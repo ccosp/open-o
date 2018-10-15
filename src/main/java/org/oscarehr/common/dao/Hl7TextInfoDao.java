@@ -26,6 +26,7 @@
 package org.oscarehr.common.dao;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -214,6 +215,24 @@ public class Hl7TextInfoDao extends AbstractDao<Hl7TextInfo> {
 		q.setParameter("dNo", demographicNo);
 		return q.getResultList();
     }
+    
+	@SuppressWarnings("unchecked")
+    public List<Hl7TextInfo> findByLabIdList(List<Integer> labIds) {
+    	
+    	StringBuilder stringBuilder = new StringBuilder();
+    	for(Integer labId : labIds) {
+    		stringBuilder.append("'" + labId + "'");
+    	}
+
+    	String sql = "SELECT x FROM " + modelClass.getName() + " x WHERE x.labNumber IN ("+ stringBuilder.toString() +") ORDER BY x.labNumber DESC";
+    	Query query = entityManager.createQuery(sql);
+    	List<Hl7TextInfo> resultList = query.getResultList();
+    	if(resultList == null) {
+    		resultList = Collections.emptyList();
+    	}
+    	return resultList;
+    }
+
 
 	public List<Object[]> findLabsViaMagic(String status, String providerNo, String patientFirstName, String patientLastName, String patientHealthNumber) {
 		String sql = "FROM Hl7TextInfo info, ProviderLabRoutingModel p " +
