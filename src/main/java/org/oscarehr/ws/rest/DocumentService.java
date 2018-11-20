@@ -25,6 +25,7 @@ package org.oscarehr.ws.rest;
 
 import java.nio.file.FileSystems;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +173,11 @@ public class DocumentService extends AbstractServiceImpl {
 			String dateString = dateFormat.format(documentDate);
 			documentResponse.add( new DocumentTo1( id, name, dateString, DocumentCategory.EDOCUMENT.name()) );			
 		}
+		
+		// sort response by date descending
+		if(! documentResponse.getDocuments().isEmpty()) {
+			Collections.sort(documentResponse.getDocuments(), Collections.reverseOrder());
+		}
 
 		return documentResponse;
 	}
@@ -193,6 +199,11 @@ public class DocumentService extends AbstractServiceImpl {
 					dateString,
 					DocumentCategory.EFORM.name()) );
 		}
+		
+		if(! documentResponse.getDocuments().isEmpty()) {
+			Collections.sort(documentResponse.getDocuments(), Collections.reverseOrder());
+		}
+		
 		return documentResponse;
 	}
 	
@@ -209,6 +220,10 @@ public class DocumentService extends AbstractServiceImpl {
 					hl7TextInfo.getDiscipline(),
 					hl7TextInfo.getObrDate(),
 					DocumentCategory.HL7LAB.name()) );
+		}
+		
+		if(! documentResponse.getDocuments().isEmpty()) {
+			Collections.sort(documentResponse.getDocuments(), Collections.reverseOrder());
 		}
 		
 		return documentResponse;
@@ -236,6 +251,11 @@ public class DocumentService extends AbstractServiceImpl {
 					DocumentCategory.FORM.name(),
 					patientForm.getTable()) );
 		}
+		
+		if(! documentResponse.getDocuments().isEmpty()) {
+			Collections.sort(documentResponse.getDocuments(), Collections.reverseOrder());
+		}
+		
 		return documentResponse;
 	}
 
@@ -252,8 +272,7 @@ public class DocumentService extends AbstractServiceImpl {
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response getEForm(@PathParam("eformId") int eformId){		
 		java.nio.file.Path path = eformDataManager.createEformPDF(getLoggedInInfo(), eformId);	
-		ResponseBuilder response = getFile(path);
-		return response.build();
+		return getFile(path).build();
 	}
 	
 	@GET
@@ -261,8 +280,7 @@ public class DocumentService extends AbstractServiceImpl {
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response getHL7Lab(@PathParam("hl7LabId") int hl7LabId){
 		java.nio.file.Path path = labManager.getHl7MessageAsPDF(getLoggedInInfo(), hl7LabId);
-		ResponseBuilder response = getFile(path);
-		return response.build();
+		return getFile(path).build();
 	}
 	
 	@GET
@@ -289,7 +307,10 @@ public class DocumentService extends AbstractServiceImpl {
 	
 	
 	private final ResponseBuilder getFile(final String filePath) {
-		java.nio.file.Path path = FileSystems.getDefault().getPath(filePath);
+		java.nio.file.Path path = null;
+		if(filePath != null && ! filePath.isEmpty()) {
+			path = FileSystems.getDefault().getPath(filePath);
+		}
 		return getFile(path);
 	}
 
@@ -299,8 +320,9 @@ public class DocumentService extends AbstractServiceImpl {
 			throw new RuntimeException("missing required security object (_edoc)");
 		}
 		
-	    ResponseBuilder response = Response.status(Status.NO_CONTENT);	    
-	    if(path.toFile().exists()) {
+	    ResponseBuilder response = Response.status(Status.NO_CONTENT);	
+
+	    if(path != null && path.toFile().exists()) {
 		    response = Response.ok( path.toFile() );
 		    response.header("Content-Disposition", "attachment; filename=" + path.getFileName());
 	    }

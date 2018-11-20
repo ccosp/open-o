@@ -23,7 +23,7 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
-public class DocumentTo1 {
+public class DocumentTo1 implements Comparable<DocumentTo1> {
 	
 	private int id;
 	private String name;
@@ -77,6 +77,14 @@ public class DocumentTo1 {
 
 	public void setDocumentTable(String documentTable) {
 		this.documentTable = documentTable;
+	}
+
+	@Override
+	public int compareTo(DocumentTo1 arg0) {
+		if (arg0.getDocumentDate() == null || arg0.getDocumentDate() == null) {
+			return 0;
+		}
+		return getDocumentDate().compareTo(arg0.getDocumentDate());
 	}
 
 }

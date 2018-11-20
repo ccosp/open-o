@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.oscarehr.common.dao.Hl7TextInfoDao;
@@ -78,8 +79,11 @@ public class LabManager {
 		checkPrivilege(loggedInInfo, "r");
 		
 		List<PatientLabRouting> patientLabRoutingList = patientLabRoutingDao.findByDemographicAndLabType(demographicNo, PatientLabRoutingDao.HL7);
-		List<Integer> labIds = new ArrayList<Integer>();
-		if(patientLabRoutingList != null) {
+		List<Integer> labIds = null;
+		List<Hl7TextInfo> hl7TextInfoList = Collections.emptyList();
+		
+		if(patientLabRoutingList != null && patientLabRoutingList.size() > 0) {
+			labIds = new ArrayList<Integer>();
 			for(PatientLabRouting patientLabRouting : patientLabRoutingList) {
 				labIds.add(patientLabRouting.getLabNo());
 			}			
@@ -87,7 +91,11 @@ public class LabManager {
 		
 		LogAction.addLogSynchronous(loggedInInfo, "LabManager.getHl7TextInfo", "demographicNo="+demographicNo);
 		
-		return hl7textInfoDao.findByLabIdList(labIds);
+		if(labIds != null) {
+			hl7TextInfoList = hl7textInfoDao.findByLabIdList(labIds);
+		}
+		
+		return hl7TextInfoList;
 
 	}
 	
