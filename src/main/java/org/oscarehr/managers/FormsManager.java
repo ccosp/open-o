@@ -28,7 +28,7 @@ package org.oscarehr.managers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import java.nio.file.Path;
 import org.oscarehr.common.dao.EFormDao;
 import org.oscarehr.common.dao.EFormDao.EFormSortOrder;
 import org.oscarehr.common.dao.EFormDataDao;
@@ -196,5 +196,16 @@ public class FormsManager {
 		
 		return documentId;
 	}
+	
+	public Path saveFormAsTempPdf( LoggedInInfo loggedInInfo, FormTransportContainer formTransportContainer ) {
+  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_edoc)");
+		}
+  		
+  		LogAction.addLogSynchronous(loggedInInfo, "FormsManager.saveFormAsTempPdf", "" );
+  		
+		return ConvertToEdoc.saveAsTempPDF(formTransportContainer);
+	}
+
 	
 }
