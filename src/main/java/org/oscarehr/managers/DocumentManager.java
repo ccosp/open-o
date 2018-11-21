@@ -203,15 +203,19 @@ public class DocumentManager {
 	}
 	
 	public String getPathToDocument(LoggedInInfo loggedInInfo, int documentId) {
-		Document document = this.getDocument(loggedInInfo, documentId);
-		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		Document document = this.getDocument(loggedInInfo, documentId);		
+		String path = null; 
 		
-		if(! path.endsWith(File.separator)) {
-			path = path + File.separator;
+		if(document != null) {
+			path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+			
+			if(! path.endsWith(File.separator)) {
+				path = path + File.separator;
+			}
+			
+			path = path + document.getDocfilename();		
 		}
 		
-		path = path + document.getDocfilename();		
- 
 		return path;
 	}
 }
