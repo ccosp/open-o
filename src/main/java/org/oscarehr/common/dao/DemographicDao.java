@@ -189,6 +189,15 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		List<Demographic> rs = getHibernateTemplate().find(q, new Object[] { providerNo });
 		return rs;
 	}
+	
+	public List<Integer> getDemographicNosByProvider(String providerNo, boolean onlyActive) {
+		String q = "From Demographic d where d.ProviderNo = ? ";
+		if (onlyActive) {
+			q = "Select d.DemographicNo From Demographic d where d.ProviderNo = ?  ";
+		}
+		List<Integer> rs = getHibernateTemplate().find(q, new Object[] { providerNo });
+		return rs;
+	}
 
 	public Demographic getDemographicByMyOscarUserName(String myOscarUserName) {
 		String q = "From Demographic d where d.myOscarUserName = ? ";
@@ -2173,5 +2182,15 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Demographic> getActiveDemographicAfter(Date afterDatetimeExclusive) {
+		String q = "From Demographic d where d.PatientStatus='AC'";
+		if (afterDatetimeExclusive!=null) q += " and d.lastUpdateDate > ?";
+		
+		List<Demographic> rs = null;
+		rs = afterDatetimeExclusive!=null ? getHibernateTemplate().find(q, afterDatetimeExclusive) : getHibernateTemplate().find(q);
+		
+		return rs;
+	}
 	
 }
