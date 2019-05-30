@@ -47,7 +47,7 @@ import org.w3c.dom.NodeList;
  */
 
 
-
+@Deprecated
 public class MsgAddressBook {
    static int num;
    public java.util.Vector providerList;

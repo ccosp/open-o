@@ -24,10 +24,10 @@
 
 package org.oscarehr.common.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
-
 import org.oscarehr.common.model.MessageList;
 import org.springframework.stereotype.Repository;
 
@@ -40,9 +40,9 @@ public class MessageListDao extends AbstractDao<MessageList> {
 	}
 	
 	public List<MessageList> findByProviderNoAndMessageNo(String providerNo, Long messageNo) {
-		Query query = createQuery("msg", "msg.providerNo = :pno AND msg.message = :msg");
+		Query query = createQuery("msg", "msg.providerNo = :pno AND msg.message = :msgNo");
 		query.setParameter("pno", providerNo);
-		query.setParameter("msg", messageNo);
+		query.setParameter("msgNo", messageNo);
 		return query.getResultList();
 	}
 
@@ -182,6 +182,30 @@ public class MessageListDao extends AbstractDao<MessageList> {
 		Integer result = ((Long)query.getSingleResult()).intValue();
 		
 		return result;
-	}
+	}  
+    
+    public List<MessageList> findByIntegratedFacility(int facilityId, String status) {
+		Query query = createQuery("ml", "ml.status like :status and ml.destinationFacilityId = :destinationFacilityId order by ml.id");
+		query.setParameter("destinationFacilityId", facilityId);
+		query.setParameter("status", status);
+		List<MessageList> results = query.getResultList();
+		if(results == null)
+		{
+			results = Collections.emptyList(); 
+		}
+		return results;
+    }
+    
+	public List<MessageList> findByMessageAndIntegratedFacility(Long messageNo, int facilityId) {
+	    Query query = createQuery("ml", "ml.message = :messageNo and ml.destinationFacilityId = :destinationFacilityId order by ml.id");
+		query.setParameter("messageNo", messageNo);
+		query.setParameter("destinationFacilityId", facilityId);
+		List<MessageList> results = query.getResultList();
+		if(results == null)
+		{
+			results = Collections.emptyList(); 
+		}
+		return results;
+    }
     
 }

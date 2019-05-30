@@ -95,8 +95,8 @@ height:100% !important;
 		<td class="MainTableTopRowRightColumn">
 		<table class="TopStatusBar">
 			<tr>
-				<td><bean:message
-					key="oscarMessenger.SentMessage.msgMessageSent" /></td>
+				<td><h2><bean:message
+					key="oscarMessenger.SentMessage.msgMessageSent" /></h2></td>
 				<td></td>
 				<td style="text-align: right">				
 				<oscar:help keywords="message" key="app.top1"/> | 

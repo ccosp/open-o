@@ -28,225 +28,306 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
-<%
-      String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-	  boolean authed=true;
-%>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.messenger" rights="r" reverse="<%=true%>">
-	<%authed=false; %>
-	<%response.sendRedirect("../../securityError.jsp?type=_admin&type=_admin.messenger");%>
-</security:oscarSec>
-<%
-if(!authed) {
-	return;
-}
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html:html locale="true">
+<security:oscarSec roleName="${ sessionScope.userrole }" objectName="_admin" rights="r" reverse="${ false }">
 
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<title><bean:message
-	key="oscarMessenger.config.MessengerAdmin.title" /></title>
-<html:base />
-<link rel="stylesheet" type="text/css" media="all" href="../../share/css/extractedFromPages.css"  />
+	<title><bean:message key="oscarMessenger.config.MessengerAdmin.title" /></title>
+	<link href="${pageContext.request.contextPath}/js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.10.2.custom.min.js" ></script>
+	<style type="text/css">
+		summary{ cursor:pointer; }
+		.contact-group-buttons{
+			padding-top: 10px;
+		}
+		
+		i.group-member {
+			display:block;
+			float:left;
+			clear:right;
+			width: 20px;
+			margin-top:3px;
+			margin-bottom: 3px;
+		}
+		#remote-contacts summary {
+			padding 5px 10px;
+			background-color: #fafafa;
+			background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+			background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+			background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+			background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+			background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+			background-repeat: repeat-x;
+			border-top: 1px solid #d4d4d4;
+			border-bottom: 1px solid #d4d4d4;
+		}
+		
+		#addContacts .tab-content, #manageGroups .group-member-list {
+			background-color: #ccc;
+			border-left:#ccc thin solid;
+			border-right:#ccc thin solid;
+			height: auto;
+			max-height: 900px;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+		
+		#addContacts .contact-entry, #manageGroups .group-member-list .contact-entry {
+			background-color: white;
+			margin:1px auto;
+			padding:5px 0px 0px 10px;
+		}
+		
+		span.provider-name {
+			display: block;
+		}
+	</style>
+	
+	<script type="text/javascript">
+		var ctx = '${pageContext.request.contextPath}';
+	
+		$("input:checkbox").change(function(){
+			if(this.checked) 
+			{
+				addMember(this.value, 0);
+			}
+			else
+			{
+				removeMember(this.value, 0)
+			}
+		});
+		
+		$(".add-member-btn").click(function(){
+			var groupId = this.id;
+			groupId = groupId.replace("add-", '');
+			var memberId = $("#add-member-id").val(); 
+			if(memberId)
+			{
+				addMember(memberId, groupId)
+				$(".search-provider").val('');
+			}
+		});
+		
+		$("i.group-member").click(function(){
+			var memberId = this.id;
+			if(memberId)
+			{
+				removeMember(memberId, 0);
+				$(this).parent().parent().remove();
+			}
+		});
+		
+		$("#add-group-btn").click(function(){
+			var groupName = $("#new-group-name").val();
+			if(groupName){
+				createGroup(groupName);
+			}
+		});
+		
+		$(".delete-group-btn").click(function(){
+			var groupId = this.id;
+			if(groupId)
+			{
+				groupId = groupId.replace("delete-", '');
+				deleteGroup(groupId);
+			}
+		});
 
-<script>
-function BackToOscar()
-{
-    if (opener.callRefreshTabAlerts) {
-	opener.callRefreshTabAlerts("oscar_new_msg");
-        setTimeout("window.close()", 100);
-    } else {
-        window.close();
-    }
-}
-</script>
+		function addMember(memberId, groupId) {
+			$.post(ctx + "/oscarMessenger.do?method=add&member=" + memberId + "&group=" + groupId);
+		}
+		
+		function removeMember(memberId, groupId) {
+			$.post(ctx + "/oscarMessenger.do?method=remove&member=" + memberId + "&group=" + groupId);
+		}
+		
+		function createGroup(groupName) {
+			$.post(ctx + "/oscarMessenger.do?method=create&groupName=" + groupName);	
+		}
+		
+		function deleteGroup(groupId) {
+			$.post(ctx + "/oscarMessenger.do?method=remove&group=" + groupId);
+		}
 
-<link rel="stylesheet" type="text/css" href="../styles.css">
+		$(document).ready(function(){
+			// create the provider name array
+			var providers = new Array();
+			
+			$("span.provider-name").each(function(){
+				var provider = {value:this.id, label:$(this).text().trim()}
+				providers.push(provider);
+			});
+			
+			$(".search-provider").autocomplete({
+		      	source: providers,
+		        focus: function( event, ui ) {
+		            $( this ).val( ui.item.label );
+		            return false;
+		        },
+				select: function( event, ui ) {
+				    $( this ).val( ui.item.label );
+				    $( "#add-member-id" ).val( ui.item.value );
+				    return false;
+		        }
+		    });
+		});
+	</script>
+	
 </head>
 
+<body>
 
-<body topmargin="0" leftmargin="0" vlink="#0000FF">
+<div class="container-fluid">
 
-<%
-////////////////////////////////////////////////////////////////////////////////
-   oscar.oscarMessenger.config.data.MsgMessengerGroupData adminUtil = new oscar.oscarMessenger.config.data.MsgMessengerGroupData();
-   String grpNo = new String();
-   if( request.getParameter("groupNo") != null || request.getAttribute("groupNo") != null){
-      if (request.getAttribute("groupNo") != null){
-         grpNo = (String) request.getAttribute("groupNo");
-      }else{
-         grpNo = request.getParameter("groupNo");
-      }
+    <div class="navbar">
+    <div class="navbar-inner">
+    	<a class="brand" href="#">
+    		Messenger Group Admin
+    	</a>
+	    <ul class="nav nav-tabs">
+	    	<li class="active">
+	    		<a href="#addContacts" data-toggle="tab">Manage Contacts</a>
+	    	</li>  
+	    	<li>
+	    		<a href="#manageGroups" data-toggle="tab">Manage Contact Groups</a>
+	    	</li>   
+	    </ul>
+    </div>
+    </div>
 
-   }else{
-      grpNo = "0";
-   }
-   if (grpNo.equals("")){
-     grpNo = "0";
-   }
-
-   String currGroupName = adminUtil.getMyName(grpNo);
-    currGroupName = adminUtil.printAllBelowGroups(grpNo);
-////////////////////////////////////////////////////////////////////////////////
-%>
-
-<html:errors />
-<table border="0" cellpadding="0" cellspacing="0"
-	style="border-collapse: collapse" bordercolor="#111111" width="100%"
-	id="AutoNumber1" height="100%">
-
-	<tr>
-		<td width="10%" height="37" bgcolor="#000000">&nbsp;</td>
-		<td width="100%" bgcolor="#000000"
-			style="border-left: 2px solid #A9A9A9; padding-left: 5" height="0%">
-		<p class="ScreenTitle"><bean:message
-			key="oscarMessenger.config.MessengerAdmin.2ndTitle" /></p>
-		</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td width="100%" style="border-left: 2px solid #A9A9A9;" height="100%"
-			valign="top">
-		<table cellpadding="0" cellspacing="2"
-			style="border-collapse: collapse" bordercolor="#111111" width="100%"
-			height="100%">
-
-			<!-- Start new rows here -->
-			<tr>
-				<td><!--<div class="DivContentTitle"><bean:message key="displayMessages.title"/> of 
-								<%
-                                //oscar.oscarMessenger.pageUtil.SessionBean bean = (oscar.oscarMessenger.pageUtil.SessionBean)request.getSession().getAttribute("SessionBean");
-
-                                /*out.print("dsffdsfdsuserName");*/%>
-                      </div>-->
-                </td>
-			</tr>
-			<tr>
-				<td>
-				<div class="DivContentSectionHead"><%=currGroupName%></div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<table>
-					<tr>
-						<td class=cellButtonLook><a
-							href="MessengerCreateGroup.jsp?Level=<%=grpNo%>"><bean:message
-							key="oscarMessenger.config.MessengerAdmin.newGroup" /></a></td>
-						<td><bean:message
-							key="oscarMessenger.config.MessengerAdmin.msgCreateNewGroup" /></td>
-					</tr>
-					<%
-                           String par = adminUtil.parentDirectory(grpNo);
-
-                           if ( !(par).equals("") ){;
-                           %>
-					<tr>
-						<td class=cellButtonLook><a
-							href="MessengerAdmin.jsp?groupNo=<%=par%>"><bean:message
-							key="oscarMessenger.config.MessengerAdmin.goBack" /></a></td>
-						<td><bean:message
-							key="oscarMessenger.config.MessengerAdmin.msgGoToParent" /></td>
-					</tr>
-					<tr>
-						<td class=cellButtonLook><a
-							href="MessengerCreateGroup.jsp?Group=<%=grpNo%>"><bean:message
-							key="oscarMessenger.config.MessengerAdmin.rename" /></a></td>
-						<td><bean:message
-							key="oscarMessenger.config.MessengerAdmin.msgChangeGroupsName" />
-						</td>
-					</tr>
-					<%}%>
-				</table>
-
-				<%
-                           adminUtil.parentDirectory(grpNo);
-                        %> <br>
-
-
-				<% //This Part Prints all the groups for this level
-
-                        String groupList = adminUtil.printGroups(grpNo);
-                        int numGroups = adminUtil.numGroups;
-                        if ( numGroups > 0 ){%>
-				<table>
-					<tr>
-						<td><bean:message
-							key="oscarMessenger.config.MessengerAdmin.msgExploreLowerLevel" />
-						</td>
-					</tr>
-				</table>
-				<%    out.print (groupList);
-                        }
-                        %> <%
-                        if (request.getAttribute("fail") != null){
-                           String error = ((String) request.getAttribute("fail"));
-                           out.print("<br><font color=red>"+error+"</font><br>");
-                        }
-
-                        %> 
-                        <html:form	action="/oscarMessenger/UpdateMembers">
-					<input type=hidden name="grpNo" value=<%=grpNo%>>
-					<input type=submit name="update" class="ControlPushButton"
-						value="<bean:message key="oscarMessenger.config.MessengerAdmin.btnUpdateGroupMembers"/>">
-					<input type=submit name="delete" class="ControlPushButton"
-						value="<bean:message key="oscarMessenger.config.MessengerAdmin.btnDeleteThisGroup"/>">
-					<br>
-					<bean:message
-						key="oscarMessenger.config.MessengerAdmin.msgAllMembersChecked" />
-					<div class="ChooseRecipientsBox1">
-					<table>
-						<tr>
-							<th>&nbsp;</th>
-							<th bgcolor=#eeeeff><bean:message
-								key="oscarMessenger.config.MessengerAdmin.lastName" /></th>
-							<th bgcolor=#eeeeff><bean:message
-								key="oscarMessenger.config.MessengerAdmin.firstName" /></th>
-							<th bgcolor=#eeeeff><bean:message
-								key="oscarMessenger.config.MessengerAdmin.providerType" /></th>
-						</tr>
-						<%
-                            adminUtil.printAllProvidersWithMembers(request.getLocale(),grpNo,out);
-                           %>
-					</table>
+	<div class="row-fluid tab-content">
+		<div class="tab-pane active" id="addContacts">
+			<p>Enable or disable (check or uncheck) local and remote clinic providers as a contact in the Oscar Messenger address book.</p>
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a data-toggle="tab" href="#local-contacts" >
+						Local Providers
+					</a>
+				</li>
+				<c:if test="${ not empty remoteContacts }">
+					<li>
+						<a data-toggle="tab" href="#remote-contacts" >
+							Remote Providers
+						</a>
+					</li>
+				</c:if>
+			</ul>
+		
+			<div class="tab-content">
+				<div class="tab-pane active" id="local-contacts" >
+					<c:forEach items="${ localContacts }" var="contact" varStatus="count">	
+						<div class="row-fluid contact-entry">
+							<label class="checkbox ${ count.index%2 == 0 ? 'even' : 'odd' }">
+								<input type="checkbox" value="${ contact.id.compositeId }"
+									${ contact.member ? 'checked="checked"' : '' } />
+								<span id="${ contact.id.compositeId }" class="provider-name" >
+									<c:out value="${ contact.lastName }" />, <c:out value="${ contact.firstName }" />
+								</span>
+								<span class="muted">
+									<c:out value="${ contact.providerType }" />
+								</span>
+							</label>
+						</div>				
+					</c:forEach>					
+				</div>
+				
+				<c:if test="${ not empty remoteContacts }">
+					<div class="tab-pane" id="remote-contacts">
+						<c:forEach items="${ remoteContacts }" var="location">
+							<details>
+								<summary>	
+									<strong><c:out value="${ location.key }" /></strong>
+								</summary>
+								<c:forEach items="${ location.value }" var="contact" varStatus="count">	
+									<div class="row-fluid contact-entry">						
+										<label class="checkbox ${ count.index%2 == 0 ? 'even' : 'odd' }" >
+											<input type="checkbox" value="${ contact.id.compositeId }"
+												${ contact.member ? 'checked="checked"' : '' }/>
+											<span id="${ contact.id.compositeId }" class="provider-name" >
+												<c:out value="${ contact.lastName }" />, <c:out value="${ contact.firstName }" />
+											</span>
+											<span class="muted">
+												<c:out value="${ contact.providerType }" />
+											</span>
+										</label>
+									</div>							
+								</c:forEach>
+							</details>
+						</c:forEach> 
 					</div>
-
-				</html:form></td>
-			</tr>
-			<!-- End new rows here -->
-
-			<tr height="100%">
-				<td></td>
-			</tr>
-		</table>
-		</td>
-	</tr>
-
-	<tr>
-		<td height="0%"
-			style="border-bottom: 2px solid #A9A9A9; border-top: 2px solid #A9A9A9;"></td>
-		<td height="0%"
-			style="border-bottom: 2px solid #A9A9A9; border-top: 2px solid #A9A9A9;"></td>
-	</tr>
-	<tr>
-		<td width="100%" height="0%" colspan="2">&nbsp;</td>
-	</tr>
-	<tr>
-		<td width="100%" height="0%" style="padding: 5" bgcolor="#DCDCDC"
-			colspan="2"></td>
-	</tr>
-	
-</table>
-
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
-
-<script>
-$( document ).ready(function() {	
-    parent.parent.resizeIframe($('html').height());
-});
-</script>
+				</c:if>
+			</div>	
+		</div>
+		<div class="tab-pane" id="manageGroups">
+			<p>Manage Oscar Messenger contact groups</p>
+			<ul class="nav nav-tabs">
+				<c:forEach items="${ groups }" var="group" varStatus="count">
+					<li ${ count.index eq 0 ? 'class="active"' : '' } >
+						<a data-toggle="tab" href="#group-${ group.key.id }" >
+							<c:out value="${ group.key.groupDesc }" />	
+						</a>
+					</li>
+				</c:forEach>
+				<li>
+					<a data-toggle="tab" href="#new-group" class="muted">
+						<i class="icon-plus add-group-tab" title="New Group" ></i>
+					</a>
+				</li>
+			</ul>
+		
+			<div class="tab-content">
+				<c:forEach items="${ groups }" var="group" varStatus="count">					
+					<div class="tab-pane form-check ${ count.index eq 0 ? 'active' : '' }" id="group-${ group.key.id }">
+						<div class="group-member-list">
+							<c:forEach items="${ group.value }" var="member">
+								<div class="row-fluid contact-entry">																	
+									<label class="checkbox">								
+										<i class="icon-trash group-member"
+											title="Remove Contact" id="${ member.id.compositeId }" ></i>
+										<span class="provider-name" >
+											<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />
+										</span>
+										<span class="muted">
+											<c:out value="${ member.providerType }" />
+										</span>
+									</label>
+								</div>
+							</c:forEach>
+						</div>
+						<div class="control-group contact-group-buttons">
+							<div class="input-append">
+								<div class="autocomplete">							
+									<input type='text' placeholder="Last, First" class="search-provider" /> 
+									<input type='hidden' id="add-member-id" 
+									value="" />
+									<button id="add-${ group.key.id }" class="btn add-member-btn">Add Contact</button>	
+								</div>						
+							</div>
+						</div>
+						<div class="row-fluid" style="background-color:white;">
+							<button id="delete-${ group.key.id }" class="btn delete-group-btn pull-right">Delete Group</button>	
+						</div>
+					</div>
+				</c:forEach>
+				
+				<div class="tab-pane form-check" id="new-group">
+					<div class="control-group">
+						<div class="input-append">						
+							<input type='text' placeholder="Group Name" class="group-name-input" id="new-group-name" /> 
+							<button id="add-group-btn" class="btn">
+								add
+							</button>								
+						</div>
+					</div>
+				</div>
+				
+			</div> 
+		</div>			
+	</div>
+</div>	
 </body>
+</security:oscarSec>
 </html:html>

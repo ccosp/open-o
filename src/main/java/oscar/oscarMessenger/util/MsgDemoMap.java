@@ -35,8 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Vector;
-
 import org.oscarehr.common.dao.MsgDemoMapDao;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.util.MiscUtils;
@@ -44,9 +42,10 @@ import org.oscarehr.util.SpringUtils;
 
 import oscar.util.ConversionUtils;
 /**
- *
- * @author root
+ * @deprecated
+ * use the common entity at org.oscarehr.common.model.MsgDemoMap  
  */
+@Deprecated
 public class MsgDemoMap {
     
 	private MsgDemoMapDao dao = SpringUtils.getBean(MsgDemoMapDao.class);

@@ -25,8 +25,107 @@
 
 package oscar.oscarMessenger.data;
 
-public class MsgProviderData {
+import org.oscarehr.caisi_integrator.ws.CachedProvider;
+import org.oscarehr.common.model.Provider;
 
-    public String providerNo;
-    public String locationId;
+public final class MsgProviderData {
+	
+	private ContactIdentifier id;
+	private String firstName;
+	private String lastName;
+	private String prefix;
+	private String providerType;
+	private String location;
+	private boolean member;
+	
+	public MsgProviderData() {
+		// default
+	}
+	
+	public MsgProviderData(CachedProvider cachedProvider) {
+		getId().setContactId(cachedProvider.getFacilityIdStringCompositePk().getCaisiItemId());
+		getId().setFacilityId(cachedProvider.getFacilityIdStringCompositePk().getIntegratorFacilityId());
+		setFirstName(cachedProvider.getFirstName());
+		setLastName(cachedProvider.getLastName());
+		setLocation("Integrator");
+		setProviderType(cachedProvider.getSpecialty());
+	}
+	
+	public MsgProviderData(Provider provider) {
+		getId().setContactId(provider.getProviderNo());
+		getId().setContactUniqueId(provider.getPractitionerNo());
+		getId().setFacilityId(0);
+		setFirstName(provider.getFirstName());
+		setLastName(provider.getLastName());
+		setLocation(provider.getAddress());
+		setProviderType(provider.getSpecialty());
+	}
+	
+	public ContactIdentifier getId() {
+		if(id == null) {
+			id = new ContactIdentifier();
+		}
+		return id;
+	}
+	
+	public void setId(ContactIdentifier id) {
+		this.id = id;
+	}
+	
+	public String getFirstName() {
+		if(firstName == null)
+		{
+			return "";
+		}
+		return firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		if(lastName == null)
+		{
+			return "";
+		}
+		return lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getPrefix() {
+		return prefix;
+	}
+	
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+	
+	public String getProviderType() {
+		return providerType;
+	}
+	
+	public void setProviderType(String providerType) {
+		this.providerType = providerType;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public boolean isMember() {
+		return member;
+	}
+
+	public void setMember(boolean member) {
+		this.member = member;
+	}
+
 }

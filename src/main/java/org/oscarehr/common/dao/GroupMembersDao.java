@@ -25,6 +25,7 @@
 
 package org.oscarehr.common.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -60,6 +61,33 @@ public class GroupMembersDao extends AbstractDao<GroupMembers>{
         return query.getResultList();
     }
 	
-	
+    public List<GroupMembers> findByProviderNumberAndFacilityId(String providerNo, Integer facilityId) {
+		Query query = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.providerNo LIKE ? AND x.facilityId=?");
+		query.setParameter(1, providerNo);
+		query.setParameter(2, facilityId);
+		
+		@SuppressWarnings("unchecked")
+		List<GroupMembers> results = query.getResultList();
+		
+		if(results == null) {
+			results = Collections.emptyList();
+		}
+		
+		return results;
+    }
+    
+    public List<GroupMembers> findByFacilityId(Integer facilityId) {
+		Query query = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId=?");
+		query.setParameter(1, facilityId);
+		
+		@SuppressWarnings("unchecked")
+		List<GroupMembers> results = query.getResultList();
+		
+		if(results == null) {
+			results = Collections.emptyList();
+		}
+		
+		return results;
+    }
 	
 }

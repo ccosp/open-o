@@ -24,14 +24,16 @@
 
 package org.oscarehr.dashboard.handler;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.oscarehr.PMmodule.service.ProviderManager;
 import org.oscarehr.common.model.OscarMsgType;
+import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarMessenger.data.MsgMessageData;
-import oscar.oscarMessenger.data.MsgProviderData;
-import oscar.oscarMessenger.util.MsgDemoMap;
+import oscar.oscarMessenger.data.MessengerSystemMessage;
+import org.oscarehr.common.model.Security;
+import org.oscarehr.managers.MessagingManager;
 
 public class MessageHandler {
 
@@ -47,34 +49,24 @@ public class MessageHandler {
 	) {
 		String userName = SYSTEM_USER_NAME;
 		String userNo = SYSTEM_USER_ID;
-		String attachment = null;
-		String pdfAttachment = null;
+		
+		MessagingManager messagingManager = SpringUtils.getBean(MessagingManager.class);
+		ProviderManager providerManager = SpringUtils.getBean(ProviderManager.class);
+		org.oscarehr.common.model.Provider provider = providerManager.getProvider(SYSTEM_USER_ID);
+		Security security = new Security();
+		LoggedInInfo loggedInInfo = new LoggedInInfo();
+		loggedInInfo.setLoggedInProvider(provider);
+		loggedInInfo.setLoggedInSecurity(security);
+		
+        MessengerSystemMessage systemMessage = new MessengerSystemMessage(new String[] { providerNo });
+        systemMessage.setType(OscarMsgType.GENERAL_TYPE);
+        systemMessage.setSentByNo(userNo);
+        systemMessage.setSentBy(userName);
+        systemMessage.setSubject(subject);
+        systemMessage.setMessage(messageBody);
+        systemMessage.setAttachedDemographicNo(linkedDemographicNumbers.toArray(new Integer[linkedDemographicNumbers.size()]));
+        
+        messagingManager.sendSystemMessage(loggedInInfo, systemMessage);
 
-		MsgMessageData messageData = new MsgMessageData();
-
-		String[] providerIds = new String[] { providerNo };
-		String sentToWho = messageData.createSentToString(providerIds);
-		ArrayList<MsgProviderData> providerListing = messageData.getProviderStructure(providerIds);
-
-		String messageId = messageData.sendMessage2(
-			messageBody,
-			subject,
-			userName,
-			sentToWho,
-			userNo,
-			providerListing,
-			attachment,
-			pdfAttachment,
-			OscarMsgType.GENERAL_TYPE
-		);
-
-		if (linkedDemographicNumbers == null) {
-			return;
-		}
-
-		MsgDemoMap msgDemoMap = new MsgDemoMap();
-		for (Integer demographicNumber : linkedDemographicNumbers) {
-			msgDemoMap.linkMsg2Demo(messageId, demographicNumber.toString());
-		}
 	}
 }

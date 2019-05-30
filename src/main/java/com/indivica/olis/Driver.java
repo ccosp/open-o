@@ -393,8 +393,8 @@ public class Driver {
 		ArrayList<MsgProviderData> sendToProviderListData = new ArrayList<MsgProviderData>();
 		for (String providerNo : sendToProviderList) {
 			MsgProviderData mpd = new MsgProviderData();
-			mpd.providerNo = providerNo;
-			mpd.locationId = "145";
+			mpd.getId().setContactId(providerNo);
+			mpd.getId().setClinicLocationNo(145);
 			sendToProviderListData.add(mpd);
 		}
 

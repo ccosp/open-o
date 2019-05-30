@@ -25,10 +25,12 @@
 
 package oscar.oscarMessenger.pageUtil;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,42 +40,46 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.MessageListDao;
-import org.oscarehr.common.model.MessageList;
+import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
+import org.oscarehr.caisi_integrator.ws.CachedFacility;
+import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
 import org.oscarehr.common.model.OscarMsgType;
+import org.oscarehr.managers.MessagingManager;
+import org.oscarehr.managers.MessengerDemographicManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-
-import oscar.oscarDB.DBHandler;
-import oscar.oscarMessenger.util.MsgDemoMap;
+import oscar.oscarMessenger.data.MsgDisplayMessage;
 import oscar.util.ParameterActionForward;
 
 public class MsgViewMessageAction extends Action {
-	
-	private MessageListDao messageListDao = SpringUtils.getBean(MessageListDao.class);
-	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
+	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+	private MessagingManager messagingManager = SpringUtils.getBean(MessagingManager.class);
+	private MessengerDemographicManager messengerDemographicManager = SpringUtils.getBean(MessengerDemographicManager.class);
+	
     public ActionForward execute(ActionMapping mapping,
 				 ActionForm form,
 				 HttpServletRequest request,
 				 HttpServletResponse response)
 	throws IOException, ServletException {
-
-    	if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_msg", "r", null)) {
+    	
+    	LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+    	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
-    	
-        // Extract attributes we will need
-        
 
         oscar.oscarMessenger.pageUtil.MsgSessionBean bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean)request.getSession().getAttribute("msgSessionBean");
         String providerNo= LoggedInInfo.getLoggedInInfoFromSession(request).getLoggedInProviderNo();
-        if(bean!=null)
+        if(bean!=null) 
+        {
             providerNo = bean.getProviderNo();
+        }
         else
+        {
             MiscUtils.getLogger().debug("MsgSessionBean is null");
+		}
         
         String messageNo = request.getParameter("messageID");  
         String messagePosition = request.getParameter("messagePosition");
@@ -84,124 +90,98 @@ public class MsgViewMessageAction extends Action {
         String from = request.getParameter("from")==null?"oscarMessenger":request.getParameter("from");
         String boxType = request.getParameter("boxType")==null?"":request.getParameter("boxType");
         
-        if(msgCount==null){
-            MsgDisplayMessagesBean DisplayMessagesBeanId = new MsgDisplayMessagesBean();
-            Vector theMessages2 = DisplayMessagesBeanId.estDemographicInbox(orderBy,demographic_no);
-            msgCount = Integer.toString(theMessages2.size());
+        if(msgCount == null && demographic_no != null){
+        	msgCount = messagingManager.getInboxCountByDemographicNo(loggedInInfo, Integer.parseInt(demographic_no))+"";
+        }
+
+        MsgDisplayMessage msgDisplayMessage = null;
+        if(messageNo != null && ! messageNo.trim().isEmpty()) 
+        {
+        	msgDisplayMessage = messagingManager.getInboxMessage(loggedInInfo, Integer.parseInt(messageNo));
         }
         
-        int  i = 1;
+        if(msgDisplayMessage != null)
+        {
+        	
+	        int messageType = msgDisplayMessage.getType();
+	        String msgType_link = msgDisplayMessage.getTypeLink();
+	        Map<Integer, String> attachedDemographics = messengerDemographicManager.getAttachedDemographicNameMap(loggedInInfo, Integer.parseInt(msgDisplayMessage.getMessageId()));
+	        
+	        if(loggedInInfo.getCurrentFacility().isIntegratorEnabled())
+	        {
+	        	// usually only one demographic transfer at a time.
+	        	List<DemographicTransfer> unlinkedDemographics = messengerDemographicManager.getUnlinkedIntegratedDemographics(loggedInInfo, Integer.parseInt(messageNo));
+	        	request.setAttribute("unlinkedDemographics", unlinkedDemographics);
+	        	CachedFacility remoteFacility = null;
+	        	
+	        	if(unlinkedDemographics != null && unlinkedDemographics.size() > 0) {
+	        		remoteFacility = CaisiIntegratorManager.getRemoteFacility(loggedInInfo, loggedInInfo.getCurrentFacility(), unlinkedDemographics.get(0).getIntegratorFacilityId());
+	        		
+	        	}
+	        	
+	        	if(remoteFacility != null) {
+	        		request.setAttribute("demographicLocation", remoteFacility.getName());
+	        	}
+	        	
+	        }
+	        
+	        request.setAttribute("attachedDemographics", attachedDemographics);
+	        request.setAttribute("viewMessageMessage",msgDisplayMessage.getMessageBody());
+	        request.setAttribute("viewMessageSubject",msgDisplayMessage.getThesubject());
+	        request.setAttribute("viewMessageSentby",msgDisplayMessage.getSentby());
+	        request.setAttribute("viewMessageSentto",msgDisplayMessage.getSentto());
+	        request.setAttribute("viewMessageTime",msgDisplayMessage.getThetime());
+	        request.setAttribute("viewMessageDate",msgDisplayMessage.getThedate());
+	        request.setAttribute("viewMessageAttach",msgDisplayMessage.getAttach());
+	        request.setAttribute("viewMessagePDFAttach",msgDisplayMessage.getPdfAttach());
+	        request.setAttribute("viewMessageId",messageNo);                 
+	        request.setAttribute("viewMessageNo",messageNo);
+	        request.setAttribute("viewMessagePosition",messagePosition);
+	        request.setAttribute("providerNo",providerNo); 
+	        if(orderBy!=null){
+	            request.setAttribute("orderBy", orderBy);
+	        }
 
-        try{
-           
-           java.sql.ResultSet rs;
-           
-              //print out message
-              String sql = new String("Select * from messagetbl where messageid = \'"+messageNo+"\' ");
-              rs = DBHandler.GetSQL(sql);
-
-              if (rs.next()) {
-                 String attach, pdfAttach;
-                 String message = (oscar.Misc.getString(rs, "themessage"));
-                 String subject = (oscar.Misc.getString(rs, "thesubject"));
-                 String sentby  = (oscar.Misc.getString(rs, "sentby"));
-                 String sentto  = (oscar.Misc.getString(rs, "sentto"));
-                 String thetime = (oscar.Misc.getString(rs, "theime"));
-                 String thedate = (oscar.Misc.getString(rs, "thedate"));
-                 String att     = rs.getString("attachment");
-                 String pdfAtt  = rs.getString("pdfattachment");
-                 String msgType = (oscar.Misc.getString(rs, "type"));
-                 String msgType_link = (oscar.Misc.getString(rs, "type_link"));
-
-                 if (att == null || att.equalsIgnoreCase("null") ){
-                    attach ="0";
-                 }else{
-                    attach ="1";
-                 }
-
-
-                 if (pdfAtt == null || pdfAtt.equalsIgnoreCase("null") ){
-                    pdfAttach ="0";
-                 }else{
-                    pdfAttach ="1";
-                 }
-
-                 request.setAttribute("viewMessageMessage",message);
-                 request.setAttribute("viewMessageSubject",subject);
-                 request.setAttribute("viewMessageSentby",sentby);
-                 request.setAttribute("viewMessageSentto",sentto);
-                 request.setAttribute("viewMessageTime",thetime);
-                 request.setAttribute("viewMessageDate",thedate);
-                 request.setAttribute("viewMessageAttach",attach);
-                 request.setAttribute("viewMessagePDFAttach",pdfAttach);
-                 request.setAttribute("viewMessageId",messageNo);                 
-                 // not from query
-                 request.setAttribute("viewMessageNo",messageNo);
-                 request.setAttribute("viewMessagePosition",messagePosition);
-                 request.setAttribute("providerNo",providerNo); 
-                 if(orderBy!=null){
-                     request.setAttribute("orderBy", orderBy);
-                 }
-                                  
-                 if( msgType != null && !"".equalsIgnoreCase(msgType) ) {
-                     request.setAttribute("msgType", msgType);
-                     
-                     if( Integer.valueOf(msgType).equals(OscarMsgType.OSCAR_REVIEW_TYPE) ) {
-                         if( msgType_link != null ) {
-                            HashMap<String,List<String>>hashMap = new HashMap<String,List<String>>();
-                            String[] keyValues = msgType_link.split(",");
-
-                            for( String s : keyValues ) {
-                                String[] keyValue = s.split(":");
-                                if( keyValue.length == 4 ) {
-                                    if( hashMap.containsKey(keyValue[0]) ) {
-                                        hashMap.get(keyValue[0]).add(keyValue[1]+":"+keyValue[2]+":"+keyValue[3]);
-                                    }
-                                    else {
-                                        List<String> list = new ArrayList<String>();
-                                        list.add(keyValue[1]+":"+keyValue[2]+":"+keyValue[3]);
-                                        hashMap.put(keyValue[0], list);
-                                    }
-                                }
-                            }
-                            request.setAttribute("msgTypeLink", hashMap);
-                         }
-                     }
-                 }
-                                  
-                 MiscUtils.getLogger().debug("viewMessagePosition: " + messagePosition + "IsLastMsg: " + request.getAttribute("viewMessageIsLastMsg"));
-              }
-              else{
-                 i=0; // something wrong no message there
-              }
-
-              if (i == 1){
-            	  for(MessageList ml:messageListDao.findByProviderNoAndMessageNo(providerNo, Long.valueOf(messageNo))) {
-            		  if(!ml.getStatus().equals("del")) {
-            			  ml.setStatus("read");
-            			  messageListDao.merge(ml);
-            		  }
-            	  }
-              }
-              
-              if (linkMsgDemo !=null && demographic_no!=null){
-                  if(linkMsgDemo.equalsIgnoreCase("true")){
-                      MsgDemoMap msgDemoMap = new MsgDemoMap();
-                      msgDemoMap.linkMsg2Demo(messageNo, demographic_no);
-                      
-                  }
-              }
-                  
-
-          //}
-         rs.close();
-
-        }
-        catch (java.sql.SQLException e){ 
-           MiscUtils.getLogger().error("Error", e); 
+	        if(messageType > 0) 
+	        {
+	            request.setAttribute("msgType", messageType+"");
+	        }
+	            
+	        if( messageType == OscarMsgType.OSCAR_REVIEW_TYPE && msgType_link != null) {
+	
+	           HashMap<String,List<String>>hashMap = new HashMap<String,List<String>>();
+	           String[] keyValues = msgType_link.split(",");
+	
+	           for( String s : keyValues ) {
+	               String[] keyValue = s.split(":");
+	               if( keyValue.length == 4 ) {
+	                   if( hashMap.containsKey(keyValue[0]) ) {
+	                       hashMap.get(keyValue[0]).add(keyValue[1]+":"+keyValue[2]+":"+keyValue[3]);
+	                   }
+	                   else {
+	                       List<String> list = new ArrayList<String>();
+	                       list.add(keyValue[1]+":"+keyValue[2]+":"+keyValue[3]);
+	                       hashMap.put(keyValue[0], list);
+	                   }
+	               }
+	           }
+	           
+	           request.setAttribute("msgTypeLink", hashMap);
+	        }
+       
+	        MiscUtils.getLogger().debug("viewMessagePosition: " + messagePosition + "IsLastMsg: " + request.getAttribute("viewMessageIsLastMsg"));
+	        
+	        messagingManager.setMessageRead(loggedInInfo, Integer.parseInt(msgDisplayMessage.getMessageId()));
         }
         
-        request.setAttribute("today", oscar.util.UtilDateUtilities.getToday("dd-MMM-yyyy"));
+        if (linkMsgDemo != null && demographic_no != null){
+            if(linkMsgDemo.equalsIgnoreCase("true")){
+            	messengerDemographicManager.attachDemographicToMessage(loggedInInfo, Integer.parseInt(messageNo), Integer.parseInt(demographic_no));
+            }
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        request.setAttribute("today", simpleDateFormat.format(new Date(System.currentTimeMillis())));
         
         ParameterActionForward actionforward = new ParameterActionForward(mapping.findForward("success"));
         actionforward.addParameter("boxType", boxType);

@@ -844,13 +844,17 @@
 			<forward name="success" path="/oscarMessenger/DisplayMessages.jsp" />
 			<forward name="reply" path="/oscarMessenger/CreateMessage.jsp" />
 		</action>
-		<action input="/oscarMessenger/config/MessengerAdmin.jsp" name="msgMessengerAdminForm" path="/oscarMessenger/UpdateMembers" scope="request" type="oscar.oscarMessenger.config.pageUtil.MsgMessengerAdminAction">
+		
+		<action input="/oscarMessenger/config/MessengerAdmin.jsp" name="msgMessengerAdminForm" path="/oscarMessenger" scope="request" parameter="method" 
+			type="oscar.oscarMessenger.config.pageUtil.MsgMessengerAdminAction">
 			<forward name="success" path="/oscarMessenger/config/MessengerAdmin.jsp" />
 			<forward name="failure" path="/oscarMessenger/config/MessengerAdmin.jsp" />
 		</action>
+		
 		<action input="/oscarMessenger/config/MessengerCreateGroup.jsp" name="msgMessengerCreateGroupForm" path="/oscarMessenger/AddGroup" scope="request" type="oscar.oscarMessenger.config.pageUtil.MsgMessengerCreateGroupAction">
 			<forward name="success" path="/oscarMessenger/config/MessengerAdmin.jsp" />
 		</action>
+		
 		<action input="/oscarMessenger/ViewMessage.jsp" name="msgViewAttachmentForm" path="/oscarMessenger/ViewAttach" scope="request" type="oscar.oscarMessenger.pageUtil.MsgViewAttachmentAction">
 			<forward name="success" path="/oscarMessenger/ViewAttachment.jsp" />
 		</action>

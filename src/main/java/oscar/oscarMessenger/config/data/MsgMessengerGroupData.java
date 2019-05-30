@@ -49,8 +49,10 @@ import oscar.util.ConversionUtils;
  * <p>Company: </p>
  * @author unascribed
  * @version 1.0
+ * @deprecated
+ * Use MessagingManager
  */
-
+@Deprecated
 public class MsgMessengerGroupData {
 
 	public java.util.Vector<String> groupMemberVector;

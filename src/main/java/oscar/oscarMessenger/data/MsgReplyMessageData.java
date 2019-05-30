@@ -25,7 +25,11 @@
 
 package oscar.oscarMessenger.data;
 
-
+/**
+ * @deprecated not needed
+ *
+ */
+@Deprecated
 public class MsgReplyMessageData {
     public java.util.ArrayList<MsgProviderData> localList = null;
     public java.util.ArrayList<MsgProviderData> remoList = null;
@@ -37,19 +41,19 @@ public class MsgReplyMessageData {
         remoList = new java.util.ArrayList<MsgProviderData>();
 
         oscar.oscarMessenger.data.MsgMessageData messageData = new oscar.oscarMessenger.data.MsgMessageData();
-        localId = messageData.getCurrentLocationId();
+        localId = messageData.getCurrentLocationId()+"";
     }
 
     public void add(String proId, String locoId){
         if (locoId.equals(localId)){
             MsgProviderData providerData = new MsgProviderData();
-            providerData.providerNo = proId;
-            providerData.locationId = locoId;
+            providerData.getId().setContactId(proId);
+            providerData.getId().setContactId(locoId);
             localList.add(providerData);
         }else{
             MsgProviderData providerData = new MsgProviderData();
-            providerData.providerNo = proId;
-            providerData.locationId = locoId;
+            providerData.getId().setContactId(proId);
+            providerData.getId().setContactId(locoId);
             remoList.add(providerData);
         }
     }
@@ -59,7 +63,7 @@ public class MsgReplyMessageData {
         if (remoList != null){
             for (int i = 0; i < remoList.size(); i++){
                 MsgProviderData pD = remoList.get(i);
-                if ( ( pD.providerNo.equals(proId) ) && ( pD.locationId.equals(locoId) ) ){
+                if ( ( proId.equals(pD.getId().getContactId()) ) && ( locoId.equals(pD.getId().getClinicLocationNo()+"") ) ){
                     retval = true;
                     i = remoList.size();
                 }

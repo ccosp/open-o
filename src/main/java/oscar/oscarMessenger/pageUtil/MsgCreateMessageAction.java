@@ -36,13 +36,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.oscarehr.common.model.OscarMsgType;
+import org.oscarehr.managers.MessengerDemographicManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.oscarMessenger.data.MsgProviderData;
-import oscar.oscarMessenger.util.MsgDemoMap;
 
 public class MsgCreateMessageAction extends Action {
 
@@ -54,8 +54,8 @@ public class MsgCreateMessageAction extends Action {
 				 HttpServletRequest request,
 				 HttpServletResponse response)
 	throws IOException, ServletException {
-
-    	if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_msg", "w", null)) {
+    	LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+    	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", "w", null)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
     	
@@ -70,7 +70,7 @@ public class MsgCreateMessageAction extends Action {
             String message      = ((MsgCreateMessageForm)form).getMessage();
             String[] providers  = ((MsgCreateMessageForm)form).getProvider();
             String subject      = ((MsgCreateMessageForm)form).getSubject();
-	    bean.setMessage(null);
+            bean.setMessage(null);
             bean.setSubject(null);
             
             MiscUtils.getLogger().debug("Providers: " + Arrays.toString(providers));
@@ -78,50 +78,38 @@ public class MsgCreateMessageAction extends Action {
             MiscUtils.getLogger().debug("Message: " + message);
             
             String sentToWho    = null;
-            String currLoco     = null;
             String messageId    = null;
             String demographic_no = ((MsgCreateMessageForm)form).getDemographic_no();
 
-            java.util.ArrayList<MsgProviderData> providerListing, localProviderListing, remoteProviderListing;
+            java.util.ArrayList<MsgProviderData> providerListing, remoteProviderListing;
 
 
             subject.trim();
             if (subject.length() == 0) {subject = "none";}
 
             oscar.oscarMessenger.data.MsgMessageData messageData = new oscar.oscarMessenger.data.MsgMessageData();
-            providers               = messageData.getDups4(providers);
-            providerListing         = messageData.getProviderStructure(providers);
-            localProviderListing    = messageData.getLocalProvidersStructure();
+            providers               = messageData.getDups4(providers);           
+            providerListing         = messageData.getProviderStructure(loggedInInfo, providers);
             remoteProviderListing   = messageData.getRemoteProvidersStructure();
-            currLoco                = messageData.getCurrentLocationId();
 
-
-
-            if (messageData.isLocals()){
-            sentToWho = messageData.createSentToString(localProviderListing);
-            }else{
-            sentToWho = "";
-            }
-
-            if (messageData.isRemotes()){
-                sentToWho = sentToWho+" "+messageData.getRemoteNames(remoteProviderListing);
-            }
-
+            sentToWho = messageData.createSentToString(providerListing);
+            sentToWho = sentToWho + " " + messageData.getRemoteNames(remoteProviderListing);
+            sentToWho = sentToWho.trim();
             messageId = messageData.sendMessage2(message,subject,userName,sentToWho,userNo,providerListing,att, pdfAtt, OscarMsgType.GENERAL_TYPE);
 
-            //link msg and demogrpahic if both messageId and demographic_no are not null
-            if (demographic_no != null && (demographic_no.equals("") || demographic_no.equals("null")) ){
+            //link msg and demographic if both messageId and demographic_no are not null
+            if (demographic_no != null && (demographic_no.equals("") || "null".equals(demographic_no)) ){
                demographic_no = null;
             }
+
             if(messageId!=null && demographic_no!=null){
-                MsgDemoMap msgDemoMap = new MsgDemoMap();
-                msgDemoMap.linkMsg2Demo(messageId, demographic_no);
+            	MessengerDemographicManager messengerDemographicManager = SpringUtils.getBean(MessengerDemographicManager.class);
+                messengerDemographicManager.attachDemographicToMessage(loggedInInfo, Integer.parseInt(messageId), Integer.parseInt(demographic_no));
             }
 
+            request.setAttribute("SentMessageProvs",sentToWho.toString());
 
-    request.setAttribute("SentMessageProvs",sentToWho.toString());
-
-    return (mapping.findForward("success"));
+            return (mapping.findForward("success"));
     }
 
 }

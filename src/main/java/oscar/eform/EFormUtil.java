@@ -75,6 +75,7 @@ import org.oscarehr.common.model.Prevention;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.SecRole;
 import org.oscarehr.common.model.Tickler;
+import org.oscarehr.managers.MessagingManager;
 import org.oscarehr.managers.PreventionManager;
 import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.managers.SecurityInfoManager;
@@ -95,7 +96,7 @@ import oscar.eform.data.EForm;
 import oscar.eform.data.EFormBase;
 import oscar.oscarClinic.ClinicData;
 import oscar.oscarDB.DBHandler;
-import oscar.oscarMessenger.data.MsgMessageData;
+import oscar.oscarMessenger.data.MessengerSystemMessage;
 import oscar.util.ConversionUtils;
 import oscar.util.OscarRoleObjectPrivilege;
 import oscar.util.UtilDateUtilities;
@@ -970,15 +971,21 @@ public class EFormUtil {
 			if (StringUtils.isBlank(template)) continue;
 
 			String subject = getContent("subject", template, eForm.getFormName());
-			String sentWho = getSentWho(template);
 			String[] sentList = getSentList(template);
 			String userNo = eForm.getProviderNo();
 			String userName = providerDao.getProviderName(eForm.getProviderNo());
 			String message = getContent("content", template, "");
 			message = putTemplateEformHtml(eForm.getFormHtml(), message);
+			
+			MessagingManager messagingManager = SpringUtils.getBean(MessagingManager.class);
+            MessengerSystemMessage systemMessage = new MessengerSystemMessage(sentList);
+            systemMessage.setType(OscarMsgType.GENERAL_TYPE);
+            systemMessage.setSentByNo(userNo);
+            systemMessage.setSentBy(userName);
+            systemMessage.setSubject(subject);
+            systemMessage.setMessage(message);
 
-			MsgMessageData msg = new MsgMessageData();
-			msg.sendMessage2(message, subject, userName, sentWho, userNo, msg.getProviderStructure(sentList), null, null, OscarMsgType.GENERAL_TYPE);
+            messagingManager.sendSystemMessage(loggedInInfo, systemMessage);
 		}
 		
 		/* write to ticklers
@@ -1003,9 +1010,8 @@ public class EFormUtil {
 			tickler.setMessage(message);
 			tickler.setDemographicNo(Integer.valueOf(eForm.getDemographicNo()));
 			tickler.setCreator(eForm.getProviderNo());
-			
-			ProgramManager2 programManager = SpringUtils.getBean(ProgramManager2.class);
-			ProgramProvider pp = programManager.getCurrentProgramInDomain(loggedInInfo,loggedInInfo.getLoggedInProviderNo());
+
+			ProgramProvider pp = programManager2.getCurrentProgramInDomain(loggedInInfo,loggedInInfo.getLoggedInProviderNo());
 			
 			if(pp != null) {
 				tickler.setProgramId(pp.getProgramId().intValue());
@@ -1543,22 +1549,6 @@ public class EFormUtil {
 			sentList[i] = sentList[i].trim();
 		}
 		return sentList;
-	}
-
-	private static String getSentWho(String msgtxt) {
-		String[] sentList = getSentList(msgtxt);
-		String sentWho = "";
-		for (String sent : sentList) {
-			sent = providerDao.getProviderName(sent);
-			if( !StringUtils.isBlank(sent) ) {
-				if (!StringUtils.isBlank(sentWho) ) {
-					sentWho += ", " + sent;
-				} else {
-					sentWho += sent;
-				}
-			}
-		}
-		return sentWho;
 	}
 
 	private static void sortByProviderName(List<EFormData> allEformDatas) {

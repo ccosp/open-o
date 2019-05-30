@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +36,7 @@ import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.model.Program;
+import org.oscarehr.PMmodule.service.ProviderManager;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
@@ -50,7 +50,9 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Dxresearch;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.SecRole;
+import org.oscarehr.common.model.Security;
 import org.oscarehr.common.model.UserDSMessagePrefs;
+import org.oscarehr.managers.MessagingManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 import oscar.dms.EDoc;
@@ -58,9 +60,7 @@ import oscar.dms.EDocUtil;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 import oscar.oscarLab.ca.all.parsers.DefaultGenericHandler;
-import oscar.oscarMessenger.data.MsgMessageData;
-import oscar.oscarMessenger.data.MsgProviderData;
-import oscar.oscarMessenger.util.MsgDemoMap;
+import oscar.oscarMessenger.data.MessengerSystemMessage;
 import oscar.util.ConversionUtils;
 import ca.uhn.hl7v2.HL7Exception;
 
@@ -256,33 +256,26 @@ public class EaapsHandler extends DefaultGenericHandler implements oscar.oscarLa
 			}
 			return;
 		}
+		
+		
+		MessagingManager messagingManager = SpringUtils.getBean(MessagingManager.class);
+		ProviderManager providerManager = SpringUtils.getBean(ProviderManager.class);
+		org.oscarehr.common.model.Provider userProvider = providerManager.getProvider(SYSTEM_USER_ID);
+		Security security = new Security();
+		LoggedInInfo loggedInInfo = new LoggedInInfo();
+		loggedInInfo.setLoggedInProvider(userProvider);
+		loggedInInfo.setLoggedInSecurity(security);
+		
+        MessengerSystemMessage systemMessage = new MessengerSystemMessage(new String[] { provider.getProviderNo() });
+        systemMessage.setType(OscarMsgType.GENERAL_TYPE);
+        systemMessage.setSentByNo(SYSTEM_USER_ID);
+        systemMessage.setSentBy("System");
+        systemMessage.setSubject("eAAPS: Recommendations ready for " + demo.getFormattedName());
+        systemMessage.setMessage(mrpNote);
+        systemMessage.setAttachedDemographicNo(new Integer[] {demo.getDemographicNo()});
+        
+        messagingManager.sendSystemMessage(loggedInInfo, systemMessage);
 
-		MsgMessageData messageData = new MsgMessageData();
-
-		String[] providerIds = new String[] { provider.getProviderNo() };
-		ArrayList<MsgProviderData> providerListing = messageData.getProviderStructure(providerIds);
-		ArrayList<MsgProviderData> remoteProviders = messageData.getRemoteProvidersStructure();
-
-		String sentToWho;
-		if (messageData.isLocals()) {
-			sentToWho = messageData.createSentToString(providerIds);
-		} else {
-			sentToWho = "";
-		}
-
-		if (messageData.isRemotes()) {
-			sentToWho = sentToWho + " " + messageData.getRemoteNames(remoteProviders);
-		}
-
-		String subject = "eAAPS: Recommendations ready for " + demo.getFormattedName();
-		String userName = "System";
-		String userNo = SYSTEM_USER_ID;
-		String attachment = null;
-		String pdfAttachment = null;
-		String messageId = messageData.sendMessage2(mrpNote, subject, userName, sentToWho, userNo, providerListing, attachment, pdfAttachment, OscarMsgType.GENERAL_TYPE);
-
-		MsgDemoMap msgDemoMap = new MsgDemoMap();
-		msgDemoMap.linkMsg2Demo(messageId, demo.getDemographicNo().toString());
 	}
 
 

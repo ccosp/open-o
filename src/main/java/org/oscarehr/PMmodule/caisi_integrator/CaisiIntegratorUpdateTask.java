@@ -52,6 +52,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -113,6 +114,7 @@ import org.oscarehr.caisi_integrator.util.Role;
 import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.caisi_integrator.ws.FacilityWs;
 import org.oscarehr.caisi_integrator.ws.ImportLog;
+import org.oscarehr.caisi_integrator.ws.ProviderCommunicationTransfer;
 import org.oscarehr.caisi_integrator.ws.transfer.DemographicTransfer;
 import org.oscarehr.caisi_integrator.ws.transfer.ProviderTransfer;
 import org.oscarehr.casemgmt.dao.CaseManagementIssueDAO;
@@ -169,6 +171,7 @@ import org.oscarehr.common.model.Measurement;
 import org.oscarehr.common.model.MeasurementMap;
 import org.oscarehr.common.model.MeasurementType;
 import org.oscarehr.common.model.MeasurementsExt;
+import org.oscarehr.common.model.MessageList;
 import org.oscarehr.common.model.Prevention;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.Security;
@@ -176,6 +179,7 @@ import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.labs.LabIdAndType;
 import org.oscarehr.managers.IntegratorFileLogManager;
 import org.oscarehr.managers.IntegratorPushManager;
+import org.oscarehr.managers.MessengerIntegratorManager;
 import org.oscarehr.managers.PatientConsentManager;
 import org.oscarehr.util.BenchmarkTimer;
 import org.oscarehr.util.CxfClientUtilsOld;
@@ -250,6 +254,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 	private PatientConsentManager patientConsentManager = (PatientConsentManager) SpringUtils.getBean(PatientConsentManager.class);
 	private IntegratorFileLogManager integratorFileLogManager = SpringUtils.getBean(IntegratorFileLogManager.class);
 	private MeasurementTypeDao measurementTypeDao = (MeasurementTypeDao) SpringUtils.getBean("measurementTypeDao");
+	private MessengerIntegratorManager messengerIntegratorManager = SpringUtils.getBean(MessengerIntegratorManager.class);
 	
 	
 	private ConsentType consentType;
@@ -421,10 +426,11 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 			header.setUsername(facility.getIntegratorUser());
 			out.writeUnshared(header);
 			
+			pushMessages(out, facility, loggedInInfo);
 			pushFacility(out,facility, lastDataUpdated);
 			pushProviders(out,lastDataUpdated, facility);
 			pushPrograms(out,lastDataUpdated, facility);
-			
+		
 			IOUtils.closeQuietly(out);
 			out = new ObjectOutputStream(new FileOutputStream(new File(documentDir + File.separator + filename + ".2.ser")));
 			
@@ -477,8 +483,56 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 				
 		
 		logger.info("Finished pushing data for facility : " + facility.getId() + " : " + facility.getName());
+		
+		// fetching new provider messages from the integrator
+		fetchMessages(loggedInInfo, facility);
 	}
+	
+	/**
+	 * Push all the inter-provider messages to the integrator.
+	 * Converts Oscar messages into ProviderCommunication objects for use in the Integrator
+	 * @throws IOException 
+	 */
+	private void pushMessages(ObjectOutputStream out, Facility facility, LoggedInInfo loggedInInfo) throws IOException {
+		List<org.oscarehr.caisi_integrator.ws.CachedFacility> cachedFacilities = CaisiIntegratorManager.getRemoteFacilities(loggedInInfo, facility);
+		LoggedInInfo systemLoggedInInfo = new LoggedInInfo();
+		systemLoggedInInfo.setLoggedInProvider(loggedInInfo.getLoggedInProvider());
+		Security security = new Security();
+		systemLoggedInInfo.setLoggedInSecurity(security);
+		
+		List<ProviderCommunicationTransfer> providerCommunicationList = messengerIntegratorManager.getIntegratedMessages(systemLoggedInInfo, cachedFacilities, MessageList.STATUS_NEW);
+		if(providerCommunicationList.size() > 0)
+		{
+			out.writeUnshared(providerCommunicationList);
+		}
+	}
+	
+	/**
+	 * Get all the messages for all the active messaging providers in this facility. 
+	 * @throws UnsupportedEncodingException 
+	 */
+	private void fetchMessages(LoggedInInfo loggedInInfo, Facility facility) throws UnsupportedEncodingException {
+		LoggedInInfo systemLoggedInInfo = new LoggedInInfo();
+		systemLoggedInInfo.setLoggedInProvider(loggedInInfo.getLoggedInProvider());
+		Security security = new Security();
+		systemLoggedInInfo.setLoggedInSecurity(security);
+		systemLoggedInInfo.setCurrentFacility(facility);
+		
+		List<ProviderCommunicationTransfer> providerCommunicationList = Collections.emptyList();
+		List<Integer> receivedMessages = Collections.emptyList(); 
+		try {
+			providerCommunicationList = CaisiIntegratorManager.getProviderCommunication(systemLoggedInInfo);
+			receivedMessages = messengerIntegratorManager.receiveIntegratedMessages(systemLoggedInInfo, providerCommunicationList);
+		} catch (MalformedURLException e) {
+			MiscUtils.getLogger().error("Error while retreiving messages for Oscar Messaging members", e);
+		}
 
+		try {
+			CaisiIntegratorManager.updateProviderCommunicationStatus(systemLoggedInInfo, receivedMessages);
+		} catch (MalformedURLException e) {
+			MiscUtils.getLogger().error("Error while updating message status " + receivedMessages, e);
+		}	
+	}
 
 	private void pushFacility(ObjectOutputStream out, Facility facility, Date lastDataUpdated) throws MalformedURLException, IOException {
 		if (facility.getLastUpdated().after(lastDataUpdated)) {

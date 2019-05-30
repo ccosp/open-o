@@ -62,16 +62,19 @@ import org.oscarehr.caisi_integrator.ws.InvalidHinExceptionException;
 import org.oscarehr.caisi_integrator.ws.MatchingDemographicParameters;
 import org.oscarehr.caisi_integrator.ws.ProgramWs;
 import org.oscarehr.caisi_integrator.ws.ProgramWsService;
+
 import org.oscarehr.caisi_integrator.ws.ProviderWs;
 import org.oscarehr.caisi_integrator.ws.ProviderWsService;
 import org.oscarehr.caisi_integrator.ws.ReferralWs;
 import org.oscarehr.caisi_integrator.ws.ReferralWsService;
+import org.oscarehr.caisi_integrator.ws.ProviderCommunicationTransfer;
 import org.oscarehr.common.model.Consent;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Facility;
 import org.oscarehr.common.model.IntegratorConsent;
 import org.oscarehr.common.model.IntegratorConsent.ConsentStatus;
 import org.oscarehr.common.model.IntegratorConsent.SignatureStatus;
+import org.oscarehr.common.model.OscarMsgType;
 import org.oscarehr.hnr.ws.MatchingClientParameters;
 import org.oscarehr.hnr.ws.MatchingClientScore;
 import org.oscarehr.util.CxfClientUtilsOld;
@@ -152,9 +155,7 @@ public class CaisiIntegratorManager {
 
 		return (port);
 	}
-
 	
-
 	public static boolean haveAllRemoteFacilitiesSyncedIn(LoggedInInfo loggedInInfo,Facility facility,int seconds) throws MalformedURLException {
 		return haveAllRemoteFacilitiesSyncedIn(loggedInInfo,facility, seconds,true);
 	}
@@ -179,6 +180,10 @@ public class CaisiIntegratorManager {
 		return getRemoteFacilities(loggedInInfo, facility, true);
 	}
 	
+	public static List<CachedFacility> getRemoteFacilitiesExcludingCurrent(LoggedInInfo loggedInInfo,Facility facility) throws MalformedURLException {
+		return getRemoteFacilitiesExcludingCurrent(loggedInInfo, facility, true);
+	}
+	
     public static List<CachedFacility> getRemoteFacilities(LoggedInInfo loggedInInfo, Facility facility,boolean useCachedData) throws MalformedURLException {
     	
 		@SuppressWarnings("unchecked")
@@ -192,6 +197,19 @@ public class CaisiIntegratorManager {
     	}
     	
 		return (results);
+	}
+    
+    public static List<CachedFacility> getRemoteFacilitiesExcludingCurrent(LoggedInInfo loggedInInfo, Facility facility,boolean useCachedData) throws MalformedURLException {
+    	
+		CachedFacility currentFacility = getCurrentRemoteFacility(loggedInInfo, facility);
+		List<CachedFacility> remoteFacilities = getRemoteFacilities(loggedInInfo, facility, useCachedData);
+		List<CachedFacility> results = new ArrayList<CachedFacility>();
+		for(CachedFacility cachedFacility : remoteFacilities) {
+			if(cachedFacility.getIntegratorFacilityId() != currentFacility.getIntegratorFacilityId()) {
+				results.add(cachedFacility);
+			}
+		}
+		return Collections.unmodifiableList(results);
 	}	
     
 	
@@ -595,7 +613,7 @@ public class CaisiIntegratorManager {
 		if (demographicTransfer.getBirthDate()!=null) demographic.setBirthDay(demographicTransfer.getBirthDate());		
 		if (demographicTransfer.getGender()!=null) demographic.setSex(demographicTransfer.getGender().name());
 
-		copyDemographicFieldsIfNotNull(demographicTransfer, demographic);
+		copyDemographicFieldsIfNotNull(demographicTransfer, demographic); 
 				
 		demographic.setPatientStatus("AC");
 		demographic.setDateJoined(new Date());
@@ -662,4 +680,32 @@ public class CaisiIntegratorManager {
 		
 		return matchingDemographicParameters;
     }
+    
+    /**
+     * Get Oscar Messenger messages from the integrator. 
+     * Unlike other Integrated objects - Provider communication will be saved into the local facility
+     * @param loggedInInfo
+     * @param searchRequest
+     * @return
+     * @throws MalformedURLException 
+     */
+    public static List<ProviderCommunicationTransfer> getProviderCommunication(LoggedInInfo loggedInInfo) 
+    		throws MalformedURLException {
+    	
+		ProviderWs providerWs = getProviderWs(loggedInInfo, loggedInInfo.getCurrentFacility());
+		
+		// an empty provider number forces a return of all the messages for the facility. 
+    	return  providerWs.getProviderCommunications("", OscarMsgType.GENERAL_TYPE+"", true);
+    }
+    
+    public static void updateProviderCommunicationStatus(LoggedInInfo loggedInInfo, List<Integer> providerCommunicationIdList) throws MalformedURLException { 
+    	for(Integer providerCommunicationId : providerCommunicationIdList) {
+    		updateProviderCommunicationStatus(loggedInInfo, providerCommunicationId);
+    	}
+	}
+    
+    public static void updateProviderCommunicationStatus(LoggedInInfo loggedInInfo, Integer providerCommunicationId) throws MalformedURLException { 
+		ProviderWs providerWs = getProviderWs(loggedInInfo, loggedInInfo.getCurrentFacility()); 
+    	providerWs.deactivateProviderCommunication(providerCommunicationId);
+	}
 }

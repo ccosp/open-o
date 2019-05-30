@@ -34,7 +34,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="groups_tbl")
-public class Groups extends AbstractModel<Integer>{
+public class Groups extends AbstractModel<Integer> implements Comparable<Groups> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +63,10 @@ public class Groups extends AbstractModel<Integer>{
     }
 
 	public String getGroupDesc() {
+		if(groupDesc == null)
+		{
+			return "";
+		}
     	return groupDesc;
     }
 
@@ -70,6 +74,8 @@ public class Groups extends AbstractModel<Integer>{
     	this.groupDesc = groupDesc;
     }
 
-
-
+	@Override
+	public int compareTo(Groups groups) {
+		return getGroupDesc().compareTo(groups.getGroupDesc());
+	}
 }

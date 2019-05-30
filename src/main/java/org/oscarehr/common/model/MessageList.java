@@ -38,7 +38,7 @@ public class MessageList extends AbstractModel<Integer> {
 	public static final String STATUS_DELETED = "del";
 	public static final String STATUS_NEW = "new";
 	public static final String STATUS_READ = "read";
-	
+	public static final String STATUS_SENT = "sent";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +52,28 @@ public class MessageList extends AbstractModel<Integer> {
 	private String status;
 
 	private int remoteLocation;
+	
+	@Column(name="destinationFacilityId")
+	private int destinationFacilityId;
+	
+	@Column(name="sourceFacilityId")
+	private int sourceFacilityId;
+	
+	public int getDestinationFacilityId() {
+		return destinationFacilityId;
+	}
+
+	public void setDestinationFacilityId(int destinationFacilityId) {
+		this.destinationFacilityId = destinationFacilityId;
+	}
+
+	public int getSourceFacilityId() {
+		return sourceFacilityId;
+	}
+
+	public void setSourceFacilityId(int sourceFacilityId) {
+		this.sourceFacilityId = sourceFacilityId;
+	}
 
 	public Integer getId() {
     	return id;

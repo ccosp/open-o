@@ -4,7 +4,7 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
+ * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,11 +21,8 @@
  * Hamilton
  * Ontario, Canada
  */
-
-
 package org.oscarehr.common.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,63 +30,45 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="groupMembers_tbl")
-public class GroupMembers extends AbstractModel<Integer>{
+@Table(name="msgIntegratorDemoMap")
+public class MsgIntegratorDemoMap extends AbstractModel<Integer> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
-	@Column(name="groupID")
-	private int groupId;
-
-	@Column(name="provider_no")
-	private String providerNo;
+	private int messageId;
+	private int sourceDemographicNo;
+	private int msgDemoMapId;
+	private int sourceFacilityId;
 	
-	@Column(name="facilityId")
-	private int facilityId;
-	
-	@Column(name="clinicLocationNo")
-	private int clinicLocationNo;
-
 	public Integer getId() {
-    	return id;
-    }
-
+		return id;
+	}
 	public void setId(Integer id) {
-    	this.id = id;
-    }
-
-	public int getGroupId() {
-    	return groupId;
-    }
-
-	public void setGroupId(int groupId) {
-    	this.groupId = groupId;
-    }
-
-	public String getProviderNo() {
-    	return providerNo;
-    }
-
-	public void setProviderNo(String providerNo) {
-    	this.providerNo = providerNo;
-    }
-
-	public int getFacilityId() {
-		return facilityId;
+		this.id = id;
 	}
-
-	public void setFacilityId(int facilityId) {
-		this.facilityId = facilityId;
+	public int getMessageId() {
+		return messageId;
 	}
-
-	public int getClinicLocationNo() {
-		return clinicLocationNo;
+	public void setMessageId(int messageId) {
+		this.messageId = messageId;
 	}
-
-	public void setClinicLocationNo(int clinicLocationNo) {
-		this.clinicLocationNo = clinicLocationNo;
+	public int getSourceDemographicNo() {
+		return sourceDemographicNo;
 	}
-
+	public void setSourceDemographicNo(int sourceDemographicNo) {
+		this.sourceDemographicNo = sourceDemographicNo;
+	}
+	public int getMsgDemoMapId() {
+		return msgDemoMapId;
+	}
+	public void setMsgDemoMapId(int msgDemoMapId) {
+		this.msgDemoMapId = msgDemoMapId;
+	}
+	public int getSourceFacilityId() {
+		return sourceFacilityId;
+	}
+	public void setSourceFacilityId(int sourceFacilityId) {
+		this.sourceFacilityId = sourceFacilityId;
+	}
 }

@@ -25,75 +25,58 @@
 package oscar.oscarMessenger.pageUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.MessageListDao;
-import org.oscarehr.common.dao.MessageTblDao;
-import org.oscarehr.common.model.MessageList;
 import org.oscarehr.common.model.MessageTbl;
+import org.oscarehr.common.model.MsgDemoMap;
+import org.oscarehr.managers.MessagingManager;
+import org.oscarehr.managers.MessengerDemographicManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+
 import org.oscarehr.util.SpringUtils;
 
-import oscar.util.ConversionUtils;
+import com.google.gson.Gson;
+
+import oscar.oscarMessenger.data.ContactIdentifier;
 
 public class MsgHandleMessagesAction extends Action {
 
-	private MessageListDao messageListDao = SpringUtils.getBean(MessageListDao.class);
-
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+	private MessagingManager messagingManager = SpringUtils.getBean(MessagingManager.class);
+	private MessengerDemographicManager messengerDemographicManager = SpringUtils.getBean(MessengerDemographicManager.class);
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 		
-		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_msg", "r", null)) {
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", "r", null)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
 		
 		// Extract attributes we will need
-		MsgSessionBean bean = (MsgSessionBean) request.getSession().getAttribute("msgSessionBean");
-		String providerNo = bean.getProviderNo();
+//		MsgSessionBean bean = (MsgSessionBean) request.getSession().getAttribute("msgSessionBean");
+//		String providerNo = bean.getProviderNo();
 		MsgHandleMessagesForm frm = (MsgHandleMessagesForm) form;
 		String messageNo = frm.getMessageNo();
 		String demographicNo = frm.getDemographic_no();
 
-		String sentByLocation;
+//		String sentByLocation;
 		String reply = frm.getReply();
 		String replyAll = frm.getReplyAll();
 		String delete = frm.getDelete();
 		String forward = frm.getForward();
 
-		oscar.oscarMessenger.data.MsgReplyMessageData replyMessageData;
-		replyMessageData = new oscar.oscarMessenger.data.MsgReplyMessageData();
-		replyMessageData.estLists();
-
-		HttpSession session = request.getSession(true);
-		java.util.Enumeration ty = session.getAttributeNames();
-
-		/*
-		 *edit 2006-0801-01 by wreby
-		 *This will search the database to determine if any demographic was
-		 *associated with the parent message.  If so, it will now set the
-		 *demographic_no attribute so that the demographic is associated with
-		 *the child message too.
-		 */
-		oscar.oscarMessenger.util.MsgDemoMap msgDemoMap = new oscar.oscarMessenger.util.MsgDemoMap();
-		java.util.Hashtable demoMap = msgDemoMap.getDemoMap(messageNo);
-		java.util.Enumeration demoKeys = demoMap.keys();
-		if (demoKeys.hasMoreElements()) {
-			demographicNo = demoKeys.nextElement().toString();
-		}
-		// end edit 2006-0801-01 by wreby
-
 		//Set Demographic_no attribute if there's any
+		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, Integer.parseInt(messageNo));
+		demographicNo = msgDemoMap.get(0).getDemographic_no()+"";
 		if (demographicNo != null) {
 			request.setAttribute("demographic_no", demographicNo);
 		}
@@ -119,75 +102,57 @@ public class MsgHandleMessagesAction extends Action {
 		}
 
 		if (delete.compareToIgnoreCase("Delete") == 0) {
-			for (MessageList ml : messageListDao.findByProviderNoAndMessageNo(providerNo, Long.valueOf(messageNo))) {
-				ml.setStatus("del");
-				messageListDao.merge(ml);
-			}
+			
+			messagingManager.deleteMessage(loggedInInfo, Integer.parseInt(messageNo));
+			
 		} else if (reply.equalsIgnoreCase("Reply") || (replyAll.equalsIgnoreCase("reply All"))) {
 
-			String[] replyval = new String[] {};
-			java.util.Vector vector = new java.util.Vector();
 			StringBuilder subject = new StringBuilder("Re:");
-			String themessage = new String();
+			
 			StringBuilder theSendMessage = new StringBuilder();
+			MessageTbl message = messagingManager.getMessage(loggedInInfo, Integer.parseInt(messageNo));
+			String themessage = message.getMessage();
+			themessage = themessage.replace('\n', '>'); //puts > at the beginning
+			theSendMessage = new StringBuilder(themessage); //of each line
+			theSendMessage.insert(0, "\n\n\n>");
+			subject.append(message.getSubject());
+			
+			List<ContactIdentifier> replyList = new ArrayList<ContactIdentifier>();
 
-			try { //gets the sender
-				MessageTblDao mtDao = SpringUtils.getBean(MessageTblDao.class);
-				MessageTbl t = mtDao.find(ConversionUtils.fromIntString(messageNo));
-				if (t != null) {
-					vector.add(t.getSentByNo());
-					subject.append(t.getSubject());
-					themessage = t.getMessage();
-					sentByLocation = "" + t.getSentByLocation();
-					themessage = themessage.replace('\n', '>'); //puts > at the beginning
-					theSendMessage = new StringBuilder(themessage); //of each line
-					theSendMessage.insert(0, "\n\n\n>");
-					replyMessageData.add((String) vector.elementAt(0), sentByLocation);
-				}
-				replyval = new String[vector.size()];
-				for (int k = 0; k < vector.size(); k++) {
-					replyval[k] = (String) vector.elementAt(k);
-				}
-
-				if (replyAll.compareToIgnoreCase("reply All") == 0) { // add every one that got the message
-					MessageListDao mlDao = SpringUtils.getBean(MessageListDao.class);
-					for (MessageList ml : mlDao.findByMessage(ConversionUtils.fromLongString(messageNo))) {
-						vector.add(ml.getProviderNo());
-						replyMessageData.add(ml.getProviderNo(), "" + ml.getRemoteLocation());
-					}
-
-					replyval = new String[vector.size()]; //no need for the old replyval
-					for (int k = 0; k < vector.size(); k++) {
-						replyval[k] = (String) vector.elementAt(k);
-					}
-				}
-
-			} catch (Exception e) {
-				MiscUtils.getLogger().error("Error", e);
+			if (replyAll.compareToIgnoreCase("reply All") == 0) 
+			{ // add everyone that got the message				
+				replyList = messagingManager.getAllMessageRecipients(loggedInInfo, Integer.parseInt(messageNo));
 			}
-
+			else
+			{
+				ContactIdentifier contactIdentifier = new ContactIdentifier();
+				contactIdentifier.setContactId(message.getSentByNo());
+				contactIdentifier.setClinicLocationNo(message.getSentByLocation());
+				replyList.add(contactIdentifier);
+			}
+			
+			String replyListString = new Gson().toJson(replyList);
+		
 			request.setAttribute("ReText", theSendMessage.toString());
-			request.setAttribute("ReMessage", replyval); // used to set the providers that will get the reply message
-			request.setAttribute("ProvidersClassObject", replyMessageData);
+			request.setAttribute("replyList", replyListString); // used to set the providers that will get the reply message
 			request.setAttribute("ReSubject", subject.toString());
+			
 			return (mapping.findForward("reply"));
+			
 		} else if (forward.equals("Forward")) {
+			
 			StringBuilder subject = new StringBuilder("Fwd:");
 			String themessage = new String();
 			StringBuilder theSendMessage = new StringBuilder();
-			try { //gets the sender
-				MessageTblDao mtDao = SpringUtils.getBean(MessageTblDao.class);
-				MessageTbl m = mtDao.find(ConversionUtils.fromIntString(messageNo));
-				if (m != null) {
-					subject.append(m.getSubject());
-					themessage = m.getMessage();
-					themessage = themessage.replace('\n', '>'); //puts > at the beginning
-					theSendMessage = new StringBuilder(themessage); //of each line
-					theSendMessage.insert(0, "\n\n\n>");
-				}
-			} catch (Exception e) {
-				MiscUtils.getLogger().error("Error", e);
-			}
+			
+			MessageTbl forwardMessage = messagingManager.getMessage(loggedInInfo, Integer.parseInt(messageNo));
+			
+			subject.append(forwardMessage.getSubject());
+			themessage = forwardMessage.getMessage();
+			themessage = themessage.replace('\n', '>'); //puts > at the beginning
+			theSendMessage = new StringBuilder(themessage); //of each line
+			theSendMessage.insert(0, "\n\n\n>");
+	
 			request.setAttribute("ReText", theSendMessage.toString()); //this one is a goody
 			request.setAttribute("ReSubject", subject.toString());
 			return (mapping.findForward("reply"));

@@ -42,6 +42,12 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarMessenger.data.MsgDisplayMessage;
 import oscar.util.ConversionUtils;
 
+/**
+ * @deprecated
+ * Use org.oscarehr.managers.MessagingManager and JPA model.
+ *
+ */
+@Deprecated 
 public class MsgDisplayMessagesBean implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -56,7 +62,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 	private Vector<String> subject;
 	private Vector<String> attach;
 
-	private String currentLocationId;
+	private String currentLocationId = "0";
 
 	/*
 	* edit 2006-0811-01 by wreby
@@ -108,12 +114,20 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 	}
 
 	public String getCurrentLocationId() {
-		if (currentLocationId == null) {
-			OscarCommLocationsDao dao = SpringUtils.getBean(OscarCommLocationsDao.class);
-			for (OscarCommLocations l : dao.findByCurrent1(1)) {
-				currentLocationId = "" + l.getId();
-				break;
-			}
+		if (currentLocationId == "0") {
+			OscarCommLocationsDao oscarCommLocationsDao = SpringUtils.getBean(OscarCommLocationsDao.class);
+        	List<OscarCommLocations> oscarCommLocations = oscarCommLocationsDao.findByCurrent1(1);
+        	Integer oscarCommLocationsID = null;
+        	
+        	if(oscarCommLocations != null) 
+        	{
+        		oscarCommLocationsID = oscarCommLocations.get(0).getId();
+        	}
+        	
+        	if(oscarCommLocationsID != null)
+        	{
+        		currentLocationId = oscarCommLocationsID+"";
+        	}  
 		}
 		return currentLocationId;
 	}
@@ -307,10 +321,18 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		int fromRecordNum = (recordsToDisplay * page) - recordsToDisplay;
 		String limitSql = " limit " + fromRecordNum + ", " + recordsToDisplay;
 				
-		try {
-			//String sql = ("select map.messageID is null as isnull, map.demographic_no, ml.message, ml.status," + " m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  " + "from messagelisttbl ml, messagetbl m " + "(select map.messageID, map.demographic_no from msgDemoMap map where map.messageID = m.messageid limit 1) as map" + " " + "where ml.provider_no = '" + providerNo + "' " + "and status not like \'del\' and remoteLocation = '" + getCurrentLocationId() + "' " + " and ml.message = m.messageid "                       
-                        String sql = "(select m.messageid, (select map.demographic_no from msgDemoMap map where map.messageID = m.messageid limit 1) as demographic_no, ml.message, ml.status,  m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  from messagelisttbl ml, messagetbl m  where ml.provider_no = '" + providerNo + "' " + "and status not like \'del\' and remoteLocation = '" + getCurrentLocationId() + "' " + " and ml.message = m.messageid "
-			        + getSQLSearchFilter(searchCols) + " order by " + getOrderBy(orderby) + limitSql + ")";
+		try {                      
+            String sql = "(select m.messageid is null as isnull, "
+            		+ "(select map.demographic_no from msgDemoMap map "
+            		+ "where map.messageID = m.messageid limit 1) as demographic_no, "
+            		+ "ml.message, ml.status,  m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby "
+            		+ "from messagelisttbl ml, messagetbl m  "
+            		+ "where ml.provider_no = '" + providerNo + "' " 
+            		+ "and status not like \'del\' and remoteLocation = '" + getCurrentLocationId() + "' " 
+            		+ " and ml.message = m.messageid "
+			        + getSQLSearchFilter(searchCols) 
+			        + " order by " + getOrderBy(orderby) 
+			        + limitSql + ")";
 
 			FormsDao dao = SpringUtils.getBean(FormsDao.class);
 			for (Object[] o : dao.runNativeQuery(sql)) {
@@ -325,25 +347,25 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String sentby = String.valueOf(o[9]);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
-				dm.status = status;
-				dm.messageId = message;
-				dm.thesubject = thesubject;
-				dm.thedate = thedate;
-				dm.theime = theime;
-				dm.sentby = sentby;
-				dm.demographic_no = demographic_no;
+				dm.setStatus(status);
+				dm.setMessageId(message);
+				dm.setThesubject(thesubject);
+				dm.setThedate(thedate);
+				dm.setThetime(theime);
+				dm.setSentby(sentby);
+				dm.setDemographic_no(demographic_no);
 				String att = attachment;
 				String pdfAtt = pdfattachment;
 
 				if (att == null || att.equalsIgnoreCase("null")) {
-					dm.attach = "0";
+					dm.setAttach("0");
 				} else {
-					dm.attach = "1";
+					dm.setAttach("1");
 				}
 				if (pdfAtt == null || pdfAtt.equalsIgnoreCase("null")) {
-					dm.pdfAttach = "0";
+					dm.setPdfAttach("0");
 				} else {
-					dm.pdfAttach = "1";
+					dm.setPdfAttach("1");
 				}
 
 				msg.add(dm);
@@ -367,7 +389,15 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		String[] searchCols = { "m.thesubject", "m.themessage", "m.sentby", "m.sentto" };
 		
 		try {
-			String sql = "select map.messageID is null as isnull, map.demographic_no, m.messageid, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  " + "from  messagetbl m, msgDemoMap map where map.demographic_no = '" + demographic_no + "'  " + "and m.messageid = map.messageID " + getSQLSearchFilter(searchCols) + " order by " + getOrderBy(orderby);
+			String sql = "select map.messageID is null as isnull, map.demographic_no, m.messageid, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  " 
+					+ "from  messagetbl m, msgDemoMap map where map.demographic_no = '" 
+					+ demographic_no 
+					+ "'  " 
+					+ "and m.messageid = map.messageID " 
+					+ getSQLSearchFilter(searchCols) 
+					+ " order by " 
+					+ getOrderBy(orderby);
+			
 			FormsDao dao = SpringUtils.getBean(FormsDao.class);
 			List<Object[]> os = dao.runNativeQuery(sql);
 			for (Object[] o : os) {
@@ -381,31 +411,31 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String sentby = String.valueOf(o[8]);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
-				dm.status = "    ";
-				dm.messageId = messageid;
-				dm.messagePosition = Integer.toString(index);
-				dm.thesubject = thesubject;
-				dm.thedate = thedate;
-				dm.theime = theime;
-				dm.sentby = sentby;
-				dm.demographic_no = demo_no;
+				dm.setStatus("    ");
+				dm.setMessageId(messageid);
+				dm.setMessagePosition(Integer.toString(index));
+				dm.setThesubject(thesubject);
+				dm.setThedate(thedate);
+				dm.setThetime(theime);
+				dm.setSentby(sentby);
+				dm.setDemographic_no(demo_no);
 
 				String att = attachment;
 				String pdfAtt = pdfattachment;
 				if (att == null || att.equals("null")) {
-					dm.attach = "0";
+					dm.setAttach("0");
 				} else {
-					dm.attach = "1";
+					dm.setAttach("1");
 				}
 				if (pdfAtt == null || pdfAtt.equals("null")) {
-					dm.pdfAttach = "0";
+					dm.setPdfAttach("0");
 				} else {
-					dm.pdfAttach = "1";
+					dm.setPdfAttach("1");
 				}
 
 				boolean isLast = index == os.size();
 				if (isLast) {
-					dm.isLastMsg = true;
+					dm.setLastMsg(true);
 				}
 
 				msg.add(dm);
@@ -444,7 +474,17 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		String limitSql = " limit " + fromRecordNum + ", " + recordsToDisplay;
 		
 		try {
-			String sql = "select map.messageID is null as isnull, map.demographic_no, ml.message, ml.status, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  from messagelisttbl ml, messagetbl m " + " left outer join msgDemoMap map on map.messageID = m.messageid " + " where provider_no = '" + providerNo + "' and status like \'del\' and remoteLocation = '" + getCurrentLocationId() + "' " + " and ml.message = m.messageid " + getSQLSearchFilter(searchCols) + " order by "
+			String sql = "select map.messageID is null as isnull, map.demographic_no, ml.message, ml.status, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  "
+					+ "from messagelisttbl ml, messagetbl m " 
+					+ " left outer join msgDemoMap map on (map.messageID = m.messageid) " 
+					+ " where provider_no = '" 
+					+ providerNo 
+					+ "' and status like \'del\' and remoteLocation = '" 
+					+ getCurrentLocationId() 
+					+ "' " 
+					+ " and ml.message = m.messageid " 
+					+ getSQLSearchFilter(searchCols) 
+					+ " order by "
 			        + getOrderBy(orderby) + limitSql;
 
 			FormsDao dao = SpringUtils.getBean(FormsDao.class);
@@ -459,25 +499,25 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String sentby = String.valueOf(o[9]);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
-				dm.status = "deleted";
-				dm.messageId = message;
-				dm.thesubject = thesubject;
-				dm.thedate = thedate;
-				dm.theime = theime;
-				dm.sentby = sentby;
-				dm.demographic_no = demographic_no;
+				dm.setStatus("deleted");
+				dm.setMessageId(message);
+				dm.setThesubject(thesubject);
+				dm.setThedate(thedate);
+				dm.setThetime(theime);
+				dm.setSentby(sentby);
+				dm.setDemographic_no(demographic_no);
 
 				String att = attachment;
 				String pdfAtt = pdfattachment;
 				if (att == null || att.equals("null")) {
-					dm.attach = "0";
+					dm.setAttach("0");
 				} else {
-					dm.attach = "1";
+					dm.setAttach("1");
 				}
 				if (pdfAtt == null || pdfAtt.equals("null")) {
-					dm.pdfAttach = "0";
+					dm.setPdfAttach("0");
 				} else {
-					dm.pdfAttach = "1";
+					dm.setPdfAttach("1");
 				}
 				msg.add(dm);
 				
@@ -549,7 +589,17 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		String limitSql = " limit " + fromRecordNum + ", " + recordsToDisplay;
 				
 		try {
-			String sql = "select map.messageID is null as isnull, map.demographic_no, m.messageid as status, m.messageid, thedate, theime, thesubject, sentby, sentto, attachment, pdfattachment from messagetbl m left outer join msgDemoMap map on map.messageID = m.messageid where sentbyNo = '" + providerNo + "' and sentByLocation = '" + getCurrentLocationId() + "'  " + getSQLSearchFilter(searchCols) + " order by " + getOrderBy(orderby) + limitSql;
+			String sql = "select map.messageID is null as isnull, map.demographic_no, m.messageid as status, m.messageid, thedate, theime, thesubject, sentby, sentto, attachment, pdfattachment "
+					+ "from messagetbl m left outer join msgDemoMap map on (map.messageID = m.messageid) "
+					+ "where sentbyNo = '" 
+					+ providerNo 
+					+ "' and sentByLocation = '" 
+					+ getCurrentLocationId() 
+					+ "'  " 
+					+ getSQLSearchFilter(searchCols) 
+					+ " order by " 
+					+ getOrderBy(orderby) 
+					+ limitSql;
 
 			FormsDao dao = SpringUtils.getBean(FormsDao.class);
 			for (Object[] o : dao.runNativeQuery(sql)) {
@@ -564,25 +614,25 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String pdfattachment = String.valueOf(o[10]);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
-				dm.status = "sent";
-				dm.messageId = status;
-				dm.thesubject = thesubject;
-				dm.thedate = thedate;
-				dm.theime = theime;
-				dm.sentby = sentby;
-				dm.sentto = sentto;
-				dm.demographic_no = demographic_no;
+				dm.setStatus("sent");
+				dm.setMessageId(status);
+				dm.setThesubject(thesubject);
+				dm.setThedate(thedate);
+				dm.setThetime(theime);
+				dm.setSentby(sentby);
+				dm.setSentto(sentto);
+				dm.setDemographic_no(demographic_no);
 				String att = attachment;
 				String pdfAtt = pdfattachment;
 				if (att == null || att.equals("null")) {
-					dm.attach = "0";
+					dm.setAttach("0");
 				} else {
-					dm.attach = "1";
+					dm.setAttach("1");
 				}
 				if (pdfAtt == null || pdfAtt.equals("null")) {
-					dm.pdfAttach = "0";
+					dm.setPdfAttach("0");
 				} else {
-					dm.pdfAttach = "1";
+					dm.setPdfAttach("1");
 				}
 
 				msg.add(dm);

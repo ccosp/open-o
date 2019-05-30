@@ -24,30 +24,41 @@
 
 
 package oscar.oscarMessenger.data;
-import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.oscarehr.common.dao.MessageListDao;
 import org.oscarehr.common.dao.MessageTblDao;
+import org.oscarehr.common.dao.OscarCommLocationsDao;
 import org.oscarehr.common.model.MessageList;
 import org.oscarehr.common.model.MessageTbl;
-import org.oscarehr.util.MiscUtils;
+import org.oscarehr.common.model.OscarCommLocations;
+import org.oscarehr.managers.MessengerGroupManager;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import oscar.oscarDB.DBPreparedHandler;
 import oscar.oscarMessenger.util.Msgxml;
-
+/**
+ * 
+ * @deprecated
+ * Use the MessagingManger
+ *
+ */
+@Deprecated
 public class MsgMessageData {
 
     boolean areRemotes = false;
     boolean areLocals = false;
-    java.util.ArrayList<MsgProviderData> providerArrayList = null;
-    String currentLocationId = null;
+    private java.util.ArrayList<MsgProviderData> providerArrayList;
+    private int currentLocationId = 0;
 
     private String messageSubject;
     private String messageDate;
@@ -55,42 +66,41 @@ public class MsgMessageData {
     
     MessageTblDao messageTblDao = SpringUtils.getBean(MessageTblDao.class);
     MessageListDao messageListDao = SpringUtils.getBean(MessageListDao.class);
-     
+    OscarCommLocationsDao oscarCommLocationsDao = SpringUtils.getBean(OscarCommLocationsDao.class);
+    MessengerGroupManager messengerGroupManager = SpringUtils.getBean(MessengerGroupManager.class);
 
     public MsgMessageData(){
     }
 
-    public MsgMessageData(String msgID){
-        try{
-            DBPreparedHandler db = new DBPreparedHandler();
-            String sql = "";
-            //sql = "select tbl.thedate, tbl.thesubject from msgDemoMap map, messagetbl tbl where demographic_no ='"+ demographic_no
-            //        + "' and tbl.messageid = map.messageID order by tbl.thedate";
-            sql = "select thesubject, thedate, theime from messagetbl where messageid='"+msgID+"'";
-
-            ResultSet rs = db.queryResults(sql);
-            if(rs.next()){
-                this.messageSubject = oscar.Misc.getString(rs, "thesubject");
-                this.messageDate = oscar.Misc.getString(rs, "thedate");
-                this.messageTime = oscar.Misc.getString(rs, "theime");
-            }
-        }
-        catch (java.sql.SQLException e){
-            MiscUtils.getLogger().debug("Message data not found");
+    public MsgMessageData(String msgID){   	
+    	MessageTbl message = null;
+    	if(msgID != null && ! msgID.isEmpty()) {
+    		message = messageTblDao.find(Integer.parseInt(msgID));
+    	}
+        if(message != null)
+        {
+        	SimpleDateFormat date = new SimpleDateFormat("MM-dd-yyyy");
+        	SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+            this.messageSubject = message.getSubject(); 
+            this.messageDate = date.format(message.getDate()); 
+            this.messageTime = time.format(message.getTime());
         }
     }
-    public String getCurrentLocationId(){
-        if (currentLocationId == null){
-            try{
-              DBPreparedHandler db = new DBPreparedHandler();
-              java.sql.ResultSet rs;
-              rs = db.queryResults("select locationId from oscarcommlocations where current1 = '1'");
-
-              if (rs.next()) {
-                currentLocationId = oscar.Misc.getString(rs, "locationId");
-              }
-              rs.close();
-            }catch (java.sql.SQLException e){MiscUtils.getLogger().error("Error", e); }
+    
+    public int getCurrentLocationId(){
+        if (currentLocationId == 0){
+        	List<OscarCommLocations> oscarCommLocations = oscarCommLocationsDao.findByCurrent1(1);
+        	Integer oscarCommLocationsID = null;
+        	
+        	if(oscarCommLocations != null) 
+        	{
+        		oscarCommLocationsID = oscarCommLocations.get(0).getId();
+        	}
+        	
+        	if(oscarCommLocationsID != null)
+        	{
+        		currentLocationId = oscarCommLocationsID;
+        	}            
         }
         return currentLocationId;
     }
@@ -100,134 +110,38 @@ public class MsgMessageData {
        * @param strarray is a String Array,
        * @return turns a String Array
        */
-   public String[] getDups4(String[] strarray){
-
-		java.util.Vector<String> vector = new java.util.Vector<String>();
-		String temp = new String();
-
-
-		java.util.Arrays.sort(strarray);
-		temp ="";
-
-		for (int i =0 ; i < strarray.length ; i++){
-		   if (!strarray[i].equals(temp) ){
-                      vector.add(strarray[i]);
-			  temp = strarray[i];
-		   }
-		}
-	        String[] retval = new String[vector.size()];
-                for (int i =0; i < vector.size() ; i++ ){
-                   retval[i] = vector.elementAt(i);
-                }
-   	     return retval;
+   public String[] getDups4(String[] strarray){	  
+	   List<String> arrayList = new ArrayList<String>(Arrays.asList(strarray));
+	   Set<String> hashSet = new HashSet<String>(arrayList);
+	   String[] outputArray = new String[hashSet.size()];
+	   return hashSet.toArray(outputArray);
 	}
 
-    ////////////////////////////////////////////////////////////////////////////
-    public String createSentToString(String[] providers){
+   public String createSentToString(java.util.ArrayList<MsgProviderData> providerList){
+	   StringBuilder stringBuilder = new StringBuilder("");
+	   String comma = "";
+	   for(MsgProviderData provider : providerList)
+	   {
+		   stringBuilder.append(comma);
+		   if(! provider.getFirstName().isEmpty()) 
+		   {
+			   stringBuilder.append(provider.getFirstName()); 
+			   stringBuilder.append(" ");
+		   }
+		   
+		   if(! provider.getLastName().isEmpty()) 
+		   {
+			   stringBuilder.append(provider.getLastName());  
+		   }
+		   
+		   comma = ", ";
+	   }
 
-            String sql = "select first_name, last_name from provider where ";
-            StringBuilder temp = new StringBuilder(sql);
-            StringBuilder sentToWho = new StringBuilder();
+	   stringBuilder.append(".");
+	   return stringBuilder.toString();
+   }
 
-
-            //create SQL statement with the provider numbers
-            for (int i =0 ; i < providers.length ; i++){
-              if (i == (providers.length -1)){
-                 temp.append(" provider_no = "+providers[i]);
-              }
-              else{
-                temp.append(" provider_no = "+providers[i]+" or ");
-              }
-            }
-
-            sql = temp.toString();
-
-            //Create A "sent to who String" I thought it would be better to create this line
-            //once than have to look this information up in the database everytime the
-            //message was viewed. The names are delimited with a '.'
-            try
-            {
-              DBPreparedHandler db = new DBPreparedHandler();
-              java.sql.ResultSet rs;
-
-              rs = db.queryResults(sql);
-
-              boolean first = true;
-              while (rs.next()) {
-                  if (!first) {
-                      sentToWho.append(", ");
-                  } else {
-                      first = false;
-                  }
-                  sentToWho.append(" "+oscar.Misc.getString(rs, "first_name") +" " +oscar.Misc.getString(rs, "last_name"));
-              }
-              sentToWho.append(".");
-
-        rs.close();
-
-      }catch (java.sql.SQLException e){MiscUtils.getLogger().error("Error", e); }
-
-
-
-    return sentToWho.toString();
-    }
-    //=-------------------------------------------------------------------------
-
-    ////////////////////////////////////////////////////////////////////////////
-     public String createSentToString(java.util.ArrayList<MsgProviderData> providerList){
-
-            String sql = "select first_name, last_name from provider where ";
-            StringBuilder temp = new StringBuilder(sql);
-            StringBuilder sentToWho = new StringBuilder();
-
-
-            //create SQL statement with the provider numbers
-            for (int i =0 ; i < providerList.size(); i++){
-              MsgProviderData proData = providerList.get(i);
-              String proNo = proData.providerNo;
-              if (i == (providerList.size() -1)){
-                 temp.append(" provider_no = '"+proNo + "'");
-              }
-              else{
-                temp.append(" provider_no = '"+proNo+"' or ");
-              }
-            }
-
-            sql = temp.toString();
-
-            //Create A "sent to who String" I thought it would be better to create this line
-            //once than have to look this information up in the database everytime the
-            //message was viewed. The names are delimited with a '.'
-            try
-            {
-              DBPreparedHandler db = new DBPreparedHandler();
-              java.sql.ResultSet rs;
-
-              rs = db.queryResults(sql);
-
-              boolean first = true;
-              while (rs.next()) {
-                  if (!first) {
-                      sentToWho.append(", ");
-                  } else {
-                      first = false;
-                  }
-                  sentToWho.append(" "+oscar.Misc.getString(rs, "first_name") +" " +oscar.Misc.getString(rs, "last_name"));
-              }
-              sentToWho.append(".");
-
-        rs.close();
-
-      }catch (java.sql.SQLException e){MiscUtils.getLogger().error("Error", e); }
-
-
-
-    return sentToWho.toString();
-    }
-    //=-------------------------------------------------------------------------
-
-    ////////////////////////////////////////////////////////////////////////////
-   
+   @Deprecated
     public String sendMessage(String message, String subject,String userName,String sentToWho,String userNo,String[] providers ){
        String messageid=null;
        oscar.oscarMessenger.util.MsgStringQuote str = new oscar.oscarMessenger.util.MsgStringQuote();
@@ -258,9 +172,8 @@ public class MsgMessageData {
 
       
       return messageid;
-    }//=------------------------------------------------------------------------
-
-    
+    }
+   
     public String sendMessageReview(String message, String subject,String userName,String sentToWho,String userNo,ArrayList<MsgProviderData> providers,String attach, String pdfAttach, Integer type, String typeLink ){
         oscar.oscarMessenger.util.MsgStringQuote str = new oscar.oscarMessenger.util.MsgStringQuote();
       
@@ -284,7 +197,7 @@ public class MsgMessageData {
      mt.setSentBy(userName);
      mt.setSentTo(sentToWho);
      mt.setSentByNo(userNo);
-     mt.setSentByLocation(Integer.parseInt(getCurrentLocationId()));
+     mt.setSentByLocation(getCurrentLocationId());
      mt.setAttachment(attach);
      mt.setType(type);
      mt.setType_link(typeLink);
@@ -301,9 +214,9 @@ public class MsgMessageData {
      for (MsgProviderData providerData : providers){
     	 MessageList ml = new MessageList();
     	 ml.setMessage(Integer.parseInt(messageid));
-    	 ml.setProviderNo(providerData.providerNo);
+    	 ml.setProviderNo(providerData.getId().getContactId());
     	 ml.setStatus("new");
-    	 ml.setRemoteLocation(Integer.parseInt(providerData.locationId));
+    	 ml.setRemoteLocation(providerData.getId().getClinicLocationNo());
     	 messageListDao.persist(ml);
      }
 
@@ -328,7 +241,7 @@ public class MsgMessageData {
      sentToWho = org.apache.commons.lang.StringEscapeUtils.escapeSql(sentToWho);
      userName = org.apache.commons.lang.StringEscapeUtils.escapeSql(userName);
      
-     MessageTbl mt = new MessageTbl();
+		MessageTbl mt = new MessageTbl();
      mt.setDate(new Date());
      mt.setTime(new Date());
      mt.setMessage(message);
@@ -336,108 +249,62 @@ public class MsgMessageData {
      mt.setSentBy(userName);
      mt.setSentTo(sentToWho);
      mt.setSentByNo(userNo);
-     mt.setSentByLocation(Integer.parseInt(getCurrentLocationId()));
+     mt.setSentByLocation(getCurrentLocationId());
      mt.setAttachment(attach);
      mt.setType(type);
      if(pdfAttach !=null){
     	 mt.setPdfAttachment(pdfAttach.getBytes());
      }
      messageTblDao.persist(mt);
-     
-     
+         
      String messageid = String.valueOf(mt.getId());
-
-   
-
+     
      for (MsgProviderData providerData : providers){
     	 MessageList ml = new MessageList();
     	 ml.setMessage(Integer.parseInt(messageid));
-    	 ml.setProviderNo(providerData.providerNo);
+    	 ml.setProviderNo(providerData.getId().getContactId());
     	 ml.setStatus("new");
-    	 ml.setRemoteLocation(Integer.parseInt(providerData.locationId));
+    	 ml.setRemoteLocation(providerData.getId().getClinicLocationNo());
+    	 ml.setDestinationFacilityId(providerData.getId().getFacilityId());
     	 messageListDao.persist(ml);
-     }
-
-      
+     } 
       return messageid;
     }
 
-
-
-    ////////////////////////////////////////////////////////////////////////////
-    //This function takes in an Array of provider Numbers
-    //It parse through them and looks for an @
-    //Providers wiht an @ are remote location providers
-    //Its creates an arrayList of class provider
-    public java.util.ArrayList<MsgProviderData> getProviderStructure(String[] providerArray){
-          providerArrayList = new java.util.ArrayList<MsgProviderData>();
-
-         for (int i =0 ; i < providerArray.length ; i++){
-            MsgProviderData pD = new MsgProviderData();
-            if (providerArray[i].indexOf('@') == -1){
-                areLocals = true;
-                pD.providerNo = providerArray[i];
-                pD.locationId = getCurrentLocationId();
-            }else{
-                areRemotes = true;
-                String[] theSplit = providerArray[i].split("@");
-                pD.providerNo = theSplit[0];
-                pD.locationId = theSplit[1];
-
-            }
-            providerArrayList.add(pD);
+    public java.util.ArrayList<MsgProviderData> getProviderStructure(LoggedInInfo loggedInInfo, String[] providerArray){
+         providerArrayList = new java.util.ArrayList<MsgProviderData>();                  
+         ContactIdentifier contactIdentifier = null;
+         
+         for (String providerId : providerArray){        	 
+            contactIdentifier = new ContactIdentifier(providerId);
+        	MsgProviderData msgProviderData = messengerGroupManager.getMemberData(loggedInInfo, contactIdentifier);
+            providerArrayList.add(msgProviderData);
          }
+         
          return providerArrayList;
-    }//-=-----------------------------------------------------------------------
-
-    ////////////////////////////////////////////////////////////////////////////
+    }
+    
     public java.util.ArrayList<MsgProviderData> getRemoteProvidersStructure(){
         java.util.ArrayList<MsgProviderData> arrayList = new java.util.ArrayList<MsgProviderData>();
         if ( providerArrayList != null){
             for (int i = 0; i < providerArrayList.size(); i++){
                 MsgProviderData providerData = providerArrayList.get(i);
-                if (!providerData.locationId.equals(getCurrentLocationId())){
+                if (providerData.getId().getClinicLocationNo() > 0 && providerData.getId().getClinicLocationNo() != getCurrentLocationId()){
                     arrayList.add(providerData);
                 }
             }
         }
         return arrayList;
-    }//=------------------------------------------------------------------------
-
-    ////////////////////////////////////////////////////////////////////////////
-    public java.util.ArrayList<MsgProviderData> getLocalProvidersStructure(){
-        java.util.ArrayList<MsgProviderData> arrayList = new java.util.ArrayList<MsgProviderData>();
-        if ( providerArrayList != null){
-            for (int i = 0; i < providerArrayList.size(); i++){
-                MsgProviderData providerData = providerArrayList.get(i);
-
-                if (providerData.locationId.equals(getCurrentLocationId())){
-                    arrayList.add(providerData);
-                }
-            }
-        }
-        return arrayList;
-    }//=------------------------------------------------------------------------
-
-    ////////////////////////////////////////////////////////////////////////////
-    //Tells whether there are remotes recievers of this message
-    public boolean isRemotes(){return areRemotes;}//=---------------------------
-
-    ////////////////////////////////////////////////////////////////////////////
-    //Tells whether there are local recievers of this message
-    public boolean isLocals(){return areLocals;}//=-----------------------------
-
-
-
-
-  public String getRemoteNames(java.util.ArrayList<MsgProviderData> arrayList){
+    }
+    
+    public String getRemoteNames(java.util.ArrayList<MsgProviderData> arrayList){
 
         String[] arrayOfLocations = new String[arrayList.size()];
         String[] sortedArrayOfLocations;
         MsgProviderData providerData ;
         for (int i = 0; i < arrayList.size();i++){
             providerData        = arrayList.get(i);
-            arrayOfLocations[i] = providerData.locationId;
+            arrayOfLocations[i] = providerData.getId().getClinicLocationNo()+"";
         }
         sortedArrayOfLocations  =  getDups4(arrayOfLocations);
 
@@ -447,9 +314,9 @@ public class MsgMessageData {
             java.util.ArrayList<String> sortedProvs = new java.util.ArrayList<String>();
             for (int j = 0; j < arrayList.size(); j++){
                 providerData = arrayList.get(j);
-                if (providerData.locationId.equals( sortedArrayOfLocations[i] )){
+                if (providerData.getId().getClinicLocationNo() == Integer.parseInt(sortedArrayOfLocations[i])){
 
-                   sortedProvs.add(providerData.providerNo);
+                   sortedProvs.add(providerData.getId().getContactId());
                 }
             }
             vectOfSortedProvs.add(sortedProvs);
@@ -460,18 +327,12 @@ public class MsgMessageData {
         //for each location get there address book and there locationDesc
         String theAddressBook = new String();
         String theLocationDesc = new String();
-        try{
-            DBPreparedHandler db = new DBPreparedHandler();
-            java.sql.ResultSet rs;
-            String sql = new String("select  locationDesc, addressBook from oscarcommlocations where locationId = "+(sortedArrayOfLocations[i])     );
-            rs = db.queryResults(sql);
-            if (rs.next()){
-               theLocationDesc = oscar.Misc.getString(rs, "locationDesc");
-               theAddressBook = oscar.Misc.getString(rs, "addressBook");
-            }
-            rs.close();
-        }catch (java.sql.SQLException e){MiscUtils.getLogger().error("Error", e); }
-        // get a node list of all the providers for that addressBook then search for ones i need
+        OscarCommLocations oscarCommLocations = oscarCommLocationsDao.find(sortedArrayOfLocations[i]);
+        if(oscarCommLocations != null)
+        {
+            theLocationDesc = oscarCommLocations.getLocationDesc();
+            theAddressBook = oscarCommLocations.getAddressBook();
+        }
 
         Document xmlDoc = Msgxml.parseXML(theAddressBook);
 
@@ -509,25 +370,15 @@ public class MsgMessageData {
         return stringBuffer.toString();
   }
 
-  public String getSubject(String msgID){
-      String subject=null;
-      try{
-            DBPreparedHandler db = new DBPreparedHandler();
-            String sql = "";
-            //sql = "select tbl.thedate, tbl.thesubject from msgDemoMap map, messagetbl tbl where demographic_no ='"+ demographic_no
-            //        + "' and tbl.messageid = map.messageID order by tbl.thedate";
-            sql = "select thesubject from messagetbl where messageid='"+msgID+"'";
-
-            ResultSet rs = db.queryResults(sql);
-            if(rs.next()){
-                subject = oscar.Misc.getString(rs, "thesubject");
-            }
-        }
-        catch (java.sql.SQLException e){
-            subject="error: subject not found!";
-        }
-      return subject;
-  }
+	public String getSubject(String msgID){
+		MessageTbl message = messageTblDao.find(msgID);
+		String subject = "error: subject not found!";
+		if(message != null && message.getSubject() != null)
+		{
+			subject = message.getSubject();
+		}
+		return subject;
+	}
 
   public String getSubject(){
       return this.messageSubject;

@@ -24,35 +24,141 @@
 
 package oscar.oscarMessenger.config.pageUtil;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.dao.GroupMembersDao;
 import org.oscarehr.common.dao.GroupsDao;
 import org.oscarehr.common.model.GroupMembers;
 import org.oscarehr.common.model.Groups;
+import org.oscarehr.managers.MessengerGroupManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
+import oscar.oscarMessenger.data.ContactIdentifier;
 import oscar.oscarMessenger.data.MsgAddressBookMaker;
+import oscar.oscarMessenger.data.MsgProviderData;
 import oscar.util.ConversionUtils;
 
-public class MsgMessengerAdminAction extends Action {
+public class MsgMessengerAdminAction extends DispatchAction {
 
+	private MessengerGroupManager messengerGroupManager = SpringUtils.getBean(MessengerGroupManager.class);	
 	private GroupsDao groupsDao = SpringUtils.getBean(GroupsDao.class);
-	private GroupMembersDao groupMembersDao = (GroupMembersDao) SpringUtils.getBean(GroupMembersDao.class);
+	private GroupMembersDao groupMembersDao = SpringUtils.getBean(GroupMembersDao.class);
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		return null;
+	}
+
+	@SuppressWarnings("unused")
+	public ActionForward fetch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);		
+		Map<Groups, List<MsgProviderData>> groups = messengerGroupManager.getAllGroupsWithMembers(loggedInInfo);
+		List<MsgProviderData> localContacts = messengerGroupManager.getAllLocalMessengerContactList(loggedInInfo);
+		Map<String, List<MsgProviderData>> remoteContacts = messengerGroupManager.getAllRemoteMessengerContactList(loggedInInfo);
+		
+		request.setAttribute("groups", groups);
+		request.setAttribute("localContacts", localContacts);
+		request.setAttribute("remoteContacts", remoteContacts);
+		return mapping.findForward("success");
+	}
+	
+	@SuppressWarnings("unused")
+	public void add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);	
+		String memberId = request.getParameter("member");
+		String groupId = request.getParameter("group");
+		if(groupId == null) {
+			groupId = "0";
+		}
+		if(memberId != null && ! memberId.isEmpty()) {
+			//incoming id is expected to be a composite id 
+			ContactIdentifier contactIdentifier = new ContactIdentifier(memberId);
+			messengerGroupManager.addMember(loggedInInfo, contactIdentifier, Integer.parseInt(groupId));
+		}
+		request.setAttribute("success", true);
+	}
+	
+	@SuppressWarnings("unused")
+	public void remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);	
+		String memberId = request.getParameter("member");
+		String groupId = request.getParameter("group");
+		if(groupId == null) {
+			groupId = "0";
+		}
+		
+		if(memberId != null && memberId != "") 
+		{
+			//incoming id is expected to be a composite id 
+			ContactIdentifier contactIdentifier = new ContactIdentifier(memberId);
+			messengerGroupManager.removeMember(loggedInInfo, contactIdentifier);
+		}
+		else if(Integer.parseInt(groupId) > 0) 
+		{
+			messengerGroupManager.removeGroup(loggedInInfo, Integer.parseInt(groupId));
+		}
+	}
+	
+	public void create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+		String groupName = request.getParameter("groupName");
+		String parentId = request.getParameter("parentId");
+		if(parentId == null) {
+			parentId = "0";
+		}
+		
+		messengerGroupManager.addGroup(loggedInInfo, groupName, Integer.parseInt(parentId));
+		fetch(mapping, form, request, response);
+	}
+	
+	@Deprecated
+	@SuppressWarnings("unused")
+	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		String parent = new String();
+		
+		GroupsDao dao = SpringUtils.getBean(GroupsDao.class);
+		String grpNo = ((MsgMessengerAdminForm) form).getGrpNo();
+		
+		Groups gg = dao.find(ConversionUtils.fromIntString(grpNo));
+		if (gg != null) {
+			parent = "" + gg.getParentId();
+		}
+
+		if (dao.findByParentId(ConversionUtils.fromIntString(parent)).size() > 1) {
+			request.setAttribute("groupNo", grpNo);
+			request.setAttribute("fail", "This Group has Children, you must delete the children groups first");
+			return (mapping.findForward("failure"));
+		}
+
+		for (GroupMembers g : groupMembersDao.findByGroupId(Integer.parseInt(grpNo))) {
+			groupMembersDao.remove(g.getId());
+		}
+
+		Groups g = groupsDao.find(Integer.parseInt(grpNo));
+		if (g != null) {
+			groupsDao.remove(g.getId());
+		}
+
+		MsgAddressBookMaker addMake = new MsgAddressBookMaker();
+		addMake.updateAddressBook();
+		request.setAttribute("groupNo", parent);
+		
+		return mapping.findForward("success");
+	}
+	
+	@Deprecated
+	@SuppressWarnings("unused")
+	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_admin", "w", null)) {
 			throw new SecurityException("missing required security object (_admin)");

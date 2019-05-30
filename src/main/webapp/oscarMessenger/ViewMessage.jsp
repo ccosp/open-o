@@ -69,6 +69,7 @@ if (request.getParameter("bFirstDisp")!=null) bFirstDisp= (request.getParameter(
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
 <html:html locale="true">
@@ -80,17 +81,7 @@ if (request.getParameter("bFirstDisp")!=null) bFirstDisp= (request.getParameter(
 <link rel="stylesheet" type="text/css" href="printable.css"
 	media="print">
 
-<style>
-.TopStatusBar{
-width:100% !important;
-height:100% !important;
-}
-</style>
-
 <%
-//oscar.oscarMessenger.pageUtil.MsgSessionBean bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean)pageContext.findAttribute("bean");
-oscar.oscarMessenger.util.MsgDemoMap msgDemoMap = new oscar.oscarMessenger.util.MsgDemoMap();
-java.util.HashMap<String, List<String> > demoMap = msgDemoMap.getDemoMap2((String) request.getAttribute("viewMessageId"));
 String boxType = request.getParameter("boxType");
 %>
 
@@ -247,8 +238,8 @@ function fmtOscarMsg() {
 			<td class="MainTableTopRowRightColumn">
 			<table class="TopStatusBar">
 				<tr>
-					<td><bean:message
-						key="oscarMessenger.ViewMessage.msgViewMessage" /></td>
+					<td><h2><bean:message
+						key="oscarMessenger.ViewMessage.msgViewMessage" /></h2></td>
 					<td></td>
 					<td style="text-align: right">
 					  <oscar:help keywords="message" key="app.top1"/> | 
@@ -330,30 +321,30 @@ function fmtOscarMsg() {
 				</tr>
 				<tr>
 					<td class="Printable">
-					<table border="0" cellspacing="1" valign="top">
+					<table valign="top">
 						<tr>
 							<td class="Printable" bgcolor="#DDDDFF"><bean:message
 								key="oscarMessenger.ViewMessage.msgFrom" />:</td>
-							<td id="sentBy" class="Printable" bgcolor="#CCCCFF"><%= request.getAttribute("viewMessageSentby") %>
+							<td colspan="2" id="sentBy" class="Printable" bgcolor="#CCCCFF"><%= request.getAttribute("viewMessageSentby") %>
 							</td>
 						</tr>
 						<tr>
 							<td class="Printable" bgcolor="#DDDDFF"><bean:message
 								key="oscarMessenger.ViewMessage.msgTo" />:</td>
-							<td id="sentTo" class="Printable" bgcolor="#BFBFFF"><%= request.getAttribute("viewMessageSentto") %>
+							<td colspan="2" id="sentTo" class="Printable" bgcolor="#BFBFFF"><%= request.getAttribute("viewMessageSentto") %>
 							</td>
 						</tr>
 						<tr>
 							<td class="Printable" bgcolor="#DDDDFF"><bean:message
 								key="oscarMessenger.ViewMessage.msgSubject" />:</td>
-							<td id="msgSubject" class="Printable" bgcolor="#BBBBFF"><%= request.getAttribute("viewMessageSubject") %>
+							<td colspan="2" id="msgSubject" class="Printable" bgcolor="#BBBBFF"><%= request.getAttribute("viewMessageSubject") %>
 							</td>
 						</tr>
 
 						<tr>
 							<td class="Printable" bgcolor="#DDDDFF"><bean:message
 								key="oscarMessenger.ViewMessage.msgDate" />:</td>
-							<td id="sentDate" class="Printable" bgcolor="#B8B8FF"><%= request.getAttribute("viewMessageDate") %>&nbsp;&nbsp;
+							<td colspan="2" id="sentDate" class="Printable" bgcolor="#B8B8FF"><%= request.getAttribute("viewMessageDate") %>&nbsp;&nbsp;
 							<%= request.getAttribute("viewMessageTime") %></td>
 						</tr>
 						<%  String attach = (String) request.getAttribute("viewMessageAttach");
@@ -363,7 +354,7 @@ function fmtOscarMsg() {
 						<tr>
 							<td bgcolor="#DDDDFF"><bean:message
 								key="oscarMessenger.ViewMessage.msgAttachments" />:</td>
-							<td bgcolor="#B8B8FF"><a
+							<td bgcolor="#B8B8FF" colspan="2"><a
 								href="javascript:popupViewAttach(700,960,'ViewAttach.do?attachId=<%=id%>')">
 							<bean:message key="oscarMessenger.ViewMessage.btnAttach" /> </a></td>
 						</tr>
@@ -377,7 +368,7 @@ function fmtOscarMsg() {
 						<tr>
 							<td bgcolor="#DDDDFF"><bean:message
 								key="oscarMessenger.ViewMessage.msgAttachments" />:</td>
-							<td bgcolor="#B8B8FF"><a
+							<td bgcolor="#B8B8FF" colspan="2"><a
 								href="javascript:popupViewAttach(700,960,'ViewPDFAttach.do?attachId=<%=id%>')">
 							<bean:message key="oscarMessenger.ViewMessage.btnAttach" /> </a></td>
 						</tr>
@@ -386,47 +377,50 @@ function fmtOscarMsg() {
                                 %>
 
 						<tr>
-
 							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF"><textarea id="msgBody" name="Message"
-								wrap="hard" readonly="true" rows="18" cols="60"><%= request.getAttribute("viewMessageMessage") %></textarea><br>
-							<html:submit styleClass="ControlPushButton" property="reply">
-								<bean:message key="oscarMessenger.ViewMessage.btnReply" />
-							</html:submit> <html:submit styleClass="ControlPushButton" property="replyAll">
-								<bean:message key="oscarMessenger.ViewMessage.btnReplyAll" />
-							</html:submit> <html:submit styleClass="ControlPushButton" property="forward">
-								<bean:message key="oscarMessenger.ViewMessage.btnForward" />
-							</html:submit> <html:submit styleClass="ControlPushButton" property="delete">
-								<bean:message key="oscarMessenger.ViewMessage.btnDelete" />
-							</html:submit> <html:hidden property="messageNo" value="<%=(String)request.getAttribute(\"viewMessageNo\") %>" />
+							<td bgcolor="#EEEEFF" colspan="2">
+								<textarea id="msgBody" name="Message"
+									wrap="hard" readonly="true" rows="18" cols="60"><%= request.getAttribute("viewMessageMessage") %>
+								</textarea>
 							</td>
-
 						</tr>
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF">&nbsp;</td>
+							<td bgcolor="#EEEEFF" colspan="2">
+								<html:submit styleClass="ControlPushButton" property="reply">
+									<bean:message key="oscarMessenger.ViewMessage.btnReply" />
+								</html:submit> <html:submit styleClass="ControlPushButton" property="replyAll">
+									<bean:message key="oscarMessenger.ViewMessage.btnReplyAll" />
+								</html:submit> <html:submit styleClass="ControlPushButton" property="forward">
+									<bean:message key="oscarMessenger.ViewMessage.btnForward" />
+								</html:submit> <html:submit styleClass="ControlPushButton" property="delete">
+									<bean:message key="oscarMessenger.ViewMessage.btnDelete" />
+								</html:submit> <html:hidden property="messageNo" value="<%=(String)request.getAttribute(\"viewMessageNo\") %>" />
+							</td>
 						</tr>
-
-
 						<tr>
 							<td bgcolor="#B8B8FF"></td>
-							<td bgcolor="#B8B8FF"><font style="font-weight: bold">Link
+							<td bgcolor="#B8B8FF" colspan="2"><font style="font-weight: bold">Link
 							this message to ...</font></td>
 						</tr>
 
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
 							<td bgcolor="#EEEEFF"><input type="text" name="keyword"
-								size="30" /> <input type="hidden" class="ControlPushButton"
+								size="30" /> 
+							</td>
+							<td bgcolor="#EEEEFF"> 
+							<input type="hidden" class="ControlPushButton"
 								name="demographic_no" /> <input type="button"
 								class="ControlPushButton" name="searchDemo"
 								value="Search Demographic"
-								onclick="popupSearchDemo(document.forms[0].keyword.value)" /></td>
+								onclick="popupSearchDemo(document.forms[0].keyword.value)" />
+							</td>
 
 						</tr>
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF"><font style="font-weight: bold">Selected
+							<td bgcolor="#EEEEFF" colspan="2"><font style="font-weight: bold">Selected
 							Demographic</font></td>
 						</tr>
 
@@ -446,14 +440,18 @@ function fmtOscarMsg() {
                                 } %>
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF"><input type="text"
+							<td bgcolor="#EEEEFF" ><input type="text"
 								name="selectedDemo" size="30" readonly
 								style="background: #EEEEFF; border: none" value="none" /> <script>
                                             if ( "<%=demoName%>" != "null" && "<%=demoName%>" != "") {
                                                 document.forms[0].selectedDemo.value = "<%=demoName%>"
                                                 document.forms[0].demographic_no.value = "<%=demographic_no%>"
                                             }
-                                        </script> <input type="button"
+                                        </script> 
+                                </td>
+                                
+                                <td bgcolor="#EEEEFF">        
+                                        <input type="button"
 								class="ControlPushButton" name="linkDemo"
 								value="Link to demographic"
 								onclick="popup(document.forms[0].demographic_no.value,'<%=request.getAttribute("viewMessageId")%>','<%=request.getAttribute("providerNo")%>','linkToDemographic')" />
@@ -468,121 +466,121 @@ function fmtOscarMsg() {
 
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF"><font style="font-weight: bold">Demographic(s)
-							linked to this message</font></td>
-						</tr>
-
-
-						<%      
-                                        if(demoMap !=null){ %>
-
-						<%  int idx = 0;                                           
-                                                Set<String> keys = demoMap.keySet();
-                                                int demoCount;
-                                            for ( String demoID : keys ) { 
-                                               demoCount = 0;
-                                                List<String> list = demoMap.get(demoID);
-                                                for( String demoN : list ) {
-                                                     
-                                        %>
-						<tr>
-							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF"><input type="text" size="30" readonly
-								style="background: #EEEEFF; border: none"
-								value="<%=demoN%>" /> <a
-								href="javascript:popupViewAttach(700,960,'../demographic/demographiccontrol.jsp?demographic_no=<%=demoID%>&displaymode=edit&dboperation=search_detail')">M</a>
-								
-							<a href="javascript:void(0)" onclick="window.opener.location.href='../web/#/record/<%=demoID%>/summary'">E2</a>
-							<%
-								//Hide old echart link
-								boolean showOldEchartLink = true;
-							    UserPropertyDAO propDao =(UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
-								UserProperty oldEchartLink = propDao.getProp(curUser_no, UserProperty.HIDE_OLD_ECHART_LINK_IN_APPT);
-								if (oldEchartLink!=null && "Y".equals(oldEchartLink.getValue())) showOldEchartLink = false;
-								CaseManagementNoteDAO caseManagementNoteDAO = SpringUtils.getBean(CaseManagementNoteDAO.class);
-							if (showOldEchartLink) {
-                                                            String params = "";
-                                                            String msgType = (String)request.getAttribute("msgType");
-                                                            
-                                                            if( msgType != null ) {
-                                                                
-                                                                    if( Integer.valueOf(msgType).equals(OscarMsgType.OSCAR_REVIEW_TYPE) ) {
-                                                                        HashMap<String,List<String>> hashMap =  (HashMap<String,List<String>>)request.getAttribute("msgTypeLink");
-                                                                        if( hashMap != null) {                                                                            
-                                                                            List<String> demoList = hashMap.get(demoID);
-                                                                            
-                                                                             String[] val = demoList.get(demoCount).split(":");
-                                                                             if( val.length == 3 ) {
-                                                                                 String note_id = "";
-                                                                                 CaseManagementNote note = caseManagementNoteDAO.getNote(Long.valueOf(val[2]));
-                                                                                 if( note != null ) {
-                                                                                     String uuid = note.getUuid();
-                                                                                     List<CaseManagementNote> noteList = caseManagementNoteDAO.getNotesByUUID(uuid);
-                                                                                     if( noteList.get(noteList.size()-1).getId().equals(note.getId()) ) {
-                                                                                         note_id = String.valueOf(note.getId());
-                                                                                     }
-                                                                                     else {
-                                                                                         note_id = String.valueOf(noteList.get(noteList.size()-1).getId());
-                                                                                     }
-                                                                                 }
-                                                                                
-                                                                                params = "&appointmentNo=" + (val[0].equalsIgnoreCase("null") ? "" :  val[0]) +"&msgType=" + msgType + "&OscarMsgTypeLink="+val[1]+"&noteId="+note_id;
-                                                                             }
-                                                                             else {
-                                                                                 params = "";
-                                                                             }
-                                                                         }
-                                                                    }
-                                                                }
-                                                            
-                                                            
-                                                        
-                                                        %>
-                                                         <a href="javascript:void(0)" onclick="popupViewAttach(700,960,'../oscarEncounter/IncomingEncounter.do?demographicNo=<%=demoID%>&curProviderNo=<%=request.getAttribute("providerNo")%><%=params%>');return false;">E</a>
-							<%} %>
-								
-							<a href="javascript:popupViewAttach(700,960,'../oscarRx/choosePatient.do?providerNo=<%=request.getAttribute("providerNo")%>&demographicNo=<%=demoID%>')">Rx</a>
-								
-							<phr:indivoRegistered provider="<%=providerNo%>" demographic="<%=demoID%>">
-								<%
-									String onclickString="alert('Please login to MyOscar first.')";
-	
-									MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);
-									if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn()) onclickString="msg4phr = encodeURIComponent(document.getElementById('msgBody').innerHTML); sub4phr =  encodeURIComponent(document.getElementById('msgSubject').innerHTML); popupViewAttach(600,900,'../phr/PhrMessage.do?method=createMessage&providerNo="+request.getAttribute("providerNo")+"&demographicNo="+demoID+"&message='+msg4phr+'&subject='+sub4phr)";
-								%>
-								<a href="javascript: function myFunction() {return false; }" ONCLICK="<%=onclickString%>"	title="myOscar">
-									<bean:message key="demographic.demographiceditdemographic.msgSendMsgPHR"/>
-								</a>
-							</phr:indivoRegistered>	
-							
-								
-								
-							<input type="button" class="ControlPushButton"
-								name="writeEncounter" value="Write to encounter"
-								onclick="popup( '<%=demoID%>','<%=request.getAttribute("viewMessageId")%>','<%=request.getAttribute("providerNo")%>','writeToEncounter')" />
+							<td bgcolor="#EEEEFF" colspan="2"><font style="font-weight: bold" >
+							Demographic(s) linked to this message</font>
 							</td>
 						</tr>
-						<tr>
-							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF"><a
-								href="javascript:popupStart(400,850,'../demographic/demographiccontrol.jsp?demographic_no=<%=demoID%>&last_name=<%=demoLastName%>&first_name=<%=demoFirstName%>&orderby=appointment_date&displaymode=appt_history&dboperation=appt_history&limit1=0&limit2=25','ApptHist')"
-								title="Click to see appointment history">Next Appt: <oscar:nextAppt
-								demographicNo="<%=demoID%>" /></a></td>
-						</tr>
-						<%     ++idx;
-                                                ++demoCount;
-                                            }
-                                            
-                                          }
-                                       
-                                    }
-                                else{%>
-						<tr>
-							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF">o demographic is linked to this
-							message</td>
-						</tr>
-						<%}%>
+						
+						<c:forEach items="${ unlinkedDemographics }" var="unlinkedDemographic" >
+							<tr>
+								<td bgcolor="#EEEEFF"></td>
+								<td bgcolor="#EEEEFF"> 
+									<c:out value="${ unlinkedDemographic.lastName }" />, <c:out value="${ unlinkedDemographic.firstName }" /> <br />
+									<strong>Location:</strong> <c:out value="${ demographicLocation }" />							
+								</td>
+								<td bgcolor="#EEEEFF">
+									<a title="Import" href="#"  
+										onclick="javascript:popupViewAttach(700,1027,'../appointment/copyRemoteDemographic.jsp?remoteFacilityId=${ unlinkedDemographic.integratorFacilityId }&demographic_no=${ unlinkedDemographic.caisiDemographicId }&originalPage=../demographic/demographiceditdemographic.jsp&provider_no=<%=providerNo%>')" >
+									Import
+									</a>
+								</td>
+							</tr>
+						</c:forEach>
+
+                        <% int demoCount = 0; %>              
+                        <c:forEach items="${ attachedDemographics }" var="demographic">
+             			<c:set var="demographicNumber" value="${ demographic.key }" />
+							<tr>
+								<td bgcolor="#EEEEFF"></td>
+								<td bgcolor="#EEEEFF">
+								<input type="text" size="30" readonly
+									style="background: #EEEEFF; border: none"
+									value="${ demographic.value }" /> 
+								</td>
+								<td bgcolor="#EEEEFF">	
+								<a href="javascript:popupViewAttach(700,960,'../demographic/demographiccontrol.jsp?demographic_no=${ demographic.key }&displaymode=edit&dboperation=search_detail')">M</a>
+									
+								<a href="javascript:void(0)" onclick="window.opener.location.href='../web/#/record/${ demographic.key }/summary'">E2</a>
+								<%
+									//Hide old echart link
+									boolean showOldEchartLink = true;
+								    UserPropertyDAO propDao =(UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+									UserProperty oldEchartLink = propDao.getProp(curUser_no, UserProperty.HIDE_OLD_ECHART_LINK_IN_APPT);
+									if (oldEchartLink!=null && "Y".equals(oldEchartLink.getValue())) showOldEchartLink = false;
+									CaseManagementNoteDAO caseManagementNoteDAO = SpringUtils.getBean(CaseManagementNoteDAO.class);
+								if (showOldEchartLink) {
+	                                                            String params = "";
+	                                                            String msgType = (String)request.getAttribute("msgType");
+	                                                            
+	                                                            if( msgType != null ) {
+	                                                                
+	                                                                    if( Integer.valueOf(msgType).equals(OscarMsgType.OSCAR_REVIEW_TYPE) ) {
+	                                                                        HashMap<String,List<String>> hashMap =  (HashMap<String,List<String>>)request.getAttribute("msgTypeLink");
+	                                                                        if( hashMap != null) {                                                                            
+	                                                                            List<String> demoList = hashMap.get((String) pageContext.getAttribute("demographicNumber"));
+	                                                                            
+	                                                                             String[] val = demoList.get(demoCount).split(":");
+	                                                                             if( val.length == 3 ) {
+	                                                                                 String note_id = "";
+	                                                                                 CaseManagementNote note = caseManagementNoteDAO.getNote(Long.valueOf(val[2]));
+	                                                                                 if( note != null ) {
+	                                                                                     String uuid = note.getUuid();
+	                                                                                     List<CaseManagementNote> noteList = caseManagementNoteDAO.getNotesByUUID(uuid);
+	                                                                                     if( noteList.get(noteList.size()-1).getId().equals(note.getId()) ) {
+	                                                                                         note_id = String.valueOf(note.getId());
+	                                                                                     }
+	                                                                                     else {
+	                                                                                         note_id = String.valueOf(noteList.get(noteList.size()-1).getId());
+	                                                                                     }
+	                                                                                 }
+	                                                                                
+	                                                                                params = "&appointmentNo=" + (val[0].equalsIgnoreCase("null") ? "" :  val[0]) +"&msgType=" + msgType + "&OscarMsgTypeLink="+val[1]+"&noteId="+note_id;
+	                                                                             }
+	                                                                             else {
+	                                                                                 params = "";
+	                                                                             }
+	                                                                         }
+	                                                                    }
+	                                                                }
+	                                                            
+	                                                            
+	                                                        
+	                                                        %>
+	                                                         <a href="javascript:void(0)" onclick="popupViewAttach(700,960,'../oscarEncounter/IncomingEncounter.do?demographicNo=${ demographic.key }&curProviderNo=<%=request.getAttribute("providerNo")%><%=params%>');return false;">E</a>
+								<%} %>
+									
+								<a href="javascript:popupViewAttach(700,960,'../oscarRx/choosePatient.do?providerNo=<%=request.getAttribute("providerNo")%>&demographicNo=${ demographic.key }')">Rx</a>
+									
+								<phr:indivoRegistered provider="<%=providerNo%>" demographic="${ demographic.key }">
+									<%
+										String onclickString="alert('Please login to MyOscar first.')";
+		
+										MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);
+										if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn()) onclickString="msg4phr = encodeURIComponent(document.getElementById('msgBody').innerHTML); sub4phr =  encodeURIComponent(document.getElementById('msgSubject').innerHTML); popupViewAttach(600,900,'../phr/PhrMessage.do?method=createMessage&providerNo="+request.getAttribute("providerNo")+"&demographicNo="+ (String) pageContext.getAttribute("demographicNumber") +"&message='+msg4phr+'&subject='+sub4phr)";
+									%>
+									<a href="javascript: function myFunction() {return false; }" ONCLICK="<%=onclickString%>"	title="myOscar">
+										<bean:message key="demographic.demographiceditdemographic.msgSendMsgPHR"/>
+									</a>
+								</phr:indivoRegistered>	
+								
+									
+									
+								<input type="button" class="ControlPushButton"
+									name="writeEncounter" value="Write to encounter"
+									onclick="popup( '${ demographic.key }','<%=request.getAttribute("viewMessageId")%>','<%=request.getAttribute("providerNo")%>','writeToEncounter')" />
+								</td>
+							</tr>
+							<tr>
+								<td bgcolor="#EEEEFF"></td>
+								<td bgcolor="#EEEEFF"><a
+									href="javascript:popupStart(400,850,'../demographic/demographiccontrol.jsp?demographic_no=${ demographic.key }&last_name=<%=demoLastName%>&first_name=<%=demoFirstName%>&orderby=appointment_date&displaymode=appt_history&dboperation=appt_history&limit1=0&limit2=25','ApptHist')"
+									title="Click to see appointment history">Next Appt: <oscar:nextAppt
+									demographicNo="${ demographic.key }" /></a></td>
+								<td bgcolor="#EEEEFF"></td>
+							</tr>						
+						<% ++demoCount; %>						
+						</c:forEach>
+
 					</table>
 					</td>
 				</tr>
