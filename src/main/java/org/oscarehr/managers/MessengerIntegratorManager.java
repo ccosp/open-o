@@ -161,7 +161,7 @@ public class MessengerIntegratorManager {
     	// set the status of each message to sent
     	for(MessageList message : integratedMessageList)
     	{
-   		messagingManager.setMessageStatus(loggedInInfo, message, MessageList.STATUS_SENT);
+    		messagingManager.setMessageStatus(loggedInInfo, message, MessageList.STATUS_SENT);
     	}
     	
     	return providerCommunicationTransferList;
@@ -178,13 +178,13 @@ public class MessengerIntegratorManager {
     	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
-
-    	MessageTbl messageTbl = messagingManager.getMessage(loggedInInfo, (int) messageList.getMessage());
+    	long messageId = messageList.getMessage();
+    	MessageTbl messageTbl = messagingManager.getMessage(loggedInInfo, (int) messageId);
 		ProviderCommunicationTransfer providerCommunication = new ProviderCommunicationTransfer();
-		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, (int) messageList.getMessage());
+		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, (int) messageId);
 		
-		/* temporary work around with the JSONObject. This could be a future upgrade on the Integrator 
-		 * side if inter-facility messaging becomes popular.
+		/* temporary work around through use of a JSONObject. This could be a future upgrade on the Integrator 
+		 * side if inter-facility messaging becomes more popular.
 		 */
 		JSONObject jsonString = new JSONObject();
 		jsonString.put(JSON_KEY.subject.name(), messageTbl.getSubject());
@@ -192,7 +192,7 @@ public class MessengerIntegratorManager {
 		jsonString.put(JSON_KEY.from.name(), messageTbl.getSentBy());
 		jsonString.put(JSON_KEY.copyto.name(), messageTbl.getSentTo());
 		
-		if(msgDemoMap != null && msgDemoMap.isEmpty() && msgDemoMap.size() > 0)
+		if(msgDemoMap != null && ! msgDemoMap.isEmpty() && msgDemoMap.size() > 0)
 		{
 			jsonString.put(JSON_KEY.demographicNo.name(), msgDemoMap.get(0).getDemographic_no());
 		}
@@ -204,7 +204,23 @@ public class MessengerIntegratorManager {
 		providerCommunication.setDestinationProviderId(messageList.getProviderNo());
 		providerCommunication.setSentDate(sentDate);
 		providerCommunication.setSourceIntegratorFacilityId(getThisFacilityId(loggedInInfo));
-		providerCommunication.setSourceProviderId(messageTbl.getSentByNo());
+		
+		/*
+		 * it's possible to have more than one sender/reciever in the source.
+		 * The first provider id is the message creator - located in the messageTbl.sentByNo column. 
+		 * 
+		 * for the moment it's assumed that "this facility" has an Id of zero (0).
+		 * This can be changed once the assignment of facility id's is stablized in future changes to the 
+		 * Integrator functionality. 
+		 */ 		 
+		List<MessageList> sourceProviderList = messageListDao.findByMessageAndIntegratedFacility(messageId, 0);
+		List<String> sourceProviderIds = new ArrayList<String>();
+		sourceProviderIds.add(messageTbl.getSentByNo());
+		for(MessageList sourceProvider : sourceProviderList) 
+		{
+			sourceProviderIds.add(sourceProvider.getProviderNo());
+		}
+		providerCommunication.setSourceProviderId(StringUtils.join(sourceProviderIds,","));
 		providerCommunication.setType(messageTbl.getType()+"");	
 		providerCommunication.setData(jsonString.toString().getBytes("UTF-8"));
 
@@ -225,7 +241,11 @@ public class MessengerIntegratorManager {
 		}
     	
     	List<Integer> receivedMessages = new ArrayList<Integer>();
-    	
+		String[] sourceProviderIdList = null;
+		String sourceProviderIds = "";
+		Integer messageId = null;
+		Integer sourceFacilityId = null;
+		
 		for(ProviderCommunicationTransfer providerCommunication : providerCommunicationList)
 		{
 			MessageTbl messageTbl = new MessageTbl();
@@ -244,18 +264,50 @@ public class MessengerIntegratorManager {
 			messageTbl.setDate(providerCommunication.getSentDate().getTime());
 			messageTbl.setTime(providerCommunication.getSentDate().getTime());
 			messageTbl.setSentBy(from);
-			messageTbl.setSentByNo(providerCommunication.getSourceProviderId());
+			
+			/*
+			 * The source provider id column may also contain any other providers that were copied in 
+			 * at the source. 
+			 * The originator of the message will always be the first entry. 
+			 * Anyone is welcome to do this a better way.
+			 */
+			sourceProviderIds = providerCommunication.getSourceProviderId();			
+			if(sourceProviderIds.contains(",")) 
+			{
+				sourceProviderIdList = sourceProviderIds.split(",");
+			}
+			else
+			{
+				sourceProviderIdList = new String[] {sourceProviderIds};
+			}
+			
+			if(sourceProviderIdList != null && sourceProviderIdList.length > 0)
+			{
+				messageTbl.setSentByNo(sourceProviderIdList[0]);				
+			}
+			
+			sourceFacilityId = providerCommunication.getSourceIntegratorFacilityId();
+			
+			messageTbl.setSentByLocation(sourceFacilityId);
 			messageTbl.setSentTo(copyto);
 			messageTbl.setSubject(subject);
 			messageTbl.setMessage(message);
 			messageTbl.setType(Integer.parseInt(providerCommunication.getType()));
-			messageTbl.setSentByLocation(providerCommunication.getSourceIntegratorFacilityId());
-			
-			Integer messageId = messagingManager.saveMessage(loggedInInfo, messageTbl);
-			
+		
+			/*
+			 * Save the actual message and then populate the associated tables for 
+			 * additional recipients and the related demogaphic chart.
+			 */
+			messageId = messagingManager.saveMessage(loggedInInfo, messageTbl);			
 			if(messageId != null && messageId > 0)
 			{
+				
+				/*
+				 *  add additional providers from other facilities for 
+				 *  whom the message was copied to.
+				 */				
 				String[] providerIds = new String[] {};
+				
 				if(providerCommunication.getDestinationProviderId().contains(",")) 
 				{
 					providerIds = providerCommunication.getDestinationProviderId().split(",");
@@ -265,6 +317,19 @@ public class MessengerIntegratorManager {
 					providerIds = new String[] {providerCommunication.getDestinationProviderId()};
 				}
 
+				/*
+				 *  It's assumed that "this facility" has an Id of zero.
+				 *  This can be changed once the assignment of facility id's is stablized in future changes to the 
+				 *  Integrator functionality.
+				 *  
+				 *  The identifier for this clinic is set in the oscarcommlocations table. The ID is set to 145 by default.
+				 *  Adding this is a requirement for the use of a XML address book. However it's unknown if the address book 
+				 *  feature is still in use. Use of the currentlocation column may need to be reconsidered in the future.
+				 *  
+				 *  For now, it's important to use the currentlocation column to distinguish between a provider id that 
+				 *  exists in the local clinic (145) or a remote clinic (>=0)
+				 *   
+				 */
 				messagingManager.addRecipientsToMessage(loggedInInfo, messageId, providerIds, messagingManager.getCurrentLocationId(), 0, providerCommunication.getSourceIntegratorFacilityId());
 				
 				if(demographic != null && ! demographic.isEmpty()) 
@@ -276,9 +341,25 @@ public class MessengerIntegratorManager {
 			}
 		}
 		
+		/*
+		 *  add additional providers that are included from the source facility.
+		 *  This list was captured in the loop above.
+		 */
+		
+		if(sourceProviderIdList != null && sourceProviderIdList.length > 1)
+		{
+			messagingManager.addRecipientsToMessage(loggedInInfo, messageId, sourceProviderIdList, 0, 0, sourceFacilityId);			
+		}
+		
 		return receivedMessages;
 	}
 
+	/**
+	 * retrieves the actual id for this Integrated facility.
+	 * 
+	 * @param loggedInInfo
+	 * @return
+	 */
     public int getThisFacilityId(LoggedInInfo loggedInInfo) {
     	Facility thisFacility = facilityManager.getDefaultFacility(loggedInInfo);
     	int facilityId = 0;

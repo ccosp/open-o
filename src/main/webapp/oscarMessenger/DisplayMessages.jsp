@@ -432,16 +432,13 @@ function checkAll(formId){
                                     </td>
                                     <td bgcolor="#EEEEFF">
                                         <%
-                                            if( pageType == 1 ) {
-                                                int pos = dm.getSentto().indexOf(",");
-                                                if( pos == -1 )
-                                                    out.print(dm.getSentto());
-                                                else
-                                                    out.print(dm.getSentto().substring(0,pos));
+                                            if( pageType == 1 ) {                       
+                                                out.print(dm.getSentto());
                                             }
-                                            else {
+                                            else 
+                                            {
                                                 out.print(dm.getSentby());
-                                           }
+                                            }
                                         %>
                                     
                                     </td>

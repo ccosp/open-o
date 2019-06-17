@@ -25,7 +25,10 @@ package org.oscarehr.managers;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.oscarehr.common.dao.MessageListDao;
 import org.oscarehr.common.dao.MessageTblDao;
@@ -220,8 +223,16 @@ public class MessagingManager {
 		return messageList.getMessage();
 	}
 	
-	public void setMessageRead(LoggedInInfo loggedInInfo, int messageId) {
-		List<MessageList> messageList = messageListDao.findByMessage((long) messageId);
+	/**
+	 * Set the message opened by this local provider from new to read. Matching provider numbers from 
+	 * remote locations will be ignored.
+	 * 
+	 * @param loggedInInfo
+	 * @param messageId
+	 * @param providerNo
+	 */
+	public void setMessageRead(LoggedInInfo loggedInInfo, Long messageId, String providerNo) {
+		List<MessageList> messageList = messageListDao.findByProviderNoAndMessageNo(providerNo, messageId);
 		for(MessageList message : messageList)
 		{
 			if(! MessageList.STATUS_DELETED.equalsIgnoreCase(message.getStatus()) 
@@ -303,7 +314,7 @@ public class MessagingManager {
     	
     	//TODO transition from using the MsgMessageData Object.
     	MsgMessageData messageData = new MsgMessageData();
-    	String[] recipients = messageData.getDups4(systemMessage.getRecipients());
+		String[] recipients = removeDuplicates(systemMessage.getRecipients());
     	
     	ArrayList<MsgProviderData> providerListing = messageData.getProviderStructure(loggedInInfo, recipients);
         String sentToWho = messageData.createSentToString(providerListing);
@@ -349,9 +360,10 @@ public class MessagingManager {
     }
     
     public void addRecipientsToMessage(LoggedInInfo loggedInInfo, int messageId, String[] providerNoArray, int clinicLocationNo, int facilityId, int sourceFacilityId) {
+    	providerNoArray = removeDuplicates(providerNoArray);
     	for(String providerNo : providerNoArray)
     	{
-    		addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, sourceFacilityId);
+    		addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, sourceFacilityId);		
     	}
     }
     
@@ -373,24 +385,82 @@ public class MessagingManager {
     public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, String providerNo, int clinicLocationNo, int facilityId) {
     	addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, 0);
     }
+
+    /**
+     * A combined result of both the local reply recipients and recipients located in remote 
+     * facilities.
+     */
+    public List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, int messageId) {
+       	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
+       	contactIdentifierList.addAll(getAllLocalReplyRecipients(loggedInInfo, messageId));
+       	contactIdentifierList.addAll(getAllRemoteReplyRecipients(loggedInInfo, messageId));
+       	return contactIdentifierList; 
+    }
     
-    public List<ContactIdentifier> getAllMessageRecipients(LoggedInInfo loggedInInfo, int messageId) {
+    /**
+     * Recipients that were copied in on the message that have an origin in the client from where 
+     * the reply is originating. 
+     * 
+     * @param loggedInInfo
+     * @param messageId
+     * @return
+     */
+    public List<ContactIdentifier> getAllLocalReplyRecipients(LoggedInInfo loggedInInfo, int messageId) {
        	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
     		throw new SecurityException("missing required security object (_msg)");
     	}
        	
-       	List<MessageList> messageList = messageListDao.findByMessage((long) messageId);
+       	List<MessageList> messageList = messageListDao.findByMessageNoAndLocationNo((long) messageId, getCurrentLocationId());
        	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
        	for(MessageList message : messageList) {
-       		ContactIdentifier contactIdentifier = new ContactIdentifier();
-       		contactIdentifier.setClinicLocationNo(message.getRemoteLocation());
-       		contactIdentifier.setContactId(message.getProviderNo());
-       		contactIdentifier.setFacilityId(message.getDestinationFacilityId());
-       		contactIdentifierList.add(contactIdentifier);
+       		if(! loggedInInfo.getLoggedInProviderNo().equals(message.getProviderNo()))
+       		{
+	       		ContactIdentifier contactIdentifier = new ContactIdentifier();
+	       		contactIdentifier.setClinicLocationNo(message.getRemoteLocation());
+	       		contactIdentifier.setContactId(message.getProviderNo());
+	       		contactIdentifier.setFacilityId(0);
+	       		contactIdentifierList.add(contactIdentifier);
+       		}
        	}
        	return contactIdentifierList;
     }
     
+    /**
+     * Recipients that were copied in on the message but have an origin in one of the included 
+     * remote facilities. 
+     * 
+     * @param loggedInInfo
+     * @param messageId
+     * @return
+     */
+    public List<ContactIdentifier> getAllRemoteReplyRecipients(LoggedInInfo loggedInInfo, int messageId) {
+       	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
+    		throw new SecurityException("missing required security object (_msg)");
+    	}
+       	
+    	List<MessageList> messageList = messageListDao.findByMessage((long) messageId);
+       	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
+       	int currentLocationId = getCurrentLocationId();
+       	for(MessageList message : messageList) {  
+       		if(message.getRemoteLocation() != currentLocationId)
+       		{
+	       		ContactIdentifier contactIdentifier = new ContactIdentifier();
+	       		contactIdentifier.setClinicLocationNo(message.getRemoteLocation());
+	       		contactIdentifier.setContactId(message.getProviderNo());
+	       		contactIdentifier.setFacilityId(message.getSourceFacilityId());
+	       		contactIdentifierList.add(contactIdentifier);
+       		}
+       	}
+       	return contactIdentifierList;
+    }
+    
+    /**
+     * Save the message content.
+     * 
+     * @param loggedInInfo
+     * @param messageTbl
+     * @return
+     */
     public Integer saveMessage(LoggedInInfo loggedInInfo, MessageTbl messageTbl) {
     	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, null)) {
 			throw new SecurityException("missing required security object (_msg)");
@@ -400,6 +470,11 @@ public class MessagingManager {
     	return messageTbl.getId();
     }
     
+    /**
+     * Get the current address book location id for this clinic from the oscarcommlocations table. 
+     * 
+     * @return
+     */
 	public int getCurrentLocationId() {
 		int currentLocationId = 0;
     	List<OscarCommLocations> oscarCommLocations = oscarCommLocationsDao.findByCurrent1(1);
@@ -415,6 +490,18 @@ public class MessagingManager {
     		currentLocationId = oscarCommLocationsID;
     	}  
 		return currentLocationId;
+	}
+	
+	/**
+	 * remove duplicate values from any string array.
+	 * @param strarray
+	 * @return
+	 */
+	public String[] removeDuplicates(String[] strarray){	  
+	   List<String> arrayList = new ArrayList<String>(Arrays.asList(strarray));
+	   Set<String> hashSet = new HashSet<String>(arrayList);
+	   String[] outputArray = new String[hashSet.size()];
+	   return hashSet.toArray(outputArray);
 	}
 	
 }

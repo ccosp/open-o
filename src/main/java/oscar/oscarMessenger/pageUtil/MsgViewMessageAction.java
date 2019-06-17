@@ -171,7 +171,11 @@ public class MsgViewMessageAction extends Action {
        
 	        MiscUtils.getLogger().debug("viewMessagePosition: " + messagePosition + "IsLastMsg: " + request.getAttribute("viewMessageIsLastMsg"));
 	        
-	        messagingManager.setMessageRead(loggedInInfo, Integer.parseInt(msgDisplayMessage.getMessageId()));
+	        // Box Type 1 is the sent messages review page. 
+	        if(! "1".equals(boxType))
+	        {
+	        	messagingManager.setMessageRead(loggedInInfo, Long.parseLong(msgDisplayMessage.getMessageId()), providerNo);
+	        }
         }
         
         if (linkMsgDemo != null && demographic_no != null){

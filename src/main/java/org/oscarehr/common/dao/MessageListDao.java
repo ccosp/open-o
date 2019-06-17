@@ -46,10 +46,17 @@ public class MessageListDao extends AbstractDao<MessageList> {
 		return query.getResultList();
 	}
 
-	public List<MessageList> findByProviderNoAndLocationNo(String providerNo, Integer remoteLocation) {
+	public List<MessageList> findByProviderNoAndLocationNo(String providerNo, Integer locationNo) {
 		Query query = createQuery("ml", "ml.providerNo = :providerNo and ml.status not like 'del' and ml.remoteLocation = :remoteLocation order by ml.message");
 		query.setParameter("providerNo", providerNo);
-		query.setParameter("remoteLocation", remoteLocation);
+		query.setParameter("remoteLocation", locationNo);
+		return query.getResultList();
+	}
+	
+	public List<MessageList> findByMessageNoAndLocationNo(Long messageNo, Integer locationNo) {
+		Query query = createQuery("ml", "ml.message = :messageNo and ml.status not like 'del' and ml.remoteLocation = :remoteLocation order by ml.message");
+		query.setParameter("messageNo", messageNo);
+		query.setParameter("remoteLocation", locationNo);
 		return query.getResultList();
 	}
 

@@ -60,32 +60,26 @@ public class MsgHandleMessagesAction extends Action {
 		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", "r", null)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
-		
-		// Extract attributes we will need
-//		MsgSessionBean bean = (MsgSessionBean) request.getSession().getAttribute("msgSessionBean");
-//		String providerNo = bean.getProviderNo();
+
 		MsgHandleMessagesForm frm = (MsgHandleMessagesForm) form;
 		String messageNo = frm.getMessageNo();
 		String demographicNo = frm.getDemographic_no();
 
-//		String sentByLocation;
 		String reply = frm.getReply();
 		String replyAll = frm.getReplyAll();
 		String delete = frm.getDelete();
 		String forward = frm.getForward();
 
 		//Set Demographic_no attribute if there's any
-		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, Integer.parseInt(messageNo));
-		demographicNo = msgDemoMap.get(0).getDemographic_no()+"";
+		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, Integer.parseInt(messageNo));	
+		if(msgDemoMap != null && msgDemoMap.size() > 0)
+		{
+			demographicNo = msgDemoMap.get(0).getDemographic_no()+"";
+		}
+		
 		if (demographicNo != null) {
 			request.setAttribute("demographic_no", demographicNo);
 		}
-
-		/*
-		 * This is a little fix:
-		 * 
-		 * Look the parameter != null and set it correctly
-		 */
 
 		java.util.Enumeration enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
@@ -118,19 +112,20 @@ public class MsgHandleMessagesAction extends Action {
 			subject.append(message.getSubject());
 			
 			List<ContactIdentifier> replyList = new ArrayList<ContactIdentifier>();
-
-			if (replyAll.compareToIgnoreCase("reply All") == 0) 
-			{ // add everyone that got the message				
-				replyList = messagingManager.getAllMessageRecipients(loggedInInfo, Integer.parseInt(messageNo));
-			}
-			else
-			{
-				ContactIdentifier contactIdentifier = new ContactIdentifier();
-				contactIdentifier.setContactId(message.getSentByNo());
-				contactIdentifier.setClinicLocationNo(message.getSentByLocation());
-				replyList.add(contactIdentifier);
-			}
 			
+			// add the primary sender
+			ContactIdentifier contactIdentifier = new ContactIdentifier();
+			contactIdentifier.setContactId(message.getSentByNo());
+			contactIdentifier.setFacilityId(message.getSentByLocation());		
+			replyList.add(contactIdentifier);
+			
+			// add everyone that got the message if reply all	
+			if (replyAll.compareToIgnoreCase("reply All") == 0) 
+			{ 			
+				List<ContactIdentifier> replyAllList = messagingManager.getAllMessageReplyRecipients(loggedInInfo, Integer.parseInt(messageNo));
+				replyList.addAll(replyAllList);				
+			}
+
 			String replyListString = new Gson().toJson(replyList);
 		
 			request.setAttribute("ReText", theSendMessage.toString());

@@ -85,11 +85,6 @@ pageContext.setAttribute("messageBody", request.getAttribute("ReText"));
 
 oscar.oscarMessenger.pageUtil.MsgSessionBean bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean)pageContext.findAttribute("bean");
 
-/* boolean bFirstDisp=true; //this is the first time to display the window
-if (request.getParameter("bFirstDisp")!=null) {
-	bFirstDisp= (request.getParameter("bFirstDisp")).equals("true");
-} */
-
 String demographic_no = (String) request.getAttribute("demographic_no");
 DemographicData demoData = new DemographicData();
 org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographic_no);
@@ -111,27 +106,7 @@ if(recall){
 	pageContext.setAttribute("delegateName", delegateName);
 	pageContext.setAttribute("messageSubject", subjectText);
 }
-	
 
-
-/* if(subjectText == null) {
-	if (request.getAttribute("ReSubject") != null){
-		bean.setSubject((String)request.getAttribute("ReSubject"));
-	}
-}
-else if (subjectText != null) {
-	bean.setSubject(subjectText);
-}
-
-String messageText = request.getParameter("message");
-if(messageText == null) {
-	if (request.getAttribute("ReText") != null){
-		bean.setMessage((String)request.getAttribute("ReText"));
-	}
-}
-else if (messageText != null) {
-	bean.setMessage(messageText);
-} */
 %>
 
 <html:html locale="true">
@@ -299,9 +274,16 @@ else if (messageText != null) {
 	 */
     var replyList = '${ replyList }';
     var replyListJson = JSON.parse(replyList);    
+
 	$(document).ready(function(){
 	    for (i in replyListJson) {
-	    	$("input[value='" + replyListJson[i].compositeId + "']").attr("checked", "checked");
+	    	var checkedElement = $("input#local-" + replyListJson[i].compositeId);
+	    	if(checkedElement.length == 0)
+	    	{
+	    		checkedElement = $("input#remote-" + replyListJson[i].compositeId);
+	    	}
+	    	checkedElement.attr("checked", "checked");
+	    	checkedElement.parent().parent().attr('open', '').parent().attr('open', '');
 	    }
 	})
 </script>
