@@ -445,6 +445,7 @@ else if (messageText != null) {
 										</div>
 										
 										<!-- Display Members by remote locations -->
+										<c:if test="${ not empty remoteMembers }" >
 										<div id="remote-locations">
 										<details>
 											<summary>
@@ -472,7 +473,7 @@ else if (messageText != null) {
 											</c:forEach>
 										</details>
 										</div>
-
+										</c:if>
 									</td><!--list of the providers cell end-->
 								</tr>
 							</table>

@@ -39,7 +39,6 @@ import org.oscarehr.common.model.MsgDemoMap;
 import org.oscarehr.common.model.OscarCommLocations;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

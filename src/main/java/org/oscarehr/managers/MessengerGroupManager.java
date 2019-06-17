@@ -119,6 +119,13 @@ public class MessengerGroupManager {
 		}
 		
 		Map<String, List<MsgProviderData>> remoteMembers = new TreeMap<String, List<MsgProviderData>>();
+		
+		if(! loggedInInfo.getCurrentFacility().isIntegratorEnabled())
+		{
+			logger.warn("Cannot retrieve remote provider contact list. Integrator is disabled.");
+			return remoteMembers; 
+		}
+		
 		Facility facility = facilityManager.getDefaultFacility(loggedInInfo);	
 
 		try {
@@ -132,7 +139,7 @@ public class MessengerGroupManager {
 					remoteMembers.put(remoteFacility.getName(), remoteMemberDataList);
 				}
 			}			
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
 			logger.error("Error",e);
 		}
 		
@@ -295,13 +302,7 @@ public class MessengerGroupManager {
 		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
 			throw new SecurityException("missing required security object (_admin)");
 		}
-		
-		if(CaisiIntegratorManager.isIntegratorOffline(loggedInInfo.getSession()))
-		{
-			logger.warn("Cannot retrieve remote provider contact list. Integrator is offline.");
-			return null; 
-		}
-		
+
 		MsgProviderData messengerContact = null;
 		CachedProvider cachedProvider = null;
 		Facility facility = facilityManager.getDefaultFacility(loggedInInfo);
@@ -412,20 +413,21 @@ public class MessengerGroupManager {
 		}
 		
 		Map<String, List<MsgProviderData>> providersMap = new TreeMap<String, List<MsgProviderData>>();
-		if(CaisiIntegratorManager.isIntegratorOffline(loggedInInfo.getSession()))
+		
+		if(! loggedInInfo.getCurrentFacility().isIntegratorEnabled())
 		{
-			logger.warn("Cannot retrieve remote provider contact list. Integrator is offline.");
+			logger.warn("Cannot retrieve remote provider contact list. Integrator is disabled.");
 			return providersMap; 
 		}
-		
+				
 		Facility facility = facilityManager.getDefaultFacility(loggedInInfo);
 		List<CachedFacility> remoteFacilities = Collections.emptyList();
 		List<CachedProvider> remoteProviders = Collections.emptyList();
 		
 		try {
 			remoteFacilities = CaisiIntegratorManager.getRemoteFacilitiesExcludingCurrent(loggedInInfo, facility);
-			remoteProviders = CaisiIntegratorManager.getAllProviders(loggedInInfo, facility);
-		} catch (MalformedURLException e) {
+			remoteProviders = CaisiIntegratorManager.getAllProviders(loggedInInfo, facility);		
+		} catch (Exception e) {
 			logger.error("Error while getting remote provider list from Integrator ", e);
 		}
 		
