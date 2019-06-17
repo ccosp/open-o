@@ -2882,4 +2882,7 @@ INSERT INTO `tickler_category` VALUES (\N, 'To Call In', 'Call this patient in f
 insert into `secObjectName` (`objectName`, `description`, `orgapplicable`) values ('_admin.schedule.curprovider_only','allow provider with non-admin role to create schedule templates and assign to themselves', 0);
 
 
+INSERT INTO oscar_msg_type Values(1,'OSCAR Resident Review');
+insert into oscar_msg_type Values(2,'General');
 
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_msg', 'x', 0, '999998');
