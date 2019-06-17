@@ -344,8 +344,9 @@ function fmtOscarMsg() {
 						<tr>
 							<td class="Printable" bgcolor="#DDDDFF"><bean:message
 								key="oscarMessenger.ViewMessage.msgDate" />:</td>
-							<td colspan="2" id="sentDate" class="Printable" bgcolor="#B8B8FF"><%= request.getAttribute("viewMessageDate") %>&nbsp;&nbsp;
-							<%= request.getAttribute("viewMessageTime") %></td>
+							<td colspan="2" id="sentDate" class="Printable" bgcolor="#B8B8FF">
+								<c:out value="${ viewMessageDate }" /> <c:out value="${ viewMessageTime }" /> 
+							</td>
 						</tr>
 						<%  String attach = (String) request.getAttribute("viewMessageAttach");
                                     String id = (String) request.getAttribute("viewMessageId");

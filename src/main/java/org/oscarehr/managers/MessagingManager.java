@@ -23,7 +23,7 @@
  */
 package org.oscarehr.managers;
 
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +39,7 @@ import org.oscarehr.common.model.MsgDemoMap;
 import org.oscarehr.common.model.OscarCommLocations;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,11 +101,10 @@ public class MessagingManager {
 		MessageTbl messageTbl = getMessage(loggedInInfo, messageId);
 		MsgDisplayMessage msgDisplayMessage = new MsgDisplayMessage();
 		String attachedDemographics = messengerDemographicManager.getAttachedDemographicNamesAndAges(loggedInInfo, messageTbl.getId());
-		
-		SimpleDateFormat sentDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-		SimpleDateFormat sentTimeFormat = new SimpleDateFormat("HH:MM:SS");
-		String sentDate = sentDateFormat.format(messageTbl.getDate());
-		String sentTime = sentTimeFormat.format(messageTbl.getTime());
+
+		String sentDate = messageTbl.getDate().toString();
+		String sentTime = messageTbl.getTime().toString();
+
 		Integer messageType = messageTbl.getType();
 		if(messageType == null) {
 			messageType = 0;
