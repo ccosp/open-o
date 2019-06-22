@@ -38,7 +38,7 @@ public class MsgIntegratorDemoMap extends AbstractModel<Integer> {
 	private Integer id;
 	private int messageId;
 	private int sourceDemographicNo;
-	private int msgDemoMapId;
+	private long msgDemoMapId;
 	private int sourceFacilityId;
 	
 	public Integer getId() {
@@ -59,10 +59,10 @@ public class MsgIntegratorDemoMap extends AbstractModel<Integer> {
 	public void setSourceDemographicNo(int sourceDemographicNo) {
 		this.sourceDemographicNo = sourceDemographicNo;
 	}
-	public int getMsgDemoMapId() {
+	public long getMsgDemoMapId() {
 		return msgDemoMapId;
 	}
-	public void setMsgDemoMapId(int msgDemoMapId) {
+	public void setMsgDemoMapId(long msgDemoMapId) {
 		this.msgDemoMapId = msgDemoMapId;
 	}
 	public int getSourceFacilityId() {

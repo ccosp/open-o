@@ -155,6 +155,16 @@ tr.newMessage td {
 .TopStatusBar{
 width:100% !important;
 }
+
+.integratedMessage {
+	background-color: #FFCCCC;
+	color: black;
+}
+
+.normalMessage {
+	background-color: #EEEEFF;
+	color: black;
+}
 </style>
 
 <script type="text/javascript">
@@ -413,7 +423,7 @@ function checkAll(formId){
                                 <%}else{%>
                                 <tr>
                                 <%}%>
-                                    <td bgcolor="#EEEEFF"  width="75">
+                                    <td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'  width="75">
                                     <%if (pageType != 1){%>
                                         <html:checkbox property="messageNo" value="<%=dm.getMessageId() %>" />
                                      <% } %>
@@ -427,10 +437,10 @@ function checkAll(formId){
 
 
                                     </td>
-                                    <td bgcolor="#EEEEFF">
+                                    <td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'>
                                      <bean:message key="<%= key %>"/>
                                     </td>
-                                    <td bgcolor="#EEEEFF">
+                                    <td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'>
                                         <%
                                             if( pageType == 1 ) {                       
                                                 out.print(dm.getSentto());
@@ -442,18 +452,18 @@ function checkAll(formId){
                                         %>
                                     
                                     </td>
-                                    <td bgcolor="#EEEEFF">
+                                    <td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'>
                                     <a href="<%=request.getContextPath()%>/oscarMessenger/ViewMessage.do?messageID=<%=dm.getMessageId()%>&boxType=<%=pageType%>">
                                         <%=dm.getThesubject()%>
                                     </a>
 
                                     </td>
-                                    <td bgcolor="#EEEEFF">
+                                    <td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'>
                                     	<%= dm.getThedate() %>
                                     	&nbsp;&nbsp;
                                     	<%= dm.getThetime() %>
                                     </td>
-                                    <td bgcolor="#EEEEFF">
+                                    <td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'>
                                                                        
                                     <%if(dm.getDemographic_no() != null  && !dm.getDemographic_no().equalsIgnoreCase("null")) {%>                                        
                                         <oscar:nameage demographicNo="<%=dm.getDemographic_no()%>"></oscar:nameage>

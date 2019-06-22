@@ -32,6 +32,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -46,35 +48,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "oscar_msg_type")
 @XmlRootElement
 @NamedQueries({    
-    @NamedQuery(name = "OscarMsgType.findByType", query = "SELECT o FROM OscarMsgType o WHERE o.Id = :type"),
+    @NamedQuery(name = "OscarMsgType.findByType", query = "SELECT o FROM OscarMsgType o WHERE o.id = :type"),
     @NamedQuery(name = "OscarMsgType.findByDescription", query = "SELECT o FROM OscarMsgType o WHERE o.description = :description")})
 public class OscarMsgType extends AbstractModel<Integer>implements Serializable {
     
     public static final Integer OSCAR_REVIEW_TYPE = 1;
     public static final Integer GENERAL_TYPE = 2;
+    public static final Integer INTEGRATOR_TYPE = 3;
 
     private static final long serialVersionUID = 1L;
     @Id    
     @Basic(optional = false)
     @Column(name = "type")
-    private Integer Id;
+    private Integer id;
     @Column(name = "description")
     private String description;
+	
+	@Enumerated(EnumType.STRING)
+    private String code;
     
     public OscarMsgType() {
     }
 
     public OscarMsgType(Integer type) {
-        this.Id = type;
+        this.id = type;
     }
 
     @Override
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer type) {
-        this.Id = type;
+        this.id = type;
     }
 
     public String getDescription() {
@@ -88,7 +94,7 @@ public class OscarMsgType extends AbstractModel<Integer>implements Serializable 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (Id != null ? Id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +105,7 @@ public class OscarMsgType extends AbstractModel<Integer>implements Serializable 
             return false;
         }
         OscarMsgType other = (OscarMsgType) object;
-        if ((this.Id == null && other.Id != null) || (this.Id != null && !this.Id.equals(other.Id))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -107,7 +113,7 @@ public class OscarMsgType extends AbstractModel<Integer>implements Serializable 
 
     @Override
     public String toString() {
-        return "org.oscarehr.common.model.OscarMsgType[ type=" + Id + " ]";
+        return "org.oscarehr.common.model.OscarMsgType[ type=" + id + " ]";
     }
     
 }

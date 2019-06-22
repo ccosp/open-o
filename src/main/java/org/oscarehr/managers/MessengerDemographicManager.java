@@ -114,7 +114,7 @@ public class MessengerDemographicManager {
 			throw new SecurityException("missing required security object (_msg)");
 		}
     	
-    	return msgIntegratorDemoMapDao.findByMessageIdandMsgDemoMapId(messageId, 0);
+    	return msgIntegratorDemoMapDao.findByMessageIdandMsgDemoMapId(messageId, 0L);
 	}
 	
 	public List<DemographicTransfer> getUnlinkedIntegratedDemographics(LoggedInInfo loggedInInfo, int messageId) {
@@ -235,12 +235,44 @@ public class MessengerDemographicManager {
 	 * @param messageId
 	 * @param demographicNo
 	 * @param facilityId
-	 * @param msgDemoMapId
 	 * @return
 	 */
-//	public Integer updateAttachedIntegratedDemographic(LoggedInInfo loggedInInfo, int messageId, int demographicNo, int facilityId, int msgDemoMapId) {
-//		
-//	}
+	public long updateAttachedIntegratedDemographic(LoggedInInfo loggedInInfo, int messageId, int demographicNo, int facilityId) {
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, null)) {
+			throw new SecurityException("missing required security object (_msg)");
+		}
+		
+		// first check the list to avoid duplicates.
+		List<MsgDemoMap> attachedDemographics = getAttachedDemographicList(loggedInInfo, messageId);
+		if(attachedDemographics != null)
+		{
+			for(MsgDemoMap msgDemoMap : attachedDemographics)
+			{
+				if(msgDemoMap.getDemographic_no() == demographicNo)
+				{
+					return msgDemoMap.getId();
+				}
+			}
+		}
+		
+		long msgDemoMapId = attachDemographicToMessage(loggedInInfo, messageId, demographicNo);
+		
+		// this is a one to one relationship. One message to One integrated demographic
+		List<MsgIntegratorDemoMap> msgIntegratorDemoMapList = getUnlinkedIntegratedDemographicList(loggedInInfo, messageId);
+		if(msgIntegratorDemoMapList != null)
+		{
+			for(MsgIntegratorDemoMap msgIntegratorDemoMap : msgIntegratorDemoMapList)
+			{
+				if(msgIntegratorDemoMap.getSourceFacilityId() == facilityId) 
+				{
+					msgIntegratorDemoMap.setMsgDemoMapId(msgDemoMapId);
+					msgIntegratorDemoMapDao.merge(msgIntegratorDemoMap);
+				}
+			}
+		}
+		
+		return msgDemoMapId;
+	}
 
 	 /**
      * Attach an array of local Demographic numbers to the given message id 

@@ -191,6 +191,14 @@ public class MessagingManager {
 			return messageListDao.findUnreadByProviderAndAttachedCount(providerNo);
 		}	
 	}
+	
+	public Integer getMyInboxIntegratorMessagesCount(LoggedInInfo loggedInInfo, String providerNo) {
+    	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
+			throw new SecurityException("missing required security object (_msg)");
+		}
+    	
+		return messageListDao.countUnreadByProviderAndFromIntegratedFacility(providerNo);
+	} 
 		
 	/**
 	 * Get the count of all messages attached to the given demographic Id.

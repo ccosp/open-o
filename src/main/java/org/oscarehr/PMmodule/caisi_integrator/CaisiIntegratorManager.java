@@ -695,7 +695,7 @@ public class CaisiIntegratorManager {
 		ProviderWs providerWs = getProviderWs(loggedInInfo, loggedInInfo.getCurrentFacility());
 		
 		// an empty provider number forces a return of all the messages for the facility. 
-    	return  providerWs.getProviderCommunications("", OscarMsgType.GENERAL_TYPE+"", true);
+    	return  providerWs.getProviderCommunications("", OscarMsgType.INTEGRATOR_TYPE+"", true);
     }
     
     public static void updateProviderCommunicationStatus(LoggedInInfo loggedInInfo, List<Integer> providerCommunicationIdList) throws MalformedURLException { 

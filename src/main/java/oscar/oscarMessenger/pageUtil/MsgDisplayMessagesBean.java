@@ -325,7 +325,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
             String sql = "(select m.messageid is null as isnull, "
             		+ "(select map.demographic_no from msgDemoMap map "
             		+ "where map.messageID = m.messageid limit 1) as demographic_no, "
-            		+ "ml.message, ml.status,  m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby "
+            		+ "ml.message, ml.status,  m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby, m.type "
             		+ "from messagelisttbl ml, messagetbl m  "
             		+ "where ml.provider_no = '" + providerNo + "' " 
             		+ "and status not like \'del\' and remoteLocation = '" + getCurrentLocationId() + "' " 
@@ -345,6 +345,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String attachment = String.valueOf(o[7]);
 				String pdfattachment = String.valueOf(o[8]);
 				String sentby = String.valueOf(o[9]);
+				String type = String.valueOf(o[10]);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
 				dm.setStatus(status);
@@ -354,6 +355,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				dm.setThetime(theime);
 				dm.setSentby(sentby);
 				dm.setDemographic_no(demographic_no);
+				dm.setType(Integer.parseInt(type));
 				String att = attachment;
 				String pdfAtt = pdfattachment;
 
@@ -386,7 +388,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		Vector<MsgDisplayMessage> msg = new Vector<MsgDisplayMessage>();
 		int index = 0;
 
-		String[] searchCols = { "m.thesubject", "m.themessage", "m.sentby", "m.sentto" };
+		String[] searchCols = { "m.thesubject", "m.themessage", "m.sentby", "m.sentto", "m.type" };
 		
 		try {
 			String sql = "select map.messageID is null as isnull, map.demographic_no, m.messageid, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  " 
@@ -409,6 +411,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String attachment = String.valueOf(o[6]);
 				String pdfattachment = String.valueOf(o[7]);
 				String sentby = String.valueOf(o[8]);
+				String type = String.valueOf(o[9]);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
 				dm.setStatus("    ");
@@ -419,7 +422,8 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				dm.setThetime(theime);
 				dm.setSentby(sentby);
 				dm.setDemographic_no(demo_no);
-
+				dm.setType(Integer.parseInt(type));
+				
 				String att = attachment;
 				String pdfAtt = pdfattachment;
 				if (att == null || att.equals("null")) {
@@ -474,7 +478,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		String limitSql = " limit " + fromRecordNum + ", " + recordsToDisplay;
 		
 		try {
-			String sql = "select map.messageID is null as isnull, map.demographic_no, ml.message, ml.status, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  "
+			String sql = "select map.messageID is null as isnull, map.demographic_no, ml.message, ml.status, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby, m.type "
 					+ "from messagelisttbl ml, messagetbl m " 
 					+ " left outer join msgDemoMap map on (map.messageID = m.messageid) " 
 					+ " where provider_no = '" 
@@ -497,7 +501,8 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String attachment = String.valueOf(o[7]);
 				String pdfattachment = String.valueOf(o[8]);
 				String sentby = String.valueOf(o[9]);
-
+				String type = String.valueOf(o[10]);
+				
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
 				dm.setStatus("deleted");
 				dm.setMessageId(message);
@@ -506,6 +511,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				dm.setThetime(theime);
 				dm.setSentby(sentby);
 				dm.setDemographic_no(demographic_no);
+				dm.setType(Integer.parseInt(type));
 
 				String att = attachment;
 				String pdfAtt = pdfattachment;

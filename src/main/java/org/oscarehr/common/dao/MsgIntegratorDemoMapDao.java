@@ -42,7 +42,7 @@ public class MsgIntegratorDemoMapDao extends AbstractDao<MsgIntegratorDemoMap>{
 	 * Find remote integrated demographics where the local message demographic number has not 
 	 * been linked to the remote demographic number
 	 */
-	public List<MsgIntegratorDemoMap> findByMessageIdandMsgDemoMapId(Integer messageId, Integer msgDemoMapId) {
+	public List<MsgIntegratorDemoMap> findByMessageIdandMsgDemoMapId(Integer messageId, long msgDemoMapId) {
 		String sql = "select x from MsgIntegratorDemoMap x where x.messageId=?1 and x.msgDemoMapId = ?2";
     	Query query = entityManager.createQuery(sql);
     	query.setParameter(1,messageId);

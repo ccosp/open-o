@@ -2884,5 +2884,6 @@ insert into `secObjectName` (`objectName`, `description`, `orgapplicable`) value
 
 INSERT INTO oscar_msg_type Values(1,'OSCAR Resident Review');
 insert into oscar_msg_type Values(2,'General');
+INSERT INTO `oscar_msg_type`(`type`, `description`) VALUES (3, 'Integrator Message');
 
 INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_msg', 'x', 0, '999998');

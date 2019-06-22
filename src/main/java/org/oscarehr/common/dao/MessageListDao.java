@@ -87,6 +87,19 @@ public class MessageListDao extends AbstractDao<MessageList> {
 		
 	}
 	
+	public int countUnreadByProviderAndFromIntegratedFacility(String providerNo) {
+		Query query = entityManager.createQuery("select count(l) from MessageList l where l.providerNo= :providerNo and l.status='new' and l.sourceFacilityId > 0");
+		
+		query.setParameter("providerNo", providerNo);
+		return getCountResult(query).intValue();	
+	}
+	
+	public int countUnreadByProvider(String providerNo) {
+		Query query = entityManager.createQuery("select count(l) from MessageList l where l.providerNo= :providerNo and l.status='new' and l.sourceFacilityId > 0");
+		
+		query.setParameter("providerNo", providerNo);
+		return getCountResult(query).intValue();	
+	}
 	
     public List<MessageList> search(String providerNo, String status, int start, int max) {
     	

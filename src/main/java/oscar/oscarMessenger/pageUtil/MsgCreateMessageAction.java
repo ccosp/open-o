@@ -95,6 +95,7 @@ public class MsgCreateMessageAction extends Action {
             sentToWho = messageData.createSentToString(providerListing);
             sentToWho = sentToWho + " " + messageData.getRemoteNames(remoteProviderListing);
             sentToWho = sentToWho.trim();
+
             messageId = messageData.sendMessage2(message,subject,userName,sentToWho,userNo,providerListing,att, pdfAtt, OscarMsgType.GENERAL_TYPE);
 
             //link msg and demographic if both messageId and demographic_no are not null

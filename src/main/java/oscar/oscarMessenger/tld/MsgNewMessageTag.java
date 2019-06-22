@@ -25,26 +25,36 @@
 
 package oscar.oscarMessenger.tld;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.hibernate.HibernateException;
-import org.oscarehr.util.DbConnectionFilter;
+import org.oscarehr.PMmodule.service.ProviderManager;
+import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.Security;
+import org.oscarehr.managers.FacilityManager;
+import org.oscarehr.managers.MessagingManager;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
-
-import oscar.util.SqlUtils;
+import org.oscarehr.util.SpringUtils;
 
 public class MsgNewMessageTag extends TagSupport {
 
+	private static MessagingManager messagingManager = SpringUtils.getBean(MessagingManager.class);
+	private static ProviderManager providerManager = SpringUtils.getBean(ProviderManager.class);
+	private static FacilityManager facilityManager = SpringUtils.getBean(FacilityManager.class);
+	
+    private String providerNo;
+    private int numNewMessages;
+    private int numNewDemographicMessages;
+    private int numIntegratedMessages;
+    private LoggedInInfo loggedInInfo;
+	
     public MsgNewMessageTag()    {
         numNewMessages = 0;
         numNewDemographicMessages = 0;
+        numIntegratedMessages = 0;
+        loggedInInfo = new LoggedInInfo();
     }
 
     public void setProviderNo(String providerNo1)    {
@@ -56,61 +66,68 @@ public class MsgNewMessageTag extends TagSupport {
     }
 
     public int doStartTag() throws JspException    {
-       
-            Connection c = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            try {
-                c = DbConnectionFilter.getThreadLocalDbConnection();
-                						//String sql = new String("select count(*) from messagelisttbl where provider_no ='"+ providerNo +"' and status = 'new' ");
-                String sql = "select count(*) from messagelisttbl m LEFT JOIN oscarcommlocations o ON m.remoteLocation = o.locationId where m.provider_no = ? and m.status = 'new' and o.current1=1" ;
-                ps = c.prepareStatement(sql);
-                ps.setString(1,providerNo);
-                rs = ps.executeQuery();                
-                while (rs.next()) {
-                   numNewMessages = (rs.getInt(1));
-                }
-                
-                String sqlCommand="select count(*) from messagelisttbl,msgDemoMap where provider_no =? and status = 'new' and messageID = message" ;
-                ps = c.prepareStatement(sqlCommand);
-                ps.setString(1,providerNo);
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                	numNewDemographicMessages = (rs.getInt(1));
-                }
-            }
-            catch (SQLException e) {
-                throw (new HibernateException(e));
-            }
-            finally {
-                SqlUtils.closeResources(c, ps, rs);
-            }
-        
-        try        {
+
+    	Provider provider = providerManager.getProvider(providerNo);
+    	loggedInInfo.setLoggedInProvider(provider);
+    	loggedInInfo.setLoggedInSecurity(new Security());
+    	
+    	numNewMessages = messagingManager.getMyInboxMessageCount(loggedInInfo, providerNo, false);
+    	numNewDemographicMessages = messagingManager.getMyInboxMessageCount(loggedInInfo, providerNo, true);
+    	
+    	if(facilityManager.getDefaultFacility(loggedInInfo).isIntegratorEnabled())
+    	{
+    		numIntegratedMessages = messagingManager.getMyInboxIntegratorMessagesCount(loggedInInfo, providerNo);
+    	}
+    	
+        try {
             JspWriter out = super.pageContext.getOut();
             if(numNewMessages > 0)
+            {
                 out.print("<span class='tabalert'>");
+            }
             else
+            {
                 out.print("<span>");
+            }
         } catch(Exception p) {MiscUtils.getLogger().error("Error",p);
         }
         return(EVAL_BODY_INCLUDE);
     }
 
-    public int doEndTag()        throws JspException    {
+    public int doEndTag() throws JspException {
      //ronnie 2007-4-26
        try{
           JspWriter out = super.pageContext.getOut();
-          if (numNewMessages > 0)
-              out.print("<sup>"+numNewDemographicMessages+"/"+numNewMessages+"</sup></span>  ");
+          if (numNewMessages > 0) 
+          {
+        	  StringBuilder stringBuilder = new StringBuilder("<sup>");
+        	  stringBuilder.append("<span id='demographicMessageCount' title='New Demographic Messages'>");
+        	  stringBuilder.append(numNewDemographicMessages);
+        	  stringBuilder.append("</span>");
+        	  
+          	  if(facilityManager.getDefaultFacility(loggedInInfo).isIntegratorEnabled())
+        	  {
+          		stringBuilder.append("|<span id='integratorMessageCount' title='New Integrator Messages'>");
+          		stringBuilder.append(numIntegratedMessages);
+          		stringBuilder.append("</span>");
+        	  }
+        	  
+        	  stringBuilder.append("/<span id='totalMessageCount' title='Total New Messages'>");
+        	  stringBuilder.append(numNewMessages);
+        	  stringBuilder.append("</span>");
+         	  
+          	  stringBuilder.append("</sup></span>  ");
+              
+          	  out.print(stringBuilder);
+          }
           else
+          {
               out.print("</span>  ");
+          }
        }catch(Exception p) {MiscUtils.getLogger().error("Error",p);
        }
        return EVAL_PAGE;
     }
 
-    private String providerNo;
-    private int numNewMessages;
-    private int numNewDemographicMessages;
+
 }

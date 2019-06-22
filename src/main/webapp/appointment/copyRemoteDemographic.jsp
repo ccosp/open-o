@@ -68,6 +68,14 @@
    		 
    	int remoteFacilityId = Integer.parseInt(request.getParameter("remoteFacilityId"));
 	int remoteDemographicId = Integer.parseInt(request.getParameter("demographic_no"));
+	
+	// for when the demographic is being imported from an Oscar message.
+	int messageID = 0;
+	int boxType = 0;
+	if(request.getParameter("messageID") != null)
+	{
+		messageID = Integer.parseInt(request.getParameter("messageID"));
+	}
 
 	//--- make new local demographic record ---
 	Demographic demographic=CaisiIntegratorManager.makeUnpersistedDemographicObjectFromRemoteEntry(loggedInInfo, loggedInInfo.getCurrentFacility(), remoteFacilityId, remoteDemographicId);
@@ -137,6 +145,16 @@
 	
 		redirect.append("&doctor_no=");
 		redirect.append(request.getParameter("provider_no"));
+		
+		if(messageID > 0)
+		{
+			redirect.append("&messageID=");
+			redirect.append(messageID);
+			redirect.append("&boxType=");
+			redirect.append(boxType);
+			redirect.append("&importedDemographic=");
+			redirect.append(true);
+		}
 	
 		@SuppressWarnings("unchecked")
 		Enumeration<String> e = request.getParameterNames();

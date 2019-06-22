@@ -70,6 +70,7 @@ if (request.getParameter("bFirstDisp")!=null) bFirstDisp= (request.getParameter(
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <html:html locale="true">
@@ -467,27 +468,30 @@ function fmtOscarMsg() {
 
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF" colspan="2"><font style="font-weight: bold" >
-							Demographic(s) linked to this message</font>
+							<td bgcolor="#EEEEFF" colspan="2">
+								<strong>
+									Demographic(s) linked to this message
+								</strong>
 							</td>
 						</tr>
-						
-						<c:forEach items="${ unlinkedDemographics }" var="unlinkedDemographic" >
-							<tr>
-								<td bgcolor="#EEEEFF"></td>
-								<td bgcolor="#EEEEFF"> 
-									<c:out value="${ unlinkedDemographic.lastName }" />, <c:out value="${ unlinkedDemographic.firstName }" /> <br />
-									<strong>Location:</strong> <c:out value="${ demographicLocation }" />							
-								</td>
-								<td bgcolor="#EEEEFF">
-									<a title="Import" href="#"  
-										onclick="javascript:popupViewAttach(700,1027,'../appointment/copyRemoteDemographic.jsp?remoteFacilityId=${ unlinkedDemographic.integratorFacilityId }&demographic_no=${ unlinkedDemographic.caisiDemographicId }&originalPage=../demographic/demographiceditdemographic.jsp&provider_no=<%=providerNo%>')" >
-									Import
-									</a>
-								</td>
-							</tr>
-						</c:forEach>
-
+						<c:if test="${ not empty unlinkedDemographics }">
+							<c:forEach items="${ unlinkedDemographics }" var="unlinkedDemographic" >
+								<tr id="unlinkedDemographicDetails" >
+									<td bgcolor="#EEEEFF"></td>
+									<td bgcolor="#EEEEFF"> 
+										<c:out value="${ unlinkedDemographic.lastName }" />, <c:out value="${ unlinkedDemographic.firstName }" /> <br />
+										<strong>Gender:</strong> <c:out value="${ unlinkedDemographic.gender }" /><br />
+										<strong>HIN:</strong> <c:out value="${ unlinkedDemographic.hin }" /><br />
+										<strong>File Location:</strong> <c:out value="${ demographicLocation }" />							
+									</td>
+									<td bgcolor="#EEEEFF">
+										<a title="Import" href="../appointment/copyRemoteDemographic.jsp?remoteFacilityId=${ unlinkedDemographic.integratorFacilityId }&demographic_no=${ unlinkedDemographic.caisiDemographicId }&messageID=${ viewMessageNo }&originalPage=../oscarMessenger/ViewMessage.do" >
+										Import
+										</a>
+									</td>
+								</tr>
+							</c:forEach>
+						</c:if>
                         <% int demoCount = 0; %>              
                         <c:forEach items="${ attachedDemographics }" var="demographic">
              			<c:set var="demographicNumber" value="${ demographic.key }" />

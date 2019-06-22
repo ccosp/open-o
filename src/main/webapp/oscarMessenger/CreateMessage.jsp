@@ -167,6 +167,16 @@ if(recall){
     }
 
 	function validatefields(){
+		
+		// cannot send attachments to remote facilities
+		$("input:checked").each(function () {
+			if(this.id.split("-")[2] > 0 && $("#attachmentAlert").val())
+			{
+				alert("Cannot send attachments to Integrated facilities.");
+				return false;
+			}
+		})	
+		
 	  if (document.forms[0].message.value.length == 0){
 	    alert("<bean:message key="oscarMessenger.CreateMessage.msgEmptyMessage"/>");
 	    return false;
@@ -473,7 +483,7 @@ if(recall){
                     %>
 							<br>
 							<bean:message key="oscarMessenger.CreateMessage.msgAttachments" />
-		
+							<input type="hidden" id="attachmentAlert" name="attachmentAlert" value="true" />
 							<% 
 							bean.setSubject(null);
 							bean.setMessage(null);

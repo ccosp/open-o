@@ -41,6 +41,7 @@ import org.oscarehr.common.model.Facility;
 import org.oscarehr.common.model.MessageList;
 import org.oscarehr.common.model.MessageTbl;
 import org.oscarehr.common.model.MsgDemoMap;
+import org.oscarehr.common.model.OscarMsgType;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -221,7 +222,7 @@ public class MessengerIntegratorManager {
 			sourceProviderIds.add(sourceProvider.getProviderNo());
 		}
 		providerCommunication.setSourceProviderId(StringUtils.join(sourceProviderIds,","));
-		providerCommunication.setType(messageTbl.getType()+"");	
+		providerCommunication.setType(OscarMsgType.INTEGRATOR_TYPE+"");	
 		providerCommunication.setData(jsonString.toString().getBytes("UTF-8"));
 
     	return providerCommunication; 
@@ -293,7 +294,7 @@ public class MessengerIntegratorManager {
 			messageTbl.setSubject(subject);
 			messageTbl.setMessage(message);
 			messageTbl.setType(Integer.parseInt(providerCommunication.getType()));
-		
+	
 			/*
 			 * Save the actual message and then populate the associated tables for 
 			 * additional recipients and the related demogaphic chart.
