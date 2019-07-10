@@ -274,7 +274,7 @@ public class EaapsHandler extends DefaultGenericHandler implements oscar.oscarLa
 			sentToWho = sentToWho + " " + messageData.getRemoteNames(remoteProviders);
 		}
 
-		String subject = "eAAPS: Recommendations ready for " + demo.getFormattedName();
+		String subject = "Electronic Asthma Management System (eAMS): Recommendations ready for " + demo.getFormattedName();
 		String userName = "System";
 		String userNo = SYSTEM_USER_ID;
 		String attachment = null;
