@@ -211,6 +211,19 @@ p {
     display: block;
 }
 
+#oscar_new_msg .tabalert sup {
+	color: silver;
+}
+
+#integratorMessageCount {
+	color: #FFCCCC !important;
+	font-weight: bold !important;
+}
+
+#demographicMessageCount, #totalMessageCount {
+	color:red !important;
+}
+
 @media print {
  .noprint {display:none !important;}
 }

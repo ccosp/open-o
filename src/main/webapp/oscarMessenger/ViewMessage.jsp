@@ -258,17 +258,21 @@ function fmtOscarMsg() {
 					<td>
 					<table cellspacing=3>
 						<tr>
-							<td>
-							<table class=messButtonsA cellspacing=0 cellpadding=3>
-								<tr>
-									<td class="messengerButtonsA"><html:link
-										page="/oscarMessenger/CreateMessage.jsp"
-										styleClass="messengerButtons">
-										<bean:message key="oscarMessenger.ViewMessage.btnCompose" />
-									</html:link></td>
-								</tr>
-							</table>
-							</td>
+							<!-- dont need this button from the encounter view -->
+							<c:if test="${ empty from or not from eq 'encounter' }">
+								<td>
+								<table class=messButtonsA cellspacing=0 cellpadding=3>
+									<tr>
+										<td class="messengerButtonsA"><html:link
+											page="/oscarMessenger/CreateMessage.jsp"
+											styleClass="messengerButtons">
+											<bean:message key="oscarMessenger.ViewMessage.btnCompose" />
+										</html:link></td>
+									</tr>
+								</table>
+								</td>
+							</c:if>
+							
 							<td>
 							<table class=messButtonsA cellspacing=0 cellpadding=3>
 								<tr>
@@ -278,6 +282,9 @@ function fmtOscarMsg() {
 								</tr>
 							</table>
 							</td>
+							
+							<!-- dont need this button from the encounter view -->
+							<c:if test="${ empty from or not from eq 'encounter' }">
 							<td>
 							<table class=messButtonsA cellspacing=0 cellpadding=3>
 								<tr>
@@ -287,12 +294,11 @@ function fmtOscarMsg() {
 										<bean:message key="oscarMessenger.ViewMessage.btnInbox" />
 									</html:link></td>
 								</tr>
-							</table>
+							</table>							
 							</td>
-							<%
-                                        if( boxType.equals("1") ) {
-                                        
-                                    %>
+							</c:if>
+							
+							<% if( "1".equals(boxType) ) { %>
 							<td>
 							<table class=messButtonsA cellspacing=0 cellpadding=3>
 								<tr>
@@ -304,9 +310,8 @@ function fmtOscarMsg() {
 								</tr>
 							</table>
 							</td>
-							<%
-                                        }
-                                    %>
+							<%} %>
+							
 							<td>
 							<table class=messButtonsA cellspacing=0 cellpadding=3>
 								<tr>
@@ -381,11 +386,62 @@ function fmtOscarMsg() {
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
 							<td bgcolor="#EEEEFF" colspan="2">
-								<textarea id="msgBody" name="Message"
-									wrap="hard" readonly="true" rows="18" cols="60"><%= request.getAttribute("viewMessageMessage") %>
-								</textarea>
+								<textarea id="msgBody" name="Message" wrap="hard" readonly="true" rows="18" cols="60"><c:out value="${ viewMessageMessage }"/></textarea>
 							</td>
 						</tr>
+						
+						<!-- switch views depending on if the request was made from the patient encounter -->
+						
+						<c:choose>
+						<%-- If view request is from the encounter, display the following: --%>
+						<c:when test="${ from eq 'encounter' }">
+							<tr>
+								<td bgcolor="#EEEEFF"></td>
+								<td bgcolor="#EEEEFF">
+								<strong>
+									Demographic(s) linked to this message
+								</strong>
+								</td>
+							</tr>
+							
+							<%-- display the list of attached demographics --%>
+							<c:choose>
+								<c:when test="${ not empty attachedDemographics }">
+									<c:forEach items="${ attachedDemographics }" var="demoattached">
+										<tr>
+										<td bgcolor="#EEEEFF"></td>
+										<td bgcolor="#EEEEFF" colspan="2">
+										
+											<c:out value="${ demoattached.value }" /> <br />
+
+											<c:if test="${ demoattached.key eq demographic_no }">
+												<input
+													onclick="javascript:popup('${ demographic_no }', '${ messageID }', '${ providerNo }');"
+													class="ControlPushButton" type="button" name="writeToEncounter"
+													value="Write To Encounter"> <input
+													onclick="return paste2Encounter('${ demographic_no }');"
+													class="ControlPushButton" type="button" name="pasteToEncounter"
+													value="Paste To Encounter"> 												
+											 </c:if>
+										</td>
+										</tr>
+									</c:forEach>							
+								</c:when>
+								
+								<%--  or send a message that no demogrpahic is linked --%>
+								<c:otherwise>
+									<tr>
+									<td bgcolor="#EEEEFF"></td>
+									<td bgcolor="#EEEEFF">
+										No demographic is linked to this message
+									</td>
+								</tr>
+								</c:otherwise>
+							</c:choose>						
+						</c:when>
+						
+						<%-- If veiw request is from the inbox, display the following --%>
+						<c:otherwise>
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
 							<td bgcolor="#EEEEFF" colspan="2">
@@ -397,13 +453,17 @@ function fmtOscarMsg() {
 									<bean:message key="oscarMessenger.ViewMessage.btnForward" />
 								</html:submit> <html:submit styleClass="ControlPushButton" property="delete">
 									<bean:message key="oscarMessenger.ViewMessage.btnDelete" />
-								</html:submit> <html:hidden property="messageNo" value="<%=(String)request.getAttribute(\"viewMessageNo\") %>" />
+								</html:submit> 
+								<html:hidden property="messageNo" value="${ viewMessageNo }" />
 							</td>
 						</tr>
 						<tr>
 							<td bgcolor="#B8B8FF"></td>
-							<td bgcolor="#B8B8FF" colspan="2"><font style="font-weight: bold">Link
-							this message to ...</font></td>
+							<td bgcolor="#B8B8FF" colspan="2">
+							<strong>
+								Link this message to ...
+							</strong>
+							</td>
 						</tr>
 
 						<tr>
@@ -422,8 +482,7 @@ function fmtOscarMsg() {
 						</tr>
 						<tr>
 							<td bgcolor="#EEEEFF"></td>
-							<td bgcolor="#EEEEFF" colspan="2"><font style="font-weight: bold">Selected
-							Demographic</font></td>
+							<td bgcolor="#EEEEFF" colspan="2"><strong>Selected Demographic</strong></td>
 						</tr>
 
 						<%
@@ -485,7 +544,8 @@ function fmtOscarMsg() {
 										<strong>File Location:</strong> <c:out value="${ demographicLocation }" />							
 									</td>
 									<td bgcolor="#EEEEFF">
-										<a title="Import" href="../appointment/copyRemoteDemographic.jsp?remoteFacilityId=${ unlinkedDemographic.integratorFacilityId }&demographic_no=${ unlinkedDemographic.caisiDemographicId }&messageID=${ viewMessageNo }&originalPage=../oscarMessenger/ViewMessage.do" >
+										<a title="Import" 
+											href="<%= request.getContextPath() %>/oscarMessenger/ImportDemographic.do?remoteFacilityId=${ unlinkedDemographic.integratorFacilityId }&remoteDemographicNo=${ unlinkedDemographic.caisiDemographicId }&messageID=${ viewMessageNo }" >
 										Import
 										</a>
 									</td>
@@ -585,7 +645,10 @@ function fmtOscarMsg() {
 							</tr>						
 						<% ++demoCount; %>						
 						</c:forEach>
-
+						
+					</c:otherwise>
+					</c:choose>  <!-- end view demographic selection block -->
+					
 					</table>
 					</td>
 				</tr>
@@ -601,6 +664,123 @@ function fmtOscarMsg() {
 <%  String bodyTextAsHTML = (String) request.getAttribute("viewMessageMessage");
     bodyTextAsHTML = bodyTextAsHTML.replaceAll("\n|\r\n?","<br/>"); %>
 <p class="NotDisplayable Printable"><%= bodyTextAsHTML %></p>
-</body>
 
+
+	<!-- Select demographic modal window for the import demographic process -->
+	<div id="selectDemographic" class="modal">
+	  	<div class="modal-content">
+	  		<form id="selectDemographicForm" action="<%= request.getContextPath() %>/oscarMessenger/ImportDemographic.do">
+			<div class="modal-header">
+			  <span id="closeSelectDemographic" class="close">&times;</span>
+			  <h2>Local Demographic Matches Found</h2>
+			</div>
+			<div class="modal-body">
+			  <c:if test="${ not empty demographicUserSelect }">
+				  <c:forEach items="${ unlinkedDemographics }" var="unlinkedDemographic" >
+				  	<c:if test="${ unlinkedDemographic.caisiDemographicId eq remoteDemographicNo }">
+					  	<div>
+							<c:out value="${ unlinkedDemographic.lastName }" />, <c:out value="${ unlinkedDemographic.firstName }" /> <br />
+							<strong>Gender:</strong> <c:out value="${ unlinkedDemographic.gender }" /><br />
+							<strong>HIN:</strong> <c:out value="${ unlinkedDemographic.hin }" /><br />
+							<strong>File Location:</strong> <c:out value="${ demographicLocation }" />							
+							<input type="hidden" id="remoteDemographicNo" name="remoteDemographicNo" value="${ unlinkedDemographic.caisiDemographicId }" />
+							<input type="hidden" id="remoteFacilityId" name="remoteFacilityId" value="${ unlinkedDemographic.integratorFacilityId }" />
+					  	</div>
+					</c:if>
+				 </c:forEach>
+				 <p>
+				  		Select a local demographic file to link with this remote demographic. Or select "No Match" to import the remote demographic.
+				 </p>
+			  	<c:forEach items="${ demographicUserSelect }" var="demographicSelect" >
+			  		<div class="demographicOption">
+			  			<input type="radio" name="selectedDemographicNo" id="demographic_${ demographicSelect.demographicNo }" value="${ demographicSelect.demographicNo }" />
+			  			<label for="demographic_${ demographicSelect.demographicNo }">
+			  				<c:out value="${ demographicSelect.lastName }" />, <c:out value="${ demographicSelect.firstName }" /> <br />
+							<strong>Gender:</strong> <c:out value="${ demographicSelect.sex }" /><br />
+							<strong>HIN:</strong> <c:out value="${ demographicSelect.hin }" /><br />
+							<strong>DOB:</strong> <c:out value="${ demographicSelect.birthDayAsString }" />
+			  			</label>		  		
+			  		</div>
+			  	</c:forEach>
+			  	<div class="demographicOption">
+			  		<input type="radio" name="selectedDemographicNo" id="no_selection" value="0" />
+			  		<label for="no_selection">
+			  			No Match
+			  		</label>
+			  	</div>
+	  		
+			  	<input type="hidden" id="messageID" name="messageID" value="${ viewMessageId }" />			  						  
+			  </c:if>
+			</div>
+		</form>
+			<div class="modal-footer">			
+			  <div>
+			  	<button class="modal_button" id="cancelbtn" value="cancel" >cancel</button>
+			  	<button class="modal_button" id="linkbtn" value="link" >link</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" >
+		/*
+		 * Modal window scripts for import demographic selector.
+		 * This is triggered after the user selects to import a remote demographic
+		 * and several matching demographics are found in the local database.
+		 */
+		var modal = document.getElementById("selectDemographic");
+		var span = document.getElementById("closeSelectDemographic");
+		var cancel = document.getElementById("cancelbtn");
+		var link = document.getElementById("linkbtn");
+
+		//open the modal
+		function openSelectDemographicModal() {
+			modal.style.display = "block";
+		}
+		
+		//(x), close the modal
+		cancel.onclick = function() {
+			modal.style.display = "none";
+		}
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+		window.onclick = function(event) {
+			if (event.target == modal) {
+			 modal.style.display = "none";
+			}
+		}
+		
+		// submit actions
+		link.onclick = function() {
+ 			var form = document.getElementById("selectDemographicForm");			
+			var selected = form.elements["selectedDemographicNo"];
+			var remoteDemographic = form.elements["remoteDemographicNo"];
+			
+			if(! selected.value)
+			{
+				alert("Please select a demographic or \"No Match\"");
+				return false;
+			}
+
+			if(! remoteDemographic)
+			{
+				alert("Cannot link this demographic. Contact support.");
+				return false;
+			}
+			
+			form.submit();
+			 modal.style.display = "none";
+		}
+
+		/* the select demographic modal will open if there are 
+		 * a selection of demogrpahic files to select from
+		 */
+		if("${ demographicUserSelect }")
+		{
+			 openSelectDemographicModal();
+		}
+	</script>
+
+</body>
 </html:html>

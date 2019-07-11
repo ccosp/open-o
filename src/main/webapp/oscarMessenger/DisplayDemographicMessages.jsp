@@ -246,7 +246,7 @@ function unlink(){
                                         String isLastMsg = "false";
                             %>
 						<tr>
-							<td bgcolor="#EEEEFF" width="75"><html:checkbox
+							<td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>' width="75"><html:checkbox
 								property="messageNo" value="<%=dm.getMessageId() %>" /> <% String atta = dm.getAttach();
                                             if (atta.equals("1")){
                                             %><img src="img/clip4.jpg">
@@ -254,12 +254,12 @@ function unlink(){
                                             }
                                          %> &nbsp;</td>
 
-							<td bgcolor="#EEEEFF"><%= dm.getSentby()  %></td>
-							<td bgcolor="#EEEEFF"><a
+							<td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'><%= dm.getSentby()  %></td>
+							<td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'><a
 								href="<%=request.getContextPath()%>/oscarMessenger/ViewMessage.do?from=encounter&demographic_no=<%=demographic_no%>&msgCount=<%=msgCount%>&orderBy=<%=orderby%>&messageID=<%=dm.getMessageId()%>&messagePosition=<%=dm.getMessagePosition()%>">
 							<%=dm.getThesubject()%> </a></td>
-							<td bgcolor="#EEEEFF"><%= dm.getThedate()  %></td>
-                                                        <td bgcolor="#EEEEFF">
+							<td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'><%= dm.getThedate()  %></td>
+                                                        <td class='<%= dm.getType() == 3 ? "integratedMessage" : "normalMessage" %>'>
                                                             <oscar:nameage demographicNo="<%=dm.getDemographic_no()%>"></oscar:nameage>
                                                         </td>
 						</tr>

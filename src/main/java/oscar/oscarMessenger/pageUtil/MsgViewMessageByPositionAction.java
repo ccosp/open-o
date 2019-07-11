@@ -46,7 +46,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.util.ParameterActionForward;
-
+@Deprecated 
+/**
+ * @Deprecated: don't use.
+ */
 public class MsgViewMessageByPositionAction extends Action {
 
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);

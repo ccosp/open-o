@@ -162,6 +162,7 @@ public class MsgViewMessageAction extends Action {
 	        request.setAttribute("viewMessageId",messageNo);                 
 	        request.setAttribute("viewMessageNo",messageNo);
 	        request.setAttribute("viewMessagePosition",messagePosition);
+	        request.setAttribute("from", from);
 	        request.setAttribute("providerNo",providerNo); 
 	        if(orderBy!=null){
 	            request.setAttribute("orderBy", orderBy);
@@ -213,16 +214,9 @@ public class MsgViewMessageAction extends Action {
         request.setAttribute("today", simpleDateFormat.format(new Date(System.currentTimeMillis())));
         
         ParameterActionForward actionforward = new ParameterActionForward(mapping.findForward("success"));
-        actionforward.addParameter("boxType", boxType);
-        if(from.equalsIgnoreCase("encounter")){
-            actionforward = new ParameterActionForward(mapping.findForward("viewFromEncounter"));
-            actionforward.addParameter("demographic_no", demographic_no);
-            actionforward.addParameter("msgCount", msgCount);
-        }
-        else{          
-            actionforward.addParameter("linkMsgDemo", linkMsgDemo);
-        }
-                
+        actionforward.addParameter("boxType", boxType);         
+        actionforward.addParameter("linkMsgDemo", linkMsgDemo);
+   
         return actionforward;
     }
 

@@ -104,7 +104,7 @@ public class MessagingManager {
 		MsgDisplayMessage msgDisplayMessage = new MsgDisplayMessage();
 		String attachedDemographics = messengerDemographicManager.getAttachedDemographicNamesAndAges(loggedInInfo, messageTbl.getId());
 
-		String sentDate = messageTbl.getDate().toString();
+		String sentDate = new SimpleDateFormat("dd-MM-yyyy").format(messageTbl.getDate());
 		String sentTime = messageTbl.getTime().toString();
 
 		Integer messageType = messageTbl.getType();

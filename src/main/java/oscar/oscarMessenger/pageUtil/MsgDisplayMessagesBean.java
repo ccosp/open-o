@@ -24,11 +24,13 @@
 
 package oscar.oscarMessenger.pageUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-
+import java.util.Date;
 import org.oscarehr.common.dao.MessageListDao;
 import org.oscarehr.common.dao.MessageTblDao;
 import org.oscarehr.common.dao.OscarCommLocationsDao;
@@ -346,6 +348,8 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String pdfattachment = String.valueOf(o[8]);
 				String sentby = String.valueOf(o[9]);
 				String type = String.valueOf(o[10]);
+				
+				thedate = formatDate(thedate);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
 				dm.setStatus(status);
@@ -391,7 +395,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		String[] searchCols = { "m.thesubject", "m.themessage", "m.sentby", "m.sentto", "m.type" };
 		
 		try {
-			String sql = "select map.messageID is null as isnull, map.demographic_no, m.messageid, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby  " 
+			String sql = "select map.messageID is null as isnull, map.demographic_no, m.messageid, m.thesubject, m.thedate, m.theime, m.attachment, m.pdfattachment, m.sentby, m.type  " 
 					+ "from  messagetbl m, msgDemoMap map where map.demographic_no = '" 
 					+ demographic_no 
 					+ "'  " 
@@ -412,6 +416,8 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String pdfattachment = String.valueOf(o[7]);
 				String sentby = String.valueOf(o[8]);
 				String type = String.valueOf(o[9]);
+				
+				thedate = formatDate(thedate);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
 				dm.setStatus("    ");
@@ -502,6 +508,8 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String pdfattachment = String.valueOf(o[8]);
 				String sentby = String.valueOf(o[9]);
 				String type = String.valueOf(o[10]);
+				
+				thedate = formatDate(thedate);
 				
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
 				dm.setStatus("deleted");
@@ -618,6 +626,8 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 				String sentto = String.valueOf(o[8]);
 				String attachment = String.valueOf(o[9]);
 				String pdfattachment = String.valueOf(o[10]);
+				
+				thedate = formatDate(thedate);
 
 				oscar.oscarMessenger.data.MsgDisplayMessage dm = new oscar.oscarMessenger.data.MsgDisplayMessage();
 				dm.setStatus("sent");
@@ -686,5 +696,16 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("Error", e);
 		}
+	}
+	
+	/**
+	 * A temporary helper method to last the life of this deprecated class.
+	 * Formats a database formatted date string into an Oscar formatted date string. 
+	 * @throws ParseException 
+	 */
+	private String formatDate(String thedate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(thedate);
+		SimpleDateFormat finalFormat = new SimpleDateFormat("dd-MM-yyyy");
+		return finalFormat.format(date);
 	}
 }
