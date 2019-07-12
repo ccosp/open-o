@@ -806,6 +806,11 @@
 			<forward name="home" path="/Home.do" redirect="true" />
 			<forward name="login" path="/index.jsp" />
 		</action>
+		
+		<action input="/oscarMessenger/ViewMessage.jsp" path="/oscarMessenger/ImportDemographic" scope="request" type="oscar.oscarMessenger.pageUtil.ImportDemographicAction">
+			<forward name="success" path="/oscarMessenger/ViewMessage.do" />
+		</action>
+		
 		<action input="/oscarMessenger/SendMessage.jsp" name="msgSendMessageForm" path="/oscarMessenger/SendMessage" scope="request" type="oscar.oscarMessenger.pageUtil.MsgSendMessageAction">
 			<forward name="success" path="/oscarMessenger/SentMessage.jsp" />
 		</action>

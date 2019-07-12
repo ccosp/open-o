@@ -172,7 +172,7 @@ if(recall){
 		$("input:checked").each(function () {
 			if(this.id.split("-")[2] > 0 && $("#attachmentAlert").val())
 			{
-				alert("Cannot send attachments to Integrated facilities.");
+				alert("<bean:message key="oscarMessenger.CreateMessage.attachmentsNotPermitted"/>");
 				return false;
 			}
 		})	

@@ -97,6 +97,10 @@ public class ProgramManager2 {
 		return (results);
 	}
 	
+	public ProgramProvider getCurrentProgramInDomain(LoggedInInfo loggedInInfo) {
+		return getCurrentProgramInDomain(loggedInInfo, loggedInInfo.getLoggedInProviderNo());
+	}
+	
 	public ProgramProvider getCurrentProgramInDomain(LoggedInInfo loggedInInfo, String providerNo) {
 		ProgramProvider result = null;
 		int defProgramId = 0;

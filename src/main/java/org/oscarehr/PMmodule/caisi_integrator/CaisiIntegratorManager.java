@@ -681,6 +681,11 @@ public class CaisiIntegratorManager {
 		return matchingDemographicParameters;
     }
     
+    public static void linkIntegratedDemographicFiles(LoggedInInfo loggedInInfo, int demographicNo, int remoteFacilityId, int remoteDemographicNo) throws MalformedURLException {
+    	DemographicWs demographicWs = getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
+		demographicWs.linkDemographics(loggedInInfo.getLoggedInProviderNo(), demographicNo, remoteFacilityId, remoteDemographicNo);
+    }
+    
     /**
      * Get Oscar Messenger messages from the integrator. 
      * Unlike other Integrated objects - Provider communication will be saved into the local facility

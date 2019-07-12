@@ -326,4 +326,56 @@ public class MessengerDemographicManager {
 	   	return msgDemoMapDao.findByDemographicNo(demographicNo);
 	}
 	
+	/**
+	 * Import a demographic file and/or linking it to another file on the Integrator.
+	 * Returns null after a successful import or returns a list of Demographic objects if a user selection is required.
+	 * 
+	 * @return
+	 */
+	public List<Demographic> importDemographic(LoggedInInfo loggedInInfo, int remoteFacilityId, int remoteDemographicNo, int messageId) {
+	   	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, null)) {
+				throw new SecurityException("missing required security object (_msg)");
+		}
+	   	
+	   	Demographic remoteDemographic = demographicManager.getRemoteDemographic(loggedInInfo, remoteFacilityId, remoteDemographicNo);
+	   	Demographic exactMatch = demographicManager.findExactMatchToDemographic(loggedInInfo, remoteDemographic);
+	   	
+	   	// first try an exact match, and hopefully save the user some time.
+	   	if(exactMatch != null)
+	   	{
+	   		// link the local demographic with the integrator and return null if an exact match is found.
+	   		linkDemographicWithRemote(loggedInInfo, exactMatch.getDemographicNo(), remoteFacilityId, remoteDemographicNo, messageId);
+		   	return null;
+	   	}
+
+	   	// try a fuzzy match next
+	   	List<Demographic> fuzzyMatches = demographicManager.findFuzzyMatchToDemographic(loggedInInfo, remoteDemographic);
+	   	if(fuzzyMatches != null && fuzzyMatches.size() > 0)
+	   	{
+	   		// return the fuzzy matches for the user to select from
+	   		return fuzzyMatches;
+	   	}
+	   	
+	   	// there are no matches at this point, so just import the remote demographic as new.
+	   	else
+	   	{
+	   		Demographic newDemographic = demographicManager.copyRemoteDemographic(loggedInInfo, remoteDemographic, remoteFacilityId, remoteDemographicNo);
+	   		updateAttachedIntegratedDemographic(loggedInInfo, messageId, newDemographic.getDemographicNo(), remoteFacilityId);
+	   	}
+	   	
+	   	return null;
+	}
+	
+	public boolean linkDemographicWithRemote(LoggedInInfo loggedInInfo, int demographicNo, int remoteFacilityId, int remoteDemographicNo, int messageId) {
+	   	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, null)) {
+				throw new SecurityException("missing required security object (_msg)");
+		}
+	   	boolean success = demographicManager.linkDemographicToRemoteDemographic(loggedInInfo, demographicNo, remoteFacilityId, remoteDemographicNo);
+	   	if(success)
+	   	{
+	   		updateAttachedIntegratedDemographic(loggedInInfo, messageId, demographicNo, remoteFacilityId);
+	   	}
+	   	return success;
+	}
+	
 }
