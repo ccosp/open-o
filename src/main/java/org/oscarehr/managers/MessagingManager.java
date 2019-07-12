@@ -24,8 +24,11 @@
 package org.oscarehr.managers;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -168,6 +171,25 @@ public class MessagingManager {
 		}
 		 
 		return msgs;
+	}
+	
+	public List<MessageTbl> getMessagesLinkedToDemographic(LoggedInInfo loggedInInfo, int demographicNo) {
+    	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
+			throw new SecurityException("missing required security object (_msg)");
+		}
+    	
+    	List<MsgDemoMap> msgDemoMapList = messengerDemographicManager.getMessageMapByDemographicNo(loggedInInfo, demographicNo);
+    	List<MessageTbl> messageTblList = new ArrayList<MessageTbl>();
+    	if(msgDemoMapList != null) {
+    		for(MsgDemoMap msgDemoMap : msgDemoMapList) {
+    			MessageTbl messageTbl = getMessage(loggedInInfo, msgDemoMap.getMessageID());
+    			messageTblList.add(messageTbl);
+    		}
+    	}
+    	
+    	sortByDate(messageTblList);
+    	
+    	return messageTblList;
 	}
 
 	public Integer getMyInboxMessagesCount(LoggedInInfo loggedInInfo, String providerNo, String status) {
@@ -510,6 +532,14 @@ public class MessagingManager {
 	   Set<String> hashSet = new HashSet<String>(arrayList);
 	   String[] outputArray = new String[hashSet.size()];
 	   return hashSet.toArray(outputArray);
+	}
+	
+	private static final void sortByDate(List<MessageTbl> list) {
+	    Collections.sort(list, new Comparator<MessageTbl>() {
+	        public int compare(MessageTbl mt1, MessageTbl mt2) {
+	            return Long.valueOf(mt2.getDate().getTime()).compareTo(mt1.getDate().getTime());
+	        }
+	    });
 	}
 	
 }
