@@ -231,7 +231,6 @@ function fmtOscarMsg() {
 <body class="BodyStyle" vlink="#0000FF">
 <html:form action="/oscarMessenger/HandleMessages">
 
-	<!--  -->
 	<table class="MainTable" id="scrollNumber1" name="encounterTable">
 		<tr class="MainTableTopRow">
 			<td class="MainTableTopRowLeftColumn"><bean:message
@@ -259,7 +258,7 @@ function fmtOscarMsg() {
 					<table cellspacing=3>
 						<tr>
 							<!-- dont need this button from the encounter view -->
-							<c:if test="${ empty from or not from eq 'encounter' }">
+							<c:if test="${ empty param.from or not param.from eq 'encounter' }">
 								<td>
 								<table class=messButtonsA cellspacing=0 cellpadding=3>
 									<tr>
@@ -284,18 +283,18 @@ function fmtOscarMsg() {
 							</td>
 							
 							<!-- dont need this button from the encounter view -->
-							<c:if test="${ empty from or not from eq 'encounter' }">
-							<td>
-							<table class=messButtonsA cellspacing=0 cellpadding=3>
-								<tr>
-									<td class="messengerButtonsA"><html:link
-										page="/oscarMessenger/DisplayMessages.jsp"
-										styleClass="messengerButtons">
-										<bean:message key="oscarMessenger.ViewMessage.btnInbox" />
-									</html:link></td>
-								</tr>
-							</table>							
-							</td>
+							<c:if test="${ empty param.from or not param.from eq 'encounter' }">
+								<td>
+								<table class=messButtonsA cellspacing=0 cellpadding=3>
+									<tr>
+										<td class="messengerButtonsA"><html:link
+											page="/oscarMessenger/DisplayMessages.jsp"
+											styleClass="messengerButtons">
+											<bean:message key="oscarMessenger.ViewMessage.btnInbox" />
+										</html:link></td>
+									</tr>
+								</table>							
+								</td>
 							</c:if>
 							
 							<% if( "1".equals(boxType) ) { %>
