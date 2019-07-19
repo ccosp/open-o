@@ -210,8 +210,48 @@ public class MessagingManager {
 		if(!onlyWithPatientAttached) {
 			return getMyInboxMessagesCount(loggedInInfo, providerNo, MessageList.STATUS_NEW);
 		} else {
-			return messageListDao.findUnreadByProviderAndAttachedCount(providerNo);
+			
+			return getCountNewMessagesDemographicAttached(loggedInInfo, providerNo);	
+			
+			/* 
+			 * The commented-out method does not return a correct count in situations where multiple 
+			 * demographics are attached to a single email.
+			 */			
+			// return messageListDao.findUnreadByProviderAndAttachedCount(providerNo);
+			
 		}	
+	}
+	
+	/**
+	 * This is a short cut hack that returns a proper count in situations when multiple demographics are 
+	 * attached to a single message. This is because Hibernate does not handle SQL methods such as GROUP BY and DISTINCT
+	 * This method can be eliminated if/when JPA is upgraded or joins are used in the DB model. 
+	 * 
+	 * @param loggedInInfo
+	 * @param providerNo
+	 * @return
+	 */
+	public int getCountNewMessagesDemographicAttached(LoggedInInfo loggedInInfo, String providerNo) {
+    	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
+			throw new SecurityException("missing required security object (_msg)");
+		}
+    	
+    	int count = 0;
+    	// get all messages by provider.
+    	List<MessageList> messageList = messageListDao.findUnreadByProvider(providerNo);
+
+    	if(messageList != null)
+    	{
+    		for(MessageList message : messageList) 
+    		{
+    			List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, (int) message.getMessage());
+    			if(msgDemoMap != null && msgDemoMap.size() > 0)
+    			{
+    				count++;
+    			}
+    		}
+    	}
+    	return count;
 	}
 	
 	public Integer getMyInboxIntegratorMessagesCount(LoggedInInfo loggedInInfo, String providerNo) {
