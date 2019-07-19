@@ -39,6 +39,7 @@ import org.oscarehr.common.dao.MsgIntegratorDemoMapDao;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.MsgDemoMap;
 import org.oscarehr.common.model.MsgIntegratorDemoMap;
+import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,11 +197,11 @@ public class MessengerDemographicManager {
 	 * @param demographicNoArray
 	 * @return
 	 */
-	public Integer[] attachIntegratedDemographicToMessage(LoggedInInfo loggedInInfo, int messageId, Integer[] demographicNoArray, int facilityId) {
+	public Integer[] attachIntegratedDemographicToMessage(LoggedInInfo loggedInInfo, int messageId, Integer[] demographicNoArray, int sourceFacilityId) {
     	List<Integer> demoMapIdList = new ArrayList<Integer>();
     	for(int demographicNo : demographicNoArray)
     	{
-    		Integer id = attachIntegratedDemographicToMessage(loggedInInfo, messageId, demographicNo, facilityId, 0);
+    		Integer id = attachIntegratedDemographicToMessage(loggedInInfo, messageId, demographicNo, sourceFacilityId);
     		demoMapIdList.add(id);
     	}
     	return demoMapIdList.toArray(new Integer[demoMapIdList.size()]);
@@ -214,18 +215,39 @@ public class MessengerDemographicManager {
 	 * @param facilityId
 	 * @return
 	 */
-	public Integer attachIntegratedDemographicToMessage(LoggedInInfo loggedInInfo, int messageId, int demographicNo, int facilityId, int msgDemoMapId) {
+	public Integer attachIntegratedDemographicToMessage(LoggedInInfo loggedInInfo, int messageId, int demographicNo, int sourceFacilityId) {
 		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, null)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
+		int msgDemoMapId = 0;
+		
+		
 		MsgIntegratorDemoMap msgIntegratorDemoMap = new MsgIntegratorDemoMap();
 		msgIntegratorDemoMap.setMessageId(messageId);
 		msgIntegratorDemoMap.setSourceDemographicNo(demographicNo);
-		msgIntegratorDemoMap.setSourceFacilityId(facilityId);
+		msgIntegratorDemoMap.setSourceFacilityId(sourceFacilityId);
 		msgIntegratorDemoMap.setMsgDemoMapId(msgDemoMapId);
 
 		msgIntegratorDemoMapDao.persist(msgIntegratorDemoMap);
 		return msgIntegratorDemoMap.getId();
+	}
+	
+	
+	/**
+	 * Get all the demographic ids from the given remote facility that are linked 
+	 * to the given local demographic number.
+	 * 
+	 * @param loggedInInfo
+	 * @param demographicNo
+	 * @param sourceFacilityId
+	 * @return List<Integer> 
+	 */
+	public List<Integer> getLinkedDemographicIdsFromSourceFacility(LoggedInInfo loggedInInfo, final int demographicNo, int sourceFacilityId) {
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
+			throw new SecurityException("missing required security object (_msg)");
+		}
+		
+		return demographicManager.getLinkedDemographicIds(loggedInInfo, demographicNo, sourceFacilityId);	
 	}
 	
 	/**
@@ -235,7 +257,7 @@ public class MessengerDemographicManager {
 	 * @param messageId
 	 * @param demographicNo
 	 * @param facilityId
-	 * @return
+	 * @return long
 	 */
 	public long updateAttachedIntegratedDemographic(LoggedInInfo loggedInInfo, int messageId, int demographicNo, int facilityId) {
 		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, null)) {
@@ -304,12 +326,34 @@ public class MessengerDemographicManager {
     	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, demographicNo)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
-    	
+
     	MsgDemoMap msgDemoMap = new MsgDemoMap();
     	msgDemoMap.setDemographic_no(demographicNo);
     	msgDemoMap.setMessageID(messageId);
     	msgDemoMapDao.persist(msgDemoMap);
     	return msgDemoMap.getId();
+    }
+    
+    /**
+     * This method is hard-coded to the most common Integrator patient consent types. 
+     * UserProperty.INTEGRATOR_PATIENT_CONSENT
+     * UserProperty.INTEGRATOR_DEMOGRAPHIC_CONSENT
+     * 
+     * @param loggedInInfo
+     * @param demographicNo
+     * @return
+     */
+    public boolean isPatientConsentedForIntegrator(LoggedInInfo loggedInInfo, int demographicNo) {
+    	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, demographicNo)) {
+			throw new SecurityException("missing required security object (_msg)");
+		}
+    	/*
+    	 * it is acceptable to remove the hard-coded consent types in the futre
+    	 * Or any additional Integrator consent types can be added.  Dealers choice.
+    	 * For now, this intention for this method is to check the most commonly used Integrator consent types. 
+    	 */
+    	return demographicManager.isPatientConsented(loggedInInfo, demographicNo, UserProperty.INTEGRATOR_PATIENT_CONSENT)
+    		|| demographicManager.isPatientConsented(loggedInInfo, demographicNo, UserProperty.INTEGRATOR_DEMOGRAPHIC_CONSENT);
     }
     
     /**

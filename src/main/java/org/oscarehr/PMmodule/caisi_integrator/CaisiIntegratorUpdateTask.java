@@ -496,6 +496,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 	private void pushMessages(ObjectOutputStream out, Facility facility, LoggedInInfo loggedInInfo) throws IOException {
 		List<org.oscarehr.caisi_integrator.ws.CachedFacility> cachedFacilities = CaisiIntegratorManager.getRemoteFacilities(loggedInInfo, facility);
 		LoggedInInfo systemLoggedInInfo = new LoggedInInfo();
+		systemLoggedInInfo.setCurrentFacility(facility);
 		systemLoggedInInfo.setLoggedInProvider(loggedInInfo.getLoggedInProvider());
 		Security security = new Security();
 		systemLoggedInInfo.setLoggedInSecurity(security);
@@ -513,6 +514,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 	 */
 	private void fetchMessages(LoggedInInfo loggedInInfo, Facility facility) throws UnsupportedEncodingException {
 		LoggedInInfo systemLoggedInInfo = new LoggedInInfo();
+		systemLoggedInInfo.setCurrentFacility(facility);
 		systemLoggedInInfo.setLoggedInProvider(loggedInInfo.getLoggedInProvider());
 		Security security = new Security();
 		systemLoggedInInfo.setLoggedInSecurity(security);

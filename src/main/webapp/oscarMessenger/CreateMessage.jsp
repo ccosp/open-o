@@ -296,6 +296,18 @@ if(recall){
 	    	checkedElement.parent().parent().attr('open', '').parent().attr('open', '');
 	    }
 	})
+		
+	/*
+	 * Throw an error returned from the action
+	 */
+	$(document).ready(function(){
+		var submissionerror = '${createMessageError}';
+		if(submissionerror)
+		{
+			alert(submissionerror);
+		}
+	})
+	 	 
 </script>
 </head>
 <body class="BodyStyle" vlink="#0000FF">

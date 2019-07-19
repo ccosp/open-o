@@ -816,6 +816,7 @@
 		</action>
 		<action input="/oscarMessenger/CreateMessage.jsp" name="msgCreateMessageForm" path="/oscarMessenger/CreateMessage" scope="request" type="oscar.oscarMessenger.pageUtil.MsgCreateMessageAction">
 			<forward name="success" path="/oscarMessenger/SentMessage.jsp" />
+			<forward name="error" path="/oscarMessenger/CreateMessage.jsp" />
 		</action>
 		<action input="/oscarMessenger/DisplayMessages.jsp" name="msgDisplayMessagesForm" path="/oscarMessenger/DisplayMessages" scope="request" type="oscar.oscarMessenger.pageUtil.MsgDisplayMessagesAction">
 			<forward name="success" path="/oscarMessenger/DisplayMessages.jsp" />

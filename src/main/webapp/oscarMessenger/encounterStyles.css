@@ -293,6 +293,7 @@ table.messButtonsD {
 /* styles for the modal window */
 
 .modal {
+  font-size: 11px;
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -320,6 +321,7 @@ table.messButtonsD {
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
+	text-align: right;
 }
 
 /* Modal Content */
@@ -329,7 +331,7 @@ table.messButtonsD {
   margin: auto;
   padding: 0;
   border: 1px solid #888;
-  width: 80%;
+  width: 50%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   animation-name: animatetop;
   animation-duration: 0.4s
@@ -355,7 +357,7 @@ table.messButtonsD {
 .close {
   color: #aaa;
   float: right;
-  font-size: 28px;
+font-size: large;
   font-weight: bold;
 }
 

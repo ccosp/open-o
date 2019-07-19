@@ -1,1 +1,0 @@
-INSERT INTO `oscar_msg_type`(`type`, `description`) VALUES (3, 'Integrator Message');

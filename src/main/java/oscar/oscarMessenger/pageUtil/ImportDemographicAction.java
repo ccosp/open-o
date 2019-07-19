@@ -52,6 +52,9 @@ public class ImportDemographicAction extends Action {
 
     	LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     	
+    	/*
+    	 * Import the demographic from the remote facility if there is no match in this local facility
+    	 */
     	if(loggedInInfo.getCurrentFacility().isIntegratorEnabled())
     	{
     		List<Demographic> demographicList = messengerDemographicManager.importDemographic(loggedInInfo, 
@@ -63,6 +66,9 @@ public class ImportDemographicAction extends Action {
     		}
     	}
     	
+    	/*
+    	 * If the user has chosen a local demographic to link with the demographic offered from the remote facility.
+    	 */
     	if(selectedDemographicNo != null) 
     	{
     		messengerDemographicManager.linkDemographicWithRemote(loggedInInfo, 

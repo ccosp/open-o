@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -55,7 +57,7 @@ import net.sf.json.JSONObject;
 @Service
 public class MessengerIntegratorManager {
 	
-	private enum JSON_KEY{subject, message, from, copyto, demographicNo}
+	private enum JSON_KEY{subject, message, from, copyto, demographic, demographicNo, sourceFacility, linked}
 	
 	@Autowired
 	private MessageListDao messageListDao;
@@ -180,6 +182,8 @@ public class MessengerIntegratorManager {
 			throw new SecurityException("missing required security object (_msg)");
 		}
     	long messageId = messageList.getMessage();
+    	int destinationFacilityId = messageList.getDestinationFacilityId();
+    			
     	MessageTbl messageTbl = messagingManager.getMessage(loggedInInfo, (int) messageId);
 		ProviderCommunicationTransfer providerCommunication = new ProviderCommunicationTransfer();
 		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, (int) messageId);
@@ -195,13 +199,13 @@ public class MessengerIntegratorManager {
 		
 		if(msgDemoMap != null && ! msgDemoMap.isEmpty() && msgDemoMap.size() > 0)
 		{
-			jsonString.put(JSON_KEY.demographicNo.name(), msgDemoMap.get(0).getDemographic_no());
+			jsonString.put(JSON_KEY.demographic.name(), createAttachedDemographicObject(loggedInInfo, msgDemoMap, destinationFacilityId));
 		}
 
 		Calendar sentDate = Calendar.getInstance();
 		sentDate.setTime(messageTbl.getDate());
 		providerCommunication.setActive(true);
-		providerCommunication.setDestinationIntegratorFacilityId(messageList.getDestinationFacilityId());
+		providerCommunication.setDestinationIntegratorFacilityId(destinationFacilityId);
 		providerCommunication.setDestinationProviderId(messageList.getProviderNo());
 		providerCommunication.setSentDate(sentDate);
 		providerCommunication.setSourceIntegratorFacilityId(getThisFacilityId(loggedInInfo));
@@ -227,6 +231,124 @@ public class MessengerIntegratorManager {
 
     	return providerCommunication; 
     }
+	
+	/**
+	 * This method checks against the destination facility for demographic files that are already linked 
+	 * and then prepares a JSONObject of all the demographic numbers and sourceFacility ids 
+	 * that should be attached to a message. 
+	 * 
+	 * The demographic number is sent as "unlinked" if the demographic is not found to be linked
+	 * in the Integrator. It will be up to the reciever to choose to link the demographic file with a local file 
+	 * or to import the demographic file.
+	 * 
+	 * For example: 
+	 * 
+	 * This is a demographic that is not linked. The source facility number indicates 
+	 * the facility where the demographic file resides.
+	 *  
+	 * demographicNo : 1234
+	 * sourceFacility : 4
+	 * linked : false
+	 * 
+	 * This demographic is linked. The sourcefacility will be 0 or the destination facility id
+	 * to indicate that the demographic file exists in the destination facility
+	 * 
+	 * demographicNo : 6795
+	 * sourceFacility : 0 or 2
+	 * linked : true
+	 * 
+	 * @param msgDemoMapList
+	 * @param sourceFacilityId
+	 * @return
+	 */
+	private JSONArray createAttachedDemographicObject(LoggedInInfo loggedInInfo, List<MsgDemoMap> msgDemoMapList, int destinationFacilityId) {
+		JSONArray jsonArray = new JSONArray();
+		
+		for(MsgDemoMap msgDemoMap : msgDemoMapList)
+		{
+			int demographicNo = msgDemoMap.getDemographic_no();
+			
+			/*
+			 * First check if the given demographic is linked in the destination facility
+			 */
+			JSONArray linkedDemographicIdArray = getLinkedDemographicIdList(loggedInInfo, demographicNo, destinationFacilityId);
+
+			
+			/*
+			 * Linked demographics were found, attach them to this list
+			 */
+			if(linkedDemographicIdArray != null)
+			{
+				jsonArray.add(linkedDemographicIdArray);
+			}
+			
+			/*
+			 * No linked demographics were found. Send the local demographic file for consideration 
+			 * by the recieving user to import.
+			 */
+			else 
+			{
+				/*
+				 * Single results need to be in an array to maintain consistency. 
+				 */
+				JSONArray demographicObjectArray = new JSONArray();
+				JSONObject demographicObject = new JSONObject();
+				
+				demographicObject.put(JSON_KEY.demographicNo.name(), demographicNo);
+				
+				/* 
+				 * the demographic file exists only in this facility. Indicate this so that
+				 * the end user has the option to import this demographic file at the 
+				 * destination 
+				 */				
+				demographicObject.put(JSON_KEY.sourceFacility.name(), getThisFacilityId(loggedInInfo));
+				
+				// the demographic is linked; make this true
+				demographicObject.put(JSON_KEY.linked.name(), Boolean.FALSE);
+				
+				demographicObjectArray.add(demographicObject);
+				
+				jsonArray.add(demographicObjectArray);
+			}
+		}
+		
+		return jsonArray;
+	}
+	
+	/**
+	 * Ideally there should only be one linked demographic.
+	 * It's problematic if there are more than 1 linked demographic in the remote facility. 
+	 * They are being captured here in an array so that the end user is notified of multiple 
+	 * links, and then may want to clean them up.
+	 * 
+	 * @param loggedInInfo
+	 * @param demographicNo
+	 * @param destinationFacilityId
+	 * @return
+	 */
+	private JSONArray getLinkedDemographicIdList(LoggedInInfo loggedInInfo, final int demographicNo, int destinationFacilityId) {
+		List<Integer> linkedDemographicNumberList = messengerDemographicManager.getLinkedDemographicIdsFromSourceFacility(loggedInInfo, demographicNo, destinationFacilityId);
+		JSONArray demographicObjectArray = null;
+		
+		for(Integer linkedDemographicNumber : linkedDemographicNumberList)
+		{
+			if(demographicObjectArray == null)
+			{
+				demographicObjectArray = new JSONArray();
+			}
+			
+			JSONObject demographicObject = new JSONObject();
+			demographicObject.put(JSON_KEY.demographicNo.name(), linkedDemographicNumber);
+			demographicObject.put(JSON_KEY.sourceFacility.name(), destinationFacilityId);
+			
+			// the demographic is linked; make this true
+			demographicObject.put(JSON_KEY.linked.name(), Boolean.TRUE);
+			
+			demographicObjectArray.add(demographicObject);
+		}
+		
+		return demographicObjectArray;
+	}
 	
 	/**
 	 * Save messages from the Integrator into the Oscar messenger inbox.
@@ -256,11 +378,6 @@ public class MessengerIntegratorManager {
 			String message = jsonObject.getString(JSON_KEY.message.name());
 			String from = jsonObject.getString(JSON_KEY.from.name());
 			String copyto = jsonObject.getString(JSON_KEY.copyto.name());
-			String demographic = null; 
-			if(jsonObject.containsKey(JSON_KEY.demographicNo.name()))
-			{
-				demographic = jsonObject.getString(JSON_KEY.demographicNo.name());
-			}
 
 			messageTbl.setDate(providerCommunication.getSentDate().getTime());
 			messageTbl.setTime(providerCommunication.getSentDate().getTime());
@@ -299,7 +416,8 @@ public class MessengerIntegratorManager {
 			 * Save the actual message and then populate the associated tables for 
 			 * additional recipients and the related demogaphic chart.
 			 */
-			messageId = messagingManager.saveMessage(loggedInInfo, messageTbl);			
+			messageId = messagingManager.saveMessage(loggedInInfo, messageTbl);	
+			
 			if(messageId != null && messageId > 0)
 			{
 				
@@ -332,12 +450,15 @@ public class MessengerIntegratorManager {
 				 *   
 				 */
 				messagingManager.addRecipientsToMessage(loggedInInfo, messageId, providerIds, messagingManager.getCurrentLocationId(), 0, providerCommunication.getSourceIntegratorFacilityId());
-				
-				if(demographic != null && ! demographic.isEmpty()) 
+								
+				/*
+				 * Attach any demographic files that came in with the message.
+				 */
+				if(jsonObject.containsKey(JSON_KEY.demographic.name()))
 				{
-					messengerDemographicManager.attachIntegratedDemographicToMessage(loggedInInfo, messageId, Integer.parseInt(demographic), providerCommunication.getSourceIntegratorFacilityId(), 0);
+					attachIncomingDemographcToMessage(loggedInInfo, jsonObject.getJSONArray(JSON_KEY.demographic.name()), messageId);
 				}
-				
+
 				receivedMessages.add(providerCommunication.getId());
 			}
 		}
@@ -345,14 +466,47 @@ public class MessengerIntegratorManager {
 		/*
 		 *  add additional providers that are included from the source facility.
 		 *  This list was captured in the loop above.
-		 */
-		
+		 */		
 		if(sourceProviderIdList != null && sourceProviderIdList.length > 1)
 		{
 			messagingManager.addRecipientsToMessage(loggedInInfo, messageId, sourceProviderIdList, 0, 0, sourceFacilityId);			
 		}
 		
 		return receivedMessages;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void attachIncomingDemographcToMessage(LoggedInInfo loggedInInfo, final JSONArray demographicList, final int messageId) {
+
+		Iterator<JSONArray> demographicArray = demographicList.iterator();
+		while(demographicArray.hasNext())
+		{
+			Iterator<JSONObject> demographicObject = demographicArray.next().iterator();
+			while(demographicObject.hasNext())
+			{
+				JSONObject demographic = demographicObject.next();
+				int demographicNo = Integer.parseInt(demographic.getString(JSON_KEY.demographicNo.name()));
+				int sourceFacility = Integer.parseInt(demographic.getString(JSON_KEY.sourceFacility.name()));
+				
+				/*
+				 *  This is a local demographic if the demographic is linked
+				 *  and the source facility id matches this facility 
+				 */
+				if(demographic.getBoolean(JSON_KEY.linked.name()) 
+						&& getThisFacilityId(loggedInInfo) == sourceFacility)
+				{
+					messengerDemographicManager.attachDemographicToMessage(loggedInInfo, messageId, demographicNo);
+				}
+				
+				/*
+				 * Otherwise this demographic goes into the pile of import proposals. 
+				 */
+				else
+				{
+					messengerDemographicManager.attachIntegratedDemographicToMessage(loggedInInfo, messageId, demographicNo, sourceFacility);
+				}
+			}			
+		}
 	}
 
 	/**

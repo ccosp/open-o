@@ -86,43 +86,11 @@ public class MsgViewMessageAction extends Action {
         String linkMsgDemo = request.getParameter("linkMsgDemo");           
         String demographic_no = request.getParameter("demographic_no");   
         String orderBy = request.getParameter("orderBy");
-        String msgCount = request.getParameter("msgCount");
+        // String msgCount = request.getParameter("msgCount");
         String from = request.getParameter("from")==null?"oscarMessenger":request.getParameter("from");
         String boxType = request.getParameter("boxType")==null?"":request.getParameter("boxType");
-     
-        
-        // imported demographic is switched on after a demographic file has been imported from 
-        // a remote facility.  This switch is sent from the copyRemoteDemographic.jsp process. 
-        String remoteFacilityIdString = request.getParameter("remoteFacilityId");
-        String importedDemographicString = request.getParameter("importedDemographic");
-        boolean importedDemographic = false;
-        int remoteFacilityId = 0;
-        
-        if(remoteFacilityIdString != null)
-        {
-        	remoteFacilityId = Integer.parseInt(remoteFacilityIdString);
-        }
 
-        if(importedDemographicString != null)
-        {
-        	importedDemographic = Boolean.parseBoolean(importedDemographicString);
-        }
-        
-        MsgDisplayMessage msgDisplayMessage = null;
-        if(messageNo != null && ! messageNo.trim().isEmpty()) 
-        {
-	        // if this is an imported demographic then it will need to be added to the message demographic table.
-	        if(importedDemographic)
-	        {
-	        	messengerDemographicManager.updateAttachedIntegratedDemographic(loggedInInfo, Integer.parseInt(messageNo), Integer.parseInt(demographic_no), remoteFacilityId);
-	        }
-	        
-	        if(msgCount == null && demographic_no != null){
-	        	msgCount = messagingManager.getInboxCountByDemographicNo(loggedInInfo, Integer.parseInt(demographic_no))+"";
-	        }
-     
-        	msgDisplayMessage = messagingManager.getInboxMessage(loggedInInfo, Integer.parseInt(messageNo));
-        }
+        MsgDisplayMessage msgDisplayMessage = messagingManager.getInboxMessage(loggedInInfo, Integer.parseInt(messageNo));
         
         if(msgDisplayMessage != null)
         {       	
@@ -132,7 +100,7 @@ public class MsgViewMessageAction extends Action {
 	        
 	        // check if there are any demographic files sent over from other integrated facilities.
 	        // skip this step if the demographic has already been imported (importedDemographic).
-	        if(loggedInInfo.getCurrentFacility().isIntegratorEnabled() && ! importedDemographic)
+	        if(loggedInInfo.getCurrentFacility().isIntegratorEnabled())
 	        {
 	        	// usually only one demographic transfer at a time.
 	        	List<DemographicTransfer> unlinkedDemographics = messengerDemographicManager.getUnlinkedIntegratedDemographics(loggedInInfo, Integer.parseInt(messageNo));

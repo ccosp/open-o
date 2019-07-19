@@ -370,7 +370,7 @@ public class MessagingManager {
     	
     	return messageIdInteger;
     }
-       
+    
     /**
      * Attach all providers that should receive this message. 
      * @param loggedInInfo
@@ -522,6 +522,7 @@ public class MessagingManager {
 		return currentLocationId;
 	}
 	
+	// HELPER METHODS.
 	/**
 	 * remove duplicate values from any string array.
 	 * @param strarray
@@ -542,4 +543,46 @@ public class MessagingManager {
 	    });
 	}
 	
+    /**
+     * Checks a list of message recipients for any recipients that are in remote locations. 
+     * 
+     * @param loggedInInfo
+     * @param msgProviderDataList
+     * @return
+     */
+    public static boolean doesContainRemoteRecipient(LoggedInInfo loggedInInfo, final List<MsgProviderData> msgProviderDataList) {
+    	boolean remoterecipient = Boolean.FALSE;
+    	int thisfacilityid = loggedInInfo.getCurrentFacility().getId();
+    	
+    	if(msgProviderDataList != null) 
+    	{
+	    	for(MsgProviderData msgProviderData : msgProviderDataList)
+	    	{
+	    		ContactIdentifier contactIdentifier = msgProviderData.getId();
+	    		if(contactIdentifier.getFacilityId() > 0 && contactIdentifier.getFacilityId() != thisfacilityid)
+	    		{
+	    			remoterecipient = Boolean.TRUE;
+	    			break;
+	    		}
+	    	}
+    	}
+    	return remoterecipient;
+    }
+	
+    public static final List<ContactIdentifier> createContactIdentifierList(final String[] compositeContactIdArray) {
+    	
+    	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
+    	
+    	if(compositeContactIdArray == null)
+    	{
+    		return contactIdentifierList;
+    	}
+
+    	for(String compositeContactId : compositeContactIdArray) {
+    		ContactIdentifier contactIdentifier = new ContactIdentifier(compositeContactId);
+    		contactIdentifierList.add(contactIdentifier);
+    	}
+    	
+    	return contactIdentifierList;
+    }
 }

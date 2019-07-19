@@ -26,6 +26,7 @@
 package oscar.oscarMessenger.pageUtil;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,20 +36,28 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.MessageResources;
+import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.OscarMsgType;
+import org.oscarehr.common.model.UserProperty;
+import org.oscarehr.managers.MessagingManager;
 import org.oscarehr.managers.MessengerDemographicManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
+import com.google.gson.Gson;
+
+import oscar.oscarMessenger.data.ContactIdentifier;
 import oscar.oscarMessenger.data.MsgProviderData;
 
 public class MsgCreateMessageAction extends Action {
 
-
+	private static UserPropertyDAO userPropertyDao = SpringUtils.getBean(UserPropertyDAO.class);
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
-	
+	private static MessengerDemographicManager messengerDemographicManager = SpringUtils.getBean(MessengerDemographicManager.class);
+
     public ActionForward execute(ActionMapping mapping,
 				 ActionForm form,
 				 HttpServletRequest request,
@@ -59,7 +68,7 @@ public class MsgCreateMessageAction extends Action {
 			throw new SecurityException("missing required security object (_msg)");
 		}
     	
-            // Extract attributes we will need
+            //FIXME no more sessions
             oscar.oscarMessenger.pageUtil.MsgSessionBean bean;
             bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean)request.getSession().getAttribute("msgSessionBean");
             String userNo   = bean.getProviderNo();
@@ -80,6 +89,9 @@ public class MsgCreateMessageAction extends Action {
             String sentToWho    = null;
             String messageId    = null;
             String demographic_no = ((MsgCreateMessageForm)form).getDemographic_no();
+            if (demographic_no != null && (demographic_no.equals("") || "null".equals(demographic_no)) ){           	
+            	demographic_no = null;
+            }
 
             java.util.ArrayList<MsgProviderData> providerListing, remoteProviderListing;
 
@@ -87,30 +99,57 @@ public class MsgCreateMessageAction extends Action {
             subject.trim();
             if (subject.length() == 0) {subject = "none";}
 
+            //FIXME remove these deprecated methods and use the Messenger Managers instead (the deprecated classes still use JDBC)
             oscar.oscarMessenger.data.MsgMessageData messageData = new oscar.oscarMessenger.data.MsgMessageData();
             providers               = messageData.getDups4(providers);           
             providerListing         = messageData.getProviderStructure(loggedInInfo, providers);
+            
+            //FIXME currently unused - I think...
             remoteProviderListing   = messageData.getRemoteProvidersStructure();
+            
+            /*
+             * A demographic that has not consented to the Integrator cannot be sent to remote providers.
+             * This is short circuit that will return a warning that the patient has not consented.
+             * This message will not send until the non-consenting patient has consented -or- is removed 
+             * from the message.
+             */
+            if(demographic_no != null 
+            		&& ("1".equals( userPropertyDao.getProp( UserProperty.INTEGRATOR_PATIENT_CONSENT ).getValue()) 
+            				|| "1".equals( userPropertyDao.getProp( UserProperty.INTEGRATOR_DEMOGRAPHIC_CONSENT ).getValue())))
+            {
+            	if( MessagingManager.doesContainRemoteRecipient(loggedInInfo, providerListing)
+            			&& ! messengerDemographicManager.isPatientConsentedForIntegrator(loggedInInfo, Integer.parseInt(demographic_no)))
+            	{
+            		return error(mapping, request, (MsgCreateMessageForm) form, "oscarMessenger.CreateMessage.patientConsentError");
+            	}
+            }
 
+            //FIXME remove these deprecated methods and use the Messenger Managers instead
             sentToWho = messageData.createSentToString(providerListing);
             sentToWho = sentToWho + " " + messageData.getRemoteNames(remoteProviderListing);
             sentToWho = sentToWho.trim();
-
             messageId = messageData.sendMessage2(message,subject,userName,sentToWho,userNo,providerListing,att, pdfAtt, OscarMsgType.GENERAL_TYPE);
 
-            //link msg and demographic if both messageId and demographic_no are not null
-            if (demographic_no != null && (demographic_no.equals("") || "null".equals(demographic_no)) ){
-               demographic_no = null;
-            }
-
+            // link msg and demographic if both messageId and demographic_no are not null.
             if(messageId!=null && demographic_no!=null){
-            	MessengerDemographicManager messengerDemographicManager = SpringUtils.getBean(MessengerDemographicManager.class);
                 messengerDemographicManager.attachDemographicToMessage(loggedInInfo, Integer.parseInt(messageId), Integer.parseInt(demographic_no));
             }
 
             request.setAttribute("SentMessageProvs",sentToWho.toString());
 
             return (mapping.findForward("success"));
+    }
+    
+    private ActionForward error(ActionMapping mapping, HttpServletRequest request, MsgCreateMessageForm form, String messageKey) {
+    		MessageResources msgResource = getResources(request);
+    		String message = msgResource.getMessage(messageKey);
+			request.setAttribute("createMessageError", message);
+			request.setAttribute("messageSubject", form.getSubject());
+			request.setAttribute("messageBody", form.getMessage());
+			request.setAttribute("demographic_no", form.getDemographic_no());
+			List<ContactIdentifier> replyList = MessagingManager.createContactIdentifierList(form.getProvider());
+			request.setAttribute("replyList", new Gson().toJson(replyList));
+	    	return mapping.findForward("error");
     }
 
 }

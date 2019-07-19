@@ -7,7 +7,8 @@ update messagelisttbl set destinationFacilityId = 0 where destinationFacilityId 
 update messagelisttbl set sourceFacilityId = 0 where sourceFacilityId is null;
 update groupMembers_tbl set clinicLocationNo = 0 where clinicLocationNo is null;
 
-INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_msg', 'x', 0, '999999');
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_msg', 'x', 0, '999998');
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_demographic', 'r', 0, '999998');
 
 CREATE TABLE `msgIntegratorDemoMap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -17,3 +18,5 @@ CREATE TABLE `msgIntegratorDemoMap` (
   `msgDemoMapId` int(11),
   PRIMARY KEY (`id`)
 )
+
+INSERT INTO `oscar_msg_type`(`type`, `description`) VALUES (3, 'Integrator Message');

@@ -35,6 +35,8 @@ import java.util.Objects;
 import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.model.ProgramProvider;
+import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
+import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.caisi_integrator.ws.GetConsentTransfer;
 import org.oscarehr.common.Gender;
 import org.oscarehr.common.dao.AdmissionDao;
@@ -809,7 +811,10 @@ public class DemographicManager {
 		}
 
 		/**
-		 * Will return null if the integrator is not enabled.
+		 * Fetch the remote demographic file from the Integrator.
+		 * 
+		 * THIS IS AN INTEGRATOR FUNCTION ONLY.  INTEGRATOR MUST BE ENABLED.
+		 * 
 		 * @param loggedInInfo
 		 * @param remoteFacilityId
 		 * @param remoteDemographicId
@@ -831,8 +836,10 @@ public class DemographicManager {
 		}
 		
 		/**
-		 * Copies the given demograpic file into the local facility. 
-		 * This sets the 
+		 * Copies the given remotely Integrated demographic file into this local facility.
+		 * 
+		 * THIS IS AN INTEGRATOR FUNCTION ONLY.  INTEGRATOR MUST BE ENABLED.
+		 * 
 		 * @param loggedInInfo
 		 * @param remoteFacilityId
 		 * @param remoteDemographicId
@@ -878,8 +885,20 @@ public class DemographicManager {
 		}
 		
 		/**
+		 * Checks to see if this patient has consented to the given consent type
+		 */
+		public boolean isPatientConsented(LoggedInInfo loggedInInfo, int demographic_no, String consentType) {
+			checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
+
+			ConsentType patientConsentType = patientConsentManager.getConsentType( consentType );			
+			return patientConsentManager.hasPatientConsented(demographic_no, patientConsentType);
+		}
+		
+		/**
 		 * Link the given demographic numbers with in the given remote facility.
-		 * Requires Integrator to be enabled. 
+		 * 
+		 * THIS IS AN INTEGRATOR FUNCTION ONLY.  INTEGRATOR MUST BE ENABLED.
+		 * 
 		 */
 		public boolean linkDemographicToRemoteDemographic(LoggedInInfo loggedInInfo, int demographicNo, int remoteFacilityId, int remoteDemographicNo) {
 			checkPrivilege(loggedInInfo, SecurityInfoManager.WRITE);
@@ -901,6 +920,72 @@ public class DemographicManager {
 				
 			}
 			return false;
+		}
+		
+		/**
+		 * Fetch all the the demographic ids linked by the Integrator to the given local demographic number
+		 * and given remote facility id. 
+		 * 
+		 * THIS IS AN INTEGRATOR FUNCTION ONLY.  INTEGRATOR MUST BE ENABLED. 
+		 * 
+		 * @param loggedInInfo
+		 * @param local demographicNo
+		 * @param sourceFacilityId where the linked demographic should exist
+		 * @return
+		 */
+		public List<Integer> getLinkedDemographicIds(LoggedInInfo loggedInInfo, int demographicNo, int sourceFacilityId) {
+			checkPrivilege(loggedInInfo, SecurityInfoManager.READ, demographicNo);
+			
+			ArrayList<Integer> remoteDemographicNumbers = new ArrayList<Integer>();
+			List<DemographicTransfer> demographicTransferList = getLinkedDemographics(loggedInInfo, demographicNo);
+					
+			/*
+			 * Add the demographic number to the array if the demographic file is 
+			 * from the target facility (sourceFacilityId)
+			 */
+			for(DemographicTransfer demographicTransfer : demographicTransferList)
+			{						
+				if(demographicTransfer.getIntegratorFacilityId() == sourceFacilityId)
+				{
+					remoteDemographicNumbers.add(demographicTransfer.getCaisiDemographicId());
+				}
+			}
+			
+			LogAction.addLog(loggedInInfo, "DemographicManager.getLinkedDemographicIds", null, null, ""+demographicNo, null);
+			
+			return remoteDemographicNumbers;
+		}
+		
+		/**
+		 * Fetch all the the demographic files from all facilities linked by the Integrator to the given local demographic number
+		 * Excludes the demographic file located in this facility
+		 * 
+		 * THIS IS AN INTEGRATOR FUNCTION ONLY.  INTEGRATOR MUST BE ENABLED.
+		 * 
+		 * @param loggedInInfo
+		 * @param demographicNo
+		 * @return
+		 */
+		public List<DemographicTransfer> getLinkedDemographics(LoggedInInfo loggedInInfo, int demographicNo) {
+			checkPrivilege(loggedInInfo, SecurityInfoManager.READ, demographicNo);
+			
+			if(loggedInInfo.getCurrentFacility().isIntegratorEnabled()) 
+			{
+				/*
+				 *  Fetch all demographic files that are linked to this local demographic number.
+				 *  Excludes all results for this facility. 
+				 */
+				try {
+					DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
+					return demographicWs.getLinkedDemographicsByDemographicId(demographicNo);
+				} catch (MalformedURLException e) {
+					MiscUtils.getLogger().error("Integrator connection failed ", e);
+				}
+			}
+			
+			LogAction.addLog(loggedInInfo, "DemographicManager.getLinkedDemographics(LoggedInInfo", null, null, ""+demographicNo, null);
+			
+			return Collections.emptyList();
 		}
 
 		private void checkPrivilege(LoggedInInfo loggedInInfo, String privilege) {
