@@ -123,6 +123,14 @@ public class MsgCreateMessageAction extends Action {
             		return error(mapping, request, (MsgCreateMessageForm) form, "oscarMessenger.CreateMessage.patientConsentError");
             	}
             }
+            
+            /*
+             * The Integrator does not support attachments at this time.  Stop attachments from being sent externally. 
+             */
+            if( (att != null || pdfAtt != null) &&  MessagingManager.doesContainRemoteRecipient(loggedInInfo, providerListing))
+            {
+            	return error(mapping, request, (MsgCreateMessageForm) form, "oscarMessenger.CreateMessage.attachmentsNotPermitted");
+            }
 
             //FIXME remove these deprecated methods and use the Messenger Managers instead
             sentToWho = messageData.createSentToString(providerListing);
