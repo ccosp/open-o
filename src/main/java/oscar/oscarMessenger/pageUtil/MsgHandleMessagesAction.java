@@ -25,7 +25,7 @@
 package oscar.oscarMessenger.pageUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -111,19 +111,15 @@ public class MsgHandleMessagesAction extends Action {
 			theSendMessage.insert(0, "\n\n\n>");
 			subject.append(message.getSubject());
 			
-			List<ContactIdentifier> replyList = new ArrayList<ContactIdentifier>();
+			List<ContactIdentifier> replyList = Collections.emptyList();
 			
-			// add the primary sender
-			ContactIdentifier contactIdentifier = new ContactIdentifier();
-			contactIdentifier.setContactId(message.getSentByNo());
-			contactIdentifier.setFacilityId(message.getSentByLocation());		
-			replyList.add(contactIdentifier);
-			
-			// add everyone that got the message if reply all	
-			if (replyAll.compareToIgnoreCase("reply All") == 0) 
-			{ 			
-				List<ContactIdentifier> replyAllList = messagingManager.getAllMessageReplyRecipients(loggedInInfo, Integer.parseInt(messageNo));
-				replyList.addAll(replyAllList);				
+			if ("Reply".equalsIgnoreCase(reply))
+			{
+				replyList = messagingManager.getReplyToSender(loggedInInfo, message);
+			}
+			else if("reply All".equalsIgnoreCase(replyAll))
+			{
+				replyList = messagingManager.getAllMessageReplyRecipients(loggedInInfo, message);
 			}
 
 			String replyListString = new Gson().toJson(replyList);

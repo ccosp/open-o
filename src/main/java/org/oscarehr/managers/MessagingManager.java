@@ -458,14 +458,61 @@ public class MessagingManager {
 
     /**
      * A combined result of both the local reply recipients and recipients located in remote 
-     * facilities.
+     * facilities inluding the original sender.
      */
-    public List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, int messageId) {
+    public List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, MessageTbl messageTbl) {
        	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
-       	contactIdentifierList.addAll(getAllLocalReplyRecipients(loggedInInfo, messageId));
-       	contactIdentifierList.addAll(getAllRemoteReplyRecipients(loggedInInfo, messageId));
+       	contactIdentifierList.addAll(getReplyToSender(loggedInInfo, messageTbl));
+       	contactIdentifierList.addAll(getAllLocalReplyRecipients(loggedInInfo, messageTbl.getId()));
+       	contactIdentifierList.addAll(getAllRemoteReplyRecipients(loggedInInfo, messageTbl.getId()));
        	return contactIdentifierList; 
     }
+    
+    /**
+     * A combined result of both the local reply recipients and recipients located in remote 
+     * facilities inluding the original sender.
+     */
+    public List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, int messageId) {
+    	MessageTbl messageTbl = getMessage(loggedInInfo, messageId);
+    	return getAllMessageReplyRecipients(loggedInInfo, messageTbl);
+    }
+    
+    /**
+     * Get the only the sender's identifier for a message reply. 
+     * @param loggedInInfo
+     * @param messageId
+     * @return
+     */
+    public List<ContactIdentifier> getReplyToSender(LoggedInInfo loggedInInfo, int messageId) {
+       	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
+    		throw new SecurityException("missing required security object (_msg)");
+    	}
+       	
+    	MessageTbl messageTbl = getMessage(loggedInInfo, messageId);
+    	return getReplyToSender(loggedInInfo, messageTbl);
+    }
+    
+    public List<ContactIdentifier> getReplyToSender(LoggedInInfo loggedInInfo, MessageTbl messageTbl) {
+       	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
+    		throw new SecurityException("missing required security object (_msg)");
+    	}
+		// add the primary sender
+       	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
+       	String providerNo = messageTbl.getSentByNo();
+       	int clinicLocationNo = messageTbl.getSentByLocation();
+       	
+		ContactIdentifier contactIdentifier = new ContactIdentifier();
+		contactIdentifier.setContactId(providerNo);
+	
+		if(clinicLocationNo != getCurrentLocationId()) {
+			contactIdentifier.setFacilityId(clinicLocationNo);
+		}
+		
+		contactIdentifier.setClinicLocationNo(clinicLocationNo);
+		contactIdentifierList.add(contactIdentifier);
+       	return contactIdentifierList;
+    }
+
     
     /**
      * Recipients that were copied in on the message that have an origin in the client from where 
