@@ -53,26 +53,41 @@ public class ImportDemographicAction extends Action {
     	LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     	
     	/*
-    	 * Import the demographic from the remote facility if there is no match in this local facility
+    	 * During the first round(selectedDemographicNo == null): the given demographic is imported or a selection list 
+    	 * is offered back to the user
+    	 * 
+    	 * During the second round (selectedDemographicNo != null): the user has made a selection and that selection 
+    	 * will be linked with the remote demographic.
     	 */
     	if(loggedInInfo.getCurrentFacility().isIntegratorEnabled())
     	{
-    		List<Demographic> demographicList = messengerDemographicManager.importDemographic(loggedInInfo, 
-    				Integer.parseInt(remoteFacilityId), Integer.parseInt(remoteDemographicNo), Integer.parseInt(messageID));
+    		
+        	/*
+        	 * Import the demographic automatically if there is no match in the local facility. Otherwise
+        	 * return a list of possible matches for the user to select from.
+        	 */
+    		List<Demographic> demographicList = null;
+    		
+    		if(selectedDemographicNo == null)
+    		{
+	    		demographicList = messengerDemographicManager.importDemographic(loggedInInfo, 
+	    				Integer.parseInt(remoteFacilityId), Integer.parseInt(remoteDemographicNo), Integer.parseInt(messageID));
+    		}
+    		
     		if(demographicList != null)
     		{
     			request.setAttribute("demographicUserSelect", demographicList);
     			request.setAttribute("remoteDemographicNo", remoteDemographicNo);
     		}
-    	}
-    	
-    	/*
-    	 * If the user has chosen a local demographic to link with the demographic offered from the remote facility.
-    	 */
-    	if(selectedDemographicNo != null) 
-    	{
-    		messengerDemographicManager.linkDemographicWithRemote(loggedInInfo, 
-    				Integer.parseInt(selectedDemographicNo), Integer.parseInt(remoteFacilityId), Integer.parseInt(remoteDemographicNo), Integer.parseInt(messageID));
+    	    	
+	    	/*
+	    	 * If the user has chosen a local demographic to link with the demographic offered from the remote facility.
+	    	 */
+	    	if(selectedDemographicNo != null) 
+	    	{
+	    		messengerDemographicManager.linkDemographicWithRemote(loggedInInfo, 
+	    				Integer.parseInt(selectedDemographicNo), Integer.parseInt(remoteFacilityId), Integer.parseInt(remoteDemographicNo), Integer.parseInt(messageID));
+	    	}
     	}
     	
     	request.setAttribute("boxType", "0");
