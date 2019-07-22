@@ -445,7 +445,26 @@ public class MessagingManager {
 		MessageList messageList = new MessageList();
 		messageList.setMessage(messageId);
 		messageList.setProviderNo(providerNo);
-		messageList.setStatus(MessageList.STATUS_NEW);
+		
+		/* 
+		 * this is a "copy-to" recipient from another facility if the source id is > 0 
+		 * These recipients need to be identified as remote as to not confuse with local providers
+		 * with the same id. 
+		 */		
+		if(sourceFacilityId > 0)
+		{
+			messageList.setStatus(MessageList.STATUS_REMOTE);
+		}
+		
+		/*
+		 * Otherwise this is a local provider (source id = 0) and the message should
+		 * be marked as new for the provider to recieve it. 
+		 */
+		else
+		{
+			messageList.setStatus(MessageList.STATUS_NEW);
+		}
+
 		messageList.setRemoteLocation(clinicLocationNo);
 		messageList.setDestinationFacilityId(facilityId);
 		messageList.setSourceFacilityId(sourceFacilityId);
@@ -503,12 +522,18 @@ public class MessagingManager {
        	
 		ContactIdentifier contactIdentifier = new ContactIdentifier();
 		contactIdentifier.setContactId(providerNo);
-	
-		if(clinicLocationNo != getCurrentLocationId()) {
+		contactIdentifier.setClinicLocationNo(clinicLocationNo);
+		
+		/*
+		 *  Kinda crazy, right? based on current design; the sentByLocation id is the only way 
+		 *  to track the facility id for a reply to sender. 
+		 */
+		if(loggedInInfo.getCurrentFacility().isIntegratorEnabled() 
+				&& clinicLocationNo != getCurrentLocationId()) {
 			contactIdentifier.setFacilityId(clinicLocationNo);
+			contactIdentifier.setClinicLocationNo(0);
 		}
 		
-		contactIdentifier.setClinicLocationNo(clinicLocationNo);
 		contactIdentifierList.add(contactIdentifier);
        	return contactIdentifierList;
     }
@@ -564,7 +589,18 @@ public class MessagingManager {
 	       		ContactIdentifier contactIdentifier = new ContactIdentifier();
 	       		contactIdentifier.setClinicLocationNo(message.getRemoteLocation());
 	       		contactIdentifier.setContactId(message.getProviderNo());
-	       		contactIdentifier.setFacilityId(message.getSourceFacilityId());
+	       		
+	       		// assuming that this facility id is always 0
+	       		if(message.getSourceFacilityId() > 0)
+	       		{
+	       			contactIdentifier.setFacilityId(message.getSourceFacilityId());
+	       		}
+
+	       		else
+	       		{
+	       			contactIdentifier.setFacilityId(message.getDestinationFacilityId());
+	       		}
+
 	       		contactIdentifierList.add(contactIdentifier);
        		}
        	}

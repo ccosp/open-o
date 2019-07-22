@@ -39,6 +39,7 @@ public class MessageList extends AbstractModel<Integer> {
 	public static final String STATUS_NEW = "new";
 	public static final String STATUS_READ = "read";
 	public static final String STATUS_SENT = "sent";
+	public static final String STATUS_REMOTE = "remote";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
