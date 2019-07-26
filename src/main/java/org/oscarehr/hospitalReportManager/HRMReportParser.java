@@ -106,7 +106,7 @@ public class HRMReportParser {
 				SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
 				// Load a WXS schema, represented by a Schema instance.
-				Source schemaFile = new StreamSource(new File(SFTPConnector.OMD_directory + "report_manager_cds.xsd"));
+				Source schemaFile = new StreamSource(new File(OscarProperties.getInstance().getProperty("OMD_directory") + "report_manager_cds.xsd"));
 				
 				logger.debug("reading XML from " + tmpXMLholder);
 				logger.debug("reading schema from " +  OscarProperties.getInstance().getProperty("OMD_directory") + "report_manager_cds.xsd");
