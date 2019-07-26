@@ -1397,6 +1397,8 @@ function changeLt(drugId){
              var data="";
              if(elementId.match("prnVal_")!=null)
                  data="elementId="+elementId+"&propertyValue="+$(elementId).value;
+             else if(elementId.match("repeats_")!=null)
+                 data="elementId="+elementId+"&propertyValue="+$(elementId).value;
              else
                  data="elementId="+elementId+"&propertyValue="+$(elementId).innerHTML;
              data = data + "&rand="+Math.floor(Math.random()*10001);

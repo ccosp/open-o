@@ -2204,6 +2204,10 @@ public class RxPrescriptionData {
 				}
 
 			} else {
+				if(favorite == null) {
+					//we never found it..try by id
+					favorite = dao.find(this.getFavoriteId());
+				}
 				favorite = syncFavorite(favorite);
 				dao.merge(favorite);
 
