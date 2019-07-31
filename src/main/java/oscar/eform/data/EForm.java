@@ -542,7 +542,7 @@ public class EForm extends EFormBase {
                 } else if (type.equals(OPENER_VALUE)) {
 			html.insert(pointer, " "+OPENER_VALUE+"=\""+value+"\"");
 		} else if (type.equals("text") || type.equals("hidden")) {
-			html.insert(pointer, " value=\""+value+"\"");
+			html.insert(pointer, " value=\""+value.replace("\"", "&quot;")+"\"");
                 } else if(type.equals("textarea")) {
 			pointer = html.indexOf(">", pointer) + 1;
 			int endPointer = html.indexOf("<", pointer);
