@@ -12148,6 +12148,7 @@ CREATE TABLE resident_oscarMsg (
 CREATE TABLE oscar_msg_type (
     type int(10),
     description varchar(255),
+    code varchar(255),
     PRIMARY KEY(type)
 );
 
