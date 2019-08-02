@@ -241,6 +241,7 @@ public class AppService extends AbstractServiceImpl {
 				consent.setExplicit(true);
 				consent.setOptout(false);
 				consent.setLastEnteredBy(getLoggedInInfo().getLoggedInProviderNo());
+				consent.setEditDate(new Date());
 				consentDao.persist(consent);
 				//Consent consent = consentDao.findByDemographicAndConsentTypeId( demographicNo,  appDef.getConsentTypeId()  ) ;
 				if(consent != null && consent.getPatientConsented()) {
