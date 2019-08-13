@@ -140,6 +140,31 @@ angular.module("phrServices", [])
                });
         
              return deferred.promise;
+        },
+        acceptAppointmentConsent: function(){
+           	var deferred = $q.defer();
+           	 $http.post(this.apiPath+'/app/AcceptAppointmentConsent',this.configHeaders).then(function(response){
+               	console.log("returned from /AcceptAppointmentConsent",response.data);
+               	deferred.resolve(response);
+               },function(data, status, headers){
+               	console.log("error initializing phr",data, status, headers);
+               	deferred.reject("An error occured while trying to initialize k2a");
+               });
+        
+             return deferred.promise;
+        },
+        isPHRActiveCheckAppointmentConfigured: function () {
+        		var deferred = $q.defer();
+        		$http({
+                url: this.apiPath+'/app/PHRActiveAndAppointmentConfigured',
+                method: "GET",
+                headers: this.configHeaders,
+              }).then(function(response){
+            	  deferred.resolve(response.data);
+                },function (data, status, headers) {
+                	deferred.reject("An error occured while getting phr content");
+                });
+           return deferred.promise;
         }
 	
     };
