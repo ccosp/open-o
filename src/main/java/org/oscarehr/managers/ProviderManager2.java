@@ -85,6 +85,19 @@ public class ProviderManager2 {
 
 		return (result);
 	}
+	
+	public Provider getProviderIfActive(@SuppressWarnings("unused") LoggedInInfo loggedInInfo, String providerNo)
+	{
+		Provider activeProvider = null;
+		List<Provider> activeProviderList = providerDao.getActiveProvider(providerNo);
+		// This should return a single result or null. Multiple results return null because 
+		// duplicate providers cannot exist.
+		if(activeProviderList != null && activeProviderList.size() == 1)
+		{
+			activeProvider = activeProviderList.get(0);
+		}
+		return activeProvider;
+	}
 
 	public List<Provider> getProvidersByIds(LoggedInInfo loggedInInfo, List<String> ids) {
 		List<Provider> results = new ArrayList<Provider>();

@@ -232,7 +232,10 @@ public class MessengerGroupManager {
 		List<MsgProviderData> memberDataList = new ArrayList<MsgProviderData>();
 		for(GroupMembers groupMember : groupMemberList) {
 			MsgProviderData messengerContact = getMemberData(loggedInInfo, groupMember);
-			memberDataList.add(messengerContact);
+			if(messengerContact != null)
+			{
+				memberDataList.add(messengerContact);
+			}			
 		}
 		return memberDataList; 
 	}
@@ -262,7 +265,7 @@ public class MessengerGroupManager {
 	
 	private MsgProviderData getMemberData(LoggedInInfo loggedInInfo, int facilityId, String providerNo) {
 		MsgProviderData messengerContact = null;
-		if(facilityId == 0)
+		if(facilityId == 0 || facilityId == loggedInInfo.getCurrentFacility().getId())
 		{
 			messengerContact = getLocalMember(loggedInInfo, providerNo);
 		}
@@ -283,10 +286,13 @@ public class MessengerGroupManager {
 		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.READ, null)) {
 			throw new SecurityException("missing required security object (_admin)");
 		}
-		
-		Provider provider = providerManager.getProvider(loggedInInfo, providerNo);
-		MsgProviderData msgProviderData = new MsgProviderData(provider);
-		msgProviderData.getId().setClinicLocationNo(getCurrentLocationId());
+		MsgProviderData msgProviderData = null;		
+		Provider provider = providerManager.getProviderIfActive(loggedInInfo, providerNo);
+		if(provider != null)
+		{
+			msgProviderData = new MsgProviderData(provider);
+			msgProviderData.getId().setClinicLocationNo(getCurrentLocationId());
+		}
 		return msgProviderData;
 	}
 	

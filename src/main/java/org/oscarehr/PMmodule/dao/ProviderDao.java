@@ -297,6 +297,23 @@ public class ProviderDao extends HibernateDaoSupport {
 		}
 		return rs;
 	}
+    
+    public List<Provider> getActiveProvider(String providerNo) {
+    	
+    	String sql = "FROM Provider p where p.Status='1' and p.ProviderNo =?";
+    	
+    	ArrayList<Object> paramList = new ArrayList<Object>();
+    	paramList.add(providerNo);
+
+    	Object params[] = paramList.toArray(new Object[paramList.size()]);
+
+    	List<Provider> rs = getHibernateTemplate().find(sql,params);
+
+		if (log.isDebugEnabled()) {
+			log.debug("getProvider: # of results=" + rs.size());
+		}
+		return rs;
+	}
 
     
 	public List<Provider> search(String name) {
