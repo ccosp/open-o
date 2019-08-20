@@ -449,7 +449,7 @@ public class MessengerIntegratorManager {
 				 *  exists in the local clinic (145) or a remote clinic (>=0)
 				 *   
 				 */
-				messagingManager.addRecipientsToMessage(loggedInInfo, messageId, providerIds, messagingManager.getCurrentLocationId(), 0, providerCommunication.getSourceIntegratorFacilityId());
+				messagingManager.addRecipientsToMessage(loggedInInfo, messageId, providerIds, messagingManager.getCurrentLocationId(), 0, sourceFacilityId, MessageList.STATUS_NEW);
 								
 				/*
 				 * Attach any demographic files that came in with the message.
@@ -469,7 +469,7 @@ public class MessengerIntegratorManager {
 		 */		
 		if(sourceProviderIdList != null && sourceProviderIdList.length > 1)
 		{
-			messagingManager.addRecipientsToMessage(loggedInInfo, messageId, sourceProviderIdList, 0, 0, sourceFacilityId);			
+			messagingManager.addRecipientsToMessage(loggedInInfo, messageId, sourceProviderIdList, 0, 0, sourceFacilityId, MessageList.STATUS_REMOTE);			
 		}
 		
 		return receivedMessages;

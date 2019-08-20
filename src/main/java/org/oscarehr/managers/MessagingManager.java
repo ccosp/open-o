@@ -419,25 +419,41 @@ public class MessagingManager {
      * @param destinationFacility
      * @param sourceFacilityId
      */
-	public void addRecipientsToMessage(LoggedInInfo loggedInInfo, int messageId, ContactIdentifier[] contactIdentifier) {
+	public void addRecipientsToMessage(LoggedInInfo loggedInInfo, int messageId, ContactIdentifier[] contactIdentifier, String status) {
     	for(ContactIdentifier contact : contactIdentifier) {
-    		addRecipientToMessage(loggedInInfo, messageId, contact);
+    		addRecipientToMessage(loggedInInfo, messageId, contact, status);
     	}
     }
 	
-    public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, ContactIdentifier contactIdentifier) {
-    	addRecipientToMessage(loggedInInfo, messageId, contactIdentifier.getContactId(), contactIdentifier.getClinicLocationNo(), contactIdentifier.getFacilityId());
+	public void addRecipientsToMessage(LoggedInInfo loggedInInfo, int messageId, ContactIdentifier[] contactIdentifier) {
+		addRecipientsToMessage(loggedInInfo, messageId, contactIdentifier, MessageList.STATUS_NEW);
+	}
+	
+	public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, ContactIdentifier contactIdentifier) {
+		addRecipientToMessage(loggedInInfo, messageId, contactIdentifier.getContactId(), contactIdentifier.getClinicLocationNo(), contactIdentifier.getFacilityId(), MessageList.STATUS_NEW);
+	}
+	
+    public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, ContactIdentifier contactIdentifier, String status) {
+    	addRecipientToMessage(loggedInInfo, messageId, contactIdentifier.getContactId(), contactIdentifier.getClinicLocationNo(), contactIdentifier.getFacilityId(), status);
     }
     
     public void addRecipientsToMessage(LoggedInInfo loggedInInfo, int messageId, String[] providerNoArray, int clinicLocationNo, int facilityId, int sourceFacilityId) {
+    	addRecipientsToMessage(loggedInInfo, messageId, providerNoArray, clinicLocationNo, facilityId, sourceFacilityId, MessageList.STATUS_NEW);
+    }
+    
+    public void addRecipientsToMessage(LoggedInInfo loggedInInfo, int messageId, String[] providerNoArray, int clinicLocationNo, int facilityId, int sourceFacilityId, String status) {
     	providerNoArray = removeDuplicates(providerNoArray);
     	for(String providerNo : providerNoArray)
     	{
-    		addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, sourceFacilityId);		
+    		addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, sourceFacilityId, status);		
     	}
     }
     
     public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, String providerNo, int clinicLocationNo, int facilityId, int sourceFacilityId) {
+    	addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, sourceFacilityId, MessageList.STATUS_NEW);
+    }
+    
+    public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, String providerNo, int clinicLocationNo, int facilityId, int sourceFacilityId, String status) {
     	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_msg", SecurityInfoManager.WRITE, null)) {
 			throw new SecurityException("missing required security object (_msg)");
 		}
@@ -445,34 +461,20 @@ public class MessagingManager {
 		MessageList messageList = new MessageList();
 		messageList.setMessage(messageId);
 		messageList.setProviderNo(providerNo);
-		
-		/* 
-		 * this is a "copy-to" recipient from another facility if the source id is > 0 
-		 * These recipients need to be identified as remote as to not confuse with local providers
-		 * with the same id. 
-		 */		
-		if(sourceFacilityId > 0)
-		{
-			messageList.setStatus(MessageList.STATUS_REMOTE);
-		}
-		
-		/*
-		 * Otherwise this is a local provider (source id = 0) and the message should
-		 * be marked as new for the provider to recieve it. 
-		 */
-		else
-		{
-			messageList.setStatus(MessageList.STATUS_NEW);
-		}
-
+		messageList.setStatus(status);
 		messageList.setRemoteLocation(clinicLocationNo);
 		messageList.setDestinationFacilityId(facilityId);
 		messageList.setSourceFacilityId(sourceFacilityId);
 		messageListDao.persist(messageList);
     }
+    
+    public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, String providerNo, int clinicLocationNo, int facilityId)
+    {
+    	addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, MessageList.STATUS_NEW);
+    }
 
-    public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, String providerNo, int clinicLocationNo, int facilityId) {
-    	addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, 0);
+    public void addRecipientToMessage(LoggedInInfo loggedInInfo, int messageId, String providerNo, int clinicLocationNo, int facilityId, String status) {
+    	addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, 0, status);
     }
 
     /**
