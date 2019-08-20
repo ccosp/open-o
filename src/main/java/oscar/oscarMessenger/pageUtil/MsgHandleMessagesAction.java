@@ -101,14 +101,20 @@ public class MsgHandleMessagesAction extends Action {
 			
 		} else if (reply.equalsIgnoreCase("Reply") || (replyAll.equalsIgnoreCase("reply All"))) {
 
-			StringBuilder subject = new StringBuilder("Re:");
-			
 			StringBuilder theSendMessage = new StringBuilder();
 			MessageTbl message = messagingManager.getMessage(loggedInInfo, Integer.parseInt(messageNo));
 			String themessage = message.getMessage();
 			themessage = themessage.replace('\n', '>'); //puts > at the beginning
 			theSendMessage = new StringBuilder(themessage); //of each line
 			theSendMessage.insert(0, "\n\n\n>");
+			
+			StringBuilder subject = new StringBuilder("");
+			
+			if(! message.getSubject().startsWith("Re:")) 
+			{
+				subject.append("Re:");				
+			}
+			
 			subject.append(message.getSubject());
 			
 			List<ContactIdentifier> replyList = Collections.emptyList();
