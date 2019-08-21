@@ -364,21 +364,24 @@ public class MessengerIntegratorManager {
 		}
     	
     	List<Integer> receivedMessages = new ArrayList<Integer>();
-		String[] sourceProviderIdList = null;
-		String sourceProviderIds = "";
 		Integer messageId = null;
 		Integer sourceFacilityId = null;
-		
+
 		for(ProviderCommunicationTransfer providerCommunication : providerCommunicationList)
 		{
+			sourceFacilityId = providerCommunication.getSourceIntegratorFacilityId();
+			
 			MessageTbl messageTbl = new MessageTbl();
 			String messageString = new String(providerCommunication.getData(), "UTF-8");
 			JSONObject jsonObject = JSONObject.fromObject(messageString);
 			String subject = jsonObject.getString(JSON_KEY.subject.name());
 			String message = jsonObject.getString(JSON_KEY.message.name());
 			String from = jsonObject.getString(JSON_KEY.from.name());
-			String copyto = jsonObject.getString(JSON_KEY.copyto.name());
-
+			String copyto = jsonObject.getString(JSON_KEY.copyto.name());	
+			String sourceProviderIds = providerCommunication.getSourceProviderId();
+	
+	
+			messageTbl.setSentByLocation(sourceFacilityId);
 			messageTbl.setDate(providerCommunication.getSentDate().getTime());
 			messageTbl.setTime(providerCommunication.getSentDate().getTime());
 			messageTbl.setSentBy(from);
@@ -387,26 +390,22 @@ public class MessengerIntegratorManager {
 			 * The source provider id column may also contain any other providers that were copied in 
 			 * at the source. 
 			 * The originator of the message will always be the first entry. 
-			 * Anyone is welcome to do this a better way.
-			 */
-			sourceProviderIds = providerCommunication.getSourceProviderId();			
-			if(sourceProviderIds.contains(",")) 
+			 */	
+			
+			// spaces can be evil
+			sourceProviderIds = sourceProviderIds.replaceAll("\\s", "");
+			String[] sourceProviderIdArray = new String[] {};
+	
+			if(sourceProviderIds.contains(","))
 			{
-				sourceProviderIdList = sourceProviderIds.split(",");
+				sourceProviderIdArray = sourceProviderIds.split(",");
 			}
 			else
 			{
-				sourceProviderIdList = new String[] {sourceProviderIds};
+				sourceProviderIdArray = new String[] {sourceProviderIds};
 			}
-			
-			if(sourceProviderIdList != null && sourceProviderIdList.length > 0)
-			{
-				messageTbl.setSentByNo(sourceProviderIdList[0]);				
-			}
-			
-			sourceFacilityId = providerCommunication.getSourceIntegratorFacilityId();
-			
-			messageTbl.setSentByLocation(sourceFacilityId);
+				
+			messageTbl.setSentByNo(sourceProviderIdArray[0]);
 			messageTbl.setSentTo(copyto);
 			messageTbl.setSubject(subject);
 			messageTbl.setMessage(message);
@@ -450,7 +449,23 @@ public class MessengerIntegratorManager {
 				 *   
 				 */
 				messagingManager.addRecipientsToMessage(loggedInInfo, messageId, providerIds, messagingManager.getCurrentLocationId(), 0, sourceFacilityId, MessageList.STATUS_NEW);
-								
+				
+				/*
+				 *  add additional providers that are included from the source facility.
+				 *  The first entry does not get saved here.
+				 */		
+				if(sourceProviderIdArray.length > 1)
+				{
+			
+					List<String> sourceProviderIdList = new ArrayList<String>();
+					for(int i = 1; i < sourceProviderIdArray.length; i++ )
+					{
+						sourceProviderIdList.add(sourceProviderIdArray[i]);
+					}
+					
+					messagingManager.addRecipientsToMessage(loggedInInfo, messageId, sourceProviderIdList.toArray(new String[sourceProviderIdList.size()]), 0, 0, sourceFacilityId, MessageList.STATUS_REMOTE);			
+				}
+
 				/*
 				 * Attach any demographic files that came in with the message.
 				 */
@@ -461,15 +476,6 @@ public class MessengerIntegratorManager {
 
 				receivedMessages.add(providerCommunication.getId());
 			}
-		}
-		
-		/*
-		 *  add additional providers that are included from the source facility.
-		 *  This list was captured in the loop above.
-		 */		
-		if(sourceProviderIdList != null && sourceProviderIdList.length > 1)
-		{
-			messagingManager.addRecipientsToMessage(loggedInInfo, messageId, sourceProviderIdList, 0, 0, sourceFacilityId, MessageList.STATUS_REMOTE);			
 		}
 		
 		return receivedMessages;

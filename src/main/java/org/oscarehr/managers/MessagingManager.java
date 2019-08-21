@@ -442,7 +442,6 @@ public class MessagingManager {
     }
     
     public void addRecipientsToMessage(LoggedInInfo loggedInInfo, int messageId, String[] providerNoArray, int clinicLocationNo, int facilityId, int sourceFacilityId, String status) {
-    	providerNoArray = removeDuplicates(providerNoArray);
     	for(String providerNo : providerNoArray)
     	{
     		addRecipientToMessage(loggedInInfo, messageId, providerNo, clinicLocationNo, facilityId, sourceFacilityId, status);		
@@ -481,11 +480,28 @@ public class MessagingManager {
      * A combined result of both the local reply recipients and recipients located in remote 
      * facilities inluding the original sender.
      */
-    public List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, MessageTbl messageTbl) {
-       	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
-       	contactIdentifierList.addAll(getReplyToSender(loggedInInfo, messageTbl));
-       	contactIdentifierList.addAll(getAllLocalReplyRecipients(loggedInInfo, messageTbl.getId()));
-       	contactIdentifierList.addAll(getAllRemoteReplyRecipients(loggedInInfo, messageTbl.getId()));
+    public final List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, final MessageTbl messageTbl) {
+       	
+    	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();     	
+       	List<ContactIdentifier> sender = getReplyToSender(loggedInInfo, messageTbl);
+       	List<ContactIdentifier> localCopyTo = getAllLocalReplyRecipients(loggedInInfo, messageTbl.getId());
+       	List<ContactIdentifier> remoteCopyTo = getAllRemoteReplyRecipients(loggedInInfo, messageTbl.getId());
+       	
+       	if(sender != null) 
+       	{
+       		contactIdentifierList.addAll(sender);
+       	}
+       	
+     	if(localCopyTo != null) 
+       	{
+     		contactIdentifierList.addAll(localCopyTo);
+       	}
+     	
+     	if(remoteCopyTo != null) 
+       	{
+     		contactIdentifierList.addAll(remoteCopyTo);
+       	}
+
        	return contactIdentifierList; 
     }
     
