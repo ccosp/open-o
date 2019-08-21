@@ -103,7 +103,7 @@
 		$(".add-member-btn").click(function(){
 			var groupId = this.id;
 			groupId = groupId.replace("add-", '');
-			var memberId = $("#add-member-id").val(); 
+			var memberId = $("#add-member-id-" + groupId).val(); 
 			if(memberId)
 			{
 				addMember(memberId, groupId)
@@ -138,6 +138,7 @@
 
 		function addMember(memberId, groupId) {
 			$.post(ctx + "/oscarMessenger.do?method=add&member=" + memberId + "&group=" + groupId);
+			$('#group-' + groupId).load(ctx + '/oscarMessenger.do?method=fetch #group-' + groupId);
 		}
 		
 		function removeMember(memberId, groupId) {
@@ -145,11 +146,13 @@
 		}
 		
 		function createGroup(groupName) {
-			$.post(ctx + "/oscarMessenger.do?method=create&groupName=" + groupName);	
+			$.post(ctx + "/oscarMessenger.do?method=create&groupName=" + groupName);
+			$('#manageGroups').load(ctx + '/oscarMessenger.do?method=fetch #manageGroups');
 		}
 		
 		function deleteGroup(groupId) {
 			$.post(ctx + "/oscarMessenger.do?method=remove&group=" + groupId);
+			$('#manageGroups').load(ctx + '/oscarMessenger.do?method=fetch #manageGroups');
 		}
 
 		$(document).ready(function(){
@@ -169,7 +172,7 @@
 		        },
 				select: function( event, ui ) {
 				    $( this ).val( ui.item.label );
-				    $( "#add-member-id" ).val( ui.item.value );
+				    $( "#add-member-id-" + this.id ).val( ui.item.value );
 				    return false;
 		        }
 		    });
@@ -300,9 +303,8 @@
 						<div class="control-group contact-group-buttons">
 							<div class="input-append">
 								<div class="autocomplete">							
-									<input type='text' placeholder="Last, First" class="search-provider" /> 
-									<input type='hidden' id="add-member-id" 
-									value="" />
+									<input type='text' placeholder="Last, First" id="${ group.key.id }" class="search-provider" /> 
+									<input type='hidden' id="add-member-id-${ group.key.id }" value="" />
 									<button id="add-${ group.key.id }" class="btn add-member-btn">Add Contact</button>	
 								</div>						
 							</div>
