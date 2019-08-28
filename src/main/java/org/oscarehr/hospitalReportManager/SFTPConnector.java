@@ -340,7 +340,11 @@ public class SFTPConnector {
 					file = file.substring(file.lastIndexOf("/")+1,file.length());
 					logger.debug("file to delete is now " + file);
 				}
-				cmd.rm(file);
+				try {
+					cmd.rm(file);
+				}catch(SftpException e) {
+					logger.error("Error deleting file",e);
+				}
 
 				fLogger.info("Deleted file " + file + " from server");
 				logger.debug("Deleted server file " + file);
