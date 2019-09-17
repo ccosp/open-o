@@ -267,7 +267,9 @@ public class ScheduleManager {
 
 		LogAction.addLogSynchronous(loggedInInfo, "ScheduleManager.getAppointmentUpdatedAfterDate", "updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive);
 
-		patientConsentManager.filterProviderSpecificConsent(loggedInInfo, results);
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_appointment.UpdatedAfterDate", "x", null)) {
+			patientConsentManager.filterProviderSpecificConsent(loggedInInfo, results);
+        }
 		return (results);
 	}
 
