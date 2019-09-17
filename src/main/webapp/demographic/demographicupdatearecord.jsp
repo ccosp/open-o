@@ -349,7 +349,7 @@
      
     if(demographic.getMyOscarUserName() != null && !demographic.getMyOscarUserName().trim().isEmpty()){ 
      	Demographic myoscarDemographic = demographicDao.getDemographicByMyOscarUserName(demographic.getMyOscarUserName());
-     	if(!myoscarDemographic.getDemographicNo().equals(demographic.getDemographicNo())){
+     	if(myoscarDemographic != null && !myoscarDemographic.getDemographicNo().equals(demographic.getDemographicNo())){
 
 %>
 			***<font color='red'><bean:message key="demographic.demographicaddarecord.msgDuplicatedPHR" /></font>
