@@ -416,8 +416,10 @@ for (int i=0; i<sites.size(); i++) {
 		<tr>
 			<td align="right"><bean:message key="admin.provider.formStatus" />:
 			</td>
-			<td><input type="text" name="status"
-				value="<%= provider.getStatus()==null? "" : provider.getStatus() %>" maxlength="1"></td>
+			<td>
+				<input type="radio" id="statusActive" name="status" value="1" <%="1".equals(provider.getStatus()) ? "checked" : ""%>><label for="statusActive"><bean:message key="admin.provider.formStatusActive"/></label>
+				<input type="radio" id="statusInactive" name="status" value="0" <%=!"1".equals(provider.getStatus()) ? "checked" : ""%>><label for="statusInactive"><bean:message key="admin.provider.formStatusInactive"/></label>
+			</td>
 		</tr>
 		<tr>
 			<td align="right"><bean:message
