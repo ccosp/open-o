@@ -36,6 +36,7 @@ import org.oscarehr.common.dao.PreventionDao;
 import org.oscarehr.common.dao.PreventionExtDao;
 import org.oscarehr.common.dao.PropertyDao;
 import org.oscarehr.common.interfaces.Immunization.ImmunizationProperty;
+import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.Prevention;
 import org.oscarehr.common.model.PreventionExt;
 import org.oscarehr.common.model.Property;
@@ -57,6 +58,8 @@ public class PreventionManager {
 	@Autowired
 	private PropertyDao propertyDao;
 	@Autowired
+	private PatientConsentManager patientConsentManager;
+	@Autowired
 	private SecurityInfoManager securityInfoManager;
 		
 	private static final String HIDE_PREVENTION_ITEM = "hide_prevention_item";
@@ -65,9 +68,19 @@ public class PreventionManager {
 
 	public List<Prevention> getUpdatedAfterDate(LoggedInInfo loggedInInfo, Date updatedAfterThisDateExclusive, int itemsToReturn) {
 		List<Prevention> results = preventionDao.findByUpdateDate(updatedAfterThisDateExclusive, itemsToReturn);
-
+		patientConsentManager.filterProviderSpecificConsent(loggedInInfo, results);
 		LogAction.addLogSynchronous(loggedInInfo, "PreventionManager.getUpdatedAfterDate", "updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive);
 
+		return (results);
+	}
+
+	public List<Prevention> getByDemographicIdUpdatedAfterDate(LoggedInInfo loggedInInfo, Integer demographicId, Date updatedAfterThisDateExclusive) {
+		List<Prevention> results = new ArrayList<Prevention>();
+		ConsentType consentType = patientConsentManager.getProviderSpecificConsent(loggedInInfo);
+		if (patientConsentManager.hasPatientConsented(demographicId, consentType)) {
+			results = preventionDao.findByDemographicIdAfterDatetimeExclusive(demographicId, updatedAfterThisDateExclusive);
+			LogAction.addLogSynchronous(loggedInInfo, "PreventionManager.getByDemographicIdUpdatedAfterDate", "demographicId="+demographicId+" updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive);
+		}
 		return (results);
 	}
 

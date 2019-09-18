@@ -779,7 +779,11 @@ java.util.Locale vLocale =(java.util.Locale)session.getAttribute(org.apache.stru
 <table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%" id="firstTable" class="noprint">
 <tr>
 <td align="center" >
-<a href="../web/" title="OSCAR EMR"><img src="<%=request.getContextPath()%>/images/oscar_small.png" border="0"></a>
+<%if("true".equals(OscarProperties.getInstance().getProperty("newui.enabled", "false"))) { %>
+	<a href="../web/" title="OSCAR EMR"><img src="<%=request.getContextPath()%>/images/oscar_small.png" border="0"></a>
+<% } else { %>
+	<img src="<%=request.getContextPath()%>/images/oscar_small.png" border="0">
+<% } %>
 </td>
 <td id="firstMenu">
 <ul id="navlist">
@@ -863,6 +867,15 @@ java.util.Locale vLocale =(java.util.Locale)session.getAttribute(org.apache.stru
        </oscar:newUnclaimedLab>
    </li>
   </security:oscarSec>
+  
+<security:oscarSec roleName="<%=roleName$%>" objectName="_hrm,_admin.hrm,_hrm.administrator" rights="r">
+   <li>
+       <a HREF="#" ONCLICK ="popupInboxManager('../hospitalReportManager/inbox.jsp', 'HRM');return false;" TITLE='View HRM Reports'>
+	  	HRM
+       </a>
+   </li>
+  </security:oscarSec>
+
 </oscar:oscarPropertiesCheck>
 
  </caisi:isModuleLoad>
@@ -885,12 +898,15 @@ java.util.Locale vLocale =(java.util.Locale)session.getAttribute(org.apache.stru
 </caisi:isModuleLoad>
 
 <%-- EConsult cannot be logged into without a link, no sense in showing it --%>
-<% if(econsultUrl != null && ! econsultUrl.isEmpty()) { %>
+ <%
+	 boolean hide_eConsult = OscarProperties.getInstance().isPropertyActive("hide_eConsult_link");
+	 if("on".equalsIgnoreCase(prov) && !hide_eConsult){
+ %>
 	 <li id="econ">
 		<a href="#" onclick ="popupOscarRx(625, 1024, '../econsult.do?method=frontend&task=physicianSummary')" title="eConsult">
 	 	<span>eConsult</span></a>
 	</li>
-<%} %>
+<% 	} %>
 
 <%if(!StringUtils.isEmpty(OscarProperties.getInstance().getProperty("clinicalConnect.CMS.url",""))) { %>
 <li id="clinical_connect">
@@ -966,7 +982,14 @@ java.util.Locale vLocale =(java.util.Locale)session.getAttribute(org.apache.stru
 				window.setTimeout(pollMessageCount, 2000);
 			</script>
 	    </li>
-    </myoscar:indivoRegistered>
+	</myoscar:indivoRegistered>
+    <phr:phrNotRegistered provider="<%=curUser_no%>">
+    		<li>
+			<a HREF="#" ONCLICK ="popup('600', '1024','../phr/PHRSignup.jsp','INDIVOMESSENGER2<%=curUser_no%>')" title='<bean:message key="global.phr"/>'>
+				<bean:message key="global.btnphr"/>
+			</a>
+	    </li>
+    </phr:phrNotRegistered>
 <%if(appManager.isK2AEnabled()){ %>
 <li>
 	<a href="javascript:void(0);" id="K2ALink">K2A<span><sup id="k2a_new_notifications"></sup></span></a>
@@ -1517,8 +1540,16 @@ for(nProvider=0;nProvider<numProvider;nProvider++) {
          }
      }
      bColor=bColor?false:true;
+     
+     boolean hideColumn=false;
+     if("true".equals(OscarProperties.getInstance().getProperty("schedule.hideNonScheduledDaysInWeekView","false"))) {
+    	 if(sd == null || "0".equals(String.valueOf(sd.getAvailable())) ) {
+    		 hideColumn=true;
+    	 }
+     }
+     
 %>
-            <td valign="top" width="<%=isWeekView?100/7:100/numProvider%>%"> <!-- for the first provider's schedule -->
+            <td valign="top" width="<%=isWeekView?100/7:100/numProvider%>%" <%=hideColumn?"style=\"display:none\" ":"" %>> <!-- for the first provider's schedule -->
 
         <table border="0" cellpadding="0" bgcolor="#486ebd" cellspacing="0" width="100%"><!-- for the first provider's name -->
           <tr><td class="infirmaryView" NOWRAP ALIGN="center" BGCOLOR="<%=bColor?"#bfefff":"silver"%>">
@@ -1800,7 +1831,8 @@ for(nProvider=0;nProvider<numProvider;nProvider++) {
 			 <%} %>
 
             <%
-                String nextStatus = as.getNextStatus();
+                String nextStatus =null;
+            try {nextStatus = as.getNextStatus();} catch(Exception e){}
 			    if (nextStatus != null && !nextStatus.equals("")) {
             %>
 			<!-- Short letters -->
@@ -1969,7 +2001,7 @@ start_time += iSm + ":00";
 
 <!-- doctor code block 3 -->
 <% if(bShowEncounterLink && !isWeekView) { %>
-<% if (oscar.OscarProperties.getInstance().isPropertyActive("SINGLE_PAGE_CHART")) { 
+<% if ("true".equals(OscarProperties.getInstance().getProperty("newui.enabled", "false")) && oscar.OscarProperties.getInstance().isPropertyActive("SINGLE_PAGE_CHART")) { 
 	
 	newUxUrl = "../web/#/record/" + demographic_no + "/";
 	
@@ -2061,7 +2093,12 @@ start_time += iSm + ":00";
 <security:oscarSec roleName="<%=roleName$%>" objectName="_appointment.doctorLink" rights="r">
      &#124; <a href=# onClick="popupWithApptNo(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=curUser_no%>&demographicNo=<%=demographic_no%>','rx',<%=appointment.getId()%>)" title="<bean:message key="global.prescriptions"/>"><bean:message key="global.rx"/>
       </a>
-
+      <%if("true".equals(OscarProperties.getInstance().getProperty("newui.enabled", "false")) && OscarProperties.getInstance().isPropertyActive("RX2")) {
+    		// This is temporary for testing the angularRx
+    	  %>
+	&#124; <a href=# onClick="popupWithApptNo(700,1027,'../webp/#!/record/<%=demographic_no%>/rx','rx',<%=appointment.getId()%>)" title="<bean:message key="global.prescriptions"/>"><bean:message key="global.rx"/>2
+      </a>
+      <%} %>
 
 <!-- doctor color -->
 <oscar:oscarPropertiesCheck property="ENABLE_APPT_DOC_COLOR" value="yes">

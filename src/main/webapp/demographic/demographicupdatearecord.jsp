@@ -120,10 +120,15 @@
 	
 	demographic.setLastName(request.getParameter("last_name").trim());
 	demographic.setFirstName(request.getParameter("first_name").trim());
+	demographic.setMiddleNames(request.getParameter("middleNames").trim());
 	demographic.setAddress(request.getParameter("address"));
 	demographic.setCity(request.getParameter("city"));
 	demographic.setProvince(request.getParameter("province"));
 	demographic.setPostal(request.getParameter("postal"));
+	demographic.setResidentialAddress(request.getParameter("residentialAddress"));
+	demographic.setResidentialCity(request.getParameter("residentialCity"));
+	demographic.setResidentialProvince(request.getParameter("residentialProvince"));
+	demographic.setResidentialPostal(request.getParameter("residentialPostal"));
 	demographic.setPhone(request.getParameter("phone"));
 	demographic.setPhone2(request.getParameter("phone2"));
 	demographic.setEmail(request.getParameter("email"));
@@ -134,6 +139,7 @@
 	demographic.setHin(request.getParameter("hin"));
 	demographic.setVer(request.getParameter("ver"));
 	demographic.setRosterStatus(request.getParameter("roster_status"));
+	demographic.setRosterEnrolledTo(request.getParameter("roster_enrolled_to"));
 	demographic.setPatientStatus(request.getParameter("patient_status"));
 	demographic.setChartNo(request.getParameter("chart_no"));
 	demographic.setProviderNo(request.getParameter("provider_no"));
@@ -343,7 +349,7 @@
      
     if(demographic.getMyOscarUserName() != null && !demographic.getMyOscarUserName().trim().isEmpty()){ 
      	Demographic myoscarDemographic = demographicDao.getDemographicByMyOscarUserName(demographic.getMyOscarUserName());
-     	if(!myoscarDemographic.getDemographicNo().equals(demographic.getDemographicNo())){
+     	if(myoscarDemographic != null && !myoscarDemographic.getDemographicNo().equals(demographic.getDemographicNo())){
 
 %>
 			***<font color='red'><bean:message key="demographic.demographicaddarecord.msgDuplicatedPHR" /></font>

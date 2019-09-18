@@ -122,6 +122,15 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
     private String countryOfOrigin;
     private String newsletter;
 
+    private String middleNames;
+    private String rosterEnrolledTo;
+    
+    private String residentialAddress;
+    private String residentialCity;
+	private String residentialProvince;
+	private String residentialPostal;
+	
+    
         public String getTitle() {
         	return title;
         }
@@ -1123,6 +1132,26 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
     	this.newsletter = newsletter;
     }
 
+	public String getMiddleNames() {
+		return middleNames;
+	}
+
+	public void setMiddleNames(String middleNames) {
+		this.middleNames = middleNames;
+	}
+
+	
+
+	public String getRosterEnrolledTo() {
+		return rosterEnrolledTo;
+	}
+
+	public void setRosterEnrolledTo(String rosterEnrolledTo) {
+		this.rosterEnrolledTo = rosterEnrolledTo;
+	}
+
+
+
 	public static final Comparator<Demographic> FormattedNameComparator = new Comparator<Demographic>() {	
         @Override	
         public int compare(Demographic dm1, Demographic dm2) {	
@@ -1220,5 +1249,57 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	public Integer getId() {
 		return this.getDemographicNo();
 	}
+	
+	
+	public String getRosterStatusDisplay() {
+		String rs = StringUtils.trimToNull(this.getRosterStatus());
+		if(rs != null) {
+			if("RO".equals(rs)) {
+				return "ROSTERED";
+			}
+			if("TE".equals(rs)) {
+				return "TERMINATED";
+			}
+			if("FS".equals(rs)) {
+				return "FEE FOR SERVICE";
+			}
+			return rs;
+		}else {
+			return "";
+		}
+	}
+
+	public String getResidentialAddress() {
+		return residentialAddress;
+	}
+
+	public void setResidentialAddress(String residentialAddress) {
+		this.residentialAddress = residentialAddress;
+	}
+
+	public String getResidentialCity() {
+		return residentialCity;
+	}
+
+	public void setResidentialCity(String residentialCity) {
+		this.residentialCity = residentialCity;
+	}
+
+	public String getResidentialProvince() {
+		return residentialProvince;
+	}
+
+	public void setResidentialProvince(String residentialProvince) {
+		this.residentialProvince = residentialProvince;
+	}
+
+	public String getResidentialPostal() {
+		return residentialPostal;
+	}
+
+	public void setResidentialPostal(String residentialPostal) {
+		this.residentialPostal = residentialPostal;
+	}
+	
 	
 }
