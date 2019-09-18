@@ -314,6 +314,7 @@ public class RxPrescriptionData {
 		p.setHideCpp(drug.getHideFromCpp());
 		p.setPharmacyId(drug.getPharmacyId());
 		if(drug.isNonAuthoritative() != null) p.setNonAuthoritative(drug.isNonAuthoritative());
+		p.discontinued = drug.isDiscontinued();
 		return p;
 	}
 
@@ -2203,6 +2204,10 @@ public class RxPrescriptionData {
 				}
 
 			} else {
+				if(favorite == null) {
+					//we never found it..try by id
+					favorite = dao.find(this.getFavoriteId());
+				}
 				favorite = syncFavorite(favorite);
 				dao.merge(favorite);
 

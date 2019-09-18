@@ -575,6 +575,10 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 
 		}
 
+		if(!listElem.equals("")) {
+			listRx.add(listElem);
+		}
+		
 		// get the print prop values
 		Properties props = new Properties();
 		StringBuilder temp = new StringBuilder();

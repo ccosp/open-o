@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,6 +70,8 @@ import org.oscarehr.common.dao.AppDefinitionDao;
 import org.oscarehr.common.dao.AppUserDao;
 import org.oscarehr.common.dao.AppointmentSearchDao;
 import org.oscarehr.common.dao.ConsentDao;
+import org.oscarehr.common.dao.ProviderPreferenceDao;
+import org.oscarehr.common.dao.SecObjPrivilegeDao;
 import org.oscarehr.common.dao.SecurityDao;
 import org.oscarehr.common.model.AppDefinition;
 import org.oscarehr.common.model.AppUser;
@@ -79,20 +82,29 @@ import org.oscarehr.common.model.AppointmentSearch;
 import org.oscarehr.common.model.Consent;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.ProviderPreference;
+import org.oscarehr.common.model.SecObjPrivilege;
+import org.oscarehr.common.model.SecObjPrivilegePrimaryKey;
 import org.oscarehr.common.model.Security;
 import org.oscarehr.managers.PatientConsentManager;
 import org.oscarehr.managers.SecurityInfoManager;
+import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
 import org.oscarehr.phr.RegistrationHelper;
+import org.oscarehr.phr.util.MyOscarUtils;
+import org.oscarehr.util.EncryptionUtils;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.ws.rest.to.Creds;
 import org.oscarehr.ws.rest.to.GenericRESTResponse;
 import org.oscarehr.ws.rest.to.RSSResponse;
 import org.oscarehr.ws.rest.to.model.AppDefinitionTo1;
+import org.oscarehr.ws.rest.to.model.PHRAccount;
 import org.oscarehr.ws.rest.to.model.PHRInviteTo1;
 import org.oscarehr.ws.rest.to.model.ProviderTo1;
 import org.oscarehr.ws.rest.to.model.RssItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.quatro.dao.security.SecuserroleDao;
 
@@ -102,6 +114,7 @@ import com.quatro.web.admin.SecurityAddSecurityHelper;
 import oscar.OscarProperties;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
+import oscar.oscarProvider.data.ProviderMyOscarIdData;
 
 import org.oscarehr.PMmodule.dao.ProviderDao;
 
@@ -139,6 +152,9 @@ public class AppService extends AbstractServiceImpl {
 	
 	@Autowired
 	AppointmentSearchDao appointmentSearchDao;
+	
+	@Autowired
+	SecObjPrivilegeDao secObjPrivilegeDao;
 	
 	@GET
 	@Path("/getApps/")
@@ -186,6 +202,71 @@ public class AppService extends AbstractServiceImpl {
 		return new GenericRESTResponse(false,"Consent Not Configured");
 	}
 	
+	@GET
+	@Path("/PHRActiveAndAppointmentConfigured/")
+	@Produces("application/json")
+	public GenericRESTResponse isPHRActiveAndAppointmentConfigured(@Context HttpServletRequest request){
+		Integer id = appManager.getAppDefinitionConsentId(getLoggedInInfo(), "PHR");
+		if(id != null) {
+			ConsentType consent = patientConsentManager.getConsentTypeByConsentTypeId(id);
+			if(consent != null) {
+				Provider provider = providerDao.getProvider(consent.getProviderNo());
+				if(provider != null) {
+					LoggedInInfo loggedInInfo = new LoggedInInfo(null, null, provider,null,null);
+					if(securityInfoManager.hasPrivilege(loggedInInfo, "_appointment.UpdatedAfterDate", "x", null)) {
+						return new GenericRESTResponse(true,""+id);
+					}
+				}
+			}
+		}
+		return new GenericRESTResponse(false,"Consent Not Configured");
+	}
+	
+	@POST
+	@Path("/AcceptAppointmentConsent/")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public GenericRESTResponse acceptAppointmentConsent(@Context HttpServletRequest request){
+		String msg  = "";
+		String privilege = "x";
+		String objectName = "_appointment.UpdatedAfterDate";  
+		String roleUserGroup = null;
+		Integer id = appManager.getAppDefinitionConsentId(getLoggedInInfo(), "PHR");
+		if(id != null) {
+			ConsentType consent = patientConsentManager.getConsentTypeByConsentTypeId(id);
+			if(consent != null) {
+				Provider provider = providerDao.getProvider(consent.getProviderNo());
+				roleUserGroup = provider.getProviderNo();
+				if(provider != null) {
+					SecObjPrivilege sop = new SecObjPrivilege();
+				    sop.setId(new SecObjPrivilegePrimaryKey());
+					sop.getId().setRoleUserGroup(roleUserGroup);
+					sop.getId().setObjectName(objectName);
+					sop.setPrivilege(privilege);
+					sop.setPriority(0);
+					sop.setProviderNo(getLoggedInInfo().getLoggedInProviderNo());
+					String secExceptionMsg = new String();
+					try {
+						secObjPrivilegeDao.persist(sop);
+						
+					} catch(DataIntegrityViolationException divEx) {
+						secExceptionMsg = divEx.getMostSpecificCause().getLocalizedMessage();
+					}
+
+					if(secExceptionMsg.length() > 0)
+						msg += secExceptionMsg;
+					else {
+						msg += "Role/Obj/Rights " + roleUserGroup + "/" + objectName + "/" + privilege + " is added. ";
+					    LogAction.addLog(getLoggedInInfo().getLoggedInProviderNo(), LogConst.ADD, LogConst.CON_PRIVILEGE, roleUserGroup +"|"+ objectName +"|"+privilege, request.getRemoteAddr());
+					    return new GenericRESTResponse(true,msg);
+					}
+					
+					
+				}
+			}
+		}
+		return new GenericRESTResponse(false,msg);
+	}
 	
 	/*States returned:                  Boolean    Message 
 		PHR inactive                    FALSE      INACTIVE
@@ -233,6 +314,7 @@ public class AppService extends AbstractServiceImpl {
 				consent.setExplicit(true);
 				consent.setOptout(false);
 				consent.setLastEnteredBy(getLoggedInInfo().getLoggedInProviderNo());
+				consent.setEditDate(new Date());
 				consentDao.persist(consent);
 				//Consent consent = consentDao.findByDemographicAndConsentTypeId( demographicNo,  appDef.getConsentTypeId()  ) ;
 				if(consent != null && consent.getPatientConsented()) {
@@ -598,8 +680,8 @@ public class AppService extends AbstractServiceImpl {
 			bufferedReader.close();
 	   		
 			logger.info("response code "+reps.getStatus());
-	   		if(reps.getStatus() == 200) {
-	   			return Response.ok(response).build();
+	   		if(reps.getStatus() >= 200 && reps.getStatus() < 300) {
+	   			return Response.ok(response).status(reps.getStatus()).build();
 	   		}
 	   		
 			}catch(Exception e) {
@@ -700,6 +782,137 @@ public class AppService extends AbstractServiceImpl {
 		return new GenericRESTResponse(false, "Demographic/email/PHRUsername error");
 	}
 	
+	@POST
+	@Path("/updatePHRPW")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public GenericRESTResponse createProviderPHRAccount(@Context HttpServletRequest request){
+		try {
+			String password = RegistrationHelper.getNewRandomPassword();
+			String providerNo = getLoggedInInfo().getLoggedInProviderNo();
+			
+			PHRAccount phrAccount = new PHRAccount();
+			phrAccount.setPassword(password);
+			phrAccount.setProviderNo(ProviderMyOscarIdData.getMyOscarId(providerNo));
+			
+			Response response = callPHR("/updatePW", providerNo, phrAccount.toJson().toString());
+			logger.error("stat "+response.getStatus()+" == "+Response.Status.OK.getStatusCode()+" ==== "+(response.getStatus()==Response.Status.CREATED.getStatusCode()));
+			
+			
+			if (response.getStatus()==Response.Status.OK.getStatusCode()) {
+				try {
+				String username = (String) response.getEntity(); 
+				//Save username to properties
+				ProviderMyOscarIdData.setId(providerNo, username);
+				
+				//Save Password
+				SecretKeySpec key=MyOscarUtils.getDeterministicallyMangledPasswordSecretKeyFromSession(request.getSession());
+		        byte[] encryptedMyOscarPassword=EncryptionUtils.encrypt(key, password.getBytes("UTF-8"));
+
+		        ProviderPreferenceDao providerPreferenceDao=(ProviderPreferenceDao) SpringUtils.getBean("providerPreferenceDao");
+		        ProviderPreference providerPreference=providerPreferenceDao.find(providerNo);
+		        providerPreference.setEncryptedMyOscarPassword(encryptedMyOscarPassword);
+		        providerPreferenceDao.merge(providerPreference);
+		        
+		        MyOscarLoggedInInfo.setLoggedInInfo(request.getSession(), null);
+				
+		        MyOscarUtils.attemptMyOscarAutoLoginIfNotAlreadyLoggedInAsynchronously(getLoggedInInfo(), false);
+				
+				return new GenericRESTResponse(true, "Password Updated");	
+				}catch(Exception e) {
+					logger.error("Error creating account ",e);
+				}
+				
+			} 
+			return new GenericRESTResponse(false, "Error connecting to PHR, try again later");
+			
+		} catch (JSONException e) {
+			logger.error("Convert PHRInvite to JSON error", e);
+			return new GenericRESTResponse(false, "Error connecting to PHR, try again later");
+		}
+		
+	}
+	
+	@POST
+	@Path("/createPHRAccount")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public GenericRESTResponse createProviderPHRAccount(@Context HttpServletRequest request,PHRAccount phrAccount){
+		
+		String password = RegistrationHelper.getNewRandomPassword();
+		String providerNo = getLoggedInInfo().getLoggedInProviderNo();
+		phrAccount.setPassword(password);
+		phrAccount.setRole("PROVIDER");
+		phrAccount.setProviderNo(getLoggedInInfo().getLoggedInProviderNo());
+
+		try {
+			Response response = callPHR("/createUser", providerNo, phrAccount.toJson().toString());
+			logger.error("stat "+response.getStatus()+" == "+Response.Status.CREATED.getStatusCode()+" ==== "+(response.getStatus()==Response.Status.CREATED.getStatusCode()));
+			
+			
+			if (response.getStatus()==Response.Status.CREATED.getStatusCode()) {
+				try {
+				String username = (String) response.getEntity(); 
+				//Save username to properties
+				ProviderMyOscarIdData.setId(providerNo, username);
+				
+				//Save Password
+				SecretKeySpec key=MyOscarUtils.getDeterministicallyMangledPasswordSecretKeyFromSession(request.getSession());
+		        byte[] encryptedMyOscarPassword=EncryptionUtils.encrypt(key, password.getBytes("UTF-8"));
+
+		        ProviderPreferenceDao providerPreferenceDao=(ProviderPreferenceDao) SpringUtils.getBean("providerPreferenceDao");
+		        ProviderPreference providerPreference=providerPreferenceDao.find(providerNo);
+		        providerPreference.setEncryptedMyOscarPassword(encryptedMyOscarPassword);
+		        providerPreferenceDao.merge(providerPreference);
+				
+				
+				return new GenericRESTResponse(true, "Account Registered");	
+				}catch(Exception e) {
+					logger.error("Error creating account ",e);
+				}
+				
+			} 
+			return new GenericRESTResponse(false, "Error connecting to PHR, try again later");
+			
+		} catch (JSONException e) {
+			logger.error("Convert PHRInvite to JSON error", e);
+			return new GenericRESTResponse(false, "Error connecting to PHR, try again later");
+		}
+		
+	}
+	
+	
+	@GET
+	@Path("/providerLaunchItems")
+	public Response providerLaunchItems(@Context HttpServletRequest request,@Context HttpServletResponse resp){
+		String providerNo = getLoggedInInfo().getLoggedInProviderNo();
+		Response response = callPHR("/getProviderLaunchItems", providerNo,providerNo);
+		if(response.getStatus() == Response.Status.OK.getStatusCode()) {
+			return Response.ok(response.getEntity()).build();
+		}
+		return  Response.noContent().build();
+	}
+	
+	Object chartLaunchItems  = null;
+	@GET
+	@Path("/providerChartLaunchItems")
+	@Produces("application/json")
+	public Response providerChartLaunchItems(@Context HttpServletRequest request,@Context HttpServletResponse resp){
+		String providerNo = getLoggedInInfo().getLoggedInProviderNo();
+		if( appManager.hasAppDefinition(getLoggedInInfo(), "PHR")){
+			if(chartLaunchItems!= null) {
+				return Response.ok(chartLaunchItems).build();
+			}
+			Response response = callPHR("/providerChartLaunchItems", providerNo,providerNo);
+			
+			if(response.getStatus() == Response.Status.OK.getStatusCode()) {
+				chartLaunchItems = response.getEntity();
+				return Response.ok(chartLaunchItems).build();
+			}
+		}
+		return  Response.noContent().build();
+	}
+	
 	@GET
 	@Path("/openPHRWindow/{windowName}")
 	public Response openPHRWindow(@Context HttpServletRequest request,@Context HttpServletResponse response,@PathParam("windowName") String windowName) throws IOException{
@@ -714,7 +927,17 @@ public class AppService extends AbstractServiceImpl {
 		return Response.status(Status.ACCEPTED).build();
 	}
 	
-	
+	@GET
+	@Path("/openProviderPHRWindow/{windowName}")
+	public Response openProviderPHRWindow(@Context HttpServletRequest request,@Context HttpServletResponse response,@PathParam("windowName") String windowName) throws IOException{
+		
+		String redirectUrl = callPHRWindowOpen("openWindow",getLoggedInInfo().getLoggedInProviderNo(), windowName ,"provider");
+		
+		logger.debug("URL for open window " +windowName+" url-- "+redirectUrl );
+		
+		response.sendRedirect(redirectUrl);
+		return Response.status(Status.ACCEPTED).build();
+	}
 	
 	@POST
 	@Path("/K2AInit/")

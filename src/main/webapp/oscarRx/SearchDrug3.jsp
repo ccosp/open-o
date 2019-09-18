@@ -685,7 +685,23 @@ function checkFav(){
             }});
    	 }
     }
-       
+
+    function printDrugProfile() {
+    	var ids=[];
+    	jQuery("input[type='checkbox'][id ^= 'reRxCheckBox']").each(function(){
+    		if(jQuery(this).is(":checked")) {
+    			var name = jQuery(this).attr('name').substring(9);
+    			ids.push(name);
+    		}
+    	});
+    	if(ids.length>0) {
+    		popupWindow(720,700,'PrintDrugProfile2.jsp?ids=' + ids.join(','),'PrintDrugProfile');
+    	} else {
+    		popupWindow(720,700,'PrintDrugProfile2.jsp','PrintDrugProfile');
+    	}
+    }
+    
+    
 </script>
                
                <style type="text/css" media="print">
@@ -916,7 +932,7 @@ THEME 2*/
                                                 <div class="DivContentSectionHead">
                                                     <bean:message key="SearchDrug.section2Title" />
                                                     &nbsp;
-                                                    <a href="javascript:popupWindow(720,700,'PrintDrugProfile2.jsp','PrintDrugProfile')"><bean:message key="SearchDrug.Print"/></a>
+                                                    <a href="javascript:void(0)" onClick="printDrugProfile();"><bean:message key="SearchDrug.Print"/></a>
                                                     &nbsp;
 													<%if(securityManager.hasWriteAccess("_rx",roleName2$,true)) {%>
                                                     <a href="#" onclick="$('reprint').toggle();return false;"><bean:message key="SearchDrug.Reprint"/></a>
@@ -1381,6 +1397,8 @@ function changeLt(drugId){
              var data="";
              if(elementId.match("prnVal_")!=null)
                  data="elementId="+elementId+"&propertyValue="+$(elementId).value;
+             else if(elementId.match("repeats_")!=null)
+                 data="elementId="+elementId+"&propertyValue="+$(elementId).value;
              else
                  data="elementId="+elementId+"&propertyValue="+$(elementId).innerHTML;
              data = data + "&rand="+Math.floor(Math.random()*10001);
@@ -1589,19 +1607,25 @@ function changeLt(drugId){
          var url="<c:out value="${ctx}"/>" + "/oscarRx/getAllergyData.jsp"  ;
          var data="atcCode="+atcCode+"&id="+id +"&rand="+ Math.floor(Math.random()*10001);
          new Ajax.Request(url,{method: 'post',postBody:data,onSuccess:function(transport){
-                 var json=transport.responseText.evalJSON();
-            	
-                 if(json != null && json.id != null && json.DESCRIPTION == null && json.reaction == null) {
-                	 var str = "<font color='red'>Allergy not Found. Please check your allergy list</font>" ;
-                	 $('alleg_'+json.id).innerHTML = str;
-                     document.getElementById('alleg_tbl_'+json.id).style.display='table';
-                 }
-                 if(json!=null&&json.DESCRIPTION!=null&&json.reaction!=null){
-                      var str = "<font color='red'>Allergy:</font> "+ json.DESCRIPTION + " <font color='red'>Reaction:</font> "+json.reaction + " <font color='red'>Severity of Reaction:</font> "+json.severity;
-                      $('alleg_'+json.id).innerHTML = str;
-                      document.getElementById('alleg_tbl_'+json.id).style.display='table';
-                 }
-            }});
+	         var response = JSON.parse(transport.responseText);       	 
+	       	 var items = response.items;
+	       	 var output = "";
+	       	 
+	       	 if(items != null && items.length>0) {
+		       	 for(var x=0;x<items.length;x++) {
+		       		 if(items[x].warning != null && items[x].warning == true) {
+		       			 var str = "<font color='red'>Warning: Allergy \""+ items[x].description + "\" with reaction  \""+items[x].reaction + "\" and "+items[x].severity + " severity Found.</font><br/>";                     
+	                     output += str;
+		       		 }
+		       		if(items[x].missing != null && items[x].missing == true) {
+		       			var str = "<font color='red'>Warning Allergy: \""+ items[x].description + "\" not Found in drug database. Please update this Allergy.</font><br/>";
+		       			output += str;
+		       		}
+		       	 }
+		       	$('alleg_'+response.id).innerHTML = output; 	 
+		       	document.getElementById('alleg_tbl_'+response.id).style.display='table';
+	       	 }
+         }});
    }
    function checkIfInactive(id,dinNumber){
         var url="<c:out value="${ctx}"/>" + "/oscarRx/getInactiveDate.jsp"  ;
@@ -2422,14 +2446,16 @@ function checkMedTerm(){
 
 function isMedTermChecked(rnd){
 	var termChecked = false;
-	var longTerm = jQuery("#longTerm_" + rnd);
+	var longTermY = jQuery("#longTermY_" + rnd);
+	var longTermN = jQuery("#longTermN_" + rnd);
+	
 	var shortTerm = jQuery("#shortTerm_" + rnd);
 	var medTermWrap = jQuery("#medTerm_" + rnd);
 		
-	if(longTerm.prop( "checked" ) || shortTerm.prop( "checked" )){
+	if(longTermY.is(":checked") || longTermN.is(":checked")) {
 		termChecked = true;
-		medTermWrap.css('color', 'black');		
-	}else{
+		medTermWrap.css('color', 'black');	
+	} else {
 		termChecked = false; 
 		medTermWrap.css('color', 'red');
 	}
@@ -2462,12 +2488,31 @@ jQuery( document ).ready(function() {
 	    isMedTermChecked(randId);
 	    <%}%> 
 	    
-	    var el = jQuery( this );
-	    medTermCheckOne(randId, el);
+	    //var el = jQuery( this );
+	    //medTermCheckOne(randId, el);
     });
 });
 </script>
 
+<script>
+function updateShortTerm(rand,val) {
+	if(val) {
+		jQuery("#shortTerm_" + rand).prop("checked",true);
+	} else {
+		jQuery("#shortTerm_" + rand).prop("checked",false);
+	}
+	
+}
+
+function updateLongTerm(rand,repeatEl) {
+	<%if("true".equals(OscarProperties.getInstance().getProperty("rx_select_long_term_when_repeat", "true"))) { %>
+	var repeats = jQuery('#repeats_' + rand).val().trim();
+	if(!isNaN(repeats) && repeats > 0) {
+		jQuery("#longTermY_" + rand).prop("checked",true);
+	}
+	<% } %>
+}
+</script>
 <script language="javascript" src="../commons/scripts/sort_table/css.js"></script>
 <script language="javascript" src="../commons/scripts/sort_table/common.js"></script>
 <script language="javascript" src="../commons/scripts/sort_table/standardista-table-sorting.js"></script>

@@ -283,7 +283,7 @@ div.Title4   { font-weight: 600; font-size: 8pt; color: white; font-family:
         }
 
 	function linkreq(rptId, reqId) {
-	    var link = "../../LinkReq.jsp?table=hl7TextMessage&rptid="+rptId+"&reqid="+reqId;
+	    var link = "../../LinkReq.jsp?table=hl7TextMessage&rptid="+rptId+"&reqid="+reqId + "<%=demographicID != null ? "&demographicNo=" + demographicID : ""%>";
 	    window.open(link, "linkwin", "width=500, height=200");
 	}
 
@@ -1079,7 +1079,18 @@ div.Title4   { font-weight: 600; font-size: 8pt; color: white; font-family:
                                                                         <font color="red"><%= ackStatus %></font>
                                                                         <% if ( ackStatus.equals("Acknowledged") ) { %>
                                                                             <%= report.getTimestamp() %>,
-                                                                            <%= ( report.getComment().equals("") ? "no comment" : "comment : "+report.getComment() ) %>
+                                                                            <% if(report.getComment() != null) {
+                                                                            	if(report.getComment().equals("")) {
+                                                                            		out.print("no comment");
+                                                                            	} else {
+                                                                            		out.print("comment : "+report.getComment());
+                                                                            	}
+                                                                            } else {
+                                                                            	out.print("no comment");
+                                                                              
+                                                                            }
+                                                                         
+                                                                            %>
                                                                         <% } %>
                                                                         <br>
                                                                     <% }

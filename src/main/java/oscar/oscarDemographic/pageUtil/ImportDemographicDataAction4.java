@@ -333,7 +333,7 @@ import oscar.util.UtilDateUtilities;
 	                    } finally {
 	                    	IOUtils.closeQuietly(out);
 	                    }
-                        logs.add(importXML(LoggedInInfo.getLoggedInInfoFromSession(request) , ofile, warnings, request,frm.getTimeshiftInDays(),students,courseId));
+                        logs.add(importXML(LoggedInInfo.getLoggedInInfoFromSession(request) , ofile, warnings, request,frm.getTimeshiftInDays(),students,courseId,true));
                         importNo++;
                         demographicNo=null;
                     }
@@ -346,10 +346,10 @@ import oscar.util.UtilDateUtilities;
                     importLog = makeImportLog(logs, tmpDir);
                 }
                 in.close();
-                Util.cleanFile(ifile);
+//                Util.cleanFile(ifile);
 
             } else if (matchFileExt(ifile, "xml")) {
-                logs.add(importXML(LoggedInInfo.getLoggedInInfoFromSession(request), ifile, warnings, request,frm.getTimeshiftInDays(),students,courseId));
+                logs.add(importXML(LoggedInInfo.getLoggedInInfoFromSession(request), ifile, warnings, request,frm.getTimeshiftInDays(),students,courseId,false));
                 demographicNo=null;
                 importLog = makeImportLog(logs, tmpDir);
             } else {
@@ -455,11 +455,13 @@ import oscar.util.UtilDateUtilities;
             }
             	
             
-            String ofile = tmpDir + entryName;
+            String ofile = tmpDir + entryDir +  entryName;
             
             if (!matchFileExt(ofile, "xml")) {
                 OutputStream out = null;    
                 try {
+                	String path = ofile.substring(0,ofile.lastIndexOf(File.separator));
+                	new File(path).mkdirs();
                     out = new FileOutputStream(ofile);
                     while ((len=in.read(buf)) > 0) out.write(buf,0,len);
                     out.close();
@@ -484,9 +486,9 @@ import oscar.util.UtilDateUtilities;
     	return importContacts(loggedInInfo, xmlFile,warnings,request,timeShiftInDays,null,null,0);
     }
     
-    String[] importXML(LoggedInInfo loggedInInfo, String xmlFile, ArrayList<String> warnings, HttpServletRequest request, int timeShiftInDays,List<Provider> students, int courseId) throws SQLException, Exception {
+    String[] importXML(LoggedInInfo loggedInInfo, String xmlFile, ArrayList<String> warnings, HttpServletRequest request, int timeShiftInDays,List<Provider> students, int courseId, boolean cleanFile) throws SQLException, Exception {
         if(students == null || students.isEmpty()) {
-            return importXML(loggedInInfo, xmlFile,warnings,request,timeShiftInDays,null,null,0);
+            return importXML(loggedInInfo, xmlFile,warnings,request,timeShiftInDays,null,null,0, cleanFile);
         }
 
         List<String> logs = new ArrayList<String>();
@@ -501,7 +503,7 @@ import oscar.util.UtilDateUtilities;
             }
             Program p = programManager.getProgram(pid);
 
-            String[] result = importXML(loggedInInfo, xmlFile,warnings,request,timeShiftInDays,student,p,courseId);
+            String[] result = importXML(loggedInInfo, xmlFile,warnings,request,timeShiftInDays,student,p,courseId, cleanFile);
             logs.addAll(convertLog(result));
         }
         return logs.toArray(new String[logs.size()]);
@@ -742,7 +744,7 @@ import oscar.util.UtilDateUtilities;
     }
 
 
-    String[] importXML(LoggedInInfo loggedInInfo, String xmlFile, ArrayList<String> warnings, HttpServletRequest request, int timeShiftInDays, Provider student, Program admitTo, int courseId) throws SQLException, Exception {
+    String[] importXML(LoggedInInfo loggedInInfo, String xmlFile, ArrayList<String> warnings, HttpServletRequest request, int timeShiftInDays, Provider student, Program admitTo, int courseId, boolean cleanFile) throws SQLException, Exception {
         ArrayList<String> err_demo = new ArrayList<String>(); //errors: duplicate demographics
         ArrayList<String> err_data = new ArrayList<String>(); //errors: discrete data
         ArrayList<String> err_summ = new ArrayList<String>(); //errors: summary
@@ -983,11 +985,11 @@ import oscar.util.UtilDateUtilities;
         }
 
         String address="", city="", province="", postalCode="";
-        String mailingAddress="", mailingCity="",mailingProvince="",mailingPostalCode="";
+        String residentialAddress="", residentialCity="",residentialProvince="",residentialPostalCode="";
 		
         if(demo.getAddressArray()!= null) {
 	        for (cdsDt.Address addr :demo.getAddressArray()) {
-	        	if(addr.getAddressType() == AddressType.R) {
+	        	if(addr.getAddressType() == AddressType.M) {
 	                if (StringUtils.filled(addr.getFormatted())) {
 	                    address = addr.getFormatted();
 	                } else {
@@ -1004,22 +1006,22 @@ import oscar.util.UtilDateUtilities;
 	        		
 	        		//there's an address we don't support
 	        		 if (StringUtils.filled(addr.getFormatted())) {
-		                    mailingAddress = addr.getFormatted();
-		                    extra = Util.addLine(extra, "Mailing Address: ", mailingAddress);
+		                    residentialAddress = addr.getFormatted();
+		                    extra = Util.addLine(extra, "Residential Address: ", residentialAddress);
 		                } else {
 		                    cdsDt.AddressStructured addrStr = addr.getStructured();
 		                    if (addrStr!=null) {
-		                        mailingAddress = StringUtils.noNull(addrStr.getLine1()) + StringUtils.noNull(addrStr.getLine2()) + StringUtils.noNull(addrStr.getLine3());
-		                        mailingCity = StringUtils.noNull(addrStr.getCity());
-		                        mailingProvince = getCountrySubDivCode(addrStr.getCountrySubdivisionCode());
-		                        cdsDt.PostalZipCode mailingPostalZip = addrStr.getPostalZipCode();
-		                        if (mailingPostalZip!=null)
-		                        	mailingPostalCode = StringUtils.noNull(mailingPostalZip.getPostalCode());
+		                        residentialAddress = StringUtils.noNull(addrStr.getLine1()) + StringUtils.noNull(addrStr.getLine2()) + StringUtils.noNull(addrStr.getLine3());
+		                        residentialCity = StringUtils.noNull(addrStr.getCity());
+		                        residentialProvince = getCountrySubDivCode(addrStr.getCountrySubdivisionCode());
+		                        cdsDt.PostalZipCode residentialPostalZip = addrStr.getPostalZipCode();
+		                        if (residentialPostalZip!=null)
+		                        	residentialPostalCode = StringUtils.noNull(residentialPostalZip.getPostalCode());
 		                        
-		                        extra = Util.addLine(extra, "Mailing Address: ", mailingAddress);
-		                        extra = Util.addLine(extra, "Mailing City: ", mailingCity);
-		                        extra = Util.addLine(extra, "Mailing Province: ", mailingProvince);
-		                        extra = Util.addLine(extra, "Mailing Postal Code: ", mailingPostalCode);
+		                        extra = Util.addLine(extra, "Residential Address: ", residentialAddress);
+		                        extra = Util.addLine(extra, "Residential City: ", residentialCity);
+		                        extra = Util.addLine(extra, "Residential Province: ", residentialProvince);
+		                        extra = Util.addLine(extra, "Residential Postal Code: ", residentialPostalCode);
 		                        
 		                        
 		                    }
@@ -1167,7 +1169,7 @@ import oscar.util.UtilDateUtilities;
 
         } else { //add patient!
 */
-            demoRes = dd.addDemographic(loggedInInfo, title, lastName, firstName, middleNames, address, city, province, postalCode, mailingAddress, mailingCity, mailingProvince, mailingPostalCode, homePhone, workPhone, year_of_birth, month_of_birth, date_of_birth, hin, versionCode, rosterStatus, rosterDate, termDate, termReason, rosterEnrolledTo, patient_status, psDate, ""/*date_joined*/, chart_no, official_lang, spoken_lang, primaryPhysician, sex, ""/*end_date*/, ""/*eff_date*/, ""/*pcn_indicator*/, hc_type, hc_renew_date, ""/*family_doctor*/, email, ""/*pin*/, ""/*alias*/, ""/*previousAddress*/, ""/*children*/, ""/*sourceOfIncome*/, ""/*citizenship*/, sin);
+            demoRes = dd.addDemographic(loggedInInfo, title, lastName, firstName, middleNames, address, city, province, postalCode, residentialAddress, residentialCity, residentialProvince, residentialPostalCode, homePhone, workPhone, year_of_birth, month_of_birth, date_of_birth, hin, versionCode, rosterStatus, rosterDate, termDate, termReason, rosterEnrolledTo, patient_status, psDate, ""/*date_joined*/, chart_no, official_lang, spoken_lang, primaryPhysician, sex, ""/*end_date*/, ""/*eff_date*/, ""/*pcn_indicator*/, hc_type, hc_renew_date, ""/*family_doctor*/, email, ""/*pin*/, ""/*alias*/, ""/*previousAddress*/, ""/*children*/, ""/*sourceOfIncome*/, ""/*citizenship*/, sin);
             demographicNo = demoRes.getId();
 /*        }
 
@@ -1631,6 +1633,11 @@ import oscar.util.UtilDateUtilities;
                     		ongConcerns = probList[i].getDiagnosisCode().getStandardCodeDescription();
                     	}
                     }
+                    if (StringUtils.empty(ongConcerns)) {
+                		if(!StringUtils.empty(probList[i].getProblemDescription())) {
+                			ongConcerns = probList[i].getProblemDescription();
+                		}
+                	}
                     if (StringUtils.empty(ongConcerns)) ongConcerns = "Imported Concern";
                     cmNote.setNote(ongConcerns);
                     caseManagementManager.saveNoteSimple(cmNote);
@@ -1674,8 +1681,6 @@ import oscar.util.UtilDateUtilities;
                         cme.setDateValue(dateFPtoDate(probList[i].getOnsetDate(), timeShiftInDays));
                         cme.setValue(dateFPGetPartial(probList[i].getOnsetDate()));
                         caseManagementManager.saveNoteExt(cme);
-                    } else {
-                        err_data.add("Error! No Onset Date for Problem List ("+(i+1)+")");
                     }
                     if (probList[i].getResolutionDate()!=null) {
                         cme.setKeyVal(CaseManagementNoteExt.RESOLUTIONDATE);
@@ -2632,7 +2637,16 @@ import oscar.util.UtilDateUtilities;
                                 } else {
                                 	 String tmpDir = oscarProperties.getProperty("TMP_DIR");
                                      tmpDir = Util.fixDirName(tmpDir);
-                                     FileUtils.copyFile(new File(tmpDir + repR[i].getFilePath().substring(repR[i].getFilePath().lastIndexOf("\\")+1)), new File(docDir + docFileName));
+                                     String path3 = tmpDir + repR[i].getFilePath();
+                                     if(!path3.endsWith(contentType)) {
+                                    	 path3 = path3 + contentType;
+                                     }
+                                     if(path3.indexOf("\\") != -1) {
+                                    	 path3 = path3.replace("\\", File.separator);
+                                     }
+                                     
+                                     //FileUtils.copyFile(new File(tmpDir + repR[i].getFilePath().substring(repR[i].getFilePath().lastIndexOf("\\")+1)), new File(docDir + docFileName));
+                                     FileUtils.copyFile(new File(path3), new File(docDir + docFileName));
                                 }
 
                                 if (repR[i].getClass1()!=null) {
@@ -2916,7 +2930,9 @@ import oscar.util.UtilDateUtilities;
             if(demoRes != null) {
                 err_demo.addAll(demoRes.getWarningsCollection());
             }
-            Util.cleanFile(xmlFile);
+            if (cleanFile) {
+            	Util.cleanFile(xmlFile);
+            }
 
             return packMsgs(err_demo, err_data, err_summ, err_othe, err_note, warnings);
 	}

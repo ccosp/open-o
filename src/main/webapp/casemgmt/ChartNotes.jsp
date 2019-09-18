@@ -405,6 +405,7 @@ try
 					<option value="http://search.nlm.nih.gov/medlineplus/query?DISAMBIGUATION=true&amp;FUNCTION=search&amp;SERVER2=server2&amp;SERVER1=server1&amp;PARAMETER="><bean:message key="global.medlineplus" /></option>
                     <option value="tripsearch.jsp?searchterm=">Trip Database</option>
                     <option value="macplussearch.jsp?searchterm=">MacPlus Database</option>
+                    <option value="https://empendium.com/mcmtextbook/search?type=textbook&q=">McMaster Text Book</option>
     	        </select>
 				</div>				
 
@@ -443,11 +444,33 @@ try
 					</select>
 				</security:oscarSec>
 				
+				<span id="phrButtonArea">
+				</span>
 				<script>
 				function updateMYOSCAR(){
 					jQuery.getScript('phrLinks.jsp?demographicNo=<%=demographicNo%>');
 				}
 				updateMYOSCAR();
+				
+				jQuery(document).ready(function(){
+		    			jQuery.ajax({
+			  			type: "GET",
+		    		        url: "<%=request.getContextPath()%>/ws/rs/app/providerChartLaunchItems",
+				        dataType: 'json',
+				        success: function (data) {
+					
+				       		for(i =0; i < data.length; i++){
+				        			d = data[i];
+				       			jQuery("#phrButtonArea").append(
+				       			jQuery("<button/>")
+				       		    .text(d.heading)
+				       		    .click(function () { window.open('../ws/rs/app/openProviderPHRWindow/'+d.link+'<%=demographicNo%>'); }));
+
+				       		}
+				    		}
+					});
+			    });
+				
 				</script>
 				
 			</div>	

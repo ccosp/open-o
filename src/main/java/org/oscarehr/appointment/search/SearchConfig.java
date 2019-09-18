@@ -259,6 +259,7 @@ public class SearchConfig {
 				Element appointmentType = doc.createElement("appointment_type");
 				appointmentType.setAttribute("id",""+aType.getId());
 				appointmentType.setAttribute("name",aType.getName());
+				appointmentType.setAttribute("mappingOscarApptType", ""+aType.getMappingOscarApptType());
 				doc.getFirstChild().appendChild(appointmentType);
 			}
 		}
@@ -694,7 +695,7 @@ public class SearchConfig {
 			timeslot.setCode(code);
 		}
 		try {
-			timeslot.setDemographicNo(Integer.parseInt(combined[4]));
+			timeslot.setDemographicNo(Integer.parseInt(combined[5]));
 		}catch(Exception e) {
 			logger.error("Error parsing demo",e);
 		}

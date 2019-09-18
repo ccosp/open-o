@@ -69,15 +69,17 @@
 		</div>
 		
 		<%--  div class="container"> --%>
-			<div class="row">
-  				<div class="col-md-12">
+			<div class="row" data-ng-show="phrActive">
+  				<div class="col-xs-12">
+  				    <h6>PHR Connector Launch Bar</h6>
 					<div>
 						<button style="margin-left:3px;" ng-repeat="recc in audit.launchItems" type="button" class="btn btn-primary" ng-click="openPHRWindow(recc)">{{recc.heading}}</button>
+						<button style="margin-left:3px;" ng-show="hasLaunchItems" type="button" onclick="window.open('ApptSearchConfiguration.jsp');" class="btn btn-primary" >On-line Booking</button>
 					</div>
 				</div>
 			</div>	
 			<div class="row">
-  				<div class="col-md-9">	
+  				<div class="col-xs-9">	
 					<div data-ng-hide="phrActive" class="jumbotron" ng-cloak>
 						<h2>PHR Clinic Configuration Wizard</h2>
 						<div class="alert alert-warning" role="alert" data-ng-show="userpassError">Invalid Username and Password.</div>
@@ -106,22 +108,24 @@
 						<div class="alert alert-warning" role="alert" data-ng-show="userpassError">Invalid Username and Password.</div>
 						<form   method="POST">
 							<fieldset>
-								<h4>The PHR needs an OSCAR system user to interact with. This OSCAR user will show as the creator of appointments booked online.</h4>
-								<div class="form-group col-xs-10">
-									
-								
+								<h4 ng-if="!showPHRUserCreate && !showPHRUserLink">We're almost there!  To complete the connection, the PHR needs to register a primary OSCAR user to interact with at the system level.  This OSCAR user will show in OSCAR as the creator of appointments booked on-line through the PHR.  You have two options for registering (Option 1 strongly recommended):</h4>
+								<div class="form-group col-xs-10">								
 									<h3>Set PHR User</h3>
 										<div ng-if="selectUserMethod">
-									 		<p>This will include: 
+									 		<p>Option 1 - Create a New User for PHR
+									 		<small>
 												 <ul> 
-													 <li>creating a provider record with the name self-Book</li>
-													 <li>creating a security record with a strong random user/password</li>
-													 <li>creating consent type to record which patients are participating with using the PHR</li>
-													 <li>And communicate this user to the PHR server for integration.</li>
+													 <li>create the New User as a Provider in OSCAR with the name Self-Book</li>
+													 <li>create a strong random user/password for the New User</li>
+													 <li>create a "OSCAR consent" record associated with the New User to track which patients agree to connecting with the clinic through the PHR</li>
+													 <li>automatically register this New User with the PHR to complete the connection.</li>
 												 </ul>
+												 </small>
 												<button type="button" class="btn btn-primary btn-block" ng-click="selectPHRUser()">Create a new User</button>
-											<h3>Link an existing user</h3>
-									 			<p>This will create the consentType to record which patients are participating with using the PHR. Communicating the user information to the PHR will need to be done manually.</p>
+											<h3>Option 2 - Link with an Existing User</h3>
+												<small>
+									 			<p>Selecting this option will create an "OSCAR consent" record associated with the selected Existing User to track which patients agree to connecting with the clinic through the PHR.  To complete the connection with the PHR, you will need to manually register the Existing User in the PHR.</p>
+									 			</small>
 												<button type="button" class="btn btn-primary btn-block" ng-click="selectLinkExistingUser()">Link an existing user</button>
 									</div>
 									<div ng-if="showPHRUserCreate">
@@ -172,149 +176,17 @@
 						
 					</div>
 					
-					<%-- APPT CONFIG UI --%>
-					<div  ng-show="currentSearchConfig != null">
-		 		
-		 		<div class="form-group">
-				    <label for="ClinicTitleId">Booking Title</label>
-				    <input type="text" class="form-control" id="ClinicTitleId" placeholder="Name of Clinic" ng-model="currentSearchConfig.title">
-				  </div>
-		 		<ul class="nav nav-tabs nav-justified">
-  					<li role="presentation" ng-class="tabActive('main')"><a ng-click="setActiveTab('main')"><bean:message key="admin.appointmentSearchConfig.main"/></a></li>
-  					<li role="presentation" ng-class="tabActive('codes')"><a ng-click="setActiveTab('codes')"><bean:message key="admin.appointmentSearchConfig.apptCodes"/></a></li>
-  					<li role="presentation" ng-class="tabActive('types')"><a ng-click="setActiveTab('types')"><bean:message key="admin.appointmentSearchConfig.apptTypes"/></a></li>
-  					
-				</ul>	
-		 		<div class="tab-content">
-    					<div role="tabpanel" class="tab-pane" ng-class="tabActive('main')" id="home">
-    						<table class="table table-bordered table-striped table-hover">
-				            <tr>
-				                <th><bean:message key="admin.appointmentSearchConfig.provider"/></th>
-				                <th><bean:message key="admin.appointmentSearchConfig.team"/></th>
-				                <td ng-repeat="appt in currentSearchConfig.bookingAppointmentTypes"><small>{{appt.name}}</small></td>
-				            </tr>
-				            <tr ng-repeat-start="provider in currentSearchConfig.bookingProviders"> 
-				                <td><a ng-click="viewProvider(provider,$event)" class="clickable">{{getProviderName(provider.providerNo)}}</a>
-				                    <md-icon class="glyphicon glyphicon-trash" aria-label="Trash" ng-click="removeProvider(provider, currentSearchConfig.bookingProviders, $index, $event)"></md-icon>
-				                </td>
-				                <td>
-				                    <%-- button class="btn btn-default" aria-label="Add Appointment Code"  ng-click="cnf.openAddTeamMemberDialog(provider, $event)" style="padding:0px; margin:0px;"><bean:message key="admin.appointmentSearchConfig.add"/></button> --%>
-				                    <div class="btn-group">
-									  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									    <bean:message key="admin.appointmentSearchConfig.add"/> <span class="caret"></span>
-									  </button>
-									  <ul class="dropdown-menu">
-									    <li ng-repeat="prov in  activeProviders"><a ng-click="addTeamMember(provider,prov)">{{prov.lastName+", "+prov.firstName}}</a></li>
-									  </ul>
-									</div>
-				                </td>
-				                <td ng-repeat="appt in currentSearchConfig.bookingAppointmentTypes" ng-click="editApptTypeForProvider(appt,provider,$event)" style="cursor: pointer;"><span><i ng-class="{'glyphicon glyphicon-ok' : checkAppt(provider,appt) }" ></i><small> {{listAppt(provider,appt) | blankFilter:checkAppt(provider,appt)}}</small></span></td>
-				            </tr>
-				            <tr ng-repeat="teamProvider in provider.teamMembers" ng-repeat-end>
-				                <td>&nbsp;</td>
-				                <td><small><a ng-click="viewProvider(teamProvider, $event)" class="clickable">{{getProviderName(teamProvider.providerNo)}}</a> <md-icon class="glyphicon glyphicon-trash" aria-label="Trash" ng-click="removeProvider(teamProvider,provider.teamMembers,$index,$event)" ></md-icon></small></td>
-				                <td ng-repeat="appt in currentSearchConfig.bookingAppointmentTypes" ng-click="editApptTypeForProvider(appt,teamProvider,$event)" style="cursor: pointer;"><span><i ng-class="{'glyphicon glyphicon-ok' : checkAppt(teamProvider,appt) }" ></i><small> {{listAppt(teamProvider,appt) | blankFilter:checkAppt(teamProvider,appt)}}</small></span></td>
-				            </tr>
-				            <tr>
-				                <td>
-				                		<div class="btn-group">
-									  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									    <bean:message key="admin.appointmentSearchConfig.add"/> <span class="caret"></span>
-									  </button>
-									  <ul class="dropdown-menu">
-									    <li ng-repeat="prov in  activeProviders"><a ng-click="addProvider(prov)">{{prov.lastName+", "+prov.firstName}}</a></li>
-									  </ul>
-									</div>
-				                </td>
-				            </tr>
-				        </table>	 
-    					</div>
-    					<div role="tabpanel" class="tab-pane" ng-class="tabActive('types')" id="profile">
-    						<h2>Appointment Types</h2>
-			            <div class="row">
-			                <div class="col-xs-6">
-			                		<a ng-click="openSurvey(surveyConfig)" class="list-group-item" <%-- ng-class="itemActive(surveyConfig.id)" --%> 
-		    						   data-ng-repeat="appointmentType in currentSearchConfig.bookingAppointmentTypes" >
-								  	
-								  	<h4 class="list-group-item-heading">{{appointmentType.name}}</h4>
-								  	
-								  </a>
-			                
-			                
-			                    
-			                </div>
-			                <div class="col-xs-6">
-			                    <h2>Existing Types from oscar</h2>
-			                    
-			                    <a ng-click="openSurvey(surveyConfig)" class="list-group-item" <%-- ng-class="itemActive(surveyConfig.id)" --%> 
-		    						   data-ng-repeat="appointmentType in oscarAppointmentTypes.types" >
-								  	
-								  	<h4 class="list-group-item-heading">{{appointmentType.name}} 
-								  		
-								  			<button class="btn btn-default btn-xs pull-right" aria-label="Add" ng-click="addApptTypeFromOSCAR(appointmentType)" <%-- ng-disabled="mat.isApptAlreadyAdded(apptType.id)" --%> class="md-raised md-primary"><bean:message key="admin.appointmentSearchConfig.add"/></button>
-								  		
-								  	</h4>
-								</a>
-			                    
-			                    
-			                   
-			                    <h3>Custom</h3>
-			                     <div class="form-group">
-								    <label for="exampleInputEmail1">Appointment Type Label</label>
-								    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Appt description user will see" ng-model="apptLabelDesc">
-								 </div>
-								 <button type="button" class="btn btn-default btn-xs" ng-click="addApptType(apptLabelDesc)"><bean:message key="admin.appointmentSearchConfig.add"/></button>
-			                   
-			                </div>
-			            </div>
-    					</div>
-    					<div role="tabpanel" class="tab-pane" ng-class="tabActive('codes')" id="profile">
-    						<h2>Appointment Codes</h2>
-			            <div class="row">
-			                <div class="col-xs-12">
-			                    <table class="table table-bordered table-hover">
-			                        <tr>
-			                            <td>&nbsp;</td>
-			                            <td>Appt Code Desc</td>
-			                            <td>Book Code</td>
-			                            <td>Open Access Code</td>
-			                        </tr>
-			                        <tr ng-repeat="appCode in oscarTemplateCodes">
-			                            <td style="background-color:{{appCode.color}}">{{appCode.code}}</td>
-			                            <td>{{appCode.description}} ({{appCode.duration}})</td>
-			                            <td>
-			                            		<button type="button" class="btn btn-success btn-xs" ng-if="isCodeEnabled(currentSearchConfig,appCode)"  ng-click="addOrRemoveFromCodeList(appCode)">Enabled</button>
-  											<button type="button" class="btn btn-default btn-xs" ng-if="!isCodeEnabled(currentSearchConfig,appCode)" ng-click="addOrRemoveFromCodeList(appCode)">Disabled</button>
-			                            		
-			                            </td>
-			                            <td>
-			                            		<button type="button" class="btn btn-success btn-xs" ng-if="isOnlineBookingEnabled(currentSearchConfig,appCode)"  ng-click="addOrRemoveFromOnlineBookingCodeList(appCode)">Enabled</button>
-  											<button type="button" class="btn btn-default btn-xs" ng-if="!isOnlineBookingEnabled(currentSearchConfig,appCode)" ng-click="addOrRemoveFromOnlineBookingCodeList(appCode)">Disabled</button>
-			                            		
-			                            
-			                            		
-			                            </td>
-			                        </tr>
-			                    </table>
-			                
-			                
-			                
-			                </div>
-			            </div>
-    					</div>
-  				</div>
-  				<button class="btn btn-primary" ng-click="saveSearchConfig()">Save</button>
-		 		
-		 				
-		 	</div>
-					<%-- APPT CONFIG UI END --%>
 					
-					<div btf-markdown="audit.markdownText"></div>
+					
+					<div style="margin-top:5px;" btf-markdown="audit.markdownText"></div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-xs-3">
 					
 					<div  > <%-- </div>class="jumbotron" ng-if="!serverOffline && !audit.clinicInformationSetup">  --%>
 					  <h3></h3>
+					  <div class="alert alert-warning" role="alert" ng-if="!phrAppointmentDataConfigured">
+					  	<strong>Enable Appointment Notifications For All Patients</strong> <br>If this is not enabled, the EMR will only share appointment notification data for patients with a kindredPHR account<button ng-click="enableAppointmentSharing()"  class="btn btn-info btn-block" type="button">Enable</button>
+					  </div>
 					  <div ng-repeat="recc in audit.recommendations" class="alert alert-warning" role="alert" >
 					  	<strong>{{recc.heading}}</strong> <br>{{recc.description}}<button ng-click="openPHRWindow(recc)"  class="btn btn-info btn-block" type="button">Configure</button>
 					  </div>
@@ -334,10 +206,14 @@
 			$scope.userpassError = false;
 			$scope.working = false;
 			$scope.phrConsentConfigured = false;
+			$scope.phrAppointmentDataConfigured = true;
 			$scope.showPHRUserCreate = false;
 			$scope.selectUserMethod = true;
 			
 			$scope.initButtonText = "Initialize";
+			$scope.hasLaunchItems = false;	
+			
+		
 			
 			checkStatus = function(){
 			    phrService.isPHRInit().then(function(data){
@@ -371,6 +247,21 @@
 				});
 		    };
 		    
+		    checkAppointmentStatus = function(){
+		    		phrService.isPHRActiveCheckAppointmentConfigured().then(function(data){
+			    		console.log("enableAppointmentSharing coming back",data);
+			    		$scope.phrAppointmentDataConfigured  = data.success;
+				});
+		    }
+		    checkAppointmentStatus();
+		    
+		    $scope.enableAppointmentSharing = function(){
+		    		phrService.acceptAppointmentConsent().then(function(data){
+		    			console.log("enableAppointmentSharing coming back",data);
+		    			checkAppointmentStatus();
+				});
+		    	
+		    }
 		    
 		    
 		    getConsent = function(id){
@@ -392,6 +283,7 @@
 				    		$scope.audit = resp.data;
 				    		$scope.serverOffline = false;
 				    	}
+				    	$scope.hasLaunchItems= true;
 				    	console.log($scope.phrActive );
 				    	
 				    	if($scope.phrActive){
