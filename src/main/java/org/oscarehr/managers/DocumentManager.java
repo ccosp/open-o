@@ -38,7 +38,10 @@ import java.util.List;
 import org.oscarehr.common.dao.CtlDocumentDao;
 import org.oscarehr.common.dao.DocumentDao;
 import org.oscarehr.common.model.ConsentType;
+import org.oscarehr.common.dao.DocumentDao.DocumentType;
+import org.oscarehr.common.dao.DocumentDao.Module;
 import org.oscarehr.common.model.CtlDocument;
+import org.oscarehr.common.model.CtlDocumentPK;
 import org.oscarehr.common.model.Document;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -47,6 +50,7 @@ import org.springframework.stereotype.Service;
 
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
+import oscar.dms.EDocUtil;
 import oscar.log.LogAction;
 
 @Service
@@ -64,6 +68,7 @@ public class DocumentManager {
     protected SecurityInfoManager securityInfoManager;
 	@Autowired
 	private PatientConsentManager patientConsentManager;
+
 	
 	public Document getDocument(LoggedInInfo loggedInInfo, Integer id)
 	{
@@ -232,4 +237,66 @@ public class DocumentManager {
 		
 		return path;
 	}
+	
+	/**
+	 * Fetch by demographic number and given document type 
+	 * ie: get only LAB documents for the given demographic number. 
+	 * 
+	 * @param LoggedInInfo loggedInInfo
+	 * @param int demographicNo
+	 * @param enum DocumentType
+	 * @return
+	 */
+	public List<Document> getDemographicDocumentsByDocumentType(LoggedInInfo loggedInInfo, int demographicNo, DocumentType documentType) {
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("Access Denied");
+		}
+		
+		CtlDocumentPK ctlDocumentPk = new CtlDocumentPK(Module.DEMOGRAPHIC.getName(), demographicNo, null);
+		List<CtlDocument> ctlDocumentList = ctlDocumentDao.findByCtlDocumentPK(ctlDocumentPk);
+		List<Integer> documentIdList = new ArrayList<Integer>();
+		for(CtlDocument ctlDocument : ctlDocumentList)
+		{
+			documentIdList.add(ctlDocument.getId().getDocumentNo());
+		}
+		
+		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDemographicDocumentsByDocumentType", "fetching documents of type " + documentType.getName() + " for demographic " + demographicNo);
+		
+		return documentDao.findByIdsAndDoctype(documentIdList, documentType);
+	}
+	
+	/**
+	 * Add a document to Oscar's document library.  Don't forget to reference the document 
+	 * with addDocumentRelationship - if required.
+	 * 
+	 *  This method actually saves the Document contents to the file system
+	 * 
+	 * @param loggedInInfo
+	 * @param document
+	 * @return
+	 * @throws Exception
+	 */
+	public Document addDocument(LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) throws Exception {
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("Access Denied");
+		}
+	
+		try {
+
+			EDocUtil.writeDocContent(document.getDocfilename(), document.getDocumentFileContentsAsBytes());			
+			saveDocument(loggedInInfo, document, ctlDocument);
+
+			if(document.getId() != null && document.getId() > 0)
+			{
+				LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Document Id: " + document.getId());				
+				return document;
+			}
+		} catch (Exception e) {
+			LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Exception thrown during document save: " + e.getMessage());
+			throw e;
+		}
+	
+		return null;
+	}
+
 }

@@ -87,7 +87,7 @@ public class EctDisplayEconsultAction extends EctDisplayAction {
     	if(backendEconsultUrl == null || backendEconsultUrl.equals("")) {
             return true;
         } else {
-        	
+
             HttpSession session = request.getSession();
         	String oneIdEmail = session.getAttribute("oneIdEmail") != null ? session.getAttribute("oneIdEmail").toString() : "";
         	String demographicNo = bean.getDemographicNo();

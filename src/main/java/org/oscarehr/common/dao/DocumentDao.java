@@ -58,7 +58,7 @@ public class DocumentDao extends AbstractDao<Document> {
 	}
 	
 	public enum DocumentType {
-		CONSULT, LAB;
+		CONSULT, LAB, ECONSULT;
 	
 		public String getName() {
 			return this.name().toLowerCase();
@@ -455,5 +455,21 @@ public class DocumentDao extends AbstractDao<Document> {
 		
 		return query.getResultList();
 		
+	}
+	
+	public List<Document> findByIdsAndDoctype(List<Integer> documentIds, DocumentType documentType) {
+		Query query = entityManager.createQuery("SELECT d FROM Document d WHERE d.doctype = :doctype AND d.status = 'A' AND documentNo IN (:documentNo)");
+		query.setParameter("doctype", documentType.getName());
+		query.setParameter("documentNo", documentIds);
+		
+		@SuppressWarnings("unchecked")
+		List<Document> results = query.getResultList();
+		
+		if(results == null)
+		{
+			results = Collections.emptyList();
+		}
+		
+		return results;
 	}
 }
