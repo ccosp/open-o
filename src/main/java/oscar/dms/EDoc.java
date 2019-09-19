@@ -82,7 +82,9 @@ public class EDoc extends TagObject implements Comparable<EDoc> {
 	private int numberOfPages = 0;
 	private Integer appointmentNo = -1;
 	private boolean restrictToProgram=false;
-	private String fileSignature;	
+
+	private String fileSignature;
+
 	private org.oscarehr.common.model.Document document;
 	private CtlDocument ctlDocument;
 	private String filePath;

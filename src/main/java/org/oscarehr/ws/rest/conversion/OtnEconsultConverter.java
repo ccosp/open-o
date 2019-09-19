@@ -1,0 +1,32 @@
+package org.oscarehr.ws.rest.conversion;
+
+import org.oscarehr.common.model.Document;
+import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.ws.rest.to.model.OtnEconsult;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OtnEconsultConverter extends AbstractConverter<Document, OtnEconsult> {
+
+	@Override
+	public Document getAsDomainObject(LoggedInInfo loggedInInfo, OtnEconsult t) throws ConversionException {
+		Document document = new Document();
+		document.setContentdatetime(t.getImportDate());
+		document.setContenttype(t.getContentType());
+		document.setDoccreator(loggedInInfo.getLoggedInProviderNo());
+		document.setDocdesc(OtnEconsult.getDocdescription());
+		document.setDocfilename(t.getFileName());
+		document.setDoctype(OtnEconsult.getDoctype().getName());
+		document.setStatus('A');
+		document.setUpdatedatetime(t.getImportDate());
+		document.setBase64Binary(t.getContents());
+		return document;
+	}
+
+	@Override
+	public OtnEconsult getAsTransferObject(LoggedInInfo loggedInInfo, Document d) throws ConversionException {
+		// Endpoint is not 2-way. Import only.
+		return null;
+	}
+
+}
