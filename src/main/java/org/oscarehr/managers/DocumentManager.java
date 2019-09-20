@@ -282,8 +282,7 @@ public class DocumentManager {
 		}
 	
 		try {
-
-			EDocUtil.writeDocContent(document.getDocfilename(), document.getBase64Binary());			
+			EDocUtil.writeDocContent(document.getDocfilename(), document.getBase64Binary());
 			saveDocument(loggedInInfo, document, ctlDocument);
 
 			if(document.getId() != null && document.getId() > 0)
@@ -291,6 +290,7 @@ public class DocumentManager {
 				LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Document Id: " + document.getId());				
 				return document;
 			}
+			
 		} catch (Exception e) {
 			LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Exception thrown during document save: " + e.getMessage());
 			throw e;

@@ -20,6 +20,9 @@ public class OtnEconsultConverter extends AbstractConverter<Document, OtnEconsul
 		document.setStatus('A');
 		document.setUpdatedatetime(t.getImportDate());
 		document.setBase64Binary(t.getContents());
+		document.setResponsible(loggedInInfo.getLoggedInProviderNo());
+		document.setPublic1(0);
+		
 		return document;
 	}
 

@@ -416,11 +416,13 @@ public class ConsultationManager {
 		// save the document
 		document = documentManager.addDocument(loggedInInfo, document, ctlDocument);
 		
-		// update the consultResponseDoc table.
-		if(document != null)
+		if(document == null)
 		{		
-			LogAction.addLogSynchronous(loggedInInfo, "ConsultationManager.importEconsult", "eConsult saved for demographic " + otnEconsult.getDemographicNo());
+			throw new Exception("Unknown exception during document save");
 		}
+		
+		LogAction.addLogSynchronous(loggedInInfo, "ConsultationManager.importEconsult", "eConsult saved for demographic " + otnEconsult.getDemographicNo());
+		
 	}
 	
 	public List<Document> getEconsultDocuments(LoggedInInfo loggedInInfo, int demographicNo) {

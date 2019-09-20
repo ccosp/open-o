@@ -397,8 +397,8 @@ public class ConsultationWebService extends AbstractServiceImpl {
 				response.setSuccess(true);
 			} catch (Exception e) {
 				response.setSuccess(false);
-				response.setMessage(e.getMessage());
-				MiscUtils.getLogger().warn("Exception", e);
+				response.setMessage(e.getMessage());				
+				MiscUtils.getLogger().error("Exception", e);
 			}
 		}
 		return response;
