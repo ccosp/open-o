@@ -283,7 +283,7 @@ public class DocumentManager {
 	
 		try {
 
-			EDocUtil.writeDocContent(document.getDocfilename(), document.getDocumentFileContentsAsBytes());			
+			EDocUtil.writeDocContent(document.getDocfilename(), document.getBase64Binary());			
 			saveDocument(loggedInInfo, document, ctlDocument);
 
 			if(document.getId() != null && document.getId() > 0)
