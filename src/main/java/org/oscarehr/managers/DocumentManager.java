@@ -39,9 +39,7 @@ import org.oscarehr.common.dao.CtlDocumentDao;
 import org.oscarehr.common.dao.DocumentDao;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.dao.DocumentDao.DocumentType;
-import org.oscarehr.common.dao.DocumentDao.Module;
 import org.oscarehr.common.model.CtlDocument;
-import org.oscarehr.common.model.CtlDocumentPK;
 import org.oscarehr.common.model.Document;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -161,33 +159,27 @@ public class DocumentManager {
             throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
         }
 		
-		Integer savedId = null;
-	
+		Integer savedId = null;	
 		if( document.getId() == null ) {
-			savedId = addDocument( loggedInInfo, document );
+			documentDao.persist( document );
+			savedId = document.getId();
+			ctlDocument.getId().setDocumentNo( savedId );
+			ctlDocumentDao.persist( ctlDocument );			
 		} else if( document.getId() > 0 ) {
-			savedId = updateDocument( loggedInInfo, document );
+			savedId = updateDocument( loggedInInfo, document, ctlDocument);
 		}
-		
-		ctlDocument.getId().setDocumentNo( savedId );
-		
-		if( savedId != null ) {
-			ctlDocumentDao.persist( ctlDocument );
-		}
-		
 		return savedId;
 	}
 	
-	private Integer addDocument( LoggedInInfo loggedInInfo, Document document ) {
-
-		documentDao.persist( document );
-		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document saved ", "Document No." + document.getDocumentNo(), "","");
-		return document.getId();
-	}
-	
-	private Integer updateDocument( LoggedInInfo loggedInInfo, Document document ) {
+	public Integer updateDocument( LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument ) {
+		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "w", "" ) ) {
+            throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
+        }
+		document.setUpdatedatetime(new Date(System.currentTimeMillis()));
 		documentDao.merge( document );
-		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document updated ", "Document No." + document.getDocumentNo(), "","");
+		ctlDocument.getId().setDocumentNo( document.getId() );
+		ctlDocumentDao.merge( ctlDocument );
+		LogAction.addLog(loggedInInfo, "DocumentManager.updateDocument", "Document updated ", "Document No." + document.getDocumentNo(), "","");
 		return document.getId();
 	}
 	
@@ -252,24 +244,26 @@ public class DocumentManager {
 			throw new RuntimeException("Access Denied");
 		}
 		
-		CtlDocumentPK ctlDocumentPk = new CtlDocumentPK(Module.DEMOGRAPHIC.getName(), demographicNo, null);
-		List<CtlDocument> ctlDocumentList = ctlDocumentDao.findByCtlDocumentPK(ctlDocumentPk);
-		List<Integer> documentIdList = new ArrayList<Integer>();
-		for(CtlDocument ctlDocument : ctlDocumentList)
-		{
-			documentIdList.add(ctlDocument.getId().getDocumentNo());
-		}
-		
 		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDemographicDocumentsByDocumentType", "fetching documents of type " + documentType.getName() + " for demographic " + demographicNo);
 		
-		return documentDao.findByIdsAndDoctype(documentIdList, documentType);
+		return documentDao.findByDemographicAndDoctype(demographicNo, documentType);
+	}
+	
+	public Document getDocumentByDemographicAndFilename(LoggedInInfo loggedInInfo, int demographicNo, String fileName) {		
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("Access Denied");
+		}
+		
+		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDocumentByDemographicAndFilename", "fetching document with filename " + fileName + " for demographic " + demographicNo);
+		
+		return documentDao.findByDemographicAndFilename(demographicNo, fileName);		
 	}
 	
 	/**
-	 * Add a document to Oscar's document library.  Don't forget to reference the document 
-	 * with addDocumentRelationship - if required.
+	 * Add a document to Oscar's document library.  
 	 * 
-	 *  This method actually saves the Document contents to the file system
+	 *  This method actually saves the Document contents to the file system. The document resource
+	 *  MUST contain valid Base64 encoded document binary data.
 	 * 
 	 * @param loggedInInfo
 	 * @param document
@@ -282,9 +276,22 @@ public class DocumentManager {
 		}
 	
 		try {
+			
+			// is this new file or an update?
+			Document existingDocument = getDocumentByDemographicAndFilename(loggedInInfo, ctlDocument.getId().getModuleId(), document.getDocfilename());
+			
+			if(existingDocument != null && existingDocument.getId() != null && existingDocument.getId() > 0)
+			{
+				document.setDocumentNo(existingDocument.getId());
+			}
+			
+			// Always rite to file system, updates will overwrite.
 			EDocUtil.writeDocContent(document.getDocfilename(), document.getBase64Binary());
+			
+			// save document method handles both new saves and updates 
 			saveDocument(loggedInInfo, document, ctlDocument);
 
+			// confirm success if the file saved correctly.
 			if(document.getId() != null && document.getId() > 0)
 			{
 				LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Document Id: " + document.getId());				

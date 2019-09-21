@@ -23,13 +23,11 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
 
 import org.oscarehr.common.model.CtlDocument;
-import org.oscarehr.common.model.CtlDocumentPK;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -55,33 +53,5 @@ public class CtlDocumentDao extends AbstractDao<CtlDocument>{
         List<CtlDocument> cList = query.getResultList();
 		return cList;
     }
-    
-    @SuppressWarnings("unchecked")
-	public List<CtlDocument> findByCtlDocumentPK(CtlDocumentPK ctlDocumentPk) {
-    	String module = ctlDocumentPk.getModule();
-    	Integer moduleId = ctlDocumentPk.getModuleId();
-    	Integer documentNo = ctlDocumentPk.getDocumentNo();
-    	List<CtlDocument> cList = Collections.emptyList();
-    	
-    	// a query just for the module name would be enormous. 
-    	if(documentNo == null && moduleId == null)
-    	{
-    		return cList;
-    	}
-    	
-		Query query = entityManager.createQuery("select x from CtlDocument x where x.id.documentNo like ? and x.id.module like ? and x.id.moduleId like ?");
-    	
-    	query.setParameter(1, documentNo != null ? documentNo : "%");
-    	query.setParameter(2, module);
-    	query.setParameter(3, moduleId != null ? moduleId : "%");
-		
-        cList = query.getResultList();
-        
-        if(cList == null)
-        {
-        	cList = Collections.emptyList();
-        }
-        
-		return cList;
-    }
+
 }

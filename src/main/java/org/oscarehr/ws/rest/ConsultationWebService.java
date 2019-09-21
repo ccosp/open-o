@@ -395,6 +395,7 @@ public class ConsultationWebService extends AbstractServiceImpl {
 			try {
 				consultationManager.importEconsult(getLoggedInInfo(), data);
 				response.setSuccess(true);
+				response.setMessage("File " + data.getFileName() + " imported.");
 			} catch (Exception e) {
 				response.setSuccess(false);
 				response.setMessage(e.getMessage());				

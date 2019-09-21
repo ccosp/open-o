@@ -457,10 +457,10 @@ public class DocumentDao extends AbstractDao<Document> {
 		
 	}
 	
-	public List<Document> findByIdsAndDoctype(List<Integer> documentIds, DocumentType documentType) {
-		Query query = entityManager.createQuery("SELECT d FROM Document d WHERE d.doctype = :doctype AND d.status = 'A' AND documentNo IN (:documentNo)");
+	public List<Document> findByDemographicAndDoctype(int demographicId, DocumentType documentType) {
+		Query query = entityManager.createNativeQuery("SELECT d.* FROM document d, ctl_document c WHERE c.document_no = d.document_no AND d.doctype = :doctype AND d.status NOT LIKE 'D' AND c.module LIKE 'demographic' AND c.module_id = :demographicId", Document.class);		
+		query.setParameter("demographicId", demographicId);
 		query.setParameter("doctype", documentType.getName());
-		query.setParameter("documentNo", documentIds);
 		
 		@SuppressWarnings("unchecked")
 		List<Document> results = query.getResultList();
@@ -471,5 +471,13 @@ public class DocumentDao extends AbstractDao<Document> {
 		}
 		
 		return results;
+	}
+	
+	public Document findByDemographicAndFilename(int demographicId, String fileName) {
+		Query query = entityManager.createNativeQuery("SELECT d.* FROM document d, ctl_document c WHERE c.document_no = d.document_no AND d.docfilename = :docfilename AND d.status NOT LIKE 'D' AND c.module LIKE 'demographic' AND c.module_id = :demographicId", Document.class);
+		query.setParameter("demographicId", demographicId);
+		query.setParameter("docfilename", fileName);
+
+		return getSingleResultOrNull(query);
 	}
 }
