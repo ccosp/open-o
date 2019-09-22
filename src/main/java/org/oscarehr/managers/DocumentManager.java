@@ -218,15 +218,27 @@ public class DocumentManager {
 		String path = null; 
 		
 		if(document != null) {
-			path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-			
-			if(! path.endsWith(File.separator)) {
-				path = path + File.separator;
-			}
-			
-			path = path + document.getDocfilename();		
+			path = getFullPathToDocument(document.getDocfilename());		
 		}
 		
+		return path;
+	}
+	
+	public String getFullPathToDocument(String filename) {
+
+		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+			
+		if(! path.endsWith(File.separator)) {
+			path += File.separator;
+		}
+			
+		path += filename;
+		
+		if(! FileSystems.getDefault().getPath(path).toFile().exists())
+		{
+			path = null;
+		}
+
 		return path;
 	}
 	

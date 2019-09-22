@@ -181,7 +181,10 @@ public class DocumentService extends AbstractServiceImpl {
 			}
 			Date documentDate = document.getContentdatetime();	
 			String dateString = dateFormat.format(documentDate);
-			documentResponse.add( new DocumentTo1( id, name, dateString, DocumentCategory.EDOCUMENT.name()) );			
+			DocumentTo1 documentTo1 = new DocumentTo1( id, name, dateString, DocumentCategory.EDOCUMENT.name(), "application/pdf");
+			documentTo1.setContentType(document.getContenttype());
+			documentTo1.setDocumentDescription(document.getDocdesc());
+			documentResponse.add( documentTo1 );			
 		}
 		
 		// sort response by date descending
@@ -207,7 +210,8 @@ public class DocumentService extends AbstractServiceImpl {
 					(Integer) eformData.get("id"), 
 					(String) eformData.get("formName"),
 					dateString,
-					DocumentCategory.EFORM.name()) );
+					DocumentCategory.EFORM.name(), 
+					"application/pdf") );
 		}
 		
 		if(! documentResponse.getDocuments().isEmpty()) {
@@ -229,7 +233,8 @@ public class DocumentService extends AbstractServiceImpl {
 					hl7TextInfo.getLabNumber(), 
 					hl7TextInfo.getDiscipline(),
 					hl7TextInfo.getObrDate(),
-					DocumentCategory.HL7LAB.name()) );
+					DocumentCategory.HL7LAB.name(), 
+					"application/pdf") );
 		}
 		
 		if(! documentResponse.getDocuments().isEmpty()) {
@@ -259,6 +264,7 @@ public class DocumentService extends AbstractServiceImpl {
 					patientForm.getFormName(),
 					dateString,
 					DocumentCategory.FORM.name(),
+					"application/pdf",
 					patientForm.getTable()) );
 		}
 		
@@ -273,8 +279,16 @@ public class DocumentService extends AbstractServiceImpl {
 	@Path("/edocument/{documentId}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response getDocument(@PathParam("documentId") int documentId){
-		String path = documentManager.getPathToDocument(getLoggedInInfo(), documentId);
-		return getFile(path).build();
+		Document document = documentManager.getDocument(getLoggedInInfo(), documentId);
+		String path = documentManager.getFullPathToDocument(document.getDocfilename());
+		ResponseBuilder responseBuilder = getFile(path);
+		String contentType = document.getContenttype();
+		if(contentType != null && ! contentType.isEmpty())
+		{
+			// default is preset to application/octet_stream
+			responseBuilder.header("Content-Type", contentType);
+		}
+		return responseBuilder.build();
 	}
 	
 	@GET
@@ -282,7 +296,7 @@ public class DocumentService extends AbstractServiceImpl {
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response getEForm(@PathParam("eformId") int eformId){		
 		java.nio.file.Path path = eformDataManager.createEformPDF(getLoggedInInfo(), eformId);	
-		return getFile(path).build();
+		return getFile(path).header("Content-Type", "application/pdf").build();
 	}
 	
 	@GET
@@ -290,7 +304,7 @@ public class DocumentService extends AbstractServiceImpl {
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response getHL7Lab(@PathParam("hl7LabId") int hl7LabId){
 		java.nio.file.Path path = labManager.getHl7MessageAsPDF(getLoggedInInfo(), hl7LabId);
-		return getFile(path).build();
+		return getFile(path).header("Content-Type", "application/pdf").build();
 	}
 
 	@GET
@@ -299,12 +313,9 @@ public class DocumentService extends AbstractServiceImpl {
 	public Response getForm(@PathParam("formId") int formId, @PathParam("documentTable") String documentTable) {
 			
 		ResponseBuilder response = Response.status(Status.NO_CONTENT);
-		//		/oscar-SNAPSHOT/form/forwardshortcutname.jsp?formname=Annual V2&demographic_no=980&formId=1
-		//		/form/formannualV2.jsp?demographic_no=980&formId=1
 		if(documentTable != null && documentTable != "") 
 		{	
 			StringBuilder formPath = new StringBuilder();
-//			formPath.append("/" + httpServletRequest.getContextPath());
 			formPath.append("/form/forwardshortcutname.jsp");
 			formPath.append(String.format("?%1$s=%2$s", "formname", documentTable));
 			formPath.append(String.format("&%1$s=%2$s", "demographic_no", ""));
@@ -330,7 +341,7 @@ public class DocumentService extends AbstractServiceImpl {
 			}
 		}
 
-		return response.build();
+		return response.header("Content-Type", "application/pdf").build();
 	}
 	
 	private final ResponseBuilder getFile(final String filePath) {

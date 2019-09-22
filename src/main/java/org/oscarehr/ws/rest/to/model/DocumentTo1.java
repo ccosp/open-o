@@ -30,17 +30,20 @@ public class DocumentTo1 implements Comparable<DocumentTo1> {
 	private String category;
 	private String documentDate;
 	private String documentTable;
+	private String documentDescription;
+	private String contentType;
 	
-	public DocumentTo1( int id, String name, String documentDate, String category) {
+	public DocumentTo1( int id, String name, String documentDate, String category, String contentType) {
 		setId(id);
 		setName(name);
 		setDocumentDate(documentDate);
 		setCategory(category);
 		setDocumentTable("");
+		setContentType(contentType);
 	}
 	
-	public DocumentTo1( int id, String name, String documentDate, String category, String documentTable) {
-		this(id, name, documentDate, category);
+	public DocumentTo1( int id, String name, String documentDate, String category, String contentType, String documentTable) {
+		this(id, name, documentDate, category, contentType);
 		setDocumentTable(documentTable);
 	}
 	
@@ -77,6 +80,22 @@ public class DocumentTo1 implements Comparable<DocumentTo1> {
 
 	public void setDocumentTable(String documentTable) {
 		this.documentTable = documentTable;
+	}
+
+	public String getDocumentDescription() {
+		return documentDescription;
+	}
+
+	public void setDocumentDescription(String documentDescription) {
+		this.documentDescription = documentDescription;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	@Override
