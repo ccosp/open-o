@@ -1,0 +1,1 @@
+INSERT INTO `oscar_ephi_upgrade`.`ctl_doctype`(`module`, `doctype`, `status`) VALUES ('demographic', 'econsult', 'A');
