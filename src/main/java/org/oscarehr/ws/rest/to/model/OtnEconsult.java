@@ -35,7 +35,7 @@ public class OtnEconsult implements Serializable  {
 
 	private static final DocumentType docType = DocumentType.ECONSULT; 
 	private static final char docTypeCode = 'E';
-	private static final String docDescription = "OTN eConsult Consultation";
+	private final String defaultDocDescription = "OTN eConsult Consultation";
 	
 	private String contentType;
 	private Integer demographicNo;
@@ -43,6 +43,7 @@ public class OtnEconsult implements Serializable  {
 	private byte[] contents;
 	private Date importDate;
 	private Integer consultId;
+	private String docDescription;
 	
 	/**
 	 * Default
@@ -107,8 +108,16 @@ public class OtnEconsult implements Serializable  {
 		return docTypeCode;
 	}
 
-	public static String getDocdescription() {
+	public String getDocDescription() {
+		if(this.docDescription == null || this.docDescription.isEmpty())
+		{
+			return defaultDocDescription;
+		}
 		return docDescription;
 	}
-	
+
+	public void setDocDescription(String docDescription) {
+		this.docDescription = docDescription;
+	}
+
 }
