@@ -472,7 +472,9 @@ for (int i=0; i<sites.size(); i++) {
 		<tr>
 			<td align="right"><bean:message key="admin.provider.formStatus" />:
 			</td>
-			<td><input type="text" name="status" value='1' maxlength="1">
+			<td>
+				<input type="radio" id="statusActive" name="status" value="1" checked><label for="statusActive"><bean:message key="admin.provider.formStatusActive"/></label>
+				<input type="radio" id="statusInactive" name="status" value="0"><label for="statusInactive"><bean:message key="admin.provider.formStatusInactive"/></label>
 			</td>
 		</tr>
 			

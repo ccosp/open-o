@@ -1397,6 +1397,8 @@ function changeLt(drugId){
              var data="";
              if(elementId.match("prnVal_")!=null)
                  data="elementId="+elementId+"&propertyValue="+$(elementId).value;
+             else if(elementId.match("repeats_")!=null)
+                 data="elementId="+elementId+"&propertyValue="+$(elementId).value;
              else
                  data="elementId="+elementId+"&propertyValue="+$(elementId).innerHTML;
              data = data + "&rand="+Math.floor(Math.random()*10001);
@@ -2444,14 +2446,16 @@ function checkMedTerm(){
 
 function isMedTermChecked(rnd){
 	var termChecked = false;
-	var longTerm = jQuery("#longTerm_" + rnd);
+	var longTermY = jQuery("#longTermY_" + rnd);
+	var longTermN = jQuery("#longTermN_" + rnd);
+	
 	var shortTerm = jQuery("#shortTerm_" + rnd);
 	var medTermWrap = jQuery("#medTerm_" + rnd);
 		
-	if(longTerm.prop( "checked" ) || shortTerm.prop( "checked" )){
+	if(longTermY.is(":checked") || longTermN.is(":checked")) {
 		termChecked = true;
-		medTermWrap.css('color', 'black');		
-	}else{
+		medTermWrap.css('color', 'black');	
+	} else {
 		termChecked = false; 
 		medTermWrap.css('color', 'red');
 	}
@@ -2484,12 +2488,31 @@ jQuery( document ).ready(function() {
 	    isMedTermChecked(randId);
 	    <%}%> 
 	    
-	    var el = jQuery( this );
-	    medTermCheckOne(randId, el);
+	    //var el = jQuery( this );
+	    //medTermCheckOne(randId, el);
     });
 });
 </script>
 
+<script>
+function updateShortTerm(rand,val) {
+	if(val) {
+		jQuery("#shortTerm_" + rand).prop("checked",true);
+	} else {
+		jQuery("#shortTerm_" + rand).prop("checked",false);
+	}
+	
+}
+
+function updateLongTerm(rand,repeatEl) {
+	<%if("true".equals(OscarProperties.getInstance().getProperty("rx_select_long_term_when_repeat", "true"))) { %>
+	var repeats = jQuery('#repeats_' + rand).val().trim();
+	if(!isNaN(repeats) && repeats > 0) {
+		jQuery("#longTermY_" + rand).prop("checked",true);
+	}
+	<% } %>
+}
+</script>
 <script language="javascript" src="../commons/scripts/sort_table/css.js"></script>
 <script language="javascript" src="../commons/scripts/sort_table/common.js"></script>
 <script language="javascript" src="../commons/scripts/sort_table/standardista-table-sorting.js"></script>

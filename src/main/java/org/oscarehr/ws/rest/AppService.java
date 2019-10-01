@@ -71,6 +71,7 @@ import org.oscarehr.common.dao.AppUserDao;
 import org.oscarehr.common.dao.AppointmentSearchDao;
 import org.oscarehr.common.dao.ConsentDao;
 import org.oscarehr.common.dao.ProviderPreferenceDao;
+import org.oscarehr.common.dao.SecObjPrivilegeDao;
 import org.oscarehr.common.dao.SecurityDao;
 import org.oscarehr.common.model.AppDefinition;
 import org.oscarehr.common.model.AppUser;
@@ -82,6 +83,8 @@ import org.oscarehr.common.model.Consent;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.ProviderPreference;
+import org.oscarehr.common.model.SecObjPrivilege;
+import org.oscarehr.common.model.SecObjPrivilegePrimaryKey;
 import org.oscarehr.common.model.Security;
 import org.oscarehr.managers.PatientConsentManager;
 import org.oscarehr.managers.SecurityInfoManager;
@@ -89,6 +92,7 @@ import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
 import org.oscarehr.phr.RegistrationHelper;
 import org.oscarehr.phr.util.MyOscarUtils;
 import org.oscarehr.util.EncryptionUtils;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.ws.rest.to.Creds;
@@ -100,6 +104,7 @@ import org.oscarehr.ws.rest.to.model.PHRInviteTo1;
 import org.oscarehr.ws.rest.to.model.ProviderTo1;
 import org.oscarehr.ws.rest.to.model.RssItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.quatro.dao.security.SecuserroleDao;
 
@@ -148,6 +153,9 @@ public class AppService extends AbstractServiceImpl {
 	@Autowired
 	AppointmentSearchDao appointmentSearchDao;
 	
+	@Autowired
+	SecObjPrivilegeDao secObjPrivilegeDao;
+	
 	@GET
 	@Path("/getApps/")
 	@Produces("application/json")
@@ -194,6 +202,71 @@ public class AppService extends AbstractServiceImpl {
 		return new GenericRESTResponse(false,"Consent Not Configured");
 	}
 	
+	@GET
+	@Path("/PHRActiveAndAppointmentConfigured/")
+	@Produces("application/json")
+	public GenericRESTResponse isPHRActiveAndAppointmentConfigured(@Context HttpServletRequest request){
+		Integer id = appManager.getAppDefinitionConsentId(getLoggedInInfo(), "PHR");
+		if(id != null) {
+			ConsentType consent = patientConsentManager.getConsentTypeByConsentTypeId(id);
+			if(consent != null) {
+				Provider provider = providerDao.getProvider(consent.getProviderNo());
+				if(provider != null) {
+					LoggedInInfo loggedInInfo = new LoggedInInfo(null, null, provider,null,null);
+					if(securityInfoManager.hasPrivilege(loggedInInfo, "_appointment.UpdatedAfterDate", "x", null)) {
+						return new GenericRESTResponse(true,""+id);
+					}
+				}
+			}
+		}
+		return new GenericRESTResponse(false,"Consent Not Configured");
+	}
+	
+	@POST
+	@Path("/AcceptAppointmentConsent/")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public GenericRESTResponse acceptAppointmentConsent(@Context HttpServletRequest request){
+		String msg  = "";
+		String privilege = "x";
+		String objectName = "_appointment.UpdatedAfterDate";  
+		String roleUserGroup = null;
+		Integer id = appManager.getAppDefinitionConsentId(getLoggedInInfo(), "PHR");
+		if(id != null) {
+			ConsentType consent = patientConsentManager.getConsentTypeByConsentTypeId(id);
+			if(consent != null) {
+				Provider provider = providerDao.getProvider(consent.getProviderNo());
+				roleUserGroup = provider.getProviderNo();
+				if(provider != null) {
+					SecObjPrivilege sop = new SecObjPrivilege();
+				    sop.setId(new SecObjPrivilegePrimaryKey());
+					sop.getId().setRoleUserGroup(roleUserGroup);
+					sop.getId().setObjectName(objectName);
+					sop.setPrivilege(privilege);
+					sop.setPriority(0);
+					sop.setProviderNo(getLoggedInInfo().getLoggedInProviderNo());
+					String secExceptionMsg = new String();
+					try {
+						secObjPrivilegeDao.persist(sop);
+						
+					} catch(DataIntegrityViolationException divEx) {
+						secExceptionMsg = divEx.getMostSpecificCause().getLocalizedMessage();
+					}
+
+					if(secExceptionMsg.length() > 0)
+						msg += secExceptionMsg;
+					else {
+						msg += "Role/Obj/Rights " + roleUserGroup + "/" + objectName + "/" + privilege + " is added. ";
+					    LogAction.addLog(getLoggedInInfo().getLoggedInProviderNo(), LogConst.ADD, LogConst.CON_PRIVILEGE, roleUserGroup +"|"+ objectName +"|"+privilege, request.getRemoteAddr());
+					    return new GenericRESTResponse(true,msg);
+					}
+					
+					
+				}
+			}
+		}
+		return new GenericRESTResponse(false,msg);
+	}
 	
 	/*States returned:                  Boolean    Message 
 		PHR inactive                    FALSE      INACTIVE
@@ -241,6 +314,7 @@ public class AppService extends AbstractServiceImpl {
 				consent.setExplicit(true);
 				consent.setOptout(false);
 				consent.setLastEnteredBy(getLoggedInInfo().getLoggedInProviderNo());
+				consent.setEditDate(new Date());
 				consentDao.persist(consent);
 				//Consent consent = consentDao.findByDemographicAndConsentTypeId( demographicNo,  appDef.getConsentTypeId()  ) ;
 				if(consent != null && consent.getPatientConsented()) {

@@ -184,6 +184,9 @@
 					
 					<div  > <%-- </div>class="jumbotron" ng-if="!serverOffline && !audit.clinicInformationSetup">  --%>
 					  <h3></h3>
+					  <div class="alert alert-warning" role="alert" ng-if="!phrAppointmentDataConfigured">
+					  	<strong>Enable Appointment Notifications For All Patients</strong> <br>If this is not enabled, the EMR will only share appointment notification data for patients with a kindredPHR account<button ng-click="enableAppointmentSharing()"  class="btn btn-info btn-block" type="button">Enable</button>
+					  </div>
 					  <div ng-repeat="recc in audit.recommendations" class="alert alert-warning" role="alert" >
 					  	<strong>{{recc.heading}}</strong> <br>{{recc.description}}<button ng-click="openPHRWindow(recc)"  class="btn btn-info btn-block" type="button">Configure</button>
 					  </div>
@@ -203,6 +206,7 @@
 			$scope.userpassError = false;
 			$scope.working = false;
 			$scope.phrConsentConfigured = false;
+			$scope.phrAppointmentDataConfigured = true;
 			$scope.showPHRUserCreate = false;
 			$scope.selectUserMethod = true;
 			
@@ -243,6 +247,21 @@
 				});
 		    };
 		    
+		    checkAppointmentStatus = function(){
+		    		phrService.isPHRActiveCheckAppointmentConfigured().then(function(data){
+			    		console.log("enableAppointmentSharing coming back",data);
+			    		$scope.phrAppointmentDataConfigured  = data.success;
+				});
+		    }
+		    checkAppointmentStatus();
+		    
+		    $scope.enableAppointmentSharing = function(){
+		    		phrService.acceptAppointmentConsent().then(function(data){
+		    			console.log("enableAppointmentSharing coming back",data);
+		    			checkAppointmentStatus();
+				});
+		    	
+		    }
 		    
 		    
 		    getConsent = function(id){

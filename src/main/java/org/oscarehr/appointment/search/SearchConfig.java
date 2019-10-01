@@ -695,7 +695,7 @@ public class SearchConfig {
 			timeslot.setCode(code);
 		}
 		try {
-			timeslot.setDemographicNo(Integer.parseInt(combined[4]));
+			timeslot.setDemographicNo(Integer.parseInt(combined[5]));
 		}catch(Exception e) {
 			logger.error("Error parsing demo",e);
 		}

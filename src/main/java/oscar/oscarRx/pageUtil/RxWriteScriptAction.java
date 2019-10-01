@@ -849,6 +849,8 @@ public final class RxWriteScriptAction extends DispatchAction {
 					if (!val.equals("") && !val.equalsIgnoreCase("null")) rx.setDuration(val);
 				} else if (elem.equals("durationUnit_" + num)) {
 					if (!val.equals("") && !val.equalsIgnoreCase("null")) rx.setDurationUnit(val);
+				} else if (elem.equals("repeats_" + num)) {
+					if (!val.equals("") && !val.equalsIgnoreCase("null")) rx.setRepeat(Integer.parseInt(val));
 				} else if (elem.equals("prnVal_" + num)) {
 					if (!val.equals("") && !val.equalsIgnoreCase("null")) {
 						if (val.equalsIgnoreCase("true")) rx.setPrn(true);
