@@ -92,7 +92,7 @@ public class HRMDownloadJob implements OscarRunnable {
 			SFTPConnector connector = new SFTPConnector(x, hostname,Integer.parseInt(port),username,privateKeyDirectory + privateKeyFile,"Automatic");
 			SFTPConnector.setDecryptionKey(decryptionKey);
 			connector.startAutoFetch(x,remoteDir);
-				
+			connector.close();
 			logger.info("===== HRM JOB DONE RUNNING....");
 		} catch (Exception e) {
 			logger.error("Error", e);

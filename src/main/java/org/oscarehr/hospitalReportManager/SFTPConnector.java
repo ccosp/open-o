@@ -452,9 +452,15 @@ public class SFTPConnector {
 	 * Close channels, disconnect sessions, release/close file handlers.
 	 */
 	public void close() {
-		cmd.exit();
-		sess.disconnect();
-		fLogger.getHandlers()[0].close();
+		if(cmd != null) {
+			cmd.exit();
+		}
+		if(sess != null) {
+			sess.disconnect();
+		}
+		if(fLogger != null && fLogger.getHandlers() != null && fLogger.getHandlers().length>0) {
+			fLogger.getHandlers()[0].close();
+		}
 	}
 
 	/********************************************************/
