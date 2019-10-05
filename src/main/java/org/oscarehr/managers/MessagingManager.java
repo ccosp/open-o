@@ -27,6 +27,7 @@ package org.oscarehr.managers;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -679,9 +680,34 @@ public class MessagingManager {
 	private static final void sortByDate(List<MessageTbl> list) {
 	    Collections.sort(list, new Comparator<MessageTbl>() {
 	        public int compare(MessageTbl mt1, MessageTbl mt2) {
-	            return Long.valueOf(mt2.getDate().getTime()).compareTo(mt1.getDate().getTime());
+	        	java.util.Date datetime1 = combineDateTime(mt1.getDate(), mt1.getTime());
+	        	java.util.Date datetime2 = combineDateTime(mt2.getDate(), mt2.getTime());
+	            return Long.valueOf(datetime2.getTime()).compareTo(datetime1.getTime());
 	        }
 	    });
+	}
+	
+	/**
+	 * Combines the separate date and time columns of a Message into a single object.
+	 * @param date
+	 * @param time
+	 * @return
+	 */
+	private static final java.util.Date combineDateTime(final java.util.Date date, 
+			final java.util.Date time) {
+
+		Calendar calendar = Calendar.getInstance();
+		Calendar calendarDate = Calendar.getInstance();
+		Calendar timeMerge = Calendar.getInstance();
+		calendarDate.clear();
+		calendarDate.setTime(date);
+		timeMerge.clear();
+		timeMerge.setTime(time);	
+		calendar.clear();
+		calendar.set(calendarDate.get(Calendar.YEAR), calendarDate.get(Calendar.MONTH), calendarDate.get(Calendar.DATE), 
+				timeMerge.get(Calendar.HOUR_OF_DAY), timeMerge.get(Calendar.MINUTE), timeMerge.get(Calendar.SECOND));
+
+		return calendar.getTime();
 	}
 	
     /**
