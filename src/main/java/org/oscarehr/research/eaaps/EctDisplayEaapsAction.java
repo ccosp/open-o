@@ -149,7 +149,7 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 		
 		String eaapsUrl = null;
 		if (patientData.isUrlProvided()) {
-			eaapsUrl = getEaapsUrl(patientData.getUrl(), true);
+			eaapsUrl = getEaapsUrl(patientData.getUrl(), false);
 		}
 		
 		String widgetMessage = patientData.getWidgetMessage();

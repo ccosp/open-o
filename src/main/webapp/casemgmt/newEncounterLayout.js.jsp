@@ -72,7 +72,7 @@ function showMessenger(url, notificationId, message) {
 	var messageContent = "";
 	// in case URL is specified - make sure it's clickable
 	if (url) {
-		messageContent = "<a style='color: white' href='" + url + "' target='_blank'>" + message + "</a>";
+		messageContent = "<a style='color: white' onclick='popupPage(700,1000,\"eaaps\",\"" + url + "\");return false;'  >"+message+"</a>";
 	} else { // otherwise - just show the message provided
 		messageContent = message;
 	}
