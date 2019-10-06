@@ -1904,6 +1904,7 @@ insert into `secObjectName` (`objectName`) values ('_dashboardDrilldown');
 insert into `secObjectName` (`objectName`) values ('_dashboardChgUser');
 
 insert into `secObjectName` (`objectName`) values ('_admin.demographic');
+insert into `secObjectName` (`objectName`) values ('_newCasemgmt.eaaps');
 
 insert into `secObjPrivilege` values('receptionist', '_appointment', 'x', 0, '999998');
 insert into `secObjPrivilege` values('receptionist', '_demographic', 'x', 0, '999998');
@@ -2097,7 +2098,7 @@ insert into `secObjPrivilege` values('admin','_appDefinition','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_demographicExport','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_admin.document','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_admin.demographic','u',0,'999998');
-
+insert into `secObjPrivilege` values('doctor','_newCasemgmt.eaaps','x',0,'999998');
 
 
 -- for defaultqueue
