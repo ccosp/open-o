@@ -273,6 +273,13 @@
 		<form-bean name="setProviderColour" type="org.apache.struts.action.DynaActionForm">
 			<form-property name="colour" type="java.lang.String" />
 		</form-bean>
+		
+		<form-bean name="setTicklerPreferencesForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="taskAssigneeSelection" type="org.oscarehr.common.model.UserProperty" />
+			<form-property name="taskAssigneeMRP" type="org.oscarehr.common.model.UserProperty" />
+			<form-property name="taskAssigneeProvider" type="org.oscarehr.common.model.UserProperty" />
+		</form-bean>
+		
 		<form-bean name="setProviderNoteStaleDateForm" type="org.apache.struts.action.DynaActionForm">
 			<form-property name="dateProperty" type="org.oscarehr.common.model.UserProperty" />
 			<form-property name="singleViewProperty" type="org.oscarehr.common.model.UserProperty" />
@@ -1714,6 +1721,13 @@
               <forward name="genClinicalConnectPrefs"     path="/provider/setClinicalConnectPrefs.jsp"/>
 	    <forward name="genLabMacroPrefs"     path="/provider/setLabMacroPrefs.jsp"/>
         </action>
+        
+		<action path="/setTicklerPreferences" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request" input="/provider/setTicklerPreferences.jsp" name="setTicklerPreferencesForm">
+			<forward name="success"	 path="/provider/setTicklerPreferences.jsp" />
+			<forward name="complete" path="/provider/setTicklerPreferences.jsp" />
+			<forward name="error"    path="/provider/setTicklerPreferences.jsp?error" />
+        </action>        
+
 		<action input="/provider/providerIndivoIdSetter.jsp" name="setMyOscarIdForm" path="/setMyOscarId" scope="request" type="oscar.oscarProvider.pageUtil.ProEditMyOscarIdAction">
 			<forward name="success" path="/provider/providerIndivoIdSetter.jsp" />
 			<forward name="failure" path="/provider/providerIndivoIdSetter.jsp" />

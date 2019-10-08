@@ -1971,7 +1971,104 @@ public ActionForward viewEDocBrowserInDocumentReport(ActionMapping actionmapping
 		request.setAttribute("method","saveLabRecallPrefs");
 		
 		return actionmapping.findForward("genLabRecallPrefs");
-	}     
+	}    
+
+    public ActionForward viewTicklerTaskAssignee(ActionMapping actionmapping,ActionForm actionform,HttpServletRequest request, HttpServletResponse response) {
+        DynaActionForm frm = (DynaActionForm)actionform;
+        LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
+        String providerNo=loggedInInfo.getLoggedInProviderNo();
+
+	UserProperty ticklerTaskAssignee = this.userPropertyDAO.getProp(providerNo, UserProperty.TICKLER_TASK_ASSIGNEE);
+
+	String defaultTo = "";
+	if (ticklerTaskAssignee == null){
+		ticklerTaskAssignee = new UserProperty();
+		ticklerTaskAssignee.setValue("default");
+		defaultTo = ticklerTaskAssignee.getValue();
+	}else if(ticklerTaskAssignee.getValue().equals("mrp")){
+		defaultTo = "mrp";
+	}
+
+	ArrayList<LabelValueBean> providerList = new ArrayList<LabelValueBean>();
+	providerList.add(new LabelValueBean("Select", ""));
+
+	ProviderDao dao = SpringUtils.getBean(ProviderDao.class);
+	List<Provider> ps = dao.getProviders();
+	Collections.sort(ps, new BeanComparator("lastName"));
+	try {
+		
+		for (Provider p : ps) {
+			if(!p.getProviderNo().equals("-1")){
+			 providerList.add(new LabelValueBean(p.getLastName() + ", " + p.getFirstName(), p.getProviderNo()));
+			}
+		}
+		
+		} catch (Exception e) {
+			MiscUtils.getLogger().error("Error", e);
+		}
+	    request.setAttribute("providerSelect",providerList);
+       
+        request.setAttribute("providertitle","provider.ticklerPreference.title"); 
+        request.setAttribute("providermsgPrefs","provider.ticklerPreference.msgPrefs"); //=Preferences
+        request.setAttribute("providerbtnSubmit","provider.ticklerPreference.btnSubmit"); //=Save
+        request.setAttribute("providerbtnCancel","provider.ticklerPreference.btnCancel"); //=Cancel
+        request.setAttribute("method","saveTicklerTaskAssignee");
+
+	    request.setAttribute("taskAssigneeSelection", ticklerTaskAssignee);
+	    frm.set("taskAssigneeSelection", ticklerTaskAssignee);
+
+        request.setAttribute("providerMsg","");
+
+	    request.setAttribute("taskAssigneeMRP", defaultTo);
+
+	    UserProperty t=(UserProperty)frm.get("taskAssigneeMRP");
+	    t.setValue(defaultTo);
+
+        return actionmapping.findForward("success");
+    }
+    
+
+    public ActionForward saveTicklerTaskAssignee(ActionMapping actionmapping,ActionForm actionform, HttpServletRequest request, HttpServletResponse response) {
+        LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
+        String providerNo=loggedInInfo.getLoggedInProviderNo();
+        DynaActionForm frm=(DynaActionForm)actionform;
+
+	UserProperty a=(UserProperty)frm.get("taskAssigneeSelection");
+	String tickerTaskAssignee = a != null ? a.getValue() : "";
+
+	boolean delete = false;
+	if(tickerTaskAssignee.equals("")){delete=true;}
+
+	UserProperty property = this.userPropertyDAO.getProp(providerNo, UserProperty.TICKLER_TASK_ASSIGNEE);
+	if( property == null ) {
+		property = new UserProperty();
+		property.setProviderNo(providerNo);
+		property.setName(UserProperty.TICKLER_TASK_ASSIGNEE);
+	}
+
+	if(delete){
+	 userPropertyDAO.delete(property);
+	}else{
+	 property.setValue(tickerTaskAssignee);
+	 userPropertyDAO.saveProp(property);
+	}
+
+	    request.setAttribute("status", "success");
+
+        request.setAttribute("providertitle","provider.ticklerPreference.title"); 
+        request.setAttribute("providermsgPrefs","provider.ticklerPreference.msgPrefs"); //=Preferences
+        request.setAttribute("providerbtnSubmit","provider.ticklerPreference.btnSubmit"); //=Save
+        request.setAttribute("providerbtnCancel","provider.ticklerPreference.btnCancel"); //=Cancel
+
+	    request.setAttribute("providerbtnClose","provider.ticklerPreference.providerbtnClose"); //=Close Window
+
+        request.setAttribute("providerMsg","provider.ticklerPreference.savedMsg");
+
+        request.setAttribute("method","saveTicklerTaskAssignee");
+
+        return actionmapping.findForward("complete");
+
+	}
 
     public ActionForward viewEncounterWindowSize(ActionMapping actionmapping,ActionForm actionform,HttpServletRequest request, HttpServletResponse response) {
 
