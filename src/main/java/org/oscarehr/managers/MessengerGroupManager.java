@@ -23,7 +23,6 @@
  */
 package org.oscarehr.managers;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -318,8 +317,8 @@ public class MessengerGroupManager {
 
 		try {
 			cachedProvider = CaisiIntegratorManager.getProvider(loggedInInfo, facility, facilityCompositePk);
-		} catch (MalformedURLException e) {
-			logger.error("Error while getting remote provider list from Integrator ", e);
+		} catch (Exception e) {
+			logger.error("Error while getting remote provider list from Integrator. Could be offline. ", e);
 		}
 		
 		if(cachedProvider != null) 

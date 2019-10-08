@@ -304,28 +304,61 @@ public class CaisiIntegratorManager {
 	}
 
 	public static ProviderWs getProviderWs(LoggedInInfo loggedInInfo, Facility facility) throws MalformedURLException {
-		ProviderWsService service = new ProviderWsService(buildURL(facility, "ProviderService"));
-		ProviderWs port = service.getProviderWsPort();
 
-		CxfClientUtilsOld.configureClientConnection(port);
-		addAuthenticationInterceptor(loggedInInfo, facility, port);
-
-		return (port);
+		try
+		{
+			ProviderWsService service = new ProviderWsService(buildURL(facility, "ProviderService"));
+			ProviderWs port = service.getProviderWsPort();
+	
+			CxfClientUtilsOld.configureClientConnection(port);
+			addAuthenticationInterceptor(loggedInInfo, facility, port);
+			
+			return port;
+		}
+		catch(MalformedURLException e) 
+		{
+			throw e;
+		}
+		catch(Exception e)
+		{
+			// do nothing.
+			MiscUtils.getLogger().error("Error connecting to Provider Webservice ", e);
+			return null;
+		}
+		/*
+		 * There should be a global method to handle these uncaught connectivity exceptions
+		 * more gracefully 
+		 */
 	}
 
-    public static List<CachedProvider> getAllProviders(LoggedInInfo loggedInInfo,Facility facility) throws MalformedURLException {
+    public static List<CachedProvider> getAllProviders(LoggedInInfo loggedInInfo,Facility facility) throws MalformedURLException{
 		
     	@SuppressWarnings("unchecked")
 		List<CachedProvider> results=(List<CachedProvider>) basicDataCache.get("ALL_PROVIDERS");
 
-    	if (results==null)
+    	
+    	if (results == null)
     	{
 			ProviderWs providerWs = getProviderWs(loggedInInfo, facility);
-			results = Collections.unmodifiableList(providerWs.getAllProviders());
-			basicDataCache.put("ALL_PROVIDERS", results);
+			if(providerWs != null)
+			{
+				results = providerWs.getAllProviders();
+			}
     	}
     	
-		return (results);
+    	if(results == null)
+    	{
+    		results = Collections.emptyList();
+    	}
+    		
+		results = Collections.unmodifiableList(results);
+		
+		if(! results.isEmpty())
+		{
+			basicDataCache.put("ALL_PROVIDERS", results);
+		}
+		
+		return results;
 	}
 
 	public static CachedProvider getProvider(LoggedInInfo loggedInInfo,Facility facility, FacilityIdStringCompositePk remoteProviderPk) throws MalformedURLException {
@@ -694,8 +727,7 @@ public class CaisiIntegratorManager {
      * @return
      * @throws MalformedURLException 
      */
-    public static List<ProviderCommunicationTransfer> getProviderCommunication(LoggedInInfo loggedInInfo) 
-    		throws MalformedURLException {
+    public static List<ProviderCommunicationTransfer> getProviderCommunication(LoggedInInfo loggedInInfo) throws MalformedURLException {
     	
 		ProviderWs providerWs = getProviderWs(loggedInInfo, loggedInInfo.getCurrentFacility());
 		
@@ -709,7 +741,7 @@ public class CaisiIntegratorManager {
     	}
 	}
     
-    public static void updateProviderCommunicationStatus(LoggedInInfo loggedInInfo, Integer providerCommunicationId) throws MalformedURLException { 
+    public static void updateProviderCommunicationStatus(LoggedInInfo loggedInInfo, Integer providerCommunicationId) throws MalformedURLException{ 
 		ProviderWs providerWs = getProviderWs(loggedInInfo, loggedInInfo.getCurrentFacility()); 
     	providerWs.deactivateProviderCommunication(providerCommunicationId);
 	}
