@@ -28,9 +28,11 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
@@ -113,23 +115,47 @@ public class MessengerIntegratorManager {
 			throw new SecurityException("missing required security object (_msg)");
 		}
     	
+    	/*
+    	 * Fetch all NEW messages with a destination to the given facility.
+    	 */
     	List<MessageList> integratedMessageList = messageListDao.findByIntegratedFacility(facility.getIntegratorFacilityId(), status);    	
     	if(integratedMessageList.isEmpty())
     	{
     		return null;
     	}
     	
-    	// Sort the selected integrated messages into groups of provider id's by message id.
+    	/*
+    	 *  Sort the selected integrated messages into groups of provider id's by message id.
+    	 *  The MessageList object represents a one to many relationship where 1 message 
+    	 *  has many recipients in many different facilities.
+    	 */ 
     	Map<Long, MessageList> messageIds = new HashMap<Long, MessageList>();
     	for(MessageList integratedMessage : integratedMessageList)
     	{
+    		/*
+    		 *  getMessage is the message id.
+    		 *  MessageList Object contains recipient information
+    		 */
     		messageIds.put(integratedMessage.getMessage(), integratedMessage);
     	}
     	
+    	/*
+    	 * Build a map of recipients grouped by each message id.
+    	 * There may be a more efficient way to do this.
+    	 */
     	Map<Long, List<String>> messageProviderMap = null; 
     	for(Long messageId : messageIds.keySet())
     	{
-    		List<MessageList> messageList = messageListDao.findByMessageAndIntegratedFacility(messageId, facility.getIntegratorFacilityId());
+    		/*
+    		 * Determine if there are any other recipients from other facilities
+    		 * in a relationship with this message.
+    		 */
+    		List<MessageList> messageList = messageListDao.findByMessage(messageId);
+
+    		/*
+    		 * This method is used so that the target destination facility has a record
+    		 * of any other providers from other facilities that were copied in. 
+    		 */
     		if(messageList.size() > 1)
     		{
     			List<String> providerIds = new ArrayList<String>();
@@ -140,19 +166,33 @@ public class MessengerIntegratorManager {
 
 	    		for(MessageList message : messageList) 
 	    		{
-	    			providerIds.add(message.getProviderNo());
+	    			/*
+	    			 * Add each provider as recipients of this message. Format: provder_number @ facility_id
+	    			 */
+	    			if(message.getDestinationFacilityId() > 0)
+	    			{
+	    				String address = message.getProviderNo() + '@' + message.getDestinationFacilityId();
+		    			providerIds.add(address);
+	    			}    	
 	    		}
 	    		
 	    		messageProviderMap.put(messageId, providerIds);
     		}
     	}
 
+    	/*
+    	 * Retrieve and convert each message for this facility
+    	 * into a transport Object for transmission to the Integrator.
+    	 */
     	List<ProviderCommunicationTransfer> providerCommunicationTransferList = new ArrayList<ProviderCommunicationTransfer>();   	
     	for(MessageList message : messageIds.values())
     	{
     		ProviderCommunicationTransfer providerCommunicationTransfer = getIntegratedMessage(loggedInInfo, message);
     		
-    		// override the current provider number if there is a list of provider numbers available.
+    		/*
+    		 * The primary recipient of this message is stored in the Message Object. If the recipient list messageProviderMap 
+    		 * exists then override the primary recipient with this list.
+    		 */
     		if(messageProviderMap != null) {
     			List<String> sendTo = messageProviderMap.get(message.getMessage());
     			providerCommunicationTransfer.setDestinationProviderId(StringUtils.join(sendTo,","));
@@ -161,7 +201,7 @@ public class MessengerIntegratorManager {
     		providerCommunicationTransferList.add(providerCommunicationTransfer);
     	}
     	
-    	// set the status of each message to sent
+    	// set the final status of each message to "sent"
     	for(MessageList message : integratedMessageList)
     	{
     		messagingManager.setMessageStatus(loggedInInfo, message, MessageList.STATUS_SENT);
@@ -219,7 +259,7 @@ public class MessengerIntegratorManager {
 		 * Integrator functionality. 
 		 */ 		 
 		List<MessageList> sourceProviderList = messageListDao.findByMessageAndIntegratedFacility(messageId, 0);
-		List<String> sourceProviderIds = new ArrayList<String>();
+		Set<String> sourceProviderIds = new HashSet<String>();
 		sourceProviderIds.add(messageTbl.getSentByNo());
 		for(MessageList sourceProvider : sourceProviderList) 
 		{
@@ -390,9 +430,9 @@ public class MessengerIntegratorManager {
 			 * The source provider id column may also contain any other providers that were copied in 
 			 * at the source. 
 			 * The originator of the message will always be the first entry. 
+			 * These providers will always be from the same source facility. 
+			 * This array will be used further down in the method
 			 */	
-			
-			// spaces can be evil
 			sourceProviderIds = sourceProviderIds.replaceAll("\\s", "");
 			String[] sourceProviderIdArray = new String[] {};
 	
@@ -413,7 +453,8 @@ public class MessengerIntegratorManager {
 	
 			/*
 			 * Save the actual message and then populate the associated tables for 
-			 * additional recipients and the related demogaphic chart.
+			 * additional recipients, copy to other facilities
+			 * and the related demographic chart.
 			 */
 			messageId = messagingManager.saveMessage(loggedInInfo, messageTbl);	
 			
@@ -424,15 +465,19 @@ public class MessengerIntegratorManager {
 				 *  add additional providers from other facilities for 
 				 *  whom the message was copied to.
 				 */				
-				String[] providerIds = new String[] {};
+				String[] destinationProviderIds = new String[] {};
+				String destinationProviderIdString = providerCommunication.getDestinationProviderId();
 				
-				if(providerCommunication.getDestinationProviderId().contains(",")) 
+				// crossed fingers that a null does not appear here - it shouldn't.
+				destinationProviderIdString = destinationProviderIdString.replaceAll("\\s", "");
+				
+				if(destinationProviderIdString.contains(",")) 
 				{
-					providerIds = providerCommunication.getDestinationProviderId().split(",");
+					destinationProviderIds = destinationProviderIdString.split(",");
 				}
 				else
 				{
-					providerIds = new String[] {providerCommunication.getDestinationProviderId()};
+					destinationProviderIds = new String[] {destinationProviderIdString};
 				}
 
 				/*
@@ -447,11 +492,35 @@ public class MessengerIntegratorManager {
 				 *  For now, it's important to use the currentlocation column to distinguish between a provider id that 
 				 *  exists in the local clinic (145) or a remote clinic (>=0)
 				 *   
-				 */
-				messagingManager.addRecipientsToMessage(loggedInInfo, messageId, providerIds, messagingManager.getCurrentLocationId(), 0, sourceFacilityId, MessageList.STATUS_NEW);
+				 */	
+				int currentlocation = messagingManager.getCurrentLocationId();
+				int destinationFacility = providerCommunication.getDestinationIntegratorFacilityId();
+				
+				for(String providerId : destinationProviderIds)
+				{
+					String messageStatus = MessageList.STATUS_REMOTE;
+					int targetFacility = 0;
+					int targetLocation = 0;
+					
+					if(providerId.contains("@"))
+					{
+						String[] identifier = providerId.split("@");						
+						targetFacility = Integer.parseInt(identifier[1]);
+						providerId = identifier[0];
+					}
+					
+					if(destinationFacility == targetFacility)
+					{
+						messageStatus = MessageList.STATUS_NEW;
+						targetLocation = currentlocation;
+						targetFacility = 0;
+					}
+					
+					messagingManager.addRecipientToMessage(loggedInInfo, messageId, providerId, targetLocation, 0, targetFacility, messageStatus);
+				}
 				
 				/*
-				 *  add additional providers that are included from the source facility.
+				 *  Add additional providers that are included from the source facility.
 				 *  The first entry does not get saved here.
 				 */		
 				if(sourceProviderIdArray.length > 1)

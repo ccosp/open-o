@@ -104,9 +104,11 @@ public class MsgHandleMessagesAction extends Action {
 			StringBuilder theSendMessage = new StringBuilder();
 			MessageTbl message = messagingManager.getMessage(loggedInInfo, Integer.parseInt(messageNo));
 			String themessage = message.getMessage();
-			themessage = themessage.replace('\n', '>'); //puts > at the beginning
-			theSendMessage = new StringBuilder(themessage); //of each line
-			theSendMessage.insert(0, "\n\n\n>");
+			themessage = themessage.replaceAll("\n", "\n>");//puts > at the beginning of each line
+	
+			// stamp the original message
+			theSendMessage = new StringBuilder(String.format("\n\n\n>On %1$td-%1$tm-%1$tY, at %2$s, %3$s wrote: \n", message.getDate(), message.getTime(), message.getSentBy()));
+			theSendMessage.append(">" +themessage);
 			
 			StringBuilder subject = new StringBuilder("");
 			
