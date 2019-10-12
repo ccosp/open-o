@@ -286,16 +286,41 @@ if(recall){
     var replyListJson = JSON.parse(replyList);    
 
 	$(document).ready(function(){
+		
+		var missing = [];
 	    for (i in replyListJson) {
 	    	var checkedElement = $("input#local-" + replyListJson[i].compositeId);
+	    		    	
 	    	if(checkedElement.length == 0)
 	    	{
 	    		checkedElement = $("input#remote-" + replyListJson[i].compositeId);
 	    	}
+	    	
+	    	if(checkedElement.length == 0) 
+	    	{
+	    		missing.push(replyListJson[i].compositeId);
+	    	}
+	    	
 	    	checkedElement.attr("checked", "checked");
-	    	checkedElement.parent().parent().attr('open', '').parent().attr('open', '');
+	    	checkedElement.parent().parent().attr('open', '').parent().attr('open', '');	    	
 	    }
+	    
+    	if(missing.length > 0)
+    	{
+    		generateMissingContactAlert(missing);
+    	}
 	})
+	
+	/*
+	 * Called when a contact id is used in a message reply and the 
+	 * contact is not in the Oscar Messenger contact list. 
+	 */
+	function generateMissingContactAlert(missingArray) 
+	{
+		alert( "Some recipients of this reply are missing in the Recipient directory and will not receive this message.\n" 
+				+ "\n\nAdd these recipients to the Recipient directory at: "
+				+ "Administration/System Management/Messenger Group Admin");
+	}
 		
 	/*
 	 * Throw an error returned from the action
