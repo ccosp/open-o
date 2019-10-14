@@ -29,6 +29,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 import org.oscarehr.common.model.MessageList;
+import org.oscarehr.common.model.OscarMsgType;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -88,9 +89,10 @@ public class MessageListDao extends AbstractDao<MessageList> {
 	}
 	
 	public int countUnreadByProviderAndFromIntegratedFacility(String providerNo) {
-		Query query = entityManager.createQuery("select count(l) from MessageList l where l.providerNo= :providerNo and l.status='new' and l.sourceFacilityId > 0");
+		Query query = entityManager.createQuery("SELECT count(l) FROM MessageList l, MessageTbl mt WHERE l.message = mt.id AND l.providerNo= :providerNo AND l.status='new' AND mt.type = :type");
 		
 		query.setParameter("providerNo", providerNo);
+		query.setParameter("type", OscarMsgType.INTEGRATOR_TYPE);
 		return getCountResult(query).intValue();	
 	}
 	

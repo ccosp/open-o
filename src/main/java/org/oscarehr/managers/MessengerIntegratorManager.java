@@ -499,7 +499,7 @@ public class MessengerIntegratorManager {
 				for(String providerId : destinationProviderIds)
 				{
 					String messageStatus = MessageList.STATUS_REMOTE;
-					int targetFacility = 0;
+					int targetFacility = destinationFacility;
 					int targetLocation = 0;
 					
 					if(providerId.contains("@"))
