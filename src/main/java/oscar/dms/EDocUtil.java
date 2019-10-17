@@ -33,7 +33,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -1081,13 +1083,21 @@ public final class EDocUtil {
 		eDoc.setModule("demographic");
 		eDoc.setModuleId("" + remoteDocument.getCaisiDemographicId());
 		eDoc.setNumberOfPages(remoteDocument.getNumberOfPages());
-		eDoc.setObservationDate(DateUtils.toDate(remoteDocument.getObservationDate()));
+		
+		// to a string in yyyy-mm-dd
+		Calendar observationDate = remoteDocument.getObservationDate();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String observationDateString = simpleDateFormat.format(observationDate.getTime());
+		eDoc.setObservationDate(observationDateString);
+		
 		eDoc.setProgramId(remoteDocument.getProgramId());
 		eDoc.setResponsibleId(remoteDocument.getResponsible());
 		eDoc.setReviewDateTimeDate(DateUtils.toDate(remoteDocument.getReviewDateTime()));
 		eDoc.setReviewDateTime(DateUtils.formatDate(remoteDocument.getReviewDateTime(), null));
 		eDoc.setReviewerId(remoteDocument.getReviewer());
-		eDoc.setSource(remoteDocument.getSource());
+		
+		// this will get used as a marker for an integrated result.
+		eDoc.setSource(remoteDocument.getSource() == null ? "integrator" : remoteDocument.getSource());
 		eDoc.setStatus(remoteDocument.getStatus() != null && remoteDocument.getStatus().length() > 0 ? remoteDocument.getStatus().charAt(0) : ' ');
 		eDoc.setType(remoteDocument.getContentType());
 
