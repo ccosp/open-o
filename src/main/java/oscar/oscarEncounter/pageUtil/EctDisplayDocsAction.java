@@ -29,7 +29,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -106,6 +110,9 @@ public class EctDisplayDocsAction extends EctDisplayAction {
     				logger.error("error getting remote documents", e);
     			}
     		}
+    		
+    		// sort complete list by date descending
+    		sortByDate(docList);
     
     		boolean isURLjavaScript;
     		for (int i = 0; i < docList.size(); i++) {
@@ -173,6 +180,11 @@ public class EctDisplayDocsAction extends EctDisplayAction {
     			item.setURL(url);
     			item.setURLJavaScript(true);
     			
+    			if("integrator".equalsIgnoreCase(curDoc.getSource()))
+    			{
+        			item.setBgColour("#FFCCCC");
+    			}
+		
     			Dao.addItem(item);
     
     		}
@@ -182,6 +194,23 @@ public class EctDisplayDocsAction extends EctDisplayAction {
     		return true;
     	}
     }
+	
+ 	private static final void sortByDate(List<EDoc> list) {
+ 	    Collections.sort(list, new Comparator<EDoc>() {
+ 	        public int compare(EDoc mt1, EDoc mt2) {
+ 	        	try {
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					java.util.Date datetime1 = simpleDateFormat.parse(mt1.getObservationDate());
+					java.util.Date datetime2 = simpleDateFormat.parse(mt2.getObservationDate());
+					return Long.valueOf(datetime2.getTime()).compareTo(datetime1.getTime());
+				} catch (ParseException e) {
+					// do nothing
+				}
+ 	        	return 0;
+ 	        }
+ 	    });
+ 	}
+
 
 	public String getCmd() {
 		return cmd;
