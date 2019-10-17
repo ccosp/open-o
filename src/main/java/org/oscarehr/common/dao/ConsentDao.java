@@ -23,6 +23,7 @@
  */
 package org.oscarehr.common.dao;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -90,5 +91,28 @@ public class ConsentDao extends AbstractDao<Consent> {
         return consents;
 	}
 	
+	/**
+	 * Returns all demographic ids that have consented (opt-in) to the given consent type id.
+	 * @param consentTypeId
+	 * @return
+	 */
+	public List<Integer> findAllDemoIdsConsentedToType(int consentTypeId) {
+		String sql = "SELECT x.demographicNo FROM " 
+				+ modelClass.getSimpleName() 
+				+ " x WHERE x.consentTypeId = ?1"
+				+ " AND x.optout = 0 "
+				+ " AND x.deleted = 0";
+	
+		Query query = entityManager.createQuery(sql);
+		query.setParameter( 1, consentTypeId );
+	
+		@SuppressWarnings("unchecked")
+		List<Integer> consents = query.getResultList();
+		if(consents == null)
+		{
+			consents = Collections.emptyList();
+		}
+	    return consents;
+	}
 
 }
