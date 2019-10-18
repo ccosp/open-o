@@ -92,13 +92,6 @@ function showMessenger(url, notificationId, message) {
 						actions: false
 					});
 				}
-			},
-			dismiss: {
-				label: 'Dismiss',
-				action: function() {
-					dismissHandler(notificationId);
-					return msg;
-				}
 			}
 		}
 	});
