@@ -264,7 +264,7 @@
 
 <%
 ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
-List<Provider> allProvidersList = providerDao.getActiveProviders(); 
+List<Provider> allProvidersList = providerDao.getActiveProviders(true); 
 
 //DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
 //List allDemographics = demographicDao.getDemographics();

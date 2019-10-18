@@ -25,6 +25,7 @@
 --%>
 
 
+<%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -368,7 +369,7 @@ if(!authed) {
 
                                 <select  id="numerator_measurements" name="numerator_measurements">
                                     <% for (EctMeasurementTypesBean measurementTypes : vec) {%>
-                                    <option value="<%=measurementTypes.getType()%>"  <%=sel(measurementTypes.getType(), "" + request.getAttribute("numerator_measurements"))%>   ><%=measurementTypes.getTypeDisplayName()%> (<%=measurementTypes.getType()%>) </option>
+                                    <option value="<%=measurementTypes.getType()%>"  <%=sel(measurementTypes.getType(), "" + request.getAttribute("numerator_measurements"))%>   ><%=measurementTypes.getTypeDisplayName()%> (<%=measurementTypes.getType()%>) (<%=measurementTypes.getMeasuringInstrc() %>) </option>
                                     <% }%>
                                 </select>
                                 <div id="numerator_value" >
@@ -424,7 +425,7 @@ if(!authed) {
 
                                 <select  id="numerator<%=i %>_measurements" name="numerator<%=i %>_measurements">
                                     <% for (EctMeasurementTypesBean measurementTypes : vec) {%>
-                                    <option value="<%=measurementTypes.getType()%>"  <%=sel(measurementTypes.getType(), "" + request.getAttribute("numerator"+i+"_measurements"))%>   ><%=measurementTypes.getTypeDisplayName()%> (<%=measurementTypes.getType()%>) </option>
+                                    <option value="<%=measurementTypes.getType()%>"  <%=sel(measurementTypes.getType(), "" + request.getAttribute("numerator"+i+"_measurements"))%>   ><%=measurementTypes.getTypeDisplayName()%> (<%=measurementTypes.getType()%>) (<%=measurementTypes.getMeasuringInstrc() %>) </option>
                                     <% }%>
                                 </select>
                                 <div id="numerator<%=i %>_value" >
@@ -511,10 +512,15 @@ if(!authed) {
                                 <input type="checkbox" name="showfields" <%=dchecked((String[]) request.getAttribute("showfields"), "address")%> value="address"  ><bean:message key="report.ClinicalReports.msgAddress"/></input>
                                 <br/>
                                 <%for (int rm = 0; rm < 3; rm++) {%>
-                                <select name="report_measurement<%=rm%>">
+                                <select name="report_measurement<%=rm%>" >
                                     <option value="-1"><bean:message key="report.ClinicalReports.msgNoMeasurements"/></option>
-                                    <% for (EctMeasurementTypesBean measurementTypes : vec) {%>
-                                    <option value="<%=measurementTypes.getType()%>" <%=sel(measurementTypes.getType(), "" + request.getAttribute("report_measurement" + rm))%> ><%=measurementTypes.getTypeDisplayName()%> (<%=measurementTypes.getType()%>) </option>
+                                    <% for (EctMeasurementTypesBean measurementTypes : vec) {
+                                    	String measInst = measurementTypes.getMeasuringInstrc();
+                                    	if(measInst.length() > 25) {
+                                    		measInst = StringUtils.abbreviate(measurementTypes.getMeasuringInstrc(), 25);
+                                    	}
+                                    %>
+                                    <option value="<%=measurementTypes.getType()%>" <%=sel(measurementTypes.getType(), "" + request.getAttribute("report_measurement" + rm))%> ><%=measurementTypes.getTypeDisplayName()%> (<%=measurementTypes.getType()%>) (<%=measInst %>) </option>
                                     <% }%>
                                 </select>
                                 <%}%>

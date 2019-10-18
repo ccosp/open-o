@@ -258,7 +258,7 @@ public class HRMAction extends DispatchAction {
 			connector = new SFTPConnector(LoggedInInfo.getLoggedInInfoFromSession(request), hostname,Integer.parseInt(port),username,privateKeyDirectory + privateKeyFile,"Manual");
 			SFTPConnector.setDecryptionKey(decryptionKey);
 			connector.startAutoFetch(LoggedInInfo.getLoggedInInfoFromSession(request),remoteDir);
-
+			connector.close();
 		} catch (Exception e) {
 			error = e.getMessage();
 		}

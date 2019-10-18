@@ -257,7 +257,7 @@ boolean isNKDA = "No Known Drug Allergies".equals(name);
 						
 						<%if(drugrefId == null || "0".equals(drugrefId) || "null".equals(drugrefId)){ %>
 						<tr valign="center">
-							<td><span class="label">Non Drug:</span>
+							<td><span class="label">Non Drug Indicator:</span>
 							<select name="nonDrug" id="nonDrug">
 								<option value="">Select Below</option>
 								<option value="on" <%=nonDrug != null && nonDrug.booleanValue() == true?" selected=\"selected\" ":""%>>Allergy to non-drug substance</option>
