@@ -297,8 +297,28 @@ public class DocumentManager {
 				document.setDocumentNo(existingDocument.getId());
 			}
 			
-			// Always rite to file system, updates will overwrite.
+			// Always write to file system, updates will overwrite.
 			EDocUtil.writeDocContent(document.getDocfilename(), document.getBase64Binary());
+			
+			/*
+			 *  This ensures that all incoming documents contain the highly required default of 0.
+			 *  A null here will break other parts of Oscar functionality.
+			 */
+			if(document.getNumberofpages() == null) 
+			{
+				document.setNumberofpages(0);
+			}
+			
+			/*
+			 *  Get the page count if the document is PDF and the page count is not already given.
+			 *  The page count is usually missing in documents that are imported from external sources.
+			 *  This method is a catch-all to ensure that the page count is not missed in all PDFs.
+			 */
+			if("application/pdf".equalsIgnoreCase(document.getContenttype()) && document.getNumberofpages() == 0)
+			{
+				int pagecount = EDocUtil.getPDFPageCount(document.getDocfilename());
+				document.setNumberofpages(pagecount);
+			}
 			
 			// save document method handles both new saves and updates 
 			saveDocument(loggedInInfo, document, ctlDocument);
@@ -311,6 +331,7 @@ public class DocumentManager {
 			}
 			
 		} catch (Exception e) {
+			// catch exception, document, and then throw.
 			LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Exception thrown during document save: " + e.getMessage());
 			throw e;
 		}

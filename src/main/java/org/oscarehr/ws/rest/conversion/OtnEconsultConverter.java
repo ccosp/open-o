@@ -20,12 +20,23 @@ public class OtnEconsultConverter extends AbstractConverter<Document, OtnEconsul
 		document.setDoccreator(loggedInInfo.getLoggedInProviderNo());
 		document.setDocfilename(t.getFileName());
 		document.setDoctype(OtnEconsult.getDoctype().getName());
-		document.setStatus('A');
 		document.setUpdatedatetime(t.getImportDate());
 		document.setBase64Binary(t.getContents());
 		document.setResponsible(loggedInInfo.getLoggedInProviderNo());
+		document.setObservationdate(t.getImportDate());
+	
+		// expected defaults. These can be adapted as needed.
+		document.setStatus('A');
 		document.setPublic1(0);
-		
+		document.setDocClass("");
+		document.setDocSubClass("");
+		document.setDocxml("");
+		document.setSource("");
+		document.setSourceFacility("");
+		document.setProgramId(-1);
+		document.setNumberofpages(0);
+		document.setAppointmentNo(-1);
+
 		return document;
 	}
 
