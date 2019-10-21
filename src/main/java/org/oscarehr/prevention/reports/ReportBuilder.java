@@ -152,6 +152,9 @@ public class ReportBuilder {
 		List<Prevention> noFutureItems = new ArrayList<Prevention>();
 	      DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	      for(Prevention prevention:list) {
+	    	  logger.info("prevention="+prevention);
+	    	  logger.info("preventionDate="+prevention.getPreventionDate());
+	    	  logger.info("asOfDate="+asOfDate);
 	    	  	if(prevention.getPreventionDate() != null && prevention.getPreventionDate().before(asOfDate)) {
 	    	  		noFutureItems.add(prevention);
 	    	  	}
@@ -257,7 +260,11 @@ public class ReportBuilder {
 		for(PreventionSearchConfigTo1 preventionSearchConfig : searchConfig.getPreventions()) {
 			List<Prevention> prev = getPreventionData(loggedInInfo,preventionSearchConfig,demographicNo );
 
-			List<Prevention> noFutureItem = removeFutureItems(prev, preventionSearchConfig.getAsOfDate());
+			List<Prevention> noFutureItem = prev;
+			
+			if(preventionSearchConfig.getDateCalcType() == PreventionSearchConfigTo1.ASOFDATE) {
+				noFutureItem = removeFutureItems(prev, preventionSearchConfig.getAsOfDate());
+			}
 			logger.info("number of items for patient "+demographicNo+" = "+noFutureItem.size()+"/"+prev.size());
 			
 			if(noFutureItem.size() > 0) {
