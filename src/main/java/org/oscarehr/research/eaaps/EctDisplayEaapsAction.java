@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.net.util.Base64;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -116,7 +117,7 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 			return true;
 		}
 		logger.debug("eaams module should show!");
-		Dao.setLeftHeading("eAMS");
+		Dao.setLeftHeading("Asthma Management System");
 		Dao.setHeadingColour("FF6600"); // orange
 		Dao.setMenuHeader("Menu Header");  
         Dao.setRightHeadingID("eams");
@@ -148,7 +149,7 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 		
 		String eaapsUrl = null;
 		if (patientData.isUrlProvided()) {
-			eaapsUrl = getEaapsUrl(patientData.getUrl(), true);
+			eaapsUrl = getEaapsUrl(patientData.getUrl(), false);
 		}
 		
 		String widgetMessage = patientData.getWidgetMessage();
@@ -187,6 +188,7 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 	    }
 	    buf.append("mrp=").append(mrpProviderNo);
 	    buf.append("&pNo=").append(loggedInInfo.getLoggedInProviderNo());
+	    buf.append("&pNa=").append(Base64.encodeBase64URLSafeString(loggedInInfo.getLoggedInProvider().getFormattedName().getBytes()));
 	    
 		String clinic = OscarProperties.getInstance().getProperty("eaaps.clinic", "");
 		if(!clinic.equals("")) {
