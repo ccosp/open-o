@@ -155,7 +155,7 @@ public class EaapsHandler extends DefaultGenericHandler implements oscar.oscarLa
 		if (fileName != null) {
 			String provider = getProvider(message, demo); 
 						
-			String description = "eAAPS Action plan for " + demo.getFormattedName();
+			String description = "Asthma Action Plan for " + demo.getFormattedName();
 
 			EDoc doc = createEDoc(message, fileName, demo, description);
 			// save edoc
@@ -274,7 +274,7 @@ public class EaapsHandler extends DefaultGenericHandler implements oscar.oscarLa
 			sentToWho = sentToWho + " " + messageData.getRemoteNames(remoteProviders);
 		}
 
-		String subject = "eAAPS: Recommendations ready for " + demo.getFormattedName();
+		String subject = "Electronic Asthma Management System (eAMS): Recommendations ready for " + demo.getFormattedName();
 		String userName = "System";
 		String userNo = SYSTEM_USER_ID;
 		String attachment = null;
