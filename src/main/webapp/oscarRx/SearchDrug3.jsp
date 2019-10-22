@@ -1566,11 +1566,15 @@ function changeLt(drugId){
        $('themeLegend').show();
     }
 
+var skipParseInstr = false;
+
     function useFav2(favoriteId){
         var randomId=Math.round(Math.random()*1000000);
         var data="favoriteId="+favoriteId+"&randomId="+randomId;
         var url= "<c:out value="${ctx}"/>" + "/oscarRx/useFavorite.do?parameterValue=useFav2";
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,asynchronous:true,evalScripts:true,insertion: Insertion.Bottom});
+
+	    skipParseInstr = true;
     }
     function calculateRxData(randomId){
         var dummie=parseIntr($('instructions_'+randomId));
@@ -1637,6 +1641,9 @@ function changeLt(drugId){
                     $('inactive_'+json.id).innerHTML = str;
                 }
             }});
+
+	if(skipParseInstr)
+	skipParseInstr=false; 
    }
 
 
@@ -2075,7 +2082,10 @@ function removeReRxDrugId(drugId){
 
 //represcribe a drug
 function represcribe(element, toArchive){
-  
+
+skipParseInstr=true;
+
+
     var elemId=element.id;
     var ar=elemId.split("_");
     var drugId=ar[1];
@@ -2158,6 +2168,10 @@ function updateQty(element){
         return true;
 }
     function parseIntr(element){
+
+	if(skipParseInstr)
+	return false;
+
         var elemId=element.id;
         var ar=elemId.split("_");
         var rand=ar[1];
