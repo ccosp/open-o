@@ -315,6 +315,7 @@ public class RxPrescriptionData {
 		p.setPharmacyId(drug.getPharmacyId());
 		if(drug.isNonAuthoritative() != null) p.setNonAuthoritative(drug.isNonAuthoritative());
 		p.discontinued = drug.isDiscontinued();
+		p.setArchivedDate(drug.getArchivedDate());
 		return p;
 	}
 
@@ -333,8 +334,10 @@ public class RxPrescriptionData {
 		List<Prescription> lst = new ArrayList<Prescription>();
 		DrugDao dao = SpringUtils.getBean(DrugDao.class);
 
-		for (Drug drug : dao.findByDemographicIdAndRegion(demographicNo, regionalIdentifier))
-			lst.add(toPrescription(drug, demographicNo));
+		for (Drug drug : dao.findByDemographicIdAndRegion(demographicNo, regionalIdentifier)) {
+			Prescription p = toPrescription(drug, demographicNo); 
+			lst.add(p);
+		}
 		return lst.toArray(new Prescription[lst.size()]);
 	}
 
