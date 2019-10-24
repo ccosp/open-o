@@ -1580,7 +1580,6 @@ var skipParseInstr = false;
     function calculateRxData(randomId){
 
 	if(skipParseInstr){
-	console.log("simon says skip parseInstr");
 	return false;
 	}
 
