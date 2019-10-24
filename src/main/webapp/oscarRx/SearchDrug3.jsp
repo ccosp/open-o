@@ -1576,7 +1576,14 @@ var skipParseInstr = false;
 
 	    skipParseInstr = true;
     }
+
     function calculateRxData(randomId){
+
+	if(skipParseInstr){
+	console.log("simon says skip parseInstr");
+	return false;
+	}
+
         var dummie=parseIntr($('instructions_'+randomId));
         if(dummie)
             updateQty($('quantity_'+randomId));
@@ -1641,9 +1648,6 @@ var skipParseInstr = false;
                     $('inactive_'+json.id).innerHTML = str;
                 }
             }});
-
-	if(skipParseInstr)
-	skipParseInstr=false; 
    }
 
 
@@ -2083,9 +2087,7 @@ function removeReRxDrugId(drugId){
 //represcribe a drug
 function represcribe(element, toArchive){
 
-skipParseInstr=true;
-
-
+    skipParseInstr=true;
     var elemId=element.id;
     var ar=elemId.split("_");
     var drugId=ar[1];
@@ -2168,10 +2170,6 @@ function updateQty(element){
         return true;
 }
     function parseIntr(element){
-
-	if(skipParseInstr)
-	return false;
-
         var elemId=element.id;
         var ar=elemId.split("_");
         var rand=ar[1];

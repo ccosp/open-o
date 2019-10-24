@@ -653,8 +653,11 @@ if(listRxDrugs!=null){
            }
         </script>
                 <%}%>
-  <script type="text/javascript">
-    counterRx=0;
+<script type="text/javascript">
+counterRx=0;
+
+if(skipParseInstr)
+skipParseInstr=false;
 </script>
 <%}%>
 
