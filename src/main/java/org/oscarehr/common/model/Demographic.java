@@ -90,6 +90,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	private String hcType;
 	private String chartNo;
 	private String email;
+	private Boolean consentToUseEmailForCare;
 	private String yearOfBirth;
 	private Date effDate;
 	private Date rosterDate;
@@ -1299,6 +1300,14 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
 	public void setResidentialPostal(String residentialPostal) {
 		this.residentialPostal = residentialPostal;
+	}
+
+	public Boolean getConsentToUseEmailForCare() {
+		return consentToUseEmailForCare;
+	}
+
+	public void setConsentToUseEmailForCare(Boolean consentToUseEmailForCare) {
+		this.consentToUseEmailForCare = consentToUseEmailForCare;
 	}
 	
 	

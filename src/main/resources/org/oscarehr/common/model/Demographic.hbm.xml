@@ -31,6 +31,7 @@
 		<property column="residentialProvince" length="20" name="ResidentialProvince" type="string" />
 		<property column="residentialPostal" length="9" name="ResidentialPostal" type="string" />
 		<property column="email" length="100" name="Email" type="string" />
+		<property column="consentToUseEmailForCare" length="1" name="ConsentToUseEmailForCare" type="boolean"/>
 		<property column="phone" length="20" name="Phone" type="string" />
 		<property column="phone2" length="20" name="Phone2" type="string" />
 		<property column="myOscarUserName" length="255" name="myOscarUserName" type="string" />

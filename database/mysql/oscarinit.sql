@@ -545,6 +545,7 @@ CREATE TABLE demographic (
   residentialCity varchar(50),
   residentialProvince varchar(20),
   residentialPostal varchar(9),
+  consentToUseEmailForCare tinyint(1),
   PRIMARY KEY  (demographic_no),
   KEY hin (hin),
   KEY name (last_name,first_name),

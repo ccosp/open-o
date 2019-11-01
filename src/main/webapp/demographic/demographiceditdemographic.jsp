@@ -2934,6 +2934,17 @@ if ( Dead.equals(PatStat) ) {%>
 								</td>
 							</tr>
 							<tr valign="top">
+								<td align="right"><b><bean:message key="demographic.demographiceditdemographic.consentToUseEmailForCare" /></b></td>
+								<td align="left" nowrap>
+									 <label for="consentToUseEmailForCareY"><bean:message key="WriteScript.msgYes"/></label> 
+            								<input type="radio" value="yes" name="consentToUseEmailForCare" <% if (demographic.getConsentToUseEmailForCare() != null && demographic.getConsentToUseEmailForCare()){ out.write("checked"); }%> />
+          							 <label for="consentToUseEmailForCareN"><bean:message key="WriteScript.msgNo"/></label>
+            								<input type="radio" value="no" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() != null && !demographic.getConsentToUseEmailForCare()){ out.write("checked");}%> />
+									 <label for="consentToUseEmailForCareE"><bean:message key="WriteScript.msgUnset"/></label>
+            								<input type="radio" value="unset" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() == null){ out.write("checked"); } %> />
+								</td>
+							</tr>
+							<tr valign="top">
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formDOB" /></b><bean:message
 									key="demographic.demographiceditdemographic.formDOBDetais" /><b>:</b>
