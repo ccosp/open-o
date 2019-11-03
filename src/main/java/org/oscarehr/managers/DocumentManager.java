@@ -31,9 +31,11 @@ import java.util.List;
 
 import org.oscarehr.common.dao.CtlDocumentDao;
 import org.oscarehr.common.dao.DocumentDao;
+import org.oscarehr.common.dao.ProviderInboxRoutingDao;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.CtlDocument;
 import org.oscarehr.common.model.Document;
+import org.oscarehr.common.model.ProviderInboxItem;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,9 @@ public class DocumentManager {
 	
 	@Autowired
 	private PatientConsentManager patientConsentManager;
+	
+	@Autowired
+	private ProviderInboxRoutingDao providerInboxRoutingDao;
 	
 	public Document getDocument(LoggedInInfo loggedInInfo, Integer id)
 	{
@@ -99,5 +104,17 @@ public class DocumentManager {
 		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDocumentsByProgramProviderDemographicDate", "programId=" + programId+", providerNo="+providerNo+", demographicId="+demographicId+", updatedAfterThisDateExclusive="+updatedAfterThisDateExclusive.getTime());
 
 		return (results);
+	}
+
+	public List<String> getProvidersThatHaveAcknowledgedDocument(LoggedInInfo loggedInInfo, Integer documentId) {
+		List<ProviderInboxItem> inboxList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", documentId);
+		List<String> providerList = new ArrayList<String>();
+		for(ProviderInboxItem item: inboxList) {
+			if(ProviderInboxItem.ACK.equals(item.getStatus())){ 
+				//If this has been acknowledge add the provider_no to the list.
+				providerList.add(item.getProviderNo());
+			}
+		}
+		return providerList;
 	}
 }
