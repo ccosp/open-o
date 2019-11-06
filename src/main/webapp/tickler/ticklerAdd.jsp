@@ -53,12 +53,15 @@ boolean bFirstDisp=true; //this is the first time to display the window
 if (request.getParameter("bFirstDisp")!=null) bFirstDisp= (request.getParameter("bFirstDisp")).equals("true");
 String ChartNo;
 String demoNo = "";
+String demoMRP = "";
 String demoName = request.getParameter("name");
+String defaultTaskAssignee = ""; 
 
 DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 Demographic demographic = demographicDao.getDemographic(request.getParameter("demographic_no"));
 if(demographic != null) {
 	demoName = demographic.getFormattedName();
+	demoMRP = demographic.getProviderNo();
 }
 if ( request.getAttribute("demographic_no") != null){
     demoNo = (String) request.getAttribute("demographic_no");
@@ -86,6 +89,25 @@ String priority = "Normal";
 if(request.getParameter("taskTo")!=null) taskTo = request.getParameter("taskTo");
 if(request.getParameter("priority")!=null) priority = request.getParameter("priority");
 if(request.getParameter("recall")!=null) recall = true;
+
+
+//don't over ride taskTo query param
+if(request.getParameter("taskTo")==null){
+
+UserPropertyDAO propertyDao = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+UserProperty prop = propertyDao.getProp(user_no,"tickler_task_assignee");
+
+if(prop!=null) {
+	defaultTaskAssignee = prop.getValue();
+	if(!defaultTaskAssignee.equals("mrp")){
+	  taskTo = defaultTaskAssignee;	
+	}else if(defaultTaskAssignee.equals("mrp")){
+	  taskTo = demoMRP;
+	}
+}
+
+}   
+
 
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*, java.net.*, oscar.oscarEncounter.pageUtil.EctSessionBean" %>
@@ -116,7 +138,11 @@ GregorianCalendar now=new GregorianCalendar();
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.oscarehr.common.model.Site"%>
-<%@page import="org.oscarehr.common.model.Provider"%><html:html locale="true">
+<%@page import="org.oscarehr.common.model.Provider"%>
+<%@ page import="org.oscarehr.common.dao.UserPropertyDAO"%>
+<%@ page import="org.oscarehr.common.model.UserProperty"%>
+
+<html:html locale="true">
 <head>
 <title><bean:message key="tickler.ticklerAdd.title"/></title>
 <link rel="stylesheet" href="../billing/billing.css" >
@@ -416,7 +442,7 @@ function changeSite(sel) {
 <% // multisite end ==========================================
 } else {
 %>
-  
+
       <select name="task_assigned_to">        
             <%  String proFirst="";
                 String proLast="";
