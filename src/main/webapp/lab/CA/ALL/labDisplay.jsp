@@ -1240,11 +1240,15 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                             </tr>
                             <tr>
                                 <td align="center" bgcolor="white" colspan="2" style="padding:0px;" cellspacing="0">							    
-<% if(demographicID!=null && !demographicID.equals("")){
+<%
+String[] multiID = multiLabId.split(",");
+						
+for(int mcount=0; mcount<multiID.length; mcount++){
+	if(demographicID!=null && !demographicID.equals("")){
 							    TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
 							    List<Tickler> LabTicklers = null;
 							    if(demographicID != null) {
-							    	LabTicklers = ticklerManager.getTicklerByLabIdAnyProvider(loggedInInfo, Integer.valueOf(segmentID), Integer.valueOf(demographicID));
+							    	LabTicklers = ticklerManager.getTicklerByLabIdAnyProvider(loggedInInfo, Integer.valueOf(multiID[mcount]), Integer.valueOf(demographicID));
 							    }
 							    
 							    if(LabTicklers!=null && LabTicklers.size()>0){
@@ -1294,9 +1298,11 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
 							   		</div><!-- end ticklerDisplay -->
 							   </div>   
 							   <%}//no ticklers to display 
-}%>                     
-                                
-                                    <%String[] multiID = multiLabId.split(",");
+
+	}
+}
+								
+								
                                     ReportStatus report;
                                     boolean startFlag = false;
                                     for (int j=multiID.length-1; j >=0; j--){
