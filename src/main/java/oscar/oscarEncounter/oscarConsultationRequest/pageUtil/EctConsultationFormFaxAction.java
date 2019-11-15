@@ -31,6 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.tika.io.IOUtils;
 import org.oscarehr.common.dao.ConsultationRequestDao;
+import org.oscarehr.common.dao.EFormDataDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.EFormData;
@@ -73,6 +74,7 @@ public class EctConsultationFormFaxAction extends Action {
 	private static final Logger logger = MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	private ConsultationRequestDao consultationRequestDao = SpringUtils.getBean(ConsultationRequestDao.class);
+	private EFormDataDao eformDataDao = SpringUtils.getBean(EFormDataDao.class);
 	
 	public EctConsultationFormFaxAction() {
 	}
@@ -228,11 +230,16 @@ public class EctConsultationFormFaxAction extends Action {
 			if(reqId!=null && !reqId.trim().equals("") && consultationRequestDao.getConsultation(Integer.parseInt(reqId))!=null){
 				ProfessionalSpecialist professionalSpecialist = consultationRequestDao.getConsultation(Integer.parseInt(reqId)).getProfessionalSpecialist();
 				if (professionalSpecialist!=null && professionalSpecialist.getEformId()!=null && professionalSpecialist.getEformId()!=0){
-					String localUri = PrintAction.getEformRequestUrl(request);
-					buffer = WKHtmlToPdfUtils.convertToPdf(localUri + professionalSpecialist.getEformId() + "&blankForm=true");
-					bis = new ByteInputStream(buffer, buffer.length);
-					streams.add(bis);
-					alist.add(bis);
+					//need to get FDID. Get latest form
+					List<EFormData> eformDataList = eformDataDao.findByDemographicIdAndFormId(Integer.parseInt(demoNo), professionalSpecialist.getEformId());
+					if(!eformDataList.isEmpty()) {
+						EFormData efd = eformDataList.get(0);
+						String localUri = PrintAction.getEformRequestUrl(request);
+						buffer = WKHtmlToPdfUtils.convertToPdf(localUri + efd.getId() + "&blankForm=true");
+						bis = new ByteInputStream(buffer, buffer.length);
+						streams.add(bis);
+						alist.add(bis);
+					}
 
 				}
 			}
