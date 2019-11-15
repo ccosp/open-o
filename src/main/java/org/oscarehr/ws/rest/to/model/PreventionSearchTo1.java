@@ -33,11 +33,11 @@ public class PreventionSearchTo1 {
 
 	private Integer id;
 	private String reportName;
-	private Integer ageStyle;
+	private String ageStyle;
 	private String age1;
 	private String age2;
 	
-	private Integer ageCalc;
+	private String ageCalc;
 	private Date ageAsOf;
 	private String rosterStat;
 	private Date rosterAsOf;
@@ -49,7 +49,7 @@ public class PreventionSearchTo1 {
 
 	
 		    
-	private Integer sex;
+	private String sex;
 	
 	private List<PreventionSearchConfigTo1> preventions;
 	private List<String> exclusionCodes;
@@ -94,11 +94,11 @@ public class PreventionSearchTo1 {
      */
 	
 
-	public Integer getAgeStyle() {
+	public String getAgeStyle() {
 		return ageStyle;
 	}
 
-	public void setAgeStyle(Integer ageStyle) {
+	public void setAgeStyle(String ageStyle) {
 		this.ageStyle = ageStyle;
 	}
 
@@ -118,11 +118,11 @@ public class PreventionSearchTo1 {
 		this.age2 = age2;
 	}
 
-	public Integer getAgeCalc() {
+	public String getAgeCalc() {
 		return ageCalc;
 	}
 
-	public void setAgeCalc(Integer ageCalc) {
+	public void setAgeCalc(String ageCalc) {
 		this.ageCalc = ageCalc;
 	}
 
@@ -150,11 +150,11 @@ public class PreventionSearchTo1 {
 		this.rosterAsOf = rosterAsOf;
 	}
 
-	public Integer getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(Integer sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
