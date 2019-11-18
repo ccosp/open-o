@@ -58,7 +58,7 @@ public class DocumentDao extends AbstractDao<Document> {
 	}
 	
 	public enum DocumentType {
-		CONSULT, LAB;
+		CONSULT, LAB, ECONSULT;
 	
 		public String getName() {
 			return this.name().toLowerCase();
@@ -455,5 +455,29 @@ public class DocumentDao extends AbstractDao<Document> {
 		
 		return query.getResultList();
 		
+	}
+	
+	public List<Document> findByDemographicAndDoctype(int demographicId, DocumentType documentType) {
+		Query query = entityManager.createNativeQuery("SELECT d.* FROM document d, ctl_document c WHERE c.document_no = d.document_no AND d.doctype = :doctype AND d.status NOT LIKE 'D' AND c.module LIKE 'demographic' AND c.module_id = :demographicId", Document.class);		
+		query.setParameter("demographicId", demographicId);
+		query.setParameter("doctype", documentType.getName());
+		
+		@SuppressWarnings("unchecked")
+		List<Document> results = query.getResultList();
+		
+		if(results == null)
+		{
+			results = Collections.emptyList();
+		}
+		
+		return results;
+	}
+	
+	public Document findByDemographicAndFilename(int demographicId, String fileName) {
+		Query query = entityManager.createNativeQuery("SELECT d.* FROM document d, ctl_document c WHERE c.document_no = d.document_no AND d.docfilename = :docfilename AND d.status NOT LIKE 'D' AND c.module LIKE 'demographic' AND c.module_id = :demographicId", Document.class);
+		query.setParameter("demographicId", demographicId);
+		query.setParameter("docfilename", fileName);
+
+		return getSingleResultOrNull(query);
 	}
 }

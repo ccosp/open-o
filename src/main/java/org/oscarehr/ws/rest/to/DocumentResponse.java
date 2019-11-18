@@ -1,3 +1,4 @@
+
 /**
  * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
@@ -21,37 +22,49 @@
  * Hamilton
  * Ontario, Canada
  */
-package org.oscarehr.common.dao;
+package org.oscarehr.ws.rest.to;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
+import org.oscarehr.ws.rest.to.model.DocumentTo1;
 
-import org.oscarehr.common.model.CtlDocument;
-import org.springframework.stereotype.Repository;
+public class DocumentResponse {
 
-@Repository
-public class CtlDocumentDao extends AbstractDao<CtlDocument>{
-
-	public CtlDocumentDao() {
-		super(CtlDocument.class);
+	private List<DocumentTo1> documents;
+	
+	public DocumentResponse() {
+		documents = new ArrayList<DocumentTo1>();
 	}
 	
-	public CtlDocument getCtrlDocument(Integer docId) {
-		Query query = entityManager.createQuery("select x from CtlDocument x where x.id.documentNo=?");
-		query.setParameter(1, docId);
-		
-		return(getSingleResultOrNull(query));
+	public DocumentResponse( ArrayList<DocumentTo1> documentList ) {
+		documents = documentList;
 	}
 
-    public List<CtlDocument> findByDocumentNoAndModule(Integer ctlDocNo, String module) {
-		Query query = entityManager.createQuery("select x from CtlDocument x where x.id.documentNo=? and x.id.module = ?");
-		query.setParameter(1, ctlDocNo);
-		query.setParameter(2, module);
-		
-		@SuppressWarnings("unchecked")
-        List<CtlDocument> cList = query.getResultList();
-		return cList;
-    }
+	public List<DocumentTo1> getDocuments() {
+		return documents;
+	}
 
+	public void setDocuments(List<DocumentTo1> documents) {
+		this.documents = documents;
+	}
+	
+	public void add(DocumentTo1 document) {
+		getDocuments().add(document);
+	}
+	
+	public void addAll(List<DocumentTo1> document) {
+		for(DocumentTo1 documentto : document) {
+			getDocuments().add(documentto);
+		}
+	}
+	
+	public void addAll(DocumentResponse documentResponse) {
+		addAll( documentResponse.getDocuments() );
+	}
+	
+	public void mergeAll(DocumentResponse documentResponse) {
+		addAll(documentResponse.getDocuments());
+	}
+	
 }

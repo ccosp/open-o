@@ -122,7 +122,6 @@ public class EFormUtil {
 	private static ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
 	private static TicklerDao ticklerDao = SpringUtils.getBean(TicklerDao.class);
 	private static PreventionManager preventionManager = SpringUtils.getBean(PreventionManager.class);
-	private static ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
 	private static ConsultationRequestDao consultationRequestDao = SpringUtils.getBean(ConsultationRequestDao.class);
 	private static ProfessionalSpecialistDao professionalSpecialistDao = SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	
@@ -1596,5 +1595,26 @@ public class EFormUtil {
 			if (str.trim().equalsIgnoreCase(strLst.trim())) return strLst.trim();
 		}
 		return null;
+	}
+	
+	/** 
+	 * Local EFormData Factory
+	 */
+	public static EFormData toEFormData( EForm eForm ) {
+		EFormData eFormData=new EFormData();
+		eFormData.setFormId(Integer.parseInt(eForm.getFid()));
+		eFormData.setFormName(eForm.getFormName());
+		eFormData.setSubject(eForm.getFormSubject());
+		eFormData.setDemographicId(Integer.parseInt(eForm.getDemographicNo()));
+		eFormData.setCurrent(true);
+		eFormData.setFormDate(new Date());
+		eFormData.setFormTime(eFormData.getFormDate());
+		eFormData.setProviderNo(eForm.getProviderNo());
+		eFormData.setFormData(eForm.getFormHtml());
+		eFormData.setShowLatestFormOnly(eForm.isShowLatestFormOnly());
+		eFormData.setPatientIndependent(eForm.isPatientIndependent());
+		eFormData.setRoleType(eForm.getRoleType());
+
+		return(eFormData);
 	}
 }

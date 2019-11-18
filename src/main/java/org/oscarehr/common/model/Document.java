@@ -49,6 +49,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.apache.commons.io.FileUtils;
 
@@ -150,6 +151,9 @@ public class Document extends AbstractModel<Integer> implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date receivedDate;
     private int abnormal = 0;
+
+    @Transient
+    private byte[] base64Binary;
     
     public Document() {
     }
@@ -395,5 +399,12 @@ public class Document extends AbstractModel<Integer> implements Serializable {
 		this.abnormal = abnormal;
 	}
 	
+    public byte[] getBase64Binary() {
+		return base64Binary;
+	}
+
+	public void setBase64Binary(byte[] base64Binary) {
+		this.base64Binary = base64Binary;
+	}
 	
 }

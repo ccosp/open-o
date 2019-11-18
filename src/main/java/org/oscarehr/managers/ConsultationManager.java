@@ -48,6 +48,8 @@ import org.oscarehr.common.dao.ConsultationRequestArchiveDao;
 import org.oscarehr.common.dao.ConsultationRequestExtArchiveDao;
 import org.oscarehr.common.dao.ConsultationRequestExtDao;
 import org.oscarehr.common.dao.ConsultationServiceDao;
+import org.oscarehr.common.dao.DocumentDao.DocumentType;
+import org.oscarehr.common.dao.DocumentDao.Module;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.ProfessionalSpecialistDao;
 import org.oscarehr.common.dao.PropertyDao;
@@ -64,7 +66,10 @@ import org.oscarehr.common.model.ConsultationRequestExt;
 import org.oscarehr.common.model.ConsultationRequestExtArchive;
 import org.oscarehr.common.model.ConsultationResponse;
 import org.oscarehr.common.model.ConsultationServices;
+import org.oscarehr.common.model.CtlDocument;
+import org.oscarehr.common.model.CtlDocumentPK;
 import org.oscarehr.common.model.Demographic;
+import org.oscarehr.common.model.Document;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Property;
@@ -73,8 +78,10 @@ import org.oscarehr.consultations.ConsultationRequestSearchFilter;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter.SORTDIR;
 import org.oscarehr.consultations.ConsultationResponseSearchFilter;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.ws.rest.conversion.OtnEconsultConverter;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
 import org.oscarehr.ws.rest.to.model.ConsultationResponseSearchResult;
+import org.oscarehr.ws.rest.to.model.OtnEconsult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -121,7 +128,10 @@ public class ConsultationManager {
 	ConsultationRequestExtArchiveDao consultationRequestExtArchiveDao;
 	@Autowired
 	ConsultationRequestArchiveDao consultationRequestArchiveDao;
-	
+	@Autowired
+	DocumentManager documentManager;
+
+
 	public final String CON_REQUEST_ENABLED = "consultRequestEnabled";
 	public final String CON_RESPONSE_ENABLED = "consultResponseEnabled";
 	public final String ENABLED_YES = "Y";
@@ -388,7 +398,37 @@ public class ConsultationManager {
 		}
 	}
 	
+	/**
+	 * Import a PDF formatted OTN eConsult.
+	 * @throws Exception 
+	 */
+	public void importEconsult(LoggedInInfo loggedInInfo, OtnEconsult otnEconsult) throws Exception {
+		checkPrivilege(loggedInInfo, SecurityInfoManager.WRITE);
+		
+		// convert to an Oscar Document
+		OtnEconsultConverter otnEconsultConverter = new OtnEconsultConverter();
+		Document document = otnEconsultConverter.getAsDomainObject(loggedInInfo, otnEconsult);
+		CtlDocumentPK ctlDocumentPk = new CtlDocumentPK(Module.DEMOGRAPHIC.getName(), otnEconsult.getDemographicNo(), null);
+		CtlDocument ctlDocument = new CtlDocument();
+		ctlDocument.setStatus("A");
+		ctlDocument.setId(ctlDocumentPk);
+		
+		// save the document
+		document = documentManager.addDocument(loggedInInfo, document, ctlDocument);
+		
+		if(document == null)
+		{		
+			throw new Exception("Unknown exception during document save");
+		}
+		
+		LogAction.addLogSynchronous(loggedInInfo, "ConsultationManager.importEconsult", "eConsult saved for demographic " + otnEconsult.getDemographicNo());
+		
+	}
 	
+	public List<Document> getEconsultDocuments(LoggedInInfo loggedInInfo, int demographicNo) {
+		checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
+		return documentManager.getDemographicDocumentsByDocumentType(loggedInInfo, demographicNo, DocumentType.ECONSULT);
+	}
 	
 	private ConsultationRequestSearchResult convertToRequestSearchResult(Object[] items) {
 		ConsultationRequestSearchResult result = new ConsultationRequestSearchResult();
