@@ -613,28 +613,6 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 		return false;
 	}
 	
-	/**
-	 * If the patient has not consented to participating in Integrator, remove it from the list of 
-	 * demographics to be pushed.
-	 * A check for if this action is desired by the user should be done first.
-	 */
-	private List<Integer> checkPatientConsent( List<Integer> demographicNoList ) {
-		
-		Set<Integer> consentedSet = new HashSet<Integer>();
-		List<Integer> consentedDemographicNoList = new ArrayList<Integer>();
-		
-		for( int demographicNo : demographicNoList ) {
-			if( checkPatientConsent( demographicNo ) ) {
-				logger.debug( "Adding consented Demographic " + demographicNo + " to the Integrator push list" );
-				consentedSet.add( demographicNo );
-			}
-		}
-
-		consentedDemographicNoList.addAll(consentedSet);
-		
-		return consentedDemographicNoList;
-	}
-	
 	private boolean checkPatientConsent( int demographicNo ) {
 		return patientConsentManager.hasPatientConsented( demographicNo, this.consentType );
 	}
@@ -642,22 +620,23 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 	private List<Integer> getDemographicIdsToPush(Facility facility, Date lastDataUpdated, List<Program> programs) {
 	
 		List<Integer> fullFacilitydemographicIds = null;
-		
-		fullFacilitydemographicIds = DemographicDao.getDemographicIdsAdmittedIntoFacility(facility.getId());
-		
+
 		if ( isFullPush(facility) || lastDataUpdated.getTime() == 0 ) {
 			logger.info("Integrator pushing ALL demographics");
 			
 			// check if patient consent module is active and then sort out all patients that 
 			// have given consent
 			if( CaisiIntegratorUpdateTask.ISACTIVE_PATIENT_CONSENT_MODULE ) {
-				logger.debug("Integrator patient consent is active. Checking demographic list.");				
-				return checkPatientConsent( fullFacilitydemographicIds );
+				logger.debug("Integrator patient consent is active. Checking demographic list.");
+				return patientConsentManager.getAllDemographicsWithOptinConsentByType(null, this.consentType);
 			} else {
-				return fullFacilitydemographicIds;
+				return DemographicDao.getDemographicIdsAdmittedIntoFacility(facility.getId());
 			}
 						
 		} else {
+			
+			fullFacilitydemographicIds = DemographicDao.getDemographicIdsAdmittedIntoFacility(facility.getId());
+			
 			logger.info("Integrator pushing only changed demographics");
 			
 			//Make a list of all ids that have a change in one of the subtypes...it's a bunch of queries
@@ -722,8 +701,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 		List<Integer> demographicIds = getDemographicIdsToPush(facility,lastDataUpdated, programs);
 		List<Program> programsInFacility = programDao.getProgramsByFacilityId(facility.getId());
 		List<String> providerIdsInFacility = providerDao.getProviderIds(facility.getId());
-
-
+		
 		
 		long startTime = System.currentTimeMillis();
 		int demographicPushCount = 0;
@@ -732,22 +710,29 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 		int currentFileNumber = 2;
 		
 		boolean rid = integratorControlDao.readRemoveDemographicIdentity(facility.getId());
-		
-		
+				
 		//we could parallelize this. basically we want X records per file. So we just assign each unit of work to be
-		//a set of demographicIds which will end up being a single file. so we need to know the file number and the ids for it
-		
-		
+		//a set of demographicIds which will end up being a single file. so we need to know the file number and the ids for it		
 		for (Integer demographicId : demographicIds) {
-		
-			
 			
 			demographicPushCount++;
 
 			BenchmarkTimer benchTimer = new BenchmarkTimer("pushing demo facilityId:" + facility.getId() + ", demographicId:" + demographicId + "  " + demographicPushCount + " of " + demographicIds.size());
-
 			String filename = "IntegratorPush_" + facility.getId() + "_" + demographicId + ".ser";				
 			ObjectOutputStream demoOut = null;
+			
+			/*
+			 * This is a little hack that checks if a patient consent is new and/or has been edited
+			 * If true, the date is rolled back so that ALL of this patient file is pushed to the Integrator.
+			 * Otherwise the date threshold will remain at the last push date.
+			 * This only works in conjunction with the global patient consent module.
+			 */
+			Date dateThreshold = lastDataUpdated;
+			
+			if(CaisiIntegratorUpdateTask.ISACTIVE_PATIENT_CONSENT_MODULE) {
+				dateThreshold = adjustDateThreshold(loggedInInfo, lastDataUpdated, demographicId);
+				benchTimer.tag("adjustDateThreshhold");
+			}
 						
 			try {
 				
@@ -759,61 +744,61 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 				
 				demoOut = new ObjectOutputStream(new FileOutputStream(new File(documentDir + File.separator + filename)));
 
-				pushDemographic(demoOut,lastDataUpdated, facility, demographicId,rid);
+				pushDemographic(demoOut,dateThreshold, facility, demographicId,rid);
 				benchTimer.tag("pushDemographic");
 				
 				// Use alternate method for patient consents if the Patient Consent Module is off. 
 				if( ! CaisiIntegratorUpdateTask.ISACTIVE_PATIENT_CONSENT_MODULE ) {
-					pushDemographicConsent(demoOut,lastDataUpdated, facility, demographicId);
+					pushDemographicConsent(demoOut,dateThreshold, facility, demographicId);
 					benchTimer.tag("pushDemographicConsent");
 				}
 				
-				pushDemographicIssues(demoOut,lastDataUpdated, facility, programsInFacility, demographicId, cachedFacility);
+				pushDemographicIssues(demoOut,dateThreshold, facility, programsInFacility, demographicId, cachedFacility);
 				benchTimer.tag("pushDemographicIssues");
 				
-				pushDemographicPreventions(demoOut,lastDataUpdated, facility, providerIdsInFacility, demographicId);
+				pushDemographicPreventions(demoOut,dateThreshold, facility, providerIdsInFacility, demographicId);
 				benchTimer.tag("pushDemographicPreventions");
 				
-				pushDemographicNotes(demoOut,lastDataUpdated, facility, demographicId, programsInFacility);
+				pushDemographicNotes(demoOut,dateThreshold, facility, demographicId, programsInFacility);
 				benchTimer.tag("pushDemographicNotes");
 				
-				pushDemographicDrugs(demoOut,lastDataUpdated, facility, providerIdsInFacility, demographicId);
+				pushDemographicDrugs(demoOut,dateThreshold, facility, providerIdsInFacility, demographicId);
 				benchTimer.tag("pushDemographicDrugs");
 				
-				pushAdmissions(demoOut,lastDataUpdated, facility, programsInFacility, demographicId);
+				pushAdmissions(demoOut,dateThreshold, facility, programsInFacility, demographicId);
 				benchTimer.tag("pushAdmissions");
 				
-				pushAppointments(demoOut,lastDataUpdated, facility, demographicId);
+				pushAppointments(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushAppointments");
 				
-				pushMeasurements(demoOut,lastDataUpdated, facility, demographicId);
+				pushMeasurements(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushMeasurements");
 				
-				pushDxresearchs(demoOut,lastDataUpdated, facility, demographicId);
+				pushDxresearchs(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushDxresearchs");
 				
 				
 				if( OscarProperties.getInstance().isOntarioBillingRegion() ) {
-					pushBillingItems(demoOut,lastDataUpdated, facility, demographicId);
+					pushBillingItems(demoOut,dateThreshold, facility, demographicId);
 					benchTimer.tag("pushBillingItems");
 				}
 
-				pushEforms(demoOut,lastDataUpdated, facility, demographicId);
+				pushEforms(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushEforms");
 
-				pushAllergies(demoOut,lastDataUpdated, facility, demographicId);
+				pushAllergies(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushAllergies");
 				
-				pushDocuments(demoOut,loggedInInfo, lastDataUpdated, facility, demographicId, documentPaths);
+				pushDocuments(demoOut,loggedInInfo, dateThreshold, facility, demographicId, documentPaths);
 				benchTimer.tag("pushDocuments");
 				
-				pushForms(demoOut,lastDataUpdated, facility, demographicId);
+				pushForms(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushForms");
 				
-				pushLabResults(demoOut,lastDataUpdated, facility, demographicId);
+				pushLabResults(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushLabResults");
 				
-				pushHL7LabResults(demoOut,lastDataUpdated, facility, demographicId);
+				pushHL7LabResults(demoOut,dateThreshold, facility, demographicId);
 				benchTimer.tag("pushHL7LabResults");
 				
 				
@@ -973,15 +958,48 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 			}
 		}
 	}
+	
+	/**
+	 * This method will determine if the threshold should be rolled back to the beginning of time 
+	 * or remain at the current date for each demographic. 
+	 * @param lastUpdatedData
+	 * @param facility
+	 * @param demographicId
+	 * @return
+	 */
+	private Date adjustDateThreshold(LoggedInInfo loggedinInfo, Date lastUpdatedData, Integer demographicId) {
+		if(isConsentNewOrEdited(loggedinInfo, lastUpdatedData, demographicId))
+		{
+			return new Date(0);
+		}
+		else
+		{
+			return lastUpdatedData; 
+		}
+	}
+	
+	/**
+	 * Returns true if the consent was edited after the given lastUpdatedData date AND if consent is granted. 
+	 * This only works on the global patient consent table. 
+	 * @param lastUpdatedData
+	 * @param facility
+	 * @param demographicId
+	 */
+	private boolean isConsentNewOrEdited(LoggedInInfo loggedinInfo, Date lastUpdatedData, Integer demographicId) {
+		Consent consent = patientConsentManager.getConsentByDemographicAndConsentType(loggedinInfo, demographicId, this.consentType);
+		return lastUpdatedData.before(consent.getEditDate()) && consent.getPatientConsented();
+	}
 
 	private void pushDemographicConsent(ObjectOutputStream out, Date lastUpdatedData, Facility facility,  Integer demographicId) throws IOException {
 		// find the latest relevant consent that needs to be pushed.
 		List<IntegratorConsent> integratorConsentList = integratorConsentDao.findByFacilityAndDemographicSince(facility.getId(), demographicId, lastUpdatedData);
-		for(IntegratorConsent integratorConsent : integratorConsentList) {
-			org.oscarehr.caisi_integrator.ws.transfer.SetConsentTransfer consentTransfer = CaisiIntegratorManager.makeSetConsentTransfer2(integratorConsent);
-			out.writeUnshared(consentTransfer);
+		if(integratorConsentList != null)
+		{
+			for(IntegratorConsent integratorConsent : integratorConsentList) {
+				org.oscarehr.caisi_integrator.ws.transfer.SetConsentTransfer consentTransfer = CaisiIntegratorManager.makeSetConsentTransfer2(integratorConsent);
+				out.writeUnshared(consentTransfer);
+			}
 		}
-		
 	}
 
 	private void pushDemographicIssues(ObjectOutputStream out, Date lastDataUpdated, Facility facility, List<Program> programsInFacility, Integer demographicId, org.oscarehr.caisi_integrator.ws.CachedFacility cachedFacility) throws IOException {

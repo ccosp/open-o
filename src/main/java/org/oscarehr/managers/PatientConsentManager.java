@@ -439,4 +439,8 @@ public class PatientConsentManager {
 		return demographicResults;
 	}
 	
+	public List<Integer> getAllDemographicsWithOptinConsentByType(LoggedInInfo loggedinInfo, ConsentType consentTypeId ) {
+		return consentDao.findAllDemoIdsConsentedToType(consentTypeId.getId());		
+	}
+	
 }
