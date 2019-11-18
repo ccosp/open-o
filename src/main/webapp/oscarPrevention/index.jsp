@@ -905,16 +905,21 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
                  }%>
                
          <%
+         /* Integrated results dont have an "ID" key */
+         if(hdata.containsKey("id"))
+         {
 			List<DHIRSubmissionLog> dhirLogs =  submissionManager.findByPreventionId(Integer.parseInt((String)hdata.get("id")));
-         	if(!dhirLogs.isEmpty()) {
-         	%> <span class="footnote" style="background-color:black;color:white"><%=dhirLogs.get(0).getStatus()%></span> <%
-         	} else {
-         		if(dhirEnabled && !StringUtils.isEmpty(snomedId)) {
-	         		if((ispa && hasIspaConsent) || (!ispa && hasNonIspaConsent)) {
-	         			%><span class="footnote" style="background-color:orange;color:black;white-space:nowrap">Not Submitted</span> <%
-	         		}
-         		}
-         	}
+			
+			if(!dhirLogs.isEmpty()) {
+			 	%> <span class="footnote" style="background-color:black;color:white"><%=dhirLogs.get(0).getStatus()%></span> <%
+			} else {
+				if(dhirEnabled && !StringUtils.isEmpty(snomedId)) {
+					if((ispa && hasIspaConsent) || (!ispa && hasNonIspaConsent)) {
+						%><span class="footnote" style="background-color:orange;color:black;white-space:nowrap">Not Submitted</span> <%
+					}
+				}
+			}			
+         }	
          %>
         
 		<%=getFromFacilityMsg(hdata)%></p>
@@ -978,16 +983,21 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
             <%      }
                 }%>
          <%
+         /* Integrated results dont have an "ID" key */
+         if(hdata.containsKey("id"))
+         {
 			List<DHIRSubmissionLog> dhirLogs =  submissionManager.findByPreventionId(Integer.parseInt((String)hdata.get("id")));
-         	if(!dhirLogs.isEmpty()) {
-         	%> <span class="footnote" style="background-color:black;color:white"><%=dhirLogs.get(0).getStatus()%></span> <%
-         	} else {
-         		if(dhirEnabled && !StringUtils.isEmpty(snomedId)) {
-         			if((ispa && hasIspaConsent) || (!ispa && hasNonIspaConsent)) {
-	         			%><span class="footnote" style="background-color:orange;color:black">Not Submitted</span> <%
-	         		}
-         		}
-         	}
+			
+			if(!dhirLogs.isEmpty()) {
+			 	%> <span class="footnote" style="background-color:black;color:white"><%=dhirLogs.get(0).getStatus()%></span> <%
+			} else {
+					if(dhirEnabled && !StringUtils.isEmpty(snomedId)) {
+						if((ispa && hasIspaConsent) || (!ispa && hasNonIspaConsent)) {
+			 			%><span class="footnote" style="background-color:orange;color:black">Not Submitted</span> <%
+			 		}
+					}
+			}
+         }
          %>
 		</p>
 		</div>
