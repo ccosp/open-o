@@ -86,24 +86,7 @@ public class MsgHandleMessagesAction extends Action {
 		else if(unlinkedIntegratorDemographicName != null && ! unlinkedIntegratorDemographicName.isEmpty())
 		{
 			request.setAttribute("unlinkedIntegratorDemographicName", unlinkedIntegratorDemographicName);
-			demographicNo = null;
-//			/* 
-//			 * this data is for a demographic from a remote facility.
-//			 * Do not confuse it with a local demographic.
-//			 */			
-//			List<MsgIntegratorDemoMap> unlinkedDemographics = messengerDemographicManager.getUnlinkedIntegratedDemographicList(loggedInInfo, Integer.parseInt(messageNo));
-//			
-//			if(unlinkedDemographics != null && unlinkedDemographics.size() > 0)
-//			{
-//				MsgIntegratorDemoMap msgIntegratorDemoMap = unlinkedDemographics.get(0);
-//				
-//				// demographic numb
-//				demographicNo = msgIntegratorDemoMap.getSourceDemographicNo()+"";
-//				
-//				// indicate that this demographic is unlinked.
-//
-//			}
-			
+			demographicNo = null;			
 		}
 		
 		/*

@@ -552,12 +552,12 @@ if(recall){
 					<td bgcolor="#EEEEFF">
 
 						<c:choose>					
-							<c:when test="${ unlinkedIntegratorDemographic }">
-								<input type="text name="selectedDemo" value="${ unlinkedIntegratorDemographicName }" 
-									size="30" readonly style="background: #EEEEFF; border: none" value="none" />
+							<c:when test="${ not empty unlinkedIntegratorDemographicName }">
+								<input type="text" name="selectedDemo" value="${ unlinkedIntegratorDemographicName }" 
+									size="30" style="background: #EEEEFF; border: none;" readonly />
 							</c:when>
 							<c:otherwise>
-								<input type="text name="selectedDemo" size="30" readonly style="background: #EEEEFF; border: none" value="none" /> 
+								<input type="text" name="selectedDemo" size="30" readonly style="background: #EEEEFF; border: none" value="none" /> 
 								<script type="text/javascript">
 			                          if ( "<%=demoName%>" != "null" && "<%=demoName%>" != "") {
 			                              document.forms[0].selectedDemo.value = "<%=demoName%>";
