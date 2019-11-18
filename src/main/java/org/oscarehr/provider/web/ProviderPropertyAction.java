@@ -1987,6 +1987,8 @@ public ActionForward viewEDocBrowserInDocumentReport(ActionMapping actionmapping
 		defaultTo = ticklerTaskAssignee.getValue();
 	}else if(ticklerTaskAssignee.getValue().equals("mrp")){
 		defaultTo = "mrp";
+	}else{
+		defaultTo = "provider";
 	}
 
 	ArrayList<LabelValueBean> providerList = new ArrayList<LabelValueBean>();
