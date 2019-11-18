@@ -44,6 +44,7 @@ import org.oscarehr.common.model.Facility;
 import org.oscarehr.common.model.MessageList;
 import org.oscarehr.common.model.MessageTbl;
 import org.oscarehr.common.model.MsgDemoMap;
+import org.oscarehr.common.model.MsgIntegratorDemoMap;
 import org.oscarehr.common.model.OscarMsgType;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,6 +229,14 @@ public class MessengerIntegratorManager {
 		ProviderCommunicationTransfer providerCommunication = new ProviderCommunicationTransfer();
 		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, (int) messageId);
 		
+		/*
+		 * This is a list of demographics related to this message that have NOT been 
+		 * linked and imported into this clinic
+		 * This may happen if the user responds to a message before importing the patient or
+		 * if the user refuses to import the patient.
+		 */
+		List<MsgIntegratorDemoMap> unlinkedDemoMap = messengerDemographicManager.getUnlinkedIntegratedDemographicList(loggedInInfo, (int) messageId);
+		
 		/* temporary work around through use of a JSONObject. This could be a future upgrade on the Integrator 
 		 * side if inter-facility messaging becomes more popular.
 		 */
@@ -241,6 +250,11 @@ public class MessengerIntegratorManager {
 		{
 			jsonString.put(JSON_KEY.demographic.name(), createAttachedDemographicObject(loggedInInfo, msgDemoMap, destinationFacilityId));
 		}
+		
+		if(unlinkedDemoMap != null && ! unlinkedDemoMap.isEmpty() && unlinkedDemoMap.size() > 0)
+		{
+			jsonString.put(JSON_KEY.demographic.name(), createAttachedDemographicObject(unlinkedDemoMap));
+		}
 
 		Calendar sentDate = Calendar.getInstance();
 		sentDate.setTime(messageTbl.getDate());
@@ -251,11 +265,11 @@ public class MessengerIntegratorManager {
 		providerCommunication.setSourceIntegratorFacilityId(getThisFacilityId(loggedInInfo));
 		
 		/*
-		 * it's possible to have more than one sender/reciever in the source.
+		 * it's possible to have more than one sender/receiver in the source.
 		 * The first provider id is the message creator - located in the messageTbl.sentByNo column. 
 		 * 
 		 * for the moment it's assumed that "this facility" has an Id of zero (0).
-		 * This can be changed once the assignment of facility id's is stablized in future changes to the 
+		 * This can be changed once the assignment of facility id's is stabilized in future changes to the 
 		 * Integrator functionality. 
 		 */ 		 
 		List<MessageList> sourceProviderList = messageListDao.findByMessageAndIntegratedFacility(messageId, 0);
@@ -312,7 +326,6 @@ public class MessengerIntegratorManager {
 			 * First check if the given demographic is linked in the destination facility
 			 */
 			JSONArray linkedDemographicIdArray = getLinkedDemographicIdList(loggedInInfo, demographicNo, destinationFacilityId);
-
 			
 			/*
 			 * Linked demographics were found, attach them to this list
@@ -324,35 +337,58 @@ public class MessengerIntegratorManager {
 			
 			/*
 			 * No linked demographics were found. Send the local demographic file for consideration 
-			 * by the recieving user to import.
+			 * by the receiving user to import.
 			 */
 			else 
-			{
-				/*
-				 * Single results need to be in an array to maintain consistency. 
-				 */
-				JSONArray demographicObjectArray = new JSONArray();
-				JSONObject demographicObject = new JSONObject();
-				
-				demographicObject.put(JSON_KEY.demographicNo.name(), demographicNo);
-				
-				/* 
-				 * the demographic file exists only in this facility. Indicate this so that
-				 * the end user has the option to import this demographic file at the 
-				 * destination 
-				 */				
-				demographicObject.put(JSON_KEY.sourceFacility.name(), getThisFacilityId(loggedInInfo));
-				
-				// the demographic is linked; make this true
-				demographicObject.put(JSON_KEY.linked.name(), Boolean.FALSE);
-				
-				demographicObjectArray.add(demographicObject);
-				
-				jsonArray.add(demographicObjectArray);
+			{				
+				linkedDemographicIdArray = getUnLinkedDemographicIdList(demographicNo, getThisFacilityId(loggedInInfo), Boolean.FALSE);				
+				jsonArray.add(linkedDemographicIdArray);
 			}
 		}
 		
 		return jsonArray;
+	}
+	
+	/**
+	 * This method gets used because some of the demographics did not get linked. This helps keep a reference 
+	 * to the demographic in a message chain. 
+	 * @param loggedInInfo
+	 * @param unlinkedDemoMap
+	 * @return
+	 */
+	private JSONArray createAttachedDemographicObject(List<MsgIntegratorDemoMap> unlinkedDemoMap) {
+		JSONArray jsonArray = new JSONArray();
+		JSONArray demographicObjectArray = null;
+		
+		for(MsgIntegratorDemoMap unlinkedDemo : unlinkedDemoMap)
+		{
+			if(demographicObjectArray == null)
+			{
+				demographicObjectArray = new JSONArray();
+			}
+			
+			JSONObject demographicObject = createDemographicJSONObject(unlinkedDemo.getSourceDemographicNo(), unlinkedDemo.getSourceFacilityId(), Boolean.TRUE);
+			demographicObjectArray.add(demographicObject);
+		}
+		
+		if(demographicObjectArray != null)
+		{
+			jsonArray.add(demographicObjectArray);
+		}
+		
+		return jsonArray;
+	}
+	
+	private JSONArray getUnLinkedDemographicIdList(int demographicNo, int destinationFacilityId, boolean linked)
+	{
+		/*
+		 * Single results need to be in an array to maintain consistency. 
+		 */
+		JSONArray demographicObjectArray = new JSONArray();
+		JSONObject demographicObject = createDemographicJSONObject(demographicNo, destinationFacilityId, linked);
+		demographicObjectArray.add(demographicObject);
+		
+		return demographicObjectArray;
 	}
 	
 	/**
@@ -376,18 +412,22 @@ public class MessengerIntegratorManager {
 			{
 				demographicObjectArray = new JSONArray();
 			}
-			
-			JSONObject demographicObject = new JSONObject();
-			demographicObject.put(JSON_KEY.demographicNo.name(), linkedDemographicNumber);
-			demographicObject.put(JSON_KEY.sourceFacility.name(), destinationFacilityId);
-			
-			// the demographic is linked; make this true
-			demographicObject.put(JSON_KEY.linked.name(), Boolean.TRUE);
+
+			JSONObject demographicObject = createDemographicJSONObject(linkedDemographicNumber, destinationFacilityId, Boolean.TRUE);
 			
 			demographicObjectArray.add(demographicObject);
 		}
 		
 		return demographicObjectArray;
+	}
+	
+	private JSONObject createDemographicJSONObject(int demographicNumber, int facilityId, boolean linked) 
+	{
+		JSONObject demographicObject = new JSONObject();
+		demographicObject.put(JSON_KEY.demographicNo.name(), demographicNumber);
+		demographicObject.put(JSON_KEY.sourceFacility.name(), facilityId);
+		demographicObject.put(JSON_KEY.linked.name(), linked);
+		return demographicObject;
 	}
 	
 	/**

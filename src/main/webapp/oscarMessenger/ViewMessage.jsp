@@ -537,6 +537,7 @@ function fmtOscarMsg() {
 								<tr id="unlinkedDemographicDetails" >
 									<td bgcolor="#EEEEFF"></td>
 									<td bgcolor="#EEEEFF"> 
+										<input type="hidden" name="unlinkedIntegratorDemographicName" value="${ unlinkedDemographic.lastName }, ${ unlinkedDemographic.firstName }" />
 										<c:out value="${ unlinkedDemographic.lastName }" />, <c:out value="${ unlinkedDemographic.firstName }" /> <br />
 										<strong>Gender:</strong> <c:out value="${ unlinkedDemographic.gender }" /><br />
 										<strong>HIN:</strong> <c:out value="${ unlinkedDemographic.hin }" /><br />

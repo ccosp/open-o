@@ -549,15 +549,24 @@ if(recall){
 				<tr>
 					<td bgcolor="#EEEEFF"></td>
 					
-					<td bgcolor="#EEEEFF"><input type="text"
-						name="selectedDemo" size="30" readonly
-						style="background: #EEEEFF; border: none" value="none" /> 
-							<script type="text/javascript">
-	                          if ( "<%=demoName%>" != "null" && "<%=demoName%>" != "") {
-	                              document.forms[0].selectedDemo.value = "<%=demoName%>";
-	                              document.forms[0].demographic_no.value = "<%=demographic_no%>";
-	                          }
-	                      </script>
+					<td bgcolor="#EEEEFF">
+
+						<c:choose>					
+							<c:when test="${ unlinkedIntegratorDemographic }">
+								<input type="text name="selectedDemo" value="${ unlinkedIntegratorDemographicName }" 
+									size="30" readonly style="background: #EEEEFF; border: none" value="none" />
+							</c:when>
+							<c:otherwise>
+								<input type="text name="selectedDemo" size="30" readonly style="background: #EEEEFF; border: none" value="none" /> 
+								<script type="text/javascript">
+			                          if ( "<%=demoName%>" != "null" && "<%=demoName%>" != "") {
+			                              document.forms[0].selectedDemo.value = "<%=demoName%>";
+			                              document.forms[0].demographic_no.value = "<%=demographic_no%>";
+			                          }
+			                     </script>						
+							</c:otherwise>					
+						</c:choose>
+				           
 	                </td>
 	                <td bgcolor="#EEEEFF"> 
                     <input type="button"

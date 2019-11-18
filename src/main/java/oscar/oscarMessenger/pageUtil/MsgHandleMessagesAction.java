@@ -41,7 +41,6 @@ import org.oscarehr.managers.MessagingManager;
 import org.oscarehr.managers.MessengerDemographicManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
-
 import org.oscarehr.util.SpringUtils;
 
 import com.google.gson.Gson;
@@ -69,14 +68,47 @@ public class MsgHandleMessagesAction extends Action {
 		String replyAll = frm.getReplyAll();
 		String delete = frm.getDelete();
 		String forward = frm.getForward();
+		String unlinkedIntegratorDemographicName = request.getParameter("unlinkedIntegratorDemographicName");
 
-		//Set Demographic_no attribute if there's any
+		/*
+		 * Set Demographic_no attribute if there's any
+		 * Check the current demographic map and replace the incoming demographicNo attribute
+		 */
 		List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, Integer.parseInt(messageNo));	
 		if(msgDemoMap != null && msgDemoMap.size() > 0)
 		{
 			demographicNo = msgDemoMap.get(0).getDemographic_no()+"";
 		}
 		
+		/*
+		 * Check the unlinked demographic table and reuse
+		 */
+		else if(unlinkedIntegratorDemographicName != null && ! unlinkedIntegratorDemographicName.isEmpty())
+		{
+			request.setAttribute("unlinkedIntegratorDemographicName", unlinkedIntegratorDemographicName);
+			demographicNo = null;
+//			/* 
+//			 * this data is for a demographic from a remote facility.
+//			 * Do not confuse it with a local demographic.
+//			 */			
+//			List<MsgIntegratorDemoMap> unlinkedDemographics = messengerDemographicManager.getUnlinkedIntegratedDemographicList(loggedInInfo, Integer.parseInt(messageNo));
+//			
+//			if(unlinkedDemographics != null && unlinkedDemographics.size() > 0)
+//			{
+//				MsgIntegratorDemoMap msgIntegratorDemoMap = unlinkedDemographics.get(0);
+//				
+//				// demographic numb
+//				demographicNo = msgIntegratorDemoMap.getSourceDemographicNo()+"";
+//				
+//				// indicate that this demographic is unlinked.
+//
+//			}
+			
+		}
+		
+		/*
+		 * The final demographic number being sent to the page.
+		 */
 		if (demographicNo != null) {
 			request.setAttribute("demographic_no", demographicNo);
 		}
