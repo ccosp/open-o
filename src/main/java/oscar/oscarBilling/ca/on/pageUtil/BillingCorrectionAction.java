@@ -341,7 +341,11 @@ public class BillingCorrectionAction extends DispatchAction{
             
             if(!provider.getProviderNo().equals(request.getParameter("provider_no"))) {
             	Provider newProvider = providerDao.getProvider(request.getParameter("provider_no"));
-            	bCh1.setProviderOhipNo(newProvider.getOhipNo());
+            	if(newProvider != null) { 
+            		bCh1.setProviderOhipNo(newProvider.getOhipNo());
+            	} else {
+            		MiscUtils.getLogger().warn("null provider! can't do the update (" + request.getParameter("provider_no") + ")");
+            	}
             }
         }
 
