@@ -2439,6 +2439,7 @@ INSERT INTO `appointment_status` VALUES
 (11,'N','No Show','#cccccc','noshow.gif',1,0,0,'NOSHO'),
 (12,'C','Cancelled','#999999','cancel.gif',1,0,0,'CAN'),
 (13,'B','Billed','#3ea4e1','billed.gif',1,0,0,'BILL'),
+(14,'h','Confirmed','#2fcccf','thumb.png',1,0,0,'CONFI'),
 (6,'a','Customized 1','#897DF8','1.gif',1,1,0,'CUST1'),
 (7,'b','Customized 2','#897DF8','2.gif',1,1,0,'CUST2'),
 (8,'c','Customized 3','#897DF8','3.gif',0,1,0,'CUST3'),
