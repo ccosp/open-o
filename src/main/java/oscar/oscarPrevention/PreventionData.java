@@ -492,7 +492,12 @@ public class PreventionData {
 				} catch (Exception e) {
 					log.error("Error", e);
 				}
-				if (remoteFacility != null) remoteFacilityName = remoteFacility.getName();
+				
+				if (remoteFacility != null) 
+				{
+					remoteFacilityName = remoteFacility.getName();
+				}
+				
 				h.put("remoteFacilityName", remoteFacilityName);
 				h.put("integratorDemographicId", cachedDemographicPrevention.getCaisiDemographicId());
 				h.put("type", cachedDemographicPrevention.getPreventionType());
@@ -500,6 +505,7 @@ public class PreventionData {
 				h.put("provider_name", "remote:" + cachedDemographicPrevention.getCaisiProviderId());
 				h.put("prevention_date", DateFormatUtils.ISO_DATE_FORMAT.format(cachedDemographicPrevention.getPreventionDate()) + " 00:00");
 				h.put("prevention_date_asDate", cachedDemographicPrevention.getPreventionDate());
+				h.put("prevention_date_no_time", blankIfNull(DateFormatUtils.ISO_DATE_FORMAT.format(cachedDemographicPrevention.getPreventionDate())));
 
 				if (demographicDateOfBirth != null) {
 					String age = UtilDateUtilities.calcAgeAtDate(demographicDateOfBirth, DateUtils.toDate(cachedDemographicPrevention.getPreventionDate()));
