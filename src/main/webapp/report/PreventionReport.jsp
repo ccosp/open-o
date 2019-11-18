@@ -581,23 +581,40 @@ if(!authed) {
 					console.log("data coming back",data);
 					console.log("before get report ",$scope.newReport);
 					$scope.newReport = data;
-					var d = new Date();
-					d.setTime(data.ageAsOf);
-					$scope.newReport.ageAsOf = d;
+					if(data.ageAsOf != null) {
+						var d = new Date();
+						d.setTime(data.ageAsOf);
+						$scope.newReport.ageAsOf = d;
+					}
 					
+					if(data.rosterAsOf != null) {
+						var d2 = new Date();
+						d2.setTime(data.rosterAsOf);
+						$scope.newReport.rosterAsOf = d2;	
+					}
 					
-					var d2 = new Date();
-					d2.setTime(data.rosterAsOf);
-					$scope.newReport.rosterAsOf = d2;	
+					if(data.billingCodeStart != null) {
+						var d3 = new Date();
+						d3.setTime(data.billingCodeStart);
+						$scope.newReport.billingCodeStart = d3;
+					}
 					
+					if(data.billingCodeEnd != null) {
+						var d4 = new Date();
+						d4.setTime(data.billingCodeEnd);
+						$scope.newReport.billingCodeEnd = d4;
+					}
 					
-					var d3 = new Date();
-					d3.setTime(data.billingCodeStart);
-					$scope.newReport.billingCodeStart = d3;
-					
-					var d4 = new Date();
-					d4.setTime(data.billingCodeEnd);
-					$scope.newReport.billingCodeEnd = d4;
+					if(data.billingTrackingCodeStart != null) {
+						var d5 = new Date();
+						d5.setTime(data.billingTrackingCodeStart);
+						$scope.newReport.billingTrackingCodeStart = d5;
+					}
+					if(data.billingTrackingCodeEnd != null) {
+						var d6 = new Date();
+						d6.setTime(data.billingTrackingCodeEnd);
+						$scope.newReport.billingTrackingCodeEnd = d6;
+					}
 					 
 					console.log("after get report ",$scope.newReport);
 					$scope.showManageReport = true;

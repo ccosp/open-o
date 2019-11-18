@@ -610,8 +610,14 @@ public class ReportBuilder {
 		
 		StringBuilder stringBuffer = new StringBuilder("select demographic_no from demographic d "); // had , provider p / but i don't think i meed that
 
-		Integer ageStyle = frm.getAgeStyle();
-		Integer yearStyle = frm.getAgeCalc();
+		Integer ageStyle = null;
+		try {
+			ageStyle = Integer.parseInt(frm.getAgeStyle());
+		}catch(NumberFormatException e) {}
+		Integer yearStyle = null;
+		try {
+			yearStyle = Integer.parseInt(frm.getAgeCalc());
+		}catch(NumberFormatException e) {}
 		String startYear = frm.getAge1();
 		String endYear = frm.getAge2();
 		String rosterStatus = frm.getRosterStat();
@@ -619,7 +625,10 @@ public class ReportBuilder {
 		// Should this be passed in, or put in the  String provider = frm.getProviderNo();
 
 		
-		Integer sex = frm.getSex();
+		Integer sex = null;
+		try {
+			sex = Integer.parseInt(frm.getSex());
+		}catch(NumberFormatException e) {}
 
 		String asofDate = "CURRENT_DATE";
 		logger.error("what is date "+frm.getAgeAsOf());

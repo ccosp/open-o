@@ -49,10 +49,10 @@ public class PreventionReportBuilderTest extends DaoTestFixtures {
 		PreventionSearchTo1 preventionSearchTo1 = new PreventionSearchTo1();
 //		 {"id":null,"reportName":null,"ageStyle":1,"age1":"2","age2":null,"ageCalc":0,"ageAsOf":null,"rosterStat":"RO","rosterAsOf":null,"sex":1}
 		preventionSearchTo1.setAge1("2");
-		preventionSearchTo1.setAgeStyle(2);
-		preventionSearchTo1.setAgeCalc(0);
+		preventionSearchTo1.setAgeStyle("2");
+		preventionSearchTo1.setAgeCalc("0");
 		preventionSearchTo1.setRosterStat("RO");
-		preventionSearchTo1.setSex(1);
+		preventionSearchTo1.setSex("1");
 		
 		
 		
