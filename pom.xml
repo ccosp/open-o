@@ -3,7 +3,7 @@
 	<groupId>org.oscarehr</groupId>
 	<artifactId>oscar</artifactId>
 	<packaging>war</packaging>
-	<version>14.0.0-SNAPSHOT</version>
+	<version>15.0.0-SNAPSHOT</version>
 	<name>oscar</name>
 	<description>OSCAR McMaster is a web-based electronic medical record (EMR) system initially developed for academic primary care clinics. It has grown into a comprehensive EMR and billing system used by many doctor's offices and private medical clinics in Canada and other parts of the world. The name is derived from where it was created and an acronym; OSCAR stands for Open Source Clinical Application and Resource and McMaster refers to McMaster University, where it was developed. It enables the delivery of evidence resources at the point of care.</description>
 	<issueManagement>
@@ -1726,7 +1726,7 @@
 											maven-antrun-plugin
 										</artifactId>
 										<versionRange>
-											[1.3,)
+											[1.7,)
 										</versionRange>
 										<goals>
 											<goal>run</goal>
@@ -1829,7 +1829,7 @@
 		<profile>
 			<id>jdk7</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 				<jdk>1.7</jdk>
 			</activation>
 
@@ -1874,7 +1874,7 @@
 		<profile>
 			<id>jdk8</id>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 				<jdk>1.8</jdk>
 			</activation>
 
