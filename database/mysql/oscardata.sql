@@ -2941,4 +2941,6 @@ insert into secObjPrivilege values('admin','_admin.hrm','x',0,'999998');
 insert into secRole values(\N,'HRMAdmin','HRM Administator');
 insert into secObjPrivilege values('HRMAdmin','_hrm.administrator','x',0,'999998');
 
-
+insert into lst_gender (code,description,isactive,displayorder) values ('M','Male',1,2);
+insert into lst_gender (code,description,isactive,displayorder) values ('F','Female',1,1);
+insert into lst_gender (code,description,isactive,displayorder) values ('T','Transgender',1,3);
