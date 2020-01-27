@@ -230,6 +230,20 @@ public class TRUENORTHHandler implements MessageHandler {
         return ret;
     }
 
+    @Override
+    public String getOBXNameLong(int i, int j) {
+        String ret = "";
+        try{
+            OBX obxSeg = (obrSegMap.get(obrSegKeySet.get(i))).get(j);
+            if (obxSeg.getValueType().getValue()!=null && (!obxSeg.getValueType().getValue().equals("FT"))) {
+                ret = getString(obxSeg.getObservationIdentifier().getComponent(2).toString());
+            }
+        }catch(Exception e){
+            logger.error("Error returning OBX name", e);
+        }
+        return ret;
+    }
+
     public String getOBXResult(int i, int j){
 
         String result = "";
@@ -734,5 +748,10 @@ public class TRUENORTHHandler implements MessageHandler {
     public String getNteForPID() {
 	    // TODO Auto-generated method stub
 	    return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 }

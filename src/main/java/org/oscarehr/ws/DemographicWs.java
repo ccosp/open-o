@@ -27,19 +27,24 @@ package org.oscarehr.ws;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
-
 import org.apache.cxf.annotations.GZIP;
 import org.apache.log4j.Logger;
 import org.oscarehr.common.Gender;
+import org.oscarehr.common.model.Consent;
+import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.PHRVerification;
 import org.oscarehr.managers.DemographicManager;
+import org.oscarehr.managers.PatientConsentManager;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.transfer_objects.DemographicTransfer;
+import org.oscarehr.ws.transfer_objects.DemographicTransfer2;
 import org.oscarehr.ws.transfer_objects.PhrVerificationTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -53,10 +58,19 @@ public class DemographicWs extends AbstractWs {
 	@Autowired
 	private DemographicManager demographicManager;
 	
+	@Autowired
+	private PatientConsentManager patientConsentManager;
+	
 	public DemographicTransfer getDemographic(Integer demographicId)
 	{
 		Demographic demographic=demographicManager.getDemographic(getLoggedInInfo(),demographicId);
 		return(DemographicTransfer.toTransfer(demographic));
+	}
+	
+	public DemographicTransfer2 getDemographic2(Integer demographicId)
+	{
+		Demographic demographic=demographicManager.getDemographic(getLoggedInInfo(),demographicId);
+		return(DemographicTransfer2.toTransfer(demographic));
 	}
 
 	public DemographicTransfer getDemographicByMyOscarUserName(String myOscarUserName)
@@ -129,5 +143,72 @@ public class DemographicWs extends AbstractWs {
 		
 		List<Demographic> demographics=demographicManager.getDemographics(getLoggedInInfo(),ids);
 		return(DemographicTransfer.toTransfers(demographics));	
+	}
+	                              
+	public DemographicTransfer[] getActiveDemographicsAfter(@WebParam(name="lastUpdate") Calendar lastUpdate, @WebParam(name="fields") String fields) {
+		Date afterDateExclusive = lastUpdate!=null ? lastUpdate.getTime() : null;
+		List<Demographic> demographics = demographicManager.getActiveDemographicAfter(getLoggedInInfo(), afterDateExclusive);
+		
+		List<DemographicTransfer> result = new ArrayList<DemographicTransfer>();
+		if (demographics!=null) {
+			String[] fieldList = fields!=null ? fields.split(",") : null;
+			
+			for (Demographic d : demographics) {
+				DemographicTransfer dto = DemographicTransfer.toTransfer(d);
+				
+				if (fieldList!=null) {
+					result.add(dto.filter(fieldList));
+				} else {
+					result.add(dto);
+				}
+			}
+		}
+		return result.toArray(new DemographicTransfer[0]);
+	}
+	
+	public DemographicTransfer2[] getActiveDemographicsAfter2(@WebParam(name="lastUpdate") Calendar lastUpdate, @WebParam(name="fields") String fields) {
+		Date afterDateExclusive = lastUpdate!=null ? lastUpdate.getTime() : null;
+		List<Demographic> demographics = demographicManager.getActiveDemographicAfter(getLoggedInInfo(), afterDateExclusive);
+		
+		List<DemographicTransfer2> result = new ArrayList<DemographicTransfer2>();
+		if (demographics!=null) {
+			String[] fieldList = fields!=null ? fields.split(",") : null;
+			
+			for (Demographic d : demographics) {
+				DemographicTransfer2 dto = DemographicTransfer2.toTransfer(d);
+				
+				if (fieldList!=null) {
+					result.add(dto.filter(fieldList));
+				} else {
+					result.add(dto);
+				}
+			}
+		}
+		return result.toArray(new DemographicTransfer2[0]);
+	}
+	
+	public String writePHRId(@WebParam(name="demographicNo") Integer demographicNo, @WebParam(name="phrId") String phrId) {
+		
+		if (demographicNo!=null && phrId!=null) {
+			Demographic demo = demographicManager.getDemographic(getLoggedInInfo(), demographicNo);
+			demo.setMyOscarUserName(phrId);
+			demographicManager.updateDemographic(getLoggedInInfo(), demo);
+			
+		    return "success";
+		}
+		return "fail";
+	}
+
+	public Integer[] getConsentedDemographicIdsAfter(@WebParam(name="lastUpdate") Calendar lastUpdate)
+	{
+		LoggedInInfo loggedInInfo = getLoggedInInfo();
+		ConsentType consentType = patientConsentManager.getProviderSpecificConsent(loggedInInfo);
+		List<Consent> consents = patientConsentManager.getConsentsByTypeAndEditDate(loggedInInfo, consentType, lastUpdate.getTime());
+		List<Integer> demoIds = new ArrayList<Integer>();
+		for (Consent c : consents) {
+			if (!demoIds.contains(c.getDemographicNo())) demoIds.add(c.getDemographicNo());
+		}
+		
+		return demoIds.toArray(new Integer[0]);
 	}
 }

@@ -450,6 +450,15 @@ public class PATHL7Handler implements MessageHandler {
         }
     }
 
+    @Override
+    public String getOBXNameLong(int i, int j) {
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getComponent(2).toString()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
     public String getOBXResult(int i, int j){
     	try{
     		if("ED".equals(getOBXValueType(i,j))) {
@@ -760,5 +769,10 @@ public class PATHL7Handler implements MessageHandler {
 		}
 		return result;
 	}
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
+    }
     
 }

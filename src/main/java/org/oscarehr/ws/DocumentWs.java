@@ -25,23 +25,27 @@
 package org.oscarehr.ws;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceException;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.cxf.annotations.GZIP;
 import org.apache.log4j.Logger;
-import org.oscarehr.PMmodule.service.ProgramManager;
+import org.oscarehr.PMmodule.service.ProviderManager;
 import org.oscarehr.common.model.CtlDocument;
 import org.oscarehr.common.model.Document;
+import org.oscarehr.common.model.Provider;
 import org.oscarehr.managers.DocumentManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.transfer_objects.DocumentTransfer;
+import org.oscarehr.ws.transfer_objects.ProviderTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,9 +57,9 @@ public class DocumentWs extends AbstractWs {
 
 	@Autowired
 	private DocumentManager documentManager;
-
+	
 	@Autowired
-	private ProgramManager programManager;
+	private ProviderManager providerManager;
 
 	public DocumentTransfer getDocument(Integer documentId) {
 		try {
@@ -80,5 +84,24 @@ public class DocumentWs extends AbstractWs {
 		List<Document> documents = documentManager.getDocumentsByProgramProviderDemographicDate(loggedInInfo, programId, providerNo, demographicId, updatedAfterThisDateExclusive, itemsToReturn);
 		logger.debug("programId="+programId+", providerNo="+providerNo+", demographicId="+demographicId+", updatedAfterThisDateExclusive="+DateFormatUtils.ISO_DATETIME_FORMAT.format(updatedAfterThisDateExclusive)+", itemsToReturn="+itemsToReturn+", results="+documents.size());
 		return (DocumentTransfer.getTransfers(loggedInInfo, documents));
+	}
+
+	public DocumentTransfer[] getDocumentsByDemographicIdAfter(@WebParam(name="lastUpdate") Calendar lastUpdate, @WebParam(name="demographicId") Integer demographicId)
+	{
+		LoggedInInfo loggedInInfo = getLoggedInInfo();
+		List<Document> documents = documentManager.getDocumentsByDemographicIdUpdateAfterDate(loggedInInfo, demographicId, lastUpdate.getTime());
+		return (DocumentTransfer.getTransfers(loggedInInfo, documents));
+	}
+	
+	public ProviderTransfer[] getProvidersThatHaveAcknowledgedDocument(Integer documentId) {
+		LoggedInInfo loggedInInfo = getLoggedInInfo();
+		List<String> providerNumbers= documentManager.getProvidersThatHaveAcknowledgedDocument(loggedInInfo,documentId);
+		List<Provider> providers = new ArrayList<Provider>();
+		for(String providerNo :providerNumbers) {
+			Provider provider = providerManager.getProvider(providerNo); 
+			providers.add(provider);
+		}
+		ProviderTransfer[] results = ProviderTransfer.toTransfers(providers);
+		return results;
 	}
 }

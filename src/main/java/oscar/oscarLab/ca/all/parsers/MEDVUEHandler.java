@@ -247,6 +247,15 @@ public class MEDVUEHandler implements MessageHandler {
 		return getString(obxseg.getObservationIdentifier().getText().getValue());
 	}
 
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		try{
+			return getString(obxseg.getObservationIdentifier().getComponent(2).toString());
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
 
 	private boolean isReport(int i, int j) {
 		String obxName = getOBXName(i, j);
@@ -705,6 +714,11 @@ public class MEDVUEHandler implements MessageHandler {
 	
 	public String getNteForPID() {
     	return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 	
 }
