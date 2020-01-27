@@ -53,12 +53,15 @@ boolean bFirstDisp=true; //this is the first time to display the window
 if (request.getParameter("bFirstDisp")!=null) bFirstDisp= (request.getParameter("bFirstDisp")).equals("true");
 String ChartNo;
 String demoNo = "";
+String demoMRP = "";
 String demoName = request.getParameter("name");
+String defaultTaskAssignee = ""; 
 
 DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 Demographic demographic = demographicDao.getDemographic(request.getParameter("demographic_no"));
 if(demographic != null) {
 	demoName = demographic.getFormattedName();
+	demoMRP = demographic.getProviderNo();
 }
 if ( request.getAttribute("demographic_no") != null){
     demoNo = (String) request.getAttribute("demographic_no");
@@ -86,6 +89,24 @@ String priority = "Normal";
 if(request.getParameter("taskTo")!=null) taskTo = request.getParameter("taskTo");
 if(request.getParameter("priority")!=null) priority = request.getParameter("priority");
 if(request.getParameter("recall")!=null) recall = true;
+
+UserPropertyDAO propertyDao = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+UserProperty prop = propertyDao.getProp(user_no,"tickler_task_assignee");
+
+//don't over ride taskTo query param
+if(request.getParameter("taskTo")==null){
+
+if(prop!=null) {
+	defaultTaskAssignee = prop.getValue();
+	if(!defaultTaskAssignee.equals("mrp")){
+	  taskTo = defaultTaskAssignee;	
+	}else if(defaultTaskAssignee.equals("mrp")){
+	  taskTo = demoMRP;
+	}
+}
+
+}   
+
 
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*, java.net.*, oscar.oscarEncounter.pageUtil.EctSessionBean" %>
@@ -116,7 +137,11 @@ GregorianCalendar now=new GregorianCalendar();
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.oscarehr.common.model.Site"%>
-<%@page import="org.oscarehr.common.model.Provider"%><html:html locale="true">
+<%@page import="org.oscarehr.common.model.Provider"%>
+<%@ page import="org.oscarehr.common.dao.UserPropertyDAO"%>
+<%@ page import="org.oscarehr.common.model.UserProperty"%>
+
+<html:html locale="true">
 <head>
 <title><bean:message key="tickler.ticklerAdd.title"/></title>
 <link rel="stylesheet" href="../billing/billing.css" >
@@ -324,7 +349,7 @@ function refresh() {
       <td><font color="#003366" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><bean:message key="tickler.ticklerAdd.formServiceDate"/>:</strong></font></td>
       <td><input type="text" name="xml_appointment_date" value="<%=xml_appointment_date%>"> 
         <font color="#003366" size="1" face="Verdana, Arial, Helvetica, sans-serif">
-        <a href="#" onClick="openBrWindow('../billing/billingCalendarPopup.jsp?type=end&amp;year=<%=curYear%>&amp;month=<%=curMonth%>','','width=300,height=300')" title="<bean:message key="tickler.ticklerAdd.btnCalendarLookup"/>">
+        <a href="javascript:void(0)" onClick="openBrWindow('../billing/billingCalendarPopup.jsp?type=end&amp;year=<%=curYear%>&amp;month=<%=curMonth%>','','width=300,height=300');return false;" title="<bean:message key="tickler.ticklerAdd.btnCalendarLookup"/>">
             <input type="image" src="../images/cal.gif" width="25" height="22" border="0" align="top" alt="<bean:message key="tickler.ticklerAdd.btnCalendarLookup"/>"/>
         </a>
         <a href="#" onClick="toggleQuickPickDateDisplay(this)" title="<bean:message key="tickler.ticklerAdd.btnToggleQuickpickDates"/>" style="padding-left:5px; vertical-align: middle;"><bean:message key="tickler.ticklerAdd.btnShowQuickpick"/></a>
@@ -385,6 +410,14 @@ function refresh() {
       <script>
 var _providers = [];
 <%	
+String taskToName = "";
+
+if(defaultTaskAssignee.equals("mrp"))
+taskToName = "Prefernce set to MRP, attach a patient.";
+
+if(!taskTo.isEmpty())
+taskToName = providerDao.getProviderNameLastFirst(taskTo);
+
 Site site = null;
 for (int i=0; i<sites.size(); i++) { %>
 	_providers["<%= sites.get(i).getSiteId() %>"]="<% Iterator<Provider> iter = sites.get(i).getProviders().iterator();
@@ -400,6 +433,7 @@ function changeSite(sel) {
 }
       </script>
  
+<div id="selectWrapper">
       	<select id="site" name="site" onchange="changeSite(this)">
       		<option value="none">---select clinic---</option>
       	<%
@@ -408,15 +442,60 @@ function changeSite(sel) {
       		<option value="<%= sites.get(i).getSiteId() %>"><%= sites.get(i).getName() %></option>
       	<% } %>
       	</select>
-      	<select name="task_assigned_to" style="width:140px"></select>
+
+      	<select name="task_assigned_to" id="task_assigned_to" style="width:140px"></select>
+
+	<h3 id="preferenceLink" style="display:none"><small><a href="#" onClick="toggleWrappers()">[preference]</a></small></h3>
+</div>
+
+<div id="nameWrapper" style="display:none">
+	<h3><%=taskToName%> <small><a href="#" onClick="toggleWrappers()">[change]</a></small></h3>
+	<input type="hidden" id="taskToBin" value="<%=taskTo%>">
+	<input type="hidden" id="taskToNameBin" value="<%=taskToName%>">
+</div>
       	<script>
       		document.getElementById("site").value = '<%= site==null?"none":site.getSiteId() %>';
       		changeSite(document.getElementById("site"));
       	</script>
+
+<% if(prop!=null) {%>
+<script>
+//prop exists so hide selectWrapper
+document.getElementById("selectWrapper").style.display="none";
+document.getElementById("nameWrapper").style.display="block";
+document.getElementById("preferenceLink").style.display="inline-block";
+
+var taskToValue = document.getElementById("taskToBin").value;
+var taskToName = document.getElementById('taskToNameBin').value;
+
+function toggleWrappers(){
+if(document.getElementById("selectWrapper").style.display=="none"){
+document.getElementById("selectWrapper").style.display="block";
+document.getElementById("nameWrapper").style.display="none";
+}else{
+document.getElementById("selectWrapper").style.display="none";
+document.getElementById("nameWrapper").style.display="block";
+}
+}
+
+_providers.push("<option value=\""+taskToValue+"\" selected>"+taskToName+"</option>");
+
+var newItemKey = _providers.length-1;
+
+var selSite = document.getElementById('site');
+var optSite = document.createElement('option');
+optSite.appendChild( document.createTextNode("** preference **") );
+optSite.value = newItemKey; 
+optSite.setAttribute('selected', 'selected');
+selSite.appendChild(optSite); 
+changeSite(selSite);
+</script>
+<%}%>
+
 <% // multisite end ==========================================
 } else {
 %>
-  
+
       <select name="task_assigned_to">        
             <%  String proFirst="";
                 String proLast="";

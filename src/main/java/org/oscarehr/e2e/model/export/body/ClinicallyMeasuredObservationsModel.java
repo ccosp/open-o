@@ -25,6 +25,7 @@ package org.oscarehr.e2e.model.export.body;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
@@ -137,39 +138,63 @@ public class ClinicallyMeasuredObservationsModel {
 	}
 
 	public ArrayList<Component4> getComponents() {
-		ArrayList<Component4> components = new ArrayList<Component4>();
+		ArrayList<Component4> components = new ArrayList<>();
+		
 		if(ClinicallyMeasuredObservations.BLOOD_PRESSURE_CODE.equals(measurement.getType())) {
+			
 			// Parse Systolic and Diastolic Blood Pressure integers
 			Pattern pattern = Pattern.compile("\\d+");
 			Matcher matcher = pattern.matcher(measurement.getDataField());
-			List<Integer> values = new ArrayList<Integer>();
+			List<Integer> values = new ArrayList<>();
 			while(matcher.find()) {
 				values.add(Integer.parseInt(matcher.group()));
 			}
 
 			// Make a deep copy of measurement object
 			Measurement tempMeasurement = null;
-			try {
+			
+			try
+			(
 				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-				ObjectOutputStream out = new ObjectOutputStream(bos);
+				ObjectOutputStream out = new ObjectOutputStream(bos)
+			) 
+			{
 				out.writeObject(measurement);
-				out.flush();
-				out.close();
-				ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
-				tempMeasurement = (Measurement) in.readObject();
-			} catch(Exception e) {
-				log.error(e.toString(), e);
+				
+				try
+				(
+					ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()))
+				)
+				{
+					tempMeasurement = (Measurement) in.readObject();
+				} 
+				catch (ClassNotFoundException e) 
+				{
+					log.error("Error ", e);
+				}
+				
+			} 
+			catch (IOException e) 
+			{
+				log.error("Error ", e);
+			} 
+
+			if(tempMeasurement != null && values.size() > 0)
+			{
+				// Add Systolic Component
+				tempMeasurement.setType(ClinicallyMeasuredObservations.DIASTOLIC_CODE);
+				tempMeasurement.setDataField(values.get(0).toString());
+				components.add(new ComponentObservation().getComponent(tempMeasurement));
 			}
-
-			// Add Systolic Component
-			tempMeasurement.setType(ClinicallyMeasuredObservations.DIASTOLIC_CODE);
-			tempMeasurement.setDataField(values.get(0).toString());
-			components.add(new ComponentObservation().getComponent(tempMeasurement));
-
-			// Add Diastolic Component
-			tempMeasurement.setType(ClinicallyMeasuredObservations.SYSTOLIC_CODE);
-			tempMeasurement.setDataField(values.get(1).toString());
-			components.add(new ComponentObservation().getComponent(tempMeasurement));
+			
+			if(tempMeasurement != null &&values.size() > 1)
+			{
+				// Add Diastolic Component
+				tempMeasurement.setType(ClinicallyMeasuredObservations.SYSTOLIC_CODE);
+				tempMeasurement.setDataField(values.get(1).toString());
+				components.add(new ComponentObservation().getComponent(tempMeasurement));
+			}
+			
 		} else {
 			components.add(new ComponentObservation().getComponent(measurement));
 		}

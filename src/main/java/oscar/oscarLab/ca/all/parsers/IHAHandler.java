@@ -818,6 +818,15 @@ public class IHAHandler implements MessageHandler {
     	if((index=repType.indexOf("OE"))!=-1) return "Narrative Report";
         return(getOBXField(i, j, 3, 0, 2));
     }
+
+    @Override
+    public String getOBXNameLong(int i, int j) {
+        String repType = getSendingApplication();
+        if((repType.indexOf("OE")) != -1) {
+            return "Narrative Report";
+        }
+        return (getOBXField(i, j, 3, 0, 2));
+    }
     
     /*@Override
     public String getOBXResult(int i, int j){
@@ -1194,5 +1203,10 @@ public class IHAHandler implements MessageHandler {
     }
     public String getNteForPID() {
     	return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 }

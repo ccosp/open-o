@@ -244,6 +244,11 @@ public class DefaultGenericHandler implements MessageHandler {
         return(getOBXField(i, j, 3, 0, 2));
     }
 
+    @Override
+    public String getOBXNameLong(int i, int j) {
+        return(getOBXField(i, j, 3, 0, 2));
+    }
+
     public String getOBXResult(int i, int j){
         return(getOBXField(i, j, 5, 0, 1));
     }
@@ -677,5 +682,10 @@ public class DefaultGenericHandler implements MessageHandler {
 
     public String getNteForPID() {
     	return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 }

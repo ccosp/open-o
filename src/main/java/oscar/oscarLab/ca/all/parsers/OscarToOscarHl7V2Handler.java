@@ -172,6 +172,11 @@ public final class OscarToOscarHl7V2Handler implements MessageHandler {
 	    return chainnedMessageAdapter.getOBXName(i, j);
     }
 
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		return chainnedMessageAdapter.getOBXNameLong(i, j);
+	}
+
 	public String getOBXReferenceRange(int i, int j) {
 	    return chainnedMessageAdapter.getOBXReferenceRange(i, j);
     }
@@ -250,6 +255,11 @@ public final class OscarToOscarHl7V2Handler implements MessageHandler {
     public String getNteForPID(){
     	
     	return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 
 }

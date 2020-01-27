@@ -214,6 +214,11 @@ public class HRMXMLHandler implements MessageHandler {
 		return getOBXName(i, j, false);
 	}
 
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		return "";
+	}
+
 	/**
 	 * return the OBX name for the specified OBR index 'i' and OBX index 'j' If the OBX is an ITS or DPT then return a single space to trick the full report style. See above for default call to getOBXName()
 	 */
@@ -489,5 +494,10 @@ public class HRMXMLHandler implements MessageHandler {
 	    }
 	    public String getNteForPID() {
 	    	return "";
+	    }
+	    
+	    //for OMD validation
+	    public boolean isTestResultBlocked(int i, int j) {
+	    	return false;
 	    }
 }
