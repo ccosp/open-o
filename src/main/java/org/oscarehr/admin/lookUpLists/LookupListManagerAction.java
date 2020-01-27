@@ -120,7 +120,14 @@ public class LookupListManagerAction extends DispatchAction {
 			lookupListItem = new LookupListItem();
 			lookupListItem.setActive( true );
 			lookupListItem.setCreatedBy( user );
-			lookupListItem.setDisplayOrder(  lookupListItems.get( lookupListItems.size() - 1 ).getDisplayOrder() + 1  );
+			
+			lookupListItem.setDisplayOrder(1);
+			
+			if(! lookupListItems.isEmpty())
+			{
+				lookupListItem.setDisplayOrder(  lookupListItems.get( lookupListItems.size() - 1 ).getDisplayOrder() + 1  );
+			}
+
 			lookupListItem.setLabel( lookupListItemLabel );
 			lookupListItem.setLookupListId( lookupListIdInteger );
 			lookupListItem.setValue( UUID.randomUUID().toString() );
