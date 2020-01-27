@@ -2888,3 +2888,7 @@ INSERT INTO `oscar_msg_type` VALUES (3, 'Integrator Message', 'INTEGRATOR_TYPE')
 
 INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_msg', 'x', 0, '999998');
 INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_demographic', 'r', 0, '999998');
+
+insert into lst_gender (code,description,isactive,displayorder) values ('M','Male',1,2);
+insert into lst_gender (code,description,isactive,displayorder) values ('F','Female',1,1);
+insert into lst_gender (code,description,isactive,displayorder) values ('T','Transgender',1,3);

@@ -12288,3 +12288,13 @@ CREATE TABLE DHIRSubmissionLog (
     PRIMARY KEY(id)
 );
 
+create table lst_gender
+(
+	code char(1) NOT NULL,
+ 	description varchar(80),
+ 	isactive tinyint(1),
+ 	displayorder int(10),
+ 	PRIMARY KEY (code)
+);
+
+
