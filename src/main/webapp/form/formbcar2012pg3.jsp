@@ -866,15 +866,15 @@ function calToday(field) {
             <%
             if (!bView) {
             %>
-            <input type="submit" style="width:40px;" value="Save" onclick="javascript:return onSave();" />
+            <input type="submit" value="Save" onclick="javascript:return onSave();" />
             <input type="submit" value="Save and Exit" onclick="javascript:return onSaveExit();"/>
             <%
             }
             %>
-            <input type="submit" style="width:40px;" value="Exit" onclick="javascript:return onExit();"/>
-            <input type="submit" style="width:50px;" value="Print" onclick="javascript:return onPrint();"/>
+            <input type="submit" value="Exit" onclick="javascript:return onExit();"/>
+            <input type="submit" value="Print" onclick="javascript:return onPrint();"/>
             <input type="submit" value="Print AR1 & AR2" onclick="javascript:return onPrint12();"/>
-            <input type="submit" style="width:75px;" value="Print All" onclick="javascript:return onPrintAll();"/>
+            <input type="submit" value="Print All" onclick="javascript:return onPrintAll();"/>
         </td>
         
         <%
@@ -2474,15 +2474,15 @@ function calToday(field) {
             <%
             if (!bView) {
             %>
-            <input type="submit" style="width:40px;" value="Save" onclick="javascript:return onSave();" />
+            <input type="submit" value="Save" onclick="javascript:return onSave();" />
             <input type="submit" value="Save and Exit" onclick="javascript:return onSaveExit();"/>
             <%
             }
             %>
-            <input type="submit" style="width:40px;" value="Exit" onclick="javascript:return onExit();"/>
-            <input type="submit" style="width:50px;" value="Print" onclick="javascript:return onPrint();"/>
+            <input type="submit" value="Exit" onclick="javascript:return onExit();"/>
+            <input type="submit" value="Print" onclick="javascript:return onPrint();"/>
             <input type="submit" value="Print AR1 & AR2" onclick="javascript:return onPrint12();"/>
-            <input type="submit" style="width:75px;" value="Print All" onclick="javascript:return onPrintAll();"/>
+            <input type="submit" value="Print All" onclick="javascript:return onPrintAll();"/>
         </td>
         
         <%
