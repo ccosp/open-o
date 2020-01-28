@@ -90,9 +90,21 @@ if (request.getParameter("view") != null && request.getParameter("view").equals(
 
 
 <head>
+<title>Antenatal Record 1</title>
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.are-you-sure.js"></script>
+
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <script type="text/javascript" >
 
+
+/*
+ * JQuery dirty form check
+ */
+$(function() {
+    $('form').areYouSure();
+});
 
 function showHideBox(layerName, iState) { // 1 visible, 0 hidden
     if(document.layers)	   //NN4+
@@ -491,19 +503,16 @@ function calcAgeAtEDD(){
         
         pg1_ageAtEDD.value = age;
     }
-
+   
 }
-
 
 </script>
 
-<title>Antenatal Record 1</title>
 
-<link rel="stylesheet" type="text/css"
-	href="<%=bView?"bcArStyleView.css" : "bcAr2007Style.css"%>">
+
+<link rel="stylesheet" type="text/css" href="<%=bView?"bcArStyleView.css" : "bcAr2007Style.css"%>">
 <!-- calendar stylesheet -->
-<link rel="stylesheet" type="text/css" media="all"
-	href="../share/calendar/calendar.css" title="win2k-cold-1" />
+<link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
 
 <!-- main calendar program -->
 <script type="text/javascript" src="../share/calendar/calendar.js"></script>
@@ -878,7 +887,7 @@ function calcAgeAtEDD(){
 @oscar.formDB Field="formEdited" Type="timestamp"  
 @oscar.formDB Field="c_lastVisited" Type="char(3)" 
 -->
-<html:form action="/form/formname">
+<html:form action="/form/formname" styleId="bcarForm">
 
 	<input type="hidden" name="commonField" value="ar2_" />
 	<input type="hidden" name="c_lastVisited" value="pg1" />

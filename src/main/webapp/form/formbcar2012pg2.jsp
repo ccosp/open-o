@@ -91,17 +91,28 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 <html:html locale="true">
 <% response.setHeader("Cache-Control","no-cache");%>
 <head>
+<title>Antenatal Record 2</title>
+<html:base/>   
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.are-you-sure.js"></script>
+
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-    <title>Antenatal Record 2</title>
-    <html:base/>
+
     <link rel="stylesheet" type="text/css" href="<%=bView?"bcArStyleView.css" : "bcAr2007Style.css"%>">
     
     <!-- calendar stylesheet -->
     <link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
     
- 
-    <script type="text/javascript">
+<script type="text/javascript">
     
+    /*
+     * JQuery dirty form check
+     */
+    $(function() {
+        $('form').areYouSure();
+    });
+
 		  function reset() {
 		      document.forms[0].target = "";
 		      document.forms[0].action = "/<%=project_home%>/form/formname.do" ;
@@ -815,7 +826,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 			    val = 3 - val;
 			    document.forms[0].ar2_EPDS10[val].checked = true;
 			}
-		}   
+		}  
     
     </script>
 
@@ -863,7 +874,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 </head>
 
 
-<body bgproperties="fixed" topmargin="0" leftmargin="0" rightmargin="0" onload="setEPDSscores();">
+<body bgproperties="fixed" topmargin="0" leftmargin="0" rightmargin="0">
 <div ID="Langdiv" class="demo">
     <table bgcolor='silver' width='100%'>
         <tr><td align='right'><a href="javascript: function myFunction() {return false; }" onclick="showHideBox('Langdiv',0); return false;">X</a></td></tr>
@@ -935,7 +946,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
     <center><i>At 36 weeks copy to patient / to hospital</i></center>
 </div>
 
-<html:form action="/form/formname">
+<html:form action="/form/formname" >
 
 <input type="hidden" name="commonField" value="ar2_" />
 <input type="hidden" name="c_lastVisited" value="pg2" />
