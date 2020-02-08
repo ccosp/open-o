@@ -42,7 +42,7 @@ String fieldName = request.getParameter("fieldname")!=null ? request.getParamete
 <title>Provider List</title>
 <link rel="stylesheet" href="../css/receptionistapptstyle.css">
 <script language="JavaScript">
-<!--
+//<!--
 
 function typeInData(v) {
   self.close();
@@ -51,6 +51,7 @@ function typeInData(v) {
   <% } else {%>
   opener.document.forms[0].<%=fieldName%>.value = v ; 
   <% }%>
+  opener.recheckForm();
 }
 //-->
 </SCRIPT>

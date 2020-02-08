@@ -106,12 +106,35 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
     
 <script type="text/javascript">
     
-    /*
-     * JQuery dirty form check
-     */
-    $(function() {
-        $('form').areYouSure();
+/*
+ * JQuery dirty form check
+ */
+$(function() {
+    $('form').areYouSure({'addRemoveFieldsMarksDirty':true});
+    
+  	//dirty form enable/disable save button.
+ 	$("form").find('input[value="Save"]').attr('disabled', 'disabled');
+   	$("form").find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+   	
+    $('form').on('dirty.areYouSure', function() {
+        $(this).find('input[value="Save"]').removeAttr('disabled');
+        $(this).find('input[value="Save and Exit"]').removeAttr('disabled');
     });
+    
+    $('form').on('clean.areYouSure', function() {
+    	$(this).find('input[value="Save"]').attr('disabled', 'disabled');
+    	$(this).find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+    });
+
+});
+
+/*
+ * reload the are you sure form check. Usually after a 
+ * javascript is run.
+ */
+function recheckForm() {
+    $('form').trigger('checkform.areYouSure');
+}
 
 		  function reset() {
 		      document.forms[0].target = "";
@@ -161,12 +184,6 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 				} else {
 					return false;
 				}
-				/*
-				for (var j=0; j<document.forms[0].length; j++) { 
-						if (document.forms[0].elements[j] != null && document.forms[0].elements[j].name ==  name ) {
-							 return document.forms[0].elements[j] ;
-						}
-				}*/
 		    }
 		
 		    function onSave() {
@@ -176,23 +193,20 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 		        ret = checkAllNumber();
 		        if(ret==true) {
 		            reset();
-		            ret = confirm("Are you sure you want to save this form?");
 		        }
 		        return ret;
 		    }
-		    function onExit() {
-		        if(confirm("Are you sure you wish to exit without saving your changes?")==true) {
-		            window.close();
-		        }
-		        return(false);
-		    }
+		    
+ 		    function onExit() {
+		        window.close();
+		    } 
+ 		    
 		    function onSaveExit() {
 		        document.forms[0].submit.value="exit";
 		        var ret = checkAllDates();
 		        ret = checkAllNumber();
 		        if(ret == true) {
 		            reset();
-		            ret = confirm("Are you sure you wish to save and close this window?");
 		        }
 		        return ret;
 		    }
@@ -508,6 +522,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 			varMonth = varMonth>9? varMonth : ("0"+varMonth);
 			varDate = calDate.getDate()>9? calDate.getDate(): ("0"+calDate.getDate());
 			field.value = varDate + '/' + (varMonth) + '/' + calDate.getFullYear();
+			recheckForm();
 		}
 		
 		function calcTweakScore(){
@@ -535,6 +550,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 		        val = val + 1;
 		
 		    document.forms[0].pg1_tweakScore.value = val;
+		    recheckForm();
 		}
 		
 		function calcEPDSscore(){
@@ -551,6 +567,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 		    val = val + getRadioButtonVal(document.forms[0].ar2_EPDS10);
 		    
 		    document.forms[0].ar2_EPDSscore.value = val;
+		    recheckForm();
 		}
 		
 		function getRadioButtonVal(field){
@@ -640,8 +657,10 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 		}
 		function insertBox(str, layerName) { // 1 visible, 0 hidden
 		    if(document.getElementById)	{
-		        //var obj = document.getElementById(field);
 		        fieldObj.value = str;
+		        
+		        // important to enable the save button.
+		        recheckForm();
 		    }
 		    showHideBox(layerName, 0);
 		}
@@ -698,6 +717,9 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 		        
 		        ar2_age.value = age;
 		    }
+		    
+	        // important to enable the save button.
+	        recheckForm();
 		}
 		
 		function calcBMI(field, weight){
@@ -715,6 +737,9 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 		            alert("Please input a valid weight and height (units must be metric)");
 		        }
 		    }
+		    
+	        // important to enable the save button.
+	        recheckForm();
 		}
 		
 		function calcBMIMetric() {
@@ -725,6 +750,9 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 					document.forms[0].c_ppBMI.value = Math.round(weight * 10 / height / height) / 10;
 				}
 			}
+			
+	        // important to enable the save button.
+	        recheckForm();
 		}
 		
 		
@@ -766,6 +794,9 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 		var weekday = day%7;
 		   source.value = week + "w+" + weekday;
 		<% } %>
+		
+        // important to enable the save button.
+        recheckForm();
 		}
 		
 		function setEPDSscores(){
@@ -826,6 +857,9 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 			    val = 3 - val;
 			    document.forms[0].ar2_EPDS10[val].checked = true;
 			}
+			
+	        // important to enable the save button.
+	        recheckForm();
 		}  
     
     </script>
@@ -1005,7 +1039,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
             <%
             }
             %>
-            <input type="submit" value="Exit" onclick="javascript:return onExit();"/>
+            <input type="button" value="Exit" onclick="onExit();"/>
             <input type="submit" value="Print" onclick="javascript:return onPrint();"/>
             <input type="submit" value="Print EPDS/TWEAK" onclick="javascript:return onPrintScores();"/>
             <input type="submit" value="Print AR1 & AR2" onclick="javascript:return onPrint12();"/>
@@ -1018,18 +1052,12 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
         <td>
             <a href="javascript: function myFunction() {return false; }" title="Double click shaded fields for drop down or calculation" onClick="showHideBox('Instrdiv',1);return false;"><font color='red'>Instruction</font></a>
         </td>
-        
-        <!--<td align="right">  <b>View:</b>
-        <a href="javascript: popupPage('formbcarpg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');"> AR1</a> |
-        <a href="javascript: popupPage('formbcarpg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');">AR2 <font size=-2>(pg.2)</font></a>
-        </td>
-        -->
+
         <td align="right"><b>Edit:</b>
             <a href="formbcar2012pg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR1</a> |
             AR2<font size=-2>(pg.1)</font> |
             <a href="formbcar2012pg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR2 <font size=-2>(pg.2)</font></a> |
-            <!--a href="javascript: popupFixedPage(700,950,'../decision/antenatal/antenatalplanner.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>');">AR Planner</a-->
-        </td>
+		</td>
         <%
         }
         %>
@@ -1070,8 +1098,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td><span class="small9">ABO group</span><br>
-                                        <!--input type="text" name="ar2_labBlood" style="width:100%" size="10" maxlength="12" value="<%--= props.getProperty("ar2_labBlood", "") --%>" @oscar.formDB /-->
-                                        <select name="ar2_labBlood" style="width:100%">
+                                 		<select name="ar2_labBlood" style="width:100%">
                                             <%
                                             String[] optBG = {"", "O", "A", "B", "AB"};
                                             for (int i=0; i<optBG.length; i++) {
@@ -1081,8 +1108,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
                                         </select>
                                     </td>
                                     <td><span class="small9">Rh factor</span><br>
-                                        <!--input type="text" name="ar2_labRh" style="width:100%" size="10" maxlength="12" value="<%--= props.getProperty("ar2_labRh", "") --%>" @oscar.formDB /-->
-                                        <select name="ar2_labRh" style="width:100%">
+                                      	<select name="ar2_labRh" style="width:100%">
                                             <option value="" <%=props.getProperty("ar2_labRh", "").equals("")?"selected":""%> ></option>
                                             <option value="pos" <%=props.getProperty("ar2_labRh", "").equals("pos")?"selected":""%> >pos</option>
                                             <option value="neg" <%=props.getProperty("ar2_labRh", "").equals("neg")?"selected":""%> >neg</option>
@@ -1279,16 +1305,11 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
                             <input type="text" name="ar2_labHBsAgDate" id="ar2_labHBsAgDate" style="width:100%" size="10" maxlength="10" value="<%= props.getProperty("ar2_labHBsAgDate", "") %>" @oscar.formDB dbType="date"/>
                                </td>
                         <td>
-                        	<%-- change Dennis Warren @ Treatment March 2012 --%> 
+     
                         	<input type="checkbox" id="ar2_labHBsAgR" name="ar2_labHBsAgR" 
                         	 <%= props.getProperty("ar2_labHBsAgR", "") %>  @oscar.formDB dbType="tinyint(1)" />
                         	<span class="small8">Positive</span>   
-                        	                	
-                            <%--   select name="ar2_labHBsAg" style="width:100%">
-                                <option value="" <%= props.getProperty("ar2_labHBsAg", "").equals("")?"selected":""%> ></option>
-                                <option value="NR" <%= props.getProperty("ar2_labHBsAg", "").equals("NR")?"selected":""%> >NR</option>
-                                <option value="R" <%= props.getProperty("ar2_labHBsAg", "").equals("R")?"selected":""%> >R</option>
-                            </select --%>
+
                         </td>
                     </tr>
                     <tr>
@@ -2696,7 +2717,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
             <%
             }
             %>
-            <input type="submit" value="Exit" onclick="javascript:return onExit();"/>
+            <input type="button" value="Exit" onclick="onExit();"/>
             <input type="submit" value="Print" onclick="javascript:return onPrint();"/>
             <input type="submit" value="Print EPDS/TWEAK" onclick="javascript:return onPrintScores();"/>
             <input type="submit" value="Print AR1 & AR2" onclick="javascript:return onPrint12();"/>
@@ -2706,20 +2727,12 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
         <%
         if (!bView) {
         %> 
-        <!--td>
-        <a href="javascript: popPage('formlabreq.jsp?demographic_no=<%=demoNo%>&formId=0&provNo=<%=provNo%>&labType=AR','LabReq');">LAB</a>
-        </td-->
 
-        <!--  <td align="right"><b>View:</b>
-        <a href="javascript: popupPage('formbcarpg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');"> AR1</a> |
-        <a href="javascript: popupPage('formbcarpg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');">AR2 <font size=-2>(pg.2)</font></a>
-        </td>-->
         <td align="right"><b>Edit:</b>
             <a href="formbcar2012pg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR1</a> |
             AR2<font size=-2>(pg.1)</font> |
             <a href="formbcar2012pg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR2 <font size=-2>(pg.2)</font></a> |
-            <!--a href="javascript: popupFixedPage(700,950,'../decision/antenatal/antenatalplanner.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>');">AR Planner</a-->
-        </td>
+  		</td>
         <%
         }
         %>
@@ -3040,7 +3053,7 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 
 </html:form>
 <script type="text/javascript">
-    Calendar.setup({
+    Calendar.setup({ onUpdate: function(){recheckForm()}, 
         inputField     :    "ar2_labDiabDate",      // id of the input field
         ifFormat       :    "%d/%m/%Y",       // format of the input field
         showsTime      :    false,            // will display a time selector
@@ -3048,21 +3061,21 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
         singleClick    :    true,           // double-click mode
         step           :    1                // show all years in drop-down boxes (instead of every other year as default)
     });
-Calendar.setup({ inputField : "c_EDD", ifFormat : "%d/%m/%Y", showsTime :false, button : "c_EDD_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_lmp", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_lmp_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labRATDate1", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate1_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labRATDate2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate2_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labGGTDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGGTDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labGBSDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGBSDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labEdinDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labEdinDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "c_EDD", ifFormat : "%d/%m/%Y", showsTime :false, button : "c_EDD_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_lmp", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_lmp_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRATDate1", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate1_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRATDate2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate2_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labGGTDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGGTDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labGBSDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGBSDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labEdinDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labEdinDate_cal", singleClick : true, step : 1 });
 
-Calendar.setup({ inputField : "ar2_labRhIgG", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labRhIgG2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG2_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labHBsAgDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labHBsAgDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_1USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_1USoundDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_2USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_2USoundDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_3USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_3USoundDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_4USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_4USoundDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRhIgG", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRhIgG2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG2_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labHBsAgDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labHBsAgDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_1USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_1USoundDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_2USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_2USoundDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_3USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_3USoundDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_4USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_4USoundDate_cal", singleClick : true, step : 1 });
 
 </script>
 
