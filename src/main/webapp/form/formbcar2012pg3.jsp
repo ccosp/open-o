@@ -94,6 +94,10 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
     <title>Antenatal Record 2</title>
     <html:base/>
+    
+    <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.are-you-sure.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="<%=bView?"bcArStyleView.css" : "bcAr2007Style.css"%>">
     <!-- calendar stylesheet -->
     <link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
@@ -133,7 +137,36 @@ if (props.getProperty("ar2_age", "").equals("") ) 	props.setProperty("ar2_age", 
     </style>
 </head>
 <script type="text/javascript">
-<!--
+
+/*
+ * JQuery dirty form check
+ */
+$(function() {
+    $('form').areYouSure({'addRemoveFieldsMarksDirty':true});
+    
+  	//dirty form enable/disable save button.
+ 	$("form").find('input[value="Save"]').attr('disabled', 'disabled');
+   	$("form").find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+   	
+    $('form').on('dirty.areYouSure', function() {
+        $(this).find('input[value="Save"]').removeAttr('disabled');
+        $(this).find('input[value="Save and Exit"]').removeAttr('disabled');
+    });
+    
+    $('form').on('clean.areYouSure', function() {
+    	$(this).find('input[value="Save"]').attr('disabled', 'disabled');
+    	$(this).find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+    });
+
+});
+/*
+ * reload the are you sure form check. Usually after a 
+ * javascript is run.
+ */
+function recheckForm() {
+    $('form').trigger('checkform.areYouSure');
+}
+
 var fieldObj;
 function showHideBox(layerName, iState) { // 1 visible, 0 hidden
     if(document.layers)	   //NN4+
@@ -210,6 +243,9 @@ function insertBox(str, layerName) { // 1 visible, 0 hidden
     if(document.getElementById)	{
         //var obj = document.getElementById(field);
         fieldObj.value = str;
+        
+        // important to enable the save button.
+        recheckForm();
     }
     showHideBox(layerName, 0);
 }
@@ -244,6 +280,8 @@ function wtEnglish2Metric(obj) {
 			obj.value = weightM;
 		}
 	}
+    // important to enable the save button.
+    recheckForm();
 }
 
 function calcEDDAge(){
@@ -267,6 +305,8 @@ function calcEDDAge(){
         
         ar2_age.value = age;
     }
+    // important to enable the save button.
+    recheckForm();
 }
 
 function calcBMI(field, weight){
@@ -284,6 +324,9 @@ function calcBMI(field, weight){
             alert("Please input a valid weight and height (units must be metric)");
         }
     }
+    
+    // important to enable the save button.
+    recheckForm();
 }
 
 function calcBMIMetric() {
@@ -294,6 +337,9 @@ function calcBMIMetric() {
 			document.forms[0].c_ppBMI.value = Math.round(weight * 10 / height / height) / 10;
 		}
 	}
+	
+    // important to enable the save button.
+    recheckForm();
 }
 // -->
 </script>
@@ -336,12 +382,6 @@ function calcBMIMetric() {
 		} else {
 			return false;
 		}
-		/*
-		for (var j=0; j<document.forms[0].length; j++) { 
-				if (document.forms[0].elements[j] != null && document.forms[0].elements[j].name ==  name ) {
-					 return document.forms[0].elements[j] ;
-				}
-		}*/
     }
 
     function onSave() {
@@ -351,15 +391,11 @@ function calcBMIMetric() {
         ret = checkAllNumber();
         if(ret==true) {
             reset();
-            ret = confirm("Are you sure you want to save this form?");
         }
         return ret;
     }
-    function onExit() {
-        if(confirm("Are you sure you wish to exit without saving your changes?")==true) {
+     function onExit() {
             window.close();
-        }
-        return(false);
     }
     function onSaveExit() {
         document.forms[0].submit.value="exit";
@@ -367,7 +403,7 @@ function calcBMIMetric() {
         ret = checkAllNumber();
         if(ret == true) {
             reset();
-            ret = confirm("Are you sure you wish to save and close this window?");
+/*             ret = confirm("Are you sure you wish to save and close this window?"); */
         }
         return ret;
     }
@@ -696,6 +732,9 @@ if (!fedb.equals("") && fedb.length()==10 ) {
 		var weekday = day%7;
         source.value = week + "w+" + weekday;
 <% } %>
+
+// important to enable the save button.
+recheckForm();
 }
 
 	function getDateField(name) {
@@ -721,9 +760,9 @@ function calToday(field) {
 	varMonth = varMonth>9? varMonth : ("0"+varMonth);
 	varDate = calDate.getDate()>9? calDate.getDate(): ("0"+calDate.getDate());
 	field.value = varDate + '/' + (varMonth) + '/' + calDate.getFullYear();
+	recheckForm();
 }
-
-
+ 
 </script>
 
 
@@ -800,7 +839,7 @@ function calToday(field) {
     <center><i>At 36 weeks copy to patient / to hospital</i></center>
 </div>
 
-<html:form action="/form/formname">
+<html:form action="/form/formname" >
 
 <input type="hidden" name="commonField" value="ar2_" />
 <input type="hidden" name="c_lastVisited" value="pg3" />
@@ -855,15 +894,15 @@ function calToday(field) {
             <%
             if (!bView) {
             %>
-            <input type="submit" style="width:40px;" value="Save" onclick="javascript:return onSave();" />
+            <input type="submit" value="Save" onclick="javascript:return onSave();" />
             <input type="submit" value="Save and Exit" onclick="javascript:return onSaveExit();"/>
             <%
             }
             %>
-            <input type="submit" style="width:40px;" value="Exit" onclick="javascript:return onExit();"/>
-            <input type="submit" style="width:50px;" value="Print" onclick="javascript:return onPrint();"/>
+            <input type="button" value="Exit" onclick="onExit();"/>
+            <input type="submit" value="Print" onclick="javascript:return onPrint();"/>
             <input type="submit" value="Print AR1 & AR2" onclick="javascript:return onPrint12();"/>
-            <input type="submit" style="width:75px;" value="Print All" onclick="javascript:return onPrintAll();"/>
+            <input type="submit" value="Print All" onclick="javascript:return onPrintAll();"/>
         </td>
         
         <%
@@ -872,12 +911,7 @@ function calToday(field) {
         <td>
             <a href="javascript: function myFunction() {return false; }" title="Double click shaded fields for drop down or calculation" onClick="showHideBox('Instrdiv',1);return false;"><font color='red'>Instruction</font></a>
         </td>
-        
-        <!--<td align="right">  <b>View:</b>
-        <a href="javascript: popupPage('formbcarpg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');"> AR1</a> |
-        <a href="javascript: popupPage('formbcarpg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');">AR2 <font size=-2>(pg.2)</font></a>
-        </td>
-        -->
+
         <td align="right"><b>Edit:</b>
             <a href="formbcar2012pg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR1</a> |
             <a href="formbcar2012pg2.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR2 <font size=-2>(pg.1)</font></a> |
@@ -1119,7 +1153,6 @@ function calToday(field) {
                             </span><img src="../images/cal.gif" id="ar2_labHBsAgDate_cal">              
                         </td>
                         <td>
-                           <%-- change Dennis Warren @ Treatment March 2012 --%>
                         	<input type="checkbox" id="ar2_labHBsAgNR" name="ar2_labHBsAgNR" 
                         		<%= props.getProperty("ar2_labHBsAgNR", "") %>  @oscar.formDB dbType="tinyint(1)" />
                             <span class="small8">Negative</span>               
@@ -1204,14 +1237,10 @@ function calToday(field) {
         <td>
             <table width="100%" border="0"  cellspacing="0" cellpadding="0">
                 <tr>
-                    <%-- updated heading Dennis Warren @ Treatment March 2012 --%>
                     <td><span class="small9">Prenatal Genetic Screening</span></td>
                 </tr>
                 <tr>
                     <td>
-                        <!--input type="text" name="ar2_labAfpTS" style="width:100%" 
-                        size="10" maxlength="10" value="<%--= props.getProperty("ar2_labAfpTS", "") --%>" @oscar.formDB /-->
-                        
                         <select name="ar2_labScreen" style="width:95%;float:right;">
                             <%
                             String[] optAfp = {"", "TMS", "IPS", "SIPS", "declined"};
@@ -1464,8 +1493,7 @@ function calToday(field) {
                         <td>
                         <input type="text" name="ar2_proPreg" style="width:100%" size="40" maxlength="50" value="<%= props.getProperty("ar2_proPreg", "") %>" @oscar.formDB /></td>
                            </tr>
-                           
-                           <%-- change by Dennis Warren @ Treatment March 2012 --%>
+
                       <tr>
                       	<td><span class="small9">Breastfeeding:</span></td>
                       	<td>
@@ -1667,12 +1695,7 @@ function calToday(field) {
     <td>
         <input type="text" name="pg3_pos4" onDblClick="showBox('Langdiv',1, this, event);" class="spe" style="width:100%;" size="8" maxlength="8" value="<%= props.getProperty("pg3_pos4", "") %>" @oscar.formDB />
            </td>
-    <td><%-- span class="small8"><font color="red">
-        <input type="checkbox" name="pg3_toPatient20" <%= props.getProperty("pg3_toPatient20", "")%>  @oscar.formDB dbType="tinyint(1)"  >
-        Copy given to patient<br>
-        <input type="checkbox" name="pg3_SentHosp20" <%= props.getProperty("pg3_SentHosp20", "")%>  @oscar.formDB dbType="tinyint(1)"  >
-        Copy sent to hospital at 20 weeks
-        </font><br></span--%>
+    <td>
         <input type="text" name="pg3_comment4" style="width:100%" size="50" maxlength="70" value="<%= props.getProperty("pg3_comment4", "") %>" @oscar.formDB />
            </td>
     <td >
@@ -2243,8 +2266,6 @@ function calToday(field) {
 </tr>
 <tr><td width="23%"></td>
     <td>
-    <%-- Modified to allow table data for multiple Ultra Sound exams 
-    			By: Dennis Warren @ OSCARprn by Treatment June 2012 --%>
         <table width="100%" border="1" cellspacing="0" cellpadding="0">
             <tr>
                 <th colspan="6" align="left">
@@ -2360,59 +2381,11 @@ function calToday(field) {
             	</td>           
                       
             </tr>
-            
-            <%-- 
-            <tr>
-                <td></td>
-                <td>
-                    <span class="small8"><i>DD/MM/YYYY</i></span>
-                </td>
-                <td></td>
-                <td>
-                    <span class="small8"><i>weeks + days</i></span>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="small9">1st US</span>
-                </td>
-                <td>
-                    <input type="text" name="ar2_1USoundDate" id="ar2_1USoundDate" size="10" maxlength="10" value="<%= props.getProperty("ar2_1USoundDate", "") %>" @oscar.formDB dbType="date"/>
-                           <img src="../images/cal.gif" id="ar2_1USoundDate_cal">
-                </td>
-                <td>
-                    <span class="small9">GA by US</span>
-                </td>
-                <td>
-                    <input type="text" name="ar2_gestAgeUs" style="width:100%" size="10" maxlength="10" value="<%= props.getProperty("ar2_gestAgeUs", "") %>" @oscar.formDB />
-                </td>
-                <td align="right">
-                    <span class="small9">If maternal prenatal screen above cut off, amnio:</span>
-                </td>
-                <td>
-                    <input type="checkbox" name="ar2_amnioCutOffY" <%= props.getProperty("ar2_amnioCutOffY", "")%>  @oscar.formDB dbType="tinyint(1)" />
-                    <span class="small8">Yes</span>
-                    <input type="checkbox" name="ar2_amnioCutOffN" <%= props.getProperty("ar2_amnioCutOffN", "")%>  @oscar.formDB dbType="tinyint(1)" />
-                    <span class="small8">No</span>
-                </td>
-            </tr>
-            --%>
+
         </table>
         
         <table width="100%" border="0" cellspacing="2" cellpadding="0">            
-            <%-- tr>
-                <td colspan="4" width="70%">
-                    <span class="small9">Comments</span>
-                </td>
-                <td width="30%"></td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <textarea name="pg3_probComment" style="width:100%" cols="40" rows="1"  @oscar.formDB dbType="varchar(255)" ><%= props.getProperty("pg3_probComment", "") %></textarea>
-                </td>
-                <td></td>
-            </tr--%>
+
             <tr>
                 <td colspan="4">
                     <span class="small9">Other Investigations</span>
@@ -2463,34 +2436,26 @@ function calToday(field) {
             <%
             if (!bView) {
             %>
-            <input type="submit" style="width:40px;" value="Save" onclick="javascript:return onSave();" />
+            <input type="submit" value="Save" onclick="javascript:return onSave();" />
             <input type="submit" value="Save and Exit" onclick="javascript:return onSaveExit();"/>
             <%
             }
             %>
-            <input type="submit" style="width:40px;" value="Exit" onclick="javascript:return onExit();"/>
-            <input type="submit" style="width:50px;" value="Print" onclick="javascript:return onPrint();"/>
+            <input type="button" value="Exit" onclick="onExit();"/>
+            <input type="submit" value="Print" onclick="javascript:return onPrint();"/>
             <input type="submit" value="Print AR1 & AR2" onclick="javascript:return onPrint12();"/>
-            <input type="submit" style="width:75px;" value="Print All" onclick="javascript:return onPrintAll();"/>
+            <input type="submit" value="Print All" onclick="javascript:return onPrintAll();"/>
         </td>
         
         <%
         if (!bView) {
         %> 
-        <!--td>
-        <a href="javascript: popPage('formlabreq.jsp?demographic_no=<%=demoNo%>&formId=0&provNo=<%=provNo%>&labType=AR','LabReq');">LAB</a>
-        </td-->
-
-        <!--  <td align="right"><b>View:</b>
-        <a href="javascript: popupPage('formbcarpg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');"> AR1</a> |
-        <a href="javascript: popupPage('formbcarpg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');">AR2 <font size=-2>(pg.2)</font></a>
-        </td>-->
+ 
         <td align="right"><b>Edit:</b>
             <a href="formbcar2012pg1.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR1</a> |
             <a href="formbcar2012pg2.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR2 <font size=-2>(pg.1)</font></a> |
             AR2<font size=-2>(pg.2)</font> |
-            <!--a href="javascript: popupFixedPage(700,950,'../decision/antenatal/antenatalplanner.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>');">AR Planner</a-->
-        </td>
+      	</td>
         <%
         }
         %>
@@ -2499,7 +2464,7 @@ function calToday(field) {
 
 </html:form>
 <script type="text/javascript">
-    Calendar.setup({
+    Calendar.setup({ onUpdate: function(){recheckForm()}, 
         inputField     :    "ar2_labDiabDate",      // id of the input field
         ifFormat       :    "%d/%m/%Y",       // format of the input field
         showsTime      :    false,            // will display a time selector
@@ -2507,18 +2472,18 @@ function calToday(field) {
         singleClick    :    true,           // double-click mode
         step           :    1                // show all years in drop-down boxes (instead of every other year as default)
     });
-Calendar.setup({ inputField : "c_EDD", ifFormat : "%d/%m/%Y", showsTime :false, button : "c_EDD_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_lmp", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_lmp_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labRATDate1", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate1_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labRATDate2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate2_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labGGTDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGGTDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labGBSDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGBSDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labEdinDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labEdinDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "c_EDD", ifFormat : "%d/%m/%Y", showsTime :false, button : "c_EDD_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_lmp", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_lmp_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRATDate1", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate1_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRATDate2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRATDate2_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labGGTDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGGTDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labGBSDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labGBSDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labEdinDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labEdinDate_cal", singleClick : true, step : 1 });
 
-Calendar.setup({ inputField : "ar2_labRhIgG", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labRhIgG2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG2_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_labHBsAgDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labHBsAgDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "ar2_1USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_1USoundDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRhIgG", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labRhIgG2", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labRhIgG2_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_labHBsAgDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_labHBsAgDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "ar2_1USoundDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "ar2_1USoundDate_cal", singleClick : true, step : 1 });
 </script>
 
 </body>

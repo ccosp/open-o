@@ -24,25 +24,17 @@
 package oscar.form;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
 import oscar.SxmlMisc;
-import oscar.util.UtilDateUtilities;
 
 
-/**
- * 
- * @author Dennis Warren
- * OSCARprn
- * 
- * Rewritten June 2012
- * New code is a proper re-hash of the file FrmBCAR2007Record.java 
- *
- */
 public class FrmBCAR2012Record extends FrmRecord{
 	
 	private final String _dateFormat = "dd/MM/yyyy";
@@ -51,6 +43,7 @@ public class FrmBCAR2012Record extends FrmRecord{
 	
     public Properties getFormRecord(LoggedInInfo loggedInInfo, int demographicNo, int existingID) {
     	      
+    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(_dateFormat);
         Date dateOfBirth;
         Date dateToday = new Date();
     	
@@ -62,17 +55,17 @@ public class FrmBCAR2012Record extends FrmRecord{
         	
         	props = new Properties();
         	
-            dateOfBirth = UtilDateUtilities.calcDate(demographic.getYearOfBirth(), demographic.getMonthOfBirth(), demographic.getDateOfBirth());
+        	dateOfBirth = demographic.getBirthDay().getTime();
             
             this.setDemographicProperties();
             
-            props.setProperty("demographic_no", demographic.getDemographicNo().toString());            
-            props.setProperty("formCreated", UtilDateUtilities.DateToString(dateToday, _dateFormat));        
-            props.setProperty("pg1_dateOfBirth", UtilDateUtilities.DateToString(dateOfBirth, _dateFormat));           
-            props.setProperty("pg1_age", String.valueOf(UtilDateUtilities.calcAge(dateOfBirth)));
-            props.setProperty("pg1_formDate", UtilDateUtilities.DateToString(dateToday, _dateFormat));
-            props.setProperty("pg2_formDate", UtilDateUtilities.DateToString(dateToday, _dateFormat));
-            props.setProperty("pg3_formDate", UtilDateUtilities.DateToString(dateToday, _dateFormat));
+            props.setProperty("demographic_no", demographic.getDemographicNo()+"");
+            props.setProperty("formCreated", simpleDateFormat.format(dateToday));        
+            props.setProperty("pg1_dateOfBirth", simpleDateFormat.format(dateOfBirth));           
+            props.setProperty("pg1_age", demographic.getAge());
+            props.setProperty("pg1_formDate", simpleDateFormat.format(dateToday));
+            props.setProperty("pg2_formDate", simpleDateFormat.format(dateToday));
+            props.setProperty("pg3_formDate", simpleDateFormat.format(dateToday));
             String rd = SxmlMisc.getXmlContent(demographic.getFamilyDoctor(), "rd");
             rd = rd != null ? rd : "";
             props.setProperty("pg1_famPhy", rd);
@@ -99,22 +92,18 @@ public class FrmBCAR2012Record extends FrmRecord{
         
         return props;
     }
-   
-    /**
-     * @author dennis warren
-     * @ OSCARprn
-     */
+
     private void setDemographicProperties() {
     	
-        props.setProperty("c_surname", demographic.getLastName());
-        props.setProperty("c_givenName", demographic.getFirstName());
-        props.setProperty("c_address", demographic.getAddress());
-        props.setProperty("c_city", demographic.getCity());
-        props.setProperty("c_province", demographic.getProvince());
-        props.setProperty("c_postal", demographic.getPostal() != null ? demographic.getPostal() : "");
-        props.setProperty("c_phn", demographic.getHin()); 
-        props.setProperty("c_phone", demographic.getPhone());
-        props.setProperty("c_phoneAlt1", demographic.getPhone2());
+        props.setProperty("c_surname", StringUtils.trimToEmpty(demographic.getLastName()));
+        props.setProperty("c_givenName", StringUtils.trimToEmpty(demographic.getFirstName()));
+        props.setProperty("c_address", StringUtils.trimToEmpty(demographic.getAddress()));
+        props.setProperty("c_city", StringUtils.trimToEmpty(demographic.getCity()));
+        props.setProperty("c_province", StringUtils.trimToEmpty(demographic.getProvince()));
+        props.setProperty("c_postal", StringUtils.trimToEmpty(demographic.getPostal()));
+        props.setProperty("c_phn", StringUtils.trimToEmpty(demographic.getHin())); 
+        props.setProperty("c_phone", StringUtils.trimToEmpty(demographic.getPhone()));
+        props.setProperty("c_phoneAlt1", StringUtils.trimToEmpty(demographic.getPhone2()));
         
         String cell = null;  
  
