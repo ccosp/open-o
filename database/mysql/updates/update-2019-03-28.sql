@@ -23,3 +23,5 @@ CREATE TABLE `msgIntegratorDemoMap` (
 )
 
 INSERT INTO `oscar_msg_type`(`type`, `description`, `code`) VALUES (3, 'Integrator Message', 'INTEGRATOR_TYPE');
+
+INSERT INTO `property`(`name`, `value`, `provider_no`) VALUES ('integrator_patient_consent', '1', NULL); 
