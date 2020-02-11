@@ -426,24 +426,14 @@ if(recall){
 							<div class="ChooseRecipientsBox">
 							<table>                                                     
                                 <tr>
-									<td><!--list of the providers cell Start-->														
+								<td style="padding: 10px 5px;"><!--list of the providers cell Start-->												
 									<%if(recall){ %>
 										<div>
 											<input name="provider" value="<%=delegate%>" type="checkbox" checked> 
 											<strong><a title="default recall delegate: <%=delegateName%>">default: <%=delegateName%></a></strong>								
 										</div>
 									<%} %>
-									
-										<!-- Display all local members -->
-										<c:forEach items="${ localMembers }" var="member">
-											<div class="member_contact">								
-												<input type="checkbox" name="provider" id="local-${ member.id.compositeId }" value="${ member.id.compositeId }"  />
-												<label for="local-${ member.id.compositeId }" >
-													<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />															
-												</label>												
-											</div>
-										</c:forEach>
-									
+																	
 										<!-- Display Member Groups -->
 										<div id="member-groups">
 										<details>
@@ -503,6 +493,19 @@ if(recall){
 										</details>
 										</div>
 										</c:if>
+										
+										<hr style="border-top:1px solid #dcdcdc; border-bottom:none;" />
+										
+										<!-- Display all local members -->
+										<c:forEach items="${ localMembers }" var="member">
+											<div class="member_contact">								
+												<input type="checkbox" name="provider" id="local-${ member.id.compositeId }" value="${ member.id.compositeId }"  />
+												<label for="local-${ member.id.compositeId }" >
+													<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />															
+												</label>												
+											</div>
+										</c:forEach>
+										
 									</td><!--list of the providers cell end-->
 								</tr>
 							</table>

@@ -83,21 +83,24 @@ public class FrmRecordHelp {
         return props;
     }
 
-    public synchronized int saveFormRecord(Properties props, String sql) throws SQLException {
+    @SuppressWarnings("deprecation")
+	public synchronized int saveFormRecord(Properties props, String sql) throws SQLException {
 
+    	int insertedPk = -1;
 
-        ResultSet rs = DBHandler.GetSQL(sql, true);
+    	ResultSet rs = DBHandler.GetSQL(sql, true);
         rs.moveToInsertRow();
-        rs = updateResultSet(props, rs, true);
+        updateResultSet(props, rs, true);
         rs.insertRow();
-        String saveAsXml = OscarProperties.getInstance().getProperty("save_as_xml", "false");
-
-        if (saveAsXml.equalsIgnoreCase("true")) {
+        rs.last();
+        insertedPk = rs.getInt(1); 
+        
+        String saveAsXml = OscarProperties.getInstance().getProperty("save_as_xml", "false");      
+        if ("true".equalsIgnoreCase(saveAsXml)) {
 
             String demographicNo = props.getProperty("demographic_no");
             int index = sql.indexOf("form");
             int spaceIndex = sql.indexOf(" ", index);
-            ;
             String formClass = sql.substring(index, spaceIndex);
             Date d = new Date();
             String now = UtilDateUtilities.DateToString(d, "yyyyMMddHHmmss");
@@ -108,33 +111,17 @@ public class FrmRecordHelp {
             String fileName = place + formClass + "_" + demographicNo + "_" + now + ".xml";
 
             try {
+            	// caution: this method closes the resultset.
                 Document doc = JDBCUtil.toDocument(rs);
                 JDBCUtil.saveAsXML(doc, fileName);
             } catch (Exception e) {
                 MiscUtils.getLogger().error("Error", e);
             }
         }
+        
         rs.close();
 
-        int ret = 0;
-        /*
-         * if db_type = mysql return LAST_INSERT_ID() but if db_type = postgresql, return a prepared
-         * statement, since here we dont know which sequence will be used
-         */
-        String db_type = OscarProperties.getInstance() != null ? OscarProperties.getInstance().getProperty("db_type",
-                "") : "";
-        if (db_type.equals("") || db_type.equalsIgnoreCase("mysql")) {
-            sql = "SELECT LAST_INSERT_ID()";
-        } else if (db_type.equalsIgnoreCase("postgresql")) {
-            sql = "SELECT CURRVAL('?')";
-        } else {
-            throw new SQLException("ERROR: Database " + db_type + " unrecognized.");
-        }
-        rs = DBHandler.GetSQL(sql);
-        if (rs.next())
-            ret = rs.getInt(1);
-        rs.close();
-        return ret;
+        return insertedPk;
     }
 
     public ResultSet updateResultSet(Properties props, ResultSet rs, boolean bInsert) throws SQLException {
