@@ -90,9 +90,47 @@ if (request.getParameter("view") != null && request.getParameter("view").equals(
 
 
 <head>
+<title>Antenatal Record 1</title>
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.are-you-sure.js"></script>
+
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <script type="text/javascript" >
 
+
+/*
+ * JQuery dirty form check
+ */
+$(function() {
+    $('form').areYouSure({'addRemoveFieldsMarksDirty':true});
+    
+  	//dirty form enable/disable save button.
+ 	$("form").find('input[value="Save"]').attr('disabled', 'disabled');
+   	$("form").find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+   	$("form").find('input[value="Exit"]').removeAttr('disabled');
+   	
+    $('form').on('dirty.areYouSure', function() {
+        $(this).find('input[value="Save"]').removeAttr('disabled');
+        $(this).find('input[value="Save and Exit"]').removeAttr('disabled');
+        $(this).find('input[value="Exit"]').attr('disabled', 'disabled');
+    });
+    
+    $('form').on('clean.areYouSure', function() {
+    	$(this).find('input[value="Save"]').attr('disabled', 'disabled');
+    	$(this).find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+       	$(this).find('input[value="Exit"]').removeAttr('disabled');
+    });
+
+});
+
+/*
+ * reload the are you sure form check. Usually after a 
+ * javascript is run.
+ */
+function recheckForm() {
+    $('form').trigger('checkform.areYouSure');
+}
 
 function showHideBox(layerName, iState) { // 1 visible, 0 hidden
     if(document.layers)	   //NN4+
@@ -111,6 +149,9 @@ function insertBox(str, field, layerName) { // 1 visible, 0 hidden
     if(document.getElementById)	{
         var obj = document.getElementById(field);
         obj.value = str;
+        
+        // important to enable the save button.
+        recheckForm();
     }
     showHideBox(layerName, 0);
 }
@@ -131,6 +172,8 @@ function insertBox1(str, layerName) { // 1 visible, 0 hidden
     if(document.getElementById)	{
         //var obj = document.getElementById(field);
         fieldObj.value = str;
+        
+        recheckForm();
     }
     showHideBox(layerName, 0);
 }
@@ -138,6 +181,8 @@ function insertBox1(str, layerName) { // 1 visible, 0 hidden
 function showDef(str, field) { 
     if(document.getElementById)	{
         field.value = str;
+        // important to enable the save button.
+        recheckForm();
     }
 }
 function showBMIBox(layerName, iState, field, e) { // 1 visible, 0 hidden
@@ -174,14 +219,12 @@ function syncDemo() {
 }
 
 function wtEnglish2Metric(obj) {
-	//if(!isNaN(document.forms[0].c_ppWt) ) {
-	//	weight = document.forms[0].c_ppWt.value;
+
         weight = obj.value;
 	if( !isNaN(weight) ) {
 		
 		weightM = Math.round(weight * 10 * 0.4536) / 10 ;
 		if(confirm("Are you sure you want to change " + weight + " pounds to " + weightM +"kg?") ) {
-			//document.forms[0].c_ppWt.value = weightM;
 			obj.value = weightM;
 		}
 	}
@@ -198,13 +241,12 @@ function htEnglish2Metric() {
 			inch = inch.charAt(inch.length-1)=='"' ? inch.substring(0, inch.length-1) : inch;
 			inch = inch.substring(1);
 		}
-		
-		//if(!isNaN(feet) && !isNaN(inch) )
-			height = Math.round((feet * 30.48 + inch * 2.54) * 10) / 10 ;
-			if(confirm("Are you sure you want to change " + feet + " feet " + inch + " inch(es) to " + height +"cm?") ) {
-				document.forms[0].c_ppHt.value = height;
-			}
-		//}
+
+		height = Math.round((feet * 30.48 + inch * 2.54) * 10) / 10 ;
+		if(confirm("Are you sure you want to change " + feet + " feet " + inch + " inch(es) to " + height +"cm?") ) {
+			document.forms[0].c_ppHt.value = height;
+		}
+
 	}
 }
 function calcBMIMetric() {
@@ -231,6 +273,8 @@ function calcBMIMetric() {
             document.forms[0].action = "../form/createpdf?__title=British+Columbia+Antenatal+Record+Part+1&__cfgfile=bcar1PrintCfgPg1_2012&__template=bcar1_2012";
             document.forms[0].target="_blank";            
         }
+        // important to enable the save button.
+        recheckForm();
         return ret;
     }
     function onPrint12() {
@@ -258,27 +302,33 @@ function calcBMIMetric() {
         }
         return ret;
     }
+    
     function onSave() {
         document.forms[0].submit.value="save";
         var ret = checkAllDates();
         if(ret==true)
         {
             reset();
-            ret = confirm("Are you sure you want to save this form?");
         }
         return ret;
     }
     
+    function onExit() {
+        window.close();
+  	}
+    
     function onSaveExit() {
-        document.forms[0].submit.value="exit";
+    	
+    	document.forms[0].submit.value="exit";
         var ret = checkAllDates();
-        if(ret == true)
+        if(ret==true)
         {
             reset();
-            ret = confirm("Are you sure you wish to save and close this window?");
         }
         return ret;
+
     }
+       
     function popupPage(varpage) {
         windowprops = "height=700,width=960"+
             ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=no,screenX=50,screenY=50,top=20,left=20";
@@ -291,9 +341,7 @@ function calcBMIMetric() {
         windowprops = "height=700,width=960"+
             ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=no,screenX=50,screenY=50,top=20,left=20";
         var popup = window.open(varpage,pageName, windowprops);
-        //if (popup.opener == null) {
-        //    popup.opener = self;
-        //}
+ 
         popup.focus();
     }
     function popupFixedPage(vheight,vwidth,varpage) { 
@@ -468,6 +516,9 @@ function calByLMP() {
 		var odate = new Date(calDate.getTime() + (280 * 86400000));
 		document.forms[0].pg1_eddByDate.value = odate.getDate() + '/' + (odate.getMonth()+1) + '/' + odate.getFullYear();
 	}
+    // important to enable the save button.
+    recheckForm();
+
 }
 
 function calcAgeAtEDD(){
@@ -491,19 +542,18 @@ function calcAgeAtEDD(){
         
         pg1_ageAtEDD.value = age;
     }
-
+    
+    // important to enable the save button.
+    recheckForm();  
 }
-
 
 </script>
 
-<title>Antenatal Record 1</title>
 
-<link rel="stylesheet" type="text/css"
-	href="<%=bView?"bcArStyleView.css" : "bcAr2007Style.css"%>">
+
+<link rel="stylesheet" type="text/css" href="<%=bView?"bcArStyleView.css" : "bcAr2007Style.css"%>">
 <!-- calendar stylesheet -->
-<link rel="stylesheet" type="text/css" media="all"
-	href="../share/calendar/calendar.css" title="win2k-cold-1" />
+<link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
 
 <!-- main calendar program -->
 <script type="text/javascript" src="../share/calendar/calendar.js"></script>
@@ -878,7 +928,7 @@ function calcAgeAtEDD(){
 @oscar.formDB Field="formEdited" Type="timestamp"  
 @oscar.formDB Field="c_lastVisited" Type="char(3)" 
 -->
-<html:form action="/form/formname">
+<html:form action="/form/formname" styleId="bcarForm">
 
 	<input type="hidden" name="commonField" value="ar2_" />
 	<input type="hidden" name="c_lastVisited" value="pg1" />
@@ -897,7 +947,6 @@ function calcAgeAtEDD(){
 			<%
             if (!bView) {
             %> <input type="submit" 
-            	style="width:40px;" 
             	value="Save"
 				onclick="javascript:return onSave();" /> 
 				
@@ -905,21 +954,19 @@ function calcAgeAtEDD(){
 				value="Save and Exit" 
 				onclick="javascript:return onSaveExit();" /> <%
             }
-            %> <input type="submit" style="width: 40px;" value="Exit"
-				onclick="javascript:return onExit();" /> 
+            %> <input type="button" value="Exit"
+				onclick="onExit();" /> 
 				
-				<input type="submit"
-				style="width: 50px;" value="Print"
+				<input type="submit" value="Print"
 				onclick="javascript:return onPrint();" /> 
 				
-				<input type="submit"
-				style="width: 75px;" value="Print Risk"
+				<input type="submit" value="Print Risk"
 				onclick="javascript:return onPrintRisk();" /> 
 				
 				<input type="submit"
 				value="Print AR1 & AR2" onclick="javascript:return onPrint12();" />
 				
-				<input type="submit" style="width: 75px;" value="Print All"
+				<input type="submit" value="Print All"
 				onclick="javascript:return onPrintAll();" />
 			</td>
 			<%
@@ -930,10 +977,7 @@ function calcAgeAtEDD(){
 				onClick="showHideBox('Instrdiv',1);return false;"><font
 				color='red'>Instruction</font></a></td>
 
-			<td align="right"><!-- font size=-2><b>View:</b> </font>
-            <a href="javascript: popupPage('formbcarpg2.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');"><font size=-2>AR2 (pg.1)</font></a> |
-            <a href="javascript: popupPage('formbcarpg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');"><font size=-2>AR2 (pg.2)</font></a>
-            &nbsp;</font> --></td>
+			<td align="right"></td>
 			<td align="right"><b>Edit:</b>AR1 | <a
 				href="formbcar2012pg2.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR2
 			<font size=-2>(pg.1)</font></a> | <a
@@ -944,12 +988,14 @@ function calcAgeAtEDD(){
         %>
 		</tr>
 	</table>
-
+	
+<!-- 	<div id="saveError" style="display:none; background-color:red; color:white; padding:10px;">
+		There was an error during save. Please try again.
+	</div>
+	 -->
 	<table width="100%" border="1" cellspacing="0" cellpadding="0">
 		<tr>
-			
-		
-		<%-- Alignment modified by: Dennis Warren @ Treatment March 2012 --%>
+
 			<td width="60%">
 
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -975,9 +1021,9 @@ function calcAgeAtEDD(){
 					
 					<td width="33%">
 					
-					<a href="javascript: function myFunction() {return false; }"
-						onClick="popupFixedPage(600, 300, 'formbcarpg1namepopup.jsp'); return false;">Attending
-					Physician/Midwife:</a><br />
+					<a href="javascript: function myFunction() {return false; }" onClick="popupFixedPage(600, 300, 'formbcarpg1namepopup.jsp'); return false;">
+						Attending Physician/Midwife:
+					</a><br />
 					<input type="text" name="pg1_priCare" style="width: 100%" size="30"
 						maxlength="60" value="<%= props.getProperty("pg1_priCare", "") %>"
 						@oscar.formDB />
@@ -2500,23 +2546,22 @@ function calcAgeAtEDD(){
             <%
             if (!bView) {
             %>
-            <input type="submit" style="width:40px;" value="Save" onclick="javascript:return onSave();" />
+            <input type="submit" value="Save" onclick="javascript:return onSave();" />
             <input type="submit" value="Save and Exit" onclick="javascript:return onSaveExit();"/>
             <%
             }
             %>
-            <input type="submit" style="width:40px;" value="Exit" onclick="javascript:return onExit();"/>
-            <input type="submit" style="width:50px;" value="Print" onclick="javascript:return onPrint();"/>
-            <input type="submit" style="width:75px;" value="Print Risk" onclick="javascript:return onPrintRisk();"/>
+            <input type="button" value="Exit" onclick="onExit();"/>
+            <input type="submit" value="Print" onclick="javascript:return onPrint();"/>
+            <input type="submit" value="Print Risk" onclick="javascript:return onPrintRisk();"/>
             <input type="submit" value="Print AR1 & AR2" onclick="javascript:return onPrint12();"/>
-            <input type="submit" style="width:75px;" value="Print All" onclick="javascript:return onPrintAll();"/>
+            <input type="submit" value="Print All" onclick="javascript:return onPrintAll();"/>
         </td>
         <%
         if (!bView) {
         %>
         <td>
-            <!--a href="javascript: popPage('formlabreq.jsp?demographic_no=<%=demoNo%>&formId=0&provNo=<%=provNo%>&labType=AR','LabReq');">LAB</a-->
-							</td>
+          				</td>
 							<td align="right"><b>View:</b> <a
 								href="javascript: popupPage('formbcar2012pg2.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>&view=1');">AR2
 							<font size=-2>(pg.1)</font></a> | <a
@@ -2526,7 +2571,7 @@ function calcAgeAtEDD(){
 								href="formbcar2012pg2.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR2
 							<font size=-2>(pg.1)</font></a> | <a
 								href="formbcar2012pg3.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>">AR2
-							<font size=-2>(pg.2)</font></a> | <!--a href="javascript: popupFixedPage(700,950,'../decision/antenatal/antenatalplanner.jsp?demographic_no=<%=demoNo%>&formId=<%=formId%>&provNo=<%=provNo%>');">AR Planner</a-->
+							<font size=-2>(pg.2)</font></a> 
 							</td>
 							<%
         }
@@ -2922,21 +2967,21 @@ function calcAgeAtEDD(){
 					</html:form>
 </body>
 <script type="text/javascript">
-Calendar.setup({ inputField : "pg1_lmp", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_lmp_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_stopDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_stopDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_eddByUs", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_eddByUs_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_examination", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_examination_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_smokeQuitDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_smokeQuitDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_alcoQuitDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_alcoQuitDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_lmp", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_lmp_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_stopDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_stopDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_eddByUs", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_eddByUs_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_examination", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_examination_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_smokeQuitDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_smokeQuitDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_alcoQuitDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_alcoQuitDate_cal", singleClick : true, step : 1 });
 
-Calendar.setup({ inputField : "pg1_eddByDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_eddByDate_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_firstUsPerf", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_firstUsPerf_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_eddByDate", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_eddByDate_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_firstUsPerf", ifFormat : "%d/%m/%Y", showsTime :false, button : "pg1_firstUsPerf_cal", singleClick : true, step : 1 });
 
-Calendar.setup({ inputField : "pg1_obHistDate1", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate1_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_obHistDate2", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate2_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_obHistDate3", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate3_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_obHistDate4", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate4_cal", singleClick : true, step : 1 });
-Calendar.setup({ inputField : "pg1_obHistDate5", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate5_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_obHistDate1", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate1_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_obHistDate2", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate2_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_obHistDate3", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate3_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_obHistDate4", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate4_cal", singleClick : true, step : 1 });
+Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : "pg1_obHistDate5", ifFormat : "%b %Y", showsTime :false, button : "pg1_obHistDate5_cal", singleClick : true, step : 1 });
 </script>
 
 </html:html>

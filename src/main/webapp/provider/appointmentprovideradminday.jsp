@@ -1791,8 +1791,6 @@ for(nProvider=0;nProvider<numProvider;nProvider++) {
 			  }
 		  }
 		  
-                  //String reason = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(String.valueOf(appointment.getReason()).trim());
-                  //String notes = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(String.valueOf(appointment.getNotes()).trim());
                   String reason = String.valueOf(appointment.getReason()).trim();
                   String notes = String.valueOf(appointment.getNotes()).trim();
                   String status = String.valueOf(appointment.getStatus()).trim();
@@ -1805,9 +1803,15 @@ for(nProvider=0;nProvider<numProvider;nProvider++) {
           	    	if(lli != null) {
           	    		reasonCodeName = lli.getLabel();
           	    	}
+          	    	if(reasonCodeName != null)
+          	    	{
+          	    		reasonCodeName = reasonCodeName.trim();
+          	    	}
           	      }
 				if ( "yes".equalsIgnoreCase(OscarProperties.getInstance().getProperty("SHOW_APPT_TYPE_WITH_REASON")) ) {
-					reasonCodeName = ( type + " : " + reasonCodeName );
+					reasonCodeName = ( type 
+							+ ((type != null && ! type.isEmpty()) ? " : " : "")
+							+ reasonCodeName );
 				}
           
           	  bFirstTimeRs=true;
@@ -1905,12 +1909,12 @@ for(nProvider=0;nProvider<numProvider;nProvider++) {
 <a href=# onClick ="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=0&displaymode=edit&dboperation=search');return false;" title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%>
 <%=name%>
 	<%=type != null ? "type: " + type : "" %>
-	reason: <%=reasonCodeName!=null?reasonCodeName:""%> <%if(reason!=null && !reason.isEmpty()){%>- <%=UtilMisc.htmlEscape(reason)%>
+	reason: <%=reasonCodeName!=null?reasonCodeName:""%> <%if(reason!=null && !reason.isEmpty()){%><%=((reasonCodeName != null && ! reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%>
 <%}%>	<bean:message key="provider.appointmentProviderAdminDay.notes"/>: <%=UtilMisc.htmlEscape(notes)%>" >
             .<%=(view==0&&numAvailProvider!=1)?(name.length()>len?name.substring(0,len).toUpperCase():name.toUpperCase()):name.toUpperCase()%>
             </font></a><!--Inline display of reason -->
       <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON" value="yes" defaultVal="true">
-      <span class="reason reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }"><bean:message key="provider.appointmentProviderAdminDay.Reason"/>:<%=UtilMisc.htmlEscape(reason)%></span>
+      <span class="reason reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }"><%=UtilMisc.htmlEscape(reason)%></span>
       </oscar:oscarPropertiesCheck></td>
         <%
         			} else {
@@ -1919,7 +1923,6 @@ for(nProvider=0;nProvider<numProvider;nProvider++) {
                                         <a href="#" onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=<%=demographic_no%>');return false;" title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><font color="red">!</font></a>
     					</caisi:isModuleLoad>
     					<caisi:isModuleLoad moduleName="ticklerplus">
-		    				<!--  <a href="../Tickler.do?method=filter&filter.client=<%=demographic_no %>" title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><font color="red">!</font></a> -->
     						<a href="#" onClick="popupPage(700,102.4, '../Tickler.do?method=filter&filter.client=<%=demographic_no %>');return false;" title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><font color="red">!</font></a>
     					</caisi:isModuleLoad>
 					<%} %>
@@ -1986,7 +1989,7 @@ start_time += iSm + ":00";
 <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON_TOOLTIP" value="yes" defaultVal="true"> 
 	title="<%=name%>
 	type: <%=type != null ? type : "" %>
-	reason: <%=reasonCodeName!=null? reasonCodeName:""%> <%if(reason!=null && !reason.isEmpty()){%>- <%=UtilMisc.htmlEscape(reason)%><%}%>
+	reason: <%=reasonCodeName!=null? reasonCodeName:""%> <%if(reason!=null && !reason.isEmpty()){%><%=((reasonCodeName != null && ! reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%><%}%>
 	notes: <%=notes%>"
 </oscar:oscarPropertiesCheck> ><%=(view==0) ? (name.length()>len?name.substring(0,len) : name) :name%></a>
 
@@ -2123,7 +2126,10 @@ start_time += iSm + ":00";
 	  <%}}%>
       <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON" value="yes" defaultVal="true">
      		<span class="reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }">
-     			<strong>&#124;<%=reasonCodeName==null?"":"&nbsp;" + reasonCodeName + " -"%><%=reason==null?"":"&nbsp;" + reason%></strong>
+     			<strong><i>
+	     			&#124;<%=reasonCodeName==null ? "" : "&nbsp;" + reasonCodeName %>
+	     			<%=(reason==null || reason.isEmpty()) ? "" : ((reasonCodeName != null && ! reasonCodeName.isEmpty()) ? "- " : "") + reason%>
+     			</i></strong>
      		</span>
       </oscar:oscarPropertiesCheck>
       
@@ -2131,8 +2137,7 @@ start_time += iSm + ":00";
 
 	  <!-- add one link to caisi Program Management Module -->
 	  <caisi:isModuleLoad moduleName="caisi">
-                <%-- <a href=# onClick="popupPage(700, 1048,'../PMmodule/ClientManager.do?id=<%=demographic_no%>')" title="Program Management">|P</a>--%>
-	  	<a href='../PMmodule/ClientManager.do?id=<%=demographic_no%>' title="Program Management">|P</a>
+  			<a href='../PMmodule/ClientManager.do?id=<%=demographic_no%>' title="Program Management">|P</a>
     </caisi:isModuleLoad>
           <%
 

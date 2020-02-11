@@ -258,7 +258,6 @@
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDocListForm.java:private void setUpVector() {</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDocListForm.java:public Vector&lt;String&gt; getProviderNoVector() {</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDocListForm.java:setUpVector();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgHandleMessagesAction.java:java.util.Vector vector = new java.util.Vector();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarPrevention/Prevention.java:Hashtable preventionTypes = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarPrevention/Prevention.java:Vector v = new Vector();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarPrevention/Prevention.java:a = new Vector();</ViolationValue>
@@ -600,8 +599,6 @@
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarMeasurements/addMeasurementMap2.jsp:Vector&lt;EctMeasurementTypesBean&gt; vec = hd.getMeasurementTypeVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarMeasurements/adminFlowsheet/EditFlowsheet.jsp:Vector&lt;EctMeasurementTypesBean&gt; vec = hd.getMeasurementTypeVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarMeasurements/adminFlowsheet/UpdateFlowsheet.jsp:Hashtable colourHash = mFlowsheet.getIndicatorHashtable();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:java.util.Vector locationVect = new java.util.Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:listy = new java.util.ArrayList();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/DisplayDemographicMessages.jsp:&lt;% //java.util.Vector theMessages = new java.util.Vector() ;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/DisplayDemographicMessages.jsp:java.util.Vector theMessages2 = new java.util.Vector() ;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/DisplayMessages.jsp:java.util.Vector theMessages2 = new java.util.Vector() ;</ViolationValue>
@@ -899,9 +896,10 @@
         <ViolationValue>/src/main/java/oscar/form/FrmPalliativeCareRecord.java:ResultSet rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/form/FrmPeriMenopausalRecord.java:ResultSet rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/form/FrmReceptionAssessmentRecord.java:ResultSet rs = DBHandler.GetSQL(sql);</ViolationValue>
+        <ViolationValue>/src/main/java/oscar/form/FrmRecordHelp.java://        rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/form/FrmRecordHelp.java:ResultSet rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/form/FrmRecordHelp.java:ResultSet rs = DBHandler.GetSQL(sql, true);</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/form/FrmRecordHelp.java:rs = DBHandler.GetSQL(sql);</ViolationValue>
+        <ViolationValue>/src/main/java/oscar/form/FrmRecordHelp.java:try(ResultSet rs = DBHandler.GetSQL(sql, true))</ViolationValue>
         <ViolationValue>/src/main/java/oscar/form/FrmRhImmuneGlobulinRecord.java:rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/form/FrmRourke2006Record.java:ResultSet rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/form/FrmRourke2006Record.java:rs = DBHandler.GetSQL("select sex from demographic where demographic_no = "+demo);</ViolationValue>
@@ -977,10 +975,7 @@
         <ViolationValue>/src/main/java/oscar/oscarLab/ca/bc/PathNet/PathNetInfo.java:ResultSet rsLab = DBHandler.GetSQL(select_not_signed);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarLab/ca/on/CommonLabResultData.java:DBPreparedHandler db = new DBPreparedHandler();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarLab/ca/on/CommonLabResultData.java:import oscar.oscarDB.DBPreparedHandler;</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgMessageData.java:DBPreparedHandler db = new DBPreparedHandler();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgMessageData.java:import oscar.oscarDB.DBPreparedHandler;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/docxfer/send/MsgGenerate.java:ResultSet rs = DBHandler.GetSQL(sql);</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgViewMessageAction.java:rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarReport/ClinicalReports/SQLDenominator.java:ResultSet rs = DBHandler.GetSQL(exeSql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarReport/ClinicalReports/SQLNumerator.java:ResultSet rs = DBHandler.GetSQL(sql.replaceAll("\\$\\{"+processString+"\\}", demographicNo));</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarReport/data/ObecData.java:DBPreparedHandler accessDB = null;</ViolationValue>
@@ -1891,7 +1886,6 @@
         <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgAddressBook.java:remoteLocationDesc = new java.util.Vector();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgAddressBook.java:remoteLocationId        = new java.util.Vector();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgAddressBook.java:remoteLocationId = new java.util.Vector();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgMessageData.java:java.util.Vector&lt;String&gt; vector = new java.util.Vector&lt;String&gt;();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDisplayMessagesBean.java:* @param messageid Vector, Contains all the messageids to be displayed</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDisplayMessagesBean.java:* @param sentby Vector contains Strings of who sent the message</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDisplayMessagesBean.java:* @param status Vector, Strings either read , new or del</ViolationValue>
@@ -1969,10 +1963,6 @@
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDocListForm.java:return this.providerNoVector;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDocListForm.java:setUpVector();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgDocListForm.java:this.providerNoVector = noVector;</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgHandleMessagesAction.java:java.util.Hashtable demoMap = msgDemoMap.getDemoMap(messageNo);</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgHandleMessagesAction.java:java.util.Vector vector = new java.util.Vector();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgViewMessageAction.java:Vector theMessages2 = DisplayMessagesBeanId.estDemographicInbox(orderBy,demographic_no);</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgViewMessageAction.java:import java.util.Vector;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgViewPDFAction.java:String pdfFile = ( String) attVector.elementAt(fileID);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgViewPDFAction.java:Vector attVector = Doc2PDF.getXMLTagValue(pdfAttachment, "CONTENT" );</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/pageUtil/MsgViewPDFAction.java:import java.util.Vector;</ViolationValue>
@@ -2888,17 +2878,9 @@
         <ViolationValue>/src/main/webapp/oscarMDS/PatientSearch.jsp:bufChart = new StringBuffer( (oscar.Misc.getString(rs,"chart_no"))   );</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMDS/PatientSearch.jsp:bufName = new StringBuffer( (oscar.Misc.getString(rs,"last_name")+ ","+ oscar.Misc.getString(rs,"first_name")) );</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMDS/PatientSearch.jsp:bufNo = new StringBuffer( (oscar.Misc.getString(rs,"demographic_no")) );</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:&lt;%for (int j = 0; j &lt; xmlVector.size() ; j++){/*this is the remotes*/%&gt;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:&lt;%if (xmlVector.size() &gt; 0){%&gt;&lt;!--the remotes--&gt;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:Document xmlDoc = Msgxml.parseXML((String) xmlVector.elementAt(j));</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:StringBuffer stringBuffer = new StringBuffer();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:java.util.Vector locationVect = new java.util.Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:java.util.Vector xmlVector    = addressBook.remoteAddressBooks();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/CreateMessage.jsp:locationVect = (java.util.Vector) request.getAttribute("Relocation");</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/DisplayDemographicMessages.jsp:&lt;% //java.util.Vector theMessages = new java.util.Vector() ;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/DisplayDemographicMessages.jsp:java.util.Vector theMessages2 = new java.util.Vector() ;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/DisplayMessages.jsp:java.util.Vector theMessages2 = new java.util.Vector() ;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarMessenger/ViewMessageFromEncounter.jsp:java.util.Hashtable demoMap = msgDemoMap.getDemoMap((String) request.getAttribute("viewMessageId"));</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/ViewPDFAttachment.jsp:&lt;% Vector attVector = Doc2PDF.getXMLTagValue(pdfAttch, "TITLE" ); %&gt;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/ViewPDFAttachment.jsp:&lt;% for ( int i = 0 ; i &lt; attVector.size(); i++) { %&gt;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarMessenger/ViewPDFAttachment.jsp:&lt;td bgcolor="#DDDDFF"&gt;&lt;%=(String) attVector.get(i)%&gt;&lt;/td&gt;</ViolationValue>

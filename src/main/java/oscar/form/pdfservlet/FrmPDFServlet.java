@@ -670,31 +670,64 @@ public class FrmPDFServlet extends HttpServlet {
 	                        for (Enumeration e = tempPropertiesArray[k].propertyNames(); e.hasMoreElements();) {
 	                            tempName = new StringBuilder(e.nextElement().toString());
 	                            tempValue = tempPropertiesArray[k].getProperty(tempName.toString()).trim();
+	                            
 	                            if (tempName.toString().equals("__finalEDB"))
-	                                args.setProperty(tempName.toString(), props.getProperty(tempValue));
+	                            {
+	                            	/*
+	                            	 * there is a certain condition when the EDD value is not in the properties
+	                            	 * this catches that condition before throwing a nasty NPE
+	                            	 */	                            	
+	                            	if(props.contains(tempValue))
+	                            	{
+	                            		args.setProperty(tempName.toString(), props.getProperty(tempValue));
+	                            	}
+	                            }
 	                            else if (tempName.toString().equals("__xDateScale"))
+	                            {
 	                                args.setProperty(tempName.toString(), props.getProperty(tempValue));
+	                            }
 	                            else if (tempName.toString().equals("__dateFormat"))
+	                            {
 	                                args.setProperty(tempName.toString(),tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__nMaxPixX"))
+	                            {
 	                                args.setProperty(tempName.toString(),tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__nMaxPixY"))
+	                            {
 	                                args.setProperty(tempName.toString(),tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__fStartX"))
+	                            {
 	                                args.setProperty(tempName.toString(),tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__fEndX"))
+	                            {
 	                                args.setProperty(tempName.toString(),tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__fStartY"))
+	                            {
 	                                args.setProperty(tempName.toString(),tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__fEndY"))
+	                            {
 	                                args.setProperty(tempName.toString(),tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__origX"))
+	                            {
 	                                origX = Integer.parseInt(tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__origY"))
+	                            {
 	                                origY = Integer.parseInt(tempValue);
+	                            }
 	                            else if (tempName.toString().equals("__className"))
+	                            {
 	                                className = tempValue;
-	                            else {
+	                            }
+	                            else 
+	                            {
 	                            	MiscUtils.getLogger().debug("Adding xDate " + tempName.toString() + " VAL: " + props.getProperty(tempName.toString()));
 	                            	MiscUtils.getLogger().debug("Adding yHeight " + tempValue + " VAL: " + props.getProperty(tempValue));
 	                                xDate.add(props.getProperty(tempName.toString()));

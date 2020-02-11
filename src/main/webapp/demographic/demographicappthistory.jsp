@@ -38,7 +38,7 @@
 		return;
 	}
 %>
-
+<%@page import="oscar.util.*"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.web.context.WebApplicationContext"%>
@@ -51,7 +51,6 @@
 <%@ page import="org.oscarehr.caisi_integrator.ws.*"%>
 <%@ page import="org.oscarehr.common.model.CachedAppointmentComparator" %>
 
-<%@page import="oscar.util.DateUtils"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
@@ -64,7 +63,9 @@
 <%@page import="org.oscarehr.common.model.AppointmentArchive" %>
 <%@page import="org.oscarehr.common.dao.AppointmentStatusDao" %>
 <%@page import="org.oscarehr.common.model.AppointmentStatus" %>
-
+<%@page import="org.oscarehr.managers.LookupListManager" %>
+<%@page import="org.oscarehr.common.model.LookupList" %>
+<%@page import="org.oscarehr.common.model.LookupListItem" %>
 
 <%@ page import="org.oscarehr.common.model.ProviderData"%>
 <%@ page import="org.oscarehr.common.dao.ProviderDataDao"%>
@@ -90,34 +91,43 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean("oscarAppointmentDao");
 ProviderDataDao providerDao = SpringUtils.getBean(ProviderDataDao.class);
 AppointmentStatusDao appointmentStatusDao = SpringUtils.getBean(AppointmentStatusDao.class);
-
-
-
-if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
-	SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
-	sites = siteDao.getAllActiveSites(); 
-	//get all sites bgColors
-	for (Site st : sites) {
-		siteBgColor.put(st.getName(), new String[]{st.getBgColor(), st.getShortName()});
-	}
+LookupListManager lookupListManager = SpringUtils.getBean(LookupListManager.class);
+LookupList reasonCodes = lookupListManager.findLookupListByName(loggedInInfo, "reasonCode");
+Map<Integer,LookupListItem> reasonCodesMap = new  HashMap<Integer,LookupListItem>();
+for(LookupListItem lli:reasonCodes.getItems()) {
+	reasonCodesMap.put(lli.getId(),lli);	
 }
 
-  String curProvider_no = (String) session.getAttribute("user");
-  String demographic_no = request.getParameter("demographic_no");
-  String strLimit1="0";
-  String strLimit2="50";
-  if(request.getParameter("limit1")!=null) strLimit1 = request.getParameter("limit1");
-  if(request.getParameter("limit2")!=null) strLimit2 = request.getParameter("limit2");
-  
-  String demolastname = request.getParameter("last_name")==null?"":request.getParameter("last_name");
-  String demofirstname = request.getParameter("first_name")==null?"":request.getParameter("first_name");
-  String deepColor = "#CCCCFF" , weakColor = "#EEEEFF" ;
-  String showDeleted = request.getParameter("deleted");
-  String orderby="";
-  if(request.getParameter("orderby")!=null) orderby=request.getParameter("orderby");
-  
-  Map<String,ProviderData> providerMap = new HashMap<String,ProviderData>();
-  
+
+
+	if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
+		SiteDao siteDao = (SiteDao) WebApplicationContextUtils.getWebApplicationContext(application)
+				.getBean("siteDao");
+		sites = siteDao.getAllActiveSites();
+		//get all sites bgColors
+		for (Site st : sites) {
+			siteBgColor.put(st.getName(), new String[] { st.getBgColor(), st.getShortName() });
+		}
+	}
+
+	String curProvider_no = (String) session.getAttribute("user");
+	String demographic_no = request.getParameter("demographic_no");
+	String strLimit1 = "0";
+	String strLimit2 = "50";
+	if (request.getParameter("limit1") != null)
+		strLimit1 = request.getParameter("limit1");
+	if (request.getParameter("limit2") != null)
+		strLimit2 = request.getParameter("limit2");
+
+	String demolastname = request.getParameter("last_name") == null ? "" : request.getParameter("last_name");
+	String demofirstname = request.getParameter("first_name") == null ? "" : request.getParameter("first_name");
+	String deepColor = "#CCCCFF", weakColor = "#EEEEFF";
+	String showDeleted = request.getParameter("deleted");
+	String orderby = "";
+	if (request.getParameter("orderby") != null)
+		orderby = request.getParameter("orderby");
+
+	Map<String, ProviderData> providerMap = new HashMap<String, ProviderData>();
 %>
 
 
@@ -334,6 +344,17 @@ if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
     if(provider != null) {
     	providerMap.put(provider.getId(),provider);
     }
+    
+ 	String reasonCodeName = null;
+	if (appointment.getReasonCode() != null) {
+		LookupListItem lookupListItem = reasonCodesMap.get(appointment.getReasonCode());
+		if (lookupListItem != null) {
+			reasonCodeName = lookupListItem.getLabel();
+		}
+		if (reasonCodeName != null) {
+			reasonCodeName = reasonCodeName.trim();
+		}
+	}
        
 %> 
 <tr <%=(deleted)?"style='text-decoration: line-through' ":"" %> bgcolor="<%=bodd?weakColor:"white"%>" appt_no="<%=appointment.getId().toString()%>" demographic_no="<%=demographic_no%>" provider_no="<%=provider!=null?provider.getId():""%>">	  
@@ -346,7 +367,7 @@ if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
 	  <% } %>
 	  </td>
       <td><%=appointment.getType() %></td>
-      <td><%=appointment.getReason()%></td>
+      <td><%=(reasonCodeName != null && ! reasonCodeName.isEmpty()) ? reasonCodeName : ""%><%=(appointment.getReason() != null && ! appointment.getReason().isEmpty()) ? ((reasonCodeName != null && ! reasonCodeName.isEmpty()) ? " - " : "") + UtilMisc.htmlEscape(appointment.getReason()) : ""%></td>
       <% if( provider != null ) {%>
       <td><%=(provider.getLastName() == null ? "N/A" : provider.getLastName()) + "," + (provider.getFirstName() == null ? "N/A" : provider.getFirstName())%></td>
       <%}
