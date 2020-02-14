@@ -676,8 +676,10 @@ public class FrmPDFServlet extends HttpServlet {
 	                            	/*
 	                            	 * there is a certain condition when the EDD value is not in the properties
 	                            	 * this catches that condition before throwing a nasty NPE
+	                            	 * Try not to think about it too much - it will make you insane. Someone 
+	                            	 * thought it would be cool to interchange the map. 
 	                            	 */	                            	
-	                            	if(props.contains(tempValue))
+	                            	if(props.containsKey(tempValue))
 	                            	{
 	                            		args.setProperty(tempName.toString(), props.getProperty(tempValue));
 	                            	}
