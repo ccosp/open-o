@@ -115,7 +115,7 @@ public class FrmRecordHelp {
                 Document doc = JDBCUtil.toDocument(rs);
                 JDBCUtil.saveAsXML(doc, fileName);
             } catch (Exception e) {
-                MiscUtils.getLogger().error("Error", e);
+                MiscUtils.getLogger().error("Error. Failed to save XML Doc for " + fileName, e);
             }
         }
         
