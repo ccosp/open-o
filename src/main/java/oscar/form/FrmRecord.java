@@ -64,7 +64,10 @@ public abstract class FrmRecord {
 
 	public abstract String createActionURL(String where, String action, String demoId, String formId) throws SQLException;
 
-
+	public Properties getGraph(LoggedInInfo loggedInInfo, int demographicNo, int existingID){
+		return new Properties();
+	}
+	
 	public Properties getGraph(int demographicNo, int existingID){
 		return new Properties();
 	}

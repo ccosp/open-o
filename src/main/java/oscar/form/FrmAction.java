@@ -91,7 +91,7 @@ public final class FrmAction extends Action {
             		rec.setGraphType(graphType);
             	}
             	
-               props = rec.getGraph(demographicNo, formId);
+               props = rec.getGraph(loggedInInfo, demographicNo, formId);
                
                for( Enumeration e = props.propertyNames(); e.hasMoreElements(); ) {
                    String name = (String)e.nextElement();                   
@@ -185,7 +185,7 @@ public final class FrmAction extends Action {
 
         } catch (Exception ex) {
             // throw new ServletException(ex);
-        	log.error("Exception for form " + formClassName , ex );
+        	log.error("Exception for form " + formClassName + " Save failed.", ex );
         }
 
         log.info("Forwarding form " + formClassName + " to " + actionForward.getPath());

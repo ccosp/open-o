@@ -123,7 +123,8 @@ public class FrmBCAR2012Record extends FrmRecord{
 
         FrmRecordHelp frh = new FrmRecordHelp();
         frh.setDateFormat(_dateFormat);
-        return ((frh).saveFormRecord(props, sql));
+        int recordId = ((frh).saveFormRecord(props, sql));
+        return recordId;
     }
 
     public Properties getPrintRecord(int demographicNo, int existingID) throws SQLException {
