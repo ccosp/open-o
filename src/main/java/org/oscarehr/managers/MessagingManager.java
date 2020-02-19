@@ -316,7 +316,7 @@ public class MessagingManager {
 	}
 	
 	public void deleteMessage(LoggedInInfo loggedInInfo, int messageId) {
-		List<MessageList> messageList = messageListDao.findByMessage((long) messageId);
+		List<MessageList> messageList = messageListDao.findByProviderNoAndMessageNo(loggedInInfo.getLoggedInProviderNo(), (long) messageId);
 		for(MessageList message : messageList)
 		{
 			setMessageStatus(loggedInInfo, message, MessageList.STATUS_DELETED);

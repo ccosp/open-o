@@ -283,8 +283,11 @@ if(recall){
 	 * Check off all the contact members that this message will be replied to. 
 	 */
     var replyList = '${ replyList }';
-    var replyListJson = JSON.parse(replyList);    
-
+    var replyListJson = []; 
+    if(replyList)
+    {
+    	replyListJson = JSON.parse(replyList);    
+    }
 	$(document).ready(function(){
 		
 		var missing = [];
