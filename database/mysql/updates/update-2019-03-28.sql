@@ -1,4 +1,5 @@
 alter table groupMembers_tbl add facilityId int(6);
+alter table groupMembers_tbl add destinationFacilityId int(6);
 alter table messagelisttbl add destinationFacilityId int(6);
 alter table messagelisttbl add sourceFacilityId int(6);
 alter table oscar_msg_type add code varchar(255);
