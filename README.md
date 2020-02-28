@@ -6,6 +6,8 @@ An open source electronic medical record system.
 
 ## What is OpenOscar?
 
+A community driver fork of Oscar EMR.
+
 ## Installation
 
 For a Dockerized installation, see [OpenOSP](https://github.com/open-osp/open-osp)
