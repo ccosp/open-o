@@ -2,6 +2,8 @@
 
 ## What is Oscar?
 
+An open source electronic medical record system.
+
 ## What is OpenOscar?
 
 ## Installation
