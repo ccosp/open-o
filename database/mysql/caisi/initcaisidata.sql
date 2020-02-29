@@ -1554,12 +1554,6 @@ VALUES ('default', 0, null, 1, 0, 0, 0, 0, null, null, 10, 10000000, 2592000, 31
 --
 insert into encounterForm values("Discharge Summary","../form/formDischargeSummary.jsp?demographic_no=","formDischargeSummary",0);
 
-
--- quatro group's report runner
-insert into lst_gender (code,description,isactive,displayorder) values ('M','Male',1,2);
-insert into lst_gender (code,description,isactive,displayorder) values ('F','Female',1,1);
-insert into lst_gender (code,description,isactive,displayorder) values ('T','Transgender',1,3);
-
 insert into lst_sector (id,description,isactive,displayorder) values (1,'Men',1,1);
 insert into lst_sector (id,description,isactive,displayorder) values (2,'Women',1,2);
 insert into lst_sector (id,description,isactive,displayorder) values (3,'Families',1,3);
