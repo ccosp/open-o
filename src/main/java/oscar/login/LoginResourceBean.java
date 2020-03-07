@@ -1,0 +1,158 @@
+/**
+ * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
+ * This software is published under the GPL GNU General Public License.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *
+ * This software was written for the
+ * Department of Family Medicine
+ * McMaster University
+ * Hamilton
+ * Ontario, Canada
+ */
+package oscar.login;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.oscarehr.common.service.AcceptableUseAgreementManager;
+import org.oscarehr.util.MiscUtils;
+
+import oscar.OscarProperties;
+
+public class LoginResourceBean {
+	
+	private String supportLink;
+	private String supportText;
+	private String clinicText;
+	private String clinicLink;
+	private String buildTag;
+	private String econsultURL;
+	private AcceptableUseAgreementManager acceptableUseAgreementManager;
+
+	public LoginResourceBean(HttpServletRequest request)
+	{
+		OscarProperties oscarProperties = OscarProperties.getInstance();
+		String oscarDocuments = oscarProperties.getProperty("BASE_DOCUMENT_DIR") + File.separator + "login";		
+		Properties loginProperties = new Properties();
+		File propertiesFile = new File(oscarDocuments, ".env");
+		
+		if(propertiesFile.exists())
+		{
+			try(FileInputStream fileInputStream = new FileInputStream(propertiesFile))
+			{
+				loginProperties.load(fileInputStream);
+			} catch (Exception e) {
+				MiscUtils.getLogger().warn("Problem with fetching login resources " + e);
+			} 
+		}
+		
+		if(loginProperties.containsKey("clinicText"))
+		{
+			this.clinicText = oscarProperties.getProperty("clinicText");
+		}
+		
+		if(loginProperties.containsKey("clinicLink"))
+		{
+			this.supportLink = oscarProperties.getProperty("clinicLink");
+		}
+		
+		if(loginProperties.containsKey("supportText"))
+		{
+			this.supportText = oscarProperties.getProperty("supportText");
+		}
+		
+		if(loginProperties.containsKey("supportLink"))
+		{
+			this.supportText = oscarProperties.getProperty("supportLink");
+		}
+		
+		this.buildTag = OscarProperties.getBuildDate() + " " + OscarProperties.getBuildTag();
+		this.econsultURL = oscarProperties.getProperty("backendEconsultUrl");	
+		
+		if(oscarProperties.getBooleanProperty("oneid.enabled", "true")) {
+			//Gets the request URL
+			StringBuffer oscarUrl = request.getRequestURL();
+			//Determines the initial length by subtracting the length of the servlet path from the full url's length
+			Integer urlLength = oscarUrl.length() - request.getServletPath().length();
+			//Sets the length of the URL, found by subtracting the length of the servlet path from the length of the full URL, that way it only gets up to the context path
+			oscarUrl.setLength(urlLength);
+			
+			this.econsultURL = this.econsultURL + "/SAML2/login?oscarReturnURL=" + oscarUrl + "/ssoLogin.do" + "?loginStart=";
+		}
+		
+		this.acceptableUseAgreementManager = new AcceptableUseAgreementManager();
+	
+	}
+
+	public String getSupportLink() {
+		return supportLink;
+	}
+
+	public void setSupportLink(@SuppressWarnings("unused") String supportLink) {
+		this.supportLink = null;
+	}
+
+	public String getSupportText() {
+		return supportText;
+	}
+
+	public void setSupportText(@SuppressWarnings("unused") String supportText) {
+		this.supportText = null;
+	}
+
+	public String getClinicText() {
+		return clinicText;
+	}
+
+	public void setClinicText(@SuppressWarnings("unused") String clinicText) {
+		this.clinicText = null;
+	}
+
+	public String getClinicLink() {
+		return clinicLink;
+	}
+
+	public void setClinicLink(@SuppressWarnings("unused") String clinicLink) {
+		this.clinicLink = null;
+	}
+
+	public String getBuildTag() {
+		return buildTag;
+	}
+
+	public void setBuildTag(@SuppressWarnings("unused") String buildTag) {
+		this.buildTag = null;
+	}
+
+	public String getEconsultURL() {
+		return econsultURL;
+	}
+
+	public void setEconsultURL(@SuppressWarnings("unused") String econsultURL) {
+		this.econsultURL = null;
+	}
+
+	public AcceptableUseAgreementManager getAcceptableUseAgreementManager() {
+		return acceptableUseAgreementManager;
+	}
+
+	public void setAcceptableUseAgreementManager(@SuppressWarnings("unused") AcceptableUseAgreementManager acceptableUseAgreementManager) {
+		this.acceptableUseAgreementManager = null;
+	}
+	
+}

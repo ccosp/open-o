@@ -363,4 +363,5 @@ public class OscarProperties extends Properties {
 	public static boolean isLdapAuthenticationEnabled() {
 		return Boolean.parseBoolean(oscarProperties.getProperty("ldap.enabled"));
 	}
+
 }

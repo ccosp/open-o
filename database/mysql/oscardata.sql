@@ -2892,3 +2892,6 @@ INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `prior
 insert into lst_gender (code,description,isactive,displayorder) values ('M','Male',1,2);
 insert into lst_gender (code,description,isactive,displayorder) values ('F','Female',1,1);
 insert into lst_gender (code,description,isactive,displayorder) values ('T','Transgender',1,3);
+
+INSERT INTO `property`(`name`, `value`, `id`, `provider_no`) VALUES ('aua_valid_duration', '2300-01-01', 118, '999998');
+INSERT INTO `property`(`name`, `value`, `id`, `provider_no`) VALUES ('aua_valid_from', '2001-01-01', 117, '999998');

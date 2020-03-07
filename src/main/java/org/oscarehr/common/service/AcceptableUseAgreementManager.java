@@ -46,7 +46,7 @@ public class AcceptableUseAgreementManager {
 	
 		
 	private static void loadAUA(){
-		String path = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/OSCARloginText.txt";
+		String path = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR") + "/OSCARloginText.txt";
 		try{
 			File auaFile = new File(path);
 		    if(!auaFile.exists()){
@@ -68,15 +68,46 @@ public class AcceptableUseAgreementManager {
 	 }
 	 
 	public static boolean hasAUA(){
+		String auaProp = oscar.OscarProperties.getInstance().getProperty("show_aua");
+		
+		if(auaProp == null)
+		{
+			auaProp =  "";
+		}
+		
+		if (!(auaProp.equals("always") || auaProp.equals("true"))) 
+		{ 
+			return false; 
+		} 
+		
 		logger.debug("loadAttempted "+loadAttempted+" auaText "+auaText);
-		if(!loadAttempted){
+		
+		if(!loadAttempted)
+		{
 			loadAUA();
 		}
 		
-		if (auaText == null){
+		if (auaText == null)
+		{
 			return false;
 		}
 		return true;
+	}
+	
+	public static boolean auaAlwaysShow(){
+		String auaProp = oscar.OscarProperties.getInstance().getProperty("show_aua");
+		
+		if(auaProp == null)
+		{
+			auaProp =  "";
+		}
+		
+		if (auaProp.equals("always")) 
+		{ 
+			return true; 		
+		} 
+		
+		return false;
 	}
 	
 	 public static String getAUAText() {
@@ -134,7 +165,8 @@ public class AcceptableUseAgreementManager {
 	 
 	
 	 
-	 public static Property findLatestProperty(List<Property> ... propArray){
+	 @SafeVarargs
+	public static Property findLatestProperty(List<Property> ... propArray){
 			Property returnProperty = null;
 			for(List<Property> propList: propArray ){
 			
