@@ -1759,7 +1759,7 @@
 											maven-checkstyle-plugin
 										</artifactId>
 										<versionRange>
-											[2.8,)
+											[2.15,)
 										</versionRange>
 										<goals>
 											<goal>checkstyle</goal>
