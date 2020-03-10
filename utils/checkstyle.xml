@@ -288,7 +288,7 @@
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
         -->
-        <module name="DoubleCheckedLocking"/>
+<!--         <module name="DoubleCheckedLocking"/> -->
         <module name="IllegalInstantiation"/>
 
         <!-- 

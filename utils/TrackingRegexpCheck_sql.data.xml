@@ -167,6 +167,26 @@
         <ViolationValue>/database/mysql/icd10.sql:`icd10` varchar(7) NOT NULL default '',</ViolationValue>
         <ViolationValue>/database/mysql/icd9.sql:description varchar(200) NOT NULL default '',</ViolationValue>
         <ViolationValue>/database/mysql/icd9.sql:icd9 varchar(7) NOT NULL default '',</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(126, 'ER', 'WCB REFUSED PAYMENT - CLAIM INFORMATION HAD NOT BEEN RECEIVED. FAX THE PATIENT''S ADDRESS'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(143, 'FI', 'SERVICES RENDERED TO A PHYSICIAN''S OWN FAMILY MEMBER ARE NOT PAYABLE.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(2, '*B', 'PATIENT''S ELIGIBILITY WITH MSP IS IN QUESTION. PLEASE HAVE PATIENT CONTACT MSP.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(219, 'H2', 'REFERRAL NOT REC''D'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(220, 'H4', 'REFERRAL NOT REC''D'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(222, 'H6', 'REFERRAL NOT REC''D'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(223, 'H7', 'REFERRAL NOT REC''D'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(331, 'K9', 'OUR RECORDS INDICATE THAT FEE ITEM 00114 /00115 IS NOT APPLICABLE.PLEASE VERIFY PATIENT''S LOCATION.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(35, 'A7', 'DEP. 66 - PHN SUBMITTED IS REGISTERED TO MALE. PLEASE RESUBMIT USING MOTHER''S PHN AND DEPENDANT 66.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(381, 'PD', 'FAMILY THERAPY IS ONLY PAYABLE ON ONE MEMBER''S PHN.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(469, 'TA', 'PATIENT''S ANNUAL LIMIT FOR THIS BENEFIT HAS BEEN REACHED.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(493, 'TY', 'DON''T TAKE A USER FEE'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(505, 'UA', 'THIS CLAIM WAS ASSESSED BY THE PLAN''S MEDICAL AND SURGICAL ADVISORS.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(563, 'WF', 'FEE ITEM BILLED AND DOCTOR''S SPECIALTY/PRACTIONER NUMBER DO NOT CORRESPOND.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(564, 'WG', 'FEE ITEMS WITH LETTER PREFIX ''A'' ARE NOT BENEFITS OF THE PLAN.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(601, 'XH', 'THIS CLAIM HAS BEEN RETURNED TO YOU PER YOUR SUBMISSION CODE ''E'' REQUEST RECORD.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(602, 'XI', 'OMIT FROM ICBC EXTRACT - WRITE OFF ICBC'' S 90 DAY RECYCLE FILE'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(61, 'B5', 'CHILD IS OVER-AGE FOR BILLING UNDER MOTHER''S IDENTITY NUMBER UNDER THE RECIPROCAL AGREEMENT.'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(655, 'ZB', 'ALPHA''S IN DIAGNOSTIC CODE CHANGED TO 0'),</ViolationValue>
+        <ViolationValue>/database/mysql/oscardata_bc.sql:(672, 'ZT', 'PATIENT VISIT CHARGE - MORE THAN ONE SER VICE PERFORMED ON ONE DAY - TWO PVC''S WI LL BE DEDUCTED'),</ViolationValue>
         <ViolationValue>/database/mysql/oscardata_on.sql:INSERT INTO `OscarJobType` VALUES (\N,'CanadianVaccineCatalogueUpdater','Updates the local copy of the data','org.oscarehr.integration.born.CanadianVaccineCatalogueJob',1,now()),(\N,'BORN FHIR','','org.oscarehr.integration.born.BORNFhirJob',1,now());</ViolationValue>
         <ViolationValue>/database/mysql/oscardata_on.sql:INSERT INTO `OscarJob` VALUES (\N,'CanadianVaccineCatalogueUpdater','Updates the CVC data',(select id from OscarJobType where name='CanadianVaccineCatalogueUpdater'),'0 * 0 * * *','999998',0,now(),null),(\N,'BORN FHIR','',(select id from OscarJobType where name='BORN FHIR'),'0 * * * * *','999998',0,now(),null);</ViolationValue>
         <ViolationValue>/database/mysql/updates/update-2007-01-07.sql:templatetitle varchar(80) NOT NULL DEFAULT '',</ViolationValue>
@@ -272,13 +292,6 @@
         <ViolationValue>/database/mysql/caisi/cookierevolverinit.sql:`user_specific` tinyint(1) default NULL,</ViolationValue>
         <ViolationValue>/database/mysql/caisi/cookierevolverinit.sql:`verification_needed` tinyint(1) default NULL,</ViolationValue>
         <ViolationValue>/database/mysql/caisi/init_ticklerplus.sql:shortcut tinyint(1) default '0',</ViolationValue>
-        <ViolationValue>/database/mysql/caisi/initcaisi.sql:--   `answer` varchar(10) default NULL,</ViolationValue>
-        <ViolationValue>/database/mysql/caisi/initcaisi.sql:--   `demographic_no` int(10) default NULL,</ViolationValue>
-        <ViolationValue>/database/mysql/caisi/initcaisi.sql:--   `processed` int(10) default NULL,</ViolationValue>
-        <ViolationValue>/database/mysql/caisi/initcaisi.sql:--   `provider_no` varchar(6) default NULL,</ViolationValue>
-        <ViolationValue>/database/mysql/caisi/initcaisi.sql:--   `status` char(2) default NULL,</ViolationValue>
-        <ViolationValue>/database/mysql/caisi/initcaisi.sql:--   `surveyId` varchar(5) default NULL,</ViolationValue>
-        <ViolationValue>/database/mysql/caisi/initcaisi.sql:--   `survey_date` date default NULL,</ViolationValue>
         <ViolationValue>/database/mysql/caisi/initcaisi.sql:`ODBFormReqired` char(1) default NULL,</ViolationValue>
         <ViolationValue>/database/mysql/caisi/initcaisi.sql:`access_id` bigint(20) NOT NULL default '0',</ViolationValue>
         <ViolationValue>/database/mysql/caisi/initcaisi.sql:`access_type_id` varchar(255) default NULL,</ViolationValue>
@@ -1380,9 +1393,6 @@
         <ViolationValue>/database/mysql/caisi/updates/patch-2010-06-08.sql:alter table secRole modify role_name varchar(60) NOT NULL default '';</ViolationValue>
         <ViolationValue>/database/mysql/caisi/updates/patch-2010-09-10.sql:alter table eform add roleType varchar(50) default null;</ViolationValue>
         <ViolationValue>/database/mysql/caisi/updates/patch-2010-09-10.sql:alter table eform_data add roleType varchar(50) default null;</ViolationValue>
-        <ViolationValue>/database/mysql/formBCAR2012.sql:demographic_no int(10) NOT NULL default '0' ,</ViolationValue>
-        <ViolationValue>/database/mysql/formBCAR2012.sql:formCreated date  default NULL ,</ViolationValue>
-        <ViolationValue>/database/mysql/formBCAR2012.sql:provider_no int(10)  default NULL ,</ViolationValue>
         <ViolationValue>/database/mysql/icd10.sql:`description` varchar(255) NOT NULL default '',</ViolationValue>
         <ViolationValue>/database/mysql/icd10.sql:`icd10` varchar(7) NOT NULL default '',</ViolationValue>
         <ViolationValue>/database/mysql/icd9.sql:description varchar(200) NOT NULL default '',</ViolationValue>
