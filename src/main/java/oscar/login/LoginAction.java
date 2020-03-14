@@ -94,7 +94,11 @@ public final class LoginAction extends DispatchAction {
     	boolean ajaxResponse = request.getParameter("ajaxResponse") != null?Boolean.valueOf(request.getParameter("ajaxResponse")):false;
     	
     	String ip = request.getRemoteAddr();
-        Boolean isMobileOptimized = request.getSession().getAttribute("mobileOptimized") != null;
+        String userAgent = request.getHeader("user-agent");
+        String accept = request.getHeader("Accept");       
+        UAgentInfo userAgentInfo = new UAgentInfo(userAgent, accept);       
+        boolean isMobileOptimized = userAgentInfo.detectMobileQuick();
+        		
 		String submitType = "";
         if(request.getParameter("submit")!=null){
 			submitType = String.valueOf(request.getParameter("submit"));
@@ -445,17 +449,6 @@ public final class LoginAction extends DispatchAction {
             	where="cobalt";
             }
 
-//			prop = propDao.getProp(provider.getProviderNo(), UserProperty.ENHANCED_OR_CLASSIC);
-//			if (prop != null) {
-//				prop.setValue(loginType);
-//				propDao.saveProp(prop);
-//			} else {
-//				UserProperty property = new UserProperty();
-//				property.setName(UserProperty.ENHANCED_OR_CLASSIC);
-//				property.setProviderNo(provider.getProviderNo());
-//				property.setValue(loginType);
-//				propDao.saveProp(property);
-//			}
         }
         // expired password
         else if (strAuth != null && strAuth.length == 1 && strAuth[0].equals("expired")) {
@@ -478,9 +471,6 @@ public final class LoginAction extends DispatchAction {
         else { 
         	logger.debug("go to normal directory");
 
-        	// go to normal directory
-            // request.setAttribute("login", "failed");
-            // LogAction.addLog(userName, "failed", LogConst.CON_LOGIN, "", ip);
             cl.updateLoginList(ip, userName);
             CRHelper.recordLoginFailure(userName, request);
             

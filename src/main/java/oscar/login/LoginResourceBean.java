@@ -27,8 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.oscarehr.common.service.AcceptableUseAgreementManager;
 import org.oscarehr.util.MiscUtils;
 
@@ -40,11 +38,14 @@ public class LoginResourceBean {
 	private String supportText;
 	private String clinicText;
 	private String clinicLink;
+	private String clinicName;
+	private String supportName;
+	private String tabName;
 	private String buildTag;
 	private String econsultURL;
 	private AcceptableUseAgreementManager acceptableUseAgreementManager;
 
-	public LoginResourceBean(HttpServletRequest request)
+	public LoginResourceBean()
 	{
 		OscarProperties oscarProperties = OscarProperties.getInstance();
 		String oscarDocuments = oscarProperties.getProperty("BASE_DOCUMENT_DIR") + File.separator + "login";		
@@ -63,36 +64,44 @@ public class LoginResourceBean {
 		
 		if(loginProperties.containsKey("clinicText"))
 		{
-			this.clinicText = oscarProperties.getProperty("clinicText");
+			this.clinicText = loginProperties.getProperty("clinicText");
 		}
 		
 		if(loginProperties.containsKey("clinicLink"))
 		{
-			this.supportLink = oscarProperties.getProperty("clinicLink");
+			this.clinicLink = loginProperties.getProperty("clinicLink");
+		}
+		
+		if(loginProperties.containsKey("clinicName"))
+		{
+			this.clinicName = loginProperties.getProperty("clinicName");
+		}
+		
+		if(loginProperties.containsKey("supportName"))
+		{
+			this.supportName = loginProperties.getProperty("supportName");
 		}
 		
 		if(loginProperties.containsKey("supportText"))
 		{
-			this.supportText = oscarProperties.getProperty("supportText");
+			this.supportText = loginProperties.getProperty("supportText");
 		}
 		
 		if(loginProperties.containsKey("supportLink"))
 		{
-			this.supportText = oscarProperties.getProperty("supportLink");
+			this.supportLink = loginProperties.getProperty("supportLink");
+		}
+
+		if(loginProperties.containsKey("tabName"))
+		{
+			this.tabName = loginProperties.getProperty("tabName");
 		}
 		
 		this.buildTag = OscarProperties.getBuildDate() + " " + OscarProperties.getBuildTag();
 		this.econsultURL = oscarProperties.getProperty("backendEconsultUrl");	
 		
 		if(oscarProperties.getBooleanProperty("oneid.enabled", "true")) {
-			//Gets the request URL
-			StringBuffer oscarUrl = request.getRequestURL();
-			//Determines the initial length by subtracting the length of the servlet path from the full url's length
-			Integer urlLength = oscarUrl.length() - request.getServletPath().length();
-			//Sets the length of the URL, found by subtracting the length of the servlet path from the length of the full URL, that way it only gets up to the context path
-			oscarUrl.setLength(urlLength);
-			
-			this.econsultURL = this.econsultURL + "/SAML2/login?oscarReturnURL=" + oscarUrl + "/ssoLogin.do" + "?loginStart=";
+			this.econsultURL = this.econsultURL + "/SAML2/login?oscarReturnURL=" + "#!" + "/ssoLogin.do" + "?loginStart=";
 		}
 		
 		this.acceptableUseAgreementManager = new AcceptableUseAgreementManager();
@@ -131,6 +140,14 @@ public class LoginResourceBean {
 		this.clinicLink = null;
 	}
 
+	public String getClinicName() {
+		return clinicName;
+	}
+
+	public void setClinicName(@SuppressWarnings("unused") String clinicName) {
+		this.clinicName = null;
+	}
+
 	public String getBuildTag() {
 		return buildTag;
 	}
@@ -154,5 +171,21 @@ public class LoginResourceBean {
 	public void setAcceptableUseAgreementManager(@SuppressWarnings("unused") AcceptableUseAgreementManager acceptableUseAgreementManager) {
 		this.acceptableUseAgreementManager = null;
 	}
-	
+
+	public String getSupportName() {
+		return supportName;
+	}
+
+	public void setSupportName(@SuppressWarnings("unused") String supportName) {
+		this.supportName = null;
+	}
+
+	public String getTabName() {
+		return tabName;
+	}
+
+	public void setTabName(String tabName) {
+		this.tabName = tabName;
+	}
+
 }
