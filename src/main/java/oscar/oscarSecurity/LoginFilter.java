@@ -52,7 +52,9 @@ public class LoginFilter implements Filter {
 	private static final Logger logger=MiscUtils.getLogger();
 
 	private static final String[] EXEMPT_URLS = { 
-		"/images/", 
+		"/images/Oscar.ico", 
+		"/images/Logo.png", 
+		"/images/oneId/",
 		"/signature_pad/", 
 		"/lab/CMLlabUpload.do", 
 		"/lab/newLabUpload.do", 
@@ -77,12 +79,15 @@ public class LoginFilter implements Filter {
 		"/js/jquery-1.7.1.min.js",
 		"/js/bootstap",
 		"/css/bootstrap",
-		"/myoscar_login_tester.jsp",
-		"/myoscar_login_tester2.jsp"
+		"/css/Roboto.css",
+		"/loginResource",
+		"/css/font/Roboto"
 	};
 	
 	private static final String[] EXEMPT_URLS_FOR_REQUEST_TIMEOUT = {
-		"/images/",  
+		"/images/Oscar.ico", 
+		"/images/Logo.png", 
+		"/images/oneId/", 
 		"/login.do",
 		"/ssoLogin.do",
 		"/econsultSSOLogin.do",
@@ -105,7 +110,10 @@ public class LoginFilter implements Filter {
 		"/ProxyEformNotification",
 		"/js/jquery-1.7.1.min.js",
 		"/js/bootstrap",
-		"/css/bootstrap"
+		"/css/bootstrap",
+		"/css/Roboto.css",
+		"/loginResource",
+		"/css/font/Roboto"
 	};
 	
 	private static final String[] EXEMPT_URLS_FOR_REQUEST_TIMEOUT_REDIRECT = {

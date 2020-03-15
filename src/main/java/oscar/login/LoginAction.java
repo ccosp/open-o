@@ -47,17 +47,9 @@ import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.service.ProviderManager;
 import org.oscarehr.PMmodule.web.OcanForm;
-import org.oscarehr.common.dao.FacilityDao;
-import org.oscarehr.common.dao.ProviderPreferenceDao;
-import org.oscarehr.common.dao.SecurityDao;
-import org.oscarehr.common.dao.ServiceRequestTokenDao;
-import org.oscarehr.common.dao.UserPropertyDAO;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.ProviderPreference;
-import org.oscarehr.common.model.Security;
-import org.oscarehr.common.model.ServiceRequestToken;
-import org.oscarehr.common.model.UserProperty;
+import org.oscarehr.PMmodule.web.utils.UserRoleUtils;
+import org.oscarehr.common.dao.*;
+import org.oscarehr.common.model.*;
 import org.oscarehr.decisionSupport.service.DSService;
 import org.oscarehr.managers.AppManager;
 import org.oscarehr.phr.util.MyOscarUtils;
@@ -91,20 +83,29 @@ public final class LoginAction extends DispatchAction {
     private static final String LOG_PRE = "Login!@#$: ";
     
     
-    private ProviderManager providerManager = (ProviderManager) SpringUtils.getBean("providerManager");
+    private ProviderManager providerManager = SpringUtils.getBean(ProviderManager.class);
     private AppManager appManager = SpringUtils.getBean(AppManager.class);
-    private FacilityDao facilityDao = (FacilityDao) SpringUtils.getBean("facilityDao");
-    private ProviderPreferenceDao providerPreferenceDao = (ProviderPreferenceDao) SpringUtils.getBean("providerPreferenceDao");
+    private FacilityDao facilityDao = SpringUtils.getBean(FacilityDao.class);
+    private ProviderPreferenceDao providerPreferenceDao = SpringUtils.getBean(ProviderPreferenceDao.class);
     private ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
-    private UserPropertyDAO propDao =(UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+    private UserPropertyDAO propDao = SpringUtils.getBean(UserPropertyDAO.class);
 	
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	boolean ajaxResponse = request.getParameter("ajaxResponse") != null?Boolean.valueOf(request.getParameter("ajaxResponse")):false;
     	
     	String ip = request.getRemoteAddr();
-        Boolean isMobileOptimized = request.getSession().getAttribute("mobileOptimized") != null;
+        String userAgent = request.getHeader("user-agent");
+        String accept = request.getHeader("Accept");       
+        UAgentInfo userAgentInfo = new UAgentInfo(userAgent, accept);       
+        boolean isMobileOptimized = userAgentInfo.detectMobileQuick();
+        		
+		String submitType = "";
+        if(request.getParameter("submit")!=null){
+			submitType = String.valueOf(request.getParameter("submit"));
+		}
     	
         LoginCheckLogin cl = new LoginCheckLogin();
+        String loginType = request.getParameter("loginType");
         String oneIdKey = request.getParameter("nameId");
         String oneIdEmail = request.getParameter("email");
         String userName = "";
@@ -182,12 +183,12 @@ public final class LoginAction extends DispatchAction {
 	            // return mapping.findForward(where); //go to block page
 	            // change to block page
 	            String newURL = mapping.findForward("error").getPath();
-	            newURL = newURL + "?errormsg=Your account is locked. Please contact your administrator to unlock.";
+	            newURL = newURL + "?errormsg=Oops! Your account is now locked due to incorrect password attempts!";
 	            
 	            if(ajaxResponse) {
 	            	JSONObject json = new JSONObject();
 	            	json.put("success", false);
-	            	json.put("error", "Your account is locked. Please contact your administrator to unlock.");
+	            	json.put("error", "Oops! Your account is now locked due to incorrect password attempts!");
 	            	response.setContentType("text/x-json");
 	            	json.write(response.getWriter());
 	            	return null;
@@ -308,7 +309,15 @@ public final class LoginAction extends DispatchAction {
             session.setAttribute("oscar_context_path", request.getContextPath());
             session.setAttribute("expired_days", strAuth[5]);
             // If a new session has been created, we must set the mobile attribute again
-            if (isMobileOptimized) session.setAttribute("mobileOptimized","true");
+            if (isMobileOptimized){
+            	if (submitType.equalsIgnoreCase("Sign in using Full Site")){
+					session.setAttribute("fullSite","true");
+				}
+				else{
+					session.setAttribute("mobileOptimized","true");
+				}
+			}
+
             // initiate security manager
             String default_pmm = null;
             
@@ -429,12 +438,17 @@ public final class LoginAction extends DispatchAction {
                 request.getSession().setAttribute("proceedURL", proceedURL);               
                 return mapping.findForward("LoginTest");
             }
+
+			if (UserRoleUtils.hasRole(request, "Patient Intake")) {
+				return mapping.findForward("patientIntake");
+			}
             
             //are they using the new UI?
             UserProperty prop = propDao.getProp(provider.getProviderNo(), UserProperty.COBALT);
             if(prop != null && prop.getValue() != null && prop.getValue().equals("yes")) {
             	where="cobalt";
             }
+
         }
         // expired password
         else if (strAuth != null && strAuth.length == 1 && strAuth[0].equals("expired")) {
@@ -457,9 +471,6 @@ public final class LoginAction extends DispatchAction {
         else { 
         	logger.debug("go to normal directory");
 
-        	// go to normal directory
-            // request.setAttribute("login", "failed");
-            // LogAction.addLog(userName, "failed", LogConst.CON_LOGIN, "", ip);
             cl.updateLoginList(ip, userName);
             CRHelper.recordLoginFailure(userName, request);
             
