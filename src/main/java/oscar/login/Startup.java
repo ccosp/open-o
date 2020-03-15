@@ -75,7 +75,7 @@ public class Startup implements ServletContextListener {
 			char sep = System.getProperty("file.separator").toCharArray()[0];
 			propFileName = System.getProperty("user.home") + sep + propName;
 			logger.info("looking up " + propFileName);
-			// oscar.OscarProperties p = oscar.OscarProperties.getInstance();
+		
 			try {
 				// This has been used to look in the users home directory that started tomcat
 				p.readFromFile(propFileName);
