@@ -782,7 +782,7 @@
 		<!-- Login -->
 		<action input="/login.jsp" name="loginForm" path="/login" scope="request" type="oscar.login.LoginAction" validate="true">
 			<forward name="provider" path="/provider/providercontrol.jsp" redirect="true" />
-			<forward name="failure" path="/logout.jsp?" />
+			<forward name="failure" path="/logout.jsp" />
 			<forward name="error" path="/loginfailed.jsp" />
 			<forward name="caisiPMM" path="/PMmodule/ProviderInfo.do" />
 			<forward name="shelterSelection" path="/shelterSelection.do" redirect="true" />
