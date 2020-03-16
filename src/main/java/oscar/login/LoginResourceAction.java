@@ -68,7 +68,7 @@ public class LoginResourceAction extends HttpServlet {
 		}
 
         // Get content type by filename.        
-        if(image != null)
+        if(image != null && image.exists())
         {
         	 contentType = getServletContext().getMimeType(image.getName());
         }
