@@ -698,8 +698,7 @@ function GetTextTop(){
         }
     }
  
-    if ((document.getElementById('includePdfPrintControl').checked) || (document.getElementById("includeFaxControl").checked) || (document.getElementById('AddSignature').checked) || (document.getElementById('XboxType').checked) || (xPresent) ) {
- 
+	if ( <% if (OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_print_enabled")) { %>(document.getElementById('includePdfPrintControl').checked) || <%}%> <% if (OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_fax_enabled")) { %>(document.getElementById("includeFaxControl").checked) || <% } %> (document.getElementById('AddSignature').checked) || (document.getElementById('XboxType').checked) || (xPresent) ) {
      	textTop += "&lt;!-- jQuery for greater functionality --&gt;\n"
 	    // dependency on jquery up to version 2.2.1 for pdf and faxing hack. (3.1.1 does NOT work.)  Lets reference something off the OSCAR server
 	    textTop += "&lt;script type=&quot;text/javascript&quot; src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js&quot;&gt;&lt;/script&gt;\n";	
@@ -708,7 +707,7 @@ function GetTextTop(){
 	    // ole darn it, I knew I left a copy of jQuery lying around somewhere... perhaps under my nose?
 	    textTop += "&lt;script&gt; window.jQuery || document.write('&lt;script src=&quot;jquery-1.7.1.min.js&quot;&gt;&lt; &#92;/script&gt;') &lt;/script&gt;\n\n";
     }
- 
+    	
     //Peter Hutten-Czapski's Xbox scripts   
     if (xPresent){
         textTop += "&lt;!-- scripts for Xbox functions --&gt;\n"
@@ -1100,9 +1099,12 @@ function GetTextTop(){
 	if (document.getElementById('AddSignature').checked){
 		textTop += "loadSig();"
 	}
+	<% if (OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_fax_enabled")) { %>
 	if ((document.getElementById('faxno').value.length >0)){
 		textTop += "setFaxNo();"
 	}
+	<% } %>
+	 
 	textTop += "&quot;&gt;\n"
 
 	//<form>
