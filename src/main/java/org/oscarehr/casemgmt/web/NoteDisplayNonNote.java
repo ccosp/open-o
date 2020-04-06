@@ -57,6 +57,7 @@ public class NoteDisplayNonNote implements NoteDisplay {
 	private boolean isEncounterForm = false;
 	private boolean isInvoice = false;
 	private String linkInfo;
+	private Date created;
 	
 	@Override
     public Integer getAppointmentNo() {
@@ -83,6 +84,7 @@ public class NoteDisplayNonNote implements NoteDisplay {
 		if( date == null ) {
 			date = patientForm.created;
 		}
+		created = patientForm.created;
 		note = patientForm.formName;
 		noteId = patientForm.formId;
 		linkInfo = patientForm.jsp;
@@ -306,6 +308,14 @@ public class NoteDisplayNonNote implements NoteDisplay {
 	
 	public boolean isTicklerNote() {
 		return false;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 }

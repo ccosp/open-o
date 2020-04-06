@@ -455,8 +455,8 @@ public class CaseloadContentAction extends DispatchAction {
 
 				// add form links to string
 				if (hasPrivilege("_billing", roleName$)) {
-					buttons += bShortcutForm?"| <a href=# onClick='popupPage2( \"../form/forwardshortcutname.jsp?formname="+formName+"&demographic_no="+demographic_no+"\")' title='form'>"+formNameShort+"</a> " : "";
-					buttons += bShortcutForm2?"| <a href=# onClick='popupPage2( \"../form/forwardshortcutname.jsp?formname="+formName2+"&demographic_no="+demographic_no+"\")' title='form'>"+formName2Short+"</a> " : "";
+					buttons += bShortcutForm?"| <a href=# onClick='popupPage2( \"../form/forwardshortcutname.do?formname="+formName+"&demographic_no="+demographic_no+"\")' title='form'>"+formNameShort+"</a> " : "";
+					buttons += bShortcutForm2?"| <a href=# onClick='popupPage2( \"../form/forwardshortcutname.do?formname="+formName2+"&demographic_no="+demographic_no+"\")' title='form'>"+formName2Short+"</a> " : "";
 					buttons += (bShortcutIntakeForm) ? "| <a href='#' onClick='popupPage(700, 1024, \"formIntake.jsp?demographic_no="+demographic_no+"\")'>In</a> " : "";
 				}
 

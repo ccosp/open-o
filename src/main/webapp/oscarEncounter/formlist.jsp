@@ -65,10 +65,10 @@ if(!authed) {
 <link rel="stylesheet" type="text/css" href="encounterStyles.css">
 <script type="text/javascript" language=javascript>
 
-function popupPageK(page) {
+function popupPageK(winname, page) {
     windowprops = "height=700,width=960,location=no,"
     + "scrollbars=yes,menubars=no,toolbars=no,resizable=yes,top=0,left=0";
-    var popup = window.open(page, "formhistory", windowprops);
+    var popup = window.open(page, winname, windowprops);
     popup.focus();
     
 }
@@ -112,18 +112,18 @@ function popupPageK(page) {
 	</tr>
 </table>
 <center>
-<table BORDER="0" CELLPADDING="2" CELLSPACING="2" WIDTH="60%"
-	BGCOLOR="white">
+<table BORDER="0" CELLPADDING="2" CELLSPACING="2" WIDTH="65%" BGCOLOR="white">
 	<tr BGCOLOR="<%=tableTitle%>">
-		<th width=30% nowrap><bean:message
+		<th width=35% nowrap><bean:message
 			key="oscarEncounter.formlist.formName" /></th>
-		<th width=11% nowrap><bean:message
+		<th width=30% nowrap><bean:message
 			key="oscarEncounter.formlist.formCreated" /></th>
-		<th width=11% nowrap><bean:message
+		<th width=35% nowrap><bean:message
 			key="oscarEncounter.formlist.formEditedTime" /></th>
 	</tr>
 
 	<%
+
 	for(int j=0; j<forms.length; j++) {
 		EctFormData.Form frm = forms[j];
 		String table = frm.getFormTable();
@@ -138,18 +138,36 @@ function popupPageK(page) {
                 }
 		int nItems = 0;
 
+		String current = "";
 		for(int i=0; i<pforms.length; i++) {
 			nItems++;
 			EctFormData.PatientForm pfrm = pforms[i];
+			
+			String winName = frm.getFormName() + demoNo + pfrm.getCreated();
+			int hash = Math.abs(winName.hashCode());
+			
+			// yellow highlight the key forms.
+			boolean yellow = false;
+			if(! current.equals(pfrm.getCreated()))
+			{
+				yellow = true;
+			}
 %>
-	<tr
-		bgcolor='<%= j%2 == 0 ? (i%2 == 0 ?weakcolor:deepcolor) : (i%2 == 0 ?"white":"#eeeeee")%>'>
-		<td><a href=#
-			onClick="popupPageK('<%=frm.getFormPage()+demoNo+"&formId="+pfrm.getFormId()+"&provNo="+provNo+(pfrm.getRemoteFacilityId()!=null?"&remoteFacilityId="+pfrm.getRemoteFacilityId():"")%>'); return false;"><%=frm.getFormName()+(pfrm.getRemoteFacilityId()!=null?" (remote)":"")%></a></td>
+	<tr bgcolor='<%= yellow ? "yellow" : j%2 == 0 ? (i%2 == 0 ?weakcolor:deepcolor) : (i%2 == 0 ?"white":"#eeeeee")%>'>
+		<td><a href=# onClick="popupPageK('<%=hash + "started"%>','<%=request.getContextPath() 
+									+ "/form/forwardshortcutname.do?formname=" + frm.getFormName()
+									+ "&demographic_no=" + demoNo 
+									+ "&formId=" + pfrm.getFormId()
+									+ "&provNo=" + provNo
+									+ "&remoteFacilityId=" + pfrm.getRemoteFacilityId() %>'); return false;" >
+									
+				<%=frm.getFormName() + (pfrm.getRemoteFacilityId()!=null?" (remote)":"") + (yellow ? " (current)" : "")%>
+			</a></td>
 		<td align='center'><%=pfrm.getCreated()%></td>
 		<td align='center'><%=pfrm.getEdited()%></td>
 	</tr>
 	<%
+			current = pfrm.getCreated();
 		}
 %>
 	<%

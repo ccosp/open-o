@@ -944,7 +944,7 @@ function removeSaveFeedback()  {
                                 %>
 
 					<option
-						value="<%="../form/forwardshortcutname.jsp?formname="+frm.getFormName()+"&demographic_no="+demoNo%>"><%=frm.getFormName()%>&nbsp;Cr:<%=pfrm.getCreated()%>&nbsp;Ed:<%=pfrm.getEdited()%>
+						value="<%="../form/forwardshortcutname.do?formname="+frm.getFormName()+"&demographic_no="+demoNo%>"><%=frm.getFormName()%>&nbsp;Cr:<%=pfrm.getCreated()%>&nbsp;Ed:<%=pfrm.getEdited()%>
 					<%}}}
 
                             %>

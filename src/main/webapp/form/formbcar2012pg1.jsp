@@ -132,6 +132,19 @@ function recheckForm() {
     $('form').trigger('checkform.areYouSure');
 }
 
+/*
+ * Only refresh if the parent window is formlist.jsp.
+ */
+function refreshParent() {
+    if (window.opener != null && !window.opener.closed && window.opener.location.href.includes("formlist.jsp")) {
+        window.opener.location.reload();
+    }
+}
+
+$(window).on('beforeunload', function() {
+	refreshParent();
+});
+
 function showHideBox(layerName, iState) { // 1 visible, 0 hidden
     if(document.layers)	   //NN4+
     {
@@ -314,6 +327,7 @@ function calcBMIMetric() {
     }
     
     function onExit() {
+    	refreshParent();
         window.close();
   	}
     
@@ -595,6 +609,15 @@ function calcAgeAtEDD(){
 
 <body bgproperties="fixed" topmargin="0" leftmargin="1" rightmargin="1">
 <div ID="Langdiv" class="demo">
+
+<logic:equal value="history" parameter="warning">
+	<script type="text/javascript">
+		if(! confirm("\bWarning: older version.\b\n\nContents of this form will overwrite newer versions if saved.\n\nSelect 'OK' to continue.")) {
+			window.close();
+		}
+	</script>
+</logic:equal>
+
 <table bgcolor='silver' width='100%'>
 	<tr>
 		<td align='right'><a
@@ -1174,7 +1197,7 @@ function calcAgeAtEDD(){
 				</tr>
 				<tr>
 					<td width="55%">Surname<br>
-					<input type="text" name="c_surname" style="width: 100%" size="30"
+					<input type="text" name="c_surname" readonly style="width: 100%" size="30"
 						maxlength="30" value="<%= props.getProperty("c_surname", "") %>"
 						@oscar.formDB /></td>
 					<td>Given Name<br>
@@ -1184,37 +1207,37 @@ function calcAgeAtEDD(){
 				</tr>
 				<tr>
 					<td colspan="2">Address<br>
-					<input type="text" name="c_address" style="width: 100%" size="50"
+					<input type="text" name="c_address" readonly style="width: 100%" size="50"
 						maxlength="60" value="<%= props.getProperty("c_address", "") %>"
-						@oscar.formDB /> <input type="text" name="c_city"
+						@oscar.formDB /> <input type="text" name="c_city" readonly
 						style="width: 50%" size="50" maxlength="60"
 						value="<%= props.getProperty("c_city", "") %>" @oscar.formDB /> <input
 						type="text" name="c_province" size="10" maxlength="50"
 						value="<%= props.getProperty("c_province", "") %>" @oscar.formDB />
-					<input type="text" name="c_postal" size="7" maxlength="8"
+					<input type="text" name="c_postal" size="7" readonly maxlength="8"
 						value="<%= props.getProperty("c_postal", "") %>" @oscar.formDB />
 					</td>
 				</tr>
 				<tr>
 					<td valign="top">Phone Number<br>
-					<input type="text" name="c_phone" style="width: 100%" size="60"
+					<input type="text" name="c_phone" readonly style="width: 100%" size="60"
 						maxlength="60" value="<%= props.getProperty("c_phone", "") %>"
 						@oscar.formDB /></td>
 					<td>Personal Health Number<br>
-					<input type="text" name="c_phn" style="width: 100%" size="20"
+					<input type="text" name="c_phn" readonly style="width: 100%" size="20"
 						maxlength="20" value="<%= props.getProperty("c_phn", "") %>"
 						@oscar.formDB /></td>
 				</tr>
 				<tr>
 					<td>Alternate Phone Number #1<br>
-					<input type="text" name="c_phoneAlt1" style="width: 100%" size="60"
+					<input type="text" name="c_phoneAlt1" readonly style="width: 100%" size="60" 
 						maxlength="60" value="<%= props.getProperty("c_phoneAlt1", "") %>"
 						@oscar.formDB /></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>Alternate Phone Number #2<br>
-					<input type="text" name="c_phoneAlt2" style="width: 100%" size="60"
+					<input type="text" name="c_phoneAlt2" readonly style="width: 100%" size="60" 
 						maxlength="60" value="<%= props.getProperty("c_phoneAlt2", "") %>"
 						@oscar.formDB /></td>
 					<td></td>

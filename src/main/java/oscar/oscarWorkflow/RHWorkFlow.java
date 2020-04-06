@@ -132,7 +132,7 @@ public class RHWorkFlow implements WorkFlow {
     }
 
     public String getLink(String demographicNo,String workFlowId){
-        return "../form/forwardshortcutname.jsp?formname=RH Form&amp;demographic_no="+demographicNo;
+        return "../form/forwardshortcutname.do?formname=RH Form&amp;demographic_no="+demographicNo;
     }
 
 

@@ -369,21 +369,6 @@ request.getSession().setAttribute("EctSessionBean",bean);
 							<% } %> &nbsp;</td>
 						</tr>
 
-
-						<!--
-                                    <tr>
-                                    <td colspan="2">       
-                                        <input type="text" name="url" id="url" size="30" value="http://localhost:8084/oscar_mcmaster/form/forwardshortcutname.jsp?formname=Vascular%20Tracker&demographic_no=39" />
-                                    </td>
-                                    </tr>
-
-                                    <tr>
-                                    <td colspan="2">
-                                        <input type="button" name="setURL" value="setURL" onclick="SetBottomURL( document.forms[0].url.value);" />
-                                    </td>
-                                    </tr>
-                                    -->
-
 						<tr>
 							<td colspan="3" align="center">
 							<% if ( request.getParameter("isAttaching") != null ) { %> <input
