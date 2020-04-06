@@ -46,7 +46,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.LabRequestReportLink;
-import oscar.util.DateUtils;
 import oscar.util.StringUtils;
 
 public class EctDisplayFormAction extends EctDisplayAction {
@@ -85,11 +84,10 @@ public class EctDisplayFormAction extends EctDisplayAction {
 				Dao.setMenuHeader(messages.getMessage("oscarEncounter.LeftNavBar.AddFrm"));
 				StringBuilder javascript = new StringBuilder("<script type=\"text/javascript\">");
 				String js = "";
-				String dbFormat = "yy/MM/dd";
 				String serviceDateStr;
 				StringBuilder strTitle;
 				String fullTitle;
-				Date date;
+				Date date = null;
 				String key;
 				int hash;
 				// grab all of the forms
@@ -104,7 +102,7 @@ public class EctDisplayFormAction extends EctDisplayAction {
 						if (caisiProperty != null && (caisiProperty.equalsIgnoreCase("yes")
 								||caisiProperty.equalsIgnoreCase("true")
 								||caisiProperty.equalsIgnoreCase("on"))) {
-							; // form in
+	
 						}
 						else {	
 							continue; //form out
@@ -114,7 +112,7 @@ public class EctDisplayFormAction extends EctDisplayAction {
 
 					String table = encounterForm.getFormTable();
 					if (!table.equalsIgnoreCase("")) {
-						new EctFormData();
+
 						EctFormData.PatientForm[] pforms = EctFormData.getPatientFormsFromLocalAndRemote(loggedInInfo, bean.demographicNo, table);
 						// if a form has been started for the patient, create a module item for it
 						if (pforms.length > 0) {	
@@ -123,18 +121,14 @@ public class EctDisplayFormAction extends EctDisplayAction {
 							EctFormData.PatientForm pfrm = pforms[0];
 
 							// convert date to that specified in base class
-							DateFormat formatter = new SimpleDateFormat(dbFormat);
-							String dateStr = pfrm.getCreated();
+							DateFormat formatter = new SimpleDateFormat(EctFormData.DATE_FORMAT);
+							serviceDateStr = pfrm.getCreated();
+							
 							try {
-								date = formatter.parse(dateStr);
+								date = formatter.parse(serviceDateStr);
 							} catch (ParseException ex) {
 								logger.debug("EctDisplayFormAction: Error creating date " + ex.getMessage());
-								// date = new Date(System.currentTimeMillis());
-								date = null;
 							}
-
-							if (date != null) serviceDateStr = DateUtils.formatDate(date, request.getLocale());
-							else serviceDateStr = "";
 
 							item.setDate(date);
 
@@ -152,18 +146,17 @@ public class EctDisplayFormAction extends EctDisplayAction {
 									strTitle.append("*");
 								}
 							}
-							
+							winName = winName + serviceDateStr;
 							hash = Math.abs(winName.hashCode());
 							url = new StringBuilder(
 									"popupPage(700,960,'" + hash + "started', '" +
 							        request.getContextPath() +
-							        "/form/forwardshortcutname.jsp?formname="
+							        "/form/forwardshortcutname.do?formname="
 							        + encounterForm.getFormName() +
 							        "&demographic_no=" + bean.demographicNo +
 							        (pfrm.getRemoteFacilityId()!=null?"&remoteFacilityId="+pfrm.getRemoteFacilityId():"") +
-							        (appointmentNo!=null?"&appointmentNo="+appointmentNo:"")
-										        
-							        +"&formId="+pfrm.getFormId() + "');");
+							        (appointmentNo!=null?"&appointmentNo="+appointmentNo:"")										        
+							         + "&formId=latest" + "');");
 
 							key = StringUtils.maxLenString(fullTitle, MAX_LEN_KEY, CROP_LEN_KEY, ELLIPSES) + "(" + serviceDateStr + ")";
 							key = StringEscapeUtils.escapeJavaScript(key);

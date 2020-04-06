@@ -272,7 +272,7 @@ String backurl=bsurl+"/oscarEncounter/IncomingEncounter.do?";
                         oscar.oscarEncounter.data.EctFormData.PatientForm[] pforms = oscar.oscarEncounter.data.EctFormData.getPatientForms(bean.demographicNo, table);
                         if(pforms.length>0) {
                             oscar.oscarEncounter.data.EctFormData.PatientForm pfrm = pforms[0];
-                            String value=session.getAttribute("casemgmt_oscar_baseurl")+"/form/forwardshortcutname.jsp?formname="
+                            String value=session.getAttribute("casemgmt_oscar_baseurl")+"/form/forwardshortcutname.do?formname="
                                     +cf.getFormName()+"&demographic_no="+bean.demographicNo;
                             String label=cf.getFormName()+"&nbsp;Cr:"+pfrm.getCreated()+"&nbsp;Ed:"+pfrm.getEdited();
                 %>
