@@ -73,11 +73,7 @@ public class LoginResourceAction extends HttpServlet {
         	 contentType = getServletContext().getMimeType(image.getName());
         }
         
-        // check if the content type is legit
-        if (contentType == null || !contentType.startsWith("image")) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
-        else
+        if (contentType != null && contentType.startsWith("image")) 
         {
             response.reset();
             response.setContentType(contentType);
