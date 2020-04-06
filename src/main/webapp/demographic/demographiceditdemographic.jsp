@@ -1199,13 +1199,13 @@ if(wLReadonly.equals("")){
 			<tr>
 				<td><a
 					href="javascript: function myFunction() {return false; }"
-					onClick="popupPage(700,1000,'../form/forwardshortcutname.jsp?formname=AR1&demographic_no=<%=request.getParameter("demographic_no")%>');">AR1</a>
+					onClick="popupPage(700,1000,'../form/forwardshortcutname.do?formname=AR1&demographic_no=<%=request.getParameter("demographic_no")%>');">AR1</a>
 				</td>
 			</tr>
 			<tr>
 				<td><a
 					href="javascript: function myFunction() {return false; }"
-					onClick="popupPage(700,1000,'../form/forwardshortcutname.jsp?formname=AR2&demographic_no=<%=request.getParameter("demographic_no")%>');">AR2</a>
+					onClick="popupPage(700,1000,'../form/forwardshortcutname.do?formname=AR2&demographic_no=<%=request.getParameter("demographic_no")%>');">AR2</a>
 				</td>
 			</tr>
 <% } %>

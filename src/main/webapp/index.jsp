@@ -651,25 +651,34 @@ response.addCookie(prvCookie);
 		<c:if test="${ LoginResourceBean.acceptableUseAgreementManager.auaAvailable and LoginResourceBean.acceptableUseAgreementManager.alwaysShow }" >
 			<script type="text/javascript">document.getElementById('auaText').style.display = 'block';</script>
 		</c:if>
-
-		<div class="powered">
-			<div class="details">
-				<div>Powered</div>
-				<div>by</div>
+		
+			<div class="powered">
+				<c:if test="${ not empty LoginResourceBean.supportLink 
+								or not empty LoginResourceBean.supportName 
+								or not empty LoginResourceBean.supportText }">
+					<div class="details">
+						<div>Powered</div>
+						<div>by</div>
+					</div>
+				</c:if>
+	 			<div class="support_details" >
+	 				<a target="_blank" href="${ LoginResourceBean.supportLink }" id="supportImageLink" >
+	 					<img width="150px" src="${ pageContext.request.contextPath }/loginResource/supportLogo.png" 
+	 						onerror="this.style.display='none'; document.getElementById('supportImageLink').style.display='none';">					
+	 				</a>
+	 				<c:if test="${ not empty LoginResourceBean.supportName }">
+		 				<div id="support_name">
+		 					<a target="_blank" href="${ LoginResourceBean.supportLink }" >
+			 					<c:out value="${ LoginResourceBean.supportName }" />
+			 				</a>
+			 			</div>
+			 		</c:if>
+		 			<div id="support_text">
+		 				<c:out value="${ LoginResourceBean.supportText }" escapeXml="false"/>
+		 			</div>
+	 			</div>
 			</div>
 
- 			<div class="support_details" >
- 				<a target="_blank" href="${ LoginResourceBean.supportLink }" >
- 					<img width="150px" src="${ pageContext.request.contextPath }/loginResource/supportLogo.png">					
- 				</a>
- 				<div id="support_name">
-	 				<c:out value="${ LoginResourceBean.supportName }" />
-	 			</div>
-	 			<div id="support_text">
-	 				<c:out value="${ LoginResourceBean.supportText }" escapeXml="false"/>
-	 			</div>
- 			</div>
-		</div>
 	</div>
      <footer>
      	<span id="license" class="extrasmall">

@@ -29,10 +29,14 @@
 
 <html:html locale="true">
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<script language=javascript>
-        window.close();
-        </script>
+
+<script type="text/javascript">
+    if (window.opener != null && !window.opener.closed && window.opener.location.href.includes("formlist.jsp")) {
+        window.opener.location.reload();
+    }
+    
+       window.close();
+</script>
 </head>
 <body>
 <bean:message key="oscarEncounter.close.msgClick1" />

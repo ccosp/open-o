@@ -106,6 +106,7 @@ if ((bean = (oscar.oscarEncounter.pageUtil.EctSessionBean)request.getSession().g
 String provNo = bean.providerNo;
 
 String dateFormat = "dd-MMM-yyyy H:mm";
+String anotherDateFormat = "dd-MM-yyyy";
 long savedId = 0;
 boolean found = false;
 String bgColour = "color:#000000;background-color:#CCCCFF;";
@@ -589,11 +590,21 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 								<a class="links" title="<bean:message key="oscarEncounter.view.eformView"/>" id="view<%=globalNoteId%>" href="#" onclick="<%=url%>" style="float: right; margin-right: 5px; font-size: 10px;"> <bean:message key="oscarEncounter.view" /> </a>
 							<%
 						} else if (note.isEncounterForm()) {
-							String winName = "encounterforms"+demographicNo;
+							NoteDisplayNonNote formEntry = (NoteDisplayNonNote) note;
+							SimpleDateFormat simpleDateFormat = new SimpleDateFormat(anotherDateFormat);
+							String createdDate = simpleDateFormat.format(formEntry.getCreated());
+							String winName = formEntry.getNote().trim() + demographicNo + createdDate;
 							int hash = Math.abs(winName.hashCode());
-							String url = "popupPage(700,800,'"+hash+"','"+request.getContextPath()+StringEscapeUtils.escapeHtml(((NoteDisplayNonNote)note).getLinkInfo())+"'); return false;";
+							String url = "popupPage(700,800,'"
+											+hash+"started"+"','"
+											+request.getContextPath()
+											+ StringEscapeUtils.escapeHtml("/form/forwardshortcutname.do?formname=" + formEntry.getNote())
+											+ "&demographic_no=" + demographicNo
+											+ "&formId=" + formEntry.getNoteId()
+											+"'); return false;";
 							%>
-								<a class="links" title="<bean:message key="oscarEncounter.view.eformView"/>" id="view<%=globalNoteId%>" href="#" onclick="<%=url%>" style="float: right; margin-right: 5px; font-size: 10px;"> <bean:message key="oscarEncounter.view" /> </a>
+								<a class="links" title="<bean:message key="oscarEncounter.view.eformView"/>" id="view<%=globalNoteId%>" href="#" onclick="<%=url%>" 
+									style="float: right; margin-right: 5px; font-size: 10px;"> <bean:message key="oscarEncounter.view" /> </a>
 							<%
 						}
 					 	if (!note.isDocument() && !note.isCpp() && !note.isEformData() && !note.isEncounterForm() && !note.isInvoice()) {
