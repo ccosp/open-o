@@ -1149,6 +1149,9 @@
 			<forward name="graph" path="/form/createpdf" />
 			<forward name="failure" path="/oscarEncounter/error.jsp" />
 		</action>
+		
+		<action input="/" path="/form/forwardshortcutname" scope="request" type="oscar.form.pageUtil.FormForwardAction">
+		</action>
 
 		<action name="inputForm" path="/admin/RecommitHSFO" parameter="method" scope="request" type="oscar.form.study.HSFO.pageUtil.RecommitHSFOAction">
 			<forward name="schedulePage" path="/admin/recommitschedule.jsp" />

@@ -183,7 +183,7 @@ oscarApp.controller('FormCtrl', function ($scope,$http,$location,$stateParams,de
 			
 		}else{ //form
 			if(angular.isDefined(item.formId)){
-				addOrShow = '../form/forwardshortcutname.jsp?formname='+item.name+'&demographic_no='+ $stateParams.demographicNo+'&formId='+item.formId;
+				addOrShow = '../form/forwardshortcutname.do?formname='+item.name+'&demographic_no='+ $stateParams.demographicNo+'&formId='+item.formId;
 			}else{
 				addOrShow = item.formValue + $stateParams.demographicNo + "&formId=0&provNo=" + user.providerNo + "&parentAjaxId=forms";
 			}

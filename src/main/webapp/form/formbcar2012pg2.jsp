@@ -136,6 +136,19 @@ function recheckForm() {
     $('form').trigger('checkform.areYouSure');
 }
 
+/*
+ * Only refresh if the parent window is formlist.jsp.
+ */
+function refreshParent() {
+    if (window.opener != null && !window.opener.closed && window.opener.location.href.includes("formlist.jsp")) {
+        window.opener.location.reload();
+    }
+}
+
+$(window).on('beforeunload', function() {
+	refreshParent();
+});
+
 		  function reset() {
 		      document.forms[0].target = "";
 		      document.forms[0].action = "/<%=project_home%>/form/formname.do" ;
@@ -198,6 +211,7 @@ function recheckForm() {
 		    }
 		    
  		    function onExit() {
+ 		    	refreshParent();
 		        window.close();
 		    } 
  		    
@@ -1580,37 +1594,37 @@ function recheckForm() {
                         <td align="center" colspan="2"><%=bSync? ("<b><a href=\"javascript: function myFunction() {return false; }\" onClick='syncDemo(); return false;'><font size='+1' color='red'>Synchronize</font></a></b>") :"" %></td>
                     </tr><tr>
                         <td width="55%">Surname<br>
-                            <input type="text" name="c_surname" style="width:100%" size="30" maxlength="30" value="<%= props.getProperty("c_surname", "") %>" @oscar.formDB />
+                            <input type="text" name="c_surname" readonly style="width:100%" size="30" maxlength="30" value="<%= props.getProperty("c_surname", "") %>" @oscar.formDB />
                                </td>
                         <td>Given Name<br>
-                            <input type="text" name="c_givenName" style="width:100%" size="30" maxlength="30" value="<%= props.getProperty("c_givenName", "") %>" @oscar.formDB />
+                            <input type="text" name="c_givenName" readonly style="width:100%" size="30" maxlength="30" value="<%= props.getProperty("c_givenName", "") %>" @oscar.formDB />
                                </td>
                     </tr><tr>
                         <td colspan="2">Address<br>
-                            <input type="text" name="c_address" style="width:100%" size="50" maxlength="60" value="<%= props.getProperty("c_address", "") %>" @oscar.formDB />
-                                   <input type="text" name="c_city" style="width:50%" size="50" maxlength="60" value="<%= props.getProperty("c_city", "") %>" @oscar.formDB />
-                                   <input type="text" name="c_province" size="10" maxlength="50" value="<%= props.getProperty("c_province", "") %>" @oscar.formDB />
-                                   <input type="text" name="c_postal" size="7" maxlength="8" value="<%= props.getProperty("c_postal", "") %>" @oscar.formDB />
+                            <input type="text" name="c_address" readonly style="width:100%" size="50" maxlength="60" value="<%= props.getProperty("c_address", "") %>" @oscar.formDB />
+                                   <input type="text" name="c_city" readonly style="width:50%" size="50" maxlength="60" value="<%= props.getProperty("c_city", "") %>" @oscar.formDB />
+                                   <input type="text" name="c_province" readonly size="10" maxlength="50" value="<%= props.getProperty("c_province", "") %>" @oscar.formDB />
+                                   <input type="text" name="c_postal" reasonly size="7" maxlength="8" value="<%= props.getProperty("c_postal", "") %>" @oscar.formDB />
                                </td>
                     </tr><tr>
                         <td valign="top">Phone Number<br>
-                            <input type="text" name="c_phone" style="width:100%" size="60" maxlength="60" value="<%= props.getProperty("c_phone", "") %>" @oscar.formDB />
+                            <input type="text" name="c_phone" readonly style="width:100%" size="60" maxlength="60" value="<%= props.getProperty("c_phone", "") %>" @oscar.formDB />
                                </td>  
                                 <td>Personal Health Number<br>
-                                    <input type="text" name="c_phn" style="width:100%" size="20" maxlength="20" value="<%= props.getProperty("c_phn", "") %>" @oscar.formDB />
+                                    <input type="text" name="c_phn" readonly style="width:100%" size="20" maxlength="20" value="<%= props.getProperty("c_phn", "") %>" @oscar.formDB />
                                        </td>
                             </tr> 
                             <tr>
                     <td>
                         Alternate Phone Number #1<br>
-                        <input type="text" name="c_phoneAlt1" style="width:100%" size="60" maxlength="60" value="<%= props.getProperty("c_phoneAlt1", "") %>" @oscar.formDB />                        
+                        <input type="text" name="c_phoneAlt1" readonly style="width:100%" size="60" maxlength="60" value="<%= props.getProperty("c_phoneAlt1", "") %>" @oscar.formDB />                        
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>
                         Alternate Phone Number #2<br>
-                        <input type="text" name="c_phoneAlt2" style="width:100%" size="60" maxlength="60" value="<%= props.getProperty("c_phoneAlt2", "") %>" @oscar.formDB />                        
+                        <input type="text" name="c_phoneAlt2" readonly style="width:100%" size="60" maxlength="60" value="<%= props.getProperty("c_phoneAlt2", "") %>" @oscar.formDB />                        
                     </td>
                     <td></td>
                 </tr>

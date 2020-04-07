@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,12 +52,14 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.util.SqlUtils;
-import oscar.util.UtilDateUtilities;
 
 public class EctFormData {
 
 	private static Logger logger = MiscUtils.getLogger();
 	private static EncounterFormDao encounterFormDao = (EncounterFormDao) SpringUtils.getBean("encounterFormDao");
+	
+	public static final String DATE_FORMAT = "dd-MM-yyyy";
+	public static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
 	public static Form[] getForms() {
 		List<EncounterForm> results = encounterFormDao.findAll();
@@ -352,11 +355,13 @@ public class EctFormData {
 		}
 
 		public String getCreated() {
-			return (UtilDateUtilities.DateToString(created, "yy/MM/dd"));
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+			return simpleDateFormat.format(created);
 		}
 
 		public String getEdited() {
-			return (UtilDateUtilities.DateToString(edited, "yy/MM/dd HH:mm:ss"));
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATETIME_FORMAT);
+			return simpleDateFormat.format(edited);
 		}
 
 		public String getFormName() {
