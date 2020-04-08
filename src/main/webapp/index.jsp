@@ -25,7 +25,7 @@
 --%>
 
 
-<%@ page import="javax.servlet.http.Cookie, oscar.oscarSecurity.CookieSecurity" %>
+<%@ page import="javax.servlet.http.Cookie, oscar.oscarSecurity.CookieSecurity, oscar.login.UAgentInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix="c" %>
@@ -34,11 +34,18 @@
 
 <caisi:isModuleLoad moduleName="ticklerplus">
 	<c:if test="${ not empty sessionScope.user }">
-		<c:redirect url="${ pageContext.request.contextPath }/provider/providercontrol.jsp" />
+		<c:redirect url="/provider/providercontrol.jsp" />
 	</c:if>  
 </caisi:isModuleLoad>
 
 <%
+// detect if mobile device.
+String userAgent = request.getHeader("User-Agent");
+String accept = request.getHeader("Accept");       
+UAgentInfo userAgentInfo = new UAgentInfo(userAgent, accept);       
+boolean isMobileDevice = userAgentInfo.detectMobileQuick();
+pageContext.setAttribute("isMobileDevice", isMobileDevice);
+
 // clear old cookies
 Cookie prvCookie = new Cookie(CookieSecurity.providerCookie, "");
 prvCookie.setPath("/");
@@ -150,7 +157,7 @@ response.addCookie(prvCookie);
 
 		.loginContainer .panel-heading #oscar_logo {
 			max-width:300px;
-			margin-left: -20px;
+			margin: 0 auto;
 		}
 
 		.loginContainer .panel-heading {
@@ -435,6 +442,7 @@ response.addCookie(prvCookie);
 				width: 400px;
 			  margin: 0 auto;
 			}
+			
 		}
 		
 		@media ( min-width : 768px) {
@@ -605,9 +613,16 @@ response.addCookie(prvCookie);
 							<input type="hidden" id="loginType" name="loginType" value=""/>
    	                        <input type=hidden name='propname' value='<bean:message key="loginApplication.propertyFile"/>' />
 							
-							<div id="buttonContainer">	
-								<input class="btn btn-oscar btn-primary btn-block" name="submit" type="submit" 
-									onclick="enhancedOrClassic('C');" value="Login" />
+							<div id="buttonContainer">
+								<c:choose>
+									<c:when test="${ isMobileDevice }">
+										<input class="btn btn-oscar btn-primary btn-block" name="submit" id="fullSubmit" type="submit" onclick="enhancedOrClassic('C');" value="Full" />
+										<input class="btn btn-oscar btn-primary btn-block" name="submit" id="mobileSubmit" type="submit" onclick="enhancedOrClassic('C');" value="Mobile" />
+									</c:when>
+									<c:otherwise>
+										<input class="btn btn-oscar btn-primary btn-block" name="submit" type="submit" onclick="enhancedOrClassic('C');" value="Login" />
+									</c:otherwise>
+								</c:choose>	
 							</div>
 							
    						</html:form>
