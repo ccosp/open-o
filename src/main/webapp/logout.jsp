@@ -48,6 +48,6 @@
   else if (request.getParameter("errorMessage") != null) {
 	  param = "?errorMessage=" + request.getParameter("errorMessage");
   }
-  
+
   response.sendRedirect("index.jsp"+param);
 %>
