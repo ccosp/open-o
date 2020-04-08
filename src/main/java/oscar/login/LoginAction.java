@@ -93,19 +93,23 @@ public final class LoginAction extends DispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	boolean ajaxResponse = request.getParameter("ajaxResponse") != null?Boolean.valueOf(request.getParameter("ajaxResponse")):false;
     	
+    	boolean isMobileOptimized = false;
+    	
     	String ip = request.getRemoteAddr();
         String userAgent = request.getHeader("user-agent");
         String accept = request.getHeader("Accept");       
-        UAgentInfo userAgentInfo = new UAgentInfo(userAgent, accept);       
-        boolean isMobileOptimized = userAgentInfo.detectMobileQuick();
-        		
-		String submitType = "";
-        if(request.getParameter("submit")!=null){
-			submitType = String.valueOf(request.getParameter("submit"));
+        UAgentInfo userAgentInfo = new UAgentInfo(userAgent, accept); 
+        isMobileOptimized = userAgentInfo.detectMobileQuick();
+        
+        // override by the user login.
+        String submitType = request.getParameter("submit");  
+		
+		if(submitType != null && "full".equalsIgnoreCase(submitType))
+		{
+			isMobileOptimized = false;
 		}
-    	
+	   	
         LoginCheckLogin cl = new LoginCheckLogin();
-        String loginType = request.getParameter("loginType");
         String oneIdKey = request.getParameter("nameId");
         String oneIdEmail = request.getParameter("email");
         String userName = "";
@@ -310,7 +314,7 @@ public final class LoginAction extends DispatchAction {
             session.setAttribute("expired_days", strAuth[5]);
             // If a new session has been created, we must set the mobile attribute again
             if (isMobileOptimized){
-            	if (submitType.equalsIgnoreCase("Sign in using Full Site")){
+            	if ("Full".equalsIgnoreCase(submitType)){
 					session.setAttribute("fullSite","true");
 				}
 				else{
