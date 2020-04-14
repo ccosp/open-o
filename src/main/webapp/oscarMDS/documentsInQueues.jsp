@@ -48,8 +48,8 @@ if(!authed) {
 <html>
     <head>
                 <title>Documents In Queues</title>
-<!-- script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script-->
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
    <!-- main calendar program -->
@@ -66,7 +66,7 @@ if(!authed) {
 <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/Oscar.js"></script>
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
         <script type="text/javascript" src="../share/javascript/controls.js"></script>
 
         <script type="text/javascript" src="../share/yui/js/yahoo-dom-event.js"></script>
@@ -88,6 +88,29 @@ function removeLink(docType, docId, providerNo, e) {
 	}});
 
 	//e.parentNode.remove(e);
+}
+
+function handleDocSave(docid,action){
+	var url=contextpath + "/dms/inboxManage.do";
+	var data='method=isDocumentLinkedToDemographic&docId='+docid;
+	new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
+                    var json=transport.responseText.evalJSON();
+                    if(json!=null){
+                        var success=json.isLinkedToDemographic;
+                        var demoid='';
+                    	                                       
+                        if(success){
+                            if(action=='addTickler'){
+                                demoid=json.demoId;
+                                if(demoid!=null && demoid.length>0)
+                                    popupStart(450,600,contextpath + '/tickler/ForwardDemographicTickler.do?docType=DOC&docId='+docid+'&demographic_no='+demoid,'tickler')
+                            }                    
+                        }
+                        else {
+                            alert("Make sure demographic is linked and document changes saved!");
+                        }
+                    }
+	}});
 }
 
 function forwardDocument(docId) {
@@ -2011,41 +2034,42 @@ function addDocToPatient(doclabid,patientId){//if doc is previously not assigned
                                                     return false;
                                                 }
 
-                                             function updateStatus(formid,inQueue){//acknowledge
-                                                 if(inQueue)
-                                                     //console.log('inqueue is boolean true');
-                                                 if(inQueue=='true')
-                                                     //console.log('inqueue is string true');
-                                                 var num=formid.split("_");
-                                                        var doclabid=num[1];
-                                                        if(doclabid){
-                                                            var demoId=$('demofind'+doclabid).value;
-                                                            var saved=$('saved'+doclabid).value;
-                                                            if(demoId=='-1'|| saved=='false'){
-                                                                alert('Document is not assigned and saved to a patient,please file it');
-                                                            }else{
-                                                        var url=contextpath+"/oscarMDS/UpdateStatus.do";
-                                                        var data=$(formid).serialize(true);
+                                               function updateStatus( formid,inQueue ){//acknowledge
+                                                   
+                                                   if( inQueue === true ) {
+                                                       	//console.log('inqueue is string true');
+                                                   		var num=formid.split("_");
+                                                          var doclabid=num[1].trim();
+                                                          if(doclabid){
+                                                              var demoId=$('demofind'+doclabid).value;
+                                                              var saved=$('saved'+doclabid).value;
+                                                              if(demoId=='-1'|| saved=='false'){
+                                                                  alert('Document is not assigned and saved to a patient,please file it');
+                                                              }else{
+  		                                                        var url=contextpath+"/oscarMDS/UpdateStatus.do";
+  		                                                        var data=$(formid).serialize(true);
 
-                                                        new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
-                                                                //console.log('after updatestatus ,doclabid '+doclabid);
-                                                                         if(doclabid){
-                                                                             Effect.BlindUp('labdoc_'+doclabid);
-                                                                             updateDocLabData(doclabid,inQueue);
-                                                                             if(inQueue){
-                                                                                 //console.log(' inqueue is true ');
-                                                                                 //make the document out of the queue
-                                                                                 updateDocStatusInQueue(doclabid);
-                                                                                 //remove doc from queueDocNos
-                                                                                 removeDocFromQueue(doclabid);
-                                                                         }else{
-                                                                             //console.log('inqueue is false');
-                                                                         }
-                                                            }
-                                                        }});
-                                                    }
-                                             }                                             
-                                                }
+                                                          		new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
+                                                                  		//console.log('after updatestatus ,doclabid '+doclabid);
+                                                                          
+                                                                          Effect.BlindUp('labdoc_'+doclabid);
+                                                                          updateDocLabData(doclabid,inQueue);
+                                                                          if(inQueue){
+                                                                              //console.log(' inqueue is true ');
+                                                                              //make the document out of the queue
+                                                                              updateDocStatusInQueue(doclabid);
+                                                                              //remove doc from queueDocNos
+                                                                              removeDocFromQueue(doclabid);
+                                                                      	 }else{
+                                                                          	//console.log('inqueue is false');
+                                                                      	 }
+                                                              			
+                                                          		}});
+                                                      		}
+                                               			}                                             
+                                                  }
+                                               }
+
 
                                        function fileDoc(docId){
                                            if(docId){
@@ -2140,7 +2164,7 @@ function addDocToPatient(doclabid,patientId){//if doc is previously not assigned
                                                   $('curPage_'+docid).value=curPage;
 
                                                         showPageImg(docid,curPage,cp);
-                                                        if(curPage>=totalPage){
+                                                        if(curPage+1>=totalPage){
                                                             hideNext(docid);
                                                             showPrev(docid);
                                                         } else{
@@ -2203,7 +2227,7 @@ function addDocToPatient(doclabid,patientId){//if doc is previously not assigned
                                                     $("lastP_"+docid).setStyle({display:'inline'});
                                                 }
 </script>
-<script type="text/javascript" src="../dms/showDocument.js"></script>        
+        
         
         <link rel="stylesheet" type="text/css" href="../share/yui/css/fonts-min.css"/>
         <link rel="stylesheet" type="text/css" href="../share/yui/css/autocomplete.css"/>

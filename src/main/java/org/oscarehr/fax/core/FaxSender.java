@@ -77,24 +77,26 @@ public class FaxSender {
 				
 				log.info("SENDING " + faxJobList.size() + " FAXES");
 				
-				String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/";
+				String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+				if(! path.endsWith(File.separator))
+				{
+					path = path + File.separator;
+				}
 				String filename;
-				int separator;
-				
+
 				for( FaxJob faxJob : faxJobList ) {
-					try {
+					try(ByteArrayOutputStream pdfStream = new ByteArrayOutputStream()) {
 						client.header("user", faxJob.getUser());
 						client.header("passwd", faxConfig.getFaxPasswd());
 						
-						ByteArrayOutputStream pdfStream = new ByteArrayOutputStream();
+						faxJob.setSenderEmail( faxConfig.getSenderEmail() );
+						filename = faxJob.getFile_name();
 						
-						if( (separator = faxJob.getFile_name().lastIndexOf("/")) > -1 ) {
-							filename = faxJob.getFile_name().substring(separator+1);
+						if(filename.contains(File.separator))
+						{
+							filename.replace(File.separator, "");
 						}
-						else {
-							filename = faxJob.getFile_name();
-						}
-						
+
 						FileUtils.copyFile(new File(path+filename), pdfStream);
 						
 						String base64 = Base64Utility.encode(pdfStream.toByteArray());

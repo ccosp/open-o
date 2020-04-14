@@ -52,9 +52,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 /**
- *
+ * @deprecated unsafe with potential memory leaks. Consider another conversion tool.
  * @author root
  */
+@Deprecated
 public class Doc2PDF {
     private static Logger logger=MiscUtils.getLogger(); 
 

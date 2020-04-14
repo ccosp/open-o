@@ -29,7 +29,6 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.tika.io.IOUtils;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.FaxConfig;
@@ -202,20 +201,13 @@ public class EctConsultationFormFaxAction extends Action {
 				String faxPath = path;
 				String filename = "Consult_" + reqId + System.currentTimeMillis() + ".pdf";
 				String faxPdf = String.format("%s%s%s", faxPath, File.separator, filename);
-				
-				FileOutputStream fos = null;
-				
-				try {
-					fos = new FileOutputStream(faxPdf);		
+	
+				try(FileOutputStream fos = new FileOutputStream(faxPdf)) {	
 					ConcatPDF.concat(alist, fos);
-				} finally {
-					IOUtils.closeQuietly(fos);
-				}
+				} 
 				
-				String tempPath = OscarProperties.getInstance().getProperty(
-					"fax_file_location", System.getProperty("java.io.tmpdir"));
+				String tempPath = OscarProperties.getInstance().getProperty("fax_file_location", System.getProperty("java.io.tmpdir"));
                 String faxClinicId = OscarProperties.getInstance().getProperty("fax_clinic_id","");
-
 				
 				PdfReader pdfReader = new PdfReader(faxPdf);
 				int numPages = pdfReader.getNumberOfPages();
@@ -241,16 +233,11 @@ public class EctConsultationFormFaxAction extends Action {
 					FileUtils.copyFile(new File(faxPdf), new File(tempPdf));
 					
 					// Creating text file with the specialists fax number.
-					PrintWriter pw = null;
-					
-					try {
-						fos = new FileOutputStream(tempTxt);
-						pw = new PrintWriter(fos);
+
+					try(FileOutputStream fos = new FileOutputStream(tempTxt);
+							PrintWriter pw = new PrintWriter(fos)) {
 						pw.println(faxNo);
-					} finally {
-						IOUtils.closeQuietly(pw);
-						IOUtils.closeQuietly(fos);
-					}
+					} 
 
 					// A little sanity check to ensure both files exist.
 					if (!new File(tempPdf).exists() || !new File(tempTxt).exists()) {

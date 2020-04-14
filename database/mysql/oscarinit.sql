@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS consultationRequests (
   followUpDate date default NULL,
   site_name varchar(255),
   signature_img VARCHAR(20),
-  letterheadName VARCHAR(20),
+  letterheadName VARCHAR(255),
   letterheadAddress TEXT,
   letterheadPhone VARCHAR(50),
   letterheadFax VARCHAR(50),
@@ -370,7 +370,7 @@ CREATE TABLE IF NOT EXISTS consultationResponse (
   urgency char(2),
   followUpDate date,
   signatureImg VARCHAR(20),
-  letterheadName VARCHAR(20),
+  letterheadName VARCHAR(255),
   letterheadAddress TEXT,
   letterheadPhone VARCHAR(50),
   letterheadFax VARCHAR(50),
@@ -10733,6 +10733,7 @@ CREATE TABLE IF NOT EXISTS `fax_config` (
   `queue` varchar(255),
   `active` tinyint(1),
   `faxNumber` varchar(10),
+  `senderEmail` varchar(255),
   PRIMARY KEY (`id`)
 );
 
