@@ -40,6 +40,7 @@ import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.caisi_integrator.ws.GetConsentTransfer;
 import org.oscarehr.common.Gender;
 import org.oscarehr.common.dao.AdmissionDao;
+import org.oscarehr.common.dao.ContactSpecialtyDao;
 import org.oscarehr.common.dao.DemographicArchiveDao;
 import org.oscarehr.common.dao.DemographicContactDao;
 import org.oscarehr.common.dao.DemographicCustArchiveDao;
@@ -52,6 +53,7 @@ import org.oscarehr.common.dao.PHRVerificationDao;
 import org.oscarehr.common.exception.PatientDirectiveException;
 import org.oscarehr.common.model.Admission;
 import org.oscarehr.common.model.ConsentType;
+import org.oscarehr.common.model.ContactSpecialty;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Demographic.PatientStatus;
 import org.oscarehr.common.model.DemographicContact;
@@ -61,6 +63,7 @@ import org.oscarehr.common.model.DemographicMerged;
 import org.oscarehr.common.model.PHRVerification;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.UserProperty;
+import org.oscarehr.util.DemographicContactCreator;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
@@ -116,6 +119,8 @@ public class DemographicManager {
 	@Autowired
 	private SecurityInfoManager securityInfoManager;
 	
+	@Autowired
+	private ContactSpecialtyDao contactSpecialtyDao;
 
 	@Autowired
 	PatientConsentManager patientConsentManager;
@@ -261,6 +266,20 @@ public class DemographicManager {
 
 		//--- log action ---
 		LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.createUpdateDemographicCust", "id=" + demoCust.getId());
+	}
+	
+	public List<DemographicContact> getDemographicContacts(LoggedInInfo loggedInInfo, Integer id, String category) {
+		List<DemographicContact> result = null;
+		
+		result = demographicContactDao.findByDemographicNoAndCategory(id, category);
+
+		//--- log action ---
+		if (result != null) {
+			for (DemographicContact item : result) {
+				LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.getDemographicContacts", "id=" + item.getId() + "(" + id.toString() + ")");
+			}
+		}
+		return result;
 	}
 
 	public List<DemographicContact> getDemographicContacts(LoggedInInfo loggedInInfo, Integer id) {
@@ -999,5 +1018,186 @@ public class DemographicManager {
     				throw new RuntimeException("missing required security object (_demographic)");
     			}
         	}
+		
+		/**
+		 * Returns a list of type DemographicContacts that are associated to this demographic number.
+		 * DemographicContact.details returns a Contact object that contains the detailed info of each contact.
+		 * 
+		 * @param loggedInInfo
+		 * @param demographicNo
+		 * @return DemographicContacts
+		 */
+		public List<DemographicContact> getHealthCareTeam(LoggedInInfo loggedInInfo, Integer demographicNo) {
+			if(demographicNo == null) {
+				return null;
+			}
+			
+			// only professional contacts here.
+			List<DemographicContact> demographicContacts = getDemographicContacts( loggedInInfo, demographicNo, DemographicContact.CATEGORY_PROFESSIONAL );
+			LogAction.addLogSynchronous(loggedInInfo,"DemographicManager.getHealthCareTeam", demographicNo+"");
+
+			return DemographicContactCreator.addContactDetailsToDemographicContact( demographicContacts );
+		}
+
+		public List<Object[]> getArchiveMeta(LoggedInInfo loggedInInfo, Integer demographicNo) {
+			
+			List<Object[]> archiveMeta = demographicArchiveDao.findMetaByDemographicNo(demographicNo);
+			
+			LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.getArchiveMeta", ""+demographicNo);
+			
+			return archiveMeta;
+		}
+
+		/**
+		 * Find the provider designated as the primary or most responsible practitioner for this patient.
+		 * If the MRP is not indicated this method will return the first available internal provider.
+		 * @param loggedInInfo
+		 * @param demographicNo
+		 * @return DemographicContact
+		 */
+		public DemographicContact getMostResponsibleProviderFromHealthCareTeam(LoggedInInfo loggedInInfo, Integer demographicNo) {
+			
+			if(demographicNo == null) {
+				return null;
+			}
+			
+			DemographicContact mrp = null;
+			List<DemographicContact> demographicContacts = getHealthCareTeam(loggedInInfo, demographicNo);
+						
+			for(DemographicContact demographicContact : demographicContacts) {
+				if( demographicContact.isMrp() ) {
+					mrp = demographicContact;
+				}
+			}
+			
+			// can be removed if annoying. This is a back up for when the MRP is 
+			// not indicated. 
+			if(mrp == null) {
+				for( DemographicContact demographicContact : demographicContacts ) {
+					if( demographicContact.getType() == 0 ) {
+						mrp = demographicContact;
+					}
+				}
+			}
+			
+			LogAction.addLogSynchronous(loggedInInfo,"DemographicManager.getMostResponsibleProviderFromHealthCareTeam", 
+					"Retrieving MRP for Demographic " + demographicNo+"");
+			
+			return DemographicContactCreator.addContactDetailsToDemographicContact( mrp );
+		}
+
+		/**
+		 * Get Health Care Team Member by a specific role.
+		 * @param loggedInInfo
+		 * @param demographicNo
+		 * @param role (can be an numeric string or alpha string)
+		 * @return
+		 */
+		public DemographicContact getHealthCareMemberbyRole( LoggedInInfo loggedInInfo, Integer demographicNo, String role ) {
+			if(demographicNo == null) {
+				return null;
+			}
+			
+			if(role == null) {
+				role = "";
+			}
+			
+			ContactSpecialty contactSpecialty = null;
+			String roleId = "";
+			DemographicContact contact = null;
+			String contactRole = "";
+			
+			if( StringUtils.isNumeric( role ) ) {					
+				contactSpecialty = contactSpecialtyDao.find( Integer.parseInt( role ) );
+				if( contactSpecialty != null ) {
+					role = contactSpecialty.getSpecialty();
+					roleId = role; 
+				}					
+			} else {
+				contactSpecialty = contactSpecialtyDao.findBySpecialty( role.trim() );
+				if( contactSpecialty != null ) {
+					roleId = contactSpecialty.getId()+"";
+				}
+			}
+						
+			List<DemographicContact> demographicContacts = getHealthCareTeam(loggedInInfo, demographicNo);			
+			
+			for( DemographicContact demographicContact : demographicContacts ) {
+				contactRole = demographicContact.getRole();
+				if( role.equalsIgnoreCase( contactRole ) || roleId.equalsIgnoreCase( contactRole ) ) {
+					contact = demographicContact;
+				}				
+			}
+			
+			return DemographicContactCreator.addContactDetailsToDemographicContact( contact );
+		}
+		
+		public DemographicContact getHealthCareMemberbyId(LoggedInInfo loggedInInfo, Integer demographicContactId) {
+			if(demographicContactId == null) {
+				return null;
+			}
+			
+			DemographicContact contact = demographicContactDao.find(demographicContactId);			
+			LogAction.addLogSynchronous(loggedInInfo,"DemographicManager.getHealthCareMemberbyId", demographicContactId+"");
+			MiscUtils.getLogger().debug("Health Care Contact found." + contact);
+			return DemographicContactCreator.addContactDetailsToDemographicContact( contact );
+		}
+		
+		/**
+		 * Returns all of the demographics personal contacts.
+		 * @param loggedInInfo
+		 * @param demographicNo
+		 * @return
+		 */
+		public List<DemographicContact> getPersonalEmergencyContacts(LoggedInInfo loggedInInfo, Integer demographicNo) {
+			if(demographicNo == null) {
+				return null;
+			}	 
+			
+			List<DemographicContact> demographicContacts = getDemographicContacts( loggedInInfo, demographicNo, 
+					DemographicContact.CATEGORY_PERSONAL );
+			
+			return DemographicContactCreator.addContactDetailsToDemographicContact(demographicContacts);
+		}
+		
+		/**
+		 * Get personal contact info with the contact id.
+		 * @param loggedInInfo
+		 * @param contactId
+		 * @return
+		 */
+		public DemographicContact getPersonalEmergencyContactById(LoggedInInfo loggedInInfo, Integer demographicContactId) {
+			
+			if( demographicContactId == null ) {
+				return null;
+			}
+			
+			DemographicContact contact = demographicContactDao.find(demographicContactId);			
+			LogAction.addLogSynchronous(loggedInInfo,"DemographicManager.getPersonalEmergencyContactById", demographicContactId+"");
+			return DemographicContactCreator.addContactDetailsToDemographicContact( contact );
+		}
+		
+		
+		/**
+		 * These are contacts which are marked as emergency contacts.
+		 * @param loggedInInfo
+		 * @param demographicId
+		 * @return
+		 */
+		public List<DemographicContact> getEmergencyContacts(LoggedInInfo loggedInInfo, Integer demographicNo) {
+			if(demographicNo == null) {
+				return null;
+			}
+			
+			List<DemographicContact> demographicContacts = getPersonalEmergencyContacts(loggedInInfo, demographicNo);
+			List<DemographicContact> emergencyContacts = new ArrayList<DemographicContact>();
+			for( DemographicContact demographicContact : demographicContacts ) {
+				if( Boolean.parseBoolean( demographicContact.getEc() ) ) {
+					emergencyContacts.add( DemographicContactCreator.addContactDetailsToDemographicContact(demographicContact) );
+				}				
+			}
+			return emergencyContacts;
+		}
+
 	
 }

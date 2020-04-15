@@ -192,7 +192,8 @@ if(!authed) {
 	var appointmentNo = '<%=appNo%>';
 </script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.7.1.min.js" ></script>                
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui-1.8.18.custom.min.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery_oscar_defaults.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/share/javascript/prototype.js"></script>
 <link rel="stylesheet" type="text/css" media="all"
@@ -207,12 +208,11 @@ if(!authed) {
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/share/calendar/calendar-setup.js"></script>
 
-   <script src="<c:out value="${ctx}/js/jquery.js"/>"></script>
    <script>
      jQuery.noConflict();
    </script>
 
-
+<link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/css/healthCareTeam.css" />
 	<oscar:customInterface section="conreq"/>
 
 <title><bean:message
@@ -321,9 +321,6 @@ textarea {
 </head>
 
 
-
-<link type="text/javascript" src="../consult.js" />
-
 <script language="JavaScript" type="text/javascript">
 
 var servicesName = new Object();   		// used as a cross reference table for name and number
@@ -401,8 +398,7 @@ function getClinicalData( data, target ) {
 		data : data,
 		dataType : 'JSON',
 		success: function(data) {
-			var json = JSON.parse(data);
-			jQuery(target).val( jQuery(target).val() + "\n" + json.note );			
+			jQuery(target).val( jQuery(target).val() + "\n" + response.note );			
 		}
 	});
 }
@@ -563,7 +559,7 @@ function fillSpecialistSelect1( makeNbr )
 			document.EctConsultationFormRequestForm.specialist.options[0] = new Option("<%=consultUtil.getSpecailistsName(consultUtil.specialist)%>", "<%=consultUtil.specialist%>",false ,true );
 
 			//don't display if no consultant was saved
-			<%if(!consultUtil.specialist.equals("null")){%>
+			<%if( ! "null".equals(consultUtil.specialist) ){%>
 			document.getElementById("consult-disclaimer").style.display='inline';
 			<%}else{%>
 			//display so user knows why field is empty
@@ -646,24 +642,8 @@ function initService(ser,name,spec,specname,phone,fax,address){
 
         });
 
-/*	for (aIdx in servicesName){
-	   var serNBR = servicesName[aIdx].serviceNumber;
-   	   document.EctConsultationFormRequestForm.service.options[ i ] = new Option( aIdx, serNBR );
-	   if (serNBR == strSer){
-	      document.EctConsultationFormRequestForm.service.options[ i ].selected = true;
-	      isSel = 1;
-          //window.alert("get here"+serNBR);
-	      fillSpecialistSelect1( serNBR );
-          //window.alert("and here");
-	   }
-	   if (isSel != 1){
-	      document.EctConsultationFormRequestForm.service.options[ 0 ].selected = true;
-	   }
-	   i++;
-	}*/
 	}
 //-------------------------------------------------------------------
-
 /////////////////////////////////////////////////////////////////////
 function onSelectSpecialist(SelectedSpec)	{
 	var selectedIdx = SelectedSpec.selectedIndex;
@@ -689,7 +669,7 @@ function onSelectSpecialist(SelectedSpec)	{
 	var specs = (services[selectedService].specialists); 			// get all the specs the offer this service
     
 	// load the text fields with phone fax and address for past consult review even if spec has been removed from service list
-	<%if(requestId!=null && !consultUtil.specialist.equals("null")){ %>
+	<%if(requestId!=null && ! "null".equals( consultUtil.specialist ) ){ %>
 	form.phone.value = '<%=StringEscapeUtils.escapeJavaScript(consultUtil.specPhone)%>';
 	form.fax.value = '<%=StringEscapeUtils.escapeJavaScript(consultUtil.specFax)%>';					
 	form.address.value = '<%=StringEscapeUtils.escapeJavaScript(consultUtil.specAddr) %>';
@@ -879,7 +859,6 @@ function importFromEnct(reqInfo,txtArea)
 						value = StringUtils.lineBreaks(value);
 					}
 					value = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(value);
-					out.println("info = '" + value + "'");
 				}%>
              break;
           case "ongoingConcerns":
@@ -1257,8 +1236,16 @@ function signatureHandler(e) {
 var requestIdKey = "<%=signatureRequestId %>";
 
 function AddOtherFaxProvider() {
-	var selected = jQuery("#otherFaxSelect option:selected");
-	_AddOtherFax(selected.text(),selected.val());
+	var name = jQuery("#searchHealthCareTeamInput").val();
+	var fax = jQuery("#copytoSpecialistFax").val();
+	if ( checkPhone(fax) ) {
+		_AddOtherFax(name,fax);
+		jQuery("#searchHealthCareTeamInput").val("");
+		jQuery("#copytoSpecialistFax").val("");
+	}
+	else {
+		alert("The fax number you entered is invalid.");
+	}
 }
 function AddOtherFax() {
 	var number = jQuery("#otherFaxInput").val();
@@ -1272,8 +1259,12 @@ function AddOtherFax() {
 
 function _AddOtherFax(name, number) {
 	var remove = "<a href='javascript:void(0);' onclick='removeRecipient(this)'>remove</a>";
-	var html = "<li>"+name+"<b>, Fax No: </b>"+number+ " " +remove+"<input type='hidden' name='faxRecipients' value='"+number+"'></input></li>";
-	jQuery("#faxRecipients").append(jQuery(html));
+	var rvalue = {};
+	rvalue.name=name;
+	rvalue.fax=number;
+	var html = "<tr><td class='tite4'>" + name + "</td><td class='tite4'>" + number + "</td><td class='tite4'>" + remove
+		+ "<input type='hidden' id='faxRecipients' name='faxRecipients' value='" + JSON.stringify(rvalue) + "' /> </td></tr>";
+	jQuery("#addFaxRecipient").append(jQuery(html));
 	updateFaxButton();
 }
 
@@ -1289,12 +1280,12 @@ function checkPhone(str)
 
 function removeRecipient(el) {
 	var el = jQuery(el);
-	if (el) { el.parent().remove(); updateFaxButton(); }
+	if (el) { el.parent().parent().remove(); }
 	else { alert("Unable to remove recipient."); }
 }
 
 function hasFaxNumber() {
-	return specialistFaxNumber.length > 0 || jQuery("#faxRecipients").children().size() > 0;
+	return specialistFaxNumber.length > 0 || ( jQuery("#faxRecipients").val() != null && jQuery("#faxRecipients").val() != "undefined");
 }
 function updateFaxButton() {
 	var disabled = !hasFaxNumber();
@@ -1308,12 +1299,12 @@ function updateFaxButton() {
 <body topmargin="0" leftmargin="0" vlink="#0000FF" 
 	onload="window.focus();disableDateFields();fetchAttached();disableEditing();showSignatureImage();">
 <html:errors />
-<html:form action="/oscarEncounter/RequestConsultation"
-	onsubmit="alert('HTHT'); return false;">
+<html:form action="/oscarEncounter/RequestConsultation" onsubmit="alert('HTHT'); return false;" >
 	<%
 		EctConsultationFormRequestForm thisForm = (EctConsultationFormRequestForm)request.getAttribute("EctConsultationFormRequestForm");
 
-		if (requestId != null)
+
+		if (requestId != null && ! "null".equals( requestId ) && ! requestId.isEmpty() )
 		{
 			EctViewRequestAction.fillFormValues(LoggedInInfo.getLoggedInInfoFromSession(request), thisForm, new Integer(requestId));
                 thisForm.setSiteName(consultUtil.siteName);
@@ -1558,12 +1549,12 @@ function updateFaxButton() {
 						<oscar:oscarPropertiesCheck value="yes" property="faxEnable">
 							<input id="fax_button" name="submitAndFax" type="button" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnSubmitAndFax"/>" onclick="return checkForm('Submit And Fax','EctConsultationFormRequestForm');" />
 						</oscar:oscarPropertiesCheck>
-
-						<input type="button" value="Send eResponse" onclick="$('saved').value='true';document.location='<%=thisForm.getOruR01UrlString(request)%>'" />
+						
+						<logic:equal value="true" name="EctConsultationFormRequestForm" property="eReferral">
+							<input type="button" value="Send eResponse" onclick="$('saved').value='true';document.location='<%=thisForm.getOruR01UrlString(request)%>'" />
+						</logic:equal>
 					<% } %>
-					<logic:equal value="true" name="EctConsultationFormRequestForm" property="eReferral">
-						<input type="button" value="Send eResponse" onclick="$('saved').value='true';document.location='<%=thisForm.getOruR01UrlString(request)%>'" />
-					</logic:equal>
+
 					
 					</td>
                     </tr>
@@ -1573,7 +1564,7 @@ function updateFaxButton() {
 					<table height="100%" width="100%">
 						<% if (props.isConsultationFaxEnabled() && OscarProperties.getInstance().isPropertyActive("consultation_dynamic_labelling_enabled")) { %>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.consultationFormPrint.msgAssociated2" />:</td>
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.consultationFormPrint.msgAssociated2" /></td>
 							<td  class="tite1">
 								<html:select property="providerNo" onchange="switchProvider(this.value)">
 									<%
@@ -1593,7 +1584,7 @@ function updateFaxButton() {
 						<% } %>
 						<tr>						
 						<td class="tite4">
-							<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formRefDate" />:
+							<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formRefDate" />
 						</td>
 								
 						<oscar:oscarPropertiesCheck value="false" property="CONSULTATION_LOCK_REFERRAL_DATE">	
@@ -1616,22 +1607,21 @@ function updateFaxButton() {
 						<oscar:oscarPropertiesCheck value="true" property="CONSULTATION_LOCK_REFERRAL_DATE">
 						
 								<td  class="tite3" >
-									<html:text styleId="referalDate" property="referalDate" 
-										readonly="true"  value="<%=formattedDate%>" />
+									<html:text styleId="referalDate" property="referalDate" readonly="true" value="<%=formattedDate%>" />
 								</td>
 													
 						</oscar:oscarPropertiesCheck>
 
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formService" />:
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formService" />
 							</td>
 							<td  class="tite1">
 								<html:select styleId="service" property="service" onchange="fillSpecialistSelect(this);">
 							</html:select></td>
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formCons" />:
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formCons" />
 							</td>
 							<td  class="tite2">
 							<%
@@ -1680,19 +1670,26 @@ function updateFaxButton() {
 							</td>
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formPhone" />:
+							<td class="tite4">
+								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formPhone" />
 							</td>
 							<td  class="tite2"><input type="text" name="phone" class="righty" value="<%=thisForm.getProfessionalSpecialistPhone()%>" /></td>
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formFax" />:
+							<td class="tite4">
+								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formFax" />
+								<c:if test="${ not empty consultUtil.specialistFaxLog.status }">
+									<span style="font-size:80%;color:red;" >Status: <c:out value="${ consultUtil.specialistFaxLog.status }" /></span>
+								</c:if>
 							</td>
-							<td  class="tite3"><input type="text" name="fax" class="righty" /></td>
+							<td  class="tite3">							
+								<input type="text" name="fax" class="righty" />
+							</td>
 						</tr>
 
 						<tr>
 							<td class="tite4">
-								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAddr" />:
+								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAddr" />
 							</td>
 							<td  class="tite3">
 								<textarea name="address" cols=20 ><%=thisForm.getProfessionalSpecialistAddress()%></textarea>
@@ -1721,7 +1718,7 @@ function updateFaxButton() {
 						</oscar:oscarPropertiesCheck>	
 						<oscar:oscarPropertiesCheck defaultVal="false" value="true" property="CONSULTATION_PATIENT_WILL_BOOK">
 							<tr>
-								<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formPatientBook" />:</td>
+								<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formPatientBook" /></td>
 								<td  class="tite3"><html:checkbox property="patientWillBook" value="1" onclick="disableDateFields()">
 								</html:checkbox></td>
 							</tr>
@@ -1729,14 +1726,14 @@ function updateFaxButton() {
 	
 	
 						<tr>						
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnAppointmentDate" />:
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnAppointmentDate" />
 							</td>
                             <td  class="tite3"><img alt="calendar" id="appointmentDate_cal" src="../../images/cal.gif"> 
  							<html:text styleId="appointmentDate" property="appointmentDate" readonly="true" ondblclick="this.value='';" />
 							</td>
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message	key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAppointmentTime" />:
+							<td class="tite4"><bean:message	key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAppointmentTime" />
 							</td>
 							<td  class="tite3">
 							<table>
@@ -1780,7 +1777,7 @@ function updateFaxButton() {
 						<%if (bMultisites) { %>
 						<tr>
 							<td  class="tite4">
-								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.siteName" />:
+								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.siteName" />
 							</td>
 							<td>
 								<html:select property="siteName" onchange='this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor'>
@@ -1802,62 +1799,62 @@ function updateFaxButton() {
 					<table height="100%" width="100%" bgcolor="white">
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgPatient" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgPatient" />
 							</td>
                                                         <td class="tite1"><a href="javascript:void();" onClick="popupAttach(600,900,'<%=request.getContextPath()%>/demographic/demographiccontrol.jsp?demographic_no=<%=demo%>&displaymode=edit&dboperation=search_detail')"><%=thisForm.getPatientName()%></a></td>
 						</tr>
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgAddress" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgAddress" />
 							</td>
 							<td class="tite1"><%=thisForm.getPatientAddress().replace("null", "")%></td>
 						</tr>
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgPhone" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgPhone" />
 							</td>
 							<td class="tite2"><%=thisForm.getPatientPhone()%></td>
 						</tr>
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgWPhone" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgWPhone" />
 							</td>
 							<td class="tite2"><%=thisForm.getPatientWPhone()%></td>
 						</tr>
 												<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgCellPhone" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgCellPhone" />
 							</td>
 							<td class="tite2"><%=thisForm.getPatientCellPhone()%></td>
 						</tr>
                                                 <tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgEmail" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgEmail" />
 							</td>
 							<td class="tite2"><%=thisForm.getPatientEmail()%></td>
 						</tr>
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgBirthDate" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgBirthDate" />
 							</td>
 							<td class="tite2"><%=thisForm.getPatientDOB()%></td>
 						</tr>
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgSex" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgSex" />
 							</td>
 							<td class="tite3"><%=thisForm.getPatientSex()%></td>
 						</tr>
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgHealthCard" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgHealthCard" />
 							</td>
 							<td class="tite3"><%=thisForm.getPatientHealthNum()%>&nbsp;<%=thisForm.getPatientHealthCardVersionCode()%>&nbsp;<%=thisForm.getPatientHealthCardType()%>
 							</td>
 						</tr>
 						<tr id="conReqSendTo">
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgSendTo" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgSendTo" />
 							</td>
 							<td class="tite3"><html:select property="sendTo">
 								<html:option value="-1">---- <bean:message
@@ -1889,7 +1886,7 @@ function updateFaxButton() {
 
 						<tr>
 							<td colspan="2" class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAppointmentNotes" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAppointmentNotes" />
 							</td>
 						</tr>
 						<tr>
@@ -1900,7 +1897,7 @@ function updateFaxButton() {
 						
 						<tr>
 							<td class="tite4"><bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formLastFollowup" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formLastFollowup" />
 							</td>
 							<td class="tite3">
 	                             <img alt="calendar" id="followUpDate_cal" src="../../images/cal.gif" />
@@ -1913,7 +1910,7 @@ function updateFaxButton() {
 							if(thisForm.getFdid() != null) {
 						%>
 						<tr>
-							<td class="tite4">EForm:
+							<td class="tite4">EForm
 							</td>
 							<td class="tite2">
 								<a href="<%=request.getContextPath()%>/eform/efmshowform_data.jsp?fdid=<%=thisForm.getFdid() %>">Click to view</a>
@@ -1926,11 +1923,13 @@ function updateFaxButton() {
 					</td>
 				</tr>
 				<tr>
+					<td colspan=2 class="tite4">Letterhead</td>
+				<tr>
 					<td colspan=2>
 					<table  width="100%">
 						<tr>
 						
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadName" />:
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadName" />
 							</td>							
 							<td  class="tite3">				
 								<select name="letterheadName" id="letterheadName" onchange="switchProvider(this.value)">
@@ -1955,13 +1954,13 @@ function updateFaxButton() {
 								<% }
 								}%>
 								</select>
-								<%if ( props.getBooleanProperty("consultation_fax_enabled", "true") ) {%>
+								<%if ( props.isConsultationFaxEnabled() ) {%>
 									<div style="font-size:12px"><input type="checkbox" name="ext_letterheadTitle" value="Dr" <%=(consultUtil.letterheadTitle != null && consultUtil.letterheadTitle.equals("Dr") ? "checked"  : "") %>>Include Dr. with name</div>
 								<%}%>
 							</td>
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadAddress" />:
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadAddress" />
 							</td>
 							<td  class="tite3">
 								<% if (consultUtil.letterheadAddress != null) { %>
@@ -1978,7 +1977,7 @@ function updateFaxButton() {
 							</td>
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadPhone" />:
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadPhone" />
 							</td>
 							<td  class="tite3">
 								<% if (consultUtil.letterheadPhone != null) {
@@ -1996,7 +1995,7 @@ function updateFaxButton() {
 							</td>
 						</tr>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadFax" />:
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.letterheadFax" />
 							</td>
 							<td  class="tite3">
 							   <%								
@@ -2020,9 +2019,59 @@ function updateFaxButton() {
 					</table>
 					</td>
 				</tr>
+				<% if (props.isConsultationFaxEnabled()) { %>
+	
+					<tr>
+						<td colspan=3 >
+							<table id="addFaxRecipient" width="100%">
+										
+								<tr>
+									<td colspan=3 class="tite4" style="border-bottom:black thin solid;">
+									
+										Additional Fax Recipients
+									
+										<% String rdohip = "";
+									    if (demographic != null) {
+										    	String famDoc = demographic.getFamilyDoctor();
+										    	if (famDoc != null && famDoc.trim().length() > 0) { 
+										    		rdohip = SxmlMisc.getXmlContent( famDoc, "rdohip" ); 
+										    		rdohip = rdohip == null ? "" : rdohip.trim(); 
+										    	}
+									    } %>
+									</td>
+								</tr>
+							
+								<tr>
+									<td class="tite3">
+										Name <input type="text" id="searchHealthCareTeamInput" value="" placeholder="last, first"  />
+									</td>
+									
+									<td class="tite3">
+										Fax <input type="text" id="copytoSpecialistFax" placeholder="xxx-xxx-xxxx" value="" />
+									</td>
+									<td class="tite3" style="padding:4px 0px;">
+										<button onclick="AddOtherFaxProvider(); return false;" > Add Recipient </button>
+									</td>
+								</tr>									
+								<c:if test="${ not empty consultUtil.copyToFaxLog }">
+									<c:forEach items="${ consultUtil.copyToFaxLog }" var="faxLog">
+										<tr>
+											<td class="tite4"><c:out value="${ faxLog.name }" /></td>
+											<td class="tite4"><c:out value="${ faxLog.fax }" /></td>
+											<td class="tite4">
+												<c:out value="${ faxLog.status }" />
+												<c:out value="${ faxLog.sent }" />
+											</td>
+										</tr>
+									</c:forEach>
+								</c:if>
+							</table>
+						</td>	
+					</tr>
+				<% } %>
+				
 				<tr>
-					<td colspan=2>
-					<td>
+					<td colspan=2><td>
 				</tr>
 				<tr>
 					<td colspan="2" class="tite4"><bean:message
@@ -2038,7 +2087,7 @@ function updateFaxButton() {
 					<table width="100%">
 						<tr>
 							<td width="30%" rowspan="2" class="tite4">
-								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formClinInf" />:						
+								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formClinInf" />						
 							</td>
 							<td id="clinicalInfoButtonBar">
 								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportSocHistory"/>" onclick="importFromEnct('SocialHistory',document.forms[0].clinicalInformation);" />&nbsp;
@@ -2079,7 +2128,7 @@ function updateFaxButton() {
 										else
 										{
 							%> <bean:message
-								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formSignificantProblems" />:
+								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formSignificantProblems" />
 							<%
  	}
  %>
@@ -2134,7 +2183,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 								<% if (props.getProperty("currentMedicationsTitle", "").length() > 1) {
 									out.print( props.getProperty("currentMedicationsTitle", "") );
 								}else { %> 										
-									<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formCurrMedications" />:
+									<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formCurrMedications" />
 								<% }  %>
 							</td>
 							<td id="medsButtonBar">
@@ -2160,7 +2209,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 						<table width="100%">
 						<tr>
 							<td width="30%" class="tite4">
-							<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAllergies" />:
+							<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAllergies" />
 							</td>
 							<td>
 								<input id="fetchAllergies_allergies" type="button" class="btn clinicalData" value="Allergies" />
@@ -2179,7 +2228,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 				if (props.isConsultationSignatureEnabled()) {
 				%>
 				<tr>
-					<td colspan=2 class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formSignature" />:
+					<td colspan=2 class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formSignature" />
 					</td>
 				</tr>
 				<tr>
@@ -2201,93 +2250,12 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 
 					</td>
 				</tr>
+				<tr><td colspan=2 class="spacer"></td></tr>
 				<% }%>
-				<%
-				if (props.isConsultationFaxEnabled()) {
-				%>
-				<tr><td colspan=2 class="tite4">Additional Fax Recipients:</td></tr>
-				<tr>
-					<td colspan=2>
-					    <%
-					    String rdohip = "";
-					    if (demographic!=null) {
-					    	String famDoc = demographic.getFamilyDoctor();
-					    	if (famDoc != null && famDoc.trim().length() > 0) { rdohip = SxmlMisc.getXmlContent(famDoc,"rdohip"); rdohip = rdohip == null ? "" : rdohip.trim(); }
-					    }
-					    %>
-						<table width="100%">
-						<tr>
-
-							<td class="tite4" width="10%">  Providers: </td>
-							<td class="tite3" width="20%">
-								<select id="otherFaxSelect">
-									<option value="">Select additional fax recipients</option>
-								<%
-								String rdName = "";
-								String rdFaxNo = "";
-								for (int i=0;i < displayServiceUtil.specIdVec.size(); i++) {
-		                                 String  specId     =  displayServiceUtil.specIdVec.elementAt(i);
-		                                 String  fName      =  displayServiceUtil.fNameVec.elementAt(i);
-		                                 String  lName      =  displayServiceUtil.lNameVec.elementAt(i);
-		                                 String  proLetters =  displayServiceUtil.proLettersVec.elementAt(i);
-		                                 String  address    =  displayServiceUtil.addressVec.elementAt(i);
-		                                 String  phone      =  displayServiceUtil.phoneVec.elementAt(i);
-		                                 String  fax        =  displayServiceUtil.faxVec.elementAt(i);
-		                                 String  referralNo = ""; // TODO: add referal number to specialists ((String) displayServiceUtil.referralNoList.get(i)).trim();
-		                                 if (rdohip != null && !"".equals(rdohip) && rdohip.equals(referralNo)) {
-		                                	 rdName = String.format("%s, %s", lName, fName);
-		                                	 rdFaxNo = fax;
-		                                 }
-									if (!"".equals(fax)) {
-									%>
-
-									<option value="<%= fax %>"> <%= String.format("%s, %s", lName, fName) %> </option>
-									<%
-									}
-								}
-		                        %>
-								</select>
-							</td>
-							<td class="tite3">
-								<button onclick="AddOtherFaxProvider(); return false;">Add Provider</button>
-							</td>
-						</tr>
-						<tr>
-							<td class="tite4" width="20%"> Other Fax Number: </td>
-							<td class="tite3" width="32%">
-								<input type="text" id="otherFaxInput"></input>
-
-							<font size="1"> <bean:message key="global.phoneformat1" />  </font></td>
-							<td class="tite3">
-								<button onclick="AddOtherFax(); return false;">Add Other Fax Recipient</button>
-							</td>
-						</tr>
-						<tr>
-							<td colspan=3>
-								<ul id="faxRecipients">
-								<%
-								if (!"".equals(rdName) && !"".equals(rdFaxNo)) {
-									%>
-								<!--<li>-->
-										<!-- <%--= rdName %> <b>Fax No: </b><%= rdFaxNo --%> <a href="javascript:void(0);" onclick="removeRecipient(this)">remove</a>-->
-										<input type="hidden" name="faxRecipients" value="<%= rdFaxNo %>" />
-								<!--</li>-->
-									<%
-								}
-								%>
-								</ul>
-							</td>
-						</tr>
-						</table>
-					</td>
-				</tr>
-				<% } %>
-
-
 
 				<tr>
 
-<td colspan=2>
+				<td colspan=2 class="tite4">
 						<input type="hidden" name="submission" value="" />
 						
 						<%if (request.getAttribute("id") != null) {%>
@@ -2330,66 +2298,94 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 									value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnSubmitAndFax"/>" 
 									onclick="return checkForm('Submit And Fax','EctConsultationFormRequestForm');" />
 							</oscar:oscarPropertiesCheck>
+							<logic:equal value="true" name="EctConsultationFormRequestForm" property="eReferral">
+									<input type="button" value="Send eResponse" onclick="$('saved').value='true';document.location='<%=thisForm.getOruR01UrlString(request)%>'" />
+							</logic:equal>
 							
 						<% }%>
 						
-						<logic:equal value="true" name="EctConsultationFormRequestForm" property="eReferral">
-								<input type="button" value="Send eResponse" onclick="$('saved').value='true';document.location='<%=thisForm.getOruR01UrlString(request)%>'" />
-						</logic:equal>
 					</td>
 				</tr>
-
-				<script type="text/javascript">
-
-	        initMaster();
-	        initService('<%=consultUtil.service%>','<%=((consultUtil.service==null)?"":StringEscapeUtils.escapeJavaScript(consultUtil.getServiceName(consultUtil.service.toString())))%>','<%=consultUtil.specialist%>','<%=((consultUtil.specialist==null)?"":StringEscapeUtils.escapeJavaScript(consultUtil.getSpecailistsName(consultUtil.specialist.toString())))%>','<%=StringEscapeUtils.escapeJavaScript(consultUtil.specPhone)%>','<%=StringEscapeUtils.escapeJavaScript(consultUtil.specFax)%>','<%=StringEscapeUtils.escapeJavaScript(consultUtil.specAddr)%>');
-            initSpec();
-            document.EctConsultationFormRequestForm.phone.value = ("");
-        	document.EctConsultationFormRequestForm.fax.value = ("");
-        	document.EctConsultationFormRequestForm.address.value = ("");
-            <%if (request.getAttribute("id") != null)
-					{%>
-                setSpec('<%=consultUtil.service%>','<%=consultUtil.specialist%>');
-                FillThreeBoxes('<%=consultUtil.specialist%>');
-            <%}
-					else
-					{%>
-                document.EctConsultationFormRequestForm.service.options.selectedIndex = 0;
-                document.EctConsultationFormRequestForm.specialist.options.selectedIndex = 0;
-            <%}%>
-
-            onSelectSpecialist(document.EctConsultationFormRequestForm.specialist);
-            
-            <%
-            	//new with BORN referrals. Allow form to be loaded with service and 
-            	//specialist pre-selected
-            	String reqService = request.getParameter("service");
-            	
-            	String reqSpecialist = request.getParameter("specialist");
-            	if(reqService != null && reqSpecialist != null) {
-            		ConsultationServices consultService = consultationServiceDao.findByDescription(reqService);
-            		if(consultService != null) {
-            		%>
-            		jQuery("#service").val('<%=consultService.getId()%>');
-            		fillSpecialistSelect(document.getElementById('service'));
-            		jQuery("#specialist").val('<%=reqSpecialist%>');
-            		onSelectSpecialist(document.getElementById('specialist'));
-            		<%
-            	} }
-            	
-            	String serviceId = request.getParameter("serviceId");
-            	if(serviceId != null) {
-            		%>
-            		jQuery("#service").val('<%=serviceId%>');
-            		fillSpecialistSelect(document.getElementById('service'));
-            		<%
-            	}
-            %>
+				
+			<script type="text/javascript">
+			//<!--
+				function initConsultationServices() {
+					initMaster();
+			        initService('<%=consultUtil.service%>','<%=((consultUtil.service==null)?"":StringEscapeUtils.escapeJavaScript(consultUtil.getServiceName(consultUtil.service.toString())))%>','<%=consultUtil.specialist%>','<%=((consultUtil.specialist==null)?"":StringEscapeUtils.escapeJavaScript(consultUtil.getSpecailistsName(consultUtil.specialist.toString())))%>','<%=StringEscapeUtils.escapeJavaScript(consultUtil.specPhone)%>','<%=StringEscapeUtils.escapeJavaScript(consultUtil.specFax)%>','<%=StringEscapeUtils.escapeJavaScript(consultUtil.specAddr)%>');
+		            initSpec();
+		            
+		            document.EctConsultationFormRequestForm.phone.value = ("");
+		        	document.EctConsultationFormRequestForm.fax.value = ("");
+		        	document.EctConsultationFormRequestForm.address.value = ("");
+		            <%if (request.getAttribute("id") != null)
+							{%>
+		                setSpec('<%=consultUtil.service%>','<%=consultUtil.specialist%>');
+		                FillThreeBoxes('<%=consultUtil.specialist%>');
+		            <%}
+							else
+							{%>
+		                document.EctConsultationFormRequestForm.service.options.selectedIndex = 0;
+		                document.EctConsultationFormRequestForm.specialist.options.selectedIndex = 0;
+		            <%}%>
+		
+		            onSelectSpecialist(document.EctConsultationFormRequestForm.specialist);
+		            
+		            <%
+		            	//new with BORN referrals. Allow form to be loaded with service and 
+		            	//specialist pre-selected
+		            	String reqService = request.getParameter("service");
+		            	
+		            	String reqSpecialist = request.getParameter("specialist");
+		            	
+		            	if(reqService != null && reqSpecialist != null) {
+		            		ConsultationServices consultService = consultationServiceDao.findByDescription(reqService);
+		            		if(consultService != null) {
+		            		%>
+		            		jQuery("#service").val('<%=consultService.getId()%>');
+		            		fillSpecialistSelect(document.getElementById('service'));
+		            		jQuery("#specialist").val('<%=reqSpecialist%>');
+		            		onSelectSpecialist(document.getElementById('specialist'));
+		            		<%
+		            	} }
+		            	
+		            	String serviceId = request.getParameter("serviceId");
+		            	if(serviceId != null) {
+		            		%>
+		            		jQuery("#service").val('<%=serviceId%>');
+		            		fillSpecialistSelect(document.getElementById('service'));
+		            		<%
+		            	}
+		            %>
+				}
         //-->
         </script>
+        
+       	<oscar:oscarPropertiesCheck value="false" property="ENABLE_HEALTH_CARE_TEAM_IN_CONSULTATION_REQUESTS" defaultVal="false" >
+			<script type="text/javascript">
+			//<!--
+				initConsultationServices();
+			//-->
+			</script>
+		</oscar:oscarPropertiesCheck>
+		
+		<oscar:oscarPropertiesCheck value="true" property="ENABLE_HEALTH_CARE_TEAM_IN_CONSULTATION_REQUESTS" defaultVal="false" >
+			<script type="text/javascript">
+			//<!--
+				var specialist = "${ consultUtil.specialist }";
+				var service = "${ consultUtil.service }";
 
-
-
+				document.EctConsultationFormRequestForm.specialist.value = specialist;
+				if(  typeof healthCareTeam !== 'undefined' && healthCareTeam !== null ) {
+					document.EctConsultationFormRequestForm.annotation.value = healthCareTeam[ specialist ].note; 
+					document.EctConsultationFormRequestForm.phone.value = healthCareTeam[ specialist ].phoneNum;
+					document.EctConsultationFormRequestForm.fax.value = healthCareTeam[ specialist ].specFax;					
+					document.EctConsultationFormRequestForm.address.value = healthCareTeam[ specialist ].specAddress;
+				}
+				document.EctConsultationFormRequestForm.service.value = service
+				
+			//-->
+			</script>
+		</oscar:oscarPropertiesCheck>
 
 				<!----End new rows here-->
 
@@ -2407,7 +2403,51 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 </html:form>
 </body>
 
-<script type="text/javascript" language="javascript">
+<script type="text/javascript" >
+jQuery(document).ready( function() {
+	//--> Autocomplete searches
+	jQuery( "#searchHealthCareTeamInput" ).autocomplete({				
+		source: function( request, response ) { 
+			var url = ctx + "/demographic/Contact.do?method=searchAllContacts&searchMode=search_name&orderBy=c.lastName,c.firstName";
+			jQuery.ajax({
+				url: url,
+				type: "GET",
+				dataType: "json",
+				data: {
+				 	term: request.term   			  
+				},
+				contentType: "application/json",
+				success: function( data ) {
+					response(jQuery.map(data, function( item ) {					
+						return {
+						  label: item.lastName + ", " 
+						  + item.firstName + " :: "
+						  + item.residencePhone
+						  + " :: " + item.address 
+						  + " " + item.city,
+						  value: item.id,
+						  contact: item
+						 }						 
+					}));
+				}
+			});
+	    },
+	    minLength: 2,  
+	    focus: function( event, ui ) {
+	    		event.preventDefault();
+	        return false;
+	    },
+	    select: function(event, ui) { 
+	    		event.preventDefault(); 	    		
+	    		jQuery("#copytoSpecialistFax").val(ui.item.contact.fax);
+	    		jQuery("#searchHealthCareTeamInput").val( ui.item.contact.lastName + ", " + ui.item.contact.firstName );
+	    }      
+	});
+})
+</script>
+
+
+<script type="text/javascript">
 
 Calendar.setup( { inputField : "followUpDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "followUpDate", singleClick : true, step : 1 } );
 Calendar.setup( { inputField : "appointmentDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "appointmentDate", singleClick : true, step : 1 } );

@@ -10709,6 +10709,7 @@ CREATE TABLE IF NOT EXISTS `faxes` (
   `filename` varchar(255),
   `faxline` varchar(11),
   `destination` varchar(11),
+  `recipient` varchar(255),
   `status` varchar(32),
   `statusString` varchar(255),
   `document` text,

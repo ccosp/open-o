@@ -25,106 +25,129 @@
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
+import java.util.HashSet;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.util.MiscUtils;
+
+import net.sf.json.JSONObject;
 
 public final class EctConsultationFaxForm extends ActionForm {
 
-    public String getRecipient()
-    {
-        if(recipient == null)
-            recipient = new String();
-        return recipient;
-    }
+    private String recipient;
+    private String from;
+    private String recipientsFaxNumber;
+    private String sendersPhone;
+    private String sendersFax;
+    private String comments;
+    private String requestId;
+    private String transType;
+    private String demographicNo;
+    private String[] faxRecipients;
+    private boolean coverpage;
+    private HashSet<FaxRecipient> allFaxRecipients;
+    private HashSet<FaxRecipient> copiedTo;
+    private HttpServletRequest request;
+    
+	public String getRecipient() {
+		return recipient;
+	}
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+	public String getFrom() {
+		return from;
+	}
+	public void setFrom(String from) {
+		this.from = from;
+	}
+	public String getRecipientsFaxNumber() {
+		if(recipientsFaxNumber != null) {
+			recipientsFaxNumber = recipientsFaxNumber.trim().replaceAll("\\D", "");
+		}
+		return recipientsFaxNumber;
+	}
+	public void setRecipientsFaxNumber(String recipientsFaxNumber) {
+		this.recipientsFaxNumber = recipientsFaxNumber;
+	}
+	public String getSendersPhone() {
+		return sendersPhone;
+	}
+	public void setSendersPhone(String sendersPhone) {
+		this.sendersPhone = sendersPhone;
+	}
+	public String getSendersFax() {
+		return sendersFax;
+	}
+	public void setSendersFax(String sendersFax) {
+		this.sendersFax = sendersFax;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public String getRequestId() {
+		return requestId;
+	}
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
+	public String getTransType() {
+		return transType;
+	}
+	public void setTransType(String transType) {
+		this.transType = transType;
+	}
+	public String getDemographicNo() {
+		return demographicNo;
+	}
+	public void setDemographicNo(String demographicNo) {
+		this.demographicNo = demographicNo;
+	}
+	public String[] getFaxRecipients() {
+		return faxRecipients;
+	}
+	public void setFaxRecipients(String[] faxRecipients) {
+		this.faxRecipients = faxRecipients;
+	}
+	public boolean isCoverpage() {
+		return coverpage;
+	}
+	public void setCoverpage(boolean coverpage) {
+		this.coverpage = coverpage;
+	}
+	public HashSet<FaxRecipient> getAllFaxRecipients() {
+		if(allFaxRecipients == null) {
+			allFaxRecipients = new HashSet<FaxRecipient>();
+			allFaxRecipients.add( new FaxRecipient( getRecipient() , getRecipientsFaxNumber() ) );
+			allFaxRecipients.addAll(getCopiedTo());
+		}
 
-    public void setRecipient(String str)
-    {
-        MiscUtils.getLogger().debug("recipient has been set");
-        recipient = str;
-    }
+		return allFaxRecipients;
+	}
 
-    public String getFrom()
-    {
-        if(from == null)
-            from = new String();
-        return from;
-    }
+	public HashSet<FaxRecipient> getCopiedTo() {
+		if(copiedTo == null) {
+			copiedTo = new HashSet<FaxRecipient>();
+		}
+		if(getFaxRecipients() != null) {
+			for(String faxRecipient : getFaxRecipients()) {
+				JSONObject jsonObject = JSONObject.fromObject(faxRecipient);
+				String fax = jsonObject.getString("fax");
+				String name = jsonObject.getString("name");
+				copiedTo.add(new FaxRecipient(name, fax));
+			}
+		}
+		return copiedTo;
+	}
 
-    public void setFrom(String str)
-    {
-        MiscUtils.getLogger().debug("from has been set");
-        from = str;
-    }
-
-    public String getRecipientsFaxNumber()
-    {
-        if(recipientsFaxNumber == null)
-            recipientsFaxNumber = new String();
-        return recipientsFaxNumber;
-    }
-
-    public void setRecipientsFaxNumber(String str)
-    {
-        MiscUtils.getLogger().debug("recipientsFaxNumber setter");
-        recipientsFaxNumber = str;
-    }
-
-    public String getSendersPhone()
-    {
-        if(sendersPhone == null)
-            sendersPhone = new String();
-        return sendersPhone;
-    }
-
-    public void setSendersPhone(String str)
-    {
-        MiscUtils.getLogger().debug(" setter");
-        sendersPhone = str;
-    }
-
-    public String getSendersFax()
-    {
-        if(sendersFax == null)
-            sendersFax = new String();
-        return sendersFax;
-    }
-
-    public void setSendersFax(String str)
-    {
-        MiscUtils.getLogger().debug("sendersFax setter");
-        sendersFax = str;
-    }
-
-    public String getComments()
-    {
-        if(comments == null)
-            comments = new String();
-        return comments;
-    }
-
-    public void setComments(String str)
-    {
-        MiscUtils.getLogger().debug("appointmentDay setter");
-        comments = str;
-    }
-
-    public String getRequestId()
-    {
-        if(requestId == null)
-            requestId = new String();
-        return requestId;
-    }
-
-    public void setRequestId(String str)
-    {
-        MiscUtils.getLogger().debug("requestId setter");
-        requestId = str;
-    }
-    String recipient;
-    String from;
-    String recipientsFaxNumber;
-    String sendersPhone;
-    String sendersFax;
-    String comments;
-    String requestId;
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
 }

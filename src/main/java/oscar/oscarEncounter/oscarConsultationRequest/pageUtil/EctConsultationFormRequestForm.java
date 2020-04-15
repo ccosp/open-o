@@ -120,6 +120,9 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 	private String appointmentInstructions;
 	private String appointmentInstructionsLabel;
 	
+	private String[] docNo;
+	private String[] labNo;
+	
 	public String getProfessionalSpecialistName() {
 		return (StringUtils.trimToEmpty(professionalSpecialistName));
 	}
@@ -623,5 +626,25 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 		this.appointmentInstructionsLabel = appointmentInstructionsLabel;
 	}
 
+	public String[] getDocNo() {
+		if(docNo == null) {
+			return new String[] {};
+		}
+		return docNo;
+	}
 
+	public void setDocNo(String[] docNo) {
+		this.docNo = docNo;
+	}
+
+	public String[] getLabNo() {
+		if(labNo == null) {
+			return new String[] {};
+		}
+		return labNo;
+	}
+
+	public void setLabNo(String[] labNo) {
+		this.labNo = labNo;
+	}
 }

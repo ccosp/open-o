@@ -26,6 +26,7 @@ package org.oscarehr.fax.core;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
@@ -35,11 +36,15 @@ import org.apache.commons.io.FileUtils;
 import org.apache.cxf.common.util.Base64Utility;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.http.HttpStatus;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.log4j.Logger;
+import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
+import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
+import org.oscarehr.common.model.FaxJob.STATUS;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
@@ -50,6 +55,7 @@ public class FaxSender {
 	private static String PATH = "/fax";
 	private FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
 	private FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
+    private FaxClientLogDao faxClientLogDao = SpringUtils.getBean(FaxClientLogDao.class);
 	
 	private Logger log = MiscUtils.getLogger();
 	
@@ -85,7 +91,12 @@ public class FaxSender {
 				String filename;
 
 				for( FaxJob faxJob : faxJobList ) {
+					
+					FaxClientLog faxClientLog = faxClientLogDao.findClientLogbyFaxId(faxJob.getId()+"");
+					STATUS faxStatus = STATUS.ERROR;
+					
 					try(ByteArrayOutputStream pdfStream = new ByteArrayOutputStream()) {
+
 						client.header("user", faxJob.getUser());
 						client.header("passwd", faxConfig.getFaxPasswd());
 						
@@ -104,26 +115,45 @@ public class FaxSender {
 						
 						Response httpResponse = client.post(faxJob);
 						
-						if( httpResponse.getStatus() == HttpStatus.SC_OK ) {
-							
+						if( httpResponse.getStatus() == HttpStatus.SC_OK ) {							
 							faxJobId = httpResponse.readEntity(FaxJob.class);
 							faxJob.setDocument(null);
 							faxJob.setJobId(faxJobId.getJobId());
-							faxJob.setStatus(faxJobId.getStatus());
-													
-							faxJobDao.merge(faxJob);
-							log.info("Updated Fax with jobid " + faxJob.getJobId() + " and status " + faxJob.getStatus());
-							
+							faxJob.setStatusString(faxJobId.getStatusString());
+							faxStatus = faxJobId.getStatus();
 						}
-						else {
+						else 
+						{
+							faxJob.setStatusString("WEB SERVICE RESPONDED WITH " + httpResponse.getStatus());
 							log.error("WEB SERVICE RESPONDED WITH " + httpResponse.getStatus(), new IOException());
 						}
+						
 					}
-					catch(IOException e ) {
+					catch(HttpHostConnectException e) 
+					{
+						faxStatus = FaxJob.STATUS.WAITING;
+						faxJob.setStatusString("Connection error. Check internet connection " + faxJob.getFile_name());
+						log.error("Connection error. Check internet connection " + faxJob.getFile_name());
+					}
+					catch(IOException e ) 
+					{
+						faxJob.setStatusString("CANNOT FIND " + faxJob.getFile_name());
 						log.error("CANNOT FIND " + faxJob.getFile_name());
 					}
 					catch( Exception e ) {
+						faxJob.setStatusString("PROBLEM COMMUNICATING WITH WEB SERVICE");
 						log.error("PROBLEM COMMUNICATING WITH WEB SERVICE",e);
+					} 
+					finally 
+					{
+						faxJob.setStatus(faxStatus);
+						faxJobDao.merge(faxJob);
+						log.info("Updated Fax with jobid " + faxJob.getJobId() + " and status " + faxJob.getStatus());
+						if(faxClientLog != null) {
+							faxClientLog.setResult(faxStatus.name());
+			                faxClientLog.setEndTime(new Date(System.currentTimeMillis()));
+			                faxClientLogDao.merge(faxClientLog);
+						}
 					}
 				}
 				
