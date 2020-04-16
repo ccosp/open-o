@@ -26,6 +26,7 @@
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,8 +47,8 @@ public final class EctConsultationFaxForm extends ActionForm {
     private String demographicNo;
     private String[] faxRecipients;
     private boolean coverpage;
-    private HashSet<FaxRecipient> allFaxRecipients;
-    private HashSet<FaxRecipient> copiedTo;
+    private Set<FaxRecipient> allFaxRecipients;
+    private Set<FaxRecipient> copiedTo;
     private HttpServletRequest request;
     
 	public String getRecipient() {
@@ -108,6 +109,9 @@ public final class EctConsultationFaxForm extends ActionForm {
 		this.demographicNo = demographicNo;
 	}
 	public String[] getFaxRecipients() {
+		if(faxRecipients ==  null) {
+			return new String[]{};
+		}
 		return faxRecipients;
 	}
 	public void setFaxRecipients(String[] faxRecipients) {
@@ -119,7 +123,7 @@ public final class EctConsultationFaxForm extends ActionForm {
 	public void setCoverpage(boolean coverpage) {
 		this.coverpage = coverpage;
 	}
-	public HashSet<FaxRecipient> getAllFaxRecipients() {
+	public Set<FaxRecipient> getAllFaxRecipients() {
 		if(allFaxRecipients == null) {
 			allFaxRecipients = new HashSet<FaxRecipient>();
 			allFaxRecipients.add( new FaxRecipient( getRecipient() , getRecipientsFaxNumber() ) );
@@ -129,11 +133,9 @@ public final class EctConsultationFaxForm extends ActionForm {
 		return allFaxRecipients;
 	}
 
-	public HashSet<FaxRecipient> getCopiedTo() {
+	public Set<FaxRecipient> getCopiedTo() {
 		if(copiedTo == null) {
 			copiedTo = new HashSet<FaxRecipient>();
-		}
-		if(getFaxRecipients() != null) {
 			for(String faxRecipient : getFaxRecipients()) {
 				JSONObject jsonObject = JSONObject.fromObject(faxRecipient);
 				String fax = jsonObject.getString("fax");

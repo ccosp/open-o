@@ -61,9 +61,6 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 
 	String demographicNo;
 
-	// Documents attached to this consultation
-	String documents;
-
 	// Patient Will Book Field, can be either "1" or "0"
 	String patientWillBook;
 
@@ -215,10 +212,6 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 		return (StringUtils.trimToEmpty(demographicNo));
 	}
 
-	public String getDocuments() {
-		return documents;
-	}
-
 	public String getPatientWillBook() {
 		return patientWillBook;
 	}
@@ -306,10 +299,6 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 
 	public void setDemographicNo(String str) {
 		demographicNo = str;
-	}
-
-	public void setDocuments(String doc) {
-		documents = doc;
 	}
 
 	public void setPatientWillBook(String str) {

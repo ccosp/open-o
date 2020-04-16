@@ -48,7 +48,7 @@ import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.ConcatPDF;
 
 import com.itextpdf.text.pdf.PdfReader;
-import com.lowagie.text.DocumentException;
+import com.itextpdf.text.DocumentException;
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 
@@ -88,6 +88,10 @@ public class EctConsultationFormFaxAction extends Action {
 		}
 		
 		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		if(! path.endsWith(File.separator))
+		{
+			path = path + File.separator;
+		}
 		ArrayList<Object> pdfDocumentList = new ArrayList<Object>();
 		byte[] buffer;
 		ByteInputStream bis;
@@ -186,11 +190,11 @@ public class EctConsultationFormFaxAction extends Action {
 			}
 			
 			if (pdfDocumentList.size() > 0) {
-
+ 
 				// Writing consultation request to disk as a pdf.
 				String faxPath = path;
 				String filename = "Consult_" + reqId + System.currentTimeMillis() + ".pdf";
-				String faxPdf = String.format("%s%s%s", faxPath, File.separator, filename);
+				String faxPdf = String.format("%s%s", faxPath, filename);
 				
 				FileOutputStream fos = new FileOutputStream(faxPdf);				
 				ConcatPDF.concat(pdfDocumentList, fos);				
@@ -275,6 +279,9 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
+		} catch (com.lowagie.text.DocumentException e) {
+			error = "DocumentException";
+			exception = e;
 		} finally { 
 			// Cleaning up InputStreams created for concatenation.
 			for (InputStream is : streams) {

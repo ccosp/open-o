@@ -1243,9 +1243,12 @@
 		<action input=" " name="EctIncomingConsultationForm" path="/oscarEncounter/IncomingConsultation" scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctIncomingConsultationAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp" />
 		</action>
-		<action input="/oscarConsultationRequest/attachConsultation.jsp" name="attachConsultation" path="/oscarConsultationRequest/attachDoc" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocsAction">
-			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/attachSuccessfull.jsp" />
+
+		<action input="/oscarConsultationRequest/ConsultationFormRequest.jsp" path="/attachDocs" validate="false" parameter="method"
+			type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocsAction" scope="request">
+			<forward name="fetchAll" path="/oscarEncounter/oscarConsultationRequest/attachConsultation.jsp" />
 		</action>
+		
 		<action input="/oscarConsultationRequest/ViewConsultationRequests.jsp" name="EctViewConsultationRequestsForm" path="/oscarEncounter/ViewConsultation" scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp" />
 
