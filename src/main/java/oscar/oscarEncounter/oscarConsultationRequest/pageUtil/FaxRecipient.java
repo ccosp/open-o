@@ -1,3 +1,9 @@
+package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
+
+import java.util.Date;
+
+import org.oscarehr.common.model.FaxJob.STATUS;
+
 /**
  * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
@@ -21,32 +27,53 @@
  * Hamilton
  * Ontario, Canada
  */
-package org.oscarehr.common.dao;
 
-import java.util.List;
-
-import javax.persistence.Query;
-import org.oscarehr.common.model.ContactSpecialty;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class ContactSpecialtyDao extends AbstractDao<ContactSpecialty> {
-
-	protected ContactSpecialtyDao() {
-	    super(ContactSpecialty.class);
-    }
-
-	public List<ContactSpecialty> findAll() {
-		Query findAll = entityManager.createNamedQuery("ContactSpecialty.findAll");
-		List<ContactSpecialty> contactSpecialtyList = findAll.getResultList();		
-		return contactSpecialtyList;
+public class FaxRecipient {
+	
+	private String name;
+	private String fax;
+	private Date sent;
+	private STATUS status;
+	
+	public FaxRecipient() {
+		//default
 	}
 	
-	public ContactSpecialty findBySpecialty( String specialtyName ) {
-		Query query = entityManager.createQuery("SELECT s FROM ContactSpecialty s WHERE s.specialty LIKE :SPECIALTY");
-		query.setParameter("SPECIALTY", specialtyName);
-		ContactSpecialty contactSpecialty = getSingleResultOrNull(query);		
-		return contactSpecialty;
+	public FaxRecipient(String name, String fax) {
+		this.name = name;
+		this.fax = fax;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public Date getSent() {
+		return sent;
+	}
+
+	public void setSent(Date sent) {
+		this.sent = sent;
+	}
+
+	public STATUS getStatus() {
+		return status;
+	}
+
+	public void setStatus(STATUS status) {
+		this.status = status;
 	}
 
 }

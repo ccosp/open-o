@@ -28,7 +28,6 @@ package org.oscarehr.common.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -63,9 +62,13 @@ public class ConsultationRequest extends AbstractModel<Integer> implements Seria
 
 	private Integer serviceId;
 
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="specId")
+	@ManyToOne(fetch=FetchType.EAGER, targetEntity=ProfessionalSpecialist.class)
+	@JoinColumn( name="specId", referencedColumnName="specId"  )
 	private ProfessionalSpecialist professionalSpecialist;
+	
+	@ManyToOne(fetch=FetchType.EAGER, targetEntity=DemographicContact.class)
+	@JoinColumn(name="demographicContactId", referencedColumnName="id")
+	private DemographicContact demographicContact;
 
 	@Temporal(TemporalType.DATE)
 	private Date appointmentDate;	
@@ -288,6 +291,21 @@ public class ConsultationRequest extends AbstractModel<Integer> implements Seria
     	else
     		return null;
     }
+
+	public DemographicContact getDemographicContact() {
+		return demographicContact;
+	}
+
+	public void setDemographicContact(DemographicContact demographicContact) {
+		this.demographicContact = demographicContact;
+	}
+	
+	public Integer getDemographicContactId() {
+		if( demographicContact != null ) {
+			return this.demographicContact.getId();
+		}
+		return null;
+	}
 
 	public String getSignatureImg() {
 	    return signatureImg;

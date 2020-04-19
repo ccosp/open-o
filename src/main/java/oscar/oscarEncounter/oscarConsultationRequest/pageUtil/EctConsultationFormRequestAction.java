@@ -34,6 +34,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -63,6 +65,7 @@ import org.oscarehr.common.model.Clinic;
 import org.oscarehr.common.model.ConsultationRequest;
 import org.oscarehr.common.model.ConsultationRequestExt;
 import org.oscarehr.common.model.Demographic;
+import org.oscarehr.common.model.DemographicContact;
 import org.oscarehr.common.model.DigitalSignature;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
@@ -85,6 +88,7 @@ import oscar.util.ParameterActionForward;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v26.message.ORU_R01;
 import ca.uhn.hl7v2.model.v26.message.REF_I12;
+import net.sf.json.JSONObject;
 
 import com.lowagie.text.DocumentException;
 
@@ -105,6 +109,9 @@ public class EctConsultationFormRequestAction extends Action {
 
 		String appointmentHour = frm.getAppointmentHour();
 		String appointmentPm = frm.getAppointmentPm();
+        String[] attachedDocuments = frm.getDocNo();
+        String[] attachedLabs = frm.getLabNo();
+        List<String> documents = new ArrayList<String>();
 
 		if (appointmentPm.equals("PM") && Integer.parseInt(appointmentHour) < 12 ) {
 			appointmentHour = Integer.toString(Integer.parseInt(appointmentHour) + 12);
@@ -133,6 +140,7 @@ public class EctConsultationFormRequestAction extends Action {
         ConsultationRequestDao consultationRequestDao=(ConsultationRequestDao)SpringUtils.getBean("consultationRequestDao");
         ConsultationRequestExtDao consultationRequestExtDao=(ConsultationRequestExtDao)SpringUtils.getBean("consultationRequestExtDao");
         ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao)SpringUtils.getBean("professionalSpecialistDao");
+        DemographicManager demographicManager = SpringUtils.getBean( DemographicManager.class );
         
         String[] format = new String[] {"yyyy-MM-dd","yyyy/MM/dd"};
 
@@ -146,7 +154,11 @@ public class EctConsultationFormRequestAction extends Action {
 				
 								
                                 ConsultationRequest consult = new ConsultationRequest();
-                                Date date = DateUtils.parseDate(frm.getReferalDate(), format);
+                                String dateString = frm.getReferalDate();
+                                Date date = null;
+                                if(dateString != null && ! dateString.isEmpty()) {
+                                	date = DateUtils.parseDate(dateString, format);
+                                }
                                 consult.setReferralDate(date);
                                 consult.setServiceId(new Integer(frm.getService()));
 
@@ -196,23 +208,47 @@ public class EctConsultationFormRequestAction extends Action {
                                     consult.setFollowUpDate(date);
                                 }
 
-                                if(frm.getSource()!=null && !"null".equals(frm.getSource())) {
-                                	consult.setSource(frm.getSource());
-                                } else {
-                                	consult.setSource("");
+                                Integer specId = new Integer( frm.getSpecialist() );
+                                
+                                // converting the newer Contacts Table and Health Care Team back and forth
+                                // from the older professionalSpecialist module.
+                                // This should persist and retrieve values to be backwards compatible.
+                                if( OscarProperties.getInstance().getBooleanProperty("ENABLE_HEALTH_CARE_TEAM_IN_CONSULTATION_REQUESTS", "true") ) { 
+                                	
+                                	// when this is enabled the demographicContactId is being posted as a specId variable.
+                                	Integer demographicContactId = new Integer( specId );
+                                	
+                                	// specId is reset to unknown.
+                                	specId = 0;
+                                	
+                                	DemographicContact demographicContact = demographicManager.getHealthCareMemberbyId( loggedInInfo, demographicContactId );	                            	
+                                	
+                                	if( demographicContact != null ) {
+                                		
+                                		consult.setDemographicContact( demographicContact );
+
+                                		// If the demographicContact is holding the specId, then retrieve it for backwards 
+                                		// compatibility. For the most part only contacts in the professionalSpecialist table should get through the 
+                                		// filters.
+                                		if( DemographicContact.TYPE_PROFESSIONALSPECIALIST == demographicContact.getType() ) {
+                                			specId = Integer.parseInt( demographicContact.getContactId() );
+                                		}                      		
+                                	}	                                	 
+                                } 
+                                 
+                                // only add the professionalSpecialist if it checks out. 0 will obviously return a null.
+                                ProfessionalSpecialist professionalSpecialist = professionalSpecialistDao.find( specId );
+                                
+                                if( professionalSpecialist != null ) {
+                                	request.setAttribute("professionalSpecialistName", professionalSpecialist.getFormattedTitle() );
+                                    consult.setProfessionalSpecialist(professionalSpecialist); 
                                 }
-
-                                consultationRequestDao.persist(consult);
-
-                                    Integer specId = new Integer(frm.getSpecialist());
-                                    ProfessionalSpecialist professionalSpecialist=professionalSpecialistDao.find(specId);
-                                    if( professionalSpecialist != null ) {
-                                        consult.setProfessionalSpecialist(professionalSpecialist);
-                                        consultationRequestDao.merge(consult);
-                                    }
-                                        MiscUtils.getLogger().debug("saved new consult id "+ consult.getId());
-                                        requestId = String.valueOf(consult.getId());
-                                        
+                           
+                                consultationRequestDao.persist( consult ); 
+                                
+                                requestId = String.valueOf(consult.getId());                                    
+                                MiscUtils.getLogger().debug("saved new consult id "+ requestId );
+     
                                 Enumeration e = request.getParameterNames();
                                 while(e.hasMoreElements()) {
                                 	String name = (String)e.nextElement();
@@ -221,16 +257,14 @@ public class EctConsultationFormRequestAction extends Action {
                                 		consultationRequestExtDao.persist(createExtEntry(requestId,name.substring(name.indexOf("_")+1),value));
                                 	}
                                 }
-                                // now that we have consultation id we can save any attached docs as well
-								// format of input is D2|L2 for doc and lab
-								String[] docs = frm.getDocuments().split("\\|");
-			
-								for (int idx = 0; idx < docs.length; ++idx) {
-									if (docs[idx].length() > 0) {
-										if (docs[idx].charAt(0) == 'D') EDocUtil.attachDocConsult(providerNo, docs[idx].substring(1), requestId);
-										else if (docs[idx].charAt(0) == 'L') ConsultationAttachLabs.attachLabConsult(providerNo, docs[idx].substring(1), requestId);
-									}
-								}
+                                // now that we have consultation id we can save any attached docs as well  
+                                
+                                ConsultationAttachDocs consultationAttachDocs = new ConsultationAttachDocs(providerNo,demographicNo,requestId,attachedDocuments);
+                                consultationAttachDocs.attach(loggedInInfo);
+            				  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
+            				  	consultationAttachLabs.attach(loggedInInfo);
+  
+								
 			}
 	        catch (ParseException e) {
 	                MiscUtils.getLogger().error("Invalid Date", e);
@@ -262,32 +296,38 @@ public class EctConsultationFormRequestAction extends Action {
                 Date date = DateUtils.parseDate(frm.getReferalDate(), format);
                 consult.setReferralDate(date);
                 consult.setServiceId(new Integer(frm.getService()));
-
                 consult.setSignatureImg(signatureId);
-                
-                //We shouldn't change the referral provider just because someone updated and printed it! 
-                //consult.setProviderNo(frm.getProviderNo());
-                
         		consult.setLetterheadName(frm.getLetterheadName());
         		consult.setLetterheadAddress(frm.getLetterheadAddress());
         		consult.setLetterheadPhone(frm.getLetterheadPhone());
-        		consult.setLetterheadFax(frm.getLetterheadFax());
+        		consult.setLetterheadFax(frm.getLetterheadFax());                
 
-                /*
-                 * If Consultant: was changed to "blank/No Consultant Saved" we
-                 * don't want to try and create an Integer out of the specId as
-                 * it will throw a NumberForamtException
-                */
-                String specIdStr = frm.getSpecialist();
-                ProfessionalSpecialist professionalSpecialist=null;
-
-                if (specIdStr != null && !specIdStr.isEmpty())
-                {
-                    Integer specId = new Integer(frm.getSpecialist());
-                    professionalSpecialist=professionalSpecialistDao.find(specId);
+        		Integer specId = new Integer( frm.getSpecialist() );
+                
+                // converting the newer Contacts Table and Health Care Team back and forth
+                // from the older professionalSpecialist module.
+                // This should persist and retrieve values to be backwards compatable.
+                if( OscarProperties.getInstance().getBooleanProperty("ENABLE_HEALTH_CARE_TEAM_IN_CONSULTATION_REQUESTS", "true") ) {                                	
+                	DemographicContact demographicContact = demographicManager.getHealthCareMemberbyId( loggedInInfo, specId );	                            	
+                	if( demographicContact != null ) {
+                		consult.setDemographicContact(demographicContact);
+                		
+                		// add in the professional specialist to enable backwards compatibility.
+                		if( DemographicContact.TYPE_PROFESSIONALSPECIALIST == demographicContact.getType() ) {
+                			specId = Integer.parseInt( demographicContact.getContactId() );
+                		}                      		
+                	}	                                	 
+                } 
+                 
+                // only add the professionalSpecialist if it checks out.
+                ProfessionalSpecialist professionalSpecialist=professionalSpecialistDao.find( specId );
+        			
+                if( professionalSpecialist != null ) {
+                		request.setAttribute("professionalSpecialistName", professionalSpecialist.getFormattedTitle());
+                    consult.setProfessionalSpecialist(professionalSpecialist);                                   
                 }
-                consult.setProfessionalSpecialist(professionalSpecialist);
-
+                
+                
                 if( frm.getAppointmentDate() != null && !frm.getAppointmentDate().equals("") ) {
                 	date = DateUtils.parseDate(frm.getAppointmentDate(), format);
                 	consult.setAppointmentDate(date);
@@ -297,8 +337,6 @@ public class EctConsultationFormRequestAction extends Action {
                 		consult.setAppointmentTime(date);
 			}catch(NumberFormatException nfEx) {
 				MiscUtils.getLogger().error("Invalid Time", nfEx);
-			} catch(IllegalArgumentException e) {
-				MiscUtils.getLogger().error("Invalid Time", e);
 			}
                 }
                 consult.setReasonForReferral(frm.getReasonForConsultation());
@@ -323,13 +361,6 @@ public class EctConsultationFormRequestAction extends Action {
                     date = DateUtils.parseDate(frm.getFollowUpDate(), format);
                     consult.setFollowUpDate(date);
                 }
-                
-                if(frm.getSource()!=null && !"null".equals(frm.getSource())) {
-                	consult.setSource(frm.getSource());
-                } else {
-                	consult.setSource("");
-                }
-                
                 consultationRequestDao.merge(consult);
                 
                 consultationRequestExtDao.clear(Integer.parseInt(requestId));
@@ -341,6 +372,14 @@ public class EctConsultationFormRequestAction extends Action {
                 		consultationRequestExtDao.persist(createExtEntry(requestId,name.substring(name.indexOf("_")+1),value));
                 	}
                 }
+                
+                // save any additional attachments added on the update
+
+                ConsultationAttachDocs consultationAttachDocs = new ConsultationAttachDocs(providerNo,demographicNo,requestId,attachedDocuments);
+                consultationAttachDocs.attach(loggedInInfo); 
+			  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
+			  	consultationAttachLabs.attach(loggedInInfo);
+
 			}
 
 			catch (ParseException e) {
@@ -374,15 +413,48 @@ public class EctConsultationFormRequestAction extends Action {
 			}
 
 		} else if (submission.endsWith("And Fax")) {
-
-			request.setAttribute("reqId", requestId);
-			if (OscarProperties.getInstance().isConsultationFaxEnabled()) {
-				return mapping.findForward("faxIndivica");
-			}	
-			else {
-				return mapping.findForward("fax");
+			
+			String[] faxRecipients = request.getParameterValues("faxRecipients");
+			HashSet<FaxRecipient> copytoRecipients = new HashSet<FaxRecipient>();
+			
+			if(faxRecipients != null) {
+				for(String recipient : faxRecipients) {
+					JSONObject jsonObject = JSONObject.fromObject(recipient);
+					String fax = jsonObject.getString("fax");
+					String name = jsonObject.getString("name");
+					copytoRecipients.add(new FaxRecipient(name, fax));
+				}
 			}
-
+			
+			
+			// call-back document descriptions into documents parameter.
+			List<EDoc> attachedDocumentList = EDocUtil.listDocs(loggedInInfo, demographicNo, requestId, EDocUtil.ATTACHED);
+	        CommonLabResultData commonLabResultData = new CommonLabResultData();
+			List<LabResultData> attachedLabList = commonLabResultData.populateLabResultsData(loggedInInfo, demographicNo, requestId, CommonLabResultData.ATTACHED);
+			
+	        if(attachedDocumentList != null) {      	
+	        	for(EDoc documentItem : attachedDocumentList) {
+	        		String description = documentItem.getDescription();
+	        		if( description == null || description == "") {
+	        			description = documentItem.getFileName();
+	        		}
+	        		documents.add(description);
+	        	}
+	        }
+	        
+	        if(attachedLabList != null) {
+	           	for(LabResultData labResultData : attachedLabList) {
+	           		documents.add(labResultData.getDisciplineDisplayString());
+	        	}
+	        }
+			
+		  	request.setAttribute("documents", documents);			
+			request.setAttribute("copytoRecipients", copytoRecipients);
+			request.setAttribute("reqId", requestId);
+			request.setAttribute("transType", "consultRequest");
+			
+			return mapping.findForward("fax");
+			
 		} 
 		else if (submission.endsWith("esend"))
 		{

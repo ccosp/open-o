@@ -37,6 +37,11 @@ import oscar.log.LogAction;
 import oscar.oscarDB.DBHandler;
 import oscar.util.UtilDateUtilities;
 
+/**
+ * @deprecated convert to proper JPA Hibernate 
+ *
+ */
+@Deprecated
 public class EctPatientData {
 
     public static String getProviderNo(LoggedInInfo loggedInInfo, String demographicNo) {
