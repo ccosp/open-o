@@ -565,7 +565,6 @@ function fmtOscarMsg() {
 								<td bgcolor="#EEEEFF">	
 								<a href="javascript:popupViewAttach(700,960,'../demographic/demographiccontrol.jsp?demographic_no=${ demographic.key }&displaymode=edit&dboperation=search_detail')">M</a>
 									
-								<a href="javascript:void(0)" onclick="window.opener.location.href='../web/#/record/${ demographic.key }/summary'">E2</a>
 								<%
 									//Hide old echart link
 									boolean showOldEchartLink = true;
