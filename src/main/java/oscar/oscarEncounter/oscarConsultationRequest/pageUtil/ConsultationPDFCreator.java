@@ -57,7 +57,6 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 	private OutputStream os;
 	private Document document;
 	private BaseFont bf;
-	// private Font boldFont;
 	private Font font;
 	private Font boldFontHeading;
 	private Font heading;
