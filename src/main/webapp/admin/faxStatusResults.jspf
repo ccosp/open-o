@@ -2,7 +2,6 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.lang.time.DateFormatUtils"%>
-
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
       String roleName2$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -17,7 +16,8 @@ if(!authed) {
 	return;
 }
 %>
-<table class="table-condensed table-bordered small" id="content">
+
+<table class="table-condensed table-bordered small span8" style="margin:0px;margin-bottom:50px;" id="content">
 	<thead>
 		<tr>
 			<th class="small">Type</th>

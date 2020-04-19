@@ -52,7 +52,7 @@ public class FaxJobDao extends AbstractDao<FaxJob> {
     	
     	if( demographic_no != null ) {
     		firstclause = true;
-    		sql.append(" job.demographic_no = :demo");
+    		sql.append(" job.demographicNo = :demo");
     	}
     	
     	if( status != null) {
@@ -134,7 +134,9 @@ public class FaxJobDao extends AbstractDao<FaxJob> {
     public List<FaxJob> getReadyToSendFaxes(String number) {
     	Query query = entityManager.createQuery("select job from FaxJob job where job.status = :status and job.fax_line = :number and job.jobId is null");
     	
-    	query.setParameter("status", FaxJob.STATUS.SENT);
+    	// these faxes are "waiting" to be sent
+    	// they become "sent" after they clear the api
+    	query.setParameter("status", FaxJob.STATUS.WAITING);
     	query.setParameter("number", number);
     	
     	return query.getResultList();

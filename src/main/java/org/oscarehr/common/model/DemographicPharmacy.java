@@ -36,6 +36,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="demographicPharmacy")
@@ -59,9 +60,14 @@ public class DemographicPharmacy extends AbstractModel<Integer>{
 	private String status;
 	
 	private int preferredOrder;
+	
+	private Boolean consentToContact = Boolean.TRUE;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date addDate;
+	
+	@Transient
+	private PharmacyInfo details;
 
 	public Integer getId() {
     	return id;
@@ -122,5 +128,20 @@ public class DemographicPharmacy extends AbstractModel<Integer>{
 	    this.preferredOrder = preferedOrder;
     }
 
+	public PharmacyInfo getDetails() {
+		return details;
+	}
+
+	public void setDetails(PharmacyInfo details) {
+		this.details = details;
+	}
+
+	public Boolean getConsentToContact() {
+		return consentToContact;
+	}
+
+	public void setConsentToContact(Boolean consentToContact) {
+		this.consentToContact = consentToContact;
+	}
 
 }

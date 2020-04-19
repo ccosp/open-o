@@ -25,101 +25,175 @@ package org.oscarehr.fax.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.model.Clinic;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.BaseFont;
+
+import oscar.oscarClinic.ClinicData;
 
 public class PdfCoverPageCreator {
 	
 	private String note;
-
+	private static BaseFont basefont;
+	private static Font body = new Font(basefont, 12, Font.NORMAL);
+	private static Font heading = new Font(basefont, 13, Font.NORMAL);
+	private static Font heading_bold = new Font(basefont, 14, Font.BOLD);
+	private ClinicData clinic;
+	
 	public PdfCoverPageCreator(String note) {
-		this.note = note;		
+		this.note = note;
+		try {
+			basefont = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED );
+		} catch (IOException e) {
+			MiscUtils.getLogger().error("PDF COVER PAGE ERROR",e);
+		} catch (DocumentException e) {
+			MiscUtils.getLogger().error("PDF COVER PAGE ERROR",e);
+		}
+	}
+	
+	public PdfCoverPageCreator(String note, ClinicData clinic) {
+		this(note);
+		this.clinic = clinic;
 	}
 	
 	public byte[] createCoverPage() {
+	
+		byte[] bytearray = new byte[] {};
 		
-		Document document = new Document();
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		
-		try {
+		try(ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+			Document document = new Document();
 			
-	        PdfWriter pdfWriter = PdfWriter.getInstance(document, os);
-	        document.open();
-	        
-	        PdfPTable table = new PdfPTable(1);
-	        table.setWidthPercentage(95);
-	        
-	        PdfPCell cell = new PdfPCell(table);
-	        cell.setBorder(0);
-	        cell.setPadding(3);
+			PdfWriter.getInstance(document, os);
+
+			document.setPageSize( PageSize.LETTER );
+			document.addTitle( "Fax Cover Page" );
+			document.addCreator( "OSCAR" );
+			document.addAuthor("OSCAR EMR");
+			document.open();
+						
+			PdfPTable maintable = new PdfPTable(1);
+			maintable.setWidthPercentage(100f);
+			
+			// clinic address
+			PdfPCell cell = new PdfPCell(createClinicInfoHeader());		
+			cell.setBorder(0);			
+			maintable.addCell(cell);
+			
+			// date line
+			cell = new PdfPCell(createDateLine());		
+			cell.setBorder(0);	
+			maintable.addCell(cell);
+			
+			// memo
+			cell = new PdfPCell(new Phrase(note, body));
+			cell.setPaddingTop(30f);
+			cell.setBorder(0);
 			cell.setColspan(1);
-			table.addCell(cell);
-			
-			ClinicDAO clinicDao = SpringUtils.getBean(ClinicDAO.class);
-			Clinic clinic = clinicDao.getClinic();
-			BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252,
-					BaseFont.NOT_EMBEDDED);
-			Font headerFont = new Font(bf, 28, Font.BOLD);
-			Font infoFont = new Font(bf, 12, Font.NORMAL);
-					
-			
-			if( clinic != null ) {							
-				
-				cell = new PdfPCell(new Phrase(String.format("%s\n %s, %s, %s %s",
-						   clinic.getClinicName(),
-					 	   clinic.getClinicAddress(),  clinic.getClinicCity(),
-						   clinic.getClinicProvince(), clinic.getClinicPostal()), headerFont));				
-			}
-			else {
-				
-				cell = new PdfPCell(new Phrase("OSCAR", headerFont));
-			
-			}
-			
+		
+			maintable.addCell(cell);
 
-			cell.setPaddingTop(100);
-			cell.setPaddingLeft(25);
-			cell.setPaddingBottom(25);
-			cell.setBorderWidthBottom(1);
-			table.addCell(cell);
-
-			PdfPTable infoTable = new PdfPTable(1);
-			cell = new PdfPCell(new Phrase(note,infoFont));
-			cell.setPaddingTop(25);
-			cell.setPaddingLeft(25);
-			infoTable.addCell(cell);
-			table.addCell(infoTable);
+			document.add(maintable);
+			document.close();
 			
-			document.add(table);
+			bytearray = os.toByteArray();
 			
-	        
+			
         } catch (DocumentException e) {
 	        
         	MiscUtils.getLogger().error("PDF COVER PAGE ERROR",e);
-	        return new byte[] {};
 	        
         }catch( IOException e ) {
         	
         	MiscUtils.getLogger().error("PDF COVER PAGE ERROR",e);
-	        return new byte[] {};
 	        
-        }
-		finally {
-			document.close();
-		}
+        } 
 		
-		return os.toByteArray();
+		return bytearray;
+	}
+
+	/**
+	 * Creates a table and populates it with the clinic information for the header.
+	 * @return the table produced
+	 */
+	private PdfPTable createClinicInfoHeader() {
+
+		if(clinic == null)
+		{
+			clinic = new ClinicData();
+		} 
+		
+		String letterheadName = clinic.getClinicName();
+
+		PdfPTable infoTable = new PdfPTable(1);
+
+		PdfPCell cell = new PdfPCell( new Phrase(letterheadName, heading_bold) );
+		cell.setBorder(0);
+		cell.setPadding(0);
+		infoTable.addCell(cell);
+	
+		// add the address details
+		Phrase addressPhrase = new Phrase("", heading);
+
+		addressPhrase.add( String.format("%s",clinic.getClinicAddress() ) );
+		
+		cell.setPhrase( addressPhrase );
+		infoTable.addCell(cell);
+		
+		Phrase cityphrase = new Phrase("", heading);
+		
+		cityphrase.add(String.format("%s, %s. %s", clinic.getClinicCity(),
+				clinic.getClinicProvince(), 
+				clinic.getClinicPostal() ) );
+	
+		cell.setPhrase( cityphrase );
+		infoTable.addCell(cell);
+		
+		// add the telecom info
+		Phrase telecomPhrase = new Phrase("", heading);
+
+		telecomPhrase.add( String.format("Phone: %s", clinic.getClinicPhone() ) );
+		
+		cell.setPhrase( telecomPhrase );
+		infoTable.addCell(cell);
+		
+		telecomPhrase = new Phrase("", heading);
+		
+		telecomPhrase.add( String.format("Fax: %s", clinic.getClinicFax() ) );
+		
+		cell.setPhrase( telecomPhrase );
+		infoTable.addCell(cell);
+
+		return infoTable;
+	}
+	
+	protected PdfPTable createDateLine() {
+		
+		PdfPTable datelineborder = new PdfPTable(1);
+		datelineborder.setWidthPercentage(100f);
+		PdfPCell datecell = new PdfPCell();
+		Date today = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		datecell.setPhrase( new Phrase( simpleDateFormat.format(today), body) ); 
+		datecell.setBorder(0);
+		datecell.setColspan(1);
+		datecell.setPaddingTop(50f);
+		datecell.setPaddingBottom(5f);
+		datecell.enableBorderSide(PdfPCell.BOTTOM );
+
+		datecell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+
+		datelineborder.addCell(datecell);
+		
+		return datelineborder;		
 	}
 }

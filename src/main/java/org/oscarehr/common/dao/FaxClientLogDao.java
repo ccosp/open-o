@@ -25,6 +25,11 @@
 
 package org.oscarehr.common.dao;
 
+import java.util.Collections;
+import java.util.List;
+
+import javax.persistence.Query;
+
 import org.oscarehr.common.model.FaxClientLog;
 import org.springframework.stereotype.Repository;
 
@@ -35,4 +40,27 @@ public class FaxClientLogDao extends AbstractDao<FaxClientLog>{
 		super(FaxClientLog.class);
 	}
 
+	public FaxClientLog findClientLogbyFaxId(String faxId) {
+    	Query query = entityManager.createQuery("select log from FaxClientLog log where log.faxId = :id");
+
+    	// faxId is the id for an entry in the Faxes table.
+    	query.setParameter("id", faxId);
+    	
+    	return super.getSingleResultOrNull(query);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<FaxClientLog> findClientLogbyRequestId(String requestId) {
+		
+		// only the most recent entries
+    	Query query = entityManager.createQuery("select log from FaxClientLog log where log.requestId = :requestId order by log.startTime desc");
+
+    	// faxId is the id for an entry in the Faxes table.
+    	query.setParameter("requestId", requestId);
+    	List<FaxClientLog> results = query.getResultList();
+    	if(results == null) {
+    		results = Collections.emptyList();
+    	}
+    	return results ;
+	}
 }

@@ -26,7 +26,9 @@ package org.oscarehr.managers;
 import java.util.List;
 
 import org.oscarehr.common.dao.DemographicPharmacyDao;
+import org.oscarehr.common.dao.PharmacyInfoDao;
 import org.oscarehr.common.model.DemographicPharmacy;
+import org.oscarehr.common.model.PharmacyInfo;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,22 +49,32 @@ public class PharmacyManager {
 
 	@Autowired
 	private DemographicPharmacyDao demographicPharmacyDao;
+	@Autowired
+	private PharmacyInfoDao pharmacyInfoDao;
 
 	public List<DemographicPharmacy> getPharmacies(LoggedInInfo loggedInInfo, Integer demographicId) {
 		List<DemographicPharmacy> result =  demographicPharmacyDao.findAllByDemographicId(demographicId);
 		
 		if(result != null) {
-			for(DemographicPharmacy item:result) {
-		    	//--- log action ---
-				LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.getPharmacies", "pharmacyId="+item.getPharmacyId());
-			}
-	    }
-	    
+			LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.getPharmacies", "demographicNo="+demographicId);
+			result = addDetails(loggedInInfo, result );
+		}
+
 	    return result;
+	}
+	
+	public DemographicPharmacy getDemographicPharmacy(LoggedInInfo loggedInInfo, Integer demographicPharmacyId ) {
+		DemographicPharmacy demographicPharmacy =  demographicPharmacyDao.find(demographicPharmacyId);
+		
+		if(demographicPharmacy != null) {
+			LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.getPharmacy", "demographicPharmacyId="+demographicPharmacyId);
+			demographicPharmacy = addDetails(loggedInInfo, demographicPharmacy );
+		}
+	    return demographicPharmacy;
 	}
 
 	public DemographicPharmacy addPharmacy(LoggedInInfo loggedInInfo, Integer demographicId, Integer pharmacyId, Integer preferredOrder) {
-		DemographicPharmacy result =  demographicPharmacyDao.addPharmacyToDemographic(demographicId, pharmacyId, preferredOrder);
+		DemographicPharmacy result = demographicPharmacyDao.addPharmacyToDemographic(pharmacyId, demographicId, preferredOrder);		
 		
 		if(result != null) {
 	    	//--- log action ---
@@ -87,6 +99,47 @@ public class PharmacyManager {
 		
 		//--- log action ---
 		LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.removePharmacy", "demographicNo="+demographicId + ",pharmacyId="+pharmacyId);	
+	}
+	
+	public void setDoNotContact(LoggedInInfo loggedInInfo, Integer pharmacyId, boolean doNotContact) {
+		DemographicPharmacy pharmacy = demographicPharmacyDao.find(pharmacyId);
+		pharmacy.setConsentToContact(doNotContact);
+		demographicPharmacyDao.saveEntity(pharmacy);
+		LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.setDoNotContact", "demographicNo="+pharmacy.getDemographicNo() + ",pharmacyId="+pharmacyId);			
+	}
+	
+	public Integer savePharmacyInfo(LoggedInInfo loggedInInfo, PharmacyInfo pharmacyInfo) {
+		
+		// not sure what the server is set to pass.
+		if( pharmacyInfo.getId() == 0 ) {
+			pharmacyInfo.setId(null); 
+		}
+		
+		if( pharmacyInfo.getId() == null ){
+			pharmacyInfoDao.persist(pharmacyInfo);
+			LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.createPharmacy", "Added New Pharmacy Contact to PharmacyInfo");			
+
+		} else {
+			pharmacyInfoDao.merge( pharmacyInfo );
+			LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.createPharmacy", "Saved Edited Pharmacy Contact");			
+		}
+		
+		return pharmacyInfo.getId();
+	}
+	
+	private final List<DemographicPharmacy> addDetails( LoggedInInfo loggedInInfo, List<DemographicPharmacy> demographicPharmacyList ) {
+		for(DemographicPharmacy demographicPharmacy : demographicPharmacyList) {
+			demographicPharmacy = addDetails( loggedInInfo, demographicPharmacy );
+		}
+		return demographicPharmacyList;
+	}
+	
+	private final DemographicPharmacy addDetails(LoggedInInfo loggedInInfo, DemographicPharmacy demographicPharmacy) {
+		// would rather have this done in the JPA as a join, but... 
+		LogAction.addLogSynchronous(loggedInInfo, "PharmacyManager.addDetails", "pharmacyId="+demographicPharmacy.getPharmacyId());
+		PharmacyInfo pharmacyInfo = pharmacyInfoDao.getPharmacy( demographicPharmacy.getPharmacyId() ) ;
+		demographicPharmacy.setDetails( pharmacyInfo );
+		return demographicPharmacy;
 	}
 
 }

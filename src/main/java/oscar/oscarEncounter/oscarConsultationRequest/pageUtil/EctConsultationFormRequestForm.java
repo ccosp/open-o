@@ -61,9 +61,6 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 
 	String demographicNo;
 
-	// Documents attached to this consultation
-	String documents;
-
 	// Patient Will Book Field, can be either "1" or "0"
 	String patientWillBook;
 
@@ -119,6 +116,9 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 	
 	private String appointmentInstructions;
 	private String appointmentInstructionsLabel;
+	
+	private String[] docNo;
+	private String[] labNo;
 	
 	public String getProfessionalSpecialistName() {
 		return (StringUtils.trimToEmpty(professionalSpecialistName));
@@ -212,10 +212,6 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 		return (StringUtils.trimToEmpty(demographicNo));
 	}
 
-	public String getDocuments() {
-		return documents;
-	}
-
 	public String getPatientWillBook() {
 		return patientWillBook;
 	}
@@ -303,10 +299,6 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 
 	public void setDemographicNo(String str) {
 		demographicNo = str;
-	}
-
-	public void setDocuments(String doc) {
-		documents = doc;
 	}
 
 	public void setPatientWillBook(String str) {
@@ -623,5 +615,25 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 		this.appointmentInstructionsLabel = appointmentInstructionsLabel;
 	}
 
+	public String[] getDocNo() {
+		if(docNo == null) {
+			return new String[] {};
+		}
+		return docNo;
+	}
 
+	public void setDocNo(String[] docNo) {
+		this.docNo = docNo;
+	}
+
+	public String[] getLabNo() {
+		if(labNo == null) {
+			return new String[] {};
+		}
+		return labNo;
+	}
+
+	public void setLabNo(String[] labNo) {
+		this.labNo = labNo;
+	}
 }
