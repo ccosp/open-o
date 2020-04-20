@@ -14,6 +14,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -287,19 +290,21 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		}
 
 		//TODO: tiff, png, jpeg, epg, 
-		
-		addImage( infoTable, filename, PageSize.LETTER.getWidth() * 0.5f, 50f );
-
+		Path path = Paths.get(filename);
+		if(Files.exists(path))
+		{
+			addImage( infoTable, filename, PageSize.LETTER.getWidth() * 0.5f, 50f );
+		}
 		return infoTable;		
 
 	}
 	
 	protected void addImage( PdfPTable pdfPTable, String filename, float width, float height ) {
-		FileInputStream fileInputStream = null;
-		try {
-			fileInputStream = new FileInputStream( filename );
+
+		try(FileInputStream fileInputStream = new FileInputStream( filename )) {
+
 			PdfPCell cell = new PdfPCell();
-			byte[] faxLogImage = new byte[1024 * 256];		
+			byte[] faxLogImage = new byte[1024 * 256];				
 			fileInputStream.read( faxLogImage );
 			Image image = Image.getInstance( faxLogImage );
 			image.scaleToFit( width, height );
@@ -308,6 +313,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			cell.setPadding(0);
 			cell.setBorder(0);
 			pdfPTable.addCell(cell);
+
 		} catch (FileNotFoundException e) {
 			logger.error("Failed to locate file at " + filename , e);
 		} catch (BadElementException e) {
@@ -316,15 +322,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			logger.error("This image location is malformed " + filename, e);
 		} catch (IOException e) {
 			logger.error("Unexpected error.", e);
-		} finally {
-			if( fileInputStream != null ) {
-				try {
-					fileInputStream.close();
-				} catch (IOException e) {
-					logger.error("Failed to close input stream", e);
-				}
-			}
-		}		
+		} 	
 	}
 
 	protected PdfPTable createReplyHeader( Integer alignment ) {
