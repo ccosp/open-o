@@ -657,7 +657,7 @@ function getClinicalData( data, target ) {
 		data : data,
 		dataType : 'JSON',
 		success: function(data) {
-			jQuery(target).val( jQuery(target).val() + "\n" + response.note );			
+			jQuery(target).val( jQuery(target).val() + "\n" + data.note );			
 		}
 	});
 }
