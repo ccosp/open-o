@@ -302,6 +302,7 @@ CREATE TABLE IF NOT EXISTS config_Immunization (
 CREATE TABLE IF NOT EXISTS consultationRequests (
   referalDate date default NULL,
   serviceId int(10) default NULL,
+  demographicContactId int(10),
   specId int(10) default NULL,
   appointmentDate date default NULL,
   appointmentTime time default NULL,
@@ -7732,7 +7733,8 @@ CREATE TABLE IF NOT EXISTS demographicPharmacy (
    demographic_no int(10),
    status char(1) default '1',
    addDate timestamp,
-   preferredOrder int(10)
+   preferredOrder int(10),
+   consentToContact tinyint(1)
 ) ;
 
 
