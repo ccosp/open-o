@@ -127,14 +127,14 @@ public class ManageFaxes extends DispatchAction {
 		
 		File file = new File(documentDir, filename);
 		PdfDecoder decode_pdf  = new PdfDecoder(true);
-		File ofile = null;		
+		File ofile = null;
+		
 		FontMappings.setFontReplacements();
+
 		decode_pdf.useHiResScreenDisplay(true);
 		decode_pdf.setExtractionMode(0, 96, 96/72f);
-		FileInputStream is = null;
-		
-		try {
-			is = new FileInputStream(file);
+
+		try(FileInputStream is = new FileInputStream(file)) {
 			decode_pdf.openPdfFileFromInputStream(is, false);
 			BufferedImage image_to_save = decode_pdf.getPageAsImage(pageNum);
 			decode_pdf.getObjectStore().saveStoredImage( documentCacheDir.getCanonicalPath() + "/" + filename + "_" + pageNum + ".png", image_to_save, true, false, "png");
@@ -146,18 +146,8 @@ public class ManageFaxes extends DispatchAction {
 		} catch (IOException e) {
 			log.error("IO error during file decode of " + filename, e);
 		} finally {
-			
-			if( is != null ) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					log.error("Error closing InputStream ", e);
-				}
-			}
-			
 			decode_pdf.flushObjectValues(true);
 			decode_pdf.closePdfFile();
-
 		}			
 
 		return ofile;
@@ -393,31 +383,37 @@ public class ManageFaxes extends DispatchAction {
 		Calendar calendar = GregorianCalendar.getInstance();
 		Date dateBegin=null, dateEnd = null;
 		String datePattern[] = new String[] {"yyyy-MM-dd"};
-		try {
-			dateBegin = DateUtils.parseDate(dateBeginStr, datePattern);
-			calendar.setTime(dateBegin);
-			calendar.set(Calendar.HOUR, 0);
-			calendar.set(Calendar.MINUTE, 0);
-			calendar.set(Calendar.MILLISECOND, 0);
-			dateBegin = calendar.getTime();
-		}
-		catch( ParseException e ) {
-			dateBegin = null;
-			MiscUtils.getLogger().error("UNPARSEABLE DATE " + dateBeginStr);
-		}
 		
-		try {
-			dateEnd = DateUtils.parseDate(dateEndStr, datePattern);
-			calendar.setTime(dateEnd);
-			calendar.set(Calendar.HOUR, 23);
-			calendar.set(Calendar.MINUTE, 59);
-			calendar.set(Calendar.MILLISECOND, 59);
-			dateEnd = calendar.getTime();
-
+		if(dateBeginStr != null && ! dateBeginStr.isEmpty())
+		{
+			try {
+				dateBegin = DateUtils.parseDate(dateBeginStr, datePattern);
+				calendar.setTime(dateBegin);
+				calendar.set(Calendar.HOUR, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				dateBegin = calendar.getTime();
+			}
+			catch( ParseException e ) {
+				dateBegin = null;
+				MiscUtils.getLogger().error("UNPARSEABLE DATE " + dateBeginStr);
+			}
 		}
-		catch( ParseException e ) {
-			dateEnd = null;
-			MiscUtils.getLogger().error("UNPARSEABLE DATE " + dateEndStr);
+		if(dateEndStr != null && ! dateEndStr.isEmpty())
+		{
+			try {
+				dateEnd = DateUtils.parseDate(dateEndStr, datePattern);
+				calendar.setTime(dateEnd);
+				calendar.set(Calendar.HOUR, 23);
+				calendar.set(Calendar.MINUTE, 59);
+				calendar.set(Calendar.MILLISECOND, 59);
+				dateEnd = calendar.getTime();
+	
+			}
+			catch( ParseException e ) {
+				dateEnd = null;
+				MiscUtils.getLogger().error("UNPARSEABLE DATE " + dateEndStr);
+			}
 		}
 		
 		FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);

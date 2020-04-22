@@ -46,6 +46,7 @@ input#searchHealthCareTeamInput:focus {
 	color:black;
 }
 
+
 /* OVERRIDE ELEMENTS IN HOST PAGE */
 body#demographiceditdemographic table#demographicPatientNotes,
 body#demographiceditdemographic table#waitingListTable,
@@ -250,5 +251,43 @@ table#addEditHealthCareTeam.listView {
   display:none;
 }
 
+table tr td.displayHCTHeading, tr#healthCareTeamSubHeading {
+	font-variant-caps: small-caps !important;
+	font-weight: bold !important;
+}
 
 
+/* workarounds */
+* html .ui-autocomplete {
+	width: 1px;
+} /* without this, the menu expands to 100% in IE6 */
+.ui-autocomplete-loading {
+	background: white url('../images/ui-anim_basic_16x16.gif') right center
+		no-repeat;
+}
+
+.ui-autocomplete {
+	width:40%;
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: white;
+	border: #ccc thin solid;
+	padding:5px;
+}
+
+.ui-autocomplete li:nth-child(even) {background-color: whitesmoke;}
+.ui-autocomplete li:nth-child(odd) {background-color: white;}
+
+.ui-menu .ui-menu {
+	background-color: whitesmoke;
+}
+
+.ui-menu .ui-menu-item {
+	border: white thin solid;
+	padding: 5px;
+}
+
+.ui-menu .ui-menu-item a.ui-state-hover,.ui-menu .ui-menu-item a.ui-state-active {
+	background-color: yellow;
+}

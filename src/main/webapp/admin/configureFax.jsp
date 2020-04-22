@@ -148,7 +148,7 @@ if(!authed) {
 			});
 		}
 				
-		if( $("#faxServicePasswd").val() == "**********" ) {
+		if( $("#faxServicePasswd").val() == "Fax Service Passwd" ) {
 			$("#faxServicePasswd").keypress(function() {
 				$(this).val("");
 				$(this).off();
@@ -174,7 +174,7 @@ if(!authed) {
 		}
 		
 		
-		if( $("#faxPasswd").val() == "**********" ) {
+		if( $("#faxPasswd").val() == "login passwd" ) {
 			$("#faxPasswd").keypress(function() {
 				$(this).val("");
 				$(this).off();
@@ -211,7 +211,7 @@ if(!authed) {
 			});
 		});
 			
-		$("input[type='password']").filter(function() {
+		$("input[type='text']").filter(function() {
 			return this.id.match("^faxPasswd\\d+")
 		}).each(function() {			
 			$(this).dblclick(function() {
@@ -268,7 +268,6 @@ if(!authed) {
 		$(div).attr("id",userDivId);
 		$(div).find("#faxUser").attr("id","faxUser" + userCount);
 		$(div).find("#faxPasswd").attr("id","faxPasswd" + userCount);
-		$(div).find("#faxPasswd"+userCount).val("");
 		
 		$(div).find("#remove").attr("id","r"+userCount);
 		$(div).find("#r"+userCount).attr("onclick","removeUser("+userCount+");return false;");
@@ -360,16 +359,18 @@ if(!authed) {
 		<form id="configFrm" method="post" onSubmit="return verify()"> 
 		<input type="hidden" name="method" value="configure"/> 
 		<div id="bodyrow" class="row">
+
+			<legend>Fax Server Credentials</legend>
 			<div class="span12">
-				<legend>Fax Server Credentials</legend>
-			</div>
-	
-	
+			
+			<div class="row">			
 				<div class="span12">
 					<label for="faxUrl" > Fax Server URL</label>
-					<input class="span12" id="faxUrl" type="text" name="faxUrl" placeholder="fax web service URL" value="<%=faxConfigList.isEmpty() ?  "" : faxConfigList.get(0).getUrl()%>" />				
+					<input class="span12" id="faxUrl" type="text" name="faxUrl" placeholder="fax web service URL" value="<%=faxConfigList.get(0).getUrl()%>" />				
 				</div>			
-			
+			</div>
+
+			<div class="row">
 				<div class="span6">
 					<label for="faxServiceUser">Fax Server Username</label>
 					<input class="span6" id="faxServiceUser" type="text" name="siteUser" value="<%=faxConfigList.isEmpty() || faxConfigList.get(0).getSiteUser() == null ? "Fax Service login" : faxConfigList.get(0).getSiteUser() %>" />				
@@ -379,7 +380,7 @@ if(!authed) {
 					<%
 						String faxServicePassword = "";
 						
-						if(faxConfigList != null && !faxConfigList.isEmpty() && faxConfigList.get(count) != null && faxConfigList.get(count).getPasswd() != null
+						if(faxConfigList != null && faxConfigList.get(count) != null && faxConfigList.get(count).getPasswd() != null
 								&& faxConfigList.get(count).getPasswd().length() > 0) {
 							faxServicePassword="**********";
 						}
@@ -388,13 +389,13 @@ if(!authed) {
 					<label for="faxServicePasswd">Fax Server Password</label>
 					<input class="span6" id="faxServicePasswd" type="password" name="sitePasswd" value="<%=faxServicePassword%>" />
 				</div>
-		</div>
 
-		<div id="content" class="row">
-			
-			<div class="span12">
-				<legend>Fax Gateway Accounts <a class="pull-right" style="margin-right:40px;" href="" onclick="addUser();return false;">+Add</a></legend>
 			</div>
+
+			</div>
+		</div>
+		<div id="content" class="row">
+			<legend>Fax Gateway Accounts <a class="pull-right" style="margin-right:40px;" href="" onclick="addUser();return false;">+Add</a></legend>
 			
 			<div class="span12">
 		
@@ -415,25 +416,26 @@ if(!authed) {
 						<%
 						String faxPassword = "";
 						
-						if(faxConfigList != null && !faxConfigList.isEmpty() && faxConfigList.get(count) != null && faxConfigList.get(count).getFaxPasswd() != null
+						if(faxConfigList != null && faxConfigList.get(count) != null && faxConfigList.get(count).getFaxPasswd() != null
 								&& faxConfigList.get(count).getFaxPasswd().length() > 0) {
 							faxPassword="**********";
 						}
 						
 						%>
 						<input class="span6" type="password" id="faxPasswd<%=count == 0 ? "" : count%>" name="faxPassword" value="<%=faxPassword%>"/>
-						
 					</div>
 				</div>
 				<div class="row">
 					<div class="span6">
-						<label for="faxNumber<%=count == 0 ? "" : count%>" >Fax Number (##########)</label>
+
+						<label for="faxNumber<%=count == 0 ? "" : count%>" >Fax Number</label>
 						<input class="span6" type="text" id="faxNumber<%=count == 0 ? "" : count%>" name="faxNumber" value="<%=faxConfigList.isEmpty() ? "Clinic Fax Number" : faxConfigList.get(count).getFaxNumber()%>"/>
 					</div>	
 					
 					<div class="span6">
 					<label for="senderEmail<%=count == 0 ? "" : count%>">Email</label>
-					<input class="span6" type="email" id="senderEmail<%=count == 0 ? "" : count%>" name="senderEmail" placeholder="Account email" value="<%=faxConfigList.isEmpty() ? "Sender Email" :  faxConfigList.get(count).getSenderEmail()%>" />
+
+					<input class="span6" type="email" id="senderEmail<%=count == 0 ? "" : count%>" name="senderEmail" placeholder="Account email" value="<%=faxConfigList.get(count).getSenderEmail()%>" />
 				</div>
 				</div>
 				<div class="row">
@@ -491,9 +493,7 @@ if(!authed) {
 		</div> <!-- end content -->
 				
 				<div class="row">
-					<div class="span12">
-						<input class="btn btn-default" id="submit" type="submit" disabled value="Save" />
-					</div>
+					<input class="btn btn-default" id="submit" type="submit" disabled value="Save" />
 				</div>
 			</form>
 			

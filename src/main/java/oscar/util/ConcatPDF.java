@@ -44,7 +44,6 @@ package oscar.util;
  */
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -63,21 +62,13 @@ import com.itextpdf.text.pdf.SimpleBookmark;
 public class ConcatPDF {
 
 
-    public static void concat (ArrayList<Object> alist,String filename) throws IOException {
-        OutputStream os = null;
-        try{
-        	os = new FileOutputStream(filename);
+    public static void concat (ArrayList<Object> alist,String filename){
+        try(OutputStream os = new FileOutputStream(filename);) {        	
         	concat(alist,os);
         }catch(Exception e){
             MiscUtils.getLogger().error("Error", e);
         }
-        finally {
-        	os.close();
-        }
     }
-
-
-
 
     /**
      * This class can be used to concatenate existing PDF files.
@@ -120,7 +111,7 @@ public class ConcatPDF {
                         encryptionField.setAccessible(true);
                         encryptionField.set(reader, false);
                     } catch (Exception e) {
-			MiscUtils.getLogger().error("Error",e);
+                    	MiscUtils.getLogger().error("Error",e);
                     }
     			}
 

@@ -80,7 +80,7 @@ public class ProfessionalContact extends Contact {
 
 	@Override
 	public String getProviderCpso() {
-		return this.getProviderCpso();
+		return this.getCpso();
 	}
 	
 	/**

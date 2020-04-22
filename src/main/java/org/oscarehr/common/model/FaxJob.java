@@ -43,11 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name="faxes")
 public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob> {
 	
-	public enum STATUS {
-		
-		RECEIVED,SENT,COMPLETE,ERROR,WAITING,CANCELLED,RESOLVED				
-				
-	}
+	public enum STATUS {RECEIVED,SENT,COMPLETE,ERROR,WAITING,CANCELLED,RESOLVED,UNKNOWN}
 	public static enum Direction {IN, OUT}
 	
 	public FaxJob() {		
@@ -57,6 +53,7 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
 		this.file_name = null;
 		this.fax_line = null;
 		this.destination = null;
+		this.recipient = null;
 		this.status = null;
 		this.statusString = null;
 		this.numPages = null;
@@ -75,6 +72,7 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
 		this.file_name = faxJob.getFile_name();
 		this.fax_line = faxJob.getFax_line();
 		this.destination = faxJob.getDestination();
+		this.recipient = faxJob.getRecipient();
 		this.status = faxJob.getStatus();
 		this.statusString = faxJob.getStatusString();
 		this.numPages = faxJob.getNumPages();
@@ -105,6 +103,8 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
     private String fax_line;
     
     private String destination;
+    
+    private String recipient;
     
     @Enumerated(EnumType.STRING)
     private STATUS status;
@@ -180,7 +180,16 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
     public void setDestination(String destination) {
         this.destination = destination;
     }
-    /**
+
+    public String getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	/**
      * @return the status
      */
     public STATUS getStatus() {
@@ -270,7 +279,7 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
 	@Override
     public int compareTo(FaxJob arg0) {
 	
-		if( arg0 == null ) {
+		if( arg0 == null || arg0.getStamp() == null) {
 			return 1;
 		}
 		

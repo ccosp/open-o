@@ -56,6 +56,7 @@ import oscar.oscarClinic.ClinicData;
 import oscar.oscarFax.client.OSCARFAXClient;
 import oscar.oscarFax.client.OSCARFAXSOAPMessage;
 
+@Deprecated
 public class EctConsultationFaxAction extends Action {
 
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);

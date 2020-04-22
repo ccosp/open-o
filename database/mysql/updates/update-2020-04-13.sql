@@ -1,0 +1,1 @@
+alter table fax_config add senderEmail varchar(255);

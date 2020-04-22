@@ -24,6 +24,7 @@
 package org.oscarehr.fax.core;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Date;
@@ -37,9 +38,12 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -76,28 +80,32 @@ public class FaxImporter {
 		log.info( "CHECKING REMOTE FOR INCOMING FAXES" );
 		
 		List<FaxConfig> faxConfigList = faxConfigDao.findAll(null,null);
-		DefaultHttpClient client = new DefaultHttpClient();
+	
+
 		
 		for( FaxConfig faxConfig : faxConfigList ) {
 			if( faxConfig.isActive() ) {
+				
+				Credentials credentials = new UsernamePasswordCredentials( faxConfig.getSiteUser(), faxConfig.getPasswd() );	
+				CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+				credentialsProvider.setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT), credentials);
 
-				Credentials credentials = new UsernamePasswordCredentials( faxConfig.getSiteUser(), faxConfig.getPasswd() );
-				client.getCredentialsProvider().setCredentials( new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT), credentials );
+				CloseableHttpClient client = HttpClientBuilder.create()
+						.setDefaultCredentialsProvider(credentialsProvider)
+						.build();
 
 				HttpGet mGet = null;
 				HttpResponse response = null;
 				int status = HttpStatus.SC_OK;
 				
 				try {
-
-					log.debug( "Auth: " + faxConfig.getSiteUser() + ":" + faxConfig.getPasswd() );					
-					log.debug( "Service Path: " + faxConfig.getUrl() + PATH + "/" + URLEncoder.encode( faxConfig.getFaxUser(), "UTF-8" ) );
+						
+					log.debug( "Service Path: " + faxConfig.getUrl() + PATH + File.separator + URLEncoder.encode( faxConfig.getFaxUser(), "UTF-8" ) );
 					
-					mGet = new HttpGet( faxConfig.getUrl() + PATH + "/" + URLEncoder.encode( faxConfig.getFaxUser(), "UTF-8" ) );
+					mGet = new HttpGet( faxConfig.getUrl() + PATH + File.separator + URLEncoder.encode( faxConfig.getFaxUser(), "UTF-8" ) );
 					mGet.setHeader("accept", "application/json");
 					mGet.setHeader("user", faxConfig.getFaxUser());
 					mGet.setHeader("passwd", faxConfig.getFaxPasswd());
-
 					response = client.execute(mGet);
 			
 					if( response != null ) {
@@ -164,7 +172,6 @@ public class FaxImporter {
 					
 				} catch (IOException e) {
 					log.error("HTTP WS CLIENT ERROR", e);
-
 				} finally {
 					if(mGet != null) {
 						mGet.reset();
@@ -175,7 +182,7 @@ public class FaxImporter {
 		
 	}
 		
-	private FaxJob downloadFax( DefaultHttpClient client, FaxConfig faxConfig, FaxJob fax ) {
+	private FaxJob downloadFax( CloseableHttpClient client, FaxConfig faxConfig, FaxJob fax ) {
 
 		FaxJob downloadedFax = null;
 		HttpGet mGet = null;
@@ -222,7 +229,7 @@ public class FaxImporter {
 		return downloadedFax;
 	}
 	
-	private void deleteFax( DefaultHttpClient client, FaxConfig faxConfig, FaxJob fax ) 
+	private void deleteFax( CloseableHttpClient client, FaxConfig faxConfig, FaxJob fax ) 
 			throws ClientProtocolException, IOException {
 		HttpDelete mDelete = new HttpDelete(faxConfig.getUrl() + PATH + "/" 
 				+ URLEncoder.encode(faxConfig.getFaxUser(),"UTF-8") + "/" 
