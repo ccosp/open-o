@@ -764,7 +764,7 @@ function getClinicalData( data, target ) {
 		data : data,
 		dataType : 'JSON',
 		success: function(data) {
-			jQuery(target).val( jQuery(target).val() + "\n" + response.note );			
+			jQuery(target).val( jQuery(target).val() + "\n" + data.note );			
 		}
 	});
 }
@@ -1645,6 +1645,7 @@ function _AddOtherFax(name, number) {
 
 function checkPhone(str)
 {
+	str = str.trim().replace(/\D/g,'');
 	var phone =  /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/
 	if (str.match(phone)) {
    		return true;

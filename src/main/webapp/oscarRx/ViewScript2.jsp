@@ -406,6 +406,7 @@ imageUrl = request.getContextPath()+"/imageRenderingServlet?source="+ImageRender
 <script type="text/javascript">
 var POLL_TIME=1500;
 var counter=0;
+var isRxFaxEnabled = "<%=OscarProperties.getInstance().isRxFaxEnabled()%>";
 
 function refreshImage()
 {
@@ -430,28 +431,21 @@ function unloadMess(){
     return mess;
 }
 
-
 var isSignatureDirty = false;
 var isSignatureSaved = false;
-function signatureHandler(e) {
-	<% if (OscarProperties.getInstance().isRxFaxEnabled()) { %>
-	var hasFaxNumber = <%= pharmacy != null && pharmacy.getFax().trim().length() > 0 ? "true" : "false" %>;
-	<% } %>
+
+function signatureHandler(e) {	
+	e.target.onbeforeunload = null;
+	var hasFaxNumber = <%=pharmacy != null && pharmacy.getFax().trim().length() > 0%>;
 	isSignatureDirty = e.isDirty;
 	isSignatureSaved = e.isSave;
-	e.target.onbeforeunload = null;
-	<% if (OscarProperties.getInstance().isRxFaxEnabled()) { //%>
-	e.target.document.getElementById("faxButton").disabled = !hasFaxNumber || !e.isSave;
-	<% } %>
-	if (e.isSave) {
-		<% if (OscarProperties.getInstance().isRxFaxEnabled()) { //%>
-		if (hasFaxNumber) {
-			e.target.onbeforeunload = unloadMess;
-		}
-		<% } %>
-		refreshImage();			
+	e.target.document.getElementById("faxButton").disabled = !(isRxFaxEnabled && hasFaxNumber && isSignatureSaved);
+	if(isSignatureSaved)
+	{
+		refreshImage();
 	}
 }
+
 var requestIdKey = "<%=signatureRequestId %>";
 
 </script>
@@ -656,7 +650,7 @@ function toggleView(form) {
 					<tr>                            
                             <td><span><input type=button value="Fax & Paste into EMR"
                                     class="ControlPushButton" id="faxButton" style="width: 150px"
-                                    onClick="printPaste2Parent(false);sendFax();" disabled/></span>
+                                    onClick="printPaste2Parent(false);sendFax();" title="Pharmacy fax number and signature required." disabled/></span>
                                     
                                  <span>
                                  	<select id="faxNumber" name="faxNumber">
