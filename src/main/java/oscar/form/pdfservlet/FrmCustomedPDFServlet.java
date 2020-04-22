@@ -58,6 +58,7 @@ import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
+import org.oscarehr.common.model.FaxJob.Direction;
 import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.LocaleUtils;
@@ -102,21 +103,32 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 			boolean isFax = method.equals("oscarRxFax");
 			baosPDF = generatePDFDocumentBytes(req, this.getServletContext());
 			if (isFax) {
+				// this fax method shouldn't be here and will be removed in future edits.
 				res.setContentType("text/html");
 				PrintWriter writer = res.getWriter();
-				String faxNo = req.getParameter("pharmaFax").trim().replaceAll("\\D", "");
+				String faxNo = req.getParameter("pharmaFax");
+				if(faxNo != null)
+				{
+					faxNo = faxNo.trim().replaceAll("\\D", "");
+				}
+				
+				String pharmaName = req.getParameter("pharmaName");
+				
 			    if (faxNo.length() < 7) {
 					writer.println("<script>alert('Error: No fax number found!');window.close();</script>");
 				} else {
 		                	// write to file
 		                	String pdfFile = "prescription_"+req.getParameter("pdfId")+".pdf";
-		                	String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/";
+		                	String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		                	if(! path.endsWith(File.separator)) 
+		                	{
+		                		path = path + File.separator;
+		                	}
 		                	FileOutputStream fos = new FileOutputStream(path+pdfFile);
 		                	baosPDF.writeTo(fos);
 		                	fos.close();
 
-							String tempPath = OscarProperties.getInstance().getProperty(
-								"fax_file_location", System.getProperty("java.io.tmpdir"));
+							String tempPath = OscarProperties.getInstance().getProperty("fax_file_location", System.getProperty("java.io.tmpdir"));
 		                	
 		                	// write to file
 		                	String tempPdf = tempPath + "/prescription_" + req.getParameter("pdfId") + ".pdf";
@@ -133,6 +145,10 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 		                	}
 		                	
 			                String faxNumber = req.getParameter("clinicFax");
+			                if(faxNumber != null)
+			                {
+			                	faxNumber = faxNumber.trim().replaceAll("\\D", "");
+			                }
 			                String demo = req.getParameter("demographic_no");
 			                FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
 			                FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
@@ -152,16 +168,19 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 			                		faxJob.setFax_line(faxNumber);
 			                		faxJob.setFile_name(pdfFile);
 			                		faxJob.setUser(faxConfig.getFaxUser());
+			                		faxJob.setRecipient(pharmaName);
 			                		faxJob.setNumPages(pdfReader.getNumberOfPages());
 			                		faxJob.setStamp(new Date());
-			                		faxJob.setStatus(FaxJob.STATUS.SENT);
+			                		faxJob.setStatus(FaxJob.STATUS.WAITING);
 			                		faxJob.setOscarUser(provider_no);
 			                		faxJob.setDemographicNo(Integer.parseInt(demo));
+			                		
+			                		faxJob.setSenderEmail(faxConfig.getSenderEmail());
+			                		faxJob.setDirection(Direction.OUT);
 			                		
 			                		faxJobDao.persist(faxJob);
 			                		validFaxNumber = true;
 			                		break;
-			                		
 			                	}
 			                }
 			                

@@ -112,7 +112,12 @@ public class ConfigureFaxAction extends DispatchAction {
 							savedFaxConfig.setFaxPasswd(faxPasswds[idx]);
 						}
 						
-						savedFaxConfig.setFaxNumber(faxNumbers[idx]);
+						String faxNumber = faxNumbers[idx];
+						if(faxNumber != null)
+						{
+							faxNumber = faxNumber.trim().replaceAll("\\D", "");
+						}
+						savedFaxConfig.setFaxNumber(faxNumber);
 						savedFaxConfig.setSenderEmail(senderEmails[idx]);
 						savedFaxConfig.setQueue(Integer.parseInt(inboxQueues[idx]));
 						savedFaxConfig.setActive(Boolean.parseBoolean(activeState[idx]));

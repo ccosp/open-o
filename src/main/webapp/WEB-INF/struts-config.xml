@@ -1648,10 +1648,6 @@
 			<forward name="success" path="/oscarMaintenance/oscarMaintenanceDisplay.jsp" />
 			<forward name="input" path="/oscarMaintenance/oscarMaintenanceInput.jsp" />
 		</action>
-		<action input="/oscarEncounter/oscarConsultationRequest/ConsultationFaxForm.jsp" name="EctConsultationFaxForm" path="/oscarEncounter/oscarConsultationRequests/consultationFax" scope="request"
-			type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFaxAction">
-			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ConsultationFaxComfirmation.jsp" />
-		</action>
 		<action input="/provider/editSignature.jsp" name="ProEditSignatureForm" path="/EnterSignature" scope="request" type="oscar.oscarProvider.pageUtil.ProEditSignatureAction">
 			<forward name="success" path="/provider/providerSignature.jsp" />
 		</action>
@@ -2638,10 +2634,6 @@
 		</action>
 
 		<action path="/Provider/showPersonal" type="org.oscarehr.provider.web.DisplayPersonalInfoAppointmentAction" parameter="method" validate="false" scope="request">
-		</action>
-
-		<action path="/admin/faxStatus" scope="request" parameter="method" validate="false" type="oscar.util.FaxStatusAction">
-			<forward name="success" path="/admin/faxStatus.jsp" />
 		</action>
 		
 		<action path="/admin/oscarStatus" scope="request" parameter="method" validate="false" type="oscar.util.OscarStatusAction">

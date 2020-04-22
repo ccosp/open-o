@@ -878,12 +878,12 @@ THEME 2*/
                                                 <span id="indicator1" style="display: none"> <!--img src="/images/spinner.gif" alt="Working..." --></span>
                                             </td>
                                             <td>
-                                                <input type="button" name="search" class="ControlPushButton" style="width:48px" value="<bean:message key="SearchDrug.msgSearch"/>" onclick="popupRxSearchWindow();" title="<bean:message key="SearchDrug.help.Search"/>">
-                                                <input id="customDrug" type="button" class="ControlPushButton" style="width:86px" onclick="customWarning2();" value="<bean:message key="SearchDrug.msgCustomDrugRx3"/>" title="<bean:message key="SearchDrug.help.CustomDrug"/>" />
-                                                <input id="customNote" type="button" class="ControlPushButton" style="width:40px"   onclick="customNoteWarning();" value="<bean:message key="SearchDrug.msgNoteRx3"/>" title="<bean:message key="SearchDrug.help.CustomNote"/>"/>
-                                                <input id="reset" type="button" class="ControlPushButton" style="width:42px" title="Clear pending prescriptions"   onclick="resetStash();" value="<bean:message key="SearchDrug.msgResetPrescriptionRx3"/>"/>
+                                                <input type="button" name="search" class="ControlPushButton"  value="<bean:message key="SearchDrug.msgSearch"/>" onclick="popupRxSearchWindow();" title="<bean:message key="SearchDrug.help.Search"/>">
+                                                <input id="customDrug" type="button" class="ControlPushButton" onclick="customWarning2();" value="<bean:message key="SearchDrug.msgCustomDrugRx3"/>" title="<bean:message key="SearchDrug.help.CustomDrug"/>" />
+                                                <input id="customNote" type="button" class="ControlPushButton"  onclick="customNoteWarning();" value="<bean:message key="SearchDrug.msgNoteRx3"/>" title="<bean:message key="SearchDrug.help.CustomNote"/>"/>
+                                                <input id="reset" type="button" class="ControlPushButton" title="Clear pending prescriptions"   onclick="resetStash();" value="<bean:message key="SearchDrug.msgResetPrescriptionRx3"/>"/>
                                                 <% if(!OscarProperties.getInstance().getProperty("rx.drugofchoice.hide","false").equals("true")) { %>
-                                                <input type="button" class="ControlPushButton" style="width:92px" onclick="callTreatments('searchString','treatmentsMyD')" value="<bean:message key="SearchDrug.msgDrugOfChoiceRx3"/>" title="<bean:message key="SearchDrug.help.DrugOfChoice"/>"/>
+                                                <input type="button" class="ControlPushButton" onclick="callTreatments('searchString','treatmentsMyD')" value="<bean:message key="SearchDrug.msgDrugOfChoiceRx3"/>" title="<bean:message key="SearchDrug.help.DrugOfChoice"/>"/>
                                                 <%} %>
                                                 <%if (OscarProperties.getInstance().hasProperty("ONTARIO_MD_INCOMINGREQUESTOR")) {%>
                                                 <a href="javascript:goOMD();" title="<bean:message key="SearchDrug.help.OMD"/>"><bean:message key="SearchDrug.msgOMDLookup"/></a>
