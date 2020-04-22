@@ -40,6 +40,7 @@ import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.caisi_integrator.ws.GetConsentTransfer;
 import org.oscarehr.common.Gender;
 import org.oscarehr.common.dao.AdmissionDao;
+import org.oscarehr.common.dao.ConsentDao;
 import org.oscarehr.common.dao.ContactSpecialtyDao;
 import org.oscarehr.common.dao.DemographicArchiveDao;
 import org.oscarehr.common.dao.DemographicContactDao;
@@ -52,7 +53,7 @@ import org.oscarehr.common.dao.DemographicMergedDao;
 import org.oscarehr.common.dao.PHRVerificationDao;
 import org.oscarehr.common.exception.PatientDirectiveException;
 import org.oscarehr.common.model.Admission;
-
+import org.oscarehr.common.model.Consent;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.ContactSpecialty;
 import org.oscarehr.common.model.Demographic;
@@ -128,6 +129,9 @@ public class DemographicManager {
 
 	@Autowired
 	PatientConsentManager patientConsentManager;
+	
+	@Autowired
+	ConsentDao consentDao;
 	
 	@Autowired
 	ProgramManager2 programManager;
