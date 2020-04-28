@@ -439,10 +439,9 @@ if(recall){
 																	
 										<!-- Display Member Groups -->
 										<div id="member-groups">
-										<details>
-											<summary>
-												<strong>Member Groups</strong>
-											</summary>
+
+											<strong>Member Groups</strong>
+										
 											<c:forEach items="${ groupManager }" var="group" varStatus="count">
 											<details>										
 												<summary>			
@@ -463,7 +462,7 @@ if(recall){
 												
 											</details>
 											</c:forEach>
-										</details>
+								
 										</div>
 										
 										<!-- Display Members by remote locations -->
@@ -498,7 +497,7 @@ if(recall){
 										</c:if>
 										
 										<hr style="border-top:1px solid #dcdcdc; border-bottom:none;" />
-										
+										<strong>Local Members</strong>
 										<!-- Display all local members -->
 										<c:forEach items="${ localMembers }" var="member">
 											<div class="member_contact">								
