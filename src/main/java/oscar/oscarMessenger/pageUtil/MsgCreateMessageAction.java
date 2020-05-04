@@ -101,7 +101,7 @@ public class MsgCreateMessageAction extends Action {
 
             //FIXME remove these deprecated methods and use the Messenger Managers instead (the deprecated classes still use JDBC)
             oscar.oscarMessenger.data.MsgMessageData messageData = new oscar.oscarMessenger.data.MsgMessageData();
-            providers               = messageData.getDups4(providers);           
+            providers               = messageData.getDups4(providers);              
             providerListing         = messageData.getProviderStructure(loggedInInfo, providers);
             
             //FIXME currently unused - I think...
@@ -109,7 +109,7 @@ public class MsgCreateMessageAction extends Action {
             
             /*
              * A demographic that has not consented to the Integrator cannot be sent to remote providers.
-             * This is short circuit that will return a warning that the patient has not consented.
+             * This is a short circuit that will return a warning that the patient has not consented.
              * This message will not send until the non-consenting patient has consented -or- is removed 
              * from the message.
              */

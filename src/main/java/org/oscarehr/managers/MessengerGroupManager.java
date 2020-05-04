@@ -33,6 +33,7 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
+import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.caisi_integrator.util.MiscUtils;
 import org.oscarehr.caisi_integrator.ws.CachedFacility;
 import org.oscarehr.caisi_integrator.ws.CachedProvider;
@@ -48,7 +49,6 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import oscar.oscarMessenger.data.ContactIdentifier;
 import oscar.oscarMessenger.data.MsgProviderData;
 
@@ -67,6 +67,8 @@ public class MessengerGroupManager {
 	private FacilityManager facilityManager;
 	@Autowired
 	private OscarCommLocationsDao oscarCommLocationsDao;
+	@Autowired
+	private ProviderDao providerDao;
 	
 	private static Logger logger = MiscUtils.getLogger();
 	
@@ -215,7 +217,21 @@ public class MessengerGroupManager {
 			throw new SecurityException("missing required security object (_admin)");
 		}
 		
-		List<GroupMembers> groupMembers = groupMembersDao.findByGroupId(groupId);
+		List<GroupMembers> groupMembers = Collections.emptyList();
+		
+		/*
+		 *  get all group members if the Integrator is enabled.
+		 *  Otherwise just the local groups is good
+		 */
+		if(loggedInInfo.getCurrentFacility().isIntegratorEnabled()) 
+		{
+			groupMembers = groupMembersDao.findByGroupId(groupId);
+		}
+		else
+		{
+			groupMembers = groupMembersDao.findLocalByGroupId(groupId);
+		}
+		
 		List<MsgProviderData> messengerContactList = getMemberData(loggedInInfo, groupMembers);
 		Collections.sort(messengerContactList, new SortLastName());	
 		return messengerContactList; 
@@ -421,7 +437,7 @@ public class MessengerGroupManager {
 		
 		if(! loggedInInfo.getCurrentFacility().isIntegratorEnabled())
 		{
-			logger.warn("Cannot retrieve remote provider contact list. Integrator is disabled.");
+			logger.debug("Cannot retrieve remote provider contact list. Integrator is disabled.");
 			return providersMap; 
 		}
 				
@@ -562,6 +578,15 @@ public class MessengerGroupManager {
     	}            
        
         return oscarCommLocationsID;
+    }
+    
+    public boolean checkProviderStatus(String providerNo) {	
+    	boolean status = Boolean.FALSE;
+    	Provider provider = providerDao.getProvider(providerNo);
+    	if("1".equals(provider.getStatus())) {
+    		status = Boolean.TRUE;
+    	}
+    	return status;
     }
 	
 	/**

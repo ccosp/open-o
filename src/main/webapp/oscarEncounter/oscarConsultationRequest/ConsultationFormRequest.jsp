@@ -1939,18 +1939,17 @@ function statusChanged(val) {
 									</tr>
 								</c:forEach>
 							</table></td></tr>
-						
-							<c:if test="${ not EctConsultationFormRequestForm.eReferral }">
-								<tr>
-									<td style="text-align:right;">
-										<a href="javascript:void(0);" id="attachDocumentPanelBtn" title="Add/Remove Attachment" 
-											data-poload="${ ctx }/attachDocs.do?method=fetchAll&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
-											Add Attachment
-										</a>
-									</td>
-								</tr>
-							</c:if>
-					</table>
+
+									<c:if test="${ not EctConsultationFormRequestForm.eReferral }">
+										<tr>
+											<td style="text-align: right;"><a
+												href="javascript:void(0);" id="attachDocumentPanelBtn"
+												title="Add/Remove Attachment"
+												data-poload="${ ctx }/attachDocs.do?method=fetchAll&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
+													Add Attachment </a></td>
+										</tr>
+									</c:if>
+								</table>
 					</td>
 				</tr>
 			</table>
