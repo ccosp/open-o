@@ -136,33 +136,13 @@ if(recall){
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-ui-1.8.18.custom.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/fg.menu.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 
 <script type="text/javascript">
 
-    var browserName=navigator.appName; 
-    
-    if (browserName=="Netscape"){ 
-        if( document.implementation ){
-            //this detects W3C DOM browsers (IE is not a W3C DOM Browser)
-            if( Event.prototype && Event.prototype.__defineGetter__ ){
-                //this detects Mozilla Based Browsers
-                Event.prototype.__defineGetter__( "srcElement", function(){
-                    var src = this.target;
-                    if( src && src.nodeType == Node.TEXT_NODE )
-                        src = src.parentNode;
-                        return src;
-                    }
-                );
-            }
-        }
-    }
-    
     function checkGroup(group)
     {
-    	$.each($("input." + group), function(){
-    	    $(this).attr("checked", !$(this).attr("checked"));
+    	$.each($("input." + group.id), function(){
+    	    $(this).attr("checked", $(group).attr("checked") ? "checked" : false);
 		})
     }
 
@@ -278,53 +258,7 @@ if(recall){
 	    }
 	
 	}
-	
-	/* 
-	 * Check off all the contact members that this message will be replied to. 
-	 */
-    var replyList = '${ replyList }';
-    var replyListJson = []; 
-    if(replyList)
-    {
-    	replyListJson = JSON.parse(replyList);    
-    }
-	$(document).ready(function(){
-		
-		var missing = [];
-	    for (i in replyListJson) {
-	    	var checkedElement = $("input#local-" + replyListJson[i].compositeId);
-	    		    	
-	    	if(checkedElement.length == 0)
-	    	{
-	    		checkedElement = $("input#remote-" + replyListJson[i].compositeId);
-	    	}
-	    	
-	    	if(checkedElement.length == 0) 
-	    	{
-	    		missing.push(replyListJson[i].compositeId);
-	    	}
-	    	
-	    	checkedElement.attr("checked", "checked");
-	    	checkedElement.parent().parent().attr('open', '').parent().attr('open', '');	    	
-	    }
-	    
-    	if(missing.length > 0)
-    	{
-    		generateMissingContactAlert(missing);
-    	}
-	})
-	
-	/*
-	 * Called when a contact id is used in a message reply and the 
-	 * contact is not in the Oscar Messenger contact list. 
-	 */
-	function generateMissingContactAlert(missingArray) 
-	{
-		alert( "Some recipients of this reply are missing in the Recipient directory and will not receive this message.\n" 
-				+ "\n\nAdd these recipients to the Recipient directory at: "
-				+ "Administration/System Management/Messenger Group Admin");
-	}
-		
+
 	/*
 	 * Throw an error returned from the action
 	 */
@@ -442,21 +376,24 @@ if(recall){
 
 											<strong>Member Groups</strong>
 										
-											<c:forEach items="${ groupManager }" var="group" varStatus="count">
+											<c:forEach items="${ groupManager }" var="group">
 											<details>										
 												<summary>			
-													<input type="checkbox" name="tableDFR" id="${ group.key.id }" 
-															value="${ group.key.id }" onclick="javascript:checkGroup('member_group_${ count.index }');" />
-													<label for="${ group.key.id }" >${ group.key.groupDesc }</label>
+													<input type="checkbox" name="tableDFR" id="member_group_${ group.key.id }" 
+															value="${ group.key.id }" onclick="checkGroup(this)" />
+													<label for="member_group_${ group.key.id }" >${ group.key.groupDesc }</label>
 												</summary>
 																																			
 												<c:forEach items="${ group.value }" var="member">
 													<div class="group_member_contact">										
-														<input type="checkbox" name="provider" class="member_group_${ count.index }" 
-															id="group-${ member.id.compositeId }" value="${ member.id.compositeId }"  />
-														<label for="group-${ member.id.compositeId }" >
+														
+														<input type="checkbox" name="provider" class="member_group_${ group.key.id }" 
+															id="${ group.key.id }-${ member.id.compositeId }" value="${ member.id.compositeId }" />
+														
+														<label for="${ group.key.id }-${ member.id.compositeId }" >
 															<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />															
 														</label>
+														
 													</div>
 												</c:forEach>
 												
@@ -467,24 +404,36 @@ if(recall){
 										
 										<!-- Display Members by remote locations -->
 										<c:if test="${ not empty remoteMembers }" >
+										
+										<hr style="border-top:1px solid #dcdcdc; border-bottom:none;" />
+										
 										<div id="remote-locations">
 										<details>
 											<summary>
-												<strong>Integrated Members</strong>
+												<strong>All Integrated Clinics</strong>
 											</summary>
-											<c:forEach items="${ remoteMembers }" var="location" varStatus="count">
+											<c:forEach items="${ remoteMembers }" var="location" >
 												<details>										
 													<summary>			
-														<input type="checkbox" name="tableDFR" id="${ location.key }" 
-																value="${ location.key }" onchange="javascript:checkGroup('remote_group_${ count.index }');" />
-														<label for="${ location.key }" >${ location.key }</label>
+														<input type="checkbox" name="tableDFR" id="remote_group_${ location.key }" 
+																value="${ location.key }" onchange="checkGroup(this)" />
+														<label for="remote_group_${ location.key }" >${ location.key }</label>
 													</summary>
 
 													<c:forEach items="${ location.value }" var="member">
+													
+														<%-- this is horrible. try not to repeat it --%>
+														<c:set var="providerChecked" value="false" />
+														<c:forEach var="replyId" items="${ replyList }">
+															<c:if test="${ replyId.compositeId eq member.id.compositeId }">
+																<c:set var="providerChecked" value="true" />
+															</c:if>
+														</c:forEach>
+																	
 														<div class="remote_member_contact">												
-															<input type="checkbox" name="provider" class="remote_group_${ count.index }" 
-																id="remote-${ member.id.compositeId }" value="${ member.id.compositeId }"  />
-															<label for="remote-${ member.id.compositeId }" >
+															<input type="checkbox" name="provider" class="remote_group_${ location.key }" 
+																id="${ member.id.compositeId }" value="${ member.id.compositeId }"  ${ providerChecked ? 'checked' : '' }/>
+															<label for="${ member.id.compositeId }" >
 																<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />															
 															</label>
 														</div>
@@ -497,17 +446,32 @@ if(recall){
 										</c:if>
 										
 										<hr style="border-top:1px solid #dcdcdc; border-bottom:none;" />
-										<strong>Local Members</strong>
-										<!-- Display all local members -->
-										<c:forEach items="${ localMembers }" var="member">
-											<div class="member_contact">								
-												<input type="checkbox" name="provider" id="local-${ member.id.compositeId }" value="${ member.id.compositeId }"  />
-												<label for="local-${ member.id.compositeId }" >
-													<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />															
-												</label>												
-											</div>
-										</c:forEach>
 										
+										<details>
+											<summary>
+												<strong>All Local Members</strong>
+											</summary>
+
+											<!-- Display all local members -->
+											<c:forEach items="${ localMembers }" var="member">
+											
+												<%-- this is horrible. try not to repeat it --%>
+												<c:set var="providerChecked" value="false" />
+												<c:forEach var="replyId" items="${ replyList }">
+													<c:if test="${ replyId.compositeId eq member.id.compositeId }">
+														<c:set var="providerChecked" value="true" />
+													</c:if>
+												</c:forEach>
+	
+												<div class="member_contact">								
+													<input type="checkbox" name="provider" id="0-${ member.id.compositeId }" 
+														value="${ member.id.compositeId }"  ${ providerChecked ? 'checked' : '' }/>
+													<label for="0-${ member.id.compositeId }" >
+														<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />															
+													</label>												
+												</div>
+											</c:forEach>
+										</details>
 									</td><!--list of the providers cell end-->
 								</tr>
 							</table>
