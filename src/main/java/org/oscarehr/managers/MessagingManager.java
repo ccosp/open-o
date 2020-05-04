@@ -474,7 +474,7 @@ public class MessagingManager {
 
     /**
      * A combined result of both the local reply recipients and recipients located in remote 
-     * facilities inluding the original sender.
+     * facilities including the original sender.
      */
     public final List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, final MessageTbl messageTbl) {
        	
@@ -566,7 +566,7 @@ public class MessagingManager {
     		throw new SecurityException("missing required security object (_msg)");
     	}
        	
-       	List<MessageList> messageList = messageListDao.findByMessageNoAndLocationNo((long) messageId, getCurrentLocationId());
+       	List<MessageList> messageList = messageListDao.findAllByMessageNoAndLocationNo((long) messageId, getCurrentLocationId());
        	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
        	for(MessageList message : messageList) {
        		if(! loggedInInfo.getLoggedInProviderNo().equals(message.getProviderNo()))
