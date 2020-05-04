@@ -1349,7 +1349,8 @@ INSERT INTO `measurementType` (`type`, `typeDisplayName`, `typeDescription`, `me
 ('PHQ9', 'PHQ9 Score', 'PHQ9', 'Value 0 to 30', '4', '2012-09-06 07:25:35'),
 ('PRET', 'Preterm', 'PRET', '', '4', '0000-00-00 00:00:00'),
 ('TERM', 'Term Pregnancies', 'TERM', '', '4', '0000-00-00 00:00:00'),
-('TOP', 'Termination of Preg', 'TOP', '', '4', '0000-00-00 00:00:00');
+('TOP', 'Termination of Preg', 'TOP', '', '4', '0000-00-00 00:00:00'),
+('CVRP', 'COVID result', 'COVID result', '', '11', '0000-00-00 00:00:00');
 
 --
 -- Dumping data for table 'mygroup'
