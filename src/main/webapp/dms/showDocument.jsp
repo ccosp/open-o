@@ -143,48 +143,33 @@
             String url2 = cp+"/dms/ManageDocument.do?method=display&doc_no=" + docId;
             String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());	
 %>
-<% if (request.getParameter("inWindow") != null && request.getParameter("inWindow").equalsIgnoreCase("true")) {  %>
+
+<c:if test="${param.inWindow eq 'true'}">
 <html>
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar.js"></script>
-<!-- language for the calendar -->
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
-<!-- the following script defines the Calendar.setup helper function, which makes
-       adding a calendar a matter of 1 or 2 lines of code. -->
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar-setup.js"></script>
-<!-- calendar stylesheet -->
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/share/calendar/calendar.css" title="win2k-cold-1" />
+
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/share/yui/css/fonts-min.css"/>
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/showDocument.css" />
+        
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar.js"></script>
+		<!-- language for the calendar -->
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
+		<!-- the following script defines the Calendar.setup helper function, which makesadding a calendar a matter of 1 or 2 lines of code. -->
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar-setup.js"></script>
+		<!-- calendar stylesheet -->
+		<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/share/calendar/calendar.css" title="win2k-cold-1" />
 		<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/controls.js"></script>
 		<!-- jquery -->
-		<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
         <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/Oscar.js" ></script>
-        
-
-        
-        <script type="text/javascript" src="<%= request.getContextPath() %>/js/demographicProviderAutocomplete.js"></script>
-
+                
+        <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-1.12.0.min.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>      
+		<script type="text/javascript" src="<%= request.getContextPath() %>/js/demographicProviderAutocomplete.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
-
-        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/share/yui/css/fonts-min.css"/>
-        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/share/yui/css/autocomplete.css"/>
-        <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/share/css/demographicProviderAutocomplete.css"  />
-
-        <style type="text/css">
-        	.multiPage {
-        		background-color: RED;
-        		color: WHITE;
-        		font-weight:bold;
-				padding: 0px 5px;
-				font-size: medium;
-        	}
-        	.singlePage {
-
-        	}
-        	        	
-        </style>
 
         <script type="text/javascript">
         jQuery.noConflict();
@@ -256,9 +241,10 @@
         </script>
         <script type="text/javascript" src="showDocument.js"></script>
 </head>
+
 <body>
-<% } %>
-        <div id="labdoc_<%=docId%>">
+</c:if>
+        <div id="labdoc_<%=docId%>" class="content">
         	<%
         	 ArrayList ackList = AcknowledgementData.getAcknowledgements("DOC",docId);
         	 ReportStatus reportStatus = null;
@@ -426,14 +412,16 @@
                                     </tr>
                                     <tr>
                                         <td><bean:message key="inboxmanager.document.ObservationDateMsg" /></td>
-                                        <td>
-                                            <input   id="observationDate<%=docId%>" name="observationDate" type="text" value="<%=curdoc.getObservationDate()%>">
-                                            <a id="obsdate<%=docId%>" onmouseover="renderCalendar(this.id,'observationDate<%=docId%>' );" href="javascript:void(0);" ><img title="Calendar" src="<%=request.getContextPath()%>/images/cal.gif" alt="Calendar"border="0" /></a>
+                                        <td id="observation-calendar">
+                                            <input class="input-field" id="observationDate<%=docId%>" name="observationDate" type="text" value="<%=curdoc.getObservationDate()%>">
+                                            <a class="calendar-icon" id="obsdate<%=docId%>" onmouseover="renderCalendar(this.id,'observationDate<%=docId%>' );" href="javascript:void(0);" >
+                                            	<img class="calendar-image" title="Calendar" src="<%=request.getContextPath()%>/images/cal.gif" alt="Calendar" />
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><bean:message key="inboxmanager.document.DemographicMsg" /></td>
-                                        <td style="width:400px;"><%
+                                        <td><%
                                         if(!demographicID.equals("-1")){%>
                                             <input id="saved<%=docId%>" type="hidden" name="saved" value="true"/>
                                             <input type="hidden" value="<%=demographicID%>" name="demog" id="demofind<%=docId%>" />
@@ -444,7 +432,7 @@
                                             <input type="hidden" name="demofindName" value="<%=demoName%>" id="demofindName<%=docId%>"/>   
                                                                                    
                                             <input type="checkbox" id="activeOnly<%=docId%>" name="activeOnly" checked="checked" value="true" onclick="setupDemoAutoCompletion()">Active Only<br>  
-                                            <input type="text" style="width:400px;" id="autocompletedemo<%=docId%>" onchange="checkSave('<%=docId%>');" name="demographicKeyword" />
+                                            <input type="text" id="autocompletedemo<%=docId%>" onchange="checkSave('<%=docId%>');" name="demographicKeyword" placeholder="Search Demographic"/>
                                             <div id="autocomplete_choices<%=docId%>" class="autocomplete"></div>
                                             
                                             <%}%>
@@ -460,11 +448,11 @@
                                         <td valign="top"><bean:message key="inboxmanager.document.FlagProviderMsg" /> </td>
                                         <td>
                                             <input type="hidden" name="provi" id="provfind<%=docId%>" />
-                                            <input type="text" id="autocompleteprov<%=docId%>" name="demographicKeyword"/>
-                                            <div id="autocomplete_choicesprov<%=docId%>" class="autocomplete"></div>
+                                            <input type="text" id="autocompleteprov<%=docId%>" name="demographicKeyword" placeholder="Search Provider"/>
+                                            <div id="autocomplete_choicesprov<%=docId%>" class="autocomplete" ></div>
 
 
-                                            <div id="providerList<%=docId%>"></div>
+                                            <div class="provider-list-additions" id="providerList<%=docId%>"></div>
                                         </td>
                                     </tr>
 
@@ -619,9 +607,7 @@
                 <tr><td colspan="9" ><hr width="100%" color="red"></td></tr>
             </table>
         </div>        
-<!--
 
-//-->
 <script type="text/javascript">
 
         if($('displayDocumentAs_<%=docId%>').value=="<%=UserProperty.PDF%>") {
@@ -702,7 +688,7 @@
         
 
 </script>
-<% if (request.getParameter("inWindow") != null && request.getParameter("inWindow").equalsIgnoreCase("true")) {  %>
+<c:if test="${param.inWindow eq 'true'}">
 </body>
 </html>
-<%}%>
+</c:if>

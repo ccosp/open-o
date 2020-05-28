@@ -1,0 +1,102 @@
+		* {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+
+		body, html {
+			height: 100%;
+		}
+		
+		body {
+			margin: 0;
+			background-color: #ffffff;
+			display: flex;
+			flex-direction: column;
+		}
+		
+		div.content table {
+			border-collapse: collapse;
+			width:100% !important;
+		}
+
+		div.content table.docTable tr td {
+			width:66%;
+			font-size: normal;
+		}
+		
+		div.content fieldset input[type="text"] {
+			width:100%;
+		}
+		
+		div.content fieldset table tr td:first-of-type {
+			padding:1px 5px;
+			width: 35% !important;
+		}
+
+		div.content fieldset table tr td input#createNewDemo {
+			width:100%;
+		}
+		
+    div.content fieldset legend {
+			font-weight: bold;
+		}
+
+        div.content fieldset table tr td#observation-calendar a { 
+            position: relative;
+			top: -20px;
+        } 
+
+        div.content fieldset table tr td#observation-calendar { 
+            width: 100%; 
+            margin-bottom: 10px; 
+        } 
+
+        div.content fieldset table tr td#observation-calendar input{ 
+            text-align: center; 
+        } 
+          
+        div.content fieldset table tr td .calendar-icon { 
+            padding: 5px; 
+            min-width: 40px; 
+        } 
+          
+        div.content fieldset table tr td input[type="text"],  fieldset table tr td select { 
+            width: 100%; 
+            padding: 5px; 
+            text-align: left; 
+        } 
+		
+		
+		.content {
+			flex: 1 0 auto;
+            margin:auto 10px;
+            padding:10px;
+		}
+		
+		div.content img {
+			max-width: 100%;
+			height: auto;
+			width: auto\9;
+		}
+		
+		.multiPage {
+        		background-color: RED;
+        		color: WHITE;
+        		font-weight:bold;
+				padding: 0px 5px;
+				font-size: medium;
+        }
+        
+        div.content div.provider-list-additions div a {
+			color:red;
+			float:right;
+		}
+		
+		ul.ui-menu {
+			max-height:400px;
+			max-width: 260px;
+			overflow-y:scroll;
+			overflow-wrap: anywhere;
+			overflow-x: hidden;
+		}

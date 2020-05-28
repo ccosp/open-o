@@ -48,33 +48,41 @@ if(!authed) {
 <html>
     <head>
                 <title>Documents In Queues</title>
+                
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/showDocument.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/share/css/oscarMDSIndex.css"  />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/oscarMDS/encounterStyles.css">
+		<link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
+		<link rel="stylesheet" type="text/css" href="../share/css/OscarStandardLayout.css">
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
-   <!-- main calendar program -->
-<script type="text/javascript" src="../share/calendar/calendar.js"></script>
-<!-- language for the calendar -->
-<script type="text/javascript" src="../share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
-<!-- the following script defines the Calendar.setup helper function, which makes
-       adding a calendar a matter of 1 or 2 lines of code. -->
-<script type="text/javascript" src="../share/calendar/calendar-setup.js"></script>
-<!-- calendar style sheet -->
-<link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
-<link rel="stylesheet" type="text/css" href="../share/css/OscarStandardLayout.css">
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/Oscar.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
+
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
+		   <!-- main calendar program -->
+		<script type="text/javascript" src="../share/calendar/calendar.js"></script>
+		<!-- language for the calendar -->
+		<script type="text/javascript" src="../share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
+		<!-- the following script defines the Calendar.setup helper function, which makes
+		       adding a calendar a matter of 1 or 2 lines of code. -->
+		<script type="text/javascript" src="../share/calendar/calendar-setup.js"></script>
+		
+		<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-1.12.0.min.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>      
+		<script type="text/javascript" src="<%= request.getContextPath() %>/js/demographicProviderAutocomplete.js"></script>
+		
+		<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/Oscar.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
         <script type="text/javascript" src="../share/javascript/controls.js"></script>
 
         <script type="text/javascript" src="../share/yui/js/yahoo-dom-event.js"></script>
         <script type="text/javascript" src="../share/yui/js/connection-min.js"></script>
         <script type="text/javascript" src="../share/yui/js/animation-min.js"></script>
         <script type="text/javascript" src="../share/yui/js/datasource-min.js"></script>
-        <script type="text/javascript" src="../share/yui/js/autocomplete-min.js"></script>
-        <script type="text/javascript" src="../js/demographicProviderAutocomplete.js"></script>
+
         
 <script type="text/javascript">
 

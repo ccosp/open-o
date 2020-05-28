@@ -186,10 +186,7 @@ TH {
 
 .MainTableTopRowRightColumn {
 	background-color: #003399;
-	border-left: 2px solid #A9A9A9;
-	border-right: 2px solid #A9A9A9;
-	border-top: 2px solid #A9A9A9;
-	height: 34px;
+	padding: 5px 15px;
 }
 
 .MainTableTopRow {
@@ -201,12 +198,6 @@ TH {
 	height: 34px;
 }
 
-.MainTableBottomRowRightColumn {
-	border-left: 2px solid #A9A9A9;
-	border-right: 2px solid #A9A9A9;
-	border-bottom: 2px solid #A9A9A9;
-	height: 4px;
-}
 
 .MainTableRightColumn {
 	border-left: 2px solid #A9A9A9;
@@ -226,6 +217,17 @@ TH {
 	font-weight: bold;
 	font-size: 110%;
 	color: white;
+}
+
+.MainTableTopRowRightColumn a {
+	display: -webkit-inline-boxblock;
+	display: inline-block;
+	border-right: white thin solid;
+	padding:0 3px 0 0;
+	margin: 0px;
+}
+.MainTableTopRowRightColumn a:last-of-type {
+	border:none !important;
 }
 
 @media print {
