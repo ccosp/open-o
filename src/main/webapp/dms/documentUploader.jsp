@@ -60,24 +60,15 @@ if (queueIdStr != null) {
     if( uProp != null) {
         destFolder=uProp.getValue();
     }
-
 String context = request.getContextPath();
 String resourcePath = context + "/share/documentUploader/";
 
-String userAgent = request.getHeader("User-Agent");
-int isFirefox = userAgent.indexOf("Firefox");
-if (isFirefox > 0) {
-	if (Float.parseFloat(userAgent.substring(isFirefox + 8, isFirefox + 11)) < 4.0) {
-%>
-	<jsp:forward page="documentUploaderFirefox36.jsp" />
-<%
-	}
-}
 %>
 <!DOCTYPE HTML>
 <html lang="en" class="no-js">
 <head>
 	<meta charset="utf-8">
+	
 	<title><bean:message key="inboxmanager.document.title" /></title>
 	<link rel="stylesheet" href="<%=context%>/css/cupertino/jquery-ui-1.8.18.custom.css" id="theme">
 	<link rel="stylesheet" href="<%=resourcePath%>jquery.fileupload-ui.css">

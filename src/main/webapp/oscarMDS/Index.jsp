@@ -416,8 +416,16 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
 
 	}
 	
-	input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;padding:0px;}    
-	#ticklerWrap{position:relative;top:0px;background-color:#FF6600;width:100%;}  
+	input[type=button], button, input[id^='ackBtn_']{ 
+		font-size:12px !important;padding:0px;
+	} 
+	   
+	#ticklerWrap{
+		position:relative;
+		top:0px;
+		background-color:#FF6600;
+		width:100%;
+	}  
 	
 	.completedTickler{
 	    opacity: 0.8;
@@ -428,8 +436,12 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
 	.DoNotPrint{display:none;}
 	}  	
 
-	.TDISRes	{font-weight: bold; font-size: 10pt; color: black; font-family:
-               Verdana, Arial, Helvetica}
+	.TDISRes {
+		font-weight: bold; 
+		font-size: 10pt; 
+		color: black; 
+		font-family: Verdana, Arial, Helvetica
+	}
 </style>
 </head>
 
@@ -466,12 +478,17 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
                                 	<a href="javascript:popupStart(600,500,'<%=request.getContextPath()%>/dms/html5AddDocuments.jsp')" style="color: #FFFFFF; "><bean:message key="inboxmanager.document.uploadDoc"/></a>
                                 <% } else { %>
                                 	<a href="javascript:popupStart(800,1000,'<%=request.getContextPath()%>/dms/documentUploader.jsp')" style="color: #FFFFFF; "><bean:message key="inboxmanager.document.uploadDoc"/></a>
+                                	
+                    <%--    Soon:         	<a href="javascript:void(0)" style="color:white;" class="dialog-link" id="/dms/documentUploader.jsp" >
+                                		<bean:message key="inboxmanager.document.uploadDoc" />
+                                	</a> --%>
                                 <% } %>
 								
 								<a href="javascript:popupStart(700,1100,'../dms/inboxManage.do?method=getDocumentsInQueues')" style="color: #FFFFFF;"><bean:message key="inboxmanager.document.pendingDocs"/></a>
 								
+								<a href="javascript:popupStart(800,1200,'<%=request.getContextPath() %>/dms/incomingDocs.jsp')" style="color: #FFFFFF;" ><bean:message key="inboxmanager.document.incomingDocs"/></a>
+									                                
 								<% if (! OscarProperties.getInstance().isBritishColumbiaBillingRegion()) { %>
-	                                <a href="javascript:popupStart(800,1200,'<%=request.getContextPath() %>/dms/incomingDocs.jsp')" style="color: #FFFFFF;" ><bean:message key="inboxmanager.document.incomingDocs"/></a>
 									<a href="javascript:popupStart(800,1000, '<%=request.getContextPath() %>/oscarMDS/CreateLab.jsp')" style="color: #FFFFFF;"><bean:message key="global.createLab" /></a>
 	                                <a href="javascript:popupStart(800,1000, '<%=request.getContextPath() %>/olis/Search.jsp')" style="color: #FFFFFF;"><bean:message key="olis.olisSearch" /></a>
 	                                <a href="javascript:popupPage(400, 400,'<html:rewrite page="/hospitalReportManager/hospitalReportManager.jsp"/>')" style="color: #FFFFFF;">HRM Status/Upload</a>
@@ -614,8 +631,40 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
           </tr>
      </table>
      </form>
+ 
+	<%-- modal dialog script --%>
+	<script>
+	jQuery(document).ready( function(){
+
+		var ctx = "${pageContext.servletContext.contextPath}";
+	
+		jQuery( function() {
+				
+			jQuery( "#dialog" ).dialog({
+		      autoOpen: false,
+		      show: {
+		        effect: "blind",
+		        duration: 1000
+		      },
+		      hide: {
+		        effect: "explode",
+		        duration: 1000
+		      }
+		    });
+		 
+			jQuery(".dialog-link").on( "click", function(event) {
+				event.preventDefault();
+		    	var url = ctx + this.id;
+ 		    	jQuery("#dialog").load(url).dialog({modal:true}); 
+		    });
+		});
+	});
+	</script>
+    
 </body>
 </html>
 <% } // end if(!ajax) %>
 
+<div id="dialog" ></div> 
 <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
+

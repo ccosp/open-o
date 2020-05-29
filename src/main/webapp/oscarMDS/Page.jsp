@@ -97,43 +97,6 @@ String curUser_no = (String) session.getAttribute("user");
             </tr>
             <tr>
                 <td style="margin:0px;padding:0px;">
-                    <%--
-                    <table width="100%" style="margin:0px;padding:0px;" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <th align="left" valign="bottom" class="cell" nowrap>
-                                <input type="checkbox" onclick="checkAll('lab_form');" name="checkA"/>
-                                <bean:message key="oscarMDS.index.msgHealthNumber"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgPatientName"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgSex"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgResultStatus"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgDateTest"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgOrderPriority"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgRequestingClient"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgDiscipline"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                <bean:message key="oscarMDS.index.msgReportStatus"/>
-                            </th>
-                            <th align="left" valign="bottom" class="cell">
-                                Ack #
-                            </th>
-                        </tr>
-					</table>
-					 --%>
 					<div id="listViewDocs" style="height:536px; overflow:auto;" onscroll="handleScroll(this)">
 					<style type="text/css">
 						#summaryView td, #summaryView th {

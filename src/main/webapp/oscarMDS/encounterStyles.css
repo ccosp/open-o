@@ -184,7 +184,7 @@ TH {
 	max-width: 130px;
 }
 
-.MainTableTopRowRightColumn {
+.MainTableTopRowRightColumn , .MainTableBottomRow .MainTableBottomRowRightColumn{
 	background-color: #003399;
 	padding: 5px 15px;
 }

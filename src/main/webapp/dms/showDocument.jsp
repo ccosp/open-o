@@ -341,7 +341,7 @@
                             <%} %>
                         </div>
                         <% if (displayDocumentAs.equals(UserProperty.IMAGE)) { %>
-                            <a href="<%=url2%>" target="_blank"><img alt="document" id="docImg_<%=docId%>"  src="<%=url%>" /></a>
+      						<a href="<%=url2%>" target="_blank"><img alt="document" id="docImg_<%=docId%>" src="<%=url%>" onerror="this.src='<%=request.getContextPath()%>/images/icon_alert.gif'"/></a>
                         <%} else {%>
                             <div id="docDispPDF_<%=docId%>"></div>
                         <%}%>
@@ -475,7 +475,11 @@
                                             <bean:message key="inboxmanager.document.LinkedProvidersMsg"/>
                                             <%
             Properties p = (Properties) session.getAttribute("providerBean");
-            List<ProviderInboxItem> routeList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", Integer.parseInt(docId));
+            List<ProviderInboxItem> routeList = Collections.emptyList(); 
+            if(docId != null)
+            {
+            	routeList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", Integer.parseInt(docId));
+            }
                                             %>
                                             <ul>
                                                 <%for (ProviderInboxItem pItem : routeList) {
@@ -537,14 +541,12 @@
 %>
 
                         <fieldset>
-                          <%--  <input id="test1Regex_<%=docId%>" type="text"/><input id="test2Regex_<%=docId%>" type="text"/>
-                            <a href="javascript:void(0);" onclick="testShowDoc();">click</a>--%>
                             <legend><span class="FieldData"><i><bean:message key="inboxmanager.document.NextAppointmentMsg"/> <oscar:nextAppt demographicNo="<%=demographicID%>"/></i></span></legend>
                             <%
                                 int iPageSize = 5;
                                 Provider prov;
                                 boolean HighlightUserAppt = false;
-                                if (!demographicID.equals("-1")) {
+                                if (demographicID != null && ! demographicID.isEmpty() && ! demographicID.equals("-1")) {
                                     
                                     List<Appointment> appointmentList = appointmentDao.getAppointmentHistory(Integer.parseInt(demographicID), 0, iPageSize);
                                     if (appointmentList != null && appointmentList.size() > 0) {
