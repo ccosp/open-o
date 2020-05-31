@@ -401,10 +401,7 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
 
 
 <style type="text/css">
-	#categoryList {
-		padding:10px;
 
-	}
 	.multiPage {
 		background-color: RED;
 		color: WHITE;
@@ -412,12 +409,10 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
 		padding: 0px 5px;
 		font-size: medium;
 	}
-	.singlePage {
 
-	}
-	
 	input[type=button], button, input[id^='ackBtn_']{ 
-		font-size:12px !important;padding:0px;
+		font-size:12px !important;
+		padding:0px;
 	} 
 	   
 	#ticklerWrap{
@@ -445,13 +440,12 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
 </style>
 </head>
 
-<body oldclass="BodyStyle" vlink="#0000FF"  >
+<body vlink="#0000FF"  >
     <form name="reassignForm" method="post" action="ReportReassign.do" id="lab_form">
-        <table  oldclass="MainTable" id="scrollNumber1" border="0" name="encounterTable" cellspacing="0" cellpadding="3" width="100%">
-            <tr oldclass="MainTableTopRow">
-                <td class="MainTableTopRowRightColumn" colspan="10" align="left">
-                 <table width="100%">
-
+        <table id="scrollNumber1" >
+            <tr>
+                <td class="MainTableTopRowRightColumn" align="left">
+                 <table>
                         <tr>
                             <td align="left" valign="center" >
                                 <input type="hidden" name="providerNo" value="<%= providerNo %>" />
@@ -505,118 +499,129 @@ boolean ajax = "true".equals(request.getParameter("ajax"));
             </tr>
         </table>
 
-        <table id="readerViewTable" style="table-layout: fixed;border-color: #039;border-width: thin;border-spacing: 0px;background-color: #E0E1FF" width="100%" border="1">
+        <table id="readerViewTable" style="table-layout: fixed;background-color: #E0E1FF" >
                                                      <col width="150">
                                                      <col width="100%">
           <tr>
-              <td id="categoryList" valign="top" style="overflow:hidden;border-color: #039;border-width: thin;background-color: #E0E1FF" >
+              <td id="categoryList" valign="top" style="background-color: #E0E1FF" >
 <% } // end if(!ajax)
    else {
 %>
 					<input type="hidden" id="categoryHash" value="<%=categoryHash%>" />
-                    <div style="overflow:auto;">
+               <div class="documentSummaryList">
+               		<details id="masterDocumentSummary" open>
                     <%
                     	//Enumeration en=patientIdNames.keys();
                         if((totalNumDocs) > 0){
-                    %>
-                        <div>
+                    %>                  
+                        <summary>
                         	<a id="totalAll" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_ALL);">
-                        		All (<span id="totalNumDocs"><%=totalNumDocs%></span>)</a>
-                        </div>
-                        <br>
-
+                        		All (<span id="totalNumDocs"><%=totalNumDocs%></span>)
+                        	</a>
+                        </summary>
+                        <ul>
     				<% }
-
-                       if((totalDocs)>0){
+                       if(totalDocs > 0){
 					%>
-						<div>
+						<li>
 							<a id="totalDocs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_DOCUMENTS);"
 							   title="Documents">Documents (<span id="totalDocsNum"><%=totalDocs%></span>)
 						   </a>
-					   </div>
-                     <%} if((totalLabs)>0){%>
-                       <div>
+					   </li>
+					   
+                     <%} if(totalLabs > 0){%>
+                       <li>
                             <a id="totalHL7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_HL7);" title="HL7">
                            		HL7 (<span id="totalHL7Num"><%=totalLabs%></span>)
                            	</a>
-                       </div>
+                       </li>
 
-					<%}
-					  if(totalLabs>0){%><br><%}
-
-					%>
-					    <div>
+					<% } %>
+					
+					    <li>
 					    	<a id="totalNormals" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_NORMAL);" title="Normal">
 					    		Normal
 				    		</a>
-		    			</div>
+		    			</li>
 
-						<div>
+						<li>
     						<a id="totalAbnormals" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_ABNORMAL);" title="Abnormal">
     							Abnormal
    							</a>
-						</div>
-						<dl id="patientsdoclabs">
+						</li>
+					</ul>
+					</details>	
+					<% if (unmatchedDocs > 0 || unmatchedLabs > 0) { %>
+					
+					<details class="unmatchedList">
+						<summary>
+       						<a id="patient0all" href="javascript:void(0);"  
+       							onclick="un_bold(this);changeView(CATEGORY_PATIENT,0)" 
+       							title="Unmatched">Unmatched (<span id="patientNumDocs0"><%=unmatchedDocs + unmatchedLabs%></span>)
+       						</a>
+                    	</summary> 
+                    		
+                    		<ul id="labdoc0showSublist" >
+			                   <%if (unmatchedDocs > 0) {%>
+			                        		<li>
+			                        			<a id="patient0docs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,0,CATEGORY_TYPE_DOC);" title="Documents">
+			                        				Documents (<span id="pDocNum_0"><%=unmatchedDocs%></span>)
+			                       				</a>
+			                        		</li>
+			                   <%} if (unmatchedLabs > 0) {%>
+			                     			<li>
+			                     				<a id="patient0hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,0,CATEGORY_TYPE_HL7);" title="HL7">
+			                     					HL7 (<span id="pLabNum_0"><%=unmatchedLabs%></span>)
+			                   					</a>
+			                        		</li>
+			                   <%}%>
+			                 </ul>
+			            </details>
+					
+					<% } %>	
+					
+										
+					<div id="patientsdoclabs">
 				    <%
 				         for (PatientInfo info : patients) {
 				                        String patientId= info.id + "";
 				                        String patientName= info.toString();
 				                        int numDocs= info.getDocCount() + info.getLabCount();
 				   %>
+					<details>
+   					   <summary>
+       						<a id="patient<%=patientId%>all" href="javascript:void(0);"  onclick="un_bold(this);changeView(CATEGORY_PATIENT,<%=patientId%>);" 
+       							title="<%=patientName%>" >
+       								<%=patientName%> (<span id="patientNumDocs<%=patientId%>"><%=numDocs%></span>)
+       						</a>
+       					</summary>
+                    		<ul id="labdoc<%=patientId%>showSublist" >
+				                   <%if (info.getDocCount() > 0) {%>
+				                        		<li>
+				                        			<a id="patient<%=patientId%>docs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,<%=patientId%>,CATEGORY_TYPE_DOC);" title="Documents">
+				                        				Documents (<span id="pDocNum_<%=patientId%>"><%=info.getDocCount()%></span>)
+				                       				</a>
+				                        		</li>
+				                   <%} if (info.getLabCount() > 0) {%>
+				                     			<li>
+				                     				<a id="patient<%=patientId%>hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,<%=patientId%>,CATEGORY_TYPE_HL7);" title="HL7">
+				                     					HL7 (<span id="pLabNum_<%=patientId%>"><%=info.getLabCount()%></span>)
+				                   					</a>
+				                        		</li>
+				                   <%}%>
+                    		</ul>
+                  </details>
 
-   					   <dt> <img id="plus<%=patientId%>" alt="plus" src="<%=request.getContextPath()%>/images/plus.png" onclick="showhideSubCat('plus','<%=patientId%>');"/>
-       					    <img id="minus<%=patientId%>" alt="minus" style="display:none;" src="<%=request.getContextPath()%>/images/minus.png" onclick="showhideSubCat('minus','<%=patientId%>');"/>
-       						<a id="patient<%=patientId%>all" href="javascript:void(0);"  onclick="un_bold(this);changeView(CATEGORY_PATIENT,<%=patientId%>);" title="<%=patientName%>"><%=patientName%> (<span id="patientNumDocs<%=patientId%>"><%=numDocs%></span>)</a>
-                    		<dl id="labdoc<%=patientId%>showSublist" style="display:none" >
-                   <%if (info.getDocCount() > 0) {%>
-                        		<dt>
-                        			<a id="patient<%=patientId%>docs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,<%=patientId%>,CATEGORY_TYPE_DOC);" title="Documents">
-                        				Documents (<span id="pDocNum_<%=patientId%>"><%=info.getDocCount()%></span>)
-                       				</a>
-                        		</dt>
-                   <%} if (info.getLabCount() > 0) {%>
-                     			<dt>
-                     				<a id="patient<%=patientId%>hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,<%=patientId%>,CATEGORY_TYPE_HL7);" title="HL7">
-                     					HL7 (<span id="pLabNum_<%=patientId%>"><%=info.getLabCount()%></span>)
-                   					</a>
-                        		</dt>
-                   <%}%>
-                    		</dl>
-                    	</dt>
+					<% if (selectedCategoryPatient != null) { 
+						if (selectedCategoryPatient.equals(Integer.toString(info.id))) { %>
+							<script>
+								un_bold($('patient<%=info.id%><%=(selectedCategoryType.equals("CATEGORY_TYPE_HL7"))?"hl7s":(selectedCategoryType.equals("CATEGORY_TYPE_DOC")?"docs":"all")%>'));
+							</script>
+					<% }} %>
+            	<%}  // end of for loop for patient list %>
+				</div> <!-- end of patient summary list -->
 
-			<% if (selectedCategoryPatient != null) { if (selectedCategoryPatient.equals(Integer.toString(info.id))) { %>
-			<script>
-				showhideSubCat('plus','<%=info.id%>');
-				un_bold($('patient<%=info.id%><%=(selectedCategoryType.equals("CATEGORY_TYPE_HL7"))?"hl7s":(selectedCategoryType.equals("CATEGORY_TYPE_DOC")?"docs":"all")%>'));
-			</script>
-			<% } } %>
-                   <%}%>
-
-				   <% if (unmatchedDocs > 0 || unmatchedLabs > 0) { %>
-						<dt> <img id="plus0" alt="plus" src="<%=request.getContextPath()%>/images/plus.png" onclick="showhideSubCat('plus','0');"/>
-       					    <img id="minus0" alt="minus" style="display:none;" src="<%=request.getContextPath()%>/images/minus.png" onclick="showhideSubCat('minus','0');"/>
-       						<a id="patient0all" href="javascript:void(0);"  onclick="un_bold(this);changeView(CATEGORY_PATIENT,0)" title="Unmatched">Unmatched (<span id="patientNumDocs0"><%=unmatchedDocs + unmatchedLabs%></span>)</a>
-                    		<dl id="labdoc0showSublist" style="display:none" >
-                   <%if (unmatchedDocs > 0) {%>
-                        		<dt>
-                        			<a id="patient0docs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,0,CATEGORY_TYPE_DOC);" title="Documents">
-                        				Documents (<span id="pDocNum_0"><%=unmatchedDocs%></span>)
-                       				</a>
-                        		</dt>
-                   <%} if (unmatchedLabs > 0) {%>
-                     			<dt>
-                     				<a id="patient0hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,0,CATEGORY_TYPE_HL7);" title="HL7">
-                     					HL7 (<span id="pLabNum_0"><%=unmatchedLabs%></span>)
-                   					</a>
-                        		</dt>
-                   <%}%>
-                    		</dl>
-                    	</dt>
-
-					<% } %>
-
-                  	</dl>
-                  	</div>
+        </div>
                   	
 <%  } //end else
 	

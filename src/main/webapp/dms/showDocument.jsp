@@ -148,7 +148,6 @@
 <html>
 <head>
 
-        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/share/yui/css/fonts-min.css"/>
         <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/library/jquery/jquery-ui.theme-1.12.1.min.css" />
         <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/library/jquery/jquery-ui.structure-1.12.1.min.css" />
         <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/showDocument.css" />
@@ -156,7 +155,7 @@
 		<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar.js"></script>
 		<!-- language for the calendar -->
 		<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
-		<!-- the following script defines the Calendar.setup helper function, which makesadding a calendar a matter of 1 or 2 lines of code. -->
+		<!-- the following script defines the Calendar.setup helper function, which makes adding a calendar a matter of 1 or 2 lines of code. -->
 		<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar-setup.js"></script>
 		<!-- calendar stylesheet -->
 		<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/share/calendar/calendar.css" title="win2k-cold-1" />
@@ -169,7 +168,6 @@
         <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-1.12.0.min.js"></script>
 		<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>      
 		<script type="text/javascript" src="<%= request.getContextPath() %>/js/demographicProviderAutocomplete.js"></script>
-        <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
 
         <script type="text/javascript">
         jQuery.noConflict();
@@ -231,7 +229,12 @@
 
 
         function split(id,demoName) {
-        	var loc = "<%= request.getContextPath()%>/oscarMDS/Split.jsp?document=" + id + "&queueID=<%=inQueue%>" + "&demoName=" + demoName;
+        	var loc = "<%= request.getContextPath() %>";
+        	loc = loc + "/oscarMDS/Split.jsp?document=";
+        	loc = loc + id;
+        	loc = loc + "&queueID=";
+        	loc = loc + "<%=inQueue%>";
+        	loc = loc + "&demoName=" + demoName;
         	popupStart(1400, 1400, loc, "Splitter");
         }
 
@@ -239,7 +242,7 @@
         var contextpath = "<%=request.getContextPath()%>";
         
         </script>
-        <script type="text/javascript" src="showDocument.js"></script>
+
 </head>
 
 <body>
@@ -329,9 +332,7 @@
                             </form>        	            
             <table class="docTable">
                 <tr>
-
-
-                    <td colspan="8">
+                    <td valign="top" class="pdfPreviewColumn">
                         <div style="text-align: right;font-weight: bold">
                         <% if( numOfPage > 1 && displayDocumentAs.equals(UserProperty.IMAGE) ) {%>
                         	<a id="firstP_<%=docId%>" style="display: none;" href="javascript:void(0);" onclick="firstPage('<%=docId%>','<%=cp%>');">First</a>
@@ -345,11 +346,19 @@
                         <%} else {%>
                             <div id="docDispPDF_<%=docId%>"></div>
                         <%}%>
+                        <div style="text-align: right;font-weight: bold">
+                            <% if( numOfPage > 1 && displayDocumentAs.equals(UserProperty.IMAGE)) {%>
+                        	<a id="firstP2_<%=docId%>" style="display: none;" href="javascript:void(0);" onclick="firstPage('<%=docId%>','<%=cp%>');">First</a>
+                            <a id="prevP2_<%=docId%>" style="display: none;"  href="javascript:void(0);" onclick="prevPage('<%=docId%>','<%=cp%>');">Prev</a>
+                            <a id="nextP2_<%=docId%>" href="javascript:void(0);" onclick="nextPage('<%=docId%>','<%=cp%>');">Next</a>
+                            <a id="lastP2_<%=docId%>" href="javascript:void(0);" onclick="lastPage('<%=docId%>','<%=cp%>');">Last</a>
+                            <%} %>
+                        </div>
                     </td>
 
-                    <td align="left" valign="top">
+                    <td valign="top" class="pdfAssignmentToolsColumn">
                         <fieldset><legend><bean:message key="inboxmanager.document.PatientMsg"/><span id="assignedPId_<%=docId%>"><%=demoName%></span> </legend>
-                            <table border="0">
+                            <table>
                                 <tr>
                                     <td><bean:message key="inboxmanager.document.DocumentUploaded"/></td>
                                     <td><%=curdoc.getDateTimeStamp()%></td>
@@ -394,6 +403,10 @@
                                 <input type="hidden" name="totalPage_<%=docId%>" id="totalPage_<%=docId%>" value="<%=numOfPage%>"/>
                                 <input type="hidden" name="displayDocumentAs_<%=docId%>" id="displayDocumentAs_<%=docId%>" value="<%=displayDocumentAs%>">
                                 <table border="0">
+                                    <tr>
+                                        <td><bean:message key="dms.documentReport.msgCreator"/>:</td>
+                                        <td><%=curdoc.getCreatorName()%></td>
+                                    </tr>
                                     <tr>
                                         <td><bean:message key="dms.documentReport.msgDocType" />:</td>
                                         <td>
@@ -455,14 +468,6 @@
                                             <div class="provider-list-additions" id="providerList<%=docId%>"></div>
                                         </td>
                                     </tr>
-
-
-
-                                    <tr>
-                                        <td><bean:message key="dms.documentReport.msgCreator"/>:</td>
-                                        <td><%=curdoc.getCreatorName()%></td>
-                                    </tr>
-
                                     <tr>
                                         <td width="30%" colspan="1" align="left"><a id="saveSucessMsg_<%=docId%>" style="display:none;color:blue;"><bean:message key="inboxmanager.document.SuccessfullySavedMsg"/></a></td>
                                         <td width="30%" colspan="1" align="left"><%if(demographicID.equals("-1")){%><input type="submit" name="save" disabled id="save<%=docId%>" value="Save" /><input type="button" name="save" id="saveNext<%=docId%>" onclick="saveNext(<%=docId%>)" disabled value='<bean:message key="inboxmanager.document.SaveAndNext"/>' /><%}
@@ -593,23 +598,12 @@
                          </fieldset>                                                  	                                
                     </td>
                 </tr>
-                <tr>
-                	<td colspan="8">
-                        <div style="text-align: right;font-weight: bold">
-                            <% if( numOfPage > 1 && displayDocumentAs.equals(UserProperty.IMAGE)) {%>
-                        	<a id="firstP2_<%=docId%>" style="display: none;" href="javascript:void(0);" onclick="firstPage('<%=docId%>','<%=cp%>');">First</a>
-                            <a id="prevP2_<%=docId%>" style="display: none;"  href="javascript:void(0);" onclick="prevPage('<%=docId%>','<%=cp%>');">Prev</a>
-                            <a id="nextP2_<%=docId%>" href="javascript:void(0);" onclick="nextPage('<%=docId%>','<%=cp%>');">Next</a>
-                            <a id="lastP2_<%=docId%>" href="javascript:void(0);" onclick="lastPage('<%=docId%>','<%=cp%>');">Last</a>
-                            <%} %>
-                        </div>
-                    </td>
-                	<td>&nbsp;</td>
-                </tr> 
-                <tr><td colspan="9" ><hr width="100%" color="red"></td></tr>
+                
+                <tr><td colspan="2"><hr width="100%" color="red"></td></tr>
             </table>
         </div>        
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
+<script type="text/javascript" src="showDocument.js"></script>        
 <script type="text/javascript">
 
         if($('displayDocumentAs_<%=docId%>').value=="<%=UserProperty.PDF%>") {

@@ -77,12 +77,12 @@ String curUser_no = (String) session.getAttribute("user");
 	       	}
 		</script>
 		
-        <table  oldclass="MainTable" id="scrollNumber1" border="0" name="encounterTable" cellspacing="0" cellpadding="3" width="100%">
-            <tr oldclass="MainTableTopRow">
+        <table id="scrollNumber1">
+            <tr>
                 <td class="MainTableTopRowRightColumn" colspan="10" align="left">
                  <table width="100%">
                      <tr>
-                           <td align="left" valign="center" > <%-- width="30%" --%>
+                           <td align="left" valign="center" >
                                <% if (labdocs.size() > 0) { %>
                                    <input id="topFBtn" type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="parent.checkSelected(document)">
                                    <% if (ackStatus.equals("N") || ackStatus.isEmpty()) {%>
@@ -96,14 +96,9 @@ String curUser_no = (String) session.getAttribute("user");
                 </td>
             </tr>
             <tr>
-                <td style="margin:0px;padding:0px;">
+                <td>
 					<div id="listViewDocs" style="height:536px; overflow:auto;" onscroll="handleScroll(this)">
-					<style type="text/css">
-						#summaryView td, #summaryView th {
-							padding: 0px 5px;
-						}
-					</style>
-					<table id="summaryView" width="100%" style="margin:0px;padding:0px;" cellpadding="0" cellspacing="0">
+					<table id="summaryView">
 					<thead>
 						<tr>
                             <th align="left" valign="bottom" class="cell" nowrap>
@@ -147,10 +142,11 @@ String curUser_no = (String) session.getAttribute("user");
                             Integer totalNoPages=pageCount;
                             Integer total_row_index=labdocs.size()-1;
                             if (total_row_index < 0 || (totalNoPages != null && totalNoPages.intValue() == (pageNum+1))) {
-                                	%> <input type="hidden" name="NoMoreItems" value="true" /> <%
+                                	%> 
+                            <input type="hidden" name="NoMoreItems" value="true" /> <%
                             		if (isListView) { %>
 		                                <tr>
-		                                    <tdcolspan="9" align="center">
+		                                    <td colspan="10" align="center">
 		                                        <i>	<% if (pageNum == 1) { %>
 		                                        	<bean:message key="oscarMDS.index.msgNoReports"/>
 		                                        	<% } else { %>
@@ -257,9 +253,7 @@ String curUser_no = (String) session.getAttribute("user");
 		                        		<% } else {
 
 		                        		%>
-		                        		<%--
-		                        				<iframe src="../lab/CA/ALL/labDisplayAjax.jsp?segmentID=<%=segmentID %>" style="height:100%;width:100%;border:0;"></iframe>
-		                        		--%>
+		                
 		                        		<jsp:include page="../lab/CA/ALL/labDisplayAjax.jsp" flush="true">
 		                        			<jsp:param name="segmentID" value="<%=segmentID%>"/>
 		                        			<jsp:param name="demoName" value="<%=demoName%>"/>
@@ -384,17 +378,17 @@ String curUser_no = (String) session.getAttribute("user");
                             </tbody>
                        	</table>
 
-                       	<table width="100%" style="margin:0px;padding:0px;" cellpadding="0" cellspacing="0">
+                       	<table>
                        		<tr><td bgcolor="E0E1FF">
                        			<div id='loader' style="display:none"><img src='<%=request.getContextPath()%>/images/DMSLoader.gif'> Loading reports...</div>
                        		</td></tr>
                        	</table>
                        	</div>
                        	<% if (labdocs.size() > 0) { %>
-                       	<table width="100%" style="margin:0px;padding:0px;" cellpadding="0" cellspacing="0">
+                       	<table>
                             <tr class="MainTableBottomRow">
                                 <td class="MainTableBottomRowRightColumn" bgcolor="#003399" colspan="10" align="left">
-                                    <table width="100%">
+                                    <table>
                                         <tr>
                                             <td align="left" valign="middle" width="30%">
 
