@@ -9,84 +9,88 @@
 
 --%>
 <%@ page import="oscar.dms.*,java.util.*" %>
-<%@ page import="com.sun.pdfview.PDFFile" %>
-<%@ page import="java.io.FileNotFoundException,java.io.IOException" %>
-<%@ page import="org.apache.pdfbox.pdmodel.*" %>
+<%@ page import="org.oscarehr.util.SpringUtils, org.oscarehr.common.model.Document" %>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils,oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*,oscar.oscarLab.ca.all.util.*"%>
-<%@page import="org.springframework.web.context.WebApplicationContext,org.oscarehr.common.dao.*,org.oscarehr.common.model.*"%>
-<%@page import="org.oscarehr.document.dao.DocumentDAO, java.io.File, java.io.RandomAccessFile, java.nio.channels.FileChannel, java.nio.ByteBuffer, com.sun.pdfview.PDFFile" %>
+<%@ page import="org.oscarehr.common.dao.DocumentDao"%>
+<%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%
+	String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+	boolean authed = true;
+%>
+<security:oscarSec roleName="<%=roleName$%>" objectName="_lab" rights="r" reverse="<%=true%>" >
+	<%
+		authed = false;
+		response.sendRedirect("../securityError.jsp?type=_lab");
+	%>
+</security:oscarSec>
+<%
+	if (!authed) {
+		return;
+	}
+%>
 
 <html>
 <head>
 <title>PDF Sorter</title>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery-1.4.2.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery.rotate.1-1.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery-ui-1.8.4.custom_full.min.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/share/javascript/jquery/jquery-ui-1.8.4.custom.css" type="text/css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/share/css/sorter.css" type="text/css" />
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/jquery/jquery-ui.theme-1.12.1.min.css" type="text/css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/share/css/sorter.css" type="text/css" />
+
+<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js"></script>
+
+<script type="text/javascript" src="<%=request.getContextPath()%>/share/javascript/jquery/jquery.rotate.1-1.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/share/javascript/sorter.js"></script>
+
 </head>
 <body>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/sorter.js"></script>
-<div id="mastercontainer">
-<div id="buildercontainer">
-	<ul id="builder">
-	</ul>
-</div>
 
-<div id="pickertoolscontainer">
-	<ul id="pickertools">
-		<li id="tool_add"><img src="../images/icons/103.png"><span>Add</span></li>
-		<li id="tool_remove"><img src="../images/icons/101.png"><span>Remove</span></li>
-		<li id="tool_rotate"><img src="../images/icons/114.png"><span>Rotate</span></li>
-		<li id="tool_savecontinue"><img src="../images/icons/172.png"><span>Save &amp; Continue</span></li>
-		<li id="tool_done"><img src="../images/icons/071.png"><span>Done</span></li>
-	</ul>
-</div>
 
-<div id="pickercontainer">
-<ul id="picker">
-<%
-String documentId = request.getParameter("document");
-DocumentDAO docdao = (DocumentDAO) WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext()).getBean("documentDAO");
-org.oscarehr.document.model.Document thisDocument = docdao.getDocument(documentId);
+	<div id="mastercontainer">
 
-String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-File documentDir = new File(docdownload);
+		<div id="buildercontainer">
+			<h2>Document 2</h2>
+			<div id="builderContainerWindow">
+				<ul id="builder"></ul>
+			</div>
+			<div id="pickertoolscontainer">
+				<ul id="pickertools">
+					<li id="tool_add"><img src="../images/icons/103.png"><span>Add</span></li>
+					<li id="tool_remove"><img src="../images/icons/101.png"><span>Remove</span></li>
+					<li id="tool_rotate"><img src="../images/icons/114.png"><span>Rotate</span></li>
+					<li id="tool_savecontinue"><img src="../images/icons/172.png"><span>Save &amp; Continue</span></li>
+					<li id="tool_done"><img src="../images/icons/071.png"><span>Done</span></li>
+				</ul>
+			</div>
+		</div>
 
-File docDir = new File(docdownload);
-String documentDirName = documentDir.getName();
-File parentDir = documentDir.getParentFile();
-String filePath=docdownload+thisDocument.getDocfilename();
+		<div id="pickercontainer">
+			<h2>Document 1</h2>
+			<div id="pickercontainerWindow">
+				<ul id="picker">
+					<%
+						String documentId = request.getParameter("document");
+						String queueID = request.getParameter("queueID");
+						String demoName = request.getParameter("demoName");
+						DocumentDao docdao = SpringUtils.getBean(DocumentDao.class);
+						Document thisDocument = docdao.getDocument(documentId);
 
-File cacheDir = new File(parentDir,documentDirName+"_cache");
+						for (int i = 1; i <= thisDocument.getNumberofpages(); i++) {
+					%>
+							<li>
+								<img class="page" src='<%=request.getContextPath() + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + documentId + "&curPage=" + i%>' />
+							</li>
+					<%
+						}
+					%>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-if(!cacheDir.exists()){
-    cacheDir.mkdir();
-}
-
-File file = new File(documentDir, thisDocument.getDocfilename());
-
-RandomAccessFile raf = new RandomAccessFile(file, "r");
-FileChannel channel = raf.getChannel();
-ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
-PDFFile pdffile = new PDFFile(buf);
-
-for (int i = 1; i <= pdffile.getNumPages(); i++) {
-%>
-	<li><img class="page" src="<%= request.getContextPath() + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + documentId + "&curPage=" + i %>" /></li>
-<% }
-
-channel.close();
-raf.close();
-%>
-</ul>
-</div>
-</div>
-
-<input type="hidden" id="document_no" value="<%=documentId %>" />
+	<input type="hidden" id="document_no" value="${ param.document }" />
+	<input type="hidden" id="queueID" value="${ param.queueID }" />
+	<input type="hidden" id="demoName" value="${ demoName }" />
 </body>
 </html>

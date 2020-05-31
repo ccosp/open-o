@@ -131,11 +131,11 @@ $(document).ready(function() {
 	
 	$("#picker div").append(function(index, html) {
 		return "<span class='num'>" + ++index + "</span>" +
-				"<span class='jog-control'><img style='height: 16px; -box-shadow: none; " +
+				"<span class='jog-control'><img style='-box-shadow: none; " +
 				"-webkit-box-shadow: none; -moz-box-shadow: none' src='../images/icons/132.png' />" +
-				"<img style='height: 16px; -box-shadow: none; -webkit-box-shadow: none; " +
+				"<img style=' -box-shadow: none; -webkit-box-shadow: none; " +
 				"-moz-box-shadow: none' src='../images/icons/131.png' />" +
-				"<img style='height: 16px; -box-shadow: none; -webkit-box-shadow: none; " +
+				"<img style=' -box-shadow: none; -webkit-box-shadow: none; " +
 				"-moz-box-shadow: none' src='../images/icons/114.png' /></span>";
 	});
 	
@@ -257,9 +257,8 @@ $(document).ready(function() {
 		
 		if( confirm("Are you sure want to exit?")) {
 		
-			var docnum = $("#document_no").attr('value');
-			
-			opener.refreshAndFile(docnum);
+//			var docnum = $("#document_no").attr('value');			
+//			opener.refreshAndFile(docnum);
 			window.close();
 		}
 		

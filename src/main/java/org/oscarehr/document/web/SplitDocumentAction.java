@@ -8,8 +8,8 @@
  */
 package org.oscarehr.document.web;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
@@ -60,6 +60,13 @@ public class SplitDocumentAction extends DispatchAction {
 		String docNum = request.getParameter("document");
 		String[] commands = request.getParameterValues("page[]");
 		String queueId = request.getParameter("queueID");
+		
+		/*
+		 * Default Queue is always 1 if not specified
+		 */
+		if(queueId == null || queueId.isEmpty()) {
+			queueId = "1";
+		}
 
 		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 		String providerNo=loggedInInfo.getLoggedInProviderNo();
@@ -67,16 +74,18 @@ public class SplitDocumentAction extends DispatchAction {
 		Document doc = documentDao.getDocument(docNum);
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		if(!docdownload.endsWith(File.separator))
+		{
+			docdownload = docdownload + File.separator;
+		}
 
 		String newFilename = doc.getDocfilename();
 
-		FileInputStream input = null;
 		PDDocument pdf = null;
 		PDDocument newPdf = null;
 		
-		try {
-		
-		input = new FileInputStream(docdownload + doc.getDocfilename());
+		try (FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename())) {
+
 		PDFParser parser = new PDFParser(input);
 		parser.parse();
 		pdf = parser.getPDDocument();
@@ -98,8 +107,6 @@ public class SplitDocumentAction extends DispatchAction {
 			}
 
 		}
-
-		//newPdf.save(docdownload + newFilename);
 
 		if (newPdf.getNumberOfPages() > 0) {
 
@@ -127,9 +134,8 @@ public class SplitDocumentAction extends DispatchAction {
 			providerInboxRoutingDao.addToProviderInbox(providerNo, Integer.parseInt(newDocNo), "DOC");
 
 			QueueDocumentLinkDao queueDocumentLinkDAO = (QueueDocumentLinkDao) ctx.getBean("queueDocumentLinkDAO");
-			Integer qid = queueId == null ? 1 : Integer.parseInt(queueId);
 			Integer did= Integer.parseInt(newDocNo.trim());
-			queueDocumentLinkDAO.addActiveQueueDocumentLink(qid, did);
+			queueDocumentLinkDAO.addActiveQueueDocumentLink(Integer.parseInt(queueId), did);
 
 			ProviderLabRoutingDao providerLabRoutingDao = (ProviderLabRoutingDao) SpringUtils.getBean("providerLabRoutingDao");
 
@@ -161,7 +167,7 @@ public class SplitDocumentAction extends DispatchAction {
 				newCtlDocument.setId(ctlDocumentPK);
 				newCtlDocument.getId().setModuleId(result3.getId().getModuleId());
 				newCtlDocument.setStatus(result3.getStatus());
-				documentDao.persist(newCtlDocument);
+				documentDao.merge(newCtlDocument);
 			}
 			
 			if( result.isEmpty() || result2.isEmpty() ) {
@@ -182,17 +188,7 @@ public class SplitDocumentAction extends DispatchAction {
 			MiscUtils.getLogger().error(e.getMessage(),e);
 			return null;
 		}
-		finally {
-			try {
-				
-				if( pdf != null)  pdf.close();
-				if( input != null ) input.close();
-				
-			}catch(IOException e ) {
-				//do nothing
-			}
-		}
-
+		
 		return mapping.findForward("success");
 	}
 
@@ -200,7 +196,10 @@ public class SplitDocumentAction extends DispatchAction {
 		Document doc = documentDao.getDocument(request.getParameter("document"));
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-
+		if(!docdownload.endsWith(File.separator))
+		{
+			docdownload = docdownload + File.separator;
+		}
 		FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename());
 		PDFParser parser = new PDFParser(input);
 		parser.parse();
@@ -227,7 +226,10 @@ public class SplitDocumentAction extends DispatchAction {
 		Document doc = documentDao.getDocument(request.getParameter("document"));
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-
+		if(!docdownload.endsWith(File.separator))
+		{
+			docdownload = docdownload + File.separator;
+		}
 		FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename());
 		PDFParser parser = new PDFParser(input);
 		parser.parse();
@@ -254,7 +256,10 @@ public class SplitDocumentAction extends DispatchAction {
 		Document doc = documentDao.getDocument(request.getParameter("document"));
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-
+		if(!docdownload.endsWith(File.separator))
+		{
+			docdownload = docdownload + File.separator;
+		}
 		FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename());
 		PDFParser parser = new PDFParser(input);
 		parser.parse();
