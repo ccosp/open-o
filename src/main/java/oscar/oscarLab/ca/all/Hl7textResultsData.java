@@ -25,23 +25,29 @@
 package oscar.oscarLab.ca.all;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.ConsultResponseDocDao;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
+import org.oscarehr.common.dao.Hl7TextMessageDao;
 import org.oscarehr.common.dao.MeasurementDao;
 import org.oscarehr.common.dao.MeasurementMapDao;
 import org.oscarehr.common.dao.MeasurementsDeletedDao;
 import org.oscarehr.common.dao.MeasurementsExtDao;
 import org.oscarehr.common.dao.PatientLabRoutingDao;
+import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.ConsultResponseDoc;
 import org.oscarehr.common.model.Hl7TextInfo;
+import org.oscarehr.common.model.Hl7TextMessage;
 import org.oscarehr.common.model.Measurement;
 import org.oscarehr.common.model.MeasurementMap;
 import org.oscarehr.common.model.MeasurementType;
@@ -51,6 +57,7 @@ import org.oscarehr.common.model.PatientLabRouting;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
+import oscar.OscarProperties;
 import oscar.oscarLab.ca.all.parsers.Factory;
 import oscar.oscarLab.ca.all.parsers.MessageHandler;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -67,6 +74,7 @@ public class Hl7textResultsData {
 	private static ConsultDocsDao consultDocsDao = SpringUtils.getBean(ConsultDocsDao.class);
 	private static ConsultResponseDocDao consultResponseDocDao = SpringUtils.getBean(ConsultResponseDocDao.class);
 	private static Hl7TextInfoDao hl7TxtInfoDao = SpringUtils.getBean(Hl7TextInfoDao.class);
+	private static Hl7TextMessageDao hl7TxtMsgDao = SpringUtils.getBean(Hl7TextMessageDao.class);
 	private static PatientLabRoutingDao patientLabRoutingDao = SpringUtils.getBean(PatientLabRoutingDao.class);
 
 	private Hl7textResultsData() {
@@ -76,41 +84,55 @@ public class Hl7textResultsData {
 	public static void populateMeasurementsTable(String lab_no, String demographic_no) {
 		MessageHandler h = Factory.getHandler(lab_no);
 
-		java.util.Calendar calender = java.util.Calendar.getInstance();
-		String day = Integer.toString(calender.get(java.util.Calendar.DAY_OF_MONTH));
-		String month = Integer.toString(calender.get(java.util.Calendar.MONTH) + 1);
-		String year = Integer.toString(calender.get(java.util.Calendar.YEAR));
-		String hour = Integer.toString(calender.get(java.util.Calendar.HOUR));
-		String min = Integer.toString(calender.get(java.util.Calendar.MINUTE));
-		String second = Integer.toString(calender.get(java.util.Calendar.SECOND));
-		String dateEntered = year+"-"+month+"-"+day+" " + hour + ":" + min + ":" + second;
+		Calendar calender = Calendar.getInstance();
+		String day = Integer.toString(calender.get(Calendar.DAY_OF_MONTH));
+		String month = Integer.toString(calender.get(Calendar.MONTH) + 1);
+		String year = Integer.toString(calender.get(Calendar.YEAR));
+		String hour = Integer.toString(calender.get(Calendar.HOUR));
+		String min = Integer.toString(calender.get(Calendar.MINUTE));
+		String second = Integer.toString(calender.get(Calendar.SECOND));
+		String dateEntered = year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + second + ":";
 
 		//Check for other versions of this lab
 		String[] matchingLabs = getMatchingLabs(lab_no).split(",");
 		//if this lab is the latest version delete the measurements from the previous version and add the new ones
 
+		// Get list of obx names that will always be added to measurements
+		List<String> alwaysAddObxNames = new ArrayList<String>();
+		if (OscarProperties.getInstance().hasProperty("hl7_measurements_names_to_always_add")) {
+			alwaysAddObxNames = Arrays.asList(OscarProperties.getInstance().get("hl7_measurements_names_to_always_add").toString().split(","));
+		}
+		
 		int k = 0;
 		while (k < matchingLabs.length && !matchingLabs[k].equals(lab_no)) {
 			k++;
 		}
 
 		if (k != 0) {
+			List<AbstractModel<?>> measurementsDeletedList = new ArrayList<>();
+			List<AbstractModel<?>> measurementsToRemove = new ArrayList<>();
 			MeasurementsDeleted measurementsDeleted;
 			for (Measurement m : measurementDao.findByValue("lab_no", matchingLabs[k - 1])) {
 				measurementsDeleted = new MeasurementsDeleted(m);
-				measurementsDeletedDao.persist(measurementsDeleted);
-				measurementDao.remove(m.getId());
+				measurementsDeletedList.add(measurementsDeleted);
+				measurementsToRemove.add(m);
 			}
+			measurementsDeletedDao.batchPersist(measurementsDeletedList);
+			measurementDao.batchRemove(measurementsToRemove);
 		}
 		// loop through the measurements for the lab and add them
 
+		List<AbstractModel<?>> measurementsExts = new ArrayList<>();
 		for (int i = 0; i < h.getOBRCount(); i++) {
 			for (int j = 0; j < h.getOBXCount(i); j++) {
 
 				String result = h.getOBXResult(i, j);
 
+				
 				// only add if there is a result and it is supposed to be viewed
-				if (result == null || result.equals("") || result.equals("DNR") || h.getOBXName(i, j).equals("") || h.getOBXResultStatus(i, j).equals("DNS")) continue;
+				if (result.equals("") || result.equals("DNR") || h.getOBXName(i, j).equals("") || h.getOBXResultStatus(i, j).equals("DNS")) {
+					if (!alwaysAddObxNames.contains(h.getOBXName(i, j))) continue;
+				}
 				logger.debug("obx(" + j + ") should be added");
 				String identifier = h.getOBXIdentifier(i, j);
 				String name = h.getOBXName(i, j);
@@ -136,147 +158,204 @@ public class Hl7textResultsData {
 
 				String measType = "";
 				String measInst = "";
+				identifier = StringUtils.trimToEmpty(identifier).replaceAll("null", "");
 				
-				List<Object[]> measurements = measurementMapDao.findMeasurements("FLOWSHEET", identifier);
-				if (measurements.isEmpty()) {
-					logger.warn("CODE:" + identifier + " needs to be mapped");
-				} else {
-					for (Object[] o : measurements) {
-						MeasurementMap mm = (MeasurementMap) o[1];
-						MeasurementType type = (MeasurementType) o[2];
+				if (!identifier.isEmpty()) {
+					List<Object[]> measurements = measurementMapDao.findMeasurements("FLOWSHEET", identifier, name);
+					if (measurements.isEmpty()) {
+						logger.warn("CODE:" + identifier + " needs to be mapped");
+					} else {
+						for (Object[] o : measurements) {
+							MeasurementMap mm = (MeasurementMap) o[1];
+							MeasurementType type = (MeasurementType) o[2];
 
-						measType = mm.getIdentCode();
-						measInst = type.getMeasuringInstruction();
+							measType = mm.getIdentCode();
+							measInst = type.getMeasuringInstruction();
+						}
 					}
 				}
 				
 				
 				Measurement m = new Measurement();
-				m.setType(measType);
-				m.setDemographicId(Integer.parseInt(demographic_no));
-				m.setProviderNo("0");
-				m.setDataField(result);
-				m.setMeasuringInstruction(measInst);
-				logger.info("DATETIME FOR MEASUREMENT " + datetime);
-				if(datetime != null && datetime.length()>0) {
-					m.setDateObserved(UtilDateUtilities.StringToDate(datetime, "yyyy-MM-dd hh:mm:ss"));
-				} 
-				
-				if( m.getDateObserved() == null && datetime != null && datetime.length() > 0 ) {
-					m.setDateObserved(UtilDateUtilities.StringToDate(datetime, "yyyy-MM-dd"));
+				boolean negativeOrPositive = result.trim().equalsIgnoreCase("negative") || result.trim().equalsIgnoreCase("positive");
+				boolean plusOrMinus = result.matches("^\\-\\d*\\.?\\d*|\\+?\\d*\\.?\\d*$") || result.matches("^\\d*\\.?\\d*\\-|\\d*\\.?\\d*\\+$");
+				if ((negativeOrPositive || plusOrMinus || NumberUtils.isNumber(result)) && !result.trim().equals(".")) {
+                    m.setType(measType);
+                    m.setDemographicId(Integer.parseInt(demographic_no));
+                    m.setProviderNo("0");
+                    m.setDataField(result);
+                    m.setMeasuringInstruction(measInst);
+                    logger.info("DATETIME FOR MEASUREMENT " + datetime);
+                    if (datetime != null && datetime.length() > 0) {
+                        m.setDateObserved(UtilDateUtilities.StringToDate(datetime, "yyyy-MM-dd hh:mm:ss"));
+                    }
+
+                    if (m.getDateObserved() == null && datetime != null && datetime.length() > 0) {
+                        m.setDateObserved(UtilDateUtilities.StringToDate(datetime, "yyyy-MM-dd"));
+                    }
+
+                    if (m.getDateObserved() == null) {
+                        m.setDateObserved(UtilDateUtilities.StringToDate(dateEntered, "yyyy-MM-dd hh:mm:ss"));
+                    }
+                    m.setAppointmentNo(0);
+                    m.setComments(comments);
+                    measurementDao.persist(m);
+
+				    int mId = m.getId();
+
+                    MeasurementsExt me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("lab_no");
+                    me.setVal(lab_no);
+                    measurementsExts.add(me);
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("abnormal");
+                    me.setVal(abnormal);
+                    measurementsExts.add(me);
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("identifier");
+                    me.setVal(identifier);
+                    measurementsExts.add(me);
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("name");
+                    me.setVal(name);
+                    measurementsExts.add(me);
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("labname");
+                    me.setVal(labname);
+                    measurementsExts.add(me);
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("accession");
+                    me.setVal(accession);
+                    measurementsExts.add(me);
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("request_datetime");
+                    me.setVal(req_datetime);
+                    measurementsExts.add(me);
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("datetime");
+                    me.setVal(datetime);
+                    measurementsExts.add(me);
+
+                    if (olis_status != null && olis_status.length() > 0) {
+                        me = new MeasurementsExt();
+                        me.setMeasurementId(mId);
+                        me.setKeyVal("olis_status");
+                        me.setVal(olis_status);
+                        measurementsExts.add(me);
+                    }
+
+                    if (unit != null && unit.length() > 0) {
+                        me = new MeasurementsExt();
+                        me.setMeasurementId(mId);
+                        me.setKeyVal("unit");
+                        me.setVal(unit);
+                        measurementsExts.add(me);
+                    }
+
+                    if (refRange[0].length() > 0) {
+                        me = new MeasurementsExt();
+                        me.setMeasurementId(mId);
+                        me.setKeyVal("range");
+                        me.setVal(refRange[0]);
+                        measurementsExts.add(me);
+                    } else {
+                        if (refRange[1].length() > 0) {
+                            me = new MeasurementsExt();
+                            me.setMeasurementId(mId);
+                            me.setKeyVal("minimum");
+                            me.setVal(refRange[1]);
+                            measurementsExts.add(me);
+                        }
+                        if (refRange[2].length() > 0) {
+                            me = new MeasurementsExt();
+                            me.setMeasurementId(mId);
+                            me.setKeyVal("maximum");
+                            me.setVal(refRange[2]);
+                            measurementsExts.add(me);
+                        }
+                    }
+
+                    me = new MeasurementsExt();
+                    me.setMeasurementId(mId);
+                    me.setKeyVal("other_id");
+                    me.setVal(i + "-" + j);
+                    measurementsExts.add(me);
 				}
-				
-				if( m.getDateObserved() == null ){
-					m.setDateObserved(UtilDateUtilities.StringToDate(dateEntered, "yyyy-MM-dd hh:mm:ss"));
-				}
-				m.setAppointmentNo(0);
+			}
+		}
+		measurementsExtDao.batchPersist(measurementsExts, 50);
+	}
 
-				measurementDao.persist(m);
+	public static String getMatchingLabs_CLS(String lab_no) {
+		String ret = "";
+		Hl7TextInfo self = null;
+		List<Integer> idList = new ArrayList<Integer>();
+		
+		for (Object[] o : hl7TxtInfoDao.findByLabIdViaMagic(ConversionUtils.fromIntString(lab_no))) {
+			Hl7TextInfo a = (Hl7TextInfo) o[0];
+			//Hl7TextInfo b = (Hl7TextInfo) o[1];
 
-				int mId = m.getId();
-
-				MeasurementsExt me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("lab_no");
-				me.setVal(lab_no);
-				measurementsExtDao.persist(me);
-
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("abnormal");
-				me.setVal(abnormal);
-				measurementsExtDao.persist(me);
-
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("identifier");
-				me.setVal(identifier);
-				measurementsExtDao.persist(me);
-
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("name");
-				me.setVal(name);
-				measurementsExtDao.persist(me);
-
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("labname");
-				me.setVal(labname);
-				measurementsExtDao.persist(me);
-
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("accession");
-				me.setVal(accession);
-				measurementsExtDao.persist(me);
-
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("request_datetime");
-				me.setVal(req_datetime);
-				measurementsExtDao.persist(me);
-
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("datetime");
-				me.setVal(datetime);
-				measurementsExtDao.persist(me);
-
-				if (olis_status != null && olis_status.length() > 0) {
-					me = new MeasurementsExt();
-					me.setMeasurementId(mId);
-					me.setKeyVal("olis_status");
-					me.setVal(olis_status);
-					measurementsExtDao.persist(me);
-				}
-
-				if (unit != null && unit.length() > 0) {
-					me = new MeasurementsExt();
-					me.setMeasurementId(mId);
-					me.setKeyVal("unit");
-					me.setVal(unit);
-					measurementsExtDao.persist(me);
-				}
-
-				if (refRange[0].length() > 0) {
-					me = new MeasurementsExt();
-					me.setMeasurementId(mId);
-					me.setKeyVal("range");
-					me.setVal(refRange[0]);
-					measurementsExtDao.persist(me);
-				} else {
-					if (refRange[1].length() > 0) {
-						me = new MeasurementsExt();
-						me.setMeasurementId(mId);
-						me.setKeyVal("minimum");
-						me.setVal(refRange[1]);
-						measurementsExtDao.persist(me);
-					}
-					if (refRange[2].length() > 0) {
-						me = new MeasurementsExt();
-						me.setMeasurementId(mId);
-						me.setKeyVal("maximum");
-						me.setVal(refRange[2]);
-						measurementsExtDao.persist(me);
-					}
-				}
-				
-				me = new MeasurementsExt();
-				me.setMeasurementId(mId);
-				me.setKeyVal("other_id");
-				me.setVal(i + "-" + j);
-				measurementsExtDao.persist(me);
+			int labNo = a.getLabNumber();
+			if(lab_no.equals(String.valueOf(labNo))) {
+				self = a;
+			}
+			ret = ret + "," + labNo;
+			idList.add(labNo);
+		}
+		
+		//nothing but itself was found, but we have a special case for glucose tolerance tests
+		//they come in with different accessions but same filler order no.
+		if(self != null && ret.length()>0 && ret.substring(1).indexOf(",") == -1) {
+			ret = "";
+			for(Hl7TextInfo info : hl7TxtInfoDao.findByFillerOrderNumber(self.getFillerOrderNum())) {
+				ret = ret + "," + info.getLabNumber();
+				idList.add(info.getLabNumber());
 			}
 		}
 		
-
+		if(idList.isEmpty()) {
+			idList.add(Integer.parseInt(lab_no));
+		}
+		
+		Collections.sort(idList);
+		
+		StringBuilder sb = new StringBuilder();
+		for(Integer id:idList) {
+			if(sb.length() > 0) {
+				sb.append(",");
+			}
+			sb.append(String.valueOf(id));
+		}
+		
+		return sb.toString();
+	//	if (ret.equals("")) return (lab_no);
+	//	else return (ret.substring(1));
 	}
-
+	
 	public static String getMatchingLabs(String lab_no) {
 		String ret = "";
 		int monthsBetween = 0;
 		
+		Hl7TextMessage hl7Msg = hl7TxtMsgDao.find(Integer.parseInt(lab_no));
+		if(hl7Msg != null && "CLS".equals(hl7Msg.getType())) {
+			return getMatchingLabs_CLS(lab_no);
+		}
+
 		for (Object[] o : hl7TxtInfoDao.findByLabIdViaMagic(ConversionUtils.fromIntString(lab_no))) {
 			Hl7TextInfo a = (Hl7TextInfo) o[0];
 			Hl7TextInfo b = (Hl7TextInfo) o[1];
@@ -487,15 +566,13 @@ public class Hl7textResultsData {
 			for(Hl7TextInfo info : hl7TxtInfoDao.findByLabId(labNo)) {
 				routings.add(new Object[]{info});
 			}
+		} else if (demographicNo == null) {
+			// note to self: lab reports not found in the providerLabRouting table will not show up - 
+			// need to ensure every lab is entered in providerLabRouting, with '0'
+			// for the provider number if unable to find correct provider				
+			routings = hl7TxtInfoDao.findLabsViaMagic(status, providerNo, patientFirstName, patientLastName, patientHealthNumber);
 		} else {
-			if (demographicNo == null) {
-				// note to self: lab reports not found in the providerLabRouting table will not show up - 
-				// need to ensure every lab is entered in providerLabRouting, with '0'
-				// for the provider number if unable to find correct provider				
-				routings = hl7TxtInfoDao.findLabsViaMagic(status, providerNo, patientFirstName, patientLastName, patientHealthNumber);
-			} else {
-				routings = hl7TxtInfoDao.findByDemographicId(ConversionUtils.fromIntString(demographicNo));
-			}
+			routings = hl7TxtInfoDao.findByDemographicId(ConversionUtils.fromIntString(demographicNo));
 		}
 
 		for (Object[] o : routings) {
@@ -506,18 +583,23 @@ public class Hl7textResultsData {
 			lbData.labType = LabResultData.HL7TEXT;
 			lbData.segmentID = "" + hl7.getLabNumber();
 
-			//check if any demographic is linked to this lab
-			if (lbData.isMatchedToPatient()) {
-				//get matched demographic no
-				List<PatientLabRouting> lst = patientLabRoutingDao.findByLabNoAndLabType(Integer.parseInt(lbData.segmentID), lbData.labType);
+			//if the demographic number is null find a matching demo
+			if (demographicNo == null) {
+				//check if any demographic is linked to this lab
+				if (lbData.isMatchedToPatient()) {
+					//get matched demographic no
+					List<PatientLabRouting> lst = patientLabRoutingDao.findByLabNoAndLabType(Integer.parseInt(lbData.segmentID), lbData.labType);
 
-				if (!lst.isEmpty()) {
-					lbData.setLabPatientId("" + lst.get(0).getDemographicNo());
+					if (!lst.isEmpty()) {
+						lbData.setLabPatientId("" + lst.get(0).getDemographicNo());
+					} else {
+						lbData.setLabPatientId("-1");
+					}
 				} else {
 					lbData.setLabPatientId("-1");
 				}
 			} else {
-				lbData.setLabPatientId("-1");
+				lbData.setLabPatientId(demographicNo);
 			}
 
 			if(o.length == 1) {
@@ -589,7 +671,12 @@ public class Hl7textResultsData {
 		return labResults;
 	}
 
-	public static ArrayList<LabResultData> populateHl7ResultsData(String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal) {
+	public static ArrayList<LabResultData> populateHl7ResultsData(String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber,
+			String status, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal) {
+		return populateHl7ResultsData(providerNo, demographicNo, patientFirstName, patientLastName, patientHealthNumber, status, isPaged, page, pageSize, mixLabsAndDocs, isAbnormal, null, null);
+	}
+	
+	public static ArrayList<LabResultData> populateHl7ResultsData(String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal, Date startDate, Date endDate) {
 
 		if (providerNo == null) {
 			providerNo = "";
@@ -614,7 +701,7 @@ public class Hl7textResultsData {
 		// note to self: lab reports not found in the providerLabRouting table will not show up - need to ensure every lab is entered in providerLabRouting, with '0'
 		// for the provider number if unable to find correct provider
 
-		for (Object[] i : hl7TxtInfoDao.findLabAndDocsViaMagic(providerNo, demographicNo, patientFirstName, patientLastName, patientHealthNumber, status, isPaged, page, pageSize, mixLabsAndDocs, isAbnormal, searchProvider, patientSearch)) {
+		for (Object[] i : hl7TxtInfoDao.findLabAndDocsViaMagic(providerNo, demographicNo, patientFirstName, patientLastName, patientHealthNumber, status, isPaged, page, pageSize, mixLabsAndDocs, isAbnormal, searchProvider, patientSearch, startDate, endDate)) {
 
 			String label = String.valueOf(i[0]);
 			String lab_no = String.valueOf(i[1]);

@@ -25,8 +25,8 @@ public class HRMDocumentToDemographic extends AbstractModel<Integer> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private String demographicNo;
-	private String hrmDocumentId;
+	private Integer demographicNo;
+	private Integer hrmDocumentId;
 	private Date timeAssigned;
 	
 	@Override
@@ -34,11 +34,11 @@ public class HRMDocumentToDemographic extends AbstractModel<Integer> {
 	    return id;
     }
 
-	public String getDemographicNo() {
+	public Integer getDemographicNo() {
     	return demographicNo;
     }
 
-	public void setDemographicNo(String demographicNo) {
+	public void setDemographicNo(Integer demographicNo) {
     	this.demographicNo = demographicNo;
     }
 
@@ -50,11 +50,11 @@ public class HRMDocumentToDemographic extends AbstractModel<Integer> {
     	this.timeAssigned = timeAssigned;
     }
 
-	public String getHrmDocumentId() {
+	public Integer getHrmDocumentId() {
     	return hrmDocumentId;
     }
 
-	public void setHrmDocumentId(String hrmDocumentId) {
+	public void setHrmDocumentId(Integer hrmDocumentId) {
     	this.hrmDocumentId = hrmDocumentId;
     }
 

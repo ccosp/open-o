@@ -36,6 +36,7 @@
 <%@page import="org.oscarehr.util.MiscUtils"%>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.managers.TicklerManager" %>
+<%@ page import="java.util.Date" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
@@ -83,15 +84,17 @@ Tickler tickler = new Tickler();
     tickler.setTaskAssignedTo(docassigned);
     tickler.setCreator(doccreator);
     tickler.setMessage(docfilename);
-    tickler.setServiceDate(UtilDateUtilities.StringToDate(docdate));
+    Date serviceDate = UtilDateUtilities.StringToDate(docdate);
+    if (serviceDate == null) {
+        serviceDate = new Date();
+    }
+    tickler.setServiceDate(serviceDate);
 
 
    ticklerManager.addTickler(loggedInInfo,tickler);
 
-
+   int ticklerNo = tickler.getId();
    if (docType != null && docId != null && !docType.trim().equals("") && !docId.trim().equals("") && !docId.equalsIgnoreCase("null") ){
-
-      int ticklerNo = tickler.getId();
       if (ticklerNo > 0){
           try{
              TicklerLink tLink = new TicklerLink();

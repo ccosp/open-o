@@ -42,6 +42,16 @@ public class HRMSubClassDao extends AbstractDao<HRMSubClass> {
 		return subclasses;
 	}
 
+	public List<HRMSubClass> findBySendingFacilityId(String sendingFacilityId) {
+		String sql = "select x from " + this.modelClass.getName() + " x  where x.sendingFacilityId = ?1";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter(1, sendingFacilityId);
+
+		@SuppressWarnings("unchecked")
+		List<HRMSubClass> subclasses = query.getResultList();
+		return subclasses;
+	}
+
 	public boolean subClassMappingExists(String className, String subClassName) {
 		return subClassMappingExists(className, subClassName, "*");
 	}
@@ -52,6 +62,7 @@ public class HRMSubClassDao extends AbstractDao<HRMSubClass> {
 
 	public boolean subClassMappingExists(String className, String subClassName, String subClassMnemonic, String sendingFacilityId) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.className=? and x.subClassName=?  and x.subClassMnemonic=? and x.sendingFacilityId=?";
+		sendingFacilityId = (sendingFacilityId==null)?"*":sendingFacilityId;
 		Query query = entityManager.createQuery(sql);
 		query.setParameter(1, className);
 		query.setParameter(2, subClassName);
@@ -67,10 +78,10 @@ public class HRMSubClassDao extends AbstractDao<HRMSubClass> {
 
 	private HRMSubClass findSubClassMapping(String className, String subClassName, String subClassMnemonic, String sendingFacilityId) {
 		String sql = null;
-
 		if (subClassMnemonic != null){
 			sql = "select x from " + this.modelClass.getName() + " x where x.className=? and x.subClassName=? and x.sendingFacilityId=? and x.subClassMnemonic=?";
-		}else{
+		}
+		else{
 			sql = "select x from " + this.modelClass.getName() + " x where x.className=? and x.subClassName=? and x.sendingFacilityId=?";
 		}
 		Query query = entityManager.createQuery(sql);
@@ -100,4 +111,6 @@ public class HRMSubClassDao extends AbstractDao<HRMSubClass> {
 		}
 		return mapping;
 	}
+
+
 }

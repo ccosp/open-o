@@ -129,8 +129,8 @@ public class HRMUtil {
 
 		 for (HRMDocumentToDemographic hrmDocumentToDemographic : hrmDocumentToDemographics)
 		 {
-			String id = hrmDocumentToDemographic.getHrmDocumentId();
-			List<HRMDocument> hrmDocuments = hrmDocumentDao.findById(Integer.parseInt(id));
+
+			List<HRMDocument> hrmDocuments = hrmDocumentDao.findById(hrmDocumentToDemographic.getHrmDocumentId());
 
 			for (HRMDocument hrmDocument : hrmDocuments)
 			{

@@ -74,7 +74,7 @@ public class EctDisplayHRMAction extends EctDisplayAction {
 
 			List<HRMDocument> allHrmDocsForDemo = new LinkedList<HRMDocument>();
 			for (HRMDocumentToDemographic hrmDemoDocResult : hrmDocListDemographic) {
-				List<HRMDocument> hrmDoc = hrmDocumentDao.findById(Integer.parseInt(hrmDemoDocResult.getHrmDocumentId()));
+				List<HRMDocument> hrmDoc = hrmDocumentDao.findById(hrmDemoDocResult.getHrmDocumentId());
 				allHrmDocsForDemo.addAll(hrmDoc);
 			}
 

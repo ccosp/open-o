@@ -33,6 +33,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,6 +48,7 @@ import java.util.ResourceBundle;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
 import org.oscarehr.PMmodule.dao.ProviderDao;
@@ -1213,6 +1218,35 @@ public final class EDocUtil {
     				}
     			}
     		}
+        }
+        
+        /**
+         * Get the number of pages in a PDF file.  
+         * This is handy when the number of pages in a PDF document is unknown.
+         * 
+         * Returns 0 on error.
+         * 
+         * PDF only! Other file types will return 0
+         * 
+         * @param fileName
+         * @return number of pages
+         * @throws IOException 
+         * @throws URISyntaxException 
+         */
+        public static int getPDFPageCount(String fileName) {
+        	int pagecount = 0;
+
+        	Path path = Paths.get(resovePath(fileName));      	
+        	if(Files.exists(path, new LinkOption[]{ LinkOption.NOFOLLOW_LINKS}))
+        	{
+        		try {
+					PDDocument pdf = PDDocument.load(path.toFile());
+					pagecount = pdf.getNumberOfPages();
+				} catch (IOException e) {
+					logger.error("Could not locate PDF file: " + fileName, e);
+				}
+        	}       	
+        	return pagecount;
         }
 
 	}
