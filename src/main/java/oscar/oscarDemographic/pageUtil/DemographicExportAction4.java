@@ -1655,8 +1655,8 @@ public class DemographicExportAction4 extends Action {
 				//HRM reports
 				List<HRMDocumentToDemographic> hrmDocToDemographics = hrmDocToDemographicDao.findByDemographicNo(demoNo);
 				for (HRMDocumentToDemographic hrmDocToDemographic : hrmDocToDemographics) {
-					String hrmDocumentId = hrmDocToDemographic.getHrmDocumentId();
-					List<HRMDocument> hrmDocs = hrmDocDao.findById(Integer.valueOf(hrmDocumentId));
+
+					List<HRMDocument> hrmDocs = hrmDocDao.findById(hrmDocToDemographic.getHrmDocumentId());
 					for (HRMDocument hrmDoc : hrmDocs) {
 						String reportFile = hrmDoc.getReportFile();
 						if (StringUtils.empty(reportFile)) continue;
@@ -1782,7 +1782,7 @@ public class DemographicExportAction4 extends Action {
 							}
 
 							//Notes
-							List<HRMDocumentComment> comments = hrmDocCommentDao.getCommentsForDocument(Integer.parseInt(hrmDocumentId));
+							List<HRMDocumentComment> comments = hrmDocCommentDao.getCommentsForDocument(hrmDocToDemographic.getHrmDocumentId());
 							String notes = null;
 							for (HRMDocumentComment comment : comments) {
 								notes = Util.addLine(notes, comment.getComment());

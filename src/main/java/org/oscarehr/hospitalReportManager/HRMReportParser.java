@@ -10,6 +10,12 @@
 package org.oscarehr.hospitalReportManager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +36,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.cxf.helpers.FileUtils;
 import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
+import org.oscarehr.common.dao.DemographicCustDao;
 import org.oscarehr.common.dao.DemographicDao;
+import org.oscarehr.common.dao.IncomingLabRulesDao;
 import org.oscarehr.common.model.Demographic;
+import org.oscarehr.common.model.DemographicCust;
+import org.oscarehr.common.model.IncomingLabRules;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentDao;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentSubClassDao;
@@ -41,12 +51,12 @@ import org.oscarehr.hospitalReportManager.model.HRMDocument;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentSubClass;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToProvider;
-import org.oscarehr.hospitalReportManager.xsd.OmdCds;
+import omd.hrm.OmdCds;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
-
 import oscar.OscarProperties;
 
 
@@ -60,7 +70,7 @@ public class HRMReportParser {
 	public static HRMReport parseReport(LoggedInInfo loggedInInfo, String hrmReportFileLocation) {
 		OmdCds root = null;
 		
-		logger.debug("Parsing the Report in the location:"+hrmReportFileLocation);
+		logger.info("Parsing the Report in the location:"+hrmReportFileLocation);
 		
 		String fileData = null;
 		if (hrmReportFileLocation != null) {
@@ -91,14 +101,15 @@ public class HRMReportParser {
 				SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
 				// Load a WXS schema, represented by a Schema instance.
-				Source schemaFile = new StreamSource(new File(SFTPConnector.OMD_directory + "report_manager_cds.xsd"));
-				Schema schema = factory.newSchema(schemaFile); 
+				File schemaFile = new ClassPathResource("/xsd/hrm/1.1.2/ontariomd_hrm.xsd").getFile();
+				Source schemaSource = new StreamSource(schemaFile);
+				Schema schema = factory.newSchema(schemaSource); 
 
-				JAXBContext jc = JAXBContext.newInstance("org.oscarehr.hospitalReportManager.xsd");
+				JAXBContext jc = JAXBContext.newInstance("omd.hrm");
 				Unmarshaller u = jc.createUnmarshaller();
 				u.setSchema(schema);
 				
-				root = (OmdCds) u.unmarshal(tmpXMLholder);
+				root = (OmdCds) u.unmarshal(new FileInputStream(tmpXMLholder));
 
 				tmpXMLholder = null;
 
@@ -106,19 +117,23 @@ public class HRMReportParser {
 				logger.error("SAX ERROR PARSING XML " + e);
 			} catch (ParserConfigurationException e) {
 				logger.error("PARSER ERROR PARSING XML " + e);
+			} catch (FileNotFoundException e) {
+				logger.error("FILE ERROR PARSING XML " + e);
 			} catch (JAXBException e) {
 				// TODO Auto-generated catch block
-				logger.error("error",e);
-				if(e.getLinkedException() != null) {
+				logger.error("error", e);
+				if (e.getLinkedException() != null) {
 					SFTPConnector.notifyHrmError(loggedInInfo, e.getLinkedException().getMessage());
 				} else {
 					SFTPConnector.notifyHrmError(loggedInInfo, e.getMessage());
 				}
-				
+			} catch (IOException e) {
+				logger.error("ERROR READING report_manager_cds.xsd RESOURCE" + e);
 			}
 
-                        if (root!=null && hrmReportFileLocation!=null && fileData!=null)
-                            return new HRMReport(root, hrmReportFileLocation, fileData);
+			if (root!=null && hrmReportFileLocation!=null && fileData!=null) {
+				return new HRMReport(root, hrmReportFileLocation, fileData);
+			}
 		}
 
 		return null;
@@ -131,7 +146,7 @@ public class HRMReportParser {
 			return;
 		}
 
-		logger.debug("Adding Report to Inbox, for file:"+report.getFileLocation());
+		logger.info("Adding Report to Inbox, for file:"+report.getFileLocation());
 		
 		HRMDocument document = new HRMDocument();
 
@@ -190,7 +205,7 @@ public class HRMReportParser {
 					document.setUnmatchedProviders((document.getUnmatchedProviders() != null ? document.getUnmatchedProviders() : "") + "|" + ((report.getDeliverToUserIdLastName()!=null)?report.getDeliverToUserIdLastName() + ", " + report.getDeliverToUserIdFirstName():report.getDeliverToUserId()) + " (" + report.getDeliverToUserId() + ")");
 					hrmDocumentDao.merge(document);
 					// Route this report to the "system" user so that a search for "all" in the inbox will come up with them
-					HRMReportParser.routeReportToProvider(document.getId().toString(), "-1");
+					HRMReportParser.routeReportToProvider(document.getId(), "-1");
 				}
 
 				HRMReportParser.routeReportToSubClass(report, document.getId());
@@ -198,7 +213,7 @@ public class HRMReportParser {
 		} else if (exactMatchList != null && exactMatchList.size() > 0) {
 			// We've seen this one before.  Increment the counter on how many times we've seen it before
 			
-			logger.debug("We've seen this report before. Increment the counter on how many times we've seen it before, for file:"+report.getFileLocation());
+			logger.info("We've seen this report before. Increment the counter on how many times we've seen it before, for file:"+report.getFileLocation());
 			
 			HRMDocument existingDocument = hrmDocumentDao.findById(exactMatchList.get(0)).get(0);
 			existingDocument.setNumDuplicatesReceived((existingDocument.getNumDuplicatesReceived() != null ? existingDocument.getNumDuplicatesReceived() : 0) + 1);
@@ -215,25 +230,29 @@ public class HRMReportParser {
 		}
 		
 
-		logger.debug("Routing Report To Demographic, for file:"+report.getFileLocation());
+		logger.info("Routing Report To Demographic, for file:"+report.getFileLocation());
 		
 		// Search the demographics on the system for a likely match and route it to them automatically
 		DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
 
-		List<Demographic> matchingDemographicListByName = demographicDao.searchDemographic(report.getLegalName());
+		List<Demographic> matchingDemographicListByHin = demographicDao.searchDemographicByHIN(report.getHCN());
 
-		if (matchingDemographicListByName.size() == 1) {
-			// Found a match by name
-			HRMReportParser.routeReportToDemographic(mergedDocument.getId().toString(), matchingDemographicListByName.get(0).getDemographicNo().toString());
-		} else {
-			for (Demographic d : matchingDemographicListByName) {
-
-				if (report.getHCN().equalsIgnoreCase(d.getHin())) { // Check health card no.
-					HRMReportParser.routeReportToDemographic(mergedDocument.getId().toString(), d.getDemographicNo().toString());
-					return;
-				} else if (report.getGender().equalsIgnoreCase(d.getSex()) && report.getDateOfBirthAsString().equalsIgnoreCase(d.getBirthDayAsString())) { // Check dob & sex
-					HRMReportParser.routeReportToDemographic(mergedDocument.getId().toString(), d.getDemographicNo().toString());
-					return;
+		if (matchingDemographicListByHin.size() > 0) {
+			if (OscarProperties.getInstance().isPropertyActive("omd_hrm_demo_matching_criteria")) {
+				for (Demographic d : matchingDemographicListByHin) {
+					if (report.getGender().equalsIgnoreCase(d.getSex()) 
+							&& report.getDateOfBirthAsString().equalsIgnoreCase(d.getBirthDayAsString())
+							&& report.getLegalLastName().equalsIgnoreCase(d.getLastName())) {
+						HRMReportParser.routeReportToDemographic(mergedDocument.getId(), d.getDemographicNo());
+						break;
+					}
+				}
+			} else {
+				// if there is a matching record assign to variable
+				Demographic demographic = matchingDemographicListByHin.get(0); // searchDemographicByHIN typically returns only one result where there is a match
+				// if not empty and DOB matches as well, route report to Demographic
+				if (report.getDateOfBirthAsString().equalsIgnoreCase(demographic.getBirthDayAsString())) {
+					HRMReportParser.routeReportToDemographic(mergedDocument.getId(), demographic.getDemographicNo());
 				}
 			}
 		}
@@ -253,7 +272,7 @@ public class HRMReportParser {
 			logger.info("doSimilarReportCheck cannot continue, report parameter is null");
 			return;
 		}
-		logger.debug("Identifying if this is a report that we received before, but was sent to the wrong demographic, for file:"+report.getFileLocation());
+		logger.info("Identifying if this is a report that we received before, but was sent to the wrong demographic, for file:"+report.getFileLocation());
 		
 		HRMDocumentDao hrmDocumentDao = (HRMDocumentDao) SpringUtils.getBean("HRMDocumentDao");
 
@@ -330,7 +349,7 @@ public class HRMReportParser {
 		for (Demographic d : matchingDemographicListByName) {
 			List<HRMDocumentToDemographic> matchingHrmDocumentList = hrmDocumentToDemographicDao.findByDemographicNo(d.getDemographicNo().toString());
 			for (HRMDocumentToDemographic matchingHrmDocument : matchingHrmDocumentList) {
-				HRMDocument hrmDocument = hrmDocumentDao.find(Integer.parseInt(matchingHrmDocument.getHrmDocumentId()));
+				HRMDocument hrmDocument = hrmDocumentDao.find(matchingHrmDocument.getHrmDocumentId());
 
 				HRMReport hrmReport = HRMReportParser.parseReport(loggedInInfo, hrmDocument.getReportFile());
 				hrmReport.setHrmDocumentId(hrmDocument.getId());
@@ -350,7 +369,7 @@ public class HRMReportParser {
 			return;
 		}
 		
-		logger.debug("Routing Report To SubClass, for file:"+report.getFileLocation());
+		logger.info("Routing Report To SubClass, for file:"+report.getFileLocation());
 		
 		HRMDocumentSubClassDao hrmDocumentSubClassDao = (HRMDocumentSubClassDao) SpringUtils.getBean("HRMDocumentSubClassDao");
 
@@ -366,7 +385,7 @@ public class HRMReportParser {
 				newSubClass.setSubClassMnemonic((String) subClass.get(1));
 				newSubClass.setSubClassDescription((String) subClass.get(2));
 				newSubClass.setSubClassDateTime((Date) subClass.get(3));
-
+				newSubClass.setSendingFacilityId(report.getSendingFacilityId());
 				if (firstSubClass) {
 					newSubClass.setActive(true);
 					firstSubClass = false;
@@ -380,6 +399,18 @@ public class HRMReportParser {
 		}
 	}
 
+	public static String getAppropriateDateStringFromReport(HRMReport report) {
+		if (report.getFirstReportClass().equalsIgnoreCase("Diagnostic Imaging Report") || report.getFirstReportClass().equalsIgnoreCase("Cardio Respiratory Report")) {
+			return (String) report.getAccompanyingSubclassList().get(0).get(4);
+		}
+
+		Calendar calendar = report.getFirstReportEventTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+		sdf.setTimeZone(calendar.getTimeZone());
+		
+		return sdf.format(calendar.getTime());
+	}
+	
 	public static Date getAppropriateDateFromReport(HRMReport report) {
 		if (report.getFirstReportClass().equalsIgnoreCase("Diagnostic Imaging Report") || report.getFirstReportClass().equalsIgnoreCase("Cardio Respiratory Report")) {
 			return ((Date) (report.getAccompanyingSubclassList().get(0).get(3)));
@@ -395,43 +426,95 @@ public class HRMReportParser {
 			return false;
 		}
 		
-		logger.debug("Routing Report to Provider, for file:"+report.getFileLocation());
+		logger.info("Routing Report to Provider, for file:"+report.getFileLocation());
 		
 		HRMDocumentToProviderDao hrmDocumentToProviderDao = (HRMDocumentToProviderDao) SpringUtils.getBean("HRMDocumentToProviderDao");
 		ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao"); 
+		IncomingLabRulesDao incomingLabRulesDao = (IncomingLabRulesDao) SpringUtils.getBean("IncomingLabRulesDao");
 
-		String providerNo = report.getDeliverToUserId().substring(1); // We have to remove the first "D"
-		//		String providerLastName = report.getDeliverToUserIdLastName();
-		//		String providerFirstName = report.getDeliverToUserIdFirstName();
+		String practitionerNo = report.getDeliverToUserId();
+		
+		Provider sendToProvider = null;
+		if (OscarProperties.getInstance().isPropertyActive("OMD_match_using_OLIS_identifier_type")) {
+			if (practitionerNo.startsWith("D")) {
+				sendToProvider = providerDao.getProviderByPractitionerNoAndOlisType(practitionerNo.substring(1), "MDL");
+			} else if (practitionerNo.startsWith("N")) {
+				sendToProvider = providerDao.getProviderByPractitionerNoAndOlisType(practitionerNo.substring(1), "NPL");
+			}
+		} else {
+			sendToProvider = providerDao.getProviderByPractitionerNo(practitionerNo.substring(1));
+		}
 
-		Provider sendToProvider = providerDao.getProviderByPractitionerNo(providerNo);
 		List<Provider> sendToProviderList = new LinkedList<Provider>();
-		//		if (sendToProvider == null) {
-		//			// Check to see if there's a match with first and last name
-		//			List<Provider> potentialProviderMatchList = providerDao.getProviderLikeFirstLastName(providerFirstName, providerLastName);
-		//			if (potentialProviderMatchList != null && potentialProviderMatchList.size() >= 1) {
-		//				for (Provider p : potentialProviderMatchList)
-		//					sendToProviderList.add(p);
-		//			}
-		//		} else {
 		if (sendToProvider != null) {	
 			sendToProviderList.add(sendToProvider);
 		}
-		//		}
+
+		if (OscarProperties.getInstance().isPropertyActive("queens_resident_tagging")) {
+			DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
+			List<Demographic> matchingDemographicListByHin = demographicDao.searchDemographicByHIN(report.getHCN());
+			if (!matchingDemographicListByHin.isEmpty()) {
+				Demographic demographic = demographicDao.searchDemographicByHIN(report.getHCN()).get(0);
+				DemographicCustDao demographicCustDao = SpringUtils.getBean(DemographicCustDao.class);
+				//add mrp if not already in list
+				if (sendToProvider != null && !sendToProvider.getProviderNo().equals(demographic.getProviderNo()) && demographic.getProvider() != null) {
+					sendToProviderList.add(demographic.getProvider());
+				}
+				//get and add alt providers
+				List<DemographicCust> demographicCust = demographicCustDao.findAllByDemographicNumber(demographic.getDemographicNo());
+				if (demographicCust.size() > 0) {
+					ArrayList<String> residentIds = new ArrayList<String>();
+					residentIds.add(demographicCust.get(0).getMidwife());
+					residentIds.add(demographicCust.get(0).getNurse());
+					residentIds.add(demographicCust.get(0).getResident());
+					for (String residentId : residentIds) {
+						if (residentId != null && !residentId.equals("")) {
+							Provider p = providerDao.getProvider(residentId);
+							if (p != null) { sendToProviderList.add(p); }
+						}
+					}
+				}
+			}
+		}
 
 		for (Provider p : sendToProviderList) {
 						
-			List<HRMDocumentToProvider> existingHRMDocumentToProviders =  hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNoList(reportId.toString(), p.getProviderNo());
+			List<HRMDocumentToProvider> existingHRMDocumentToProviders =  hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNoList(reportId, p.getProviderNo());
 			
 			if (existingHRMDocumentToProviders == null || existingHRMDocumentToProviders.size() == 0) {	
 				HRMDocumentToProvider providerRouting = new HRMDocumentToProvider();
-				providerRouting.setHrmDocumentId(reportId.toString());
+				providerRouting.setHrmDocumentId(reportId);
 	
 				providerRouting.setProviderNo(p.getProviderNo());
 				providerRouting.setSignedOff(0);
 	
 				hrmDocumentToProviderDao.merge(providerRouting);
-			}	
+			}
+			
+			//Gets the list of IncomingLabRules pertaining to the current provider
+			List<IncomingLabRules> incomingLabRules = incomingLabRulesDao.findCurrentByProviderNo(p.getProviderNo());
+			//If the list is not null
+			if (incomingLabRules != null) {
+				//For each labRule in the list
+				for(IncomingLabRules labRule : incomingLabRules) {
+				    if (labRule.getForwardTypeStrings().contains("HRM")) {
+                        //Creates a string of the provider number that the lab will be forwarded to
+                        String forwardProviderNumber = labRule.getFrwdProviderNo();
+                        //Checks to see if this provider is already linked to this lab
+                        HRMDocumentToProvider hrmDocumentToProvider = hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNo(reportId, forwardProviderNumber);
+                        //If a record was not found
+                        if (hrmDocumentToProvider == null) {
+                            //Puts the information into the HRMDocumentToProvider object
+                            hrmDocumentToProvider = new HRMDocumentToProvider();
+                            hrmDocumentToProvider.setHrmDocumentId(reportId);
+                            hrmDocumentToProvider.setProviderNo(forwardProviderNumber);
+                            hrmDocumentToProvider.setSignedOff(0);
+                            //Stores it in the table
+                            hrmDocumentToProviderDao.persist(hrmDocumentToProvider);
+                        }
+                    }
+				}
+			}
 		}
 
 		return sendToProviderList.size() > 0;
@@ -454,7 +537,7 @@ public class HRMReportParser {
 		routeReportToProvider(newReport, originalDocument.getId());
 	}
 
-	public static void routeReportToProvider(String reportId, String providerNo) {
+	public static void routeReportToProvider(Integer reportId, String providerNo) {
 		HRMDocumentToProviderDao hrmDocumentToProviderDao = (HRMDocumentToProviderDao) SpringUtils.getBean("HRMDocumentToProviderDao");
 		HRMDocumentToProvider providerRouting = new HRMDocumentToProvider();
 
@@ -476,7 +559,7 @@ public class HRMReportParser {
 		}
 	}
 
-	public static void routeReportToDemographic(String reportId, String demographicNo) {
+	public static void routeReportToDemographic(Integer reportId, Integer demographicNo) {
 		HRMDocumentToDemographicDao hrmDocumentToDemographicDao = (HRMDocumentToDemographicDao) SpringUtils.getBean("HRMDocumentToDemographicDao");
 
 		HRMDocumentToDemographic demographicRouting = new HRMDocumentToDemographic();

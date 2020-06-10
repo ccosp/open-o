@@ -31,6 +31,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -282,6 +283,17 @@ public class EctFormData {
 		return (results.toArray(new PatientForm[0]));
 	}
 
+	public static PatientForm[] getPatientFormsFromLocalAndRemote(LoggedInInfo loggedInInfo, String demoNo, String table, Boolean sortByEdited) {
+		PatientForm[] results = getPatientFormsFromLocalAndRemote(loggedInInfo, demoNo, table);
+
+		if (sortByEdited){
+			Collections.sort(Arrays.asList(results), PatientForm.EDITED_DATE_COMPARATOR);
+		}
+
+
+		return (results);
+	}
+
 	/**
 	 * Due to backwards compatability hack, leave all the getter methods as returning String, direct field access can be used to get native types.
 	 */
@@ -303,6 +315,22 @@ public class EctFormData {
 				}
 				
 				return (o2.created.compareTo(o1.created));
+			}
+		};
+		public static final Comparator<PatientForm> EDITED_DATE_COMPARATOR = new Comparator<PatientForm>() {
+			public int compare(PatientForm o1, PatientForm o2) {
+				if( o2.edited == null && o1.edited == null ) {
+					return o2.created.compareTo(o1.created);
+				}
+				if( o2.edited == null && o1.edited != null ) {
+					return o2.created.compareTo(o1.edited);
+				}
+				if( o1.edited == null && o2.edited != null ) {
+					return o2.edited.compareTo(o1.created);
+				}
+
+
+				return (o2.edited.compareTo(o1.edited));
 			}
 		};
 

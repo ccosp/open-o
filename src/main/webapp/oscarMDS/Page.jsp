@@ -20,6 +20,8 @@
 <%@page import="org.oscarehr.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils"%>
 <%@page import="org.oscarehr.util.MiscUtils,org.apache.commons.lang.StringEscapeUtils"%>
 <%@page import="org.apache.log4j.Logger,org.oscarehr.common.dao.OscarLogDao,org.oscarehr.util.SpringUtils"%>
+<%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
+<%@ page import="org.oscarehr.common.model.SystemPreferences" %>
 
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -97,44 +99,58 @@ String curUser_no = (String) session.getAttribute("user");
             </tr>
             <tr>
                 <td>
-					<div id="listViewDocs" style="height:536px; overflow:auto;" onscroll="handleScroll(this)">
-					<table id="summaryView">
+					<div id="listViewDocs" style="height:536px; overflow:scroll;" onscroll="handleScroll(this)">
+					    <%
+                            SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
+                            SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName("inboxDateSearchType");
+                            String dateType = "serviceObservation";
+
+                            if (systemPreferences != null && systemPreferences.getValue() != null)
+                            {
+                                dateType = systemPreferences.getValue();
+                            }
+                        %>
+					<table id="summaryView" class="tablesorter">
 					<thead>
 						<tr>
-                            <th align="left" valign="bottom" class="cell" nowrap>
+                            <th nowrap>
                                 <input type="checkbox" onclick="checkAllLabs('lab_form');" name="checkA"/>
                                 <bean:message key="oscarMDS.index.msgHealthNumber"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 <bean:message key="oscarMDS.index.msgPatientName"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 <bean:message key="oscarMDS.index.msgSex"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 <bean:message key="oscarMDS.index.msgResultStatus"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
+                                <% if (dateType.equals("receivedCreated")) { %>
+                                <bean:message key="oscarMDS.index.msgDateCreated"/>
+                                <% } else { %>
                                 <bean:message key="oscarMDS.index.msgDateTest"/>
+                                <% } %>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 <bean:message key="oscarMDS.index.msgOrderPriority"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 <bean:message key="oscarMDS.index.msgRequestingClient"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 <bean:message key="oscarMDS.index.msgDiscipline"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 <bean:message key="oscarMDS.index.msgReportStatus"/>
                             </th>
-                            <th align="left" valign="bottom" class="cell">
+                            <th>
                                 Ack #
                             </th>
                         </tr>
                           </thead>    
-                          <tbody>
+                          <tbody id="summaryBody">
                                             <%
 							} // End if(pageNum == 1)
                             List<String> doclabid_seq=new ArrayList<String>();
@@ -148,9 +164,9 @@ String curUser_no = (String) session.getAttribute("user");
 		                                <tr>
 		                                    <td colspan="10" align="center">
 		                                        <i>	<% if (pageNum == 1) { %>
-		                                        	<bean:message key="oscarMDS.index.msgNoReports"/>
+		                                        	<bean:message key="oscarMDS.index.msgNoReports"/>		                                        	
 		                                        	<% } else { %>
-		                                        	<bean:message key="oscarMDS.index.msgNoMoreReports"/>
+		                                        	<bean:message key="oscarMDS.index.msgNoMoreReports"/>		                                        	
 		                                        	<% } %>
 		                                        </i>
 
@@ -159,7 +175,7 @@ String curUser_no = (String) session.getAttribute("user");
 	                         	<%	}
                             		else {
                             		%>
-                            			<center>
+                            			
                             			<div>
                             			<% if (pageNum == 1) { %>
                                        	<bean:message key="oscarMDS.index.msgNoReports"/>
@@ -167,7 +183,7 @@ String curUser_no = (String) session.getAttribute("user");
                                        	<bean:message key="oscarMDS.index.msgNoMoreReports"/>
                                        	<% } %>
                             			</div>
-                            			</center>
+                            		
                             		<%
                             		}
 
@@ -175,8 +191,6 @@ String curUser_no = (String) session.getAttribute("user");
                             for (int i = 0; i < labdocs.size(); i++) {
 
                                 LabResultData   result =  (LabResultData) labdocs.get(i);
-                                //LabResultData result = (LabResultData) labMap.get(labNoArray.get(i));
-
                                 String segmentID        =  result.getSegmentID();
                                 String status           =  result.getAcknowledgedStatus();
 
@@ -241,7 +255,7 @@ String curUser_no = (String) session.getAttribute("user");
                                         	}
                                 		%>
 
-                                	<jsp:include page="../hospitalReportManager/Display.do" flush="true">
+                                	<jsp:include page="../hospitalReportManager/displayHRMReport.jsp" flush="true">
                                 		<jsp:param name="id" value="<%=segmentID %>" />
                                 		<jsp:param name="segmentID" value="<%=segmentID %>" />
                                 		<jsp:param name="providerNo" value="<%=providerNo %>" />
@@ -339,13 +353,13 @@ String curUser_no = (String) session.getAttribute("user");
                                     		duplicateLabIds.append(duplicateLabId);
                                     	}
                                     %>
-                                    <a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=segmentID%>&segmentID=<%=segmentID%>&providerNo=<%=providerNo%>&searchProviderNo=<%=searchProviderNo%>&status=<%=status%>&demoName=<%=StringEscapeUtils.escapeHtml(demoName)%>&duplicateLabIds=<%=duplicateLabIds.toString()%> ',850,1020)"><%=labRead%><%=result.getPatientName()%></a>
+                                    <a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=segmentID%>&segmentID=<%=segmentID%>&providerNo=<%=providerNo%>&searchProviderNo=<%=searchProviderNo%>&status=<%=status%>&demoName=<%=demoName%>&duplicateLabIds=<%=duplicateLabIds.toString()%>&isListView=<%=isListView%>',850,1020)"><%=labRead%><%=result.getPatientName()%></a>
                                     <% }else {%>
                                     <a href="javascript:parent.reportWindow('<%=request.getContextPath()%>/lab/CA/BC/labDisplay.jsp?segmentID=<%=segmentID%>&providerNo=<%=providerNo%>&searchProviderNo=<%=searchProviderNo%>&status=<%=status%>')"><%=labRead%><%=StringEscapeUtils.escapeJavaScript(result.getPatientName())%></a>
                                     <% }%>
                                 </td>
                                 <td nowrap>
-                                    <center><%=result.getSex() %></center>
+                                    <%=result.getSex() %>
                                 </td>
                                 <td nowrap>
                                     <%= (result.isAbnormal() ? "Abnormal" : "" ) %>
@@ -422,5 +436,24 @@ String curUser_no = (String) session.getAttribute("user");
                 </td>
             </tr>
         </table>
+        <script>
+	        jQuery.tablesorter.addParser({
+				  id: 'dateOfTest',
+				  is: function(s) {return false;},
+				  format: function(s) {
+				    return s.indexOf("/")!=-1?s.substr(s.indexOf("/")+2,10):s;
+				  },
+				  type: 'text'
+			});
+		
+			jQuery("#summaryView").tablesorter({
+					sortList:[],
+					headers:{
+						4:{
+							sorter:'dateOfTest'
+						}
+					}
+	        });
+        </script>
     <% } // End if (pageNum == 1) %>
 

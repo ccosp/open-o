@@ -23,9 +23,12 @@
 
 package org.oscarehr.PMmodule.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -38,9 +41,11 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.dao.ProviderFacilityDao;
+import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.ProviderFacility;
 import org.oscarehr.common.model.ProviderFacilityPK;
+import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -637,4 +642,93 @@ public class ProviderDao extends HibernateDaoSupport {
 				this.releaseSession(session);
 			}
 		}
+
+    @NativeSql({"provider", "appointment"})
+    public List<String> getProviderNosWithAppointmentsOnDate(Date appointmentDate) {
+        Session session = getSession();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            String sql = "SELECT p.provider_no FROM provider p WHERE p.provider_no IN (SELECT DISTINCT a.provider_no FROM appointment a WHERE a.appointment_date = '" + sdf.format(appointmentDate) + "') " +
+                    "AND p.Status='1'";
+            SQLQuery query = session.createSQLQuery(sql);
+            
+            return query.list();
+        }finally {
+            this.releaseSession(session);
+        }
+    }
+
+    public List<Provider> getOlisHicProviders() {
+        UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
+        Session session = getSession();
+        String sql = "FROM Provider p WHERE p.practitionerNo IS NOT NULL AND p.practitionerNo != ''";
+        Query query = session.createQuery(sql);
+        List<Provider> practitionerNoProviders = query.list();
+        
+        List<Provider> results = new ArrayList<Provider>();
+        for (Provider practitionerNoProvider : practitionerNoProviders) {
+            String olisType = userPropertyDAO.getStringValue(practitionerNoProvider.getProviderNo(), UserProperty.OFFICIAL_OLIS_IDTYPE);
+            if (olisType != null && !olisType.isEmpty()) {
+                results.add(practitionerNoProvider);
+            }
+        }
+        return results;
+    }
+
+    public Provider getProviderByPractitionerNoAndOlisType(String practitionerNo, String olisIdentifierType) {
+        UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
+        String sql = "FROM Provider p WHERE p.practitionerNo=?";
+        
+        List<Provider> providers = getHibernateTemplate().find(sql, practitionerNo);
+
+        if (!providers.isEmpty()) {
+            Provider provider = providers.get(0);
+            String olisType = userPropertyDAO.getStringValue(provider.getProviderNo(), UserProperty.OFFICIAL_OLIS_IDTYPE);
+            if (olisIdentifierType.equals(olisType)) {
+                return providers.get(0);
+            }
+        }
+        return null;
+    }
+    
+    public List<Provider> getOlisProvidersByPractitionerNo(List<String> practitionerNumbers) {
+		Session session = getSession();
+        String sql = "FROM Provider p WHERE p.practitionerNo IN (:practitionerNumbers)";
+		Query query = session.createQuery(sql);
+		query.setParameterList("practitionerNumbers", practitionerNumbers);
+        List<Provider> providers = query.list();
+        
+        return providers;
+	}
+
+	/**
+	 * Gets a list of provider numbers based on the provided list of provider numbers
+	 * @param providerNumbers The list of provider numbers to get the related objects for
+	 * @return A list of providers
+	 */
+	public List<Provider> getProvidersByIds(List<String> providerNumbers) {
+		Session session = getSession();
+		String sql = "FROM Provider p WHERE p.ProviderNo IN (:providerNumbers)";
+		Query query = session.createQuery(sql);
+		query.setParameterList("providerNumbers", providerNumbers);
+		
+		List<Provider> providers = query.list();
+		return providers;
+	}
+
+	/**
+	 * Gets a map of provider names with the provider number as the map key based on the provided list of provider numbers
+	 * @param providerNumbers A list of provider numbers to get the name map for 
+	 * @return A map of provider names with their related provider number as the key
+	 */
+	public Map<String, String> getProviderNamesByIdsAsMap(List<String> providerNumbers) {
+        Map<String, String> providerNameMap = new HashMap<>();
+        List<Provider> providers = getProvidersByIds(providerNumbers);
+        
+        for (Provider provider : providers) {
+        	providerNameMap.put(provider.getProviderNo(), provider.getFullName());
+		}
+        
+        return providerNameMap;
+	}
 }

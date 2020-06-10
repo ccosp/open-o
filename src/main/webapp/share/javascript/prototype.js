@@ -1948,7 +1948,7 @@ Abstract.Insertion.prototype = {
       this.insertContent([this.range.createContextualFragment(this.content)]);
     }
 
-    setTimeout(function() {content.evalScripts()}, 10);
+    setTimeout(function() {content.evalScripts()}, 500);
   },
 
   contentFromAnonymousTable: function() {

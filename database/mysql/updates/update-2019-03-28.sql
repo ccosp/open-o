@@ -3,6 +3,7 @@ alter table groupMembers_tbl add destinationFacilityId int(6);
 alter table messagelisttbl add destinationFacilityId int(6);
 alter table messagelisttbl add sourceFacilityId int(6);
 alter table oscar_msg_type add code varchar(255);
+alter table groupMembers_tbl add clinicLocationNo int(11);
 
 update groupMembers_tbl set facilityId = 0 where facilityId is null;
 update messagelisttbl set destinationFacilityId = 0 where destinationFacilityId is null;
@@ -21,7 +22,7 @@ CREATE TABLE `msgIntegratorDemoMap` (
   `sourceFacilityId` int(6),
   `msgDemoMapId` int(11),
   PRIMARY KEY (`id`)
-)
+);
 
 INSERT INTO `oscar_msg_type`(`type`, `description`, `code`) VALUES (3, 'Integrator Message', 'INTEGRATOR_TYPE');
 
