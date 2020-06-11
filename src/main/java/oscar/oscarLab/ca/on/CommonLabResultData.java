@@ -41,6 +41,7 @@ import org.oscarehr.billing.CA.BC.dao.Hl7MshDao;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult;
 import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.common.dao.CtlDocumentDao;
+import org.oscarehr.common.dao.DemographicCustDao;
 import org.oscarehr.common.dao.DocumentResultsDao;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
 import org.oscarehr.common.dao.LabPatientPhysicianInfoDao;
@@ -49,11 +50,13 @@ import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.dao.ProviderLabRoutingDao;
 import org.oscarehr.common.dao.QueueDocumentLinkDao;
 import org.oscarehr.common.model.CtlDocument;
+import org.oscarehr.common.model.DemographicCust;
 import org.oscarehr.common.model.PatientLabRouting;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.ProviderLabRoutingModel;
 import org.oscarehr.common.model.QueueDocumentLink;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao;
+import org.oscarehr.hospitalReportManager.dao.HRMDocumentToProviderDao;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.labs.LabIdAndType;
 import org.oscarehr.managers.DemographicManager;
@@ -206,7 +209,7 @@ public class CommonLabResultData {
 	}
 
 
-    public ArrayList<LabResultData> populateLabResultsData(LoggedInInfo loggedInInfo, String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal) {
+    public ArrayList<LabResultData> populateLabResultsData(LoggedInInfo loggedInInfo, String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal, Date startDate, Date endDate) {
 
     		ArrayList<LabResultData> labs = new ArrayList<LabResultData>();
     		oscar.oscarMDS.data.MDSResultsData mDSData = new oscar.oscarMDS.data.MDSResultsData();
@@ -238,7 +241,7 @@ public class CommonLabResultData {
     		if (hl7text != null && hl7text.trim().equals("yes")){
     			if (isPaged) {
     		        ArrayList<LabResultData> hl7Labs = Hl7textResultsData.populateHl7ResultsData(providerNo, demographicNo, patientFirstName, patientLastName,
-    		        												   patientHealthNumber, status, true, page, pageSize, mixLabsAndDocs, isAbnormal);
+    		        												   patientHealthNumber, status, true, page, pageSize, mixLabsAndDocs, isAbnormal, startDate, endDate);
     		        labs.addAll(hl7Labs);
                 }
                 else {
@@ -251,7 +254,7 @@ public class CommonLabResultData {
     }
 
     public ArrayList<LabResultData> populateLabResultsData(LoggedInInfo loggedInInfo, String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String ackStatus, String docScanStatus, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal) {
-    		return populateLabResultsData(loggedInInfo, providerNo, demographicNo, patientFirstName, patientLastName, patientHealthNumber, ackStatus, isPaged, page, pageSize, mixLabsAndDocs, isAbnormal);
+    		return populateLabResultsData(loggedInInfo, providerNo, demographicNo, patientFirstName, patientLastName, patientHealthNumber, ackStatus, isPaged, page, pageSize, mixLabsAndDocs, isAbnormal, null, null);
     }
 
 	public ArrayList<LabResultData> populateLabResultsData(LoggedInInfo loggedInInfo, String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status) {
@@ -403,8 +406,6 @@ public class CommonLabResultData {
 	public ArrayList<LabResultData> populateLabResultsData(LoggedInInfo loggedInInfo, String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status, String scannedDocStatus) {
 		ArrayList<LabResultData> labs = new ArrayList<LabResultData>();
 		labs = populateLabsData(loggedInInfo, providerNo, demographicNo, patientFirstName, patientLastName, patientHealthNumber, status, scannedDocStatus);
-		labs.addAll(populateDocumentData(providerNo, demographicNo, patientFirstName, patientLastName, patientHealthNumber, status, scannedDocStatus));
-
 		return labs;
 	}
 
@@ -424,19 +425,15 @@ public class CommonLabResultData {
 			while (rs.next()) {
 				empty = false;
 				String id = oscar.Misc.getString(rs, "id");
-				if (!oscar.Misc.getString(rs, "status").equals("A")) {
-					ProviderLabRoutingModel plr  = providerLabRoutingDao.find(Integer.parseInt(id));
-					if(plr != null) {
-						plr.setStatus(""+status);
-						//we don't want to clobber existing comments when filing labs
-						if( status != 'F') {
-							if(!skipCommentOnUpdate) {
-								plr.setComment(comment);
-							}
-						}
-						plr.setTimestamp(new Date());
-						providerLabRoutingDao.merge(plr);
+				ProviderLabRoutingModel plr  = providerLabRoutingDao.find(Integer.parseInt(id));
+				if(plr != null) {
+					plr.setStatus(""+status);
+					//we don't want to clobber existing comments when filing labs
+					if( status != 'F' ) {
+						plr.setComment(comment);
 					}
+					plr.setTimestamp(new Date());
+					providerLabRoutingDao.merge(plr);
 				}
 			} 
 			if (empty) {
@@ -532,6 +529,25 @@ public class CommonLabResultData {
 				plr.setDemographicNo(Integer.parseInt(demographicNo));
 				plr.setLabType(labType);
 				patientLabRoutingDao.persist(plr);
+				
+				if (OscarProperties.getInstance().isPropertyActive("queens_resident_tagging")) {
+					DemographicCustDao demographicCustDao = SpringUtils.getBean(DemographicCustDao.class);
+					List<DemographicCust> demographicCust = demographicCustDao.findAllByDemographicNumber(Integer.parseInt(demographicNo));
+					if (demographicCust.size() > 0) {
+						ArrayList<String> residentIds = new ArrayList<String>();
+						residentIds.add(demographicCust.get(0).getMidwife());
+						residentIds.add(demographicCust.get(0).getNurse());
+						residentIds.add(demographicCust.get(0).getResident());
+						
+						for (String residentId : residentIds) {
+							if (residentId != null && !residentId.equals("")) {
+								ProviderLabRouting p = new ProviderLabRouting();
+								p.routeMagic(Integer.parseInt(labArray[i]), residentId, labType);
+							}
+						}
+						
+					}
+				}
 				
 
 				// add labs to measurements table
@@ -678,7 +694,7 @@ public class CommonLabResultData {
 		boolean ret = false;
 		try {
 			HRMDocumentToDemographicDao hrmDocumentToDemographicDao = (HRMDocumentToDemographicDao)  SpringUtils.getBean("HRMDocumentToDemographicDao");
-			List<HRMDocumentToDemographic> docToDemo = hrmDocumentToDemographicDao.findByHrmDocumentId(labId);
+			List<HRMDocumentToDemographic> docToDemo = hrmDocumentToDemographicDao.findByHrmDocumentId(Integer.parseInt(labId));
 			if(docToDemo != null && docToDemo.size() > 0){
 				ret = true;
 			}
@@ -691,8 +707,14 @@ public class CommonLabResultData {
 
 
 	public int getAckCount(String labId, String labType) {
-		ProviderLabRoutingDao dao = SpringUtils.getBean(ProviderLabRoutingDao.class);
-		return dao.findByStatusANDLabNoType(ConversionUtils.fromIntString(labId), labType, "A").size();
+		if (labType.equals(LabResultData.HRM)) {
+			HRMDocumentToProviderDao hrmDao = SpringUtils.getBean(HRMDocumentToProviderDao.class);
+			Integer labIdInteger = Integer.parseInt(labId);
+			return hrmDao.findSignedByHrmDocumentId(labIdInteger).size();
+		} else {
+			ProviderLabRoutingDao dao = SpringUtils.getBean(ProviderLabRoutingDao.class);
+			return dao.findByStatusANDLabNoType(ConversionUtils.fromIntString(labId), labType, "A").size();
+		}
 	}
 
 	public static void populateMeasurementsTable(String labId, String demographicNo, String labType) {

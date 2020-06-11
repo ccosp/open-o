@@ -2728,8 +2728,12 @@
 			<forward name="success" path="/hospitalReportManager/hrmPreferences.jsp" />
 		</action>
 		<action path="/hospitalReportManager/HRMDownloadFile" type="org.oscarehr.hospitalReportManager.HRMDownloadFileAction" />
-		
+
 		<action path="/hospitalReportManager/hrm" type="org.oscarehr.hospitalReportManager.v2018.HRMAction" parameter="method">		
+		</action>
+
+		<action input="/displayHRMReport.jsp" path="/hospitalReportManager/PrintHRMReport" scope="request" type="org.oscarehr.hospitalReportManager.PrintHRMReportAction">
+			<forward name="error" path="/hospitalReportManager/displayHRMReport.jsp" />
 		</action>
 
 		<action path="/caseload/CaseloadContent" scope="request" type="org.oscarehr.caseload.CaseloadContentAction" parameter="method" />

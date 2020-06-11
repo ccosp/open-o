@@ -689,9 +689,7 @@ public class ManageDocumentAction extends DispatchAction {
 			String name = d.getDocfilename() + "_" + pn + ".png";
 			log.debug("name " + name);
 
-			File outfile = null;
-
-			outfile = hasCacheVersion2(d, pn);
+			File outfile = hasCacheVersion2(d, pn);
 			if (outfile != null) {
 				log.debug("got doc from local cache   ");
 			} else {
@@ -704,23 +702,16 @@ public class ManageDocumentAction extends DispatchAction {
 			ServletOutputStream outs = response.getOutputStream();
 			response.setHeader("Content-Disposition", "attachment;filename=" + d.getDocfilename());
 
-			BufferedInputStream bfis = null;
-			try {
+			try (BufferedInputStream bfis = new BufferedInputStream(new FileInputStream(outfile))){
 				if (outfile != null) {
-					bfis = new BufferedInputStream(new FileInputStream(outfile));
 					int data;
 					while ((data = bfis.read()) != -1) {
 						outs.write(data);
-						// outs.flush();
 					}
 				} else {
 					log.info("Unable to retrieve content for " + d + ". This may indicate previous upload or save errors...");
 				}
-			} finally {
-				if (bfis!=null) {
-					bfis.close();
-				}
-			}
+			} 
 
 			outs.flush();
 			outs.close();

@@ -143,48 +143,31 @@
             String url2 = cp+"/dms/ManageDocument.do?method=display&doc_no=" + docId;
             String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());	
 %>
-<% if (request.getParameter("inWindow") != null && request.getParameter("inWindow").equalsIgnoreCase("true")) {  %>
+
+<c:if test="${param.inWindow eq 'true'}">
 <html>
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar.js"></script>
-<!-- language for the calendar -->
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
-<!-- the following script defines the Calendar.setup helper function, which makes
-       adding a calendar a matter of 1 or 2 lines of code. -->
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/calendar/calendar-setup.js"></script>
-<!-- calendar stylesheet -->
-<link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/share/calendar/calendar.css" title="win2k-cold-1" />
-		<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
-        <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
-        <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/controls.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/css/showDocument.css" />
+        
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/calendar.js"></script>
+		<!-- language for the calendar -->
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
+		<!-- the following script defines the Calendar.setup helper function, which makes adding a calendar a matter of 1 or 2 lines of code. -->
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/calendar-setup.js"></script>
+		<!-- calendar stylesheet -->
+		<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/calendar/calendar.css" title="win2k-cold-1" />
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/prototype.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/effects.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/controls.js"></script>
 		<!-- jquery -->
-		<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
-        <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/Oscar.js" ></script>
-        
-
-        
-        <script type="text/javascript" src="<%= request.getContextPath() %>/js/demographicProviderAutocomplete.js"></script>
-
-        <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
-
-        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/share/yui/css/fonts-min.css"/>
-        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/share/yui/css/autocomplete.css"/>
-        <link rel="stylesheet" type="text/css" media="all" href="<%= request.getContextPath() %>/share/css/demographicProviderAutocomplete.css"  />
-
-        <style type="text/css">
-        	.multiPage {
-        		background-color: RED;
-        		color: WHITE;
-        		font-weight:bold;
-				padding: 0px 5px;
-				font-size: medium;
-        	}
-        	.singlePage {
-
-        	}
-        	        	
-        </style>
+        <script language="javascript" type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js" ></script>
+                
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>      
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/demographicProviderAutocomplete.js"></script>
 
         <script type="text/javascript">
         jQuery.noConflict();
@@ -246,7 +229,12 @@
 
 
         function split(id,demoName) {
-        	var loc = "<%= request.getContextPath()%>/oscarMDS/Split.jsp?document=" + id + "&queueID=<%=inQueue%>" + "&demoName=" + demoName;
+        	var loc = "${pageContext.servletContext.contextPath}";
+        	loc = loc + "/oscarMDS/Split.jsp?document=";
+        	loc = loc + id;
+        	loc = loc + "&queueID=";
+        	loc = loc + "<%=inQueue%>";
+        	loc = loc + "&demoName=" + demoName;
         	popupStart(1400, 1400, loc, "Splitter");
         }
 
@@ -254,11 +242,12 @@
         var contextpath = "<%=request.getContextPath()%>";
         
         </script>
-        <script type="text/javascript" src="showDocument.js"></script>
+
 </head>
+
 <body>
-<% } %>
-        <div id="labdoc_<%=docId%>">
+</c:if>
+        <div id="labdoc_<%=docId%>" class="content">
         	<%
         	 ArrayList ackList = AcknowledgementData.getAcknowledgements("DOC",docId);
         	 ReportStatus reportStatus = null;
@@ -315,20 +304,20 @@
                                                         }
                                                         
                                                         %>
-                                                        <input type="button" id="msgBtn_<%=docId%>" value="Msg" onclick="popupPatient(700,960,'<%= request.getContextPath() %>/oscarMessenger/SendDemoMessage.do?demographic_no=','msg', '<%=docId%>')" <%=btnDisabled %>/>
+                                                        <input type="button" id="msgBtn_<%=docId%>" value="Msg" onclick="popupPatient(700,960,'${pageContext.servletContext.contextPath}/oscarMessenger/SendDemoMessage.do?demographic_no=','msg', '<%=docId%>')" <%=btnDisabled %>/>
                                                         
                                                         <!--input type="button" id="ticklerBtn_<%=docId%>" value="Tickler" onclick="handleDocSave('<%=docId%>','addTickler')"/-->
                                                        <%
                                                        if(org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
                                                        %>
-                                                        <input type="button" id="mainTickler_<%=docId%>" value="Tickler" onClick="popupPatientTicklerPlus(710, 1024,'<%= request.getContextPath() %>/Tickler.do?', 'Tickler','<%=docId%>')" <%=btnDisabled %>>
+                                                        <input type="button" id="mainTickler_<%=docId%>" value="Tickler" onClick="popupPatientTicklerPlus(710, 1024,'${pageContext.servletContext.contextPath}/Tickler.do?', 'Tickler','<%=docId%>')" <%=btnDisabled %>>
                                                         <% } else { %>
-                                                        <input type="button" id="mainTickler_<%=docId%>" value="Tickler" onClick="popupPatientTickler(710, 1024,'<%= request.getContextPath() %>/tickler/ticklerAdd.jsp?', 'Tickler','<%=docId%>')" <%=btnDisabled %>>
+                                                        <input type="button" id="mainTickler_<%=docId%>" value="Tickler" onClick="popupPatientTickler(710, 1024,'${pageContext.servletContext.contextPath}/tickler/ticklerAdd.jsp?', 'Tickler','<%=docId%>')" <%=btnDisabled %>>
                                                         <% } %>
                                                         
-                                                        <input type="button" id="mainEchart_<%=docId%>" value=" <bean:message key="oscarMDS.segmentDisplay.btnEChart"/> " onClick="popupPatient(710, 1024,'<%= request.getContextPath() %>/oscarEncounter/IncomingEncounter.do?reason=<bean:message key="oscarMDS.segmentDisplay.labResults"/>&curDate=<%=currentDate%>>&appointmentNo=&appointmentDate=&startTime=&status=&demographicNo=', 'encounter', '<%=docId%>')" <%=btnDisabled %>>
-                                                        <input type="button" id="mainMaster_<%=docId%>" value=" <bean:message key="oscarMDS.segmentDisplay.btnMaster"/>" onClick="popupPatient(710,1024,'<%= request.getContextPath() %>/demographic/demographiccontrol.jsp?displaymode=edit&dboperation=search_detail&demographic_no=','master','<%=docId%>')" <%=btnDisabled %>>
-                                                        <input type="button" id="mainApptHistory_<%=docId%>" value=" <bean:message key="oscarMDS.segmentDisplay.btnApptHist"/>" onClick="popupPatient(710,1024,'<%= request.getContextPath() %>/demographic/demographiccontrol.jsp?orderby=appttime&displaymode=appt_history&dboperation=appt_history&limit1=0&limit2=25&demographic_no=','ApptHist','<%=docId%>')" <%=btnDisabled %>>
+                                                        <input type="button" id="mainEchart_<%=docId%>" value=" <bean:message key="oscarMDS.segmentDisplay.btnEChart"/> " onClick="popupPatient(710, 1024,'${pageContext.servletContext.contextPath}/oscarEncounter/IncomingEncounter.do?reason=<bean:message key="oscarMDS.segmentDisplay.labResults"/>&curDate=<%=currentDate%>>&appointmentNo=&appointmentDate=&startTime=&status=&demographicNo=', 'encounter', '<%=docId%>')" <%=btnDisabled %>>
+                                                        <input type="button" id="mainMaster_<%=docId%>" value=" <bean:message key="oscarMDS.segmentDisplay.btnMaster"/>" onClick="popupPatient(710,1024,'${pageContext.servletContext.contextPath}/demographic/demographiccontrol.jsp?displaymode=edit&dboperation=search_detail&demographic_no=','master','<%=docId%>')" <%=btnDisabled %>>
+                                                        <input type="button" id="mainApptHistory_<%=docId%>" value=" <bean:message key="oscarMDS.segmentDisplay.btnApptHist"/>" onClick="popupPatient(710,1024,'${pageContext.servletContext.contextPath}/demographic/demographiccontrol.jsp?orderby=appttime&displaymode=appt_history&dboperation=appt_history&limit1=0&limit2=25&demographic_no=','ApptHist','<%=docId%>')" <%=btnDisabled %>>
 
                                                         <input type="button" id="refileDoc_<%=docId%>" value="<bean:message key="oscarEncounter.noteBrowser.msgRefile"/>" onclick="refileDoc('<%=docId%>');" >
                                                         <select  id="queueList_<%=docId%>" name="queueList"> 
@@ -343,9 +332,7 @@
                             </form>        	            
             <table class="docTable">
                 <tr>
-
-
-                    <td colspan="8">
+                    <td valign="top" class="pdfPreviewColumn">
                         <div style="text-align: right;font-weight: bold">
                         <% if( numOfPage > 1 && displayDocumentAs.equals(UserProperty.IMAGE) ) {%>
                         	<a id="firstP_<%=docId%>" style="display: none;" href="javascript:void(0);" onclick="firstPage('<%=docId%>','<%=cp%>');">First</a>
@@ -355,15 +342,23 @@
                             <%} %>
                         </div>
                         <% if (displayDocumentAs.equals(UserProperty.IMAGE)) { %>
-                            <a href="<%=url2%>" target="_blank"><img alt="document" id="docImg_<%=docId%>"  src="<%=url%>" /></a>
+      						<a href="<%=url2%>" target="_blank"><img alt="document" id="docImg_<%=docId%>" src="<%=url%>" onerror="this.src='<%=request.getContextPath()%>/images/icon_alert.gif'"/></a>
                         <%} else {%>
                             <div id="docDispPDF_<%=docId%>"></div>
                         <%}%>
+                        <div style="text-align: right;font-weight: bold">
+                            <% if( numOfPage > 1 && displayDocumentAs.equals(UserProperty.IMAGE)) {%>
+                        	<a id="firstP2_<%=docId%>" style="display: none;" href="javascript:void(0);" onclick="firstPage('<%=docId%>','<%=cp%>');">First</a>
+                            <a id="prevP2_<%=docId%>" style="display: none;"  href="javascript:void(0);" onclick="prevPage('<%=docId%>','<%=cp%>');">Prev</a>
+                            <a id="nextP2_<%=docId%>" href="javascript:void(0);" onclick="nextPage('<%=docId%>','<%=cp%>');">Next</a>
+                            <a id="lastP2_<%=docId%>" href="javascript:void(0);" onclick="lastPage('<%=docId%>','<%=cp%>');">Last</a>
+                            <%} %>
+                        </div>
                     </td>
 
-                    <td align="left" valign="top">
+                    <td valign="top" class="pdfAssignmentToolsColumn">
                         <fieldset><legend><bean:message key="inboxmanager.document.PatientMsg"/><span id="assignedPId_<%=docId%>"><%=demoName%></span> </legend>
-                            <table border="0">
+                            <table>
                                 <tr>
                                     <td><bean:message key="inboxmanager.document.DocumentUploaded"/></td>
                                     <td><%=curdoc.getDateTimeStamp()%></td>
@@ -409,6 +404,10 @@
                                 <input type="hidden" name="displayDocumentAs_<%=docId%>" id="displayDocumentAs_<%=docId%>" value="<%=displayDocumentAs%>">
                                 <table border="0">
                                     <tr>
+                                        <td><bean:message key="dms.documentReport.msgCreator"/>:</td>
+                                        <td><%=curdoc.getCreatorName()%></td>
+                                    </tr>
+                                    <tr>
                                         <td><bean:message key="dms.documentReport.msgDocType" />:</td>
                                         <td>
                                             <select name ="docType" id="docType_<%=docId%>">
@@ -426,14 +425,16 @@
                                     </tr>
                                     <tr>
                                         <td><bean:message key="inboxmanager.document.ObservationDateMsg" /></td>
-                                        <td>
-                                            <input   id="observationDate<%=docId%>" name="observationDate" type="text" value="<%=curdoc.getObservationDate()%>">
-                                            <a id="obsdate<%=docId%>" onmouseover="renderCalendar(this.id,'observationDate<%=docId%>' );" href="javascript:void(0);" ><img title="Calendar" src="<%=request.getContextPath()%>/images/cal.gif" alt="Calendar"border="0" /></a>
+                                        <td id="observation-calendar">
+                                            <input class="input-field" id="observationDate<%=docId%>" name="observationDate" type="text" value="<%=curdoc.getObservationDate()%>">
+                                            <a class="calendar-icon" id="obsdate<%=docId%>" onmouseover="renderCalendar(this.id,'observationDate<%=docId%>' );" href="javascript:void(0);" >
+                                            	<img class="calendar-image" title="Calendar" src="<%=request.getContextPath()%>/images/cal.gif" alt="Calendar" />
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><bean:message key="inboxmanager.document.DemographicMsg" /></td>
-                                        <td style="width:400px;"><%
+                                        <td><%
                                         if(!demographicID.equals("-1")){%>
                                             <input id="saved<%=docId%>" type="hidden" name="saved" value="true"/>
                                             <input type="hidden" value="<%=demographicID%>" name="demog" id="demofind<%=docId%>" />
@@ -444,11 +445,11 @@
                                             <input type="hidden" name="demofindName" value="<%=demoName%>" id="demofindName<%=docId%>"/>   
                                                                                    
                                             <input type="checkbox" id="activeOnly<%=docId%>" name="activeOnly" checked="checked" value="true" onclick="setupDemoAutoCompletion()">Active Only<br>  
-                                            <input type="text" style="width:400px;" id="autocompletedemo<%=docId%>" onchange="checkSave('<%=docId%>');" name="demographicKeyword" />
+                                            <input type="text" id="autocompletedemo<%=docId%>" onchange="checkSave('<%=docId%>');" name="demographicKeyword" placeholder="Search Demographic"/>
                                             <div id="autocomplete_choices<%=docId%>" class="autocomplete"></div>
                                             
                                             <%}%>
-											<input type="button" id="createNewDemo" value="Create New Demographic"  onclick="popup(700,960,'<%= request.getContextPath() %>/demographic/demographicaddarecordhtm.jsp','demographic')"/>
+											<input type="button" id="createNewDemo" value="Create New Demographic"  onclick="popup(700,960,'${pageContext.servletContext.contextPath}/demographic/demographicaddarecordhtm.jsp','demographic')"/>
 
                                                    <input id="saved_<%=docId%>" type="hidden" name="saved" value="false"/>
                                                    <br><input id="mrp_<%=docId%>" style="display: none;" type="checkbox" onclick="sendMRP(this)"  name="demoLink" >
@@ -460,21 +461,13 @@
                                         <td valign="top"><bean:message key="inboxmanager.document.FlagProviderMsg" /> </td>
                                         <td>
                                             <input type="hidden" name="provi" id="provfind<%=docId%>" />
-                                            <input type="text" id="autocompleteprov<%=docId%>" name="demographicKeyword"/>
-                                            <div id="autocomplete_choicesprov<%=docId%>" class="autocomplete"></div>
+                                            <input type="text" id="autocompleteprov<%=docId%>" name="demographicKeyword" placeholder="Search Provider"/>
+                                            <div id="autocomplete_choicesprov<%=docId%>" class="autocomplete" ></div>
 
 
-                                            <div id="providerList<%=docId%>"></div>
+                                            <div class="provider-list-additions" id="providerList<%=docId%>"></div>
                                         </td>
                                     </tr>
-
-
-
-                                    <tr>
-                                        <td><bean:message key="dms.documentReport.msgCreator"/>:</td>
-                                        <td><%=curdoc.getCreatorName()%></td>
-                                    </tr>
-
                                     <tr>
                                         <td width="30%" colspan="1" align="left"><a id="saveSucessMsg_<%=docId%>" style="display:none;color:blue;"><bean:message key="inboxmanager.document.SuccessfullySavedMsg"/></a></td>
                                         <td width="30%" colspan="1" align="left"><%if(demographicID.equals("-1")){%><input type="submit" name="save" disabled id="save<%=docId%>" value="Save" /><input type="button" name="save" id="saveNext<%=docId%>" onclick="saveNext(<%=docId%>)" disabled value='<bean:message key="inboxmanager.document.SaveAndNext"/>' /><%}
@@ -487,7 +480,11 @@
                                             <bean:message key="inboxmanager.document.LinkedProvidersMsg"/>
                                             <%
             Properties p = (Properties) session.getAttribute("providerBean");
-            List<ProviderInboxItem> routeList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", Integer.parseInt(docId));
+            List<ProviderInboxItem> routeList = Collections.emptyList(); 
+            if(docId != null)
+            {
+            	routeList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", Integer.parseInt(docId));
+            }
                                             %>
                                             <ul>
                                                 <%for (ProviderInboxItem pItem : routeList) {
@@ -549,14 +546,12 @@
 %>
 
                         <fieldset>
-                          <%--  <input id="test1Regex_<%=docId%>" type="text"/><input id="test2Regex_<%=docId%>" type="text"/>
-                            <a href="javascript:void(0);" onclick="testShowDoc();">click</a>--%>
                             <legend><span class="FieldData"><i><bean:message key="inboxmanager.document.NextAppointmentMsg"/> <oscar:nextAppt demographicNo="<%=demographicID%>"/></i></span></legend>
                             <%
                                 int iPageSize = 5;
                                 Provider prov;
                                 boolean HighlightUserAppt = false;
-                                if (!demographicID.equals("-1")) {
+                                if (demographicID != null && ! demographicID.isEmpty() && ! demographicID.equals("-1")) {
                                     
                                     List<Appointment> appointmentList = appointmentDao.getAppointmentHistory(Integer.parseInt(demographicID), 0, iPageSize);
                                     if (appointmentList != null && appointmentList.size() > 0) {
@@ -603,25 +598,12 @@
                          </fieldset>                                                  	                                
                     </td>
                 </tr>
-                <tr>
-                	<td colspan="8">
-                        <div style="text-align: right;font-weight: bold">
-                            <% if( numOfPage > 1 && displayDocumentAs.equals(UserProperty.IMAGE)) {%>
-                        	<a id="firstP2_<%=docId%>" style="display: none;" href="javascript:void(0);" onclick="firstPage('<%=docId%>','<%=cp%>');">First</a>
-                            <a id="prevP2_<%=docId%>" style="display: none;"  href="javascript:void(0);" onclick="prevPage('<%=docId%>','<%=cp%>');">Prev</a>
-                            <a id="nextP2_<%=docId%>" href="javascript:void(0);" onclick="nextPage('<%=docId%>','<%=cp%>');">Next</a>
-                            <a id="lastP2_<%=docId%>" href="javascript:void(0);" onclick="lastPage('<%=docId%>','<%=cp%>');">Last</a>
-                            <%} %>
-                        </div>
-                    </td>
-                	<td>&nbsp;</td>
-                </tr> 
-                <tr><td colspan="9" ><hr width="100%" color="red"></td></tr>
+                
+                <tr><td colspan="2"><hr width="100%" color="red"></td></tr>
             </table>
         </div>        
-<!--
-
-//-->
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
+<script type="text/javascript" src="showDocument.js"></script>        
 <script type="text/javascript">
 
         if($('displayDocumentAs_<%=docId%>').value=="<%=UserProperty.PDF%>") {
@@ -635,10 +617,10 @@
         		
         		var url;
                 if( jQuery("#activeOnly<%=docId%>").is(":checked") ) {
-                	url = "<%= request.getContextPath() %>/demographic/SearchDemographic.do?jqueryJSON=true&activeOnly=" + jQuery("#activeOnly<%=docId%>").val();
+                	url = "${pageContext.servletContext.contextPath}/demographic/SearchDemographic.do?jqueryJSON=true&activeOnly=" + jQuery("#activeOnly<%=docId%>").val();
                 }
                 else {
-                	url = "<%= request.getContextPath() %>/demographic/SearchDemographic.do?jqueryJSON=true";
+                	url = "${pageContext.servletContext.contextPath}/demographic/SearchDemographic.do?jqueryJSON=true";
                 } 
                 
 	            jQuery( "#autocompletedemo<%=docId%>" ).autocomplete({
@@ -678,7 +660,7 @@
         jQuery(setupDemoAutoCompletion());
         
         function setupProviderAutoCompletion() {
-        	var url = "<%= request.getContextPath() %>/provider/SearchProvider.do?method=labSearch";
+        	var url = "${pageContext.servletContext.contextPath}/provider/SearchProvider.do?method=labSearch";
         	
         	jQuery( "#autocompleteprov<%=docId%>" ).autocomplete({
 	              source: url,
@@ -702,7 +684,7 @@
         
 
 </script>
-<% if (request.getParameter("inWindow") != null && request.getParameter("inWindow").equalsIgnoreCase("true")) {  %>
+<c:if test="${param.inWindow eq 'true'}">
 </body>
 </html>
-<%}%>
+</c:if>

@@ -224,7 +224,7 @@ public class InboxManager {
 
 		HRMResultsData hrmResult = new HRMResultsData();
 
-		Collection<LabResultData> hrmDocuments = hrmResult.populateHRMdocumentsResultsData(loggedInInfo, searchProviderNo, ackStatus, newestLab, oldestLab);
+		Collection<LabResultData> hrmDocuments = hrmResult.populateHRMdocumentsResultsData(loggedInInfo, searchProviderNo, ackStatus, newestLab, oldestLab, true, page, pageSize);
 		if (oldestLab == null) {
 			for (LabResultData hrmDocument : hrmDocuments) {
 				if (oldestLab == null || (hrmDocument.getDateObj() != null && oldestLab.compareTo(hrmDocument.getDateObj()) > 0))

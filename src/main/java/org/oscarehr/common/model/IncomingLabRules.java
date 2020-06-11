@@ -25,12 +25,9 @@
 
 package org.oscarehr.common.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="incomingLabRules")
@@ -50,6 +47,10 @@ public class IncomingLabRules extends AbstractModel<Integer>{
 
 	private String archive = "0"; // false?!?
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "forward_rule_id", referencedColumnName = "id")
+    private List<IncomingLabRulesType> forwardTypes = new ArrayList<>();
+    
 	public Integer getId() {
     	return id;
     }
@@ -90,5 +91,37 @@ public class IncomingLabRules extends AbstractModel<Integer>{
     	this.archive = archive;
     }
 
+    public List<IncomingLabRulesType> getForwardTypes() {
+        return forwardTypes;
+    }
 
+    public List<String> getForwardTypeStrings() {
+        List<String> forwardTypeStrings = new ArrayList<>();
+        for (IncomingLabRulesType type : forwardTypes) {
+            forwardTypeStrings.add(type.getType());
+        }
+        
+        //if the forward types are empty add all types just in case the data is invalid
+        if (forwardTypeStrings.isEmpty()) {
+            forwardTypeStrings.add("HL7");
+            forwardTypeStrings.add("DOC");
+            forwardTypeStrings.add("HRM");
+        }
+        return forwardTypeStrings;
+    }
+
+    public void setForwardTypes(ArrayList<IncomingLabRulesType> forwardTypes) {
+        this.forwardTypes = forwardTypes;
+    }
+    
+    public boolean addForwardType(String newType) {
+        for (IncomingLabRulesType forwardType : forwardTypes) {
+            if (newType.equals(forwardType.getType())) { return false; }
+        }
+        IncomingLabRulesType newIncomingLabRulesType = new IncomingLabRulesType();
+        newIncomingLabRulesType.setType(newType);
+        newIncomingLabRulesType.setIncomingLabRules(this);
+        forwardTypes.add(newIncomingLabRulesType);
+        return true;
+    }
 }

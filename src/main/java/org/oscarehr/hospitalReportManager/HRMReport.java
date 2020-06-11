@@ -9,23 +9,27 @@
 
 package org.oscarehr.hospitalReportManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import omd.hrm.PersonNameSimple;
 import org.apache.commons.codec.binary.Base64;
-import org.oscarehr.hospitalReportManager.xsd.DateFullOrPartial;
-import org.oscarehr.hospitalReportManager.xsd.Demographics;
-import org.oscarehr.hospitalReportManager.xsd.OmdCds;
-import org.oscarehr.hospitalReportManager.xsd.PersonNameStandard;
-import org.oscarehr.hospitalReportManager.xsd.PersonNameStandard.LegalName.OtherName;
-import org.oscarehr.hospitalReportManager.xsd.ReportFormat;
-import org.oscarehr.hospitalReportManager.xsd.ReportsReceived.OBRContent;
+import omd.hrm.DateFullOrPartial;
+import omd.hrm.Demographics;
+import omd.hrm.OmdCds;
+import omd.hrm.PersonNameStandard;
+import omd.hrm.PersonNameStandard.LegalName.OtherName;
+import omd.hrm.ReportFormat;
+import omd.hrm.ReportsReceived.OBRContent;
 import org.oscarehr.util.MiscUtils;
+import oscar.util.StringUtils;
 
 public class HRMReport {
 
@@ -102,15 +106,7 @@ public class HRMReport {
 	
 	public String getDateOfBirthAsString() {
 		List<Integer> dob = getDateOfBirth();
-		String ret = String.valueOf(dob.get(0));
-		if(dob.size()>1) {
-			ret = ret + "-" + (dob.get(1)<10?"0" + dob.get(1) : dob.get(1)+"");
-		}
-		if(dob.size()>2) {
-			ret = ret + "-" + (dob.get(2)<10?"0" + dob.get(2) : dob.get(2)+"");
-		}
-	
-		return ret;
+		return dob.get(0) + "-" + String.format("%02d", dob.get(1)) + "-" + String.format("%02d", dob.get(2));
 	}
 
 	public String getHCN(){
@@ -261,6 +257,17 @@ public class HRMReport {
 			return dateFP(hrmReport.getPatientRecord().getReportsReceived().get(0).getEventDateTime()).toGregorianCalendar();
 		return null;
 	}
+	
+	public String getMediaType() { 
+		String mediaType = "";
+		try {
+			mediaType = hrmReport.getPatientRecord().getReportsReceived().get(0).getMedia().value();
+		}catch(Exception e) {
+			MiscUtils.getLogger().error("error", e);
+		}
+		
+		return mediaType;
+	}
 
 	public List<String> getFirstReportAuthorPhysician() {
 		List<String> physicianName = new ArrayList<String>();
@@ -299,6 +306,20 @@ public class HRMReport {
 		return physicianName;
 	}
 
+	public String getSendingAuthor() {
+		String sourceAuthor = "";
+		if (hrmReport.getPatientRecord().getReportsReceived() != null && !hrmReport.getPatientRecord().getReportsReceived().isEmpty()) {
+			PersonNameSimple authorPhysician = hrmReport.getPatientRecord().getReportsReceived().get(0).getAuthorPhysician();
+			if (authorPhysician!=null) {
+				sourceAuthor = (StringUtils.noNull(authorPhysician.getFirstName()).trim() + " " + StringUtils.noNull(authorPhysician.getLastName()).trim()).trim();
+			}
+		}
+		
+
+		return sourceAuthor;
+	}
+
+
 	public String getSendingFacilityId() {
 		if (hrmReport.getPatientRecord().getReportsReceived() == null || hrmReport.getPatientRecord().getReportsReceived().isEmpty() ){
 			return "";
@@ -332,8 +353,15 @@ public class HRMReport {
 				obrContentList.add(o.getAccompanyingDescription());
 
 							if (o.getObservationDateTime()!=null) {
-								Date date = dateFP(o.getObservationDateTime()).toGregorianCalendar().getTime();
+								GregorianCalendar calendar = dateFP(o.getObservationDateTime()).toGregorianCalendar();
+								SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+								sdf.setTimeZone(calendar.getTimeZone());
+								
+								Date date = calendar.getTime();
+								String formattedDate = sdf.format(calendar.getTime());
+								
 								obrContentList.add(date);
+								obrContentList.add(formattedDate);
 							}
 				
 				subclassList.add(obrContentList);
@@ -342,15 +370,32 @@ public class HRMReport {
 		return subclassList;
 	}
 	
-	public Calendar getFirstAccompanyingSubClassDateTime() {
+	public String getFirstAccompanyingSubClassDateTime() {
 		if (hrmReport.getPatientRecord().getReportsReceived() != null &&
 				!hrmReport.getPatientRecord().getReportsReceived().isEmpty() &&
 				hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent() != null && 
 				hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent().get(0) != null &&
 				hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent().get(0).getObservationDateTime() != null) {
-			return dateFP(hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent().get(0).getObservationDateTime()).toGregorianCalendar();
+
+			GregorianCalendar calendar = dateFP(hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent().get(0).getObservationDateTime()).toGregorianCalendar();
+			SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+			sdf.setTimeZone(calendar.getTimeZone());
+			
+			return sdf.format(calendar.getTime());
 		}
 		
+		return "";
+	}
+
+	public String getFirstAccompanyingSubClass() {
+		if (hrmReport.getPatientRecord().getReportsReceived() != null &&
+				!hrmReport.getPatientRecord().getReportsReceived().isEmpty() &&
+				hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent() != null &&
+				hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent().get(0) != null &&
+				hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent().get(0).getObservationDateTime() != null) {
+			return (hrmReport.getPatientRecord().getReportsReceived().get(0).getOBRContent().get(0).getAccompanyingDescription());
+		}
+
 		return null;
 	}
 	

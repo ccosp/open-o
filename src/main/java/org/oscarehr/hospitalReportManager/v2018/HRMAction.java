@@ -772,13 +772,9 @@ public class HRMAction extends DispatchAction {
 				//}
 				
 				List<HRMDocumentToDemographic> ptList = hrmDocumentToDemographicDao.findByHrmDocumentId(d.getId().toString());
-				Integer demographicNo = null;
-				if(!ptList.isEmpty()) {
-					demographicNo = Integer.parseInt(ptList.get(0).getDemographicNo());
-				}
-				
+				Integer demographicNo = ptList.get(0).getDemographicNo();
 				JSONObject data1 = new JSONObject();
-				data1.put("id", d.getId());
+				data1.put("id", d.getId()+"");
 				data1.put("provider_no", d.getRecipientProviderNo() != null ?  d.getRecipientProviderNo() : "");
 				data1.put("demographic_no", demographicNo != null ? demographicNo.toString() : "");
 				data1.put("recipient_name", d.getRecipientName() != null ? d.getRecipientName() : "");

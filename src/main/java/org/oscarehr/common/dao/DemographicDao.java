@@ -2182,7 +2182,7 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public List<Demographic> getActiveDemographicAfter(Date afterDatetimeExclusive) {
 		String q = "From Demographic d where d.PatientStatus='AC'";
 		if (afterDatetimeExclusive!=null) q += " and d.lastUpdateDate > ?";
@@ -2191,6 +2191,24 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		rs = afterDatetimeExclusive!=null ? getHibernateTemplate().find(q, afterDatetimeExclusive) : getHibernateTemplate().find(q);
 		
 		return rs;
+	}
+
+	public List<Demographic> searchDemographicByHIN(String hinStr) {
+		List<Demographic> list = new ArrayList<Demographic>();
+
+		String queryString = "From Demographic d where d.Hin like :hin ";
+
+		Session session = this.getSession();
+		try {
+			Query q = session.createQuery(queryString);
+
+			q.setParameter("hin", hinStr.trim());
+
+			list = q.list();
+		} finally {
+			this.releaseSession(session);
+		}
+		return list;
 	}
 	
 }

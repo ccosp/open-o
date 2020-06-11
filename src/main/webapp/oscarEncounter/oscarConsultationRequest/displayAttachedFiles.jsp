@@ -96,7 +96,7 @@ if(!authed) {
                 //For each HRMDocumentToDemographic in the list
                 for (HRMDocumentToDemographic hrmDocumentToDemographic : hrmDocumentToDemographicList) {
                 	//Gets the corresponding HRMDocument
-                	hrmDocument = hrmDocumentDao.find(Integer.parseInt(hrmDocumentToDemographic.getHrmDocumentId()));
+                	hrmDocument = hrmDocumentDao.find(hrmDocumentToDemographic.getHrmDocumentId());
                 	//Checks if the hrmDescription has data, if it does then it becomes the displayName, if it doesn't then the reportType becomes the display name
                 	if (!hrmDocument.getDescription().equals("")) {
                 		truncatedDisplayName = StringUtils.maxLenString(hrmDocument.getDescription(),14,11,"");	

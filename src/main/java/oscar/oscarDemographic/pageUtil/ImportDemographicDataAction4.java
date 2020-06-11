@@ -2533,8 +2533,8 @@ import oscar.util.UtilDateUtilities;
                             hrmDocCommentDao.persist(hrmDocComment);
                         }
 
-                        hrmDocToDemo.setDemographicNo(demographicNo);
-                        hrmDocToDemo.setHrmDocumentId(hrmDoc.getId().toString());
+                        hrmDocToDemo.setDemographicNo(Integer.parseInt(demographicNo));
+                        hrmDocToDemo.setHrmDocumentId(hrmDoc.getId());
                         hrmDocToDemoDao.persist(hrmDocToDemo);
 
                         for(Reports.ReportReviewed reportReviewed : repR[i].getReportReviewedArray()) {
@@ -2544,7 +2544,7 @@ import oscar.util.UtilDateUtilities;
                         	String reviewDateTime = dateFPtoString(reportReviewed.getDateTimeReportReviewed(), timeShiftInDays);
                         	
                         	HRMDocumentToProvider hrmDocProvider = new HRMDocumentToProvider();
-                        	hrmDocProvider.setHrmDocumentId(hrmDoc.getId().toString());
+                        	hrmDocProvider.setHrmDocumentId(hrmDoc.getId());
                         	hrmDocProvider.setProviderNo(reviewer);
                         	hrmDocProvider.setSignedOff(1);
                         	

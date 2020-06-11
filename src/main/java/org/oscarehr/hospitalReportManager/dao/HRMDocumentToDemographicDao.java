@@ -33,13 +33,27 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 	public List<HRMDocumentToDemographic> findByDemographicNo(String demographicNo) {
 		String sql = "select x from " + this.modelClass.getName() + " x, HRMDocument h where x.hrmDocumentId = h.id and  x.demographicNo=? order by h.reportDate DESC";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, demographicNo);
+		Integer demographicNoInteger = Integer.parseInt(demographicNo);
+		query.setParameter(1, demographicNoInteger);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToDemographic> documentToDemographics = query.getResultList();
 		return documentToDemographics;
 	}
 
+	/**
+	 * @deprecated use findByHrmDocumentId(Integer hrmDocumentId)
+	 */
+	@Deprecated
 	public List<HRMDocumentToDemographic> findByHrmDocumentId(String hrmDocumentId) {
+		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=?";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter(1, hrmDocumentId);
+		@SuppressWarnings("unchecked")
+		List<HRMDocumentToDemographic> documentToDemographics = query.getResultList();
+		return documentToDemographics;
+	}
+
+	public List<HRMDocumentToDemographic> findByHrmDocumentId(Integer hrmDocumentId) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=?";
 		Query query = entityManager.createQuery(sql);
 		query.setParameter(1, hrmDocumentId);
@@ -58,8 +72,8 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 		//Creates a new empty list, it remains empty if an error occurs
 		List<HRMDocumentToDemographic> attachedHRMDocumentToDemographics = new ArrayList<HRMDocumentToDemographic>();
 		
-		if (!consultationId.equalsIgnoreCase("null") || !consultationId.equals("") || !consultationId.equals(null))
-		{
+		if (consultationId != null && !consultationId.equalsIgnoreCase("null") && !consultationId.equals("")) {
+
 			try {
 				//Parses the consultationId to an integer
 				Integer parsedConsultationId = Integer.parseInt(consultationId);
@@ -91,6 +105,7 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 		
 		return attachedHRMDocumentToDemographics;
 	}
+
 	
 	@SuppressWarnings("unchecked")
 	public List<HRMDocumentToDemographic> findHRMDocumentsAttachedToEForm(String fdid) {
@@ -138,4 +153,5 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 		
 		return attachedHRMDocumentToDemographics;
 	}
+
 }

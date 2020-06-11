@@ -104,7 +104,7 @@ public class EFormAttachHRMReports {
         for(int index = 0; index < oldList.size(); ++index) {
         	//If the item from the oldList is not in the keepList, then it sets it as deleted
             if(!keepList.contains(oldList.get(index)))
-            	detachHRMReportConsult((oldList.get(index)).getHrmDocumentId(), consultationId);
+            	detachHRMReportConsult((oldList.get(index)).getHrmDocumentId()+"", consultationId);
         }
 
         //Attaches all the items in the newList 

@@ -31,7 +31,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import org.apache.commons.lang.StringUtils;
+import org.oscarehr.common.dao.SystemPreferencesDao;
+import org.oscarehr.common.model.SystemPreferences;
 import org.oscarehr.util.DbConnectionFilter;
+import org.oscarehr.util.SpringUtils;
 
 public class CategoryData {
 
@@ -42,6 +46,9 @@ public class CategoryData {
     private int totalNumDocs = 0;
     private int abnormalCount = 0;
     private int normalCount = 0;
+    private int unmatchedHRMCount = 0;
+    private int matchedHRMCount = 0;
+
     private HashMap<Integer,PatientInfo> patients;
 
 	public int getTotalDocs() {
@@ -72,6 +79,10 @@ public class CategoryData {
 		return normalCount;
 	}
 
+	public int getHRMCountMatched() { return matchedHRMCount; }
+
+	public int getHRMCountUnmatched() { return unmatchedHRMCount; }
+
 	public HashMap<Integer, PatientInfo> getPatients() {
 		return patients;
 	}
@@ -83,9 +94,17 @@ public class CategoryData {
 	private String patientHealthNumber;
 	private boolean patientSearch;
 	private boolean providerSearch;
+	private String documentDateSql = "";
+	private String documentAbnormalSql = "";
+	private String documentJoinSql = "";
+	private String labDateSql = "";
+	private String labAbnormalSql = "";
+	private String hrmDateSql = "";
+	private String hrmProviderSql = "";
 
 	public CategoryData(String patientLastName, String patientFirstName, String patientHealthNumber, boolean patientSearch,
-					    boolean providerSearch, String searchProviderNo, String status)  {
+					    boolean providerSearch, String searchProviderNo, String status, String abnormalStatus, 
+						String startDate, String endDate)  {
 
 		this.patientLastName = patientLastName;
 		this.searchProviderNo = searchProviderNo;
@@ -94,6 +113,64 @@ public class CategoryData {
 		this.patientHealthNumber = patientHealthNumber;
 		this.patientSearch = patientSearch;
 		this.providerSearch = providerSearch;
+
+		SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
+		String dateSearchType = "serviceObservation";
+
+		SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName("inboxDateSearchType");
+		if (systemPreferences != null)
+		{
+			if (systemPreferences.getValue() != null && !systemPreferences.getValue().isEmpty())
+			{
+				dateSearchType = systemPreferences.getValue();
+			}
+		}
+		
+		if (startDate != null && !startDate.equals("")) {
+			if (dateSearchType.equals("receivedCreated")) {
+				documentDateSql += "AND doc.contentdatetime >= '" + startDate + " 00:00:00' ";
+				labDateSql += "AND message.created >= '" + startDate + " 00:00:00' ";
+			} else {
+				documentDateSql += "AND doc.observationdate >= '" + startDate + " 00:00:00' ";
+				labDateSql += "AND info.obr_date >= '" + startDate + " 00:00:00' ";
+			}
+
+			hrmDateSql += "AND h.timeReceived >= '" + startDate + " 00:00:00' ";
+		}
+		
+		if (endDate != null && !endDate.equals("")) {
+			if (dateSearchType.equals("receivedCreated")) {
+				documentDateSql += "AND doc.contentdatetime <= '" + endDate + " 23:59:59' ";
+				labDateSql += "AND message.created <= '" + endDate + " 23:59:59' ";
+			} else {
+				documentDateSql += "AND doc.observationdate <= '" + endDate + " 23:59:59' ";
+				labDateSql += "AND info.obr_date <= '" + endDate + " 23:59:59' ";
+			}
+
+			hrmDateSql += "AND h.timeReceived <= '" + endDate + " 23:59:59' ";
+		}
+
+		if (abnormalStatus != null && !abnormalStatus.equals("all")) {
+			if (abnormalStatus.equals("abnormalOnly")) {
+				documentAbnormalSql = " AND doc.abnormal = TRUE ";
+				labAbnormalSql = " AND info.result_status = 'A' ";
+			} else if (abnormalStatus.equals("normalOnly")) {
+				documentAbnormalSql = " AND (doc.abnormal = FALSE OR doc.abnormal IS NULL) ";
+				labAbnormalSql = " AND (info.result_status IS NULL OR info.result_status != 'A') ";
+			}
+		}
+		
+		if (!documentDateSql.equals("") || !documentAbnormalSql.equals("")) {
+			documentJoinSql = " LEFT JOIN document doc ON cd.document_no = doc.document_no";
+		}
+
+		if(providerSearch){
+			if(searchProviderNo.equals("0")){
+				hrmProviderSql += " AND hp.providerNo ='-1'";
+			} else{
+				hrmProviderSql += " AND hp.providerNo ='" + searchProviderNo +"' ";
+			}
+		}
 
     	totalDocs = 0;
 		totalLabs = 0;
@@ -112,10 +189,23 @@ public class CategoryData {
 		totalDocs += getDocumentCountForPatientSearch();
         totalLabs += getLabCountForPatientSearch();
 
+        //Checking for HRM counts for Logged in Doctor
+        matchedHRMCount = getHRMDocumentCountForPatient();
+
+        //Adding matched HRM count to total docs
+        totalDocs += matchedHRMCount;
+
         // If this is not a patient search, then we need to find the unmatched documents.
         if (!patientSearch) {
             unmatchedDocs += getDocumentCountForUnmatched();
             unmatchedLabs += getLabCountForUnmatched();
+
+            //Unmatched Counts for HRM
+            unmatchedHRMCount += getHRMDocumentCountForUnmatched();
+
+            //Adding Unmatched HRM to totalDocs
+			totalDocs += unmatchedHRMCount;
+
             totalDocs += unmatchedDocs;
             totalLabs += unmatchedLabs;
         }
@@ -130,21 +220,40 @@ public class CategoryData {
         normalCount = totalNumDocs - abnormalCount;
 	}
 
+	public String getDateSearchType() {
+		SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
+
+		SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName("inboxDateSearchType");
+		if (systemPreferences != null)
+		{
+			if (systemPreferences.getValue() != null && !systemPreferences.getValue().isEmpty())
+			{
+				return systemPreferences.getValue();
+			}
+		}
+
+		return "serviceObservation";
+	}
+
 	public int getLabCountForUnmatched()
 			throws SQLException {
-		String sql;
-		              sql = " SELECT HIGH_PRIORITY COUNT(1) as count "
-				                       + " FROM patientLabRouting plr2, providerLabRouting plr  "
-				                       + " WHERE plr.lab_no = plr2.lab_no "
-				                       + (providerSearch ? " AND plr.provider_no = '"+searchProviderNo+"' " : "")
-				
-				                        + "   AND plr.lab_type = 'HL7' "
-				                        + "   AND plr.status like '%"+status+"%' "
-				                       + "   AND plr2.lab_type = 'HL7'"
-				                       + "   AND plr2.demographic_no = '0' ";
-				
+		String dateSearchType = getDateSearchType();
+		String sql = " SELECT HIGH_PRIORITY COUNT(DISTINCT accessionNum) as count "
+				+ " FROM providerLabRouting plr "
+				+ " LEFT JOIN patientLabRouting plr2 ON plr.lab_no = plr2.lab_no AND plr2.lab_type = 'HL7'"
+				+ " RIGHT JOIN hl7TextInfo info ON plr.lab_no = info.lab_no"
+				+ (dateSearchType.equals("receivedCreated")?" RIGHT JOIN hl7TextMessage message ON plr.lab_no = message.lab_id":"")
+				+ " WHERE plr.lab_type = 'HL7' "
+				+ (providerSearch ? " AND plr.provider_no = '"+searchProviderNo+"' " : "")
+				+ " AND plr.status " + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
+				+ labAbnormalSql
+				+ labDateSql
+				+ " AND (plr2.demographic_no IS NULL"
+				+ " OR plr2.demographic_no = '0')";
 
-			
+
+
+
 		Connection c  = DbConnectionFilter.getThreadLocalDbConnection();
 		PreparedStatement ps = c.prepareStatement(sql);
 		ResultSet rs= ps.executeQuery(sql);
@@ -158,10 +267,10 @@ public class CategoryData {
 		if (patientSearch) {
         	sql = " SELECT HIGH_PRIORITY COUNT(1) as count "
         		+ " FROM patientLabRouting cd, demographic d, providerLabRouting plr, hl7TextInfo info "
-        		+ " WHERE d.last_name like '%"+patientLastName+"%'  "
-        		+ " 	AND d.first_name like '%"+patientFirstName+"%' "
-        		+ " 	AND d.hin like '%"+patientHealthNumber+"%' "
-        		+ " 	AND plr.status like '%"+status+"%' "
+        		+ " WHERE d.last_name" + (StringUtils.isEmpty(patientLastName) ? " IS NOT NULL " : " like '%"+patientLastName+"%'  ")
+        		+ " 	AND d.first_name" + (StringUtils.isEmpty(patientFirstName) ? " IS NOT NULL " : " like '%"+patientFirstName+"%' ")
+        		+ " 	AND d.hin" + (StringUtils.isEmpty(patientHealthNumber) ? " IS NOT NULL " : " like '%"+patientHealthNumber+"%' ")
+        		+ " 	AND plr.status " + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
         		+ (providerSearch ? "AND plr.provider_no = '"+searchProviderNo+"' " : "")
         		+ " 	AND plr.lab_type = 'HL7' "
         		+ " 	AND cd.lab_type = 'HL7' "
@@ -173,7 +282,7 @@ public class CategoryData {
         else if (providerSearch || !"".equals(status)){ // providerSearch
         	sql = "SELECT HIGH_PRIORITY COUNT(1) as count "
 				+ " FROM providerLabRouting plr, hl7TextInfo info "
-				+ " WHERE plr.status like '%"+status+"%' "
+				+ " WHERE plr.status " + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
 				+ (providerSearch ? " AND plr.provider_no = '"+searchProviderNo+"' " : " ")
 				+ " AND plr.lab_type = 'HL7'  "
 				+ " AND info.lab_no = plr.lab_no"
@@ -193,11 +302,15 @@ public class CategoryData {
 	public int getDocumentCountForUnmatched()
 			throws SQLException {
 		String sql = " SELECT HIGH_PRIORITY COUNT(1) as count "
-					+ " FROM ctl_document cd, providerLabRouting plr "
-					+ " WHERE plr.lab_type = 'DOC' AND plr.status like '%"+status+"%' "
+					+ " FROM ctl_document cd " 
+					+ "LEFT JOIN providerLabRouting plr ON plr.lab_no = cd.document_no"
+					+ documentJoinSql
+					+ " WHERE plr.lab_type = 'DOC' " 
+					+ " AND plr.status " + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
 					+ (providerSearch ? " AND plr.provider_no ='"+searchProviderNo+"' " : "")
-					+ "	AND plr.lab_no = cd.document_no"
-					+ " AND 	cd.module_id = -1 ";
+					+ " AND 	cd.module_id = -1 "
+					+ documentAbnormalSql
+					+ documentDateSql;
 		Connection c  = DbConnectionFilter.getThreadLocalDbConnection();
 		PreparedStatement ps = c.prepareStatement(sql);
 		ResultSet rs= ps.executeQuery(sql);
@@ -206,18 +319,24 @@ public class CategoryData {
 
 	public int getLabCountForPatientSearch() throws SQLException {
 		PatientInfo info;
-		String sql = " SELECT HIGH_PRIORITY d.demographic_no, last_name, first_name, COUNT(1) as count "
-        	+ " FROM patientLabRouting cd,  demographic d, providerLabRouting plr "
-        	+ " WHERE   d.last_name like '%"+patientLastName+"%' "
-        	+ " 	AND d.first_name like '%"+patientFirstName+"%' "
-        	+ " 	AND d.hin like '%"+patientHealthNumber+"%' "
-        	+ " 	AND cd.demographic_no = d.demographic_no "
-        	+ " 	AND cd.lab_no = plr.lab_no "
+		String dateSearchType = getDateSearchType();
+		String sql = " SELECT HIGH_PRIORITY d.demographic_no, d.last_name, d.first_name, COUNT(*) as count "
+        	+ " FROM patientLabRouting cd" 
+			+ " LEFT JOIN demographic d ON cd.demographic_no = d.demographic_no" 
+			+ " LEFT JOIN providerLabRouting plr ON cd.lab_no = plr.lab_no"
+			+ " LEFT JOIN hl7TextInfo info ON cd.lab_no = info.lab_no"
+			+ (dateSearchType.equals("receivedCreated")?" LEFT JOIN hl7TextMessage message ON cd.lab_no = message.lab_id":"")
+        	+ " WHERE   d.last_name" + (StringUtils.isEmpty(patientLastName) ? " IS NOT NULL " : "  like '%"+patientLastName+"%' ")
+        	+ " 	AND d.first_name" + (StringUtils.isEmpty(patientFirstName) ? " IS NOT NULL " : " like '%"+patientFirstName+"%' ")
+        	+ " 	AND d.hin" + (StringUtils.isEmpty(patientHealthNumber) ? " IS NOT NULL " : " like '%"+patientHealthNumber+"%' ")
         	+ " 	AND plr.lab_type = 'HL7' "
         	+ " 	AND cd.lab_type = 'HL7' "
-        	+ " 	AND plr.status like '%"+status+"%' "
-        	+ (providerSearch ? "AND plr.provider_no = '"+searchProviderNo+"' " : "")
-        	+ " GROUP BY demographic_no ";
+        	+ " 	AND plr.status " + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
+			+ (dateSearchType.equals("receivedCreated")?" AND message.lab_id IS NOT NULL ":" AND info.lab_no IS NOT NULL ")
+        	+ (providerSearch ? " AND plr.provider_no = '"+searchProviderNo+"' " : "")
+			+ labAbnormalSql
+			+ labDateSql
+        	+ " GROUP BY demographic_no, info.accessionNum ";
 
 		Connection c  = DbConnectionFilter.getThreadLocalDbConnection();
 		PreparedStatement ps = c.prepareStatement(sql);
@@ -249,7 +368,7 @@ public class CategoryData {
         	+ " 	AND cd.lab_no = plr.lab_no "
         	+ " 	AND plr.lab_type = 'HL7' "
         	+ " 	AND cd.lab_type = 'HL7' "
-        	+ " 	AND plr.status like '%"+status+"%' "
+        	+ " 	AND plr.status " + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
         	+ (providerSearch ? "AND plr.provider_no = '"+searchProviderNo+"' " : "")
         	+ " GROUP BY demographic_no ";
 
@@ -266,16 +385,20 @@ public class CategoryData {
 	 */
 	public int getDocumentCountForPatientSearch() throws SQLException {
 		PatientInfo info;
+		
 		String sql = " SELECT HIGH_PRIORITY demographic_no, last_name, first_name, COUNT( distinct cd.document_no) as count "
-					+ " FROM ctl_document cd, demographic d, providerLabRouting plr "
-					+ " WHERE   d.last_name like '%"+patientLastName+"%'  "
-					+ " 	AND d.hin like '%"+patientHealthNumber+"%' "
-					+ " 	AND d.first_name like '%"+patientFirstName+"%' "
-					+ " 	AND cd.module_id = d.demographic_no "
-					+ " 	AND cd.document_no = plr.lab_no "
+					+ " FROM ctl_document cd "
+					+ "LEFT JOIN demographic d  ON cd.module_id = d.demographic_no "
+					+ "LEFT JOIN providerLabRouting plr ON cd.document_no = plr.lab_no "
+					+ documentJoinSql
+					+ " WHERE   d.last_name" + (StringUtils.isEmpty(patientLastName) ? " IS NOT NULL " : " like '%"+patientLastName+"%'  ")
+					+ " 	AND d.hin" + (StringUtils.isEmpty(patientHealthNumber) ? " IS NOT NULL " : " like '%"+patientHealthNumber+"%' ")
+					+ " 	AND d.first_name" + (StringUtils.isEmpty(patientFirstName) ? " IS NOT NULL " : " like '%"+patientFirstName+"%' ")
 					+ " 	AND plr.lab_type = 'DOC' "
-					+ " 	AND plr.status like '%"+status+"%' "
+					+ " 	AND plr.status " + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
 					+ (providerSearch ? "AND plr.provider_no = '"+searchProviderNo+"' " : "")
+					+ documentAbnormalSql
+					+ documentDateSql
 					+ " GROUP BY demographic_no ";
 		Connection c  = DbConnectionFilter.getThreadLocalDbConnection();
 		PreparedStatement ps = c.prepareStatement(sql);
@@ -287,9 +410,72 @@ public class CategoryData {
         	patients.put(info.id, info);
         	count += info.getDocCount();
         }
+
         return count;
 	}
 
+	public int getHRMDocumentCountForPatient() throws SQLException{
+		int count = 0;
+		PatientInfo info;
+
+		String sql = " SELECT HIGH_PRIORITY demographic_no, first_name, last_name, COUNT( distinct h.id) as count "
+						+ " FROM HRMDocument h "
+						+ " LEFT JOIN HRMDocumentToDemographic hd ON h.id = hd.hrmDocumentId"
+						+ " LEFT JOIN HRMDocumentToProvider hp ON h.id = hp.hrmDocumentId"
+						+ " LEFT JOIN demographic d ON hd.demographicNo = d.demographic_no"
+						+ " WHERE h.id IN (SELECT hrmDocumentId FROM HRMDocumentToDemographic hd)"
+						+ " 	AND d.last_name " + (StringUtils.isEmpty(patientLastName) ? " IS NOT NULL " : " like '%"+patientLastName+"%' ")
+						+ "		AND d.hin " + (StringUtils.isEmpty(patientHealthNumber) ? " IS NOT NULL " : " like '%"+patientHealthNumber+"%' ")
+						+ "		AND d.first_name " + (StringUtils.isEmpty(patientFirstName) ? " IS NOT NULL " : " like '%"+patientFirstName+"%' ")
+						+ "		AND hp.signedOff = 0 "
+						+ hrmDateSql
+						+ hrmProviderSql
+						+ "GROUP BY demographic_no ";
+
+		Connection c  = DbConnectionFilter.getThreadLocalDbConnection();
+		PreparedStatement ps = c.prepareStatement(sql);
+		ResultSet rs= ps.executeQuery(sql);
+
+		while(rs.next()){
+			Integer hrmCount = rs.getInt("count");
+			int id = rs.getInt("demographic_no");
+			// Updating patient info if it already exists.
+			if (patients.containsKey(id)) {
+				info = patients.get(id);
+				info.setDocCount(info.getDocCount() + hrmCount);
+			}
+			// Otherwise adding a new patient record.
+			else {
+				info = new PatientInfo(id, rs.getString("first_name"), rs.getString("last_name"));
+				info.setDocCount(hrmCount);
+				patients.put(info.id, info);
+			}
+
+			count += hrmCount;
+		}
+
+		return count;
+	}
+
+	public int getHRMDocumentCountForUnmatched() throws SQLException{
+		int count = 0;
+		String sql = " SELECT HIGH_PRIORITY COUNT( distinct h.id) as count "
+					+" FROM HRMDocument h"
+					+" LEFT JOIN HRMDocumentToProvider hp ON h.id = hp.hrmDocumentId"
+					+" WHERE h.id NOT IN (SELECT hrmDocumentId FROM HRMDocumentToDemographic) AND hp.signedOff=0 "
+					+ hrmDateSql
+					+ hrmProviderSql;
+
+		Connection c  = DbConnectionFilter.getThreadLocalDbConnection();
+		PreparedStatement ps = c.prepareStatement(sql);
+		ResultSet rs= ps.executeQuery(sql);
+
+		while(rs.next()){
+			count = rs.getInt("count");
+		}
+
+		return count;
+	}
 
 	public Long getCategoryHash() {
 		return Long.valueOf("" + (int)'A' + totalNumDocs)
