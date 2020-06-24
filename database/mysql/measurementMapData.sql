@@ -42,7 +42,8 @@ insert into measurementMap (loinc_code, ident_code, name, lab_type) VALUES ('174
 insert into measurementMap (loinc_code, ident_code, name, lab_type) VALUES ('14927-8','TRIG','Triglycerides','MUHC'); 
 insert into measurementMap (loinc_code, ident_code, name, lab_type) VALUES ('9322-9','CHHD','Total Cholesterol/HDL Cholesterol Ratio','MUHC'); 
 insert into measurementMap (loinc_code, ident_code, name, lab_type) VALUES ('9318-7','UMIC',' U Microalb/Creat Ratio','MUHC'); 
-
+INSERT INTO `measurementMap`(`loinc_code`, `ident_code`, `name`, `lab_type`) VALUES ('94309-2', 'CVRP', 'COVID result', 'FLOWSHEET');
+INSERT INTO `measurementMap`(`loinc_code`, `ident_code`, `name`, `lab_type`) VALUES ('94309-2', '94309-2', 'COVID-19', 'PATHL7');
 
 /*!40000 ALTER TABLE `measurementMap` ENABLE KEYS */;
 UNLOCK TABLES;
