@@ -1044,9 +1044,6 @@ INSERT INTO `measurementType` (`type`, `typeDisplayName`, `typeDescription`, `me
 ( 'BILI', 'Bilirubin', 'Total Bilirubin', 'umol/L Range under 20', '14', '2014-05-09 00:00:00'),
 ( 'BMED', 'Blood Pressure Medication Changes', 'BP Med Changes', 'Changed', '7', '2013-02-01 00:00:00'),
 ( 'BMI', 'Body Mass Index', 'BMI', 'BMI', '4', '2013-02-01 00:00:00'),
-( 'BP', 'BP', 'Blood Pressure', 'BP Tru', '6', '2013-02-01 00:00:00'),
-( 'BP', 'BP', 'Blood Pressure', 'supine', '6', '2013-02-01 00:00:00'),
-( 'BP', 'BP', 'Blood Pressure', 'standing position', '6', '2013-02-01 00:00:00'),
 ( 'BP', 'BP', 'Blood Pressure', 'sitting position', '6', '2013-02-01 00:00:00'),
 ( 'BPII', 'BPI Pain Interference', 'BPI Pain Interference', 'null', '2', '2013-07-25 13:00:00'),
 ( 'BPIS', 'BPI Pain Severity', 'BPI Pain Severity', 'null', '2', '2013-07-25 00:00:00'),
@@ -1117,7 +1114,7 @@ INSERT INTO `measurementType` (`type`, `typeDisplayName`, `typeDescription`, `me
 ( 'EDGI', 'Autonomic Neuropathy', 'Autonomic Neuropathy', 'Present', '7', '2013-02-01 00:00:00'),
 ( 'EDND', 'Education Nutrition Diabetes', 'Education Nutrition Diabetes', 'Yes/No', '7', '2013-02-01 00:00:00'),
 ( 'EDNL', 'Education Nutrition Lipids', 'Education Nutrition Lipids', 'Yes/No', '7', '2013-02-01 00:00:00'),
-( 'EGFR', 'EGFR', 'EGFR', 'in ml/min', '4', '2013-02-01 00:00:00'),
+( 'EGFR', 'EGFR', 'EGFR', '', '4', '2013-02-01 00:00:00'),
 ( 'ENA', 'ENA', 'Extractable Nuclear Antigens', 'result', '11', '2014-05-09 00:00:00'),
 ( 'EPR', 'Exacerbation plan in place or reviewed', 'Exacerbation plan in place or reviewed', 'Yes/No', '7', '2013-02-01 00:00:00'),
 ( 'ESR', 'ESR', 'Erythrocyte sedimentation rate', 'mm/h Range under 20', '14', '2014-05-09 00:00:00'),
@@ -1195,7 +1192,7 @@ INSERT INTO `measurementType` (`type`, `typeDisplayName`, `typeDescription`, `me
 ( 'HPCP', 'Hep C PCR', 'Hep C PCR', 'Yes/No', '7', '2013-02-01 00:00:00'),
 ( 'HPNP', 'Hearing protection/Noise control programs', 'NULL', 'Yes/No', '7', '2013-10-25 13:00:00'),
 ( 'HPYL', 'H Pylori', 'H Pylori', 'result', '17', '2014-05-09 00:00:00'),
-( 'HR', 'P', 'Heart Rate', 'in bpm (nnn) Range:40-180', '5', '2013-02-01 00:00:00'),
+( 'HR', 'P', 'Heart Rate', '', '5', '2013-02-01 00:00:00'),
 ( 'HRMS', 'Review med use and side effects', 'HTN Review of Medication use and side effects', 'null', '11', '2013-02-01 00:00:00'),
 ( 'HSMC', 'Self Management Challenges', 'HTN Self Management Challenges', 'null', '11', '2013-02-01 00:00:00'),
 ( 'HSMG', 'Self Management Goal', 'HTN Self Management Goal', 'null', '11', '2013-02-01 00:00:00'),
@@ -1322,7 +1319,7 @@ INSERT INTO `measurementType` (`type`, `typeDisplayName`, `typeDescription`, `me
 ( 'SUO2', 'Need for supplemental oxygen', 'Need for supplemental oxygen', 'Yes/No', '7', '2013-02-01 00:00:00'),
 ( 'TCHD', 'TC/HDL', 'LIPIDS TD/HDL', 'monitor every 1-3 year', '3', '2013-02-01 00:00:00'),
 ( 'TCHL', 'Total Cholestorol', 'Total Cholestorol', 'in mmol/L (nn.n) Range:2.0-12.0', '2', '2013-02-01 00:00:00'),
-( 'TEMP', 'Temp', 'Temperature', 'degrees celcius', '3', '2013-02-01 00:00:00'),
+( 'TEMP', 'Temp', 'Temperature', 'C(for Celsius)', '3', '2013-02-01 00:00:00'),
 ( 'TG', 'TG', 'LIPIDS TG', 'monitor every 1-3 year', '3', '2013-02-01 00:00:00'),
 ( 'TOXP', 'Toxoplasma IgG', 'Toxoplasma IgG', 'Positive', '7', '2013-02-01 00:00:00'),
 ( 'TRIG', 'Triglycerides', 'Triglycerides', 'in mmol/L (nn.n) Range:0.0-12.0', '3', '2013-02-01 00:00:00'),
@@ -1343,7 +1340,17 @@ INSERT INTO `measurementType` (`type`, `typeDisplayName`, `typeDescription`, `me
 ( 'WBC', 'WBC', 'White Cell Count', 'x10 9/L Range 4-11', '14', '2014-05-09 00:00:00'),
 ( 'WHR', 'Waist:Hip', 'Waist Hip Ratio', 'Range:0.5-2 Interval:3mo.', '2', '2013-02-01 00:00:00'),
 ( 'WKED', 'Work/Education', 'NULL', 'Review', '16', '2013-12-30 13:00:00'),
-( 'WT', 'WT', 'Weight', 'in kg', '5', '2013-02-01 00:00:00');
+( 'WT', 'WT', 'Weight', 'in kg', '5', '2013-02-01 00:00:00')
+('BPI', 'Brief Pain Index -Short Form', 'Brief Pain Index -Short Form', 'null', '5', '2013-05-07 00:00:00'),
+('CRL', 'CRL', 'CRL', '', '24', '2018-08-26 18:42:22'),
+('ECTP', 'Ectopic Pregnancies', 'ECTP', '', '4', '0000-00-00 00:00:00'),
+('GAD7', 'GAD7 Anxiety Score', 'GAD7 Score', 'GAD7 Score', '20', '2012-09-06 07:25:35'),
+('LMP', 'Last Menstral Period', 'LMP', 'date', '13', '2012-09-06 07:25:35'),
+('PHQ9', 'PHQ9 Score', 'PHQ9', 'Value 0 to 30', '4', '2012-09-06 07:25:35'),
+('PRET', 'Preterm', 'PRET', '', '4', '0000-00-00 00:00:00'),
+('TERM', 'Term Pregnancies', 'TERM', '', '4', '0000-00-00 00:00:00'),
+('TOP', 'Termination of Preg', 'TOP', '', '4', '0000-00-00 00:00:00'),
+('CVRP', 'COVID result', 'COVID result', '', '11', '0000-00-00 00:00:00');
 
 --
 -- Dumping data for table 'mygroup'
@@ -2535,23 +2542,11 @@ INSERT INTO LookupList(name, description, categoryId, active, createdBy, dateCre
 
 SET @lookupListId:=LAST_INSERT_ID();
 
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Others'						 , 'Others'						   , 99, 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Contraception'                 , 'Contraception'                 , 1 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Counselling'                   , 'Counselling'                   , 2 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'ECP'                           , 'ECP'                           , 3 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Follow-Up'                     , 'Follow-Up'                     , 4 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Genital Warts Treatment'       , 'Genital Warts Treatment'       , 5 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'HIV Testing'                   , 'HIV Testing'                   , 6 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Immunization'                  , 'Immunization'                  , 7 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'IUD Removal'                   , 'IUD Removal'                   , 8 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Needle Exchange'               , 'Needle Exchange'               , 9 , 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'PAP Test'                      , 'PAP Test'                      , 10, 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Pregnancy Test'                , 'Pregnancy Test'                , 11, 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Repeat PAP Test'               , 'Repeat PAP Test'               , 12, 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Results'                       , 'Results'                       , 13, 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'STI Exam'                      , 'STI Exam'                      , 14, 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'STI Prescription/Treatment'    , 'STI Prescription/Treatment'    , 15, 1, 'oscar', CURRENT_TIMESTAMP);
-INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES(@lookupListId, 'Therapeutic Abortion Follow-Up', 'Therapeutic Abortion Follow-Up', 16, 1, 'oscar', CURRENT_TIMESTAMP);
+INSERT INTO LookupListItem(lookupListId, `value`, label, displayOrder, active, createdBy, dateCreated) VALUES
+(@lookupListId, ''						 , ''				, 1, 1, 'oscar', CURRENT_TIMESTAMP),
+(@lookupListId, 'Follow-Up'              , 'Follow-Up'      , 2 , 1, 'oscar', CURRENT_TIMESTAMP),
+(@lookupListId, 'Immunization'           , 'Immunization'   , 3 , 1, 'oscar', CURRENT_TIMESTAMP),
+(@lookupListId, 'Testing'                , 'Testing'        , 4 , 1, 'oscar', CURRENT_TIMESTAMP);
 
 insert into issue (code,description,role,update_date,type,sortOrderId) values ('TicklerNote','Tickler Note', 'nurse',now(),'system', 0);
 

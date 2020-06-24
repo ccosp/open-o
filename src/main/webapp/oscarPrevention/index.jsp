@@ -879,8 +879,8 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
              
 		<div class="preventionProcedure" onclick="<%=onClickCode%>" title="fade=[on] header=[<%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> -- Date:<%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>] body=[<%=StringEscapeUtils.escapeHtml((String)hExt.get("comments"))%>&lt;br/&gt;Entered By: <%=StringEscapeUtils.escapeHtml((String)hdata.get("provider_name"))%>]">
 		
-		<!--this is setting the style <%=r(hdata.get("refused"),result)%>  -->
-		<p <%=StringEscapeUtils.escapeHtml(r(hdata.get("refused"),result))%> >Age: <%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> <%if(result!=null && result.equals("abnormal")){out.print("result:"+StringEscapeUtils.escapeHtml(result));}%> <br />
+	
+		<p <%=r(hdata.get("refused"),result)%> >Age: <%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> <%if(result!=null && result.equals("abnormal")){out.print("result:"+StringEscapeUtils.escapeHtml(result));}%> <br />
 		<!--<%=refused(hdata.get("refused"))%>-->Date: <%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>
 		<%if (hExt.get("comments") != null && (hExt.get("comments")).length()>0) {
                     if (oscar.OscarProperties.getInstance().getBooleanProperty("prevention_show_comments","yes")){%>
