@@ -43,7 +43,6 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import com.google.gson.Gson;
 
 import oscar.oscarMessenger.data.ContactIdentifier;
 
@@ -145,10 +144,10 @@ public class MsgHandleMessagesAction extends Action {
 				replyList = messagingManager.getAllMessageReplyRecipients(loggedInInfo, message);
 			}
 
-			String replyListString = new Gson().toJson(replyList);
-		
+//			String replyListString = new Gson().toJson(replyList);
+//		
 			request.setAttribute("ReText", theSendMessage.toString());
-			request.setAttribute("replyList", replyListString); // used to set the providers that will get the reply message
+			request.setAttribute("replyList", replyList); // used to set the providers that will get the reply message
 			request.setAttribute("ReSubject", subject.toString());
 			
 			return (mapping.findForward("reply"));

@@ -12,8 +12,9 @@ package oscar.dms.actions;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -49,8 +50,6 @@ import oscar.dms.IncomingDocUtil;
 import oscar.dms.data.DocumentUploadForm;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
-
-import com.lowagie.text.pdf.PdfReader;
 
 public class DocumentUploadAction extends DispatchAction {
 	
@@ -113,8 +112,10 @@ public class DocumentUploadAction extends DispatchAction {
 			int numberOfPages = 0;
 			String fileName = docFile.getFileName();
 			String user = (String) request.getSession().getAttribute("user");
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			EDoc newDoc = new EDoc("", "", fileName, "", user, user, fm.getSource(), 'A',
-								   oscar.util.UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", "-1", 0);
+									simpleDateFormat.format(Calendar.getInstance().getTime()), 
+								   "", "", "demographic", "-1", 0);
 			newDoc.setDocPublic("0");
 			
 	        // if the document was added in the context of a program
@@ -181,20 +182,8 @@ public class DocumentUploadAction extends DispatchAction {
 	 * @param fileName the name of the file
 	 * @return the number of pages in the file
 	 */
-	public int countNumOfPages(String fileName) {// count number of pages in a
-													// local pdf file
-		int numOfPage = 0;
-		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		String filePath = docdownload + fileName;
-
-		try {
-			PdfReader reader = new PdfReader(filePath);
-			numOfPage = reader.getNumberOfPages();
-			reader.close();
-		} catch (IOException e) {
-			logger.debug(e.toString());
-		}
-		return numOfPage;
+	public int countNumOfPages(String fileName) {		
+		return EDocUtil.getPDFPageCount(fileName);
 	}
 
 	/**
@@ -224,33 +213,22 @@ public class DocumentUploadAction extends DispatchAction {
 				fos.close();
 		}
 	}
-        private boolean writeToIncomingDocs(FormFile docFile, String queueId, String PdfDir, String fileName) throws Exception {
+    private boolean writeToIncomingDocs(FormFile docFile, String queueId, String PdfDir, String fileName) {
         	
         String parentPath = IncomingDocUtil.getIncomingDocumentFilePath(queueId,PdfDir);
-        if(!new File(parentPath).exists()) {
+        if(! new File(parentPath).exists()) {
         	return false;
         }
         	
-		InputStream fis = null;
-		FileOutputStream fos = null;
-		try {
-			fis = docFile.getInputStream();
-			String savePath = IncomingDocUtil.getAndCreateIncomingDocumentFilePathName(queueId, PdfDir, fileName);
-			fos = new FileOutputStream(savePath);
-                        IOUtils.copy(fis, fos);
+		String savePath = IncomingDocUtil.getAndCreateIncomingDocumentFilePathName(queueId, PdfDir, fileName);
+		try (InputStream fis = docFile.getInputStream();
+				FileOutputStream fos = new FileOutputStream(savePath)) {
+			IOUtils.copy(fis, fos);
 		} catch (Exception e) {
 			logger.debug(e.toString());
 			return false;
-		} finally {
-			if (fis != null)
-                        {
-				fis.close();
-                        }
-			if (fos != null)
-                        {
-				fos.close();
-                        }
-		}
+		} 
+		
 		return true;
 	}
 

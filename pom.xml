@@ -64,11 +64,11 @@
 		</repository>
 		
 		<!-- MARC-HI (Everest & SHIC) -->
-		<repository>
+<!-- 		<repository>
 			<id>marc-te-main</id>
 			<name>MARC-HI Technology Exchange Private Maven Repository</name>
 			<url>http://te.marc-hi.ca/mvn</url>
-		</repository>
+		</repository> -->
 	</repositories>
 
 	<pluginRepositories>
@@ -556,6 +556,13 @@
 			<groupId>org.oscarehr.hrm</groupId>
 			<artifactId>hrm-jaxb</artifactId>
 			<version>4.1a</version>
+		</dependency>
+
+ 		<!-- HRM module 4.3 -->
+		<dependency>
+			<groupId>omd</groupId>
+			<artifactId>hrm</artifactId>
+			<version>4.3</version>
 		</dependency>
 
 		<!-- hsfo -->

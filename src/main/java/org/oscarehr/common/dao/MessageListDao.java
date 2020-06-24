@@ -47,6 +47,9 @@ public class MessageListDao extends AbstractDao<MessageList> {
 		return query.getResultList();
 	}
 
+	/**
+	 * Caution: excludes message recipients with a deleted status.
+	 */
 	public List<MessageList> findByProviderNoAndLocationNo(String providerNo, Integer locationNo) {
 		Query query = createQuery("ml", "ml.providerNo = :providerNo and ml.status not like 'del' and ml.remoteLocation = :remoteLocation order by ml.message");
 		query.setParameter("providerNo", providerNo);
@@ -54,6 +57,25 @@ public class MessageListDao extends AbstractDao<MessageList> {
 		return query.getResultList();
 	}
 	
+	/**
+	 * Gets entire list of message recipients regardless of message status. 
+	 * @param messageNo
+	 * @param locationNo
+	 * @return
+	 */
+	public List<MessageList> findAllByMessageNoAndLocationNo(Long messageNo, Integer locationNo) {
+		Query query = createQuery("ml", "ml.message = :messageNo and ml.remoteLocation = :remoteLocation order by ml.message");
+		query.setParameter("messageNo", messageNo);
+		query.setParameter("remoteLocation", locationNo);
+		return query.getResultList();
+	}
+	
+	/**
+	 * Caution: excludes message recipients with a deleted status.
+	 * @param messageNo
+	 * @param locationNo
+	 * @return
+	 */
 	public List<MessageList> findByMessageNoAndLocationNo(Long messageNo, Integer locationNo) {
 		Query query = createQuery("ml", "ml.message = :messageNo and ml.status not like 'del' and ml.remoteLocation = :remoteLocation order by ml.message");
 		query.setParameter("messageNo", messageNo);

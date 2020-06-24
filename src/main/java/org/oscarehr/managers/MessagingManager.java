@@ -44,12 +44,14 @@ import org.oscarehr.common.model.MessageList;
 import org.oscarehr.common.model.MessageTbl;
 import org.oscarehr.common.model.MsgDemoMap;
 import org.oscarehr.common.model.OscarCommLocations;
+
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.oscarehr.util.SpringUtils;
+
 import oscar.log.LogAction;
 import oscar.oscarMessenger.data.ContactIdentifier;
 import oscar.oscarMessenger.data.MessengerSystemMessage;
@@ -70,7 +72,7 @@ public class MessagingManager {
 	@Autowired
 	private OscarCommLocationsDao oscarCommLocationsDao;
 	@Autowired
-	private MessengerDemographicManager messengerDemographicManager;
+	private MessengerDemographicManager messengerDemographicManager;	
 			
 	/**
 	 * PREFERRED METHOD
@@ -213,13 +215,6 @@ public class MessagingManager {
 		} else {
 			
 			return getCountNewMessagesDemographicAttached(loggedInInfo, providerNo);	
-			
-			/* 
-			 * The commented-out method does not return a correct count in situations where multiple 
-			 * demographics are attached to a single email.
-			 */			
-			// return messageListDao.findUnreadByProviderAndAttachedCount(providerNo);
-			
 		}	
 	}
 	
@@ -479,7 +474,7 @@ public class MessagingManager {
 
     /**
      * A combined result of both the local reply recipients and recipients located in remote 
-     * facilities inluding the original sender.
+     * facilities including the original sender.
      */
     public final List<ContactIdentifier> getAllMessageReplyRecipients(LoggedInInfo loggedInInfo, final MessageTbl messageTbl) {
        	
@@ -571,7 +566,7 @@ public class MessagingManager {
     		throw new SecurityException("missing required security object (_msg)");
     	}
        	
-       	List<MessageList> messageList = messageListDao.findByMessageNoAndLocationNo((long) messageId, getCurrentLocationId());
+       	List<MessageList> messageList = messageListDao.findAllByMessageNoAndLocationNo((long) messageId, getCurrentLocationId());
        	List<ContactIdentifier> contactIdentifierList = new ArrayList<ContactIdentifier>();
        	for(MessageList message : messageList) {
        		if(! loggedInInfo.getLoggedInProviderNo().equals(message.getProviderNo()))
@@ -752,4 +747,5 @@ public class MessagingManager {
     	
     	return contactIdentifierList;
     }
+    
 }

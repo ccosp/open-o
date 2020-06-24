@@ -442,6 +442,14 @@ public class MeasurementDao extends AbstractDao<Measurement> {
 		return query.getResultList();
 	}
 
+	public List<Object> findLabNumbersOrderByObserved(Integer demoNo, String identCode) {
+		String sql = "SELECT DISTINCT e2.val FROM Measurement m, MeasurementsExt e1, MeasurementsExt e2 " + "WHERE m.id = e1.measurementId " + "AND e1.keyVal = 'identifier' " + "AND m.id = e2.measurementId " + "AND e2.keyVal = 'lab_no' " + "AND e1.val= :identCode " + "AND m.demographicId = :demoNo ORDER BY m.dateObserved";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter("identCode", identCode);
+		query.setParameter("demoNo", demoNo);
+		return query.getResultList();
+	}
+
 	public Measurement findLastEntered(Integer demo, String type) {
 		Query query = createQuery("ms", "ms.demographicId = :demoNo AND ms.type = :type ORDER BY ms.createDate DESC");
 		query.setParameter("demoNo", demo);

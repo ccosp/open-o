@@ -40,6 +40,36 @@ public class GroupMembersDao extends AbstractDao<GroupMembers>{
 		super(GroupMembers.class);
 	}
 	
+	/**
+	 * Only group members with an integrated facility ID that is remote - greater than zero.
+	 * @param groupId
+	 * @return
+	 */
+	public List<GroupMembers> findRemoteByGroupId(int groupId) {
+		Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId > 0 AND x.groupId=?");
+		q.setParameter(1, groupId);
+		
+		@SuppressWarnings("unchecked")
+		List<GroupMembers> results = q.getResultList();
+		
+		return results;
+	}
+	
+	/**
+	 * Only group members that have a facility id of 0 - for local. 
+	 * @param groupId
+	 * @return
+	 */
+	public List<GroupMembers> findLocalByGroupId(int groupId) {
+		Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId = 0 AND x.groupId=?");
+		q.setParameter(1, groupId);
+		
+		@SuppressWarnings("unchecked")
+		List<GroupMembers> results = q.getResultList();
+		
+		return results;
+	}
+	
 	public List<GroupMembers> findByGroupId(int groupId) {
 		Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.groupId=?");
 		q.setParameter(1, groupId);

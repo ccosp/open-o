@@ -42,46 +42,53 @@ if(!authed) {
 <%@page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.*, oscar.util.*, oscar.OscarProperties, oscar.dms.*, oscar.dms.data.*"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML >
 
 <html>
     <head>
                 <title>Documents In Queues</title>
+                
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/css/showDocument.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/css/oscarMDSIndex.css"  />
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/oscarMDS/encounterStyles.css">
+		<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/calendar/calendar.css" title="win2k-cold-1" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/share/css/OscarStandardLayout.css">
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
-   <!-- main calendar program -->
-<script type="text/javascript" src="../share/calendar/calendar.js"></script>
-<!-- language for the calendar -->
-<script type="text/javascript" src="../share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
-<!-- the following script defines the Calendar.setup helper function, which makes
-       adding a calendar a matter of 1 or 2 lines of code. -->
-<script type="text/javascript" src="../share/calendar/calendar-setup.js"></script>
-<!-- calendar style sheet -->
-<link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
-<link rel="stylesheet" type="text/css" href="../share/css/OscarStandardLayout.css">
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/Oscar.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/oscarMDSIndex.js"></script>
-        <script type="text/javascript" src="../share/javascript/controls.js"></script>
 
-        <script type="text/javascript" src="../share/yui/js/yahoo-dom-event.js"></script>
-        <script type="text/javascript" src="../share/yui/js/connection-min.js"></script>
-        <script type="text/javascript" src="../share/yui/js/animation-min.js"></script>
-        <script type="text/javascript" src="../share/yui/js/datasource-min.js"></script>
-        <script type="text/javascript" src="../share/yui/js/autocomplete-min.js"></script>
-        <script type="text/javascript" src="../js/demographicProviderAutocomplete.js"></script>
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/prototype.js"></script>
+		   <!-- main calendar program -->
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/calendar.js"></script>
+		<!-- language for the calendar -->
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/lang/<bean:message key='global.javascript.calendar'/>"></script>
+		<!-- the following script defines the Calendar.setup helper function, which makes
+		       adding a calendar a matter of 1 or 2 lines of code. -->
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/calendar-setup.js"></script>
+		
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>      
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/demographicProviderAutocomplete.js"></script>
+		
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/global.js"></script>
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/prototype.js"></script>
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/effects.js"></script>
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js"></script>
+		<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/controls.js"></script>
+
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/yui/js/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/yui/js/connection-min.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/yui/js/animation-min.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/yui/js/datasource-min.js"></script>
+
         
 <script type="text/javascript">
 
-var contextpath = "<%=request.getContextPath()%>";
+var contextpath = "${pageContext.servletContext.contextPath}";
 
 function removeLink(docType, docId, providerNo, e) {
-	var url = "../dms/ManageDocument.do";
+	var url = contextpath + "/dms/ManageDocument.do";
 	var data = 'method=removeLinkFromDocument&docType=' + docType + '&docId=' + docId + '&providerNo=' + providerNo;
 	new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
 		refreshView();
@@ -119,7 +126,7 @@ function forwardDocument(docId) {
 	
 	jQuery.ajax({
 		type: "POST",
-		url:  "<%= request.getContextPath()%>/oscarMDS/ReportReassign.do",
+		url:  contextpath + "/oscarMDS/ReportReassign.do",
 		data: query,
 		success: function (data) {    				
 			refreshView();				    				
@@ -2227,12 +2234,13 @@ function addDocToPatient(doclabid,patientId){//if doc is previously not assigned
                                                     $("lastP_"+docid).setStyle({display:'inline'});
                                                 }
 </script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/dms/showDocument.js"></script>        
         
         
-        <link rel="stylesheet" type="text/css" href="../share/yui/css/fonts-min.css"/>
-        <link rel="stylesheet" type="text/css" href="../share/yui/css/autocomplete.css"/>
-        <link rel="stylesheet" type="text/css" media="all" href="../share/css/demographicProviderAutocomplete.css"  />
-        <link rel="stylesheet" type="text/css" media="all" href="../share/css/oscarMDSIndex.css"  />
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/share/yui/css/fonts-min.css"/>
+        <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/share/yui/css/autocomplete.css"/>
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/css/demographicProviderAutocomplete.css"  />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/css/oscarMDSIndex.css"  />
           <style type="text/css">
             .Cell{
                 background-color:#9999CC;
@@ -2254,16 +2262,16 @@ height:0px;
         String searchProviderNo=(String)request.getAttribute("searchProviderNo");
         Set keys=queueDocNos.keySet();
         Iterator itr=keys.iterator();
-String patientIdNamesStr=(String)request.getAttribute("patientIdNamesStr");
-HashMap docStatus=(HashMap)request.getAttribute("docStatus");
-String patientIdStr =(String)request.getAttribute("patientIdStr");
-HashMap typeDocLab =(HashMap)request.getAttribute("typeDocLab");
-HashMap docType=(HashMap)request.getAttribute("docType");
-HashMap patientDocs=(HashMap)request.getAttribute("patientDocs");
-List<String> normals=(List<String>)request.getAttribute("normals");
-List<String> abnormals=(List<String>)request.getAttribute("abnormals");
-
-%>
+		String patientIdNamesStr=(String)request.getAttribute("patientIdNamesStr");
+		HashMap docStatus=(HashMap)request.getAttribute("docStatus");
+		String patientIdStr =(String)request.getAttribute("patientIdStr");
+		HashMap typeDocLab =(HashMap)request.getAttribute("typeDocLab");
+		HashMap docType=(HashMap)request.getAttribute("docType");
+		HashMap patientDocs=(HashMap)request.getAttribute("patientDocs");
+		List<String> normals=(List<String>)request.getAttribute("normals");
+		List<String> abnormals=(List<String>)request.getAttribute("abnormals");
+		
+		%>
         
         <table id="pendingDocs" width="100%">
              <tr oldclass="MainTableTopRow">
@@ -2329,20 +2337,9 @@ List<String> abnormals=(List<String>)request.getAttribute("abnormals");
                         var providerNo='<%=providerNo%>';
                         
                         var searchProviderNo='<%=searchProviderNo%>';
- /*console.log(typeDocLab);
- console.log(docType);
- console.log(patientDocs);
- console.log(patientIdNames);
- console.log(docStatus);
- console.log(normals);
- console.log(abnormals);
- console.log(patientIds);
- console.log(queueDocNos);
- console.log(providerNo);
- console.log(searchProviderNo);*/
                            var types=['DOC'];
 
-                        var contextpath='<%=request.getContextPath()%>';
+                        var contextpath='${pageContext.servletContext.contextPath}';
 Event.observe(window,'scroll',function(){//check for scrolling
     bufferAndShow();
 });

@@ -19,6 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.oscarehr.common.dao.IncomingLabRulesDao;
+import org.oscarehr.common.model.IncomingLabRules;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentCommentDao;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentDao;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentSubClassDao;
@@ -71,6 +73,8 @@ public class HRMModifyDocumentAction extends DispatchAction {
 				return deleteComment(mapping, form, request, response);
 			else if (method.equalsIgnoreCase("setDescription"))
 				return setDescription(mapping, form, request, response);
+			else if (method.equalsIgnoreCase("updateCategory"))
+				return updateCategory(mapping, form, request, response);
 		}
 
 		return mapping.findForward("ajax");
@@ -114,7 +118,7 @@ public class HRMModifyDocumentAction extends DispatchAction {
 	}
 
 	public ActionForward signOff(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		String reportId = request.getParameter("reportId");
+		String [] reportIds = request.getParameterValues("reportId");
 
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_hrm", "w", null)) {
         	throw new SecurityException("missing required security object (_hrm)");
@@ -123,43 +127,48 @@ public class HRMModifyDocumentAction extends DispatchAction {
 		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 		String providerNo=loggedInInfo.getLoggedInProviderNo();
 
-		try {
-			String signedOff = request.getParameter("signedOff");
-			HRMDocumentToProvider providerMapping = hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNo(reportId, providerNo);
-			if(providerMapping == null) {
-				//check for unclaimed record, if that exists..update that one
-				providerMapping = hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNo(reportId, "-1");
-				if(providerMapping != null) {
-					providerMapping.setProviderNo(providerNo);
+		for(int i = 0; i < reportIds.length; i++){
+			try {
+				Integer reportId = Integer.parseInt(reportIds[i]);
+				String signedOff = request.getParameterValues("signedOff")[i];
+				HRMDocumentToProvider providerMapping = hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNo(reportId, providerNo);
+				if(providerMapping == null) {
+					//check for unclaimed record, if that exists..update that one
+					providerMapping = hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNo(reportId, "-1");
+					if(providerMapping != null) {
+						providerMapping.setProviderNo(providerNo);
+					}
 				}
+
+				if (providerMapping != null) {
+					providerMapping.setSignedOff(Integer.parseInt(signedOff));
+					providerMapping.setSignedOffTimestamp(new Date());
+					hrmDocumentToProviderDao.merge(providerMapping);
+				}
+				else
+				{
+					HRMDocumentToProvider hrmDocumentToProvider=new HRMDocumentToProvider();
+					hrmDocumentToProvider.setHrmDocumentId(reportId);
+					hrmDocumentToProvider.setProviderNo(providerNo);
+					hrmDocumentToProvider.setSignedOff(Integer.parseInt(signedOff));
+					hrmDocumentToProvider.setSignedOffTimestamp(new Date());
+					hrmDocumentToProviderDao.persist(hrmDocumentToProvider);
+				}
+
+				request.setAttribute("success", true);
+			} catch (Exception e) {
+				MiscUtils.getLogger().error("Tried to set signed off status on document but failed.", e);
+				request.setAttribute("success", false);
 			}
-			
-			if (providerMapping != null) {
-				providerMapping.setSignedOff(Integer.parseInt(signedOff));
-				providerMapping.setSignedOffTimestamp(new Date());
-				hrmDocumentToProviderDao.merge(providerMapping);
-			}
-			else
-			{
-				HRMDocumentToProvider hrmDocumentToProvider=new HRMDocumentToProvider();
-				hrmDocumentToProvider.setHrmDocumentId(reportId);
-				hrmDocumentToProvider.setProviderNo(providerNo);
-				hrmDocumentToProvider.setSignedOff(Integer.parseInt(signedOff));
-				hrmDocumentToProvider.setSignedOffTimestamp(new Date());
-				hrmDocumentToProviderDao.persist(hrmDocumentToProvider);
-			}
-			
-			request.setAttribute("success", true);
-		} catch (Exception e) {
-			MiscUtils.getLogger().error("Tried to set signed off status on document but failed.", e); 
-			request.setAttribute("success", false);
 		}
+
 
 		return mapping.findForward("ajax");
 	}
 
 	public ActionForward assignProvider(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		String hrmDocumentId = request.getParameter("reportId");
+		//Gets the Dao for incoming lab rules
+		IncomingLabRulesDao incomingLabRulesDao = (IncomingLabRulesDao) SpringUtils.getBean("IncomingLabRulesDao");
 		String providerNo = request.getParameter("providerNo");
 		
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_hrm", "w", null)) {
@@ -169,12 +178,37 @@ public class HRMModifyDocumentAction extends DispatchAction {
 
 		try {
 			HRMDocumentToProvider providerMapping = new HRMDocumentToProvider();
-
+            Integer hrmDocumentId = Integer.valueOf(request.getParameter("reportId"));
 			providerMapping.setHrmDocumentId(hrmDocumentId);
 			providerMapping.setProviderNo(providerNo);
 			providerMapping.setSignedOff(0);
 
 			hrmDocumentToProviderDao.merge(providerMapping);
+			
+			//Gets the list of IncomingLabRules pertaining to the current provider
+			List<IncomingLabRules> incomingLabRules = incomingLabRulesDao.findCurrentByProviderNo(providerNo);
+			//If the list is not null
+			if (incomingLabRules != null) {
+				//For each labRule in the list
+				for(IncomingLabRules labRule : incomingLabRules) {
+                    if (labRule.getForwardTypeStrings().contains("HRM")) {
+                        //Creates a string of the provider number that the lab will be forwarded to
+                        String forwardProviderNumber = labRule.getFrwdProviderNo();
+                        //Checks to see if this provider is already linked to this lab
+                        HRMDocumentToProvider hrmDocumentToProvider = hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNo(hrmDocumentId, forwardProviderNumber);
+                        //If a record was not found
+                        if (hrmDocumentToProvider == null) {
+                            //Puts the information into the HRMDocumentToProvider object
+                            hrmDocumentToProvider = new HRMDocumentToProvider();
+                            hrmDocumentToProvider.setHrmDocumentId(hrmDocumentId);
+                            hrmDocumentToProvider.setProviderNo(forwardProviderNumber);
+                            hrmDocumentToProvider.setSignedOff(0);
+                            //Stores it in the table
+                            hrmDocumentToProviderDao.persist(hrmDocumentToProvider);
+                        }
+                    }
+                }
+			}
 
 			
 			//we want to remove any unmatched entries when we do a manual match like this. -1 means unclaimed in this table.
@@ -200,7 +234,7 @@ public class HRMModifyDocumentAction extends DispatchAction {
         }
 		
 		try {
-			List<HRMDocumentToDemographic> currentMappingList = hrmDocumentToDemographicDao.findByHrmDocumentId(hrmDocumentId);
+			List<HRMDocumentToDemographic> currentMappingList = hrmDocumentToDemographicDao.findByHrmDocumentId(Integer.parseInt(hrmDocumentId));
 
 			if (currentMappingList != null) {
 				for (HRMDocumentToDemographic currentMapping : currentMappingList) {
@@ -228,7 +262,7 @@ public class HRMModifyDocumentAction extends DispatchAction {
 		
 		try {
 			try {
-				List<HRMDocumentToDemographic> currentMappingList = hrmDocumentToDemographicDao.findByHrmDocumentId(hrmDocumentId);
+				List<HRMDocumentToDemographic> currentMappingList = hrmDocumentToDemographicDao.findByHrmDocumentId(Integer.parseInt(hrmDocumentId));
 
 				if (currentMappingList != null) {
 					for (HRMDocumentToDemographic currentMapping : currentMappingList) {
@@ -241,8 +275,8 @@ public class HRMModifyDocumentAction extends DispatchAction {
 
 			HRMDocumentToDemographic demographicMapping = new HRMDocumentToDemographic();
 
-			demographicMapping.setHrmDocumentId(hrmDocumentId);
-			demographicMapping.setDemographicNo(demographicNo);
+			demographicMapping.setHrmDocumentId(Integer.valueOf(hrmDocumentId));
+			demographicMapping.setDemographicNo(Integer.valueOf(demographicNo));
 			demographicMapping.setTimeAssigned(new Date());
 
 			hrmDocumentToDemographicDao.merge(demographicMapping);
@@ -375,6 +409,33 @@ public class HRMModifyDocumentAction extends DispatchAction {
 			request.setAttribute("success", false);
 		}
 		
+		return mapping.findForward("ajax");
+	}
+
+	public ActionForward updateCategory(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		String hrmDocumentId = request.getParameter("reportId");
+
+		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_hrm", "w", null)) {
+			throw new SecurityException("missing required security object (_hrm)");
+		}
+
+		try {
+			try {
+				Integer categoryId = Integer.valueOf(request.getParameter("categoryId"));
+				HRMDocument document = hrmDocumentDao.find(Integer.parseInt(hrmDocumentId));
+				if(document != null) {
+					document.setHrmCategoryId(categoryId);
+					hrmDocumentDao.merge(document);
+				}
+			} catch (Exception e) {
+				// Do nothing
+			}
+			request.setAttribute("success", true);
+		} catch (Exception e) {
+			MiscUtils.getLogger().error("Tried to assign HRM document to category but failed.", e);
+			request.setAttribute("success", false);
+		}
+
 		return mapping.findForward("ajax");
 	}
 	
