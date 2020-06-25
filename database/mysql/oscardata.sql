@@ -1340,7 +1340,7 @@ INSERT INTO `measurementType` (`type`, `typeDisplayName`, `typeDescription`, `me
 ( 'WBC', 'WBC', 'White Cell Count', 'x10 9/L Range 4-11', '14', '2014-05-09 00:00:00'),
 ( 'WHR', 'Waist:Hip', 'Waist Hip Ratio', 'Range:0.5-2 Interval:3mo.', '2', '2013-02-01 00:00:00'),
 ( 'WKED', 'Work/Education', 'NULL', 'Review', '16', '2013-12-30 13:00:00'),
-( 'WT', 'WT', 'Weight', 'in kg', '5', '2013-02-01 00:00:00')
+( 'WT', 'WT', 'Weight', 'in kg', '5', '2013-02-01 00:00:00'),
 ('BPI', 'Brief Pain Index -Short Form', 'Brief Pain Index -Short Form', 'null', '5', '2013-05-07 00:00:00'),
 ('CRL', 'CRL', 'CRL', '', '24', '2018-08-26 18:42:22'),
 ('ECTP', 'Ectopic Pregnancies', 'ECTP', '', '4', '0000-00-00 00:00:00'),
