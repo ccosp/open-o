@@ -58,7 +58,7 @@ public class SplitDocumentAction extends DispatchAction {
 
 	public ActionForward split(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		String docNum = request.getParameter("document");
-		String[] commands = request.getParameterValues("page[]");
+		String[] commands = request.getParameterValues("page");
 		String queueId = request.getParameter("queueID");
 		
 		/*
