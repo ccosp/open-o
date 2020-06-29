@@ -87,14 +87,11 @@ public abstract class DaoTestFixtures
 	
 	@BeforeClass
 	public static void classSetUp() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
-	{
-		
-		
-		Logger.getRootLogger().setLevel(Level.WARN);
+	{		
+		Logger.getRootLogger().setLevel(Level.INFO);
 		
 		long start = System.currentTimeMillis();
 		if(!SchemaUtils.inited) {
-			logger.info("dropAndRecreateDatabase");
 			SchemaUtils.dropAndRecreateDatabase();
 		}
 		long end = System.currentTimeMillis();
@@ -124,12 +121,15 @@ public abstract class DaoTestFixtures
 	
 	@Test
 	public void doSimpleExceptionTest() {
+
 		List<String> excludeList = getSimpleExceptionTestExcludes();
 		
 		String daoClassName = this.getClass().getName().replaceAll("Test$", "");
 	
 		try {
-			Class clazz = Class.forName(daoClassName);
+			Class<?> clazz = Class.forName(daoClassName);
+
+			logger.info("#------------>>  doSimpleExceptionTest() on : " + clazz.getName());
 			
 			Object daoObject = null;
 			
@@ -195,15 +195,15 @@ public abstract class DaoTestFixtures
 						}
 					}
 					if(invoke) {
-						//logger.info("invoking " + m.getName());
+						logger.info("invoking method : " + m.getName());
 						try {
 							m.invoke(daoObject, params);
 						}catch(Exception e) {
-							logger.error("error on method " + m.getName(),e);
-							fail("error on method " + m.getName() + "(" + Arrays.toString(m.getParameterTypes()) + ") with exception message " + e.getMessage());
+							logger.error("error on method : " + m.getName(),e);
+							fail("error on method : " + m.getName() + "(" + Arrays.toString(m.getParameterTypes()) + ") with exception message " + e.getMessage());
 						}
 					} else {
-						logger.info("skipping " + m.getName());
+						logger.info("skipping method : " + m.getName());
 					}
 				}
 			}
