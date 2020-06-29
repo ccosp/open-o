@@ -94,13 +94,14 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
     private String pagerNumber;
     private String salutation;
 
-    private boolean hideFromView=false;
+	private boolean hideFromView=false;
+    private boolean deleted=false;
     
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated=new Date();
 
 	private Integer eformId;
-	
+
 	@PreUpdate
 	protected void jpaUpdateLastUpdateTime() {
 		lastUpdated = new Date();
@@ -146,7 +147,7 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
     }
 
 	public String getStreetAddress() {
-    	return streetAddress;
+		return StringUtils.trimToEmpty(streetAddress);
     }
 
 	public void setStreetAddress(String streetAddress) {
@@ -249,6 +250,14 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 	public void seteDataServiceName(String eDataServiceName) {
     	this.eDataServiceName = StringUtils.trimToNull(eDataServiceName);
     }
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
     /**
      * @return the annotation

@@ -10,6 +10,7 @@
 package org.oscarehr.hospitalReportManager.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -27,11 +28,26 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 		super(HRMDocumentToDemographic.class);
 	}
 	
+	/**
+	 * @deprecated use findByDemographicNo(Integer demographicNo)
+	 */
+	@Deprecated
 	public List<HRMDocumentToDemographic> findByDemographicNo(String demographicNo) {
+		List<HRMDocumentToDemographic> hrmDocumentToDemographicList = Collections.emptyList();
+		
+		try {
+			hrmDocumentToDemographicList = findByDemographicNo(Integer.parseInt(demographicNo));
+		} catch (NumberFormatException e) {
+			//TODO need to do this until this deprecated method is purged. Demographic number is NEVER a string. 
+		}
+		
+		return hrmDocumentToDemographicList;
+	}
+	
+	public List<HRMDocumentToDemographic> findByDemographicNo(Integer demographicNo) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.demographicNo=?";
 		Query query = entityManager.createQuery(sql);
-		Integer demographicNoInteger = Integer.parseInt(demographicNo);
-		query.setParameter(1, demographicNoInteger);
+		query.setParameter(1, demographicNo);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToDemographic> documentToDemographics = query.getResultList();
 		return documentToDemographics;
