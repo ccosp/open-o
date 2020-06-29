@@ -7166,7 +7166,8 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
   pagerNumber varchar(30),
   salutation varchar(10),
   hideFromView tinyint(1),
-  eformId int(10)
+  eformId int(10),
+  deleted tinyint(1)
 );
 
 --
@@ -9187,6 +9188,8 @@ CREATE TABLE IF NOT EXISTS DemographicContact (
 	note varchar(200),
 	consentToContact tinyint(1),
 	active tinyint(1),
+	mrp tinyint(1),
+	programNo int(11),
 	KEY (`demographicNo`)
 );
 
@@ -9255,6 +9258,7 @@ CREATE TABLE IF NOT EXISTS `HRMCategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(255) NOT NULL,
   subClassNameMnemonic varchar(255),
+  sendingFacilityId varchar(50),
   PRIMARY KEY (`id`)
 );
 
@@ -9285,6 +9289,7 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentSubClass` (
   `subClassDescription` varchar(255) ,
   `subClassDateTime` date ,
   `isActive` tinyint(4) NOT NULL ,
+  `sendingFacilityId` varchar(50),
   PRIMARY KEY (`id`)
 ) ;
 
@@ -9647,8 +9652,7 @@ CREATE TABLE IF NOT EXISTS `program` (
 -- Needed by Program Managaer
 --
 
-CREATE TABLE IF NOT EXISTS provider_facility
-(
+CREATE TABLE IF NOT EXISTS `provider_facility` (
 	provider_no varchar(6) not null,
 	facility_id int not null,
 	unique (provider_no, facility_id),
@@ -10397,7 +10401,7 @@ CREATE TABLE IF NOT EXISTS PreventionsLotNrs(
   PRIMARY KEY (`id`)
 );
 
-/* Sharing Center Tables - begin */
+
 CREATE TABLE IF NOT EXISTS `sharing_affinity_domain` (
     `id` int AUTO_INCREMENT PRIMARY KEY,
     `oid` VARCHAR(255),
@@ -12313,8 +12317,7 @@ CREATE TABLE IF NOT EXISTS lst_gender
 
 CREATE TABLE IF NOT EXISTS SystemPreferences
 (
-  id         INT AUTO_INCREMENT
-    PRIMARY KEY,
+  id         INT AUTO_INCREMENT PRIMARY KEY,
   name       VARCHAR(40) NULL,
   value      VARCHAR(40) NULL,
   updateDate DATETIME    NULL
