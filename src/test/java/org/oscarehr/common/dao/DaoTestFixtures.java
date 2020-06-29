@@ -125,7 +125,7 @@ public abstract class DaoTestFixtures
 		String daoClassName = this.getClass().getName().replaceAll("Test$", "");
 	
 		try {
-			Class clazz = Class.forName(daoClassName);
+			Class<?> clazz = Class.forName(daoClassName);
 			
 			Object daoObject = null;
 			
