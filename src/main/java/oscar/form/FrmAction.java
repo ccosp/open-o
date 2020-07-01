@@ -70,10 +70,22 @@ public final class FrmAction extends Action {
         boolean saveSuccess = Boolean.FALSE;
         String formClassName = request.getParameter("form_class");
         String submitType = request.getParameter("submit");
+        String id = request.getParameter("formId");
+        Integer formId = null;
         
-        try {
+        if(id == null || id.isEmpty())
+        {
+        	id = request.getParameter("ID");
+        }
+        
+        if(id != null && ! id.isEmpty())
+        {
+        	id = id.trim();
+        	formId = Integer.parseInt(id);
+        }
 
-            Integer formId = Integer.parseInt(request.getParameter("formId").trim());
+        try {
+            
             Integer demographicNo = Integer.parseInt(request.getParameter("demographic_no").trim());
           	
             FrmRecordFactory recorder = new FrmRecordFactory();
