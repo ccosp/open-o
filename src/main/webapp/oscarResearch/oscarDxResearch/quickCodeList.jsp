@@ -31,7 +31,7 @@
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_dxresearch" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
-	<%response.sendRedirect("../../securityError.jsp?type=_dxresearch");%>
+	<%response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_dxresearch");%>
 </security:oscarSec>
 <%
 if(!authed) {
@@ -51,7 +51,7 @@ if(!authed) {
 		dxResearchBeanHandler dxResearchBeanHand = new dxResearchBeanHandler(demoNO);
 		Vector patientDx = dxResearchBeanHand.getDxResearchBeanVector();
 %>
-<table width="100%">
+<table>
 <tr>
 <%
 		ArrayList<dxQuickListBean> quickListsA = new ArrayList<dxQuickListBean>();
@@ -72,10 +72,10 @@ if(!authed) {
 			if (dxList.getDxQuickListItemsVector().isEmpty()) continue;
 			
 			Collection list = dxList.getDxQuickListItemsVectorNotInPatientsList(patientDx);
-%>	<td valign="top">
-		<table style="font-size:small">
+%>	<td>
+		<table>
 		<tr>
-			<td colspan="2" valign="top">
+			<td colspan="2">
 				<b><%=qlBean.getQuickListName()%></b>
 				<%=list.isEmpty()?"<p><i>All items already in patient's Dx</i></p>" : ""%>
 			</td>
@@ -95,8 +95,8 @@ if(!authed) {
 			}
 			for (dxCodeSearchBean code : listA) {
 %>		<tr>
-			<td valign="top"><input type="checkbox" name="xml_research" value="<%=code.getType()%>,<%=code.getDxSearchCode()%>" /></td>
-			<td valign="top"><%=code.getDescription()%></td>
+			<td><input type="checkbox" name="xml_research" value="<%=code.getType()%>,<%=code.getDxSearchCode()%>" /></td>
+			<td><%=code.getDescription()%></td>
 		</tr>
 <%			}
 %>		</table>

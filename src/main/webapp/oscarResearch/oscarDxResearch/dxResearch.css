@@ -20,92 +20,71 @@
  * McMaster University 
  * Hamilton 
  * Ontario, Canada 
- */ /* styles.css -- Style sheet for the dxResearch.
-	
-*/
-A:link {
-	font-family: verdana, arial, helvetica;
-	color: #336666;
-	cursor: pointer;
-}
-
-A:visited {
-	font-family: verdana, arial, helvetica;
-	color: #336666;
-}
-
-A:hover {
-	font-weight: bold;
-	font-family: verdana, arial, helvetica;
+ */
+*, table {
+	font-family: arial, helvetica, sans-serif;
 	color: #000000;
-	background-color: #FFFFFF;
+	font-size: small;
+}
+a,input {
+		outline: none;
+}
+.wrapper {
+	margin: auto 15px
 }
 
-BODY {
-	font-size: 10pt;
-	font-family: verdana, arial, helvetica;
-	color: #000000;
-	background-color: #FFFFFF;
+table {
+	border-collapse: collapse;
+	width: 100%;
 }
 
-TD {
-	font-size: 10pt;
-	font-family: verdana, arial, helvetica;
-	height: 15pt;
+table tr td {
+	vertical-align: top;
 }
 
-TD.black {
+table td#displayDxCodeTable table tr th {
 	font-weight: bold;
-	font-family: verdana, arial, helvetica;
-	color: #FFFFFF;
-	background-color: #666699;
-}
-
-.heading {
-	font-weight: bold;
-	font-size: 11pt;
-	font-family: verdana, arial, helvetica;
-	color: #000000;
+	color: white;
 	background-color: #6699cc;
-	height: 20pt;
+	padding: 10px 5px;
+}
+
+table td#displayDxCodeTable table tr {
+	border: 1px solid #ccc;
+}
+
+table td#displayDxCodeTable table tr td {
+	padding: 5px;
+}
+
+table td#displayDxCodeTable table tr td:last-of-type a {
+	padding-left:5px;
+	border-left:2px #6699cc solid;
+}
+
+table td#displayDxCodeTable table tr td:last-of-type a:first-of-type {
+	padding:0;
+	border-left:none;
+}
+
+table td#displayDxCodeTable table tr:nth-of-type(odd) td {
+	background-color: whitesmoke;
+}
+
+table td#displayDxCodeTable table tr:nth-of-type(even) td {
+	background-color: white;
+}
+
+table td#codeSelectorTable {
+	padding-right: 15px;
+}
+
+table#dxCodeQuicklist td.heading .panel {
+	background-color: #eeeeee;
+	margin-top: 15px;
+	margin-bottom: 5px;
 }
 
 .notResolved {
-	font-size: 9pt;
 	color: blue;
-}
-
-.quickList {
-	font-size: 9pt;
-}
-
-.subject {
-	font-size: 18pt;
-	font-weight: bold;
-	color: #FFFFFF;
-	height: 40pt;
-}
-
-.sbttn {
-	background: #EEEEFF;
-	border-bottom: 1px solid #104A7B;
-	border-right: 1px solid #104A7B;
-	border-left: 1px solid #AFC4D5;
-	border-top: 1px solid #AFC4D5;
-	color: #000066;
-	height: 19px;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.mbttn {
-	background: #D7DBF2;
-	border-bottom: 1px solid #104A7B;
-	border-right: 1px solid #104A7B;
-	border-left: 1px solid #AFC4D5;
-	border-top: 1px solid #AFC4D5;
-	color: #000066;
-	height: 19px;
-	text-decoration: none;
-	cursor: pointer;
 }
