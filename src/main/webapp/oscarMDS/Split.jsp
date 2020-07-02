@@ -21,7 +21,7 @@
 <security:oscarSec roleName="<%=roleName$%>" objectName="_lab" rights="r" reverse="<%=true%>" >
 	<%
 		authed = false;
-		response.sendRedirect("../securityError.jsp?type=_lab");
+		response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_lab");
 	%>
 </security:oscarSec>
 <%
@@ -34,14 +34,17 @@
 <head>
 <title>PDF Sorter</title>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/library/jquery/jquery-ui.theme-1.12.1.min.css" type="text/css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/share/css/sorter.css" type="text/css" />
+<link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/library/jquery/jquery-ui.theme-1.12.1.min.css" type="text/css" />
+<link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/share/css/sorter.css" type="text/css" />
 
-<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-1.12.0.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js"></script>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/library/jquery/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/library/jquery/jquery-ui-1.12.1.min.js"></script>
 
-<script type="text/javascript" src="<%=request.getContextPath()%>/share/javascript/jquery/jquery.rotate.1-1.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/share/javascript/sorter.js"></script>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/share/javascript/jquery/jquery.rotate.1-1.js"></script>
+<script>
+	var ctx = "${ pageContext.servletContext.contextPath }";
+</script>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/share/javascript/sorter.js"></script>
 
 </head>
 <body>
@@ -56,11 +59,11 @@
 			</div>
 			<div id="pickertoolscontainer">
 				<ul id="pickertools">
-					<li id="tool_add"><img src="../images/icons/103.png"><span>Add</span></li>
-					<li id="tool_remove"><img src="../images/icons/101.png"><span>Remove</span></li>
-					<li id="tool_rotate"><img src="../images/icons/114.png"><span>Rotate</span></li>
-					<li id="tool_savecontinue"><img src="../images/icons/172.png"><span>Save &amp; Continue</span></li>
-					<li id="tool_done"><img src="../images/icons/071.png"><span>Done</span></li>
+					<li id="tool_add"><img src="${ pageContext.servletContext.contextPath }/images/icons/103.png"><span>Add</span></li>
+					<li id="tool_remove"><img src="${ pageContext.servletContext.contextPath }/images/icons/101.png"><span>Remove</span></li>
+					<li id="tool_rotate"><img src="${ pageContext.servletContext.contextPath }/images/icons/114.png"><span>Rotate</span></li>
+					<li id="tool_savecontinue"><img src="${ pageContext.servletContext.contextPath }/images/icons/172.png"><span>Save &amp; Continue</span></li>
+					<li id="tool_done"><img src="${ pageContext.servletContext.contextPath }/images/icons/071.png"><span>Done</span></li>
 				</ul>
 			</div>
 		</div>

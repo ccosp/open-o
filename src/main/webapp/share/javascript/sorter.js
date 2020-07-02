@@ -234,7 +234,8 @@ $(document).ready(function() {
 		});
 		
 		$("#builder").sortable();
-		var serialized = $("#builder").sortable('serialize');
+		var serialized = $("#builder").sortable('serialize',{key : 'page'});
+		serialized = encodeURI(serialized);
 		$("#builder").sortable("destroy");
 		$("#builder").empty();
 		
@@ -244,10 +245,10 @@ $(document).ready(function() {
 		
 		$("#tool_savecontinue span").html("Wait...");
 		
-		$.getJSON('../dms/SplitDocument.do?method=split&document=' + docnum + '&' + serialized + '&queueID=' + queueId,			
+		$.getJSON(ctx + '/dms/SplitDocument.do?method=split&document=' + docnum + '&' + serialized + '&queueID=' + queueId,			
 				function(data) {
 					$("#tool_savecontinue span").html("Save &amp; Continue");
-					popup(screen.height,screen.width,"../dms/showDocument.jsp?segmentID="+data["newDocNum"] + '&demoName=' + encodeURIComponent(demoName) + "&inWindow=true", "assignDoc");			
+					popup(screen.height,screen.width, ctx + "/dms/showDocument.jsp?segmentID="+data["newDocNum"] + '&demoName=' + encodeURIComponent(demoName) + "&inWindow=true", "assignDoc");			
 				return false;
 			}
 		);
@@ -256,9 +257,6 @@ $(document).ready(function() {
 	$("#tool_done").click(function(e) {
 		
 		if( confirm("Are you sure want to exit?")) {
-		
-//			var docnum = $("#document_no").attr('value');			
-//			opener.refreshAndFile(docnum);
 			window.close();
 		}
 		
