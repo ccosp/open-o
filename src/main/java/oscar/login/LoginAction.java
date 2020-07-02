@@ -94,8 +94,12 @@ public final class LoginAction extends DispatchAction {
     	boolean ajaxResponse = request.getParameter("ajaxResponse") != null?Boolean.valueOf(request.getParameter("ajaxResponse")):false;
     	
     	boolean isMobileOptimized = false;
-    	
-    	String ip = request.getRemoteAddr();
+    	    	
+    	String ip = request.getHeader("X-FORWARDED-FOR");  
+    	if (ip == null || ip.isEmpty()) {  
+    	    ip = request.getRemoteAddr();  
+    	}
+
         String userAgent = request.getHeader("user-agent");
         String accept = request.getHeader("Accept");       
         UAgentInfo userAgentInfo = new UAgentInfo(userAgent, accept); 
