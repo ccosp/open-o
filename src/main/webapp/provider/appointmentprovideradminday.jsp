@@ -779,7 +779,7 @@ java.util.Locale vLocale =(java.util.Locale)session.getAttribute(org.apache.stru
 <table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%" id="firstTable" class="noprint">
 <tr>
 <td align="center" >
-<a href="../web/" title="OSCAR EMR"><img src="<%=request.getContextPath()%>/images/oscar_small.png" border="0"></a>
+<img src="<%=request.getContextPath()%>/images/oscar_small.png" border="0">
 </td>
 <td id="firstMenu">
 <ul id="navlist">
