@@ -151,7 +151,7 @@ response.addCookie(prvCookie);
 		}
 		
 		#clinic_logo {
-			max-width: 500px;
+			max-width: 400px;
 			margin: 0 auto;
 		}
 
