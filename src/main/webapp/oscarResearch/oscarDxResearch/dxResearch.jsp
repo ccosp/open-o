@@ -275,6 +275,7 @@ function update_date(did, demoNo, provNo) {
 
 					<table>
 						<tr>
+							<th>System</th>
 							<th class="heading" ><bean:message key="oscarResearch.oscarDxResearch.dxResearch.msgCode" /></th>
 							<th class="heading" ><bean:message key="oscarResearch.oscarDxResearch.dxResearch.msgDiagnosis" /></th>
 							<th class="heading" ><bean:message key="oscarResearch.oscarDxResearch.dxResearch.msgFirstVisit" /></th>
@@ -287,6 +288,9 @@ function update_date(did, demoNo, provNo) {
 
 							<logic:equal name="diagnotics" property="status" value="A">
 								<tr>
+								<td>
+									<bean:write name="diagnotics" property="type" />
+								</td>
 								<td class="notResolved"> <bean:write name="diagnotics" property="dxSearchCode" /></td>
 									<td class="notResolved"><bean:write name="diagnotics" property="description" /></td>
 									<td class="notResolved">
