@@ -26,9 +26,11 @@
 	color: #000000;
 	font-size: small;
 }
-a,input {
-		outline: none;
+
+a, input {
+	outline: none;
 }
+
 .wrapper {
 	margin: auto 15px
 }
@@ -58,13 +60,13 @@ table td#displayDxCodeTable table tr td {
 }
 
 table td#displayDxCodeTable table tr td:last-of-type a {
-	padding-left:5px;
-	border-left:2px #6699cc solid;
+	padding-left: 5px;
+	border-left: 2px #6699cc solid;
 }
 
 table td#displayDxCodeTable table tr td:last-of-type a:first-of-type {
-	padding:0;
-	border-left:none;
+	padding: 0;
+	border-left: none;
 }
 
 table td#displayDxCodeTable table tr:nth-of-type(odd) td {
@@ -87,4 +89,49 @@ table#dxCodeQuicklist td.heading .panel {
 
 .notResolved {
 	color: blue;
+}
+
+#oscarDxHeader {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: .5%;
+	margin-bottom: 15px;
+}
+
+table#oscarDxHeader tr td {
+	padding: 1px 5px;
+	background-color: #F3F3F3;
+	vertical-align: middle;
+}
+
+#oscarDxHeader #oscarDxHeaderLeftColumn {
+	width: 19.5% !important;
+	background-color: white;
+	padding: 0px;
+	padding-right: .5% !important;
+	width: 20%;
+}
+
+#oscarDxHeader #oscarDxHeaderLeftColumn h1 {
+	margin: 0px;
+	padding: 7px !important;
+	display: block;
+	font-size: large !important;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+#oscarDxHeaderRightColumn {
+	vertical-align: top !important;
+	text-align: right;
+	padding-top: 3px !important;
+	padding-right: 3px !important;
+}
+
+span.HelpAboutLogout a {
+	font-size: x-small;
+	color: black;
+	float: right;
+	padding: 0 3px;
 }

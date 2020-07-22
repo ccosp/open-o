@@ -175,17 +175,25 @@ function update_date(did, demoNo, provNo) {
 
 <body onLoad="setfocus();">
 <div class="wrapper">
-		<table class="dx-heading">
+
+	<div id="page-header">	
+		<table id="oscarDxHeader">
 			<tr>
-				<td class="subject">
+				<td id="oscarDxHeaderLeftColumn"><h1><bean:message key="global.disease" /></h1></td>
 
-				<h1><bean:message key="global.disease" />
-				
-				<small><oscar:nameage demographicNo="${ demographicNo }" /></small></h1>
-
+				<td id="oscarDxHeaderCenterColumn">				
+					<oscar:nameage demographicNo="${ demographicNo }" />					
+				</td>
+				<td id="oscarDxHeaderRightColumn" align=right>
+					<span class="HelpAboutLogout"> 
+						<a style="font-size: 10px; font-style: normal;" href="${ ctx }oscarEncounter/About.jsp" target="_new">About</a>
+						<a style="font-size: 10px; font-style: normal;" target="_blank"
+									href="http://www.oscarmanual.org/search?SearchableText=&Title=Chart+Interface&portal_type%3Alist=Document">Help</a>		
+					</span>
 				</td>
 			</tr>
 		</table>
+	</div>
 
 <table>
 	<tr>
