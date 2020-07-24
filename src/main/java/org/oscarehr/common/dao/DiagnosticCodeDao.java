@@ -25,16 +25,18 @@
 
 package org.oscarehr.common.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
 
+import org.oscarehr.common.model.AbstractCodeSystemModel;
 import org.oscarehr.common.model.DiagnosticCode;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class DiagnosticCodeDao extends AbstractDao<DiagnosticCode>{
+public class DiagnosticCodeDao extends AbstractCodeSystemDao<DiagnosticCode> {
 
 	public DiagnosticCodeDao() {
 		super(DiagnosticCode.class);
@@ -60,13 +62,17 @@ public class DiagnosticCodeDao extends AbstractDao<DiagnosticCode>{
 	}
 
 	public List<DiagnosticCode> search(String searchString) {
-		String sql = "select x from DiagnosticCode x where x.diagnosticCode like ? or x.description like ? order by x.diagnosticCode";
+		String sql = "select x from DiagnosticCode x where x.status like 'A' and x.diagnosticCode like ? or x.description like ? order by x.diagnosticCode";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, searchString);
-		query.setParameter(2, searchString);
-
+		query.setParameter(1, "%"+searchString+"%");
+		query.setParameter(2, "%"+searchString+"%");
 		
 		List<DiagnosticCode> results = query.getResultList();
+		if(results == null) 
+		{
+			results = Collections.emptyList();
+		}
+		
 		return results;
 	}
 
@@ -134,4 +140,25 @@ public class DiagnosticCodeDao extends AbstractDao<DiagnosticCode>{
 		query.setParameter("serviceType", serviceType);
 		return query.getResultList();
 	}
+
+	@Override
+	public DiagnosticCode findByCode(String code) {
+		List<DiagnosticCode> diagnosticCodeList = getByDxCode(code);
+		if(diagnosticCodeList != null)
+		{
+			return diagnosticCodeList.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public AbstractCodeSystemModel<?> findByCodingSystem(String codingSystem) {
+		Query query = entityManager.createQuery("FROM DiagnosticCode d WHERE d.diagnosticCode like :cs");
+		
+		query.setParameter("cs", codingSystem);
+		query.setMaxResults(1);
+		
+		return getSingleResultOrNull(query);
+	}
+
 }

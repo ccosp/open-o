@@ -42,7 +42,7 @@ public class AssociateCodesActionForm
   private String xml_diagnostic_detail3 = "";
   private String xml_other1 = "";
   private String mode = "";
-  private ServiceCodeAssociation svcAssoc;
+//  private ServiceCodeAssociation svcAssoc;
   public String getXml_diagnostic_detail1() {
     return xml_diagnostic_detail1;
   }

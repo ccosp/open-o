@@ -52,6 +52,8 @@ if(!authed) {
 <%@page import="java.text.*, java.util.*, oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.entities.*"%>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
+<%@ page import="oscar.oscarResearch.oscarDxResearch.util.dxResearchCodingSystem"%>
+
 <%!
   public void fillDxcodeList(BillingFormData.BillingService[] servicelist, Map dxcodeList) {
     for (int i = 0; i < servicelist.length; i++) {
@@ -143,6 +145,9 @@ if(!authed) {
   }
 
   ArrayList<String> recentList = billform.getRecentReferralDoctorsList(demo.getDemographicNo());
+  
+  dxResearchCodingSystem codingSys = new dxResearchCodingSystem();
+  pageContext.setAttribute("dxCodeSystemList", codingSys);
 %>
 <html>
 <head>
@@ -1519,40 +1524,54 @@ if(wcbneeds != null){%>
               <%}              %>
               </table>
               <!-- ONSCREEN DX CODE DISPLAY -->
-              <table width="100%" style="background-color:#CCCCFF;">
+              <table width="100%" style="background-color:#CCCCFF;" class="tool-table">
                 <tr>
-                  <td valign="top" width="10%">
-                    <table style="background-color:#EEEEFF;">
-                      <tr>
-                        <th align="left">
-                              <a href="#" id="pop2" onClick="formPopup(this.id,'Layer2');return false;">
-                                <bean:message key="billing.diagnostic.code"/>
-                              </a>   
-                        </th>
-                      </tr>
-                      <tr>
-                        <td>
-                            <html:text property="xml_diagnostic_detail1" size="25" onkeypress="return grabEnter(event,'ScriptAttach()')"/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <html:text property="xml_diagnostic_detail2" size="25" onkeypress="return grabEnter(event,'ScriptAttach()')"/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <html:text property="xml_diagnostic_detail3" size="25" onkeypress="return grabEnter(event,'ScriptAttach()')"/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <a href="javascript:ScriptAttach()"><img src="../../../images/search_dx_code.jpg" border="0"></a> 
-                        </td>
-                      </tr>
-                    </table>
+                  <td valign="top" width="80%">
+                         <table>
+                         <tr><td>
+                            <div class="input-group">
+								<span class="input-group-addon">
+									<bean:message key="billing.diagnostic.code"/>
+								</span> 
+								
+								<select class="form-control" name="dxCodeSystem" id="codingSystem" >
+									<oscar:oscarPropertiesCheck value="false" property="DISABLE_MSP_DX_SYSTEM">
+										<option value="msp" selected>MSP</option>
+						 			</oscar:oscarPropertiesCheck>
+						 			<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">
+										<option value="<bean:write name="codeSystem"/>"><bean:write name="codeSystem" /></option>
+									</logic:iterate>
+								</select>
+							</div>	
+						</td></tr>
+						<tr><td>
+							<div class="input-group">
+                            	<html:text styleClass="form-control jsonDxSearch" property="xml_diagnostic_detail1" />
+  	  							<span class="input-group-addon">
+									<span class="glyphicon glyphicon-search"></span>
+								</span> 
+							</div>
+						</td></tr>
+						<tr><td>
+  							<div class="input-group">
+                            	<html:text styleClass="form-control jsonDxSearch" property="xml_diagnostic_detail2" /> 
+	  							<span class="input-group-addon">
+									<span class="glyphicon glyphicon-search"></span>
+								</span> 
+							</div>
+						</td></tr>
+						<tr><td>	
+  							<div class="input-group">
+	                            <html:text styleClass="form-control jsonDxSearch" property="xml_diagnostic_detail3" />
+	  							<span class="input-group-addon">
+									<span class="glyphicon glyphicon-search"></span>
+								</span> 
+							</div>
+						</td></tr>
+					
+						</table>
                   </td>
-                  <td align="left" valign="top">
+                  <td align="left" valign="top" width="20%">
                       <div id="DX_REFERENCE"></div>
                        <oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
                          <script type="text/javascript">

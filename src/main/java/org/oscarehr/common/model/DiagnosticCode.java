@@ -31,10 +31,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.oscarehr.common.dao.AbstractCodeSystemDao.codingSystem;
 
 @Entity
 @Table(name="diagnosticcode")
-public class DiagnosticCode extends AbstractModel<Integer>{
+public class DiagnosticCode extends AbstractCodeSystemModel<Integer> implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,5 +93,22 @@ public class DiagnosticCode extends AbstractModel<Integer>{
     	this.region = region;
     }
 
+	@Override
+	@Transient
+	public String getCode() {
+		return this.diagnosticCode;
+	}
+
+	@Override
+	@Transient
+	public String getCodingSystem() {
+		return codingSystem.msp.name();
+	}
+
+	@Override
+	@Transient
+	public void setCode(String code) {
+		setDiagnosticCode(code);		
+	}
 
 }

@@ -29,6 +29,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.oscarehr.common.dao.AbstractCodeSystemDao.codingSystem;
+
 @Entity
 @Table(name="icd10")
 public class Icd10 extends AbstractCodeSystemModel<Integer> implements java.io.Serializable {
@@ -49,7 +51,7 @@ public class Icd10 extends AbstractCodeSystemModel<Integer> implements java.io.S
 	}
 	@Override
 	public String getCodingSystem() {
-		return "icd10";
+		return codingSystem.icd10.name();
 	}
 	@Override
 	public void setCode(String code) {

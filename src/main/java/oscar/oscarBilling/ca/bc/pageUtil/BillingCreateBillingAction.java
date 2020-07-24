@@ -312,11 +312,14 @@ public class BillingCreateBillingAction extends Action {
   private void validateDxCodeList(BillingSessionBean bean,
                                   ActionMessages errors) {
     BillingAssociationPersistence per = new BillingAssociationPersistence();
-    String[] dxcodes = {
-        bean.getDx1(), bean.getDx2(), bean.getDx3()};
+    String[] dxcodes = {bean.getDx1(), bean.getDx2(), bean.getDx3()};
+    
+    // this code only applies to the special MSP Dx code table when billing MSP.
+    String billType = bean.getBillType();
     for (int i = 0; i < dxcodes.length; i++) {
       String code = dxcodes[i];
-      if (code != null && !code.equals("") && !per.dxcodeExists(code)) {
+      if ( ("MSP".equalsIgnoreCase(billType) || "ICBC".equalsIgnoreCase(billType) || "WCB".equalsIgnoreCase(billType))
+    		  && (code != null && !code.equals("") && !per.dxcodeExists(code))) {
         errors.add("",
                    new ActionMessage(
                        "oscar.billing.CA.BC.billingBC.error.invaliddxcode",

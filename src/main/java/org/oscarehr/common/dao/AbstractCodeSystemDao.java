@@ -29,7 +29,7 @@ import org.oscarehr.common.model.AbstractCodeSystemModel;
 
 public abstract class AbstractCodeSystemDao<T extends AbstractCodeSystemModel<?>> extends AbstractDao<T> {
 
-	public static enum codingSystem {icd9,icd10,ichppccode,SnomedCore}
+	public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
 	
 	/**
 	 * Gets the name of the DAO for the specified code system
@@ -49,6 +49,8 @@ public abstract class AbstractCodeSystemDao<T extends AbstractCodeSystemModel<?>
 		case icd9: object = "icd9Dao";
 			break;
 		case ichppccode: object = "ichppccodeDao";
+			break;
+		case msp: object = "diagnosticCodeDao";
 			break;
 		default: throw new IllegalArgumentException("Unsupported code system: " + codeSystem + ". Please use one of icd9, ichppccode, snomedcore");				
 		}		
