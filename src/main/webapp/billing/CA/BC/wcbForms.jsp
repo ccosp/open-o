@@ -53,9 +53,9 @@ if(!authed) {
   %>
   <p>
                                                 
-    WCB Forms available to attach. <a  onclick="popup(700,960,'viewformwcb.do?demographic_no=<%=demographicNo%>&formId=0&provNo=999998&parentAjaxId=forms&hideToBill=true','<%=demographicNo%>NEWWCB'); return false;"  href="javascript:void(0);" >New WCB Form</a> <br>
+   <label> WCB Forms available to attach.</label> <a class="pull-right" onclick="popup(700,960,'viewformwcb.do?demographic_no=<%=demographicNo%>&formId=0&provNo=999998&parentAjaxId=forms&hideToBill=true','<%=demographicNo%>NEWWCB'); return false;"  href="javascript:void(0);" >New WCB Form</a> <br>
     
-    <table border="1" cellspacing="0" cellpadding="1" >
+    <table class="table table-striped table-condensed" border="1" cellspacing="0" cellpadding="1" >
         <tr bgcolor="#CCCCFF">
             <td>&nbsp;</td>
             <td>&nbsp;</td>

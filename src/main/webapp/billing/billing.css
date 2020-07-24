@@ -23,33 +23,26 @@
  */
 <!--
 BODY {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 8pt;
-	font-weight: normal;
-	line-height: 10px;
-	font-style: normal;
 	color: black;
+	line-height: 1;
 	text-decoration: none;
-	font-family: "Times New Roman", Times, serif;
-	background-attachment: fixed
+	background-attachment: fixed;
 }
 
 TD,TH {
-	font-family: "Arial", "Helvetica", sans-serif;
+
 	font-size: 8pt;
 	font-weight: normal;
-	line-height: 10px;
 }
 
 TR {
-	font-family: "Arial", "Helvetica", sans-serif;
 	font-size: 8pt;
 	font-weight: normal;
-	line-height: 10px;
-	color: grey;
 }
 
 .bodytext {
-	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	font-style: normal;
 	line-height: normal;
@@ -65,13 +58,13 @@ a:active {
 }
 
 a:link {
-	text-decoration: none;;
+	text-decoration: none;
 	color: #645FCD;
 	font-weight: bold;
 }
 
 a:visited {
-	text-decoration: none;;
+	text-decoration: none;
 	color: #645FCD;
 	font-weight: bold
 }
