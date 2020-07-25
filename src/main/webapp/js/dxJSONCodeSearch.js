@@ -1,14 +1,15 @@
 
 	jQuery(document).ready(function() {
 
-		jQuery( "#jsonDxSearch" ).autocomplete({			
+		jQuery( "#jsonDxSearch, .jsonDxSearch" ).autocomplete({			
 			source: function(request, response) {
 				jQuery.ajax({
 				    url: ctx + "/dxCodeSearchJSON.do",
 				    type: 'POST',
-				    data: 'method=search' + (jQuery( '#codingSystem' ).find(":selected").val()).toUpperCase()
-				    				+ '&keyword=' 
-				    				+ jQuery( "#jsonDxSearch" ).val(),
+				    data: {
+				    	method: 'search' + (jQuery( '#codingSystem' ).find(":selected").val()).toUpperCase(),
+				    	keyword: request.term
+				    },
 				  	dataType: "json",
 				    success: function(data) {
 						response(jQuery.map( data, function(item) { 
@@ -25,34 +26,13 @@
 			minLength: 2,
 			select: function( event, ui ) {
 				event.preventDefault();
-				jQuery( "#jsonDxSearch" ).val(ui.item.label);
-				jQuery( '#codeTxt' ).val(ui.item.value);
+				jQuery( this ).val(ui.item.value);
 			},
 			focus: function(event, ui) {
 		        event.preventDefault();
-		        jQuery( "#jsonDxSearch" ).val(ui.item.label);
-		    },
-			open: function() {
-				jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-			},
-			close: function() {
-				jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-			}
+		        jQuery( this ).val(ui.item.label);
+		    }
 		})
 
-		jQuery( "#jsonDxSearch" )
-		.val("Search")
-		.css('color','grey')
-		.focus(function(){
-			if(this.value == "Search"){
-		         this.value = "";
-		         jQuery( "#jsonDxSearch" ).css('color','black');
-		    } 			
-		}).blur(function(){
-		    if(this.value==""){
-		         this.value = "Search";	
-		         jQuery( "#jsonDxSearch" ).css('color','grey');
-		    } 
-		});
 				
 	})

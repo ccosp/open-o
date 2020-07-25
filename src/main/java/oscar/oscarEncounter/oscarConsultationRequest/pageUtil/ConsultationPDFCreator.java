@@ -251,7 +251,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		PdfPTable datelineborder = new PdfPTable(1);
 		datelineborder.setWidthPercentage(100f);
 		PdfPCell datecell = new PdfPCell();
-		datecell.setPhrase( new Phrase( String.format("%s: %s", getResource("msgDate"), reqFrm.pwb.equals("1") ? getResource("pwb") : reqFrm.referalDate) ) ); 
+		datecell.setPhrase( new Phrase( String.format("%s %s", getResource("msgDate"), reqFrm.pwb.equals("1") ? getResource("pwb") : reqFrm.referalDate) ) ); 
 		datecell.setBorder(0);
 		datecell.setColspan(1);
 		datecell.setPaddingTop(5f);

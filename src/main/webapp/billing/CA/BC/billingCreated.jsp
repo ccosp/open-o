@@ -31,7 +31,7 @@
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_billing" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
-	<%response.sendRedirect("../../../securityError.jsp?type=_billing");%>
+	<%response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_billing");%>
 </security:oscarSec>
 <%
 if(!authed) {
@@ -42,7 +42,7 @@ if(!authed) {
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%
   if(session.getValue("user") == null)
-    response.sendRedirect("../../../logout.jsp");
+    response.sendRedirect(request.getContextPath() + "/logout.jsp");
 %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -69,15 +69,18 @@ BillingFormData billform = new BillingFormData();
 
 %>
 
-
-
+<!DOCTYPE HTML >
 <html>
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title><bean:message key="billing.bc.title" /></title>
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
+
+<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/bootstrap-datetimepicker-standalone.css" />
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
 <script language="JavaScript">
-<!--
+//<!--
 
 function setfocus() {
 		  //document.serviceform.xml_diagnostic_code.focus();
@@ -154,17 +157,16 @@ function POP(n,h,v) {
   window.open(n,'OSCAR','toolbar=no,location=no,directories=no,status=yes,menubar=no,resizable=yes,copyhistory=no,scrollbars=yes,width='+h+',height='+v+',top=100,left=200');
 }
 //-->
-</SCRIPT>
+</script>
 <script language="JavaScript">
-<!--
-<!--
+
+//<!--
 function reloadPage(init) {  //reloads the window if Nav4 resized
   if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
     document.pgW=innerWidth; document.pgH=innerHeight; onresize=reloadPage; }}
   else if (innerWidth!=document.pgW || innerHeight!=document.pgH) location.reload();
 }
 reloadPage(true);
-// -->
 
 function findObj(n, d) { //v4.0
   var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
@@ -182,197 +184,279 @@ function showHideLayers() { //v3.0
 }
 //-->
 </script>
-<link rel="stylesheet" href="../billing/billing.css" type="text/css">
+
+<style type="text/css">
+
+	.button-bar {
+		margin-bottom:15px;
+	}
+	tr.table-heading td {
+		font-weight: bold;
+		background-color: #EAEAFF !important;
+	}
+
+	table tr th {
+		text-align: right;
+	}
+
+	table {
+		border-collapse: collapse;
+		margin: 5px 0 0 0;
+		width: 100%;
+	}
+	table tr td {
+		vertical-align: top;
+	}		
+	.wrapper {
+		margin: auto 15px
+	}
+	
+	#oscarBillingHeader {
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: .5%;
+	}
+	
+	table#oscarBillingHeader tr td {
+		padding: 1px 5px;
+		background-color: #F3F3F3;
+		vertical-align: middle;
+	}
+	
+	#oscarBillingHeader #oscarBillingHeaderLeftColumn {
+		width: 19.5% !important;
+		background-color: white;
+		padding: 0px;
+		padding-right: .5% !important;
+		width: 20%;
+	}
+	
+	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
+		margin: 0px;
+		padding: 7px !important;
+		display: block;
+		font-size: large !important;
+		background-color: black;
+		color: white;
+		font-weight: bold;
+	}
+	
+	#oscarBillingHeaderRightColumn {
+		vertical-align: top !important;
+		text-align: right;
+		padding-top: 3px !important;
+		padding-right: 3px !important;
+	}
+	
+	span.HelpAboutLogout a {
+		font-size: x-small;
+		color: black;
+		float: right;
+		padding: 0 3px;
+	}
+	
+</style>
+
 </head>
 
+<body onLoad="setfocus();showHideLayers('Layer1','','hide')">
 
+<div class="wrapper">
+    <html:form styleClass="form-inline" action="/billing/CA/BC/SaveBilling">
 
+	<div id="page-header">	
+		<table id="oscarBillingHeader">
+			<tr>
+				<td id="oscarBillingHeaderLeftColumn"><h1><bean:message key="billing.bc.title"/></h1></td>
 
-<body bgcolor="#FFFFFF" text="#000000" rightmargin="0" leftmargin="0"
-	topmargin="10" marginwidth="0" marginheight="0"
-	onLoad="setfocus();showHideLayers('Layer1','','hide')">
-    <html:form action="/billing/CA/BC/SaveBilling">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr bgcolor="#000000">
-		<td height="40" width="10%"></td>
-		<td width="90%" align="left">
-		<p><font face="Verdana, Arial, Helvetica, sans-serif"
-			color="#FFFFFF"><b><font
-			face="Arial, Helvetica, sans-serif" size="4">oscar<font
-			size="3"><bean:message key="billing.bc.title" /></font></font></b></font></p>
-		</td>
-	</tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<td id="oscarBillingHeaderCenterColumn">				
+					Billing Summary				
+				</td>
+				<td id="oscarBillingHeaderRightColumn" align=right>
+					<span class="HelpAboutLogout"> 
+						<a style="font-size: 10px; font-style: normal;" href="${ ctx }oscarEncounter/About.jsp" target="_new">About</a>
+						<a style="font-size: 10px; font-style: normal;" target="_blank"
+									href="http://www.oscarmanual.org/search?SearchableText=&Title=Chart+Interface&portal_type%3Alist=Document">Help</a>		
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+<div class="container-fluid">
+<table>
 	<tr>
-		<td valign="top" height="221">
-		<table width="107%" border="0" cellspacing="2" cellpadding="2">
-			<tr bgcolor="#EAEAFF">
+		<td>
+		<table class="table table-condensed table-striped">
+			<tr class="table-heading">
 				<td colspan="6">Patient Information</td>
 			</tr>
 			<tr>
-				<td width="12%" height="16">Patient Name:</td>
-				<td width="12%"><%=bean.getPatientName()%>&nbsp;</td>
-				<td width="16%">Patient PHN:</td>
-				<td width="17%"><%=bean.getPatientPHN()%></td>
-				<td width="19%">Health Card Type:</td>
-				<td width="24%"><%=bean.getPatientHCType()%></td>
+				<th>Patient Name:</th>
+				<td><%=bean.getPatientName()%></td>
+				<th>Patient PHN:</th>
+				<td><%=bean.getPatientPHN()%></td>
+				<th>Health Card Type:</th>
+				<td><%=bean.getPatientHCType()%></td>
 			</tr>
 			<tr>
-				<td height="16">Patient DoB:</td>
+				<th>Patient DoB:</th>
 				<td><%=bean.getPatientDoB()%></td>
-				<td>Patient Age:</td>
+				<th>Patient Age:</th>
 				<td><%=bean.getPatientAge()%></td>
-				<td>Patient Sex:</td>
+				<th>Patient Sex:</th>
 				<td><%=bean.getPatientSex()%></td>
 			</tr>
 			<tr>
-				<td height="16">Patient Address:</td>
+				<th>Patient Address:</th>
 				<td><%=bean.getPatientAddress1()%></td>
-				<td>City:</td>
+				<th>City:</th>
 				<td><%=bean.getPatientAddress2()%></td>
-				<td>Postal:</td>
+				<th>Postal:</th>
 				<td><%=bean.getPatientPostal()%></td>
 			</tr>
-			<tr>
-				<td height="16">&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
+
 		</table>
 
-		<table width="107%" border="0" cellspacing="2" cellpadding="2">
-			<tr bgcolor="#EAEAFF">
-				<td colspan="6">Billing Information</td>
+		<table class="table table-condensed table-striped">
+			<tr class="table-heading">
+				<td colspan="8">Billing Information</td>
 			</tr>
 			<tr>
-				<td width="12%" height="16">Billing Type:</td>
-				<td width="12%"><%=bean.getBillingType()%></td>
-				<td width="16%">Service Location:</td>
-				<td width="17%"><%=bean.getVisitType()%></td>
-				<td width="19%">Clarification Code:</td>
-				<td width="24%"><%=bean.getVisitLocation()%></td>
+				<th>Billing Type:</th>
+				<td><%=bean.getBillingType()%></td>
+				<th>Service Location:</th>
+				<td><%=bean.getVisitType()%></td>
+				<th>Clarification Code:</th>
+				<td><%=bean.getVisitLocation()%></td>
+				<th>Payment Method:</th>
+				<td><%=bean.getPaymentTypeName()%></td>
 			</tr>
 			<tr>
-				<td height="16" nowrap>Service Date: <%=bean.getServiceDate()%>
-				</td>
-				<td>Service To Date: <%=bean.getService_to_date()%></td>
-				<td>After Hours: <%=getAHDisplay(bean.getAfterHours())%></td>
-				<td>Time Call: <%=bean.getTimeCall()%></td>
-				<td>StartTime: <%=bean.getStartTime()%></td>
-				<td>EndTime: <%=bean.getEndTime()%></td>
+				<th>Service Date:</th>
+				<td><%=bean.getServiceDate()%></td>
+				<th>Service To Date:</th>
+				<td><%=bean.getService_to_date()%></td>
+				<th>After Hours:</th>
+				<td><%=getAHDisplay(bean.getAfterHours())%></td>
+				<th>Time Call:</th>
+				<td><%=bean.getTimeCall()%></td>
 			</tr>
 			<tr>
-				<td height="16">Billing Provider:</td>
+				<th>Start:</th>
+				<td><%=bean.getStartTime()%></td>
+				<th>End:</th>
+				<td><%=bean.getEndTime()%></td>
+				<th>Billing Provider:</th>
 				<td><%=billform.getProviderName(bean.getBillingProvider())%></td>
-				<td>Appointment Provider:</td>
+				<th>Appointment Provider:</th>
 				<td><%=billform.getProviderName(bean.getApptProviderNo())%></td>
-				<td>Creator:</td>
+			</tr>
+			<tr>
+				<th>Creator:</th>
 				<td><%=billform.getProviderName(bean.getCreator())%></td>
+				<th>Dependent:</th>
+				<td><%=bean.getDependent()%></td>
+				<th>Sub Code:</th>
+				<td><%=bean.getSubmissionCode()%></td>
+				<th>&nbsp;</th>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td height="16" colspan="3"><%=getReferralString(bean.getReferType1())%>
-				<%=billingReferralDao.getReferralDocName(bean.getReferral1()) %> <%=addBrackets(bean.getReferral1())%>
-				&nbsp;&nbsp;&nbsp;&nbsp; <%=getReferralString(bean.getReferType2())%>
-				<%=billingReferralDao.getReferralDocName(bean.getReferral2()) %> <%=addBrackets(bean.getReferral2())%>
-				</td>
-				<td>Dependent: <%=bean.getDependent()%></td>
+				<th>Short Note:</th>
+				<td colspan="3"><%=bean.getShortClaimNote()%></td>
+				<th>ICBC Claim #:</th>
+				<td colspan="3"><%=bean.getIcbc_claim_no()%></td>
+			</tr>
+			<tr>
+				<th><%=getReferralString(bean.getReferType1())%></th>
+				<td colspan="3"><%=billingReferralDao.getReferralDocName(bean.getReferral1()) %> <%=addBrackets(bean.getReferral1())%></td>
+				<th><%=getReferralString(bean.getReferType2())%></th>
+				<td colspan="3"><%=billingReferralDao.getReferralDocName(bean.getReferral2()) %> <%=addBrackets(bean.getReferral2())%></td>
+			</tr>
 
-				<td>Sub Code: <%=bean.getSubmissionCode()%></td>
-				<td>Payment Method: <%=bean.getPaymentTypeName()%></td>
-			</tr>
-			<tr>
-				<td>Short Note:</td>
-				<td colspan="4"><%=bean.getShortClaimNote()%></td>
-				<td>ICBC claim #:<%=bean.getIcbc_claim_no()%></td>
-			</tr>
 		</table>
-		<div align="left"></div>
 
-		<table width="100%" border="0" cellspacing="0" cellpadding="0"
-			height="137">
+		<table>
 			<tr>
-				<td valign="top">
-				<table width="100%" border="0" cellspacing="1" cellpadding="1">
-					<tr bgcolor="#EAEAFF">
-						<td><bean:message key="billing.service.code" /></td>
-						<td><bean:message key="billing.service.desc" /></td>
-						<td><bean:message key="billing.service.unit" /></td>
-						<td><bean:message key="billing.service.fee" /></td>
-						<td><bean:message key="billing.service.total" /></td>
-					</tr>
-					<% for (int i=0; i < billItem.size(); i++){
-                                              BillingBillingManager.BillingItem bi = (BillingBillingManager.BillingItem) billItem.get(i) ;
-                                        %>
-					<tr>
-						<td><%=bi.getServiceCode()%></td>
-						<td><%=bi.getDescription()%></td>
-						<td><%=bi.getUnit()%></td>
-						<td><input type="text" name="dispPrice+<%=bi.getServiceCode()%>" value="<%=bi.getDispPrice()%>"/>  </td>
-						<td><%=bi.getDispLineTotal()%></td>
-					</tr>
-					<% } %>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td><%=bean.getGrandtotal()%></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-				</table>
-				<table width="100%" border="0" cellspacing="1" cellpadding="1">
-					<tr bgcolor="#EAEAFF">
-						<td width="10%" height="14"><bean:message
-							key="billing.diagnostic.code" /></td>
-						<td width="39%"><bean:message key="billing.diagnostic.desc" /></td>
-						<td width="37%">&nbsp;</td>
-						<td width="14%">&nbsp;</td>
-					</tr>
-					<tr>
-						<td><%=bean.getDx1()%></td>
-						<td><%=billform.getDiagDesc(bean.getDx1(), bean.getBillRegion())%></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr>
-						<td><%=bean.getDx2()%></td>
-						<td><%=billform.getDiagDesc(bean.getDx2(), bean.getBillRegion())%></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr>
-						<td><%=bean.getDx3()%></td>
-						<td><%=billform.getDiagDesc(bean.getDx3(), bean.getBillRegion())%></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr bgcolor="#F6F6F6">
-						<td colspan="4">notes</td>
-					</tr>
-					<tr>
-						<td colspan="4"><%= bean.getNotes() %>&nbsp;</td>
-					</tr>
+				<td>
+					<table class="table table-condensed table-striped">
+						<tr class="table-heading">
+							<td><bean:message key="billing.service.code" /></td>
+							<td><bean:message key="billing.service.desc" /></td>
+							<td><bean:message key="billing.service.unit" /></td>
+							<td><bean:message key="billing.service.fee" /></td>
+							<td><bean:message key="billing.service.total" /></td>
+						</tr>
+						<% for (int i=0; i < billItem.size(); i++){
+	                                              BillingBillingManager.BillingItem bi = (BillingBillingManager.BillingItem) billItem.get(i) ;
+	                                        %>
+						<tr>
+							<td><%=bi.getServiceCode()%></td>
+							<td><%=bi.getDescription()%></td>
+							<td><%=bi.getUnit()%></td>
+							<td><input type="text" class="form-control" name="dispPrice+<%=bi.getServiceCode()%>" value="<%=bi.getDispPrice()%>"/>  </td>
+							<td><%=bi.getDispLineTotal()%></td>
+						</tr>
+						<% } %>
+						<tr>
+							<th colspan="4">Total:</th>
+							<td><%=bean.getGrandtotal()%></td>
+						</tr>
 
-					<tr bgcolor="#F6F6F6">
-						<td colspan="4">Internal Notes</td>
-					</tr>
-					<tr>
-						<td colspan="4"><%= bean.getMessageNotes() %>&nbsp;</td>
-					</tr>
-
-				</table>
-				<table width="100%" border="0">
+					</table>
+				</td>
+				<td>
+				
+					<table class="table table-condensed table-striped">
+						<tr class="table-heading">
+							<td><bean:message
+								key="billing.diagnostic.code" /></td>
+							<td><bean:message key="billing.diagnostic.desc" /></td>
+						</tr>
+						<tr>
+							<td><%=bean.getDx1()%></td>
+							<td><%=billform.getDiagDesc(bean.getDx1(), bean.getBillRegion())%></td>
+						</tr>
+						<tr>
+							<td><%=bean.getDx2()%></td>
+							<td><%=billform.getDiagDesc(bean.getDx2(), bean.getBillRegion())%></td>
+						</tr>
+						<tr>
+							<td><%=bean.getDx3()%></td>
+							<td><%=billform.getDiagDesc(bean.getDx3(), bean.getBillRegion())%></td>
+						</tr>
+					
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table class="table table-condensed table-striped">
+						<tr class="table-heading">
+							<td>notes</td>
+						</tr>
+						<tr>
+							<td colspan="4"><%= bean.getNotes() %></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table class="table table-condensed table-striped">
+						<tr class="table-heading">
+							<td>Internal Notes</td>
+						</tr>
+						<tr>
+							<td colspan="4"><%= bean.getMessageNotes() %></td>
+						</tr>
+	
+					</table>
+				</td>
+			</tr>
+			
+			<tr>
+			<td>
+			
+				<table>
 					<tr>
 						<td colspan="4">
 						<%
@@ -380,39 +464,41 @@ function showHideLayers() { //v3.0
                  WCBForm wcb =(WCBForm) request.getSession().getAttribute("WCBForm");
                 %> <%=wcb.getW_fname()%> <%}%>
 						</td>
-					</tr>
-					<td align="right" colspan="4">
-						<%if ("pri".equalsIgnoreCase(bean.getBillingType())){%>
-						<input type="submit" name="submit" value="Save & Print Receipt" />
-						<%}%>
-						<% if (request.getAttribute("GOBACKWCB") != null && request.getAttribute("GOBACKWCB").equals("true")){%>
-						<input type="button" name="Submit3" value="Go Back"
-							onClick="location.href='formwcb.jsp'" />
-						<%}else{%>
-						<input type="button" name="Submit3" value="Go Back"
-							onClick="location.href='billingBC.jsp?loadFromSession=yes'" />
-						<%}%>
-						<input type="submit" name="submit" value="Another Bill" />
-						<input type="submit" name="submit" value="Save Bill" />
-						<input type="button" name="Submit2" value="Cancel" onClick="window.close();" />
-					</td>
-					</tr>
+
 				</table>
 
-				<table width="100%" border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td align="right"></td>
-					</tr>
-				</table>
 				</td>
 			</tr>
+			
 		</table>
 		</td>
 	</tr>
 </table>
 
-<p>&nbsp;</p>
+
+  	<div class="container-fluid ">
+		<div class="pull-right button-bar">
+			<%if ("pri".equalsIgnoreCase(bean.getBillingType())){%>
+			<input class="btn btn-primary" type="submit" name="submit" value="Save & Print Receipt" />
+			<%}%>
+			<% if (request.getAttribute("GOBACKWCB") != null && request.getAttribute("GOBACKWCB").equals("true")){%>
+			<input class="btn btn-warning" type="button" name="Submit3" value="Go Back"
+				onClick="location.href='formwcb.jsp'" />
+			<%}else{%>
+			<input class="btn btn-warning" type="button" name="Submit3" value="Go Back"
+				onClick="location.href='billingBC.jsp?loadFromSession=yes'" />
+			<%}%>
+			<input class="btn btn-success" type="submit" name="submit" value="Another Bill" />
+			<input class="btn btn-primary" type="submit" name="submit" value="Save Bill" />
+			<input class="btn btn-danger" type="button" name="Submit2" value="Cancel" onClick="window.close();" />
+		</div>
+	</div>
+
+
+	</div> 
 </html:form>
+
+</div>	<!--  end wrapper -->
 </body>
 </html>
 <%!
