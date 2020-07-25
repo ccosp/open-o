@@ -4,7 +4,7 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
+ * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,94 +21,54 @@
  * Hamilton
  * Ontario, Canada
  */
-
-
 package org.oscarehr.common.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.oscarehr.common.dao.AbstractCodeSystemDao.codingSystem;
 
 @Entity
-@Table(name="diagnosticcode")
-public class DiagnosticCode extends AbstractCodeSystemModel<Integer> implements java.io.Serializable {
+@Table(name="icd10")
+public class Icd10 extends AbstractCodeSystemModel<Integer> implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="diagnosticcode_no")
-	private Integer id;
-
-	@Column(name="diagnostic_code")
-	private String diagnosticCode;
-
-	private String description;
-
-	private String status;
-
-	private String region;
-
-	public Integer getId() {
-    	return id;
-    }
-
-	public void setId(Integer id) {
-    	this.id = id;
-    }
-
-	public String getDiagnosticCode() {
-    	return diagnosticCode;
-    }
-
-	public void setDiagnosticCode(String diagnosticCode) {
-    	this.diagnosticCode = diagnosticCode;
-    }
-
-	public String getDescription() {
-    	return description;
-    }
-
-	public void setDescription(String description) {
-    	this.description = description;
-    }
-
-	public String getStatus() {
-    	return status;
-    }
-
-	public void setStatus(String status) {
-    	this.status = status;
-    }
-
-	public String getRegion() {
-    	return region;
-    }
-
-	public void setRegion(String region) {
-    	this.region = region;
-    }
-
+     private Integer id;
+     private String icd10;
+     private String description;
+     
 	@Override
-	@Transient
 	public String getCode() {
-		return this.diagnosticCode;
+		return icd10;
 	}
-
 	@Override
-	@Transient
+	public String getDescription() {
+		return description;
+	}
+	@Override
 	public String getCodingSystem() {
-		return codingSystem.msp.name();
+		return codingSystem.icd10.name();
 	}
-
 	@Override
-	@Transient
 	public void setCode(String code) {
-		setDiagnosticCode(code);		
+		this.icd10 = code;
+		
 	}
-
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	@Override
+	public Integer getId() {
+		return this.id;
+	}
+	
+    public void setId(Integer id) {
+        this.id = id;
+    }
+	
 }

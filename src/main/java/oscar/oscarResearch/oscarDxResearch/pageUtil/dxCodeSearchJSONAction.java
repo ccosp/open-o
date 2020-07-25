@@ -33,7 +33,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.oscarehr.common.dao.DiagnosticCodeDao;
+import org.oscarehr.common.dao.Icd10Dao;
 import org.oscarehr.common.dao.Icd9Dao;
+import org.oscarehr.common.model.DiagnosticCode;
+import org.oscarehr.common.model.Icd10;
 import org.oscarehr.common.model.Icd9;
 import org.oscarehr.util.JsonUtil;
 import org.oscarehr.util.MiscUtils;
@@ -49,9 +53,47 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 		String keyword = request.getParameter("keyword");
 		Icd9Dao dao = SpringUtils.getBean(Icd9Dao.class);		
 		List<Icd9> icd9List =  dao.getIcd9(keyword);
+
+		try {
+	        jsonify(icd9List, response, new String [] {
+	    			"handler", 
+	    			"hibernateLazyInitializer"});
+        } catch (IOException e) {
+        	logger.error("JSON Error", e);
+        }
+
+		return null;
+	}
+	
+	public ActionForward searchICD10(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+
+		String keyword = request.getParameter("keyword");
+		Icd10Dao dao = SpringUtils.getBean(Icd10Dao.class);		
+		List<Icd10> icd10List =  dao.searchCode(keyword);
 		
 		try {
-	        jsonify(icd9List, response);
+	        jsonify(icd10List, response, new String [] {
+		    			"handler", 
+		    			"hibernateLazyInitializer"});
+        } catch (IOException e) {
+        	logger.error("JSON Error", e);
+        }
+
+		return null;
+	}
+	
+	public ActionForward searchMSP(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+
+		String keyword = request.getParameter("keyword");
+		DiagnosticCodeDao dao = SpringUtils.getBean(DiagnosticCodeDao.class);		
+		List<DiagnosticCode> mspCodeList =  dao.search(keyword);
+		
+		try {
+	        jsonify(mspCodeList, response, new String [] {
+		    			"handler", 
+		    			"hibernateLazyInitializer"});
         } catch (IOException e) {
         	logger.error("JSON Error", e);
         }
@@ -61,11 +103,11 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 
 
 	private static void jsonify(final List<?> classList, 
-	    		final HttpServletResponse response) throws IOException {
+	    		final HttpServletResponse response, String[] ignoreMethods) throws IOException {
 
 		response.setContentType("text/x-json");
 		
-		String jsonstring = JsonUtil.pojoCollectionToJson(classList);
+		String jsonstring = JsonUtil.pojoCollectionToJson(classList, ignoreMethods);
 		PrintWriter pout = response.getWriter();
 		pout.write(jsonstring);
 	
