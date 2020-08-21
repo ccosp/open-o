@@ -12,14 +12,16 @@
 				    },
 				  	dataType: "json",
 				    success: function(data) {
-						response(jQuery.map( data, function(item) { 
-							return {
-								label: item.description.trim() + ' (' + item.code + ')',
-								value: item.code,
-								id: item.id
-							};
-				    	}))
-				    }			    
+				    	if(data) {
+							response(jQuery.map( data, function(item) { 
+								return {
+									label: item.description.trim() + ' (' + item.code + ')',
+									value: item.code,
+									id: item.id
+								};
+					    	}))
+				    	}	
+				    }				    
 				})					  
 			},
 			delay: 100,

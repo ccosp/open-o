@@ -47,6 +47,11 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 
 	private static Logger logger = MiscUtils.getLogger(); 
 	
+	public ActionForward unspecified(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+		return null;
+	}
+	
 	public ActionForward searchICD9(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 
