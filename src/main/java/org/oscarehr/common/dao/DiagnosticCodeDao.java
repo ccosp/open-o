@@ -104,8 +104,7 @@ public class DiagnosticCodeDao extends AbstractCodeSystemDao<DiagnosticCode> {
 	public List<DiagnosticCode> searchText(String description) {
 		String sql = "select x from DiagnosticCode x where x.description like ?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, description);
-
+		query.setParameter(1, "%"+description+"%");
 		
 		List<DiagnosticCode> results = query.getResultList();
 		return results;
@@ -144,7 +143,7 @@ public class DiagnosticCodeDao extends AbstractCodeSystemDao<DiagnosticCode> {
 	@Override
 	public DiagnosticCode findByCode(String code) {
 		List<DiagnosticCode> diagnosticCodeList = getByDxCode(code);
-		if(diagnosticCodeList != null)
+		if(diagnosticCodeList != null && diagnosticCodeList.size() > 0)
 		{
 			return diagnosticCodeList.get(0);
 		}

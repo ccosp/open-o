@@ -75,5 +75,21 @@ public class Icd10Dao extends AbstractCodeSystemDao<Icd10> {
 		
 		return getSingleResultOrNull(query);
 	}
+	
+	public List<Icd10> searchText(String description) {
+		String sql = "select x from DiagnosticCode x where x.description like ?";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter(1, "%"+description+"%");
+
+		@SuppressWarnings("unchecked")
+		List<Icd10> results = query.getResultList();
+		
+		if(results == null)
+		{
+			results = Collections.emptyList();
+		}
+
+		return results;
+	}
 
 }

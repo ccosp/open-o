@@ -39,14 +39,23 @@ import org.oscarehr.common.dao.Icd9Dao;
 import org.oscarehr.common.model.DiagnosticCode;
 import org.oscarehr.common.model.Icd10;
 import org.oscarehr.common.model.Icd9;
+import org.oscarehr.managers.CodingSystemManager;
 import org.oscarehr.util.JsonUtil;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
+
+import net.sf.json.JSONObject;
 
 public class dxCodeSearchJSONAction extends DispatchAction {
 
 	private static Logger logger = MiscUtils.getLogger(); 
 	
+	public ActionForward unspecified(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+		return null;
+	}
+	
+	@SuppressWarnings("unused")
 	public ActionForward searchICD9(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 
@@ -65,12 +74,13 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 		return null;
 	}
 	
+	@SuppressWarnings("unused")
 	public ActionForward searchICD10(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 
 		String keyword = request.getParameter("keyword");
 		Icd10Dao dao = SpringUtils.getBean(Icd10Dao.class);		
-		List<Icd10> icd10List =  dao.searchCode(keyword);
+		List<Icd10> icd10List = dao.searchCode(keyword);
 		
 		try {
 	        jsonify(icd10List, response, new String [] {
@@ -83,12 +93,22 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 		return null;
 	}
 	
+	/**
+	 * This method searches the table by text description only. NOT by code
+	 * This is intentional for smooth operation in BC Billing.
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@SuppressWarnings("unused")
 	public ActionForward searchMSP(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 
 		String keyword = request.getParameter("keyword");
 		DiagnosticCodeDao dao = SpringUtils.getBean(DiagnosticCodeDao.class);		
-		List<DiagnosticCode> mspCodeList =  dao.search(keyword);
+		List<DiagnosticCode> mspCodeList =  dao.searchText(keyword);
 		
 		try {
 	        jsonify(mspCodeList, response, new String [] {
@@ -100,6 +120,29 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 
 		return null;
 	}
+	
+	@SuppressWarnings("unused")
+	public ActionForward validateCode(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+
+		String code = request.getParameter("keyword");
+		String codeSystem = request.getParameter("codeSystem");
+		CodingSystemManager codingSystemManager = SpringUtils.getBean(CodingSystemManager.class);
+		boolean dxvalid = codingSystemManager.isCodeAvailable(codeSystem, code);
+		
+		JSONObject jsonResponse = new JSONObject();
+		jsonResponse.accumulate("dxvalid", dxvalid);
+		
+		response.setContentType("text/x-json");
+		
+		try(PrintWriter pout = response.getWriter()) {
+			jsonResponse.write(pout);
+		} catch (IOException e) {
+        	logger.error("JSON Error", e);
+		}
+		
+		return null;
+	}
 
 
 	private static void jsonify(final List<?> classList, 
@@ -108,11 +151,9 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 		response.setContentType("text/x-json");
 		
 		String jsonstring = JsonUtil.pojoCollectionToJson(classList, ignoreMethods);
-		PrintWriter pout = response.getWriter();
-		pout.write(jsonstring);
-	
-		pout.flush();
-		pout.close();
+		try(PrintWriter pout = response.getWriter()) {
+			pout.write(jsonstring);
+		}
 		         
     }
 	 
