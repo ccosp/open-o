@@ -1753,7 +1753,7 @@ if(wcbneeds != null){%>
 								</span> 
                             	<html:text styleClass="form-control" styleId="jsonDxSearchInput-1" property="xml_diagnostic_detail1" />
                             	<span class="input-group-btn">
-		                     		<button type="button" title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-1">
+		                     		<button type="button" title="Search diagnostic code" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-1">
 	                            		<span class="glyphicon glyphicon-search"></span>
 		                          	</button>
 	                          	</span>
