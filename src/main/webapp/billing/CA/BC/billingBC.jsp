@@ -47,6 +47,7 @@ if(!authed) {
 <%@taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@ page import="org.springframework.web.context.WebApplicationContext"%>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
@@ -151,7 +152,7 @@ if(!authed) {
   dxResearchCodingSystem codingSys = new dxResearchCodingSystem();
   pageContext.setAttribute("dxCodeSystemList", codingSys);
 %>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
 <title>
@@ -179,7 +180,7 @@ if(!authed) {
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/boxover.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/dxJSONCodeSearch.js"></script>
-
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery.validate-1.19.1.min.js"></script>
 
 <style type="text/css">
 	div#wcbForms p {
@@ -334,7 +335,16 @@ if(!authed) {
 	* html .ui-autocomplete {
 		height: 100px;
 	}
+	
+	table.table-borderless tr td, table.table-borderless tr th, table.table-borderless {
+	   	border: none;
+		border: 0;
+	}
+	.has-error {
+		background-color: #f2dede;
+	}
 
+	
 </style>
 <script type="text/javascript" >
 
@@ -355,51 +365,54 @@ function codeEntered(svcCode){
 }
 function addSvcCode(svcCode) {
     myform = document.forms[0];
-    for (var i = 0; i < myform.service.length; i++) {
-      if (myform.service[i].value == svcCode) {
-        if (myform.service[i].checked) {
-          if (myform.xml_other1.value == "") {
-            myform.xml_other1.value = svcCode;
-            var trayCode =  getAssocCode(svcCode,trayAssocCodes);
-            if(trayCode!=''){
-              myform.xml_other2.value = trayCode;
-            }
-            myform.xml_diagnostic_detail1.value = getAssocCode(svcCode,jsAssocCodes);
-          }
-          else if (myform.xml_other2.value == "") {
-            myform.xml_other2.value = svcCode;
-            var trayCode =  getAssocCode(svcCode,trayAssocCodes);
-            if(trayCode!=''){
-              myform.xml_other3.value = trayCode;
-            }
-            myform.xml_diagnostic_detail2.value = getAssocCode(svcCode,jsAssocCodes);
-          }
-          else if (myform.xml_other3.value == "") {
-            myform.xml_other3.value = svcCode;
-            myform.xml_diagnostic_detail3.value = getAssocCode(svcCode,jsAssocCodes);
-          }
-          else {
-            alert("There are already three service codes entered");
-            myform.service[i].checked = false;
-            return;
-          }
-        }
-        else {
-          if (myform.xml_other1.value == svcCode) {
-            myform.xml_other1.value = "";
-            myform.xml_other2.value = "";
-            myform.xml_diagnostic_detail1.value = "";
-          }
-          else if (myform.xml_other2.value == svcCode) {
-            myform.xml_other2.value = "";
-            myform.xml_diagnostic_detail2.value = "";
-          }
-          else if (myform.xml_other3.value == svcCode) {
-            myform.xml_other3.value = "";
-            myform.xml_diagnostic_detail3.value = "";
-          }
-        }return;
-      }
+    if(myform.service)
+    {
+	    for (var i = 0; i < myform.service.length; i++) {
+	      if (myform.service[i].value == svcCode) {
+	        if (myform.service[i].checked) {
+	          if (myform.xml_other1.value == "") {
+	            myform.xml_other1.value = svcCode;
+	            var trayCode =  getAssocCode(svcCode,trayAssocCodes);
+	            if(trayCode!=''){
+	              myform.xml_other2.value = trayCode;
+	            }
+	            myform.xml_diagnostic_detail1.value = getAssocCode(svcCode,jsAssocCodes);
+	          }
+	          else if (myform.xml_other2.value == "") {
+	            myform.xml_other2.value = svcCode;
+	            var trayCode =  getAssocCode(svcCode,trayAssocCodes);
+	            if(trayCode!=''){
+	              myform.xml_other3.value = trayCode;
+	            }
+	            myform.xml_diagnostic_detail2.value = getAssocCode(svcCode,jsAssocCodes);
+	          }
+	          else if (myform.xml_other3.value == "") {
+	            myform.xml_other3.value = svcCode;
+	            myform.xml_diagnostic_detail3.value = getAssocCode(svcCode,jsAssocCodes);
+	          }
+	          else {
+	            alert("There are already three service codes entered");
+	            myform.service[i].checked = false;
+	            return;
+	          }
+	        }
+	        else {
+	          if (myform.xml_other1.value == svcCode) {
+	            myform.xml_other1.value = "";
+	            myform.xml_other2.value = "";
+	            myform.xml_diagnostic_detail1.value = "";
+	          }
+	          else if (myform.xml_other2.value == svcCode) {
+	            myform.xml_other2.value = "";
+	            myform.xml_diagnostic_detail2.value = "";
+	          }
+	          else if (myform.xml_other3.value == svcCode) {
+	            myform.xml_other3.value = "";
+	            myform.xml_diagnostic_detail3.value = "";
+	          }
+	        }return;
+	      }
+	    }
     }
   }
 function getAssocCode(svcCode,assocCodes){
@@ -415,13 +428,16 @@ function getAssocCode(svcCode,assocCodes){
 }
 function checkSelectedCodes(){
     myform = document.forms[0];
-    for (var i = 0; i < myform.service.length; i++) {
-        if (myform.service[i].checked) {
-            if(!codeEntered(myform.service[i].value)){
-                myform.service[i].checked = false;
-            }
-        }
-    }
+    if(myform.service)
+    {
+	    for (var i = 0; i < myform.service.length; i++) {
+	        if (myform.service[i].checked) {
+	            if(!codeEntered(myform.service[i].value)){
+	                myform.service[i].checked = false;
+	            }
+	        }
+	    }
+	}
 }
 
 
@@ -538,28 +554,6 @@ function isNumeric(strString){
         }
          return retval;
    }
-
-function checkUnits(){
-	if  (!isNumeric(document.BillingCreateBillingForm.xml_other1_unit.value)){
-		alert("Units have be of numeric value");
-	        document.BillingCreateBillingForm.xml_other1_unit.focus();
-		return false;
-	}else if (!isNumeric(document.BillingCreateBillingForm.xml_other2_unit.value)){
-		alert("Units have be of numeric value");
-                document.BillingCreateBillingForm.xml_other2_unit.focus();
-                return false;
-	}else if (!isNumeric(document.BillingCreateBillingForm.xml_other3_unit.value)){
-		alert("Units have be of numeric value");
-                document.BillingCreateBillingForm.xml_other3_unit.focus();
-                return false;
-	}else if (document.BillingCreateBillingForm.xml_provider.value == "000000"){
-	   alert("Please select a Billing Physician");
-	   document.BillingCreateBillingForm.xml_provider.focus();
-	   return false;
-	}
-	return true;
-
-}
 
 function checkTextLimit(textField, maximumlength) {
    if (textField.value.length > maximumlength + 1){
@@ -751,12 +745,7 @@ jQuery(document).ready(function(jQuery){
     jQuery("#selectBillingForm").on('change',function() {
       	window.location.replace("../../../" + this.value);
     });
-	
-	/*  For dynamically setting the hours and minutes required for the start and end times.
-	<input type='text' id="serviceStartTime" class="form-control" />
-  	<input type=hidden id="xml_starttime_hr" name="xml_starttime_hr" />
-    <input type=hidden id="xml_starttime_min" name="xml_starttime_min" /> */
-    
+
 	jQuery("#serviceStartTime").on('blur', function() {
 	    var time = this.value;
 	    if(time) {
@@ -790,26 +779,181 @@ jQuery(document).ready(function(jQuery){
 	    	alert("Warning: the start time is greater than the end time.");
 	    }	
 	 }
-  
  
- jQuery(".referral-doctor").on('click', function() {
-  mRecordRefDocNum = jQuery(this).attr('data-num');  
-  mRecordRefDoc= jQuery(this).attr('data-doc');  
-  
-  one = jQuery('[name="xml_refer1"]');
-  two = jQuery('[name="xml_refer2"]');
-  
-  if(one.val().length>0){
-	  two.val(mRecordRefDocNum);
-	  two.attr("title", mRecordRefDoc );
-  }else{
-	  one.val(mRecordRefDocNum);
-	  one.attr("title", mRecordRefDoc );
-  }
- });
+
+	jQuery(".referral-doctor").on('click', function() {
+		 mRecordRefDocNum = jQuery(this).attr('data-num');  
+		 mRecordRefDoc= jQuery(this).attr('data-doc');  
+		 
+		 one = jQuery('[name="xml_refer1"]');
+		 two = jQuery('[name="xml_refer2"]');
+		 
+		 if(one.val().length>0){
+		  two.val(mRecordRefDocNum);
+		  two.attr("title", mRecordRefDoc );
+		 }else{
+		  one.val(mRecordRefDocNum);
+		  one.attr("title", mRecordRefDoc );
+		 }
+	});
+	
+	/*
+	 * All form validation code following
+	 *
+	 */
+	 jQuery("#bcBillingForm").validate({
+ 
+		 rules: {			 
+			 /*
+			  * Is provider selected
+			  */
+			 xml_provider: {
+				 required: true
+			 },
+			 
+			 /*
+			  * Validate all 3 service codes and 
+			  * unit values
+			  */
+			 xml_other1: {
+				 required: true
+			 },
+			 xml_other1_unit: {
+			      number: true
+			 },
+			 xml_other2_unit: {
+			      number: true
+			 },
+			 xml_other3_unit: {
+			      number: true
+			 },
+			 
+			 /*
+			  * Validate all 3 Diagnostic codes.
+			  */
+		 	 xml_diagnostic_detail1: {
+		 		 required: true,
+		 		 remote: {
+		 			url: ctx + "\/dxCodeSearchJSON.do",
+		 			type: "post",
+		 			dataType: "json",
+		 			data: {
+						keyword: function(element){
+							return jQuery( "input[name='xml_diagnostic_detail1']" ).val();
+						},
+						method: "validateCode",
+						codeSystem: function() {
+							return (jQuery( '#codingSystem option:selected, input#codingSystem' ).val()).toLowerCase();
+						}	
+		 			},
+		 			dataFilter: function (response) {
+		 				var data = JSON.parse(response);
+						return data.dxvalid;
+					}
+		 		 }
+		 	 },
+		 	 xml_diagnostic_detail2: {
+		 		 required: false,
+		 		 remote: {
+		 			url: ctx + "\/dxCodeSearchJSON.do",
+		 			type: "post",
+		 			dataType: "json",
+		 			data: {
+						keyword: function(element){
+							return jQuery( "input[name='xml_diagnostic_detail2']" ).val();
+						},
+						method: "validateCode",
+						codeSystem: function() {
+							return (jQuery( '#codingSystem option:selected, input#codingSystem' ).val()).toLowerCase();
+						}	
+		 			},
+		 			dataFilter: function (response) {
+		 				var data = JSON.parse(response);
+						return data.dxvalid;
+					}
+		 		 }
+		 	 },
+		 	 xml_diagnostic_detail3: {
+		 		 required: false,
+		 		 remote: {
+		 			url: ctx + "\/dxCodeSearchJSON.do",
+		 			type: "post",
+		 			dataType: "json",
+		 			data: {
+						keyword: function(element){
+							return jQuery( "input[name='xml_diagnostic_detail3']" ).val();
+						},
+						method: "validateCode",
+						codeSystem: function() {
+							return (jQuery( '#codingSystem option:selected, input#codingSystem' ).val()).toLowerCase();
+						}	
+		 			},
+		 			dataFilter: function (response) {
+		 				var data = JSON.parse(response);
+						return data.dxvalid;
+					}
+		 		 }
+		 	 }
+	 	 },
+	 	 
+		 /*
+		  * Error messages to return on each validation
+		  */
+		 messages: {
+		 	 xml_diagnostic_detail1: {
+		 		 required: "At least 1 diagnostic code is required",
+		 		 remote: "Invalid diagnostic code 1"
+		 	 },
+		 	 xml_diagnostic_detail2: {
+		 		 remote: "Invalid diagnostic code 2"
+		 	 },
+		 	 xml_diagnostic_detail3: {
+		 		 remote: "Invalid diagnostic code 3"
+		 	 },
+			 xml_other1_unit: "Service code units must be numeric",
+			 xml_other2_unit: "Service code units must be numeric",
+			 xml_other3_unit: "Service code units must be numeric",
+			 xml_provider: "Select a billing physician",
+			 xml_other1: "At least 1 service code is required"
+		 },
+		 
+		 /*
+		  * Error highlight and message methods
+		  */
+         highlight: function (element) { 
+             jQuery(element).addClass('has-error');             
+         },
+         unhighlight: function (element) {
+        	 jQuery(element).removeClass('has-error'); 
+         },
+		 submitHandler: function(form) {
+		     form.submit();
+		 },
+		 onkeyup: false,
+		 onfocusout: false,
+         focusInvalid: true,
+         errorElement: 'div', 
+         errorClass: 'alert alert-danger', 
+         errorLabelContainer: '#bcBillingError',
+
+	 })
+	/*
+	 * End form validation code
+	 *
+	 */
+
 	 
+	 /*
+	 *  clears out the dx code list everytime 
+	 *  the code system is changed.
+	 */
+	 jQuery("#codingSystem").change(function(){
+		 jQuery("#jsonDxSearchInput-1").val(""); 
+		 jQuery("#jsonDxSearchInput-2").val(""); 
+		 jQuery("#jsonDxSearchInput-3").val(""); 
+	 })
 	 
-})
+}); //<!-- End Document Ready //-->
 </script>
 </head>
 <%!
@@ -890,7 +1034,7 @@ if(wcbneeds != null){%>
 <%}%>
 
 <div class="container-fluid">
-<html:form styleClass="form-inline" action="/billing/CA/BC/CreateBilling" onsubmit="toggleWCB();return checkUnits();">
+<html:form styleId="bcBillingForm" styleClass="form-inline" action="/billing/CA/BC/CreateBilling" onsubmit="toggleWCB();">
   <input type="hidden" name="fromBilling" value=""/>
 
 <%
@@ -945,10 +1089,10 @@ if(wcbneeds != null){%>
   }
 %>
 
-  <table width="100%" >
+  <table >
     <tr>
       <td>
-        <table width="100%" class="tool-bar" id="billingPatientInfo">
+        <table class="tool-bar" id="billingPatientInfo">
           <tr>
           	<td>
 
@@ -976,7 +1120,7 @@ if(wcbneeds != null){%>
 
 		        <label><bean:message key="billing.provider.billProvider"/></label>
                 <html:select styleClass="form-control" property="xml_provider" value="<%=sxml_provider%>">
-                  <html:option value="000000">
+                  <html:option value="">
                     Select Provider
                   </html:option>
                 <%for (int j = 0; j < billphysician.length; j++) {                %>
@@ -1041,22 +1185,22 @@ if(wcbneeds != null){%>
 </tr>
 <tr>
 <td>
-        <table width="100%" class="tool-bar" >
+        <table class="tool-bar" >
           <tr>
             <td>
 			  <div class="form-group" > 
 		     
-	              <a href="javascript: function myFunction() {return false; }" id="hlSDate">
+	              <a href="javascript:void(0)" id="hlSDate">
 	                  <label><bean:message key="billing.servicedate"/></label>
 	              </a>
-	              <html:text styleClass="form-control" property="xml_appointment_date" size="10" readonly="true" styleId="xml_appointment_date"/>
+	              <html:text style="min-width:100px;" styleClass="form-control" property="xml_appointment_date" size="10" readonly="true" styleId="xml_appointment_date"/>
               </div>
 
             </td>
             <td>
 			<div class="form-group" > 
 		     
-              <a href="javascript: function myFunction() {return false; }" id="serviceToDate">
+              <a href="javascript:void(0)" id="serviceToDate">
                   <label>To Date</label>
               </a>
              
@@ -1217,7 +1361,7 @@ if(wcbneeds != null){%>
 
                 <html:text property="xml_vdate" readonly="true" value="" size="10" styleId="xml_vdate"/>
                 <a id="hlADate">
-                  <img title="Calendar" src="../../../images/cal.gif" alt="Calendar" border="0"/>
+                  <img title="Calendar" src="${pageContext.servletContext.contextPath}/images/cal.gif" alt="Calendar" border="0"/>
                 </a>
                 </div>
                 </div>
@@ -1263,7 +1407,7 @@ if(wcbneeds != null){%>
 </tr>
 <tr>
 <td>
-        <table width="100%" id="billingFormTable">
+        <table id="billingFormTable">
           <tr>
             <td valign="top" style="width:32%; padding-right:5px;" >
               <table class="table table-condensed table-bordered serviceCodesTable" >
@@ -1290,7 +1434,7 @@ if(wcbneeds != null){%>
                 <tr >
                 <%String svcCall = "addSvcCode('" + billlist1[i].getServiceCode() + "')";                %>
                   <td width="25%" valign="middle">
-                    <label>
+                    <label class="checkbox">
                       <html:multibox property="service" value="<%=billlist1[i].getServiceCode()%>" onclick="<%=svcCall%>"/>
                       <%=billlist1[i].getServiceCode()%>
                     </label>
@@ -1372,8 +1516,8 @@ if(wcbneeds != null){%>
                 <table style="background-color:#fff;" align="left">
                 <tr><td width="50%" valign="top">
                 
-                <table class="table table-condensed" style="background-color:#fff;">
-                <tr><td style="border-top:none;" colspan="2">Recent Referral Doctors Used</td></tr>
+                <table class="table table-condensed table-borderless" style="background-color:#fff;">
+                <tr><td colspan="2">Recent Referral Doctors</td></tr>
                   <%
                   String bgColor="#fff";
                   String rProvider = "";
@@ -1398,7 +1542,7 @@ if(wcbneeds != null){%>
                  </td>
                  <td width="50%" valign="top">
                  
-                <table class="table table-condensed" style="background-color:#fff;">
+                <table class="table table-condensed table-borderless" style="background-color:#fff;">
                 <tr><td style="border-top:none;" colspan="2">Referral Doctor on Master Record</td></tr>
                 <tr><td width="20%"><a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a></td><td><%=mRecRefDoctor%></td></tr> 
                 </table>
@@ -1430,7 +1574,7 @@ if(wcbneeds != null){%>
                 <tr >
                 <%String svcCall = "addSvcCode('" + billlist2[i].getServiceCode() + "')";                %>
                   <td width="25%">
-                  <label>
+                  <label class="checkbox">
                       <html:multibox property="service" value="<%=billlist2[i].getServiceCode()%>" onclick="<%=svcCall%>"/>
                       <%=billlist2[i].getServiceCode()%>
                   </label>
@@ -1446,10 +1590,10 @@ if(wcbneeds != null){%>
                 </tr>
               <%}              %>
               </table>
-              <table style="background-color:#999900;" class="tool-table">
+              <table style="background-color:#999900;" class="tool-table table table-condensed table-borderless">
                 <tr>
                   <td valign="top">
-                    <table width="100%">
+                    <table>
                       <tr>
                         <td width="70%">
                           <label><bean:message key="billing.service.otherservice"/></label>
@@ -1460,42 +1604,54 @@ if(wcbneeds != null){%>
                       </tr>
                       <tr>
                         <td>
+                        <div class="input-group">
+ 							<span class="input-group-addon">
+								1
+							</span>
                             <html:text styleClass="form-control" property="xml_other1" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
-                       
+                        </div>
                         </td>
                         <td>
                         <div class="input-group">
                             <html:text styleClass="form-control" property="xml_other1_unit" size="6" maxlength="6" styleId="xml_other1_unit"/>
                              <span class="input-group-btn">
-                            	<button type="button" class="btn btn" value=".5" onClick="$('xml_other1_unit').value = '0.5'">.5</button>
+                            	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other1_unit').value = '0.5'">.5</button>
                             </span>
                         </div>
                         </td>
                       </tr>
                       <tr>
                         <td>
+                        <div class="input-group">
+ 							<span class="input-group-addon">
+								2
+							</span>
                             <html:text styleClass="form-control" property="xml_other2" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
-             
+             			</div>
                         </td>
                         <td>
                         <div class="input-group">
                             <html:text styleClass="form-control" property="xml_other2_unit" size="6" maxlength="6" styleId="xml_other2_unit"/>
                             <span class="input-group-btn"> 
-                             	<button type="button" class="btn btn" value=".5" onClick="$('xml_other2_unit').value = '0.5'" >.5</button>
+                             	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other2_unit').value = '0.5'" >.5</button>
                              </span>
                          </div>
                         </td>
                       </tr>
                       <tr>
                         <td>
+						<div class="input-group">
+ 							<span class="input-group-addon">
+								3
+							</span>
                             <html:text styleClass="form-control" property="xml_other3" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
-                         
+                        </div> 
                         </td>
                         <td>
                         <div class="input-group">
                             <html:text styleClass="form-control" property="xml_other3_unit" styleId="xml_other3_unit"/>
                             <span class="input-group-btn"> 
-                            	<button type="button" class="btn btn" value=".5" onClick="$('xml_other3_unit').value = '0.5'" >.5</button>
+                            	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other3_unit').value = '0.5'" >.5</button>
                             </span>
                         </div>
                         </td>
@@ -1530,7 +1686,7 @@ if(wcbneeds != null){%>
                 <tr >
                 <%String svcCall = "addSvcCode('" + billlist3[i].getServiceCode() + "')";                %>
                   <td width="25%" >
-                  	<label>
+                  	<label class="checkbox">
                       <html:multibox property="service" value="<%=billlist3[i].getServiceCode()%>" onclick="<%=svcCall%>"/>
                       <%=billlist3[i].getServiceCode()%>
                       </label>
@@ -1545,75 +1701,113 @@ if(wcbneeds != null){%>
               <%}              %>
               </table>
               <!-- ONSCREEN DX CODE DISPLAY -->
-              <table width="100%" style="background-color:#CCCCFF;" class="tool-table">
+              <table style="background-color:#CCCCFF;" class="tool-table table table-condensed table-borderless">
                 <tr>
                   <td valign="top" width="80%">
-                         <table>
-                         <tr><td>
+                         <table class="table table-condensed table-borderless">
+                         <tr><td style="width:60%">
                             <div class="input-group">
-								<span class="input-group-addon">
-									<bean:message key="billing.diagnostic.code"/>
-								</span> 
-								
-								<select class="form-control" name="dxCodeSystem" id="codingSystem" >
-									<oscar:oscarPropertiesCheck value="false" property="DISABLE_MSP_DX_SYSTEM">
-										<option value="msp" selected>MSP</option>
-						 			</oscar:oscarPropertiesCheck>
-						 			<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">
-										<option value="<bean:write name="codeSystem"/>"><bean:write name="codeSystem" /></option>
-									</logic:iterate>
-								</select>
+ 
+								<%--
+									If the list of coding systems includes ICD10, then offer a list of options 
+									including the specific MSP Dx table. 
+									If the user wants a coding system but does not want the MSP table then 
+									the DISABLE_MSP_DX_SYSTEM switch can be set in OSCAR properties. When this is 
+									disabled the user will be presented with the other selected tables. 
+								 --%>
+								<c:set scope="page" var="icd10" value="false" />
+								<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">									
+									<c:if test="${ codeSystem eq 'icd10' }">									
+										<c:set scope="page" var="isIcd10" value="true" />
+									</c:if>								
+								</logic:iterate>
+								<c:choose>
+									<c:when test="${ isIcd10 }">
+										<span class="input-group-addon">
+											<bean:message key="billing.diagnostic.code"/>
+										</span>
+										<select style="min-width: 70px;" class="form-control" name="dxCodeSystem" id="codingSystem" >							
+											<oscar:oscarPropertiesCheck value="false" property="DISABLE_MSP_DX_SYSTEM">
+												<option value="msp" selected>MSP Dx</option>
+								 			</oscar:oscarPropertiesCheck>
+								 			<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">
+												<option value="<bean:write name="codeSystem"/>"><bean:write name="codeSystem" /></option>
+											</logic:iterate>									
+										</select>
+									</c:when>
+									<c:otherwise>
+										<input type="hidden" id="codingSystem" value="msp" />
+										<bean:message key="billing.diagnostic.code"/>
+									</c:otherwise>
+								</c:choose>
 							</div>	
-						</td></tr>
+						</td>
+						<td style="width:40%">
+							Recently used
+						</td>
+						</tr>
 						<tr><td>
 							<div class="input-group">
-                            	<html:text styleClass="form-control jsonDxSearch" property="xml_diagnostic_detail1" />
-  	  							<span class="input-group-addon">
-									<span class="glyphicon glyphicon-search"></span>
+								<span class="input-group-addon">
+									1
 								</span> 
+                            	<html:text styleClass="form-control" styleId="jsonDxSearchInput-1" property="xml_diagnostic_detail1" />
+                            	<span class="input-group-btn">
+		                     		<button type="button" title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-1">
+	                            		<span class="glyphicon glyphicon-search"></span>
+		                          	</button>
+	                          	</span>
 							</div>
-						</td></tr>
+						</td>
+						<td rowspan="3" style="width:50%" valign="top" >
+							<div id="DX_REFERENCE"></div>
+	                        <oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
+		                         <script type="text/javascript">
+			                         function getDxInformation(origRequest){
+			                               var url = "DxReference.jsp";
+			                               var ran_number=Math.round(Math.random()*1000000);
+			                               var params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
+			                               new Ajax.Updater('DX_REFERENCE',url, {method:'get',parameters:params,asynchronous:true}); 
+			                         }
+			                         getDxInformation();
+		                         </script>
+	                       </oscar:oscarPropertiesCheck>
+						</td>
+						</tr>
 						<tr><td>
   							<div class="input-group">
-                            	<html:text styleClass="form-control jsonDxSearch" property="xml_diagnostic_detail2" /> 
-	  							<span class="input-group-addon">
-									<span class="glyphicon glyphicon-search"></span>
-								</span> 
+  								<span class="input-group-addon">
+									2
+								</span>
+                            	<html:text styleClass="form-control" styleId="jsonDxSearchInput-2" property="xml_diagnostic_detail2" /> 
+								<span class="input-group-btn">
+		                     		<button type="button"  title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-2">
+	                            		<span class="glyphicon glyphicon-search"></span>
+	                          		</button>
+	                          	</span>
 							</div>
 						</td></tr>
 						<tr><td>	
   							<div class="input-group">
-	                            <html:text styleClass="form-control jsonDxSearch" property="xml_diagnostic_detail3" />
-	  							<span class="input-group-addon">
-									<span class="glyphicon glyphicon-search"></span>
-								</span> 
+  								<span class="input-group-addon">
+									3
+								</span>
+	                            <html:text styleClass="form-control" styleId="jsonDxSearchInput-3" property="xml_diagnostic_detail3" />
+	                            <span class="input-group-btn">
+		                     		<button type="button" title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-3">
+	                            		<span class="glyphicon glyphicon-search"></span>
+	                          		</button>
+	                          	</span>
 							</div>
 						</td></tr>
-					
+	
 						</table>
-                  </td>
-                  <td align="left" valign="top" width="20%">
-                      <div id="DX_REFERENCE"></div>
-                       <oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
-                         <script type="text/javascript">
-                         function getDxInformation(origRequest){
-                               var url = "DxReference.jsp";
-                               var ran_number=Math.round(Math.random()*1000000);
-                               var params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
-                               //alert(params);
-                               new Ajax.Updater('DX_REFERENCE',url, {method:'get',parameters:params,asynchronous:true}); 
-                               //alert(origRequest.responseText);
-                         }
-                         getDxInformation();
-                         </script>
-                       </oscar:oscarPropertiesCheck>
-                     
                   </td>
                 </tr>
               </table>
               <!-- ONSCREEN DX CODE DISPLAY END-->
               
-              <table width="100%" class="tool-table">
+              <table class="tool-table table table-condensed table-borderless">
                 <tr>
                   <td width="50%" style="padding-top:5px !important;">
                       <label for="shortClaimNote"></label><label>Short Claim Note</label></label>
@@ -1621,7 +1815,7 @@ if(wcbneeds != null){%>
                   </td>
                   <td width="50%" style="padding-top:5px;">
                     
-                    <label for="ignoreWarn">     
+                    <label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">     
 	                    <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/> 
 	                     Ignore Warnings
 	                 </label>
@@ -1656,9 +1850,9 @@ if(wcbneeds != null){%>
                 </tr>
                 
               </table>
+              <div id="bcBillingError"></div>
             </td>
           </tr>
-
         </table>
       </td>
     </tr>

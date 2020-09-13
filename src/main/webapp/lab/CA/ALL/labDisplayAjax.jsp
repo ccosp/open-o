@@ -28,7 +28,6 @@
 <%@ page import="org.oscarehr.common.model.PatientLabRouting"%>
 <%@ page import="oscar.util.ConversionUtils"%>
 <%@ page import="org.oscarehr.common.dao.PatientLabRoutingDao"%>
-<%@ page errorPage="../provider/errorpage.jsp" %>
 <%@ page import="java.util.*,
 		 java.sql.*,
 		 oscar.oscarDB.*,

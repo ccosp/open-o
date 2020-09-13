@@ -67,7 +67,7 @@
     pageContext.setAttribute("disable", disable);
 %>
 
-
+<!DOCTYPE html>
 <html:html locale="true">
 <head>
 <title><bean:message key="oscarResearch.oscarDxResearch.dxResearch.title" /></title>

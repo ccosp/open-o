@@ -43,17 +43,13 @@ if(!authed) {
       ul.dxlist {
         margin-right:10px;
         margin-top:0px;
-        //margin: 0;
         padding: 0;
         list-style:none;
-        font-size: 13px;
-        float:left;
       }
 
       ul.dxlist li {
         margin: 0;
         padding: 0;
-        line-height: 1.3em;
       }
       
       ul.dxlist li a {

@@ -300,9 +300,6 @@ function checkSubmitType(){
 	    }
 	}
 
-    if(document.forms[0].submit.value=="Reprocess and Resubmit Bill"){
-       window.close()
-    }
 }
 function popup( height, width, url, windowName){
   var page = url;
