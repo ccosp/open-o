@@ -34,8 +34,12 @@
 
 package oscar.oscarLab.ca.all.parsers;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
@@ -96,8 +100,21 @@ public final class Factory {
 		Document doc = null;
 		String msgType;
 		String msgHandler = "";
-
+		Path labTypesPath = null ;
+		
 		try {
+			labTypesPath = Paths.get( Factory.class.getClassLoader().getResource("oscar/oscarLab/ca/all/upload/message_config.xml").toURI() );
+		} catch (URISyntaxException e2) {
+			logger.error("Could not default Message configuration file ", e2);
+		}	
+		
+		String labTypesPathOverride = OscarProperties.getInstance().getProperty("LAB_TYPES");
+		
+		if (labTypesPathOverride != null && ! labTypesPathOverride.isEmpty()) {
+			labTypesPath = Paths.get(labTypesPathOverride);
+		} 
+
+		try(InputStream is = Files.newInputStream(labTypesPath)) {
 
 			// return default handler if the type is not specified
 			if (type == null) {
@@ -107,22 +124,13 @@ public final class Factory {
 			} else {
 				type = type.trim();
  			}
-			
-			InputStream is = Factory.class.getClassLoader().getResourceAsStream("oscar/oscarLab/ca/all/upload/message_config.xml");
 
-			if (OscarProperties.getInstance().getProperty("LAB_TYPES") != null) {
-				String filename = OscarProperties.getInstance().getProperty("LAB_TYPES");
-				is = new FileInputStream(filename);
-			} 
-			
 			SAXBuilder parser = new SAXBuilder();
 			doc = parser.build(is);
 
 			Element root = doc.getRootElement();
 			List<?> items = root.getChildren();
 			
-			// e is commonly used in exception handlers.
-			// changed 'e' to 'element'
 			for (int i = 0; i < items.size(); i++) {
 
 				Element element = (Element) items.get(i);
@@ -149,7 +157,7 @@ public final class Factory {
 				return (mh);
 			} else {
 				try {
-					Class classRef = Class.forName(msgHandler);
+					Class<?> classRef = Class.forName(msgHandler);
 					MessageHandler mh = (MessageHandler) classRef.newInstance();
 					logger.debug("Message handler '" + msgHandler + "' created successfully");
 					logger.debug("Message: " + hl7Body);
@@ -167,10 +175,12 @@ public final class Factory {
 					return (mh);
 				}
 			}
+		} catch (NoSuchFileException e) {
+			logger.error("Could not default Message configuration file ", e);
 		} catch (Exception e) {
 			logger.error("Could not create message handler", e);
-			return (null);
 		}
+		
+		return null;
 	}
-
 }

@@ -28,7 +28,7 @@
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_lab" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
-	<%response.sendRedirect("../securityError.jsp?type=_lab");%>
+	<%response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_lab");%>
 </security:oscarSec>
 <%
 if(!authed) {
@@ -77,10 +77,6 @@ String startDate = (String) request.getAttribute("startDate");
 String endDate = (String) request.getAttribute("endDate");
 
 %>
-
-<!-- choose if the output is or is not ajax -->
-<c:choose>
-<c:when test="${ not param.ajax }">
 
 <!DOCTYPE html>
 <html>
@@ -196,10 +192,6 @@ String endDate = (String) request.getAttribute("endDate");
                                                      <col width="100%">
           <tr>
               <td id="categoryList" valign="top" style="background-color: #E0E1FF" >
-              
-<!-- end if not ajax  -->             
-</c:when>
-<c:otherwise>
 
 			<input type="hidden" id="categoryHash" value="<%=categoryHash%>" />
                <div class="documentSummaryList">
@@ -315,19 +307,12 @@ String endDate = (String) request.getAttribute("endDate");
 							</script>
 					<% }} %>
             	<%}  // end of for loop for patient list %>
-				</div> <!-- end of patient summary list -->
 				</details>
 			<%} %>
-        </div>
-        
- </c:otherwise>               	
-</c:choose> 
-
-<!-- end choose for is or is not ajax -->
-
+        </div>       
+	</div>
 </td>
-
-<c:if test="${ not param.ajax }">	
+	
              <td style="background-color: #E0E1FF; height:600px;" valign="top">
                  <div id="docViews" style="overflow:scroll; height:600px; width:100%;" onscroll="handleScroll(this)">
 
@@ -694,12 +679,18 @@ String endDate = (String) request.getAttribute("endDate");
 				data: window.location.search.substr(1) + "&ajax=true",
 				success: function (data) {
 					if (jQuery("#categoryHash").length == 0 || jQuery(data)[2].value != jQuery("#categoryHash").val()) {
-						jQuery("#categoryList").html(data);
-						re_bold(currentBold);
+						var categoryList = jQuery("#categoryList");
+					
+						if(categoryList !== undefined)
+						{
+							categoryList.replaceWith(jQuery(data).find("#categoryList"));
+							re_bold(currentBold);
+						}
 					}
 				}
 			});
 		}
+
 	
 		window.removeReport = function (reportId) {
 			var el = jQuery("#labdoc_" + reportId);
@@ -737,8 +728,6 @@ String endDate = (String) request.getAttribute("endDate");
 </div> <!--  end wrapper  -->  
 </body>
 </html>
-
-</c:if> <!-- end if not ajax (second block) -->
 
 <div id="dialog" ></div> 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
