@@ -24,6 +24,7 @@
 
 --%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
       boolean authed=true;
@@ -39,52 +40,22 @@ if(!authed) {
 %>
 
 <%@page import="java.text.*, java.util.*, oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.entities.*"%>
-<style type="text/css">
-      ul.dxlist {
-        margin-right:10px;
-        margin-top:0px;
-        padding: 0;
-        list-style:none;
-      }
-
-      ul.dxlist li {
-        margin: 0;
-        padding: 0;
-      }
-      
-      ul.dxlist li a {
-        text-decoration: none;
-        font-weight: bold;
-      }
-
-  </style>
 
   <%
   String demo = request.getParameter("demographicNo");
   DxReference dxRef = new DxReference();
   List<DxReference.DxCode> pastDxList = dxRef.getLatestDxCodes(demo);
-  int col = 0;
-  if (pastDxList != null){%>
-  <div style="margin-top: 2px;padding-left:6px;">
-          <%  
-          for (DxReference.DxCode dxc : pastDxList){
-              if (col ==0  ){    
-              %>
-          <ul class="dxlist" >
-              <%}else if ( (col % 5 ) ==0){%>
-          </ul>
-          <ul class="dxlist" >
-             <%}%>  
-             <li>
-                 <a href="javascript: function myFunction() {return false; }" onClick="quickPickDiagnostic('<%=dxc.getDx()%>');return false;" title="<%=dxc.getDesc()%>">
-                    <%=dxc.getDx()%> <%=dxc.getNumMonthSinceDate()%>M
-                 </a>
-             
-             </li>
-          <%  
-          if (col >= 19){ break;}  // 24 gives 5 columns of 5  #  19 gives 4 columns of 5
-          col++;
-          }%>
-          </ul>
+  pageContext.setAttribute("dxList", pastDxList);
+  %>
+  
+  <div style="padding-left:6px;">
+  	<c:if test="${ not empty dxList }">	
+  		<select class="form-control" size="5" style="width:100%;height:100%;">
+  			<c:forEach items="${ dxList }" var="dx">
+  				<option onClick="quickPickDiagnostic('${ dx.dx }');return false;" title="${ dx.desc }">
+  					<c:out value="${ dx.dx }" /> - <c:out value="${ dx.numMonthSinceDate }m" />
+  				</option>
+  			</c:forEach>	
+  		</select> 	
+  	</c:if>
   </div>
-  <%}%>
