@@ -1406,8 +1406,6 @@ if(wcbneeds != null){%>
             </tr>
           </table>
         </div>
-        
-        <div id="wcbForms"></div>
 
 </td>
 </tr>
@@ -1870,7 +1868,9 @@ if(wcbneeds != null){%>
               <input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();"> 
 		</div>
 	</div>
-
+    <div class="container-fluid">
+    	<div id="wcbForms"></div>
+    </div>
 </html:form>
  </div>
  </div>
