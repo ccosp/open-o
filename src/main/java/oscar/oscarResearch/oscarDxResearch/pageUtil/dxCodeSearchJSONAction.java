@@ -28,6 +28,8 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -60,6 +62,7 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		String keyword = request.getParameter("keyword");
+		keyword = StringUtils.trimToEmpty(keyword);
 		Icd9Dao dao = SpringUtils.getBean(Icd9Dao.class);		
 		List<Icd9> icd9List =  dao.getIcd9(keyword);
 
@@ -79,6 +82,7 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		String keyword = request.getParameter("keyword");
+		keyword = StringUtils.trimToEmpty(keyword);
 		Icd10Dao dao = SpringUtils.getBean(Icd10Dao.class);		
 		List<Icd10> icd10List = dao.searchCode(keyword);
 		
@@ -107,8 +111,9 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		String keyword = request.getParameter("keyword");
+		keyword = StringUtils.trimToEmpty(keyword);
 		DiagnosticCodeDao dao = SpringUtils.getBean(DiagnosticCodeDao.class);		
-		List<DiagnosticCode> mspCodeList =  dao.searchText(keyword);
+		List<DiagnosticCode> mspCodeList =  dao.search(keyword);
 		
 		try {
 	        jsonify(mspCodeList, response, new String [] {
@@ -126,6 +131,7 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		String code = request.getParameter("keyword");
+		code = StringUtils.trimToEmpty(code);
 		String codeSystem = request.getParameter("codeSystem");
 		CodingSystemManager codingSystemManager = SpringUtils.getBean(CodingSystemManager.class);
 		boolean dxvalid = codingSystemManager.isCodeAvailable(codeSystem, code);
@@ -144,6 +150,33 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 		return null;
 	}
 
+	@SuppressWarnings("unused")
+	public ActionForward getDescription(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+
+		String code = request.getParameter("keyword");
+		code = StringUtils.trimToEmpty(code);
+		String codeSystem = request.getParameter("codeSystem");
+		
+		CodingSystemManager codingSystemManager = SpringUtils.getBean(CodingSystemManager.class);
+		String description = codingSystemManager.getCodeDescription(codeSystem, code);	
+		boolean dxvalid = (description != null);
+		
+		JSONObject jsonResponse = new JSONObject();
+		jsonResponse.accumulate("dxvalid", dxvalid);
+		jsonResponse.accumulate("description", description);
+		jsonResponse.accumulate("code", code);
+		
+		response.setContentType("text/x-json");
+		
+		try(PrintWriter pout = response.getWriter()) {
+			jsonResponse.write(pout);
+		} catch (IOException e) {
+        	logger.error("JSON Error", e);
+		}
+		
+		return null;
+	}
 
 	private static void jsonify(final List<?> classList, 
 	    		final HttpServletResponse response, String[] ignoreMethods) throws IOException {
