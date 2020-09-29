@@ -217,7 +217,7 @@ if(!authed) {
 	}
 	
 	#billingPatientInfo {
-		margin-top: 15px;
+		margin-top: 5px;
 	}
 	
 	.wrapper {
@@ -274,8 +274,11 @@ if(!authed) {
 		border-top: red thin solid;
 		border-bottom: red thin solid;
 		margin: 0px;
-		margin-top: 15px;
-		padding: 20px 0 0 0;
+		margin-top: 5px;
+		padding: 0px;
+	}
+	h3 ul {
+		margin:0px;
 	}
 	
 	table#billingFormTable table.tool-table tr td table {
@@ -734,6 +737,8 @@ function setCodeToChecked(svcCode){
 
 jQuery(document).ready(function(jQuery){
 	
+	jQuery("#bcBillingForm").attr('autocomplete', 'off');
+	
 	/* for setting times */
     jQuery(function () {
         jQuery('.datetimepicker').datetimepicker({
@@ -1035,7 +1040,8 @@ if(wcbneeds != null){%>
 
 <div class="container-fluid">
 <html:form styleId="bcBillingForm" styleClass="form-inline" action="/billing/CA/BC/CreateBilling" onsubmit="toggleWCB();">
-  <input type="hidden" name="fromBilling" value=""/>
+	<input autocomplete="false" name="hidden" type="text" style="display:none;">
+  	<input type="hidden" name="fromBilling" value=""/>
 
 <%
   BillingCreateBillingForm thisForm;
@@ -1400,8 +1406,6 @@ if(wcbneeds != null){%>
             </tr>
           </table>
         </div>
-        
-        <div id="wcbForms"></div>
 
 </td>
 </tr>
@@ -1751,9 +1755,9 @@ if(wcbneeds != null){%>
 								<span class="input-group-addon">
 									1
 								</span> 
-                            	<html:text styleClass="form-control" styleId="jsonDxSearchInput-1" property="xml_diagnostic_detail1" />
+                            	<html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-1" property="xml_diagnostic_detail1" />
                             	<span class="input-group-btn">
-		                     		<button type="button" title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-1">
+		                     		<button type="button" title="Search diagnostic code" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-1">
 	                            		<span class="glyphicon glyphicon-search"></span>
 		                          	</button>
 	                          	</span>
@@ -1779,7 +1783,7 @@ if(wcbneeds != null){%>
   								<span class="input-group-addon">
 									2
 								</span>
-                            	<html:text styleClass="form-control" styleId="jsonDxSearchInput-2" property="xml_diagnostic_detail2" /> 
+                            	<html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-2" property="xml_diagnostic_detail2" /> 
 								<span class="input-group-btn">
 		                     		<button type="button"  title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-2">
 	                            		<span class="glyphicon glyphicon-search"></span>
@@ -1792,7 +1796,7 @@ if(wcbneeds != null){%>
   								<span class="input-group-addon">
 									3
 								</span>
-	                            <html:text styleClass="form-control" styleId="jsonDxSearchInput-3" property="xml_diagnostic_detail3" />
+	                            <html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-3" property="xml_diagnostic_detail3" />
 	                            <span class="input-group-btn">
 		                     		<button type="button" title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-3">
 	                            		<span class="glyphicon glyphicon-search"></span>
@@ -1864,7 +1868,9 @@ if(wcbneeds != null){%>
               <input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();"> 
 		</div>
 	</div>
-
+    <div class="container-fluid">
+    	<div id="wcbForms"></div>
+    </div>
 </html:form>
  </div>
  </div>
