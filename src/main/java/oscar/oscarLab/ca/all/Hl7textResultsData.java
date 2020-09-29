@@ -25,14 +25,14 @@
 package oscar.oscarLab.ca.all;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.ConsultResponseDocDao;
@@ -96,12 +96,6 @@ public class Hl7textResultsData {
 		//Check for other versions of this lab
 		String[] matchingLabs = getMatchingLabs(lab_no).split(",");
 		//if this lab is the latest version delete the measurements from the previous version and add the new ones
-
-		// Get list of obx names that will always be added to measurements
-		List<String> alwaysAddObxNames = new ArrayList<String>();
-		if (OscarProperties.getInstance().hasProperty("hl7_measurements_names_to_always_add")) {
-			alwaysAddObxNames = Arrays.asList(OscarProperties.getInstance().get("hl7_measurements_names_to_always_add").toString().split(","));
-		}
 		
 		int k = 0;
 		while (k < matchingLabs.length && !matchingLabs[k].equals(lab_no)) {
@@ -121,18 +115,22 @@ public class Hl7textResultsData {
 			measurementDao.batchRemove(measurementsToRemove);
 		}
 		// loop through the measurements for the lab and add them
+		
+		//find a regex filter in properties -or- set default to find everything
+		String patternstring = OscarProperties.getInstance().getProperty("HL7_LAB_MEASUREMENT_FILTER", ".*");
+		Pattern pattern = Pattern.compile(patternstring);
 
 		List<AbstractModel<?>> measurementsExts = new ArrayList<>();
 		for (int i = 0; i < h.getOBRCount(); i++) {
 			for (int j = 0; j < h.getOBXCount(i); j++) {
 
 				String result = h.getOBXResult(i, j);
-
-				
+			
 				// only add if there is a result and it is supposed to be viewed
 				if (result.equals("") || result.equals("DNR") || h.getOBXName(i, j).equals("") || h.getOBXResultStatus(i, j).equals("DNS")) {
-					if (!alwaysAddObxNames.contains(h.getOBXName(i, j))) continue;
+					continue;
 				}
+				
 				logger.debug("obx(" + j + ") should be added");
 				String identifier = h.getOBXIdentifier(i, j);
 				String name = h.getOBXName(i, j);
@@ -158,12 +156,12 @@ public class Hl7textResultsData {
 
 				String measType = "";
 				String measInst = "";
-				identifier = StringUtils.trimToEmpty(identifier).replaceAll("null", "");
+				identifier = StringUtils.trimToEmpty(identifier);
 				
 				if (!identifier.isEmpty()) {
 					List<Object[]> measurements = measurementMapDao.findMeasurements("FLOWSHEET", identifier, name);
 					if (measurements.isEmpty()) {
-						logger.warn("CODE:" + identifier + " needs to be mapped");
+						logger.debug("CODE:" + identifier + " needs to be mapped");
 					} else {
 						for (Object[] o : measurements) {
 							MeasurementMap mm = (MeasurementMap) o[1];
@@ -175,17 +173,17 @@ public class Hl7textResultsData {
 					}
 				}
 				
-				
+				String trimmed = StringUtils.trimToEmpty(result);
+				Matcher matcher = pattern.matcher(trimmed.toLowerCase()); 
 				Measurement m = new Measurement();
-				boolean negativeOrPositive = result.trim().equalsIgnoreCase("negative") || result.trim().equalsIgnoreCase("positive");
-				boolean plusOrMinus = result.matches("^\\-\\d*\\.?\\d*|\\+?\\d*\\.?\\d*$") || result.matches("^\\d*\\.?\\d*\\-|\\d*\\.?\\d*\\+$");
-				if ((negativeOrPositive || plusOrMinus || NumberUtils.isNumber(result)) && !result.trim().equals(".")) {
+						
+				if(matcher.find()) {
                     m.setType(measType);
                     m.setDemographicId(Integer.parseInt(demographic_no));
                     m.setProviderNo("0");
-                    m.setDataField(result);
+                    m.setDataField(matcher.group());
                     m.setMeasuringInstruction(measInst);
-                    logger.info("DATETIME FOR MEASUREMENT " + datetime);
+
                     if (datetime != null && datetime.length() > 0) {
                         m.setDateObserved(UtilDateUtilities.StringToDate(datetime, "yyyy-MM-dd hh:mm:ss"));
                     }
@@ -308,8 +306,6 @@ public class Hl7textResultsData {
 		
 		for (Object[] o : hl7TxtInfoDao.findByLabIdViaMagic(ConversionUtils.fromIntString(lab_no))) {
 			Hl7TextInfo a = (Hl7TextInfo) o[0];
-			//Hl7TextInfo b = (Hl7TextInfo) o[1];
-
 			int labNo = a.getLabNumber();
 			if(lab_no.equals(String.valueOf(labNo))) {
 				self = a;

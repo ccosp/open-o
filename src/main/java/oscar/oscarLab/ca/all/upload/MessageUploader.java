@@ -111,241 +111,219 @@ public final class MessageUploader {
 	 * Insert the lab into the proper tables of the database
 	 */
 	public static String routeReport(LoggedInInfo loggedInInfo, String serviceName, String type, String hl7Body, int fileId, RouteReportResults results) throws Exception {
-
-		
+		return routeReport(loggedInInfo, serviceName, Factory.getHandler(type, hl7Body), hl7Body, fileId, results);
+	}
+	
+	public static String routeReport(LoggedInInfo loggedInInfo, String serviceName, MessageHandler h, String hl7Body, int fileId, RouteReportResults results) throws Exception {
+			
 		String retVal = "";
+		if(h == null) {
+			throw new Exception("Unabled to continue. No valid handler found.");
+		}
+		String type = h.getMsgType();
+		String firstName = h.getFirstName();
+		String lastName = h.getLastName();
+		String dob = h.getDOB();
+		String sex = h.getSex();
+		String hin = h.getHealthNum();
+		String resultStatus = "";
+		String priority = h.getMsgPriority();
+		String requestingClient = h.getDocName();
+		String reportStatus = h.getOrderStatus();
+		String accessionNum = h.getAccessionNum();
+		String fillerOrderNum = h.getFillerOrderNumber();
+		String sendingFacility = h.getPatientLocation();
+		ArrayList<?> docNums = h.getDocNums();
+		int finalResultCount = h.getOBXFinalResultCount();
+		String obrDate = h.getMsgDate();
+
+		if(h instanceof HHSEmrDownloadHandler) {
+			try{
+            	String chartNo = ((HHSEmrDownloadHandler)h).getPatientIdByType("MR");
+            	if(chartNo != null) {
+            		//let's get the hin
+            		List<Demographic> clients = demographicManager.getDemosByChartNo(loggedInInfo, chartNo);
+            		if(clients!=null && clients.size()>0) {
+            			hin = clients.get(0).getHin();
+            		}
+            	}
+			}catch(Exception e){
+				logger.error("HHS ERROR",e);
+			}
+        }
+        
+        // get actual ohip numbers based on doctor first and last name for spire lab
+        if(h instanceof SpireHandler) {
+			List<String> docNames = ((SpireHandler)h).getDocNames();
+			//logger.debug("docNames:");
+            for (int i=0; i < docNames.size(); i++) {
+				logger.info(i + " " + docNames.get(i));
+			}
+        	if (docNames != null) {
+				docNums = findProvidersForSpireLab(docNames);
+			}
+        }
+        logger.debug("docNums:");
+        for (int i=0; i < docNums.size(); i++) {
+			logger.info(i + " " + docNums.get(i));
+		}
+
 		try {
-			MessageHandler h = Factory.getHandler(type, hl7Body);
-
-			if(h == null) {
-				throw new Exception("Unabled to continue. No valid handler found.");
-			}
-			String firstName = h.getFirstName();
-			String lastName = h.getLastName();
-			String dob = h.getDOB();
-			String sex = h.getSex();
-			String hin = h.getHealthNum();
-			String resultStatus = "";
-			String priority = h.getMsgPriority();
-			String requestingClient = h.getDocName();
-			String reportStatus = h.getOrderStatus();
-			String accessionNum = h.getAccessionNum();
-			String fillerOrderNum = h.getFillerOrderNumber();
-			String sendingFacility = h.getPatientLocation();
-			ArrayList<?> docNums = h.getDocNums();
-			int finalResultCount = h.getOBXFinalResultCount();
-			String obrDate = h.getMsgDate();
-
-			if(h instanceof HHSEmrDownloadHandler) {
-				try{
-	            	String chartNo = ((HHSEmrDownloadHandler)h).getPatientIdByType("MR");
-	            	if(chartNo != null) {
-	            		//let's get the hin
-	            		List<Demographic> clients = demographicManager.getDemosByChartNo(loggedInInfo, chartNo);
-	            		if(clients!=null && clients.size()>0) {
-	            			hin = clients.get(0).getHin();
-	            		}
-	            	}
-				}catch(Exception e){
-					logger.error("HHS ERROR",e);
-				}
-            }
-            
-            // get actual ohip numbers based on doctor first and last name for spire lab
-            if(h instanceof SpireHandler) {
-				List<String> docNames = ((SpireHandler)h).getDocNames();
-				//logger.debug("docNames:");
-	            for (int i=0; i < docNames.size(); i++) {
-					logger.info(i + " " + docNames.get(i));
-				}
-            	if (docNames != null) {
-					docNums = findProvidersForSpireLab(docNames);
-				}
-            }
-            logger.info("docNums:");
-            for (int i=0; i < docNums.size(); i++) {
-				logger.info(i + " " + docNums.get(i));
-			}
-
-			try {
-				// reformat date
-				String format = "yyyy-MM-dd HH:mm:ss".substring(0, obrDate.length() - 1);
-				obrDate = UtilDateUtilities.DateToString(UtilDateUtilities.StringToDate(obrDate, format), "yyyy-MM-dd HH:mm:ss");
-			} catch (Exception e) {				
-				logger.error("Error parsing obr date : ", e);
-				throw e;
-			}
-
-			int i = 0;
-			int j = 0;
-			while (resultStatus.equals("") && i < h.getOBRCount()) {
-				j = 0;
-				while (resultStatus.equals("") && j < h.getOBXCount(i)) {
-					if (h.isOBXAbnormal(i, j)) resultStatus = "A";
-					j++;
-				}
-				i++;
-			}
-
-			ArrayList<String> disciplineArray = h.getHeaders();
-			String next = "";
-			
-			if (disciplineArray != null && disciplineArray.size() > 0) { 
-				next = disciplineArray.get(0);
-			}
-			
-			int sepMark;
-			if ((sepMark = next.indexOf("<br />")) < 0) {
-				if ((sepMark = next.indexOf(" ")) < 0) sepMark = next.length();
-			}
-			
-			String discipline = next.substring(0, sepMark).trim();
-
-			for (i = 1; i < disciplineArray.size(); i++) {
-
-				next = disciplineArray.get(i);
-				if ((sepMark = next.indexOf("<br />")) < 0) {
-					if ((sepMark = next.indexOf(" ")) < 0) sepMark = next.length();
-				}
-
-				if (!next.trim().equals("")) { 
-					discipline = discipline + "/" + next.substring(0, sepMark);
-				}
-			}
-
-			boolean isTDIS = type.equals("TDIS");
-			boolean hasBeenUpdated = false;
-			Hl7TextMessage hl7TextMessage = new Hl7TextMessage();
-			Hl7TextInfo hl7TextInfo = new Hl7TextInfo();
-
-			
-			if( h instanceof MEDITECHHandler ) {				
-				discipline = ( (MEDITECHHandler) h ).getDiscipline();
-			}
-
-			if (isTDIS) {
-				List<Hl7TextInfo> matchingTdisLab =  hl7TextInfoDao.searchByFillerOrderNumber(fillerOrderNum, sendingFacility);
-				if (matchingTdisLab.size()>0) {
-
-					hl7TextMessageDao.updateIfFillerOrderNumberMatches(new String(Base64.encodeBase64(hl7Body.getBytes(MiscUtils.DEFAULT_UTF8_ENCODING)), MiscUtils.DEFAULT_UTF8_ENCODING),fileId,matchingTdisLab.get(0).getLabNumber());
-
-					hl7TextInfoDao.updateReportStatusByLabId(reportStatus,matchingTdisLab.get(0).getLabNumber());
-					hasBeenUpdated = true;
-				}
-			}
-			int insertID = 0;
-			if (!isTDIS || !hasBeenUpdated) {
-				hl7TextMessage.setFileUploadCheckId(fileId);
-				hl7TextMessage.setType(type);
-				hl7TextMessage.setBase64EncodedeMessage(new String(Base64.encodeBase64(hl7Body.getBytes(MiscUtils.DEFAULT_UTF8_ENCODING)), MiscUtils.DEFAULT_UTF8_ENCODING));
-				hl7TextMessage.setServiceName(serviceName);
-				hl7TextMessageDao.persist(hl7TextMessage);
-
-				insertID = hl7TextMessage.getId();
-				hl7TextInfo.setLabNumber(insertID);
-				hl7TextInfo.setLastName(lastName);
-				hl7TextInfo.setFirstName(firstName);
-				hl7TextInfo.setSex(sex);
-				hl7TextInfo.setHealthNumber(hin);
-				hl7TextInfo.setResultStatus(resultStatus);
-				hl7TextInfo.setFinalResultCount(finalResultCount);
-				hl7TextInfo.setObrDate(obrDate);
-				hl7TextInfo.setPriority(priority);
-				hl7TextInfo.setRequestingProvider(requestingClient);
-				hl7TextInfo.setDiscipline(discipline);
-				hl7TextInfo.setReportStatus(reportStatus);
-				hl7TextInfo.setAccessionNumber(accessionNum);
-				hl7TextInfo.setFillerOrderNum(fillerOrderNum);
-				hl7TextInfoDao.persist(hl7TextInfo);
-			}
-			
-			if("true".equals(OscarProperties.getInstance().getProperty("inbox.labels.sticky","false"))) {
-				String latestLabel = "";
-				String multiID = Hl7textResultsData.getMatchingLabs(String.valueOf(hl7TextMessage.getId()));
-				for(String id: multiID.split(",")) {
-					if(!id.equals(String.valueOf(hl7TextMessage.getId()))) {
-						List<Hl7TextInfo> infos = hl7TextInfoDao.findByLabId(Integer.parseInt(id));
-						for(Hl7TextInfo info:infos) {
-							if(!StringUtils.isEmpty(info.getLabel())) {
-								latestLabel = info.getLabel();
-							}
-						}
-					}
-				}
-				if(!StringUtils.isEmpty(latestLabel)) {
-					hl7TextInfo.setLabel(latestLabel);
-					hl7TextInfoDao.merge(hl7TextInfo);
-				}
-			}
-			
-			String demProviderNo = null;
-			Connection c = null;
-			try {
-				c = DbConnectionFilter.getThreadLocalDbConnection();
-				demProviderNo = patientRouteReport(loggedInInfo, insertID, lastName, firstName, sex, dob, hin, c);
-			} finally {
-				try {
-					c.close();
-				}catch(SQLException e) {
-					
-				}
-			}
-			if(type.equals("OLIS_HL7") && demProviderNo.equals("0")) {
-				OLISSystemPreferencesDao olisPrefDao = (OLISSystemPreferencesDao)SpringUtils.getBean("OLISSystemPreferencesDao");
-			    OLISSystemPreferences olisPreferences =  olisPrefDao.getPreferences();
-			    c = DbConnectionFilter.getThreadLocalDbConnection();
-			    try {
-				    if(olisPreferences.isFilterPatients()) {
-				    	//set as unclaimed
-				    	providerRouteReport(String.valueOf(insertID), null, c, String.valueOf(0), type);
-				    } else {
-				    	providerRouteReport(String.valueOf(insertID), docNums, DbConnectionFilter.getThreadLocalDbConnection(), demProviderNo, type);
-				    }
-			    } finally {
-					try {
-						c.close();
-					}catch(SQLException e) {
-						
-					}
-				}
-			} else {
-				Integer limit = null;
-				boolean orderByLength = false;
-				String search = null;
-				if (type.equals("Spire")) {
-					limit = new Integer(1);
-					orderByLength = true;
-					search = "provider_no";
-				}
-				
-				if( "MEDITECH".equals(type) ) {
-					search = "practitionerNo";
-				}
-				
-				if( "IHAPOI".equals(type) ) {
-					search = "hso_no";
-				}
-						
-				c = DbConnectionFilter.getThreadLocalDbConnection();
-				try {
-					providerRouteReport(String.valueOf(insertID), docNums, c, demProviderNo, type, search, limit, orderByLength);
-				} finally {
-					try {
-						c.close();
-					}catch(SQLException e) {
-						
-					}
-				}
-			}
-			retVal = h.audit();
-			if(results != null) {
-				results.segmentId = insertID;
-			}
-		} catch (Exception e) {
-			logger.error("Error uploading lab to database");
+			// reformat date
+			String format = "yyyy-MM-dd HH:mm:ss".substring(0, obrDate.length() - 1);
+			obrDate = UtilDateUtilities.DateToString(UtilDateUtilities.StringToDate(obrDate, format), "yyyy-MM-dd HH:mm:ss");
+		} catch (Exception e) {				
+			logger.error("Error parsing obr date : ", e);
 			throw e;
 		}
 
+		int i = 0;
+		int j = 0;
+		while (resultStatus.equals("") && i < h.getOBRCount()) {
+			j = 0;
+			while (resultStatus.equals("") && j < h.getOBXCount(i)) {
+				if (h.isOBXAbnormal(i, j)) resultStatus = "A";
+				j++;
+			}
+			i++;
+		}
+
+		ArrayList<String> disciplineArray = h.getHeaders();
+		String next = "";
+		
+		if (disciplineArray != null && disciplineArray.size() > 0) { 
+			next = disciplineArray.get(0);
+		}
+		
+		int sepMark;
+		if ((sepMark = next.indexOf("<br />")) < 0) {
+			if ((sepMark = next.indexOf(" ")) < 0) sepMark = next.length();
+		}
+		
+		String discipline = next.substring(0, sepMark).trim();
+
+		for (i = 1; i < disciplineArray.size(); i++) {
+
+			next = disciplineArray.get(i);
+			if ((sepMark = next.indexOf("<br />")) < 0) {
+				if ((sepMark = next.indexOf(" ")) < 0) sepMark = next.length();
+			}
+
+			if (!next.trim().equals("")) { 
+				discipline = discipline + "/" + next.substring(0, sepMark);
+			}
+		}
+
+		boolean isTDIS = type.equals("TDIS");
+		boolean hasBeenUpdated = false;
+		Hl7TextMessage hl7TextMessage = new Hl7TextMessage();
+		Hl7TextInfo hl7TextInfo = new Hl7TextInfo();
+
+		
+		if( h instanceof MEDITECHHandler ) {				
+			discipline = ( (MEDITECHHandler) h ).getDiscipline();
+		}
+
+		if (isTDIS) {
+			List<Hl7TextInfo> matchingTdisLab =  hl7TextInfoDao.searchByFillerOrderNumber(fillerOrderNum, sendingFacility);
+			if (matchingTdisLab.size()>0) {
+
+				hl7TextMessageDao.updateIfFillerOrderNumberMatches(new String(Base64.encodeBase64(hl7Body.getBytes(MiscUtils.DEFAULT_UTF8_ENCODING)), MiscUtils.DEFAULT_UTF8_ENCODING),fileId,matchingTdisLab.get(0).getLabNumber());
+
+				hl7TextInfoDao.updateReportStatusByLabId(reportStatus,matchingTdisLab.get(0).getLabNumber());
+				hasBeenUpdated = true;
+			}
+		}
+		int insertID = 0;
+		if (!isTDIS || !hasBeenUpdated) {
+			hl7TextMessage.setFileUploadCheckId(fileId);
+			hl7TextMessage.setType(type);
+			hl7TextMessage.setBase64EncodedeMessage(new String(Base64.encodeBase64(hl7Body.getBytes(MiscUtils.DEFAULT_UTF8_ENCODING)), MiscUtils.DEFAULT_UTF8_ENCODING));
+			hl7TextMessage.setServiceName(serviceName);
+			hl7TextMessageDao.persist(hl7TextMessage);
+
+			insertID = hl7TextMessage.getId();
+			hl7TextInfo.setLabNumber(insertID);
+			hl7TextInfo.setLastName(lastName);
+			hl7TextInfo.setFirstName(firstName);
+			hl7TextInfo.setSex(sex);
+			hl7TextInfo.setHealthNumber(hin);
+			hl7TextInfo.setResultStatus(resultStatus);
+			hl7TextInfo.setFinalResultCount(finalResultCount);
+			hl7TextInfo.setObrDate(obrDate);
+			hl7TextInfo.setPriority(priority);
+			hl7TextInfo.setRequestingProvider(requestingClient);
+			hl7TextInfo.setDiscipline(discipline);
+			hl7TextInfo.setReportStatus(reportStatus);
+			hl7TextInfo.setAccessionNumber(accessionNum);
+			hl7TextInfo.setFillerOrderNum(fillerOrderNum);
+			hl7TextInfoDao.persist(hl7TextInfo);
+		}
+		
+		if("true".equals(OscarProperties.getInstance().getProperty("inbox.labels.sticky","false"))) {
+			String latestLabel = "";
+			String multiID = Hl7textResultsData.getMatchingLabs(String.valueOf(hl7TextMessage.getId()));
+			for(String id: multiID.split(",")) {
+				if(!id.equals(String.valueOf(hl7TextMessage.getId()))) {
+					List<Hl7TextInfo> infos = hl7TextInfoDao.findByLabId(Integer.parseInt(id));
+					for(Hl7TextInfo info:infos) {
+						if(!StringUtils.isEmpty(info.getLabel())) {
+							latestLabel = info.getLabel();
+						}
+					}
+				}
+			}
+			if(!StringUtils.isEmpty(latestLabel)) {
+				hl7TextInfo.setLabel(latestLabel);
+				hl7TextInfoDao.merge(hl7TextInfo);
+			}
+		}
+		
+		String demProviderNo = null;
+
+		try (Connection connection = DbConnectionFilter.getThreadLocalDbConnection()) {
+			demProviderNo = patientRouteReport(loggedInInfo, insertID, lastName, firstName, sex, dob, hin, connection);
+		} 
+		
+		if(type.equals("OLIS_HL7") && demProviderNo.equals("0")) {
+			OLISSystemPreferencesDao olisPrefDao = (OLISSystemPreferencesDao)SpringUtils.getBean("OLISSystemPreferencesDao");
+		    OLISSystemPreferences olisPreferences =  olisPrefDao.getPreferences();
+
+		    try (Connection connection = DbConnectionFilter.getThreadLocalDbConnection()) {
+			    if(olisPreferences.isFilterPatients()) {
+			    	//set as unclaimed
+			    	providerRouteReport(String.valueOf(insertID), null, connection, String.valueOf(0), type);
+			    } else {
+			    	providerRouteReport(String.valueOf(insertID), docNums, DbConnectionFilter.getThreadLocalDbConnection(), demProviderNo, type);
+			    }
+		    } 
+		} else {
+			Integer limit = null;
+			boolean orderByLength = false;
+			String search = null;
+			if (type.equals("Spire")) {
+				limit = new Integer(1);
+				orderByLength = true;
+				search = "provider_no";
+			}
+			
+			if( "MEDITECH".equals(type) ) {
+				search = "practitionerNo";
+			}
+			
+			if( "IHAPOI".equals(type) ) {
+				search = "hso_no";
+			}
+					
+			try (Connection connection = DbConnectionFilter.getThreadLocalDbConnection()){
+				providerRouteReport(String.valueOf(insertID), docNums, connection, demProviderNo, type, search, limit, orderByLength);
+			} 
+		}
+		retVal = h.audit();
+		if(results != null) {
+			results.segmentId = insertID;
+		}
+			
 		return (retVal);
 
 	}
@@ -466,8 +444,6 @@ public final class MessageUploader {
 			}
 		}
 		
-		//if (!labType.equals("Spire"))
-		//	labType = "HL7";
 		
 		
 		ProviderLabRouting routing = new ProviderLabRouting();
@@ -501,7 +477,6 @@ public final class MessageUploader {
 			String sql = null;
 			String demo = "0";
 			String provider_no = "0";
-			// 19481015
 			String dobYear = "%";
 			String dobMonth = "%";
 			String dobDay = "%";
@@ -527,12 +502,8 @@ public final class MessageUploader {
 				// only the first letter of names
 				if (!firstName.equals("")) firstName = firstName.substring(0, 1);
 				if (!lastName.equals("")) lastName = lastName.substring(0, 1);
-	
-				// there are too many wild cards for this query to work with any amount of accuracy.
-//				if (hinMod.equals("%")) {
-//					sql = "select demographic_no, provider_no from demographic where" + " last_name like '" + lastName + "%' and " + " first_name like '" + firstName + "%' and " + " year_of_birth like '" + dobYear + "' and " + " month_of_birth like '" + dobMonth + "' and " + " date_of_birth like '" + dobDay + "' and " + " sex like '" + sex + "%' ";
-//				} 
 				
+	
 				// HIN is ALWAYS required for lab matching. Please do not revert this code. Previous iterations have caused fatal patient miss-matches.				
 				if( hinMod != null ) {
 					if (OscarProperties.getInstance().getBooleanProperty("LAB_NOMATCH_NAMES", "yes")) {
@@ -567,9 +538,6 @@ public final class MessageUploader {
 			}
 
 		
-		try {
-			//did this link a merged patient? if so, we need to make sure we are the head record, or update
-			//result to be the head record.
 			if(result != null) {
 				DemographicMerged dm = new DemographicMerged();
 				Integer headDemo = dm.getHead(result.getDemographicNo());
@@ -593,28 +561,19 @@ public final class MessageUploader {
 			}
 
 			if(result != null) {
-				sql = "insert into patientLabRouting (demographic_no, lab_no,lab_type,dateModified,created) values ('" + ((result != null && result.getDemographicNo()!=null)?result.getDemographicNo().toString():"0") + "', '" + labId + "','HL7',now(),now())";
-				Connection c = null;
-				PreparedStatement pstmt = null;
-				try {
-					c = DbConnectionFilter.getThreadLocalDbConnection();
-					pstmt = c.prepareStatement(sql);
-					pstmt.executeUpdate();
+				PatientLabRouting patientLabRouting = new PatientLabRouting();
+				PatientLabRoutingDao patientLabRoutingDao = SpringUtils.getBean(PatientLabRoutingDao.class);
+				String demographicNo = result.getDemographicNo() != null ? result.getDemographicNo().toString() : "0";
 				
-				} finally {
-					try {
-						pstmt.close();	
-						c.close();
-					}catch(SQLException e) {
-						
-					}
-				}
+				patientLabRouting.setDemographicNo(Integer.parseInt(demographicNo));
+				patientLabRouting.setLabNo(labId);
+				patientLabRouting.setLabType("HL7");
+				patientLabRouting.setDateModified(new Date());
+				patientLabRouting.setCreated(new Date());
+				
+				patientLabRoutingDao.persist(patientLabRouting);
 				
 			}
-		} catch (SQLException sqlE) {
-			logger.info("NO MATCHING PATIENT FOR LAB id =" + labId);
-			throw sqlE;
-		}
 
 		return (result != null)?result.getProviderNo():"0";
 	}
