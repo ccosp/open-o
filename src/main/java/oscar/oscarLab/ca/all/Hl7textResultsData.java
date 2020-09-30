@@ -116,9 +116,20 @@ public class Hl7textResultsData {
 		}
 		// loop through the measurements for the lab and add them
 		
-		//find a regex filter in properties -or- set default to find everything
+		/*
+		 * find a regex filter in properties -or- set default to find everything
+		 * This OSCAR property determines what is allowed to be written to the measurements
+		 * table.  No more entire PDF documents written into measurements. 
+		 */
 		String patternstring = OscarProperties.getInstance().getProperty("HL7_LAB_MEASUREMENT_FILTER", ".*");
 		Pattern pattern = Pattern.compile(patternstring);
+		
+		/*
+		 * Setting in OSCAR properties that toggles if a code 
+		 * should be mapped to a measurement by Name AND identifier.
+		 * Excelleris uses only LOINC identifiers for the most part. 
+		 */	
+		boolean isSearchName = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("MAP_BY_IDENTIFIER_AND_NAME", "false"));
 
 		List<AbstractModel<?>> measurementsExts = new ArrayList<>();
 		for (int i = 0; i < h.getOBRCount(); i++) {
@@ -156,10 +167,21 @@ public class Hl7textResultsData {
 
 				String measType = "";
 				String measInst = "";
+
 				identifier = StringUtils.trimToEmpty(identifier);
-				
+				name = StringUtils.trimToEmpty(name);
+
 				if (!identifier.isEmpty()) {
-					List<Object[]> measurements = measurementMapDao.findMeasurements("FLOWSHEET", identifier, name);
+					
+					String searchName = "%";
+					
+					if(isSearchName)
+					{
+						searchName = name;
+					}
+
+					List<Object[]> measurements = measurementMapDao.findMeasurements("FLOWSHEET", identifier, searchName);
+					
 					if (measurements.isEmpty()) {
 						logger.debug("CODE:" + identifier + " needs to be mapped");
 					} else {
@@ -173,7 +195,12 @@ public class Hl7textResultsData {
 					}
 				}
 				
+				
+				/*
+				 * Trim and remove HTML
+				 */	
 				String trimmed = StringUtils.trimToEmpty(result);
+				trimmed = trimmed.replaceAll("\\<br\\s?/?\\>", "");
 				Matcher matcher = pattern.matcher(trimmed.toLowerCase()); 
 				Measurement m = new Measurement();
 						
@@ -196,6 +223,11 @@ public class Hl7textResultsData {
                         m.setDateObserved(UtilDateUtilities.StringToDate(dateEntered, "yyyy-MM-dd hh:mm:ss"));
                     }
                     m.setAppointmentNo(0);
+                    
+                    /*
+                     * Remove HTML
+                     */
+    				comments = comments.replaceAll("\\<br\\s?/?\\>", "");
                     m.setComments(comments);
                     measurementDao.persist(m);
 
