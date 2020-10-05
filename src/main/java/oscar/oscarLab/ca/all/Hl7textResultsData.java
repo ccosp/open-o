@@ -136,9 +136,14 @@ public class Hl7textResultsData {
 			for (int j = 0; j < h.getOBXCount(i); j++) {
 
 				String result = h.getOBXResult(i, j);
+				
+				if(result == null)
+				{
+					continue;
+				}
 			
 				// only add if there is a result and it is supposed to be viewed
-				if (result.equals("") || result.equals("DNR") || h.getOBXName(i, j).equals("") || h.getOBXResultStatus(i, j).equals("DNS")) {
+				if ("".equals(result) || "DNR".equals(result) || "".equals(h.getOBXName(i, j)) || "DNS".equals(h.getOBXResultStatus(i, j))) {
 					continue;
 				}
 				
