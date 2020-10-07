@@ -10,20 +10,33 @@ function searchDxCode(request, response) {
 	    },
 	  	dataType: "json",
 	    success: function(data) {
-	    	if(data) {
-				response(jQuery.map( data, function(item) { 
+	    	if(data && data.length > 0) {	    		
+	    		data = jQuery.map( data, function(item) { 
 					return {
-						label: item.code + ": " + item.description.trim(),
-						value: item.code,
-						id: item.id
+			    		label: item.code + ": " + item.description.trim(),
+			    		value: item.code,
+			    		id: item.id
 					};
-		    	}))
-	    	}	
+		    	})
+	    	}
+	    	else
+	    	{
+	    		data = [{
+		    		label: 'No results',
+		    		value: '0',
+		    		id: '0'
+	    		}];
+	    	}
+			return response(data);
 	    }				    
 	})				
 }
 
 jQuery(document).ready(function() {
+	
+	jQuery( ".jsonDxSearchInput" ).keydown(function(){
+		jQuery( this ).prop('title', '');
+	});
 
 	jQuery( "#jsonDxSearch, .jsonDxSearch" ).autocomplete({			
 		source: function(request, response) {
@@ -34,8 +47,17 @@ jQuery(document).ready(function() {
 		minLength: 2,
 		select: function( event, ui ) {
 			event.preventDefault();
-			this.value = ui.item.value;
-			jQuery( this ).prop('title', ui.item.label)
+			var valueid = ui.item.value;
+			
+			if(valueid == '0')
+			{
+				this.value = '';
+			}
+			else
+			{
+				this.value = valueid;
+				jQuery( this ).prop('title', ui.item.label);
+			}
 		}
 	})
 	
@@ -51,8 +73,18 @@ jQuery(document).ready(function() {
 			minLength: 3,
 			select: function( event, ui ) {
 				event.preventDefault();
-				this.value = ui.item.value;
-				jQuery( this ).prop('title', ui.item.label)
+				var valueid = ui.item.value;
+				
+				if(valueid == '0')
+				{
+					this.value = '';
+				}
+				else
+				{
+					this.value = valueid;
+					jQuery( this ).prop('title', ui.item.label);
+				}
+						
 				inputField.autocomplete("destroy");
 			},
 			change: function( event, ui ) {
