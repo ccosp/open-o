@@ -85,6 +85,8 @@ public final class DemographicTransfer {
 	private Date lastUpdateDate;
 	private String title;
 	private String officialLanguage;
+	private String cellPhone;
+	private String phoneComment;
 
 	
 	public Integer getDemographicNo() {
@@ -486,6 +488,22 @@ public final class DemographicTransfer {
 	public void setOfficialLanguage(String officialLanguage) {
     	this.officialLanguage = officialLanguage;
     }
+	
+	public String getCellPhone() {
+		return cellPhone;
+	}
+
+	public void setCellPhone(String cellPhone) {
+		this.cellPhone = cellPhone;
+	}
+	
+	public String getPhoneComment() {
+		return phoneComment;
+	}
+
+	public void setPhoneComment(String phoneComment) {
+		this.phoneComment = phoneComment;
+	}
 
 	public static DemographicTransfer toTransfer(Demographic demographic) {
 		if (demographic==null) return(null);

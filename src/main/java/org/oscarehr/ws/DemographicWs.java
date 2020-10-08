@@ -57,13 +57,13 @@ public class DemographicWs extends AbstractWs {
 	
 	@Autowired
 	private DemographicManager demographicManager;
-	
+
 	@Autowired
 	private PatientConsentManager patientConsentManager;
-	
+
 	public DemographicTransfer getDemographic(Integer demographicId)
 	{
-		Demographic demographic=demographicManager.getDemographic(getLoggedInInfo(),demographicId);
+		Demographic demographic=demographicManager.getDemographicWithExt(getLoggedInInfo(),demographicId);
 		return(DemographicTransfer.toTransfer(demographic));
 	}
 	
@@ -186,7 +186,7 @@ public class DemographicWs extends AbstractWs {
 		}
 		return result.toArray(new DemographicTransfer2[0]);
 	}
-	
+
 	public String writePHRId(@WebParam(name="demographicNo") Integer demographicNo, @WebParam(name="phrId") String phrId) {
 		
 		if (demographicNo!=null && phrId!=null) {
