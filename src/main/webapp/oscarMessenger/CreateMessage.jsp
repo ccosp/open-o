@@ -447,7 +447,7 @@ if(recall){
 										
 										<hr style="border-top:1px solid #dcdcdc; border-bottom:none;" />
 										
-										<details>
+										<details open="true">
 											<summary>
 												<strong>All Local Members</strong>
 											</summary>
