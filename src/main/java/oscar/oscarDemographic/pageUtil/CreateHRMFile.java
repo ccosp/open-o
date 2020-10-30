@@ -444,7 +444,7 @@ public class CreateHRMFile {
             else transactionInfo.setMessageUniqueID("");
             transactionInfo.setDeliverToUserID("");
             PersonNameSimple physician = transactionInfo.addNewProvider();
-           // PersonNameSimple physician = transactionInfo.addNewPhysician();
+
         }
     }
 
