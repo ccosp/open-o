@@ -29,6 +29,11 @@ import java.util.Date;
 
 import org.oscarehr.util.LoggedInInfo;
 
+@Deprecated
+/**
+ * @deprecated
+ * Requires too much redundant dataspace
+ */
 public class EctInformation {
 
 	private oscar.oscarEncounter.data.EctPatientData.Patient patient;
