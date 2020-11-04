@@ -482,8 +482,6 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 
 <style type="text/css">
 
-
-
 #attachedDocumentTable {
     border: blue thin solid;
     border-collapse: collapse;
@@ -519,10 +517,16 @@ background-color: #ddddff;
      font-size: small !important;
 }
 
-th, td.tite3, td.tite1 {
+th, td.tite1 {
 background-color: #BFBFFF;
 color : black;
 font-size: small;
+padding: 0px;
+}
+td.tite3 {
+background-color: #BFBFFF;
+color : black;
+padding: 0px;
 }
 td.tite1 {
     padding:5px 10px;
@@ -539,7 +543,11 @@ td.stat{
 font-size: 10pt;
 }
 
-.consultDemographicData input, .consultDemographicData select, .consultDemographicData textarea {
+.consultDemographicData input {
+    width: 98% !important;
+} 
+
+.consultDemographicData select{
     width: 100% !important;
 }
 
@@ -560,8 +568,8 @@ input#referalDate, input#appointmentDate, input#followUpDate {
 
 
 textarea {
-    width: 100%;
-    padding:5px 10px;
+    width: 98% !important;
+    padding:1%;
 }
 
 .MainTableLeftColumn td {
@@ -1786,7 +1794,7 @@ function updateFaxButton() {
                                 <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" />
                             </td>
                             <td  class="tite3">
-                                <textarea id="annotation" style="color: blue;" readonly></textarea>
+                                <textarea id="annotation" style="color: blue;" rows="4" readonly></textarea>
                             </td>
                         </tr>
 						<tr>
@@ -1828,7 +1836,7 @@ function updateFaxButton() {
 								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAddr" />
 							</td>
 							<td  class="tite3">
-								<textarea name="address" cols=20 ><%=thisForm.getProfessionalSpecialistAddress()%></textarea>
+								<textarea name="address" rows="5" ><%=thisForm.getProfessionalSpecialistAddress()%></textarea>
 							</td>
 						</tr>
 	
@@ -2026,8 +2034,7 @@ function updateFaxButton() {
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" class="tite3"><html:textarea cols="50"
-								rows="3" property="appointmentNotes"></html:textarea></td>
+							<td colspan="2" class="tite3"><html:textarea property="appointmentNotes"></html:textarea></td>
 						</tr>
                        
 						
@@ -2157,11 +2164,11 @@ function updateFaxButton() {
 				</tr>
 				<% if (props.isConsultationFaxEnabled()) { %>
 	
-				<tr>
-					<td colspan=2 class="tite4 heading">									
-						Additional Fax Recipients
-					</td>
-				</tr>
+					<tr>
+						<td colspan=2 class="tite4 heading">									
+							Additional Fax Recipients
+						</td>
+					</tr>
 					<tr>
 						<td colspan=2 >
 							<table style="border-collapse:collapse;" id="addFaxRecipient" width="100%">
@@ -2195,17 +2202,16 @@ function updateFaxButton() {
 					</tr>
 				<% } %>
 				
-				<tr>
-					<td colspan="2"><td>
-				</tr>
+	
 				<tr>
 					<td colspan="2" class="tite4 heading"><bean:message
 						key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formReason" />
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><html:textarea property="reasonForConsultation"
-						cols="90" rows="6"></html:textarea></td>
+					<td colspan="2">
+						<html:textarea rows="10" property="reasonForConsultation" ></html:textarea>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -2230,7 +2236,7 @@ function updateFaxButton() {
 				</tr>
 				<tr>
 				<td colspan="2">
-					<html:textarea cols="90" rows="10" styleId="clinicalInformation" property="clinicalInformation"></html:textarea></td>
+					<html:textarea rows="10" styleId="clinicalInformation" property="clinicalInformation"></html:textarea></td>
 				</tr>
 				<tr>
 					<td colspan="2" >
@@ -2270,9 +2276,8 @@ function updateFaxButton() {
 				<tr id="trConcurrentProblems">
 					<td colspan=2>
 					
-					<html:textarea cols="90" rows="6" styleId="concurrentProblems" property="concurrentProblems">
-
-					</html:textarea></td>
+					<html:textarea rows="10" styleId="concurrentProblems" property="concurrentProblems"></html:textarea>
+					</td>
 				</tr>
  <!--add for special encounter-->
 <plugin:hideWhenCompExists componentName="specialencounterComp" reverse="true">
@@ -2308,7 +2313,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 				</tr>
 				<tr>
 					<td colspan=2>
-						<html:textarea cols="90" rows="6" styleId="currentMedications" property="currentMedications"></html:textarea>
+						<html:textarea rows="10" styleId="currentMedications" property="currentMedications"></html:textarea>
 					</td>
 				</tr>
 				<tr>
@@ -2327,7 +2332,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 					</tr>
 				<tr>
 					<td colspan=2>
-						<html:textarea cols="90" rows="6" styleId="allergies" property="allergies"></html:textarea></td>
+						<html:textarea rows="10" styleId="allergies" property="allergies"></html:textarea></td>
 				</tr>
 
 <%
