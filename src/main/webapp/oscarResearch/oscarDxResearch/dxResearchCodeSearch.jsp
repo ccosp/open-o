@@ -36,10 +36,9 @@
 <html:html locale="true">
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<title><bean:message
-	key="oscarResearch.oscarDxResearch.dxResearchCodeSearch.title" /></title>
+<title><bean:message key="oscarResearch.oscarDxResearch.dxResearchCodeSearch.title" /></title>
 <script LANGUAGE="JavaScript">
-<!--
+//<!--
 function CodeAttach(File0) {
      
     self.close();
@@ -83,7 +82,7 @@ function CodesAttach() {
 	}
     self.close();
 }
--->
+//-->
 </script>
 <link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
 </head>

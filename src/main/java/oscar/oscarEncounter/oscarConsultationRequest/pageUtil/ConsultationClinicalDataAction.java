@@ -37,6 +37,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.casemgmt.model.Issue;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
+import org.oscarehr.casemgmt.service.CaseManagementManager.IssueType;
 import org.oscarehr.common.model.Allergy;
 import org.oscarehr.common.model.Drug;
 import org.oscarehr.managers.AllergyManager;
@@ -53,7 +54,7 @@ public class ConsultationClinicalDataAction extends DispatchAction  {
 	private PrescriptionManager prescriptionManager = SpringUtils.getBean(PrescriptionManager.class);
 	private CaseManagementManager caseManagementManager = SpringUtils.getBean(CaseManagementManager.class);
 	private AllergyManager allergyManager = SpringUtils.getBean( AllergyManager.class ); 
-	
+
 	public ConsultationClinicalDataAction() {
 		// Default
 	}
@@ -135,7 +136,16 @@ public class ConsultationClinicalDataAction extends DispatchAction  {
 		return null;
 	}
 	
+	@Deprecated
 	@SuppressWarnings("unused")
+	/**
+	 * @Deprecated Use the FetchIssueNote method with a RiskFactor issueType parameter
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public ActionForward fetchRiskFactors(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		
@@ -169,6 +179,39 @@ public class ConsultationClinicalDataAction extends DispatchAction  {
 		return null;
 	}
 	
+	@SuppressWarnings("unused")
+	public ActionForward fetchIssueNote(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		
+		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
+		String issueType = request.getParameter("issueType");
+		String demographicNo = request.getParameter("demographicNo");
+		IssueType issueTypeEnum = IssueType.valueOf(issueType.toUpperCase());
+		Issue issue = caseManagementManager.getIssueByCode( issueTypeEnum );
+		List<CaseManagementNote> issueNoteList = caseManagementManager.getNotes( loggedInInfo, demographicNo, new String[]{ issue.getId()+"" } );		
+
+		JSONObject json = new JSONObject();
+		json.put( "noteType", issueTypeEnum.name() );
+		StringBuilder stringBuilder = new StringBuilder();
+	
+		if( issueNoteList != null ) {
+			for(CaseManagementNote issueNote : issueNoteList) {
+				stringBuilder.append( issueNote.getNote() );
+				stringBuilder.append("\n");
+			}
+		}
+		
+		json.put("note", stringBuilder.toString());
+		
+		response.setContentType("text/javascript");
+        try {
+			response.getWriter().write( json.toString() );
+		} catch (IOException e) {
+			logger.error("Authentication error: ", e);
+		}
+        
+		return null;
+	}
 	
 	private void medicationToJson( HttpServletResponse response, List<Drug> medications, String notetype ) {
 		

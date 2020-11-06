@@ -64,11 +64,11 @@
 		</repository>
 		
 		<!-- MARC-HI (Everest & SHIC) -->
-<!-- 		<repository>
+ 		<repository>
 			<id>marc-te-main</id>
 			<name>MARC-HI Technology Exchange Private Maven Repository</name>
 			<url>http://te.marc-hi.ca/mvn</url>
-		</repository> -->
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -94,23 +94,24 @@
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
+			<version>1.2</version>
 		</dependency>
                 <dependency> 
                         <groupId>log4j</groupId> 
                         <artifactId>log4j</artifactId> 
                         <version>1.2.17</version> 
                 </dependency>
-		<dependency>
+        <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.5.6</version>
+			<version>1.7.30</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.5.6</version>
+			<version>1.7.30</version>
 		</dependency>
+                
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -251,6 +252,12 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>3.4.0.GA</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>cglib</groupId>
@@ -548,7 +555,7 @@
 		<dependency>
 			<groupId>cds</groupId>
 			<artifactId>cds_hrm</artifactId>
-			<version>1.0</version>
+			<version>4.3.1</version>
 		</dependency>
 
 		<!-- HRM module -->
@@ -608,6 +615,12 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>1.8.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- cookie revolver -->
@@ -748,7 +761,13 @@
 		<dependency>
 			<groupId>displaytag</groupId>
 			<artifactId>displaytag</artifactId>
-			<version>1.1.1</version>
+			<version>1.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- zxing / 2d bar codes -->
@@ -961,7 +980,14 @@
 					<groupId>org.apache.cxf.services.ws-discovery</groupId>
 					<artifactId>cxf-services-ws-discovery-service</artifactId>
 				</exclusion>
-
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-jdk14</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1047,7 +1073,11 @@
 				</exclusion>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
-					<artifactId>log4j-over-slf4j</artifactId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1182,14 +1212,13 @@
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-base</artifactId>
    <version>2.5</version>
-                       <exclusions>
-                               <exclusion>
-                                        <groupId>org.slf4j</groupId>
-                                        <artifactId>jcl-over-slf4j</artifactId>
-                                </exclusion>
-                        </exclusions>
 
-
+   <exclusions>
+   	<exclusion>
+   		<groupId>org.slf4j</groupId>
+   		<artifactId>slf4j-api</artifactId>
+   	</exclusion>
+   </exclusions>
 </dependency>
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
@@ -1591,7 +1620,7 @@
 				 -->
 				<configuration>
 					<sourceEncoding>ISO-8859-1</sourceEncoding>
-					<targetJdk>1.6</targetJdk>
+					<targetJdk>1.8</targetJdk>
 					<rulesets>
 						<ruleset>utils/pmd_rules.xml</ruleset>
 					</rulesets>
@@ -1790,10 +1819,11 @@
 	</build>
 
 	<profiles>
-		<profile>
+<!-- 		<profile>
 			<id>jdk6</id>
 			<activation>
-				<jdk>1.6</jdk>
+	<activeByDefault>false</activeByDefault>			
+	<jdk>1.6</jdk>
 			</activation>
 
 				<dependencies>
@@ -1832,7 +1862,7 @@
 				</plugin>
 				</plugins>
 			</build>
-		</profile>
+		</profile> -->
 		<profile>
 			<id>jdk7</id>
 			<activation>
@@ -1884,7 +1914,6 @@
 				<activeByDefault>true</activeByDefault>
 				<jdk>1.8</jdk>
 			</activation>
-
 				<dependencies>
 					<dependency>
 						<groupId>org.oscarehr</groupId>

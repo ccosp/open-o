@@ -1,58 +1,95 @@
 
-	jQuery(document).ready(function() {
+function searchDxCode(request, response) {
+	jQuery.ajax({
+	    url: ctx + "/dxCodeSearchJSON.do",
+	    type: 'POST',
+	    data: {
+	    	method: request.method,
+	    	keyword: request.term,
+	    	codeSystem: request.codeSystem
+	    },
+	  	dataType: "json",
+	    success: function(data) {
+	    	if(data && data.length > 0) {	    		
+	    		data = jQuery.map( data, function(item) { 
+					return {
+			    		label: item.code + ": " + item.description.trim(),
+			    		value: item.code,
+			    		id: item.id
+					};
+		    	})
+	    	}
+	    	else
+	    	{
+	    		data = [{
+		    		label: 'No results',
+		    		value: '0',
+		    		id: '0'
+	    		}];
+	    	}
+			return response(data);
+	    }				    
+	})				
+}
 
-		jQuery( "#jsonDxSearch" ).autocomplete({			
+jQuery(document).ready(function() {
+	
+	jQuery( ".jsonDxSearchInput" ).keydown(function(){
+		jQuery( this ).prop('title', '');
+	});
+
+	jQuery( "#jsonDxSearch, .jsonDxSearch" ).autocomplete({			
+		source: function(request, response) {
+			request.method = 'search' + (jQuery( '#codingSystem option:selected, input#codingSystem' ).val()).toUpperCase();
+			searchDxCode(request, response);					  
+		},
+		delay: 100,
+		minLength: 2,
+		select: function( event, ui ) {
+			event.preventDefault();
+			var valueid = ui.item.value;
+			
+			if(valueid == '0')
+			{
+				this.value = '';
+			}
+			else
+			{
+				this.value = valueid;
+				jQuery( this ).prop('title', ui.item.label);
+			}
+		}
+	})
+	
+		
+	jQuery(".jsonDxSearchButton").click(function () {
+		var inputField = jQuery("#" + this.value);	
+		var codeSystem = (jQuery( '#codingSystem option:selected, input#codingSystem' ).val()).toUpperCase();
+		inputField.autocomplete({ 		
 			source: function(request, response) {
-				jQuery.ajax({
-				    url: ctx + "/dxCodeSearchJSON.do",
-				    type: 'POST',
-				    data: 'method=search' + (jQuery( '#codingSystem' ).find(":selected").val()).toUpperCase()
-				    				+ '&keyword=' 
-				    				+ jQuery( "#jsonDxSearch" ).val(),
-				  	dataType: "json",
-				    success: function(data) {
-						response(jQuery.map( data, function(item) { 
-							return {
-								label: item.description.trim() + ' (' + item.code + ')',
-								value: item.code,
-								id: item.id
-							};
-				    	}))
-				    }			    
-				})					  
+				request.method = 'search' + codeSystem
+				searchDxCode(request, response);					  
 			},
-			delay: 100,
-			minLength: 2,
+			minLength: 3,
 			select: function( event, ui ) {
 				event.preventDefault();
-				jQuery( "#jsonDxSearch" ).val(ui.item.label);
-				jQuery( '#codeTxt' ).val(ui.item.value);
-			},
-			focus: function(event, ui) {
-		        event.preventDefault();
-		        jQuery( "#jsonDxSearch" ).val(ui.item.label);
-		    },
-			open: function() {
-				jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-			},
-			close: function() {
-				jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-			}
-		})
-
-		jQuery( "#jsonDxSearch" )
-		.val("Search")
-		.css('color','grey')
-		.focus(function(){
-			if(this.value == "Search"){
-		         this.value = "";
-		         jQuery( "#jsonDxSearch" ).css('color','black');
-		    } 			
-		}).blur(function(){
-		    if(this.value==""){
-		         this.value = "Search";	
-		         jQuery( "#jsonDxSearch" ).css('color','grey');
-		    } 
-		});
+				var valueid = ui.item.value;
 				
-	})
+				if(valueid == '0')
+				{
+					this.value = '';
+				}
+				else
+				{
+					this.value = valueid;
+					jQuery( this ).prop('title', ui.item.label);
+				}
+						
+				inputField.autocomplete("destroy");
+			},
+			change: function( event, ui ) {
+				inputField.autocomplete("destroy");
+			} 
+		}).autocomplete("search", inputField.val());
+	});
+})

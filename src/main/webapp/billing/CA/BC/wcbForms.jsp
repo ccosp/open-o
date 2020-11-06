@@ -51,11 +51,11 @@ if(!authed) {
   String wcbid = request.getParameter("wcbid");
   String billingcode = request.getParameter("billingcode"); 
   %>
-  <p>
-                                                
-    WCB Forms available to attach. <a  onclick="popup(700,960,'viewformwcb.do?demographic_no=<%=demographicNo%>&formId=0&provNo=999998&parentAjaxId=forms&hideToBill=true','<%=demographicNo%>NEWWCB'); return false;"  href="javascript:void(0);" >New WCB Form</a> <br>
-    
-    <table border="1" cellspacing="0" cellpadding="1" >
+  <div>
+   <div>                                         
+   <label> WCB Forms available to attach.</label> <a onclick="popup(700,960,'viewformwcb.do?demographic_no=<%=demographicNo%>&formId=0&provNo=999998&parentAjaxId=forms&hideToBill=true','<%=demographicNo%>NEWWCB'); return false;"  href="javascript:void(0);" >New WCB Form</a> <br>
+    </div> 
+    <table class="table table-striped table-condensed">
         <tr bgcolor="#CCCCFF">
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -67,9 +67,6 @@ if(!authed) {
         </tr>
         <%
             BillingmasterDAO billingmasterDAO = (BillingmasterDAO) SpringUtils.getBean("BillingmasterDAO");
-
-            //WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-            //BillingmasterDAO billingmasterDAO = (BillingmasterDAO) ctx.getBean("BillingmasterDAO");
             List<WCB> l = billingmasterDAO.getWCBForms(demographicNo);
             for (WCB wcb : l) {
             request.setAttribute("wcb",(Object) wcb);
@@ -129,7 +126,7 @@ if(!authed) {
                +Need to pull the available values into the billing form. ( two fee items, icd9 code
     -->
     </pre>
-</p>
+</div>
 
 
 <%!

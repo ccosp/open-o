@@ -44,13 +44,13 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.billing.Clinicaid.util.ClinicaidCommunication;
 
-import oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic;
+//import oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic;
 import oscar.oscarBilling.ca.bc.decisionSupport.BillingGuidelines;
-import oscar.util.SqlUtils;
+//import oscar.util.SqlUtils;
 
 public final class BillingAction extends Action {
   private static Logger _log = MiscUtils.getLogger();
-  private ServiceCodeValidationLogic vldt = new ServiceCodeValidationLogic();
+//  private ServiceCodeValidationLogic vldt = new ServiceCodeValidationLogic();
   public ActionForward execute(ActionMapping mapping,
                                ActionForm form,
                                HttpServletRequest request,
@@ -182,45 +182,45 @@ public final class BillingAction extends Action {
    * @param errors ActionMessages
    * @param demoNo String
    */
-  private void validateCodeLastBilled(HttpServletRequest request,
-                                      ActionMessages errors, String demoNo) {
-    List patientDX = vldt.getPatientDxCodes(demoNo);
-    List<String[]> cdmSvcCodes = vldt.getCDMCodes();
-    for (String[] item:cdmSvcCodes){
-         if (patientDX.contains(item[0])) {
-        validateCodeLastBilledHlp(errors, demoNo, item[1]);
-      }
-    }
-
-    this.saveErrors(request, errors);
-  }
+//  private void validateCodeLastBilled(HttpServletRequest request,
+//                                      ActionMessages errors, String demoNo) {
+//    List patientDX = vldt.getPatientDxCodes(demoNo);
+//    List<String[]> cdmSvcCodes = vldt.getCDMCodes();
+//    for (String[] item:cdmSvcCodes){
+//         if (patientDX.contains(item[0])) {
+//        validateCodeLastBilledHlp(errors, demoNo, item[1]);
+//      }
+//    }
+//
+//    this.saveErrors(request, errors);
+//  }
 
 
   /*
    * Looks through the list of billing codes and if any billing code in the list has been billed within the last year then nothing happens.But if the last code in the list has either
    * never been billed OR billed over 365 days ago, a warning is added advising to do so.
   */
-  private void validateCodeLastBilledHlp(ActionMessages errors,
-                                         String demoNo, String code) {
-    int codeLastBilled = -1;
-    String conditionCodeQuery = "select conditionCode from billing_service_code_conditions where serviceCode = '" +
-        code + "'";
-    List<String[]> conditions = SqlUtils.getQueryResultsList(conditionCodeQuery);
- 
-    for(String[] row : conditions){
-      codeLastBilled = vldt.daysSinceCodeLastBilled(demoNo, row[0]);
-      if (codeLastBilled < 365 && codeLastBilled > -1) {
-        break;
-      }
-    }
-    if (codeLastBilled > 365) {
-        MiscUtils.getLogger().debug("adding code last billed "+code);
-      errors.add("",new ActionMessage("oscar.billing.CA.BC.billingBC.error.codeLastBilled",new String[] {String.valueOf(codeLastBilled), code}));
-    }
-    else if (codeLastBilled == -1) {
-        MiscUtils.getLogger().debug("adding code never billed "+code);
-      errors.add("",new ActionMessage("oscar.billing.CA.BC.billingBC.error.codeNeverBilled",new String[] {code}));
-    }
-  }
+//  private void validateCodeLastBilledHlp(ActionMessages errors,
+//                                         String demoNo, String code) {
+//    int codeLastBilled = -1;
+//    String conditionCodeQuery = "select conditionCode from billing_service_code_conditions where serviceCode = '" +
+//        code + "'";
+//    List<String[]> conditions = SqlUtils.getQueryResultsList(conditionCodeQuery);
+// 
+//    for(String[] row : conditions){
+//      codeLastBilled = vldt.daysSinceCodeLastBilled(demoNo, row[0]);
+//      if (codeLastBilled < 365 && codeLastBilled > -1) {
+//        break;
+//      }
+//    }
+//    if (codeLastBilled > 365) {
+//        MiscUtils.getLogger().debug("adding code last billed "+code);
+//      errors.add("",new ActionMessage("oscar.billing.CA.BC.billingBC.error.codeLastBilled",new String[] {String.valueOf(codeLastBilled), code}));
+//    }
+//    else if (codeLastBilled == -1) {
+//        MiscUtils.getLogger().debug("adding code never billed "+code);
+//      errors.add("",new ActionMessage("oscar.billing.CA.BC.billingBC.error.codeNeverBilled",new String[] {code}));
+//    }
+//  }
 
 }

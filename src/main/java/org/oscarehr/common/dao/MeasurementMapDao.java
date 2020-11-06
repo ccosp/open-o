@@ -144,7 +144,7 @@ public class MeasurementMapDao extends AbstractDao<MeasurementMap> {
 		String sql = "FROM MeasurementMap a, MeasurementMap b, " + MeasurementType.class.getSimpleName() + " type " +
 				"WHERE b.labType = :labType " +
 				"AND a.identCode = :idCode " +
-				"AND a.name = :name " +
+				"AND a.name LIKE :name " +
 				"AND a.loincCode = b.loincCode " +
 				"AND type.type = b.identCode";
 		Query q = entityManager.createQuery(sql);
