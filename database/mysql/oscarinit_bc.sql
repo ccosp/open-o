@@ -6119,3 +6119,12 @@ CREATE TABLE IF NOT EXISTS `formRourke2009` (
   PRIMARY KEY (`ID`)
 ) ENGINE = MYISAM;
 
+
+-- ----------------------------
+-- Records of bcpEligibleCodes
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `bcpEligibleCodes` (
+  `Fee Item` varchar(255) DEFAULT NULL,
+  `Section` varchar(255) DEFAULT NULL,
+  `Fee Item Description` varchar(255) DEFAULT NULL
+);
