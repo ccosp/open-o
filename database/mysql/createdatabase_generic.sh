@@ -27,6 +27,13 @@ echo loading oscardata.sql...
 mysql -u${USER} -p$PASSWORD  $DATABASE_NAME  < oscardata.sql
 echo loading oscardata_${LOCATION}.sql...
 mysql -u${USER} -p$PASSWORD  $DATABASE_NAME  < oscardata_${LOCATION}.sql
+
+if [ -e ${LOCATION}_billingServiceCodes.sql ] 
+	then
+		echo loading ${LOCATION}_billingServiceCodes.sql...
+		mysql -u${USER} -p$PASSWORD  $DATABASE_NAME  < ${LOCATION}_billingServiceCodes.sql
+fi
+
 echo loading icd${ICD}.sql...
 mysql -u${USER} -p$PASSWORD  $DATABASE_NAME  < icd${ICD}.sql
 
