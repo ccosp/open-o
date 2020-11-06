@@ -27,10 +27,12 @@ package org.oscarehr.common.model;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -39,6 +41,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.oscarehr.PMmodule.utility.DateTimeFormatUtils;
 import org.oscarehr.PMmodule.utility.Utility;
+import org.oscarehr.common.model.DemographicExt.DemographicProperty;
 import org.oscarehr.util.MiscUtils;
 
 /**
@@ -121,38 +124,41 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
     private String countryOfOrigin;
     private String newsletter;
+    
+    private String cellPhone;
+    private String phoneComment;
 
-        public String getTitle() {
-        	return title;
-        }
+    public String getTitle() {
+    	return title;
+    }
 
-		public void setTitle(String title) {
-        	this.title = title;
-        }
+	public void setTitle(String title) {
+    	this.title = title;
+    }
 
-		public String getOfficialLanguage() {
-        	return officialLanguage;
-        }
+	public String getOfficialLanguage() {
+    	return officialLanguage;
+    }
 
-		public void setOfficialLanguage(String officialLanguage) {
-        	this.officialLanguage = officialLanguage;
-        }
+	public void setOfficialLanguage(String officialLanguage) {
+    	this.officialLanguage = officialLanguage;
+    }
 
-		public String getLastUpdateUser() {
-        	return lastUpdateUser;
-        }
+	public String getLastUpdateUser() {
+    	return lastUpdateUser;
+    }
 
-		public void setLastUpdateUser(String lastUpdateUser) {
-        	this.lastUpdateUser = lastUpdateUser;
-        }
+	public void setLastUpdateUser(String lastUpdateUser) {
+    	this.lastUpdateUser = lastUpdateUser;
+    }
 
-		public Date getLastUpdateDate() {
-        	return lastUpdateDate;
-        }
+	public Date getLastUpdateDate() {
+    	return lastUpdateDate;
+    }
 
-		public void setLastUpdateDate(Date lastUpdateDate) {
-        	this.lastUpdateDate = lastUpdateDate;
-        }
+	public void setLastUpdateDate(Date lastUpdateDate) {
+    	this.lastUpdateDate = lastUpdateDate;
+    }
 
 	/**
      * @return the rosterDate
@@ -876,6 +882,30 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		this.sourceOfIncome = sourceOfIncome;
 	}
 
+	public String getCellPhone() {	
+		if(this.cellPhone == null)
+		{
+			this.cellPhone = getExtraValue(DemographicProperty.demo_cell);
+		}
+		return this.cellPhone;
+	}
+
+	public void setCellPhone(String cellPhone) {
+		this.cellPhone = cellPhone;
+	}
+
+	public String getPhoneComment() {
+		if(this.phoneComment == null)
+		{
+			this.phoneComment = getExtraValue(DemographicProperty.phoneComment);
+		}
+		return phoneComment;
+	}
+
+	public void setPhoneComment(String phoneComment) {
+		this.phoneComment = phoneComment;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (null == obj) return false;
@@ -938,6 +968,48 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
 	public DemographicExt[] getExtras() {
 		return extras;
+	}
+	
+	/**
+	 * Fetch a specific demographic extra object matching the given key.
+	 * @param key
+	 * @return
+	 */
+	public DemographicExt getExtra(DemographicProperty key) {
+		List<DemographicExt> demographicExtList = new ArrayList<>();
+		DemographicExt demographicExtResult = null;
+		if(this.extras != null) {
+			for(DemographicExt demographicExt : this.extras) 
+			{
+				if(key.name().equalsIgnoreCase(demographicExt.getKey()))
+				{
+					demographicExtList.add(demographicExt);
+				}
+			}
+		}
+		/*
+		 * Only return the first (hopefully the only) result for now.
+		 */
+		if(! demographicExtList.isEmpty())
+		{
+			demographicExtResult = demographicExtList.get(0);
+		}
+		return demographicExtResult;
+	}
+	
+	/**
+	 * Fetch a specific extra value matching the given key.
+	 * @param key
+	 * @return
+	 */
+	public String getExtraValue(DemographicProperty key) {
+		DemographicExt demographicExt = getExtra(key);
+		String extraValue = "";
+		if(demographicExt != null)
+		{
+			extraValue = demographicExt.getValue();
+		}
+		return extraValue;
 	}
 
 	public String getFormattedDob() {

@@ -34,7 +34,12 @@ import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.common.model.EChart;
 import org.springframework.stereotype.Repository;
 
+@Deprecated
 @Repository
+/**
+ * @deprecated
+ * Requires too much redundant dataspace
+ */
 public class EChartDao extends AbstractDao<EChart>{
 
 	

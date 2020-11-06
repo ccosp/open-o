@@ -558,8 +558,6 @@
         <ViolationValue>/src/main/webapp/lab/CumulativeLabValues3.jsp:LinkedHashMap nameMap = new LinkedHashMap();</ViolationValue>
         <ViolationValue>/src/main/webapp/lab/DisplayLabValue.jsp:Collections.sort(list,new SortHashtable());</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/newEncounter.jsp:if( newDocArr == null ) newDocArr = new ArrayList();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecPhones = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecPhones = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddress = new Vector();</ViolationValue>
@@ -575,10 +573,8 @@
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressName = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressPhone = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp:ArrayList tickerList = new ArrayList();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/attachConsultation.jsp:ArrayList privatedocs = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/config/DisplayService.jsp:displayServiceUtil.estSpecialistVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/config/EditSpecialists.jsp:displayServiceUtil.estSpecialistVector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/displayAttachedFiles.jsp:ArrayList privatedocs = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarMeasurements/AddMeasurementData.jsp:Hashtable extraData = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarMeasurements/HealthTrackerPage.jspf:ArrayList comments = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarMeasurements/HealthTrackerPage.jspf:Hashtable h = new Hashtable();</ViolationValue>
@@ -607,7 +603,7 @@
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/currentCodeList.jsp:Vector patientDx = dxResearchBeanHand.getDxResearchBeanVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:Collection quickLists = dxQlBeanHandler.getDxQuickListBeanVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:Vector patientDx = dxResearchBeanHand.getDxResearchBeanVector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:if (dxList.getDxQuickListItemsVector().isEmpty()) continue;</ViolationValue>
+        <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:if (dxList.getDxQuickListItemsVector().isEmpty())</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarRx/BulletinDisplayMyD.jsp:Hashtable h = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarRx/BulletinDisplayMyD.jsp:Vector params = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarRx/BulletinDisplayMyD.jsp:Vector vec = new Vector();</ViolationValue>
@@ -1228,11 +1224,7 @@
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable patientNumDoc = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable&lt;String, List&lt;String&gt;&gt; ab_NormalDoc = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable&lt;String, List&lt;String&gt;&gt; typeDocLab = new Hashtable();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Vector&lt;Object&gt; vec = OscarRoleObjectPrivilege.getPrivilegeProp("_queue." + queueid);</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:if (OscarRoleObjectPrivilege.checkPrivilege(roleName, (Properties) vec.get(0), (Vector) vec.get(1)) || documentResultsDao.isSentToProvider(docid, searchProviderNo)) {</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:if (OscarRoleObjectPrivilege.checkPrivilege(roleName, (Properties) vec.get(0), (Vector) vec.get(1))) {</ViolationValue>
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:import java.util.Hashtable;</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:import java.util.Vector;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, EForm&gt; eformTable = new Hashtable&lt;String,EForm&gt;(); //stores eforms constructed from eform.properties, no HTML</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, EForm&gt; eformTableFailed = new Hashtable&lt;String,EForm&gt;();  //stores eforms that are constructed from eform.properties that alredy exist and do not need to be imported</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, File&gt; tempFiles = new Hashtable&lt;String,File&gt;(); //references extracted files in the temp folder</ViolationValue>
@@ -2679,8 +2671,6 @@
         <ViolationValue>/src/main/webapp/oscarEncounter/Index2.jsp:Vector splitChart = ectSplitChart.getSplitCharts(demoNo);</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/immunization/ScheduleConfig.jsp:Vector cfgId = new EctImmConfigData().getImmunizationConfigId();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/immunization/ScheduleConfig.jsp:Vector cfgSet = new EctImmConfigData().getImmunizationConfigName();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecPhones = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddress = null;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddressBillingNo = null;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddressFax = null;</ViolationValue>
@@ -2777,7 +2767,7 @@
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/currentCodeList.jsp:Vector patientDx = dxResearchBeanHand.getDxResearchBeanVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/dxQuickList.jsp:&lt;logic:iterate id="item" name="allQuickListItems" property="dxQuickListItemsVector"&gt;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/dxQuickList.jsp:&lt;logic:iterate id="quickLists" name="allQuickLists" property="dxQuickListBeanVector" &gt;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/dxResearch.jsp:property="dxResearchBeanVector" indexId="ctr"&gt;</ViolationValue>
+        <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/dxResearch.jsp:&lt;logic:iterate id="diagnotics" name="allDiagnostics" property="dxResearchBeanVector" indexId="ctr"&gt;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/dxResearchCodeSearch.jsp:&lt;logic:iterate id="code" name="allMatchedCodes" property="dxCodeSearchBeanVector"&gt;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/dxResearchCodeSearch.jsp:property="dxCodeSearchBeanVector"&gt;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/dxResearchEditQuickList.jsp:property="dxQuickListItemsVector"&gt;</ViolationValue>
@@ -2785,7 +2775,7 @@
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:Collection list = dxList.getDxQuickListItemsVectorNotInPatientsList(patientDx);</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:Collection quickLists = dxQlBeanHandler.getDxQuickListBeanVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:Vector patientDx = dxResearchBeanHand.getDxResearchBeanVector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:if (dxList.getDxQuickListItemsVector().isEmpty()) continue;</ViolationValue>
+        <ViolationValue>/src/main/webapp/oscarResearch/oscarDxResearch/quickCodeList.jsp:if (dxList.getDxQuickListItemsVector().isEmpty())</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarRx/BulletinDisplayMyD.jsp://Vector vec = (Vector) callWebserviceLite("get",params);</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarRx/BulletinDisplayMyD.jsp:Enumeration e = ((Hashtable) obj).keys();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarRx/BulletinDisplayMyD.jsp:Hashtable h = new Hashtable();</ViolationValue>

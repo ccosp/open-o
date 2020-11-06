@@ -37,45 +37,47 @@ Required Parameters to plug-in:
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 
-<table id="dxCodeQuicklist" style="width:100%;border-collapse:collapse;">
-	<tr >
+<table id="dxCodeQuicklist">
+	<tr>
 		<td class="heading">
-			<bean:message key="oscarResearch.oscarDxResearch.quickList" />
+		${ quickList }
+			<div class="panel panel-default">
+	  			<div class="panel-body">
+					<bean:message key="oscarResearch.oscarDxResearch.quickList" />
+					<small class="pull-right">
+						<a class="oscar-dialog-link" href="dxResearchCustomization.jsp">
+							add/edit
+						</a>
+					</small>
+				</div>
+			</div>
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<table>
-			<tr>
-				<td>
-					<html:select size="5" style="overflow:auto" property="quickList"
-						onchange="javascript:changeList(this,'${ demographicNo }','${ providerNo }');"  >			
-						<logic:iterate id="quickLists" name="allQuickLists" property="dxQuickListBeanVector" >				
-							<option value="${ quickLists.quickListName }" ${ quickLists.quickListName eq param.quickList || quickLists.lastUsed eq 'Selected' ? 'selected' : '' } >			
-								<bean:write	name="quickLists" property="quickListName" />
-							</option>
-						</logic:iterate>
-					</html:select>
-				</td>
-				<td>
-					<i>(Click the titles to switch lists)</i>
-				</td>
-			</tr>
-			</table>
+		<td class="quickList">	
+			<html:select styleClass="form-control" style="overflow:auto" property="quickList" onchange="javascript:changeList(this,'${ demographicNo }','${ providerNo }');" >			
+				<logic:iterate id="quickLists" name="allQuickLists" property="dxQuickListBeanVector" >				
+					<option value="${ quickLists.quickListName }" ${ quickLists.quickListName eq param.quickList || quickLists.lastUsed eq 'Selected' ? 'selected' : '' } >			
+						<bean:write	name="quickLists" property="quickListName" />
+					</option>
+				</logic:iterate>
+			</html:select>	
+ 				<ul class="list-group">
+  				<logic:iterate id="item" name="allQuickListItems" property="dxQuickListItemsVector">
+  					<li class="list-group-item">
+  					<span class="pull-right">
+ 						<html:link href="#" title="${ item.dxSearchCode }"
+						onclick="javascript:submitform( '${ item.dxSearchCode }', '${ item.type }' )" >
+							add
+					</html:link>
+					</span>
+  					<bean:write name="item" property="type" />: 
+  					<bean:write name="item" property="description" />	
+					</li>
+				</logic:iterate>
+			</ul>
 		</td>
-	</tr>
-
-	<logic:iterate id="item" name="allQuickListItems" property="dxQuickListItemsVector">	
-		<tr>
-			<td class="quickList">			
-				<html:link href="#" title="${ item.dxSearchCode }"
-					onclick="javascript:submitform( '${ item.dxSearchCode }', '${ item.type }' )" >
-						<bean:write name="item" property="description" />
-				</html:link>
-			</td>
-		</tr>		
-	</logic:iterate>
-
+	</tr>		
 </table>
 
 <script type="text/javascript">

@@ -53,8 +53,10 @@ import ca.uhn.hl7v2.model.v23.datatype.ED;
 import ca.uhn.hl7v2.model.v23.datatype.HD;
 import ca.uhn.hl7v2.model.v23.datatype.XCN;
 import ca.uhn.hl7v2.model.v23.message.ORU_R01;
+import ca.uhn.hl7v2.parser.DefaultXMLParser;
 import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.parser.PipeParser;
+import ca.uhn.hl7v2.parser.XMLParser;
 import ca.uhn.hl7v2.util.Terser;
 import ca.uhn.hl7v2.validation.impl.NoValidation;
 import oscar.util.UtilDateUtilities;
@@ -93,17 +95,12 @@ public class PATHL7Handler implements MessageHandler {
     public String getMsgPriority(){
         return("");
     }
+    
     /*
      *  MSH METHODS
      */
-
     public String getMsgDate(){
-        //try {
         return(formatDateTime(getString(msg.getMSH().getDateTimeOfMessage().getTimeOfAnEvent().getValue())));
-        //return(formatDateTime(getString(msg.getRESPONSE().getORDER_OBSERVATION(0).getOBR().getObservationDateTime().getTimeOfAnEvent().getValue())));
-        //} catch (HL7Exception ex) {
-        //    return ("");
-        //}
     }
 
     /*
@@ -693,7 +690,7 @@ public class PATHL7Handler implements MessageHandler {
     }
 
 
-    private String formatDateTime(String plain){
+    protected static String formatDateTime(String plain){
     	if (plain==null || plain.trim().equals("")) return "";
 
         String dateFormat = "yyyyMMddHHmmss";
@@ -761,4 +758,17 @@ public class PATHL7Handler implements MessageHandler {
 		return result;
 	}
     
+	public String getXML() {
+
+		XMLParser xmlParser = new DefaultXMLParser();
+		String messageInXML = "";
+		try {
+			messageInXML = xmlParser.encode(msg);
+		} catch (HL7Exception e) {
+			messageInXML = "";
+		}
+
+		return messageInXML;
+
+	}
 }

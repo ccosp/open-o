@@ -31,7 +31,6 @@ import java.util.List;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
-
 import org.apache.cxf.annotations.GZIP;
 import org.apache.log4j.Logger;
 import org.oscarehr.common.Gender;
@@ -40,6 +39,7 @@ import org.oscarehr.common.model.PHRVerification;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.transfer_objects.DemographicTransfer;
+import org.oscarehr.ws.transfer_objects.DemographicTransfer2;
 import org.oscarehr.ws.transfer_objects.PhrVerificationTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,11 +52,17 @@ public class DemographicWs extends AbstractWs {
 	
 	@Autowired
 	private DemographicManager demographicManager;
-	
+
 	public DemographicTransfer getDemographic(Integer demographicId)
 	{
-		Demographic demographic=demographicManager.getDemographic(getLoggedInInfo(),demographicId);
+		Demographic demographic=demographicManager.getDemographicWithExt(getLoggedInInfo(),demographicId);
 		return(DemographicTransfer.toTransfer(demographic));
+	}
+	
+	public DemographicTransfer2 getDemographic2(Integer demographicId)
+	{
+		Demographic demographic=demographicManager.getDemographic(getLoggedInInfo(),demographicId);
+		return(DemographicTransfer2.toTransfer(demographic));
 	}
 
 	public DemographicTransfer getDemographicByMyOscarUserName(String myOscarUserName)
@@ -130,4 +136,17 @@ public class DemographicWs extends AbstractWs {
 		List<Demographic> demographics=demographicManager.getDemographics(getLoggedInInfo(),ids);
 		return(DemographicTransfer.toTransfers(demographics));	
 	}
+	                              
+	public String writePHRId(@WebParam(name="demographicNo") Integer demographicNo, @WebParam(name="phrId") String phrId) {
+		
+		if (demographicNo!=null && phrId!=null) {
+			Demographic demo = demographicManager.getDemographic(getLoggedInInfo(), demographicNo);
+			demo.setMyOscarUserName(phrId);
+			demographicManager.updateDemographic(getLoggedInInfo(), demo);
+			
+		    return "success";
+		}
+		return "fail";
+	}
+
 }

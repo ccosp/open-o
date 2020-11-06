@@ -33,7 +33,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.oscarehr.common.model.Demographic;
 import org.springframework.beans.BeanUtils;
 
-public final class DemographicTransfer {
+public final class DemographicTransfer2 {
 
 	private Integer demographicNo;
 	private String phone;
@@ -63,6 +63,7 @@ public final class DemographicTransfer {
 	private String hcType;
 	private String chartNo;
 	private String email;
+	private Boolean consentToUseEmailForCare;
 	private String yearOfBirth;
 	private Date effDate;
 	private Date rosterDate;
@@ -85,8 +86,17 @@ public final class DemographicTransfer {
 	private Date lastUpdateDate;
 	private String title;
 	private String officialLanguage;
-	private String cellPhone;
-	private String phoneComment;
+	
+	private String countryOfOrigin;
+    private String newsletter;
+
+    private String middleNames;
+    private String rosterEnrolledTo;
+    
+    private String residentialAddress;
+    private String residentialCity;
+	private String residentialProvince;
+	private String residentialPostal;
 
 	
 	public Integer getDemographicNo() {
@@ -489,40 +499,96 @@ public final class DemographicTransfer {
     	this.officialLanguage = officialLanguage;
     }
 	
-	public String getCellPhone() {
-		return cellPhone;
+	public Boolean getConsentToUseEmailForCare() {
+		return consentToUseEmailForCare;
 	}
 
-	public void setCellPhone(String cellPhone) {
-		this.cellPhone = cellPhone;
-	}
-	
-	public String getPhoneComment() {
-		return phoneComment;
+	public void setConsentToUseEmailForCare(Boolean consentToUseEmailForCare) {
+		this.consentToUseEmailForCare = consentToUseEmailForCare;
 	}
 
-	public void setPhoneComment(String phoneComment) {
-		this.phoneComment = phoneComment;
+	public String getCountryOfOrigin() {
+		return countryOfOrigin;
 	}
 
-	public static DemographicTransfer toTransfer(Demographic demographic) {
+	public void setCountryOfOrigin(String countryOfOrigin) {
+		this.countryOfOrigin = countryOfOrigin;
+	}
+
+	public String getNewsletter() {
+		return newsletter;
+	}
+
+	public void setNewsletter(String newsletter) {
+		this.newsletter = newsletter;
+	}
+
+	public String getMiddleNames() {
+		return middleNames;
+	}
+
+	public void setMiddleNames(String middleNames) {
+		this.middleNames = middleNames;
+	}
+
+	public String getRosterEnrolledTo() {
+		return rosterEnrolledTo;
+	}
+
+	public void setRosterEnrolledTo(String rosterEnrolledTo) {
+		this.rosterEnrolledTo = rosterEnrolledTo;
+	}
+
+	public String getResidentialAddress() {
+		return residentialAddress;
+	}
+
+	public void setResidentialAddress(String residentialAddress) {
+		this.residentialAddress = residentialAddress;
+	}
+
+	public String getResidentialCity() {
+		return residentialCity;
+	}
+
+	public void setResidentialCity(String residentialCity) {
+		this.residentialCity = residentialCity;
+	}
+
+	public String getResidentialProvince() {
+		return residentialProvince;
+	}
+
+	public void setResidentialProvince(String residentialProvince) {
+		this.residentialProvince = residentialProvince;
+	}
+
+	public String getResidentialPostal() {
+		return residentialPostal;
+	}
+
+	public void setResidentialPostal(String residentialPostal) {
+		this.residentialPostal = residentialPostal;
+	}
+
+	public static DemographicTransfer2 toTransfer(Demographic demographic) {
 		if (demographic==null) return(null);
 		
-		DemographicTransfer demographicTransfer = new DemographicTransfer();
+		DemographicTransfer2 demographicTransfer = new DemographicTransfer2();
 
 		BeanUtils.copyProperties(demographic, demographicTransfer);
 
 		return (demographicTransfer);
 	}
 
-	public static DemographicTransfer[] toTransfers(List<Demographic> demographics) {
-		ArrayList<DemographicTransfer> results = new ArrayList<DemographicTransfer>();
+	public static DemographicTransfer2[] toTransfers(List<Demographic> demographics) {
+		ArrayList<DemographicTransfer2> results = new ArrayList<DemographicTransfer2>();
 
 		for (Demographic demographic : demographics) {
 			results.add(toTransfer(demographic));
 		}
 
-		return (results.toArray(new DemographicTransfer[0]));
+		return (results.toArray(new DemographicTransfer2[0]));
 	}
 
 	@Override
@@ -530,8 +596,8 @@ public final class DemographicTransfer {
 		return (ReflectionToStringBuilder.toString(this));
 	}
 	
-	public DemographicTransfer filter(String[] fields) {
-		DemographicTransfer dto = new DemographicTransfer();
+	public DemographicTransfer2 filter(String[] fields) {
+		DemographicTransfer2 dto = new DemographicTransfer2();
 		for (String field : fields) {
 			if ("demographicNo".equals(field)) dto.setDemographicNo(this.getDemographicNo());
 			else if ("address".equals(field)) dto.setAddress(this.getAddress());
@@ -586,4 +652,6 @@ public final class DemographicTransfer {
 		}
 		return dto;
 	}
+
+
 }
