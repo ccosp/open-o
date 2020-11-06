@@ -34,6 +34,12 @@ if [ -e ${LOCATION}_billingServiceCodes.sql ]
 		mysql -u${USER} -p$PASSWORD  $DATABASE_NAME  < ${LOCATION}_billingServiceCodes.sql
 fi
 
+if [ -e ${LOCATION}_professionalSpecialists.sql ] 
+	then
+		echo loading ${LOCATION}_professionalSpecialists.sql...
+		mysql -u${USER} -p$PASSWORD  $DATABASE_NAME  < ${LOCATION}_professionalSpecialists.sql
+fi
+
 echo loading icd${ICD}.sql...
 mysql -u${USER} -p$PASSWORD  $DATABASE_NAME  < icd${ICD}.sql
 

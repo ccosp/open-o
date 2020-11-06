@@ -7,9 +7,6 @@
 INSERT INTO `Icd9Synonym` VALUES ('172', 'Skin Cancer', '1'), ('173', 'basal cell carcinoma', '2'), ('2429', 'Hyperthyroid', '3'), ('2449', 'Hypothyroid', '4'), ('2564', 'polycystic ovarian syndrome', '5'), ('2720', 'Hypercholesterolemia', '6'), ('2722', 'Mixed hyperlipidemia', '7'), ('2724', 'Cholesterol', '8'), ('274', 'Gout', '9'), ('2768', 'hypokalemia', '10'), ('2778', 'Retinitis pigmentosa', '11'), ('2901', 'Dementia', '12'), ('2963', 'Depression/Mood', '13'), ('2967', 'Bipolar', '14'), ('3000', 'Anxiety', '15'), ('3003', 'OCD', '16'), ('30981', 'PTSD', '17'), ('3339', 'Restless leg syndrome', '18'), ('3540', 'carpal tunnel syndrome', '19'), ('356', 'Neuropathy/Neuropathic pain', '20'), ('401', 'Hypertension', '21'), ('4140', 'CAD', '22'), ('4273', 'Atrial Fibrilation', '23'), ('453', 'Deep vein thrombosis', '24'), ('4781', 'Nasal congestion', '25'), ('4912', 'COPD', '26'), ('530', 'Barret\'s esophagus', '27'), ('53081', 'GERD/Reflux', '28'), ('555', 'Cholitis/Crohn\'s', '29'), ('5718', 'Fatty liver', '30'), ('59651', 'Overactive bladder', '31'), ('600', 'Enlarged prostate', '32'), ('607', 'ED/Libido', '33'), ('627', 'Menopause', '34'), ('6929', 'Dermatitis/Eczema', '35'), ('6960', 'Psoriatic arthritis', '36'), ('715', 'Arthritis/Osteoarthritis', '37'), ('722', 'degenerative disc disorder', '38'), ('7245', 'Back Pain', '39'), ('72885', 'Muscle Spasms', '40'), ('7291', 'Fibromyalgia', '41'), ('73390', 'osteopenia', '42'), ('7506', 'Hiatis Hernia', '43'), ('7804', 'Dizziness', '44'), ('7805', 'sleep', '45'), ('78051', 'Sleep apnea', '46'), ('78052', 'insomnia', '47'), ('78605', 'Difficulty breathing', '48'), ('7865', 'Chest pain', '49'), ('78841', 'Frequent Urination', '50'), ('8470', 'whiplash', '51'), ('O54', 'Herpes', '52'), ('V433', 'Aortic valve replacement', '53'), ('V450', 'Cardiac pace maker', '54');
 
 --
--- ContactSpecialty Data
---
-INSERT INTO `ContactSpecialty` VALUES ('0', 'FAMILY PHYSICIAN', null), ('1', 'DERMATOLOGY', null), ('2', 'NEUROLOGY', null), ('3', 'PSYCHIATRY', null), ('5', 'OBSTETRICS & GYNAECOLOGY', null), ('6', 'OPHTHALMOLOGY', null), ('7', 'OTOLARYNGOLOGY', null), ('8', 'GENERAL SURGERY', null), ('9', 'NEUROSURGERY', null), ('10', 'ORTHOPAEDICS', null), ('11', 'PLASTIC SURGERY', null), ('12', 'CARDIO & THORACIC', null), ('13', 'UROLOGY', null), ('14', 'PAEDIATRICS', null), ('15', 'INTERNAL MEDICINE', null), ('16', 'RADIOLOGY', null), ('17', 'LABORATORY PROCEDURES', null), ('18', 'ANAESTHESIA', null), ('19', 'PAEDIATRIC CARDIOLOGY', null), ('20', 'PHYSICAL MEDICINE AND  REHABILITATION', null), ('21', 'PUBLIC HEALTH', null), ('22', 'PHARMACIST', null), ('23', 'OCCUPATIONAL MEDICINE', null), ('24', 'GERIATRIC MEDICINE', null), ('25', 'UNKNOWN', null), ('26', 'PROCEDURAL CARDIOLOGIST', null), ('28', 'EMERGENCY MEDICINE', null), ('29', 'MEDICAL MICROBIOLOGY', null), ('30', 'CHIROPRACTORS', null), ('31', 'NATUROPATHS', null), ('32', 'PHYSICAL THERAPISTS', null), ('33', 'NUCLEAR MEDICINE', null), ('34', 'OSTEOPATHY', null), ('35', 'ORTHOPTIC', null), ('37', 'ORAL SURGEONS', null), ('38', 'PODIATRISTS', null), ('39', 'OPTOMETRIST', null), ('40', 'DENTAL SURGEONS', null), ('41', 'ORAL MEDICINE', null), ('42', 'ORTHODONTISTS', null), ('43', 'MASSAGE PRACTITIONER', null), ('44', 'RHEUMATOLOGY', null), ('45', 'CLINICAL IMMUNIZATION AND ALLERGY', null), ('46', 'MEDICAL GENETICS', null), ('47', 'VASCULAR SURGERY', null), ('48', 'THORACIC SURGERY', null);
 
 --
 -- Dumping data for table 'clinic'
@@ -43,16 +40,6 @@ INSERT INTO config_Immunization VALUES (3,'>7 year old children','<?xml version=
 INSERT INTO config_Immunization VALUES (4,'Adult','<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<immunizationSet headers=\"true\" name=\"Adult\"><columnList><column name=\"Td (Every 10 years)\"/><column name=\"Influenza (yearly)\"/><column name=\"Pneumococcal&#13;&lt;br&gt;(&gt;65 years + risks)\"/><column name=\"MMR(Adults born 1970 or later)\"/><column name=\"Other\"/><column name=\"Other\"/><column name=\"Other\"/></columnList><rowList><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row><row name=\"Date\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/><cell index=\"5\"/><cell index=\"6\"/><cell index=\"7\"/></row></rowList></immunizationSet>','2002-07-30','174',0);
 INSERT INTO config_Immunization VALUES (5,'Routine Infants & Children','<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<immunizationSet headers=\"true\" name=\"Routine Infants &amp; Children\"><columnList><column name=\"2 months\"/><column name=\"4 months\"/><column name=\"6 months\"/><column name=\"12 months\"/><column name=\"18 months\"/><column name=\"4-6 years\"/><column name=\"14-16 years\"/></columnList><rowList><row name=\"DTP+IPV\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"5\"/><cell index=\"6\"/></row><row name=\"Hib\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"5\"/></row><row name=\"MMR\"><cell index=\"4\"/><cell index=\"6\"/></row><row name=\"Td\"><cell index=\"7\"/></row><row name=\"Hep B (first visit,&#10;1 month, 6 months)\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/></row><row name=\"VariVax&#10;(chickenpox)\"><cell index=\"4\"/></row><row name=\"Prevnar&#10;(pneumococcus)\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"4\"/></row><row name=\"Menjugate or others&#10;(meningococcus)\"><cell index=\"1\"/><cell index=\"2\"/><cell index=\"3\"/><cell index=\"7\"/></row></rowList></immunizationSet>','2002-07-30','174',0);
 
---
--- Dumping data for table 'consultationServices'
---
-
-INSERT INTO consultationServices VALUES (53,'Cardiology','1');
-INSERT INTO consultationServices VALUES (54,'Dermatology','1');
-INSERT INTO consultationServices VALUES (55,'Neurology','1');
-INSERT INTO consultationServices VALUES (56,'Radiology','1');
-INSERT INTO consultationServices VALUES (57,'SEE NOTES','1');
-INSERT INTO consultationServices VALUES (58,'Referral Doctor','02');
 
 --
 -- Dumping data for table 'ctl_doctype'
@@ -2561,51 +2548,6 @@ insert into documentDescriptionTemplate (doctype,description,descriptionShortcut
 insert into `secObjectName` (`objectName`) values('_rx.dispense');
 insert into `secObjPrivilege` values('doctor','_rx.dispense','x',0,'999998');
 
--- Moved from BC
-INSERT INTO specialty VALUES ('BC','00',' GENERAL PRACTITIONER');
-INSERT INTO specialty VALUES ('BC','01',' DERMATOLOGY');
-INSERT INTO specialty VALUES ('BC','02',' NEUROLOGY');
-INSERT INTO specialty VALUES ('BC','03',' PSYCHIATRY');
-INSERT INTO specialty VALUES ('BC','05',' OBSTETRICS & GYNAECOLOGY');
-INSERT INTO specialty VALUES ('BC','06',' OPHTHALMOLOGY');
-INSERT INTO specialty VALUES ('BC','07',' OTOLARYNGOLOGY');
-INSERT INTO specialty VALUES ('BC','08',' GENERAL SURGERY');
-INSERT INTO specialty VALUES ('BC','09',' NEUROSURGERY');
-INSERT INTO specialty VALUES ('BC','10',' ORTHOPAEDICS');
-INSERT INTO specialty VALUES ('BC','11',' PLASTIC SURGERY');
-INSERT INTO specialty VALUES ('BC','12',' CARDIO & THORACIC');
-INSERT INTO specialty VALUES ('BC','13',' UROLOGY');
-INSERT INTO specialty VALUES ('BC','14',' PAEDIATRICS');
-INSERT INTO specialty VALUES ('BC','15',' INTERNAL MEDICINE');
-INSERT INTO specialty VALUES ('BC','16',' RADIOLOGY');
-INSERT INTO specialty VALUES ('BC','17',' LABORATORY PROCEDURES');
-INSERT INTO specialty VALUES ('BC','18',' ANAESTHESIA');
-INSERT INTO specialty VALUES ('BC','19',' PAEDIATRIC CARDIOLOGY');
-INSERT INTO specialty VALUES ('BC','20',' PHYSICAL MEDICINE AND  REHABILITATION');
-INSERT INTO specialty VALUES ('BC','21',' PUBLIC HEALTH');
-INSERT INTO specialty VALUES ('BC','23',' OCCUPATIONAL MEDICINE');
-INSERT INTO specialty VALUES ('BC','24',' GERIATRIC MEDICINE          SUB-SPECIALTY OF INTERNAL MED');
-INSERT INTO specialty VALUES ('BC','26',' PROCEDURAL CARDIOLOGIST');
-INSERT INTO specialty VALUES ('BC','28',' EMERGENCY MEDICINE');
-INSERT INTO specialty VALUES ('BC','29',' MEDICAL MICROBIOLOGY');
-INSERT INTO specialty VALUES ('BC','30',' CHIROPRACTORS');
-INSERT INTO specialty VALUES ('BC','31',' NATUROPATHS');
-INSERT INTO specialty VALUES ('BC','32',' PHYSICAL THERAPISTS');
-INSERT INTO specialty VALUES ('BC','33',' NUCLEAR MEDICINE');
-INSERT INTO specialty VALUES ('BC','34',' OSTEOPATHY');
-INSERT INTO specialty VALUES ('BC','35',' ORTHOPTIC');
-INSERT INTO specialty VALUES ('BC','37',' ORAL SURGEONS');
-INSERT INTO specialty VALUES ('BC','38',' PODIATRISTS');
-INSERT INTO specialty VALUES ('BC','39',' OPTOMETRIST');
-INSERT INTO specialty VALUES ('BC','40',' DENTAL SURGEONS');
-INSERT INTO specialty VALUES ('BC','41',' ORAL MEDICINE');
-INSERT INTO specialty VALUES ('BC','42',' ORTHODONTISTS');
-INSERT INTO specialty VALUES ('BC','43',' MASSAGE PRACTITIONER');
-INSERT INTO specialty VALUES ('BC','44',' RHEUMATOLOGY');
-INSERT INTO specialty VALUES ('BC','45',' CLINICAL IMMUNIZATION AND ALLERGY');
-INSERT INTO specialty VALUES ('BC','46',' MEDICAL GENETICS');
-INSERT INTO specialty VALUES ('BC','47',' VASCULAR SURGERY');
-INSERT INTO specialty VALUES ('BC','48',' THORACIC SURGERY');
 
 insert into ProductLocation (name) values ('Default');
 
