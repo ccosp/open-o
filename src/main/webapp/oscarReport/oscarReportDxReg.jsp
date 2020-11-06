@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <%--
 
     Copyright (c) 2006-. OSCARservice, OpenSoft System. All Rights Reserved.
@@ -23,13 +22,14 @@
 <%@ include file="/taglibs.jsp"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
       boolean authed=true;
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_report,_admin.reporting" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
-	<%response.sendRedirect("../securityError.jsp?type=_report&type=_admin.reporting");%>
+	<%response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_report&type=_admin.reporting");%>
 </security:oscarSec>
 <%
 if(!authed) {
@@ -53,34 +53,63 @@ if(!authed) {
 	MyGroupDao myGroupDao = SpringUtils.getBean(MyGroupDao.class);
 %>
 
+<!DOCTYPE html>
 <html:html locale="true">
     <head>
         <title><bean:message key="admin.admin.DiseaseRegistry"/></title>
     
-    <link rel="stylesheet" type="text/css" href="../css/jquery.autocomplete.css" />
-    <script src="https://www.google.com/jsapi"></script>    
-	<script>
-		google.load("jquery", "1");
-	</script>
-	<script src="../js/jquery.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+	<link href="${pageContext.servletContext.contextPath}/css/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.servletContext.contextPath}/library/DataTables-1.10.12/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />	
+	<link href="${pageContext.servletContext.contextPath}/library/DataTables-1.10.12/extensions/Responsive/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />		
+   	<link href="${pageContext.servletContext.contextPath}/library/DataTables-1.10.12/extensions/Responsive/css/responsive.jqueryui.min.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script> 	
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/bootstrap.min.2.js"></script>
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/dxJSONCodeSearch.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/DataTables-1.10.12/media/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/DataTables-1.10.12/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/DataTables-1.10.12/extensions/Responsive/js/responsive.jqueryui.min.js"></script>
+
 	<script type="text/javascript">
+		var ctx = "${pageContext.servletContext.contextPath}";
     	function setAction(target)
     	{
      		document.forms[0].action.value=target;
 		};
+		
+		$(document).ready(function() {
+			$('#listview').DataTable({
+				responsive: true
+			});
+		});
+
 	</script>
-<script src="../js/jquery.autocomplete.js"></script>
-	<link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
-	
 	<style>
-	label {display:inline; margin-right:6px;}
-	.sel {width:180px}
+		.ui-autocomplete {
+			max-height: 200px;
+			overflow-y: auto;
+			/* prevent horizontal scrollbar */
+			overflow-x: hidden;
+			width: 200px;
+		}
+		/* IE 6 doesn't support max-height
+			   * we use height instead, but this forces the menu to always be this tall
+			   */
+		* html .ui-autocomplete {
+			height: 100px;
+		}
 	</style>
+
     </head>
     <%
 			    ProviderPreference providerPreference=(ProviderPreference)session.getAttribute(SessionConstants.LOGGED_IN_PROVIDER_PREFERENCE);
                 String curUser_no = (String) session.getAttribute("user");
                 String mygroupno = providerPreference.getMyGroupNo();
+                pageContext.setAttribute("mygroupno", mygroupno);
                 String radiostatus = (String) session.getAttribute("radiovaluestatus");
                 if (radiostatus==null || radiostatus=="")
                     radiostatus="patientRegistedAll";
@@ -94,14 +123,20 @@ if(!authed) {
 
     %>
 <body>
-<h3><bean:message key="admin.admin.DiseaseRegistry"/></h3>
-	
+
 <div class="container-fluid">
+<div class="navbar">
+    <div class="navbar-inner">
+    	<a class="brand" href="#"><bean:message key="admin.admin.DiseaseRegistry"/></a>
+	</div>
+</div>
+
 <div class="well well-small">
 	<html:form action="/report/DxresearchReport?method=addSearchCode">
+	<div class="row-fluid">
 		<input type="hidden" name="action" value="NA"/>
 		<html:select property="quicklistname" styleClass="sel">
-			<option  value="">Add From QuickList</option>
+			<option  value="">Add Dx QuickList</option>
 			<logic:iterate id="quickLists" name="allQuickLists" property="dxQuickListBeanVector">
 				<option value="<bean:write name="quickLists" property="quickListName"/>" <bean:write name="quickLists" property="lastUsed" />>
 					<bean:write name="quickLists" property="quickListName"/>
@@ -109,59 +144,57 @@ if(!authed) {
 			</logic:iterate>
 		</html:select>
         OR
-        <html:select property="codesystem" styleClass="sel">
-        	<option  value="">Select Coding System</option>
+        <html:select property="codesystem" styleClass="sel" styleId="codingSystem">
+        	<option value="">Select Coding System</option>
 			<logic:iterate id="codingSys" name="codingSystem" property="codingSystems">
 				<option value="<bean:write name="codingSys"/>"><bean:write name="codingSys"/></option>
 			</logic:iterate>
 		</html:select>
-        <input type="text" id="codesearch" name="codesearch" class="span4"/>
-        <script>
-            $("#codesearch").autocomplete("../oscarReport/oscarReportDxRegHelper.jsp");
-        </script>
-        <br>
-        <nested:submit styleClass="btn" onclick="setAction('edit');submit();">EDIT</nested:submit>
-        <nested:submit styleClass="btn">ADD</nested:submit>
+        <input type="text" id="codesearch" placeholder="search description" name="codesearch" class="span4 jsonDxSearch"/>
+    </div>
+    <div class="row-fluid">    
+        <nested:submit styleClass="btn btn-primary">Add</nested:submit>
+        <input type="button" class="btn btn-danger" value="Clear" onclick="javascript:this.form.action='${pageContext.servletContext.contextPath}/report/DxresearchReport.do?method=clearSearchCode';this.form.submit()" />          
+	</div>
 	</html:form>
 
-    <html:form action="/report/DxresearchReport?method=clearSearchCode">
-		<nested:submit styleClass="btn">CLEAR</nested:submit>
-    </html:form>
+</div>
+<div class="row-fluid">
+	<strong>Search all patients with disease codes:</strong>
 </div>
 
-	Search Patients Who Registed With Below Codes:(ichppccode/icd10 not supported yet)
-	<br>
-    <nested:form action='<%=formAction%>'>
+    <nested:form action='<%=formAction%>' styleClass="form-inline">
 
-		<display:table name="codeSearch" id="codeSearch">
+	<div class="row-fluid">
+		<display:table name="codeSearch" id="codeSearch" class="table table-condensed table-striped">
 		    <display:column property="type" title="Code System" />
 		    <display:column property="dxSearchCode" title="Code" />
 		    <display:column property="description" title="Description" />
 		</display:table>
-                        
-       	Search Result:<br>
-                                    
-        Total Number(s): <%=session.getAttribute("Counter")%><br>
-
-        Filter: 
-        <label>
+	</div>
+	<div class="row-fluid">
+        <label class="radio">
             <input type="radio" name="SearchBy" value="radio" id="SearchBy_0" <%="patientRegistedDistincted".equals(radiostatus)?"checked":""%> onclick="javascript:this.form.action='<%= request.getContextPath()%>/report/DxresearchReport.do?method=patientRegistedDistincted'">
             ALL(distincted)</label>
-        <label>
+        <label class="radio">
             <input type="radio" name="SearchBy" value="radio" id="SearchBy_1" <%="patientRegistedAll".equals(radiostatus)?"checked":""%> onclick="javascript:this.form.action='<%= request.getContextPath()%>/report/DxresearchReport.do?method=patientRegistedAll'">
             ALL</label>
-        <label>
+        <label class="radio">
             <input type="radio" name="SearchBy" value="radio" id="SearchBy_0" <%="patientRegistedActive".equals(radiostatus)?"checked":""%> onclick="javascript:this.form.action='<%= request.getContextPath()%>/report/DxresearchReport.do?method=patientRegistedActive'">
             Active</label>
-        <label>
+        <label class="radio">
             <input type="radio" name="SearchBy" value="radio" id="SearchBy_0" <%="patientRegistedDeleted".equals(radiostatus)?"checked":""%> onclick="javascript:this.form.action='<%= request.getContextPath()%>/report/DxresearchReport.do?method=patientRegistedDeleted'">
             Deleted</label>
-        <label>
+        <label class="radio">
             <input type="radio" name="SearchBy" value="radio" id="SearchBy_1" <%="patientRegistedResolve".equals(radiostatus)?"checked":""%> onclick="javascript:this.form.action='<%= request.getContextPath()%>/report/DxresearchReport.do?method=patientRegistedResolve'">
             Resolved</label>
 
 
         <select id="provider_no" name="provider_no" class="sel">
+            <option value="*"><bean:message key="report.reportindex.formAllProviders"/></option>
+            
+            <option disabled>___________</option>
+      
             <security:oscarSec roleName="<%=roleName$%>" objectName="_team_schedule_only" rights="r" reverse="false">
                 <%
                        for(Provider p : providerDao.getActiveProviders()) {
@@ -173,6 +206,7 @@ if(!authed) {
                     %>
             </security:oscarSec>
             <security:oscarSec roleName="<%=roleName$%>" objectName="_team_schedule_only" rights="r" reverse="true">
+ 
                 <%
                 		for(MyGroup g : myGroupDao.searchmygroupno() ){
                       
@@ -188,12 +222,15 @@ if(!authed) {
                             }
                     %>
             </security:oscarSec>
-                <option value="*"><bean:message key="report.reportindex.formAllProviders"/></option>
+  
         </select>
 
 
-		<nested:submit styleClass="btn btn-primary" style="margin-bottom:10px;">Search Patients</nested:submit>
-		
+		<nested:submit styleClass="btn btn-primary" >Search</nested:submit>
+	</div>
+	
+		<h3>Results</h3>	
+ 	<div class="row-fluid">
 		<display:table name="listview" id="listview" class="table table-striped table-hover table-condensed">
 			<display:column property="strFirstName" title="First Name"/>
 			<display:column property="strLastName" title="Last Name"/>
@@ -207,15 +244,13 @@ if(!authed) {
 			<display:column property="strUpdateDate" title="Update Date"/>
 			<display:column property="strStatus" title="Status"/>
 		</display:table>
+ 	</div>
 
-<%
-	if(request.getAttribute("listview") != null && (request.getAttribute("listview").getClass().getCanonicalName().contains("ArrayList"))) {
-%>
 
-	<input type="button" class="btn" value="Download Excel" onclick="javascript:this.form.action='<%= request.getContextPath()%>/report/DxresearchReport.do?method=patientExcelReport';this.form.submit()">
-<%		
-	}
-%>
+	<c:if test="${ not empty listview and not empty listview.strCode }">
+		<input type="button" class="btn" value="Download Excel" onclick="javascript:this.form.action='${pageContext.servletContext.contextPath}/report/DxresearchReport.do?method=patientExcelReport';this.form.submit()">
+	</c:if>
+
 	</nested:form>
 </div>
 </body>

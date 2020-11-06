@@ -59,9 +59,20 @@ public class dxQuickListItemsHandler {
 		String[] codingSystems = codingSys.getCodingSystems();
 		String codingSystem;
 		String name;
+		
+		if(quickListName == null)
+		{
+			quickListName = "";
+		}
 
-		if (quickListName.length() > ListNameLen) name = quickListName.substring(0, ListNameLen);
-		else name = quickListName;
+		if (quickListName.length() > ListNameLen) 
+		{
+			name = quickListName.substring(0, ListNameLen);
+		}
+		else 
+		{
+			name = quickListName;
+		}
 
 		List<QuickListUser> results = dao.findByNameAndProviderNo(name, providerNo);
 		if (!results.isEmpty()) {

@@ -41,6 +41,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.dao.DxresearchDAO;
 import org.oscarehr.common.dao.MyGroupDao;
 import org.oscarehr.common.model.DxRegistedPTInfo;
+import org.oscarehr.managers.CodingSystemManager;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.transaction.annotation.Propagation;
@@ -51,6 +52,8 @@ import oscar.oscarResearch.oscarDxResearch.bean.dxCodeSearchBean;
 import oscar.oscarResearch.oscarDxResearch.bean.dxQuickListBeanHandler;
 import oscar.oscarResearch.oscarDxResearch.bean.dxQuickListItemsHandler;
 import oscar.oscarResearch.oscarDxResearch.util.dxResearchCodingSystem;
+
+
 /**
  *
  * @author toby
@@ -264,52 +267,45 @@ public class DxresearchReportAction extends DispatchAction {
       return mapping.findForward(SUCCESS);
     }
 
-    public ActionForward addSearchCode(ActionMapping mapping, ActionForm  form,
+    @SuppressWarnings("unchecked")
+	public ActionForward addSearchCode(ActionMapping mapping, ActionForm  form,
             HttpServletRequest request, HttpServletResponse response) {
 
         DynaBean lazyForm = (DynaBean) form;
         String quickListName = (String)lazyForm.get("quicklistname");
-        List codeSearch = dxresearchdao.getQuickListItems(quickListName);
-        dxCodeSearchBean newAddition = null;
-
+        List<dxCodeSearchBean> codeSearch = dxresearchdao.getQuickListItems(quickListName);
         String codeSingle = request.getParameter("codesearch");
-
-        if (codeSingle!=null && codeSingle.contains("-->")) // buggy here as user can input "-->" and press ADD button, little odds
-
+        String codeSystem = request.getParameter("codesystem");
+        String action = request.getParameter( "action" );       
+        dxCodeSearchBean newAddition = null;
+        
+        // check the code
+        CodingSystemManager codingSystemManager = SpringUtils.getBean(CodingSystemManager.class);
+        String codeDescription = null;
+        
+        if(codeSystem != null && ! codeSystem.isEmpty())
+        {
+        	codeDescription = codingSystemManager.getCodeDescription(codeSystem.toLowerCase().trim(), codeSingle);
+        }
+        
+        if(codeDescription != null && ! codeDescription.isEmpty()) 
         {
             newAddition = new dxCodeSearchBean();
-            newAddition.setType("icd9"); // ichppccode/icd10 not supported yet
-            newAddition.setDxSearchCode(codeSingle.split("-->")[0]);
-            newAddition.setDescription(codeSingle.split("-->")[1]);
+            newAddition.setType(codeSystem); 
+        	newAddition.setDxSearchCode(codeSingle);
+        	newAddition.setDescription(codeDescription);
         }
 
-        String action = request.getParameter( "action" );
-        if( action != null && action.equalsIgnoreCase( "edit" ) && newAddition != null)
+        if (request.getSession().getAttribute("codeSearch") != null)
         {
-//          List editingCodeList = new ArrayList();
-//          editingCodeList.add( newAddition );
-//          request.getSession().setAttribute("editingCode", editingCodeList );
-//          request.getSession().setAttribute("codeSearch", editingCodeList );
-          //editingCodeType
-          request.getSession().setAttribute( "editingCodeType", newAddition.getType() );
-          request.getSession().setAttribute( "editingCodeCode", newAddition.getDxSearchCode() );
-          String description = newAddition.getDescription().trim();
-          description = String.format( "\"%s\"", description );
-          request.getSession().setAttribute( "editingCodeDesc", description );
-          return mapping.findForward(EDIT_DESC);
-        }
-
-        List existcodeSearch;
-
-        if (request.getSession().getAttribute("codeSearch")!=null && ((List)(request.getSession().getAttribute("codeSearch"))).size()>0)
-        {
-            existcodeSearch = (List)(request.getSession().getAttribute("codeSearch"));
+        	List<dxCodeSearchBean> existcodeSearch = (List<dxCodeSearchBean>) request.getSession().getAttribute("codeSearch");
             codeSearch.addAll(existcodeSearch);
         }
-
-        if (newAddition!=null)
-            codeSearch.add(newAddition);
-
+        if(newAddition != null)
+        {
+        	codeSearch.add(newAddition);
+        }
+        
         request.getSession().setAttribute("codeSearch", codeSearch);
         return mapping.findForward(SUCCESS);
     }
@@ -318,16 +314,12 @@ public class DxresearchReportAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
              {
 
-        
-        //String quickListName = (String)lazyForm.get("quicklistname");
-        //List codeSearch = dxresearchdao.getQuickListItems(quickListName);;
         List existcodeSearch =null;
 
         if (request.getSession().getAttribute("codeSearch")!=null && ((List)(request.getSession().getAttribute("codeSearch"))).size()>0)
         {
             existcodeSearch = (List)(request.getSession().getAttribute("codeSearch"));
             existcodeSearch.clear();
-            //codeSearch.addAll(existcodeSearch);
         }
 
         request.getSession().setAttribute("codeSearch", existcodeSearch);

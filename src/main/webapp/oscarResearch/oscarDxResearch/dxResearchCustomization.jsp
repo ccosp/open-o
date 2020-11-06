@@ -31,21 +31,13 @@
 
 <html:html locale="true">
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<title><bean:message
-	key="oscarResearch.oscarDxResearch.dxCustomization.title" /></title>
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
+<title><bean:message key="oscarResearch.oscarDxResearch.dxCustomization.title" /></title>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/global.js"></script>
 <html:base />
-<script type="text/javascript">
+<link rel="stylesheet" type="text/css" href="dxResearch.css" />
 
-function setfocus(){
-    window.focus();
-    window.resizeTo(600,280);
-}
-</script>
 </head>
 
-<link rel="stylesheet" type="text/css" href="dxResearch.css">
 <body topmargin="0" leftmargin="0" vlink="#0000FF" onload="setfocus();">
 <html:errors />
 <table width="100%" bgcolor="#EEEEFF">
