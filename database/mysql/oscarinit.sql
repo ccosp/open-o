@@ -7712,21 +7712,22 @@ CREATE TABLE IF NOT EXISTS `waitingList` (
 -- Table structure for table `pharmacyInfo`
 --
 CREATE TABLE IF NOT EXISTS pharmacyInfo (
-   recordID int(10) auto_increment primary key,
-   ID int(5),
-   name varchar(255),
-   address text,
-   city varchar(255),
-   province varchar(255),
-   postalCode varchar(20),
-   phone1 varchar(20),
-   phone2 varchar(20),
-   fax varchar(20),
-   email varchar(100),
-   serviceLocationIdentifier varchar(255),
-   notes text,
-   addDate timestamp,
-   status char (1) default '1'
+  `recordID` int(10) NOT NULL AUTO_INCREMENT,
+  `ID` int(10) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `address` text,
+  `city` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `postalCode` varchar(20) DEFAULT NULL,
+  `phone1` varchar(20) DEFAULT NULL,
+  `phone2` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `notes` text,
+  `addDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` char(1) DEFAULT '1',
+  `serviceLocationIdentifier` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`recordID`)
 );
 
 --
