@@ -1711,9 +1711,11 @@ insert into `secObjPrivilege` values('doctor','_tickler','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_pmm_client.BedRoomReservation','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_pmm_editProgram.vacancies','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_newCasemgmt.pregnancy','o',0,'999998');
+insert into `secObjPrivilege` values('doctor','_pregnancy','o',0,'999998');
 insert into `secObjPrivilege` values('doctor','_newCasemgmt.episode','o',0,'999998');
+insert into `secObjPrivilege` values('doctor','_episode','o',0,'999998');
 insert into `secObjPrivilege` values('doctor','_newCasemgmt.photo','x',0,'999998');
-insert into `secObjPrivilege` values('doctor','_hrm','x',0,'999998');
+insert into `secObjPrivilege` values('doctor','_hrm','o',0,'999998');
 insert into `secObjPrivilege` values('doctor','_eform','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_form','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_measurement','x',0,'999998');
@@ -1722,7 +1724,7 @@ insert into `secObjPrivilege` values('doctor','_prevention','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_dxresearch','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_allergy','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_eyeform','x',0,'999998');
-insert into `secObjPrivilege` values('doctor','_phr','x',0,'999998');
+insert into `secObjPrivilege` values('doctor','_phr','o',0,'999998');
 insert into `secObjPrivilege` values('doctor','_admin.document','x',0,'999998');
 
 
@@ -1841,10 +1843,9 @@ insert into `secObjPrivilege` values('nurse','_pmm.clientSearch','x',0,'999998')
 insert into `secObjPrivilege` values('nurse','_pmm.mergeRecords','x',0,'999998');
 insert into `secObjPrivilege` values('nurse','_pmm.newClient','x',0,'999998');
 insert into `secObjPrivilege` values('nurse','_tasks','x',0,'999998');
-insert into `secObjPrivilege` values('nurse','_phr','x',0,'999998');
+insert into `secObjPrivilege` values('nurse','_phr','o',0,'999998');
 insert into `secObjPrivilege` values('nurse','_pmm','x',0,'999998');
 insert into `secObjPrivilege` values('nurse','_pref','x',0,'999998');
-
 
 
 insert into `secObjPrivilege` values('psychiatrist','_appointment','x',0,'999998');
@@ -2495,6 +2496,7 @@ INSERT INTO secObjPrivilege VALUES('doctor','_caseload.LastEncounterDate','o',0,
 INSERT INTO secObjPrivilege VALUES('doctor','_caseload.LastEncounterType','o',0,'999998');
 INSERT INTO secObjPrivilege VALUES('doctor','_caseload.CashAdmissionDate','o',0,'999998');
 INSERT INTO secObjPrivilege VALUES('doctor','_caseload.Access1AdmissionDate','o',0,'999998');
+INSERT INTO secObjPrivilege VALUES ('admin', '_admin.eform', 'x', 0, '999999');
 
 INSERT INTO `OscarCode` VALUES (1,'CKDSCREEN','Ckd Screening');
 
