@@ -10730,6 +10730,7 @@ CREATE TABLE IF NOT EXISTS `faxes` (
   `jobId` int(11),
   `oscarUser` varchar(6),
   `demographicNo` int(11),
+  sender varchar(255),
   PRIMARY KEY (`id`),
   KEY `faxline` (`faxline`),
   KEY `faxstatus` (`status`)
