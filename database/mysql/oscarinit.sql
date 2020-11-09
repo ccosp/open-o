@@ -767,6 +767,7 @@ CREATE TABLE IF NOT EXISTS drugs (
   start_date_unknown boolean,
   lastUpdateDate datetime not null,
   dispenseInternal tinyint(1) not null,
+   demographic_contact_id int(10),
   PRIMARY KEY  (drugid)
 ) ;
 

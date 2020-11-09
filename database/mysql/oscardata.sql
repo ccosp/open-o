@@ -2141,14 +2141,15 @@ INSERT INTO `appointment_status` VALUES
 (3,'H','Here','#00ee00','here.gif',1,1,0,'HERE'),
 (4,'P','Picked','#FFBBFF','picked.gif',1,1,0,'PICK'),
 (5,'E','Empty Room','#FFFF33','empty.gif',1,1,0,'EmpRm'),
-(11,'N','No Show','#cccccc','noshow.gif',1,0,0,'NOSHO'),
-(12,'C','Cancelled','#999999','cancel.gif',1,0,0,'CAN'),
-(13,'B','Billed','#3ea4e1','billed.gif',1,0,0,'BILL'),
 (6,'a','Customized 1','#897DF8','1.gif',1,1,0,'CUST1'),
 (7,'b','Customized 2','#897DF8','2.gif',1,1,0,'CUST2'),
 (8,'c','Customized 3','#897DF8','3.gif',0,1,0,'CUST3'),
 (9,'d','Customized 4','#897DF8','4.gif',1,1,0,'CUST4'),
-(10,'e','Customized 5','#897DF8','5.gif',1,1,0,'CUST5');
+(10,'e','Customized 5','#897DF8','5.gif',1,1,0,'CUST5'),
+(11,'N','No Show','#cccccc','noshow.gif',1,0,0,'NOSHO'),
+(12,'C','Cancelled','#999999','cancel.gif',1,0,0,'CAN'),
+(13,'B','Billed','#3ea4e1','billed.gif',1,0,0,'BILL');
+
 
 insert into gstControl set gstPercent = 5;
 
