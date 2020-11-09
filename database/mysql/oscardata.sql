@@ -2592,3 +2592,5 @@ insert into lst_gender (code,description,isactive,displayorder) values ('F','Fem
 insert into lst_gender (code,description,isactive,displayorder) values ('T','Transgender',1,3);
 
 INSERT INTO `property`(`name`, `value`, `provider_no`) VALUES ('integrator_patient_consent', '1', NULL); 
+
+INSERT INTO `oscarcommlocations`(`locationId`, `locationDesc`, `locationAuth`, `current1`, `addressBook`, `remoteServerURL`) VALUES (145, 'Oscar Users', NULL, 1, '<?xml version=\"1.0\" encoding=\"UTF-8\"?><addressBook><group><group></group></group></addressBook>', NULL);
