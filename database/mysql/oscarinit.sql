@@ -8108,12 +8108,13 @@ CREATE TABLE IF NOT EXISTS incomingLabRules(
 	archive varchar(1) default 0
 );
 
-
-
-
-
-
-
+CREATE TABLE IF NOT EXISTS incomingLabRulesType (
+  id int(10) NOT NULL AUTO_INCREMENT,
+  forward_rule_id int(10),
+  type VARCHAR(10) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FOREIGN KEY (forward_rule_id) REFERENCES incomingLabRules (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 CREATE TABLE IF NOT EXISTS IssueGroup (id int primary key auto_increment, name varchar(255) not null);
