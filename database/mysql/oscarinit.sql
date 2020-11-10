@@ -832,9 +832,11 @@ CREATE TABLE IF NOT EXISTS eform (
   form_creator varchar(255) default NULL,
   status tinyint(1) NOT NULL default '1',
   form_html mediumtext,
-  showLatestFormOnly boolean NOT NULL,
+  showLatestFormOnly tinyint(1) NOT NULL,
   patient_independent boolean NOT NULL,
   roleType varchar(50) default NULL,
+  programNo int(10) DEFAULT NULL,
+  restrictToProgram tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (fid),
   UNIQUE KEY id (fid)
 ) ;
