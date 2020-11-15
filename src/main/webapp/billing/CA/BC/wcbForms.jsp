@@ -49,8 +49,8 @@ if(!authed) {
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%String demographicNo = request.getParameter("demographicNo");
   String wcbid = request.getParameter("wcbid");
-  String billingcode = request.getParameter("billingcode"); 
-  %>
+  String billingcode = request.getParameter("billingcode"); %>
+  
   <div>
    <div>                                         
    <label> WCB Forms available to attach.</label> <a onclick="popup(700,960,'viewformwcb.do?demographic_no=<%=demographicNo%>&formId=0&provNo=999998&parentAjaxId=forms&hideToBill=true','<%=demographicNo%>NEWWCB'); return false;"  href="javascript:void(0);" >New WCB Form</a> <br>
@@ -107,25 +107,6 @@ if(!authed) {
         </tr>
         <%}%>
     </table>
-    <pre>
-               
-               <!--
-               -Need to run a check to make sure the form is 100% completed before being able to attach.
-               -Need a way to group WCB forms.
-               -need to do processing for a WCB code with or without form
-
-               +need to do validation based on fee codes selected
-               +updating changed it to MSP type?
-               +When a billingrecord is updated it should set the master demo info too (eg last,first name, sex, phn)-- always pulls from demographic now
-               +Need to preselect a WCB form if one is present???  ie if they are coming from the billing
-               +needs validation to make sure a form is present
-               +ajaxify below so that it can be loaded dynamically
-               +have below hidden until wcb is selected.
-               +How to attach the form to just the code being sent?  The one option was to 
-               +Should be able to bill from the WCB form pull the available values into the billing form. ( two fee items, icd9 code                  
-               +Need to pull the available values into the billing form. ( two fee items, icd9 code
-    -->
-    </pre>
 </div>
 
 

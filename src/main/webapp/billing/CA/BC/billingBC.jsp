@@ -832,7 +832,11 @@ jQuery(document).ready(function(jQuery){
 			 xml_other3_unit: {
 			      number: true
 			 },
-			 
+			 WCBid: {
+				 required: function(element){
+					 return document.BillingCreateBillingForm.xml_billtype.value == "WCB";
+				 }
+			 },
 			 /*
 			  * Validate all 3 Diagnostic codes.
 			  */
@@ -919,7 +923,8 @@ jQuery(document).ready(function(jQuery){
 			 xml_other2_unit: "Service code units must be numeric",
 			 xml_other3_unit: "Service code units must be numeric",
 			 xml_provider: "Select a billing physician",
-			 xml_other1: "At least 1 service code is required"
+			 xml_other1: "At least 1 service code is required",
+			 WCBid: "A WCB Form must be selected."
 		 },
 		 
 		 /*
@@ -932,6 +937,7 @@ jQuery(document).ready(function(jQuery){
         	 jQuery(element).removeClass('has-error'); 
          },
 		 submitHandler: function(form) {
+			 toggleWCB();
 		     form.submit();
 		 },
 		 onkeyup: false,
@@ -1248,10 +1254,8 @@ if(wcbneeds != null){%>
 		                    <span class="input-group-addon">
 		                        <span class="glyphicon glyphicon-time"></span>
 		                    </span>
-		                </div>
-		            </div>
-			</td>
-			
+						</div>
+					</div>
 			<td>			
 
 		            <div class="form-group">
@@ -1347,10 +1351,6 @@ if(wcbneeds != null){%>
 	             	
 	            </div> 
 	        </td>
-         </div>
-        </div>  
-
-       </td>
      </tr>
    </table>
 </td>
