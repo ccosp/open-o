@@ -837,7 +837,9 @@ jQuery(document).ready(function(jQuery){
 			  * Validate all 3 Diagnostic codes.
 			  */
 		 	 xml_diagnostic_detail1: {
-		 		 required: true,
+		 		 required: function(element) {
+		 			return document.BillingCreateBillingForm.xml_billtype.value != "Pri";
+		 		 },
 		 		 remote: {
 		 			url: ctx + "\/dxCodeSearchJSON.do",
 		 			type: "post",
