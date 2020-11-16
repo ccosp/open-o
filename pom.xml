@@ -36,10 +36,10 @@
 		<developerConnection>scm:git:ssh://user@source.oscartools.org:29418/oscar</developerConnection>
 		<tag>master</tag>
 	</scm>
-	<properties>
+<!-- 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	 <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
-	</properties>
+	</properties> -->
 
 	<repositories>
 		<repository>
@@ -87,20 +87,21 @@
 
 		<!-- general libraries -->
 		<dependency>
-                <groupId>net.bull.javamelody</groupId>
-                <artifactId>javamelody-core</artifactId>
-                <version>1.53.0</version>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+            <version>1.53.0</version>
         </dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
-                <dependency> 
-                        <groupId>log4j</groupId> 
-                        <artifactId>log4j</artifactId> 
-                        <version>1.2.17</version> 
-                </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.14.0</version>
+		</dependency>
         <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -109,6 +110,11 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.30</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.slf4j</groupId>
+    		<artifactId>jcl-over-slf4j</artifactId>
 			<version>1.7.30</version>
 		</dependency>
                 
@@ -703,10 +709,10 @@
 
 
 		 <dependency>
-                        <groupId>jspellchecker</groupId>
-                        <artifactId>jazzy-core</artifactId>
-                        <version>unknown</version>
-                </dependency>
+                 <groupId>jspellchecker</groupId>
+                 <artifactId>jazzy-core</artifactId>
+                 <version>unknown</version>
+         </dependency>
 
 		<!-- patientSiteVisit.jar , suspect this is generated classes and should be removed as a jar in the future -->
 		<dependency>
@@ -736,7 +742,8 @@
 			<version>3.6</version>
 		</dependency>
 
-		<!-- ostermillerutils_1_04_03_for_java_1_4.jar we need to stop using this and replace it with apache commons -->
+		<!-- ostermillerutils_1_04_03_for_java_1_4.jar 
+		we need to stop using this and replace it with apache commons -->
 		<dependency>
 			<groupId>com.ostermiller</groupId>
 			<artifactId>ostermillerutils</artifactId>
@@ -757,7 +764,8 @@
 			<version>UNKNOWN</version>
 		</dependency>
 
-		<!-- display tag -->
+		<!-- display tag Remove this. It's only used in 1 deprecated feature in OSCAR 
+		and is not well maintained. -->
 		<dependency>
 			<groupId>displaytag</groupId>
 			<artifactId>displaytag</artifactId>
@@ -766,6 +774,14 @@
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl104-over-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1217,6 +1233,10 @@
    	<exclusion>
    		<groupId>org.slf4j</groupId>
    		<artifactId>slf4j-api</artifactId>
+   	</exclusion>
+   	<exclusion>
+   		<groupId>org.slf4j</groupId>
+   		<artifactId>jcl-over-slf4j</artifactId>
    	</exclusion>
    </exclusions>
 </dependency>
