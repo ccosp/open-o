@@ -7174,6 +7174,7 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
   `departmentId` int(10) NOT NULL,
   `eformId` int(10) DEFAULT NULL,
   `hideFromView` tinyint(1) DEFAULT 0,
+   deleted tinyint(1),
   PRIMARY KEY (`specId`)
 );
 
