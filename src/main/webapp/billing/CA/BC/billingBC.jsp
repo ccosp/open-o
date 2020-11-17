@@ -1475,7 +1475,7 @@ if(wcbneeds != null){%>
                         <div class="input-group">
                             <html:text styleClass="form-control" property="xml_refer1" onkeypress="return grabEnter(event,'ReferralScriptAttach1()')"/>
 	                     	<span class="input-group-btn">
-		                     	<button type="button" class="btn btn-primary" onclick="javascript:ReferralScriptAttach('xml_refer1')">
+		                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer1')">
 	                            	<span class="glyphicon glyphicon-search"></span>
 	                          	</button>
                           	</span>
@@ -1495,7 +1495,7 @@ if(wcbneeds != null){%>
                          	<div class="input-group">
 	                            <html:text styleClass="form-control" property="xml_refer2" onkeypress="return grabEnter(event,'ReferralScriptAttach2()')"/>
 	                            <span class="input-group-btn">
-			                     	<button type="button" class="btn btn-primary" onclick="javascript:ReferralScriptAttach('xml_refer2')">
+			                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer2')">
 		                            	<span class="glyphicon glyphicon-search"></span>
 		                          	</button>
 	                          	</span>
@@ -1613,6 +1613,11 @@ if(wcbneeds != null){%>
 								1
 							</span>
                             <html:text styleClass="form-control" property="xml_other1" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+                           	<span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other1')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
                         </div>
                         </td>
                         <td>
@@ -1631,6 +1636,11 @@ if(wcbneeds != null){%>
 								2
 							</span>
                             <html:text styleClass="form-control" property="xml_other2" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+                            <span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other2')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
              			</div>
                         </td>
                         <td>
@@ -1649,6 +1659,11 @@ if(wcbneeds != null){%>
 								3
 							</span>
                             <html:text styleClass="form-control" property="xml_other3" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+                            <span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other3')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
                         </div> 
                         </td>
                         <td>
@@ -1660,14 +1675,14 @@ if(wcbneeds != null){%>
                         </div>
                         </td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                       <td></td>
                         <td>
                           <button class="btn btn-info pull-right btn-xs" onclick="javascript:OtherScriptAttach()">
                           	Code Search	
                           </button>
                         </td>
-                      </tr>
+                      </tr> -->
                     </table>
                   </td>
                 </tr>
