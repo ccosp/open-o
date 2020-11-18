@@ -47,6 +47,7 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ page import="java.util.*, oscar.oscarDemographic.data.*"%>
 <%@ page import="oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*"%>
@@ -413,19 +414,24 @@ function showHideLayers() { //v3.0
 								key="billing.diagnostic.code" /></td>
 							<td><bean:message key="billing.diagnostic.desc" /></td>
 						</tr>
-						<tr>
-							<td><%=bean.getDx1()%></td>
-							<td><%=billform.getDiagDesc(bean.getDx1(), bean.getBillRegion())%></td>
-						</tr>
-						<tr>
-							<td><%=bean.getDx2()%></td>
-							<td><%=billform.getDiagDesc(bean.getDx2(), bean.getBillRegion())%></td>
-						</tr>
-						<tr>
-							<td><%=bean.getDx3()%></td>
-							<td><%=billform.getDiagDesc(bean.getDx3(), bean.getBillRegion())%></td>
-						</tr>
-					
+						<c:if test="${ not empty billingSessionBean.dx1 }">
+							<tr>
+								<td><%=bean.getDx1()%></td>
+								<td><%=billform.getDiagDesc(bean.getDx1(), bean.getBillRegion())%></td>
+							</tr>
+						</c:if>
+						<c:if test="${ not empty billingSessionBean.dx2 }">
+							<tr>
+								<td><%=bean.getDx2()%></td>
+								<td><%=billform.getDiagDesc(bean.getDx2(), bean.getBillRegion())%></td>
+							</tr>
+						</c:if>
+						<c:if test="${ not empty billingSessionBean.dx3 }">
+							<tr>
+								<td><%=bean.getDx3()%></td>
+								<td><%=billform.getDiagDesc(bean.getDx3(), bean.getBillRegion())%></td>
+							</tr>
+						</c:if>
 					</table>
 				</td>
 			</tr>

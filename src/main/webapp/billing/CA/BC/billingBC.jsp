@@ -1526,20 +1526,25 @@ if(wcbneeds != null){%>
                   String bgColor="#fff";
                   String rProvider = "";
 
-		  if(recentList.size()>0){
-                  for (String r : recentList){ 
-                  rProvider = billingReferralDao.getReferralDocName(r);
-                  %>
-                	  <tr bgcolor="<%=bgColor%>"><td width="20%"><a href="javascript:void(0)" class="referral-doctor" data-num="<%=r%>" data-doc="<%=rProvider%>"><%=r%></a></td><td><%=rProvider%></td></tr> 
-                  <%
-                  if(bgColor=="#fff"){bgColor="#ccc";}else{bgColor="#fff";}
-                  
-                  }
-		  }else{
-		  %>
-                	  <tr><td width="20%"></td><td>none</td></tr> 
-		  <%
-		  }
+				  if(recentList.size()>0){
+		                  for (String r : recentList){ 
+		                  rProvider = billingReferralDao.getReferralDocName(r);
+		                  %>
+		                	  <tr bgcolor="<%=bgColor%>">
+		                	  <td width="20%">
+		                	  	<a href="javascript:void(0)" class="referral-doctor" data-num="<%=r%>" data-doc="<%=rProvider%>"><%=r%></a>
+		                	  </td>
+		                	  <td><%=rProvider%></td>
+		                	  </tr> 
+		                  <%
+		                  if(bgColor=="#fff"){bgColor="#ccc";}else{bgColor="#fff";}
+		                  
+		                  }
+				  }else{
+				  %>
+		                	  <tr><td width="20%"></td><td>none</td></tr> 
+				  <%
+				  }
                   %>
                  </table> 
                  
@@ -1548,7 +1553,12 @@ if(wcbneeds != null){%>
                  
                 <table class="table table-condensed table-borderless" style="background-color:#fff;">
                 <tr><td style="border-top:none;" colspan="2">Referral Doctor on Master Record</td></tr>
-                <tr><td width="20%"><a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a></td><td><%=mRecRefDoctor%></td></tr> 
+                <tr>
+                	<td width="20%">
+                		<a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a>
+                	</td>
+                	<td><%=mRecRefDoctor%></td>
+                </tr> 
                 </table>
                 
                 </td></tr>
