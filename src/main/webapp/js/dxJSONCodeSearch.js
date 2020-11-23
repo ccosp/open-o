@@ -32,6 +32,38 @@ function searchDxCode(request, response) {
 	})				
 }
 
+function deployAutocomplete(inputField){
+	
+	var codeSystem = (jQuery( '#codingSystem option:selected, input#codingSystem' ).val()).toUpperCase();
+	inputField.autocomplete({ 		
+		source: function(request, response) {
+			request.method = 'search' + codeSystem
+			searchDxCode(request, response);					  
+		},
+		minLength: 3,
+		select: function( event, ui ) {
+			event.preventDefault();
+			var valueid = ui.item.value;
+			
+			if(valueid == '0')
+			{
+				this.value = '';
+			}
+			else
+			{
+				this.value = valueid;
+				jQuery( this ).prop('title', ui.item.label);
+			}
+					
+			inputField.autocomplete("destroy");
+		},
+		change: function( event, ui ) {
+			inputField.autocomplete("destroy");
+		} 
+	}).autocomplete("search", inputField.val());
+	
+}
+
 jQuery(document).ready(function() {
 	
 	jQuery( ".jsonDxSearchInput" ).keydown(function(){
@@ -61,35 +93,22 @@ jQuery(document).ready(function() {
 		}
 	})
 	
+	/*
+	 * Listener for enter button inside of text field.
+	 */
+	jQuery(".jsonDxSearchInput").keypress(function(event){
+		if( (event && event.keyCode == 13) || event && event.which == 13 )  {
+			event.preventDefault();
+			var inputField = jQuery("#" + this.id);
+			deployAutocomplete(inputField);
+		}
+	})
+
 		
 	jQuery(".jsonDxSearchButton").click(function () {
 		var inputField = jQuery("#" + this.value);	
-		var codeSystem = (jQuery( '#codingSystem option:selected, input#codingSystem' ).val()).toUpperCase();
-		inputField.autocomplete({ 		
-			source: function(request, response) {
-				request.method = 'search' + codeSystem
-				searchDxCode(request, response);					  
-			},
-			minLength: 3,
-			select: function( event, ui ) {
-				event.preventDefault();
-				var valueid = ui.item.value;
-				
-				if(valueid == '0')
-				{
-					this.value = '';
-				}
-				else
-				{
-					this.value = valueid;
-					jQuery( this ).prop('title', ui.item.label);
-				}
-						
-				inputField.autocomplete("destroy");
-			},
-			change: function( event, ui ) {
-				inputField.autocomplete("destroy");
-			} 
-		}).autocomplete("search", inputField.val());
+		deployAutocomplete(inputField);
 	});
+	
+	
 })
