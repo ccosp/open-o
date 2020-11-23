@@ -826,6 +826,16 @@ jQuery(document).ready(function(jQuery){
 			 xml_provider: {
 				 required: true
 			 },
+			 /*
+			  * Referral provider codes must be numeric
+			  */
+			 xml_refer1: {
+				 number: true
+			 },
+			 
+			 xml_refer2: {
+				 number: true
+			 },
 			 
 			 /*
 			  * Validate all 3 service codes and 
@@ -930,7 +940,10 @@ jQuery(document).ready(function(jQuery){
 			 xml_other2_unit: "Service code units must be numeric",
 			 xml_other3_unit: "Service code units must be numeric",
 			 xml_provider: "Select a billing physician",
-			 xml_other1: "At least 1 service code is required"
+			 xml_other1: "At least 1 service code is required",
+			 xml_refer1: "1: Invalid Referral Doctor code",
+			 xml_refer2: "2: Invalid Referral Doctor code"
+
 		 },
 		 
 		 /*
