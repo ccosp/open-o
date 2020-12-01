@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS FaxClientLog (
   startTime datetime default NULL,
   endTime datetime default NULL,
   result varchar(255) default NULL,
-  requestId varchar(10) default NULL,
-  faxId varchar(10) default NULL,
+  requestId int(10),
+  faxId int(10),
+  transactionType varchar(25),
   PRIMARY KEY  (faxLogId)
 ) ;
 

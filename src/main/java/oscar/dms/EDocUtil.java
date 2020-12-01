@@ -1194,9 +1194,15 @@ public final class EDocUtil {
          * 		Returns the absolute path on the file system.
          */
         public static String resovePath(String fileName) {
-        	String docDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-        	File file = new File(docDir, fileName);
-        	return file.getAbsolutePath();
+			Path filePath = Paths.get(fileName);
+			
+			if(! Files.exists(filePath))
+			{
+				String docDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+				filePath = Paths.get(docDir, fileName);
+			}
+			
+        	return filePath.toAbsolutePath().toString();
         }
         
         public static void writeContent(String fileName, byte[] content) throws IOException {

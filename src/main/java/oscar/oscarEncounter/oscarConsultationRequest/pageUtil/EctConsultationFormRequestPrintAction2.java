@@ -73,6 +73,10 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 		String demoNo = request.getParameter("demographicNo");
 		ArrayList<EDoc> docs = EDocUtil.listDocs(loggedInInfo, demoNo, reqId, EDocUtil.ATTACHED);
 		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		if(! path.endsWith(File.separator))
+		{
+			path = path + File.separator;
+		}
 		ArrayList<Object> alist = new ArrayList<Object>();
 		
 		CommonLabResultData consultLabs = new CommonLabResultData();

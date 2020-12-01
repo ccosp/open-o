@@ -35,11 +35,9 @@
 <a href="index.jsp">Back to Home</a> &amp; Try it again</center>
 <p>
 <hr>
-Received the exception:
+
 <br>
-<font color=red> <%= exception.toString() %><br>
-<%= exception.getMessage() %>
- <% MiscUtils.getLogger().error("Error", exception); %>
+${ message }
 </font>
 </body>
 </html>

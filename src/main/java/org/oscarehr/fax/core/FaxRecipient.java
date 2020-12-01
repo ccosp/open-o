@@ -1,16 +1,10 @@
-package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
-
-import java.util.Date;
-
-import org.oscarehr.common.model.FaxJob.STATUS;
-
 /**
- * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
+ * Copyright (c) 2015-2019. The Pharmacists Clinic, Faculty of Pharmaceutical Sciences, University of British Columbia. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
+ * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,11 +16,19 @@ import org.oscarehr.common.model.FaxJob.STATUS;
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * This software was written for the
- * Department of Family Medicine
- * McMaster University
- * Hamilton
- * Ontario, Canada
+ * The Pharmacists Clinic
+ * Faculty of Pharmaceutical Sciences
+ * University of British Columbia
+ * Vancouver, British Columbia, Canada
  */
+
+package org.oscarehr.fax.core;
+
+import java.util.Date;
+
+import org.oscarehr.common.model.FaxJob.STATUS;
+
+import net.sf.json.JSONObject;
 
 public class FaxRecipient {
 	
@@ -39,9 +41,14 @@ public class FaxRecipient {
 		//default
 	}
 	
+	public FaxRecipient(JSONObject json) {
+		this.name = json.getString("name");
+		this.setFax(json.getString("fax"));
+	}
+	
 	public FaxRecipient(String name, String fax) {
 		this.name = name;
-		this.fax = fax;
+		this.setFax(fax);
 	}
 
 	public String getName() {
@@ -57,7 +64,10 @@ public class FaxRecipient {
 	}
 
 	public void setFax(String fax) {
-		this.fax = fax;
+		if(fax != null && ! fax.trim().isEmpty())
+		{
+			this.fax = fax.replaceAll("\\D", "").trim();
+		}
 	}
 
 	public Date getSent() {

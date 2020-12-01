@@ -478,35 +478,27 @@ public class ManageDocumentAction extends DispatchAction {
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 		File documentDir = new File(docdownload);
 		File documentCacheDir = getDocumentCacheDir(docdownload);
+		
 		log.debug("Document Dir is a dir" + documentDir.isDirectory());
+		
 		File file = new File(documentDir, d.getDocfilename());
 		PdfDecoder decode_pdf  = new PdfDecoder(true);
 		File ofile = null;
-		try {
+		try (FileInputStream is = new FileInputStream(file)){
 
 			FontMappings.setFontReplacements();
 
 			decode_pdf.useHiResScreenDisplay(true);
-
 			decode_pdf.setExtractionMode(0, 96, 96/72f);
-
-			FileInputStream is = new FileInputStream(file);
-
 			decode_pdf.openPdfFileFromInputStream(is, false);
 
 			BufferedImage image_to_save = decode_pdf.getPageAsImage(pageNum);
-
-
-
+			
 			decode_pdf.getObjectStore().saveStoredImage( documentCacheDir.getCanonicalPath() + "/" + d.getDocfilename() + "_" + pageNum + ".png", image_to_save, true, false, "png");
-
 			decode_pdf.flushObjectValues(true);
-
 			decode_pdf.closePdfFile();
-
+			
 			ofile = new File(documentCacheDir, d.getDocfilename() + "_" + pageNum + ".png");
-
-
 
 		}catch(Exception e) {
 			log.error("Error decoding pdf file " + d.getDocfilename());

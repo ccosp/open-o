@@ -24,6 +24,7 @@
 
 --%>
 <%@ page import="java.sql.*, oscar.eform.data.*"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%
 	String id = request.getParameter("fid");
 	String messageOnFailure = "No eform or appointment is available";
@@ -50,11 +51,18 @@
       out.print(eForm.getFormHtml());
   }
 %>
-<%
-String iframeResize = (String) session.getAttribute("useIframeResizing");
-if(iframeResize !=null && "true".equalsIgnoreCase(iframeResize)){ %>
-<script src="<%=request.getContextPath() %>/library/pym.js"></script>
-<script>
-    var pymChild = new pym.Child({ polling: 500 });
-</script>
-<%}%>
+
+<%--
+	Addition of a floating global toolbar specifically for activation of the 
+	Fax and eDocument functions.
+--%>
+
+<%@ include file="eformFloatingToolbar/eform_floating_toolbar.jspf"%>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
+
+<c:if test="${ sessionScope.useIframeResizing }" >
+	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/library/pym.js"></script>
+	<script type="text/javascript">
+	    var pymChild = new pym.Child({ polling: 500 });
+	</script>
+</c:if>

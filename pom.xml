@@ -1194,7 +1194,12 @@
 	    <artifactId>jasypt</artifactId>
 	    <version>1.8</version>
 	</dependency>
-
+	
+	<dependency>
+		<groupId>org.xhtmlrenderer</groupId>
+		<artifactId>flying-saucer-pdf</artifactId>
+		<version>9.1.1</version>
+	</dependency>
 
 	<!-- Caisi Integrator -->
 	<dependency>
@@ -1341,6 +1346,7 @@
                         <validHeader>utils/headers/ubc.txt</validHeader>
                         <validHeader>utils/headers/uvic.txt</validHeader>
                         <validHeader>utils/headers/kai.txt</validHeader>
+                        <validHeader>utils/headers/ubcfps.txt</validHeader>
                 </validHeaders>
                 <includes>
                     <include>src/main/java/**/*.java</include>

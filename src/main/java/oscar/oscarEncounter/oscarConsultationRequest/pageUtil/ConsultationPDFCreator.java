@@ -33,6 +33,7 @@ import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Site;
 import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
+import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -289,7 +290,6 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			filename = props.getProperty("faxLogoInConsultation");	
 		}
 
-		//TODO: tiff, png, jpeg, epg, 
 		Path path = Paths.get(filename);
 		if(Files.exists(path))
 		{
@@ -301,8 +301,8 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 	
 	protected void addImage( PdfPTable pdfPTable, String filename, float width, float height ) {
 
-		try(FileInputStream fileInputStream = new FileInputStream( filename )) {
-
+		try (FileInputStream fileInputStream = new FileInputStream( filename )){
+			
 			PdfPCell cell = new PdfPCell();
 			byte[] faxLogImage = new byte[1024 * 256];				
 			fileInputStream.read( faxLogImage );
@@ -322,7 +322,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			logger.error("This image location is malformed " + filename, e);
 		} catch (IOException e) {
 			logger.error("Unexpected error.", e);
-		} 	
+		} 
 	}
 
 	protected PdfPTable createReplyHeader( Integer alignment ) {

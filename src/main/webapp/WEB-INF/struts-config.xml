@@ -597,6 +597,23 @@
 
         <form-bean name="ValidateSwipeCard" type="org.oscarehr.integration.mchcv.ValidateSwipeCard" />
         <form-bean name="bpmh" type="oscar.form.pharmaForms.formBPMH.bean.BpmhFormBean" />
+
+		<form-bean name="FaxActionForm" type="org.apache.struts.action.DynaActionForm" dynamic="true">
+			<form-property name="faxFilePath" type="java.lang.String" />
+			<form-property name="recipient" type="java.lang.String" />
+			<form-property name="recipientFaxNumber" type="java.lang.String" />
+			<form-property name="comments" type="java.lang.String" />
+			<form-property name="demographicNo" type="java.lang.Integer" />
+			<form-property name="isCoverpage" type="java.lang.String" />
+			<form-property name="senderFaxNumber" type="java.lang.String" />			
+			<form-property name="transactionId" type="java.lang.Integer" />
+			<form-property name="transactionType" type="java.lang.String" />
+			<form-property name="isOverrideFaxNumber" type="java.lang.String" />
+			<form-property name="overrideFaxNumber" type="java.lang.String" />			
+ 			<form-property name="documents" type="java.lang.String[]" />			
+			<form-property name="copyToRecipients" type="java.lang.String[]" />
+		</form-bean>
+
 	</form-beans>
 
 	<global-forwards>
@@ -1673,8 +1690,13 @@
 		</action>
 		<action input="/admin/manageFaxes.jsp" path="/admin/ManageFaxes" scope="request" parameter="method" validate="false" type="org.oscarehr.fax.admin.ManageFaxes">
 			<forward name="faxstatus" path="/admin/faxStatusResults.jspf" />			
-		</action>
-		
+		</action>		
+		<action input="/" path="/fax/faxAction" scope="request" name="FaxActionForm" parameter="method" validate="false" type="org.oscarehr.fax.action.FaxAction">
+			<forward name="preview" path="/fax/CoverPage.jsp" />
+			<forward name="error" path="/errorpage.jsp" />
+			<forward name="CONSULTATION" path="/oscarEncounter/ViewRequest.do" />
+			<forward name="EFORM" path="/eform/efmshowform_data.jsp" />
+		</action>		
 		<action input="/provider/providerColourPicker.jsp" name="setProviderColour" path="/setProviderColour" scope="request" type="oscar.oscarProvider.pageUtil.ProEditColourAction">
 			<forward name="success" path="/provider/providerColourPicker.jsp" />
 			<forward name="error" path="/provider/providerColourErr.jsp" />
@@ -1944,7 +1966,7 @@
 		
 		<action input="/eform/efmformadd_data.jsp" path="/eform/addEForm" scope="request" type="oscar.eform.actions.AddEFormAction">
 			<forward name="close" path="/eform/efmclosewindow.jsp" />
-			<forward name="fax" path="/eform/efmformfax_send.jsp" />
+			<forward name="fax" path="/fax/faxAction.do" />
 			<forward name="print" path="/eform/efmformprint.do" />
 		</action>
 		<action input="/eform/efmformadd_data.jsp" path="/eform/efmformprint" scope="request" type="oscar.eform.actions.PrintAction">
