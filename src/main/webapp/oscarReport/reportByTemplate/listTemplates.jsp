@@ -26,25 +26,22 @@
 
 <%@ page import="java.util.*, oscar.oscarReport.reportByTemplate.*"%>
 <%
+
+  if(session.getValue("user") == null) response.sendRedirect(request.getContextPath() + "/logout.jsp");
+  String roleName$ = (String)session.getAttribute("userrole") + "," + (String)session.getAttribute("user");
+
 ArrayList templates = (new ReportManager()).getReportTemplatesNoParam();
 String templateViewId = request.getParameter("templateviewid");
 if (templateViewId == null) templateViewId = "";
 %>
 
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
-<%
-      String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-      boolean authed=true;
-%>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_report,_admin.reporting,_admin" rights="r" reverse="<%=true%>">
-	<%authed=false; %>
-	<%response.sendRedirect("../../securityError.jsp?type=_report&type=_admin.reporting&type=_admin");%>
+<security:oscarSec roleName="<%=roleName$%>"
+	objectName="_admin,_report"	rights="r" reverse="<%=true%>">
+	<%
+		response.sendRedirect(request.getContextPath() + "/logout.jsp");
+	%>
 </security:oscarSec>
-<%
-if(!authed) {
-	return;
-}
-%>
+
 <div class="templatelist">
 <a href="addEditTemplate.jsp" style="color: #226d55; font-size: 10px;">Add Template</a>
 <div class="templatelistHeader">Select a template:</div>
