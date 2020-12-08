@@ -85,9 +85,9 @@ public static String getStructure2(ResultSet rs) throws SQLException {
 	ResultSetMetaData rsmd = rs.getMetaData();
 
 	int columns = rsmd.getColumnCount();
-	String rowCSS ="reportRow1";
 	String[] columnNames = new String[columns];
-	sb.append("<table class=\"reportTable\">\n");
+	sb.append("<table class=\"reportTable display compact\">");
+	sb.append("<thead><tr>");
 	for (int i=0; i<columns; i++) {  // for each column in result set
 		columnNames[i] = rsmd.getColumnName(i+1);
 		// put names in array
@@ -95,25 +95,29 @@ public static String getStructure2(ResultSet rs) throws SQLException {
 	//  insert headings for table
 		sb.append("<th class=\"reportHeader\">");
 		sb.append(columnNames[i]);
-		sb.append("</th>\n");
+		sb.append("</th>");
 	}
+	sb.append("</tr></thead><tbody>");
+	
         if (!rs.next()) {
-            sb.append("</table><center><font color=\"red\">No Results</font></center>");
+            sb.append("</tbody></table><center><font color=\"red\">No Results</font></center>");
             results = false;
         } else {
             do {
-                    sb.append("<tr class=\""+rowCSS+"\">");
+                    sb.append("<tr>");
                     for(int j=0; j<columns; j++) {
                             sb.append("<td>");
                             sb.append(oscar.Misc.getString(rs,columnNames[j]));
-                            sb.append("</td>\n");
+                            sb.append("</td>");
 
                     }
-                    rowCSS = rowCSS.compareTo("reportRow1")==0?"reportRow2":"reportRow1";
-                    sb.append("</tr>\n");
+                    sb.append("</tr>");
             } while (rs.next());
         }
-        if (results) sb.append("</table>\n");
+        if (results) 
+        {
+        	sb.append("</tbody></table>");
+        }
 	return sb.toString();
 	}
 }
