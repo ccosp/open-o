@@ -24,8 +24,10 @@
 
 package oscar.oscarReport.reportByTemplate;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,22 +67,23 @@ public class SQLReporter implements Reporter {
             return false;
         }
         ResultSet rs = null;
-        String rsHtml = "An SQL query error has occured";
+        String rsHtml = "An SQL query error has occured ";
         String csv = "";
-        try {
-            
+        try {           
             rs = DBHandler.GetSQL(sql);
             rsHtml = RptResultStruct.getStructure2(rs);  //makes html from the result set
             StringWriter swr = new StringWriter();
             CSVPrinter csvp = new CSVPrinter(swr);
             csvp.writeln(UtilMisc.getArrayFromResultSet(rs));
             csv = swr.toString();
-            //csv = csv.replace("\\", "\"");  //natural quotes in the data create '\' characters in CSV, xls works fine
-                                              //this line fixes it but messes up XLS generation.
-            //csv = UtilMisc.getCSV(rs);
-        } catch (Exception sqe) {
+        } catch (SQLException sqe) {
+        	rsHtml += sqe.getCause() != null ? sqe.getCause() : sqe.getMessage();
             MiscUtils.getLogger().error("Error", sqe);
-        }
+        } catch (IOException e) {
+          	rsHtml = "Error: during creation of CSV : " + (e.getCause() != null ? e.getCause() : e.getMessage());
+            MiscUtils.getLogger().error("Error", e);
+		}
+        
         request.getSession().setAttribute("csv", csv);
         request.setAttribute("csv", csv);
         request.setAttribute("sql", sql);
@@ -105,7 +108,7 @@ public class SQLReporter implements Reporter {
             }
         	
             ResultSet rs = null;
-            String rsHtml = "An SQL query error has occured";
+            String rsHtml = "An SQL query error has occured ";
             String csv = "";
             try {
                 
@@ -115,24 +118,25 @@ public class SQLReporter implements Reporter {
                 CSVPrinter csvp = new CSVPrinter(swr);
                 csvp.writeln(UtilMisc.getArrayFromResultSet(rs));
                 csv = swr.toString();
-                
-                //request.getSession().setAttribute("csv", csv);
-                request.setAttribute("csv-"+x, csv);
-                request.setAttribute("sql-"+x, sql);
-                request.setAttribute("resultsethtml-"+x, rsHtml);
-          
-                
-                
-             } catch (Exception sqe) {
+                 
+            } catch (SQLException sqe) {
+              	rsHtml += sqe.getCause() != null ? sqe.getCause() : sqe.getMessage();
                 MiscUtils.getLogger().error("Error", sqe);
-            }
+            } catch (IOException e) {
+              	rsHtml = "Error: during creation of CSV : " + (e.getCause() != null ? e.getCause() : e.getMessage());
+                MiscUtils.getLogger().error("Error", e);
+			}
+            
+            request.setAttribute("csv-"+x, csv);
+            request.setAttribute("sql-"+x, sql);
+            request.setAttribute("resultsethtml-"+x, rsHtml);
             x++;
         }
         
        request.setAttribute("sequenceLength", x); 
        request.setAttribute("reportobject", curReport);
-        
-        return true;
+       
+       return true;
     }
     
 }

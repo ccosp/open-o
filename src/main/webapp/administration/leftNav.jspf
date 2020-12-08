@@ -36,7 +36,7 @@ String curProvider_no = (String)session.getAttribute("user");
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request" />
 
-<div class="span2 hidden-print" id="side">
+<div class="span3 hidden-print" id="side">
    
     <!--Sidebar content--> 
 		<div class="accordion" id="adminNav">
@@ -1080,7 +1080,8 @@ $(document).ready(function(){
 
 	$(".xlink").click(function(e) {
 		var source = $(this).attr('rel');
-		$("#dynamic-content").html('<iframe id="myFrame" name="myFrame" frameborder="0" width="950" height="1000" src="'+source+'">');
+		$("#dynamic-content").addClass("dynamic-iframe-content");
+		$("#dynamic-content").html('<iframe id="myFrame" name="myFrame" frameborder="0" src="'+source+'">');
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	});
 

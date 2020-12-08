@@ -471,8 +471,11 @@ div.logoutBox {
 				onclick='popupPage(600,900,&quot;<html:rewrite page="/oscarReport/RptByExample.do"/>&quot;);return false;'><bean:message
 				key="admin.admin.btnQueryByExample" /></a></li>
 			
-			<li><a href="#"
-				onclick='popup(600,900,&quot;<html:rewrite page="/oscarReport/reportByTemplate/homePage.jsp"/>&quot;, "reportbytemplate")'><bean:message key="admin.admin.rptbyTemplate"/></a></li>
+			<li>
+				<html:link page="/oscarReport/reportByTemplate/homePage.jsp">
+					<bean:message key="admin.admin.rptbyTemplate"/>		
+				</html:link>
+			</li>
 			<li><a href="#"
 				onclick='popupPage(600,900,&quot;<html:rewrite page="/oscarReport/dbReportAgeSex.jsp"/>&quot;);return false;'><bean:message
 				key="admin.admin.btnAgeSexReport" /></a></li>
@@ -852,11 +855,8 @@ div.logoutBox {
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.Integration" /></h3>
 		<ul>
-			<li>API/Connections
-				<ul>
-				<li>&nbsp;<a href="#" onclick='popupPage(500,800,&quot;<html:rewrite page="/admin/api/clients.jsp"/>&quot;);return false;'>REST Clients</a></li>
-				</ul>
-			</li>
+			
+			<li>&nbsp;<a href="#" onclick='popupPage(500,800,&quot;<html:rewrite page="/admin/api/clients.jsp"/>&quot;);return false;'>REST Clients</a></li>	
 			<li><a href="#" onclick="popupPage(900, 500, '../setProviderStaleDate.do?method=viewIntegratorProperties');return false;"><bean:message key="provider.btnSetIntegratorPreferences" /></a></li>
 			<li><a href="#" onClick="popupPage(800, 1000, '../admin/integratorPushStatus.jsp');return false;"><bean:message key="admin.admin.integratorPush" /></a></li>
 			

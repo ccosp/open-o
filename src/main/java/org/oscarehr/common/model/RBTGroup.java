@@ -21,22 +21,48 @@
  * Hamilton
  * Ontario, Canada
  */
-//This is an interface for classes representing each template 
 
 
-package oscar.oscarReport.reportByTemplate;
-import java.util.ArrayList;
-import java.util.Map;
-public interface ReportObject {
-    public String getTemplateId();
-    public String getTitle();
-    public String getDescription();
-    public String getType();
-    public ArrayList getParameters();
-    public String getPreparedSQL(Map parameters);
-    public int getActive();
-    public boolean isSequence();
-    public String getPreparedSQL(int sequenceNo, Map parameters);
-    public String getUuid();
-    public void setUuid(String uuid);
+package org.oscarehr.common.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="rbt_groups")
+public class RBTGroup extends AbstractModel<Integer> {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	@Column(name="tid")
+	private int templateId;
+	@Column(name="group_name")
+	private String groupName;
+	
+	public Integer getId() {
+		return id;
+	}
+	public int getTemplateId() {
+		return templateId;
+	}
+	public void setTemplateId(int templateId) {
+		this.templateId = templateId;
+	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	
+	
+	
 }
