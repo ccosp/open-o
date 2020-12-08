@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS FaxClientLog (
   result varchar(255) default NULL,
   requestId varchar(10) default NULL,
   faxId varchar(10) default NULL,
+  `transactionType` varchar(25),
   PRIMARY KEY  (faxLogId)
 ) ;
 
@@ -686,6 +687,8 @@ CREATE TABLE IF NOT EXISTS document (
   number_of_pages int(6),
   appointment_no int(11) default NULL,
   restrictToProgram tinyint(1) NOT NULL,
+  abnormal int(1),
+  receivedDate date,
   PRIMARY KEY  (document_no)
 ) ;
 
@@ -12333,6 +12336,11 @@ CREATE TABLE IF NOT EXISTS SystemPreferences
   updateDate DATETIME    NULL
 );
 
-
+CREATE TABLE IF NOT EXISTS `rbt_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tid` int(11) DEFAULT NULL,
+  `group_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
 
