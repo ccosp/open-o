@@ -23,8 +23,22 @@
     Ontario, Canada
 
 --%>
-<%@ page import="java.sql.*, oscar.eform.data.*"%>
+<%@ page import="java.sql.*, oscar.eform.data.*, org.oscarehr.managers.FaxManager, org.oscarehr.util.LoggedInInfo"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
+<%
+  LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+  pageContext.setAttribute("faxActive", FaxManager.isEnabled(loggedInInfo));
+%>
+
+<%--
+	Addition of a floating global toolbar specifically for activation of the 
+	Fax and eDocument functions.
+--%>
+<c:if test="${ faxActive }">
+	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
+</c:if>
+
 <%
 	String id = request.getParameter("fid");
 	String messageOnFailure = "No eform or appointment is available";
@@ -51,14 +65,6 @@
       out.print(eForm.getFormHtml());
   }
 %>
-
-<%--
-	Addition of a floating global toolbar specifically for activation of the 
-	Fax and eDocument functions.
---%>
-
-<%@ include file="eformFloatingToolbar/eform_floating_toolbar.jspf"%>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
 
 <c:if test="${ sessionScope.useIframeResizing }" >
 	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/library/pym.js"></script>

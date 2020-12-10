@@ -73,13 +73,7 @@ public class ManageFaxes extends DispatchAction {
 	private Logger log = MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	private NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
-	
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, 
-			HttpServletRequest request, HttpServletResponse response) {
-		return null;
-	}
-	
+
 	@SuppressWarnings("unused")
 	public ActionForward CancelFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		

@@ -1,54 +1,94 @@
-   
-	/**
-	 * Trigger these functions every time this page loads.
-	 */
-	window.onload = function() {
-		
-		/*
-		 * A little trick to bypass the override of the onload
-		 * event in the Rich Text Letter writer. 
+	document.addEventListener("DOMContentLoaded", function(){   
+		/**
+		 * Trigger these functions every time this page loads.
 		 */
-		if(typeof Start === "function")
-		{
-			Start();
-			top.window.resizeTo("1100","850");
 
-		} else {
-			top.window.resizeTo("800","850");
-		}
-		
-		removeElements();
-		addNavElement();
-		moveSubjectReverse();
-	}
-	
+			removeElements();
+			addNavElement();
+			moveSubjectReverse();
+			
+			top.window.resizeTo("1100","850");
+			
+				/*
+				 * A little trick to bypass the override of the onload
+				 * event in the Rich Text Letter writer. 
+				 */
+		//		var loadmethod = document.getElementsByTagName("body")[0].getAttribute("onload"); 
+		//		
+		//		if(! loadmethod)
+		//		{
+		//			onload = document.getElementsByTagName("form")[0].getAttribute("onload"); 
+		//		}
+		//
+		//		if(loadmethod)
+		//		{
+		//			loadmethod = loadmethod.replace("(", '').replace(")", "").replace(";", "");
+		//			return window[loadmethod]();
+		//		}
+		//		
+		//		return;
+		//	}
+	});	
 	/**
 	 * Triggers the eForm save/submit function
 	 */
 	function remoteSave() {
 		
-		releaseDirtyFlag();		
 		moveSubject();
+		
+		if (typeof saveRTL === "function")
+		{
+			window["saveRTL"]();
+			document.RichTextLetter.submit();
+			return true;
+		} 
+		
+		
+		if (document.getElementsByName("SubmitButton") && 
+				typeof document.getElementsByName("SubmitButton")[0].click() === "function") 
+		{
+			try
+			{
+				document.getElementsByName("SubmitButton")[0].click();
+				return true;
+			}
+			catch(error) 
+			{
+				console.log(error);
+			}
+		}
+		
+		if(typeof releaseDirtyFlag === "function")
+		{
+			window["releaseDirtyFlag"]();
+		}
 		
 		if(typeof submission === "function")
 		{
-			submission();
+			try
+			{
+				window["submission"]();
+				document.getElementsByName("form")[0].submit();
+				return true;
+			} 
+			catch(error) 
+			{
+				console.log(error);
+			}
 		} 
-		else if (typeof saveRTL === "function")
+		
+		try
 		{
-			saveRTL();
-			document.RichTextLetter.submit();
+			document.getElementsByName("form")[0].submit();
+			return true;
 		} 
-		else if (document.getElementsByName("SubmitButton") && 
-				typeof document.getElementsByName("SubmitButton")[0].click() === "function") 
+		catch(error) 
 		{
-			document.getElementsByName("SubmitButton")[0].click();
+			console.log(error);
 		}
-		else
-		{
-			return false;
-		}
-		return true;
+
+		return false;
+
 	}
 	
 	/**
@@ -234,6 +274,39 @@
 	}
 	
 	/**
+	 * A javascript includes method 
+	 * @returns
+	 */
+	function includeHTML(elmnt) {
+		var file = "../eform/eformFloatingToolbar/eform_floating_toolbar.jspf";
+		if (file) {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					
+					if (this.status == 200) 
+					{
+						var toolbarWrapper = document.createElement("div");
+						toolbarWrapper.setAttribute("id","toolbarWrapper");
+						toolbarWrapper.setAttribute("class","hidden-print DoNotPrint no-print");
+						toolbarWrapper.innerHTML = this.responseText;
+						elmnt.append(toolbarWrapper);
+					}
+					
+					if (this.status == 404) 
+					{
+						elmnt.append("eForm tool bar not found.");
+					}
+				}
+			}
+			xhttp.open("GET", file, true);
+			xhttp.send();
+			/* Exit the function: */
+			return;
+		}
+	}
+	
+	/**
 	 * Insert additional elements into the eForm to support 
 	 * launch of the floating toolbar.
 	 */
@@ -242,10 +315,15 @@
 		/*
 		 * Get the total height of the current eform
 		 */
-		var body = document.body,
+		var body = document.body;
 	    html = document.documentElement;
 		var documentheight = Math.max( body.scrollHeight, body.offsetHeight, 
 		                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+		
+		/*
+		 * Include the eForm tool bar overlay
+		 */
+		includeHTML(body);
 		
 		/*
 		 * Add a wedge to the bottom of the eform that will add 

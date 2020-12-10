@@ -652,13 +652,13 @@ public class ConvertToEdoc {
 	private static final Tidy getTidy() {
 		Tidy tidy = new Tidy();
 		Properties properties = new Properties(); 
-		InputStream is = null;
 		
 		// these can be overriden with the properties file.
 		tidy.setForceOutput( Boolean.TRUE ); 	// output the XHTML even if it fails the validator.
 		tidy.setXHTML( Boolean.TRUE ); // only reading XHTML here.
 		tidy.setDropEmptyParas(false);
-		tidy.setDocType( "omit" ); // everything will fail horribly if doctype is strict.
+		tidy.setDocType("<!DOCTYPE html>");
+		// tidy.setDocType( "omit" ); // everything will fail horribly if doctype is strict.
 		tidy.setMakeClean( Boolean.TRUE );
 		tidy.setLogicalEmphasis( Boolean.TRUE ); // replace the b and em tags with proper <strong> tags
 
@@ -671,22 +671,14 @@ public class ConvertToEdoc {
 			tidy.setQuiet( Boolean.TRUE );
 		}
 
-		try {
-			is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" );
+		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" )) {
+			
 			if( is != null ) {
 				properties.load( is );
 			}
 		} catch (IOException e) {
 			logger.warn("Could not load Tidy properties ", e);
-		} finally {
-			if( is != null ) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					logger.error("Error", e);
-				}
-			}
-		}
+		} 
 		
 		tidy.getConfiguration().addProps( properties );
 		

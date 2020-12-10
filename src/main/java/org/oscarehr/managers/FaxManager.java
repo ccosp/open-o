@@ -47,6 +47,7 @@ import org.oscarehr.common.model.FaxJob.STATUS;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -167,6 +168,7 @@ public class FaxManager {
 	 * @param faxActionForm
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<FaxJob> createAndSaveFaxJob(LoggedInInfo loggedInInfo, DynaActionForm faxActionForm) {
 		return createAndSaveFaxJob(loggedInInfo, faxActionForm.getMap());
 	}
@@ -582,6 +584,28 @@ public class FaxManager {
   		boolean temp = nioFileManager.deleteTempFile(filePath);
   		
   		return (cache && temp);
+	}
+	
+	/**
+	 * Check if fax services are enabled. 
+	 * @return
+	 */
+	public static boolean isEnabled(LoggedInInfo loggedInInfo) {
+		SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_fax)");
+		}
+		FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
+  		List<FaxConfig> accounts = faxConfigDao.findAll(0, 50);
+  		for(FaxConfig account : accounts)
+  		{
+  			if(account.isActive())
+  			{
+  				return Boolean.TRUE;
+  			}
+  			
+  		}
+  		return Boolean.FALSE;
 	}
 
 }
