@@ -60,7 +60,7 @@ if(!authed) {
 	    		
 	    }
 	    
-	    if( faxJob.getDemographicNo() != null ) {
+	    if( faxJob.getDemographicNo() != null && faxJob.getDemographicNo() > 0 ) {
 			
 			Demographic demographic = demographicDao.getDemographic(String.valueOf(faxJob.getDemographicNo()));
 			demographicName = demographic.getDisplayName();
@@ -75,9 +75,9 @@ if(!authed) {
 			<td class="small"><%=DateFormatUtils.format(faxJob.getStamp(), "yyyy-MM-dd HH:mm:ss")%></td>
 			<td class="small"><a href="#top" onclick="view(<%=faxJob.getId()%>)">View</a>&nbsp;
 <%
-			if( !faxJob.getStatus().equals(FaxJob.STATUS.RECEIVED) ) {			    
+			if( ! FaxJob.STATUS.RECEIVED.equals(faxJob.getStatus()) ) {			    
 			    
-			    if( faxJob.getStatus().equals(FaxJob.STATUS.ERROR) || faxJob.getStatus().equals(FaxJob.STATUS.COMPLETE)) {
+			    if( FaxJob.STATUS.ERROR.equals(faxJob.getStatus()) || FaxJob.STATUS.COMPLETE.equals(faxJob.getStatus())) {
 %>			    
 				<a href="javascript:void()" onclick="resend(<%=faxJob.getId()%>,'<%=faxJob.getDestination()%>','status<%=count%>')">Resend</a>&nbsp;
 <%
@@ -88,7 +88,7 @@ if(!authed) {
 <%					    
 					}
 				}
-				else if( faxJob.getStatus().equals(FaxJob.STATUS.SENT)  || faxJob.getStatus().equals(FaxJob.STATUS.WAITING)) {
+				else if( FaxJob.STATUS.SENT.equals(faxJob.getStatus())  || FaxJob.STATUS.WAITING.equals(faxJob.getStatus())) {
 %>
 				<a href="javascript:void()" onclick="cancel(<%=faxJob.getId()%>,'status<%=count%>')">Cancel</a>&nbsp;				
 <%
