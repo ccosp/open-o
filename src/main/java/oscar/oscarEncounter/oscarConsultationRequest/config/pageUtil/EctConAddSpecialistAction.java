@@ -143,20 +143,8 @@ public class EctConAddSpecialistAction extends Action {
 		professionalSpecialist.setFirstName(addSpecailistForm.getFirstName());
 		professionalSpecialist.setLastName(addSpecailistForm.getLastName());
 		professionalSpecialist.setProfessionalLetters(addSpecailistForm.getProLetters());
-
-		String address = addSpecailistForm.getAddress();
-		StringBuilder sb = new StringBuilder();
-		for (int i =0 ; i < address.length(); i++){
-			int a = address.charAt(i);
-			if ( a == 13 || a == 10 ){
-				sb.append(" ");
-			}else{
-				sb.append((char)a);
-			}
-		}
-		address = sb.toString();
-		professionalSpecialist.setStreetAddress(addSpecailistForm.getAddress());
-
+		professionalSpecialist.setStreetAddressFromForm(addSpecailistForm.getAddress());
+	
 		professionalSpecialist.setPhoneNumber(addSpecailistForm.getPhone());
 		professionalSpecialist.setFaxNumber(addSpecailistForm.getFax());
 		professionalSpecialist.setWebSite(addSpecailistForm.getWebsite());
