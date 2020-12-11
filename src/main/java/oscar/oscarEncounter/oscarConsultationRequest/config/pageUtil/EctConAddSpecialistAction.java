@@ -127,7 +127,7 @@ public class EctConAddSpecialistAction extends Action {
 
 	private boolean referralNoValid(String referralNo) {
 		
-		String pattern = OscarProperties.getInstance().getProperty("referral_no.pattern", "\\d{6}");
+		String pattern = OscarProperties.getInstance().getProperty("referral_no.pattern", "^\\d+$");
 		
 		try {
 			if (referralNo.matches(pattern))

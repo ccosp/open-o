@@ -68,7 +68,7 @@ if(!authed) {
     List<EForm> eforms = eformDao.findAll(true);
     pageContext.setAttribute("eforms", eforms);
     
-    String referralNoMsg = oscar.OscarProperties.getInstance().getProperty("referral_no.msg");
+    String referralNoMsg = oscar.OscarProperties.getInstance().getProperty("referral_no.msg", "Must be an integer");
     
 %>
 
