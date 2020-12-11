@@ -277,7 +277,7 @@
 
 	<tr>
 		<td>
-			<a href="Contact.do?method=addProContact&keyword=<%= keyword %>&contactRole=${ param.contactRole }" 
+			<a href="Contact.do?method=addProContact&keyword=<%= keyword %>&contactRole=${ param.contactRole }&contactType=3" 
 			style="font:inherit;display:block;margin:10px;">
 				Add/Edit Professional Contact
 			</a>

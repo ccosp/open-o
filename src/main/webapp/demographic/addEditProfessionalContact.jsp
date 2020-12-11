@@ -204,6 +204,7 @@
 	<input type="hidden" name="demographicContactId" value="${ demographicContactId }"/>
 	<input type="hidden" name="keywordFirstName" id="keywordFirstName" value=""/>
 	<input type="hidden" name="keywordLastName" id="keywordLastName" value="" />
+	<input type="hidden" name="contactType" id="contactType" value="${ param.contactType }" />
 	
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
