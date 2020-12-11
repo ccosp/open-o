@@ -45,7 +45,7 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@page import="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConAddSpecialistForm"%>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Map" %>
@@ -53,8 +53,8 @@ if(!authed) {
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.InstitutionDao" %>
 <%@page import="org.oscarehr.common.model.Institution" %>
-<%@page import="org.oscarehr.common.dao.InstitutitionDepartmentDao" %>
-<%@page import="org.oscarehr.common.model.InstitutionDepartment" %>
+<%@page import="org.oscarehr.common.dao.InstitutitionDepartmentDao, org.oscarehr.common.dao.ConsultationServiceDao" %>
+<%@page import="org.oscarehr.common.model.InstitutionDepartment, org.oscarehr.common.model.ConsultationServices" %>
 <%@page import="org.oscarehr.common.dao.DepartmentDao" %>
 <%@page import="org.oscarehr.common.model.Department" %>
 <%@page import="org.oscarehr.common.model.EForm" %>
@@ -69,6 +69,10 @@ if(!authed) {
     pageContext.setAttribute("eforms", eforms);
     
     String referralNoMsg = oscar.OscarProperties.getInstance().getProperty("referral_no.msg", "Must be an integer");
+    
+    ConsultationServiceDao specialtyDao = SpringUtils.getBean(ConsultationServiceDao.class);
+	List<ConsultationServices> specialties = specialtyDao.findActive();
+	pageContext.setAttribute("specialties", specialties);
     
 %>
 
@@ -281,7 +285,22 @@ function BackToOscar() {
 						</tr>
 						<tr>
 							<td><bean:message key="oscarEncounter.oscarConsultationRequest.config.AddSpecialist.specialistType" /></td>
-							<td><html:text name="EctConAddSpecialistForm" property="specType" /></td>
+							<td>
+							
+								<select id="specType" name="specType" >	
+									<option value="0" selected>&nbsp;</option>				
+									<c:forEach items="${ specialties }" var="specialtyType">
+					
+										<option value="${ specialtyType.serviceId }" ${ specialtyType.serviceId eq EctConAddSpecialistForm.specType ? 'selected' : '' } >  
+											<c:out value="${ specialtyType.serviceDesc }" />
+										</option>
+								
+									</c:forEach>
+								</select>
+							
+							</td>
+							
+							
 							<td><bean:message key="oscarEncounter.oscarConsultationRequest.config.AddSpecialist.referralNo" /></td>
 							<td colspan="4">
 								<% if (request.getAttribute("refnoinuse") != null) { %>
