@@ -184,6 +184,9 @@ if(!authed) {
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery.validate-1.19.1.min.js"></script>
 
 <style type="text/css">
+	table {
+	  margin-bottom: 5px !important;
+	}
 	div#wcbForms p {
 		padding:0px;
 		margin:0px;
@@ -1863,18 +1866,11 @@ if(wcbneeds != null){%>
               
               <table class="tool-table table table-condensed table-borderless">
                 <tr>
-                  <td width="50%" style="padding-top:5px !important;">
+                  <td style="padding-top:5px !important;">
                       <label for="shortClaimNote"></label><label>Short Claim Note</label></label>
                     <html:text styleClass="form-control" property="shortClaimNote" />
                   </td>
-                  <td width="50%" style="padding-top:5px;">
-                    
-                    <label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">     
-	                    <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/> 
-	                     Ignore Warnings
-	                 </label>
                   
-                  </td>
                 </tr>
                 
                 <tr>
@@ -1912,8 +1908,14 @@ if(wcbneeds != null){%>
     </tr>
   </table>
 
-  	<div class="container-fluid ">
-		<div id="buttonRow" class="pull-right button-bar">
+  	<div class="row-fluid pull-right ">
+  		<div id="ignoreWarningsButton">
+				<label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">     
+				   <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/> 
+				    Ignore Warnings
+				</label>
+        </div>
+		<div id="buttonRow" class="button-bar">
             <input class="btn btn-md btn-primary" type="submit" name="Submit" value="Continue">
               <input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();"> 
 		</div>
