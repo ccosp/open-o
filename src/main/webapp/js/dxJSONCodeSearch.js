@@ -64,9 +64,9 @@ function deployAutocomplete(inputField){
 	
 }
 
-jQuery(document).ready(function() {
-	
-	jQuery( ".jsonDxSearchInput" ).keydown(function(){
+function bindDxJSONEvents() {
+
+	jQuery( ".jsonDxSearchInput" ).on("keydown", function(){
 		jQuery( this ).prop('title', '');
 	});
 
@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
 	/*
 	 * Listener for enter button inside of text field.
 	 */
-	jQuery(".jsonDxSearchInput").keypress(function(event){
+	jQuery(".jsonDxSearchInput").on("keypress", function(event){
 		if( (event && event.keyCode == 13) || event && event.which == 13 )  {
 			event.preventDefault();
 			var inputField = jQuery("#" + this.id);
@@ -105,10 +105,14 @@ jQuery(document).ready(function() {
 	})
 
 		
-	jQuery(".jsonDxSearchButton").click(function () {
+	jQuery(".jsonDxSearchButton").on( "click", function () {
 		var inputField = jQuery("#" + this.value);	
 		deployAutocomplete(inputField);
 	});
+
+}
 	
-	
+jQuery(document).on("ready", function() {
+	bindDxJSONEvents();
 })
+

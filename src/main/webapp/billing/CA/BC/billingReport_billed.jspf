@@ -67,7 +67,7 @@
       apptTime = ConversionUtils.toTimeString(b.getBillingTime()); 
       reason =b.getStatus();
       
-      if (apptDoctorNo.compareTo("none") == 0){
+      if ( apptDoctorNo == null || "none".compareTo(apptDoctorNo) == 0  || "".equals(apptDoctorNo)){
       note = "No Appt / INR";
       } 
       else{
