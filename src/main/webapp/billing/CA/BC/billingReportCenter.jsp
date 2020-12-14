@@ -75,8 +75,7 @@ GregorianCalendar now=new GregorianCalendar();
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title>Billing Report</title>
-<link rel="stylesheet" href="../web.css">
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
+
 <script language="JavaScript">
 <!--
 
@@ -193,8 +192,7 @@ String billinggroup_no;
 	</form>
 </table>
 <p><font face="Arial, Helvetica, sans-serif" size="2"> </font></p>
-<p>&nbsp;</p>
-<%@ include file="../../../demographic/zfooterbackclose.jsp"%>
+
 
 </body>
 </html>
