@@ -802,8 +802,27 @@ function loadDefaultProvder() {
 	}
 }
 
+function setReferralDoctor() {
+	jQuery(".referral-doctor").on('click', function() {
+
+		 mRecordRefDocNum = jQuery(this).attr('data-num');  
+		 mRecordRefDoc= jQuery(this).attr('data-doc');  
+		 
+		 one = jQuery('[name="xml_refer1"]');
+		 two = jQuery('[name="xml_refer2"]');
+		 
+		 if(one.val().length>0){
+		  two.val(mRecordRefDocNum);
+		  two.attr("title", mRecordRefDoc );
+		 }else{
+		  one.val(mRecordRefDocNum);
+		  one.attr("title", mRecordRefDoc );
+		 }
+	});
+}
+
 jQuery(document).ready(function(jQuery){
-	
+	setReferralDoctor();
 	loadDefaultProvder();
 	
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
@@ -818,7 +837,12 @@ jQuery(document).ready(function(jQuery){
 	/* New billing form selection method*/
     jQuery("#selectBillingForm").on('change',function() {
     	var url = ctx + '/billing.do?demographic_no=' + <%=bean.getPatientNo()%> + '&appointment_no=0&billRegion=BC&billForm=' + this.value;
-      	jQuery("#billingFormTable").load(url + " #billingFormTable");
+      	jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
+      		// re-bind all the javascript
+    		getDxInformation();
+    		bindDxJSONEvents();
+    		setReferralDoctor();
+      	});
     });
 
 	jQuery("#serviceStartTime").on('blur', function() {
@@ -854,22 +878,6 @@ jQuery(document).ready(function(jQuery){
 	    	alert("Warning: the start time is greater than the end time.");
 	    }	
 	 }
-
-	jQuery(".referral-doctor").on('click', function() {
-		 mRecordRefDocNum = jQuery(this).attr('data-num');  
-		 mRecordRefDoc= jQuery(this).attr('data-doc');  
-		 
-		 one = jQuery('[name="xml_refer1"]');
-		 two = jQuery('[name="xml_refer2"]');
-		 
-		 if(one.val().length>0){
-		  two.val(mRecordRefDocNum);
-		  two.attr("title", mRecordRefDoc );
-		 }else{
-		  one.val(mRecordRefDocNum);
-		  one.attr("title", mRecordRefDoc );
-		 }
-	});
 	
 	/*
 	 * All form validation code following
@@ -1519,6 +1527,7 @@ if(wcbneeds != null){%>
 </tr>
 <tr>
 <td>
+<div id="billingFormTableWrapper">
         <table id="billingFormTable">
           <tr>
             <td valign="top" style="width:32%; padding-right:5px;" >
@@ -1898,17 +1907,6 @@ if(wcbneeds != null){%>
 						</td>
 						<td rowspan="3" style="width:50%" valign="top" >
 							<div id="DX_REFERENCE"></div>
-	                        <oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
-		                         <script type="text/javascript">
-			                         function getDxInformation(origRequest){
-			                               var url = "DxReference.jsp";
-			                               var ran_number=Math.round(Math.random()*1000000);
-			                               var params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
-			                               new Ajax.Updater('DX_REFERENCE',url, {method:'get',parameters:params,asynchronous:true}); 
-			                         }
-			                         getDxInformation();
-		                         </script>
-	                       </oscar:oscarPropertiesCheck>
 						</td>
 						</tr>
 						<tr><td>
@@ -1965,7 +1963,7 @@ if(wcbneeds != null){%>
                 </tr>
                 <tr>
                   <td style="padding-bottom:5px !important;" colspan="2" valign="top">
-                    <div id="CORRESPONDENCENOTE">
+                    <div id="CORRESPONDENCENOTE" style="display:none;">
                       <html:textarea styleClass="form-control notes-box" property="notes" onkeyup="checkTextLimit(this.form.notes,400);"></html:textarea>
                       <small>400 characters max.</small>
                     </div>
@@ -1984,6 +1982,7 @@ if(wcbneeds != null){%>
             </td>
           </tr>
         </table>
+      </div>
       </td>
     </tr>
   </table>
@@ -2006,5 +2005,17 @@ if(wcbneeds != null){%>
 </html:form>
  </div>
  </div>
+ 
+<oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
+	<script type="text/javascript">
+		function getDxInformation(origRequest){
+		      var url = "DxReference.jsp";
+		      var ran_number=Math.round(Math.random()*1000000);
+		      var params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
+		      new Ajax.Updater('DX_REFERENCE',url, {method:'get',parameters:params,asynchronous:true}); 
+		}
+		getDxInformation();
+	</script>
+</oscar:oscarPropertiesCheck>
 </body>
 </html>
