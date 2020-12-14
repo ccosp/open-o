@@ -89,6 +89,7 @@ if(!authed) {
   }
 %>
 <%
+	LoggedInInfo loggedInInfo =	LoggedInInfo.getLoggedInInfoFromSession(request);
   int year = 0; //Integer.parseInt(request.getParameter("year"));
   int month = 0; //Integer.parseInt(request.getParameter("month"));
   //int day = now.get(Calendar.DATE);
@@ -100,7 +101,7 @@ if(!authed) {
   String color = "", colorflag = "";
   BillingSessionBean bean = (BillingSessionBean) pageContext.findAttribute("billingSessionBean");
   oscar.oscarDemographic.data.DemographicData demoData = new oscar.oscarDemographic.data.DemographicData();
-  org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+  org.oscarehr.common.model.Demographic demo = demoData.getDemographic(loggedInInfo, bean.getPatientNo());
   bean.setPatientName(demo.getFullName());
   oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic lgc = new oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic();
   BillingFormData billform = new BillingFormData();
@@ -225,13 +226,34 @@ if(!authed) {
 	}
 	
 	.wrapper {
-		margin: auto 15px
+		margin: 40px 10px 10px 10px;
+	}
+	
+	div#page-header {
+		position: fixed;
+		width: 100%;
+		top: 0;
+		left: 0;
+		z-index: 100000;
+	}
+	
+	div#page-header::after {
+    	clear: both;
+	}
+	
+	div#page-header::before, div#page-header::after {
+	    display: table;
+	    content: " ";
+	}
+	
+	div#page-header table {
+		margin:0px !important;
 	}
 	
 	#oscarBillingHeader {
 		width: 100%;
 		border-collapse: collapse;
-		margin-top: .5%;
+		background-color: #F3F3F3;
 	}
 	
 	table#oscarBillingHeader tr td {
@@ -241,11 +263,11 @@ if(!authed) {
 	}
 	
 	#oscarBillingHeader #oscarBillingHeaderLeftColumn {
-		width: 19.5% !important;
-		background-color: white;
-		padding: 0px;
-		padding-right: .5% !important;
-		width: 20%;
+		width: 20% !important;
+		background-color: black;	
+		border-bottom: black 1px solid;
+		line-height: 1;
+		border-top: black 1px solid;	
 	}
 	
 	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
@@ -263,6 +285,11 @@ if(!authed) {
 		text-align: right;
 		padding-top: 3px !important;
 		padding-right: 3px !important;
+
+	}
+	
+	#oscarBillingHeader #oscarBillingHeaderRightColumn, #oscarBillingHeader #oscarBillingHeaderCenterColumn {
+		border-bottom: 1px solid #ccc;
 	}
 	
 	span.HelpAboutLogout a {
@@ -351,6 +378,11 @@ if(!authed) {
 		background-color: #f2dede;
 	}
 
+	@media only screen and (max-width: 820px) {
+		.wrapper {
+			margin: 80px 10px 10px 10px;
+		}
+	}
 	
 </style>
 <script type="text/javascript" >
@@ -446,11 +478,6 @@ function checkSelectedCodes(){
 	    }
 	}
 }
-
-
-
-
-
 
 function HideElementById(ele){
 	document.getElementById(ele).style.display='none';
@@ -748,7 +775,36 @@ function setCodeToChecked(svcCode){
     
 }
 
+/*
+ * Sets the currently selected provider as the default on 
+ * this client computer.
+ */
+function setDefaultProvider() {
+	var selectedProvider = jQuery('select[name=xml_provider] option:selected');
+	var providerId = selectedProvider.val();
+	var providerName = selectedProvider.text();		
+	localStorage.setItem( 'default_billing_provider', providerId );		
+	alert(providerName + " is now set as the default billing physician on this computer.");
+
+}
+
+/*
+ * Loads the default provider - only if - the provider is not 
+ * already set from the billing or encounter interface.
+ */
+function loadDefaultProvder() {
+	var currentProvider = document.BillingCreateBillingForm.xml_provider.value;
+
+	if(! currentProvider)
+	{
+		var providerId = localStorage.getItem('default_billing_provider');
+		jQuery("select[name=xml_provider]").val(providerId);
+	}
+}
+
 jQuery(document).ready(function(jQuery){
+	
+	loadDefaultProvder();
 	
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
 	
@@ -798,7 +854,6 @@ jQuery(document).ready(function(jQuery){
 	    	alert("Warning: the start time is greater than the end time.");
 	    }	
 	 }
- 
 
 	jQuery(".referral-doctor").on('click', function() {
 		 mRecordRefDocNum = jQuery(this).attr('data-num');  
@@ -1016,32 +1071,51 @@ jQuery(document).ready(function(jQuery){
   }
 %>
 <body style="background-color:#FFFFFF;" onLoad="CheckType();correspondenceNote();">
-<div class="wrapper">
-
-	<div id="page-header">	
-		<table id="oscarBillingHeader">
+	<div id="page-header" >	
+		<table id="oscarBillingHeader" class="table-borderless">
 			<tr>
 				<td id="oscarBillingHeaderLeftColumn"><h1><bean:message key="billing.bc.title"/></h1></td>
 
 				<td id="oscarBillingHeaderCenterColumn">				
 					<span class="badge badge-primary"><bean:message key="billing.patient"/></span>
-	                <strong class="label-text" ><%=demo.getLastName()%>, <%=demo.getFirstName()%></label>
+	                <label class="label-text" ><%=demo.getLastName()%>, <%=demo.getFirstName()%></label>
 	            	
 	            	<span class="badge badge-primary"><bean:message key="billing.patient.age"/></span>  
-	            	<strong class="label-text"><%=demo.getAge()%></label>
-	 			
+	            	<label class="label-text"><%=demo.getAge()%></label>
+
+<%-- 	Keep until confirmed not needed.			
+
 					<span class="badge badge-primary"><bean:message key="billing.patient.status"/></span> 
 					<strong class="label-text"><%=demo.getPatientStatus()%></label>
 	
-	  <%--               <span class="badge badge-primary"><bean:message key="billing.patient.roster"/></span> 
-	                <label><%=demo.getRosterStatus()%></label> --%>
-	         
-	                <span class="badge badge-primary"><bean:message key="billing.provider.assignedProvider"/></span>
-	                <strong class="label-text"><%=billform.getProviderName(demo.getProviderNo())%></label> 
-	                
-	                <a class="badge badge-primary" href="javascript: void();" onclick="popup(800, 1000, 'billStatus.jsp?lastName=<%=demo.getLastName()%>&firstName=<%=demo.getFirstName()%>&filterPatient=true&demographicNo=<%=demo.getDemographicNo()%>','InvoiceList');return false;">
+              <span class="badge badge-primary"><bean:message key="billing.patient.roster"/></span> 
+	                <label><%=demo.getRosterStatus()%></label> 
+--%>	         
+	                <span class="badge badge-primary" title="Most Responsible Provider"><bean:message key="billing.provider.assignedProvider"/></span>
+	                <label class="label-text">
+		                <c:choose>
+		                	<c:when test="<%= demo.getProviderNo() != null && ! demo.getProviderNo().trim().isEmpty() %>">
+		                		<%=billform.getProviderName(demo.getProviderNo())%> 
+		                	</c:when>
+		                	<c:otherwise>
+		                		Unknown
+		                	</c:otherwise>
+		                </c:choose>
+	                </label>
+
+					<security:oscarSec roleName="<%=roleName$%>" objectName="_eChart" rights="x" >
+		                <button type="button" class="btn btn-link" title="View this patient's Electronic Chart" onclick="popup(710, 1024,'${pageContext.servletContext.contextPath}/casemgmt/forward.jsp?action=view&demographicNo=<%=demo.getDemographicNo()%>&providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&providerName=<%=loggedInInfo.getLoggedInProvider().getFullName()%>&appointmentNo=&reason=null&appointmentDate=&start_time=&apptProvider=null&providerview=null&msgType=null&OscarMsgTypeLink=null&noteId=null','encounter',12556);return false;">
+							<bean:message key="billing.patient.encounter" />
+						</button>	
+					</security:oscarSec>
+					
+	                <button type="button" class="btn btn-link" title="View previous invoices for this patient" onclick="popup(800, 1000, 'billStatus.jsp?lastName=<%=demo.getLastName()%>&firstName=<%=demo.getFirstName()%>&filterPatient=true&demographicNo=<%=demo.getDemographicNo()%>','InvoiceList');return false;">
 						<bean:message key="demographic.demographiceditdemographic.msgInvoiceList"/>
-					</a>				
+					</button>
+					
+					<button type="button" class="btn btn-link" title="Set a default Billing Physician to use when a physician is not pre-selected" onclick="setDefaultProvider()">
+						<bean:message key="billing.provider.defaultProvider"/>
+					</button>				
 				</td>
 				<td id="oscarBillingHeaderRightColumn" align=right>
 					<span class="HelpAboutLogout"> 
@@ -1053,8 +1127,11 @@ jQuery(document).ready(function(jQuery){
 			</tr>
 		</table>
 	</div>
+<div class="wrapper">
 
 
+
+<div class="container-fluid">
 <html:errors/>
 
 <!-- end error row -->
@@ -1063,33 +1140,36 @@ jQuery(document).ready(function(jQuery){
 List<String> wcbneeds = (List) request.getAttribute("WCBFormNeeds");
 if(wcbneeds != null){%>
 <div>
-    <h3>WCB Form needs:
+    WCB Form needs:
     <ul>
     <%for (String s: wcbneeds) { %>
     <li><bean:message key="<%=s%>"/></li>
     <%}%>
-    </ul></h3>
+    </ul>
 </div>
 <%}%>
 
-<div class="container-fluid">
 <html:form styleId="bcBillingForm" styleClass="form-inline" action="/billing/CA/BC/CreateBilling" onsubmit="toggleWCB();">
 	<input autocomplete="false" name="hidden" type="text" style="display:none;">
   	<input type="hidden" name="fromBilling" value=""/>
 
 <%
-  BillingCreateBillingForm thisForm;
-  thisForm = (BillingCreateBillingForm) request.getSession().getAttribute("BillingCreateBillingForm");
+  BillingCreateBillingForm thisForm = (BillingCreateBillingForm) request.getSession().getAttribute("BillingCreateBillingForm");
   if (thisForm != null) {
     sxml_provider = ((String) thisForm.getXml_provider());
     sxml_location = ((String) thisForm.getXml_location());
     sxml_visittype = ((String) thisForm.getXml_visittype());
+    
+    if(sxml_provider == null || "".equals(sxml_provider) || "none".equals(sxml_provider))
+    {
+        sxml_provider = bean.getApptProviderNo();
+    }
+    thisForm.setXml_provider(sxml_provider);
+    
     if (sxml_location.compareTo("") == 0) {
       sxml_location = OscarProperties.getInstance().getProperty("visitlocation");
       sxml_visittype = OscarProperties.getInstance().getProperty("visittype");
-      sxml_provider = bean.getApptProviderNo();
       thisForm.setXml_location(sxml_location);
-      thisForm.setXml_provider(sxml_provider);
       thisForm.setXml_visittype(sxml_visittype);
       if ( OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING") != null && OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING").equalsIgnoreCase("YES")){
          thisForm.setXml_encounter("8");
