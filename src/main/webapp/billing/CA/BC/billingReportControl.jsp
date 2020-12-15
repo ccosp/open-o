@@ -90,7 +90,6 @@ GregorianCalendar now=new GregorianCalendar();
 <html:base />
 <title>Billing Report</title>
 
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
 <script language="JavaScript">
 <!--
 
@@ -243,8 +242,6 @@ if (reportAction.compareTo("billob") == 0) {
 
 <%
   %>
-
-<%@ include file="../../../demographic/zfooterbackclose.jsp"%>
 
 </body>
 </html>
