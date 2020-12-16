@@ -305,7 +305,7 @@ public class BillingmasterDAO {
     }
 
 	public List<Object[]> getRecentReferralDoctors(Integer demographicNo) {
-		Query query = entityManager.createQuery("SELECT referralNo1, referralNo2 FROM Billingmaster WHERE demographic_no = ? AND (referralNo1!='' OR referralNo2!='') ORDER BY billingmasterNo DESC");
+		Query query = entityManager.createQuery("SELECT referralNo1, referralNo2 FROM Billingmaster WHERE demographic_no = ? AND (referralNo1 > 0 OR referralNo2 > 0) AND (referralNo1!='' OR referralNo2!='') AND (referralNo1 IS NOT NULL OR referralNo2 IS NOT NULL) ORDER BY billingmasterNo DESC");
 		query.setParameter(1, demographicNo);
 		return query.setMaxResults(3).getResultList();
 	}

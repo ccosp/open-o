@@ -36,7 +36,7 @@ String curProvider_no = (String)session.getAttribute("user");
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request" />
 
-<div class="span2 hidden-print" id="side">
+<div class="span3 hidden-print" id="side">
    
     <!--Sidebar content--> 
 		<div class="accordion" id="adminNav">
@@ -807,12 +807,8 @@ String curProvider_no = (String)session.getAttribute("user");
 				</security:oscarSec>				
 				
 				<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
-					<% if (OscarProperties.getInstance().isFaxEnabled()) { %>
-		            <li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/faxStatus.do"><bean:message key="admin.faxStatus.faxStatus" /></a></li>
-		            <% } %>
 					<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/oscarStatus.do"><bean:message key="admin.oscarStatus.oscarStatus" /></a></li>
-				</security:oscarSec>
-	
+				</security:oscarSec>	
 							
 				</ul>	
 				</div>
@@ -841,50 +837,21 @@ String curProvider_no = (String)session.getAttribute("user");
 					<li><a href='javascript:void(0);' class="xlink" rel='${ctx}/setProviderStaleDate.do?method=viewIntegratorProperties'><bean:message key="provider.btnSetIntegratorPreferences" /></a></li>
 					<li><a href='javascript:void(0);' class="xlink" rel='${ctx}/lab/CA/ALL/sendOruR01.jsp'><bean:message key="admin.admin.sendOruR01" /></a></li>
 					
+					<caisi:isModuleLoad moduleName="HRM">	
+						<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/hospitalReportManager/hospitalReportManager.jsp">Hospital Report Manager (HRM) Status</a></li>
+						<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/hospitalReportManager/hrmPreferences.jsp">Hospital Report Manager (HRM) Preferences</a></li>
+						<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/hospitalReportManager/hrmShowMapping.jsp">Hospital Report Manager (HRM) Class Mappings</a></li>
+						<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/hospitalReportManager/hrmCategories.jsp">Hospital Report Manager (HRM) Categories</a></li>
+					</caisi:isModuleLoad>
+					
 					<%
 						String olisKeystore = OscarProperties.getInstance().getProperty("olis_keystore", "");
 						if(olisKeystore.length()>0) {
 					%>
 					<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/olis/Preferences.jsp">OLIS Preferences</a></li>
-					<% } %>			
-					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/PHRConfiguration.jsp" ><bean:message key="admin.admin.phrconfig"/></a></li>
-					<%
-						if (StringUtils.trimToNull(OscarProperties.getInstance().getProperty("oscar_myoscar_sync_component_url"))!=null)
-						{
-							MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);
-							if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn())
-							{
-								%>
-									<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/oscar_myoscar_sync_config_redirect.jsp"><bean:message key="admin.admin.oscar_phr_sync_config"/></a></li>
-								<%
-							}
-							else
-							{
-								%>
-									<li onclick="alert('<bean:message key="admin.admin.oscar_phr_sync_config_must_be_logged_in"/>');"><bean:message key="admin.admin.oscar_phr_sync_config"/></li>
-								<%							
-							}
-						}
-					%>
-					<%
-						if (StringUtils.trimToNull(OscarProperties.getInstance().getProperty("oscar_myoscar_clinic_component_url"))!=null)
-						{
-							MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);
-							if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn())
-							{
-								%>
-									<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/oscar_myoscar_clinic_config_redirect.jsp"><bean:message key="admin.admin.oscar_phr_clinic_config"/></a></li>
-								<%
-							}
-							else
-							{
-								%>
-									<li onclick="alert('<bean:message key="admin.admin.oscar_phr_sync_config_must_be_logged_in"/>');"><bean:message key="admin.admin.oscar_phr_clinic_config"/></li>
-								<%							
-							}
-						}
-					%>
-		
+
+					<% } %>	
+
 					<%
 						if (oscarVariables.getProperty("hsfo.loginSiteCode", "") != null && !"".equalsIgnoreCase(oscarVariables.getProperty("hsfo.loginSiteCode", "")))
 									{
@@ -907,14 +874,22 @@ String curProvider_no = (String)session.getAttribute("user");
 			
 					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/updateDrugref.jsp" ><bean:message key="admin.admin.UpdateDrugref"/></a></li>	
 					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/Know2actConfiguration.jsp" ><bean:message key="admin.admin.Know2ActConfig"/></a></li>
-					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/surveillanceConfiguration.jsp" ><bean:message key="admin.admin.surveillanceConfig"/></a></li>		
-					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/consentConfiguration.jsp" ><bean:message key="admin.admin.consentConfig"/></a></li>		
+
+					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/surveillanceConfiguration.jsp" ><bean:message key="admin.admin.surveillanceConfig"/></a></li>						
 					<li><a  href='javascript:void(0);' class="xlink" rel="${ctx}/admin/integratorPushStatus.jsp"><bean:message key="admin.admin.integratorPush" /></a></li>
-					<li><a  href='javascript:void(0);' class="xlink" rel="${ctx}/admin/born.jsp"><bean:message key="admin.admin.born" /></a></li>
-					<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/clinicalconnect.jsp"><bean:message key="admin.admin.ClinicalConnectConfig" /></a></li>
-                                        <% if (OscarProperties.getInstance().getBooleanProperty("questimed.enabled", "true")) { %>                                          
-                                        <li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/QuestimedConfiguration.jsp"><bean:message key="admin.admin.QuestimedConfig" /></a></li>
-                                        <%}%>
+
+					<caisi:isModuleLoad moduleName="BORN">	
+						<li><a  href='javascript:void(0);' class="xlink" rel="${ctx}/admin/born.jsp"><bean:message key="admin.admin.born" /></a></li>
+					</caisi:isModuleLoad>
+					
+					 <oscar:oscarPropertiesCheck property="billregion" value="ON">
+						<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/clinicalconnect.jsp"><bean:message key="admin.admin.ClinicalConnectConfig" /></a></li>
+					</oscar:oscarPropertiesCheck>
+					
+					<% if (OscarProperties.getInstance().getBooleanProperty("questimed.enabled", "true")) { %>                                          
+                         <li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/QuestimedConfiguration.jsp"><bean:message key="admin.admin.QuestimedConfig" /></a></li>
+                    <%}%>
+
 				</ul>
 				</div>
 				</div>
@@ -1043,7 +1018,7 @@ String curProvider_no = (String)session.getAttribute("user");
 	</security:oscarSec>
 </oscar:oscarPropertiesCheck>
 
-
+ <oscar:oscarPropertiesCheck property="billregion" value="ON">
 	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
 				<div class="accordion-heading">
 				<a class="accordion-toggle" data-toggle="collapse" data-parent="#adminNav" href="#collapseSixteen">
@@ -1072,7 +1047,7 @@ String curProvider_no = (String)session.getAttribute("user");
 				</div>
 				</div>
 	</security:oscarSec>
-
+</oscar:oscarPropertiesCheck>
 
 		</div> <!-- ACCORDION GROUP END -->	
 		</div> <!-- ACCORDION END -->
@@ -1104,7 +1079,8 @@ $(document).ready(function(){
 
 	$(".xlink").click(function(e) {
 		var source = $(this).attr('rel');
-		$("#dynamic-content").html('<iframe id="myFrame" name="myFrame" frameborder="0" width="950" height="1000" src="'+source+'">');
+		$("#dynamic-content").addClass("dynamic-iframe-content");
+		$("#dynamic-content").html('<iframe id="myFrame" name="myFrame" frameborder="0" src="'+source+'">');
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	});
 

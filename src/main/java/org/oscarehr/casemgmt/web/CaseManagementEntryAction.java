@@ -2018,6 +2018,10 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 			String date = cform.getAppointmentDate();
 			String start_time = cform.getStart_time();
 			String apptProvider = cform.getApptProvider();
+			if(apptProvider == null || apptProvider.isEmpty() || "none".equals(apptProvider))
+			{
+				apptProvider = providerNo;
+			}
                         String providerview = null;
                         if( reviewerNo != null ) {
                             Provider p = providerMgr.getProvider(reviewerNo);

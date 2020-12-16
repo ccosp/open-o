@@ -23,99 +23,69 @@
     Ontario, Canada
 
 --%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-<%--This JSP is the 'view template XML' jsp from the report configuraiton screen--%>
 
+<%
+  if(session.getValue("user") == null) response.sendRedirect(request.getContextPath() + "/logout.jsp");
+  String roleName$ = (String)session.getAttribute("userrole") + "," + (String)session.getAttribute("user");
+%>
 
-<%@ page
-	import="oscar.oscarReport.reportByTemplate.*, org.apache.commons.lang.StringEscapeUtils"%>
+<%@ page import="oscar.oscarReport.reportByTemplate.*, org.apache.commons.lang.StringEscapeUtils"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
-<%
-      String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-      boolean authed=true;
-%>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_report,_admin.reporting,_admin" rights="r" reverse="<%=true%>">
-	<%authed=false; %>
-	<%response.sendRedirect("../../securityError.jsp?type=_report&type=_admin.reporting&type=_admin");%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<security:oscarSec roleName="<%=roleName$%>"
+	objectName="_admin,_report"	rights="r" reverse="<%=true%>">
+	<%
+		response.sendRedirect(request.getContextPath() + "/logout.jsp");
+	%>
 </security:oscarSec>
-<%
-if(!authed) {
-	return;
-}
-%>
+<!DOCTYPE html>
 
 <html:html locale="true">
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<title>Report by Template</title>
-<link rel="stylesheet" type="text/css"
-	href="../../share/css/OscarStandardLayout.css">
-<link rel="stylesheet" type="text/css" href="reportByTemplate.css">
-<style type="text/css" media="print">
-.MainTableTopRow,.MainTableLeftColumn,.noprint,.showhidequery,.sqlBorderDiv,.MainTableBottomRow
-	{
-	display: none;
-}
+	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/css/DT_bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/jquery-1.9.1.min.js"></script>  
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.2.js"></script>
 
-.xmlBorderDiv {
-	border: 0px;
-}
-
-.MainTableRightColumn {
-	border: 0;
-}
-</style>
 </head>
+<%
+	String templateid = request.getParameter("templateid");
+	if (templateid == null) 
+	{
+		templateid = (String) request.getAttribute("templateid");
+	}
+	ReportManager reportManager = new ReportManager();
+	ReportObject curreport = reportManager.getReportTemplateNoParam(templateid);
+	String xml = reportManager.getTemplateXml(templateid);
+	pageContext.setAttribute("curreport", curreport);
+%>
 
-<body vlink="#0000FF" class="BodyStyle">
+<body>
 
-<table class="MainTable" id="scrollNumber1" name="encounterTable">
-	<tr class="MainTableTopRow">
-		<td class="MainTableTopRowLeftColumn"><bean:message
-			key="oscarReport.CDMReport.msgReport" /></td>
-		<td class="MainTableTopRowRightColumn">
-		<table class="TopStatusBar" style="width: 100%;">
-			<tr>
-				<td>Report by Template</td>
-			</tr>
-		</table>
-		</td>
-	</tr>
-	<tr>
-		<%String templateid = request.getParameter("templateid");
-        if (templateid == null) templateid = (String) request.getAttribute("templateid");
-        if (templateid == null) { %>
+	<%@ include file="rbtTopNav.jspf"%>
+<h3>
+	<c:out value="${ curreport.title }" /><br />
+	<small><c:out value="${ curreport.description }" /></small>
+</h3>
+	
+
+	<%if (templateid == null) { %>
 		<jsp:forward page="homePage.jsp" />
-		<%}
-        ReportObject curreport = (new ReportManager()).getReportTemplateNoParam(templateid);
-        String xml = (new ReportManager()).getTemplateXml(templateid);%>
-		<td class="MainTableLeftColumn" valign="top" width="160px;"><jsp:include
-			page="listTemplates.jsp">
-			<jsp:param name="templateviewid"
-				value="<%=curreport.getTemplateId()%>" />
-		</jsp:include></td>
-		<td class="MainTableRightColumn" valign="top">
-		<div class="reportTitle"><%=curreport.getTitle()%></div>
-		<div class="reportDescription"><%=curreport.getDescription()%></div>
-		<div class="xmlBorderDiv"><pre wrap="on"
-			style="font-size: 11px;"><%=StringEscapeUtils.escapeHtml(xml)%></pre>
-		</div>
-		
-		<div class="noprint" style="clear: left; float: left; margin-top: 15px;">
-			<input type="button" value="Back" onclick="javascript: history.go(-1);return false;"> 
-			<input type="button" value="Print" onclick="javascript: window.print();">
-			<input type="button" value="Edit Template" onclick="document.location='addEditTemplate.jsp?templateid=<%=templateid%>&opentext=1'">
-			<a href="exportTemplateAction.do?templateid=<%=templateid%>&name=<%=curreport.getTitle()%>" class="link">Export Template to K2A</a>
-		</div>
-		</td>
-	</tr>
-	<tr class="MainTableBottomRow">
-		<td class="MainTableBottomRowLeftColumn">&nbsp;</td>
+	<%}%>
 
-		<td class="MainTableBottomRowRightColumn">&nbsp;</td>
-	</tr>
-</table>
+	<div class="xmlBorderDiv">
+		<pre style="font-size: 11px;"><%=StringEscapeUtils.escapeHtml(xml)%></pre>
+	</div>
+
+	<div id="viewTemplateActions" class="form-actions noprint">
+		<input type="button" class="btn" value="Back" onclick="javascript: window.history.back();return false;" /> 
+		<input type="button" class="btn" value="Print" onclick="javascript: window.print();" />
+		<input type="button" class="btn btn-primary" value="Edit" onclick="document.location='addEditTemplate.jsp?templateid=<%=templateid%>&opentext=1'" />
+	</div>
+
 </html:html>

@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS FaxClientLog (
   result varchar(255) default NULL,
   requestId varchar(10) default NULL,
   faxId varchar(10) default NULL,
+  `transactionType` varchar(25),
   PRIMARY KEY  (faxLogId)
 ) ;
 
@@ -686,6 +687,8 @@ CREATE TABLE IF NOT EXISTS document (
   number_of_pages int(6),
   appointment_no int(11) default NULL,
   restrictToProgram tinyint(1) NOT NULL,
+  abnormal int(1),
+  receivedDate date,
   PRIMARY KEY  (document_no)
 ) ;
 
@@ -767,6 +770,7 @@ CREATE TABLE IF NOT EXISTS drugs (
   start_date_unknown boolean,
   lastUpdateDate datetime not null,
   dispenseInternal tinyint(1) not null,
+   demographic_contact_id int(10),
   PRIMARY KEY  (drugid)
 ) ;
 
@@ -831,9 +835,11 @@ CREATE TABLE IF NOT EXISTS eform (
   form_creator varchar(255) default NULL,
   status tinyint(1) NOT NULL default '1',
   form_html mediumtext,
-  showLatestFormOnly boolean NOT NULL,
+  showLatestFormOnly tinyint(1) NOT NULL,
   patient_independent boolean NOT NULL,
   roleType varchar(50) default NULL,
+  programNo int(10) DEFAULT NULL,
+  restrictToProgram tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (fid),
   UNIQUE KEY id (fid)
 ) ;
@@ -7142,31 +7148,36 @@ CREATE TABLE IF NOT EXISTS prescription (
 --
 
 CREATE TABLE IF NOT EXISTS professionalSpecialists (
-  specId int(10) NOT NULL auto_increment primary key,
-  fName varchar(32),
-  lName varchar(32),
-  proLetters varchar(20),
-  address varchar(255),
-  phone varchar(30),
-  fax varchar(30),
-  website varchar(128),
-  email varchar(128),
-  specType varchar(128),
-  eDataUrl varchar(255),
-  eDataOscarKey varchar(1024),
-  eDataServiceKey varchar(1024),
-  eDataServiceName varchar(255),
-  lastUpdated datetime not null,
-  annotation text,
-  referralNo varchar(6),
-  institutionId int(10) not null,
-  departmentId int(10) not null,
-  privatePhoneNumber varchar(30),
-  cellPhoneNumber varchar(30),
-  pagerNumber varchar(30),
-  salutation varchar(10),
-  hideFromView tinyint(1),
-  eformId int(10)
+  `specId` int(10) NOT NULL AUTO_INCREMENT,
+  `fName` varchar(32) DEFAULT NULL,
+  `lName` varchar(32) DEFAULT NULL,
+  `proLetters` varchar(20) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `fax` varchar(30) DEFAULT NULL,
+  `website` varchar(128) DEFAULT NULL,
+  `email` varchar(128) DEFAULT NULL,
+  `specType` varchar(128) DEFAULT NULL,
+  `eDataUrl` varchar(255) DEFAULT NULL,
+  `eDataOscarKey` varchar(1024) DEFAULT NULL,
+  `eDataServiceKey` varchar(1024) DEFAULT NULL,
+  `eDataServiceName` varchar(255) DEFAULT NULL,
+  `lastUpdated` datetime NOT NULL,
+  `annotation` text DEFAULT NULL,
+  `referralNo` varchar(6) DEFAULT NULL,
+  `eReferralUrl` varchar(255) DEFAULT NULL,
+  `eReferralOscarKey` varchar(1024) DEFAULT NULL,
+  `eReferralServiceKey` varchar(1024) DEFAULT NULL,
+  `eReferralServiceName` varchar(255) DEFAULT NULL,
+  `privatePhoneNumber` varchar(30) DEFAULT NULL,
+  `cellPhoneNumber` varchar(30) DEFAULT NULL,
+  `pagerNumber` varchar(30) DEFAULT NULL,
+  `salutation` varchar(10) DEFAULT NULL,
+  `institutionId` int(10) NOT NULL,
+  `departmentId` int(10) NOT NULL,
+  `eformId` int(10) DEFAULT NULL,
+  `hideFromView` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`specId`)
 );
 
 --
@@ -7706,21 +7717,22 @@ CREATE TABLE IF NOT EXISTS `waitingList` (
 -- Table structure for table `pharmacyInfo`
 --
 CREATE TABLE IF NOT EXISTS pharmacyInfo (
-   recordID int(10) auto_increment primary key,
-   ID int(5),
-   name varchar(255),
-   address text,
-   city varchar(255),
-   province varchar(255),
-   postalCode varchar(20),
-   phone1 varchar(20),
-   phone2 varchar(20),
-   fax varchar(20),
-   email varchar(100),
-   serviceLocationIdentifier varchar(255),
-   notes text,
-   addDate timestamp,
-   status char (1) default '1'
+  `recordID` int(10) NOT NULL AUTO_INCREMENT,
+  `ID` int(10) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `address` text,
+  `city` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `postalCode` varchar(20) DEFAULT NULL,
+  `phone1` varchar(20) DEFAULT NULL,
+  `phone2` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `notes` text,
+  `addDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` char(1) DEFAULT '1',
+  `serviceLocationIdentifier` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`recordID`)
 );
 
 --
@@ -8099,12 +8111,13 @@ CREATE TABLE IF NOT EXISTS incomingLabRules(
 	archive varchar(1) default 0
 );
 
-
-
-
-
-
-
+CREATE TABLE IF NOT EXISTS incomingLabRulesType (
+  id int(10) NOT NULL AUTO_INCREMENT,
+  forward_rule_id int(10),
+  type VARCHAR(10) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FOREIGN KEY (forward_rule_id) REFERENCES incomingLabRules (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 CREATE TABLE IF NOT EXISTS IssueGroup (id int primary key auto_increment, name varchar(255) not null);
@@ -9187,6 +9200,8 @@ CREATE TABLE IF NOT EXISTS DemographicContact (
 	note varchar(200),
 	consentToContact tinyint(1),
 	active tinyint(1),
+	mrp tinyint(1),
+	programNo int(11),
 	KEY (`demographicNo`)
 );
 
@@ -9255,6 +9270,7 @@ CREATE TABLE IF NOT EXISTS `HRMCategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(255) NOT NULL,
   subClassNameMnemonic varchar(255),
+  sendingFacilityId varchar(50),
   PRIMARY KEY (`id`)
 );
 
@@ -9285,6 +9301,7 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentSubClass` (
   `subClassDescription` varchar(255) ,
   `subClassDateTime` date ,
   `isActive` tinyint(4) NOT NULL ,
+  `sendingFacilityId` varchar(50),
   PRIMARY KEY (`id`)
 ) ;
 
@@ -9647,8 +9664,7 @@ CREATE TABLE IF NOT EXISTS `program` (
 -- Needed by Program Managaer
 --
 
-CREATE TABLE IF NOT EXISTS provider_facility
-(
+CREATE TABLE IF NOT EXISTS `provider_facility` (
 	provider_no varchar(6) not null,
 	facility_id int not null,
 	unique (provider_no, facility_id),
@@ -10397,7 +10413,7 @@ CREATE TABLE IF NOT EXISTS PreventionsLotNrs(
   PRIMARY KEY (`id`)
 );
 
-/* Sharing Center Tables - begin */
+
 CREATE TABLE IF NOT EXISTS `sharing_affinity_domain` (
     `id` int AUTO_INCREMENT PRIMARY KEY,
     `oid` VARCHAR(255),
@@ -10721,6 +10737,7 @@ CREATE TABLE IF NOT EXISTS `faxes` (
   `jobId` int(11),
   `oscarUser` varchar(6),
   `demographicNo` int(11),
+  sender varchar(255),
   PRIMARY KEY (`id`),
   KEY `faxline` (`faxline`),
   KEY `faxstatus` (`status`)
@@ -12313,13 +12330,17 @@ CREATE TABLE IF NOT EXISTS lst_gender
 
 CREATE TABLE IF NOT EXISTS SystemPreferences
 (
-  id         INT AUTO_INCREMENT
-    PRIMARY KEY,
+  id         INT AUTO_INCREMENT PRIMARY KEY,
   name       VARCHAR(40) NULL,
   value      VARCHAR(40) NULL,
   updateDate DATETIME    NULL
 );
 
-
+CREATE TABLE IF NOT EXISTS `rbt_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tid` int(11) DEFAULT NULL,
+  `group_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
 

@@ -87,7 +87,7 @@ public class ReportManager {
 		curReport.setTitle(templatetitle);
 		curReport.setDescription(templatedescription);
 		curReport.setSequence(rt.isSequence());
-
+		curReport.setUuid(rt.getUuid());
 		return curReport;
 	}
 
@@ -170,7 +170,7 @@ public class ReportManager {
 			
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("Error", e);
-			return new ReportObjectGeneric(templateid, "Parameter Parsing Exception: check the configuration file");
+			return new ReportObjectGeneric(templateid, "Parameter Parsing Exception: check the configuration file. Cause: " + e.getCause());
 		}
 	}
 
@@ -259,7 +259,7 @@ public class ReportManager {
 			}
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("Error", e);
-			return "Error parsing template file.";
+			return "Error parsing file: " + e.getCause();
 		}
 
 		return "Saved Successfully";
@@ -363,7 +363,7 @@ public class ReportManager {
 			}
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("Error", e);
-			return "Error parsing template file, make sure the root element is set.";
+			return "Error parsing file: " + e.getCause();
 		}
 		return "Saved Successfully";
 	}
@@ -379,7 +379,7 @@ public class ReportManager {
 			return addUpdateTemplate(uuid, null, templateXMLdoc, loggedInInfo);
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("Error", e);
-			return "Error: Error parsing file, make sure the root element is set.";
+			return "Error parsing file: " + e.getCause();
 		}
 	}
 
@@ -389,7 +389,7 @@ public class ReportManager {
 			return addUpdateTemplate(uuid, templateId, templateXMLdoc, loggedInInfo);
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("Error", e);
-			return "Error: Error parsing file";
+			return "Error: Error parsing file: " + e.getCause();
 		}
 	}
 

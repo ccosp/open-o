@@ -71,7 +71,7 @@ public class DxReference {
     @SuppressWarnings("unchecked")
     public List<DxCode> getLatestDxCodes(String demo){
        ArrayList<DxCode> list = new ArrayList<DxCode>();
-       String nsql ="select dx_code1, dx_code2, dx_code3,service_date from billingmaster where demographic_no = ? and billingstatus != 'D' order by service_date desc";
+       String nsql ="select dx_code1, dx_code2, dx_code3,service_date from billingmaster where demographic_no = ? and billingstatus != 'D' order by service_date desc limit 10";
        try {
 
             PreparedStatement pstmt = DbConnectionFilter.getThreadLocalDbConnection().prepareStatement(nsql);

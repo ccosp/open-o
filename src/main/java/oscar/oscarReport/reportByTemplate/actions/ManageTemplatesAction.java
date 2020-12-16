@@ -45,35 +45,46 @@ import org.oscarehr.util.LoggedInInfo;
 import oscar.oscarReport.reportByTemplate.ReportManager;
 
 /**
- *
+ *	
  * @author apavel (Paul)
  */
 public class ManageTemplatesAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
                                  HttpServletRequest request, HttpServletResponse response) {
     	
-    	String roleName$ = (String)request.getSession().getAttribute("userrole") + "," + (String) request.getSession().getAttribute("user");
-    	if(!com.quatro.service.security.SecurityManager.hasPrivilege("_admin", roleName$)  && !com.quatro.service.security.SecurityManager.hasPrivilege("_report", roleName$)) {
-    		throw new SecurityException("Insufficient Privileges");
-    	}
-    	
+		 LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+
          String action = request.getParameter("action");
          String templateId = request.getParameter("templateid");
          String xmltext = request.getParameter("xmltext");
+         String uuid = request.getParameter("uuid");
          ReportManager reportManager = new ReportManager();
          String message = "Error: Improper request - Action param missing";
-         if (action.equals("delete")) {
+         if ("delete".equals(action)) {
             message = reportManager.deleteTemplate(templateId);
             if (message.equals("")) return mapping.findForward("deleted");
          }
-         else if (action.equals("add"))
-            message = reportManager.addTemplate(null, xmltext, LoggedInInfo.getLoggedInInfoFromSession(request));
-         else if (action.equals("edit"))
-            message = reportManager.updateTemplate(null, templateId, xmltext, LoggedInInfo.getLoggedInInfoFromSession(request));
+         else if ("add".equals(action)) 
+         {
+            message = reportManager.addTemplate(uuid, xmltext, loggedInInfo);
+         }
+         else if ("edit".equals(action))
+         {
+            message = reportManager.updateTemplate(uuid, templateId, xmltext, loggedInInfo);
+         }
          request.setAttribute("message", message);
          request.setAttribute("action", action);
          request.setAttribute("templateid", request.getParameter("templateid"));
          request.setAttribute("opentext", request.getParameter("opentext"));
+         
+         if(request.getParameter("done") != null 
+        		 && "done".equalsIgnoreCase(request.getParameter("done")) 
+        		 && ! message.toLowerCase().startsWith("error") 
+        		 && ! message.toLowerCase().startsWith("exception") )
+         {
+        	 return mapping.findForward("done");
+         }
+         
          return mapping.findForward("success");
     }
     

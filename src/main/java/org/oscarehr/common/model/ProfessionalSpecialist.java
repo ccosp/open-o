@@ -151,12 +151,6 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 	
 	public void setStreetAddressFromForm(String streetAddress) {
 		this.streetAddress = StringUtils.trimToNull(streetAddress);
-		this.addressArray = new String[5];
-		this.addressArray[0] = this.streetAddress; // address line
-		this.addressArray[1] = ","; // city
-		this.addressArray[2] = ","; // postal
-		this.addressArray[3] = ","; // province
-		this.addressArray[4] = ","; // country
 	}
 
 	public void setStreetAddress(String streetAddress) {

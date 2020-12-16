@@ -51,7 +51,6 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.IsPropertiesOn;
 import org.oscarehr.common.dao.ClinicDAO;
 import org.oscarehr.common.dao.ConsultationRequestDao;
 import org.oscarehr.common.dao.ConsultationRequestExtDao;
@@ -407,16 +406,16 @@ public class EctConsultationFormRequestAction extends Action {
 		if (submission.endsWith("And Print Preview")) {
 
 			request.setAttribute("reqId", requestId);
-			if (OscarProperties.getInstance().isConsultationFaxEnabled()) {
-				return mapping.findForward("printIndivica");
-			}
-			else if (IsPropertiesOn.propertiesOn("CONSULT_PRINT_PDF")) {
-				return mapping.findForward("printpdf");
-			} else if (IsPropertiesOn.propertiesOn("CONSULT_PRINT_ALT")) {
-				return mapping.findForward("printalt");
-			} else {
-				return mapping.findForward("print");
-			}
+//			if (OscarProperties.getInstance().isConsultationFaxEnabled()) {
+			return mapping.findForward("printIndivica");
+//			}
+//			else if (IsPropertiesOn.propertiesOn("CONSULT_PRINT_PDF")) {
+//				return mapping.findForward("printpdf");
+//			} else if (IsPropertiesOn.propertiesOn("CONSULT_PRINT_ALT")) {
+//				return mapping.findForward("printalt");
+//			} else {
+//				return mapping.findForward("print");
+//			}
 
 		} else if (submission.endsWith("And Fax")) {
 			

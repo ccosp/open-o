@@ -37,4 +37,6 @@ public interface ReportObject {
     public int getActive();
     public boolean isSequence();
     public String getPreparedSQL(int sequenceNo, Map parameters);
+    public String getUuid();
+    public void setUuid(String uuid);
 }

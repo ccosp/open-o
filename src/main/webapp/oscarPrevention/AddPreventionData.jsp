@@ -651,7 +651,8 @@ function changeSite(el) {
             </td>
             <td valign="top" class="MainTableRightColumn">
 <%
-			if(dhirEnabled && session.getAttribute("oneIdEmail") == null) {
+
+		if(dhirEnabled && session.getAttribute("oneIdEmail") == null) {
 		%>
 		<div style="width:100%;background-color:pink;text-align:center;font-weight:bold;font-size:13pt">
 			Warning: You are not logged into OneId and will not be able to submit data to DHIR

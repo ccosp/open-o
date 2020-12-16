@@ -88,6 +88,7 @@ if(!authed) {
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 
+<!DOCTYPE html>
 <html:html locale="true">
 
 <%! boolean bMultisites=org.oscarehr.common.IsPropertiesOn.isMultisitesEnable(); %>
@@ -454,6 +455,8 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 	var demoNo = '<%=demo%>';
 	var appointmentNo = '<%=appNo%>';
 </script>
+
+
 <link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/js/jquery_css/smoothness/jquery-ui-1.7.3.custom.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.7.1.min.js" ></script>                
@@ -478,8 +481,6 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/oscarEncounter/encounterStyles.css">
 
 <style type="text/css">
-
-
 
 #attachedDocumentTable {
     border: blue thin solid;
@@ -517,10 +518,16 @@ background-color: #ddddff;
      font-size: small !important;
 }
 
-th, td.tite3, td.tite1 {
+th, td.tite1 {
 background-color: #BFBFFF;
 color : black;
 font-size: small;
+padding: 0px;
+}
+td.tite3 {
+background-color: #BFBFFF;
+color : black;
+padding: 0px;
 }
 td.tite1 {
     padding:5px 10px;
@@ -537,7 +544,11 @@ td.stat{
 font-size: 10pt;
 }
 
-.consultDemographicData input, .consultDemographicData select, .consultDemographicData textarea {
+.consultDemographicData input {
+    width: 98% !important;
+} 
+
+.consultDemographicData select{
     width: 100% !important;
 }
 
@@ -558,8 +569,8 @@ input#referalDate, input#appointmentDate, input#followUpDate {
 
 
 textarea {
-    width: 100%;
-    padding:5px 10px;
+    width: 98% !important;
+    padding:1%;
 }
 
 /* select consultant by location */
@@ -672,6 +683,7 @@ function K( serviceNumber, service ){
 
 
 <script type="text/javascript" >
+
 // btnReminders
 jQuery(document).ready(function(){
 	jQuery(".clinicalData").click(function(){
@@ -768,6 +780,25 @@ function getClinicalData( data, target ) {
 		}
 	});
 }
+
+jQuery(document).ready(function(){
+	jQuery(".medicationData").click(function(){
+		var data = new Object();
+		var target = "#" + this.id.split("_")[1];		
+		data.method = this.id.split("_")[0];
+		data.demographicNo = <%= demo %>;
+		getClinicalData( data, target )
+	});
+	
+	jQuery(".clinicalData").click(function(){
+		var data = new Object();
+		var target = "#" + this.id.split("_")[1];		
+		data.method = "fetchIssueNote";
+		data.issueType = this.id.split("_")[0];
+		data.demographicNo = <%= demo %>;
+		getClinicalData( data, target )
+	});
+})
 
 function setDisabledDateFields(form, disabled)
 {
@@ -1242,164 +1273,6 @@ function checkForm(submissionVal,formName){
   document.forms[formName].submit();
   return true;
 }
-
-//enable import from encounter
-function importFromEnct(reqInfo,txtArea)
-{
-    var info = "";
-    switch( reqInfo )
-    {
-        case "MedicalHistory":
-            <%String value = "";
-				if (demo != null)
-				{
-					if (useNewCmgmt)
-					{
-						value = listNotes(cmgmtMgr, "MedHistory", providerNo, demo);
-					}
-					else
-					{
-						oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(LoggedInInfo.getLoggedInInfoFromSession(request), demo);
-						value = EctInfo.getMedicalHistory();
-					}
-					if (pasteFmt == null || pasteFmt.equalsIgnoreCase("single"))
-					{
-						value = StringUtils.lineBreaks(value);
-					}
-					value = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(value);
-					out.println("info = '" + value + "'");
-				}%>
-             break;
-          case "ongoingConcerns":
-             <%if (demo != null)
-				{
-					if (useNewCmgmt)
-					{
-						value = listNotes(cmgmtMgr, "Concerns", providerNo, demo);
-					}
-					else
-					{
-						oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(LoggedInInfo.getLoggedInInfoFromSession(request),demo);
-						value = EctInfo.getOngoingConcerns();
-					}
-					if (pasteFmt == null || pasteFmt.equalsIgnoreCase("single"))
-					{
-						value = StringUtils.lineBreaks(value);
-					}
-					value = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(value);
-					out.println("info = '" + value + "'");
-				}%>
-             break;
-           case "FamilyHistory":
-              <%if (demo != null)
-				{
-					if (OscarProperties.getInstance().getBooleanProperty("caisi", "on"))
-					{
-						oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(LoggedInInfo.getLoggedInInfoFromSession(request),demo);
-						value = EctInfo.getFamilyHistory();
-					}
-					else
-					{
-						if (useNewCmgmt)
-						{
-							value = listNotes(cmgmtMgr, "FamHistory", providerNo, demo);
-						}
-						else
-						{
-							oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(LoggedInInfo.getLoggedInInfoFromSession(request),demo);
-							value = EctInfo.getFamilyHistory();
-						}
-					}
-					if (pasteFmt == null || pasteFmt.equalsIgnoreCase("single"))
-					{
-						value = StringUtils.lineBreaks(value);
-					}
-					value = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(value);
-					out.println("info = '" + value + "'");
-				}%>
-              break;
-           case "SocialHistory":
-               <%if (demo != null)
- 				{
- 					if (useNewCmgmt)
- 					{
- 						value = listNotes(cmgmtMgr, "SocHistory", providerNo, demo);
- 					}
- 					else
- 					{
-						oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(LoggedInInfo.getLoggedInInfoFromSession(request),demo);
- 						value = EctInfo.getSocialHistory();
- 					}
- 					if (pasteFmt == null || pasteFmt.equalsIgnoreCase("single"))
- 					{
- 						value = StringUtils.lineBreaks(value);
- 					}
- 					value = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(value);
- 					out.println("info = '" + value + "'");
- 				}%>
-               break;
-            case "OtherMeds":
-              <%if (demo != null)
-				{
-					if (OscarProperties.getInstance().getBooleanProperty("caisi", "on"))
-					{
-						value = "";
-					}
-					else
-					{
-						if (useNewCmgmt)
-						{
-							value = listNotes(cmgmtMgr, "OMeds", providerNo, demo);
-						}
-						else
-						{
-							//family history was used as bucket for Other Meds in old encounter
-							oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(LoggedInInfo.getLoggedInInfoFromSession(request),demo);
-							value = EctInfo.getFamilyHistory();
-						}
-					}
-					if (pasteFmt == null || pasteFmt.equalsIgnoreCase("single"))
-					{
-						value = StringUtils.lineBreaks(value);
-					}
-					value = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(value);
-					out.println("info = '" + value + "'");
-
-				}%>
-                break;
-            case "Reminders":
-              <%if (demo != null)
-				{
-					if (useNewCmgmt)
-					{
-						value = listNotes(cmgmtMgr, "Reminders", providerNo, demo);
-					}
-					else
-					{
-						oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(LoggedInInfo.getLoggedInInfoFromSession(request),demo);
-						value = EctInfo.getReminders();
-					}
-					//if( !value.equals("") ) {
-					if (pasteFmt == null || pasteFmt.equalsIgnoreCase("single"))
-					{
-						value = StringUtils.lineBreaks(value);
-					}
-
-					value = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(value);
-					out.println("info = '" + value + "'");
-					//}
-				}%>
-    } //end switch
-
-    if( txtArea.value.length > 0 && info.length > 0 )
-        txtArea.value += '\n';
-
-    txtArea.value += info;
-    txtArea.scrollTop = txtArea.scrollHeight;
-    txtArea.focus();
-
-}
-
 </script>
 
 
@@ -1512,20 +1385,20 @@ function switchProvider(value) {
 		
 		document.getElementById("letterheadName").value = origValue;
 		document.getElementById("letterheadAddress").value = providerData[value]['address'];
-		document.getElementById("letterheadAddressSpan").innerHTML = providerData[value]['address'].replace(" ", "&nbsp;");
+		document.getElementById("letterheadAddressSpan").innerHTML = providerData[value]['address'].replace(" ", "");
 		document.getElementById("letterheadPhone").value = providerData[value]['phone'];
 		document.getElementById("letterheadPhoneSpan").innerHTML = providerData[value]['phone'];
 		document.getElementById("letterheadFax").value = providerData[value]['fax'];
 		//document.getElementById("letterheadFaxSpan").innerHTML = providerData[value]['fax'];
 	}
 }
-</script>
-<script type="text/javascript">
+
 <%
 String signatureRequestId=DigitalSignatureUtils.generateSignatureRequestId(loggedInInfo.getLoggedInProviderNo());
 String imageUrl=request.getContextPath()+"/imageRenderingServlet?source="+ImageRenderingServlet.Source.signature_preview.name()+"&"+DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY+"="+signatureRequestId;
 String storedImgUrl=request.getContextPath()+"/imageRenderingServlet?source="+ImageRenderingServlet.Source.signature_stored.name()+"&digitalSignatureId=";
 %>
+
 var POLL_TIME=1500;
 var counter=0;
 function refreshImage()
@@ -1811,9 +1684,8 @@ function statusChanged(val) {
 	<input type="hidden" name="requestId" value="<%=requestId%>">
 	<input type="hidden" name="ext_appNo" value="<%=request.getParameter("appNo") %>">
 	<input type="hidden" name="source" value="<%=(requestId!=null)?thisForm.getSource():request.getParameter("source") %>">
-	
-        <input type="hidden" id="saved" value="false">
-	<!--  -->
+	<input type="hidden" id="saved" value="false">
+
 	<table class="MainTable" id="scrollNumber1" name="encounterTable">
 		<tr class="MainTableTopRow">
 			<td class="MainTableTopRowLeftColumn">Consultation</td>
@@ -1961,7 +1833,7 @@ function statusChanged(val) {
 				<tr>
 
 					<td class="tite4 controlPanel" colspan=2>
-					<% boolean faxEnabled = props.isConsultationFaxEnabled(); %>
+	
 					<% if (request.getAttribute("id") != null) { %>
 						<input name="update" type="button" id="updateBtn1" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnUpdate"/>" onclick="return checkForm('Update Consultation Request','EctConsultationFormRequestForm');" />
 						<input name="updateAndPrint" type="button" id="updateAndPrintBtn1" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnUpdateAndPrint"/>" onclick="return checkForm('Update Consultation Request And Print Preview','EctConsultationFormRequestForm');" />
@@ -1973,7 +1845,7 @@ function statusChanged(val) {
 								onclick="return checkForm('Update_esend','EctConsultationFormRequestForm');" />
 						</logic:equal>
 			
-						<oscar:oscarPropertiesCheck value="yes" property="faxEnable">
+						<oscar:oscarPropertiesCheck value="yes" property="consultation_fax_enabled">
 							<input id="fax_button" name="updateAndFax" type="button" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnUpdateAndFax"/>" onclick="return checkForm('Update And Fax','EctConsultationFormRequestForm');" />
 						</oscar:oscarPropertiesCheck>
 
@@ -1987,7 +1859,7 @@ function statusChanged(val) {
 							onclick="return checkForm('Submit_esend','EctConsultationFormRequestForm');" />
 						</logic:equal>
 				
-						<oscar:oscarPropertiesCheck value="yes" property="faxEnable">
+						<oscar:oscarPropertiesCheck value="yes" property="consultation_fax_enabled">
 							<input id="fax_button" name="submitAndFax" type="button" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnSubmitAndFax"/>" onclick="return checkForm('Submit And Fax','EctConsultationFormRequestForm');" />
 						</oscar:oscarPropertiesCheck>
 						<logic:equal value="true" name="EctConsultationFormRequestForm" property="eReferral">
@@ -2108,7 +1980,7 @@ function statusChanged(val) {
                                 <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" />
                             </td>
                             <td  class="tite3">
-                                <textarea id="annotation" style="color: blue;" readonly></textarea>
+                                <textarea id="annotation" style="color: blue;" rows="4" readonly></textarea>
                             </td>
                         </tr>
 						<tr>
@@ -2150,7 +2022,7 @@ function statusChanged(val) {
 								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAddr" />
 							</td>
 							<td  class="tite3">
-								<textarea name="address" cols=20 ><%=thisForm.getProfessionalSpecialistAddress()%></textarea>
+								<textarea name="address" rows="5" ><%=thisForm.getProfessionalSpecialistAddress()%></textarea>
 							</td>
 						</tr>
 	
@@ -2197,7 +2069,7 @@ function statusChanged(val) {
 							<table>
 								<tr>
 									<td><html:select property="appointmentHour">
-										<html:option value="-1">&nbsp;</html:option>
+										<html:option value="-1"></html:option>
 										<%
 											for (int i = 1; i < 13; i = i + 1)
 														{
@@ -2209,7 +2081,7 @@ function statusChanged(val) {
 										%>
 									</html:select></td>
 									<td><html:select property="appointmentMinute">
-										<html:option value="-1">&nbsp;</html:option>
+										<html:option value="-1"></html:option>
 										<%
 											for (int i = 0; i < 60; i = i + 1)
 														{
@@ -2307,7 +2179,7 @@ function statusChanged(val) {
 							<td class="tite4"><bean:message
 								key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgHealthCard" />
 							</td>
-							<td class="tite1"><%=thisForm.getPatientHealthNum()%>&nbsp;<%=thisForm.getPatientHealthCardVersionCode()%>&nbsp;<%=thisForm.getPatientHealthCardType()%>
+							<td class="tite1"><%=thisForm.getPatientHealthNum()%><%=thisForm.getPatientHealthCardVersionCode()%><%=thisForm.getPatientHealthCardType()%>
 							</td>
 						</tr>
 						<tr id="conReqSendTo">
@@ -2348,8 +2220,7 @@ function statusChanged(val) {
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" class="tite3"><html:textarea cols="50"
-								rows="3" property="appointmentNotes"></html:textarea></td>
+							<td colspan="2" class="tite3"><html:textarea property="appointmentNotes"></html:textarea></td>
 						</tr>
                        
 						
@@ -2429,7 +2300,7 @@ function statusChanged(val) {
 								<% } else { %>
 									<input type="hidden" name="letterheadAddress" id="letterheadAddress" value="<%=StringEscapeUtils.escapeHtml(clinic.getClinicAddress()) %>  <%=StringEscapeUtils.escapeHtml(clinic.getClinicCity()) %>  <%=StringEscapeUtils.escapeHtml(clinic.getClinicProvince()) %>  <%=StringEscapeUtils.escapeHtml(clinic.getClinicPostal()) %>" />
 									<span id="letterheadAddressSpan">
-										<%=clinic.getClinicAddress() %>&nbsp;&nbsp;<%=clinic.getClinicCity() %>&nbsp;&nbsp;<%=clinic.getClinicProvince() %>&nbsp;&nbsp;<%=clinic.getClinicPostal() %>
+										<%=clinic.getClinicAddress() %><%=clinic.getClinicCity() %><%=clinic.getClinicProvince() %><%=clinic.getClinicPostal() %>
 									</span>
 								<% } %>
 							</td>
@@ -2479,11 +2350,11 @@ function statusChanged(val) {
 				</tr>
 				<% if (props.isConsultationFaxEnabled()) { %>
 	
-				<tr>
-					<td colspan=2 class="tite4 heading">									
-						Additional Fax Recipients
-					</td>
-				</tr>
+					<tr>
+						<td colspan=2 class="tite4 heading">									
+							Additional Fax Recipients
+						</td>
+					</tr>
 					<tr>
 						<td colspan=2 >
 							<table style="border-collapse:collapse;" id="addFaxRecipient" width="100%">
@@ -2517,9 +2388,7 @@ function statusChanged(val) {
 					</tr>
 				<% } %>
 				
-				<tr>
-					<td colspan="2"><td>
-				</tr>
+	
 				<tr>
 					<td colspan="2" class="tite4 heading"><bean:message
 						key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formReason" />
@@ -2527,46 +2396,41 @@ function statusChanged(val) {
 				</tr>
 				<tr>
 
-					<td colspan="2"><html:textarea property="reasonForConsultation" cols="90" rows="6"></html:textarea></td>
+					<td colspan="2">
+						<html:textarea rows="10" property="reasonForConsultation" ></html:textarea>
+					</td>
+
 				</tr>
 				<tr>
 					<td colspan="2">
 					<table style="border-collapse: collapse;" width="100%">
 						<tr>
-							<td width="30%" rowspan="2" class="tite4 heading">
+							<td width="30%" class="tite4 heading">
 								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formClinInf" />						
 							</td>
-							<td id="clinicalInfoButtonBar" class="tite4" >
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportSocHistory"/>" onclick="importFromEnct('SocialHistory',document.forms[0].clinicalInformation);" />&nbsp;
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportFamHistory"/>" onclick="importFromEnct('FamilyHistory',document.forms[0].clinicalInformation);" />&nbsp;
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportMedHistory"/>" onclick="importFromEnct('MedicalHistory',document.forms[0].clinicalInformation);" />&nbsp;
-								<input id="btnOngoingConcerns" type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportConcerns"/>" onclick="importFromEnct('ongoingConcerns',document.forms[0].clinicalInformation);" />&nbsp;
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportOtherMeds"/>" onclick="importFromEnct('OtherMeds',document.forms[0].clinicalInformation);" />&nbsp;
-
-								<span id="clinicalInfoButtons"></span>
-							</td>
-						</tr>
-						<tr>
-														<td class="tite4">
-								<input id="btnReminders" type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportReminders"/>" onclick="importFromEnct('Reminders',document.forms[0].clinicalInformation);" />&nbsp;								
-								<input id="fetchRiskFactors_clinicalInformation" type="button" class="btn clinicalData" value="Risk Factors" />&nbsp;
-								<input id="fetchMedications_clinicalInformation" type="button" class="btn clinicalData" value="Medications" />&nbsp;
-								<input id="fetchLongTermMedications_clinicalInformation" type="button" class="btn clinicalData" value="Long Term Medications" />&nbsp;
-								
-								
+							<td id="clinicalInfoButtonBar" class="tite4 buttonBar" >
+								<input id="SocHistory_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportSocHistory"/>" />
+								<input id="FamHistory_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportFamHistory"/>"  />
+								<input id="MedHistory_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportMedHistory"/>"  />
+								<input id="Concerns_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportConcerns"/>"  />
+								<input id="OMeds_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportOtherMeds"/>"  />
+								<input id="Reminders_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportReminders"/>"  />								
+								<input id="RiskFactors_clinicalInformation" type="button" class="btn clinicalData" value="Risk Factors" />
+								<input id="fetchMedications_clinicalInformation" type="button" class="btn medicationData" value="Active Medications" />
+								<input id="fetchLongTermMedications_clinicalInformation" type="button" class="btn medicationData" value="Long Term Medications" />
 							</td>
 						</tr>
 					</table>
 				</tr>
 				<tr>
-					<td colspan="2">
-					<html:textarea cols="90" rows="10" styleId="clinicalInformation" property="clinicalInformation"></html:textarea></td>
+				<td colspan="2">
+					<html:textarea rows="10" styleId="clinicalInformation" property="clinicalInformation"></html:textarea></td>
 				</tr>
 				<tr>
 					<td colspan="2" >
 					<table style="border-collapse: collapse;" width="100%">
 						<tr>
-							<td width="30%" rowspan="2" class="tite4 heading">
+							<td width="30%" class="tite4 heading">
 							<%
 								if (props.getProperty("significantConcurrentProblemsTitle", "").length() > 1)
 										{
@@ -2580,22 +2444,16 @@ function statusChanged(val) {
  	}
  %>
 							</td>
-							<td id="concurrentProblemsButtonBar" class="tite4">
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportSocHistory"/>" onclick="importFromEnct('SocialHistory',document.forms[0].concurrentProblems);" />&nbsp;
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportFamHistory"/>" onclick="importFromEnct('FamilyHistory',document.forms[0].concurrentProblems);" />&nbsp;
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportMedHistory"/>" onclick="importFromEnct('MedicalHistory',document.forms[0].concurrentProblems);" />&nbsp;
-								<input id="btnOngoingConcerns2" type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportConcerns"/>" onclick="importFromEnct('ongoingConcerns',document.forms[0].concurrentProblems);" />&nbsp;
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportOtherMeds"/>" onclick="importFromEnct('OtherMeds',document.forms[0].concurrentProblems);" />&nbsp;
-
-							</td>
-						</tr>
-						<tr>
-							
-							<td class="tite4">
-								<input id="btnReminders2" type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportReminders"/>" onclick="importFromEnct('Reminders',document.forms[0].concurrentProblems);" />&nbsp;
-								<input id="fetchRiskFactors_concurrentProblems" type="button" class="btn clinicalData" value="Risk Factors" />&nbsp;
-								<input id="fetchMedications_concurrentProblems" type="button" class="btn clinicalData" value="Medications" />&nbsp;
-								<input id="fetchLongTermMedications_concurrentProblems" type="button" class="btn clinicalData" value="Long Term Medications" />&nbsp;
+							<td id="concurrentProblemsButtonBar" class="tite4 buttonBar">
+								<input id="SocHistory_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportSocHistory"/>" />
+								<input id="FamHistory_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportFamHistory"/>"  />
+								<input id="MedHistory_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportMedHistory"/>"  />
+								<input id="Concerns_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportConcerns"/>"  />
+								<input id="OMeds_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportOtherMeds"/>"  />
+								<input id="Reminders_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportReminders"/>"  />	
+								<input id="RiskFactors_concurrentProblems" type="button" class="btn clinicalData" value="Risk Factors" />
+								<input id="fetchMedications_concurrentProblems" type="button" class="btn medicationData" value="Active Medications" />
+								<input id="fetchLongTermMedications_concurrentProblems" type="button" class="btn medicationData" value="Long Term Medications" />
 								
 							</td>
 						</tr>
@@ -2606,9 +2464,8 @@ function statusChanged(val) {
 				<tr id="trConcurrentProblems">
 					<td colspan=2>
 					
-					<html:textarea cols="90" rows="6" styleId="concurrentProblems" property="concurrentProblems">
-
-					</html:textarea></td>
+					<html:textarea rows="10" styleId="concurrentProblems" property="concurrentProblems"></html:textarea>
+					</td>
 				</tr>
  <!--add for special encounter-->
 <plugin:hideWhenCompExists componentName="specialencounterComp" reverse="true">
@@ -2633,14 +2490,10 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 									<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formCurrMedications" />
 								<% }  %>
 							</td>
-							<td id="medsButtonBar" class="tite4">
-								<input type="button" class="btn" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportOtherMeds"/>" 
-								onclick="importFromEnct('OtherMeds',document.forms[0].currentMedications);" />
-								
-								<input id="fetchMedications_currentMedications" type="button" class="btn clinicalData" value="Medications" />&nbsp;
-								<input id="fetchLongTermMedications_currentMedications" type="button" class="btn clinicalData" value="Long Term Medications" />&nbsp;
-								
-								<span id="medsButtons"></span>
+							<td id="medsButtonBar" class="tite4 buttonBar">
+								<input id="OMeds_currentMedications" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportOtherMeds"/>"  />								
+								<input id="fetchMedications_currentMedications" type="button" class="btn medicationData" value="Active Medications" />
+								<input id="fetchLongTermMedications_currentMedications" type="button" class="btn medicationData" value="Long Term Medications" />
 							</td>
 						</tr>
 					</table>
@@ -2648,7 +2501,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 				</tr>
 				<tr>
 					<td colspan=2>
-						<html:textarea cols="90" rows="6" styleId="currentMedications" property="currentMedications"></html:textarea>
+						<html:textarea rows="10" styleId="currentMedications" property="currentMedications"></html:textarea>
 					</td>
 				</tr>
 				<tr>
@@ -2658,17 +2511,16 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 							<td width="30%" class="tite4 heading">
 							<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAllergies" />
 							</td>
-							<td class="tite4">
-								<input id="fetchAllergies_allergies" type="button" class="btn clinicalData" value="Allergies" />
+							<td class="tite4 buttonBar">
+								<input id="fetchAllergies_allergies" type="button" class="btn medicationData" value="Allergies" />
 							</td>
-						</tr>
-						
+						</tr>						
 						</table>
 					</td>
 					</tr>
 				<tr>
 					<td colspan=2>
-						<html:textarea cols="90" rows="6" styleId="allergies" property="allergies"></html:textarea></td>
+						<html:textarea rows="10" styleId="allergies" property="allergies"></html:textarea></td>
 				</tr>
 
 <%
@@ -2720,7 +2572,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 									onclick="return checkForm('Update_esend','EctConsultationFormRequestForm');" />
 							</logic:equal>
 							
-							<oscar:oscarPropertiesCheck value="yes" property="faxEnable">
+							<oscar:oscarPropertiesCheck value="yes" property="consultation_fax_enabled">
 								<input id="fax_button2" name="updateAndFax" type="button" 
 									value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnUpdateAndFax"/>" 
 									onclick="return checkForm('Update And Fax','EctConsultationFormRequestForm');" />
@@ -2740,7 +2592,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 									value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnSubmitAndSendElectronicReferral"/>" 
 									onclick="return checkForm('Submit_esend','EctConsultationFormRequestForm');" />
 							</logic:equal>
-							<oscar:oscarPropertiesCheck value="yes" property="faxEnable">
+							<oscar:oscarPropertiesCheck value="yes" property="consultation_fax_enabled">
 								<input id="fax_button2" name="submitAndFax" type="button" 
 									value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnSubmitAndFax"/>" 
 									onclick="return checkForm('Submit And Fax','EctConsultationFormRequestForm');" />

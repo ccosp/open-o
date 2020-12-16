@@ -36,6 +36,11 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="eChart")
+@Deprecated 
+/**
+ * @deprecated
+ * Requires too much redundant dataspace
+ */
 public class EChart extends AbstractModel<Integer>{
 
 	@Id

@@ -4738,15 +4738,7 @@ CREATE TABLE IF NOT EXISTS `hl7_pid` (
   KEY `hl7_pid_external_id` (`external_id`),
   KEY `hl7_pid_message_id` (`message_id`)
 ) ;
- 
- 
 
-
-
-create index  billingmaster_billingstatus on billingmaster (billingstatus(1));
-create index  billingmaster_billing_no on billingmaster (billing_no);
--- create index  demographic_no on formBCBirthSumMo (demographic_no);
--- create index  formCreated on formBCBirthSumMo (formCreated);
 
 --
 -- Table structure for table `teleplan_adj_codes`
@@ -6119,3 +6111,17 @@ CREATE TABLE IF NOT EXISTS `formRourke2009` (
   PRIMARY KEY (`ID`)
 ) ENGINE = MYISAM;
 
+
+-- ----------------------------
+-- Records of bcpEligibleCodes
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `bcpEligibleCodes` (
+  `Fee Item` varchar(255) DEFAULT NULL,
+  `Section` varchar(255) DEFAULT NULL,
+  `Fee Item Description` varchar(255) DEFAULT NULL
+);
+
+create index  billingmaster_billingstatus on billingmaster (billingstatus(1));
+create index  billingmaster_billing_no on billingmaster (billing_no);
+-- create index  demographic_no on formBCBirthSumMo (demographic_no);
+-- create index  formCreated on formBCBirthSumMo (formCreated);

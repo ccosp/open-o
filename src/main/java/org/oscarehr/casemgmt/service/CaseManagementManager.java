@@ -26,6 +26,7 @@ package org.oscarehr.casemgmt.service;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -128,6 +129,8 @@ import com.quatro.service.security.RolesManager;
 @Transactional
 public class CaseManagementManager {
 
+	public static enum IssueType {OMEDS, SOCHISTORY, MEDHISTORY, CONCERNS, REMINDERS, FAMHISTORY, RISKFACTORS}
+	
 	public final int SIGNATURE_SIGNED = 1;
 	public final int SIGNATURE_VERIFY = 2;
 
@@ -201,7 +204,7 @@ public class CaseManagementManager {
 	}
 
 	// retrieves a list of providers that have been associated with each note
-	// and stores this list in the coresponding note.
+	// and stores this list in the corresponding note.
 	public void getEditors(Collection<CaseManagementNote> notes) {
 		List<Provider> providers;
 		for (CaseManagementNote note : notes) {
@@ -351,16 +354,22 @@ public class CaseManagementManager {
 	
 	public List<CaseManagementNote> getNotes( LoggedInInfo loggedInInfo, String demographic_no, String[] issues ) {
 
-		if( ! securityInfoManager.isAllowedAccessToPatientRecord( loggedInInfo, Integer.parseInt( demographic_no ) ) ) {
-			throw new RuntimeException("Access Denied");
+  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_demographic", SecurityInfoManager.READ, demographic_no)) {
+			throw new RuntimeException("Missing privileges to access this demographic (_demographic)");
 		}
-		
-		//TODO: not sure how the CAISI programs should be wired through the security info manager.
-		
+
 		List<CaseManagementNote> notes = caseManagementNoteDAO.getNotesByDemographic( demographic_no, issues );
+		
+		LogAction.addLog(loggedInInfo, "CaseManagementManager.getNotes", "Issues", Arrays.toString(issues), demographic_no, CaseManagementNote.class.toString());
+		
 		return notes;
 	}
 
+	/**
+	 * @deprecated
+	 * Use the authenticated method: getNotes(LoggedInInfo loggedInInfo, String demographic_no, String[] issues)
+	 */
+	@Deprecated
     public List<CaseManagementNote> getNotes(String demographic_no, String[] issues, Integer maxNotes) {
     	List<CaseManagementNote> notes = caseManagementNoteDAO.getNotesByDemographic(demographic_no, issues, maxNotes);
 		return notes;
@@ -440,6 +449,10 @@ public class CaseManagementManager {
 
 	public Issue getIssue(String issue_id) {
 		return this.issueDAO.getIssue(Long.valueOf(issue_id));
+	}
+	
+	public Issue getIssueByCode(IssueType issueCode) {
+		return getIssueByCode(issueCode.name());
 	}
 
 	public Issue getIssueByCode(String issueCode) {
