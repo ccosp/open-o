@@ -7,7 +7,7 @@
 			addNavElement();
 			moveSubjectReverse();
 			
-			top.window.resizeTo("1100","850");
+//			top.window.resizeTo("1100","850");
 			
 				/*
 				 * A little trick to bypass the override of the onload
@@ -28,7 +28,15 @@
 		//		
 		//		return;
 		//	}
+			
+		window.onerror = function(error, url, line) {
+//			alert(error);
+//		    controller.sendLog({acc:'error', data:'ERR:'+error+' URL:'+url+' L:'+line});
+		};	
 	});	
+	
+
+	
 	/**
 	 * Triggers the eForm save/submit function
 	 */
@@ -68,7 +76,7 @@
 			try
 			{
 				window["submission"]();
-				document.getElementsByName("form")[0].submit();
+				document.forms[0].submit();
 				return true;
 			} 
 			catch(error) 
@@ -79,7 +87,7 @@
 		
 		try
 		{
-			document.getElementsByName("form")[0].submit();
+			document.forms[0].submit();
 			return true;
 		} 
 		catch(error) 
@@ -182,16 +190,33 @@
 	 */
 	function moveSubject() {
 		var remoteSubject = document.getElementById("remote_eform_subject");
-		var remoteSubjectValue = remoteSubject.value;
-		document.forms[0].elements["subject"].value = remoteSubjectValue;
+		var remoteSubjectValue;
+		
+		if(remoteSubject)
+		{
+			remoteSubjectValue = remoteSubject.value;
+		}
+		
+		var localSubject = document.forms[0].elements["subject"];
+		if(localSubject)
+		{
+			localSubject.value = remoteSubjectValue;
+		}
 	}
 	
 	function moveSubjectReverse() {
 		var subjectElement = document.forms[0].elements["subject"];
-		var subjectElementValue = subjectElement.value;
-		if(subjectElementValue)
+		var subjectElementValue;
+		
+		if(subjectElement)
 		{
-			document.getElementById("remote_eform_subject").value = subjectElementValue;
+			subjectElementValue = subjectElement.value;
+		}
+		
+		var localSubject = document.getElementById("remote_eform_subject");
+		if(localSubject )
+		{
+			localSubject.value = subjectElementValue;
 		}
 	}
 	

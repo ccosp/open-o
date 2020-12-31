@@ -24,7 +24,7 @@
 
 package oscar.dms;
 
-import java.io.ByteArrayInputStream;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -34,39 +34,33 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
+//import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+//import org.w3c.tidy.Tidy;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xml.sax.SAXException;
+
 import com.lowagie.text.DocumentException;
+
+//import com.lowagie.text.DocumentException;
 import oscar.OscarProperties;
 import oscar.form.util.FormTransportContainer;
 
@@ -226,9 +220,12 @@ public class ConvertToEdoc {
 	 */
 	private static Path execute( final String eformString, final String filename ) {
 		
-		String correctedDocument = tidyDocument( eformString );			
-		Document document = buildDocument( correctedDocument );
+		logger.info("Incoming HTML " + eformString);	
+		
+		Document document = buildDocument( eformString );
 		Path path = null;
+
+		logger.info("Final HTML " + document.html());
 		
 		try(ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 			renderPDF( document, os );
@@ -297,10 +294,9 @@ public class ConvertToEdoc {
 	 * well formed w3c XHTML document
 	 * @throws DocumentException 
 	 */
-	private static final void renderPDF( final Document document, ByteArrayOutputStream os ) 
-			throws DocumentException {		
+	private static final void renderPDF( final Document document, ByteArrayOutputStream os ) throws DocumentException {		
 		ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocument( document,null);	
+		renderer.setDocumentFromString(document.html());	
 		renderer.layout();
 		renderer.createPDF( os );
 	}
@@ -313,46 +309,45 @@ public class ConvertToEdoc {
 	private static final Document buildDocument( final String documentString ) {
 		
 		Document document = getDocument( documentString );
+		
+		logger.info("Soup HTML " + document.html());
+		
 		if( document != null ) {
 			translateResourcePaths( document );
-			setHeadElement( document );
+			// setHeadElement( document );
 			addCss( document );
 		}
-		
-		logger.debug( printDocument( document ) );
 
 		return document;
 	}
 	
 	/**
-	 * Get a W3C XML document from well formed XML
+	 * Get a W3C XML document from well formed XHTML using JSoup
 	 */
 	private static Document getDocument( final String documentString ) {
 
-		DocumentBuilder builder;
-		Document document = null;					
-		ByteArrayInputStream bais = new ByteArrayInputStream( documentString.getBytes() );
-
-		try {
-			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			document = builder.parse(bais);			
-		} catch (SAXException e) {
-			logger.error( "", e );
-		} catch (IOException e) {
-			logger.error( "", e );
-		} catch (ParserConfigurationException e) {
-			logger.error( "", e );
-		} finally {
-			if( bais != null ) {
-				try {
-					bais.close();
-				} catch (IOException e) {
-					logger.error( "", e );
-				}
-			}
-		}
+//		DocumentBuilder builder;
+//		Document document = null;					
+//		
+//		try (ByteArrayInputStream bais = new ByteArrayInputStream( documentString.getBytes() )){
+//			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+//			document = builder.parse(bais);			
+//		} catch (SAXException e) {
+//			logger.error( "", e );
+//		} catch (IOException e) {
+//			logger.error( "", e );
+//		} catch (ParserConfigurationException e) {
+//			logger.error( "", e );
+//		} 
 		
-		return document;
+		String tidyDocumentString = tidyDocument(documentString); 
+		
+		logger.info("Cleaned HTML " + tidyDocumentString);
+		
+	    Document document = Jsoup.parse(tidyDocumentString);
+	    document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+	    return document;
+
 	}
 	
 	/**
@@ -373,47 +368,47 @@ public class ConvertToEdoc {
 	 */
 	private static void addCss( Document document ) {
 
-		XPath xpath = XPathFactory.newInstance().newXPath();
-		Element styleSheetElement = null;
+//		XPath xpath = XPathFactory.newInstance().newXPath();
+		Elements styleSheetElement = document.getElementsByAttributeValue("id", CUSTOM_STYLESHEET_ID);
 
-		try {
-			styleSheetElement = (Element) xpath.evaluate("//*[@id='" + CUSTOM_STYLESHEET_ID + "']", document, XPathConstants.NODE);
-		} catch (XPathExpressionException e) {
-			logger.error("Error", e);
-		}
+//		try {
+//			styleSheetElement = (Element) xpath.evaluate("//*[@id='" + CUSTOM_STYLESHEET_ID + "']", document, XPathConstants.NODE);
+//		} catch (XPathExpressionException e) {
+//			logger.error("Error", e);
+//		}
 
-		if( styleSheetElement != null ) {
-			setParameterInjectedCss( document, styleSheetElement.getAttribute("value") );
+		if( styleSheetElement != null && styleSheetElement.size() > 0) {
+			setParameterInjectedCss(document, styleSheetElement.get(0).val());
 		}
 	}
 	
 	/**
 	 * It is critical that a head element is present for this given document. 
 	 */
-	private static void setHeadElement( Document document ) {
-		
-		Node headNode = null;
-		Node htmlNode = document.getDocumentElement();
-		NodeList nodeList = htmlNode.getChildNodes();
-		
-		for( int i = 0; i < nodeList.getLength(); i++ ) {
-			Node node = nodeList.item(i);
-
-			if( "head".equals( node.getNodeName() )) {
-				headNode = node;
-			}
-		}
-		
-		if( headNode == null ) {              
-	      	htmlNode.appendChild( document.createElement("head") );
-		}
-	}
+//	private static void setHeadElement( Document document ) {
+//		
+//		Node headNode = null;
+//		Node htmlNode = document.getDocumentElement();
+//		NodeList nodeList = htmlNode.getChildNodes();
+//		
+//		for( int i = 0; i < nodeList.getLength(); i++ ) {
+//			Node node = nodeList.item(i);
+//
+//			if( "head".equals( node.getNodeName() )) {
+//				headNode = node;
+//			}
+//		}
+//		
+//		if( headNode == null ) {              
+//	      	htmlNode.appendChild( document.createElement("head") );
+//		}
+//	}
 	
 	/**
 	 * Returns the head element directly from the given Document 
 	 */
 	private static Element getHeadElement( Document document ) {
-		return (Element) document.getElementsByTagName("head").item(0);
+		return document.getElementsByTag("head").get(0);
 	}
 	
 	/**
@@ -427,8 +422,8 @@ public class ConvertToEdoc {
 		// add a stylesheet ie: link <link rel="stylesheet" href=".." />
 		if( filename != null ) {
 			Element linkElement = document.createElement("link");
-			linkElement.setAttribute("rel", "stylesheet");
-			linkElement.setAttribute("href", filename);
+			linkElement.attr("rel", "stylesheet");
+			linkElement.attr("href", filename);
 			getHeadElement( document ).appendChild( linkElement );
 		}		
 	}
@@ -446,7 +441,7 @@ public class ConvertToEdoc {
 	 * This method handles paths set into a link element
 	 */
 	private static void translateLinkPaths( Document document ) {
-		NodeList linkNodeList = document.getElementsByTagName("link");	
+		Elements linkNodeList = document.getElementsByTag("link");	
 		if( linkNodeList != null ) {
 			translatePaths( linkNodeList, PathAttribute.href );
 		}
@@ -456,7 +451,7 @@ public class ConvertToEdoc {
 	 * This method handles paths set into an image element.
 	 */
 	private static void translateImagePaths( Document document ) {		
-		NodeList imageNodeList = document.getElementsByTagName("img");		
+		Elements imageNodeList = document.select("img");		
 		if( imageNodeList != null ) {
 			translatePaths( imageNodeList, PathAttribute.src );
 		}
@@ -469,12 +464,12 @@ public class ConvertToEdoc {
 	 * All resource links in the document must be absolute for the PDF 
 	 * creator to work.
 	 */
-	private static void translatePaths( NodeList nodeList, PathAttribute pathAttribute ) {
+	private static void translatePaths( Elements nodeList, PathAttribute pathAttribute ) {
 
-		for( int i = 0; i < nodeList.getLength(); i++ ) {
+		for( int i = 0; i < nodeList.size(); i++ ) {
 			
-			Element element = (Element) nodeList.item(i);			
-			String path = element.getAttribute( pathAttribute.name() );
+			Element element = nodeList.get(i);			
+			String path = element.attr( pathAttribute.name() );
 			String validLink = null;
 			String parameters = null;
 			String[] parameterList = null;		
@@ -506,7 +501,8 @@ public class ConvertToEdoc {
 			} else if( parameters != null && parameters.contains("=") ) {
 				path = buildImageDirectoryPath( parameters.split("=")[1] );
 				potentialFilePaths.add( path );
-			}
+			} 
+			
 			
 			// there really should be only one valid path.
 			// Only use the one that validates
@@ -515,7 +511,7 @@ public class ConvertToEdoc {
 			// change the element resource link to something absolute  
 			// that can be used by the PDF creator. 
 			if( validLink != null ) {
-				element.setAttribute( pathAttribute.name(), validLink );
+				element.attr(pathAttribute.name(), validLink );
 			}
 		}
 	}
@@ -524,7 +520,8 @@ public class ConvertToEdoc {
 	 * Feed this method a filename and it will return a full path to the Oscar images directory. 
 	 */
 	private static String buildImageDirectoryPath( String filename ) {
-		return String.format( "%1$s%2$s%3$s", getImageDirectory(), File.separator, filename );
+		Path path = Paths.get(getImageDirectory(), filename);
+		return path.toAbsolutePath().toString();
 	}
 	
 	/**
@@ -551,6 +548,14 @@ public class ConvertToEdoc {
 
 			logger.debug( "Absolute file path " + contextRealPath );
 	
+		}
+		/*
+		 * For some strange reason eForm developers will use just the 
+		 * filename as the uri and then add javascript to alter it
+		 * This catches these potential situations
+		 */
+		else if(! uri.contains(File.separator)) {
+			 contextRealPath = buildImageDirectoryPath( uri );
 		}
 		
 		return contextRealPath;
@@ -628,19 +633,15 @@ public class ConvertToEdoc {
 	private static String tidyDocument( final String documentString ) {
 
 		Tidy tidy = getTidy();
-		StringReader reader = new StringReader( documentString );
-		StringWriter writer = new StringWriter();
 		String correctedDocument = null;
 		
-		tidy.parse( reader, writer );
-		correctedDocument = new String( writer.toString() );	
-
-		writer.flush();
-		
-		try {
-			writer.close();
+		try(StringReader reader = new StringReader( documentString );
+				StringWriter writer = new StringWriter())
+		{
+			tidy.parse( reader, writer );
+			correctedDocument = new String( writer.toString() );
 		} catch (IOException e) {
-			logger.error( "Error closing writer stream for JTidy", e );
+			logger.warn("Error during document tidy ", e);
 		}
 
 		return correctedDocument;
@@ -656,12 +657,11 @@ public class ConvertToEdoc {
 		// these can be overriden with the properties file.
 		tidy.setForceOutput( Boolean.TRUE ); 	// output the XHTML even if it fails the validator.
 		tidy.setXHTML( Boolean.TRUE ); // only reading XHTML here.
-		tidy.setDropEmptyParas(false);
-		tidy.setDocType("<!DOCTYPE html>");
-		// tidy.setDocType( "omit" ); // everything will fail horribly if doctype is strict.
+		tidy.setDropEmptyParas(Boolean.FALSE);
+		tidy.setDocType( "auto" ); // everything will fail horribly if doctype is strict.
 		tidy.setMakeClean( Boolean.TRUE );
 		tidy.setLogicalEmphasis( Boolean.TRUE ); // replace the b and em tags with proper <strong> tags
-
+		tidy.setHideComments(Boolean.TRUE);
 		// logging
 		if( logger.isDebugEnabled() ) {
 			tidy.setHideComments( Boolean.FALSE );
@@ -694,55 +694,48 @@ public class ConvertToEdoc {
 	/**
 	 * Prints the document contents to console. Used for debugging.
 	 */
-	private static String printDocument( Document doc ) {
+//	private static String printDocument( Document doc ) {
+//		return doc.html();
 
-	    TransformerFactory tf = TransformerFactory.newInstance();
-	    StreamResult streamResult = null;
-	    try {
-			Transformer transformer = tf.newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-			transformer.setOutputProperty(OutputKeys.METHOD, "xhml");
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-			streamResult = new StreamResult();
-			streamResult.setOutputStream( new ByteArrayOutputStream() );
-			transformer.transform( new DOMSource(doc), streamResult );
-
-		} catch (Exception e) {
-			logger.error("error debugging document " + e );
-		} finally {
-			if( streamResult != null ) {
-				try {
-					streamResult.getOutputStream().close();
-				} catch (IOException e) {
-					logger.error("error debugging document " + e );
-				}
-			}
-		}
-	    
-	    return streamResult.getOutputStream().toString();
-	}
+//	    TransformerFactory tf = TransformerFactory.newInstance();
+//	    StreamResult streamResult = null;
+//	    try {
+//			Transformer transformer = tf.newTransformer();
+//			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+//			transformer.setOutputProperty(OutputKeys.METHOD, "xhml");
+//			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+//			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+//			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+//			streamResult = new StreamResult();
+//			streamResult.setOutputStream( new ByteArrayOutputStream() );
+//			transformer.transform( new DOMSource(doc), streamResult );
+//
+//		} catch (Exception e) {
+//			logger.error("error debugging document " + e );
+//		} finally {
+//			if( streamResult != null ) {
+//				try {
+//					streamResult.getOutputStream().close();
+//				} catch (IOException e) {
+//					logger.error("error debugging document " + e );
+//				}
+//			}
+//		}
+//	    
+//	    return streamResult.getOutputStream().toString();
+//	}
 	
 	public static String printTidyConfig( Tidy tidy ) {
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		OutputStreamWriter osw = new OutputStreamWriter( baos );
-		tidy.getConfiguration().printConfigOptions( osw, true );
 		
-		String log = new String( baos.toString() );
+		String log = "";
 		
-		try {
-			baos.close();
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				OutputStreamWriter osw = new OutputStreamWriter( baos );) {
+			tidy.getConfiguration().printConfigOptions( osw, true );
+			log = new String( baos.toString() );
 		} catch (IOException e) {
 			logger.error("Error", e);
-		} finally {
-			try {
-				osw.close();
-			} catch (IOException e) {
-				logger.error("Error", e);
-			}
-		}
+		} 
 		
 		return log;
 	}

@@ -825,13 +825,19 @@
 			<version>UNKNOWN</version>
 		</dependency>
 
-		<!-- jtidy -->
+		<!-- https://mvnrepository.com/artifact/com.github.jtidy/jtidy -->
 		<dependency>
-			<groupId>net.sf.jtidy</groupId>
-			<artifactId>jtidy</artifactId>
-			<version>r938</version>
+		    <groupId>com.github.jtidy</groupId>
+		    <artifactId>jtidy</artifactId>
+		    <version>1.0.2</version>
 		</dependency>
-
+		
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.13.1</version>
+		</dependency>
+		
 		<!-- xerces -->
 		<dependency>
 			<groupId>xerces</groupId>
@@ -1196,9 +1202,15 @@
 	</dependency>
 	
 	<dependency>
-		<groupId>org.xhtmlrenderer</groupId>
-		<artifactId>flying-saucer-pdf</artifactId>
-		<version>9.1.20</version>
+	    <groupId>org.xhtmlrenderer</groupId>
+	    <artifactId>flying-saucer-core</artifactId>
+	    <version>9.1.20</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.xhtmlrenderer</groupId>
+	    <artifactId>flying-saucer-pdf-openpdf</artifactId>
+	    <version>9.1.20</version>
 	</dependency>
 
 	<!-- Caisi Integrator -->
