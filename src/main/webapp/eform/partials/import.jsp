@@ -27,65 +27,91 @@
 <%@ page import="oscar.eform.data.*, oscar.eform.*, java.util.*"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <%
 String status = (String) request.getAttribute("status");    		
 %>
 <head>
-<link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css"/>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
-
-<script>
-$(function() {
-    //x$( document ).tooltip();
-  });
-</script>
+	<link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css"/>
+	<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
+	<style>
+	body{background-color:#f5f5f5;}
+	</style>
 </head>
-
-<style>
-body{background-color:#f5f5f5;}
-</style>
 
 <body>
 
-<%if(status != null){ %>
+<c:if test="${ not empty status }">
     <div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Success!</strong> Your eform was imported.
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+    	<strong>Success!</strong> Your eform was imported.
     </div>
 
-<script>
-window.top.location.href = "<%=request.getContextPath()%>/administration/?show=Forms";
-</script>
+	<script>
+	window.top.location.href = "<%=request.getContextPath()%>/administration/?show=Forms";
+	</script>
 
-<%}else{%>
+</c:if>
 <form action="<%=request.getContextPath()%>/eform/manageEForm.do" method="POST" enctype="multipart/form-data" id="eformImportForm">
-    <input type="hidden" name="method" value="importEForm">
-		Import eForm:		
-        <%List<String> importErrors = (List<String>) request.getAttribute("importErrors");
+    	
+    	<input type="hidden" name="method" value="importEForm">
+    	
+    	<%List<String> importErrors = (List<String>) request.getAttribute("importErrors");
         if (importErrors != null && importErrors.size() > 0) {%>
-       		<span class="text-error"> <html:errors /> 
-                <%for (String importError: importErrors) {%>
-                - <%=importError%>
-                <%}%>
-           </span>
+	        <div class="row-fluid">
+	        	<html:errors />
+	        	<ul>
+	                <%for (String importError: importErrors) {%>
+	                <li class="text-error"><%=importError%></li>
+	                <%}%>
+	          	</ul> 
+	        </div>
         <%}%>
         
-        
-       
-         <br>
-        
-        
-        <input type="file" name="zippedForm" size="50">
-        <span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img border="0" src="../../images/icon_alertsml.gif"/></span></span>
-                                        
-        <input type="submit" name="subm" value="Import" class="btn" onclick="this.value = 'Importing...'; this.disabled = true;"><br>
-        <span class="label label-info">Info: </span> <strong>When importing the file format is required to be a zip file.</strong>
+        <div class="control-group">
+        	<div class="controls">
+        		<label class="control-label" for="zippedForm">Import eForm:</label>
+		        <input type="file" class="input-file" id="zippedForm" name="zippedForm" size="50" required/>
+		        <span style="color:red;">
+		         <i class="icon-warning-sign" title="<bean:message key="global.uploadWarningBody"/>" ></i>
+		         </span>                      
+		        <input type="submit" name="subm" value="Import" class="btn btn-primary upload" disabled>
+	        </div>
+        </div>
+        <div class="row-fluid">
+	        <span class="label label-info">Info: </span> 
+	        <span>Zip file format only</span>
+        </div>
+
 </form>
 
-<%}%>
+<script type="text/javascript">
+$( document ).ready(function() {
+	$(".input-file").change(validate).keyup(validate);
+});
+
+function validate() {
+	var v = $(this).val();
+	var id = $(this).attr("id");
+	var formHtml = $("#zippedForm").val();
+
+	if (v && formHtml) {
+	    $('.upload').removeAttr("disabled");
+		$('.upload').addClass("btn-success");
+    } else if(inputCheck=="exists"){
+	    $('.upload').attr("disabled", "disabled");
+		$('.upload').removeClass("btn-success");
+    }else{
+	    $('.upload').attr("disabled", "disabled");
+		$('.upload').removeClass("btn-success");
+    } 
+}
+	
+
+</script>
 
 </body>
 </html>
