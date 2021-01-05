@@ -539,6 +539,9 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 
 		infoTable.addCell(setInfoCell(cell, getResource("msgPhone")));
 		infoTable.addCell(setDataCell(cell, reqFrm.patientPhone));
+		
+		infoTable.addCell(setInfoCell(cell, getResource("msgCellPhone")));
+		infoTable.addCell(setDataCell(cell, reqFrm.patientCellPhone));
 
 		infoTable.addCell(setInfoCell(cell, getResource("msgWPhone")));
 		infoTable.addCell(setDataCell(cell, reqFrm.patientWPhone));
