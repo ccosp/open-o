@@ -462,7 +462,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		
 		// specialist name
 		if ( professionalSpecialist != null ) { 
-			infoTable.addCell(setDataCell(cell, professionalSpecialist.getFormattedName() ));
+			infoTable.addCell(setDataCell(cell, professionalSpecialist.getFormattedTitle() ));
 		} else {
 			infoTable.addCell(setDataCell(cell, "" ));
 		}
