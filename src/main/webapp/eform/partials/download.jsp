@@ -39,11 +39,10 @@
 <link href="<%=request.getContextPath()%>/css/DT_bootstrap.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.dataTables.js"></script>
-</head>
-
 <style>
 	body { background-color:#f5f5f5; }
 </style>
+</head>
 
 <body>
 	<%
