@@ -40,6 +40,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.oscarehr.common.dao.ReportTemplatesDao;
 import org.oscarehr.common.model.ReportTemplates;
+import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
@@ -56,6 +57,8 @@ import oscar.util.UtilXML;
 public class ReportManager {
 
 	private ReportTemplatesDao dao = SpringUtils.getBean(ReportTemplatesDao.class);
+
+	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
 	/** Creates a new instance of reportManager */
 	public ReportManager() {
@@ -284,6 +287,9 @@ public class ReportManager {
 	//templateId = null if adding a new template
 	@SuppressWarnings("unchecked")
     public String addUpdateTemplate(String uuid, String templateId, Document templateXML, LoggedInInfo loggedInInfo) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_report", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_report)");
+		}
 		try {
 			Element rootElement = templateXML.getRootElement();
 			List<Element> reports = rootElement.getChildren();
@@ -326,7 +332,7 @@ public class ReportManager {
 				templateXMLstr = UtilXML.unescapeXML(templateXMLstr);				
 
 				ReportTemplates r = null;
-				if(uuid != null) {
+				if(uuid != null && ! uuid.trim().isEmpty()) {
 					r = dao.findByUuid(uuid);
 				} else if(templateId != null) {
 					r = dao.find(Integer.parseInt(templateId));
@@ -374,6 +380,9 @@ public class ReportManager {
 	}
 
 	public String addTemplate(String uuid, String templateXML, LoggedInInfo loggedInInfo) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_report", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_report)");
+		}
 		try {
 			Document templateXMLdoc = readXml(templateXML);
 			return addUpdateTemplate(uuid, null, templateXMLdoc, loggedInInfo);
@@ -384,6 +393,9 @@ public class ReportManager {
 	}
 
 	public String updateTemplate(String uuid, String templateId, String templateXML, LoggedInInfo loggedInInfo) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_report", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_report)");
+		}
 		try {
 			Document templateXMLdoc = readXml(templateXML);
 			return addUpdateTemplate(uuid, templateId, templateXMLdoc, loggedInInfo);
