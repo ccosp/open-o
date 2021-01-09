@@ -55,22 +55,23 @@ else if (orderByRequest.equals("form_subject")) orderBy = EFormUtil.SUBJECT;
 else if (orderByRequest.equals("form_name")) orderBy = EFormUtil.NAME;
 else if (orderByRequest.equals("file_name")) orderBy = EFormUtil.FILE_NAME;
 %>
+<!DOCTYPE html>
 <html:html locale="true">
 <head>
 
 <title><bean:message key="admin.admin.frmGroups"/></title>
 
 <style>
+.contentLink {
+  	display:block;
+	width:100%;
+}
 #eformSelect{
-width:400px;
-
-font-size:18px;
-padding:2px;
+	width:400px;
+	font-size:18px;
+	padding:2px;
 }
 
-.list{
-max-width:400px;
-}
 </style>
 
 
@@ -80,13 +81,17 @@ max-width:400px;
 <%@ include file="efmTopNav.jspf"%>
 
 <h3><bean:message key="admin.admin.frmGroups"/></h3>
-
-<div class="well span6 list">
+<div class="row-fluid">
+<div class="well span6">
 
 <!--ADD GROUP-->
 <form action="<%= request.getContextPath() %>/eform/addGroup.do" method="get" id="addGroupForm" class="form-inline">
-	<input type="text" name="groupName" class="check" placeholder="<bean:message key="eform.groups.addGroup" />">
-	<input type="submit" name="subm" class="btn groupAdd" value="<bean:message key="eform.groups.addGroup" />" disabled>	
+<div class="controls">
+	<div class="input-append">
+		<input type="text" name="groupName" class="check" placeholder="<bean:message key="eform.groups.addGroup" />">
+		<input type="submit" name="subm" class="btn btn-primary groupAdd" value="<bean:message key="eform.groups.addGroup" />" disabled>
+	</div>
+</div>
 </form>
 
 
@@ -135,7 +140,8 @@ if(groupName.equals(groupView)){
 
 
 <!--EFORMS IN GROUP-->
-<div class="well span5">
+
+<div class="well span6">
 <h4><bean:message key="eform.groups.contents" />: <%=groupView%></h4>
 
 <table class="table table-condensed table-striped">
@@ -169,14 +175,14 @@ if(groupName.equals(groupView)){
 %>
 	<tr rel="popover" data-html="true" data-title="<%=curForm.get("formName")%>" data-content="<strong><bean:message key="eform.uploadhtml.btnSubject" />:</strong><br> <%=curForm.get("formSubject")%> <br> <small><bean:message key="eform.uploadhtml.btnFile" />: <%=curForm.get("formFileName")%></small>" data-trigger="hover" data-placement="bottom">
 
-		<td nowrap align="center">
+		<td>
 		<a href="<%= request.getContextPath() %>/eforms/removeFromGroup.do?fid=<%=curForm.get("fid")%>&groupName=<%=groupView%>" title="remove from group" class="btn btn-small" title="delete eform from group" data-confirm="<i class='icon-warning-sign icon-large'></i> Are you sure you would like to remove this eform from this group?"><i class="icon-trash"></i></a>
 		</td>
 
-		<td style="padding-left: 4px;"><a href="#"
+		<td><a href="#"
 			onclick="newWindow('efmshowform_data.jsp?fid=<%=curForm.get("fid")%>', '<%="FormG" + i%>'); return false;"><%=curForm.get("formName")%></a></td>
 
-		<td nowrap align='center'><%=curForm.get("formDate")%></td>
+		<td align='center'><%=curForm.get("formDate")%></td>
 		
 
 	</tr>
@@ -194,9 +200,9 @@ if(groupName.equals(groupView)){
 </tbody>
 </table>
 
-<div style="margin-top:10px;text-align:right"><button type="button" name="addEform-btn" id="addEform-btn" title="add eform to this group" class="btn btn-primary modalShow">Add eForm</button>
+<div class="row-fluid"><button type="button" name="addEform-btn" id="addEform-btn" title="add eform to this group" class="btn btn-primary modalShow pull-right">Add eForm</button>
 </div>
-
+</div>
 <!--modal-->
 <% if (!groupView.equals("")) { %>
 <html:form action="/eform/addToGroup" method="get" styleId="eformToGroupForm">

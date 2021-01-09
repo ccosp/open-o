@@ -28,10 +28,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-<%
-String status = (String) request.getAttribute("status");    		
-%>
 <html:html locale="true">
 
 <head>
@@ -76,30 +74,38 @@ padding-left:6px;
 </style>
 <body>
 
-<%if(status != null){ %>
+<c:if test="${ not empty status }">
     <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Success!</strong> Your image was uploaded.
     </div>
+    <script>
+	window.top.location.href = "<%=request.getContextPath()%>/administration/?show=ImageUpload";
+	</script> 
+    
+</c:if>
 
-<script>
-window.top.location.href = "<%=request.getContextPath()%>/administration/?show=ImageUpload";
-</script>
 
-<%}else{%>
 
-		
+	<div class="row-fluid">
+		<div class="well">		
 		<html:form action="/eform/imageUpload" enctype="multipart/form-data" method="post">
-		<bean:message key="eform.uploadimages.msgFileName" /> 
-		<span class="text-error message"><html:errors /></span>
-		<br>
-		<input type="file" name="image" id="image" class="check" size="40"  required>
-		<span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img border="0" src="../../images/icon_alertsml.gif"/></span></span>
-        
-		<input type="submit" class="btn upload" name="subm" value="<bean:message key="eform.uploadimages.btnUpload"/>" disabled>
 
+		<div class="text-error message row-fluid"><html:errors /></div>
+		<div class="control-group">
+        	<div class="controls">
+        		<label class="control-label" for="zippedForm"><bean:message key="eform.uploadimages.msgFileName" /></label>
+				<input type="file" name="image" id="image" class="check" size="40"  required>
+				<span style="color:red;">
+		         <i class="icon-warning-sign" title="<bean:message key="global.uploadWarningBody"/>" ></i>
+		         </span>
+				<input type="submit" class="btn btn-primary upload" name="subm" value="<bean:message key="eform.uploadimages.btnUpload"/>" disabled>
+			</div>
+		</div>
 		</html:form>
-<%}%>
+		</div>
+	</div>
+
 <script src="<%=request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>  
 
 <script>

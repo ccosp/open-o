@@ -836,7 +836,7 @@ jQuery(document).ready(function(jQuery){
     
 	/* New billing form selection method*/
     jQuery("#selectBillingForm").on('change',function() {
-    	var url = ctx + '/billing.do?demographic_no=' + <%=bean.getPatientNo()%> + '&appointment_no=0&billRegion=BC&billForm=' + this.value;
+    	var url = ctx + '/billing.do?demographic_no=' + <%=bean.getPatientNo()%> + '&appointment_no=' + <%=bean.getApptNo()%> + '&billRegion=BC&billForm=' + this.value;
       	jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
       		// re-bind all the javascript
     		getDxInformation();

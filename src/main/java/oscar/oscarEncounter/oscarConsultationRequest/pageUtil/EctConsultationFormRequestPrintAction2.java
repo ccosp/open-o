@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,7 +119,7 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 						File f2 = File.createTempFile("image"+doc.getDocId(),"pdf");
 						FileOutputStream fos2 = new FileOutputStream(f2);
 						
-						request.setAttribute("imagePath", path + doc.getFileName());
+						request.setAttribute("imagePath", Paths.get(path, doc.getFileName()).toString());
 						request.setAttribute("imageTitle", doc.getDescription());
 
 						ImagePDFCreator ipdfc = new ImagePDFCreator(request, fos2);
@@ -132,7 +133,7 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 						filesToDelete.add(f2);
 					}
 					else if (doc.isPDF()) {
-						alist.add(path + doc.getFileName());
+						alist.add(Paths.get(path, doc.getFileName()).toString());
 					}
 					else {
 						logger.error("EctConsultationFormRequestPrintAction: " + doc.getType() + " is marked as printable but no means have been established to print it.");	
