@@ -309,6 +309,10 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 		StringBuilder buf = new StringBuilder();
 		boolean isAppended = false;
 		
+		if(getSalutation() != null && !getSalutation().isEmpty()) {
+			buf.append(getSalutation() + " ");
+		}
+		
 		if (getLastName() != null && !getLastName().isEmpty()) {
 			buf.append(getLastName());
 			isAppended = true;

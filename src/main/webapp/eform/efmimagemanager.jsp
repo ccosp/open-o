@@ -28,11 +28,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<!DOCTYPE html>
 <html:html locale="true">
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-</head>
-
 <script type="text/javascript" language="javascript"> 
   function showImage(url, id) {
         Popup = window.open(url,id,'toolbar=no,location=no,status=yes,menubar=no, scrollbars=yes,resizable=yes,width=700,height=600,left=200,top=0');
@@ -43,14 +42,18 @@
     }
   }
 </script>
+
+</head>
+
 <body topmargin="0" leftmargin="0" rightmargin="0">
 
 <%@ include file="efmTopNav.jspf"%>
 
 <h3>Image Library</h3>
 
-<iframe id="uploadFrame" name="uploadFrame" frameborder="0" width="800" height="100" src="<%=request.getContextPath()%>/eform/partials/upload_image.jsp"></iframe>	
-	
+
+		<iframe id="uploadFrame" name="uploadFrame" frameborder="0" width="100%" height="auto" scrolling="no" src="<%=request.getContextPath()%>/eform/partials/upload_image.jsp"></iframe>		
+		
 		<table class="table table-condensed table-striped table-hover" id="tblImage">
 		<thead>
 			<tr>

@@ -141,7 +141,7 @@ public class EctConsultationFormRequestUtil {
         if(demographicExt != null) {		
         	demographicCellPhone = demographicExt.getValue();
     	}
-
+        
 		if (demographic != null) {
 			demoNo = demographicNo;
 			patientFirstName = demographic.getFirstName();
@@ -151,7 +151,7 @@ public class EctConsultationFormRequestUtil {
 			StringBuilder patientAddressSb = new StringBuilder();
 			patientAddressSb.append(StringUtils.noNull(demographic.getAddress())).append("<br>")
 							.append(StringUtils.noNull(demographic.getCity())).append(",")
-							.append(StringUtils.noNull(demographic.getProvince())).append(",")
+							.append(StringUtils.noNull(demographic.getProvince())).append("<br>")
 							.append(StringUtils.noNull(demographic.getPostal()));
 			patientAddress = patientAddressSb.toString();
 			patientPhone = StringUtils.noNull(demographic.getPhone());
