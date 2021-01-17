@@ -219,9 +219,7 @@ public class ConvertToEdoc {
 	 * Execute building and saving PDF to temp directory.
 	 */
 	private static Path execute( final String eformString, final String filename ) {
-		
-		logger.info("Incoming HTML " + eformString);	
-		
+
 		Document document = buildDocument( eformString );
 		Path path = null;
 
@@ -309,9 +307,7 @@ public class ConvertToEdoc {
 	private static final Document buildDocument( final String documentString ) {
 		
 		Document document = getDocument( documentString );
-		
-		logger.info("Soup HTML " + document.html());
-		
+
 		if( document != null ) {
 			translateResourcePaths( document );
 			// setHeadElement( document );
@@ -341,9 +337,7 @@ public class ConvertToEdoc {
 //		} 
 		
 		String tidyDocumentString = tidyDocument(documentString); 
-		
-		logger.info("Cleaned HTML " + tidyDocumentString);
-		
+
 	    Document document = Jsoup.parse(tidyDocumentString);
 	    document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
 	    return document;
@@ -435,13 +429,14 @@ public class ConvertToEdoc {
 	private static void translateResourcePaths( Document document ) {
 		translateLinkPaths( document );
 		translateImagePaths( document );
+		translateJavascriptPaths(document);
 	}
 	
 	/**
 	 * This method handles paths set into a link element
 	 */
 	private static void translateLinkPaths( Document document ) {
-		Elements linkNodeList = document.getElementsByTag("link");	
+		Elements linkNodeList = document.select("link");	
 		if( linkNodeList != null ) {
 			translatePaths( linkNodeList, PathAttribute.href );
 		}
@@ -454,6 +449,17 @@ public class ConvertToEdoc {
 		Elements imageNodeList = document.select("img");		
 		if( imageNodeList != null ) {
 			translatePaths( imageNodeList, PathAttribute.src );
+		}
+	}
+	
+	/**
+	 * This method handles paths to Javascript resources. 
+	 * Usually in the images directory
+	 */
+	private static void translateJavascriptPaths( Document document ) {
+		Elements linkNodeList = document.select("script");	
+		if( linkNodeList != null ) {
+			translatePaths( linkNodeList, PathAttribute.src );
 		}
 	}
 	
@@ -478,7 +484,7 @@ public class ConvertToEdoc {
 			if( path.contains("?") ) {
 				// image or link paths with parameters
 				parameters = path.split("\\?")[1];
-			} else {
+			} else if(! path.isEmpty()) {
 				// these are most likely relative context paths
 				path = getRealPath( path );
 				potentialFilePaths.add( path );
@@ -512,7 +518,8 @@ public class ConvertToEdoc {
 			// that can be used by the PDF creator. 
 			if( validLink != null ) {
 				element.attr(pathAttribute.name(), validLink );
-			}
+			} 
+
 		}
 	}
 	
@@ -541,14 +548,24 @@ public class ConvertToEdoc {
 			String filePath = uri.substring( contextPath.length(), uri.length() );
 			filePath = filePath.replaceFirst( File.separator , "" );
 			contextRealPath = ConvertToEdoc.realPath;
+			
 			if( ! contextRealPath.endsWith( File.separator )) {
 				contextRealPath = contextRealPath + File.separator;
 			}
+			
 			contextRealPath = String.format( "%1$s%2$s", contextRealPath, filePath );
 
 			logger.debug( "Absolute file path " + contextRealPath );
 	
 		}
+		
+		/*
+		 * catch external links to resources. 
+		 */
+		else if(uri.toLowerCase().startsWith("http")) {
+			contextRealPath = uri;
+		}
+		
 		/*
 		 * For some strange reason eForm developers will use just the 
 		 * filename as the uri and then add javascript to alter it
@@ -609,6 +626,11 @@ public class ConvertToEdoc {
 	 */
 	private static final String validateLink( String potentialLink ) {
 		
+		// short circuit for external resources. 
+		if(potentialLink.toLowerCase().startsWith("http")) {
+			return potentialLink;
+		}
+		
 		File file = null;
 		String absolutePath = null;
 				
@@ -662,17 +684,16 @@ public class ConvertToEdoc {
 		tidy.setMakeClean( Boolean.TRUE );
 		tidy.setLogicalEmphasis( Boolean.TRUE ); // replace the b and em tags with proper <strong> tags
 		tidy.setHideComments(Boolean.TRUE);
+		tidy.setHideComments( Boolean.TRUE );
+		tidy.setQuiet( Boolean.TRUE );
+		
 		// logging
 		if( logger.isDebugEnabled() ) {
 			tidy.setHideComments( Boolean.FALSE );
 			tidy.setQuiet( Boolean.FALSE );
-		} else {
-			tidy.setHideComments( Boolean.TRUE );
-			tidy.setQuiet( Boolean.TRUE );
-		}
-
-		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" )) {
-			
+		} 
+		
+		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" )) {			
 			if( is != null ) {
 				properties.load( is );
 			}

@@ -30,6 +30,12 @@ import oscar.OscarProperties;
 
 import com.lowagie.text.DocumentException;
 
+/**
+ * 
+ * @Deprecated
+ * use the fax module.
+ */
+@Deprecated
 public final class FaxAction {
 
 	private static final Logger logger = MiscUtils.getLogger();
