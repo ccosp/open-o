@@ -26,7 +26,10 @@ package org.oscarehr.managers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.oscarehr.common.dao.BillingServiceDao;
 import org.oscarehr.common.dao.CtlBillingServiceDao;
+import org.oscarehr.common.model.BillingService;
 import org.oscarehr.managers.model.ServiceType;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +39,13 @@ import org.springframework.stereotype.Service;
 public class BillingManager {
 
 	@Autowired
-	CtlBillingServiceDao ctlBillingServiceDao;
+	private CtlBillingServiceDao ctlBillingServiceDao;
 	
+	@Autowired
+	private SecurityInfoManager securityInfoManager;
 	
+	@Autowired
+	private BillingServiceDao billingServiceDao;
 	/*
 	 * I'm only doing that conversion in the manager because I don't have time to refactor the DAO method..but given more time..that's where I would do it.
 	 * Regardless those other calls should be moved over to calling this one.
@@ -59,6 +66,32 @@ public class BillingManager {
 		}
 	
 		return result;
+	}
+
+	/**
+	 * Update the description of an MSP service code. Will not write to database if
+	 * there is no change to the original description
+	 * 
+	 * @param loggedInInfo
+	 * @param servicecodeid
+	 * @param description
+	 * @return BillingService.id as failed save will return id = 0
+	 */
+	public int updateMSPServiceCodeDescription(LoggedInInfo loggedInInfo, int servicecodeid, String description) {
+		if (! securityInfoManager.hasPrivilege(loggedInInfo, "_admin", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("Access Denied");
+		}
+		
+		description = StringUtils.trimToEmpty(description);
+		int updateid = 0;
+		BillingService billingService = billingServiceDao.find(servicecodeid);
+		if(billingService != null && ! description.equals(billingService.getDescription()))
+		{
+			billingService.setDescription(description);
+			billingServiceDao.merge(billingService);
+			updateid = billingService.getId();
+		}
+		return updateid;
 	}
 }
 
