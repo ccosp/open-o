@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,6 +53,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.xmlbeans.XmlOptions;
+import org.caisi.dao.ProviderDAO;
 import org.marc.everest.rmim.uv.cdar2.pocd_mt000040uv.ClinicalDocument;
 import org.oscarehr.casemgmt.model.CaseManagementIssue;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
@@ -148,6 +150,8 @@ public class DemographicExportAction4 extends Action {
 	private static final Hl7TextInfoDao hl7TxtInfoDao = (Hl7TextInfoDao)SpringUtils.getBean("hl7TextInfoDao");
 	private static final Hl7TextMessageDao hl7TxtMssgDao = (Hl7TextMessageDao)SpringUtils.getBean("hl7TextMessageDao");
 	private static final DemographicExtDao demographicExtDao = (DemographicExtDao) SpringUtils.getBean("demographicExtDao");
+	private static final ProviderDAO providerDao = SpringUtils.getBean(ProviderDAO.class);
+	
 	private static final String PATIENTID = "Patient";
 	private static final String ALERT = "Alert";
 	private static final String ALLERGY = "Allergy";
@@ -2738,18 +2742,32 @@ public class DemographicExportAction4 extends Action {
 			else
 				labRoutingInfo.putAll(ProviderLabRouting.getInfo(lab_no, "CML"));
 
-			String timestamp = labRoutingInfo.get("timestamp").toString();
-			if (UtilDateUtilities.StringToDate(timestamp,"yyyy-MM-dd HH:mm:ss")!=null) {
+			Object timestamp = labRoutingInfo.get("timestamp");
+			
+			if (timestamp != null)
+			{
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Calendar calendar = null; 
+				
+				try {
+					Date fulldatetime = simpleDateFormat.parse(timestamp.toString());
+					calendar = Calendar.getInstance();
+				    calendar.setTime(fulldatetime);
+				} catch (ParseException e) {
+					logger.error("Error while parsing Lab Routing date " + timestamp, e);
+				}
+				
 				LaboratoryResults.ResultReviewer reviewer = labResults.addNewResultReviewer();
-				reviewer.addNewDateTimeResultReviewed().setFullDateTime(Util.calDate(timestamp));
+				reviewer.addNewDateTimeResultReviewed().setFullDateTime(calendar);
 
 				//reviewer name
 				cdsDt.PersonNameSimple reviewerName = reviewer.addNewName();
 				String lab_provider_no = (String)labRoutingInfo.get("provider_no");
 				if (!"0".equals(lab_provider_no)) {
-					ProviderData pvd = new ProviderData(lab_provider_no);
-					Util.writeNameSimple(reviewerName, pvd.getFirst_name(), pvd.getLast_name());
-					if (StringUtils.noNull(pvd.getOhip_no()).length()<=6) reviewer.setOHIPPhysicianId(pvd.getOhip_no());
+					Provider provider = providerDao.getProvider(lab_provider_no);
+
+					Util.writeNameSimple(reviewerName, provider.getFirstName(), provider.getLastName());
+					if (StringUtils.noNull(provider.getOhipNo()).length()<=6) reviewer.setOHIPPhysicianId(provider.getOhipNo());
 				}
 			}
 		}
