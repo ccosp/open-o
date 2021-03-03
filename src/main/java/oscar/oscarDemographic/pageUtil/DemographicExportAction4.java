@@ -152,7 +152,7 @@ public class DemographicExportAction4 extends Action {
 	private static final Hl7TextMessageDao hl7TxtMssgDao = (Hl7TextMessageDao)SpringUtils.getBean("hl7TextMessageDao");
 	private static final DemographicExtDao demographicExtDao = (DemographicExtDao) SpringUtils.getBean("demographicExtDao");
 	private static final ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
-	
+
 	private static final String PATIENTID = "Patient";
 	private static final String ALERT = "Alert";
 	private static final String ALLERGY = "Allergy";
