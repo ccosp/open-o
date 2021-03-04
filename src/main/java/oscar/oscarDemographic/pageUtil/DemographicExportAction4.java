@@ -296,6 +296,10 @@ public class DemographicExportAction4 extends Action {
 			legalName.setNamePurpose(cdsDt.PersonNamePurposeCode.L);
 
 			String name= StringUtils.noNull(demographic.getFirstName());
+			if(name!= null)
+			{
+				name = name.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+			}
 			if (StringUtils.filled(name)) {
 				firstName.setPart(name);
 				firstName.setPartType(cdsDt.PersonNamePartTypeCode.GIV);
@@ -304,6 +308,10 @@ public class DemographicExportAction4 extends Action {
 				exportError.add("Error! No First Name for Patient "+demoNo);
 			}
 			name = StringUtils.noNull(demographic.getLastName());
+			if(name != null)
+			{
+				name = name.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+			}
 			if (StringUtils.filled(name)) {
 				lastName.setPart(name);
 				lastName.setPartType(cdsDt.PersonNamePartTypeCode.FAMC);
@@ -2025,8 +2033,19 @@ public class DemographicExportAction4 extends Action {
 					throw new Exception("Temporary Export Directory does not exist!");
 				}
 
-				//Standard format for xml exported file : PatientFN_PatientLN_PatientUniqueID_DOB (DOB: ddmmyyyy)
-				String expFile = demographic.getFirstName()+"_"+demographic.getLastName();
+				String patientFirstName = demographic.getFirstName();
+				String patientLastName = demographic.getLastName();
+				
+				if(patientFirstName != null)
+				{
+					patientFirstName = patientFirstName.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+				}
+				if(patientLastName != null)
+				{
+					patientLastName = patientLastName.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+				}
+				
+				String expFile = patientFirstName + "_" + patientLastName;
 				expFile += "_"+demoNo;
 				expFile += "_"+demographic.getDateOfBirth()+demographic.getMonthOfBirth()+demographic.getYearOfBirth();
 				files.add(new File(directory, expFile+".xml"));
@@ -2145,20 +2164,13 @@ public class DemographicExportAction4 extends Action {
 					} catch(Exception e) {
 						logger.error("Error", e);
 					}
-					BufferedWriter out = null;
-					try {
-						out = new BufferedWriter(new FileWriter(files.get(files.size()-1)));
+//					BufferedWriter out = null;
+					try(BufferedWriter out = new BufferedWriter(new FileWriter(files.get(files.size()-1)))) {
 						out.write(output);
 					} catch (IOException e) {
 						logger.error("Error", e);
 						throw new Exception("Cannot write .xml file(s) to export directory.\nPlease check directory permissions.");
-					} finally {
-						try {
-							out.close();
-						} catch(Exception e) {
-							//ignore
-						}
-					}
+					} 
 				}
 
 				// Create Export Log
