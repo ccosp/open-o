@@ -485,7 +485,10 @@ function checkAllLabs(formId){
 	var val = document.getElementsByName("checkA")[0].checked;
 	var labs = document.getElementsByName("flaggedLabs");
 	for (i =0; i < labs.length; i++){
-		labs[i].checked = val;
+	    if(labs[i].disabled === false)
+	    {
+		    labs[i].checked = val;
+		}
 	}
 }
 
