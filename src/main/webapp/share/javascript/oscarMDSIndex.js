@@ -382,46 +382,7 @@ function showTopBtn(){
 		$('topFileBtn').show();
 	}
 }
-/*
-function changeView(){
-	if($('summaryView').getStyle('display')=='none'){
-		$('summaryView').show();
-		$('readerViewTable').hide();
 
-		$('documentCB').show();
-		$('hl7CB').show();
-		$('normalCB').show();
-		$('abnormalCB').show();
-		$('unassignedCB').show();
-		$('allCB').show();
-		var eles=document.getElementsByName('cbText');
-		for(var i=0;i<eles.length;i++){
-			var ele=eles[i];
-			ele.style.display = "inline";
-		}
-		showTopBtn();
-	}
-	else{
-		$('summaryView').hide();
-		$('readerViewTable').show();
-
-		$('documentCB').hide();
-		$('hl7CB').hide();
-		$('normalCB').hide();
-		$('abnormalCB').hide();
-		$('unassignedCB').hide();
-		$('allCB').hide();
-		var eles=document.getElementsByName('cbText');
-		for(var i=0;i<eles.length;i++){
-			var ele=eles[i];
-			ele.style.display = "none";
-		}
-		hideTopBtn();
-	}
-
-
-}
-*/
 function popupStart(vheight,vwidth,varpage) {
 	popupStart(vheight,vwidth,varpage,"helpwindow");
 }
@@ -448,32 +409,71 @@ function reportWindow(page,height,width) {
 	popup.focus();
 }
 
+function FileSelectedRows(files, searchProviderNo, status) {
 
-function submitFile(doc){
-	aBoxIsChecked = false;
-	submitLabs = true;
-	//var labs = doc.getElementsByName("flaggedLabs");
-	var labs = jQuery("input[name='flaggedLabs']");
-	var acks = jQuery("input[name='ackStatus']");
-	var pats = jQuery("input[name='patientName']");
-	for (i=0; i < labs.length; i++) {
-		if (labs[i].checked == true) {
-			if (acks[i].value == "false") {
-				aBoxIsChecked = confirm("The lab for "+pats[i].value+" has not been attached to a demographic, would you like to file it anyways?");
-				if(!aBoxIsChecked) {
-					break;
+	//TODO figure out this awkward HRM part when needed. 
+	
+//	var hrmQueryMethod = "method=signOff";
+//	var hrmQuery = "";
+//	var labs = jQuery("input[name='flaggedLabs']:checked");
+//	for (var i = 0; i < labs.length; i++) {
+//	    if(labs[i].next().value == "HRM"){
+//	        hrmQuery += "&signedOff=1&reportId=" + labs[i].value;
+//        } else {
+//            query += "&flaggedLabs=" + labs[i].value;
+//            query += "&" + labs[i].next().name + "=" + labs[i].next().value;
+//        }
+//
+//	}
+//	if(!hrmQuery.empty()){
+//        jQuery.ajax({
+//            type: "POST",
+//            url: ctx + "/hospitalReportManager/Modify.do",
+//            data: hrmQueryMethod + hrmQuery,
+//            success: function(data) {
+//                updateCategoryList();
+//
+//                jQuery("input[name='flaggedLabs']:checked").each(function () {
+//                    jQuery(this).parent().parent().remove();
+//                });
+//
+//                fakeScroll();
+//            }
+//        });
+//    }
+	var filelabs = { "flaggedLabs" : "{\"files\" : " + JSON.stringify(files) + "}" };
+	var url = ctx + "/oscarMDS/FileLabs.do";
+
+	jQuery.ajax({
+		type: "POST",
+		url: url,
+		data: filelabs,
+		success: function (data) {			
+			if(data.success)
+			{
+				var files = data.files;
+				var file;
+				var fileId;
+				for(var i = 0; i < files.length; i++)
+				{
+					// remove the filed lab from the DOM
+					file = files[i];
+					fileId = file.split(":")[0];
+					jQuery("#labdoc_" + fileId).remove();
 				}
-			}
-			else {
-				aBoxIsChecked = true;
+				updateCategoryList();
 			}
 		}
-	}
-	if (aBoxIsChecked) {
-		window.FileSelectedRows();
-	}
+	});
 }
 
+function submitFile(searchProviderNo, status){
+	var files = [];
+	jQuery("input[name='flaggedLabs']:checkbox:checked").each(function(key, value){
+		files[key] = value.value;
+	})
+	FileSelectedRows(files, searchProviderNo, status);
+}
 
 function isRowShown(rowid){
 	if($(rowid).style.display=='none')

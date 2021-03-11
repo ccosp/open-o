@@ -88,7 +88,7 @@ String curUser_no = (String) session.getAttribute("user");
                                <% if (labdocs.size() > 0) { %>
                                    <input id="topFBtn" type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="parent.checkSelected(document)">
                                    <% if (ackStatus.equals("N") || ackStatus.isEmpty()) {%>
-                                       <input id="topFileBtn" type="button" class="smallButton" value="File" onclick="parent.submitFile(document)"/>
+                                       <input id="topFileBtn" type="button" class="smallButton" value="File" onclick="submitFile('${ searchProviderNo }', '${ param.status }')"/>
                                    <% }
                                }%>
                                <input type="hidden" id="currentNumberOfPages" value="0"/>
@@ -287,7 +287,7 @@ String curUser_no = (String) session.getAttribute("user");
                                 <tr id="labdoc_<%=segmentID%>" bgcolor="<%=bgcolor%>" <%if(result.isDocument()){%> name="scannedDoc" <%} else{%> name="HL7lab" <%}%> class="<%= (result.isAbnormal() ? "AbnormalRes" : "NormalRes" ) + " " + (result.isMatchedToPatient() ? "AssignedRes" : "UnassignedRes") %>">
                                 <td nowrap>
                                     <input type="hidden" id="totalNumberRow" value="<%=total_row_index+1%>">
-                                    <input type="checkbox" name="flaggedLabs" value="<%=segmentID%>">
+                                    <input type="checkbox" name="flaggedLabs" value="<%=segmentID + ":" + result.labType%>">
                                     <input type="hidden" name="labType<%=segmentID+result.labType%>" value="<%=result.labType%>"/>
                                     <input type="hidden" name="ackStatus" value="<%= result.isMatchedToPatient() %>" />
                                     <input type="hidden" name="patientName" value="<%=StringEscapeUtils.escapeHtml(result.patientName) %>"/>
@@ -408,7 +408,7 @@ String curUser_no = (String) session.getAttribute("user");
 
                                                     <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="parent.checkSelected(document)">
                                                     <% if (ackStatus.equals("N")) {%>
-                                                        <input type="button" class="smallButton" value="File" onclick="parent.submitFile(document)"/>
+                                                        <input type="button" class="smallButton" value="File" onclick="submitFile('${ searchProviderNo }', '${ param.status }')"/>
                                                     <% }  %>
                                             </td>
                                         <script type="text/javascript">

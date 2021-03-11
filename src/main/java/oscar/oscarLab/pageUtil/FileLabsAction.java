@@ -26,9 +26,9 @@
 package oscar.oscarLab.pageUtil;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,11 +36,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.oscarehr.caisi_integrator.util.MiscUtils;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+
 import org.oscarehr.util.SpringUtils;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 
 public class FileLabsAction extends DispatchAction {
@@ -53,70 +56,75 @@ public class FileLabsAction extends DispatchAction {
    public ActionForward unspecified(ActionMapping mapping,
    ActionForm form,
    HttpServletRequest request,
-   HttpServletResponse response)
-   throws ServletException, IOException {
-	   
-	   if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_lab", "w", null)) {
-			throw new SecurityException("missing required security object (_lab)");
-		}
+   HttpServletResponse response){
 
-      String providerNo = (String) request.getSession().getAttribute("user");
-      String searchProviderNo = request.getParameter("searchProviderNo");
-      String status = request.getParameter("status");
+	   LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 
-      String[] flaggedLabs = request.getParameterValues("flaggedLabs");
+	   if(!securityInfoManager.hasPrivilege(loggedInInfo, "_lab", "w", null)) {
+		   throw new SecurityException("missing required security object (_lab)");
+	   }
 
-      String[] labTypes = CommonLabResultData.getLabTypes();
-      ArrayList<String[]> listFlaggedLabs = new ArrayList<String[]>();
+	   String flaggedLabs = request.getParameter("flaggedLabs");
 
-      if(flaggedLabs != null && labTypes != null){
-         for (int i = 0; i < flaggedLabs.length; i++){
-            for (int j = 0; j < labTypes.length; j++){
-               String s =  request.getParameter("labType"+flaggedLabs[i]+labTypes[j]);
+	   JSONArray jsonArray = null;
+	   ArrayList<String[]> listFlaggedLabs = new ArrayList<>();	 
 
-               if (s != null){  //This means that the lab was of this type.
-                  String[] la =  new String[] {flaggedLabs[i],labTypes[j]};
-                  MiscUtils.getLogger().debug("ADDING lab "+flaggedLabs[i]+" of lab type "+labTypes[j]);
-                  listFlaggedLabs.add(la);
-                  j = labTypes.length;
+	   if(flaggedLabs != null && ! flaggedLabs.isEmpty())
+	   {
+		   JSONObject jsonObject = JSONObject.fromObject(flaggedLabs);
+		   jsonArray = (JSONArray) jsonObject.get("files");
+	   }
 
-               }
-            }
-         }
-      }
+	   if(jsonArray != null)
+	   {
+		   String[] labid;
+		   for(int i = 0; i < jsonArray.size(); i++ )
+		   {
+			   labid = jsonArray.getString(i).split(":");
+			   listFlaggedLabs.add(labid);
+		   }
+	   }
 
-      String newURL = "";
+	   boolean success = CommonLabResultData.fileLabs(listFlaggedLabs, loggedInInfo);
 
+	   JSONObject jsonResponse = new JSONObject();
+	   jsonResponse.accumulate("success", success);
+	   jsonResponse.accumulate("files", jsonArray);
 
-         CommonLabResultData.fileLabs(listFlaggedLabs, providerNo);
-         newURL = mapping.findForward("success").getPath();
-         newURL = newURL + "&providerNo="+providerNo+"&searchProviderNo="+searchProviderNo+"&status="+status;
-         if (request.getParameter("lname") != null) { newURL = newURL + "&lname="+request.getParameter("lname"); }
-         if (request.getParameter("fname") != null) { newURL = newURL + "&fname="+request.getParameter("fname"); }
-         if (request.getParameter("hnum")  != null) { newURL = newURL + "&hnum="+request.getParameter("hnum"); }
-         //MiscUtils.getLogger().info(newURL);
-      return (new ActionForward(newURL));
+	   PrintWriter out = null;
+	   try {
+		   out = response.getWriter();
+	   } catch (IOException e) {
+		   MiscUtils.getLogger().error("Error with JSON response ", e);
+	   }
+	   response.setContentType("application/json");
+	   response.setCharacterEncoding("UTF-8");
+	   out.print(jsonResponse);
+	   out.flush();
+
+	   return null;
    }
 
-   public ActionForward fileLabAjax(ActionMapping mapping,
-   ActionForm form,
-   HttpServletRequest request,
-   HttpServletResponse response)
-   {
-
-	   if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_lab", "w", null)) {
-			throw new SecurityException("missing required security object (_lab)");
-		}
-	   
-      String providerNo = (String) request.getSession().getAttribute("user");
-      String flaggedLab=request.getParameter("flaggedLabId").trim();
-      String labType=request.getParameter("labType").trim();
-
-      ArrayList<String[]> listFlaggedLabs = new ArrayList<String[]>();
-      String[] la =  new String[] {flaggedLab,labType};
-      listFlaggedLabs.add(la);
-      CommonLabResultData.fileLabs(listFlaggedLabs, providerNo);
-
-      return null;
-}
+   	@SuppressWarnings("unused")
+	public ActionForward fileLabAjax(ActionMapping mapping,
+	   ActionForm form,
+	   HttpServletRequest request,
+	   HttpServletResponse response)
+	   {
+	
+		   if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_lab", "w", null)) {
+				throw new SecurityException("missing required security object (_lab)");
+			}
+		   
+	      String providerNo = (String) request.getSession().getAttribute("user");
+	      String flaggedLab=request.getParameter("flaggedLabId").trim();
+	      String labType=request.getParameter("labType").trim();
+	
+	      ArrayList<String[]> listFlaggedLabs = new ArrayList<String[]>();
+	      String[] la =  new String[] {flaggedLab,labType};
+	      listFlaggedLabs.add(la);
+	      CommonLabResultData.fileLabs(listFlaggedLabs, providerNo);
+	
+	      return null;
+	}
 }
