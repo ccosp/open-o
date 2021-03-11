@@ -608,6 +608,10 @@
 
 	<action-mappings>
 	
+		<action path="/billing/CA/BC/billingServiceCode" type="org.oscarehr.billing.CA.BC.web.BillingServiceCodeAction" 
+			scope="request" validate="false" parameter="method">
+		</action>
+	
 		<action path="/lookupListManagerAction" type="org.oscarehr.admin.lookUpLists.LookupListManagerAction" 
 			scope="request" validate="false" parameter="method">
 			<forward name="success" path="/admin/lookUpLists/" />

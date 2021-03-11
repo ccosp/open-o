@@ -92,7 +92,7 @@
    java.util.Properties props =null;	        
 
    // means it's local
-	if (remoteFacilityIdString==null)
+	if (remoteFacilityIdString==null || remoteFacilityIdString.trim().isEmpty())
 	{
 		FrmRecord rec = (new FrmRecordFactory()).factory(formClass);
 		if(fromSession != null && fromSession.equals("true")) {

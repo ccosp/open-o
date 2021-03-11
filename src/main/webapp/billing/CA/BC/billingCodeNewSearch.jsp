@@ -97,14 +97,19 @@ if(!authed) {
   }
  
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title>Service Code Search</title>
-<script LANGUAGE="JavaScript">
-<!--
+
+<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+//<!--
 function CodeAttach(File0,dx1,dx2,dx3) {
- self.close();
+  	  self.close();
       self.opener.document.BillingCreateBillingForm.xml_other1.value = File0;
       self.opener.document.BillingCreateBillingForm.xml_other2.value ='';
       self.opener.document.BillingCreateBillingForm.xml_other3.value ='';
@@ -112,7 +117,8 @@ function CodeAttach(File0,dx1,dx2,dx3) {
       self.opener.document.BillingCreateBillingForm.xml_diagnostic_detail2.value =dx2;
       self.opener.document.BillingCreateBillingForm.xml_diagnostic_detail3.value =dx3;
 }
--->
+
+//-->
 </script>
 </head>
 <body bgcolor="#FFFFFF" text="#000000" topmargin="0" leftmargin="0"
@@ -125,23 +131,23 @@ function CodeAttach(File0,dx1,dx2,dx3) {
 		selections)</font></th>
 	</tr>
 </table>
-<form name="servicecode" id="servicecode" method="post"
-	action="billingCodeNewUpdate.jsp"><input type="hidden"
-	name="formName" value="<%=formName%>" /> <input type="hidden"
-	name="formElement" value="<%=formElement%>" />
-<div style="height: 600; overflow: auto">
-<table width="800" border="1">
+<form id="servicecode" class="form form-horizontal" >
+	
+<input type="hidden" name="formName" value="<%=formName%>" /> 
+<input type="hidden" name="formElement" value="<%=formElement%>" />
+<input type="hidden" name="searchAction" value="billingCodeNewSearch" /> 
+
+<table class="table table-condensed">
 	<tr bgcolor="#CCCCFF">
-		<td><b> <font face="Arial, Helvetica, sans-serif" size="2">Code</font>
-		</b></td>
-		<td><b> <font face="Arial, Helvetica, sans-serif" size="2">Description</font>
-		</b></td>
+		<th>Code</th>
+		<th>Description</th>
 	</tr>
 	<%
   
     String color = "";
     int Count = 0;
     int intCount = 0;
+    int codeid = 0;
     String numCode = "";
     String textCode = "";
     String searchType = "";
@@ -156,6 +162,7 @@ function CodeAttach(File0,dx1,dx2,dx3) {
       intCount = intCount + 1;
       Dcode = bs.getServiceCode();
       DcodeDesc = bs.getDescription();
+      codeid = bs.getId();
       if (Count == 0) {
         Count = 1;
         color = "#FFFFFF";
@@ -180,21 +187,32 @@ function CodeAttach(File0,dx1,dx2,dx3) {
       }
   %>
 	<tr bgcolor="<%=color%>">
-		<td><font face="Arial, Helvetica, sans-serif" size="2"> <%if (Dcode.compareTo(xcodeName) == 0 || Dcode.compareTo(xcodeName1) == 0 || Dcode.compareTo(xcodeName2) == 0) {        %>
-		<input type="checkbox" name="code_<%=Dcode%>" checked> <%} else {        %>
-		<input type="checkbox" name="code_<%=Dcode%>"> <%}        %> <%=Dcode%>
-		</font></td>
-		<td><font face="Arial, Helvetica, sans-serif" size="2"> <input
-			type="hidden" name="codedesc_<%=Dcode%>" value="<%=DcodeDesc%>">
-		<input type="text" name="<%=Dcode%>" value="<%=DcodeDesc%>" size="80">
-		<input type="submit" name="update" value="update <%=Dcode%>">
-		</font></td>
+		<td>
+			<label class="checkbox" for="dcodecheckbox_<%=Dcode%>">
+				 <%if (Dcode.compareTo(xcodeName) == 0 || Dcode.compareTo(xcodeName1) == 0 || Dcode.compareTo(xcodeName2) == 0) {%>
+					<input type="checkbox" class="dcodecheckbox" id="dcodecheckbox_<%=Dcode%>" name="code_<%=Dcode%>" checked> 
+				<%} else {        %>
+					<input type="checkbox" class="dcodecheckbox" id="dcodecheckbox_<%=Dcode%>" name="code_<%=Dcode%>" onchange="checkboxChanged()"> 
+				<%} %> 
+			
+				<%=Dcode%>
+			</label>
+		</td>
+		<td>
+			<div class="input-group">
+				<input type="text" class="form-control" id="codedescription_<%=codeid%>" name="codedescription" value="<%=DcodeDesc%>" >
+				<span class="input-group-btn">
+					<input type="button" class="btn btn-primary" id="<%=codeid%>" value="update" onclick="updateDescription(<%=codeid%>)" />
+				</span>
+			</div>
+		</td>
 	</tr>
 	<%}  %>
 	<%if (intCount == 0) {  %>
 	<tr bgcolor="<%=color%>">
-		<td colspan="2"><font face="Arial, Helvetica, sans-serif"
-			size="2"> No match found. <%// =i        %> </font></td>
+		<td colspan="2">
+			No match found. <%// =i        %> 		
+		</td>
 	</tr>
 	<%}%>
 	<%if (intCount == 1) {%>
@@ -207,9 +225,10 @@ function CodeAttach(File0,dx1,dx2,dx3) {
 </script>
 	<%}  %>
 </table>
-</div>
-<input type="submit" name="update" value="Confirm"> <input
+
+<!-- <input type="submit" name="update" value="Confirm"> <input
 	type="button" name="cancel" value="Cancel"
-	onclick="javascript:window.close()"></form>
+	onclick="javascript:window.close()"> -->
+	</form>
 </body>
 </html>
