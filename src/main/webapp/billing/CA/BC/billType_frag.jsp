@@ -28,7 +28,7 @@ label {
         }
     }
 </script>
-<table>
+<table class="table table-condensed table-noborder">
 	<tr>
 		<td nowrap="nowrap"><label for="billtype">Billing Type: </label>
 		</td>

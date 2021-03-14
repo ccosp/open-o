@@ -161,18 +161,24 @@ if(!authed) {
 <bean:message key="billing.bc.title"/>
 </title>
 <html:base/>
+<script type="text/javascript" >
+	// set the context path for javascript functions
+	var ctx = '${pageContext.servletContext.contextPath}';
+</script>
+
+<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/calendar/calendar.css" title="win2k-cold-1"/>
-<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
+
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/bootstrap-datetimepicker-standalone.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/bootstrap-datetimepicker.min.css" />
 
-
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/moment.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script> 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script> 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap-datetimepicker.min.js" ></script>
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/calendar.js"></script>
@@ -183,6 +189,8 @@ if(!authed) {
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/boxover.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/dxJSONCodeSearch.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery.validate-1.19.1.min.js"></script>
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/billingBCModalBoxes.js"></script>
 
 <style type="text/css">
 	table {
@@ -389,9 +397,6 @@ if(!authed) {
 
 jQuery.noConflict();
 
-// set the context path for javascript functions
-var ctx = '${pageContext.servletContext.contextPath}';
-
 //creates a javaspt array of associated dx codes
 <%=createAssociationJS(assocCodeMap,"jsAssocCodes")%>
 <%=createAssociationJS(supDao.getAssociationKeyValues(),"trayAssocCodes")%>
@@ -571,19 +576,6 @@ function correspondenceNote(){
 	}
 }
 
-function quickPickDiagnostic(diagnos){
-
-	if (document.BillingCreateBillingForm.xml_diagnostic_detail1.value == ""){
-		document.BillingCreateBillingForm.xml_diagnostic_detail1.value = diagnos;
-        }else if ( document.BillingCreateBillingForm.xml_diagnostic_detail2.value == ""){
-		document.BillingCreateBillingForm.xml_diagnostic_detail2.value= diagnos;
-	}else if ( document.BillingCreateBillingForm.xml_diagnostic_detail3.value == "" ){
-		document.BillingCreateBillingForm.xml_diagnostic_detail3.value = diagnos;
-	}else{
-		alert("All of the Diagnostic Coding Boxes are full");
-	}
-}
-
 function isNumeric(strString){
         var validNums = "0123456789.";
         var strChar;
@@ -600,7 +592,7 @@ function isNumeric(strString){
 
 function checkTextLimit(textField, maximumlength) {
    if (textField.value.length > maximumlength + 1){
-      alert("Maximun "+maximumlength+" characters");
+      alert("Maximum "+maximumlength+" characters");
    }
    if (textField.value.length > maximumlength){
       textField.value = textField.value.substring(0, maximumlength);
@@ -616,25 +608,17 @@ function RecordAttachments(Files, File0, File1, File2) {
 
 var remote=null;
 
-function rs(n,u,w,h,x) {
-  args="width="+w+",height="+h+",resizable=yes,scrollbars=yes,status=0,top=60,left=30";
-  remote=window.open(u,n,args);
-  if (remote != null) {
-    if (remote.opener == null)
-      remote.opener = self;
-  }
-  if (x == 1) { return remote; }
-}
-
-
-var awnd=null;
-
 function OtherScriptAttach() {
   t0 = escape(document.BillingCreateBillingForm.xml_other1.value);
   t1 = escape(document.BillingCreateBillingForm.xml_other2.value);
   t2 = escape(document.BillingCreateBillingForm.xml_other3.value);
-  awnd=rs('att','<rewrite:reWrite jspPage="billingCodeNewSearch.jsp"/>?name='+t0 + '&name1=' + t1 + '&name2=' + t2 + '&search=',820,740,1);
-  awnd.focus();
+  
+  var url = 'billingCodeNewSearch.jsp?name='+t0 + '&name1=' + t1 + '&name2=' + t2 + '&search=';
+  jQuery("#modal-form").load( url + " #servicecode", function(){
+	  jQuery( "#modaldialog" )
+	  	.dialog('option', 'title', 'Select Service Codes (3 max)')
+	  	.dialog("open");
+  })
 }
 
 function ReferralScriptAttach1(){
@@ -650,84 +634,32 @@ function ReferralScriptAttach(elementName) {
      var d = elementName;
      t0 = escape(document.BillingCreateBillingForm.elements[d].value);
      t1 = escape("");
-     awnd=rs('att','<rewrite:reWrite jspPage="billingReferCodeSearch.jsp"/>?name='+t0 + '&name1=' + t1 + '&name2=&search=&formElement=' +d+ '&formName=BillingCreateBillingForm',600,600,1);
-     awnd.focus();
+     
+     var url = 'billingReferCodeSearch.jsp?name='+t0 + '&name1=' + t1 + '&name2=&search=&formElement=' +d+ '&formName=BillingCreateBillingForm';
+     jQuery("#modal-form").load( url + ' #servicecode', function(){
+   	  		jQuery( "#modaldialog" )	  	
+   	  			.dialog('option', 'title', 'Select Referal Doctor')
+   		  		.dialog("open");
+     })
 }
 
 
-function ResearchScriptAttach() {
+/* function ResearchScriptAttach() {
   t0 = escape(document.serviceform.xml_referral1.value);
   t1 = escape(document.serviceform.xml_referral2.value);
 
+  jQuery("#modal-form").load( 'billingReferralCodeSearch.jsp?name='+t0 + '&name1=' + t1 +  '&search=', function(){
+	  		jQuery( "#modaldialog" ).dialog("open");
+  })
   awnd=rs('att','../<rewrite:reWrite jspPage="billingReferralCodeSearch.jsp"/>?name='+t0 + '&name1=' + t1 +  '&search=',600,600,1);
   awnd.focus();
-}
-
-function POP(n,h,v) {
-  window.open(n,'OSCAR','toolbar=no,location=no,directories=no,status=yes,menubar=no,resizable=yes,copyhistory=no,scrollbars=yes,width='+h+',height='+v+',top=100,left=200');
-}
-
+} */
 
 function grabEnter(event,callb){
   if( (window.event && window.event.keyCode == 13) || (event && event.which == 13) )  {
      eval(callb);
      return false;
   }
-}
-
-function reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
-    document.pgW=innerWidth; document.pgH=innerHeight; onresize=reloadPage; }}
-  else if (innerWidth!=document.pgW || innerHeight!=document.pgH) location.reload();
-}
-reloadPage(true);
-
-
-function findObj(n, d) { //v4.0
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=findObj(n,d.layers[i].document);
-  if(!x && document.getElementById) x=document.getElementById(n); return x;
-}
-function getOffsetLeft (el) {
-	var ol=el.offsetLeft;
-	while ((el=el.offsetParent) != null) { ol += el.offsetLeft; }
-	return ol;
-	}
-
-function getOffsetTop (el) {
-	var ot=el.offsetTop;
-	while((el=el.offsetParent) != null) { ot += el.offsetTop; }
-	return ot;
-	}
-var objPopup = null;
-var shim = null;
-function formPopup(event,objectId){
-  objPopTrig = document.getElementById(event);
-  objPopup = document.getElementById(objectId);
-  shim = document.getElementById('DivShim');
- xPos = getOffsetLeft(objPopTrig);
-  yPos = getOffsetTop(objPopTrig) + objPopTrig.offsetHeight;
-
-  objPopup.style.zIndex = 9999;
-
-  shim.style.width = objPopup.offsetWidth + 2;
-  shim.style.height = objPopup.offsetHeight;
-  shim.style.top = objPopup.style.top;
-  shim.style.left = objPopup.style.left;
-  shim.style.zIndex = objPopup.style.zIndex - 1;
-  shim.style.display = "block";
-  objPopup.style.display = "block";
-  shim.style.visibility = 'visible';
-  objPopup.style.visibility = 'visible';
-}
-
-function formPopupHide(){
-  objPopup.style.visibility = 'hidden';
-  shim.style.visibility = 'hidden';
-  objPopup = null;
-  shim = null;
 }
 
 function addCodeToList(svcCode){
@@ -769,10 +701,7 @@ function setCodeToChecked(svcCode){
             myform.xml_other3.value  = svcCode;
             //myform.xml_diagnostic_detail3.value = "";
         }
-    }
-    
-    
-    
+    }    
 }
 
 /*
@@ -824,7 +753,6 @@ function setReferralDoctor() {
 jQuery(document).ready(function(jQuery){
 	setReferralDoctor();
 	loadDefaultProvder();
-	
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
 	
 	/* for setting times */
@@ -898,11 +826,15 @@ jQuery(document).ready(function(jQuery){
 			 xml_refer1: {
 				 number: true
 			 },
+
+			 xml_refer2: {
+				 number: true
+			 },
+
 			 
 			 xml_refer2: {
 				 number: true
 			 },
-			 
 			 /*
 			  * Validate all 3 service codes and 
 			  * unit values
@@ -1014,8 +946,10 @@ jQuery(document).ready(function(jQuery){
 			 xml_provider: "Select a billing physician",
 			 xml_other1: "At least 1 service code is required",
 			 xml_refer1: "1: Invalid Referral Doctor code",
+
 			 xml_refer2: "2: Invalid Referral Doctor code",
 			 WCBid: "A WCB Form must be selected."
+
 		 },
 		 
 		 /*
@@ -1054,6 +988,7 @@ jQuery(document).ready(function(jQuery){
 		 jQuery("#jsonDxSearchInput-2").val(""); 
 		 jQuery("#jsonDxSearchInput-3").val(""); 
 	 })
+	
 	 
 }); //<!-- End Document Ready //-->
 </script>
@@ -1094,7 +1029,7 @@ jQuery(document).ready(function(jQuery){
 <%-- 	Keep until confirmed not needed.			
 
 					<span class="badge badge-primary"><bean:message key="billing.patient.status"/></span> 
-					<strong class="label-text"><%=demo.getPatientStatus()%></label>
+					<label class="label-text"><%=demo.getPatientStatus()%></label>
 	
               <span class="badge badge-primary"><bean:message key="billing.patient.roster"/></span> 
 	                <label><%=demo.getRosterStatus()%></label> 
@@ -1118,6 +1053,7 @@ jQuery(document).ready(function(jQuery){
 					</security:oscarSec>
 					
 	                <button type="button" class="btn btn-link" title="View previous invoices for this patient" onclick="popup(800, 1000, 'billStatus.jsp?lastName=<%=demo.getLastName()%>&firstName=<%=demo.getFirstName()%>&filterPatient=true&demographicNo=<%=demo.getDemographicNo()%>','InvoiceList');return false;">
+
 						<bean:message key="demographic.demographiceditdemographic.msgInvoiceList"/>
 					</button>
 					
@@ -2005,7 +1941,7 @@ if(wcbneeds != null){%>
 </html:form>
  </div>
  </div>
- 
+
 <oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
 	<script type="text/javascript">
 		function getDxInformation(origRequest){
@@ -2017,5 +1953,6 @@ if(wcbneeds != null){%>
 		getDxInformation();
 	</script>
 </oscar:oscarPropertiesCheck>
+
 </body>
 </html>

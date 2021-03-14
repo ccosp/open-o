@@ -152,6 +152,15 @@ public class FormForwardAction extends Action {
 			redirect.addParameter("warning", "history");
 		}
 		
+		/*
+		 * Work around for older OSCAR code that does a positive evaluation on 
+		 * a null value for remoteFacilityIdString. 
+		 */
+		if(remoteFacilityIdString != null && remoteFacilityIdString.trim().isEmpty()) 
+		{			
+			remoteFacilityIdString = null;
+		}
+				
 		redirect.addParameter("remoteFacilityId", remoteFacilityIdString);		
 		redirect.addParameter("appointmentNo", appointmentNo);
 		redirect.addParameter("provNo", provNo);
