@@ -365,7 +365,7 @@ public class CommonLabResultData {
 		 * Update an existing entry
 		 */
 		List<ProviderLabRoutingModel> providerLabRoutingModelList = providerLabRoutingDao.findByLabNoAndLabTypeAndProviderNo(labNo, labType, providerNo);
-		if(providerLabRoutingModelList != null)
+		if(providerLabRoutingModelList != null && ! providerLabRoutingModelList.isEmpty())
 		{
 			for(ProviderLabRoutingModel providerLabRoutingModel : providerLabRoutingModelList)
 			{

@@ -494,7 +494,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                                                         if(success){
                                                                             if(action=='ackLab'){
                                                                                 if(confirmAck()){
-                                                                                	$("labStatus_"+labid).value = "A";
+                                                                                	jQuery("#labStatus_"+labid).val("A")
                                                                                     updateStatus(formid,labid);
                                                                                 }
                                                                             }else if(action=='msgLab'){
@@ -520,7 +520,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                                                         }else{
                                                                             if(action=='ackLab'){
                                                                                 if(confirmAckUnmatched()) {
-                                                                                	$("labStatus_"+labid).value = "A";
+                                                                                	jQuery("#labStatus_"+labid).val("A")
                                                                                     updateStatus(formid,labid);
                                                                                 }
                                                                                 else {
