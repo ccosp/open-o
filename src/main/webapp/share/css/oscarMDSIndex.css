@@ -62,6 +62,12 @@ table#summaryView tr th div.tablesorter-header-inner {
 	font-weight: bold !important;
 }
 
+#summaryView thead {
+	position:sticky;
+	top:0px;
+	margin-left: unset;
+}
+
 tr.NormalRes.UnassignedRes:nth-child(even) {
 	background-color: #ffcc00 !important;
 }
