@@ -21,6 +21,7 @@
  * Hamilton
  * Ontario, Canada
  */
+
 body {
 	background-color: #e0e1ff;
 	top: 0px;
@@ -35,9 +36,9 @@ table {
 	border-collapse: collapse !important;
 }
 
-table#readerViewTable {
+/* table#readerViewTable {
 	border: #003399 thin solid;
-}
+}*/
 
 table#summaryView tr td {
 	padding: 2px 5px !important;
@@ -495,8 +496,8 @@ table tr[id^=labdoc] td, div[id^=labdoc] {
 }
 
 td#categoryList {
-	height:600px ;
-	border-right: #003399 thin solid;
+	/* height:600px ;
+	 border-right: #003399 thin solid; */
 	overflow-wrap: anywhere;
 }
 td#categoryList div.documentSummaryList {
