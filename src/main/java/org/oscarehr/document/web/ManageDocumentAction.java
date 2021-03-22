@@ -29,34 +29,36 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.RandomAccessFile;
+
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.activation.DataHandler;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.itextpdf.text.pdf.PdfReader;
+import com.sun.pdfview.PDFFile;
+import com.sun.pdfview.PDFPage;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.io.RandomAccessFile;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -66,6 +68,7 @@ import org.jpedal.fonts.FontMappings;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
 import org.oscarehr.PMmodule.model.ProgramProvider;
+
 import org.oscarehr.caisi_integrator.ws.CachedDemographicDocument;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicDocumentContents;
 import org.oscarehr.caisi_integrator.ws.DemographicWs;
@@ -103,30 +106,23 @@ import oscar.oscarEncounter.data.EctProgram;
 import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.UtilDateUtilities;
 
-import com.lowagie.text.pdf.PdfReader;
-import com.sun.pdfview.PDFFile;
-import com.sun.pdfview.PDFPage;
-
 /**
  * @author jaygallagher
  */
 public class ManageDocumentAction extends DispatchAction {
 
-	private static Logger log = MiscUtils.getLogger();
+	private final Logger log = MiscUtils.getLogger();
 
-	private DocumentDao documentDao = SpringUtils.getBean(DocumentDao.class);
-	private CtlDocumentDao ctlDocumentDao = SpringUtils.getBean(CtlDocumentDao.class);
-	private ProviderInboxRoutingDao providerInboxRoutingDAO = SpringUtils.getBean(ProviderInboxRoutingDao.class);
-	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+	private final DocumentDao documentDao = SpringUtils.getBean(DocumentDao.class);
+	private final CtlDocumentDao ctlDocumentDao = SpringUtils.getBean(CtlDocumentDao.class);
+	private final ProviderInboxRoutingDao providerInboxRoutingDAO = SpringUtils.getBean(ProviderInboxRoutingDao.class);
+	private final SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	
 	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
 		return null;
 	}
 
-	public ActionForward documentUpdateAjax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
-		String ret = "";
+	public void documentUpdateAjax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 		String observationDate = request.getParameter("observationDate");// :2008-08-22<
 		String documentDescription = request.getParameter("documentDescription");// :test2<
@@ -178,7 +174,7 @@ public class ManageDocumentAction extends DispatchAction {
 			d.setDocdesc(documentDescription);
 			d.setDoctype(docType);
 			Date obDate = UtilDateUtilities.StringToDate(observationDate);
-	
+
 			if (obDate != null) {
 				d.setObservationdate(obDate);
 			}
@@ -190,7 +186,9 @@ public class ManageDocumentAction extends DispatchAction {
 		try {
 
 			CtlDocument ctlDocument = ctlDocumentDao.getCtrlDocument(Integer.parseInt(documentId));
-			if(ctlDocument != null) {
+			int demographicNumber = Integer.parseInt(demog);
+			// If this ctlDocument is a document module type and is not for the demographic being saved then create a new entry and remove the old one
+			if(ctlDocument != null && (ctlDocument.isDemographicDocument() && demographicNumber != ctlDocument.getId().getModuleId())) {
 				
 				CtlDocument matchedCtlDocument = new CtlDocument();
 				matchedCtlDocument.getId().setDocumentNo(ctlDocument.getId().getDocumentNo());
@@ -211,11 +209,7 @@ public class ManageDocumentAction extends DispatchAction {
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("Error", e);
 		}
-		
-		
-		if (ret != null && !ret.equals("")) {
-			// response.getOutputStream().print(ret);
-		}
+
 		HashMap hm = new HashMap();
 		hm.put("patientId", demog);
 		JSONObject jsonObject = JSONObject.fromObject(hm);
@@ -225,11 +219,9 @@ public class ManageDocumentAction extends DispatchAction {
 			MiscUtils.getLogger().error("Error", e);
 		}
 
-		return null;
-
 	}
 
-	public ActionForward getDemoNameAjax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public void getDemoNameAjax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		String dn = request.getParameter("demo_no");
 		
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_demographic", "r", dn)) {
@@ -244,11 +236,9 @@ public class ManageDocumentAction extends DispatchAction {
 		} catch (IOException e) {
 			MiscUtils.getLogger().error("Error", e);
 		}
-
-		return null;
 	}
 
-	public ActionForward removeLinkFromDocument(ActionMapping mapping, ActionForm form,
+	public void removeLinkFromDocument(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		String docType = request.getParameter("docType");
 		String docId = request.getParameter("docId");
@@ -269,8 +259,6 @@ public class ManageDocumentAction extends DispatchAction {
 		} catch (IOException e) {
 			MiscUtils.getLogger().error("Error",e);
 		}
-
-		return null;
 	}	
         public ActionForward refileDocumentAjax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	
@@ -290,8 +278,6 @@ public class ManageDocumentAction extends DispatchAction {
         }
         
 	public ActionForward documentUpdate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
-		String ret = "";
 
 		String observationDate = request.getParameter("observationDate");// :2008-08-22<
 		String documentDescription = request.getParameter("documentDescription");// :test2<
@@ -351,11 +337,6 @@ public class ManageDocumentAction extends DispatchAction {
 			MiscUtils.getLogger().error("Error", e);
 		}
 
-		if (ret != null && !ret.equals("")) {
-			// response.getOutputStream().print(ret);
-		}
-				
-		
 		String providerNo = request.getParameter("providerNo");
 		String searchProviderNo = request.getParameter("searchProviderNo");
 		String ackStatus = request.getParameter("status");
@@ -474,96 +455,33 @@ public class ManageDocumentAction extends DispatchAction {
 		return outfile;
 	}
 
-	public File createCacheVersion2(Document d, Integer pageNum) {
+	public byte[] createCacheVersion2(Document d, Integer pageNum) {
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		File documentDir = new File(docdownload);
-		File documentCacheDir = getDocumentCacheDir(docdownload);
-		log.debug("Document Dir is a dir" + documentDir.isDirectory());
-		File file = new File(documentDir, d.getDocfilename());
-		PdfDecoder decode_pdf  = new PdfDecoder(true);
-		File ofile = null;
-		try {
+		Path pdfPath = Paths.get(docdownload, d.getDocfilename());
+		Path pngFile = getDocumentCacheDir(docdownload).toPath().resolve(d.getDocfilename() + "_" + pageNum + ".png");
 
-			FontMappings.setFontReplacements();
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+			PDFParser parser = new PDFParser(new RandomAccessFile(pdfPath.toFile(), "rw"));
+			parser.parse();
+			PDDocument pdf = parser.getPDDocument();
 
-			decode_pdf.useHiResScreenDisplay(true);
+			PDFRenderer rend = new PDFRenderer(pdf);
+			//Page index starts at 0, subtracts 1 to account for that
+			BufferedImage image = rend.renderImageWithDPI(pageNum - 1, 144f);
 
-			decode_pdf.setExtractionMode(0, 96, 96/72f);
-
-			FileInputStream is = new FileInputStream(file);
-
-			decode_pdf.openPdfFileFromInputStream(is, false);
-
-			BufferedImage image_to_save = decode_pdf.getPageAsImage(pageNum);
-
-
-
-			decode_pdf.getObjectStore().saveStoredImage( documentCacheDir.getCanonicalPath() + "/" + d.getDocfilename() + "_" + pageNum + ".png", image_to_save, true, false, "png");
-
-			decode_pdf.flushObjectValues(true);
-
-			decode_pdf.closePdfFile();
-
-			ofile = new File(documentCacheDir, d.getDocfilename() + "_" + pageNum + ".png");
-
-
-
-		}catch(Exception e) {
-			log.error("Error decoding pdf file " + d.getDocfilename());
-			decode_pdf.closePdfFile();
+			// write cache file
+			ImageIO.write(image, "png", pngFile.toFile());
+			ImageIO.write(image, "png", baos);
+			return baos.toByteArray();
+		} catch (Exception e) {
+			log.error("Error decoding pdf file " + d.getDocfilename(), e);
+			return null;
 		}
-
-		return ofile;
-
-		/*
-
-		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		File documentDir = new File(docdownload);
-		File documentCacheDir = getDocumentCacheDir(docdownload);
-		log.debug("Document Dir is a dir" + documentDir.isDirectory());
-
-		File file = new File(documentDir, d.getDocfilename());
-
-		RandomAccessFile raf = new RandomAccessFile(file, "r");
-		FileChannel channel = raf.getChannel();
-		ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
-		PDFFile pdffile = new PDFFile(buf);
-		if(raf != null) raf.close();
-		if(channel != null) channel.close();
-		// long readfile = System.currentTimeMillis() - start;
-		// draw the first page to an image
-		PDFPage ppage = pdffile.getPage(pageNum);
-
-		log.debug("WIDTH " + (int) ppage.getBBox().getWidth() + " height " + (int) ppage.getBBox().getHeight());
-
-		// get the width and height for the doc at the default zoom
-		Rectangle rect = new Rectangle(0, 0, (int) ppage.getBBox().getWidth(), (int) ppage.getBBox().getHeight());
-
-		log.debug("generate the image");
-		Image img = ppage.getImage(rect.width, rect.height, // width & height
-		        rect, // clip rect
-		        null, // null for the ImageObserver
-		        true, // fill background with white
-		        true // block until drawing is done
-		        );
-
-		log.debug("about to Print to stream");
-		File outfile = new File(documentCacheDir, d.getDocfilename() + "_" + pageNum + ".png");
-
-		OutputStream outs = null;
-		try {
-			outs = new FileOutputStream(outfile);
-
-			RenderedImage rendImage = (RenderedImage) img;
-			ImageIO.write(rendImage, "png", outs);
-			outs.flush();
-		} finally {
-			if (outs != null) outs.close();
-		}
-		return outfile;
-*/
 	}
 
+	/**
+	 * @Deprecated : use createCacheVersion2
+	 */
 	public File createCacheVersion(Document d) throws Exception {
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
@@ -572,13 +490,17 @@ public class ManageDocumentAction extends DispatchAction {
 		log.debug("Document Dir is a dir" + documentDir.isDirectory());
 
 		File file = new File(documentDir, d.getDocfilename());
+		PDFFile pdffile = null;
 
-		RandomAccessFile raf = new RandomAccessFile(file, "r");
-		FileChannel channel = raf.getChannel();
-		ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
-		PDFFile pdffile = new PDFFile(buf);
-		if(raf != null) raf.close();
-		if(channel != null) channel.close();
+		try(java.io.RandomAccessFile raf = new java.io.RandomAccessFile(file, "r");
+			FileChannel channel = raf.getChannel()
+		) {
+			ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
+			pdffile = new PDFFile(buf);
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
+
 		// long readfile = System.currentTimeMillis() - start;
 		// draw the first page to an image
 		PDFPage ppage = pdffile.getPage(0);
@@ -599,131 +521,93 @@ public class ManageDocumentAction extends DispatchAction {
 		log.debug("about to Print to stream");
 		File outfile = new File(documentCacheDir, d.getDocfilename() + ".png");
 
-		OutputStream outs = null;
-		try {
-			outs = new FileOutputStream(outfile);
-
+		try (OutputStream outs = new FileOutputStream(outfile)) {
 			RenderedImage rendImage = (RenderedImage) img;
 			ImageIO.write(rendImage, "png", outs);
 			outs.flush();
-		} finally {
-			if (outs != null) outs.close();
 		}
 
 		return outfile;
 
 	}
 
-	public ActionForward showPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return getPage(mapping, form, request, response, Integer.parseInt(request.getParameter("page")));
+	public void showPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		getPage(mapping, form, request, response, Integer.parseInt(request.getParameter("page")));
 	}
 
-	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-		return getPage(mapping, form, request, response, 1);
+	public void view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
+		getPage(mapping, form, request, response, 1);
 	}
 
 	// PNG version
-	public ActionForward getPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, int pageNum) {
+	public void getPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, int pageNum) {
 
-		try {
-			String doc_no = request.getParameter("doc_no");
-			log.debug("Document No :" + doc_no);
+		String doc_no = request.getParameter("doc_no");
+		log.debug("Document No :" + doc_no);
+		LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.READ, LogConst.CON_DOCUMENT, doc_no, request.getRemoteAddr());
+		Document d = documentDao.getDocument(doc_no);
 
-			LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.READ, LogConst.CON_DOCUMENT, doc_no, request.getRemoteAddr());
+		log.debug("Document Name :" + d.getDocfilename());
 
-			Document d = documentDao.getDocument(doc_no);
-			log.debug("Document Name :" + d.getDocfilename());
+		File outfile = hasCacheVersion(d, pageNum);
 
-			File outfile = hasCacheVersion(d, pageNum);
-			if (outfile == null){
-				outfile = createCacheVersion2( d, pageNum);
-			}
-			response.setContentType("image/png");
-			// response.setHeader("Content-Disposition", "attachment;filename=\"" + filename+ "\"");
-			// read the file name.
-
-			log.debug("about to Print to stream");
-			ServletOutputStream outs = response.getOutputStream();
-
-			response.setHeader("Content-Disposition", "attachment;filename=" + d.getDocfilename());
-			BufferedInputStream bfis = null;
-			try {
-				bfis = new BufferedInputStream(new FileInputStream(outfile));
-				int data;
-				while ((data = bfis.read()) != -1) {
-					outs.write(data);
-					// outs.flush();
-				}
-			} finally {
-				if (bfis!=null) bfis.close();
-			}
-			outs.flush();
-			outs.close();
-		} catch (java.net.SocketException se) {
-			MiscUtils.getLogger().error("Error", se);
-		} catch (Exception e) {
-			MiscUtils.getLogger().error("Error", e);
+		if (outfile != null) {
+			setResponse(response, outfile);
+		} else {
+			byte[] pdfBytes = createCacheVersion2(d, pageNum);
+			setResponse(response, pdfBytes);
 		}
-		return null;
+
+		response.setContentType("image/png");
+		response.setHeader("Content-Disposition", "attachment;filename=\"" + d.getDocfilename() + "\"");
 	}
 
-	public ActionForward viewDocPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public void viewDocPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_edoc", "r", null)) {
         	throw new SecurityException("missing required security object (_edoc)");
         }
 		
 		log.debug("in viewDocPage");
-		try {
-			String doc_no = request.getParameter("doc_no");
-			String pageNum = request.getParameter("curPage");
-			if (pageNum == null) {
-				pageNum = "0";
-			}
-			Integer pn = Integer.parseInt(pageNum);
-			log.debug("Document No :" + doc_no);
-			LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.READ, LogConst.CON_DOCUMENT, doc_no, request.getRemoteAddr());
 
-			Document d = documentDao.getDocument(doc_no);
-			log.debug("Document Name :" + d.getDocfilename());
-			String name = d.getDocfilename() + "_" + pn + ".png";
-			log.debug("name " + name);
-
-			File outfile = hasCacheVersion2(d, pn);
-			if (outfile != null) {
-				log.debug("got doc from local cache   ");
-			} else {
-				outfile = createCacheVersion2(d, pn);
-				if (outfile != null) {
-					log.debug("create new doc  ");
-				}
-			}
-			response.setContentType("image/png");
-			ServletOutputStream outs = response.getOutputStream();
-			response.setHeader("Content-Disposition", "attachment;filename=" + d.getDocfilename());
-
-			try (BufferedInputStream bfis = new BufferedInputStream(new FileInputStream(outfile))){
-				if (outfile != null) {
-					int data;
-					while ((data = bfis.read()) != -1) {
-						outs.write(data);
-					}
-				} else {
-					log.info("Unable to retrieve content for " + d + ". This may indicate previous upload or save errors...");
-				}
-			} 
-
-			outs.flush();
-			outs.close();
-		} catch (java.net.SocketException se) {
-			MiscUtils.getLogger().error("Error", se);
-		} catch (Exception e) {
-			MiscUtils.getLogger().error("Error", e);
+		String doc_no = request.getParameter("doc_no");
+		String pageNum = request.getParameter("curPage");
+		if (pageNum == null) {
+			pageNum = "0";
 		}
-		return null;
+		Integer pn = Integer.parseInt(pageNum);
+		log.debug("Document No :" + doc_no);
+		LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.READ, LogConst.CON_DOCUMENT, doc_no, request.getRemoteAddr());
+
+		Document d = documentDao.getDocument(doc_no);
+		log.debug("Document Name :" + d.getDocfilename());
+		//if the file is not a pdf, use display function
+		if(!(d.getContenttype().equals("application/pdf") || d.getDocfilename().endsWith(".pdf"))) {
+			try {
+				display(mapping, form, request, response);
+			} catch (Exception e) {
+				log.error("Error while displaying document ", e);
+			}
+			return;
+		}
+
+		String name = d.getDocfilename() + "_" + pn + ".png";
+		log.debug("name " + name);
+
+		File outfile = hasCacheVersion2(d, pn);
+
+		if (outfile != null) {
+			setResponse(response, outfile);
+		} else {
+			byte[] pdfBytes = createCacheVersion2(d, pn);
+			setResponse(response, pdfBytes);
+		}
+
+		response.setContentType("image/png");
+		response.setHeader("Content-Disposition", "attachment;filename=\"" + d.getDocfilename() + "\"");
 	}
 
-	public ActionForward view2(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void view2(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_edoc", "r", null)) {
         	throw new SecurityException("missing required security object (_edoc)");
@@ -748,7 +632,7 @@ public class ManageDocumentAction extends DispatchAction {
 		// read the file name.
 		File file = new File(documentDir, d.getDocfilename());
 
-		RandomAccessFile raf = new RandomAccessFile(file, "r");
+		java.io.RandomAccessFile raf = new java.io.RandomAccessFile(file, "r");
 		FileChannel channel = raf.getChannel();
 		ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
 		PDFFile pdffile = new PDFFile(buf);
@@ -776,10 +660,10 @@ public class ManageDocumentAction extends DispatchAction {
 		ImageIO.write(rendImage, "png", outs);
 		outs.flush();
 		outs.close();
-		return null;
+
 	}
 
-	public ActionForward getDocPageNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public void getDocPageNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_edoc", "r", null)) {
         	throw new SecurityException("missing required security object (_edoc)");
@@ -803,8 +687,6 @@ public class ManageDocumentAction extends DispatchAction {
 		} catch (IOException e) {
 			MiscUtils.getLogger().error("Error", e);
 		}
-
-		return null;// execute2(mapping, form, request, response);
 	}
 	
 	public ActionForward downloadCDS(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -829,7 +711,7 @@ public class ManageDocumentAction extends DispatchAction {
 		return null;
 	}
 
-	public ActionForward display(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void display(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 		
@@ -845,6 +727,7 @@ public class ManageDocumentAction extends DispatchAction {
 
 		String doc_no = request.getParameter("doc_no");
 		log.debug("Document No :" + doc_no);
+        String demoNo = request.getParameter("demoNo");
 
 		String docxml = null;
 		String contentType = null;
@@ -873,12 +756,16 @@ public class ManageDocumentAction extends DispatchAction {
 
 			File file = new File(documentDir, d.getDocfilename());
 			filename = d.getDocfilename();
-                        
-            if (contentType != null) {
-                if (file.exists()) {
-                	contentBytes = FileUtils.readFileToByteArray(file);
-                } 
-            }
+
+			if (file.exists()) {
+				contentBytes = FileUtils.readFileToByteArray(file);
+			} else {
+				if (docxml==null || docxml.trim().equals("")){
+					// Only throw exception if the file does not exist and the docxml is null/empty to serve HTML files that were uploaded in OSCAR 12,
+					// where HTML file uploads contents were stored in the docxml field of the document table, and the file was never saved.
+					throw new IllegalStateException("Local document doesn't exist for eDoc (ID " + d.getId() + "): " + file.getAbsolutePath());
+				}
+			}
 		} else // remote document
 		{
 			FacilityIdIntegerCompositePk remotePk = new FacilityIdIntegerCompositePk();
@@ -888,7 +775,7 @@ public class ManageDocumentAction extends DispatchAction {
 			
 			CachedDemographicDocument remoteDocument = null;
 			CachedDemographicDocumentContents remoteDocumentContents = null;
-			
+
 			try {
 				if (!CaisiIntegratorManager.isIntegratorOffline(request.getSession())){
 					DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
@@ -918,20 +805,12 @@ public class ManageDocumentAction extends DispatchAction {
 			docxml = remoteDocument.getDocXml();
 			contentType = remoteDocument.getContentType();
 			filename = remoteDocument.getDocFilename();
-			
-			//TODO improvements with how this streams are needed. This is a quick patch to take advantage of the new MTOM in Integrator.
-			DataHandler dataHandler = remoteDocumentContents.getFileContents();
-			contentBytes = IOUtils.toByteArray(dataHandler.getInputStream());
+			contentBytes = remoteDocumentContents.getFileContents().getContent().toString().getBytes(StandardCharsets.UTF_8);
 		}
 
 		if (docxml != null && !docxml.trim().equals("")) {
-			response.setHeader("Content-Disposition","attachment; filename="+filename+";");
-			
-			ServletOutputStream outs = response.getOutputStream();
-			outs.write(docxml.getBytes());
-			outs.flush();
-			outs.close();
-			return null;
+			setResponse(response, docxml.getBytes());
+			return;
 		}
 
 		// TODO: Right now this assumes it's a pdf which it shouldn't
@@ -939,39 +818,32 @@ public class ManageDocumentAction extends DispatchAction {
 			contentType = "application/octet-stream";
 		}
 
+        String data = "doc_no=" + doc_no;
+        LogAction.addLog(loggedInInfo, LogConst.READ, "Document", null, demoNo, data);
+
 		response.setContentType(contentType);
 		response.setContentLength(contentBytes.length);
-		
-		
-		response.setHeader("Content-Disposition", "inline; filename=" + filename);
-        
-        if(contentType.equals("text/html")) {
-                response.setHeader("Content-Disposition","attachment; filename="+filename+";");
-        }
-
+		response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
 		log.debug("about to Print to stream");
 		ServletOutputStream outs = response.getOutputStream();
 		outs.write(contentBytes);
 		outs.flush();
 		outs.close();
-		return null;
 	}
 
-        public ActionForward viewDocumentInfo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public void viewDocumentInfo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
                 response.setContentType("text/html");
 		doViewDocumentInfo(request, response.getWriter(),true,true);
-		return null;
+
 	}
         
-        public ActionForward viewDocumentDescription(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public void viewDocumentDescription(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
                 response.setContentType("text/html");
 		doViewDocumentInfo(request, response.getWriter(),false,true);
-		return null;
 	}
-        public ActionForward viewAnnotationAcknowledgementTickler(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public void viewAnnotationAcknowledgementTickler(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
                 response.setContentType("text/html");
 		doViewDocumentInfo(request, response.getWriter(),true,false);
-		return null;
 	}
      
         public void doViewDocumentInfo(HttpServletRequest request, PrintWriter out,boolean viewAnnotationAcknowledgementTicklerFlag, boolean viewDocumentDescriptionFlag) {
@@ -1024,7 +896,7 @@ public class ManageDocumentAction extends DispatchAction {
                 }
                 
                 out.println("</body></html>");
-		out.flush();
+				out.flush();
                 out.close();
                 
         }
@@ -1138,7 +1010,7 @@ public class ManageDocumentAction extends DispatchAction {
         return (mapping.findForward("nextIncomingDoc"));
     }
         
-    public ActionForward viewIncomingDocPageAsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void viewIncomingDocPageAsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     	if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_edoc", "r", null)) {
         	throw new SecurityException("missing required security object (_edoc)");
@@ -1156,43 +1028,26 @@ public class ManageDocumentAction extends DispatchAction {
             pageNum = "0";
         }
 
-        Integer pn = Integer.parseInt(pageNum);
+        int pageNumber = Integer.parseInt(pageNum);
 
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=\"" + pdfName + UtilDateUtilities.getToday("yyyy-MM-dd.hh.mm.ss") + ".pdf\"");
-        
-        com.itextpdf.text.pdf.PdfCopy extractCopy = null;
-        com.itextpdf.text.Document document = null;
-        com.itextpdf.text.pdf.PdfReader reader = null;
 
         try {
-            reader = new com.itextpdf.text.pdf.PdfReader(filePath);
-            document = new com.itextpdf.text.Document(reader.getPageSizeWithRotation(1));
-            extractCopy = new com.itextpdf.text.pdf.PdfCopy(document, response.getOutputStream());
-
-            document.open();
-            extractCopy.addPage(extractCopy.getImportedPage(reader, pn));
-
-
+            PDDocument reader = PDDocument.load(new File(filePath));
+            PDDocument extractedPage = new PDDocument();
+            extractedPage.addPage(reader.getDocumentCatalog().getPages().get(pageNumber - 1));
+            extractedPage.save(response.getOutputStream());
+            extractedPage.close();
+            reader.close();
         } catch (Exception ex) {
             response.setContentType("text/html");
             response.getWriter().print(props.getString("dms.incomingDocs.errorInOpening") + pdfName);
             response.getWriter().print("<br>"+props.getString("dms.incomingDocs.PDFCouldBeCorrupted"));
 
             MiscUtils.getLogger().error("Error", ex);
-        } finally {
-            if (extractCopy != null) {
-                extractCopy.close();
-            }
-            if (document != null) {
-                document.close();
-            }
-            if (reader != null) {
-                reader.close();
-            }
         }
 
-        return null;
     }
 
     public int countNumOfPages(String fileName) { // count number of pages in a pdf file
@@ -1204,23 +1059,19 @@ public class ManageDocumentAction extends DispatchAction {
         }
 
         String filePath = docdownload + fileName;
-        PdfReader reader = null;
 
         try {
-            reader = new PdfReader(filePath);
+            PDDocument reader = PDDocument.load(new File(filePath));
             numOfPage = reader.getNumberOfPages();
 
+            reader.close();
         } catch (IOException e) {
             MiscUtils.getLogger().error("Error", e);
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
         }
         return numOfPage;
     }
 
-    public ActionForward displayIncomingDocs(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void displayIncomingDocs(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     	if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_edoc", "r", null)) {
         	throw new SecurityException("missing required security object (_edoc)");
@@ -1255,11 +1106,9 @@ public class ManageDocumentAction extends DispatchAction {
                 bfis.close();
             }
         }
-
-        return null;
     }
         
-    public ActionForward viewIncomingDocPageAsImage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void viewIncomingDocPageAsImage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 
     	if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_edoc", "r", null)) {
@@ -1288,7 +1137,7 @@ public class ManageDocumentAction extends DispatchAction {
 
 
                 response.setContentType("image/png");
-                response.setHeader("Content-Disposition", "inline;filename=" + pdfName);
+                response.setHeader("Content-Disposition", "inline;filename=\"" + pdfName + "\"");
                 org.apache.commons.io.IOUtils.copy(bfis,outs);
                 outs.flush();
                 
@@ -1303,30 +1152,23 @@ public class ManageDocumentAction extends DispatchAction {
                 bfis.close();
             }
         }
-        return null;
     }
 
     public File createIncomingCacheVersion(String queueId, String pdfDir, String pdfName, Integer pageNum) throws Exception {
-
 
         String incomingDocPath = IncomingDocUtil.getIncomingDocumentFilePath(queueId, pdfDir);
         File documentDir = new File(incomingDocPath);
         File documentCacheDir = getDocumentCacheDir(incomingDocPath);
         File file = new File(documentDir, pdfName);
-
         PdfDecoder decode_pdf = new PdfDecoder(true);
-        File ofile = null;
-        FileInputStream is = null;
-        
-        try {
+
+        try (FileInputStream is = new FileInputStream(file)) {
 
             FontMappings.setFontReplacements();
 
             decode_pdf.useHiResScreenDisplay(true);
 
             decode_pdf.setExtractionMode(0, 96, 96 / 72f);
-
-            is = new FileInputStream(file);
 
             decode_pdf.openPdfFileFromInputStream(is, false);
 
@@ -1336,21 +1178,35 @@ public class ManageDocumentAction extends DispatchAction {
 
             decode_pdf.flushObjectValues(true);
 
+            return new File(documentCacheDir, pdfName + "_" + pageNum + ".png");
         } catch (Exception e) {
             log.error("Error decoding pdf file " + pdfDir + pdfName);
+            return null;
         } finally {
             if (decode_pdf != null) {
                 decode_pdf.closePdfFile();
             }
-            if (is!=null) {
-                is.close();
-            }
-                
         }
-        
-        ofile = new File(documentCacheDir, pdfName + "_" + pageNum + ".png");
-        
-        return ofile;
-
     }
+
+	private HttpServletResponse setResponse(HttpServletResponse response, byte[] pdfBytes) {
+		try (ServletOutputStream outs = response.getOutputStream();
+				ByteArrayInputStream fileInputStream = new ByteArrayInputStream(pdfBytes)) {
+			org.apache.commons.io.IOUtils.copy(fileInputStream, outs);
+		} catch (Exception e) {
+			log.error("Error retrieving PDF document", e);
+		}
+		return response;
+	}
+
+    private HttpServletResponse setResponse(HttpServletResponse response, File output) {
+		try (ServletOutputStream outs = response.getOutputStream();
+			 FileInputStream fileInputStream = new FileInputStream(output)
+		) {
+			org.apache.commons.io.IOUtils.copy(fileInputStream, outs);
+		} catch (Exception e) {
+			log.error("Error retrieving document: " + output.getPath(), e);
+		}
+		return response;
+	}
 }
