@@ -82,8 +82,8 @@ String endDate = (String) request.getAttribute("endDate");
 <bean:message key="oscarMDS.index.title"/>
 </title>
 <html:base/>
-
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/showDocument.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/css/oscarMDSIndex.css"  />
@@ -595,7 +595,7 @@ String endDate = (String) request.getAttribute("endDate");
 			currentBold = "totalAll";
 			refreshCategoryList();
 		});
-		function ForwardSelectedRows() {
+		/* function ForwardSelectedRows() {
 			var query = jQuery(document.reassignForm).formSerialize();
 			var labs = jQuery("input[name='flaggedLabs']:checked");
 			for (var i = 0; i < labs.length; i++) {
@@ -612,7 +612,7 @@ String endDate = (String) request.getAttribute("endDate");
 					});
 				}
 			});
-		}
+		}*/
 
 		function refreshCategoryList() {
 			jQuery("#categoryHash").val("-1");
@@ -653,14 +653,7 @@ String endDate = (String) request.getAttribute("endDate");
 					
 				jQuery( "#dialog" ).dialog({
 			      autoOpen: false,
-			      show: {
-			        effect: "blind",
-			        duration: 1000
-			      },
-			      hide: {
-			        effect: "explode",
-			        duration: 1000
-			      }
+			      modal: true
 			    });
 			 
 				jQuery(".dialog-link").on( "click", function(event) {
@@ -673,7 +666,7 @@ String endDate = (String) request.getAttribute("endDate");
 	</script>
 	
 </div> <!--  end wrapper  -->  
-
+<input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
 <div id="dialog" ></div> 
 

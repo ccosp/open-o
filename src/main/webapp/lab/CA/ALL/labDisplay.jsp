@@ -249,29 +249,31 @@ if (request.getAttribute("printError") != null && (Boolean) request.getAttribute
 
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <html>
     <head>
         <html:base/>
         <title><%=handler.getPatientName()+" Lab Results"%></title>
-        <script language="javascript" type="text/javascript" src="../../../share/javascript/Oscar.js" ></script>
+
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+        <script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/Oscar.js" ></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/scriptaculous.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
-        <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery-1.4.2.js"></script>
+	    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+	    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>
       	<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery.form.js"></script>
-      	
-
        <script  type="text/javascript" charset="utf-8">
 
      	  jQuery.noConflict();
 		</script>
 		
 	
-	<oscar:customInterface section="labView"/>
+	<!-- <oscar:customInterface section="labView"/> -->
 
 		
         <script language="javascript" type="text/javascript">
@@ -282,7 +284,7 @@ if (request.getAttribute("printError") != null && (Boolean) request.getAttribute
                                     }
                                 }
 	</script>
-        <link rel="stylesheet" type="text/css" href="../../../share/css/OscarStandardLayout.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/share/css/OscarStandardLayout.css">
         <style type="text/css">
             <!--
 .RollRes     { font-weight: 700; font-size: 8pt; color: white; font-family:
@@ -609,18 +611,6 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
         }});
         }
 
-        window.ForwardSelectedRows = function() {
-    		var query = jQuery(document.reassignForm).formSerialize();
-    		jQuery.ajax({
-    			type: "POST",
-    			url:  "<%=request.getContextPath()%>/oscarMDS/ReportReassign.do",
-    			data: query,
-    			success: function (data) {
-    				self.close();
-    			}
-    		});
-    	}
-
         function submitLabel(lblval, segmentID){
        		document.forms['TDISLabelForm_'+segmentID].label.value = document.forms['acknowledgeForm_'+segmentID].label.value;
        	}
@@ -629,6 +619,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
     </head>
 
     <body onLoad="javascript:matchMe();">
+        <input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
         <!-- form forwarding of the lab -->
         <%        
         	for( int idx = 0; idx < segmentIDs.length; ++idx ) {
@@ -725,7 +716,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                     <input type="button" value="<bean:message key="oscarMDS.segmentDisplay.btnAcknowledge"/>" onclick="<%=ackLabFunc%>" >
                                     <input type="button" value="<bean:message key="oscarMDS.segmentDisplay.btnComment"/>" onclick="return getComment('addComment',<%=segmentID%>);">
                                     <% } %>
-                                    <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="popupStart(355, 675, '../../../oscarMDS/SelectProvider.jsp?docId=<%=segmentID%>&labDisplay=true', 'providerselect')">
+                                    <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="ForwardSelectedRows(<%=segmentID%> + ':HL7', '', '')" >
                                     <input type="button" value=" <bean:message key="global.btnClose"/> " onClick="window.close()">
                                     <input type="button" value=" <bean:message key="global.btnPrint"/> " onClick="printPDF('<%=segmentID%>')">
 
@@ -1856,7 +1847,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                     <input type="button" value="<bean:message key="oscarMDS.segmentDisplay.btnAcknowledge" />" onclick="<%=ackLabFunc%>" >
                                     <input type="button" value="<bean:message key="oscarMDS.segmentDisplay.btnComment"/>" onclick="return getComment('addComment',<%=segmentID%>);">
                                     <% } %>
-                                    <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="popupStart(397, 700, '../../../oscarMDS/SelectProvider.jsp?docId=<%=segmentID%>&labDisplay=true', 'providerselect')">
+                                    <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="ForwardSelectedRows(<%=segmentID%> + ':HL7', '', '')" >
                                     <input type="button" value=" <bean:message key="global.btnClose"/> " onClick="window.close()">
                                     <input type="button" value=" <bean:message key="global.btnPrint"/> " onClick="printPDF('<%=segmentID%>')">
                                         <indivo:indivoRegistered demographic="<%=demographicID%>" provider="<%=providerNo%>">
@@ -1899,7 +1890,9 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
         <pre id="rawhl7<%=s%>" style="display:none;"><%=hl7%></pre>
         </div>
         <%} %>
-        
+
+       	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
+
     </body>
 </html>
 <%!

@@ -26,6 +26,7 @@
 package oscar.oscarMDS.pageUtil;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -49,8 +52,8 @@ import oscar.oscarLab.ca.on.CommonLabResultData;
 
 public class ReportReassignAction extends Action {
     
-    Logger logger = Logger.getLogger(ReportReassignAction.class);
-    private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+    private final Logger logger = MiscUtils.getLogger();
+    private final SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
     
     public ReportReassignAction() {
     }
@@ -60,119 +63,133 @@ public class ReportReassignAction extends Action {
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        
-    	if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_lab", "w", null)) {
+
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+    	if(!securityInfoManager.hasPrivilege(loggedInInfo, "_lab", "w", null)) {
 			throw new SecurityException("missing required security object (_lab)");
 		}
-    	
-        String providerNo = request.getParameter("providerNo");
-        String searchProviderNo = request.getParameter("searchProviderNo");
-        String status = request.getParameter("status");        
-        if( status == null) {
-        	status = "";
-        }
-        
-        String[] flaggedLabs = request.getParameterValues("flaggedLabs");
-        MiscUtils.getLogger().info("Flagged Labs is null " + String.valueOf(flaggedLabs == null));
 
-        String selectedProviders = request.getParameter("selectedProviders");
-        MiscUtils.getLogger().info("selectedProviders " + selectedProviders);
-        String newFavorites = request.getParameter("favorites");
-        if(newFavorites == null || newFavorites.equals("null") ) {
-        	newFavorites = "";
-        }
-        
-       // String labType = request.getParameter("labType");
+    	String status = request.getParameter("status");
         String ajax=request.getParameter("ajax");
-        //Hashtable htable = new Hashtable();
-        String[] labTypes = CommonLabResultData.getLabTypes();
-        ArrayList listFlaggedLabs = new ArrayList();
-       /* Enumeration em=request.getParameterNames();
-        while(em.hasMoreElements()){
-            MiscUtils.getLogger().info("ele="+em.nextElement());
-            MiscUtils.getLogger().info("val="+request.getParameter((em.nextElement()).toString()));
-        }*/
+        String providerNo = loggedInInfo.getLoggedInProviderNo();
+        String searchProviderNo = request.getParameter("searchProviderNo");
+        JSONArray jsonArray = null;
+        String[] selectedProvidersArray = new String[0];
+        String[] arrNewFavs = new String[0];
+        ArrayList<String[]> flaggedLabsList = new ArrayList<>();
+        boolean success = Boolean.FALSE;
+        /*
+         * Group together any new favorite providers that may have been
+         * set during the forward process.
+         */
+        String newFavorites = request.getParameter("selectedFavorites");
+        if(newFavorites != null && ! newFavorites.isEmpty())
+        {
+            JSONObject jsonObject = JSONObject.fromObject(newFavorites);
+            jsonArray = (JSONArray) jsonObject.get("favorites");
+        }
 
-        if(flaggedLabs != null && labTypes != null){
-        	MiscUtils.getLogger().info("flagged Labs length " + flaggedLabs.length);
-            for (int i = 0; i < flaggedLabs.length; i++){
-                MiscUtils.getLogger().info("FLAGGED LABS " + i + " " + flaggedLabs[i]);
-                for (int j = 0; j < labTypes.length; j++){
-                    MiscUtils.getLogger().info("LAB TYPE " + labTypes[j]);
-                    String s =  request.getParameter("labType"+flaggedLabs[i]+labTypes[j]);                    
-                    MiscUtils.getLogger().info(s);
-                    if (s != null){  //This means that the lab was of this type.
-                        String[] la =  new String[] {flaggedLabs[i],labTypes[j]};
-                        listFlaggedLabs.add(la);
-                        j = labTypes.length;
-                        
-                    }
-                    
-                }
+        if(jsonArray != null) {
+            arrNewFavs = (String[]) jsonArray.toArray(new String[jsonArray.size()]);
+        }
+
+        /*
+         * Group together the providers selected during the forward
+         * process.
+         */
+        String selectedProviders = request.getParameter("selectedProviders");
+        logger.info("selected providers to forward labs to " + selectedProviders);
+
+        if(selectedProviders != null && ! selectedProviders.isEmpty()) {
+            JSONObject jsonObject = JSONObject.fromObject(selectedProviders);
+            jsonArray = jsonObject.getJSONArray("providers");
+        }
+
+        if(jsonArray != null)
+        {
+            selectedProvidersArray = (String[]) jsonArray.toArray(new String[jsonArray.size()]);
+        }
+
+        /*
+         * Group together the lab ids and types checked off during the
+         * forwarding process.
+         */
+        String flaggedLabs = request.getParameter("flaggedLabs");
+        if(flaggedLabs != null && ! flaggedLabs.isEmpty())
+        {
+            JSONObject jsonObject = JSONObject.fromObject(flaggedLabs);
+            jsonArray = (JSONArray) jsonObject.get("files");
+        }
+
+        if(jsonArray != null)
+        {
+            String[] labid;
+            for(int i = 0; i < jsonArray.size(); i++ )
+            {
+                labid = jsonArray.getString(i).split(":");
+                flaggedLabsList.add(labid);
             }
         }
-        
+
         String newURL = "";
-       // MiscUtils.getLogger().info(listFlaggedLabs.size());
         try {
         	//Only route if there are selected providers
-        	if( !("".equals(selectedProviders) || selectedProviders == null)) {
-        		CommonLabResultData.updateLabRouting(listFlaggedLabs, selectedProviders);
+        	if(selectedProvidersArray.length > 0) {
+        		success = CommonLabResultData.updateLabRouting(flaggedLabsList, selectedProvidersArray);
         	}
-        	//update favorites
-        	ProviderLabRoutingFavoritesDao favDao = (ProviderLabRoutingFavoritesDao)SpringUtils.getBean("ProviderLabRoutingFavoritesDao");
-        	String user = (String)request.getSession().getAttribute("user");
-        	List<ProviderLabRoutingFavorite>currentFavorites = favDao.findFavorites(user);
-        	
-        	if( "".equals(newFavorites) ) {
-        		for( ProviderLabRoutingFavorite fav : currentFavorites ) {
-        			favDao.remove(fav.getId());
-        		}
-        	}
-        	else {
-        		String[] arrNewFavs = newFavorites.split(",");
-        		
-        		//Check for new favorites to add
-        		boolean isNew;
-        		for( int idx = 0; idx < arrNewFavs.length; ++idx ) {
-        			isNew = true;
-        			for( ProviderLabRoutingFavorite fav : currentFavorites ) {
-        				if( fav.getRoute_to_provider_no().equals(arrNewFavs[idx])) {
-        					isNew = false;
-        					break;
-        				}
-        			}
-        			if( isNew ) {
-        				ProviderLabRoutingFavorite newFav = new ProviderLabRoutingFavorite();
-        				newFav.setProvider_no(user);
-        				newFav.setRoute_to_provider_no(arrNewFavs[idx]);
-        				favDao.persist(newFav);
-        			}
-        		}
-        		
-        		//check for favorites to remove
-        		boolean remove;
-        		for( ProviderLabRoutingFavorite fav : currentFavorites ) {
-        			remove = true;
-        			for( int idx2 = 0; idx2 < arrNewFavs.length; ++idx2 ) {
-        				if( fav.getRoute_to_provider_no().equals(arrNewFavs[idx2])) {
-        					remove = false;
-        					break;
-        				}
-        			}
-        			if( remove ) {
-        				favDao.remove(fav.getId());
-        			}
-        		}
-        		
-        	}
-        	
-            newURL = mapping.findForward("success").getPath();
-            if(newURL.contains("labDisplay.jsp"))
-                newURL = newURL + "?providerNo=" + providerNo + "&searchProviderNo=" + searchProviderNo + "&status=" + status + "&segmentID=" + flaggedLabs[0];
 
-            // the segmentID is needed when being called from a lab display
-            else newURL = newURL + "&providerNo=" + providerNo + "&searchProviderNo=" + searchProviderNo + "&status=" + status + "&segmentID=" + flaggedLabs[0];
+            //update favorites
+            ProviderLabRoutingFavoritesDao favDao = (ProviderLabRoutingFavoritesDao) SpringUtils.getBean("ProviderLabRoutingFavoritesDao");
+            List<ProviderLabRoutingFavorite> currentFavorites = favDao.findFavorites(providerNo);
+
+            if (arrNewFavs.length == 0) {
+                for (ProviderLabRoutingFavorite fav : currentFavorites) {
+                    favDao.remove(fav.getId());
+                }
+            } else {
+                //Check for new favorites to add
+                boolean isNew;
+                for (int idx = 0; idx < arrNewFavs.length; ++idx) {
+                    isNew = true;
+                    for (ProviderLabRoutingFavorite fav : currentFavorites) {
+                        if (fav.getRoute_to_provider_no().equals(arrNewFavs[idx])) {
+                            isNew = false;
+                            break;
+                        }
+                    }
+                    if (isNew) {
+                        ProviderLabRoutingFavorite newFav = new ProviderLabRoutingFavorite();
+                        newFav.setProvider_no(providerNo);
+                        newFav.setRoute_to_provider_no(arrNewFavs[idx]);
+                        favDao.persist(newFav);
+                    }
+                }
+
+                //check for favorites to remove
+                boolean remove;
+                for (ProviderLabRoutingFavorite fav : currentFavorites) {
+                    remove = true;
+                    for (int idx2 = 0; idx2 < arrNewFavs.length; ++idx2) {
+                        if (fav.getRoute_to_provider_no().equals(arrNewFavs[idx2])) {
+                            remove = false;
+                            break;
+                        }
+                    }
+                    if (remove) {
+                        favDao.remove(fav.getId());
+                    }
+                }
+
+            }
+
+            newURL = mapping.findForward("success").getPath();
+            if(newURL.contains("labDisplay.jsp")) {
+                newURL = newURL + "?providerNo=" + providerNo + "&searchProviderNo=" + searchProviderNo + "&status=" + status + "&segmentID=" + flaggedLabsList.get(0);
+
+                // the segmentID is needed when being called from a lab display
+            } else {
+                newURL = newURL + "&providerNo=" + providerNo + "&searchProviderNo=" + searchProviderNo + "&status=" + status + "&segmentID=" + flaggedLabsList.get(0);
+            }
             if (request.getParameter("lname") != null) { newURL = newURL + "&lname="+request.getParameter("lname"); }
             if (request.getParameter("fname") != null) { newURL = newURL + "&fname="+request.getParameter("fname"); }
             if (request.getParameter("hnum") != null) { newURL = newURL + "&hnum="+request.getParameter("hnum"); }
@@ -180,13 +197,23 @@ public class ReportReassignAction extends Action {
             logger.error("exception in ReportReassignAction", e);
             newURL = mapping.findForward("failure").getPath();
         }
-        //MiscUtils.getLogger().info(ajax);
+
         if(ajax!=null && ajax.equals("yes")){
-            //MiscUtils.getLogger().info("if");
+            JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("success", success);
+            jsonResponse.put("files", jsonArray);
+            try {
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.print(jsonResponse);
+                out.flush();
+            } catch (IOException e) {
+                MiscUtils.getLogger().error("Error with JSON response ", e);
+            }
             return null;
         }
         else{
-            //MiscUtils.getLogger().info("else");
             return (new ActionForward(newURL));
         }
     }

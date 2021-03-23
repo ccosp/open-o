@@ -176,23 +176,7 @@
             Calendar.setup({ inputField : inputFieldId, ifFormat : "%Y-%m-%d", showsTime :false, button : id });
             
    	   }
-        
-        window.forwardDocument = function(docId) {
-        	var frm = "#reassignForm_" + docId;
-    		var query = jQuery(frm).serialize();
-    		
-    		jQuery.ajax({
-    			type: "POST",
-    			url:  "<%= request.getContextPath()%>/oscarMDS/ReportReassign.do",
-    			data: query,
-    			success: function (data) {    				
-    				window.location.reload();    				    				
-    			},
-    			error: function(jqXHR, err, exception) {
-    				alert("Error " + jqXHR.status + " " + err);
-    			}
-    		});
-    	}
+
         function handleDocSave(docid,action){
 			var url=contextpath + "/dms/inboxManage.do";
 			var data='method=isDocumentLinkedToDemographic&docId='+docid;
@@ -291,7 +275,7 @@
 														<input type="button" <%=WebUtils.getDisabledString(enabledMyOscarButton)%> value="<bean:message key="global.btnSendToPHR"/>" onclick="popup(450, 600, '../phr/SendToPhrPreview.jsp?module=document&documentNo=<%=docId%>&demographic_no=<%=demographicID%>', 'sendtophr')"/>
                                                         <%}%>
                                                     <%}%>
-                                                        <input type="button" id="fwdBtn_<%=docId%>"  value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="popupStart(355, 685, '../oscarMDS/SelectProvider.jsp?docId=<%=docId%>', 'providerselect');">
+                                                        <input type="button" id="fwdBtn_<%=docId%>"  value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="ForwardSelectedRows(<%=docId%> + ':DOC', null, null);">
                                                     <%if( !ackedOrFiled ) { %>
                                                         <input type="button" id="fileBtn_<%=docId%>"  value="<bean:message key="oscarMDS.index.btnFile"/>" onclick="fileDoc('<%=docId%>');">
                                                     <%} %>
@@ -601,7 +585,8 @@
                 
                 <tr><td colspan="2"><hr width="100%" color="red"></td></tr>
             </table>
-        </div>        
+        </div>
+<input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
 <script type="text/javascript" src="showDocument.js"></script>        
 <script type="text/javascript">

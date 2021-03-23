@@ -262,23 +262,7 @@
                                             	
                                             }
 
-                                            
-                                            function forwardDocument(docId) {
-                                            	var frm = "#reassignForm_" + docId;
-                                            	var query = jQuery(frm).serialize();
-                                            	
-                                            	jQuery.ajax({
-                                            		type: "POST",
-                                            		url:  "<%=request.getContextPath()%>/oscarMDS/ReportReassign.do",
-                                            		data: query,
-                                            		success: function (data) {
-                                            			window.location.reload();
-                                            		},
-                                            		error: function(jqXHR, err, exception) {
-                                            			alert(jqXHR.status);
-                                            		}
-                                            	});
-                                            }
+
 
                                                 var curPage=1;
                                                 var totalPage=<%=numOfPage%>;
@@ -772,7 +756,7 @@ function sendMRP(ele){
                                                     <td>
                                                         <input type="submit"  tabindex="<%=tabindex++%>" value="<bean:message key="oscarMDS.segmentDisplay.btnAcknowledge"/>" >
                                                         <input type="button"  tabindex="<%=tabindex++%>" class="smallButton" value="Comment" onclick="addDocComment('<%=docId%>','<%=curAckStatus%>')"/>
-                                                        <input type="button"  tabindex="<%=tabindex++%>" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="popup(323, 685, '../oscarMDS/SelectProvider.jsp?docId=<%=docId%>&providerNo=<%=providerNo%>&searchProviderNo=<%=searchProviderNo%>&status=<%=status%>', 'providerselect')">
+                                                        <input type="button"  tabindex="<%=tabindex++%>" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="ForwardSelectedRows(<%=docId%> + ':DOC', null, null);">
                                                         <input type="button"  tabindex="<%=tabindex++%>" class="smallButton" value="<bean:message key="oscarMDS.index.btnFile"/>" onclick="fileDoc('<%=documentNo%>');" >
                                                         <input type="button"  tabindex="<%=tabindex++%>" value=" <bean:message key="global.btnClose"/> " onClick="window.close()">
                                                         <input type="button"  tabindex="<%=tabindex++%>" value=" <bean:message key="global.btnPrint"/> " onClick="popup(700,960,'<%=url2%>','file download')">

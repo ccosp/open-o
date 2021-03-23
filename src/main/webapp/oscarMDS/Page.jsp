@@ -83,7 +83,7 @@ String curUser_no = (String) session.getAttribute("user");
                      <tr>
                            <td align="left" valign="center" >
                                 <c:if test="${ labdocs.size() gt 0}">
-                                   <input id="topFBtn" type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="checkSelected(document)">
+                                   <input id="topFBtn" type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="submitForward('${ searchProviderNo }', '${ param.status }')">
                                     <c:if test="${ ackStatus eq 'N' or empty ackStatus }" >
                                        <input id="topFileBtn" type="button" class="smallButton" value="File" onclick="submitFile('${ searchProviderNo }', '${ param.status }')"/>
                                     </c:if>
@@ -402,41 +402,7 @@ String curUser_no = (String) session.getAttribute("user");
                        		</td></tr>
                        	</table>
                        	</div>
-                       	<%-- if (labdocs.size() > 0) { %>
-                       	<table>
-                            <tr class="MainTableBottomRow">
-                                <td class="MainTableBottomRowRightColumn" bgcolor="#003399" colspan="10" align="left">
-                                    <table>
-                                        <tr>
-                                            <td align="left" valign="middle" width="30%">
 
-                                                    <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="parent.checkSelected(document)">
-                                                    <% if (ackStatus.equals("N")) {%>
-                                                        <input type="button" class="smallButton" value="File" onclick="submitFile('${ searchProviderNo }', '${ param.status }')"/>
-                                                    <% }  %>
-                                            </td>
-                                        <script type="text/javascript">
-                                                var doclabid_seq='<%=doclabid_seq%>';
-                                                doclabid_seq=doclabid_seq.replace('[','');
-                                                doclabid_seq=doclabid_seq.replace(']','');
-                                                var arr=doclabid_seq.split(',');
-                                                var arr2=new Array();
-                                                for(var i=0;i<arr.length;i++){
-                                                    var ele=arr[i];
-                                                    ele=ele.replace(' ','');
-                                                    arr2.push(ele);
-                                                }
-                                                doclabid_seq=arr2;
-
-                                                oldestLab = '<%=request.getAttribute("oldestLab") %>';
-
-                                        </script>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                    </table>
-                    <% } --%>
                 </td>
             </tr>
         </table>
