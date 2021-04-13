@@ -8,16 +8,13 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@page import="java.net.URLEncoder"%>
-<%@ page language="java" %>
 <%@ page import="java.util.*" %>
-<%@ page import="oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*,oscar.util.StringUtils,oscar.util.UtilDateUtilities" %>
-<%@ page import="org.apache.commons.collections.MultiHashMap" %>
+<%@ page import="oscar.oscarLab.ca.on.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
-<%@page import="org.oscarehr.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="org.oscarehr.util.MiscUtils,org.apache.commons.lang.StringEscapeUtils"%>
 <%@page import="org.apache.log4j.Logger,org.oscarehr.common.dao.OscarLogDao,org.oscarehr.util.SpringUtils"%>
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
@@ -85,12 +82,12 @@ String curUser_no = (String) session.getAttribute("user");
                  <table width="100%">
                      <tr>
                            <td align="left" valign="center" >
-                               <% if (labdocs.size() > 0) { %>
-                                   <input id="topFBtn" type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="parent.checkSelected(document)">
-                                   <% if (ackStatus.equals("N") || ackStatus.isEmpty()) {%>
-                                       <input id="topFileBtn" type="button" class="smallButton" value="File" onclick="parent.submitFile(document)"/>
-                                   <% }
-                               }%>
+                                <c:if test="${ labdocs.size() gt 0}">
+                                   <input id="topFBtn" type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="checkSelected(document)">
+                                    <c:if test="${ ackStatus eq 'N' or empty ackStatus }" >
+                                       <input id="topFileBtn" type="button" class="smallButton" value="File" onclick="submitFile('${ searchProviderNo }', '${ param.status }')"/>
+                                    </c:if>
+                                </c:if>
                                <input type="hidden" id="currentNumberOfPages" value="0"/>
                            </td>
                      </tr>
@@ -99,7 +96,7 @@ String curUser_no = (String) session.getAttribute("user");
             </tr>
             <tr>
                 <td>
-					<div id="listViewDocs" style="height:536px; overflow:scroll;" onscroll="handleScroll(this)">
+					<div id="listViewDocs" style="height:550px; overflow:scroll;" onscroll="handleScroll(this)">
 					    <%
                             SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
                             SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName("inboxDateSearchType");
@@ -287,7 +284,14 @@ String curUser_no = (String) session.getAttribute("user");
                                 <tr id="labdoc_<%=segmentID%>" bgcolor="<%=bgcolor%>" <%if(result.isDocument()){%> name="scannedDoc" <%} else{%> name="HL7lab" <%}%> class="<%= (result.isAbnormal() ? "AbnormalRes" : "NormalRes" ) + " " + (result.isMatchedToPatient() ? "AssignedRes" : "UnassignedRes") %>">
                                 <td nowrap>
                                     <input type="hidden" id="totalNumberRow" value="<%=total_row_index+1%>">
-                                    <input type="checkbox" name="flaggedLabs" value="<%=segmentID%>">
+                                    <%
+                                        String disabled = "";
+                                        if(! result.isMatchedToPatient() && result.labType != "DOC")
+                                        {
+                                            disabled = "disabled";
+                                        };
+                                    %>
+                                    <input type="checkbox" name="flaggedLabs" value="<%=segmentID + ":" + result.labType%>" <%= disabled %>>
                                     <input type="hidden" name="labType<%=segmentID+result.labType%>" value="<%=result.labType%>"/>
                                     <input type="hidden" name="ackStatus" value="<%= result.isMatchedToPatient() %>" />
                                     <input type="hidden" name="patientName" value="<%=StringEscapeUtils.escapeHtml(result.patientName) %>"/>
@@ -398,7 +402,7 @@ String curUser_no = (String) session.getAttribute("user");
                        		</td></tr>
                        	</table>
                        	</div>
-                       	<% if (labdocs.size() > 0) { %>
+                       	<%-- if (labdocs.size() > 0) { %>
                        	<table>
                             <tr class="MainTableBottomRow">
                                 <td class="MainTableBottomRowRightColumn" bgcolor="#003399" colspan="10" align="left">
@@ -408,7 +412,7 @@ String curUser_no = (String) session.getAttribute("user");
 
                                                     <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnForward"/>" onClick="parent.checkSelected(document)">
                                                     <% if (ackStatus.equals("N")) {%>
-                                                        <input type="button" class="smallButton" value="File" onclick="parent.submitFile(document)"/>
+                                                        <input type="button" class="smallButton" value="File" onclick="submitFile('${ searchProviderNo }', '${ param.status }')"/>
                                                     <% }  %>
                                             </td>
                                         <script type="text/javascript">
@@ -432,7 +436,7 @@ String curUser_no = (String) session.getAttribute("user");
                                 </td>
                             </tr>
                     </table>
-                    <% } %>
+                    <% } --%>
                 </td>
             </tr>
         </table>

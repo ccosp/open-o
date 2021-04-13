@@ -26,7 +26,6 @@
 package oscar.oscarLab.ca.on;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +58,7 @@ import org.oscarehr.hospitalReportManager.dao.HRMDocumentToProviderDao;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.labs.LabIdAndType;
 import org.oscarehr.managers.DemographicManager;
+import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -70,7 +70,6 @@ import org.xml.sax.SAXException;
 
 import oscar.OscarProperties;
 import oscar.oscarDB.ArchiveDeletedRecords;
-import oscar.oscarDB.DBPreparedHandler;
 import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.all.upload.ProviderLabRouting;
 import oscar.oscarLab.ca.bc.PathNet.PathnetResultsData;
@@ -90,7 +89,7 @@ public class CommonLabResultData {
 	private static PatientLabRoutingDao patientLabRoutingDao = SpringUtils.getBean(PatientLabRoutingDao.class);
 	private static ProviderLabRoutingDao providerLabRoutingDao = SpringUtils.getBean(ProviderLabRoutingDao.class);
 	private static QueueDocumentLinkDao queueDocumentLinkDao = SpringUtils.getBean(QueueDocumentLinkDao.class);
-	
+	private static SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	
 	public CommonLabResultData() {
 
@@ -362,57 +361,49 @@ public class CommonLabResultData {
 
 	public static boolean updateReportStatus(int labNo, String providerNo, char status, String comment, String labType) {
 
-		try {
-			DBPreparedHandler db = new DBPreparedHandler();
-			// handles the case where this provider/lab combination is not already in providerLabRouting table
-			String sql = "select id, status from providerLabRouting where lab_type = '" + labType + "' and provider_no = '" + providerNo + "' and lab_no = '" + labNo + "'";
-
-			ResultSet rs = db.queryResults(sql);
-			boolean empty = true;
-			while (rs.next()) {
-				empty = false;
-				String id = oscar.Misc.getString(rs, "id");
-				ProviderLabRoutingModel plr  = providerLabRoutingDao.find(Integer.parseInt(id));
-				if(plr != null) {
-					plr.setStatus(""+status);
-					//we don't want to clobber existing comments when filing labs
-					if( status != 'F' ) {
-						plr.setComment(comment);
-					}
-					plr.setTimestamp(new Date());
-					providerLabRoutingDao.merge(plr);
-				}
-			} 
-			if (empty) {
-				ProviderLabRoutingModel p = new ProviderLabRoutingModel();
-				p.setProviderNo(providerNo);
-				p.setLabNo(labNo);
-				p.setStatus(String.valueOf(status));
-				p.setComment(comment);
-				p.setLabType(labType);
-				p.setTimestamp(new Date());
-				providerLabRoutingDao.persist(p);
+		/*
+		 * Update an existing entry
+		 */
+		List<ProviderLabRoutingModel> providerLabRoutingModelList = providerLabRoutingDao.findByLabNoAndLabTypeAndProviderNo(labNo, labType, providerNo);
+		if(providerLabRoutingModelList != null && ! providerLabRoutingModelList.isEmpty())
+		{
+			for(ProviderLabRoutingModel providerLabRoutingModel : providerLabRoutingModelList)
+			{
+				providerLabRoutingModel.setStatus(""+status);
+				//we don't want to clobber existing comments when filing labs
+				String currentComment = providerLabRoutingModel.getComment();
+				providerLabRoutingModel.setComment(currentComment != null ? currentComment : ""  + " " + comment);
+				providerLabRoutingModel.setTimestamp(new Date());
+				providerLabRoutingDao.merge(providerLabRoutingModel);
 			}
-
-			if (!"0".equals(providerNo)) {
-				ProviderLabRoutingDao dao = SpringUtils.getBean(ProviderLabRoutingDao.class);
-				List<ProviderLabRoutingModel> modelRecords = dao.findByLabNoAndLabTypeAndProviderNo(labNo, labType, providerNo);
-				ArchiveDeletedRecords adr = new ArchiveDeletedRecords();
-				adr.recordRowsToBeDeleted(modelRecords, "" + providerNo, "providerLabRouting");
-				
-				for(ProviderLabRoutingModel plr : providerLabRoutingDao.findByLabNoAndLabTypeAndProviderNo(labNo, labType, "0")) {
-					providerLabRoutingDao.remove(plr.getId());
-				}
-				
-			}
-			return true;
-		} catch (Exception e) {
-			Logger l = Logger.getLogger(CommonLabResultData.class);
-			l.error("exception in MDSResultsData.updateReportStatus()", e);
-			return false;
-		} finally {
-			DbConnectionFilter.releaseThreadLocalDbConnection();
 		}
+		
+		/*
+		 * Add a new entry if it does not exist. 
+		 * This could be an entry with a "0" provider number which indicates that it is unassigned.
+		 */
+		else
+		{
+			ProviderLabRoutingModel providerLabRouting = new ProviderLabRoutingModel();
+			providerLabRouting.setProviderNo(providerNo);
+			providerLabRouting.setLabNo(labNo);
+			providerLabRouting.setStatus(String.valueOf(status));
+			providerLabRouting.setComment(comment);
+			providerLabRouting.setLabType(labType);
+			providerLabRouting.setTimestamp(new Date());
+			providerLabRoutingDao.persist(providerLabRouting);
+		}
+
+		if (!"0".equals(providerNo)) {
+			List<ProviderLabRoutingModel> modelRecords = providerLabRoutingDao.findByLabNoAndLabTypeAndProviderNo(labNo, labType, providerNo);
+			ArchiveDeletedRecords adr = new ArchiveDeletedRecords();
+			adr.recordRowsToBeDeleted(modelRecords, "" + providerNo, "providerLabRouting");
+			
+			for(ProviderLabRoutingModel plr : providerLabRoutingDao.findByLabNoAndLabTypeAndProviderNo(labNo, labType, "0")) {
+				providerLabRoutingDao.remove(plr.getId());
+			}				
+		}
+		return Boolean.TRUE; 
 	}
 
 	public ArrayList<ReportStatus> getStatusArray(String labId, String labType) {
@@ -553,12 +544,20 @@ public class CommonLabResultData {
 		}
 	}
 
-	// //
+	public static boolean fileLabs(ArrayList<String[]> flaggedLabs, LoggedInInfo loggedInInfo) {
+		
+	    if(!securityInfoManager.hasPrivilege(loggedInInfo, "_lab", SecurityInfoManager.WRITE, null)) {
+			throw new SecurityException("missing required security object (_lab)");
+		}
+		return fileLabs(flaggedLabs, loggedInInfo.getLoggedInProviderNo());
+		
+	}
 	public static boolean fileLabs(ArrayList<String[]> flaggedLabs, String provider) {
 
 		CommonLabResultData data = new CommonLabResultData();
-
+		boolean success = Boolean.FALSE;
 		for (int i = 0; i < flaggedLabs.size(); i++) {
+			
 			String[] strarr = flaggedLabs.get(i);
 			String lab = strarr[0];
 			String labType = strarr[1];
@@ -567,16 +566,21 @@ public class CommonLabResultData {
 			if (labs != null && !labs.equals("")) {
 				String[] labArray = labs.split(",");
 				for (int j = 0; j < labArray.length; j++) {
-					updateReportStatus(Integer.parseInt(labArray[j]), provider, 'F', "", labType);
+					success = updateReportStatus(Integer.parseInt(labArray[j]), provider, 'F', "", labType);
 					removeFromQueue(Integer.parseInt(labArray[j]));
 				}
 
 			} else {
-				updateReportStatus(Integer.parseInt(lab), provider, 'F', "", labType);
+				success = updateReportStatus(Integer.parseInt(lab), provider, 'F', "", labType);
 				removeFromQueue(Integer.parseInt(lab));
 			}
+			
+			if(! success)
+			{
+				flaggedLabs.remove(i);
+			}
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 	
 	
