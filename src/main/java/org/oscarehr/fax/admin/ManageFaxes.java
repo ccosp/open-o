@@ -23,18 +23,13 @@
  */
 package org.oscarehr.fax.admin;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -54,26 +49,24 @@ import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
+import org.oscarehr.fax.action.FaxAction;
+import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-
-public class ManageFaxes extends DispatchAction {
+public class ManageFaxes extends FaxAction {
 	
 	private Logger log = MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	private NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
-
+	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 	@SuppressWarnings("unused")
 	public ActionForward CancelFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		
@@ -190,53 +183,13 @@ public class ManageFaxes extends DispatchAction {
 	
 
 	@SuppressWarnings("unused")
-	public ActionForward viewFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public void viewFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "r", null)) {
         	throw new SecurityException("missing required security object (_edoc)");
         }
-	
-		String doc_no = request.getParameter("jobId");
-		String pageNum = request.getParameter("curPage");
-		if (pageNum == null) {
-			pageNum = "0";
-		}
-		Integer pn = Integer.parseInt(pageNum);
-		log.debug("Document No :" + doc_no);
-		LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.READ, LogConst.CON_DOCUMENT, doc_no, request.getRemoteAddr());
 
-		FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
-		FaxJob faxJob = faxJobDao.find(Integer.parseInt(doc_no));
-		String filename = faxJob.getFile_name();
-		
-		int index;
-		if( (index = faxJob.getFile_name().lastIndexOf("/")) > -1 ) {
-			filename = faxJob.getFile_name().substring(index+1);
-		}
-		else {
-			filename = faxJob.getFile_name();
-		}
-		
-		String oscarDocuments = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR");
-		Path outfile = nioFileManager.createCacheVersion2(loggedInInfo, oscarDocuments, filename, pn);
-
-		try(InputStream inputStream = Files.newInputStream(outfile);
-				BufferedInputStream bfis = new BufferedInputStream(inputStream);
-				ServletOutputStream outs = response.getOutputStream()){
-			
-			response.setContentType("image/png");
-			response.setHeader("Content-Disposition", "attachment;filename=" + outfile.getFileName());
-			
-			int data;
-			while ((data = bfis.read()) != -1) {
-				outs.write(data);
-			}
-		} catch (IOException e) {
-			log.error("Error", e);	
-		}
-
-		return null;
-
+		getPreview(mapping, form, request, response);
 	}
 	
 	@SuppressWarnings("unused")
@@ -311,7 +264,7 @@ public class ManageFaxes extends DispatchAction {
 	}
 	
 	@SuppressWarnings("unused")
-	public ActionForward SetCompleted(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public void SetCompleted(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_admin", "w", null)) {
         	throw new SecurityException("missing required security object (_admin)");
@@ -324,7 +277,6 @@ public class ManageFaxes extends DispatchAction {
 		FaxJob faxJob = faxJobDao.find(Integer.parseInt(id));		
 		faxJob.setStatus(FaxJob.STATUS.RESOLVED);		
 		faxJobDao.merge(faxJob);
-		
-		return null;
 	}
+
 }

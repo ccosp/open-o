@@ -27,9 +27,9 @@ package org.oscarehr.fax.action;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +37,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -49,12 +50,13 @@ import org.oscarehr.common.model.FaxJob.STATUS;
 import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 
 public class FaxAction extends DispatchAction {
 
-	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+	private final FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 	
 	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		return null;
@@ -128,16 +130,32 @@ public class FaxAction extends DispatchAction {
 	 * Get a preview image of the entire fax document.
 	 */
 	@SuppressWarnings("unused")
-	public ActionForward getPreview(ActionMapping mapping, ActionForm form, 
+	public void getPreview(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		LoggedInInfo loggedInInfo 	= LoggedInInfo.getLoggedInInfoFromSession(request);
 		String faxFilePath 			= request.getParameter("faxFilePath");
+		String pageNumber			= request.getParameter("pageNumber");
 		Path outfile 				= null;
+		int page 					= 1;
+		String jobId 				= request.getParameter("jobId");
+		FaxJob faxJob 				= null;
+
+		if(jobId != null && ! jobId.isEmpty()) {
+			faxJob = faxManager.getFaxJob(loggedInInfo, Integer.parseInt(jobId));
+		}
+
+		if(faxJob != null) {
+			faxFilePath = faxJob.getFile_name();
+		}
+
+		if(pageNumber != null && ! pageNumber.isEmpty()) {
+			page = Integer.parseInt(pageNumber);
+		}
 		
 		if(faxFilePath != null && ! faxFilePath.isEmpty())
 		{
-			outfile = faxManager.getFaxPreviewImage(loggedInInfo, Paths.get(faxFilePath));
+			outfile = faxManager.getFaxPreviewImage(loggedInInfo, faxFilePath, page);
 		}
 
 		if(outfile != null)
@@ -154,13 +172,10 @@ public class FaxAction extends DispatchAction {
 					outs.write(data);
 				}
 				outs.flush();
-				outs.close();
 			} catch (IOException e) {
 				log.error("Error", e);	
 			}
 		}
-		
-		return null;
 	}
 	
 	/**
@@ -213,6 +228,33 @@ public class FaxAction extends DispatchAction {
 		}
 		
 		return actionForward;
+	}
+
+	/**
+	 * Get the actual number of pages in this PDF document.
+	 */
+	@SuppressWarnings("unused")
+	public void getPageCount(ActionMapping mapping, ActionForm form,
+							  HttpServletRequest request, HttpServletResponse response) {
+
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+		String jobId 			  = request.getParameter("jobId");
+		int pageCount = 0;
+
+		if(jobId != null && ! jobId.isEmpty()) {
+			pageCount = faxManager.getPageCount(loggedInInfo, Integer.parseInt(jobId));
+		}
+
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("jobId", jobId);
+		jsonObject.put("pageCount", pageCount);
+
+		try (PrintWriter out = response.getWriter()) {
+			response.setContentType("application/json");
+			jsonObject.write(out);
+		} catch (IOException e) {
+			MiscUtils.getLogger().error("JSON writer error for fax job: " + jobId, e);
+		}
 	}
 
 }

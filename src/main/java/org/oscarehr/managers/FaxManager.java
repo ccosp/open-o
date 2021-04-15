@@ -237,7 +237,6 @@ public class FaxManager {
 	 * 
 	 * 
 	 * @param loggedInInfo
-	 * @param faxActionForm
 	 * @return
 	 */
 	public FaxJob createFaxJob(LoggedInInfo loggedInInfo, Map<String, Object> faxJobMap) {
@@ -349,7 +348,6 @@ public class FaxManager {
 	 * 
 	 * @param loggedInInfo
 	 * @param faxJob
-	 * @param faxRecipient
 	 */
 	public List<FaxJob> addRecipients(LoggedInInfo loggedInInfo, FaxJob faxJob, List<FaxRecipient> faxRecipients) {
 		
@@ -391,8 +389,6 @@ public class FaxManager {
 	 * The given faxjob must contain a valid sender fax number and username.
 	 * 
 	 * @param loggedInInfo
-	 * @param faxJob
-	 * @param faxRecipient
 	 * @return
 	 */
 	public List<FaxJob> saveFaxJob(LoggedInInfo loggedInInfo, List<FaxJob> faxJobList) {
@@ -470,20 +466,52 @@ public class FaxManager {
 	}
 
 	/**
-	 * Get a preview image of the documents being faxed.
+	 * Overload
+	 * Get preview image by specific page number.
+	 */
+	public Path getFaxPreviewImage(LoggedInInfo loggedInInfo, String filePath, int pageNumber) {
+		String file = EDocUtil.resovePath(filePath);
+		return getFaxPreviewImage(loggedInInfo, Paths.get(file), pageNumber);
+	}
+
+	/**
+	 * Overload
+	 * Get a preview image of the documents being faxed.  Default is
+	 * the first page only
+	 *
+	 * @param loggedInInfo
+	 * @param filePath
+	 * @return
+	 */
+	public Path getFaxPreviewImage(LoggedInInfo loggedInInfo, String filePath) {
+		String file = EDocUtil.resovePath(filePath);
+		return getFaxPreviewImage(loggedInInfo, Paths.get(file), 1);
+	}
+
+	/**
+	 * Get a preview image of the documents being faxed.  Default is
+	 * the first page only
 	 * 
 	 * @param loggedInInfo
 	 * @param filePath
 	 * @return
 	 */
 	public Path getFaxPreviewImage(LoggedInInfo loggedInInfo, Path filePath) {
-  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.READ, null)) {
+		return getFaxPreviewImage(loggedInInfo, filePath, 1);
+	}
+
+	/**
+	 * Get preview image by specific page number.
+	 */
+	public Path getFaxPreviewImage(LoggedInInfo loggedInInfo, Path filePath, int pageNumber) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_fax)");
 		}
-  		
-  		Path outfile = null;
+
+		Path outfile = null;
+
 		if (filePath != null && Files.exists(filePath)) {
-			outfile = nioFileManager.createCacheVersion2(loggedInInfo, filePath.getParent().toString(), filePath.getFileName().toString(), 1);
+			outfile = nioFileManager.createCacheVersion2(loggedInInfo, filePath.getParent().toString(), filePath.getFileName().toString(), pageNumber);
 		}
 		return outfile;
 	}
@@ -606,6 +634,28 @@ public class FaxManager {
   			
   		}
   		return Boolean.FALSE;
+	}
+
+	public FaxJob getFaxJob(LoggedInInfo loggedInInfo, int jobId) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_fax)");
+		}
+
+		return faxJobDao.find(jobId);
+	}
+
+	/**
+	 * Returns the actual page count of this PDF document instead of
+	 * depending on the value that is placed in the database table.
+	 *
+	 * Important for when faxes are merged or when a cover page is added.
+	 */
+	public int getPageCount(LoggedInInfo loggedInInfo, int jobId) {
+		FaxJob faxJob = getFaxJob(loggedInInfo, jobId);
+		if(faxJob != null) {
+			return EDocUtil.getPDFPageCount(faxJob.getFile_name());
+		}
+		return 0;
 	}
 
 }
