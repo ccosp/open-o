@@ -104,12 +104,42 @@
 	 * open the Oscar Fax dialog.
 	 */
 	function remoteFax() {	
-		var newElement = document.createElement("input");
+		const newElement = document.createElement("input");
 		newElement.setAttribute("id", "faxAction");
 		newElement.setAttribute("name", "faxEForm");
 		newElement.setAttribute("value", "true");
 		newElement.setAttribute("type", "hidden");
 		document.forms[0].appendChild(newElement);
+
+		/*
+		 * This helps carry forward the select list values of fax recipients
+		 * from the eForm.
+		 */
+		const faxnumList = document.getElementById("faxnumList");
+		if(faxnumList)
+		{
+			const selectedOption = faxnumList.options[faxnumList.options.selectedIndex];
+			const recipientFaxNumber = selectedOption.getAttribute("value");
+			const recipient = selectedOption.getAttribute('name');
+
+			if(recipientFaxNumber) {
+				const recipientElement = document.createElement("input");
+				recipientElement.setAttribute("id", "recipient");
+				recipientElement.setAttribute("name", "recipient");
+				recipientElement.setAttribute("value", recipient);
+				recipientElement.setAttribute("type", "hidden");
+
+				document.forms[0].appendChild(recipientElement);
+
+				const recipientNumberElement = document.createElement("input");
+				recipientNumberElement.setAttribute("id", "recipientFaxNumber");
+				recipientNumberElement.setAttribute("name", "recipientFaxNumber");
+				recipientNumberElement.setAttribute("value", recipientFaxNumber);
+				recipientNumberElement.setAttribute("type", "hidden");
+
+				document.forms[0].appendChild(recipientNumberElement);
+			}
+		}
 			
 		remoteSave();
 	
@@ -158,14 +188,14 @@
 	 */
 	function remoteEdocument() {
 		
-		var edocElement = document.getElementById("saveAsEdoc");
+		const edocElement = document.getElementById("saveAsEdoc");
 		if(edocElement)
 		{
 			edocElement.value = 'true';
 		}
 		else
 		{
-			var newElement = document.createElement("input");
+			const newElement = document.createElement("input");
 			newElement.setAttribute("id", "saveAsEdoc");
 			newElement.setAttribute("name", "saveAsEdoc");
 			newElement.setAttribute("value", "true");
@@ -241,7 +271,7 @@
 			toolbarContainer.style.right = "0";
 			toolbarContainer.style.marginBottom = "0";
 			
-			var openToolbarButton = document.getElementById("openToolbarButton");
+			const openToolbarButton = document.getElementById("openToolbarButton");
 			openToolbarButton.style.display = "table";
 			openToolbarButton.style.minHeight = "50px";
 			
@@ -253,9 +283,9 @@
 	 * @returns
 	 */
 	function openToolbar() {
-		var openToolbarButton = document.getElementById("openToolbarButton");
-		var toolbarNav = document.getElementById("eform_floating_toolbar_nav");
-		var toolbarContainer = document.getElementById("eform_floating_toolbar");
+		const openToolbarButton = document.getElementById("openToolbarButton");
+		const toolbarNav = document.getElementById("eform_floating_toolbar_nav");
+		const toolbarContainer = document.getElementById("eform_floating_toolbar");
 		if( toolbarContainer && openToolbarButton && toolbarNav) {
 			toolbarNav.style.display = "initial";			
 			openToolbarButton.style.display = "none";
@@ -274,6 +304,15 @@
 	    {
 	    	element.parentNode.removeChild(element);
 	    }
+
+		element = document.querySelectorAll("script");
+	    const scriptArray = Array.from(element);
+
+		if(scriptArray.length > 0)
+		{
+			const script = scriptArray.find(script => script.src.includes("faxControl.js"))
+			script.parentNode.removeChild(script);
+		}
 	    	
 	    element = document.getElementById("fax_button");
 	    
@@ -303,32 +342,31 @@
 	 * @returns
 	 */
 	function includeHTML(elmnt) {
-		var file = "../eform/eformFloatingToolbar/eform_floating_toolbar.jspf";
-		if (file) {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4) {
-					
-					if (this.status == 200) 
-					{
-						var toolbarWrapper = document.createElement("div");
-						toolbarWrapper.setAttribute("id","toolbarWrapper");
-						toolbarWrapper.setAttribute("class","hidden-print DoNotPrint no-print");
-						toolbarWrapper.innerHTML = this.responseText;
-						elmnt.append(toolbarWrapper);
-					}
-					
-					if (this.status == 404) 
-					{
-						elmnt.append("eForm tool bar not found.");
-					}
+		const file = "../eform/eformFloatingToolbar/eform_floating_toolbar.jspf";
+		const xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4) {
+
+				if (this.status == 200)
+				{
+					var toolbarWrapper = document.createElement("div");
+					toolbarWrapper.setAttribute("id","toolbarWrapper");
+					toolbarWrapper.setAttribute("class","hidden-print DoNotPrint no-print");
+					toolbarWrapper.innerHTML = this.responseText;
+					elmnt.append(toolbarWrapper);
+				}
+
+				if (this.status == 404)
+				{
+					elmnt.append("eForm tool bar not found.");
 				}
 			}
-			xhttp.open("GET", file, true);
-			xhttp.send();
-			/* Exit the function: */
-			return;
 		}
+		xhttp.open("GET", file, true);
+		xhttp.send();
+		/* Exit the function: */
+		return;
+
 	}
 	
 	/**
