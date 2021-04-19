@@ -8,9 +8,6 @@
     @page {      
         size: letter !important;
         margin: 1cm !important;
-        @bottom-right {
-            content: \"Page \" counter(page) \" of \" counter(pages) ;
-        }
     }
 
     body, html{
@@ -72,10 +69,10 @@
     }
 
     a {
-        page-break-inside:avoid
+        page-break-inside:avoid;
     }
 
-    $a:after > img {
+    a:after > img {
        content: "";
     }
 

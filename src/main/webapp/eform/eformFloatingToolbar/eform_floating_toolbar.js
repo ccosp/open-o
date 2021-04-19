@@ -311,7 +311,9 @@
 		if(scriptArray.length > 0)
 		{
 			const script = scriptArray.find(script => script.src.includes("faxControl.js"))
-			script.parentNode.removeChild(script);
+			if(script) {
+				script.parentNode.removeChild(script);
+			}
 		}
 	    	
 	    element = document.getElementById("fax_button");
