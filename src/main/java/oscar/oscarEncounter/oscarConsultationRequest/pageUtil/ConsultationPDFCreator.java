@@ -21,6 +21,12 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
@@ -39,17 +45,6 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEventHelper;
 import oscar.OscarProperties;
 import oscar.oscarClinic.ClinicData;
 import oscar.oscarRx.data.RxProviderData;
@@ -414,9 +409,9 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		// add the address details
 		Phrase addressPhrase = new Phrase("");
 		if( reqFrm.letterheadAddress != null && reqFrm.letterheadAddress.trim().length() > 0 ) {
-			addressPhrase.add( String.format("%s", reqFrm.letterheadAddress) );
+			addressPhrase.add( reqFrm.getLetterheadAddress() );
 		} else {
-			addressPhrase.add( String.format("%s",clinic.getClinicAddress() ) );
+			addressPhrase.add( clinic.getClinicAddress() );
 			
 			addressPhrase.add(String.format("%s, %s. %s", clinic.getClinicCity(),
 					clinic.getClinicProvince(), 
@@ -429,13 +424,13 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		// add the telecom info
 		Phrase telecomPhrase = new Phrase("");
 		if( reqFrm.letterheadPhone != null && reqFrm.letterheadPhone.trim().length() > 0 ) {
-			telecomPhrase.add( String.format("Phone: %s", reqFrm.letterheadPhone ) );
+			telecomPhrase.add( String.format("Phone: %s", reqFrm.getLetterheadPhone()) );
 		} else {
 			telecomPhrase.add( String.format("Phone: %s", clinic.getClinicPhone() ) );
 		}
 		
 		if( reqFrm.letterheadFax != null && reqFrm.letterheadFax.trim().length() > 0 ) {
-			telecomPhrase.add( String.format(" Fax: %s", reqFrm.letterheadFax ) );
+			telecomPhrase.add( String.format(" Fax: %s", reqFrm.getLetterheadFax() ) );
 		} else {
 			telecomPhrase.add( String.format(" Fax: %s", clinic.getClinicFax() ) );
 		}

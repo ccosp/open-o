@@ -18,17 +18,17 @@ import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.MiscUtils;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfPageEventHelper;
-import com.lowagie.text.pdf.PdfWriter;
-import com.lowagie.text.pdf.RandomAccessFileOrArray;
-import com.lowagie.text.pdf.codec.TiffImage;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.RandomAccessFileOrArray;
+import com.itextpdf.text.pdf.codec.TiffImage;
 
 public class ImagePDFCreator extends PdfPageEventHelper {
 
@@ -76,7 +76,7 @@ public class ImagePDFCreator extends PdfPageEventHelper {
 		
 		int type = image.getOriginalType(); 
 		if (type == Image.ORIGINAL_TIFF) {
-			// The following is composed of code from com.lowagie.tools.plugins.Tiff2Pdf modified to create the 
+			// The following is composed of code from com.itextpdf.tools.plugins.Tiff2Pdf modified to create the 
 			// PDF in memory instead of on disk
 			RandomAccessFileOrArray ra = new RandomAccessFileOrArray((String)request.getAttribute("imagePath"));
             int comps = TiffImage.getNumberOfPages(ra);

@@ -295,7 +295,11 @@ public class CaseManagementPrint {
                                 file2= new File(fileName2);
 				os2 = new FileOutputStream(file2);
 				LabPDFCreator pdfCreator = new LabPDFCreator(os2, segmentId, loggedInInfo.getLoggedInProviderNo());
-				pdfCreator.printPdf();
+				try {
+					pdfCreator.printPdf();
+				} catch (com.itextpdf.text.DocumentException documentException) {
+					throw new DocumentException(documentException);
+				}
 				os2.close();
 				
 				String fileName3 = OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "//" + handler.getPatientName().replaceAll("\\s", "_") + "_" + handler.getMsgDate() + "_LabReport.1.pdf";

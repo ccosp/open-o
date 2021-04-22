@@ -281,7 +281,7 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (com.lowagie.text.DocumentException e) {
+		} catch (Exception e) {
 			error = "DocumentException";
 			exception = e;
 		} finally { 

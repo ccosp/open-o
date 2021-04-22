@@ -112,8 +112,8 @@ import oscar.OscarProperties;
 import oscar.SxmlMisc;
 import oscar.util.UtilDateUtilities;
 
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.PdfCopyFields;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfCopyFields;
 
 public class EyeformAction extends DispatchAction {
 

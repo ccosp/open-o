@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.*;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -38,7 +39,6 @@ import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
-import oscar.OscarProperties;
 import oscar.form.FrmRecord;
 import oscar.form.FrmRecordFactory;
 import oscar.form.graphic.FrmGraphicFactory;
@@ -46,19 +46,12 @@ import oscar.form.graphic.FrmPdfGraphic;
 import oscar.log.LogAction;
 import oscar.util.ConcatPDF;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.ColumnText;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  *
@@ -566,7 +559,7 @@ public class FrmPDFServlet extends HttpServlet {
 		                	float ury = Float.parseFloat(cfgVal[3].trim());
 		                	
 		                    Rectangle rec = new Rectangle(llx, lly, urx, ury);
-		                    rec.setBackgroundColor(java.awt.Color.WHITE);
+		                    rec.setBackgroundColor(BaseColor.WHITE);
 		                    cb.rectangle(rec);
 	                    	
 	                    } else if (tempName.toString().startsWith("__$line")) {
@@ -611,22 +604,6 @@ public class FrmPDFServlet extends HttpServlet {
 	                    }
 	
 	                }
-	
-	                //----------
-	                if ( OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") != null && printCfg[i-1].getProperty("forms_promotext") == null){
-//	                    log.info("adding forms_promotext");
-//	
-//	                    // remove elements of the PDF file
-//	                    Rectangle rec = new Rectangle(160, 12, 465, 21);
-//	                    rec.setBackgroundColor(java.awt.Color.WHITE);
-//	                    cb.rectangle(rec);
-//	
-//	                    cb.beginText();
-//	                    cb.setFontAndSize(BaseFont.createFont(BaseFont.HELVETICA,BaseFont.CP1252,BaseFont.NOT_EMBEDDED), 6);
-//	                    cb.showTextAligned(PdfContentByte.ALIGN_CENTER, OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT"), width/2, 16, 0);
-//	                    cb.endText();
-	                }
-	                
 	                
                 	
                 } //end if there are print properties

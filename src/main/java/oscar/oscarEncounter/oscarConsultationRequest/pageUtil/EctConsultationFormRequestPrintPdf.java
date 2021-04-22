@@ -34,7 +34,6 @@
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
-import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -43,11 +42,13 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.*;
 import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.model.PatientLabRouting;
 import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.OscarProperties;
@@ -61,18 +62,12 @@ import oscar.util.ConcatPDF;
 import oscar.util.ConversionUtils;
 import oscar.util.UtilDateUtilities;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.ColumnText;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
 /**
  *
  * @author wrighd
@@ -135,7 +130,7 @@ public class EctConsultationFormRequestPrintPdf {
 
         cb = writer.getDirectContent();
         ct = new ColumnText(cb);
-        cb.setColorStroke(new Color(0,0,0));
+        cb.setColorStroke(new BaseColor(0,0,0));
 
         // start writing the pdf document
         PdfImportedPage page1 = writer.getImportedPage(reader, 1);
@@ -252,22 +247,6 @@ public class EctConsultationFormRequestPrintPdf {
         cb.endText();
     }
 
-//    private void addFooter() throws DocumentException, IOException{
-//        cb.beginText();
-//        cb.setFontAndSize(bf, FONTSIZE);
-//        cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-"+PAGENUM+"-", width/2, 30, 0);
-//        cb.endText();
-//
-//
-//        // add promotext if it is enabled
-//        if ( OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") != null){
-//            cb.beginText();
-//            cb.setFontAndSize(BaseFont.createFont(BaseFont.HELVETICA,BaseFont.CP1252,BaseFont.NOT_EMBEDDED), 6);
-//            cb.showTextAligned(PdfContentByte.ALIGN_CENTER, OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT"), width/2, 19, 0);
-//            cb.endText();
-//        }
-//    }
-
     private void combinePDFs(LoggedInInfo loggedInInfo, String currentFileName) throws IOException{
 
         String demoNo = (String) request.getAttribute("demo");
@@ -286,26 +265,24 @@ public class EctConsultationFormRequestPrintPdf {
         // TODO:need to do something about the docs that are not PDFs
         // create pdfs from attached labs
         PatientLabRoutingDao dao = SpringUtils.getBean(PatientLabRoutingDao.class);
-        
-        try {
-            for(Object[] i : dao.findRoutingsAndConsultDocsByRequestId(ConversionUtils.fromIntString(reqId), "L")) {
-            	PatientLabRouting p = (PatientLabRouting) i[0];
-            	
-                String segmentId = "" + p.getLabNo();
-                request.setAttribute("segmentID", segmentId);
-                MessageHandler handler = Factory.getHandler(segmentId);
-                String fileName = OscarProperties.getInstance().getProperty("DOCUMENT_DIR")+"//"+handler.getPatientName().replaceAll("\\s", "_")+"_"+handler.getMsgDate()+"_LabReport.pdf";
-                OutputStream os = new FileOutputStream(fileName);
+
+        for(Object[] i : dao.findRoutingsAndConsultDocsByRequestId(ConversionUtils.fromIntString(reqId), "L")) {
+            PatientLabRouting p = (PatientLabRouting) i[0];
+
+            String segmentId = "" + p.getLabNo();
+            request.setAttribute("segmentID", segmentId);
+            MessageHandler handler = Factory.getHandler(segmentId);
+            String fileName = OscarProperties.getInstance().getProperty("DOCUMENT_DIR")+"//"+handler.getPatientName().replaceAll("\\s", "_")+"_"+handler.getMsgDate()+"_LabReport.pdf";
+
+            try(OutputStream os = new FileOutputStream(fileName)) {
                 LabPDFCreator pdf = new LabPDFCreator(request, os);
                 pdf.printPdf();
                 pdfDocs.add(fileName);
+            } catch (Exception e) {
+                request.setAttribute("printError", new Boolean(true));
+                MiscUtils.getLogger().error("Failed while printing lab document " + p.getLabNo(), e);
+                break;
             }
-        }catch(DocumentException de) {
-            request.setAttribute("printError", new Boolean(true));
-        }catch(IOException ioe) {
-            request.setAttribute("printError", new Boolean(true));
-        }catch(Exception e){
-            request.setAttribute("printError", new Boolean(true));
         }
 
         response.setContentType("application/pdf");  //octet-stream
