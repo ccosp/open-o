@@ -1179,6 +1179,18 @@
 	</dependency>
 
 	<dependency>
+		<groupId>org.owasp.encoder</groupId>
+		<artifactId>encoder</artifactId>
+		<version>1.2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.owasp</groupId>
+		<artifactId>csrfguard</artifactId>
+		<version>3.1.0</version>
+	</dependency>
+
+
+		<dependency>
 		<groupId>com.medseek.clinical.service</groupId>
 		<artifactId>SSOClinicalConnect</artifactId>
 		<version>20171101</version>

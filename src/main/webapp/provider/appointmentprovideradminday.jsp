@@ -519,8 +519,6 @@ if (isMobileOptimized) {
 	jQuery.noConflict();
 </script>
 
-<oscar:customInterface section="main"/>
-
 <script type="text/javascript" src="schedulePage.js.jsp"></script>
 
 
