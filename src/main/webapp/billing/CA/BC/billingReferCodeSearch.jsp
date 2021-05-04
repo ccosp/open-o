@@ -28,7 +28,7 @@
   String user_no = (String) session.getAttribute("user");
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*, java.net.*"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Billingreferral" %>
 <%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
@@ -129,30 +129,26 @@ codeName2 = codeName2 + "%";
  param[8] = fdesc2;
 
 %>
-<!DOCTYPE html>
 <html>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title>Diagnostic Code Search</title>
-
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
-<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
 <script LANGUAGE="JavaScript">
 
 function CodeAttach(File0) {
       self.close();
       self.opener.document.<%=formName%>.<%=formElement%>.value = File0;
+  //    self.opener.document.BillingCreateBillingForm.xml_refer2.value ='';
+  //    self.opener.document.BillingCreateBillingForm.xml_refer3.value ='';
 }
 
 </script>
 
 </head>
 
-<body bgcolor="#FFFFFF" topmargin="0" leftmargin="0"
+<body bgcolor="#FFFFFF" text="#000000" topmargin="0" leftmargin="0"
 	rightmargin="0">
-<table class="table table-condensed">
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
 	<tr bgcolor="#486ebd">
 		<th align=CENTER NOWRAP bgcolor="#CCCCFF"><font face="Helvetica"
 			color="#000000">Referral Doctor</font><font
@@ -160,18 +156,22 @@ function CodeAttach(File0) {
 		selections)</font></th>
 	</tr>
 </table>
-<form id="servicecode" class="form form-horizontal">
-<input type="hidden"
+<form name="servicecode" id="servicecode" method="post"
+	action="billingReferCodeUpdate.jsp"><input type="hidden"
 	name="formName" value="<%=formName%>" /> <input type="hidden"
 	name="formElement" value="<%=formElement%>" />
-	<input type="hidden" name="searchAction" value="billingReferCodeSearch" /> 
-<table class="table table-condensed">
+<table width="600" border="1">
 	<tr bgcolor="#CCCCFF">
-		<th>Code</th>
-		<th>Name</th>
-		<th>Specialty</th>
-		<th>City</th>
-		<th>Phone</th>
+		<td width="12%"><b><font face="Arial, Helvetica, sans-serif"
+			size="2">Code</font></b></td>
+		<td width="22%"><b><font face="Arial, Helvetica, sans-serif"
+			size="2">Name</font></b></td>
+		<td width="22%"><b><font face="Arial, Helvetica, sans-serif"
+			size="2">Specialty</font></b></td>
+		<td width="22%"><b><font face="Arial, Helvetica, sans-serif"
+			size="2">City</font></b></td>
+		<td width="22%"><b><font face="Arial, Helvetica, sans-serif"
+			size="2">Phone</font></b></td>
 	</tr>
 
 	<%
@@ -205,20 +205,20 @@ String Dcode="", DcodeDesc="", DcodeCity="", DcodeSpecialty="", DcodePhone="";
  %>
 
 	<tr bgcolor="<%=color%>">
-		<td>
-			<label class="checkbox" for="dcodecheckbox_<%=Dcode%>">
-				<% if (Dcode.compareTo(xcodeName)==0 || Dcode.compareTo(xcodeName1)==0 || Dcode.compareTo(xcodeName2)==0){ %>
-					<input type="checkbox" class="dcodecheckbox" id="dcodecheckbox_<%=Dcode%>" name="code_<%=Dcode%>" checked>
-				<%}else{%>
-					<input type="checkbox" class="dcodecheckbox" id="dcodecheckbox_<%=Dcode%>" name="code_<%=Dcode%>">
-				<%}%>
-				<c:out value="<%=Dcode%>" />
-			</label>
-		</td>
-		<td><c:out value="<%=DcodeDesc%>" /></td>
-		<td><c:out value="<%=DcodeSpecialty%>" /></td>
-		<td><c:out value="<%=DcodeCity%>" /></td>
-		<td><c:out value="<%=DcodePhone%>" /></td>
+		<td width="12%"><font face="Arial, Helvetica, sans-serif"
+			size="2">
+		<% if (Dcode.compareTo(xcodeName)==0 || Dcode.compareTo(xcodeName1)==0 || Dcode.compareTo(xcodeName2)==0){ %><input
+			type="checkbox" name="code_<%=Dcode%>" checked>
+		<%}else{%><input type="checkbox" name="code_<%=Dcode%>">
+		<%}%><%=Dcode%></font></td>
+		<td width="22%"><font face="Arial, Helvetica, sans-serif"
+			size="2"><%=DcodeDesc%></font></td>
+		<td width="22%"><font face="Arial, Helvetica, sans-serif"
+			size="2"><%=DcodeSpecialty%></font></td>
+		<td width="22%"><font face="Arial, Helvetica, sans-serif"
+			size="2"><%=DcodeCity%></font></td>
+		<td width="22%"><font face="Arial, Helvetica, sans-serif"
+			size="2"><%=DcodePhone%></font></td>
 	</tr>
 	<%
   }
@@ -226,10 +226,10 @@ String Dcode="", DcodeDesc="", DcodeCity="", DcodeSpecialty="", DcodePhone="";
 
 	<%  if (intCount == 0 ) { %>
 	<tr bgcolor="<%=color%>">
-		<td>
-			<%=desc%>No match found. <%=fdesc%>
+		<td colspan="5"><font face="Arial, Helvetica, sans-serif"
+			size="2"><%=desc%>No match found. <%=fdesc%>
 		<%// =i%>
-		</td>
+		</font></td>
 
 	</tr>
 	<%  }%>
@@ -243,9 +243,8 @@ String Dcode="", DcodeDesc="", DcodeCity="", DcodeSpecialty="", DcodePhone="";
 </script>
 	<% } %>
 </table>
-<!-- <input type="submit" name="update" value="Confirm"><input
+<input type="submit" name="update" value="Confirm"><input
 	type="button" name="cancel" value="Cancel"
-	onclick="javascript:window.close()"> -->
-	</form>
+	onclick="javascript:window.close()"></form>
 </body>
 </html>

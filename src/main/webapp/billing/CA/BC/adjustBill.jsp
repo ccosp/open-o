@@ -44,7 +44,6 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <%@page import="oscar.oscarBilling.ca.bc.data.*,oscar.*,org.oscarehr.common.model.*"%>
 <%@page import="java.math.*, java.util.*, java.sql.*, oscar.*, java.net.*,oscar.oscarBilling.ca.bc.MSP.*" %>
 <%@page import="org.springframework.web.context.WebApplicationContext,org.springframework.web.context.support.WebApplicationContextUtils, oscar.entities.*" %>
@@ -139,29 +138,16 @@ if(!authed) {
   }
 
 %>
-<!DOCTYPE html>
 <html>
 <head>
    <title>oscarBillingBC Correction</title>
-   	<script type="text/javascript" >
-	// set the context path for javascript functions
-		var ctx = '${pageContext.servletContext.contextPath}';
-	</script>
-	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
-   	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/calendar/calendar.css" title="win2k-cold-1" />
-   	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
-	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script> 
-
-   	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/calendar.js"></script>
-   	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/lang/<bean:message key="global.javascript.calendar"/>"></script>
-   	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/calendar/calendar-setup.js"></script>
-   	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/prototype.js"></script>
-<%--    	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js"></script> --%>
-  	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/billingBCModalBoxes.js"></script> 
-  	
-    <script language="JavaScript">
+   <link rel="stylesheet" type="text/css" media="all" href="../../../share/calendar/calendar.css" title="win2k-cold-1" />
+   <script type="text/javascript" src="../../../share/calendar/calendar.js"></script>
+   <script type="text/javascript" src="../../../share/calendar/lang/<bean:message key="global.javascript.calendar"/>"></script>
+   <script type="text/javascript" src="../../../share/calendar/calendar-setup.js"></script>
+   <script type="text/javascript" src="../../../share/javascript/prototype.js"></script>
+   <script type="text/javascript" src="../../../share/javascript/Oscar.js"></script>
+        <script language="JavaScript">
         if('<%=request.getAttribute("close")%>' == 'true'){
           window.close();
         }
@@ -173,7 +159,7 @@ if(!authed) {
 
 		function checkTextLimit(textField, maximumlength) {
          if (textField.value.length > maximumlength + 1){
-            alert("Maximum "+maximumlength+" characters");
+            alert("Maximun "+maximumlength+" characters");
          }
          if (textField.value.length > maximumlength){
             textField.value = textField.value.substring(0, maximumlength);
@@ -237,24 +223,16 @@ if(!authed) {
                       t0 = escape(document.ReProcessBilling.service_code.value);
                       t1 = escape("");
                       t2 = escape("");
-                      var url = 'billingCodeNewSearch.jsp?name='+t0 + '&name1=' + t1 + '&name2=' + t2 + '&search=';
-                      jQuery("#modal-form").load( url + " #servicecode", function(){
-                    	  jQuery( "#modaldialog" )
-                    	  	.dialog('option', 'title', 'Select Service Codes (3 max)')
-                    	  	.dialog("open");
-                      })
+                      awnd=rs('att','<rewrite:reWrite jspPage="billingCodeNewSearch.jsp"/>?name='+t0 + '&name1=' + t1 + '&name2=' + t2 + '&search=&formName=ReProcessBilling&formElement=service_code',820,660,1);
+                      awnd.focus();
                 }
 
                 function ReferralScriptAttach(elementName) {
                      var d = elementName;
                      t0 = escape(document.ReProcessBilling.elements[d].value);
                      t1 = escape("");
-                     var url = 'billingReferCodeSearch.jsp?name='+t0 + '&name1=' + t1 + '&name2=&search=&formElement=' +d+ '&formName=BillingCreateBillingForm';
-                     jQuery("#modal-form").load( url + ' #servicecode', function(){
-                   	  		jQuery( "#modaldialog" )	  	
-                   	  			.dialog('option', 'title', 'Select Referal Doctor')
-                   		  		.dialog("open");
-                     })
+                     awnd=rs('att','<rewrite:reWrite jspPage="billingReferCodeSearch.jsp"/>?name='+t0 + '&name1=' + t1 + '&name2=&search=&formElement=' +d+ '&formName=ReProcessBilling',600,600,1);
+                     awnd.focus();
                 }
 
 
@@ -335,7 +313,7 @@ function popup( height, width, url, windowName){
   popup.focus();
   return false;
 }
-function popFeeItemList(form,field){/* 
+function popFeeItemList(form,field){
      var width = 575;
      var height = 400;
      var serviceDate = document.getElementById('serviceDate').value;
@@ -343,15 +321,6 @@ function popFeeItemList(form,field){/*
      var url = '<rewrite:reWrite jspPage="support/billingfeeitem.jsp"/>'+'?form=' +form+ '&field='+field+'&feeField=billingAmount&corrections=1&searchStr=' +str+'&serviceDate='+serviceDate;
      var windowName = field;
      popup(height,width,url,windowName);
-      */
-     var serviceDate = document.getElementById('serviceDate').value;
-     var str = document.forms[form].elements[field].value;
-     var url = 'support/billingfeeitem.jsp?form=' +form+ '&field='+field+'&feeField=billingAmount&corrections=1&searchStr=' +str+'&serviceDate='+serviceDate;
-     jQuery("#modal-form").load( url + " #servicecode", function(){
-   	  jQuery( "#modaldialog" )
-   	  	.dialog('option', 'title', 'Select a Service Code')
-   	  	.dialog("open");
-     })
 }
 
 function popupPage(vheight,vwidth,varpage) { //open a new popup window
@@ -376,129 +345,27 @@ function calculateFee(){
 
 </script>
 <style type="text/css">
-
-	select {
-		max-width: 200px;
-	}
-
-	table.table-noborder tr td {
-		border:none;
-	}
-
-    table {
-		width: 100%;
-	}
-	
-	table.tool-bar tr td {
-		vertical-align: bottom;
-	}
-	
-	strong, label {
-		font-weight: normal !important;
-	}
-	
-	#billingPatientInfo {
-		margin-top: 5px;
-	}
-	
-	.wrapper {
-		margin: auto 15px
-	}
-	
-	#oscarBillingHeader {
-		width: 100%;
-		border-collapse: collapse;
-		margin-top: .5%;
-	}
-	
-	table#oscarBillingHeader tr td {
-		padding: 1px 5px;
-		background-color: #F3F3F3;
-		vertical-align: middle;
-	}
-	
-	#oscarBillingHeader #oscarBillingHeaderLeftColumn {
-		width: 19.5% !important;
-		background-color: white;
-		padding: 0px;
-		padding-right: .5% !important;
-		width: 20%;
-	}
-	
-	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
-		margin: 0px;
-		padding: 7px !important;
-		display: block;
-		font-size: large !important;
-		background-color: black;
-		color: white;
-		font-weight: bold;
-	}
-	
-	#oscarBillingHeaderRightColumn {
-		vertical-align: top !important;
-		text-align: right;
-		padding-top: 3px !important;
-		padding-right: 3px !important;
-	}
-	
-	span.HelpAboutLogout a {
-		font-size: x-small;
-		color: black;
-		float: right;
-		padding: 0 3px;
-	}
-	
-	h3 {
-		font-size: small;
-		width: 100%;
-		border-top: red thin solid;
-		border-bottom: red thin solid;
-		margin: 0px;
-		margin-top: 5px;
-		padding: 0px;
-	}
-	h3 ul {
-		margin:0px;
-	}
-	
+        td.bCellData{ font-weight:bold; font-family: Arial,Helvetica,sans-serif; }
+        th.bHeaderData{ font-weight:bold; font-family: Arial,Helvetica,sans-serif; }
 </style>
 </head>
 
 
 
 <body bgcolor="#FFFFFF" text="#000000" topmargin="5"  leftmargin="0" rightmargin="0" onLoad="setfocus();checkDebitRequest();correspondenceNote();">
-<div class="wrapper">
-	<div id="page-header">	
-		<table class="table table-condensed"  id="oscarBillingHeader">
-			<tr>
-				<td id="oscarBillingHeaderLeftColumn"><h1><bean:message key="billing.bc.title"/></h1></td>
-
-				<td id="oscarBillingHeaderCenterColumn">				
-					<span class="badge badge-primary">Office Claim No</span>
-	                <label class="label-text" ><%=billNo%></label>
-	            	
-	            	<span class="badge badge-primary">Last update</span>  
-	            	<strong class="label-text"><%=UpdateDate%></label>
-	 			
-					<span class="badge badge-primary">Creator</span> 
-					<label class="label-text"><%=providerBean.getProperty(bill.getCreator(),bill.getCreator() )%></label>
-			
-				</td>
-				<td id="oscarBillingHeaderRightColumn" align=right>
-					<span class="HelpAboutLogout"> 
-						<a style="font-size: 10px; font-style: normal;" href="${ ctx }oscarEncounter/About.jsp" target="_new">About</a>
-						<a style="font-size: 10px; font-style: normal;" target="_blank"
-									href="http://www.oscarmanual.org/search?SearchableText=&Title=Chart+Interface&portal_type%3Alist=Document">Help</a>		
-					</span>
-				</td>
-			</tr>
-		</table>
-	</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr bgcolor="#000000">
+    <td height="40" width="10%"> </td>
+    <td width="90%" align="left">
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" color="#FFFFFF"><b><font face="Arial, Helvetica, sans-serif" size="4">oscar<font size="3">Billing - Correction</font></font></b></font>
+      </p>
+    </td>
+  </tr>
+</table>
     <%if (allFields == null){
     /////////////////////////////////////////////////////////////////////////
     %>
-        <table class="table table-condensed"  width="100%" >
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr >
                 <td height="40" width="10%">No Record Found </td>
             </tr>
@@ -509,9 +376,25 @@ function calculateFee(){
     <%///////////////////////////////////////////////////////////////////////
     return;
     }%>
+  <table width="100%" border="0" bgcolor="#FFFFFF">
+    <tr>
+      <td  align="left"  class="bCellData"><font color="#000000">
+         Office Claim No
+      </td>
+      <td   class="bCellData">
+         <%=billNo%>
+      </td>
+      <td  align="left"  class="bCellData">
+         <font color="#000000">Last update: <%=UpdateDate%></font>
+      </td>
+      <td align="right" class="bCellData">
+          Creator:  <%=providerBean.getProperty(bill.getCreator(),bill.getCreator() )%>
+      </td>
+    </tr>
 
+   </table>
 
-<script type="text/javascript">
+<SCRIPT Language="Javascript">
 function printBill(){
 if (window.print) {
     window.print() ;
@@ -522,26 +405,24 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
 }
 }
 </script>
-    
+    <table>
     <%
-    ArrayList li = msp.getAllC12Records(billNo);
-    li.addAll(msp.getAllS00Records(billNo));
-		if(! li.isEmpty()) 
-		{ %>
-			
-		<table class="table table-condensed" >
-	<%        for ( int i = 0; i < li.size(); i++){
-	        String rejReason = (String) li.get(i);
+        ArrayList li = msp.getAllC12Records(billNo);
+        li.addAll(msp.getAllS00Records(billNo));
+
+        for ( int i = 0; i < li.size(); i++){
+        String rejReason = (String) li.get(i);
     %>
         <tr>
             <td><%=rejReason%></td>
         </tr>
 
-    	<% }%>
-    	 </table>
-    <%} %>
+    <% }%>
+    </table>
 
 <%
+
+
     DemoNo =  ""+bill.getDemographicNo();
     UpdateDate = MyDateFormat.getMyStandardDate(bill.getUpdateDate());//  rslocation.getString("update_date");
     BillDate = MyDateFormat.getMyStandardDate(bill.getBillingDate());//  rslocation.getString("billing_date");
@@ -573,13 +454,13 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
  }
 
 %>
-<html:form styleClass="form form-horizontal" action="/billing/CA/BC/reprocessBill" onsubmit="return checkSubmitType()">
+  <br><html:form  action="/billing/CA/BC/reprocessBill" onsubmit="return checkSubmitType()">
 <input type="hidden" name="update_date" value="<%=UpdateDate%>"/>
 <input type="hidden" name="demoNo" value="<%=DemoNo%>"/>
 <input type="hidden" name="billNumber" value="<%=allFields.getProperty("billingNo")%>"/>
-<table class="table table-condensed"  width="100%" >
+<table width="100%" border="0">
   <tr bgcolor="#CCCCFF">
-     <td height="21" colspan="4" class="bCellData">Patient Information<input type="hidden" name ="billingmasterNo" value="<%=billNo%>" />
+     <td height="21" colspan="2" class="bCellData">Patient Information<input type="hidden" name ="billingmasterNo" value="<%=billNo%>" />
 
 	 <%if(BillType.equals("A")||BillType.equals("P")){%>
 	 <a href="#" onClick="popupPage(800,800, '../../../billing/CA/BC/billingView.do?billing_no=<%=request.getAttribute("invoiceNo")%>&receipt=yes')">View Invoice</a>
@@ -588,111 +469,77 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
 
   </tr>
   <tr>
-    <td class="bCellData title" width="25%">
+    <td width="54%"  class="bCellData">
         Patient Name:
-
-        <input type="hidden" name="demo_name" value="<%=DemoName%>">
-    </td>
-    <td width="25%">        
-    	<a href=# onClick="popupPage2('../../../demographic/demographiccontrol.jsp?demographic_no=<%=DemoNo%>&displaymode=edit&dboperation=search_detail');return false;" title="<bean:message key="provider.appointmentProviderAdminDay.msgMasterFile"/>">
+        <a href=# onClick="popupPage2('../../../demographic/demographiccontrol.jsp?demographic_no=<%=DemoNo%>&displaymode=edit&dboperation=search_detail');return false;" title="<bean:message key="provider.appointmentProviderAdminDay.msgMasterFile"/>">
         <%=DemoName%>
         </a>
+        <input type="hidden" name="demo_name" value="<%=DemoName%>">
     </td>
-    <td class="bCellData title" width="25%">
-    	Health #:
-    </td>
-    <td width="25%">
+    <td width="46%"  class="bCellData">Health# :
       <% if (HCTYPE != null && HCTYPE.equals("BC")){ %>
       <%=allFields.getProperty("phn")%>
       <%}else{%>
       <%=allFields.getProperty("oinRegistrationNo")%>
       <%}%>
       Type
-      <%=HCTYPE%>   
+      <%=HCTYPE%>
     </td>
   </tr>
   <tr bgcolor="#EEEEFF">
-    <td  class="bCellData title">
-      Sex: 
+    <td  class="bCellData">
+      Sex: <%=DemoSex%>
       <input type="hidden" name="demo_sex" value="<%=DemoSex%>">
       <input type="hidden" name="hc_sex" value="<%=HCSex%>">
     </td>
-    <td><%=DemoSex%></td>
-    <td  class="bCellData title">
-      D.O.B.: 
+    <td  class="bCellData">
+      D.O.B. : <%=DemoDOB%>
       <input type="hidden" name="xml_dob" value="<%=DemoDOB%>">
-    </td>
-    <td>
-    <c:set var="birthdate" value="<%=DemoDOB%>" />
-    <fmt:parseDate value="${birthdate}" var="parsedbirthdate" pattern="yyyyMMdd" />
-    <fmt:formatDate pattern="yyyy-MM-dd" value="${ parsedbirthdate }" />
     </td>
   </tr>
   <tr>
-    <td  class="bCellData title">
-       Address: 
+    <td  class="bCellData">
+       Address: <%=DemoAddress%>
        <input type="hidden" name="demo_address" value="<%=DemoAddress%>">
     </td>
-    <td><%=DemoAddress%></td>
-    <td  class="bCellData title">
-       City: 
+    <td  class="bCellData">
+       City: <%=DemoCity%>
        <input type="hidden" name="demo_city" value="<%=DemoCity%>">
     </td>
-    <td><%=DemoCity%></td>
   </tr>
   <tr bgcolor="#EEEEFF">
-    <td  class="bCellData title">
-       Province: 
+    <td  class="bCellData">
+       Province: <%=DemoProvince%>
        <input type="hidden" name="demo_province" value="<%=DemoProvince%>">
     </td>
-    <td><%=DemoProvince%></td>
-    <td  class="bCellData title">
-       Postal Code: 
+    <td  class="bCellData">
+       Postal Code: <%=DemoPostal%>
        <input type="hidden" name="demo_postal" value="<%=DemoPostal%>">
     </td>
-    <td><%=DemoPostal%></td>
   </tr>
 </table>
 
 
-<table class="table table-condensed"  width="100%" >
+<table width="100%" border="0">
   <tr bgcolor="#CCCCFF">
-    <td colspan="4"  class="bCellData">
-       Billing Information
-     </td>
-
-  </tr>
-<tr>
-	<td class="title" width="25%">
-		Data Centre: 
-	</td>
-	     <td width="25%"><%=allFields.getProperty("datacenter")%></td>
-	<td class="title" width="25%">
-		Payee Number: 
-	</td>
-	     <td width="25%"><%=allFields.getProperty("payeeNo")%></td>
-</tr>
-<tr>
-	<td class="title">
-		Practitioner Number: 
-	</td>
-	     <td><%=allFields.getProperty("practitionerNo")%></td>
-	<td class="title">
-		Bill Type: 
-	</td>
-	     <td><%=bill.getBillingtype()%></td>
-</tr>
-  <tr>
     <td colspan="2"  class="bCellData">
+       Billing Information  Data Center <%=allFields.getProperty("datacenter")%> Payee Number: <%=allFields.getProperty("payeeNo")%> Practitioner Number: <%=allFields.getProperty("practitionerNo")%>
+       Bill Type: <%=bill.getBillingtype()%>
+     </td>
+  </tr>
+
+  <tr>
+    <td   class="bCellData">
     <!-- includes the Billing Type Drop Down List -->
       <jsp:include flush="false" page="billType_frag.jsp">
         <jsp:param name="BillType" value="<%=BillType%>"/>
       </jsp:include>
     </td>
-    <td colspan="2" class="bCellData">
-        <table class="table table-condensed table-noborder" >
+    <td   class="bCellData">
+        <table>
             <tr>
                 <td>
+              <!--<a href="#" onClick='rs("billingcalendar","<rewrite:reWrite jspPage="billingCalendarPopup.jsp"/>?year=<%=curYear%>&month=<%=curMonth%>&type=&returnForm=ReProcessBilling&returnItem=serviceDate","380","300","0")'>-->
               <a href="javascript: function myFunction() {return false; }" id="hlSDate">
               Billing Date:
               </a>
@@ -703,22 +550,23 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
             </tr>
             <tr>
                 <td>
-                <input type="text" class="form-control id="serviceDate" name="serviceDate" value="<%=allFields.getProperty("serviceDate")%>">
+                <input type="text" style="font-size:80%;" id="serviceDate" name="serviceDate" value="<%=allFields.getProperty("serviceDate")%>"><!--<%=allFields.getProperty("serviceDate")%>"/><%=BillDate%>-->
                 </td>
                 <td>
-                <input type="text" class="form-control  name="serviceToDay" value="<%=allFields.getProperty("serviceToDay")%>" size="2" maxlength="2"/>
+                <input type="text" name="serviceToDay" value="<%=allFields.getProperty("serviceToDay")%>" size="2" maxlength="2"/>
                 </td>
             </tr>
         </table>
     </td>
   </tr>
   <tr bgcolor="#EEEEFF">
-
-    <td width="25%" class="bCellData title align-middle">
-        Billing Physician:       
+    <td width="54%"  class="bCellData">
+        Clarification Code:
+          <input type="text" name="locationVisit" value="<%=allFields.getProperty("clarificationCode")%>" maxlength="2" size="2"/>
     </td>
-    <td width="25%" class="align-middle">
-		<select name="providerNo">
+    <td width="46%"  class="bCellData">
+        Billing Physician#:
+        <select style="font-size:80%;" name="providerNo">
             <option value="">--- Select Provider ---</option>
             <% 
                // Retrieving Provider
@@ -733,23 +581,15 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
             %>
             <option value="<%=proOHIP%>" <%=Provider.equals(proOHIP)?"selected":""%>> <%=proOHIP%> | <%=proLast%>, <%=proFirst%></option>
             <% } }%>
-        </select>
-        <input type="hidden" name="xml_provider_no" value="<%=Provider%>">    
-    </td>
-    <td colspan="2" width="50%" class="bCellData">
-        Clarification Code:
-          <input type="text" class="form-control  name="locationVisit" value="<%=allFields.getProperty("clarificationCode")%>" maxlength="2" size="2"/>
+            <input type="hidden" name="xml_provider_no" value="<%=Provider%>">
     </td>
   </tr>
   <tr>
    <%visittype = allFields.getProperty("serviceLocation");%>
-    <td class="bCellData title align-middle">
+    <td width="54%"  class="bCellData">
         Visit Type:
-        
-    </td>
-    <td class="align-middle">
-    	<input type="hidden" name="xml_visittype" value="<%=visittype%>">
-              <select name="serviceLocation">
+        <input type="hidden" name="xml_visittype" value="<%=visittype%>">
+              <select name="serviceLocation" style="font-size:80%;">
               <%
               for (int i = 0; i < billvisit.length; i++) {
                 oscar.oscarBilling.ca.bc.data.BillingFormData.BillingVisit visit = billvisit[i];
@@ -761,75 +601,71 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
               %>
 
              </select>
-    
+
     </td>
-    <td colspan="2" class="bCellData">
+    <td width="46%"  class="bCellData">
         <input type="hidden" name="xml_visitdate" value="<%=visitdate%>">
         <a href="#" onClick='rs("billingcalendar","billingCalendarPopup.jsp?year=<%=curYear%>&month=<%=curMonth%>&type=&returnForm=serviceform&returnItem=xml_vdate","380","300","0")'>
             Admission Date:
         </a>
-        <input type="text" class="form-control name="xml_vdate" value="<%=visitdate%>">
+        <input type="text" style="font-size:80%;" name="xml_vdate" value="<%=visitdate%>">
     </td>
   </tr>
   <tr>
-    <td  class="bCellData title align-middle">Dependent Number:
-
-    </td>
-    <td class="align-middle">
+    <td class="bCellData">Dependent Number:
         <select name="dependentNo" >
             <option value="00" <%=allFields.getProperty("dependentNum").equals("00")?"selected":""%>>00</option>
             <option value="66" <%=allFields.getProperty("dependentNum").equals("66")?"selected":""%>>66</option>
-        </select>    
+        </select>
     </td>
-    <td  colspan="2" class="bCellData">New Program Ind:
-        <input type="text" class="form-control  name="newProgram" value="<%=allFields.getProperty("newProgram")%>" size="2" maxlength="2" />
+    <td class="bCellData">New Program Ind:
+        <input type="text" name="newProgram" value="<%=allFields.getProperty("newProgram")%>" size="2" maxlength="2" />
     </td>
   </tr>
-
-       <tr>
-           <td class="bCellData title align-middle">MVA
-            </td>
-            <td class="align-middle">
-                <select name="mvaClaim" >
-                    <option value="N" <%=allFields.getProperty("mvaClaimCode").equals("N")?"selected":""%>>No</option>
-                    <option value="Y" <%=allFields.getProperty("mvaClaimCode").equals("Y")?"selected":""%>>Yes</option>
-                </select>            
-            </td>
-            <td  colspan="2" class="bCellData">ICBC Claim Num:
-            <input type="text" class="form-control  name="icbcClaim" value="<%=allFields.getProperty("icbcClaimNo")%>"size="8" maxlength="8"/>
-            </td>
-       </tr>
-         <tr>
-   <td class="bCellData title align-middle">After Hours:
-    </td>
-    <td class="align-middle">
+  <tr>
+   <td class="bCellData">After Hours:
         <select name="afterHours" >
             <option value="0" <%=allFields.getProperty("afterHour").equals("0")?"selected":""%>>NO</option>
             <option value="E" <%=allFields.getProperty("afterHour").equals("E")?"selected":""%>>Evening Call</option>
             <option value="N" <%=allFields.getProperty("afterHour").equals("N")?"selected":""%>>Night Call</option>
             <option value="W" <%=allFields.getProperty("afterHour").equals("W")?"selected":""%>>Weekend Call</option>
-        </select>    
+        </select>
     </td>
-    <td  colspan="2" class="bCellData">Time Call Recieved<!--TIME-CALL-RECVD-SRV-->
-       <input type="text" class="form-control  name="timeCallRec" value="<%=allFields.getProperty("timeCall")%>" size="4" maxlength="4"/>
+    <td class="bCellData">Time Call Recieved<!--TIME-CALL-RECVD-SRV-->
+       <input type="text" name="timeCallRec" value="<%=allFields.getProperty("timeCall")%>" size="4" maxlength="4"/>
        <input type="hidden" name="anatomicalArea" value="<%=allFields.getProperty("anatomicalArea")%>" />
     </td>
   </tr>
+
        <tr>
 
-            <td  colspan="2" class="bCellData">Service Time Start<%! /*SERVICE-TIME-START*/ %>
-            <input type="text" class="form-control  name="startTime" value="<%=allFields.getProperty("serviceStartTime")%>" size="4" maxlength="4"/></td>
+            <td class="bCellData">Service Time Start<%! /*SERVICE-TIME-START*/ %>
+            <input type="text" name="startTime" value="<%=allFields.getProperty("serviceStartTime")%>" size="4" maxlength="4"/></td>
 
-            <td  colspan="2" class="bCellData">Service Time Finish <%! /*SERVICE-TIME-FINISH*/ %>
-            <input type="text" class="form-control  name="finishTime" value="<%=allFields.getProperty("serviceEndTime")%>" size="4" maxlength="4"/></td>
+            <td class="bCellData">Service Time Finish <%! /*SERVICE-TIME-FINISH*/ %>
+            <input type="text" name="finishTime" value="<%=allFields.getProperty("serviceEndTime")%>" size="4" maxlength="4"/></td>
 
        </tr>
-        <tr>
-            <td  colspan="2" class="bCellData">Facility Number
-            <input type="text" class="form-control  name="facilityNum" value="<%=allFields.getProperty("facilityNo")%>" size="5" maxlength="5"/></td>
+       <tr>
+           <td class="bCellData">MVA
+                <select name="mvaClaim" >
+                    <option value="N" <%=allFields.getProperty("mvaClaimCode").equals("N")?"selected":""%>>No</option>
+                    <option value="Y" <%=allFields.getProperty("mvaClaimCode").equals("Y")?"selected":""%>>Yes</option>
+                </select>
+              <!--<input type="text" name="mvaClaim" value="<%=allFields.getProperty("mvaClaimCode")%>" size="1"/>-->
+            </td>
+            <td class="bCellData">ICBC Claim Num:
+            <input type="text" name="icbcClaim" value="<%=allFields.getProperty("icbcClaimNo")%>"size="8" maxlength="8"/></td>
+       </tr>
+       <tr>
 
-            <td  colspan="2" class="bCellData">Facility Sub Number
-            <input type="text" class="form-control  name="facilitySubNum" value="<%=allFields.getProperty("facilitySubNo")%>" size="5" maxlength="5"/></td>
+
+
+            <td class="bCellData">Facility Number
+            <input type="text" name="facilityNum" value="<%=allFields.getProperty("facilityNo")%>" size="5" maxlength="5"/></td>
+
+            <td class="bCellData">Facility Sub Number
+            <input type="text" name="facilitySubNum" value="<%=allFields.getProperty("facilitySubNo")%>" size="5" maxlength="5"/></td>
        </tr>
 </table>
 <%
@@ -839,73 +675,57 @@ if(billService != null){
     billValue = billService.getValue();
 }
 %>
-<table class="table table-condensed"  width="100%" >
+<table width="100%" border=1>
   <tr bgcolor="#CCCCFF">
     <td class="bCellData">Service Code</td>
-    <td class="bCellData">Description</td>
+    <td width="50%"  class="bCellData">Description</td>
     <td class="bCellData">Unit</td>
     <td class="bCellData">
-      Fee
+      <div align="right">$ Fee</div>
     </td>
 	<td class="bCellData">Internal Adj.</td>
   </tr>
 
     <tr>
       <td  class="bCellData">
- 		<div class="input-group">
-        	<input type="text" class="form-control" name="service_code" value="<%=allFields.getProperty("billingCode")%>" />
-        	<span class="input-group-btn">
-        		<button class="btn btn-primary" onClick="popFeeItemList('ReProcessBilling','service_code');" >
-        			<span class="glyphicon glyphicon-search"></span>
-        		</button>
-        	</span>
-        </div>
+
+        <input type="text" style="font-size:80%;" name="service_code" value="<%=allFields.getProperty("billingCode")%>" size="10" >
+        <input type="button" onClick="javascript:popFeeItemList('ReProcessBilling','service_code');return false;" value="Search/Update"/>
       </td>
-      <td class="bCellData">
-      	<div class="input-group">
-
-	      	<div class="input-group-addon">
-	        	<%=billform.getServiceDesc(allFields.getProperty("billingCode"),billRegion)%>   ($<span id="valueDisplay"><%=billValue%></span>)
-			</div>
-
-			<span class="input-group-btn">
-	        	<input type="button" class="btn btn-primary" value="Recalculate" onclick="calculateFee()"/>
-	        </span>
-       </div> 
+      <td width="50%"  class="bCellData">
+        <%=billform.getServiceDesc(allFields.getProperty("billingCode"),billRegion)%>   ($<span id="valueDisplay"><%=billValue%></span>)
         <input type="hidden" value="<%=billValue%>" id="billValue"/>
+        <input type="button" value="Recalculate" onclick="calculateFee()"/>
       </td>
       <td  class="bCellData">
         <input type="hidden" name="billing_unit" value="<%=allFields.getProperty("billingUnit")%>">
-        <input type="text" class="form-control name="billingUnit" value="<%=allFields.getProperty("billingUnit")%>" size="6" maxlength="6" id="billingUnit">
+        <input type="text" style="font-size:80%;" name="billingUnit" value="<%=allFields.getProperty("billingUnit")%>" size="6" maxlength="6" id="billingUnit">
       </td>
-      <td class="bCellData" nowrap>
+      <td   class="bCellData" nowrap>
         <div align="right">
            <input type="hidden" name="billing_amount" value="<%=allFields.getProperty("bilAmount")%>">
-           <input type="text" class="form-control" size="8" maxlength="8" name="billingAmount" value="<%=allFields.getProperty("billAmount")%>" onChange="javascript:validateNum(this)" id="billingAmount">
+           <input type="text" style="font-size:80%;" size="8" maxlength="8" name="billingAmount" value="<%=allFields.getProperty("billAmount")%>" onChange="javascript:validateNum(this)" id="billingAmount">
         </div>
       </td>
-	  <td nowrap>  
-  		<div class="input-group">
-           <input class="form-control" placeholder="amount" name="adjAmount" type="text" size="7" maxlength="7">
-           
-           		<span class="input-group-addon">
-		           <label class="checkbox">
-				       <input type="checkbox"  name="adjType" value="1"/>
-				       is debit
-				    </label>
-			    </span>
-
-		</div>
+	  <td>
+			<label>
+				Amount:
+			    <input name="adjAmount" type="text" size="7" maxlength="7">
+			</label>
+                        <label>
+                          <input type="checkbox"  name="adjType" value="1"/>
+                          debit
+                        </label>
 	  </td>
     </tr>
  </table>
- <table class="table table-condensed"  width="100%" class="table table-condensed">
+ <table width="100%" border=1>
   <%
    %>
 
     <tr>
-        <td colspan=2 >
-            <table class="table table-condensed table-noborder"  width="100%">
+        <td colspan=2 width="75%">
+            <table width="100%">
                 <tr bgcolor="#CCCCFF">
                   <td  colspan=2 class="bCellData">
                     Diagnostic Code
@@ -914,67 +734,28 @@ if(billService != null){
 
                 </tr>
                 <tr>
-                
                   <td class="bCellData">
-                    <!-- <a href="javascript:ScriptAttach('dx1')">DX 1</a> -->
-                    <div class="input-group">
-                    <span class="input-group-addon">
-						1
-					</span>
-                    <input type="text" class="form-control  name="dx1" onClick="checkSubmitType()" value="<%=allFields.getProperty("dxCode1")%>" size="10">
-					<span class="input-group-btn">
-                    <button type="button"  title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-2">
-                          <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                    </span>                    
-                    </div>
+                    <a href="javascript:ScriptAttach('dx1')">DX 1</a><input type="text" name="dx1" onClick="checkSubmitType()" value="<%=allFields.getProperty("dxCode1")%>" size="10">
                   </td>
                   <td><%=billform.getDiagDesc(allFields.getProperty("dxCode1"),billRegion)%></td>
-                
                 </tr>
                 <tr>
-                
                   <td   class="bCellData">
-                  <div class="input-group">
-                    <!-- <a href="javascript:ScriptAttach('dx2')">DX 2</a> -->
-                    <span class="input-group-addon">
-						2
-					</span>
-                    <input type="text" class="form-control  name="dx2" onClick="checkSubmitType()" value="<%=allFields.getProperty("dxCode2")%>" size="10">
-					<span class="input-group-btn">
-                    <button type="button"  title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-2">
-                          <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                    </span>
-                  </div>
+                    <a href="javascript:ScriptAttach('dx2')">DX 2</a><input type="text" name="dx2" onClick="checkSubmitType()" value="<%=allFields.getProperty("dxCode2")%>" size="10">
                   </td>
                   <td><%=billform.getDiagDesc(allFields.getProperty("dxCode2"),billRegion)%></td>
-                
                 </tr>
                 <tr>
-                
                   <td class="bCellData">
-                  <div class="input-group">
-             <!--        <a href="javascript:ScriptAttach('dx3')">DX 3</a> -->
-                    <span class="input-group-addon">
-						3
-					</span>
-                    <input type="text" class="form-control  name="dx3" onClick="checkSubmitType()" value="<%=allFields.getProperty("dxCode3")%>" size="10">
-					<span class="input-group-btn">
-                    <button type="button"  title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-2">
-                          <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                    </span>
-                  </div>
+                    <a href="javascript:ScriptAttach('dx3')">DX 3</a><input type="text" name="dx3" onClick="checkSubmitType()" value="<%=allFields.getProperty("dxCode3")%>" size="10">
                   </td>
                   <td><%=billform.getDiagDesc(allFields.getProperty("dxCode3"),billRegion)%></td>
-                
                 </tr>
               </table>
        </td>
        <td colspan=2 valign="top">
-              <table class="table table-condensed table-noborder"  width="100%">
-                 <tr bgcolor="#CCCCFF">
+              <table width="100%">
+                <tr bgcolor="#CCCCFF">
                   <td colspan=2 class="bCellData">
                     Referrals
                   <% String  refCD1 = allFields.getProperty("referralFlag1");
@@ -985,7 +766,7 @@ if(billService != null){
                   </td>
 
                 </tr>
-<%--                <tr>
+                <tr>
                     <td class="bCellData">1.
                     <select name="referalPracCD1" >
 
@@ -996,7 +777,7 @@ if(billService != null){
                     </td>
                     <td class="bCellData">
                         <input type="button" onClick="javascript:ReferralScriptAttach('referalPrac1')" value="Search"/>
-                        <input type="text" class="form-control  name="referalPrac1" value="<%=allFields.getProperty("referralNo1")%>" size="5" maxlength="5"/>
+                        <input type="text" name="referalPrac1" value="<%=allFields.getProperty("referralNo1")%>" size="5" maxlength="5"/>
                     </td>
                 </tr>
                 <tr>
@@ -1009,55 +790,9 @@ if(billService != null){
                     </td>
                     <td class="bCellData">
                         <input type="button" onClick="javascript:ReferralScriptAttach('referalPrac2')" value="Search"/>
-                        <input type="text" class="form-control  class="form-control  name="referalPrac2" value="<%=allFields.getProperty("referralNo2")%>" size="5" maxlength="5"/>
+                        <input type="text" name="referalPrac2" value="<%=allFields.getProperty("referralNo2")%>" size="5" maxlength="5"/>
                     </td>
                 </tr>
-                 --%>
-                     <tr>
-                        <td>
-                        <div class="input-group">
-							<span class="input-group-addon">
-							1
-							</span>
-                        <input type="text" class="form-control  name="referalPrac1" value="<%=allFields.getProperty("referralNo1")%>" size="5" maxlength="5"/>
-	                     	<span class="input-group-btn">
-		                     	<button type="button" class="btn btn-primary" onClick="ReferralScriptAttach('referalPrac1')">
-	                            	<span class="glyphicon glyphicon-search"></span>
-	                          	</button>
-                          	</span>
-	                    </div>
-                        </td>
-                        <td>
-		                    <select name="referalPracCD1" >
-		                        <option value="0" <%=refCD1.equals("0")?"selected":""%>>None</option>
-		                        <option value="T" <%=refCD1.equals("T")?"selected":""%>>TO</option>
-		                        <option value="B" <%=refCD1.equals("B")?"selected":""%>>BY</option>
-		                    </select>
-                        </td>
-                      </tr>
-         
-                      <tr>
-                        <td>
-                         	<div class="input-group">
-								<span class="input-group-addon">
-								2
-								</span>
-                        		<input type="text" class="form-control  class="form-control  name="referalPrac2" value="<%=allFields.getProperty("referralNo2")%>" size="5" maxlength="5"/>
-	                            <span class="input-group-btn">
-			                     	<button type="button" class="btn btn-primary" onClick="ReferralScriptAttach('referalPrac2')">
-		                            	<span class="glyphicon glyphicon-search"></span>
-		                          	</button>
-	                          	</span>
-                          	</div>
-                        </td>
-                        <td>
-		                    <select name="referalPracCD2" >
-		                        <option value="0" <%=refCD2.equals("0")?"selected":""%>>None</option>
-		                        <option value="T" <%=refCD2.equals("T")?"selected":""%>>TO</option>
-		                        <option value="B" <%=refCD2.equals("B")?"selected":""%>>BY</option>
-		                    </select>
-                        </td>
-                      </tr>
               </table>
        </td>
     </tr>
@@ -1084,16 +819,42 @@ if(billService != null){
                 </select>
             </td>
        </tr>
+       <!--<tr>
+            <td>Service Date</td><%/*SERVICE-DATE*/%>
+            <td><input type="text" name="serviceDate" value="<%=allFields.getProperty("serviceDate")%>"/></td>
+            <td>Service to Day</td><%/*SERVICE-TO-DAY*/%>
+            <td<input type="text" name="serviceToDay" value="<%=allFields.getProperty("serviceToDay")%>"/></td>
+       </tr>-->
+       <!--
+       <tr>
+            <td>Time Call Recieved</td><%!/*TIME-CALL-RECVD-SRV*/%>
+            <td><input type="text" name="timeCallRec" value="<%=allFields.getProperty("timeCall")%>" size="4"/></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+       </tr>
+       <tr>
+
+            <td>Service Time Start</td><%! /*SERVICE-TIME-START*/ %>
+            <td><input type="text" name="startTime" value="<%=allFields.getProperty("serviceStartTime")%>" size="4"/></td>
+
+            <td>Service Time Finish</td><%! /*SERVICE-TIME-FINISH*/ %>
+            <td><input type="text" name="finishTime" value="<%=allFields.getProperty("serviceEndTime")%>" size="4"</td>
+
+       </tr>
+       -->
 
        <tr>
             <td class="bCellData" colspan="4">
             <div id="DEBITREQUEST">
-                Select sequence number you would like to debit <input name="debitRequestSeqNum" class="form-control"  type="text" maxlength="7" size="7" value="<%=getDebitRequestSeqNum(allFields.getProperty("originalClaim"))%>"/>
-                </br>Select date MSP received claim (if not known, fill with zeros) (YYYYMMDD): <input id="debitRequestDate" class="form-control" name="debitRequestDate" type="text" maxlength="8" size="8" value="<%=getDebitRequestDate(allFields.getProperty("originalClaim"))%>"/>
-                <a id="hlADate"><img title="Calendar" src="../../../images/cal.gif" alt="Calendar"  /></a>
+                Select sequence number you would like to debit <input name="debitRequestSeqNum" type="text" maxlength="7" size="7" value="<%=getDebitRequestSeqNum(allFields.getProperty("originalClaim"))%>"/>
+                </br>Select date MSP received claim (if not known, fill with zeros) (YYYYMMDD): <input id="debitRequestDate" name="debitRequestDate" type="text" maxlength="8" size="8" value="<%=getDebitRequestDate(allFields.getProperty("originalClaim"))%>"/>
+                <a id="hlADate"><img title="Calendar" src="../../../images/cal.gif" alt="Calendar" border="0" /></a>
+                <!--Date Received MSP <input type="text" />-->
             </div>
             </td>
        </tr>
+
+
        <tr>
 
             <td class="bCellData">Correspondence Code</td><!--CORRESPONDENCE-CODE-->
@@ -1104,6 +865,7 @@ if(billService != null){
                     <option value="N" <%=allFields.getProperty("correspondenceCode").equals("N")?"selected":""%>>Elec Note</option>
                     <option value="B" <%=allFields.getProperty("correspondenceCode").equals("B")?"selected":""%>>Both</option>
                 </select>
+                <!--<input type="text" name="correspondenceCode" value="<%=allFields.getProperty("correspondenceCode")%>" size="1"/>-->
             </td>
             <td class="bCellData">Insurer Code</td><!--OIN-INSURER-C0DE-->
             <td class="bCellData">
@@ -1117,35 +879,36 @@ if(billService != null){
        </tr>
        <tr>
             <td class="bCellData">Claim Short Comment</td><!--CLAIM-SHORT-COMMENT-->
-            <td><input type="text" class="form-control  name="shortComment" value="<%=allFields.getProperty("claimComment")%>"size="20" maxlength="20"/></td>
+            <td><input type="text" name="shortComment" value="<%=allFields.getProperty("claimComment")%>"size="20" maxlength="20"/></td>
             <td class="bCellData">Note</td>
             <td>
                <div id="CORRESPONDENCENOTE">
-                  <textarea class="form-control"  cols="60" rows="5"name="notes" onKeyUp="checkTextLimit(this.form.notes,400);"><%=corrNote%></textarea>
+                  <textarea cols="60" rows="5"name="notes" onKeyUp="checkTextLimit(this.form.notes,400);"><%=corrNote%></textarea>
                </div>
             </td>
 
        </tr>
        <tr valign="top">
       <td>
-        <table class="table table-condensed"  width="100%">
+        <table width="100%">
           <tr bgcolor="#CCCCFF"><td class="bCellData">Billing Notes</td>
             </tr>
           <tr>
 
             <!--CLAIM-SHORT-COMMENT-->
-            <td>
-              <textarea class="form-control"  cols="60" rows="5" name="messageNotes"><%=messageNotes%></textarea>
+            <td colspan="3">
+              <textarea cols="60" rows="5" name="messageNotes"><%=messageNotes%>              </textarea>
             </td>
-		</tr>
+            <td>            </td>
+
         </table>
-		</td>
+
       <td colspan="3">
       <jsp:include flush="false" page="billTransactions.jsp">
         <jsp:param name="billMasterNo" value="<%=billNo%>"/>
       </jsp:include>
       </td>
-	</tr>
+
   </table>
 
   <script type="text/javascript">
@@ -1184,6 +947,62 @@ if(billService != null){
   </script>
   <div id="wcbForms"></div>
 
+
+
+
+
+       <!--<tr>
+            <td>Facility Num</td><%! /*FACILITY-NUM*/ %>
+            <td><input type="text" name="facilityNum" value="<%=allFields.getProperty("facilityNo")%>" size="5"/></td>
+            <td>Facility Sub Num</td><%! /*FACILITY-SUB-NUM*/%>
+            <td><input type="text" name="facilitySubNum" value="<%=allFields.getProperty("facilitySubNo")%>" size="5"/></td>
+       </tr>-->
+
+       <!--<tr>
+
+
+            <td>Registration Num</td><%!/*OIN-REGISTRATION-NUM*/%>
+            <td><input type="text" name="registrationNum" value="<%=allFields.getProperty("oinRegistrationNo")%>" size="12"/></td>
+       </tr>-->
+       <!--
+       <tr>
+            <td>First Name</td><%/*OIN-FIRST-NAME*/%>
+            <td><input type="text" name="firstName" value="<%=allFields.getProperty("oinFirstName")%>" size="12"/></td>
+
+            <td>Surname</td><%/*OIN-SURNAME*/%>
+            <td><input type="text" name="surname" value="<%=allFields.getProperty("oinSurname")%>" size="18"/></td>
+       </tr>
+       <tr>
+            <td>SEX</td>
+            <td><input type="text" name="sex" value="<%=allFields.getProperty("oinSexCode")%>" size="1"/></td>
+            <td>Birth date</td><%/*OIN-BIRTHDATE*/%>
+            <td><input type="text" name="birthdate" value="<%=allFields.getProperty("oinBirthdate")%>" size="8"/></td>
+       </tr>
+       <tr>
+
+            <td>Address 1 WCB Date Of Injury</td><%/*OIN-ADDRESS-1		WCB DATE OF INJURY*/%>
+            <td colspan="3"><input type="text" name="address1" value="<%=allFields.getProperty("oinAddress")%>" size="25"/></td>
+       </tr>
+       <tr>
+            <td>Address 2 WCB AREA OF INJURY</td><%/*OIN-ADDRESS-2 WCB AREA OF INJURY ANATOMICAL-POSITION*/%>
+            <td colspan="3"><input type="text" name="address2" value="<%=allFields.getProperty("oinAddress2")%>" size="25"/></td>
+       </tr>
+       <tr>
+            <Td>Address 3 WCB NATURE OF INJURY</td><%/*OIN-ADDRESS-3 WCB NATURE OF INJURY*/%>
+            <td colspan="3"><input type="text" name="address3" value="<%=allFields.getProperty("oinAddress3")%>" size="25" /></td>
+       </tr>
+       <tr>
+            <td>Address 4 WCB Claim Number</td><%/*OIN-ADDRESS-4 WCB CLAIM NUMBER*/%>
+            <td colspan="3"><input type="text" name="address4" value="<%=allFields.getProperty("oinAddress4")%>" size="25" /></td>
+       </tr>
+       <tr>
+            <td>Postal Code</td><%/*OIN-POSTAL-CODE*/%>
+            <td colspan="3"><input type="text" name="postalCode" value="<%=allFields.getProperty("oinPostalcode")%>" size="6"/></td>
+        </tr>
+-->
+
+
+
 <input type="hidden" value="0" name="saveandclose"/>
 
  <%
@@ -1191,17 +1010,17 @@ if(billService != null){
  %>
         <tr>
           <td colspan="4"  class="bCellData">
-            <input type="submit" class="btn btn-primary" name="submit" value="Reprocess Bill">
-            <input type="submit" class="btn btn-primary" name="submit" value="Resubmit Bill">
-            <input type="submit" class="btn btn-primary" name="submit" value="Reprocess and Resubmit Bill" onClick="checkSubmitType()">
-            <input type="submit" class="btn btn-primary" name="submit" value="Settle Bill">
+            <input type="submit" name="submit" value="Reprocess Bill">
+            <input type="submit" name="submit" value="Resubmit Bill">
+            <input type="submit" name="submit" value="Reprocess and Resubmit Bill" onClick="checkSubmitType()">
+            <input type="submit" name="submit" value="Settle Bill">
 
           </td>
        </tr>
 <%}else{%>
        <tr>
           <td colspan="4"  class="bCellData">
-            <input type="submit" class="btn btn-primary" name="submit" id="submitButton" style="display:none;" value="Reprocess and Resubmit Bill" onClick="checkSubmitType()">
+            <input type="submit" name="submit" id="submitButton" style="display:none;" value="Reprocess and Resubmit Bill" onClick="checkSubmitType()">
           </td>
        </tr>
 
@@ -1212,7 +1031,7 @@ if(billService != null){
   </html:form>
   <a href="javascript: function myFunction() {return false; }" onClick="javascript: showRecord();" >View Full Record</a>
   <div style="display: none;" id="SENDRECORD">
-    <table class="table table-condensed"  >
+    <table border=1>
         <tr>
             <td>Name</td>
             <td>Value</td>
@@ -1569,7 +1388,6 @@ if(billService != null){
            Calendar.setup({inputField:"serviceDate",ifFormat:"%Y%m%d",showsTime:false,button:"hlSDate",singleClick:true,step:1});
            Calendar.setup({inputField:"debitRequestDate",ifFormat:"%Y%m%d",showsTime:false,button:"hlADate",singleClick:true,step:1});
      </script>
-</div>
 </body>
 </html>
 <%!

@@ -1708,7 +1708,10 @@ function updateStatus(formid){//acknowledge
 				}
 
 				if (_in_window) {
-					self.opener.removeReport(doclabid);
+					if (typeof self.opener.removeReport !== 'undefined') {
+						self.opener.removeReport(doclabid);
+					}
+
 					window.close();
 				}
 				else {
@@ -1742,7 +1745,10 @@ function fileDoc(docId){
 							Effect.Fade('labdoc_'+docId);
 						}
 						if (_in_window) {
-							self.opener.removeReport(docId);
+							if (typeof self.opener.removeReport !== 'undefined') {
+								self.opener.removeReport(doclabid);
+							}
+
 							window.close();
 						}
 						else {
