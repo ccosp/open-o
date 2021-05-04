@@ -978,7 +978,7 @@ if(wLReadonly.equals("")){
 
 
 						<br/>
-						<a  href="javascript: void();" onclick="return !showMenu('2', event);" onmouseover="callEligibilityWebService('../billing/CA/BC/ManageTeleplan.do','returnTeleplanMsg');"><bean:message key="demographic.demographiceditdemographic.btnCheckElig"/></a>
+						<a  href="javascript:void(0);" onclick="return !showMenu('2', event);" onmouseover="callEligibilityWebService('../billing/CA/BC/ManageTeleplan.do','returnTeleplanMsg');"><bean:message key="demographic.demographiceditdemographic.btnCheckElig"/></a>
 						<div id='menu2' class='menu' onclick='event.cancelBubble = true;' style="width:350px;">
 							<span id="search_spinner" ><bean:message key="demographic.demographiceditdemographic.msgLoading"/></span>
 							<span id="returnTeleplanMsg"></span>
@@ -1653,13 +1653,13 @@ if ( Dead.equals(PatStat) ) {%>
 									if(ll != null) {
 										LookupListItem phuItem =  lookupListManager.findLookupListItemByLookupListIdAndValue(loggedInInfo, ll.getId(), phu);
 										
-										if(phuItem != null) {
+										if(phuItem != null && phuItem.isActive()) {
 											phuName = phuItem.getLabel();	
 										}
 									}
 									
 								%>
-                                <span class="info"><%=StringUtils.trimToEmpty(phuName)%></span>
+                                <span class="info"><c:out value="<%=StringUtils.trimToEmpty(phuName)%>" /></span>
                             </li>
                             <%} %>
                                                         
@@ -3112,13 +3112,15 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 											<%
 												if(ll != null) {
 													for(LookupListItem llItem : ll.getItems()) {
-														String selected = "";
-														if(llItem.getValue().equals(StringUtils.trimToEmpty(demoExt.get("PHU")))) {
-															selected = " selected=\"selected\" ";	
+														if(llItem.isActive()) {
+															String selected = "";
+															if(llItem.getValue().equals(StringUtils.trimToEmpty(demoExt.get("PHU")))) {
+																selected = " selected=\"selected\" ";
+															}
+															%>
+																<option value="<%=llItem.getValue()%>" <%=selected%>><%=llItem.getLabel()%></option>
+															<%
 														}
-														%>
-															<option value="<%=llItem.getValue()%>" <%=selected%>><%=llItem.getLabel()%></option>
-														<%
 													}
 												}
 											
