@@ -639,12 +639,12 @@ String endDate = (String) request.getAttribute("endDate");
 		}
 
 	
-/* 		window.removeReport = function (reportId) {
+ 		window.removeReport = function (reportId) {
 			var el = jQuery("#labdoc_" + reportId);
 			if (el != null) {
 				el.remove();
 			}
-		} */
+		}
 		
 		// Jquery modal windows
 		jQuery(document).ready( function(){

@@ -85,12 +85,13 @@
 
 	<dependencies>
 
-		<!-- general libraries -->
+		<!-- https://mvnrepository.com/artifact/net.bull.javamelody/javamelody-core -->
 		<dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>1.53.0</version>
-        </dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-core</artifactId>
+			<version>1.87.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -1224,13 +1225,6 @@
 	    <groupId>org.apache.commons</groupId>
 	    <artifactId>commons-compress</artifactId>
 	    <version>1.14</version>
-	</dependency>
-
-
-	<dependency>
-	    <groupId>net.rgielen</groupId>
-	    <artifactId>struts1filter</artifactId>
-	    <version>1.0.1-SNAPSHOT</version>
 	</dependency>
 
 <dependency>
