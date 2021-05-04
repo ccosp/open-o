@@ -722,10 +722,8 @@ public class DmsInboxManageAction extends DispatchAction {
 
 	public ActionForward updateDocStatusInQueue(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		String docid = request.getParameter("docid");
-		if (docid != null) {
-			if (!queueDocumentLinkDAO.setStatusInactive(Integer.parseInt(docid))) {
-				logger.error("failed to set status in queue document link to be inactive");
-			}
+		if (docid != null && ! docid.isEmpty()) {
+			queueDocumentLinkDAO.setStatusInactive(Integer.parseInt(docid));
 		}
 		return null;
 	}

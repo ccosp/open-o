@@ -56,9 +56,7 @@ public class SearchProviderAutoCompleteAction extends DispatchAction{
         if(searchStr==null){
             searchStr=request.getParameter("name");
         }        
-       
-        
-        MiscUtils.getLogger().info("Search Provider " + searchStr);
+
         List provList=ProviderData.searchProvider(searchStr,true);
         Hashtable d=new Hashtable();
         d.put("results", provList);
@@ -99,23 +97,9 @@ public class SearchProviderAutoCompleteAction extends DispatchAction{
     	}
     	
     	searchResults.append("]");
-    	
     	response.setContentType("text/x-json");
-    	MiscUtils.getLogger().info(searchResults.toString());
     	response.getWriter().write(searchResults.toString());
-    	/*HashMap<String,String>searchResults = new HashMap<String,String>();
-    	
-    	for( org.oscarehr.common.model.ProviderData provData : provList ) {
-    		searchResults.put(provData.getId(), provData.getLastName() + ", " + provData.getFirstName());
-    	}
-    	
-    	JSONObject json = (JSONObject) JSONSerializer.toJSON(searchResults);
-    	
-    	response.setContentType("text/x-json");
-        json.write(response.getWriter());
-        
-    	MiscUtils.getLogger().info(json);
-    	*/
+
     	return null;
     }
 }
