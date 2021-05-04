@@ -48,19 +48,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite"%>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
-<%@ page import="oscar.OscarProperties,oscar.log.*"%>
+<%@ page import="oscar.log.*"%>
 <%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="oscar.util.ConversionUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils,oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*,oscar.oscarLab.ca.all.util.*"%>
-<%@page import="org.springframework.web.context.WebApplicationContext,org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.SpringUtils"%><%
+<%@page import="oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*"%>
+<%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.SpringUtils"%><%
 
-            WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-            ProviderInboxRoutingDao providerInboxRoutingDao = (ProviderInboxRoutingDao) ctx.getBean("providerInboxRoutingDAO");
-            UserPropertyDAO userPropertyDAO = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+            ProviderInboxRoutingDao providerInboxRoutingDao = SpringUtils.getBean(ProviderInboxRoutingDao.class);
+            UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
             OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
-            ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
+            ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
                
             String providerNo = request.getParameter("providerNo");
             UserProperty uProp = userPropertyDAO.getProp(providerNo, UserProperty.LAB_ACK_COMMENT);                        
@@ -90,7 +89,7 @@
             }
             
             String defaultQueue = IncomingDocUtil.getAndSetIncomingDocQueue(providerNo, null);
-            QueueDao queueDao = (QueueDao) ctx.getBean("queueDao");
+            QueueDao queueDao = SpringUtils.getBean(QueueDao.class);
             List<Hashtable> queues = queueDao.getQueues();
             int queueId=1;
             if (defaultQueue != null) {
@@ -277,7 +276,7 @@
                                                         <input type="hidden" name="segmentID" value="<%= docId%>"/>
                                                         <input type="hidden" name="multiID" value="<%= docId%>" />
                                                         <input type="hidden" name="providerNo" value="<%= providerNo%>"/>
-                                                        <input type="hidden" name="status" value="A"/ id="status_<%=docId%>">
+                                                        <input type="hidden" name="status" value="A" id="status_<%=docId%>" />
                                                         <input type="hidden" name="labType" value="DOC"/>
                                                         <input type="hidden" name="ajaxcall" value="yes"/>
                                                         <input type="hidden" name="comment" id="comment_<%=docId%>" value="<%=docCommentTxt%>">                                                        
