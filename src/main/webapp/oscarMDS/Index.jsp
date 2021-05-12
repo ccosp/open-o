@@ -644,6 +644,8 @@ String endDate = (String) request.getAttribute("endDate");
 			if (el != null) {
 				el.remove();
 			}
+			refreshCategoryList();
+			fakeScroll();
 		}
 		
 		// Jquery modal windows

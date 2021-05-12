@@ -27,11 +27,9 @@ var oldestLab = null;
 var ctx = document.getElementById("ctx").value;
 
 function  updateDocStatusInQueue(docid){//change status of queue document link row to I=inactive
-    //console.log('in updateDocStatusInQueue, docid '+docid);
-          var url="../dms/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
-          new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){}});
-
-
+    console.log('in updateDocStatusInQueue, docid '+docid);
+	var url="../dms/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
+	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){}});
 }
 
 function saveNext(docid) {
@@ -1613,38 +1611,45 @@ function  popupStart(vheight,vwidth,varpage,windowname) {
 }
 
 function updateDocumentAndNext(eleId){//save doc info
-	var url="../dms/ManageDocument.do",data=$(eleId).serialize(true);
+	const url = "../dms/ManageDocument.do"
+	const data = $(eleId).serialize(true);
+
 	new Ajax.Request(url,
 			{
 				method:'post',
 				parameters:data,
 				onSuccess:function(transport){
-					var json=transport.responseText.evalJSON();
-					var patientId;
-					//oscarLog(json);
+					const json=transport.responseText.evalJSON();
 					if(json!=null ){
-						patientId=json.patientId;
+						const patientId=json.patientId;
 						
-						var ar=eleId.split("_");
-						var num=ar[1];
-						num=num.replace(/\s/g,'');
-						$("saveSucessMsg_"+num).show();
+						const ar = eleId.split("_");
+						const num = ar[1].replace(/\s/g,'');
+
+						$("saveSucessMsg_" + num).show();
 						$('saved'+num).value='true';
-						$("msgBtn_"+num).onclick = function() { popup(700,960, contextpath +'/oscarMessenger/SendDemoMessage.do?demographic_no='+patientId,'msg'); };
-						//Hide document						
-						Effect.BlindUp('labdoc_'+num);											
+
+						$("msgBtn_"+num).onclick = function() {
+							popup(700,960, contextpath +'/oscarMessenger/SendDemoMessage.do?demographic_no='+patientId,'msg');
+						};
+
 						updateDocStatusInQueue(num);
-						var success= updateGlobalDataAndSideNav(num,patientId);
-						if(success){
-						
-							success=updatePatientDocLabNav(num,patientId);
+
+						if (typeof _in_window !== 'undefined' && _in_window) {
+							if (typeof self.opener.removeReport !== 'undefined') {
+								self.opener.removeReport(num);
+							}
+							window.close();
+						} else {
+							//Hide document
+							Effect.BlindUp('labdoc_' + num);
+							success = updateGlobalDataAndSideNav(num, patientId);
 							if(success){
-								//disable demo input
-								$('autocompletedemo'+num).disabled=true;
-								
-								
-								//console.log('updated by save');
-								//console.log(patientDocs);
+								success=updatePatientDocLabNav(num,patientId);
+								if(success){
+									//disable demo input
+									$('autocompletedemo'+num).disabled=true;
+								}
 							}
 						}
 					}
@@ -1673,18 +1678,22 @@ function updateDocument(eleId){
 			$("saveSucessMsg_"+num).show();
 			$('saved'+num).value='true';
 			$("msgBtn_"+num).onclick = function() { popup(700,960,contextpath +'/oscarMessenger/SendDemoMessage.do?demographic_no='+patientId,'msg'); };
-			
+
 			updateDocStatusInQueue(num);
-			var success= updateGlobalDataAndSideNav(num,patientId);
-			
+			var success = false;
+			if (typeof _in_window !== 'undefined' && _in_window) {
+				if (typeof self.opener.removeReport !== 'undefined') {
+					self.opener.removeReport(num);
+					success = true;
+				}
+			} else {
+				success = updateGlobalDataAndSideNav(num, patientId);
+			}
+
 			if(success){
 				success=updatePatientDocLabNav(num,patientId);
 				if(success){
-					//disable demo input
 					$('autocompletedemo'+num).disabled=true;
-					
-					//console.log('updated by save');
-					//console.log(patientDocs);
 				}
 			}
 		}
@@ -1756,17 +1765,14 @@ function updateStatus(formid){//acknowledge
 					//updateDocLabData(doclabid);
 				}
 
-				if (_in_window) {
+				if (typeof _in_window !== 'undefined' && _in_window) {
 					if (typeof self.opener.removeReport !== 'undefined') {
 						self.opener.removeReport(doclabid);
 					}
 
 					window.close();
 				}
-				else {
-					refreshCategoryList();
-					fakeScroll();
-				}
+
 			}});
 		}
 	}
@@ -1790,20 +1796,17 @@ function fileDoc(docId){
 					var data='method=fileLabAjax&flaggedLabId='+docId+'&labType='+type;
 					new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
 						updateDocStatusInQueue(docId);
-						if (docId) {
-							Effect.Fade('labdoc_'+docId);
-						}
-						if (_in_window) {
+
+						if (typeof _in_window !== 'undefined' && _in_window) {
 							if (typeof self.opener.removeReport !== 'undefined') {
-								self.opener.removeReport(doclabid);
+								self.opener.removeReport(docId);
 							}
 
 							window.close();
+						} else {
+							Effect.BlindUp('labdoc_'+docId);
 						}
-						else {
-							refreshCategoryList();
-							fakeScroll();
-						}
+
 					}});
 				}
 			}
