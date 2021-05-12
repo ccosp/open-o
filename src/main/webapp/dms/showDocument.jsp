@@ -236,9 +236,6 @@
         	loc = loc + "&demoName=" + demoName;
         	popupStart(1400, 1400, loc, "Splitter");
         }
-
-        var _in_window = <%=( "true".equals(request.getParameter("inWindow")) ? "true" : "false" )%>;
-        var contextpath = "<%=request.getContextPath()%>";
         
         </script>
 
@@ -246,6 +243,10 @@
 
 <body>
 </c:if>
+<script type="text/javascript">
+    var _in_window = <%=( "true".equals(request.getParameter("inWindow")) ? "true" : "false" )%>;
+    var contextpath = "<%=request.getContextPath()%>";
+</script>
         <div id="labdoc_<%=docId%>" class="content">
         	<%
         	 ArrayList ackList = AcknowledgementData.getAcknowledgements("DOC",docId);
@@ -469,8 +470,15 @@
                                     </tr>
                                     <tr>
                                         <td width="30%" colspan="1" align="left"><a id="saveSucessMsg_<%=docId%>" style="display:none;color:blue;"><bean:message key="inboxmanager.document.SuccessfullySavedMsg"/></a></td>
-                                        <td width="30%" colspan="1" align="left"><%if(demographicID.equals("-1")){%><input type="submit" name="save" disabled id="save<%=docId%>" value="Save" /><input type="button" name="save" id="saveNext<%=docId%>" onclick="saveNext(<%=docId%>)" disabled value='<bean:message key="inboxmanager.document.SaveAndNext"/>' /><%}
-            else{%><input type="submit" name="save" id="save<%=docId%>" value="Save" /><input type="button" name="save" onclick="saveNext(<%=docId%>)" id="saveNext<%=docId%>" value='<bean:message key="inboxmanager.document.SaveAndNext"/>' /> <%}%>
+                                        <td width="30%" colspan="1" align="left"><%if(demographicID.equals("-1")){%>
+                                            <input type="submit" name="save" disabled id="save<%=docId%>" value="Save" />
+                                            <input type="button" name="save" id="saveNext<%=docId%>" onclick="saveNext(<%=docId%>)" disabled value='<bean:message key="inboxmanager.document.SaveAndNext"/>' />
+                                                <%}
+            else{%>
+                                            <input type="submit" name="save" id="save<%=docId%>" value="Save" />
+                                            <input type="button" name="save" onclick="saveNext(<%=docId%>)" id="saveNext<%=docId%>" value='<bean:message key="inboxmanager.document.SaveAndNext"/>' />
+
+                                                <%}%>
 
                                     </tr>
 
