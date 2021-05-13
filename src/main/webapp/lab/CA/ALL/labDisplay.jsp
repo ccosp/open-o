@@ -268,7 +268,7 @@ if (request.getAttribute("printError") != null && (Boolean) request.getAttribute
 	    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>
       	<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery.form.js"></script>
        <script  type="text/javascript" charset="utf-8">
-
+           var contextpath = "${pageContext.servletContext.contextPath}";
      	  jQuery.noConflict();
 		</script>
 		
@@ -494,28 +494,28 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                                                         var demoid='';
                                                                         //check if lab is linked to a provider
                                                                         if(success){
-                                                                            if(action=='ackLab'){
+                                                                            if(action==='ackLab'){
                                                                                 if(confirmAck()){
                                                                                 	jQuery("#labStatus_"+labid).val("A")
                                                                                     updateStatus(formid,labid);
                                                                                 }
-                                                                            }else if(action=='msgLab'){
+                                                                            }else if(action==='msgLab'){
                                                                                 demoid=json.demoId;
                                                                                 if(demoid!=null && demoid.length>0)
                                                                                     window.popup(700,960,'../../../oscarMessenger/SendDemoMessage.do?demographic_no='+demoid,'msg');
-                                                                            }else if(action=='msgLabRecall'){
+                                                                            }else if(action==='msgLabRecall'){
                                                                                 demoid=json.demoId;
                                                                                 if(demoid!=null && demoid.length>0)
                                                                                     window.popup(700,980,'../../../oscarMessenger/SendDemoMessage.do?demographic_no='+demoid+"&recall",'msgRecall');
                                                                                     window.popup(450,600,'../../../tickler/ForwardDemographicTickler.do?docType=HL7&docId='+labid+'&demographic_no='+demoid+'<%=ticklerAssignee%>&priority=<%=recallTicklerPriority%>&recall','ticklerRecall');
-                                                                            }else if(action=='ticklerLab'){
+                                                                            }else if(action==='ticklerLab'){
                                                                                 demoid=json.demoId;
                                                                                 if(demoid!=null && demoid.length>0)
                                                                                     window.popup(450,600,'../../../tickler/ForwardDemographicTickler.do?docType=HL7&docId='+labid+'&demographic_no='+demoid,'tickler')
                                                                             }
-                                                                            else if( action == 'addComment' ) {
+                                                                            else if( action === 'addComment' ) {
                                                                             	addComment(formid,labid);
-                                                                            } else if (action == 'unlinkDemo') {
+                                                                            } else if (action === 'unlinkDemo') {
                                                                                 unlinkDemographic(labid);
                                                                             }
 
@@ -552,28 +552,28 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
         function confirmAckUnmatched(){
             return confirm('<bean:message key="oscarMDS.index.msgConfirmAcknowledgeUnmatched"/>');
         }
-        function updateStatus(formid,labid){
-        	
-            var url='<%=request.getContextPath()%>'+"/oscarMDS/UpdateStatus.do";
-            var data=$(formid).serialize(true);
+        <%--function updateStatus(formid,labid){--%>
+        <%--	alert(labid)--%>
+        <%--    var url='<%=request.getContextPath()%>'+"/oscarMDS/UpdateStatus.do";--%>
+        <%--    var data=$(formid).serialize(true);--%>
 
-            new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
-            	
-            	if( <%=showAll%> ) {                	
-                	window.location.reload();
-                }
-            	else if( window.opener.document.getElementById('labdoc_'+labid) != null ) {
-                	window.opener.Effect.BlindUp('labdoc_'+labid);
-                    window.opener.refreshCategoryList();  
-                    window.close();
-            	}
-                else {
-                	window.close();
-                }
-                
-        }});
+        <%--    new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){--%>
+        <%--    	console.log(transport);--%>
+        <%--    	if( <%=showAll%> ) {                	--%>
+        <%--        	window.location.reload();--%>
+        <%--        }--%>
+        <%--    	else if( window.opener.document.getElementById('labdoc_'+labid) != null ) {--%>
+        <%--        	window.opener.Effect.BlindUp('labdoc_'+labid);--%>
+        <%--            window.opener.refreshCategoryList();  --%>
+        <%--            window.close();--%>
+        <%--    	}--%>
+        <%--        else {--%>
+        <%--        	window.close();--%>
+        <%--        }--%>
+        <%--        --%>
+        <%--    }});--%>
 
-        }
+        <%--}--%>
         
         function unlinkDemographic(labNo){           
             var reason = "Incorrect demographic";
@@ -678,6 +678,9 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
       	   );
       	});
       });
+
+        var _in_window = <%=( "true".equals(request.getParameter("inWindow")) ? "true" : "false" )%>;
+        var contextpath = "<%=request.getContextPath()%>";
 
 		</script>
 		<div id="lab_<%=segmentID%>">

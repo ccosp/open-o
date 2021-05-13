@@ -28,8 +28,10 @@ var ctx = document.getElementById("ctx").value;
 
 function  updateDocStatusInQueue(docid){//change status of queue document link row to I=inactive
     console.log('in updateDocStatusInQueue, docid '+docid);
-	var url="../dms/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
-	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){}});
+	var url=ctx + "/dms/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
+	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
+		console.log(transport)
+	}});
 }
 
 function saveNext(docid) {
@@ -1749,30 +1751,35 @@ function updateStatus(formid){//acknowledge
 	var num=formid.split("_");
 	var doclabid=num[1];
 	if(doclabid){
-		var demoId=$('demofind'+doclabid).value;
-		var saved=$('saved'+doclabid).value;
+
+		var demoId = "0";
+		var saved = true
+		if(jQuery('#demofind'+doclabid).length) {
+			demoId = jQuery('#demofind'+doclabid).val();
+		}
+		if(jQuery('#saved'+doclabid).length) {
+			saved = jQuery('#saved'+doclabid).val();
+		}
+
 		if(demoId=='-1'|| saved=='false'){
 			alert('Document is not assigned and saved to a patient,please file it');
 		}else{
 			var url=contextpath+"/oscarMDS/UpdateStatus.do";
 			var data=$(formid).serialize(true);
-
 			new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
 
-				if(doclabid){
-					Effect.BlindUp('labdoc_'+doclabid);
 					updateDocStatusInQueue(doclabid);
-					//updateDocLabData(doclabid);
-				}
 
-				if (typeof _in_window !== 'undefined' && _in_window) {
-					if (typeof self.opener.removeReport !== 'undefined') {
-						self.opener.removeReport(doclabid);
+					if (typeof _in_window !== 'undefined' && _in_window) {
+						if (typeof self.opener.removeReport !== 'undefined') {
+							self.opener.removeReport(doclabid);
+						}
+						window.close();
+					} else {
+						//Hide document
+						Effect.BlindUp('labdoc_' + doclabid);
+						updateGlobalDataAndSideNav(num, null);
 					}
-
-					window.close();
-				}
-
 			}});
 		}
 	}
