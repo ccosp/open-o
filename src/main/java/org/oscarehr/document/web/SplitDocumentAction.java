@@ -298,13 +298,13 @@ public class SplitDocumentAction extends DispatchAction {
 			pdf.save(fileName);
 		} catch (IOException ioe) {
 			errors.add(ioe.getMessage());
-			ioe.printStackTrace();
+			MiscUtils.getLogger().error("Error", ioe);
 		} finally {
 			try {
 				if (pdf != null) pdf.close();
 			} catch (IOException ioeClose) {
 				errors.add(ioeClose.getMessage());
-				ioeClose.printStackTrace();
+				MiscUtils.getLogger().error("Error", ioeClose);
 			}
 			if(errors.size()>0){
 				for (String errorMessage : errors){
