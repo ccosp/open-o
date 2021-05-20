@@ -9,9 +9,11 @@
 package org.oscarehr.document.web;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -88,108 +90,117 @@ public class SplitDocumentAction extends DispatchAction {
 		PDDocument newPdf = null;
 		
 		try {
-		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
-		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
-		parser.parse();
-		pdf = parser.getPDDocument();
+			File input = new File(docdownload + doc.getDocfilename());
+			PDFParser parser = new PDFParser(new RandomAccessFile(input, "rw"));
+			parser.parse();
+			pdf = parser.getPDDocument();
 
-		newPdf = new PDDocument();
+			newPdf = new PDDocument();
 
-		PDPageTree pages = pdf.getDocumentCatalog().getPages();
+			PDPageTree pages = pdf.getDocumentCatalog().getPages();
 
-		if (commands != null) {
-			for (String c : commands) {
-				String[] command = c.split(",");
-				int pageNum = Integer.parseInt(command[0]);
-				int rotation = Integer.parseInt(command[1]);
+			if (commands != null) {
+				for (String c : commands) {
+					String[] command = c.split(",");
+					int pageNum = Integer.parseInt(command[0]);
+					int rotation = Integer.parseInt(command[1]);
 
-				PDPage p = pages.get(pageNum-1);
-				p.setRotation(rotation);
+					PDPage p = (PDPage)pages.get(pageNum-1);
+					p.setRotation(rotation);
 
-				newPdf.addPage(p);
+					newPdf.addPage(p);
+				}
+
 			}
 
-		}
-
-		if (newPdf.getNumberOfPages() > 0) {
+			if (newPdf.getNumberOfPages() > 0) {
 
 
-			EDoc newDoc = new EDoc("","", newFilename, "", providerNo, doc.getDoccreator(), "", 'A', DateFormatUtils.format(new Date(), "yyyy-MM-dd"), "", "", "demographic", "-1",0);
-			newDoc.setDocPublic("0");
-			newDoc.setContentType("application/pdf");
-			newDoc.setNumberOfPages(newPdf.getNumberOfPages());
+				EDoc newDoc = new EDoc("","", newFilename, "", providerNo, doc.getDoccreator(), "", 'A', DateFormatUtils.format(new Date(), "yyyy-MM-dd"), "", "", "demographic", "-1",0);
+				newDoc.setDocPublic("0");
+				newDoc.setContentType("application/pdf");
+				newDoc.setNumberOfPages(newPdf.getNumberOfPages());
 
-			String newDocNo = EDocUtil.addDocumentSQL(newDoc);
+				String newDocNo = EDocUtil.addDocumentSQL(newDoc);
 
-			newPdf.save(docdownload + newDoc.getFileName());
-			newPdf.close();
+				newPdf.save(docdownload + newDoc.getFileName());
+				newPdf.close();
 
 
-			WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-			ProviderInboxRoutingDao providerInboxRoutingDao = (ProviderInboxRoutingDao) ctx.getBean("providerInboxRoutingDAO");
-			//providerInboxRoutingDao.addToProviderInbox("0", Integer.parseInt(newDocNo), "DOC");
+				WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
+				ProviderInboxRoutingDao providerInboxRoutingDao = (ProviderInboxRoutingDao) ctx.getBean("providerInboxRoutingDAO");
+				//providerInboxRoutingDao.addToProviderInbox("0", Integer.parseInt(newDocNo), "DOC");
 
-			List<ProviderInboxItem> routeList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", Integer.parseInt(docNum));
-			for (ProviderInboxItem i : routeList) {
-				providerInboxRoutingDao.addToProviderInbox(i.getProviderNo(), Integer.parseInt(newDocNo), "DOC");
+				List<ProviderInboxItem> routeList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", Integer.parseInt(docNum));
+				for (ProviderInboxItem i : routeList) {
+					providerInboxRoutingDao.addToProviderInbox(i.getProviderNo(), Integer.parseInt(newDocNo), "DOC");
+				}
+
+				providerInboxRoutingDao.addToProviderInbox(providerNo, Integer.parseInt(newDocNo), "DOC");
+
+				QueueDocumentLinkDao queueDocumentLinkDAO = (QueueDocumentLinkDao) ctx.getBean("queueDocumentLinkDAO");
+				Integer did= Integer.parseInt(newDocNo.trim());
+				queueDocumentLinkDAO.addActiveQueueDocumentLink(Integer.parseInt(queueId), did);
+
+				ProviderLabRoutingDao providerLabRoutingDao = (ProviderLabRoutingDao) SpringUtils.getBean("providerLabRoutingDao");
+
+				List<ProviderLabRoutingModel> result = providerLabRoutingDao.getProviderLabRoutingDocuments(Integer.parseInt(docNum));
+				if (!result.isEmpty()) {
+					new ProviderLabRouting().route(newDocNo,
+							   result.get(0).getProviderNo(),"DOC");
+				}
+
+				PatientLabRoutingDao patientLabRoutingDao = (PatientLabRoutingDao) SpringUtils.getBean("patientLabRoutingDao");
+				List<PatientLabRouting> result2 = patientLabRoutingDao.findDocByDemographic(Integer.parseInt(docNum));
+
+				if (!result2.isEmpty()) {
+					PatientLabRouting newPatientRoute = new PatientLabRouting();
+
+					newPatientRoute.setDemographicNo(result2.get(0).getDemographicNo());
+					newPatientRoute.setLabNo(Integer.parseInt(newDocNo));
+					newPatientRoute.setLabType("DOC");
+
+					patientLabRoutingDao.persist(newPatientRoute);
+				}
+
+				CtlDocumentDao ctlDocumentDao = SpringUtils.getBean(CtlDocumentDao.class);
+				CtlDocument result3 = ctlDocumentDao.getCtrlDocument(Integer.parseInt(docNum));
+
+				if (result3!=null) {
+					CtlDocumentPK ctlDocumentPK = new CtlDocumentPK(Integer.parseInt(newDocNo), "demographic");
+					CtlDocument newCtlDocument = new CtlDocument();
+					newCtlDocument.setId(ctlDocumentPK);
+					newCtlDocument.getId().setModuleId(result3.getId().getModuleId());
+					newCtlDocument.setStatus(result3.getStatus());
+					documentDao.merge(newCtlDocument);
+				}
+
+				if( result.isEmpty() || result2.isEmpty() ) {
+					String json = "{newDocNum:" + newDocNo + "}";
+					JSONObject jsonObject = JSONObject.fromObject(json);
+					response.setContentType("application/json");
+					PrintWriter printWriter = response.getWriter();
+					printWriter.print(jsonObject);
+					printWriter.flush();
+					return null;
+
+				}
+
+
 			}
-
-			providerInboxRoutingDao.addToProviderInbox(providerNo, Integer.parseInt(newDocNo), "DOC");
-
-			QueueDocumentLinkDao queueDocumentLinkDAO = (QueueDocumentLinkDao) ctx.getBean("queueDocumentLinkDAO");
-			Integer did= Integer.parseInt(newDocNo.trim());
-			queueDocumentLinkDAO.addActiveQueueDocumentLink(Integer.parseInt(queueId), did);
-
-			ProviderLabRoutingDao providerLabRoutingDao = (ProviderLabRoutingDao) SpringUtils.getBean("providerLabRoutingDao");
-
-			List<ProviderLabRoutingModel> result = providerLabRoutingDao.getProviderLabRoutingDocuments(Integer.parseInt(docNum));
-			if (!result.isEmpty()) {
-				new ProviderLabRouting().route(newDocNo,
-						   result.get(0).getProviderNo(),"DOC");
-			}
-
-			PatientLabRoutingDao patientLabRoutingDao = (PatientLabRoutingDao) SpringUtils.getBean("patientLabRoutingDao");
-			List<PatientLabRouting> result2 = patientLabRoutingDao.findDocByDemographic(Integer.parseInt(docNum));
-
-			if (!result2.isEmpty()) {
-				PatientLabRouting newPatientRoute = new PatientLabRouting();
-
-				newPatientRoute.setDemographicNo(result2.get(0).getDemographicNo());
-				newPatientRoute.setLabNo(Integer.parseInt(newDocNo));
-				newPatientRoute.setLabType("DOC");
-
-				patientLabRoutingDao.persist(newPatientRoute);
-			}
-
-			CtlDocumentDao ctlDocumentDao = SpringUtils.getBean(CtlDocumentDao.class);
-			CtlDocument result3 = ctlDocumentDao.getCtrlDocument(Integer.parseInt(docNum));
-
-			if (result3!=null) {
-				CtlDocumentPK ctlDocumentPK = new CtlDocumentPK(Integer.parseInt(newDocNo), "demographic");
-				CtlDocument newCtlDocument = new CtlDocument();
-				newCtlDocument.setId(ctlDocumentPK);
-				newCtlDocument.getId().setModuleId(result3.getId().getModuleId());
-				newCtlDocument.setStatus(result3.getStatus());
-				documentDao.merge(newCtlDocument);
-			}
-			
-			if( result.isEmpty() || result2.isEmpty() ) {
-				String json = "{newDocNum:" + newDocNo + "}";
-				JSONObject jsonObject = JSONObject.fromObject(json);
-				response.setContentType("application/json");
-				PrintWriter printWriter = response.getWriter();
-				printWriter.print(jsonObject);
-				printWriter.flush();
-				return null;
-								
-			}
-
-
-		}
-
+		
 		}catch( Exception e) {
 			MiscUtils.getLogger().error(e.getMessage(),e);
 			return null;
+		}
+		finally {
+			try {
+
+				if( pdf != null)  pdf.close();
+
+			}catch(IOException e ) {
+				//do nothing
+			}
 		}
 
 		return mapping.findForward("success");
@@ -199,24 +210,23 @@ public class SplitDocumentAction extends DispatchAction {
 		Document doc = documentDao.getDocument(request.getParameter("document"));
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		if(!docdownload.endsWith(File.separator))
-		{
-			docdownload = docdownload + File.separator;
-		}
-		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
-		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
+		Path filePath = Paths.get(docdownload, doc.getDocfilename());
+		File input = filePath.toFile();
+		PDFParser parser = new PDFParser(new RandomAccessFile(input, "rw"));
 		parser.parse();
 		PDDocument pdf = parser.getPDDocument();
+		setFilePermissions(input);
 		int x = 1;
-		for (PDPage page : pdf.getDocumentCatalog().getPages()) {
-			int rotation = page.getRotation();
-			page.setRotation((rotation+180)%360);
+		for (Object p : pdf.getDocumentCatalog().getPages()) {
+			PDPage pg = (PDPage)p;
+			int r = pg.getRotation();
+			pg.setRotation((r+180)%360);
+
 			ManageDocumentAction.deleteCacheVersion(doc, x);
 			x++;
 		}
 
-		pdf.save(docdownload + doc.getDocfilename());
-		pdf.close();
+		saveFile(pdf,input.getPath());
 
 		return null;
 	}
@@ -225,24 +235,23 @@ public class SplitDocumentAction extends DispatchAction {
 		Document doc = documentDao.getDocument(request.getParameter("document"));
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		if(!docdownload.endsWith(File.separator))
-		{
-			docdownload = docdownload + File.separator;
-		}
-		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
-		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
+		Path filePath = Paths.get(docdownload, doc.getDocfilename());
+		File file = filePath.toFile();
+
+		PDFParser parser = new PDFParser(new RandomAccessFile(file, "rw"));
 		parser.parse();
 		PDDocument pdf = parser.getPDDocument();
 		int x = 1;
-		for (PDPage page : pdf.getDocumentCatalog().getPages()) {
-			int rotation = page.getRotation();
-			page.setRotation((rotation+90)%360);
+		for (Object p : pdf.getDocumentCatalog().getPages()) {
+			PDPage pg = (PDPage)p;
+			int r = pg.getRotation();
+			pg.setRotation((r+90)%360);
+
 			ManageDocumentAction.deleteCacheVersion(doc, x);
 			x++;
 		}
 
-		pdf.save(docdownload + doc.getDocfilename());
-		pdf.close();
+		saveFile(pdf, file.getPath());
 
 		return null;
 	}
@@ -251,32 +260,72 @@ public class SplitDocumentAction extends DispatchAction {
 		Document doc = documentDao.getDocument(request.getParameter("document"));
 
 		String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		if(!docdownload.endsWith(File.separator))
-		{
-			docdownload = docdownload + File.separator;
-		}
-		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
-		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
+		Path filePath = Paths.get(docdownload, doc.getDocfilename());
+		File file = filePath.toFile();
+
+		PDFParser parser = new PDFParser(new RandomAccessFile(file, "rw"));
 		parser.parse();
 		PDDocument pdf = parser.getPDDocument();
 
 		// Documents must have at least 2 pages, for the first page to be removed.
 		if (pdf.getNumberOfPages() <= 1) { return null; }
 
+		setFilePermissions(file);
+
 		int x = 1;
-		for (PDPage page : pdf.getDocumentCatalog().getPages()) {
+		for (Object p : pdf.getDocumentCatalog().getPages()) {
 			ManageDocumentAction.deleteCacheVersion(doc, x);
 			x++;
 		}
 
 		pdf.removePage(0);
-
-		EDocUtil.subtractOnePage(request.getParameter("document"));
-
-		pdf.save(docdownload + doc.getDocfilename());
-		pdf.close();
+		if (saveFile(pdf, file.getPath())) {
+			EDocUtil.subtractOnePage(request.getParameter("document"));
+		}
 
 		return null;
 	}
 
+	/**
+	 *
+	 * @param pdf The pdf document
+	 * @param fileName The file name string
+	 * @return A boolean value indicating if the file was successfully saved without errors
+	 */
+	private boolean saveFile(PDDocument pdf, String fileName) {
+		List<String> errors = new ArrayList<String>();
+		try {
+			pdf.save(fileName);
+		} catch (IOException ioe) {
+			errors.add(ioe.getMessage());
+			MiscUtils.getLogger().error("Error", ioe);
+		} finally {
+			try {
+				if (pdf != null) pdf.close();
+			} catch (IOException ioeClose) {
+				errors.add(ioeClose.getMessage());
+				MiscUtils.getLogger().error("Error", ioeClose);
+			}
+			if(errors.size()>0){
+				for (String errorMessage : errors){
+					MiscUtils.getLogger().error(errorMessage);
+				}
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+	}
+
+	/**
+	 * Sets file permissions for the file that is being modified.
+	 *
+	 * @param   file  A file
+	 */
+	private void setFilePermissions(File file){
+		file.setWritable(true, false);
+		file.setExecutable(true,false);
+		file.setReadable(true, false);
+	}
 }

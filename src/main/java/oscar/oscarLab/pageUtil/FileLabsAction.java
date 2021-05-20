@@ -91,17 +91,15 @@ public class FileLabsAction extends DispatchAction {
 	   jsonResponse.accumulate("success", success);
 	   jsonResponse.accumulate("files", jsonArray);
 
-	   PrintWriter out = null;
 	   try {
-		   out = response.getWriter();
+		   PrintWriter out = response.getWriter();
+		   response.setContentType("application/json");
+		   response.setCharacterEncoding("UTF-8");
+		   out.print(jsonResponse);
+		   out.flush();
 	   } catch (IOException e) {
 		   MiscUtils.getLogger().error("Error with JSON response ", e);
 	   }
-	   response.setContentType("application/json");
-	   response.setCharacterEncoding("UTF-8");
-	   out.print(jsonResponse);
-	   out.flush();
-
 	   return null;
    }
 

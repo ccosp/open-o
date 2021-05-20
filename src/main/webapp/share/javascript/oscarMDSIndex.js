@@ -24,11 +24,14 @@
 
 /************init global data methods*****************/
 var oldestLab = null;
+var ctx = document.getElementById("ctx").value;
 
 function  updateDocStatusInQueue(docid){//change status of queue document link row to I=inactive
     console.log('in updateDocStatusInQueue, docid '+docid);
-	var url="../dms/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
-	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){}});
+	var url=ctx + "/dms/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
+	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
+		console.log(transport)
+	}});
 }
 
 function saveNext(docid) {
@@ -281,11 +284,11 @@ function sendMRP(ele){
 		}
 	}
 }
-
+/*
 function forwardDocument(docId) {
 	var frm = "#reassignForm_" + docId;
 	var query = jQuery(frm).serialize();
-	
+	alert(docId);
 	jQuery.ajax({
 		type: "POST",
 		url:  contextpath + "/oscarMDS/ReportReassign.do",
@@ -307,7 +310,7 @@ function forwardDocument(docId) {
 		}
 	});
 }
-
+*/
 
 function rotate180(id) {
 	jQuery("#rotate180btn_" + id).attr('disabled', 'disabled');
@@ -441,28 +444,7 @@ function FileSelectedRows(files, searchProviderNo, status) {
 //    }
 	var filelabs = { "flaggedLabs" : "{\"files\" : " + JSON.stringify(files) + "}" };
 	var url = ctx + "/oscarMDS/FileLabs.do";
-
-	jQuery.ajax({
-		type: "POST",
-		url: url,
-		data: filelabs,
-		success: function (data) {			
-			if(data.success)
-			{
-				var files = data.files;
-				var file;
-				var fileId;
-				for(var i = 0; i < files.length; i++)
-				{
-					// remove the filed lab from the DOM
-					file = files[i];
-					fileId = file.split(":")[0];
-					jQuery("#labdoc_" + fileId).remove();
-				}
-				updateCategoryList();
-			}
-		}
-	});
+    bulkInboxAction(url, filelabs);
 }
 
 function submitFile(searchProviderNo, status){
@@ -470,9 +452,64 @@ function submitFile(searchProviderNo, status){
 	jQuery("input[name='flaggedLabs']:checkbox:checked").each(function(key, value){
 		files[key] = value.value;
 	})
+    if(files.length === 0) {
+        alert("Select documents to be filed.");
+        return;
+    }
+
 	FileSelectedRows(files, searchProviderNo, status);
 }
 
+function submitForward(searchProviderNo, status){
+	var files = [];
+	jQuery("input[name='flaggedLabs']:checkbox:checked").each(function(key, value){
+		files[key] = value.value;
+	})
+	if(files.length === 0) {
+	    alert("Select documents to be forwarded");
+	    return;
+	}
+
+	ForwardSelectedRows(files, searchProviderNo, status);
+}
+
+function bulkInboxAction(url, filelabs) {
+
+    jQuery.ajax({
+        type: "POST",
+        url: url,
+        data: filelabs,
+        success: function (data) {
+         if(data.success)
+         {
+             var files = data.files;
+             var file;
+             var fileId;
+             for(var i = 0; i < files.length; i++)
+             {
+                 // remove the filed lab from the DOM
+                 file = files[i];
+                 fileId = file.split(":")[0];
+                 jQuery("#labdoc_" + fileId + " input[name='flaggedLabs']").attr("checked",false)
+
+                 if (url.includes("FileLabs.do")){
+                    jQuery("#labdoc_" + fileId).remove();
+                 }
+             }
+
+             jQuery("input[name='checkA']").attr("checked",false);
+
+             if(jQuery("input[name='isListView']").length) {
+                  updateCategoryList();
+             } else {
+                location.reload();
+             }
+
+             jQuery("#dialog").dialog("close");
+         }
+        }
+    });
+}
 function isRowShown(rowid){
 	if($(rowid).style.display=='none')
 		return false;
@@ -1226,78 +1263,92 @@ function popupConsultation(segmentId) {
 function checkType(docNo){
 	return docType[docNo];
 }
-function checkSelected(doc) {
 
-	//oscarLog('in checkSelected()');
-	aBoxIsChecked = false;
-	var labs = doc.getElementsByName("flaggedLabs");
-	if (labs.length == undefined) {
-		if (labs.checked == true) {
-			aBoxIsChecked = true;
-		}
-	} else {
-		for (i=0; i < labs.length; i++) {
-			if (labs[i].checked == true) {
-				//oscarLog(document.reassignForm.flaggedLabs[i].value);
-				aBoxIsChecked = true;
-			}
-		}
-	}
-	if (aBoxIsChecked) {
+function ForwardSelectedRows(files, searchProviderNo, status) {
 		var isListView = jQuery("input[name=isListView]").val();
-		var url = contextpath + "/oscarMDS/SelectProvider.jsp?isListView="+isListView;
-		popupStart(355, 685, url, 'providerselect');
-	} else {
-		alert(msgSelectOneLab);
-	}
+		var url = ctx + "/oscarMDS/SelectProvider.jsp";
+
+		// not sure why this is a parameter, but, just in case...
+		var data={
+		    "isListView": isListView,
+		    "forwardList": files+""
+		};
+		var dialogContainer = jQuery("#dialog");
+		if(! dialogContainer.length) {
+            dialogContainer = drawDialogContainer();
+		}
+		var dialog = dialogContainer.load(url, data).dialog({
+		    modal: true,
+		    width: 685,
+		    height: 355,
+		    draggable: false,
+		    title: "Forward Documents",
+		    buttons: {
+		        "Forward": function() {
+                    // workaround for JQuery bug with multiselect items that are not "selected"
+		            var fwdProviders = jQuery(this).find("select[multiple]#fwdProviders option").map(function(i, e) {
+                        return jQuery(e).val();
+                    }).toArray();
+
+                    var fwdFavorites = jQuery(this).find("select[multiple]#favorites option").map(function(i, e) {
+                        return jQuery(e).val();
+                    }).toArray();
+
+                    if(fwdProviders.length === 0) {
+                        jQuery(this).find("select[multiple]#fwdProviders").addClass("input-error");
+                        return;
+                    }
+
+		            forwardLabs(files , fwdProviders, fwdFavorites);
+		        },
+		        Cancel: function() {
+                    jQuery( this ).dialog( "close" );
+		        }
+		    },
+            close: function() {
+                jQuery(this).find("select[multiple]#fwdProviders").val('');
+                jQuery(this).find("select[multiple]#fwdFavorites").val('');
+            }
+		}).dialog("open");
+}
+
+function drawDialogContainer() {
+    var $div = jQuery('<div />').appendTo('body');
+    $div.attr('id', 'dialog');
+    return $div;
+}
+
+function forwardLabs(files, providers, favorites) {
+    var url = ctx + "/oscarMDS/ReportReassign.do";
+    if(typeof files === "string") {
+        files = new Array(files);
+    }
+
+    var filelabs = {
+        "flaggedLabs" : "{\"files\" : " + JSON.stringify(files) + "}",
+        "selectedProviders" : "{\"providers\" : " + JSON.stringify(providers) + "}",
+        "selectedFavorites" : "{\"favorites\" : " + JSON.stringify(favorites) + "}",
+        "searchProviderNo" : jQuery("input[name='searchProviderNo']").val(),
+        "ajax": "yes"
+    };
+    bulkInboxAction(url, filelabs);
 }
 
 function updateDocLabData(doclabid){//remove doclabid from global variables
-//	console.log('in updatedoclabdata='+doclabid);
 		var doclabidNum = doclabid
 		if (checkType(doclabid +"d") == "DOC") {
 			doclabid += "d";
 		}
-
-		//console.log('aa');
-		//trim doclabid
 		doclabid=doclabid.replace(/\s/g,'');
 		updateSideNav(doclabid);
-		//console.log('aa_aa11');
 		hideRowUsingId(doclabidNum);
-//		console.log('aa_aa');
-		//change typeDocLab
 		removeIdFromTypeDocLab(doclabid);
-//		console.log('bb');
-		//change docType
 		removeIdFromDocType(doclabid);
-		//console.log('cc');
-		//change patientDocs
 		removeIdFromPatientDocs(doclabid);
-		//console.log('dd');
-
-		//change patientIdNames and patientIdStr
 		removeEmptyPairFromPatientDocs();
-		//console.log('ee');
-
-		//change docStatus
 		removeIdFromDocStatus(doclabid);
-		//console.log('ff');
-
-		//remove from normals
 		removeNormal(doclabid);
-		//remove from abnormals
 		removeAbnormal(doclabid);
-
-		/*console.log(typeDocLab);
-                           console.log(docType);
-                           console.log(patientDocs);
-                           console.log(patientIdNames);
-                           console.log(patientIds);
-                           console.log(docStatus);
-                           console.log(normals);*/
-
-
 }
 function checkAb_normal(doclabid){
 	if(normals.indexOf(doclabid)!=-1)
@@ -1483,7 +1534,7 @@ function  updatePatientDocLabNav(num,patientId){
 	}
 }
 function createPatientDocLabEle(patientId,doclabid){
-	var url=contextpath+"/dms/ManageDocument.do";
+	var url = ctx + "/dms/ManageDocument.do";
 	var data='method=getDemoNameAjax&demo_no='+patientId;
 	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
 		var json=transport.responseText.evalJSON();
@@ -1700,30 +1751,35 @@ function updateStatus(formid){//acknowledge
 	var num=formid.split("_");
 	var doclabid=num[1];
 	if(doclabid){
-		var demoId=$('demofind'+doclabid).value;
-		var saved=$('saved'+doclabid).value;
+
+		var demoId = "0";
+		var saved = true
+		if(jQuery('#demofind'+doclabid).length) {
+			demoId = jQuery('#demofind'+doclabid).val();
+		}
+		if(jQuery('#saved'+doclabid).length) {
+			saved = jQuery('#saved'+doclabid).val();
+		}
+
 		if(demoId=='-1'|| saved=='false'){
 			alert('Document is not assigned and saved to a patient,please file it');
 		}else{
 			var url=contextpath+"/oscarMDS/UpdateStatus.do";
 			var data=$(formid).serialize(true);
-
 			new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
 
-				if(doclabid){
-					Effect.BlindUp('labdoc_'+doclabid);
 					updateDocStatusInQueue(doclabid);
-					//updateDocLabData(doclabid);
-				}
 
-				if (typeof _in_window !== 'undefined' && _in_window) {
-					if (typeof self.opener.removeReport !== 'undefined') {
-						self.opener.removeReport(doclabid);
+					if (typeof _in_window !== 'undefined' && _in_window) {
+						if (typeof self.opener.removeReport !== 'undefined') {
+							self.opener.removeReport(doclabid);
+						}
+						window.close();
+					} else {
+						//Hide document
+						Effect.BlindUp('labdoc_' + doclabid);
+						updateGlobalDataAndSideNav(num, null);
 					}
-
-					window.close();
-				}
-
 			}});
 		}
 	}
@@ -2090,7 +2146,7 @@ function addDocComment(docId, providerNo,sync) {
 
     if( ret ) {
     	$("status_"+docId).value = 'N';
-    	var url=contextpath+"/oscarMDS/UpdateStatus.do";
+    	var url=ctx+"/oscarMDS/UpdateStatus.do";
     	var formid = "acknowledgeForm_" + docId;
     	var data=$(formid).serialize();
     	data += "&method=addComment";
