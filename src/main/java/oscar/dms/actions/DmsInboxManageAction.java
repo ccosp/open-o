@@ -222,7 +222,7 @@ public class DmsInboxManageAction extends DispatchAction {
 		} // default to current provider
 
 		boolean providerSearch = !"-1".equals(searchProviderNo);
-		
+
 		MiscUtils.getLogger().debug("SEARCH " + searchProviderNo);
 		String patientFirstName = StringEscapeUtils.escapeSql(request.getParameter("fname"));
 		String patientLastName = StringEscapeUtils.escapeSql(request.getParameter("lname"));
@@ -241,48 +241,33 @@ public class DmsInboxManageAction extends DispatchAction {
 		}
 		boolean patientSearch = !"".equals(patientFirstName) || !"".equals(patientLastName)
 				|| !"".equals(patientHealthNumber);
-		
-		if (!searchPage.equals("true"))
-		{
-			try {
-				CategoryData cData = new CategoryData(patientLastName, patientFirstName, patientHealthNumber, patientSearch, 
-						providerSearch, searchProviderNo, status, abnormalStatus, startDate, endDate);
-				cData.populateCountsAndPatients();
-				MiscUtils.getLogger().debug("LABS " + cData.getTotalLabs());
-				request.setAttribute("patientFirstName", patientFirstName);
-				request.setAttribute("patientLastName", patientLastName);
-				request.setAttribute("patientHealthNumber", patientHealthNumber);
-				request.setAttribute("patients", new ArrayList<PatientInfo>(cData.getPatients().values()));
-				request.setAttribute("unmatchedDocs", cData.getUnmatchedDocs());
-				request.setAttribute("unmatchedLabs", cData.getUnmatchedLabs());
-				request.setAttribute("totalDocs", cData.getTotalDocs());
-				request.setAttribute("totalLabs", cData.getTotalLabs());
-				request.setAttribute("abnormalCount", cData.getAbnormalCount());
-				request.setAttribute("normalCount", cData.getNormalCount());
-				request.setAttribute("totalNumDocs", cData.getTotalNumDocs());
-				request.setAttribute("providerNo", providerNo);
-				request.setAttribute("searchProviderNo", searchProviderNo);
-				request.setAttribute("ackStatus", status);
-				request.setAttribute("abnormalStatus", abnormalStatus);
-				request.setAttribute("categoryHash", cData.getCategoryHash());
-				request.setAttribute("startDate", startDate);
-				request.setAttribute("endDate", endDate);
-				return mapping.findForward("dms_index");
-			} catch (SQLException e) {
-				logger.error("Error: ", e);
-				return mapping.findForward("error");
-			}	
+		try {
+			CategoryData cData = new CategoryData(patientLastName, patientFirstName, patientHealthNumber,
+					patientSearch, providerSearch, searchProviderNo, status, abnormalStatus, startDate, endDate);
+			cData.populateCountsAndPatients();
+			MiscUtils.getLogger().debug("LABS " + cData.getTotalLabs());
+			request.setAttribute("patientFirstName", patientFirstName);
+			request.setAttribute("patientLastName", patientLastName);
+			request.setAttribute("patientHealthNumber", patientHealthNumber);
+			request.setAttribute("patients", new ArrayList<PatientInfo>(cData.getPatients().values()));
+			request.setAttribute("unmatchedDocs", cData.getUnmatchedDocs());
+			request.setAttribute("unmatchedLabs", cData.getUnmatchedLabs());
+			request.setAttribute("totalDocs", cData.getTotalDocs());
+			request.setAttribute("totalLabs", cData.getTotalLabs());
+			request.setAttribute("abnormalCount", cData.getAbnormalCount());
+			request.setAttribute("normalCount", cData.getNormalCount());
+			request.setAttribute("totalNumDocs", cData.getTotalNumDocs());
+			request.setAttribute("providerNo", providerNo);
+			request.setAttribute("searchProviderNo", searchProviderNo);
+			request.setAttribute("ackStatus", status);
+			request.setAttribute("abnormalStatus", abnormalStatus);
+			request.setAttribute("categoryHash", cData.getCategoryHash());
+			request.setAttribute("startDate", startDate);
+			request.setAttribute("endDate", endDate);
+			return mapping.findForward("dms_index");
+		} catch (SQLException e) {
+			return mapping.findForward("error");
 		}
-		request.setAttribute("patientFirstName", patientFirstName);
-		request.setAttribute("patientLastName", patientLastName);
-		request.setAttribute("patientHealthNumber", patientHealthNumber);
-		request.setAttribute("providerNo", providerNo);
-		request.setAttribute("searchProviderNo", searchProviderNo);
-		request.setAttribute("abnormalStatus", abnormalStatus);
-		request.setAttribute("ackStatus", status);
-		request.setAttribute("startDate", startDate);
-		request.setAttribute("endDate", endDate);
-		return mapping.findForward("dms_index");
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -382,6 +367,14 @@ public class DmsInboxManageAction extends DispatchAction {
 			}
 		}
 		roleName += "," + searchProviderNo;
+
+		List<QueueDocumentLink> qd = queueDocumentLinkDAO.getQueueDocLinks();
+		HashMap<String, String> docQueue = new HashMap<String, String>();
+		for (QueueDocumentLink qdl : qd) {
+			Integer i = qdl.getDocId();
+			Integer n = qdl.getQueueId();
+			docQueue.put(i.toString(), n.toString());
+		}
 
 		InboxResultsDao inboxResultsDao = (InboxResultsDao) SpringUtils.getBean("inboxResultsDao");
 		String patientFirstName = StringEscapeUtils.escapeSql(request.getParameter("fname"));
