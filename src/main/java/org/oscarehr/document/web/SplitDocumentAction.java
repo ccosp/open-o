@@ -11,6 +11,8 @@ package org.oscarehr.document.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -84,15 +88,15 @@ public class SplitDocumentAction extends DispatchAction {
 		PDDocument pdf = null;
 		PDDocument newPdf = null;
 		
-		try (FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename())) {
-
-		PDFParser parser = new PDFParser(input);
+		try {
+		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
+		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
 		parser.parse();
 		pdf = parser.getPDDocument();
 
 		newPdf = new PDDocument();
 
-		List pages = pdf.getDocumentCatalog().getAllPages();
+		PDPageTree pages = pdf.getDocumentCatalog().getPages();
 
 		if (commands != null) {
 			for (String c : commands) {
@@ -100,7 +104,7 @@ public class SplitDocumentAction extends DispatchAction {
 				int pageNum = Integer.parseInt(command[0]);
 				int rotation = Integer.parseInt(command[1]);
 
-				PDPage p = (PDPage)pages.get(pageNum-1);
+				PDPage p = pages.get(pageNum-1);
 				p.setRotation(rotation);
 
 				newPdf.addPage(p);
@@ -183,12 +187,12 @@ public class SplitDocumentAction extends DispatchAction {
 
 
 		}
-		
+
 		}catch( Exception e) {
 			MiscUtils.getLogger().error(e.getMessage(),e);
 			return null;
 		}
-		
+
 		return mapping.findForward("success");
 	}
 
@@ -200,24 +204,20 @@ public class SplitDocumentAction extends DispatchAction {
 		{
 			docdownload = docdownload + File.separator;
 		}
-		FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename());
-		PDFParser parser = new PDFParser(input);
+		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
+		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
 		parser.parse();
 		PDDocument pdf = parser.getPDDocument();
 		int x = 1;
-		for (Object p : pdf.getDocumentCatalog().getAllPages()) {
-			PDPage pg = (PDPage)p;
-			Integer r = (pg.getRotation() != null ? pg.getRotation() : 0);
-			pg.setRotation((r+180)%360);
-
+		for (PDPage page : pdf.getDocumentCatalog().getPages()) {
+			int rotation = page.getRotation();
+			page.setRotation((rotation+180)%360);
 			ManageDocumentAction.deleteCacheVersion(doc, x);
 			x++;
 		}
 
 		pdf.save(docdownload + doc.getDocfilename());
 		pdf.close();
-
-		input.close();
 
 		return null;
 	}
@@ -230,24 +230,20 @@ public class SplitDocumentAction extends DispatchAction {
 		{
 			docdownload = docdownload + File.separator;
 		}
-		FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename());
-		PDFParser parser = new PDFParser(input);
+		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
+		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
 		parser.parse();
 		PDDocument pdf = parser.getPDDocument();
 		int x = 1;
-		for (Object p : pdf.getDocumentCatalog().getAllPages()) {
-			PDPage pg = (PDPage)p;
-			Integer r = (pg.getRotation() != null ? pg.getRotation() : 0);
-			pg.setRotation((r+90)%360);
-
+		for (PDPage page : pdf.getDocumentCatalog().getPages()) {
+			int rotation = page.getRotation();
+			page.setRotation((rotation+90)%360);
 			ManageDocumentAction.deleteCacheVersion(doc, x);
 			x++;
 		}
 
 		pdf.save(docdownload + doc.getDocfilename());
 		pdf.close();
-
-		input.close();
 
 		return null;
 	}
@@ -260,8 +256,8 @@ public class SplitDocumentAction extends DispatchAction {
 		{
 			docdownload = docdownload + File.separator;
 		}
-		FileInputStream input = new FileInputStream(docdownload + doc.getDocfilename());
-		PDFParser parser = new PDFParser(input);
+		Path documentPath = Paths.get(docdownload, doc.getDocfilename());
+		PDFParser parser = new PDFParser(new RandomAccessFile(documentPath.toFile(), "r"));
 		parser.parse();
 		PDDocument pdf = parser.getPDDocument();
 
@@ -269,20 +265,17 @@ public class SplitDocumentAction extends DispatchAction {
 		if (pdf.getNumberOfPages() <= 1) { return null; }
 
 		int x = 1;
-		for (Object p : pdf.getDocumentCatalog().getAllPages()) {
+		for (PDPage page : pdf.getDocumentCatalog().getPages()) {
 			ManageDocumentAction.deleteCacheVersion(doc, x);
 			x++;
 		}
 
 		pdf.removePage(0);
 
-
 		EDocUtil.subtractOnePage(request.getParameter("document"));
 
 		pdf.save(docdownload + doc.getDocfilename());
 		pdf.close();
-
-		input.close();
 
 		return null;
 	}

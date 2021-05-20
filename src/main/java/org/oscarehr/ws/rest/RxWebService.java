@@ -28,11 +28,13 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.interactive.action.type.PDActionJavaScript;
+
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionJavaScript;
 import org.oscarehr.common.exception.AccessDeniedException;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Drug;
