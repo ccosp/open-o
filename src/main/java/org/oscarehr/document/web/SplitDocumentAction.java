@@ -9,7 +9,6 @@
 package org.oscarehr.document.web;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
