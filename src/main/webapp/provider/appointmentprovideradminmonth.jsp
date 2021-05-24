@@ -314,26 +314,26 @@
 <%@page import="oscar.appt.JdbcApptImpl" %>
 <%@page import="oscar.appt.ApptUtil" %>
 <html:html locale="true">
+    <body bgcolor="#EEEEFF" onLoad="refreshAllTabAlerts();">
+
     <head>
+        <title><bean:message key="provider.appointmentprovideradminmonth.title"/></title>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.js"></script>
         <script>
             jQuery.noConflict();
         </script>
-        <oscar:customInterface section="monthview"/>
+<%--        <oscar:customInterface section="monthview"/>--%>
 
-        <title><bean:message
-                key="provider.appointmentprovideradminmonth.title"/></title>
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/3.0.0/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="../css/receptionistapptstyle.css" type="text/css">
-        <link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"/>
+
         <link rel="stylesheet" href="../css/helpdetails.css" type="text/css">
         <style type="text/css">
-            #navlist {
-                margin: 0;
-                padding: 0;
-                white-space: nowrap;
-            }
 
+            table {
+                width:100%
+            }
             #navlist li {
                 padding-top: 0.5px;
                 padding-bottom: 0.5px;
@@ -354,11 +354,11 @@
 
 
         </style>
-    </head>
+
     <script type="text/javascript" src="../share/javascript/prototype.js"></script>
     <script language="javascript" type="text/javascript" src="../share/javascript/Oscar.js"></script>
     <script language="JavaScript">
-        <!--
+        //<!--
         function setfocus() {
             document.jumptodate.year.focus();
             document.jumptodate.year.select();
@@ -434,7 +434,9 @@
 
         //-->
     </SCRIPT>
-    <body bgcolor="#EEEEFF" onLoad="refreshAllTabAlerts();" topmargin="0" leftmargin="0">
+    </head>
+    <!-- menu goes here -->
+    <jsp:include page="mainMenu.jsp"/>
 
     <div id="jumpmenu"
          style="position: absolute; width: 140px; height: 100px; z-index: 2; left: 240px; top: 30px; visibility: hidden">
@@ -466,160 +468,155 @@
         </table>
     </div>
 
-    <!-- menu goes here -->
-    <jsp:include page="mainMenu.jsp"/>
+    <table id="monthScheduleNavigation">
+        <tr BGCOLOR="whitesmoke">
+            <td width="33%">
+                <a href="providercontrol.jsp?year=<%=year%>&month=<%=(month-1)%>&day=<%=(day)%>&displaymode=month&dboperation=searchappointmentmonth&providerview=<%=providerview%>">
+                <span class="glyphicon glyphicon-step-backward" title="<%=arrayMonthOfYear[((month+10)%12)]%>"></span>&nbsp;&nbsp;
+                </a>
+                <b><span CLASS=title><%=strYear%>-<%=strMonth%></span></b>
+                <a href="providercontrol.jsp?year=<%=year%>&month=<%=(month+1)%>&day=<%=day%>&displaymode=month&dboperation=searchappointmentmonth&providerview=<%=providerview%>">
+                <span class="glyphicon glyphicon-step-forward" title="<%=arrayMonthOfYear[month%12]%>"></span>
+                |
+                <u><a href="providercontrol.jsp?year=<%=curYear%>&month=<%=curMonth%>&day=<%=curDay%>&view=0&displaymode=day&dboperation=searchappointmentday&viewall=1"
+                      title="<bean:message key="provider.appointmentProviderAdminDay.viewAllProv"/>"><bean:message
+                        key="provider.appointmentProviderAdminDay.viewAll"/></a></u>
 
-    <table BORDER="0" CELLPADDING="1" CELLSPACING="0" WIDTH="100%"
-           BGCOLOR="#C0C0C0">
+                | <a href="providercontrol.jsp?year=<%=curYear%>&month=<%=curMonth%>&day=<%=curDay%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName") )%>&displaymode=day&dboperation=searchappointmentday"
+                        TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>'
+                        OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>' ; return true"><bean:message
+                        key="global.today"/></a>
+
+                | <span style="color:#333">Month</span>
+
+            </td>
+            <TD ALIGN="center" width="33%"><B><%= arrayMonthOfYear[(month + 11) % 12] %>
+            </b></TD>
+            <td ALIGN="RIGHT">
+                <form method="post" name="jumptodate" action="providercontrol.jsp"
+                      style="display:inline;margin:0px;padding:0px;padding-right:10px;">
+                    <INPUT TYPE="text" NAME="year"
+                           VALUE="<%=strYear%>" WIDTH="4" HEIGHT="10" border="0" size="4"
+                           maxlength="4">- <INPUT TYPE="text" NAME="month"
+                                                  VALUE="<%=strMonth%>" WIDTH="2" HEIGHT="10" border="0"
+                                                  size="2"
+                                                  maxlength="2">- <INPUT TYPE="text" NAME="day"
+                                                                         VALUE="<%=strDay%>" WIDTH="2"
+                                                                         HEIGHT="10" border="0" size="2"
+                                                                         maxlength="2"> <INPUT TYPE="hidden"
+                                                                                               NAME="view"
+                                                                                               VALUE="<%=view%>">
+                    <INPUT TYPE="hidden" NAME="curProvider"
+                           VALUE="<%=request.getParameter("curProvider")%>"> <INPUT
+                        TYPE="hidden" NAME="curProviderName"
+                        VALUE="<%=request.getParameter("curProviderName")%>"> <INPUT
+                        TYPE="hidden" NAME="displaymode" VALUE="day"> <INPUT
+                        TYPE="hidden" NAME="dboperation" VALUE="searchappointmentday">
+                    <input type="hidden" name="Go" value=""> <INPUT TYPE="SUBMIT"
+                                                                    VALUE="<bean:message key="provider.appointmentprovideradminmonth.btnGo"/>"
+                                                                    onclick="document.forms['jumptodate'].Go.value='GO'; document.forms['jumptodate'].submit();"
+                                                                    SIZE="5">
+                </form>
+
+                <% boolean isTeamOnly = false; %>
+
+                <!--  multi-site , add site dropdown list -->
+                <%if (bMultisites) { %>
+                <script>
+                    function changeSite(sel) {
+                        sel.style.backgroundColor = sel.options[sel.selectedIndex].style.backgroundColor;
+                        var siteName = sel.options[sel.selectedIndex].value;
+                        var newGroupNo = "<%=(mygroupno == null ? "all" : mygroupno)%>";
+                        var providerview = "<%=providerview%>";
+                        if (providerview.indexOf("_grp_") != -1) {
+
+                            window.open("providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=1&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName") )%>&displaymode=month&dboperation=searchappointmentmonth" + "&site=" + siteName + "&mygroup_no=" + newGroupNo, "_self");
+                        } else {
+                            window.open("providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=1&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName") )%>&displaymode=month&dboperation=searchappointmentmonth" + "&site=" + siteName + "&providerview=" + providerview, "_self");
+                        }
+                    }
+                </script>
+
+                <select id="site" name="site" onchange="changeSite(this)"
+                        style="background-color: <%=( selectedSite == null || siteBgColor.get(selectedSite) == null ? "#FFFFFF" : siteBgColor.get(selectedSite))%>">
+                    <option value="none" style="background-color:white">---all clinic---</option>
+                    <%
+                        for (int i = 0; i < curUserSites.size(); i++) {
+                    %>
+                    <option value="<%= curUserSites.get(i).getName() %>"
+                            style="background-color:<%= curUserSites.get(i).getBgColor() %>"
+                            <%=(curUserSites.get(i).getName().equals(selectedSite)) ? " selected " : "" %> >
+                        <%= curUserSites.get(i).getName() %>
+                    </option>
+                    <% } %>
+                </select>
+                <%} %>
+                <select name="provider_no" onChange="selectprovider(this)">
+                    <option value="all" <%=providerview.equals("all") ? "selected" : ""%>><bean:message
+                            key="provider.appointmentprovideradminmonth.formAllProviders"/></option>
+                    <security:oscarSec roleName="<%=roleName$%>"
+                                       objectName="_team_schedule_only" rights="r" reverse="false">
+                        <%
+                            isTeamOnly = true;
+                            String provider_no = curUser_no;
+                            for (Provider p : providerDao.getActiveProviders()) {
+
+                                providerNameBean.setDef(p.getProviderNo(), p.getLastName() + "," + p.getFirstName());
+                        %>
+                        <option value="<%=p.getProviderNo()%>"
+                                <%=providerview.equals(p.getProviderNo()) ? "selected" : ""%>><%=providerNameBean.getShortDef(p.getProviderNo(), "", NameMaxLen)%>
+                        </option>
+                        <%
+                            }
+                        %>
+
+                    </security:oscarSec>
+                    <security:oscarSec roleName="<%=roleName$%>"
+                                       objectName="_team_schedule_only" rights="r" reverse="true">
+                        <%
+                            for (MyGroup g : myGroupDao.searchmygroupno()) {
+
+                                if (!bMultisites || siteGroups == null || siteGroups.size() == 0 || siteGroups.contains(g.getId().getMyGroupNo())) {
+                        %>
+                        <option value="<%="_grp_"+g.getId().getMyGroupNo()%>"
+                                <%=(providerview.indexOf("_grp_") != -1 && mygroupno.equals(g.getId().getMyGroupNo())) ? "selected" : ""%>>
+                            <bean:message
+                                    key="provider.appointmentprovideradminmonth.formGRP"/>: <%=g.getId().getMyGroupNo()%>
+                        </option>
+                        <%
+                                }
+                            }
+
+                            for (Provider p : providerDao.getActiveProviders()) {
+                                if (!bMultisites || siteProviderNos == null || siteProviderNos.size() == 0 || siteProviderNos.contains(p.getProviderNo())) {
+                                    providerNameBean.setDef(p.getProviderNo(), p.getLastName() + "," + p.getFirstName());
+                        %>
+                        <option value="<%=p.getProviderNo()%>"
+                                <%=providerview.equals(p.getProviderNo()) ? "selected" : ""%>><%=providerNameBean.getShortDef(p.getProviderNo(), "", NameMaxLen)%>
+                        </option>
+                        <%
+                                }
+                            }
+                        %>
+                    </security:oscarSec>
+                </select>
+
+            </td>
+        </tr>
+    </table>
+
+    <table style="margin-top: 69px;" BGCOLOR="#C0C0C0">
         <tr>
             <td>
-                <table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
-                    <tr BGCOLOR="ivory">
-                        <td width="33%"><a
-                                href="providercontrol.jsp?year=<%=year%>&month=<%=(month-1)%>&day=<%=(day)%>&displaymode=month&dboperation=searchappointmentmonth&providerview=<%=providerview%>">
-                            &nbsp;&nbsp;<img src="../images/previous.gif" WIDTH="10" HEIGHT="9"
-                                             BORDER="0" ALT="<%=arrayMonthOfYear[((month+10)%12)]%>" vspace="2"></a>
-                            <b><span CLASS=title><%=strYear%>-<%=strMonth%></span></b> <a
-                                    href="providercontrol.jsp?year=<%=year%>&month=<%=(month+1)%>&day=<%=day%>&displaymode=month&dboperation=searchappointmentmonth&providerview=<%=providerview%>">
-                                <img src="../images/next.gif" WIDTH="10" HEIGHT="9" BORDER="0"
-                                     ALT="<%=arrayMonthOfYear[month%12]%>" vspace="2">&nbsp;&nbsp;</a>
-
-                            |
-                            <u><a href="providercontrol.jsp?year=<%=curYear%>&month=<%=curMonth%>&day=<%=curDay%>&view=0&displaymode=day&dboperation=searchappointmentday&viewall=1"
-                                  title="<bean:message key="provider.appointmentProviderAdminDay.viewAllProv"/>"><bean:message
-                                    key="provider.appointmentProviderAdminDay.viewAll"/></a></u>
-
-                            | <a
-                                    href="providercontrol.jsp?year=<%=curYear%>&month=<%=curMonth%>&day=<%=curDay%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName") )%>&displaymode=day&dboperation=searchappointmentday"
-                                    TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>'
-                                    OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>' ; return true"><bean:message
-                                    key="global.today"/></a>
-
-                            | <span style="color:#333">Month</span>
-
-                        </td>
-                        <TD ALIGN="center" width="33%"><B><%= arrayMonthOfYear[(month + 11) % 12] %>
-                        </b></TD>
-                        <td ALIGN="RIGHT">
-                            <form method="post" name="jumptodate" action="providercontrol.jsp"
-                                  style="display:inline;margin:0px;padding:0px;padding-right:10px;">
-                                <INPUT TYPE="text" NAME="year"
-                                       VALUE="<%=strYear%>" WIDTH="4" HEIGHT="10" border="0" size="4"
-                                       maxlength="4">- <INPUT TYPE="text" NAME="month"
-                                                              VALUE="<%=strMonth%>" WIDTH="2" HEIGHT="10" border="0"
-                                                              size="2"
-                                                              maxlength="2">- <INPUT TYPE="text" NAME="day"
-                                                                                     VALUE="<%=strDay%>" WIDTH="2"
-                                                                                     HEIGHT="10" border="0" size="2"
-                                                                                     maxlength="2"> <INPUT TYPE="hidden"
-                                                                                                           NAME="view"
-                                                                                                           VALUE="<%=view%>">
-                                <INPUT TYPE="hidden" NAME="curProvider"
-                                       VALUE="<%=request.getParameter("curProvider")%>"> <INPUT
-                                    TYPE="hidden" NAME="curProviderName"
-                                    VALUE="<%=request.getParameter("curProviderName")%>"> <INPUT
-                                    TYPE="hidden" NAME="displaymode" VALUE="day"> <INPUT
-                                    TYPE="hidden" NAME="dboperation" VALUE="searchappointmentday">
-                                <input type="hidden" name="Go" value=""> <INPUT TYPE="SUBMIT"
-                                                                                VALUE="<bean:message key="provider.appointmentprovideradminmonth.btnGo"/>"
-                                                                                onclick="document.forms['jumptodate'].Go.value='GO'; document.forms['jumptodate'].submit();"
-                                                                                SIZE="5">
-                            </form>
-
-                            <% boolean isTeamOnly = false; %>
-
-                            <!--  multi-site , add site dropdown list -->
-                            <%if (bMultisites) { %>
-                            <script>
-                                function changeSite(sel) {
-                                    sel.style.backgroundColor = sel.options[sel.selectedIndex].style.backgroundColor;
-                                    var siteName = sel.options[sel.selectedIndex].value;
-                                    var newGroupNo = "<%=(mygroupno == null ? "all" : mygroupno)%>";
-                                    var providerview = "<%=providerview%>";
-                                    if (providerview.indexOf("_grp_") != -1) {
-
-                                        window.open("providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=1&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName") )%>&displaymode=month&dboperation=searchappointmentmonth" + "&site=" + siteName + "&mygroup_no=" + newGroupNo, "_self");
-                                    } else {
-                                        window.open("providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=1&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName") )%>&displaymode=month&dboperation=searchappointmentmonth" + "&site=" + siteName + "&providerview=" + providerview, "_self");
-                                    }
-                                }
-                            </script>
-
-                            <select id="site" name="site" onchange="changeSite(this)"
-                                    style="background-color: <%=( selectedSite == null || siteBgColor.get(selectedSite) == null ? "#FFFFFF" : siteBgColor.get(selectedSite))%>">
-                                <option value="none" style="background-color:white">---all clinic---</option>
-                                <%
-                                    for (int i = 0; i < curUserSites.size(); i++) {
-                                %>
-                                <option value="<%= curUserSites.get(i).getName() %>"
-                                        style="background-color:<%= curUserSites.get(i).getBgColor() %>"
-                                        <%=(curUserSites.get(i).getName().equals(selectedSite)) ? " selected " : "" %> >
-                                    <%= curUserSites.get(i).getName() %>
-                                </option>
-                                <% } %>
-                            </select>
-                            <%} %>
-                            <select name="provider_no" onChange="selectprovider(this)">
-                                <option value="all" <%=providerview.equals("all") ? "selected" : ""%>><bean:message
-                                        key="provider.appointmentprovideradminmonth.formAllProviders"/></option>
-                                <security:oscarSec roleName="<%=roleName$%>"
-                                                   objectName="_team_schedule_only" rights="r" reverse="false">
-                                    <%
-                                        isTeamOnly = true;
-                                        String provider_no = curUser_no;
-                                        for (Provider p : providerDao.getActiveProviders()) {
-
-                                            providerNameBean.setDef(p.getProviderNo(), p.getLastName() + "," + p.getFirstName());
-                                    %>
-                                    <option value="<%=p.getProviderNo()%>"
-                                            <%=providerview.equals(p.getProviderNo()) ? "selected" : ""%>><%=providerNameBean.getShortDef(p.getProviderNo(), "", NameMaxLen)%>
-                                    </option>
-                                    <%
-                                        }
-                                    %>
-
-                                </security:oscarSec>
-                                <security:oscarSec roleName="<%=roleName$%>"
-                                                   objectName="_team_schedule_only" rights="r" reverse="true">
-                                    <%
-                                        for (MyGroup g : myGroupDao.searchmygroupno()) {
-
-                                            if (!bMultisites || siteGroups == null || siteGroups.size() == 0 || siteGroups.contains(g.getId().getMyGroupNo())) {
-                                    %>
-                                    <option value="<%="_grp_"+g.getId().getMyGroupNo()%>"
-                                            <%=(providerview.indexOf("_grp_") != -1 && mygroupno.equals(g.getId().getMyGroupNo())) ? "selected" : ""%>>
-                                        <bean:message
-                                                key="provider.appointmentprovideradminmonth.formGRP"/>: <%=g.getId().getMyGroupNo()%>
-                                    </option>
-                                    <%
-                                            }
-                                        }
-
-                                        for (Provider p : providerDao.getActiveProviders()) {
-                                            if (!bMultisites || siteProviderNos == null || siteProviderNos.size() == 0 || siteProviderNos.contains(p.getProviderNo())) {
-                                                providerNameBean.setDef(p.getProviderNo(), p.getLastName() + "," + p.getFirstName());
-                                    %>
-                                    <option value="<%=p.getProviderNo()%>"
-                                            <%=providerview.equals(p.getProviderNo()) ? "selected" : ""%>><%=providerNameBean.getShortDef(p.getProviderNo(), "", NameMaxLen)%>
-                                    </option>
-                                    <%
-                                            }
-                                        }
-                                    %>
-                                </security:oscarSec>
-                            </select>
-
-                        </td>
-                    </tr>
+                <table>
                     <tr>
-                        <td align="center" VALIGN="TOP" colspan="3" bgcolor="ivory">
+                        <td align="center" VALIGN="TOP" colspan="3" bgcolor="whitesmoke">
                             <%
                                 DateInMonthTable aDate = new DateInMonthTable(year, month - 1, 1);
                                 int[][] dateGrid = aDate.getMonthDateGrid();
                             %>
 
-                            <table width="98%" border="1" cellspacing="0" cellpadding="2"
-                                   bgcolor="silver">
+                            <table border="1" cellspacing="0" cellpadding="2" bgcolor="silver">
                                 <tr bgcolor="#FOFOFO" align="center">
                                     <td width="14.2%"><font SIZE="2" color="red"><bean:message
                                             key="provider.appointmentprovideradminmonth.msgSun"/></font></td>
@@ -695,11 +692,11 @@
                                                 }
 
                                 %>
-                                <td nowrap bgcolor="<%=bgcolor.toString()%>" valign="top"><a
-                                        href='providercontrol.jsp?<%=caisi%>year=<%=year%>&month=<%=MyDateFormat.getDigitalXX(month)%>&day=<%=MyDateFormat.getDigitalXX(dateGrid[i][j])%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName"))%>&displaymode=day&dboperation=searchappointmentday'>
-                                    <span class='date'>&nbsp;<%=dateGrid[i][j] %> </span> <font
-                                        size="-2" color="blue"><%=strHolidayName.toString()%>
-                                </font> <%
+                                <td nowrap bgcolor="<%=bgcolor.toString()%>" valign="top">
+                                    <a href='providercontrol.jsp?<%=caisi%>year=<%=year%>&month=<%=MyDateFormat.getDigitalXX(month)%>&day=<%=MyDateFormat.getDigitalXX(dateGrid[i][j])%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+request.getParameter("curProviderName"))%>&displaymode=day&dboperation=searchappointmentday'>
+                                    <span class='date'>&nbsp;<%=dateGrid[i][j] %> </span>
+                                    <span size="-2" color="blue"><%=strHolidayName.toString()%>
+                                <%
                                     while (bFistEntry ? it.hasNext() : true) {
                                         date = bFistEntry ? it.next() : date;
                                         String _scheduleDate = year + "-" + MyDateFormat.getDigitalXX(month) + "-" + MyDateFormat.getDigitalXX(dateGrid[i][j]);
@@ -712,8 +709,8 @@
                                         }
                                         if (isTeamOnly || !providerview.startsWith("_grp_", 0) || myGrpBean.containsKey(date.getProviderNo())) {
                                 %>
-                                    <br><span
-                                        class='datepname'>&nbsp;<%=providerNameBean.getShortDef(date.getProviderNo(), "", NameMaxLen)%></span><span
+                                    </span>
+                                    <br><span class='datepname'>&nbsp;<%=providerNameBean.getShortDef(date.getProviderNo(), "", NameMaxLen)%></span><span
                                         class='datephour'><%=date.getHour() %></span>
                                     <%
                                         if (bMultisites && CurrentSiteMap.get(date.getReason()) != null && (selectedSite == null || "NONE".equals(date.getReason()) || selectedSite.equals(date.getReason()))) {
@@ -729,7 +726,8 @@
                                     <% }
                                     }
                                     } %>
-                                </a></font></td>
+                                </a>
+                                </td>
                                 <%
                                             }
                                         }
@@ -749,17 +747,15 @@
                                         aDate = new DateInMonthTable(year, month - 1, 1);
                                         dateGrid = aDate.getMonthDateGrid();
                                     %>
-                                    <td><b> <a
-                                            href="providercontrol.jsp?year=<%=year%>&month=<%=(month)%>&day=<%=(day)%>&displaymode=month&dboperation=searchappointmentmonth"
+                                    <td>
+                                        <b> <a href="providercontrol.jsp?year=<%=year%>&month=<%=(month)%>&day=<%=(day)%>&displaymode=month&dboperation=searchappointmentmonth"
                                             title="Last Month: <%=arrayMonthOfYear[((month+10)%12)]%>">
-                                        &nbsp;&nbsp;<img src="../images/previous.gif" WIDTH="10"
-                                                         HEIGHT="9" BORDER="0"
-                                                         ALT="Last Month: <%=arrayMonthOfYear[((month+10)%12)]%>"
-                                                         vspace="2"> <bean:message
-                                            key="provider.appointmentprovideradminmonth.btnLastMonth"/> </a>&nbsp;
+                                        &nbsp;&nbsp;<span class="glyphicon glyphicon-step-backward" title="Last Month: <%=arrayMonthOfYear[((month+10)%12)]%>"></span>
+                                            <bean:message key="provider.appointmentprovideradminmonth.btnLastMonth"/>
+                                    </a>&nbsp;
                                         &nbsp; &nbsp;<%=year%>-<%=month%> &nbsp; &nbsp; &nbsp; &nbsp;
                                         &nbsp; &nbsp; &nbsp;<%=arrayMonthOfYear[((month + 11) % 12)]%>
-                                    </b> <br>
+                                    </b>
                                         <table width="98%" border="1" cellspacing="1" cellpadding="6"
                                                bgcolor="#EEE9BF">
                                             <tr bgcolor="#FOFOFO">
@@ -868,9 +864,9 @@
                                             href="providercontrol.jsp?year=<%=year%>&month=<%=(month)%>&day=<%=day%>&displaymode=month&dboperation=searchappointmentmonth"
                                             title="Next Month: <%=arrayMonthOfYear[month%12]%>"> &nbsp;
                                         &nbsp; &nbsp; <bean:message
-                                                key="provider.appointmentprovideradminmonth.btnNextMonth"/> <img
-                                                src="../images/next.gif" WIDTH="10" HEIGHT="9" BORDER="0"
-                                                ALT="Next Month: <%=arrayMonthOfYear[(month)%12]%>" vspace="2">&nbsp;&nbsp;</a><br>
+                                                key="provider.appointmentprovideradminmonth.btnNextMonth"/>
+                                        <span class="glyphicon glyphicon-step-forward" title="Next Month: <%=arrayMonthOfYear[(month)%12]%>"></span>
+                                        </a><br>
 
                                         <table width="98%" border="1" cellspacing="1" cellpadding="6"
                                                bgcolor="#EEE9BF">
@@ -973,20 +969,7 @@
 
                         </td>
                     </tr>
-                    <tr>
-                        <td BGCOLOR="ivory" width="33%"><a
-                                href="providercontrol.jsp?year=<%=year%>&month=<%=(month-1)%>&day=<%=(day)%>&displaymode=month&dboperation=searchappointmentmonth">
-                            &nbsp;&nbsp;<img src="../images/previous.gif" WIDTH="10" HEIGHT="9"
-                                             BORDER="0" ALT="View Previous MONTH" vspace="2"></a> <b><span
-                                CLASS=title><%=strYear%>-<%=strMonth%></span></b> <a
-                                href="providercontrol.jsp?year=<%=year%>&month=<%=(month+1)%>&day=<%=day%>&displaymode=month&dboperation=searchappointmentmonth">
-                            <img src="../images/next.gif" WIDTH="10" HEIGHT="9" BORDER="0"
-                                 ALT="View Next MONTH" vspace="2">&nbsp;&nbsp;</a></td>
-                        <TD ALIGN="center" BGCOLOR="ivory" width="33%"></TD>
-                        <td ALIGN="RIGHT" BGCOLOR="Ivory">| <a href="../logout.jsp"><bean:message
-                                key="provider.appointmentprovideradminmonth.btnlogOut"/> &nbsp;</a></td>
 
-                    </tr>
                 </table>
             </td>
         </tr>

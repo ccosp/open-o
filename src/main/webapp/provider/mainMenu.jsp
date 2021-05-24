@@ -349,18 +349,24 @@
                                 <div class="dropdown">
                                     <a href="#" class="dashboardBtn">Dashboard</a>
                                     <div class="dashboardDropdown">
+                                        <ul>
                                         <c:forEach items="${ dashboards }" var="dashboard">
+                                            <li>
                                             <a href="javascript:void(0)"
                                                onclick="newWindow('<%=request.getContextPath()%>/web/dashboard/display/DashboardDisplay.do?method=getDashboard&dashboardId=${ dashboard.id }','dashboard')">
                                                 <c:out value="${ dashboard.name }"/>
                                             </a>
+                                            </li>
                                         </c:forEach>
                                         <security:oscarSec roleName="<%=roleName$%>" objectName="_dashboardCommonLink" rights="r">
+                                            <li>
                                             <a href="javascript:void(0)"
                                                onclick="newWindow('<%=request.getContextPath()%>/web/dashboard/display/sharedOutcomesDashboard.jsp','shared_dashboard')">
                                                 Common Provider Dashboard
                                             </a>
+                                            </li>
                                         </security:oscarSec>
+                                        </ul>
                                     </div>
 
                                 </div>
@@ -418,7 +424,7 @@
 
         </td>
 
-        <td>
+        <td style="min-width:259px;text-align:right;padding-right:15px;">
             <a href="javascript: function myFunction() {return false; }"
                onClick="popup(700,1024,'../scratch/index.jsp','scratch')"><span id="oscar_scratch"></span></a>&nbsp;
 
@@ -455,3 +461,4 @@
 
     </tr>
 </table>
+
