@@ -17,3 +17,15 @@ src/test/resources/over_ride_config.properties
 src/main/resources/uiResources_*.properties
 *.DS_Store
 *.swp
+.settings
+.gradle
+.project
+.gradle/*
+.project/*
+.settings/*
+/out
+Out
+*.iml
+.run*
+
+
