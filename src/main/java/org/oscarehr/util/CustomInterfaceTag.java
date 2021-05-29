@@ -36,6 +36,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.log4j.Logger;
 import org.oscarehr.provider.web.CppPreferencesUIBean;
 
+import org.owasp.encoder.Encode;
 import oscar.OscarProperties;
 
 public class CustomInterfaceTag extends TagSupport {
@@ -48,7 +49,7 @@ public class CustomInterfaceTag extends TagSupport {
 	public int doStartTag() throws JspException {
 		OscarProperties props = OscarProperties.getInstance();
 		String customJs = props.getProperty("cme_js");
-		
+
 		HttpServletRequest request=(HttpServletRequest)pageContext.getRequest();
 		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 		
@@ -74,21 +75,21 @@ public class CustomInterfaceTag extends TagSupport {
 				return SKIP_BODY;
 			}
 		}
-		
+
 		if(customJs != null && customJs.length()>0) {
 			JspWriter out = super.pageContext.getOut();
 			String contextPath = this.pageContext.getServletContext().getContextPath();
 			try {
-				out.println("<link rel=\"stylesheet\" href=\""+contextPath+"/js/custom/global.css\" type=\"text/css\">");
-				out.println("<script src=\""+contextPath+"/js/custom/"+customJs+"/global.js\"></script>");
 				if(getSection()!=null && getSection().length()>0) {
-					boolean hide_ConReport = OscarProperties.getInstance().isPropertyActive("hide_ConReport_link");
-					if("main".equals(getSection()) && hide_ConReport){
-						// do nothing
-					} else {
-						int randomNo = new Random().nextInt();
-						out.println("<script src=\""+contextPath+"/js/custom/"+customJs+"/"+getSection()+".js?no-cache="+randomNo+"\"></script>");
+					boolean hide_ConReport = props.isPropertyActive("hide_ConReport_link");
+					boolean cardswipe = props.getBooleanProperty("cardswipe", "false");
+					String customTag = "";
+					if (customJs.equalsIgnoreCase("ocean")) {
+						customTag = "ocean-host=" + Encode.forUriComponent(props.getProperty("ocean_host"));
 					}
+
+					int randomNo = new Random().nextInt();
+					out.println("<script id=\"mainScript\" src=\""+contextPath+"/js/custom/"+customJs+"/"+getSection()+".js?no-cache="+randomNo+"&autoRefresh=true\" hide_ConReport=\""+hide_ConReport+"\" cardswipe=\""+cardswipe+"\" " + customTag + " ></script>");
 				}
 			}catch(IOException e) {
 				logger.error("Error",e);
@@ -96,12 +97,12 @@ public class CustomInterfaceTag extends TagSupport {
 		}
 		return SKIP_BODY;
 	}
-	/*
+
 	@Override
 	public int doEndTag() throws JspException {		        
 		return EVAL_PAGE;	   
 	}
-	 */
+
 	public String getName() {
 		return name;
 	}
@@ -116,7 +117,7 @@ public class CustomInterfaceTag extends TagSupport {
 	}
 	
 	
-	public String getPreferenceBasedEChart(CppPreferencesUIBean bean) {		
+	private String getPreferenceBasedEChart(CppPreferencesUIBean bean) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<script>");
 		sb.append("jQuery(document).ready(function(){");

@@ -354,8 +354,8 @@ public class Hl7TextInfoDao extends AbstractDao<Hl7TextInfo> {
 						+ " WHERE plr.lab_type = 'HL7'"
 						+ (searchProvider ? " AND plr.provider_no = '"+providerNo+"' " : "")
 						+ " AND plr.status" + ("".equals(status) ? " IS NOT NULL " : " = '"+status+"' ")
-						+ (isAbnormal != null && isAbnormal ? "AND info.result_status = 'A'" :
-						isAbnormal != null && !isAbnormal ? "AND (info.result_status IS NULL OR info.result_status != 'A')" : "")
+						+ ((isAbnormal != null && isAbnormal) ? "AND info.result_status = 'A'" :
+						(isAbnormal != null && ! isAbnormal) ? "AND (info.result_status IS NULL OR info.result_status != 'A')" : "")
 						+ dateSql
 						+ " AND (plr2.demographic_no IS NULL OR plr2.demographic_no = '0')"
 						+ " ORDER BY plr.id DESC "
