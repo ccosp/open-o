@@ -105,7 +105,7 @@
         reasonCodesMap.put(lli.getId(), lli);
     }
 
-    String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+    String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
 
     boolean isSiteAccessPrivacy = false;
     boolean isTeamAccessPrivacy = false;
@@ -231,12 +231,10 @@
 
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
-<jsp:useBean id="as" class="oscar.appt.ApptStatusData" />
-<jsp:useBean id="dateTimeCodeBean" class="java.util.HashMap" />
+<jsp:useBean id="as" class="oscar.appt.ApptStatusData"/>
+<jsp:useBean id="dateTimeCodeBean" class="java.util.HashMap"/>
 <%
     Properties oscarVariables = OscarProperties.getInstance();
-    String econsultUrl = oscarVariables.getProperty("backendEconsultUrl");
-
     //Gets the request URL
     StringBuffer oscarUrl = request.getRequestURL();
     //Sets the length of the URL, found by subtracting the length of the servlet path from the length of the full URL, that way it only gets up to the context path
@@ -470,11 +468,13 @@
 <%@page import="org.oscarehr.web.AppointmentProviderAdminDayUIBean" %>
 <%@page import="org.oscarehr.common.model.EForm" %>
 <html:html locale="true">
-<head>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
-<title><%=WordUtils.capitalize(userlastname + ", " +  org.apache.commons.lang.StringUtils.substring(userfirstname, 0, 1)) + "-"%><bean:message key="provider.appointmentProviderAdminDay.title"/></title>
+    <head>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
+        <title><%=WordUtils.capitalize(userlastname + ", " + org.apache.commons.lang.StringUtils.substring(userfirstname, 0, 1)) + "-"%><bean:message
+                key="provider.appointmentProviderAdminDay.title"/></title>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/3.0.0/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/3.0.0/css/bootstrap.min.css"
+              type="text/css">
 
         <!-- Determine which stylesheet to use: mobile-optimized or regular -->
         <%
@@ -605,7 +605,7 @@
     <%
     } else {
     %>
-    <body onLoad="refreshAllTabAlerts();scrollOnLoad();" >
+    <body onLoad="refreshAllTabAlerts();scrollOnLoad();">
     <%
         }
     %>
@@ -785,7 +785,7 @@
     %>
 
     <!-- menu goes here -->
-    <jsp:include page="mainMenu.jsp" />
+    <jsp:include page="mainMenu.jsp"/>
 
     <script>
         jQuery(document).ready(function () {
@@ -808,1239 +808,1230 @@
     } else {
     %>
 
-    <table id="scheduleNavigation" >
-                    <tr id="ivoryBar">
-                        <td id="dateAndCalendar">
-                            <a class="redArrow"
-                               href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=<%=isWeekView?(day-7):(day-1)%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=day&dboperation=searchappointmentday<%=isWeekView?"&provider_no="+provNum:""%>&viewall=<%=viewall%>">
-                                &nbsp;&nbsp;<span class="glyphicon glyphicon-step-backward" title="<bean:message key="provider.appointmentProviderAdminDay.viewPrevDay"/>" ></span>
-                            </a>
-                            <b><span class="dateAppointment"><%
-                                if (isWeekView) {
-                            %><bean:message key="provider.appointmentProviderAdminDay.week"/> <%=week%><%
-                            } else {
-                            %><%=formatDate%><%
-                                }
-                            %></span></b>
-                            <a class="redArrow"
-                               href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=<%=isWeekView?(day+7):(day+1)%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=day&dboperation=searchappointmentday<%=isWeekView?"&provider_no="+provNum:""%>&viewall=<%=viewall%>">
-                                <span class="glyphicon glyphicon-step-forward" title="<bean:message key="provider.appointmentProviderAdminDay.viewNextDay"/>" ></span>
-                            </a>
-                            <a id="calendarLink" href=#
-                               onClick="popupPage(425,430,'../share/CalendarPopup.jsp?urlfrom=../provider/providercontrol.jsp&year=<%=strYear%>&month=<%=strMonth%>&param=<%=URLEncoder.encode("&view=0&displaymode=day&dboperation=searchappointmentday&viewall="+viewall,"UTF-8")%><%=isWeekView?URLEncoder.encode("&provider_no="+provNum, "UTF-8"):""%>')"><bean:message
-                                    key="global.calendar"/></a>
+    <table id="scheduleNavigation">
+        <tr id="ivoryBar">
+            <td id="dateAndCalendar">
+                <a class="redArrow"
+                   href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=<%=isWeekView?(day-7):(day-1)%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=day&dboperation=searchappointmentday<%=isWeekView?"&provider_no="+provNum:""%>&viewall=<%=viewall%>">
+                    <span class="glyphicon glyphicon-step-backward"
+                                      title="<bean:message key="provider.appointmentProviderAdminDay.viewPrevDay"/>"></span>
+                </a>
+                <b><span class="dateAppointment"><%
+                    if (isWeekView) {
+                %><bean:message key="provider.appointmentProviderAdminDay.week"/> <%=week%><%
+                } else {
+                %><%=formatDate%><%
+                    }
+                %></span></b>
+                <a class="redArrow"
+                   href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=<%=isWeekView?(day+7):(day+1)%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=day&dboperation=searchappointmentday<%=isWeekView?"&provider_no="+provNum:""%>&viewall=<%=viewall%>">
+                    <span class="glyphicon glyphicon-step-forward"
+                          title="<bean:message key="provider.appointmentProviderAdminDay.viewNextDay"/>"></span>
+                </a>
+                <a id="calendarLink" href=#
+                   onClick="popupPage(425,430,'../share/CalendarPopup.jsp?urlfrom=../provider/providercontrol.jsp&year=<%=strYear%>&month=<%=strMonth%>&param=<%=URLEncoder.encode("&view=0&displaymode=day&dboperation=searchappointmentday&viewall="+viewall,"UTF-8")%><%=isWeekView?URLEncoder.encode("&provider_no="+provNum, "UTF-8"):""%>')"><bean:message
+                        key="global.calendar"/></a>
 
-                            <logic:notEqual name="infirmaryView_isOscar" value="false">
-                                | <% if (request.getParameter("viewall") != null && request.getParameter("viewall").equals("1")) { %>
-                                <!-- <span style="color:#333"><bean:message
-                                    key="provider.appointmentProviderAdminDay.viewAll"/></span> -->
-                                <u><a href=# onClick="review('0')"
-                                      title="<bean:message key="provider.appointmentProviderAdminDay.viewAllProv"/>"><bean:message
-                                        key="provider.appointmentProviderAdminDay.schedView"/></a></u>
+                <logic:notEqual name="infirmaryView_isOscar" value="false">
+                    | <% if (request.getParameter("viewall") != null && request.getParameter("viewall").equals("1")) { %>
+                    <u><a href=# onClick="review('0')"
+                          title="<bean:message key="provider.appointmentProviderAdminDay.viewAllProv"/>"><bean:message
+                            key="provider.appointmentProviderAdminDay.schedView"/></a></u>
 
-                                <%} else {%>
-                                <u><a href=# onClick="review('1')"
-                                      title="<bean:message key="provider.appointmentProviderAdminDay.viewAllProv"/>"><bean:message
-                                        key="provider.appointmentProviderAdminDay.viewAll"/></a></u>
-                                <%}%>
-                            </logic:notEqual>
+                    <%} else {%>
+                    <u><a href=# onClick="review('1')"
+                          title="<bean:message key="provider.appointmentProviderAdminDay.viewAllProv"/>"><bean:message
+                            key="provider.appointmentProviderAdminDay.viewAll"/></a></u>
+                    <%}%>
+                </logic:notEqual>
 
-                            <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
-                                <security:oscarSec roleName="<%=roleName$%>" objectName="_day" rights="r">
-                                    | <a class="rightButton top"
-                                         href="providercontrol.jsp?year=<%=curYear%>&month=<%=curMonth%>&day=<%=curDay%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=day&dboperation=searchappointmentday"
-                                         TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>'
-                                         OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>' ; return true"><bean:message
-                                        key="global.today"/></a>
-                                </security:oscarSec>
-                                <security:oscarSec roleName="<%=roleName$%>" objectName="_month" rights="r">
+                <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
+                    <security:oscarSec roleName="<%=roleName$%>" objectName="_day" rights="r">
+                        | <a class="rightButton top"
+                             href="providercontrol.jsp?year=<%=curYear%>&month=<%=curMonth%>&day=<%=curDay%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=day&dboperation=searchappointmentday"
+                             TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>'
+                             OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>' ; return true"><bean:message
+                            key="global.today"/></a>
+                    </security:oscarSec>
+                    <security:oscarSec roleName="<%=roleName$%>" objectName="_month" rights="r">
 
-                                    | <a
-                                        href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=1&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=month&dboperation=searchappointmentmonth"
-                                        TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewMonthSched"/>'
-                                        OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewMonthSched"/>' ; return true"><bean:message
-                                        key="global.month"/></a>
+                        | <a
+                            href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=1&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=month&dboperation=searchappointmentmonth"
+                            TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewMonthSched"/>'
+                            OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewMonthSched"/>' ; return true"><bean:message
+                            key="global.month"/></a>
 
-                                </security:oscarSec>
+                    </security:oscarSec>
 
-                            </caisi:isModuleLoad>
+                </caisi:isModuleLoad>
 
-                            <%
-                                boolean anonymousEnabled = false;
-                                if (loggedInInfo1.getCurrentFacility() != null) {
-                                    anonymousEnabled = loggedInInfo1.getCurrentFacility().isEnableAnonymous();
-                                }
-                                if (anonymousEnabled) {
-                            %>
-                            &nbsp;&nbsp;(<a href="#" onclick="popupPage(710, 1024,'<html:rewrite
-                                page="/PMmodule/createAnonymousClient.jsp"/>?programId=<%=(String)session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID)%>');return false;">New
-                            Anon Client</a>)
-                            <%
-                                }
-                            %>
-                            <%
-                                boolean epe = false;
-                                if (loggedInInfo1.getCurrentFacility() != null) {
-                                    epe = loggedInInfo1.getCurrentFacility().isEnablePhoneEncounter();
-                                }
-                                if (epe) {
-                            %>
-                            &nbsp;&nbsp;(<a href="#" onclick="popupPage(710, 1024,'<html:rewrite
-                                page="/PMmodule/createPEClient.jsp"/>?programId=<%=(String)session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID)%>');return false;">Phone
-                            Encounter</a>)
-                            <%
-                                }
-                            %>
-                        </td>
+                <%
+                    boolean anonymousEnabled = false;
+                    if (loggedInInfo1.getCurrentFacility() != null) {
+                        anonymousEnabled = loggedInInfo1.getCurrentFacility().isEnableAnonymous();
+                    }
+                    if (anonymousEnabled) {
+                %>
+                &nbsp;&nbsp;(<a href="#" onclick="popupPage(710, 1024,'<html:rewrite
+                    page="/PMmodule/createAnonymousClient.jsp"/>?programId=<%=(String)session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID)%>');return false;">New
+                Anon Client</a>)
+                <%
+                    }
+                %>
+                <%
+                    boolean epe = false;
+                    if (loggedInInfo1.getCurrentFacility() != null) {
+                        epe = loggedInInfo1.getCurrentFacility().isEnablePhoneEncounter();
+                    }
+                    if (epe) {
+                %>
+                &nbsp;&nbsp;(<a href="#" onclick="popupPage(710, 1024,'<html:rewrite
+                    page="/PMmodule/createPEClient.jsp"/>?programId=<%=(String)session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID)%>');return false;">Phone
+                Encounter</a>)
+                <%
+                    }
+                %>
+            </td>
 
-                        <td class="title noprint" ALIGN="center">
+            <td class="title noprint" ALIGN="center">
 
-                            <%
-                                if (isWeekView) {
-                                    for (int provIndex = 0; provIndex < numProvider; provIndex++) {
-                                        if (curProvider_no[provIndex].equals(provNum)) {
-                            %>
-                            <bean:message key="provider.appointmentProviderAdminDay.weekView"/>: <%=curProviderName[provIndex]%>
-                            <%
-                                    }
-                                }
-                            } else {
-                                if (view == 1) {
-                            %>
-                            <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message
-                                    key="provider.appointmentProviderAdminDay.grpView"/></a>
-                            <% } else { %>
-                            <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>
-                            <% out.println(userfirstname + " " + userlastname); %>
-                        </td>
-                            <% } } %>
+                <%
+                    if (isWeekView) {
+                        for (int provIndex = 0; provIndex < numProvider; provIndex++) {
+                            if (curProvider_no[provIndex].equals(provNum)) {
+                %>
+                <bean:message key="provider.appointmentProviderAdminDay.weekView"/>: <%=curProviderName[provIndex]%>
+                <%
+                        }
+                    }
+                } else {
+                    if (view == 1) {
+                %>
+                <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message
+                        key="provider.appointmentProviderAdminDay.grpView"/></a>
+                <% } else { %>
+                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>
+                <% out.println(userfirstname + " " + userlastname); %>
+            </td>
+            <% }
+            } %>
 
-                        <td id="group" ALIGN="RIGHT" BGCOLOR="Ivory">
+            <td id="group" ALIGN="RIGHT" BGCOLOR="Ivory">
 
-                            <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
-                                <form method="post" name="findprovider"
-                                      onSubmit="findProvider(<%=year%>,<%=month%>,<%=day%>);return false;" target="apptReception"
-                                      action="receptionistfindprovider.jsp"
-                                      style="display:inline;margin:0px;padding:0px;padding-right:10px">
-                                    <INPUT TYPE="text" NAME="providername" VALUE="" WIDTH="2" HEIGHT="10" border="0" size="10"
-                                           maxlength="10" class="noprint" title="Find a Provider" placeholder="Enter Lastname">
-                                    <INPUT TYPE="SUBMIT" NAME="Go"
-                                           VALUE='<bean:message key="provider.appointmentprovideradminmonth.btnGo"/>'
-                                           class="noprint" onClick="findProvider(<%=year%>,<%=month%>,<%=day%>);return false;">
-                                </form>
-                            </caisi:isModuleLoad>
+                <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
+                    <form method="post" name="findprovider"
+                          onSubmit="findProvider(<%=year%>,<%=month%>,<%=day%>);return false;" target="apptReception"
+                          action="receptionistfindprovider.jsp"
+                          style="display:inline;margin:0px;padding:0px;padding-right:10px">
+                        <INPUT TYPE="text" NAME="providername" VALUE="" WIDTH="2" HEIGHT="10" border="0" size="10"
+                               maxlength="10" class="noprint" title="Find a Provider" placeholder="Enter Lastname">
+                        <INPUT TYPE="SUBMIT" NAME="Go"
+                               VALUE='<bean:message key="provider.appointmentprovideradminmonth.btnGo"/>'
+                               class="noprint" onClick="findProvider(<%=year%>,<%=month%>,<%=day%>);return false;">
+                    </form>
+                </caisi:isModuleLoad>
 
-                            <form name="appointmentForm" style="display:inline;margin:0px;padding:0px;">
-                                        <% if (isWeekView) { %>
-                                    <bean:message key="provider.appointmentProviderAdminDay.provider"/>:
-                                <select name="provider_select" onChange="goWeekView(this.options[this.selectedIndex].value)">
+                <form name="appointmentForm" style="display:inline;margin:0px;padding:0px;">
+                    <% if (isWeekView) { %>
+                    <bean:message key="provider.appointmentProviderAdminDay.provider"/>:
+                    <select name="provider_select" onChange="goWeekView(this.options[this.selectedIndex].value)">
+                        <%
+                            for (nProvider = 0; nProvider < numProvider; nProvider++) {
+                        %>
+                        <option value="<%=curProvider_no[nProvider]%>"<%=curProvider_no[nProvider].equals(provNum) ? " selected" : ""%>><%=curProviderName[nProvider]%>
+                        </option>
+                        <%
+                            }
+                        %>
+
+                    </select>
+
+                    <% } else { %>
+
+                    <!-- caisi infirmary view extension add ffffffffffff-->
+                    <caisi:isModuleLoad moduleName="caisi">
+                    <table>
+                        <tr>
+                            <td align="right">
+                                <caisi:ProgramExclusiveView providerNo="<%=curUser_no%>" value="appointment">
                                     <%
-                                        for (nProvider = 0; nProvider < numProvider; nProvider++) {
+                                        session.setAttribute("infirmaryView_isOscar", "true");
                                     %>
-                                    <option value="<%=curProvider_no[nProvider]%>"<%=curProvider_no[nProvider].equals(provNum) ? " selected" : ""%>><%=curProviderName[nProvider]%>
-                                    </option>
+                                </caisi:ProgramExclusiveView>
+                                <caisi:ProgramExclusiveView providerNo="<%=curUser_no%>" value="case-management">
+                                    <%
+                                        session.setAttribute("infirmaryView_isOscar", "false");
+                                    %>
+                                </caisi:ProgramExclusiveView>
+                                </caisi:isModuleLoad>
+
+                                <caisi:isModuleLoad moduleName="TORONTO_RFQ">
+                                    <%
+                                        session.setAttribute("infirmaryView_isOscar", "false");
+                                    %>
+                                </caisi:isModuleLoad>
+
+                                <caisi:isModuleLoad moduleName="oscarClinic">
+                                    <%
+                                        session.setAttribute("infirmaryView_isOscar", "true");
+                                    %>
+                                </caisi:isModuleLoad>
+                                <!-- caisi infirmary view extension add end ffffffffffffff-->
+
+
+                                <logic:notEqual name="infirmaryView_isOscar" value="false">
+
+                                    <%
+                                        //session.setAttribute("case_program_id", null);
+                                    %>
+                                    <!-- multi-site , add site dropdown list -->
+                                    <%
+                                        if (bMultisites) {
+                                    %>
+                                    <script>
+                                        function changeSite(sel) {
+                                            sel.style.backgroundColor = sel.options[sel.selectedIndex].style.backgroundColor;
+                                            var siteName = sel.options[sel.selectedIndex].value;
+                                            var newGroupNo = "<%=(mygroupno == null ? ".default" : mygroupno)%>";
+                                            <%if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()){%>
+                                            popupPage(10, 10, "providercontrol.jsp?provider_no=<%=curUser_no%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&new_tickler_warning_window=<%=newticklerwarningwindow%>&default_pmm=<%=default_pmm%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&mygroup_no=" + newGroupNo + "&site=" + siteName);
+                                            <%}else {%>
+                                            popupPage(10, 10, "providercontrol.jsp?provider_no=<%=curUser_no%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&mygroup_no=" + newGroupNo + "&site=" + siteName);
+                                            <%}%>
+                                        }
+                                    </script>
+
+                                    <select id="site" name="site" onchange="changeSite(this)"
+                                            style="background-color: <%=( selectedSite == null || siteBgColor.get(selectedSite) == null ? "#FFFFFF" : siteBgColor.get(selectedSite))%>">
+                                        <option value="none" style="background-color:white">all clinics</option>
+                                        <%
+                                            for (int i = 0; i < curUserSites.size(); i++) {
+                                        %>
+                                        <option value="<%=curUserSites.get(i).getName()%>"
+                                                style="background-color:<%=curUserSites.get(i).getBgColor()%>"
+                                                <%=(curUserSites.get(i).getName().equals(selectedSite)) ? " selected " : ""%> >
+                                            <%=curUserSites.get(i).getName()%>
+                                        </option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
                                     <%
                                         }
                                     %>
+                                    <span><bean:message key="global.group"/>:</span>
 
-                                </select>
-
-                                        <% } else { %>
-
-                                <!-- caisi infirmary view extension add ffffffffffff-->
-                                <caisi:isModuleLoad moduleName="caisi">
-                                <table>
-                                    <tr>
-                                        <td align="right">
-                                            <caisi:ProgramExclusiveView providerNo="<%=curUser_no%>" value="appointment">
-                                                <%
-                                                    session.setAttribute("infirmaryView_isOscar", "true");
-                                                %>
-                                            </caisi:ProgramExclusiveView>
-                                            <caisi:ProgramExclusiveView providerNo="<%=curUser_no%>" value="case-management">
-                                                <%
-                                                    session.setAttribute("infirmaryView_isOscar", "false");
-                                                %>
-                                            </caisi:ProgramExclusiveView>
-                                            </caisi:isModuleLoad>
-
-                                            <caisi:isModuleLoad moduleName="TORONTO_RFQ">
-                                                <%
-                                                    session.setAttribute("infirmaryView_isOscar", "false");
-                                                %>
-                                            </caisi:isModuleLoad>
-
-                                            <caisi:isModuleLoad moduleName="oscarClinic">
-                                                <%
-                                                    session.setAttribute("infirmaryView_isOscar", "true");
-                                                %>
-                                            </caisi:isModuleLoad>
-                                            <!-- caisi infirmary view extension add end ffffffffffffff-->
+                                    <%
+                                        List<MyGroupAccessRestriction> restrictions = myGroupAccessRestrictionDao.findByProviderNo(curUser_no);
+                                    %>
+                                    <select id="mygroup_no" name="mygroup_no" onChange="changeGroup(this)">
+                                        <option value='.<bean:message key="global.default"/>'>.<bean:message key="global.default"/></option>
 
 
-                                            <logic:notEqual name="infirmaryView_isOscar" value="false">
-
-                                                <%
-                                                    //session.setAttribute("case_program_id", null);
-                                                %>
-                                                <!-- multi-site , add site dropdown list -->
-                                                <%
-                                                    if (bMultisites) {
-                                                %>
-                                                <script>
-                                                    function changeSite(sel) {
-                                                        sel.style.backgroundColor = sel.options[sel.selectedIndex].style.backgroundColor;
-                                                        var siteName = sel.options[sel.selectedIndex].value;
-                                                        var newGroupNo = "<%=(mygroupno == null ? ".default" : mygroupno)%>";
-                                                        <%if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()){%>
-                                                        popupPage(10, 10, "providercontrol.jsp?provider_no=<%=curUser_no%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&new_tickler_warning_window=<%=newticklerwarningwindow%>&default_pmm=<%=default_pmm%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&mygroup_no=" + newGroupNo + "&site=" + siteName);
-                                                        <%}else {%>
-                                                        popupPage(10, 10, "providercontrol.jsp?provider_no=<%=curUser_no%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&mygroup_no=" + newGroupNo + "&site=" + siteName);
-                                                        <%}%>
-                                                    }
-                                                </script>
-
-                                                <select id="site" name="site" onchange="changeSite(this)"
-                                                        style="background-color: <%=( selectedSite == null || siteBgColor.get(selectedSite) == null ? "#FFFFFF" : siteBgColor.get(selectedSite))%>">
-                                                    <option value="none" style="background-color:white">---all clinic---</option>
-                                                    <%
-                                                        for (int i = 0; i < curUserSites.size(); i++) {
-                                                    %>
-                                                    <option value="<%=curUserSites.get(i).getName()%>"
-                                                            style="background-color:<%=curUserSites.get(i).getBgColor()%>"
-                                                            <%=(curUserSites.get(i).getName().equals(selectedSite)) ? " selected " : ""%> >
-                                                        <%=curUserSites.get(i).getName()%>
-                                                    </option>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </select>
-                                                <%
-                                                    }
-                                                %>
-                                                <span><bean:message key="global.group"/>:</span>
-
-                                                <%
-                                                    List<MyGroupAccessRestriction> restrictions = myGroupAccessRestrictionDao.findByProviderNo(curUser_no);
-                                                %>
-                                                <select id="mygroup_no" name="mygroup_no" onChange="changeGroup(this)">
-                                                    <option value=".<bean:message key="global.default"/>">.<bean:message
-                                                            key="global.default"/></option>
-
-
-                                                    <security:oscarSec roleName="<%=roleName$%>" objectName="_team_schedule_only"
-                                                                       rights="r" reverse="false">
-                                                        <%
-                                                            String provider_no = curUser_no;
-                                                            for (Provider p : providerDao.getActiveProviders()) {
-                                                                boolean skip = checkRestriction(restrictions, p.getProviderNo());
-                                                                if (!skip) {
-                                                        %>
-                                                        <option value="<%=p.getProviderNo()%>" <%=mygroupno.equals(p.getProviderNo()) ? "selected" : ""%>>
-                                                            <%=p.getFormattedName()%>
-                                                        </option>
-                                                        <%
-                                                                }
-                                                            }
-                                                        %>
-
-                                                    </security:oscarSec>
-                                                    <security:oscarSec roleName="<%=roleName$%>" objectName="_team_schedule_only"
-                                                                       rights="r" reverse="true">
-                                                        <%
-                                                            request.getSession().setAttribute("archiveView", "false");
-                                                            for (MyGroup g : myGroupDao.searchmygroupno()) {
-
-                                                                boolean skip = checkRestriction(restrictions, g.getId().getMyGroupNo());
-
-                                                                if (!skip && (!bMultisites || siteGroups == null || siteGroups.size() == 0 || siteGroups.contains(g.getId().getMyGroupNo()))) {
-                                                        %>
-                                                        <option value="<%="_grp_"+g.getId().getMyGroupNo()%>"
-                                                                <%=mygroupno.equals(g.getId().getMyGroupNo()) ? "selected" : ""%>><%=g.getId().getMyGroupNo()%>
-                                                        </option>
-                                                        <%
-                                                                }
-                                                            }
-
-                                                            for (Provider p : providerDao.getActiveProviders()) {
-                                                                boolean skip = checkRestriction(restrictions, p.getProviderNo());
-
-                                                                if (!skip && (!bMultisites || siteProviderNos == null || siteProviderNos.size() == 0 || siteProviderNos.contains(p.getProviderNo()))) {
-                                                        %>
-                                                        <option value="<%=p.getProviderNo()%>" <%=mygroupno.equals(p.getProviderNo()) ? "selected" : ""%>>
-                                                            <%=p.getFormattedName()%>
-                                                        </option>
-                                                        <%
-                                                                }
-                                                            }
-                                                        %>
-                                                    </security:oscarSec>
-                                                </select>
-
-                                            </logic:notEqual>
-
-                                            <logic:equal name="infirmaryView_isOscar" value="false">
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                            </logic:equal>
-
+                                        <security:oscarSec roleName="<%=roleName$%>" objectName="_team_schedule_only"
+                                                           rights="r" reverse="false">
                                             <%
+                                                String provider_no = curUser_no;
+                                                for (Provider p : providerDao.getActiveProviders()) {
+                                                    boolean skip = checkRestriction(restrictions, p.getProviderNo());
+                                                    if (!skip) {
+                                            %>
+                                            <option value='<%=p.getProviderNo()%>'<%=mygroupno.equals(p.getProviderNo()) ? " selected" : ""%> >
+                                                    <c:out value="<%=p.getFormattedName()%>" />
+                                            </option>
+                                            <%
+                                                    }
                                                 }
                                             %>
 
+                                        </security:oscarSec>
+                                        <security:oscarSec roleName="<%=roleName$%>" objectName="_team_schedule_only"
+                                                           rights="r" reverse="true">
+                                            <%
+                                                request.getSession().setAttribute("archiveView", "false");
+                                                for (MyGroup g : myGroupDao.searchmygroupno()) {
 
-                                            <!-- caisi infirmary view extension add fffffffffffff-->
-                                            <caisi:isModuleLoad moduleName="caisi">
+                                                    boolean skip = checkRestriction(restrictions, g.getId().getMyGroupNo());
 
-                                                <jsp:include page="infirmaryviewprogramlist.jspf"/>
+                                                    if (!skip && (!bMultisites || siteGroups == null || siteGroups.size() == 0 || siteGroups.contains(g.getId().getMyGroupNo()))) {
+                                            %>
+                                            <option value='<%="_grp_"+g.getId().getMyGroupNo()%>' <%=mygroupno.equals(g.getId().getMyGroupNo()) ? "selected" : ""%>>
+                                                <c:out value="<%=g.getId().getMyGroupNo()%>" />
+                                            </option>
+                                            <%
+                                                    }
+                                                }
 
-                                            </caisi:isModuleLoad>
-                                            <!-- caisi infirmary view extension add end fffffffffffff-->
+                                                for (Provider p : providerDao.getActiveProviders()) {
+                                                    boolean skip = checkRestriction(restrictions, p.getProviderNo());
 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-                        </td>
-                    </tr>
+                                                    if (!skip && (!bMultisites || siteProviderNos == null || siteProviderNos.size() == 0 || siteProviderNos.contains(p.getProviderNo()))) {
+                                            %>
+                                            <option value='<%=p.getProviderNo()%>' <%=mygroupno.equals(p.getProviderNo()) ? "selected" : ""%>>
+                                                    <c:out value="<%=p.getFormattedName()%>" />
+                                            </option>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                        </security:oscarSec>
+                                    </select>
+
+                                </logic:notEqual>
+
+                                <logic:equal name="infirmaryView_isOscar" value="false">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                </logic:equal>
+
+                                <%
+                                    }
+                                %>
+
+
+                    <!-- caisi infirmary view extension add fffffffffffff-->
+                    <caisi:isModuleLoad moduleName="caisi">
+                                    <jsp:include page="infirmaryviewprogramlist.jspf"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </caisi:isModuleLoad>
+                    <!-- caisi infirmary view extension add end fffffffffffff-->
+
+
+                </form>
+            </td>
+        </tr>
     </table>
 
     <table id="scheduleTable" BORDER="0" CELLPADDING="1" CELLSPACING="0" WIDTH="100%" BGCOLOR="#C0C0C0">
 
+        <tr>
+            <td colspan="3">
+                <table border="0" cellpadding="0" bgcolor="#486ebd" cellspacing="0" width="100%">
+                    <tr>
+                        <%
+                            boolean bShowDocLink = false;
+                            boolean bShowEncounterLink = false;
+                        %>
+                        <security:oscarSec roleName="<%=roleName$%>" objectName="_appointment.doctorLink" rights="r">
+                            <%
+                                bShowDocLink = true;
+                            %>
+                        </security:oscarSec>
+                        <security:oscarSec roleName="<%=roleName$%>" objectName="_eChart" rights="r">
+                            <%
+                                bShowEncounterLink = true;
+                            %>
+                        </security:oscarSec>
 
-                        <tr>
-                            <td colspan="3">
-                                <table border="0" cellpadding="0" bgcolor="#486ebd" cellspacing="0" width="100%">
-                                    <tr>
+                        <%
+                            int hourCursor = 0, minuteCursor = 0, depth = everyMin; //depth is the period, e.g. 10,15,30,60min.
+                            String am_pm = null;
+                            boolean bColor = true, bColorHour = true; //to change color
+
+                            int iCols = 0, iRows = 0, iS = 0, iE = 0, iSm = 0, iEm = 0; //for each S/E starting/Ending hour, how many events
+                            int ih = 0, im = 0, iSn = 0, iEn = 0; //hour, minute, nthStartTime, nthEndTime, rowspan
+                            boolean bFirstTimeRs = true;
+                            boolean bFirstFirstR = true;
+                            Object[] paramTickler = new Object[2];
+                            String[] param = new String[2];
+                            String strsearchappointmentday = request.getParameter("dboperation");
+
+                            boolean userAvail = true;
+                            int me = -1;
+                            for (nProvider = 0; nProvider < numProvider; nProvider++) {
+                                if (curUser_no.equals(curProvider_no[nProvider])) {
+                                    //userInGroup = true;
+                                    me = nProvider;
+                                    break;
+                                }
+                            }
+
+                            // set up the iterator appropriately (today - for each doctor; this week - for each day)
+                            int iterMax;
+                            if (isWeekView) {
+                                iterMax = 7;
+                                // find the nProvider value that corresponds to provNum
+                                if (numProvider == 1) {
+                                    nProvider = 0;
+                                } else {
+                                    for (int provIndex = 0; provIndex < numProvider; provIndex++) {
+                                        if (curProvider_no[provIndex].equals(provNum)) {
+                                            nProvider = provIndex;
+                                        }
+                                    }
+                                }
+                            } else {
+                                iterMax = numProvider;
+                            }
+
+                            StringBuffer hourmin = null;
+                            String[] param1 = new String[2];
+
+                            java.util.ResourceBundle wdProp = ResourceBundle.getBundle("oscarResources", request.getLocale());
+
+                            for (int iterNum = 0; iterNum < iterMax; iterNum++) {
+
+                                if (isWeekView) {
+                                    // get the appropriate datetime objects for the current day in this week
+                                    year = cal.get(Calendar.YEAR);
+                                    month = (cal.get(Calendar.MONTH) + 1);
+                                    day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                    strDate = year + "-" + month + "-" + day;
+                                    monthDay = String.format("%02d", month) + "-" + String.format("%02d", day);
+
+                                    inform = new SimpleDateFormat("yyyy-MM-dd", request.getLocale());
+                                    try {
+                                        formatDate = UtilDateUtilities.DateToString(inform.parse(strDate), wdProp.getString("date.EEEyyyyMMdd"), request.getLocale());
+                                    } catch (Exception e) {
+                                        MiscUtils.getLogger().error("Error", e);
+                                        formatDate = UtilDateUtilities.DateToString(inform.parse(strDate), "EEE, yyyy-MM-dd");
+                                    }
+                                    strYear = "" + year;
+                                    strMonth = month > 9 ? ("" + month) : ("0" + month);
+                                    strDay = day > 9 ? ("" + day) : ("0" + day);
+
+                                    // Reset timecode bean for this day
+                                    param3[0] = strDate; //strYear+"-"+strMonth+"-"+strDay;
+                                    param3[1] = curProvider_no[nProvider];
+                                    dateTimeCodeBean.put(String.valueOf(provNum), "");
+
+                                    List<Object[]> results = scheduleDateDao.search_appttimecode(ConversionUtils.fromDateString(strDate), curProvider_no[nProvider]);
+                                    for (Object[] result : results) {
+                                        ScheduleTemplate st = (ScheduleTemplate) result[0];
+                                        ScheduleDate sd = (ScheduleDate) result[1];
+                                        dateTimeCodeBean.put(sd.getProviderNo(), st.getTimecode());
+                                    }
+
+
+                                    for (ScheduleTemplateCode stc : scheduleTemplateCodeDao.findAll()) {
+
+                                        dateTimeCodeBean.put("description" + stc.getCode(), stc.getDescription());
+                                        dateTimeCodeBean.put("duration" + stc.getCode(), stc.getDuration());
+                                        dateTimeCodeBean.put("color" + stc.getCode(), (stc.getColor() == null || "".equals(stc.getColor())) ? bgcolordef : stc.getColor());
+                                        dateTimeCodeBean.put("confirm" + stc.getCode(), stc.getConfirm());
+                                    }
+
+                                    // move the calendar forward one day
+                                    cal.add(Calendar.DATE, 1);
+                                } else {
+                                    nProvider = iterNum;
+                                }
+
+                                userAvail = true;
+                                int timecodeLength = dateTimeCodeBean.get(curProvider_no[nProvider]) != null ? ((String) dateTimeCodeBean.get(curProvider_no[nProvider])).length() : 4 * 24;
+
+                                if (timecodeLength == 0) {
+                                    timecodeLength = 4 * 24;
+                                }
+
+                                depth = bDispTemplatePeriod ? (24 * 60 / timecodeLength) : everyMin; // add function to display different time slot
+                                param1[0] = strDate; //strYear+"-"+strMonth+"-"+strDay;
+                                param1[1] = curProvider_no[nProvider];
+
+                                ScheduleDate sd = scheduleDateDao.findByProviderNoAndDate(curProvider_no[nProvider], ConversionUtils.fromDateString(strDate));
+
+                                //viewall function
+                                if (request.getParameter("viewall") == null || request.getParameter("viewall").equals("0")) {
+                                    if (sd == null || "0".equals(String.valueOf(sd.getAvailable()))) {
+                                        if (nProvider != me) continue;
+                                        else userAvail = false;
+                                    }
+                                }
+                                bColor = bColor ? false : true;
+                        %>
+                        <td valign="top" width="<%=isWeekView?100/7:100/numProvider%>%">
+                            <!-- for the first provider's schedule -->
+
+                            <table border="0" cellpadding="0" bgcolor="#486ebd" cellspacing="0" width="100%">
+                                <!-- for the first provider's name -->
+                                <tr>
+                                    <td class="infirmaryView" NOWRAP ALIGN="center"
+                                        BGCOLOR="<%=bColor?"#bfefff":"silver"%>">
+                                        <!-- caisi infirmary view extension modify ffffffffffff-->
+                                        <logic:notEqual name="infirmaryView_isOscar" value="false">
+
                                         <%
-                                            boolean bShowDocLink = false;
-                                            boolean bShowEncounterLink = false;
-                                        %>
-                                        <security:oscarSec roleName="<%=roleName$%>"
-                                                           objectName="_appointment.doctorLink" rights="r">
-                                            <%
-                                                bShowDocLink = true;
-                                            %>
-                                        </security:oscarSec>
-                                        <security:oscarSec roleName="<%=roleName$%>" objectName="_eChart" rights="r">
-                                            <%
-                                                bShowEncounterLink = true;
-                                            %>
-                                        </security:oscarSec>
-
-
-                                        <%
-                                            int hourCursor = 0, minuteCursor = 0, depth = everyMin; //depth is the period, e.g. 10,15,30,60min.
-                                            String am_pm = null;
-                                            boolean bColor = true, bColorHour = true; //to change color
-
-                                            int iCols = 0, iRows = 0, iS = 0, iE = 0, iSm = 0, iEm = 0; //for each S/E starting/Ending hour, how many events
-                                            int ih = 0, im = 0, iSn = 0, iEn = 0; //hour, minute, nthStartTime, nthEndTime, rowspan
-                                            boolean bFirstTimeRs = true;
-                                            boolean bFirstFirstR = true;
-                                            Object[] paramTickler = new Object[2];
-                                            String[] param = new String[2];
-                                            String strsearchappointmentday = request.getParameter("dboperation");
-
-                                            boolean userAvail = true;
-                                            int me = -1;
-                                            for (nProvider = 0; nProvider < numProvider; nProvider++) {
-                                                if (curUser_no.equals(curProvider_no[nProvider])) {
-                                                    //userInGroup = true;
-                                                    me = nProvider;
-                                                    break;
-                                                }
-                                            }
-
-                                            // set up the iterator appropriately (today - for each doctor; this week - for each day)
-                                            int iterMax;
                                             if (isWeekView) {
-                                                iterMax = 7;
-                                                // find the nProvider value that corresponds to provNum
-                                                if (numProvider == 1) {
-                                                    nProvider = 0;
-                                                } else {
-                                                    for (int provIndex = 0; provIndex < numProvider; provIndex++) {
-                                                        if (curProvider_no[provIndex].equals(provNum)) {
-                                                            nProvider = provIndex;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-                                                iterMax = numProvider;
-                                            }
-
-                                            StringBuffer hourmin = null;
-                                            String[] param1 = new String[2];
-
-                                            java.util.ResourceBundle wdProp = ResourceBundle.getBundle("oscarResources", request.getLocale());
-
-                                            for (int iterNum = 0; iterNum < iterMax; iterNum++) {
-
-                                                if (isWeekView) {
-                                                    // get the appropriate datetime objects for the current day in this week
-                                                    year = cal.get(Calendar.YEAR);
-                                                    month = (cal.get(Calendar.MONTH) + 1);
-                                                    day = cal.get(Calendar.DAY_OF_MONTH);
-
-                                                    strDate = year + "-" + month + "-" + day;
-                                                    monthDay = String.format("%02d", month) + "-" + String.format("%02d", day);
-
-                                                    inform = new SimpleDateFormat("yyyy-MM-dd", request.getLocale());
-                                                    try {
-                                                        formatDate = UtilDateUtilities.DateToString(inform.parse(strDate), wdProp.getString("date.EEEyyyyMMdd"), request.getLocale());
-                                                    } catch (Exception e) {
-                                                        MiscUtils.getLogger().error("Error", e);
-                                                        formatDate = UtilDateUtilities.DateToString(inform.parse(strDate), "EEE, yyyy-MM-dd");
-                                                    }
-                                                    strYear = "" + year;
-                                                    strMonth = month > 9 ? ("" + month) : ("0" + month);
-                                                    strDay = day > 9 ? ("" + day) : ("0" + day);
-
-                                                    // Reset timecode bean for this day
-                                                    param3[0] = strDate; //strYear+"-"+strMonth+"-"+strDay;
-                                                    param3[1] = curProvider_no[nProvider];
-                                                    dateTimeCodeBean.put(String.valueOf(provNum), "");
-
-                                                    List<Object[]> results = scheduleDateDao.search_appttimecode(ConversionUtils.fromDateString(strDate), curProvider_no[nProvider]);
-                                                    for (Object[] result : results) {
-                                                        ScheduleTemplate st = (ScheduleTemplate) result[0];
-                                                        ScheduleDate sd = (ScheduleDate) result[1];
-                                                        dateTimeCodeBean.put(sd.getProviderNo(), st.getTimecode());
-                                                    }
-
-
-                                                    for (ScheduleTemplateCode stc : scheduleTemplateCodeDao.findAll()) {
-
-                                                        dateTimeCodeBean.put("description" + stc.getCode(), stc.getDescription());
-                                                        dateTimeCodeBean.put("duration" + stc.getCode(), stc.getDuration());
-                                                        dateTimeCodeBean.put("color" + stc.getCode(), (stc.getColor() == null || "".equals(stc.getColor())) ? bgcolordef : stc.getColor());
-                                                        dateTimeCodeBean.put("confirm" + stc.getCode(), stc.getConfirm());
-                                                    }
-
-                                                    // move the calendar forward one day
-                                                    cal.add(Calendar.DATE, 1);
-                                                } else {
-                                                    nProvider = iterNum;
-                                                }
-
-                                                userAvail = true;
-                                                int timecodeLength = dateTimeCodeBean.get(curProvider_no[nProvider]) != null ? ((String) dateTimeCodeBean.get(curProvider_no[nProvider])).length() : 4 * 24;
-
-                                                if (timecodeLength == 0) {
-                                                    timecodeLength = 4 * 24;
-                                                }
-
-                                                depth = bDispTemplatePeriod ? (24 * 60 / timecodeLength) : everyMin; // add function to display different time slot
-                                                param1[0] = strDate; //strYear+"-"+strMonth+"-"+strDay;
-                                                param1[1] = curProvider_no[nProvider];
-
-                                                ScheduleDate sd = scheduleDateDao.findByProviderNoAndDate(curProvider_no[nProvider], ConversionUtils.fromDateString(strDate));
-
-                                                //viewall function
-                                                if (request.getParameter("viewall") == null || request.getParameter("viewall").equals("0")) {
-                                                    if (sd == null || "0".equals(String.valueOf(sd.getAvailable()))) {
-                                                        if (nProvider != me) continue;
-                                                        else userAvail = false;
-                                                    }
-                                                }
-                                                bColor = bColor ? false : true;
                                         %>
-                                        <td valign="top" width="<%=isWeekView?100/7:100/numProvider%>%">
-                                            <!-- for the first provider's schedule -->
-
-                                            <table border="0" cellpadding="0" bgcolor="#486ebd" cellspacing="0"
-                                                   width="100%"><!-- for the first provider's name -->
-                                                <tr>
-                                                    <td class="infirmaryView" NOWRAP ALIGN="center"
-                                                        BGCOLOR="<%=bColor?"#bfefff":"silver"%>">
-                                                        <!-- caisi infirmary view extension modify ffffffffffff-->
-                                                        <logic:notEqual name="infirmaryView_isOscar" value="false">
-
-                                                        <%
-                                                            if (isWeekView) {
-                                                        %>
-                                                        <b><a href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=<%=day%>&view=0&displaymode=day&dboperation=searchappointmentday"><%=formatDate%>
-                                                        </a></b>
-                                                        <%
-                                                        } else {
-                                                        %>
-                                                        <b><input type='button'
-                                                                  value="<bean:message key="provider.appointmentProviderAdminDay.weekLetter"/>"
-                                                                  name='weekview'
-                                                                  onClick=goWeekView('<%=curProvider_no[nProvider]%>')
-                                                                  title="<bean:message key="provider.appointmentProviderAdminDay.weekView"/>"
-                                                                  style="color:black" class="noprint">
-                                                            <input type='button'
-                                                                   value="<bean:message key="provider.appointmentProviderAdminDay.searchLetter"/>"
-                                                                   name='searchview'
-                                                                   onClick=goSearchView('<%=curProvider_no[nProvider]%>')
-                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.searchView"/>"
-                                                                   style="color:black" class="noprint">
-                                                            <b><input type='radio' name='flipview' class="noprint"
-                                                                      onClick="goFilpView('<%=curProvider_no[nProvider]%>')"
-                                                                      title="Flip view">
-                                                                <a href=#
-                                                                   onClick="goZoomView('<%=curProvider_no[nProvider]%>','<%=StringEscapeUtils.escapeJavaScript(curProviderName[nProvider])%>')"
-                                                                   onDblClick="goFilpView('<%=curProvider_no[nProvider]%>')"
-                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>">
-                                                                    <!--a href="providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=1&curProvider=<%=curProvider_no[nProvider]%>&curProviderName=<%=curProviderName[nProvider]%>&displaymode=day&dboperation=searchappointmentday" title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>"-->
-                                                                    <%=curProviderName[nProvider]%>
-                                                                </a>
-                                                                <oscar:oscarPropertiesCheck value="yes"
-                                                                                            property="TOGGLE_REASON_BY_PROVIDER"
-                                                                                            defaultVal="true">
-                                                                    <a id="expandReason" href="#"
-                                                                       onclick="return toggleReason('<%=curProvider_no[nProvider]%>');"
-                                                                       title="<bean:message key="provider.appointmentProviderAdminDay.expandreason"/>">*</a>
-                                                                    <%-- Default is to hide inline reasons. --%>
-                                                                    <c:set value="true" var="hideReason"/>
-                                                                </oscar:oscarPropertiesCheck>
-                                                            </b>
-                                                            <button class="ds-btn" type="button"
-                                                                    data-provider_no="<%=curProvider_no[nProvider]%>">DS
-                                                            </button>
-                                                                    <% } %>
-
-                                                                    <%
-          	if (!userAvail) {
-          %>
-                                                            [<bean:message
-                                                                key="provider.appointmentProviderAdminDay.msgNotOnSched"/>]
-                                                                    <%
-          	}
-          %>
-                                                            </logic:notEqual>
-                                                            <logic:equal name="infirmaryView_isOscar" value="false">
-                                                                    <%
-		String prID="1";
-	%>
-                                                            <logic:present name="infirmaryView_programId">
-                                                                    <%
-		prID=(String)session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
-	%>
-                                                            </logic:present>
-                                                            <logic:iterate id="pb" name="infirmaryView_programBeans"
-                                                                           type="org.apache.struts.util.LabelValueBean">
-                                                                    <%
-	  		if (pb.getValue().equals(prID)) {
-	  	%>
-                                                            <b><%=pb.getLabel()%></label></b>
-                                                                    <%
-			}
-		%>
-                                                            </logic:iterate>
-                                                            </logic:equal>
-                                                            <!-- caisi infirmary view extension modify end ffffffffffffffff-->
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td valign="top">
-
-                                                        <!-- caisi infirmary view exteion add -->
-                                                        <!--  fffffffffffffffffffffffffffffffffffffffffff-->
-                                                        <caisi:isModuleLoad moduleName="caisi">
-                                                            <jsp:include page="infirmarydemographiclist.jspf"/>
-                                                        </caisi:isModuleLoad>
-                                                        <logic:notEqual name="infirmaryView_isOscar" value="false">
-                                                            <!-- caisi infirmary view exteion add end ffffffffffffffffff-->
-                                                            <!-- =============== following block is the original oscar code. -->
-                                                            <!-- table for hours of day start -->
-                                                            <table id="providerSchedule" border="0" cellpadding="0"
-                                                                   bgcolor="<%=userAvail?"#486ebd":"silver"%>"
-                                                                   cellspacing="0" width="100%">
-                                                                <%
-                                                                    bFirstTimeRs = true;
-                                                                    bFirstFirstR = true;
-
-                                                                    String useProgramLocation = OscarProperties.getInstance().getProperty("useProgramLocation");
-                                                                    String moduleNames = OscarProperties.getInstance().getProperty("ModuleNames");
-                                                                    boolean caisiEnabled = moduleNames != null && org.apache.commons.lang.StringUtils.containsIgnoreCase(moduleNames, "Caisi");
-                                                                    boolean locationEnabled = caisiEnabled && (useProgramLocation != null && useProgramLocation.equals("true"));
-
-                                                                    int length = locationEnabled ? 4 : 3;
-
-                                                                    String[] param0 = new String[length];
-
-                                                                    param0[0] = curProvider_no[nProvider];
-                                                                    param0[1] = year + "-" + month + "-" + day;//e.g."2001-02-02";
-                                                                    param0[2] = programId_oscarView;
-                                                                    if (locationEnabled) {
-
-
-                                                                        ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
-                                                                        ProgramProvider programProvider = programManager2.getCurrentProgramInDomain(loggedInInfo1, loggedInInfo1.getLoggedInProviderNo());
-                                                                        if (programProvider != null && programProvider.getProgram() != null) {
-                                                                            programProvider.getProgram().getName();
-                                                                        }
-                                                                        param0[3] = request.getParameter("programIdForLocation");
-                                                                        strsearchappointmentday = "searchappointmentdaywithlocation";
-                                                                    }
-
-                                                                    List<Appointment> appointments = appointmentDao.searchappointmentday(curProvider_no[nProvider], ConversionUtils.fromDateString(year + "-" + month + "-" + day), ConversionUtils.fromIntString(programId_oscarView));
-                                                                    Iterator<Appointment> it = appointments.iterator();
-
-                                                                    Appointment appointment = null;
-                                                                    String router = "";
-                                                                    String record = "";
-                                                                    String module = "";
-                                                                    String newUxUrl = "";
-                                                                    String inContextStyle = "";
-
-                                                                    if (request.getParameter("record") != null) {
-                                                                        record = request.getParameter("record");
-                                                                    }
-
-                                                                    if (request.getParameter("module") != null) {
-                                                                        module = request.getParameter("module");
-                                                                    }
-                                                                    List<Object[]> confirmTimeCode = scheduleDateDao.search_appttimecode(ConversionUtils.fromDateString(strDate), curProvider_no[nProvider]);
-
-                                                                    for (ih = startHour * 60; ih <= (endHour * 60 + (60 / depth - 1) * depth); ih += depth) { // use minutes as base
-                                                                        hourCursor = ih / 60;
-                                                                        minuteCursor = ih % 60;
-                                                                        bColorHour = minuteCursor == 0 ? true : false; //every 00 minute, change color
-
-                                                                        //templatecode
-                                                                        if ((dateTimeCodeBean.get(curProvider_no[nProvider]) != null) && (dateTimeCodeBean.get(curProvider_no[nProvider]) != "") && confirmTimeCode.size() != 0) {
-                                                                            int nLen = 24 * 60 / ((String) dateTimeCodeBean.get(curProvider_no[nProvider])).length();
-                                                                            int ratio = (hourCursor * 60 + minuteCursor) / nLen;
-                                                                            hourmin = new StringBuffer(dateTimeCodeBean.get(curProvider_no[nProvider]) != null ? ((String) dateTimeCodeBean.get(curProvider_no[nProvider])).substring(ratio, ratio + 1) : " ");
-                                                                        } else {
-                                                                            hourmin = new StringBuffer();
-                                                                        }
-                                                                %>
-                                                                <tr>
-                                                                    <td align="RIGHT"
-                                                                        class="<%=bColorHour?"scheduleTime00":"scheduleTimeNot00"%>"
-                                                                        NOWRAP>
-                                                                        <a href=#
-                                                                           onClick="confirmPopupPage(400,780,'../appointment/addappointment.jsp?provider_no=<%=curProvider_no[nProvider]%>&bFirstDisp=<%=true%>&year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&start_time=<%=(hourCursor>9?(""+hourCursor):("0"+hourCursor))+":"+ (minuteCursor<10?"0":"") +minuteCursor%>&end_time=<%=(hourCursor>9?(""+hourCursor):("0"+hourCursor))+":"+(minuteCursor+depth-1)%>&duration=<%=dateTimeCodeBean.get("duration"+hourmin.toString())%>','<%=dateTimeCodeBean.get("confirm"+hourmin.toString())%>','<%=allowDay%>','<%=allowWeek%>');return false;"
-                                                                           title='<%=MyDateFormat.getTimeXX_XXampm(hourCursor +":"+ (minuteCursor<10?"0":"")+minuteCursor)%> - <%=MyDateFormat.getTimeXX_XXampm(hourCursor +":"+((minuteCursor+depth-1)<10?"0":"")+(minuteCursor+depth-1))%>'
-                                                                           class="adhour">
-                                                                            <%=(hourCursor < 10 ? "0" : "") + hourCursor + ":"%><%=(minuteCursor < 10 ? "0" : "") + minuteCursor%>&nbsp;</a>
-                                                                    </td>
-                                                                    <td class="hourmin"
-                                                                        width='1%' <%=dateTimeCodeBean.get("color" + hourmin.toString()) != null ? ("bgcolor=" + dateTimeCodeBean.get("color" + hourmin.toString())) : ""%>
-                                                                        title='<%=dateTimeCodeBean.get("description"+hourmin.toString())%>'>
-                                                                        <span color='<%=(dateTimeCodeBean.get("color"+hourmin.toString())!=null && !dateTimeCodeBean.get("color"+hourmin.toString()).equals(bgcolordef) )?"black":"white"%>'><%=hourmin.toString()%>
-                                                                        </span></td>
-                                                                            <%
-	while (bFirstTimeRs?it.hasNext():true) { //if it's not the first time to parse the standard time, should pass it by
-                  appointment = bFirstTimeRs?it.next():appointment;
-                  len = bFirstTimeRs&&!bFirstFirstR?lenLimitedS:lenLimitedL;
-                  String strStartTime = ConversionUtils.toTimeString(appointment.getStartTime());
-                  String strEndTime = ConversionUtils.toTimeString(appointment.getEndTime());
-                  
-                  iS=Integer.parseInt(String.valueOf(strStartTime).substring(0,2));
-                  iSm=Integer.parseInt(String.valueOf(strStartTime).substring(3,5));
-                  iE=Integer.parseInt(String.valueOf(strEndTime).substring(0,2));
-              	  iEm=Integer.parseInt(String.valueOf(strEndTime).substring(3,5));
-
-          	  if( (ih < iS*60+iSm) && (ih+depth-1)<iS*60+iSm ) { //iS not in this period (both start&end), get to the next period
-          	  	//out.println("<td width='10'>&nbsp;</td>"); //should be comment
-          	  	bFirstTimeRs=false;
-          	  	break;
-          	  }
-          	  if( (ih > iE*60+iEm) ) { //appt before this time slot (both start&end), get to the next period
-          	  	//out.println("<td width='10'>&nbsp;</td>"); //should be comment
-          	  	bFirstTimeRs=true;
-          	  	continue;
-          	  }
-         	    iRows=((iE*60+iEm)-ih)/depth+1; //to see if the period across an hour period
-         	    //iRows=(iE-iS)*60/depth+iEm/depth-iSm/depth+1; //to see if the period across an hour period
-
- 
-                    int demographic_no = appointment.getDemographicNo();
-
-                  //Pull the appointment name from the demographic information if the appointment is attached to a specific demographic.
-                  //Otherwise get the name associated with the appointment from the appointment information
-                  StringBuilder nameSb = new StringBuilder();
-                  if ((demographic_no != 0)&& (demographicDao != null)) {
-                        Demographic demo = demographicDao.getDemographic(String.valueOf(demographic_no));
-                        nameSb.append(demo.getLastName())
-                              .append(",")
-                              .append(demo.getFirstName());
-                  }
-                  else {
-                        nameSb.append(String.valueOf(appointment.getName()));
-                  }
-                  String name = UtilMisc.toUpperLowerCase(nameSb.toString());
-
-                  paramTickler[0]=String.valueOf(demographic_no);
-                  paramTickler[1]=MyDateFormat.getSysDate(strDate); //year+"-"+month+"-"+day;//e.g."2001-02-02";
-                  tickler_no = "";
-                  tickler_note="";
-                  
-                 if(securityInfoManager.hasPrivilege(loggedInInfo1, "_tickler", "r", demographic_no)) {
-	                  for(Tickler t: ticklerManager.search_tickler(loggedInInfo1, demographic_no,MyDateFormat.getSysDate(strDate))) {
-	                	  tickler_no = t.getId().toString();
-	                      tickler_note = t.getMessage()==null?tickler_note:tickler_note + "\n" + t.getMessage();
-	                  }
-                 }
-                     
-                  //alerts and notes
-                  DemographicCust dCust = demographicCustDao.find(demographic_no);
-                  
-                  
-                  ver = "";
-                  roster = "";
-                  Demographic demographic = demographicDao.getDemographicById(demographic_no);
-                  if(demographic != null) {
-                   
-                    ver = demographic.getVer();
-                    roster = demographic.getRosterStatus();
-
-                    int intMob = 0;
-                    int intDob = 0;
-
-                    mob = String.valueOf(demographic.getMonthOfBirth());
-                    if(mob.length()>0 && !mob.equals("null"))
-                    	intMob = Integer.parseInt(mob);
-
-                    dob = String.valueOf(demographic.getDateOfBirth());
-                    if(dob.length()>0 && !dob.equals("null"))
-                    	intDob = Integer.parseInt(dob);
-
-
-                    demBday = mob + "-" + dob;
-
-                    if (roster == null ) { 
-                        roster = "";
-                    }
-                  }
-                  study_no = new StringBuffer("");
-                  study_link = new StringBuffer("");
-		  studyDescription = new StringBuffer("");
-
-		  int numStudy = 0;
-		  
-		  for(DemographicStudy ds:demographicStudyDao.findByDemographicNo(demographic_no)) {
-			  Study study = studyDao.find(ds.getId().getStudyNo());
-			  if(study != null && study.getCurrent1() == 1) {
-				  numStudy++;
-				  if(numStudy == 1) {
-					  study_no = new StringBuffer(String.valueOf(study.getId()));
-	                          study_link = new StringBuffer(String.valueOf(study.getStudyLink()));
-	                          studyDescription = new StringBuffer(String.valueOf(study.getDescription()));
-				  } else {
-					  study_no = new StringBuffer("0");
-		                      study_link = new StringBuffer("formstudy.jsp");
-				      studyDescription = new StringBuffer("Form Studies");
-				  }
-			  }
-		  }
-		  
-                  String reason = String.valueOf(appointment.getReason()).trim();
-                  String notes = String.valueOf(appointment.getNotes()).trim();
-                  String status = String.valueOf(appointment.getStatus()).trim();
-          	      String sitename = String.valueOf(appointment.getLocation()).trim();
-          	      String type = appointment.getType();
-          	      String urgency = appointment.getUrgency();
-          	      String reasonCodeName = null;
-          	      if(appointment.getReasonCode() != null)    {  	   
-          	    	LookupListItem lli  = reasonCodesMap.get(appointment.getReasonCode()); 
-          	    	if(lli != null) {
-          	    		reasonCodeName = lli.getLabel();
-          	    	}
-          	    	if(reasonCodeName != null)
-          	    	{
-          	    		reasonCodeName = reasonCodeName.trim();
-          	    	}
-          	      }
-				if ( "yes".equalsIgnoreCase(OscarProperties.getInstance().getProperty("SHOW_APPT_TYPE_WITH_REASON")) ) {
-					reasonCodeName = ( type 
-							+ ((type != null && ! type.isEmpty()) ? " : " : "")
-							+ reasonCodeName );
-				}
-          
-          	  bFirstTimeRs=true;
-	    as.setApptStatus(status);
-
-	 //multi-site. if a site have been selected, only display appointment in that site
-	 if (!bMultisites || (selectedSite == null && CurrentSiteMap.get(sitename) != null) || sitename.equals(selectedSite)) {
-%>
-                                                                    <td class="appt" bgcolor='<%=as.getBgColor()%>'
-                                                                        rowspan="<%=iRows%>" <%-- =view==0?(len==lenLimitedL?"nowrap":""):"nowrap"--%>
-                                                                        nowrap>
-                                                                        <%
-                                                                            if (BookingSource.MYOSCAR_SELF_BOOKING == appointment.getBookingSource()) {
-                                                                        %>
-                                                                        <bean:message
-                                                                                key="provider.appointmentProviderAdminDay.SelfBookedMarker"/>
-                                                                        <%
-                                                                            }
-                                                                        %>
-                                                                        <!-- multisites : add colour-coded to the "location" value of that appointment. -->
-                                                                        <%if (bMultisites) {%>
-                                                                        <span title="<%= sitename %>"
-                                                                              style="background-color:<%=siteBgColor.get(sitename)%>;">&nbsp;</span>|
-                                                                        <%} %>
-
-                                                                        <%
-                                                                            String nextStatus = as.getNextStatus();
-                                                                            if (nextStatus != null && !nextStatus.equals("")) {
-                                                                        %>
-                                                                        <!-- Short letters -->
-                                                                        <a class="apptStatus" href=#
-                                                                           onclick="refreshSameLoc('providercontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&status=&statusch=<%=nextStatus%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=addstatus&dboperation=updateapptstatus&viewall=<%=request.getParameter("viewall")==null?"0":(request.getParameter("viewall"))%>
-                                                                                   <%=isWeekView?"&viewWeek=1":""%>');"
-                                                                           title="<%=as.getTitleString(request.getLocale())%> ">
-                                                                            <%
-                                                                                }
-                                                                                if (nextStatus != null) {
-                                                                                    if (OscarProperties.getInstance().getProperty("APPT_SHOW_SHORT_LETTERS", "false") != null
-                                                                                            && OscarProperties.getInstance().getProperty("APPT_SHOW_SHORT_LETTERS", "false").equals("true")) {
-
-                                                                                        String colour = as.getShortLetterColour();
-                                                                                        if (colour == null) {
-                                                                                            colour = "#FFFFFF";
-                                                                                        }
-
-                                                                            %>
-                                                                            <span
-                                                                                    class='short_letters'
-                                                                                    style='color:<%= colour%>;border:0;height:10'>
-											[<%=UtilMisc.htmlEscape(as.getShortLetters())%>]
-									</span>
-                                                                            <%
-                                                                            } else {
-                                                                            %>
-
-                                                                            <img src="../images/<%=as.getImageName()%>"
-                                                                                 border="0" height="10"
-                                                                                 title="<%=(as.getTitleString(request.getLocale()).length()>0)?as.getTitleString(request.getLocale()):as.getTitle()%>">
-
-                                                                            <%
-                                                                                    }
-                                                                                } else {
-                                                                                    out.print("&nbsp;");
-                                                                                }
-
-                                                                            %>
-                                                                        </a>
-                                                                        <%
-                                                                            if (urgency != null && urgency.equals("critical")) {
-                                                                        %>
-                                                                        <img src="../images/warning-icon.png" border="0"
-                                                                             width="14" height="14"
-                                                                             title="Critical Appointment"/>
-                                                                        <% } %>
-                                                                            <%--|--%>
-                                                                        <%
-                                                                            if (demographic_no == 0) {
-                                                                        %>
-                                                                        <!--  caisi  -->
-                                                                        <security:oscarSec roleName="<%=roleName$%>"
-                                                                                           objectName="_tickler"
-                                                                                           rights="r">
-                                                                            <% if (tickler_no.compareTo("") != 0) {%>
-                                                                            <caisi:isModuleLoad moduleName="ticklerplus"
-                                                                                                reverse="true">
-                                                                                <a href="#"
-                                                                                   onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=0');return false;"
-                                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><span
-                                                                                        color="red">!</span></a>
-                                                                            </caisi:isModuleLoad>
-                                                                            <caisi:isModuleLoad
-                                                                                    moduleName="ticklerplus">
-                                                                                <a href="../ticklerPlus/index.jsp"
-                                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><span
-                                                                                        color="red">!</span></a>
-                                                                            </caisi:isModuleLoad>
-                                                                            <%} %>
-                                                                        </security:oscarSec>
-
-                                                                        <!--  alerts -->
-                                                                        <% if (OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) { %>
-                                                                        <% if (dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
-                                                                        <a href="#" onClick="return false;"
-                                                                           title="<%=StringEscapeUtils.escapeHtml(dCust.getAlert())%>">A</a>
-                                                                        <%
-                                                                                }
-                                                                            }
-                                                                        %>
-
-                                                                        <!--  notes -->
-                                                                        <% if (OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) { %>
-                                                                        <% if (dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
-                                                                        <a href="#" onClick="return false;"
-                                                                           title="<%=StringEscapeUtils.escapeHtml(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
-                                                                        <%
-                                                                                }
-                                                                            }
-                                                                        %>
-
-
-                                                                        <a href=#
-                                                                           onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=0&displaymode=edit&dboperation=search');return false;"
-                                                                           title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%>
-<%=name%>
-	<%=type != null ? "type: " + type : "" %>
-	reason: <%=reasonCodeName!=null?reasonCodeName:""%> <%if(reason!=null && !reason.isEmpty()){%><%=((reasonCodeName != null && ! reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%>
-<%}%>	<bean:message key="provider.appointmentProviderAdminDay.notes"/>: <%=UtilMisc.htmlEscape(notes)%>">
-                                                                            .<%=(view == 0 && numAvailProvider != 1) ? (name.length() > len ? name.substring(0, len).toUpperCase() : name.toUpperCase()) : name.toUpperCase()%>
-                                                                            </span></a><!--Inline display of reason -->
-                                                                        <oscar:oscarPropertiesCheck
-                                                                                property="SHOW_APPT_REASON" value="yes"
-                                                                                defaultVal="true">
-                                                                            <span class="reason reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }"><%=UtilMisc.htmlEscape(reason)%></span>
-                                                                        </oscar:oscarPropertiesCheck></td>
-                                                                            <%
-        			} else {
-				%> <% if (tickler_no.compareTo("") != 0) {%>
-                                                                    <caisi:isModuleLoad moduleName="ticklerplus"
-                                                                                        reverse="true">
-                                                                    <a href="#"
-                                                                       onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=<%=demographic_no%>');return false;"
-                                                                       title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><span
-                                                                            color="red">!</span></a>
-                                                                    </caisi:isModuleLoad>
-                                                                    <caisi:isModuleLoad moduleName="ticklerplus">
-                                                                    <a href="#"
-                                                                       onClick="popupPage(700,102.4, '../Tickler.do?method=filter&filter.client=<%=demographic_no %>');return false;"
-                                                                       title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><span
-                                                                            color="red">!</span></a>
-                                                                    </caisi:isModuleLoad>
-                                                                            <%} %>
-
-                                                                    <!--  alerts -->
-                                                                            <% if(OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) {%>
-                                                                            <% if(dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
-                                                                    <a href="#" onClick="return false;"
-                                                                       title="<%=StringEscapeUtils.escapeHtml(dCust.getAlert())%>">A</a>
-                                                                            <%} } %>
-
-                                                                    <!--  notes -->
-                                                                            <% if(OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) {%>
-                                                                            <% if(dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
-                                                                    <a href="#" onClick="return false;"
-                                                                       title="<%=StringEscapeUtils.escapeHtml(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
-                                                                            <%} }%>
-
-                                                                    <!-- doctor code block 1 -->
-                                                                            <% if(bShowDocLink) { %>
-                                                                    <!-- security:oscarSec roleName="<%--=roleName$--%>" objectName="_appointment.doctorLink" rights="r" -->
-                                                                            <% if ("".compareTo(study_no.toString()) != 0) {%>
-                                                                    <a href="#"
-                                                                       onClick="popupPage(700,1024, '../form/study/forwardstudyname.jsp?study_link=<%=study_link.toString()%>&demographic_no=<%=demographic_no%>&study_no=<%=study_no%>');return false;"
-                                                                       title="<bean:message key="provider.appointmentProviderAdminDay.study"/>: <%=UtilMisc.htmlEscape(studyDescription.toString())%>"><%="<span color='" + studyColor + "'>" + studySymbol + "</span>"%>
-                                                                    </a><%} %>
-
-                                                                            <% if (ver!=null && ver!="" && "##".compareTo(ver.toString()) == 0){%><a
-                                                                        href="#"
-                                                                        title="<bean:message key="provider.appointmentProviderAdminDay.versionMsg"/> <%=UtilMisc.htmlEscape(ver)%>">
-                                                                    <span color="red">*</span></a><%}%>
-
-                                                                            <% if (roster!="" && "FS".equalsIgnoreCase(roster)){%>
-                                                                    <a href="#"
-                                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span
-                                                                            color="red">$</span></a><%}%>
-
-                                                                            <% if ("NR".equalsIgnoreCase(roster) || "PL".equalsIgnoreCase(roster)){%>
-                                                                    <a href="#"
-                                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span
-                                                                            color="red">#</span></a><%}%>
-                                                                    <!-- /security:oscarSec -->
-                                                                            <% } %>
-                                                                    <!-- doctor code block 2 -->
-                                                                            <%
-
-boolean disableStopSigns = PreventionManager.isDisabled();
-boolean propertyExists = PreventionManager.isCreated();
-if(disableStopSigns!=true){
-if( OscarProperties.getInstance().getProperty("SHOW_PREVENTION_STOP_SIGNS","false").equals("true") || propertyExists==true) {
-
-		String warning = prevMgr.getWarnings(loggedInInfo1, String.valueOf(demographic_no));
-		warning = PreventionManager.checkNames(warning);
-
-		String htmlWarning = "";
-
-		if( !warning.equals("")) {
-			  htmlWarning = "<img src=\"../images/stop_sign.png\" height=\"14\" width=\"14\" title=\"" + warning +"\">&nbsp;";
-		}
-
-		out.print(htmlWarning);
-
-}
-}
-
-String start_time = "";
-if( iS < 10 ) {
-	 	start_time = "0"; 
-}
-start_time +=  iS + ":";
-if( iSm < 10 ) {
-	 	start_time += "0";
-}
-
-start_time += iSm + ":00";
-%>
-
-                                                                    <a class="apptLink" href=#
-                                                                       onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
-                                                                            <oscar:oscarPropertiesCheck
-                                                                                    property="SHOW_APPT_REASON_TOOLTIP"
-                                                                                    value="yes" defaultVal="true">
-                                                                                title="<%=name%>
-                                                                                type: <%=type != null ? type : "" %>
-                                                                                reason: <%=reasonCodeName != null ? reasonCodeName : ""%> <%if (reason != null && !reason.isEmpty()) {%><%=((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%><%}%>
-                                                                                notes: <%=notes%>"
-                                                                            </oscar:oscarPropertiesCheck> ><%=(view == 0) ? (name.length() > len ? name.substring(0, len) : name) : name%>
-                                                                    </a>
-
-                                                                            <% if(len==lenLimitedL || view!=0 || numAvailProvider==1 ) {%>
-
-                                                                    <security:oscarSec roleName="<%=roleName$%>"
-                                                                                       objectName="_eChart" rights="r">
-                                                                    <oscar:oscarPropertiesCheck
-                                                                            property="eform_in_appointment" value="yes">
-                                                                    &#124;<b><a href="#"
-                                                                                onclick="popupPage(500,1024,'../eform/efmformslistadd.jsp?parentAjaxId=eforms&demographic_no=<%=demographic_no%>&appointment=<%=appointment.getId()%>'); return false;"
-                                                                                title="eForms">e</a></b>
-                                                                    </oscar:oscarPropertiesCheck>
-                                                                    </security:oscarSec>
-
-                                                                    <!-- doctor code block 3 -->
-                                                                            <% if(bShowEncounterLink && !isWeekView) { %>
-                                                                            <% if (oscar.OscarProperties.getInstance().isPropertyActive("SINGLE_PAGE_CHART")) {
-	
-	newUxUrl = "../web/#/record/" + demographic_no + "/";
-	
-	if(String.valueOf(demographic_no).equals(record) && !module.equals("summary")){
-		newUxUrl =  newUxUrl + module;
-		inContextStyle = "style='color: blue;'";
-	}else{
-		newUxUrl =  newUxUrl + "summary?appointmentNo=" + appointment.getId() + "&encType=face%20to%20face%20encounter%20with%20client";
-		inContextStyle = "";
-	}
-%>
-                                                                    &#124; <a href="<%=newUxUrl%>" <%=inContextStyle %>><bean:message
-                                                                        key="provider.appointmentProviderAdminDay.btnE"/>2</a>
-                                                                            <%}%>
-
-                                                                            <% String  eURL = "../oscarEncounter/IncomingEncounter.do?providerNo="
-	+curUser_no+"&appointmentNo="
-	+appointment.getId()
-	+"&demographicNo="
-	+demographic_no
-	+"&curProviderNo="
-	+curProvider_no[nProvider]
-	+"&reason="
-	+URLEncoder.encode(reason)
-	+"&encType="
-	+URLEncoder.encode("face to face encounter with client","UTF-8")
-	+"&userName="
-	+URLEncoder.encode( userfirstname+" "+userlastname)
-	+"&curDate="+curYear+"-"+curMonth+"-"
-	+curDay+"&appointmentDate="+year+"-"
-	+month+"-"+day+"&startTime=" 
-	+ start_time + "&status="+status 
-	+ "&apptProvider_no=" 
-	+ curProvider_no[nProvider] 
-			+ "&providerview=" 
-	+ curProvider_no[nProvider];%>
-
-                                                                            <% if (showOldEchartLink) { %>
-                                                                    &#124; <a href=# class="encounterBtn"
-                                                                              onClick="popupWithApptNo(710, 1024,'<%=eURL%>','encounter',<%=appointment.getId()%>);return false;"
-                                                                              title="<bean:message key="global.encounter"/>">
-                                                                    <bean:message
-                                                                            key="provider.appointmentProviderAdminDay.btnE"/></a>
-                                                                            <% }} %>
-
-                                                                            <%= (bShortcutIntakeForm) ? "| <a href='#' onClick='popupPage(700, 1024, \"formIntake.jsp?demographic_no="+demographic_no+"\")' title='Intake Form'>In</a>" : "" %>
-                                                                    <!--  eyeform open link -->
-                                                                            <% if (oscar.OscarProperties.getInstance().isPropertyActive("new_eyeform_enabled") && !isWeekView) { %>
-                                                                    &#124; <a href="#"
-                                                                              onClick='popupPage(800, 1280, "../eyeform/eyeform.jsp?demographic_no=<%=demographic_no %>&appointment_no=<%=appointment.getId()%>");return false;'
-                                                                              title="EyeForm">EF</a>
-                                                                            <% } %>
-
-                                                                    <!-- billing code block -->
-                                                                            <% if (!isWeekView) { %>
-                                                                    <security:oscarSec roleName="<%=roleName$%>"
-                                                                                       objectName="_billing" rights="r">
-                                                                            <%
-	if(status.indexOf('B')==-1) 
-	{ 
-	%>
-                                                                    &#124; <a href=#
-                                                                              onClick='popupPage(755,1200, "../billing.do?billRegion=<%=URLEncoder.encode(prov)%>&billForm=<%=URLEncoder.encode(oscarVariables.getProperty("default_view"))%>&hotclick=<%=URLEncoder.encode("")%>&appointment_no=<%=appointment.getId()%>&demographic_name=<%=URLEncoder.encode(name)%>&status=<%=status%>&demographic_no=<%=demographic_no%>&providerview=<%=curProvider_no[nProvider]%>&user_no=<%=curUser_no%>&apptProvider_no=<%=curProvider_no[nProvider]%>&appointment_date=<%=year+"-"+month+"-"+day%>&start_time=<%=start_time%>&bNewForm=1");return false;'
-                                                                              title="<bean:message key="global.billingtag"/>"><bean:message
-                                                                        key="provider.appointmentProviderAdminDay.btnB"/></a>
-                                                                            <%
-	}
-	else 
-	{
-		if(caisiBillingPreferenceNotDelete!=null && caisiBillingPreferenceNotDelete.equals("1")) 
-		{
-	%>
-                                                                    &#124; <a href=#
-                                                                              onClick='onUpdatebill("../billing/CA/ON/billingEditWithApptNo.jsp?billRegion=<%=URLEncoder.encode(prov)%>&billForm=<%=URLEncoder.encode(oscarVariables.getProperty("default_view"))%>&hotclick=<%=URLEncoder.encode("")%>&appointment_no=<%=appointment.getId()%>&demographic_name=<%=URLEncoder.encode(name)%>&status=<%=status%>&demographic_no=<%=demographic_no%>&providerview=<%=curProvider_no[nProvider]%>&user_no=<%=curUser_no%>&apptProvider_no=<%=curProvider_no[nProvider]%>&appointment_date=<%=year+"-"+month+"-"+day%>&start_time=<%=iS+":"+iSm%>&bNewForm=1");return false;'
-                                                                              title="<bean:message key="global.billingtag"/>">=<bean:message
-                                                                        key="provider.appointmentProviderAdminDay.btnB"/></a>
-                                                                            <%
-		} 
-		else 
-		{ 
-	%>
-                                                                    &#124; <a href=#
-                                                                              onClick='onUnbilled("../billing/CA/<%=prov%>/billingDeleteWithoutNo.jsp?status=<%=status%>&appointment_no=<%=appointment.getId()%>");return false;'
-                                                                              title="<bean:message key="global.billingtag"/>">-<bean:message
-                                                                        key="provider.appointmentProviderAdminDay.btnB"/></a>
-                                                                            <%
-		} 
-	} 
-	%>
-
-                                                                    <!--/security:oscarSec-->
-                                                                    </security:oscarSec>
-                                                                            <% } %>
-                                                                    <!-- billing code block -->
-                                                                    <security:oscarSec roleName="<%=roleName$%>"
-                                                                                       objectName="_masterLink"
-                                                                                       rights="r">
-
-                                                                    &#124; <a class="masterBtn"
-                                                                              href="javascript:void(0)"
-                                                                              onClick="popupWithApptNo(700,1024,'../demographic/demographiccontrol.jsp?demographic_no=<%=demographic_no%>&apptProvider=<%=curProvider_no[nProvider]%>&appointment=<%=appointment.getId()%>&displaymode=edit&dboperation=search_detail','master',<%=appointment.getId()%>)"
-                                                                              title="<bean:message key="provider.appointmentProviderAdminDay.msgMasterFile"/>"><bean:message
-                                                                        key="provider.appointmentProviderAdminDay.btnM"/></a>
-
-                                                                    </security:oscarSec>
-                                                                            <% if (!isWeekView) { %>
-
-                                                                    <!-- doctor code block 4 -->
-
-                                                                    <security:oscarSec roleName="<%=roleName$%>"
-                                                                                       objectName="_appointment.doctorLink"
-                                                                                       rights="r">
-                                                                    &#124; <a href=#
-                                                                              onClick="popupWithApptNo(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=curUser_no%>&demographicNo=<%=demographic_no%>','rx',<%=appointment.getId()%>)"
-                                                                              title="<bean:message key="global.prescriptions"/>"><bean:message
-                                                                        key="global.rx"/>
-                                                                </a>
-
-
-                                                                    <!-- doctor color -->
-                                                                    <oscar:oscarPropertiesCheck
-                                                                            property="ENABLE_APPT_DOC_COLOR"
-                                                                            value="yes">
-                                                                            <%
-                String providerColor = null;
-                if(view == 1 && demographicDao != null && userPropertyDao != null) {
-                        String providerNo = (demographicDao.getDemographic(String.valueOf(demographic_no))==null?null:demographicDao.getDemographic(String.valueOf(demographic_no)).getProviderNo());
-                        UserProperty property = userPropertyDao.getProp(providerNo, UserPropertyDAO.COLOR_PROPERTY);
-                        if(property != null) {
-                                providerColor = property.getValue();
-                        }
-                }
-        %>
-                                                                            <%= (providerColor != null ? "<span style=\"background-color:"+providerColor+";width:5px\">&nbsp;</span>" : "") %>
-                                                                    </oscar:oscarPropertiesCheck>
-
-                                                                            <%
-	  if("bc".equalsIgnoreCase(prov)){
-	  if(patientHasOutstandingPrivateBills(String.valueOf(demographic_no))){
-	  %>
-                                                                    &#124;<b style="color:#FF0000">$</b>
-                                                                            <%}}%>
-                                                                    <oscar:oscarPropertiesCheck
-                                                                            property="SHOW_APPT_REASON" value="yes"
-                                                                            defaultVal="true">
-                                                                    <span class="reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }">
-     			<strong><i>
-	     			&#124;<%=reasonCodeName == null ? "" : "&nbsp;" + reasonCodeName %>
-	     			<%=(reason == null || reason.isEmpty()) ? "" : ((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + reason%>
-     			</i></strong>
-     		</span>
-                                                                    </oscar:oscarPropertiesCheck>
-
-                                                                    </security:oscarSec>
-
-                                                                    <!-- add one link to caisi Program Management Module -->
-                                                                    <caisi:isModuleLoad moduleName="caisi">
-                                                                    <a href='../PMmodule/ClientManager.do?id=<%=demographic_no%>'
-                                                                       title="Program Management">|P</a>
-                                                                    </caisi:isModuleLoad>
-                                                                            <%
-
-      if(isBirthday(monthDay,demBday)){%>
-                                                                    &#124; <img src="../images/cake.gif" height="20"
-                                                                                alt="Happy Birthday"/>
-                                                                            <%}%>
-
-                                                                            <%String appointment_no=appointment.getId().toString();
-      	request.setAttribute("providerPreference", providerPreference);
-      %>
-                                                                        <c:set var="demographic_no"
-                                                                               value="<%=demographic_no %>"/>
-                                                                        <c:set var="appointment_no"
-                                                                               value="<%=appointment_no %>"/>
-
-                                                                    <jsp:include page="appointmentFormsLinks.jspf">
-                                                                        <jsp:param value="${demographic_no}"
-                                                                                   name="demographic_no"/>
-                                                                        <jsp:param value="${appointment_no}"
-                                                                                   name="appointment_no"/>
-                                                                    </jsp:include>
-
-                                                                    <oscar:oscarPropertiesCheck
-                                                                            property="appt_pregnancy" value="true"
-                                                                            defaultVal="false">
-
-                                                                        <c:set var="demographicNo"
-                                                                               value="<%=demographic_no %>"/>
-                                                                    <jsp:include page="appointmentPregnancy.jspf">
-                                                                        <jsp:param value="${demographicNo}"
-                                                                                   name="demographicNo"/>
-                                                                    </jsp:include>
-
-                                                                    </oscar:oscarPropertiesCheck>
-
-                                                                            <% }} %>
-                                                                    </span></td>
-                                                                            <%
-        			}
-        		}
-        			bFirstFirstR = false;
-          	}
-
-            out.println("<td class='noGrid' width='1'></td></tr>"); //no grid display
-          }
-				%>
-
-                                                            </table>
-                                                            <!-- end table for each provider schedule display -->
-                                                            <!-- caisi infirmary view extension add fffffffffff-->
-                                                        </logic:notEqual>
-                                                        <!-- caisi infirmary view extension add end fffffffffffffff-->
-
-                                                    </td>
-                                                </tr>
-
-                                            </table><!-- end table for each provider name -->
-
-                                        </td>
+                                        <b><a href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=<%=day%>&view=0&displaymode=day&dboperation=searchappointmentday"><%=formatDate%>
+                                        </a></b>
                                         <%
-                                            } //end of display team a, etc.
-
+                                        } else {
                                         %>
+                                        <input type='button'
+                                                  value="<bean:message key="provider.appointmentProviderAdminDay.weekLetter"/>"
+                                                  name='weekview'
+                                                  onClick="goWeekView('<%=curProvider_no[nProvider]%>')"
+                                                  title="<bean:message key="provider.appointmentProviderAdminDay.weekView"/>"
+                                                  style="color:black" class="noprint">
+                                            <input type='button'
+                                                   value="<bean:message key="provider.appointmentProviderAdminDay.searchLetter"/>"
+                                                   name='searchview'
+                                                   onClick="goSearchView('<%=curProvider_no[nProvider]%>')"
+                                                   title="<bean:message key="provider.appointmentProviderAdminDay.searchView"/>"
+                                                   style="color:black" class="noprint">
+                                            <input type='radio' name='flipview' class="noprint"
+                                                      onClick="goFilpView('<%=curProvider_no[nProvider]%>')"
+                                                      title="Flip view">
+                                                <a href=#
+                                                   onClick="goZoomView('<%=curProvider_no[nProvider]%>','<%=StringEscapeUtils.escapeJavaScript(curProviderName[nProvider])%>')"
+                                                   onDblClick="goFilpView('<%=curProvider_no[nProvider]%>')"
+                                                   title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>">
+                                                    <!--a href="providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=1&curProvider=<%=curProvider_no[nProvider]%>&curProviderName=<%=curProviderName[nProvider]%>&displaymode=day&dboperation=searchappointmentday" title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>"-->
+                                                    <%=curProviderName[nProvider]%>
+                                                </a>
+                                                <oscar:oscarPropertiesCheck value="yes"
+                                                                            property="TOGGLE_REASON_BY_PROVIDER"
+                                                                            defaultVal="true">
+                                                    <a id="expandReason" href="#"
+                                                       onclick="return toggleReason('<%=curProvider_no[nProvider]%>');"
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.expandreason"/>">*</a>
+                                                    <%-- Default is to hide inline reasons. --%>
+                                                    <c:set value="true" var="hideReason"/>
+                                                </oscar:oscarPropertiesCheck>
+
+                                            <button class="ds-btn" type="button"
+                                                    data-provider_no="<%=curProvider_no[nProvider]%>">DS
+                                            </button>
+                                                    <% } %>
+
+                                                    <%
+                                    if (!userAvail) {
+                                  %>
+                                            [<bean:message
+                                                key="provider.appointmentProviderAdminDay.msgNotOnSched"/>]
+                                  <%
+                                    }
+                                  %>
+                                            </logic:notEqual>
+                                            <logic:equal name="infirmaryView_isOscar" value="false">
+                                                    <%String prID="1";%>
+                                            <logic:present name="infirmaryView_programId">
+                                                    <% prID=(String)session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID);%>
+                                            </logic:present>
+                                            <logic:iterate id="pb" name="infirmaryView_programBeans" type="org.apache.struts.util.LabelValueBean">
+                                                    <%
+                                                      if (pb.getValue().equals(prID)) {
+                                                    %>
+                                                            <b><label><%=pb.getLabel()%></label></b>
+                                                                    <%
+                                                            }
+                                                        %>
+                                            </logic:iterate>
+                                            </logic:equal>
+                                            <!-- caisi infirmary view extension modify end ffffffffffffffff-->
+                                    </td>
+                                </tr>
+                                <!-- END for the first provider's name -->
+                                <tr>
+
+                                    <td valign="top">
+
+                                        <!-- caisi infirmary view exteion add -->
+                                        <!--  fffffffffffffffffffffffffffffffffffffffffff-->
+                                        <caisi:isModuleLoad moduleName="caisi">
+                                            <jsp:include page="infirmarydemographiclist.jspf"/>
+                                        </caisi:isModuleLoad>
+
+                                        <logic:notEqual name="infirmaryView_isOscar" value="false">
+                                            <!-- caisi infirmary view exteion add end ffffffffffffffffff-->
+                                            <!-- =============== following block is the original oscar code. -->
+                                            <!-- table for hours of day start -->
+                                            <table id="providerSchedule" border="0" cellpadding="0"
+                                                   bgcolor="<%=userAvail?"#486ebd":"silver"%>"
+                                                   cellspacing="0" width="100%">
+                                                <%
+                                                    bFirstTimeRs = true;
+                                                    bFirstFirstR = true;
+
+                                                    String useProgramLocation = OscarProperties.getInstance().getProperty("useProgramLocation");
+                                                    String moduleNames = OscarProperties.getInstance().getProperty("ModuleNames");
+                                                    boolean caisiEnabled = moduleNames != null && org.apache.commons.lang.StringUtils.containsIgnoreCase(moduleNames, "Caisi");
+                                                    boolean locationEnabled = caisiEnabled && (useProgramLocation != null && useProgramLocation.equals("true"));
+
+                                                    int length = locationEnabled ? 4 : 3;
+
+                                                    String[] param0 = new String[length];
+
+                                                    param0[0] = curProvider_no[nProvider];
+                                                    param0[1] = year + "-" + month + "-" + day;//e.g."2001-02-02";
+                                                    param0[2] = programId_oscarView;
+                                                    if (locationEnabled) {
 
 
-                                    </tr>
-                                    <% } // end caseload view %>
-                                </table>        <!-- end table for the whole schedule row display -->
+                                                        ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
+                                                        ProgramProvider programProvider = programManager2.getCurrentProgramInDomain(loggedInInfo1, loggedInInfo1.getLoggedInProviderNo());
+                                                        if (programProvider != null && programProvider.getProgram() != null) {
+                                                            programProvider.getProgram().getName();
+                                                        }
+                                                        param0[3] = request.getParameter("programIdForLocation");
+                                                        strsearchappointmentday = "searchappointmentdaywithlocation";
+                                                    }
+
+                                                    List<Appointment> appointments = appointmentDao.searchappointmentday(curProvider_no[nProvider], ConversionUtils.fromDateString(year + "-" + month + "-" + day), ConversionUtils.fromIntString(programId_oscarView));
+                                                    Iterator<Appointment> it = appointments.iterator();
+
+                                                    Appointment appointment = null;
+                                                    String router = "";
+                                                    String record = "";
+                                                    String module = "";
+                                                    String newUxUrl = "";
+                                                    String inContextStyle = "";
+
+                                                    if (request.getParameter("record") != null) {
+                                                        record = request.getParameter("record");
+                                                    }
+
+                                                    if (request.getParameter("module") != null) {
+                                                        module = request.getParameter("module");
+                                                    }
+                                                    List<Object[]> confirmTimeCode = scheduleDateDao.search_appttimecode(ConversionUtils.fromDateString(strDate), curProvider_no[nProvider]);
+
+                                                    for (ih = startHour * 60; ih <= (endHour * 60 + (60 / depth - 1) * depth); ih += depth) { // use minutes as base
+                                                        hourCursor = ih / 60;
+                                                        minuteCursor = ih % 60;
+                                                        bColorHour = minuteCursor == 0 ? true : false; //every 00 minute, change color
+
+                                                        //templatecode
+                                                        if ((dateTimeCodeBean.get(curProvider_no[nProvider]) != null) && (dateTimeCodeBean.get(curProvider_no[nProvider]) != "") && confirmTimeCode.size() != 0) {
+                                                            int nLen = 24 * 60 / ((String) dateTimeCodeBean.get(curProvider_no[nProvider])).length();
+                                                            int ratio = (hourCursor * 60 + minuteCursor) / nLen;
+                                                            hourmin = new StringBuffer(dateTimeCodeBean.get(curProvider_no[nProvider]) != null ? ((String) dateTimeCodeBean.get(curProvider_no[nProvider])).substring(ratio, ratio + 1) : " ");
+                                                        } else {
+                                                            hourmin = new StringBuffer();
+                                                        }
+                                                %>
+                                                <tr>
+                                                    <td align="RIGHT"
+                                                        class="<%=bColorHour?"scheduleTime00":"scheduleTimeNot00"%>"
+                                                        NOWRAP>
+                                                        <a href=#
+                                                           onClick="confirmPopupPage(400,780,'../appointment/addappointment.jsp?provider_no=<%=curProvider_no[nProvider]%>&bFirstDisp=<%=true%>&year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&start_time=<%=(hourCursor>9?(""+hourCursor):("0"+hourCursor))+":"+ (minuteCursor<10?"0":"") +minuteCursor%>&end_time=<%=(hourCursor>9?(""+hourCursor):("0"+hourCursor))+":"+(minuteCursor+depth-1)%>&duration=<%=dateTimeCodeBean.get("duration"+hourmin.toString())%>','<%=dateTimeCodeBean.get("confirm"+hourmin.toString())%>','<%=allowDay%>','<%=allowWeek%>');return false;"
+                                                           title='<%=MyDateFormat.getTimeXX_XXampm(hourCursor +":"+ (minuteCursor<10?"0":"")+minuteCursor)%> - <%=MyDateFormat.getTimeXX_XXampm(hourCursor +":"+((minuteCursor+depth-1)<10?"0":"")+(minuteCursor+depth-1))%>'
+                                                           class="adhour">
+                                                            <%=(hourCursor < 10 ? "0" : "") + hourCursor + ":"%><%=(minuteCursor < 10 ? "0" : "") + minuteCursor%>&nbsp;</a>
+                                                    </td>
+                                                    <td class="hourmin"
+                                                        width='1%' <%=dateTimeCodeBean.get("color" + hourmin.toString()) != null ? ("bgcolor=" + dateTimeCodeBean.get("color" + hourmin.toString())) : ""%>
+                                                        title='<%=dateTimeCodeBean.get("description"+hourmin.toString())%>'>
+                                                                        <span color='<%=(dateTimeCodeBean.get("color"+hourmin.toString())!=null && !dateTimeCodeBean.get("color"+hourmin.toString()).equals(bgcolordef) )?"black":"white"%>'><%=hourmin.toString()%>
+                                                                        </span>
+                                                    </td>
+                                                            <%
+                                                        while (bFirstTimeRs?it.hasNext():true) { //if it's not the first time to parse the standard time, should pass it by
+                                                                      appointment = bFirstTimeRs?it.next():appointment;
+                                                                      len = bFirstTimeRs&&!bFirstFirstR?lenLimitedS:lenLimitedL;
+                                                                      String strStartTime = ConversionUtils.toTimeString(appointment.getStartTime());
+                                                                      String strEndTime = ConversionUtils.toTimeString(appointment.getEndTime());
+
+                                                                      iS=Integer.parseInt(String.valueOf(strStartTime).substring(0,2));
+                                                                      iSm=Integer.parseInt(String.valueOf(strStartTime).substring(3,5));
+                                                                      iE=Integer.parseInt(String.valueOf(strEndTime).substring(0,2));
+                                                                      iEm=Integer.parseInt(String.valueOf(strEndTime).substring(3,5));
+
+                                                                  if( (ih < iS*60+iSm) && (ih+depth-1)<iS*60+iSm ) { //iS not in this period (both start&end), get to the next period
+                                                                    //out.println("<td width='10'>&nbsp;</td>"); //should be comment
+                                                                    bFirstTimeRs=false;
+                                                                    break;
+                                                                  }
+                                                                  if( (ih > iE*60+iEm) ) { //appt before this time slot (both start&end), get to the next period
+                                                                    //out.println("<td width='10'>&nbsp;</td>"); //should be comment
+                                                                    bFirstTimeRs=true;
+                                                                    continue;
+                                                                  }
+                                                                    iRows=((iE*60+iEm)-ih)/depth+1; //to see if the period across an hour period
+                                                                    //iRows=(iE-iS)*60/depth+iEm/depth-iSm/depth+1; //to see if the period across an hour period
 
 
-                            </td>
-                        </tr>
+                                                                        int demographic_no = appointment.getDemographicNo();
 
-                    </table>
+                                                                      //Pull the appointment name from the demographic information if the appointment is attached to a specific demographic.
+                                                                      //Otherwise get the name associated with the appointment from the appointment information
+                                                                      StringBuilder nameSb = new StringBuilder();
+                                                                      if ((demographic_no != 0)&& (demographicDao != null)) {
+                                                                            Demographic demo = demographicDao.getDemographic(String.valueOf(demographic_no));
+                                                                            nameSb.append(demo.getLastName())
+                                                                                  .append(",")
+                                                                                  .append(demo.getFirstName());
+                                                                      }
+                                                                      else {
+                                                                            nameSb.append(String.valueOf(appointment.getName()));
+                                                                      }
+                                                                      String name = UtilMisc.toUpperLowerCase(nameSb.toString());
+
+                                                                      paramTickler[0]=String.valueOf(demographic_no);
+                                                                      paramTickler[1]=MyDateFormat.getSysDate(strDate); //year+"-"+month+"-"+day;//e.g."2001-02-02";
+                                                                      tickler_no = "";
+                                                                      tickler_note="";
+
+                                                                     if(securityInfoManager.hasPrivilege(loggedInInfo1, "_tickler", "r", demographic_no)) {
+                                                                          for(Tickler t: ticklerManager.search_tickler(loggedInInfo1, demographic_no,MyDateFormat.getSysDate(strDate))) {
+                                                                              tickler_no = t.getId().toString();
+                                                                              tickler_note = t.getMessage()==null?tickler_note:tickler_note + "\n" + t.getMessage();
+                                                                          }
+                                                                     }
+
+                                                                      //alerts and notes
+                                                                      DemographicCust dCust = demographicCustDao.find(demographic_no);
+
+
+                                                                      ver = "";
+                                                                      roster = "";
+                                                                      Demographic demographic = demographicDao.getDemographicById(demographic_no);
+                                                                      if(demographic != null) {
+
+                                                                        ver = demographic.getVer();
+                                                                        roster = demographic.getRosterStatus();
+
+                                                                        int intMob = 0;
+                                                                        int intDob = 0;
+
+                                                                        mob = String.valueOf(demographic.getMonthOfBirth());
+                                                                        if(mob.length()>0 && !mob.equals("null"))
+                                                                            intMob = Integer.parseInt(mob);
+
+                                                                        dob = String.valueOf(demographic.getDateOfBirth());
+                                                                        if(dob.length()>0 && !dob.equals("null"))
+                                                                            intDob = Integer.parseInt(dob);
+
+
+                                                                        demBday = mob + "-" + dob;
+
+                                                                        if (roster == null ) {
+                                                                            roster = "";
+                                                                        }
+                                                                      }
+                                                                      study_no = new StringBuffer("");
+                                                                      study_link = new StringBuffer("");
+                                                              studyDescription = new StringBuffer("");
+
+                                                              int numStudy = 0;
+
+                                                              for(DemographicStudy ds:demographicStudyDao.findByDemographicNo(demographic_no)) {
+                                                                  Study study = studyDao.find(ds.getId().getStudyNo());
+                                                                  if(study != null && study.getCurrent1() == 1) {
+                                                                      numStudy++;
+                                                                      if(numStudy == 1) {
+                                                                          study_no = new StringBuffer(String.valueOf(study.getId()));
+                                                                                  study_link = new StringBuffer(String.valueOf(study.getStudyLink()));
+                                                                                  studyDescription = new StringBuffer(String.valueOf(study.getDescription()));
+                                                                      } else {
+                                                                          study_no = new StringBuffer("0");
+                                                                                  study_link = new StringBuffer("formstudy.jsp");
+                                                                          studyDescription = new StringBuffer("Form Studies");
+                                                                      }
+                                                                  }
+                                                              }
+
+                                                                      String reason = String.valueOf(appointment.getReason()).trim();
+                                                                      String notes = String.valueOf(appointment.getNotes()).trim();
+                                                                      String status = String.valueOf(appointment.getStatus()).trim();
+                                                                      String sitename = String.valueOf(appointment.getLocation()).trim();
+                                                                      String type = appointment.getType();
+                                                                      String urgency = appointment.getUrgency();
+                                                                      String reasonCodeName = null;
+                                                                      if(appointment.getReasonCode() != null)    {
+                                                                        LookupListItem lli  = reasonCodesMap.get(appointment.getReasonCode());
+                                                                        if(lli != null) {
+                                                                            reasonCodeName = lli.getLabel();
+                                                                        }
+                                                                        if(reasonCodeName != null)
+                                                                        {
+                                                                            reasonCodeName = reasonCodeName.trim();
+                                                                        }
+                                                                      }
+                                                                    if ( "yes".equalsIgnoreCase(OscarProperties.getInstance().getProperty("SHOW_APPT_TYPE_WITH_REASON")) ) {
+                                                                        reasonCodeName = ( type
+                                                                                + ((type != null && ! type.isEmpty()) ? " : " : "")
+                                                                                + reasonCodeName );
+                                                                    }
+
+                                                                  bFirstTimeRs=true;
+                                                            as.setApptStatus(status);
+
+                                                         //multi-site. if a site have been selected, only display appointment in that site
+                                                   if (!bMultisites || (selectedSite == null && CurrentSiteMap.get(sitename) != null) || sitename.equals(selectedSite)) {
+                                                    %>
+                                                    <td class="appt" bgcolor='<%=as.getBgColor()%>'
+                                                        rowspan="<%=iRows%>" <%-- =view==0?(len==lenLimitedL?"nowrap":""):"nowrap"--%>
+                                                        nowrap>
+                                                        <%
+                                                            if (BookingSource.MYOSCAR_SELF_BOOKING == appointment.getBookingSource()) {
+                                                        %>
+                                                        <bean:message key="provider.appointmentProviderAdminDay.SelfBookedMarker"/>
+                                                        <%
+                                                            }
+                                                        %>
+                                                        <!-- multisites : add colour-coded to the "location" value of that appointment. -->
+                                                        <%if (bMultisites) {%>
+                                                        <span title="<%= sitename %>" style="background-color:<%=siteBgColor.get(sitename)%>;">&nbsp;</span>|
+                                                        <%} %>
+
+                                                        <%
+                                                            String nextStatus = as.getNextStatus();
+                                                            if (nextStatus != null && !nextStatus.equals("")) {
+                                                        %>
+                                                        <!-- Short letters -->
+                                                        <a class="apptStatus" href=#
+                                                           onclick="refreshSameLoc('providercontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&status=&statusch=<%=nextStatus%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=addstatus&dboperation=updateapptstatus&viewall=<%=request.getParameter("viewall")==null?"0":(request.getParameter("viewall"))%>, <%=isWeekView?"&viewWeek=1":""%>');"
+                                                           title="<%=as.getTitleString(request.getLocale())%> ">
+                                                            <%
+                                                                }
+                                                                if (nextStatus != null) {
+                                                                    if (OscarProperties.getInstance().getProperty("APPT_SHOW_SHORT_LETTERS", "false") != null
+                                                                            && OscarProperties.getInstance().getProperty("APPT_SHOW_SHORT_LETTERS", "false").equals("true")) {
+
+                                                                        String colour = as.getShortLetterColour();
+                                                                        if (colour == null) {
+                                                                            colour = "#FFFFFF";
+                                                                        }
+
+                                                            %>
+                                                            <span class='short_letters'
+                                                                    style='color:<%= colour%>;border:0;height:10px'>
+                                                                    [<%=UtilMisc.htmlEscape(as.getShortLetters())%>]
+                                                            </span>
+                                                            <%
+                                                            } else {
+                                                            %>
+
+                                                            <img src="../images/<%=as.getImageName()%>"
+                                                                 border="0" height="10"
+                                                                 alt="<%=(as.getTitleString(request.getLocale()).length()>0)?as.getTitleString(request.getLocale()):as.getTitle()%>">
+
+                                                            <%
+                                                                    }
+                                                                } else {
+                                                                    out.print("&nbsp;");
+                                                                }
+
+                                                            %>
+                                                        </a>
+                                                        <%
+                                                            if (urgency != null && urgency.equals("critical")) {
+                                                        %>
+                                                        <img src="../images/warning-icon.png" border="0"
+                                                             width="14" height="14"
+                                                             alt="Critical Appointment"/>
+                                                        <% } %>
+                                                            <%--|--%>
+                                                        <%
+                                                            if (demographic_no == 0) {
+                                                        %>
+                                                        <!--  caisi  -->
+                                                        <security:oscarSec roleName="<%=roleName$%>"
+                                                                           objectName="_tickler"
+                                                                           rights="r">
+                                                            <% if (tickler_no.compareTo("") != 0) {%>
+                                                            <caisi:isModuleLoad moduleName="ticklerplus"
+                                                                                reverse="true">
+                                                                <a href="#"
+                                                                   onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=0');return false;"
+                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>">
+                                                                    <span color="red">!</span></a>
+                                                            </caisi:isModuleLoad>
+                                                            <caisi:isModuleLoad
+                                                                    moduleName="ticklerplus">
+                                                                <a href="../ticklerPlus/index.jsp"
+                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>">
+                                                                    <span color="red">!</span></a>
+                                                            </caisi:isModuleLoad>
+                                                            <%} %>
+                                                        </security:oscarSec>
+
+                                                        <!--  alerts -->
+                                                        <% if (OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) { %>
+                                                        <% if (dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
+                                                        <a href="#" onClick="return false;"
+                                                           title="<%=StringEscapeUtils.escapeHtml(dCust.getAlert())%>">A</a>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
+
+                                                        <!--  notes -->
+                                                        <% if (OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) { %>
+                                                        <% if (dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
+                                                        <a href="#" onClick="return false;"
+                                                           title="<%=StringEscapeUtils.escapeHtml(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
+
+
+                                                        <a href=#
+                                                           onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=0&displaymode=edit&dboperation=search');return false;"
+                                                           title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%>
+                                                                    <%=name%>
+                                                                        <%=type != null ? "type: " + type : "" %>
+                                                                        reason: <%=reasonCodeName!=null?reasonCodeName:""%> <%if(reason!=null && !reason.isEmpty()){%><%=((reasonCodeName != null && ! reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%>
+                                                                    <%}%>	<bean:message key="provider.appointmentProviderAdminDay.notes"/>: <%=UtilMisc.htmlEscape(notes)%>" >
+                                                            <span>
+                                                            .<%=(view == 0 && numAvailProvider != 1) ? (name.length() > len ? name.substring(0, len).toUpperCase() : name.toUpperCase()) : name.toUpperCase()%>
+                                                            </span>
+                                                        </a><!--Inline display of reason -->
+                                                        <oscar:oscarPropertiesCheck
+                                                                property="SHOW_APPT_REASON" value="yes"
+                                                                defaultVal="true">
+                                                            <span class="reason reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }"><%=UtilMisc.htmlEscape(reason)%></span>
+                                                        </oscar:oscarPropertiesCheck>
+                                                    </td>
+                                                            <%
+                                                                    } else {
+                                                                %> <% if (tickler_no.compareTo("") != 0) {%>
+                                                    <caisi:isModuleLoad moduleName="ticklerplus"
+                                                                        reverse="true">
+                                                    <a href="#"
+                                                       onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=<%=demographic_no%>');return false;"
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><span
+                                                            color="red">!</span></a>
+                                                    </caisi:isModuleLoad>
+                                                    <caisi:isModuleLoad moduleName="ticklerplus">
+                                                    <a href="#"
+                                                       onClick="popupPage(700,102.4, '../Tickler.do?method=filter&filter.client=<%=demographic_no %>');return false;"
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><span
+                                                            color="red">!</span></a>
+                                                    </caisi:isModuleLoad>
+                                                            <%} %>
+
+                                                    <!--  alerts -->
+                                                            <% if(OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) {%>
+                                                            <% if(dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
+                                                    <a href="#" onClick="return false;"
+                                                       title="<%=StringEscapeUtils.escapeHtml(dCust.getAlert())%>">A</a>
+                                                            <%} } %>
+
+                                                    <!--  notes -->
+                                                            <% if(OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) {%>
+                                                            <% if(dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
+                                                    <a href="#" onClick="return false;"
+                                                       title="<%=StringEscapeUtils.escapeHtml(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+                                                            <%} }%>
+
+                                                    <!-- doctor code block 1 -->
+                                                            <% if(bShowDocLink) { %>
+                                                    <!-- security:oscarSec roleName="<%--=roleName$--%>" objectName="_appointment.doctorLink" rights="r" -->
+                                                            <% if ("".compareTo(study_no.toString()) != 0) {%>
+                                                    <a href="#"
+                                                       onClick="popupPage(700,1024, '../form/study/forwardstudyname.jsp?study_link=<%=study_link.toString()%>&demographic_no=<%=demographic_no%>&study_no=<%=study_no%>');return false;"
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.study"/>: <%=UtilMisc.htmlEscape(studyDescription.toString())%>"><%="<span color='" + studyColor + "'>" + studySymbol + "</span>"%>
+                                                    </a><%} %>
+
+                                                            <% if (ver!=null && ver!="" && "##".compareTo(ver.toString()) == 0){%><a
+                                                        href="#"
+                                                        title="<bean:message key="provider.appointmentProviderAdminDay.versionMsg"/> <%=UtilMisc.htmlEscape(ver)%>">
+                                                    <span color="red">*</span></a><%}%>
+
+                                                            <% if (roster!="" && "FS".equalsIgnoreCase(roster)){%>
+                                                    <a href="#"
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span
+                                                            color="red">$</span></a><%}%>
+
+                                                            <% if ("NR".equalsIgnoreCase(roster) || "PL".equalsIgnoreCase(roster)){%>
+                                                    <a href="#"
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span
+                                                            color="red">#</span></a><%}%>
+                                                    <!-- /security:oscarSec -->
+                                                            <% } %>
+                                                    <!-- doctor code block 2 -->
+                                                            <%
+
+                                                                            boolean disableStopSigns = PreventionManager.isDisabled();
+                                                                            boolean propertyExists = PreventionManager.isCreated();
+                                                                            if(disableStopSigns!=true){
+                                                                            if( OscarProperties.getInstance().getProperty("SHOW_PREVENTION_STOP_SIGNS","false").equals("true") || propertyExists==true) {
+
+                                                                                    String warning = prevMgr.getWarnings(loggedInInfo1, String.valueOf(demographic_no));
+                                                                                    warning = PreventionManager.checkNames(warning);
+
+                                                                                    String htmlWarning = "";
+
+                                                                                    if( !warning.equals("")) {
+                                                                                          htmlWarning = "<img src=\"../images/stop_sign.png\" height=\"14\" width=\"14\" title=\"" + warning +"\">&nbsp;";
+                                                                                    }
+
+                                                                                    out.print(htmlWarning);
+
+                                                                            }
+                                                                            }
+
+                                                                            String start_time = "";
+                                                                            if( iS < 10 ) {
+                                                                                    start_time = "0";
+                                                                            }
+                                                                            start_time +=  iS + ":";
+                                                                            if( iSm < 10 ) {
+                                                                                    start_time += "0";
+                                                                            }
+
+                                                                            start_time += iSm + ":00";
+                                                                            %>
+
+                                                    <a class="apptLink" href=#
+                                                       onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
+                                                            <oscar:oscarPropertiesCheck
+                                                                    property="SHOW_APPT_REASON_TOOLTIP"
+                                                                    value="yes" defaultVal="true">
+                                                                title="<%=name%>
+                                                                type: <%=type != null ? type : "" %>
+                                                                reason: <%=reasonCodeName != null ? reasonCodeName : ""%> <%if (reason != null && !reason.isEmpty()) {%><%=((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%><%}%>
+                                                                notes: <%=notes%>"
+                                                            </oscar:oscarPropertiesCheck> ><%=(view == 0) ? (name.length() > len ? name.substring(0, len) : name) : name%>
+                                                    </a>
+
+                                                            <% if(len==lenLimitedL || view!=0 || numAvailProvider==1 ) {%>
+
+                                                    <security:oscarSec roleName="<%=roleName$%>"
+                                                                       objectName="_eChart" rights="r">
+                                                    <oscar:oscarPropertiesCheck
+                                                            property="eform_in_appointment" value="yes">
+                                                    &#124;<b><a href="#"
+                                                                onclick="popupPage(500,1024,'../eform/efmformslistadd.jsp?parentAjaxId=eforms&demographic_no=<%=demographic_no%>&appointment=<%=appointment.getId()%>'); return false;"
+                                                                title="eForms">e</a></b>
+                                                    </oscar:oscarPropertiesCheck>
+                                                    </security:oscarSec>
+
+                                                    <!-- doctor code block 3 -->
+                                                            <% if(bShowEncounterLink && !isWeekView) { %>
+                                                            <% if (oscar.OscarProperties.getInstance().isPropertyActive("SINGLE_PAGE_CHART")) {
+	
+                                                                        newUxUrl = "../web/#/record/" + demographic_no + "/";
+
+                                                                        if(String.valueOf(demographic_no).equals(record) && !module.equals("summary")){
+                                                                            newUxUrl =  newUxUrl + module;
+                                                                            inContextStyle = "style='color: blue;'";
+                                                                        }else{
+                                                                            newUxUrl =  newUxUrl + "summary?appointmentNo=" + appointment.getId() + "&encType=face%20to%20face%20encounter%20with%20client";
+                                                                            inContextStyle = "";
+                                                                        }
+                                                                    %>
+                                                    &#124; <a href="<%=newUxUrl%>" <%=inContextStyle %>><bean:message
+                                                        key="provider.appointmentProviderAdminDay.btnE"/>2</a>
+                                                            <%}%>
+
+                                                            <% String  eURL = "../oscarEncounter/IncomingEncounter.do?providerNo="
+                                                                                +curUser_no+"&appointmentNo="
+                                                                                +appointment.getId()
+                                                                                +"&demographicNo="
+                                                                                +demographic_no
+                                                                                +"&curProviderNo="
+                                                                                +curProvider_no[nProvider]
+                                                                                +"&reason="
+                                                                                +URLEncoder.encode(reason)
+                                                                                +"&encType="
+                                                                                +URLEncoder.encode("face to face encounter with client","UTF-8")
+                                                                                +"&userName="
+                                                                                +URLEncoder.encode( userfirstname+" "+userlastname)
+                                                                                +"&curDate="+curYear+"-"+curMonth+"-"
+                                                                                +curDay+"&appointmentDate="+year+"-"
+                                                                                +month+"-"+day+"&startTime="
+                                                                                + start_time + "&status="+status
+                                                                                + "&apptProvider_no="
+                                                                                + curProvider_no[nProvider]
+                                                                                        + "&providerview="
+                                                                                + curProvider_no[nProvider];%>
+
+                                                            <% if (showOldEchartLink) { %>
+                                                    &#124; <a href=# class="encounterBtn"
+                                                              onClick="popupWithApptNo(710, 1024,'<%=eURL%>','encounter',<%=appointment.getId()%>);return false;"
+                                                              title="<bean:message key="global.encounter"/>">
+                                                    <bean:message
+                                                            key="provider.appointmentProviderAdminDay.btnE"/></a>
+                                                            <% }} %>
+
+                                                            <%= (bShortcutIntakeForm) ? "| <a href='#' onClick='popupPage(700, 1024, \"formIntake.jsp?demographic_no="+demographic_no+"\")' title='Intake Form'>In</a>" : "" %>
+                                                    <!--  eyeform open link -->
+                                                            <% if (oscar.OscarProperties.getInstance().isPropertyActive("new_eyeform_enabled") && !isWeekView) { %>
+                                                    &#124; <a href="#"
+                                                              onClick='popupPage(800, 1280, "../eyeform/eyeform.jsp?demographic_no=<%=demographic_no %>&appointment_no=<%=appointment.getId()%>");return false;'
+                                                              title="EyeForm">EF</a>
+                                                            <% } %>
+
+                                                    <!-- billing code block -->
+                                                            <% if (!isWeekView) { %>
+                                                    <security:oscarSec roleName="<%=roleName$%>"
+                                                                       objectName="_billing" rights="r">
+                                                            <%
+                                                                if(status.indexOf('B')==-1)
+                                                                {
+                                                                %>
+                                                    &#124; <a href=#
+                                                              onClick='popupPage(755,1200, "../billing.do?billRegion=<%=URLEncoder.encode(prov)%>&billForm=<%=URLEncoder.encode(oscarVariables.getProperty("default_view"))%>&hotclick=<%=URLEncoder.encode("")%>&appointment_no=<%=appointment.getId()%>&demographic_name=<%=URLEncoder.encode(name)%>&status=<%=status%>&demographic_no=<%=demographic_no%>&providerview=<%=curProvider_no[nProvider]%>&user_no=<%=curUser_no%>&apptProvider_no=<%=curProvider_no[nProvider]%>&appointment_date=<%=year+"-"+month+"-"+day%>&start_time=<%=start_time%>&bNewForm=1");return false;'
+                                                              title="<bean:message key="global.billingtag"/>"><bean:message
+                                                        key="provider.appointmentProviderAdminDay.btnB"/></a>
+                                                            <%
+                                                                }
+                                                                else
+                                                                {
+                                                                    if(caisiBillingPreferenceNotDelete!=null && caisiBillingPreferenceNotDelete.equals("1"))
+                                                                    {
+                                                                %>
+                                                    &#124; <a href=#
+                                                              onClick='onUpdatebill("../billing/CA/ON/billingEditWithApptNo.jsp?billRegion=<%=URLEncoder.encode(prov)%>&billForm=<%=URLEncoder.encode(oscarVariables.getProperty("default_view"))%>&hotclick=<%=URLEncoder.encode("")%>&appointment_no=<%=appointment.getId()%>&demographic_name=<%=URLEncoder.encode(name)%>&status=<%=status%>&demographic_no=<%=demographic_no%>&providerview=<%=curProvider_no[nProvider]%>&user_no=<%=curUser_no%>&apptProvider_no=<%=curProvider_no[nProvider]%>&appointment_date=<%=year+"-"+month+"-"+day%>&start_time=<%=iS+":"+iSm%>&bNewForm=1");return false;'
+                                                              title="<bean:message key="global.billingtag"/>">=<bean:message
+                                                        key="provider.appointmentProviderAdminDay.btnB"/></a>
+                                                            <%
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                %>
+                                                    &#124; <a href=#
+                                                              onClick='onUnbilled("../billing/CA/<%=prov%>/billingDeleteWithoutNo.jsp?status=<%=status%>&appointment_no=<%=appointment.getId()%>");return false;'
+                                                              title="<bean:message key="global.billingtag"/>">-<bean:message
+                                                        key="provider.appointmentProviderAdminDay.btnB"/></a>
+                                                            <%
+                                                                    }
+                                                                }
+                                                                %>
+
+                                                    <!--/security:oscarSec-->
+                                                    </security:oscarSec>
+                                                            <% } %>
+                                                    <!-- billing code block -->
+                                                    <security:oscarSec roleName="<%=roleName$%>"
+                                                                       objectName="_masterLink"
+                                                                       rights="r">
+
+                                                    &#124; <a class="masterBtn"
+                                                              href="javascript:void(0)"
+                                                              onClick="popupWithApptNo(700,1024,'../demographic/demographiccontrol.jsp?demographic_no=<%=demographic_no%>&apptProvider=<%=curProvider_no[nProvider]%>&appointment=<%=appointment.getId()%>&displaymode=edit&dboperation=search_detail','master',<%=appointment.getId()%>)"
+                                                              title="<bean:message key="provider.appointmentProviderAdminDay.msgMasterFile"/>"><bean:message
+                                                        key="provider.appointmentProviderAdminDay.btnM"/></a>
+
+                                                    </security:oscarSec>
+                                                            <% if (!isWeekView) { %>
+
+                                                    <!-- doctor code block 4 -->
+
+                                                    <security:oscarSec roleName="<%=roleName$%>"
+                                                                       objectName="_appointment.doctorLink"
+                                                                       rights="r">
+                                                    &#124; <a href=#
+                                                              onClick="popupWithApptNo(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=curUser_no%>&demographicNo=<%=demographic_no%>','rx',<%=appointment.getId()%>)"
+                                                              title="<bean:message key="global.prescriptions"/>"><bean:message
+                                                        key="global.rx"/>
+                                                </a>
+
+
+                                                    <!-- doctor color -->
+                                                    <oscar:oscarPropertiesCheck
+                                                            property="ENABLE_APPT_DOC_COLOR"
+                                                            value="yes">
+                                                            <%
+                                                                                    String providerColor = null;
+                                                                                    if(view == 1 && demographicDao != null && userPropertyDao != null) {
+                                                                                            String providerNo = (demographicDao.getDemographic(String.valueOf(demographic_no))==null?null:demographicDao.getDemographic(String.valueOf(demographic_no)).getProviderNo());
+                                                                                            UserProperty property = userPropertyDao.getProp(providerNo, UserPropertyDAO.COLOR_PROPERTY);
+                                                                                            if(property != null) {
+                                                                                                    providerColor = property.getValue();
+                                                                                            }
+                                                                                    }
+                                                                            %>
+                                                            <%= (providerColor != null ? "<span style=\"background-color:"+providerColor+";width:5px\">&nbsp;</span>" : "") %>
+                                                    </oscar:oscarPropertiesCheck>
+
+                                                            <%
+                                                                              if("bc".equalsIgnoreCase(prov)){
+                                                                              if(patientHasOutstandingPrivateBills(String.valueOf(demographic_no))){
+                                                                              %>
+                                                    &#124;<b style="color:#FF0000">$</b>
+                                                            <%}}%>
+                                                    <oscar:oscarPropertiesCheck
+                                                            property="SHOW_APPT_REASON" value="yes"
+                                                            defaultVal="true">
+                                                    <span class="reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }">
+                                                                        <strong><i>
+                                                                            &#124;<%=reasonCodeName == null ? "" : "&nbsp;" + reasonCodeName %>
+                                                                            <%=(reason == null || reason.isEmpty()) ? "" : ((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + reason%>
+                                                                        </i></strong>
+                                                                    </span>
+                                                    </oscar:oscarPropertiesCheck>
+
+                                                    </security:oscarSec>
+
+                                                    <!-- add one link to caisi Program Management Module -->
+                                                    <caisi:isModuleLoad moduleName="caisi">
+                                                    <a href='../PMmodule/ClientManager.do?id=<%=demographic_no%>'
+                                                       title="Program Management">|P</a>
+                                                    </caisi:isModuleLoad>
+                                                            <%
+
+                                                                  if(isBirthday(monthDay,demBday)){%>
+                                                    &#124; <img src="../images/cake.gif" height="20"
+                                                                alt="Happy Birthday"/>
+                                                            <%}%>
+
+                                                            <%String appointment_no=appointment.getId().toString();
+                                                                            request.setAttribute("providerPreference", providerPreference);
+                                                                          %>
+                                                        <c:set var="demographic_no"
+                                                               value="<%=demographic_no %>"/>
+                                                        <c:set var="appointment_no"
+                                                               value="<%=appointment_no %>"/>
+
+                                                    <jsp:include page="appointmentFormsLinks.jspf">
+                                                        <jsp:param value="${demographic_no}"
+                                                                   name="demographic_no"/>
+                                                        <jsp:param value="${appointment_no}"
+                                                                   name="appointment_no"/>
+                                                    </jsp:include>
+
+                                                    <oscar:oscarPropertiesCheck
+                                                            property="appt_pregnancy" value="true"
+                                                            defaultVal="false">
+
+                                                        <c:set var="demographicNo"
+                                                               value="<%=demographic_no %>"/>
+                                                    <jsp:include page="appointmentPregnancy.jspf">
+                                                        <jsp:param value="${demographicNo}"
+                                                                   name="demographicNo"/>
+                                                    </jsp:include>
+
+                                                    </oscar:oscarPropertiesCheck>
+
+                                                            <% }} %>
+                                                    </span></td>
+                                                            <%
+                                                                    }
+                                                                }
+                                                                    bFirstFirstR = false;
+                                                            }
+
+                                                            out.println("<td class='noGrid' width='1'></td></tr>"); //no grid display
+                                                          }
+                                                                %>
+
+                                            </table>
+                                            <!-- end table for each provider schedule display -->
+                                            <!-- caisi infirmary view extension add fffffffffff-->
+                                        </logic:notEqual>
+                                        <!-- caisi infirmary view extension add end fffffffffffffff-->
+
+                                    </td>
+                                </tr>
+
+                            </table><!-- end table for each provider name -->
+
+                        </td>
+                        <%
+                            } //end of display team a, etc.
+
+                        %>
+
+
+                    </tr>
+                    <% } // end caseload view %>
+                </table>        <!-- end table for the whole schedule row display -->
+
+
             </td>
         </tr>
+
     </table>
-    </body>
+
     <!-- key shortcut hotkey block added by phc -->
     <script language="JavaScript">
 
@@ -2176,6 +2167,7 @@ start_time += iSm + ":00";
     <% if (OscarProperties.getInstance().getBooleanProperty("indivica_hc_read_enabled", "true")) { %>
     <jsp:include page="/hcHandler/hcHandler.html"/>
     <% } %>
+    </body>
 </html:html>
 
 <%!
