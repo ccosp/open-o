@@ -50,7 +50,7 @@ public class BillingPreferencesDAO extends AbstractDao<BillingPreference> {
 	@SuppressWarnings("unchecked")
 	public BillingPreference getUserBillingPreference(String providerNo) {
 		Query query = createQuery("bp", "bp.providerNo = :providerNo");
-		query.setParameter("providerNo", ConversionUtils.fromIntString(providerNo));
+		query.setParameter("providerNo", providerNo);
 
 		List<BillingPreference> prefs = query.getResultList();
 		if (prefs.isEmpty()) return null;

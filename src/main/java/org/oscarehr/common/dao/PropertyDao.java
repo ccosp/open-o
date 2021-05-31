@@ -84,7 +84,16 @@ public class PropertyDao extends AbstractDao<Property> {
 		}
 		
 	}
-    
+
+    public String getValueByNameAndDefault(String name, String defaultValue) {
+        Property result = checkByName(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result.getValue();
+        }
+    }
+
     public List<Property> findByNameAndValue(String name, String value)
  	{
      	String sqlCommand="select x from "+modelClass.getSimpleName()+" x where x.name=?1 and x.value=?2";
@@ -98,4 +107,21 @@ public class PropertyDao extends AbstractDao<Property> {
 
  		return(results);
  	}
+
+	public void removeByName(String name) {
+		String sqlCommand="delete from "+modelClass.getSimpleName()+"  where name=?1";
+		Query query = entityManager.createQuery(sqlCommand);
+		query.setParameter(1, name);
+		query.executeUpdate();
+	}
+
+	public Boolean isActiveBooleanProperty(String name) {
+		List<Property> properties = findByName(name);
+		return !properties.isEmpty() && "true".equals(properties.get(0).getValue());
+	}
+
+	public Boolean isActiveBooleanProperty(String name, String providerNo) {
+		List<Property> properties = findByNameAndProvider(name, providerNo);
+		return !properties.isEmpty() && "true".equals(properties.get(0).getValue());
+	}
 }

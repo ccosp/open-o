@@ -39,7 +39,7 @@ import org.oscarehr.util.SpringUtils;
 import oscar.entities.Billingmaster;
 import oscar.entities.WCB;
 import oscar.oscarBilling.ca.bc.data.BillingmasterDAO;
-import oscar.oscarBilling.ca.shared.administration.GstControlAction;
+import oscar.oscarBilling.ca.on.administration.GstControlAction;
 import oscar.util.ConversionUtils;
 import oscar.util.StringUtils;
 

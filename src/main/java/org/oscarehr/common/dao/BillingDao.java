@@ -27,15 +27,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.persistence.Query;
-
-import org.apache.commons.lang.StringUtils;
 import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.Billing;
-import org.oscarehr.common.model.SystemPreferences;
 import org.oscarehr.util.DateRange;
-import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Repository;
-
 import oscar.entities.Billingmaster;
 import oscar.oscarBilling.ca.bc.MSP.MSPReconcile;
 import oscar.util.ConversionUtils;
@@ -259,7 +254,7 @@ public class BillingDao extends AbstractDao<Billing> {
 	
 	
 	@NativeSql({"billing", "provider", "billingmaster"})
-    public List<Object[]> findByManyThings(String statusType, String providerNo, String startDate, String endDate, String demoNo, boolean excludeWCB, boolean excludeMSP, boolean excludePrivate, boolean exludeICBC, String facilityNo) {
+    public List<Object[]> findByManyThings(String statusType, String providerNo, String startDate, String endDate, String demoNo, boolean excludeWCB, boolean excludeMSP, boolean excludePrivate, boolean exludeICBC) {
 		String providerQuery = "";
 	    String startDateQuery = "";
 	    String endDateQuery = "";
@@ -312,41 +307,10 @@ public class BillingDao extends AbstractDao<Billing> {
 	            MSPReconcile.PAIDPRIVATE +
 	            "','" + MSPReconcile.SETTLED + "')";
 	      }
-	    } else if (MSPReconcile.BCP.equals(statusType)){
-	        SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
-	        SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName("msp_facility_mapping_black_white");
-            String listType = (systemPreferences != null && systemPreferences.getValue() != null)? systemPreferences.getValue() : "black";
-            if (listType.equals("white")) {
-                statusTypeClause = "bm.billingstatus in ('" + MSPReconcile.SETTLED + "','" +
-                        MSPReconcile.REJECTED +
-                        "','" + MSPReconcile.PAIDWITHEXP + "') AND" +
-                        " code_map.billing_code IS NOT NULL";
-                altJoin = "left join billingmaster bm on b.billing_no = bm.billing_no\n" +
-                        "\t LEFT JOIN billing_msp_facility_mapping_blackwhite bwlist ON b.provider_no = bwlist.provider_no\n" +
-                        "\t LEFT JOIN billing_msp_facility_mapping_codes code_map ON bwlist.clinic_id = code_map.clinic_id AND bm.billing_code = code_map.billing_code where ";
-            } else {
-                statusTypeClause = "bm.billingstatus in ('" + MSPReconcile.SETTLED + "','" +
-                        MSPReconcile.REJECTED +
-                        "','" + MSPReconcile.PAIDWITHEXP + "') AND" +
-                        " code_map.billing_code IS NOT NULL AND" +
-                        " bwlist.provider_no IS NULL";
-                altJoin = "left join billingmaster bm on b.billing_no = bm.billing_no\n" +
-                        "\t LEFT JOIN billing_msp_facility_mapping_blackwhite bwlist ON b.provider_no = bwlist.provider_no\n" +
-                        "\t LEFT JOIN billing_msp_facility_mapping_codes code_map ON bm.billing_code = code_map.billing_code " +
-                        "\t LEFT JOIN billing_msp_facility_mapping facility_map ON code_map.clinic_id = facility_map.clinic_id where ";
-            }
-        }
+	    }
 	    else {
 	      statusTypeClause += " like '" + statusType + "'";
 	    }
-
-	    if (StringUtils.isNotEmpty(facilityNo)) {
-	        if (facilityNo.equals("00000")) {
-                statusTypeClause += " AND (bm.facility_no = '00000' OR bm.facility_no = '' OR bm.facility_no IS NULL)";
-            } else {
-                statusTypeClause += " AND bm.facility_no = " + facilityNo;
-            }
-        }
 	    //
 	    String p = " select b.billing_no, b.demographic_no, b.demographic_name, b.update_date, b.billingtype,"
 	        + " b.status, b.apptProvider_no,b.appointment_no, b.billing_date,b.billing_time, bm.billingstatus, "

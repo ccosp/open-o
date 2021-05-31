@@ -1921,7 +1921,18 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 
 		query.setMaxResults(itemsToReturn);
 	}
-	
+
+	public List<Demographic> getDemographicByRosterStatus(String rosterStatus, String patientStatus) {
+		if (patientStatus == null || patientStatus == "" ) {
+			patientStatus = "AC";
+		}
+		String queryStr = " FROM Demographic d where d.RosterStatus=? and d.PatientStatus = ?";
+		@SuppressWarnings("unchecked")
+		List<Demographic> rs = getHibernateTemplate().find(queryStr,new Object[]{rosterStatus, patientStatus});
+
+		return rs;
+	}
+
 	public Integer searchPatientCount(LoggedInInfo loggedInInfo, DemographicSearchRequest searchRequest) {
 		Map<String,Object> params = new HashMap<String,Object>();
 		

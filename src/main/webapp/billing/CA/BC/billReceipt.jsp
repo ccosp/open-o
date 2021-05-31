@@ -224,9 +224,6 @@ if(!authed) {
                 font-weight: bold;
             }
             .style2 {font-size: 12px}
-            .tbBody{
-                width:750;
-            }
             -->
         </style>
     </head>
@@ -272,12 +269,12 @@ if(!authed) {
                                                         <td colspan="2" class="address"><%=clinic.getClinicAddress()%>, <%=clinic.getClinicCity()%>, <%=clinic.getClinicProvince()%> <%=clinic.getClinicPostal()%>                          </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="address" id="clinicPhone">                            Telephone:
+                                                        <td class="address" >                            Telephone:
                                                         <%=vecPhones.size() >= 1 ? vecPhones.elementAt(0) : clinic.getClinicPhone()%>                          </td>
-                                                        <td class="address" id="clinicFax">&nbsp;</td>
+                                                        <td class="address" id="clinicPhone">&nbsp;</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="address" id="clinicFax">                            Fax:
+                                                        <td class="address" >                            Fax:
                                                         <%=vecFaxes.size() >= 1 ? vecFaxes.elementAt(0) : clinic.getClinicFax()%>                          </td>
                                                         <td class="address" id="clinicFax">&nbsp;</td>
                                                     </tr>
@@ -353,7 +350,7 @@ if(!authed) {
                                                                 <br>
                                                                 <strong>Address:</strong>
                                                                 <br>
-                                                                <c:out value="<%demo.getAddress()%>" />                             <br>
+                                                                <c:out value="<%=demo.getAddress()%>" />                             <br>
                                                                 <c:out value="<%=demo.getCity()%>" />                              ,
                                                                 <%=demo.getProvince()%>                              <br>
                                                                 <%=demo.getPostal()%>                              <br>
@@ -386,7 +383,7 @@ if(!authed) {
                                                     <tr align="center">
                                                         <td><c:out value="${ billingViewBean.serviceDate }" />                        </td>
                                                         <td><c:out value="<%=billform.getProviderName(bean.getApptProviderNo())%>" /></td>
-                                                        <td><c:out value="billform.getProviderName(bean.getBillingProvider())%>" /></td>
+                                                        <td><c:out value="<%=billform.getProviderName(bean.getBillingProvider())%>" /></td>
                                                         <td><c:out value="${ billingViewBean.referral1 }" />                          </td>
                                                         <td><c:out value="${ billingViewBean.referType1 }" />                         </td>
                                                         <td><c:out value="${ billingViewBean.referral2 }" />                          </td>
@@ -492,20 +489,20 @@ if(!authed) {
                                                                     <%  SystemPreferences invoiceClinicInfo = systemPreferencesDao.findPreferenceByName("invoice_custom_clinic_info");
                                                                         if(invoiceClinicInfo == null || StringUtils.isNullOrEmpty(invoiceClinicInfo.getValue())) { %>
                                                                     <td class="title4">
-                                                                        <%=Encode.forHtml(clinic.getClinicName())%>
+                                                                        <c:out value="<%=clinic.getClinicName()%>" />
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="address"><%=Encode.forHtml(clinic.getClinicAddress()+", "+clinic.getClinicCity()+", "+clinic.getClinicProvince()+" "+clinic.getClinicPostal())%> </td>
+                                                                    <td class="address"><c:out value='<%=clinic.getClinicAddress()+", "+clinic.getClinicCity()+", "+clinic.getClinicProvince()+" "+clinic.getClinicPostal()%>' /></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="address" id="clinicPhone"> Telephone: <%=vecPhones.size() >= 1 ? vecPhones.elementAt(0) : clinic.getClinicPhone()%> </td>
+                                                                    <td class="address" id="Phone"> Telephone: <c:out value="<%=vecPhones.size() >= 1 ? vecPhones.elementAt(0) : clinic.getClinicPhone()%>" /> </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="address" id="clinicFax"> Fax: <%=vecFaxes.size() >= 1 ? vecFaxes.elementAt(0) : clinic.getClinicFax()%> </td>
+                                                                    <td class="address" id="Fax"> Fax: <c:out value="<%=vecFaxes.size() >= 1 ? vecFaxes.elementAt(0) : clinic.getClinicFax()%>" /> </td>
                                                                 <% } else { %>
 
-                                                                    <td class="payeeInfo"><%= Encode.forHtml(invoiceClinicInfo.getValue())%></td>
+                                                                    <td class="payeeInfo"><c:out value="<%= invoiceClinicInfo.getValue()%>" /></td>
 
                                                                 <% } %>
                                                                 </tr>
