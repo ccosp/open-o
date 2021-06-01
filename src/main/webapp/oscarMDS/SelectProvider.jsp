@@ -28,24 +28,25 @@
 <%@ page import="org.oscarehr.common.dao.ProviderLabRoutingFavoritesDao, org.oscarehr.common.model.ProviderLabRoutingFavorite" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.Provider" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/global.js"></script>
 <title><bean:message key="oscarMDS.selectProvider.title" /></title>
-<script type="text/javascript" src="../share/javascript/prototype.js"></script>
-        <script type="text/javascript" src="../share/javascript/effects.js"></script>
-        <script type="text/javascript" src="../share/javascript/controls.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/prototype.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/effects.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/controls.js"></script>
 
-        <script type="text/javascript" src="../share/yui/js/yahoo-dom-event.js"></script>
-        <script type="text/javascript" src="../share/yui/js/connection-min.js"></script>
-        <script type="text/javascript" src="../share/yui/js/animation-min.js"></script>
-        <script type="text/javascript" src="../share/yui/js/datasource-min.js"></script>
-        <script type="text/javascript" src="../share/yui/js/autocomplete-min.js"></script>
-        <script type="text/javascript" src="../js/demographicProviderAutocomplete.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/connection-min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/animation-min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/datasource-min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/autocomplete-min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/demographicProviderAutocomplete.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="../share/yui/css/fonts-min.css"/>
-        <link rel="stylesheet" type="text/css" href="../share/yui/css/autocomplete.css"/>
-        <link rel="stylesheet" type="text/css" media="all" href="../share/css/demographicProviderAutocomplete.css"  />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/share/yui/css/fonts-min.css"/>
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/share/yui/css/autocomplete.css"/>
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/share/css/demographicProviderAutocomplete.css"  />
 
 </head>
 
@@ -78,59 +79,51 @@ function prepSubmit() {
 	var docId = '<%=request.getParameter("docId")%>';
 	var labDisplay = '<%=request.getParameter("labDisplay")%>';
 	var frm = "reassignForm";
-	
+
 	if( docId != "null" && labDisplay == "null" ) {
 		frm += "_" + docId;	
 		self.opener.document.forms[frm].selectedProviders.value = fwdProviders;
 	    self.opener.document.forms[frm].favorites.value = fwdFavorites;
 	    self.opener.forwardDocument(docId);
+	    self.close();
 	}
 	else if( isListView != "null" && isListView == true ){
-		self.opener.document.forms[frm].selectedProviders.value = fwdProviders;
-    	self.opener.document.forms[frm].favorites.value = fwdFavorites;
-    	self.opener.ForwardSelectedRows();
+		// self.opener.document.forms[frm].selectedProviders.value = fwdProviders;
+    	forwardLabs(document.getElementById("forwardList").value , fwdProviders);
 	}
 	else {		
-		frm += "_" + docId;						
+		frm += "_" + docId;
 		self.opener.document.forms[frm].selectedProviders.value = fwdProviders;
     	self.opener.document.forms[frm].favorites.value = fwdFavorites;
     	self.opener.document.forms[frm].submit();
+    	self.close();
 	}
 	
-    self.close();
+
 
 }
 
-
-/*function pageLoad() {
-var url = "<c:out value="${ctx}"/>/provider/SearchProvider.do";
-
-new Ajax.Autocompleter("autocompleteProvider", "providerList", url, {
-	  paramName: "value",
-	  minChars: 2,
-	  indicator: 'working',
-	});
-
-
-};
-*/
-
 </script>
+<style>
+.input-error {
+    border:red thin solid;
+}
+</style>
 </head>
 <body>
+<input type="hidden" id="forwardList" value="<c:out value="${ param.forwardList }" />" />
 <form name="providerSelectForm">
-<p style="text-align:center; background-color:#9999CC; border-color:#CCCCFF #6666CC #6666CC #CCCCFF;
-border-left:thin solid #CCCCFF; border-right:thin solid #6666CC; border-style:solid; border-width:thin; color:white;
-font-weight:bold;">
+<p style="font-weight:bold;">
 <bean:message key="oscarMDS.forward.msgInstruction1"/>
 </p>
-<div style="text-align:center;">
-    <input id="autocompleteprov" type="text">
+<div>
+    <input id="autocompleteprov" type="text" style="width:100%;">
     <div id="autocomplete_choicesprov" class="autocomplete"></div>
 </div>
+<div id="transferDialog">
 <div style="float:right;">
 	Forward List<br>
-	<select id="fwdProviders" size="5" style="width:250px;" multiple="multiple" ondblclick="removeProvider(this);"></select>
+	<select id="fwdProviders" size="5" style="width:250px;height:100px;overflow:scroll;" multiple="multiple" ondblclick="removeProvider(this);"></select>
 </div>
 <div style="float:right; margin:30px 30px 30px 30px;">
 	<input type="button" value=">>" onclick="copyProvider('fwdProviders','favorites');"><br>
@@ -138,7 +131,7 @@ font-weight:bold;">
 </div>
 <div>
 	Favorites<br>
-	<select id="favorites" size="5" style="width:250px;" multiple="multiple" ondblclick="removeProvider(this);">
+	<select id="favorites" size="5" style="width:250px;height:100px;overflow:scroll;" multiple="multiple" ondblclick="removeProvider(this);">
 	<%
 	ProviderLabRoutingFavoritesDao favDao = (ProviderLabRoutingFavoritesDao)SpringUtils.getBean("ProviderLabRoutingFavoritesDao");
 	String user = (String)request.getSession().getAttribute("user");
@@ -155,9 +148,10 @@ font-weight:bold;">
 
 	</select>
 </div>
-<div style="text-align:center;">
-	<p><bean:message key="oscarMDS.forward.msgInstruction2"/></p>
-	<input type="button" value="Submit" onclick="prepSubmit();return false;">
+</div>
+<div>
+	<p><bean:message key="oscarMDS.forward.msgInstruction2" /></p>
+	<!-- <input type="button" id="submitButton" value="Submit" onclick="prepSubmit();return false;"> -->
 </div>
 </form>
 <script type="text/javascript">

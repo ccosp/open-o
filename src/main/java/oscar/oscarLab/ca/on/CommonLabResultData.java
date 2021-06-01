@@ -365,7 +365,7 @@ public class CommonLabResultData {
 		 * Update an existing entry
 		 */
 		List<ProviderLabRoutingModel> providerLabRoutingModelList = providerLabRoutingDao.findByLabNoAndLabTypeAndProviderNo(labNo, labType, providerNo);
-		if(providerLabRoutingModelList != null)
+		if(providerLabRoutingModelList != null && ! providerLabRoutingModelList.isEmpty())
 		{
 			for(ProviderLabRoutingModel providerLabRoutingModel : providerLabRoutingModelList)
 			{
@@ -503,12 +503,19 @@ public class CommonLabResultData {
 	}
 
 	public static boolean updateLabRouting(ArrayList<String[]> flaggedLabs, String selectedProviders) {
+		String[] providersArray;
+		if(selectedProviders != null && selectedProviders.contains(",")) {
+			providersArray = selectedProviders.split(",");
+		} else {
+			providersArray = new String[] {selectedProviders};
+		}
+		return updateLabRouting(flaggedLabs, providersArray);
+	}
+
+	public static boolean updateLabRouting(ArrayList<String[]> flaggedLabs, String[] providersArray) {
 		boolean result;
 
 		try {
-
-			String[] providersArray = selectedProviders.split(",");
-
 			CommonLabResultData data = new CommonLabResultData();
 			ProviderLabRouting plr = new ProviderLabRouting();
 			// MiscUtils.getLogger().info(flaggedLabs.size()+"--");
