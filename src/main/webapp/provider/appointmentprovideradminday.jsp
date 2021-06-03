@@ -1134,8 +1134,9 @@
                             boolean bFirstTimeRs = true;
                             boolean bFirstFirstR = true;
                             Object[] paramTickler = new Object[2];
-                            String[] param = new String[2];
-                            String strsearchappointmentday = request.getParameter("dboperation");
+
+//                            String[] param = new String[2];
+//                            String strsearchappointmentday = request.getParameter("dboperation");
 
                             boolean userAvail = true;
                             int me = -1;
@@ -1170,6 +1171,7 @@
 
                             java.util.ResourceBundle wdProp = ResourceBundle.getBundle("oscarResources", request.getLocale());
 
+                            // for each provider schedule in the display
                             for (int iterNum = 0; iterNum < iterMax; iterNum++) {
 
                                 if (isWeekView) {
@@ -1367,7 +1369,7 @@
                                                             programProvider.getProgram().getName();
                                                         }
                                                         param0[3] = request.getParameter("programIdForLocation");
-                                                        strsearchappointmentday = "searchappointmentdaywithlocation";
+//                                                        strsearchappointmentday = "searchappointmentdaywithlocation";
                                                     }
 
                                                     List<Appointment> appointments = appointmentDao.searchappointmentday(curProvider_no[nProvider], ConversionUtils.fromDateString(year + "-" + month + "-" + day), ConversionUtils.fromIntString(programId_oscarView));
