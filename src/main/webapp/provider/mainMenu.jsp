@@ -424,39 +424,44 @@
 
         </td>
 
-        <td style="min-width:259px;text-align:right;padding-right:15px;">
-            <a href="javascript: function myFunction() {return false; }"
-               onClick="popup(700,1024,'../scratch/index.jsp','scratch')"><span id="oscar_scratch"></span></a>&nbsp;
+        <td id="userSettings">
+            <ul id="userSettingsMenu">
+                <li>
+                    <a title="Scratch Pad" href="javascript:void(0)"
+                       onClick="popup(700,1024,'../scratch/index.jsp','scratch')"><span class="glyphicon glyphicon-list-alt"></span></a>
+                </li>
+                <li>
+                    <%if (resourcehelpHtml == "") { %>
+                    <a href="javascript:void(0)" onClick="popupPage(600,750,'<%=resourcebaseurl%>')"><bean:message
+                            key="global.help"/></a>
+                    <%} else {%>
+                    <div id="help-link">
+                        <a href="javascript:void(0)"
+                           onclick="document.getElementById('helpHtml').style.display='block';document.getElementById('helpHtml').style.right='0px';"><bean:message
+                                key="global.help"/></a>
 
-            <%if (resourcehelpHtml == "") { %>
-            <a href="javascript:void(0)" onClick="popupPage(600,750,'<%=resourcebaseurl%>')"><bean:message
-                    key="global.help"/></a>
-            <%} else {%>
-            <div id="help-link">
-                <a href="javascript:void(0)"
-                   onclick="document.getElementById('helpHtml').style.display='block';document.getElementById('helpHtml').style.right='0px';"><bean:message
-                        key="global.help"/></a>
+                        <div id="helpHtml">
+                            <div class="help-title">Help</div>
 
-                <div id="helpHtml">
-                    <div class="help-title">Help</div>
+                            <div class="help-body">
 
-                    <div class="help-body">
+                                <%=resourcehelpHtml%>
+                            </div>
+                            <a href="javascript:void(0)" class="help-close"
+                               onclick="document.getElementById('helpHtml').style.right='-280px';document.getElementById('helpHtml').style.display='none'">(X)</a>
+                        </div>
 
-                        <%=resourcehelpHtml%>
-                    </div>
-                    <a href="javascript:void(0)" class="help-close"
-                       onclick="document.getElementById('helpHtml').style.right='-280px';document.getElementById('helpHtml').style.display='none'">(X)</a>
-                </div>
-
-            </div>
-            <%}%>
-
-            <% if (request.getSession().getAttribute("oneIdEmail") != null && !request.getSession().getAttribute("oneIdEmail").equals("")) { %>
-            | <a href="../logoutSSO.jsp">Global Logout</a>
-            <% } else { %>
-            | <a href="../logout.jsp"><bean:message key="global.btnLogout"/>&nbsp;</a>
-            <% } %>
-
+                        </div>
+                    <%}%>
+                </li>
+                <li>
+                    <% if (request.getSession().getAttribute("oneIdEmail") != null && !request.getSession().getAttribute("oneIdEmail").equals("")) { %>
+                    | <a href="../logoutSSO.jsp">Global Logout</a>
+                    <% } else { %>
+                    | <a href="../logout.jsp"><bean:message key="global.btnLogout"/>&nbsp;</a>
+                    <% } %>
+                </li>
+            </ul>
         </td>
 
     </tr>
