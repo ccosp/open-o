@@ -29,8 +29,8 @@
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@ page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.common.dao.DemographicCustDao, org.oscarehr.common.model.DemographicCust" %>
+<%@ page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="org.oscarehr.common.model.DemographicCust" %>
 <%@ page import="org.oscarehr.common.dao.MyGroupAccessRestrictionDao" %>
 <%@ page import="org.oscarehr.common.model.MyGroupAccessRestriction" %>
 <%@ page import="org.oscarehr.common.dao.DemographicStudyDao" %>
@@ -55,14 +55,9 @@
 <%@ page import="org.oscarehr.common.model.Appointment" %>
 <%@ page import="org.oscarehr.common.model.UserProperty" %>
 <%@ page import="org.oscarehr.common.model.Tickler" %>
-<%@ page import="org.oscarehr.managers.TicklerManager" %>
-<%@page import="org.oscarehr.managers.ProgramManager2" %>
 <%@page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@page import="org.oscarehr.managers.LookupListManager" %>
 <%@page import="org.oscarehr.common.model.LookupList" %>
 <%@page import="org.oscarehr.common.model.LookupListItem" %>
-<%@page import="org.oscarehr.managers.SecurityInfoManager" %>
-<%@page import="org.oscarehr.managers.AppManager" %>
 
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
@@ -89,12 +84,13 @@
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
     SiteDao siteDao = SpringUtils.getBean(SiteDao.class);
     MyGroupDao myGroupDao = SpringUtils.getBean(MyGroupDao.class);
-    DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
+//    DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
+    DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
     ScheduleTemplateCodeDao scheduleTemplateCodeDao = SpringUtils.getBean(ScheduleTemplateCodeDao.class);
     ScheduleDateDao scheduleDateDao = SpringUtils.getBean(ScheduleDateDao.class);
     ProviderSiteDao providerSiteDao = SpringUtils.getBean(ProviderSiteDao.class);
     OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
-    DemographicCustDao demographicCustDao = SpringUtils.getBean(DemographicCustDao.class);
+//    DemographicCustDao demographicCustDao = SpringUtils.getBean(DemographicCustDao.class);
     ProgramManager2 programManager = SpringUtils.getBean(ProgramManager2.class);
     AppManager appManager = SpringUtils.getBean(AppManager.class);
 
@@ -467,6 +463,7 @@
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@page import="org.oscarehr.web.AppointmentProviderAdminDayUIBean" %>
 <%@page import="org.oscarehr.common.model.EForm" %>
+<%@ page import="org.oscarehr.managers.*" %>
 <html:html locale="true">
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
@@ -1422,91 +1419,85 @@
                                                                         </span>
                                                     </td>
                                                             <%
-                                                        while (bFirstTimeRs?it.hasNext():true) { //if it's not the first time to parse the standard time, should pass it by
-                                                                      appointment = bFirstTimeRs?it.next():appointment;
-                                                                      len = bFirstTimeRs&&!bFirstFirstR?lenLimitedS:lenLimitedL;
-                                                                      String strStartTime = ConversionUtils.toTimeString(appointment.getStartTime());
-                                                                      String strEndTime = ConversionUtils.toTimeString(appointment.getEndTime());
+                                                    while (bFirstTimeRs?it.hasNext():true) { //if it's not the first time to parse the standard time, should pass it by
+                                                          appointment = bFirstTimeRs?it.next():appointment;
+                                                          len = bFirstTimeRs&&!bFirstFirstR?lenLimitedS:lenLimitedL;
+                                                          String strStartTime = ConversionUtils.toTimeString(appointment.getStartTime());
+                                                          String strEndTime = ConversionUtils.toTimeString(appointment.getEndTime());
 
-                                                                      iS=Integer.parseInt(String.valueOf(strStartTime).substring(0,2));
-                                                                      iSm=Integer.parseInt(String.valueOf(strStartTime).substring(3,5));
-                                                                      iE=Integer.parseInt(String.valueOf(strEndTime).substring(0,2));
-                                                                      iEm=Integer.parseInt(String.valueOf(strEndTime).substring(3,5));
+                                                          iS=Integer.parseInt(String.valueOf(strStartTime).substring(0,2));
+                                                          iSm=Integer.parseInt(String.valueOf(strStartTime).substring(3,5));
+                                                          iE=Integer.parseInt(String.valueOf(strEndTime).substring(0,2));
+                                                          iEm=Integer.parseInt(String.valueOf(strEndTime).substring(3,5));
 
-                                                                  if( (ih < iS*60+iSm) && (ih+depth-1)<iS*60+iSm ) { //iS not in this period (both start&end), get to the next period
-                                                                    //out.println("<td width='10'>&nbsp;</td>"); //should be comment
-                                                                    bFirstTimeRs=false;
-                                                                    break;
+                                                          if( (ih < iS*60+iSm) && (ih+depth-1)<iS*60+iSm ) { //iS not in this period (both start&end), get to the next period
+                                                            //out.println("<td width='10'>&nbsp;</td>"); //should be comment
+                                                            bFirstTimeRs=false;
+                                                            break;
+                                                          }
+                                                          if( (ih > iE*60+iEm) ) { //appt before this time slot (both start&end), get to the next period
+                                                            //out.println("<td width='10'>&nbsp;</td>"); //should be comment
+                                                            bFirstTimeRs=true;
+                                                            continue;
+                                                          }
+                                                            iRows=((iE*60+iEm)-ih)/depth+1; //to see if the period across an hour period
+                                                            //iRows=(iE-iS)*60/depth+iEm/depth-iSm/depth+1; //to see if the period across an hour period
+
+
+                                                              int demographic_no = appointment.getDemographicNo();
+                                                              Demographic demographic = null;
+
+                                                              //Pull the appointment name from the demographic information if the appointment is attached to a specific demographic.
+                                                              //Otherwise get the name associated with the appointment from the appointment information
+                                                              StringBuilder nameSb = new StringBuilder();
+                                                              if (demographic_no != 0) {
+                                                                  demographic = demographicManager.getDemographic(loggedInInfo1, demographic_no);
+
+                                                                    nameSb.append(demographic.getLastName())
+                                                                          .append(",")
+                                                                          .append(demographic.getFirstName());
+                                                              }
+                                                              else {
+                                                                    nameSb.append(appointment.getName());
+                                                              }
+                                                              String name = UtilMisc.toUpperLowerCase(nameSb.toString());
+
+                                                              paramTickler[0]=String.valueOf(demographic_no);
+                                                              paramTickler[1]=MyDateFormat.getSysDate(strDate);
+                                                              tickler_no = "";
+                                                              tickler_note="";
+
+                                                             if(securityInfoManager.hasPrivilege(loggedInInfo1, "_tickler", "r", demographic_no)) {
+                                                                  for(Tickler t: ticklerManager.search_tickler(loggedInInfo1, demographic_no, MyDateFormat.getSysDate(strDate))) {
+                                                                      tickler_no = t.getId().toString();
+                                                                      tickler_note = t.getMessage()==null?tickler_note:tickler_note + "\n" + t.getMessage();
                                                                   }
-                                                                  if( (ih > iE*60+iEm) ) { //appt before this time slot (both start&end), get to the next period
-                                                                    //out.println("<td width='10'>&nbsp;</td>"); //should be comment
-                                                                    bFirstTimeRs=true;
-                                                                    continue;
-                                                                  }
-                                                                    iRows=((iE*60+iEm)-ih)/depth+1; //to see if the period across an hour period
-                                                                    //iRows=(iE-iS)*60/depth+iEm/depth-iSm/depth+1; //to see if the period across an hour period
+                                                             }
 
+                                                              //alerts and notes
+                                                              DemographicCust dCust = demographicManager.getDemographicCust(loggedInInfo1,demographic_no);
 
-                                                                        int demographic_no = appointment.getDemographicNo();
+                                                              ver = "";
+                                                              roster = "";
 
-                                                                      //Pull the appointment name from the demographic information if the appointment is attached to a specific demographic.
-                                                                      //Otherwise get the name associated with the appointment from the appointment information
-                                                                      StringBuilder nameSb = new StringBuilder();
-                                                                      if ((demographic_no != 0)&& (demographicDao != null)) {
-                                                                            Demographic demo = demographicDao.getDemographic(String.valueOf(demographic_no));
-                                                                            nameSb.append(demo.getLastName())
-                                                                                  .append(",")
-                                                                                  .append(demo.getFirstName());
-                                                                      }
-                                                                      else {
-                                                                            nameSb.append(String.valueOf(appointment.getName()));
-                                                                      }
-                                                                      String name = UtilMisc.toUpperLowerCase(nameSb.toString());
+                                                              if(demographic != null) {
 
-                                                                      paramTickler[0]=String.valueOf(demographic_no);
-                                                                      paramTickler[1]=MyDateFormat.getSysDate(strDate); //year+"-"+month+"-"+day;//e.g."2001-02-02";
-                                                                      tickler_no = "";
-                                                                      tickler_note="";
+                                                                ver = demographic.getVer();
+                                                                roster = demographic.getRosterStatus();
 
-                                                                     if(securityInfoManager.hasPrivilege(loggedInInfo1, "_tickler", "r", demographic_no)) {
-                                                                          for(Tickler t: ticklerManager.search_tickler(loggedInInfo1, demographic_no,MyDateFormat.getSysDate(strDate))) {
-                                                                              tickler_no = t.getId().toString();
-                                                                              tickler_note = t.getMessage()==null?tickler_note:tickler_note + "\n" + t.getMessage();
-                                                                          }
-                                                                     }
+                                                                mob = demographic.getMonthOfBirth();
+                                                                dob = demographic.getDateOfBirth();
 
-                                                                      //alerts and notes
-                                                                      DemographicCust dCust = demographicCustDao.find(demographic_no);
+                                                                if(mob != null && dob != null) {
+                                                                    demBday = mob + "-" + dob;
+                                                                }
 
-
-                                                                      ver = "";
-                                                                      roster = "";
-                                                                      Demographic demographic = demographicDao.getDemographicById(demographic_no);
-                                                                      if(demographic != null) {
-
-                                                                        ver = demographic.getVer();
-                                                                        roster = demographic.getRosterStatus();
-
-                                                                        int intMob = 0;
-                                                                        int intDob = 0;
-
-                                                                        mob = String.valueOf(demographic.getMonthOfBirth());
-                                                                        if(mob.length()>0 && !mob.equals("null"))
-                                                                            intMob = Integer.parseInt(mob);
-
-                                                                        dob = String.valueOf(demographic.getDateOfBirth());
-                                                                        if(dob.length()>0 && !dob.equals("null"))
-                                                                            intDob = Integer.parseInt(dob);
-
-
-                                                                        demBday = mob + "-" + dob;
-
-                                                                        if (roster == null ) {
-                                                                            roster = "";
-                                                                        }
-                                                                      }
-                                                                      study_no = new StringBuffer("");
-                                                                      study_link = new StringBuffer("");
+                                                                if (roster == null ) {
+                                                                    roster = "";
+                                                                }
+                                                              }
+                                                              study_no = new StringBuffer("");
+                                                              study_link = new StringBuffer("");
                                                               studyDescription = new StringBuffer("");
 
                                                               int numStudy = 0;
@@ -1923,22 +1914,21 @@
                                                             property="ENABLE_APPT_DOC_COLOR"
                                                             value="yes">
                                                             <%
-                                                                                    String providerColor = null;
-                                                                                    if(view == 1 && demographicDao != null && userPropertyDao != null) {
-                                                                                            String providerNo = (demographicDao.getDemographic(String.valueOf(demographic_no))==null?null:demographicDao.getDemographic(String.valueOf(demographic_no)).getProviderNo());
-                                                                                            UserProperty property = userPropertyDao.getProp(providerNo, UserPropertyDAO.COLOR_PROPERTY);
-                                                                                            if(property != null) {
-                                                                                                    providerColor = property.getValue();
-                                                                                            }
-                                                                                    }
-                                                                            %>
+                                                                    String providerColor = null;
+                                                                    if(view == 1 && demographic != null && userPropertyDao != null) {
+                                                                            String providerNo = demographic.getProviderNo();
+                                                                            UserProperty property = userPropertyDao.getProp(providerNo, UserPropertyDAO.COLOR_PROPERTY);
+                                                                            if(property != null) {
+                                                                                    providerColor = property.getValue();
+                                                                            }
+                                                                    }
+                                                            %>
                                                             <%= (providerColor != null ? "<span style=\"background-color:"+providerColor+";width:5px\">&nbsp;</span>" : "") %>
                                                     </oscar:oscarPropertiesCheck>
-
                                                             <%
-                                                                              if("bc".equalsIgnoreCase(prov)){
-                                                                              if(patientHasOutstandingPrivateBills(String.valueOf(demographic_no))){
-                                                                              %>
+                                                          if("bc".equalsIgnoreCase(prov)){
+                                                          if(patientHasOutstandingPrivateBills(String.valueOf(demographic_no))){
+                                                          %>
                                                     &#124;<b style="color:#FF0000">$</b>
                                                             <%}}%>
                                                     <oscar:oscarPropertiesCheck
