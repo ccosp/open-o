@@ -80,6 +80,8 @@ table#firstTable td#firstMenu ul#navlist, table#firstTable td#userSettings ul#us
 
 table#firstTable td#userSettings {
 	text-align: right;
+	padding-right:10px;
+	min-width:250px;
 }
 
 table#firstTable td#userSettings #logoutButton {
