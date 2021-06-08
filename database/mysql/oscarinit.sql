@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `surveyData` (
   survey_date date default NULL,
   answer varchar(10) default NULL,
   processed int(10) default NULL,
-  period int(10),
+  `period` int(10),
   randomness int(10),
   version int(10),
   INDEX `surveyId_index` (surveyId(5)),
@@ -62,6 +62,8 @@ CREATE TABLE IF NOT EXISTS allergies (
   position int(10) not null,
   lastUpdateDate datetime not null,
   providerNo varchar(6),
+  atc varchar(55),
+  `reaction_type` varchar(20),
   PRIMARY KEY  (allergyid)
 ) ;
 
@@ -3531,7 +3533,7 @@ CREATE TABLE IF NOT EXISTS formLabReq (
   formCreated date default NULL,
   formEdited timestamp NOT NULL,
   provName varchar(60) default NULL,
-  reqProvName varchar(60) default "",
+  reqProvName varchar(60),
   clinicAddress varchar(30) default NULL,
   clinicCity varchar(20) default NULL,
   clinicPC varchar(7) default NULL,

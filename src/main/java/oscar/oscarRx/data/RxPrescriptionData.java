@@ -268,7 +268,7 @@ public class RxPrescriptionData {
 		p.setArchived(String.valueOf(drug.isArchived()));
 		p.setGenericName(drug.getGenericName());
 		p.setAtcCode(drug.getAtc());
-		p.setScript_no(ConversionUtils.toIntString(drug.getScriptNo()));
+		p.setScript_no(String.valueOf(drug.getScriptNo()));
 		p.setRegionalIdentifier(drug.getRegionalIdentifier());
 		p.setUnit(drug.getUnit());
 		p.setUnitName(drug.getUnitName());
