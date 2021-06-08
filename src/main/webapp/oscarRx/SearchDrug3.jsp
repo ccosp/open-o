@@ -713,7 +713,6 @@ function checkFav(){
                </style>
 
 <style type="text/css">
-<!-- .selected { font: Arial, Verdana; color:#000000; text-decoration: none; } -->
 
     .ControlPushButton{
         font-size:10.5px;
@@ -736,10 +735,7 @@ function checkFav(){
 		height:30px;
 		padding-right:10px;
 	}
-            .highlight {
-                background-color : #99FFCC;
-                border: 1px solid #008000;
-            }
+
             .rxStr a:hover{
                 color:blue;
                 text-decoration:underline;
@@ -763,33 +759,6 @@ body {
 	margin:0;
 	padding:0;
 }
-
-
-/*THEMES
-
-     .currentDrug{
-        color:red;
-     }
-     .archivedDrug{
-        text-decoration: line-through;
-     }
-     .expireInReference{
-         color:orange;
-         font-weight:bold;
-     }
-     .expiredDrug{
-
-     }
-
-     .longTermMed{
-
-     }
-
-     .discontinued{
-
-     }
-
-THEME 2*/
 
      .currentDrug{
         font-weight:bold;
@@ -854,7 +823,7 @@ THEME 2*/
         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1" height="100%">
             <%@ include file="TopLinks2.jspf" %><!-- Row One included here-->
             <tr>
-                <td width="10%" height="100%" valign="top"><%@ include file="SideLinksEditFavorites2.jsp"%></td><%-- <td></td>Side Bar File --%>
+                <td width="10%" height="100%" valign="top"><%@ include file="SideLinksEditFavorites2.jsp"%></td>
                 <td style="border-left: 2px solid #A9A9A9;" height="100%" valign="top"><!--Column Two Row Two-->
 
 
@@ -1021,7 +990,7 @@ THEME 2*/
 																				<%if(show_current){%>
 																				<td >
 		                                                                            <a href="javascript:void(0);" onclick="callReplacementWebService('ListDrugs.jsp','drugProfile');CngClass(this);" 
-		                                                                            	id="selected_default" style="font: Arial; color:#000000; text-decoration: none;" 
+		                                                                            	id="selected_default" style="color:#000000; text-decoration: none;"
 		                                                                            	TITLE="<bean:message key='SearchDrug.msgShowCurrentDesc'/>">
 		                                                                            	<bean:message key="SearchDrug.msgShowCurrent"/>
 		                                                                            </a>
@@ -1150,7 +1119,7 @@ THEME 2*/
 </tr>
 
 <tr>
-    <td width="100%" height="0%" style="padding: 5" bgcolor="#DCDCDC" colspan="3">
+    <td width="100%" height="0%" style="padding: 5px" bgcolor="#DCDCDC" colspan="3">
 
     </td>
 </tr>
@@ -1598,17 +1567,24 @@ function changeLt(drugId){
          var url="<c:out value="${ctx}"/>" + "/oscarRx/getAllergyData.jsp"  ;
          var data="atcCode="+atcCode+"&id="+id +"&rand="+ Math.floor(Math.random()*10001);
          new Ajax.Request(url,{method: 'post',postBody:data,onSuccess:function(transport){
-                 var json=transport.responseText.evalJSON();
-            	
-                 if(json != null && json.id != null && json.DESCRIPTION == null && json.reaction == null) {
-                	 var str = "<font color='red'>Allergy not Found. Please check your allergy list</font>" ;
-                	 $('alleg_'+json.id).innerHTML = str;
-                     document.getElementById('alleg_tbl_'+json.id).style.display='block';
-                 }
-                 if(json!=null&&json.DESCRIPTION!=null&&json.reaction!=null){
-                      var str = "<font color='red'>Allergy:</font> "+ json.DESCRIPTION + " <font color='red'>Reaction:</font> "+json.reaction;
-                      $('alleg_'+json.id).innerHTML = str;
-                      document.getElementById('alleg_tbl_'+json.id).style.display='block';
+                 var jsonResults = transport.responseText.evalJSON();
+
+                 // if(jsonResults != null && jsonResults.id != null && jsonResults.results.length == 0) {
+                 //     console.log(jsonResults.id);
+                 //     var str = "<span style='color:blue'>No allergy to drug matched with patient profile. Please review patient allergies to ensure accuracy.</span>" ;
+                 //     $('alleg_'+jsonResults.id).innerHTML = str;
+                 //     document.getElementById('alleg_tbl_'+jsonResults.id).style.display='inline-block';
+                 // }
+                 let resultHtml = "";
+                 if (jsonResults != null && jsonResults.results.length != 0) {
+                     for (let i = 0; i < jsonResults.results.length; i++) {
+                         let result = jsonResults.results[i];
+                         resultHtml += "<span style='color:red'><b>Allergy: </b></span>" + result.DESCRIPTION;
+                         resultHtml += "<span style='color:red'><b> Reaction: </b></span>" + result.reaction;
+                         resultHtml += "<span style='color:red'><b> Severity: </b></span>" + result.severity;
+                     }
+                     $('alleg_' + jsonResults.id).innerHTML = resultHtml + '<br />';
+                     document.getElementById('alleg_tbl_' + jsonResults.id).style.display = 'inline-block';
                  }
             }});
    }
@@ -1794,7 +1770,7 @@ function popForm2(scriptId){
                 //oscarLog( "preview2 done");
                 myLightWindow.activateWindow({
                     href: url,
-                    width: 1000,
+                    width: 980,
                     height: h
                 });
                 var editRxMsg='<bean:message key="oscarRx.Preview.EditRx"/>';
