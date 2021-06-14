@@ -72,6 +72,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="myoscar" %>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
+<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 2345) %></c:set>
 
 <%
     LoggedInInfo loggedInInfo1 = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -466,11 +467,11 @@
 <%@ page import="org.oscarehr.managers.*" %>
 <html:html locale="true">
     <head>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/global.js"></script>
         <title><%=WordUtils.capitalize(userlastname + ", " + org.apache.commons.lang.StringUtils.substring(userfirstname, 0, 1)) + "-"%><bean:message
                 key="provider.appointmentProviderAdminDay.title"/></title>
 
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/3.0.0/css/bootstrap.min.css"
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css"
               type="text/css">
 
         <!-- Determine which stylesheet to use: mobile-optimized or regular -->
@@ -480,12 +481,11 @@
         %>
         <meta name="viewport"
               content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width"/>
-        <link rel="stylesheet" href="../mobile/receptionistapptstyle.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/mobile/receptionistapptstyle.css" type="text/css">
         <%
         } else {
         %>
-        <link rel="stylesheet" href="../css/receptionistapptstyle.css" type="text/css">
-        <link rel="stylesheet" href="../css/helpdetails.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/receptionistapptstyle.css?v=${rand}" type="text/css">
         <%
             }
         %>
@@ -500,19 +500,21 @@
         <%
             }
         %>
+
         <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
         <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
         <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
-        <script type="text/javascript" src="../share/javascript/Oscar.js"></script>
-        <script type="text/javascript" src="../share/javascript/prototype.js"></script>
-        <script type="text/javascript" src="../phr/phr.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/prototype.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/phr/phr.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/phr/phr.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
 
-        <script src="<c:out value="../js/jquery.js"/>"></script>
         <script>
             jQuery.noConflict();
         </script>
 
-        <script type="text/javascript" src="schedulePage.js.jsp"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/provider/schedulePage.js.jsp"></script>
 
 
         <script type="text/javascript">
@@ -589,9 +591,9 @@
         <%
             if (OscarProperties.getInstance().getBooleanProperty("indivica_hc_read_enabled", "true")) {
         %>
-        <script src="<%=request.getContextPath()%>/hcHandler/hcHandler.js"></script>
-        <script src="<%=request.getContextPath()%>/hcHandler/hcHandlerAppointment.js"></script>
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/hcHandler/hcHandler.css" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/hcHandler/hcHandler.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/hcHandler/hcHandlerAppointment.js"></script>
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/hcHandler/hcHandler.css" type="text/css"/>
         <%
             }
         %>
