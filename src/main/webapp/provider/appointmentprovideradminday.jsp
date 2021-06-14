@@ -500,7 +500,9 @@
         <%
             }
         %>
-
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
         <script type="text/javascript" src="../share/javascript/Oscar.js"></script>
         <script type="text/javascript" src="../share/javascript/prototype.js"></script>
         <script type="text/javascript" src="../phr/phr.js"></script>
@@ -906,11 +908,11 @@
                 %>
                 <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message
                         key="provider.appointmentProviderAdminDay.grpView"/></a>
-                <% } else { %>
-                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>
-                <% out.println(userfirstname + " " + userlastname); %>
+                <% } %>
+<%--                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>--%>
+<%--                <% out.println(userfirstname + " " + userlastname); %>--%>
             </td>
-            <% }
+            <%
             } %>
 
             <td id="group" ALIGN="RIGHT" BGCOLOR="Ivory">
