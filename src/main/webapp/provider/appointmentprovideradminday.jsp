@@ -371,6 +371,9 @@
     StringBuffer study_no = null, study_link = null, studyDescription = null;
     String studySymbol = "\u03A3", studyColor = "red";
 
+    // List of statuses that are excluded from the schedule appointment count for each provider
+    List<String> noCountStatus = Arrays.asList("C","CS","CV","N","NS","NV");
+
     String resourcebaseurl = oscarVariables.getProperty("resource_base_url");
 
     UserProperty rbu = userPropertyDao.getProp("resource_baseurl");
@@ -1212,6 +1215,17 @@
                                 param1[0] = strDate; //strYear+"-"+strMonth+"-"+strDay;
                                 param1[1] = curProvider_no[nProvider];
 
+                                List<Appointment> appointmentsToCount = appointmentDao.searchappointmentday(curProvider_no[nProvider], ConversionUtils.fromDateString(year + "-" + month + "-" + day), ConversionUtils.fromIntString(programId_oscarView));
+                                Integer appointmentCount = 0;
+
+                                for (Appointment appointment : appointmentsToCount) {
+                                    if (!noCountStatus.contains(appointment.getStatus()) && appointment.getDemographicNo() != 0
+                                            && (!bMultisites || selectedSite == null || "none".equals(selectedSite) || (bMultisites && selectedSite.equals(appointment.getLocation())))
+                                    ) {
+                                        appointmentCount++;
+                                    }
+                                }
+
                                 ScheduleDate sd = scheduleDateDao.findByProviderNoAndDate(curProvider_no[nProvider], ConversionUtils.fromDateString(strDate));
 
                                 //viewall function
@@ -1248,6 +1262,9 @@
                                                   onClick="goWeekView('<%=curProvider_no[nProvider]%>')"
                                                   title="<bean:message key="provider.appointmentProviderAdminDay.weekView"/>"
                                                   style="color:black" class="noprint">
+                                            <% if(OscarProperties.getInstance().isPropertyActive("view.appointmentdaysheetbutton")){ %>
+                                            <input type='button' value="DS" name='daysheetview' onClick=goDaySheet('<%=curProvider_no[nProvider]%>') title="Day Sheet" style="color:black">
+                                            <% } %>
                                             <input type='button'
                                                    value="<bean:message key="provider.appointmentProviderAdminDay.searchLetter"/>"
                                                    name='searchview'
@@ -1260,13 +1277,10 @@
                                                 <a href=#
                                                    onClick="goZoomView('<%=curProvider_no[nProvider]%>','<%=StringEscapeUtils.escapeJavaScript(curProviderName[nProvider])%>')"
                                                    onDblClick="goFilpView('<%=curProvider_no[nProvider]%>')"
-                                                   title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>">
-                                                    <!--a href="providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=1&curProvider=<%=curProvider_no[nProvider]%>&curProviderName=<%=curProviderName[nProvider]%>&displaymode=day&dboperation=searchappointmentday" title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>"-->
-                                                    <%=curProviderName[nProvider]%>
+                                                   title='<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>' >
+                                                    <c:out value='<%=curProviderName[nProvider]  + " (" + appointmentCount + ") " %>' />
                                                 </a>
-                                                <oscar:oscarPropertiesCheck value="yes"
-                                                                            property="TOGGLE_REASON_BY_PROVIDER"
-                                                                            defaultVal="true">
+                                                <oscar:oscarPropertiesCheck value="yes" property="TOGGLE_REASON_BY_PROVIDER" defaultVal="true">
                                                     <a id="expandReason" href="#"
                                                        onclick="return toggleReason('<%=curProvider_no[nProvider]%>');"
                                                        title="<bean:message key="provider.appointmentProviderAdminDay.expandreason"/>">*</a>
@@ -1274,16 +1288,12 @@
                                                     <c:set value="true" var="hideReason"/>
                                                 </oscar:oscarPropertiesCheck>
 
-                                            <button class="ds-btn" type="button"
-                                                    data-provider_no="<%=curProvider_no[nProvider]%>">DS
-                                            </button>
                                                     <% } %>
 
                                                     <%
                                     if (!userAvail) {
                                   %>
-                                            [<bean:message
-                                                key="provider.appointmentProviderAdminDay.msgNotOnSched"/>]
+                                            [<bean:message key="provider.appointmentProviderAdminDay.msgNotOnSched"/>]
                                   <%
                                     }
                                   %>
