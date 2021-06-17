@@ -343,6 +343,12 @@ p {
 	color: red;
 }
 
+.tabalert:hover{
+	color: white !important;
+}
+
+
+
 table#firstTable td#firstMenu #navlist li {
     line-height:1;
     display: inline-block;
@@ -355,6 +361,9 @@ table#firstTable td#firstMenu #navlist #logoutMobile { display:none; }
 table#firstTable td#firstMenu #navlist li a:not(.tabalert):not(.dashboardDropdown):not(.dashboardDropdown a) {
 	display:inline-block;
 	padding:10px 5px 10px 5px;
+}
+#unclaimedLabLink {
+	padding-right: 5px;
 }
 
 div.reason-tag a {

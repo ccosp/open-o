@@ -478,27 +478,26 @@
         %>
         <c:if test="${empty sessionScope.archiveView or sessionScope.archiveView != true}">
             <%!String refresh = oscar.OscarProperties.getInstance().getProperty("refresh.appointmentprovideradminday.jsp", "-1");%>
-            <%="-1".equals(refresh) ? "" : "<meta http-equiv=\"refresh\" content=\"" + refresh + ";\">"%>
+            <%="-1".equals(refresh) ? "" : "<meta http-equiv=\"refresh\" content=\"" + refresh + "\">"%>
         </c:if>
         <%
             }
         %>
 
-        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js"></script>
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/prototype.js"></script>
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/phr/phr.js"></script>
-        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/phr/phr.js"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
 
         <script>
             jQuery.noConflict();
         </script>
 
-        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/provider/schedulePage.js.jsp"></script>
-
+        <script type="text/javascript" src="schedulePage.js.jsp"></script>
 
         <script type="text/javascript">
 
