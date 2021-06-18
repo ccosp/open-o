@@ -25,7 +25,6 @@
 --%>
 <!DOCTYPE html>
 <%@ page import="org.oscarehr.common.model.Appointment.BookingSource" %>
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@ page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
@@ -55,14 +54,22 @@
 <%@ page import="org.oscarehr.common.model.Appointment" %>
 <%@ page import="org.oscarehr.common.model.UserProperty" %>
 <%@ page import="org.oscarehr.common.model.Tickler" %>
-<%@page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@page import="org.oscarehr.common.model.LookupList" %>
-<%@page import="org.oscarehr.common.model.LookupListItem" %>
+<%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
+<%@ page import="org.oscarehr.common.model.LookupList" %>
+<%@ page import="org.oscarehr.common.model.LookupListItem" %>
 
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.util.MiscUtils" %>
 <%@ page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="oscar.util.*" %>
+<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="org.oscarehr.common.model.Site" %>
+<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
+<%@page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@ page import="org.oscarehr.managers.*" %>
+<%@ page import="java.util.*,java.text.*,java.net.*,oscar.*,oscar.util.*,org.oscarehr.provider.model.PreventionManager" %>
+<%@ page import="org.apache.commons.lang.*" %>
 
 <!-- add by caisi -->
 <%@ taglib uri="http://www.caisi.ca/plugin-tag" prefix="plugin" %>
@@ -72,11 +79,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="myoscar" %>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
+<%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
-<%
-    LoggedInInfo loggedInInfo1 = LoggedInInfo.getLoggedInInfoFromSession(request);
+<!-- Struts for i18n -->
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
+<%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
+
+<jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
+<jsp:useBean id="as" class="oscar.appt.ApptStatusData"/>
+<jsp:useBean id="dateTimeCodeBean" class="java.util.HashMap"/>
+
+<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 2345) %></c:set>
+
+<%!
     SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
-
     TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
     DemographicStudyDao demographicStudyDao = SpringUtils.getBean(DemographicStudyDao.class);
     StudyDao studyDao = SpringUtils.getBean(StudyDao.class);
@@ -84,19 +102,19 @@
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
     SiteDao siteDao = SpringUtils.getBean(SiteDao.class);
     MyGroupDao myGroupDao = SpringUtils.getBean(MyGroupDao.class);
-//    DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
     DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
     ScheduleTemplateCodeDao scheduleTemplateCodeDao = SpringUtils.getBean(ScheduleTemplateCodeDao.class);
     ScheduleDateDao scheduleDateDao = SpringUtils.getBean(ScheduleDateDao.class);
     ProviderSiteDao providerSiteDao = SpringUtils.getBean(ProviderSiteDao.class);
     OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
-//    DemographicCustDao demographicCustDao = SpringUtils.getBean(DemographicCustDao.class);
-    ProgramManager2 programManager = SpringUtils.getBean(ProgramManager2.class);
-    AppManager appManager = SpringUtils.getBean(AppManager.class);
-
     LookupListManager lookupListManager = SpringUtils.getBean(LookupListManager.class);
-    LookupList reasonCodes = lookupListManager.findLookupListByName(loggedInInfo1, "reasonCode");
     Map<Integer, LookupListItem> reasonCodesMap = new HashMap<Integer, LookupListItem>();
+    OscarProperties oscarVariables = OscarProperties.getInstance();
+%>
+
+<%
+    LoggedInInfo loggedInInfo1 = LoggedInInfo.getLoggedInInfoFromSession(request);
+    LookupList reasonCodes = lookupListManager.findLookupListByName(loggedInInfo1, "reasonCode");
     for (LookupListItem lli : reasonCodes.getItems()) {
         reasonCodesMap.put(lli.getId(), lli);
     }
@@ -109,10 +127,12 @@
     MyGroupAccessRestrictionDao myGroupAccessRestrictionDao = SpringUtils.getBean(MyGroupAccessRestrictionDao.class);
     boolean authed = true;
 %>
+
 <security:oscarSec roleName="<%=roleName$%>" objectName="_appointment,_day" rights="r" reverse="<%=true%>">
     <%authed = false; %>
     <%response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_appointment");%>
 </security:oscarSec>
+
 <%
     if (!authed) {
         return;
@@ -133,7 +153,6 @@
 <%!
     //multisite starts =====================
     private boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
-    private JdbcApptImpl jdbc = new JdbcApptImpl();
     private List<Site> sites = new ArrayList<Site>();
     private List<Site> curUserSites = new ArrayList<Site>();
     private List<String> siteProviderNos = new ArrayList<String>();
@@ -142,7 +161,6 @@
     private HashMap<String, String> siteBgColor = new HashMap<String, String>();
     private HashMap<String, String> CurrentSiteMap = new HashMap<String, String>();
 %>
-
 <%
     if (bMultisites) {
         sites = siteDao.getAllActiveSites();
@@ -174,18 +192,10 @@
             siteBgColor.put(st.getName(), st.getBgColor());
         }
     }
-//multisite ends =======================
-%>
+    //multisite ends =======================
 
-
-<!-- add by caisi end<style>* {border:1px solid black;}</style> -->
-
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
-
-<%
-    long loadPage = System.currentTimeMillis();
+//    long loadPage = System.currentTimeMillis();
     if (session.getAttribute("userrole") == null) response.sendRedirect("../logout.jsp");
-    //String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_appointment" rights="r" reverse="<%=true%>">
     <%
@@ -219,28 +229,11 @@
     <c:import url="/infirm.do?action=showProgram"/>
 </caisi:isModuleLoad>
 <!-- caisi infirmary view extension add end -->
-
-<%@ page
-        import="java.util.*,java.text.*,java.sql.*,java.net.*,oscar.*,oscar.util.*,org.oscarehr.provider.model.PreventionManager" %>
-
-<%@ page import="org.apache.commons.lang.*" %>
-
-<%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
-<jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
-<jsp:useBean id="as" class="oscar.appt.ApptStatusData"/>
-<jsp:useBean id="dateTimeCodeBean" class="java.util.HashMap"/>
 <%
-    Properties oscarVariables = OscarProperties.getInstance();
     //Gets the request URL
     StringBuffer oscarUrl = request.getRequestURL();
     //Sets the length of the URL, found by subtracting the length of the servlet path from the length of the full URL, that way it only gets up to the context path
     oscarUrl.setLength(oscarUrl.length() - request.getServletPath().length());
-%>
-
-<!-- Struts for i18n -->
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%
     PreventionManager prevMgr = (PreventionManager) SpringUtils.getBean("preventionMgr");
 %>
 <%!
@@ -378,6 +371,9 @@
     StringBuffer study_no = null, study_link = null, studyDescription = null;
     String studySymbol = "\u03A3", studyColor = "red";
 
+    // List of statuses that are excluded from the schedule appointment count for each provider
+    List<String> noCountStatus = Arrays.asList("C","CS","CV","N","NS","NV");
+
     String resourcebaseurl = oscarVariables.getProperty("resource_base_url");
 
     UserProperty rbu = userPropertyDao.getProp("resource_baseurl");
@@ -406,7 +402,7 @@
     int month = Integer.parseInt(request.getParameter("month"));
     int day = Integer.parseInt(request.getParameter("day"));
 
-//verify the input date is really existed
+    //verify the input date is really existed
     cal = new GregorianCalendar(year, (month - 1), day);
 
     if (isWeekView) {
@@ -452,25 +448,13 @@
         allowWeek = "No";
     }
 %>
-<%@page import="oscar.util.*" %>
-<%@page import="oscar.oscarDB.*" %>
-
-<%@page import="oscar.appt.JdbcApptImpl" %>
-<%@page import="oscar.appt.ApptUtil" %>
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
-<%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.web.AppointmentProviderAdminDayUIBean" %>
-<%@page import="org.oscarehr.common.model.EForm" %>
-<%@ page import="org.oscarehr.managers.*" %>
 <html:html locale="true">
     <head>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/global.js"></script>
         <title><%=WordUtils.capitalize(userlastname + ", " + org.apache.commons.lang.StringUtils.substring(userfirstname, 0, 1)) + "-"%><bean:message
                 key="provider.appointmentProviderAdminDay.title"/></title>
 
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/3.0.0/css/bootstrap.min.css"
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css"
               type="text/css">
 
         <!-- Determine which stylesheet to use: mobile-optimized or regular -->
@@ -480,12 +464,11 @@
         %>
         <meta name="viewport"
               content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width"/>
-        <link rel="stylesheet" href="../mobile/receptionistapptstyle.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/mobile/receptionistapptstyle.css" type="text/css">
         <%
         } else {
         %>
-        <link rel="stylesheet" href="../css/receptionistapptstyle.css" type="text/css">
-        <link rel="stylesheet" href="../css/helpdetails.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/receptionistapptstyle.css?v=${rand}" type="text/css">
         <%
             }
         %>
@@ -495,23 +478,26 @@
         %>
         <c:if test="${empty sessionScope.archiveView or sessionScope.archiveView != true}">
             <%!String refresh = oscar.OscarProperties.getInstance().getProperty("refresh.appointmentprovideradminday.jsp", "-1");%>
-            <%="-1".equals(refresh) ? "" : "<meta http-equiv=\"refresh\" content=\"" + refresh + ";\">"%>
+            <%="-1".equals(refresh) ? "" : "<meta http-equiv=\"refresh\" content=\"" + refresh + "\">"%>
         </c:if>
         <%
             }
         %>
 
-        <script type="text/javascript" src="../share/javascript/Oscar.js"></script>
-        <script type="text/javascript" src="../share/javascript/prototype.js"></script>
-        <script type="text/javascript" src="../phr/phr.js"></script>
 
-        <script src="<c:out value="../js/jquery.js"/>"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/prototype.js"></script>
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/phr/phr.js"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+
         <script>
             jQuery.noConflict();
         </script>
 
         <script type="text/javascript" src="schedulePage.js.jsp"></script>
-
 
         <script type="text/javascript">
 
@@ -587,9 +573,9 @@
         <%
             if (OscarProperties.getInstance().getBooleanProperty("indivica_hc_read_enabled", "true")) {
         %>
-        <script src="<%=request.getContextPath()%>/hcHandler/hcHandler.js"></script>
-        <script src="<%=request.getContextPath()%>/hcHandler/hcHandlerAppointment.js"></script>
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/hcHandler/hcHandler.css" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/hcHandler/hcHandler.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/hcHandler/hcHandlerAppointment.js"></script>
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/hcHandler/hcHandler.css" type="text/css"/>
         <%
             }
         %>
@@ -610,8 +596,7 @@
     <%
         boolean isTeamScheduleOnly = false;
     %>
-    <security:oscarSec roleName="<%=roleName$%>"
-                       objectName="_team_schedule_only" rights="r" reverse="false">
+    <security:oscarSec roleName="<%=roleName$%>" objectName="_team_schedule_only" rights="r" reverse="false">
         <%
             isTeamScheduleOnly = true;
         %>
@@ -906,11 +891,11 @@
                 %>
                 <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message
                         key="provider.appointmentProviderAdminDay.grpView"/></a>
-                <% } else { %>
-                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>
-                <% out.println(userfirstname + " " + userlastname); %>
+                <% } %>
+<%--                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>--%>
+<%--                <% out.println(userfirstname + " " + userlastname); %>--%>
             </td>
-            <% }
+            <%
             } %>
 
             <td id="group" ALIGN="RIGHT" BGCOLOR="Ivory">
@@ -1229,6 +1214,17 @@
                                 param1[0] = strDate; //strYear+"-"+strMonth+"-"+strDay;
                                 param1[1] = curProvider_no[nProvider];
 
+                                List<Appointment> appointmentsToCount = appointmentDao.searchappointmentday(curProvider_no[nProvider], ConversionUtils.fromDateString(year + "-" + month + "-" + day), ConversionUtils.fromIntString(programId_oscarView));
+                                Integer appointmentCount = 0;
+
+                                for (Appointment appointment : appointmentsToCount) {
+                                    if (!noCountStatus.contains(appointment.getStatus()) && appointment.getDemographicNo() != 0
+                                            && (!bMultisites || selectedSite == null || "none".equals(selectedSite) || (bMultisites && selectedSite.equals(appointment.getLocation())))
+                                    ) {
+                                        appointmentCount++;
+                                    }
+                                }
+
                                 ScheduleDate sd = scheduleDateDao.findByProviderNoAndDate(curProvider_no[nProvider], ConversionUtils.fromDateString(strDate));
 
                                 //viewall function
@@ -1265,6 +1261,9 @@
                                                   onClick="goWeekView('<%=curProvider_no[nProvider]%>')"
                                                   title="<bean:message key="provider.appointmentProviderAdminDay.weekView"/>"
                                                   style="color:black" class="noprint">
+                                            <% if(OscarProperties.getInstance().isPropertyActive("view.appointmentdaysheetbutton")){ %>
+                                            <input type='button' value="DS" name='daysheetview' onClick=goDaySheet('<%=curProvider_no[nProvider]%>') title="Day Sheet" style="color:black">
+                                            <% } %>
                                             <input type='button'
                                                    value="<bean:message key="provider.appointmentProviderAdminDay.searchLetter"/>"
                                                    name='searchview'
@@ -1277,13 +1276,10 @@
                                                 <a href=#
                                                    onClick="goZoomView('<%=curProvider_no[nProvider]%>','<%=StringEscapeUtils.escapeJavaScript(curProviderName[nProvider])%>')"
                                                    onDblClick="goFilpView('<%=curProvider_no[nProvider]%>')"
-                                                   title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>">
-                                                    <!--a href="providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=1&curProvider=<%=curProvider_no[nProvider]%>&curProviderName=<%=curProviderName[nProvider]%>&displaymode=day&dboperation=searchappointmentday" title="<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>"-->
-                                                    <%=curProviderName[nProvider]%>
+                                                   title='<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>' >
+                                                    <c:out value='<%=curProviderName[nProvider]  + " (" + appointmentCount + ") " %>' />
                                                 </a>
-                                                <oscar:oscarPropertiesCheck value="yes"
-                                                                            property="TOGGLE_REASON_BY_PROVIDER"
-                                                                            defaultVal="true">
+                                                <oscar:oscarPropertiesCheck value="yes" property="TOGGLE_REASON_BY_PROVIDER" defaultVal="true">
                                                     <a id="expandReason" href="#"
                                                        onclick="return toggleReason('<%=curProvider_no[nProvider]%>');"
                                                        title="<bean:message key="provider.appointmentProviderAdminDay.expandreason"/>">*</a>
@@ -1291,16 +1287,12 @@
                                                     <c:set value="true" var="hideReason"/>
                                                 </oscar:oscarPropertiesCheck>
 
-                                            <button class="ds-btn" type="button"
-                                                    data-provider_no="<%=curProvider_no[nProvider]%>">DS
-                                            </button>
                                                     <% } %>
 
                                                     <%
                                     if (!userAvail) {
                                   %>
-                                            [<bean:message
-                                                key="provider.appointmentProviderAdminDay.msgNotOnSched"/>]
+                                            [<bean:message key="provider.appointmentProviderAdminDay.msgNotOnSched"/>]
                                   <%
                                     }
                                   %>
@@ -1358,8 +1350,6 @@
                                                     param0[1] = year + "-" + month + "-" + day;//e.g."2001-02-02";
                                                     param0[2] = programId_oscarView;
                                                     if (locationEnabled) {
-
-
                                                         ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
                                                         ProgramProvider programProvider = programManager2.getCurrentProgramInDomain(loggedInInfo1, loggedInInfo1.getLoggedInProviderNo());
                                                         if (programProvider != null && programProvider.getProgram() != null) {

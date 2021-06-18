@@ -67,6 +67,9 @@
     if(rbuHtml != null) {
         resourcehelpHtml = rbuHtml.getValue();
     }
+
+    String userfirstname = loggedInInfo.getLoggedInProvider().getFirstName();
+    String userlastname = loggedInInfo.getLoggedInProvider().getLastName();
 %>
 
 <table id="firstTable" class="noprint">
@@ -181,9 +184,9 @@
                                             <span id="oscar_new_lab"><bean:message key="global.lab"/></span>
                                         </a>
                                         <oscar:newUnclaimedLab>
-                                            <a class="tabalert" HREF="#"
-                                               ONCLICK="popupInboxManager('../dms/inboxManage.do?method=prepareForIndexPage&providerNo=0&searchProviderNo=0&status=N&lname=&fname=&hnum=&pageNum=1&startIndex=0', 'Lab');return false;"
-                                               TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewLabReports"/>'>*</a>
+                                            <a id="unclaimedLabLink" class="tabalert" HREF="javascript:void(0)"
+                                               onclick="popupInboxManager('../dms/inboxManage.do?method=prepareForIndexPage&providerNo=0&searchProviderNo=0&status=N&lname=&fname=&hnum=&pageNum=1&startIndex=0', 'Lab');return false;"
+                                               title='<bean:message key="provider.appointmentProviderAdminDay.viewLabReports"/>'>U</a>
                                         </oscar:newUnclaimedLab>
                                     </li>
                                 </security:oscarSec>
@@ -373,13 +376,26 @@
                             </li>
 
                         </security:oscarSec>
+                        <li id="helpLink">
+                            <%if(resourcehelpHtml==""){ %>
+                            <a href="javascript:void(0)" onClick ="popupPage(600,750,'<%=resourcebaseurl%>')"><bean:message key="global.help"/></a>
+                            <%}else{%>
+                            <div id="help-link">
+                                <a href="javascript:void(0)" onclick="document.getElementById('helpHtml').style.display='block';document.getElementById('helpHtml').style.right='0px';"><bean:message key="global.help"/></a>
 
-                        <!-- Added logout link for mobile version -->
-                        <li id="logoutMobile">
-                            <a href="../logout.jsp"><bean:message key="global.btnLogout"/></a>
+                                <div id="helpHtml">
+                                    <div class="help-title">Help</div>
+
+                                    <div class="help-body">
+
+                                        <%=resourcehelpHtml%>
+                                    </div>
+                                    <a href="javascript:void(0)" class="help-close" onclick="document.getElementById('helpHtml').style.right='-280px';document.getElementById('helpHtml').style.display='none'">(X)</a>
+                                </div>
+
+                            </div>
+                            <%}%>
                         </li>
-
-
                         <!-- plugins menu extension point add -->
                         <%
                             int pluginMenuTagNumber = 0;
@@ -427,43 +443,55 @@
         <td id="userSettings">
             <ul id="userSettingsMenu">
                 <li>
-                    <a title="Scratch Pad" href="javascript:void(0)"
+                    <a title="Scratch Pad" href="javascript: function myFunction() {return false; }"
                        onClick="popup(700,1024,'../scratch/index.jsp','scratch')"><span class="glyphicon glyphicon-list-alt"></span></a>
                 </li>
                 <li>
-                    <%if (resourcehelpHtml == "") { %>
-                    <a href="javascript:void(0)" onClick="popupPage(600,750,'<%=resourcebaseurl%>')"><bean:message
-                            key="global.help"/></a>
-                    <%} else {%>
-                    <div id="help-link">
-                        <a href="javascript:void(0)"
-                           onclick="document.getElementById('helpHtml').style.display='block';document.getElementById('helpHtml').style.right='0px';"><bean:message
-                                key="global.help"/></a>
+                        <security:oscarSec roleName="<%=roleName$%>" objectName="_pref" rights="r">
+                            <a href="javascript:void(0)"
+                               onClick="popupPage(715,680,'providerpreference.jsp?provider_no=<%=curUser_no%>')"
+                               title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'
+                               OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>' ; return true">
 
-                        <div id="helpHtml">
-                            <div class="help-title">Help</div>
+                        </security:oscarSec>
+                            <span class="glyphicon glyphicon-user"></span>
 
-                            <div class="help-body">
-
-                                <%=resourcehelpHtml%>
-                            </div>
-                            <a href="javascript:void(0)" class="help-close"
-                               onclick="document.getElementById('helpHtml').style.right='-280px';document.getElementById('helpHtml').style.display='none'">(X)</a>
-                        </div>
-
-                        </div>
-                    <%}%>
-                </li>
-                <li>
-                    <% if (request.getSession().getAttribute("oneIdEmail") != null && !request.getSession().getAttribute("oneIdEmail").equals("")) { %>
-                    | <a href="../logoutSSO.jsp">Global Logout</a>
-                    <% } else { %>
-                    | <a href="../logout.jsp"><bean:message key="global.btnLogout"/>&nbsp;</a>
-                    <% } %>
+                            <span>
+                                <c:out value='<%= userfirstname + " " + userlastname %>' />
+                            </span>
+                        <security:oscarSec roleName="<%=roleName$%>" objectName="_pref" rights="r">
+                            </a>
+                        </security:oscarSec>
                 </li>
             </ul>
+        </td>
+        <td>
+            <a id="logoutButton" title="<bean:message key="global.btnLogout"/>" href="../logout.jsp">
+                <span class="glyphicon glyphicon-off"></span>
+            </a>
         </td>
 
     </tr>
 </table>
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>
+<script>
+    function openPreferences(providerNumber) {
+        const $div = jQuery('<div />').appendTo('body');
+        const dialogContainer = $div.attr('id', 'preference-dialog');
+        const data={
+            "provider_no": providerNumber
+        };
+        const url = "providerpreference.jsp";
+        const dialog = dialogContainer.load(url, data).dialog({
+            modal: true,
+            width: 685,
+            height: 355,
+            draggable: false,
+            title: "Provider Preferences",
+        }).dialog("open");
+    }
+
+</script>
 
