@@ -48,9 +48,9 @@ if(!authed) {
   pageContext.setAttribute("dxList", pastDxList);
   %>
   
-  <div style="padding-left:6px;">
+  <div>
   	<c:if test="${ not empty dxList }">	
-  		<select class="form-control" size="5" style="width:100%;height:100%;">
+  		<select class="form-control" size="5" style="width:100%;height:105px;">
   			<c:forEach items="${ dxList }" var="dx">
   				<option onClick="quickPickDiagnostic('${ dx.dx }');return false;" title="${ dx.desc }">
   					<c:out value="${ dx.dx }" /> - <c:out value="${ dx.numMonthSinceDate }m" />

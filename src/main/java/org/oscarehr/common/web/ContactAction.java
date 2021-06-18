@@ -1142,15 +1142,60 @@ public class ContactAction extends DispatchAction {
 		Provider provider;
 		Contact contact; 
 		ProfessionalSpecialist professionalSpecialist;
-		ContactSpecialty specialty;
+		ContactSpecialty specialty  = null;
 		String providerFormattedName = ""; 
 		String role = "";
 		
 		for( DemographicContact c : contacts ) {
 			role = c.getRole();
-			if( StringUtils.isNumeric( c.getRole() ) && ! role.isEmpty() ) {
-				specialty = contactSpecialtyDao.find( Integer.parseInt( c.getRole().trim() ) );
-				c.setRole( specialty.getSpecialty() );
+			if( role != null && ! role.isEmpty() && StringUtils.isNumeric( role ) ) {
+			
+				/*
+				 * Try to recover if the specialty is null, 
+				 * then set it to unknown if nothing could be found. 
+				 * 
+				 * First look in the contact info for a specialty.
+				 */
+				if(c.getType() == DemographicContact.TYPE_PROFESSIONALSPECIALIST
+					&& c.getContactId() != null)
+				{
+					ProfessionalSpecialist tempProfessionalSpecialist = professionalSpecialistDao.find(Integer.parseInt(c.getContactId()));
+					String specialtyType = null;
+					if(tempProfessionalSpecialist != null)
+					{
+						specialtyType = tempProfessionalSpecialist.getSpecialtyType();
+					}
+					if(specialtyType != null && ! specialtyType.isEmpty() && StringUtils.isNumeric( specialtyType ) )
+					{
+						specialty = contactSpecialtyDao.find(Integer.parseInt(specialtyType));
+					}
+				}
+				
+				if(specialty == null)
+				{
+					specialty = contactSpecialtyDao.find( Integer.parseInt( c.getRole().trim() ) );	
+				}
+				
+				/*
+				 * Try to set "UNKNOWN" if that fails.
+				 */
+				if(specialty == null)
+				{
+					specialty = contactSpecialtyDao.findBySpecialty("UNKNOWN"); 
+				}
+				
+				/*
+				 * use a text value as a last resort.
+				 */
+				if(specialty == null)
+				{
+					c.setRole("UNKNOWN");
+				}
+				else
+				{
+					c.setRole( specialty.getSpecialty() );
+				}
+	
 			}
 
 			if( c.getType() == DemographicContact.TYPE_DEMOGRAPHIC ) {

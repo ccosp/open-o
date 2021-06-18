@@ -524,39 +524,46 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 * Return the last name as parsed from column: family_doctor
 	 */
 	public String getFamilyDoctorLastName() {
-
+		String doctorName = "";
 		Matcher m = FD_LAST_NAME.matcher(getFamilyDoctor());
 
 		if( m.find() ) {
-			return m.group(1);
+			if(! "null".equalsIgnoreCase(m.group(1))){
+				doctorName = m.group(1);
+			}
 		}
-		return ""; 
+		return doctorName;
 	}
 
 	/**
 	 * Return the first name as parsed from column: family_doctor
 	 */
 	public String getFamilyDoctorFirstName() {
+		String doctorName = "";
 		Matcher m = FD_FIRST_NAME.matcher(getFamilyDoctor());
 
 		if( m.find()) {
-			return m.group(1);
+			if(! "null".equalsIgnoreCase(m.group(1))){
+				doctorName = m.group(1);
+			}
 		}
-		return "";
+		return doctorName;
 	}
 
 	/**
 	 * Return the doctor number as parsed from column: family_doctor
 	 */
 	public String getFamilyDoctorNumber() {
-
+		String doctorNumber = "";
 		Matcher m = FD_OHIP.matcher(getFamilyDoctor());
 
 		if( m.find() ) {
-			return m.group(1);
+			if(! "null".equalsIgnoreCase(m.group(1))){
+				doctorNumber = m.group(1);
+			}
 		}
 		
-		return "";
+		return doctorNumber;
 	}
 
 	/**

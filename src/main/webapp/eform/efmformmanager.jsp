@@ -120,47 +120,50 @@ $(function ()  {
  
 <div class="tab-content">
 <div class="tab-pane" id="upload">
-<div class="well">
-
-<iframe id="uploadFrame" name="uploadFrame" frameborder="0" width="100%" height="auto" scrolling="no" src="<%=request.getContextPath()%>/eform/partials/upload.jsp"></iframe>
-
-</div>
+	<div class="row-fluid">
+		<div class="well">
+		
+		<iframe id="uploadFrame" name="uploadFrame" frameborder="0" width="100%" height="auto" scrolling="no" src="<%=request.getContextPath()%>/eform/partials/upload.jsp"></iframe>
+		
+		</div>
+	</div>
 </div>
 
 <div class="tab-pane" id="import">
-<div class="well">
-                        
-<iframe id="importFrame" name="importFrame" frameborder="0" width="100%" height="auto" src="<%=request.getContextPath()%>/eform/partials/import.jsp"></iframe>
-
-</div>
+	<div class="row-fluid">
+		<div class="well">
+		                        
+		<iframe id="importFrame" name="importFrame" frameborder="0" width="100%" height="auto" src="<%=request.getContextPath()%>/eform/partials/import.jsp"></iframe>
+		
+		</div>
+	</div>
 </div>
 
 <div class="tab-pane" id="download">
-<div class="well">
-                        
-<iframe id="downloadFrame" name="downloadFrame" onload="downloadFrameLoaded()" frameborder="0" width="100%" height="auto" scrolling="no" src="<%=request.getContextPath()%>/eform/partials/download.jsp"></iframe>
-
+	<div class="row-fluid">
+		<div class="well">
+		                        
+		<iframe id="downloadFrame" name="downloadFrame" onload="downloadFrameLoaded()" frameborder="0" width="100%" height="auto" scrolling="no" src="<%=request.getContextPath()%>/eform/partials/download.jsp"></iframe>
+		
+		</div>
+	</div>
 </div>
-</div>
-
 </div><!-- tab content eformOptions -->
-    
-<h4><bean:message key="eform.uploadhtml.msgCurrentResources" /></h4>
 
+<div class="row-fluid" style="overflow-x:scroll;">
 <table class="table table-condensed table-striped" id="eformTbl">
 <thead>
     <tr>
-        <th><!--<a href="<%= request.getContextPath() %>/eform/efmformmanager.jsp?orderby=file_name" class="contentLink"class="contentLink"><bean:message key="eform.uploadhtml.btnFile" />--></a></th>
+        <th></th>
 
-        <th style="width:15%"><a href="<%= request.getContextPath() %>/eform/efmformmanager.jsp?orderby=form_name" class="contentLink"><bean:message key="eform.uploadhtml.btnFormName" /></a></th>
-        <th style="width:20%"><a href="<%= request.getContextPath() %>/eform/efmformmanager.jsp?orderby=form_subject" class="contentLink"><bean:message key="eform.uploadhtml.btnSubject" /></a></th>
+        <th><a href="<%= request.getContextPath() %>/eform/efmformmanager.jsp?orderby=form_name" class="contentLink"><bean:message key="eform.uploadhtml.btnFormName" /></a></th>
+        <th><a href="<%= request.getContextPath() %>/eform/efmformmanager.jsp?orderby=form_subject" class="contentLink"><bean:message key="eform.uploadhtml.btnSubject" /></a></th>
 
         <th><a href="<%= request.getContextPath() %>/eform/efmformmanager.jsp?" class="contentLink"><bean:message key="eform.uploadhtml.btnDate" /></a></th>
         <th><bean:message key="eform.uploadhtml.btnTime" /></th>
         <th><bean:message key="eform.uploadhtml.btnRoleType"/></th>
-        <th style="width:15%"><bean:message key="eform.uploadhtml.msgAction" /></th>
-        <th style="width:10%">Send <i class="icon-question-sign" rel="popover" data-html="true" data-placement="bottom" data-animation="true" data-trigger="hover" data-content="This is an online utility designed for users to easily share eForms to the OSCAR community." data-original-title="Send eForm to Emporium"></i></th>
-    </tr>
+        <th><bean:message key="eform.uploadhtml.msgAction" /></th>
+	 </tr>
 </thead>
 
 <tbody>
@@ -174,29 +177,28 @@ $(function ()  {
         <td title="<%=curForm.get("formName")%>">
         <a href="#" onclick="newWindow('<%= request.getContextPath() %>/eform/efmshowform_data.jsp?fid=<%=curForm.get("fid")%>', '<%="Form"+i%>'); return false;"><%=curForm.get("formName")%></a>
         </td>
-        <td><%=curForm.get("formSubject")%> </td>
-        <td align='center' ><%=curForm.get("formDate")%></td>
-        <td align='center' ><%=curForm.get("formTime")%></td>
-        <td align='center' ><%=curForm.get("roleType")%></td>
-        <td align='center'>
+        <td><%=curForm.get("formSubject")%></td>
+        <td><%=curForm.get("formDate")%></td>
+        <td><%=curForm.get("formTime")%></td>
+        <td><%=curForm.get("roleType")%></td>
+        <td>
                     
-                
-<a href="<%= request.getContextPath() %>/eform/efmformmanageredit.jsp?fid=<%= curForm.get("fid")%>" class="contentLink" style="padding-right:6px" title='<bean:message key="eform.uploadhtml.editform" /><%=curForm.get("formName")%>'><i class="icon-pencil" title="<bean:message key="eform.uploadhtml.editform" />"></i></a>
-
-                 
-<a href='<%= request.getContextPath() %>/eform/manageEForm.do?method=exportEForm&fid=<%=curForm.get("fid")%>' style="padding-right:6px" title='<bean:message key="eform.uploadhtml.btnExport" /> <%=curForm.get("formName")%>' ><i class="icon-download-alt" title="<bean:message key="eform.uploadhtml.btnExport" />"></i></a>
-                    
-
-<a href='<%= request.getContextPath() %>/eform/delEForm.do?fid=<%=curForm.get("fid")%>' style="padding-right:6px" title='<bean:message key="eform.uploadhtml.btnDelete" /> <%=curForm.get("formName")%>' class="contentLink"><i class="icon-trash" title="<bean:message key="eform.uploadhtml.btnDelete" />"></i></a>
+        <div  class="btn-group">        
+				<a class="btn btn-link" href="<%= request.getContextPath() %>/eform/efmformmanageredit.jsp?fid=<%= curForm.get("fid")%>" class="contentLink" title='<bean:message key="eform.uploadhtml.editform" /><%=curForm.get("formName")%>'><i class="icon-pencil" title="<bean:message key="eform.uploadhtml.editform" />"></i></a>
+				
+				                 
+				<a class="btn btn-link" href='<%= request.getContextPath() %>/eform/manageEForm.do?method=exportEForm&fid=<%=curForm.get("fid")%>' title='<bean:message key="eform.uploadhtml.btnExport" /> <%=curForm.get("formName")%>' ><i class="icon-download-alt" title="<bean:message key="eform.uploadhtml.btnExport" />"></i></a>
+				                    
+				
+				<a class="btn btn-link" href='<%= request.getContextPath() %>/eform/delEForm.do?fid=<%=curForm.get("fid")%>' title='<bean:message key="eform.uploadhtml.btnDelete" /> <%=curForm.get("formName")%>' class="contentLink"><i class="icon-trash" title="<bean:message key="eform.uploadhtml.btnDelete" />"></i></a>
+		</div>
 		</td>			
 		
-		<td align='center'><a href="<%= request.getContextPath() %>/eform/efmSendform.jsp?fid=<%=curForm.get("fid")%>" title='Send <%=curForm.get("formName")%> to Emporium' class="contentLink"><i class="icon-share" title="send"></i></a>
-					
     </tr>
     <% } %>
 </tbody>
 </table>
-
+</div>
 <%@ include file="efmFooter.jspf"%>
 
 <script>

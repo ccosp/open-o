@@ -8,12 +8,9 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@ page language="java" %>
+
 <%@ page import="java.util.*" %>
-<%@ page import="oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*,oscar.util.StringUtils,oscar.util.UtilDateUtilities, oscar.OscarProperties" %>
-<%@ page import="org.apache.commons.collections.MultiHashMap" %>
-<%@page import="org.oscarehr.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils"%>
-<%@page import="org.oscarehr.util.MiscUtils,org.apache.commons.lang.StringEscapeUtils"%>
+<%@ page import="oscar.oscarMDS.data.*,oscar.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -85,8 +82,8 @@ String endDate = (String) request.getAttribute("endDate");
 <bean:message key="oscarMDS.index.title"/>
 </title>
 <html:base/>
-
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/showDocument.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/css/oscarMDSIndex.css"  />
@@ -598,7 +595,7 @@ String endDate = (String) request.getAttribute("endDate");
 			currentBold = "totalAll";
 			refreshCategoryList();
 		});
-		function ForwardSelectedRows() {
+		/* function ForwardSelectedRows() {
 			var query = jQuery(document.reassignForm).formSerialize();
 			var labs = jQuery("input[name='flaggedLabs']:checked");
 			for (var i = 0; i < labs.length; i++) {
@@ -615,58 +612,8 @@ String endDate = (String) request.getAttribute("endDate");
 					});
 				}
 			});
-		}
-		window.FileSelectedRows = function () {
-			var query = jQuery(document.reassignForm).formSerialize();
-			var hrmQueryMethod = "method=signOff";
-			var hrmQuery = "";
-			var labs = jQuery("input[name='flaggedLabs']:checked");
-			for (var i = 0; i < labs.length; i++) {
-			    if(labs[i].next().value == "HRM"){
-			        hrmQuery += "&signedOff=1&reportId=" + labs[i].value;
-	            } else {
-	                query += "&flaggedLabs=" + labs[i].value;
-	                query += "&" + labs[i].next().name + "=" + labs[i].next().value;
-	            }
-	
-			}
-			if(!hrmQuery.empty()){
-	            jQuery.ajax({
-	                type: "POST",
-	                url: ctx + "/hospitalReportManager/Modify.do",
-	                data: hrmQueryMethod + hrmQuery,
-	                success: function(data) {
-	                    updateCategoryList();
-	
-	                    jQuery("input[name='flaggedLabs']:checked").each(function () {
-	                        jQuery(this).parent().parent().remove();
-	                    });
-	
-	                    fakeScroll();
-	                }
-	            });
-	        }
-	
-			jQuery.ajax({
-				type: "POST",
-				url:  ctx + "/oscarMDS/FileLabs.do",
-				data: query,
-				success: function (data) {
-					updateCategoryList();
-	
-					jQuery("input[name='flaggedLabs']:checked").each(function () {
-						jQuery(this).parent().parent().remove();
-					});
-	
-					// We may have removed enough items that the scroll bar is missing so we need to
-					// check and retrieve more items if so.
-					fakeScroll();
-				}
-			});
-	
-			location.reload();
-		}
-	
+		}*/
+
 		function refreshCategoryList() {
 			jQuery("#categoryHash").val("-1");
 			updateCategoryList();
@@ -692,11 +639,13 @@ String endDate = (String) request.getAttribute("endDate");
 		}
 
 	
-		window.removeReport = function (reportId) {
+ 		window.removeReport = function (reportId) {
 			var el = jQuery("#labdoc_" + reportId);
 			if (el != null) {
 				el.remove();
 			}
+			refreshCategoryList();
+			fakeScroll();
 		}
 		
 		// Jquery modal windows
@@ -706,14 +655,7 @@ String endDate = (String) request.getAttribute("endDate");
 					
 				jQuery( "#dialog" ).dialog({
 			      autoOpen: false,
-			      show: {
-			        effect: "blind",
-			        duration: 1000
-			      },
-			      hide: {
-			        effect: "explode",
-			        duration: 1000
-			      }
+			      modal: true
 			    });
 			 
 				jQuery(".dialog-link").on( "click", function(event) {
@@ -726,9 +668,12 @@ String endDate = (String) request.getAttribute("endDate");
 	</script>
 	
 </div> <!--  end wrapper  -->  
+<input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
+<div id="dialog" ></div> 
+
 </body>
 </html>
 
-<div id="dialog" ></div> 
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
+
 

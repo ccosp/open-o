@@ -25,7 +25,8 @@ package org.oscarehr.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -43,23 +44,26 @@ public class DigitalSignatureUtils {
 	}
 
 	public static String getTempFilePath(String signatureRequestId) {
-		return (System.getProperty("java.io.tmpdir") + "/signature_" + signatureRequestId + ".jpg");
+		String temppath = System.getProperty("java.io.tmpdir");
+		Path path = Paths.get(temppath, "signature_" + signatureRequestId + ".jpg");
+		return path.toString();
 	}
 
 	/**
 	 * This method will check if digital signatures is enabled or not. It will only attempt to save it if it's enabled.
 	 * 
 	 * @param demographicId of the owner of this signature
-	 * @throws IOException if missing or error in image when one was expected
+	 * @throws FileNotFoundException if missing or error in image when one was expected
 	 */
 	public static DigitalSignature storeDigitalSignatureFromTempFileToDB(LoggedInInfo loggedInInfo, String signatureRequestId, int demographicId) {
 		DigitalSignature digitalSignature = null;
 
 		if (loggedInInfo.getCurrentFacility().isEnableDigitalSignatures()) {
-			FileInputStream fileInputStream = null;
-			try {
-				String filename = DigitalSignatureUtils.getTempFilePath(signatureRequestId);
-				fileInputStream = new FileInputStream(filename);
+			String filename = DigitalSignatureUtils.getTempFilePath(signatureRequestId);
+			if(filename == null || filename.isEmpty()) {
+				return digitalSignature;
+			}
+			try (FileInputStream fileInputStream = new FileInputStream(filename)) {
 				byte[] image = new byte[1024 * 256];
 				fileInputStream.read(image);
 
@@ -70,28 +74,16 @@ public class DigitalSignatureUtils {
 				digitalSignature.setProviderNo(loggedInInfo.getLoggedInProviderNo());
 				digitalSignature.setSignatureImage(image);
 
-				DigitalSignatureDao digitalSignatureDao = (DigitalSignatureDao) SpringUtils.getBean("digitalSignatureDao");
+				DigitalSignatureDao digitalSignatureDao = SpringUtils.getBean(DigitalSignatureDao.class);
 				digitalSignatureDao.persist(digitalSignature);
-
-				return (digitalSignature);
 			} catch (FileNotFoundException e) {
-	            logger.debug("Signature file not found. User probably didn't collect a signature.", e);
-	            return null;
+				logger.debug("Signature file not found. User probably didn't collect a signature.", e);
 			} catch (Exception e) {
-	            logger.error("UnexpectedError.", e);
-	            return null;
-			} finally {
-				if (fileInputStream != null) {
-					try {
-						fileInputStream.close();
-					} catch (IOException e) {
-						logger.error("Unexpected error.", e);
-					}
-				}
+				logger.error("UnexpectedError.", e);
 			}
 		}
 
-		return (digitalSignature);
+		return digitalSignature;
 	}
 
 }

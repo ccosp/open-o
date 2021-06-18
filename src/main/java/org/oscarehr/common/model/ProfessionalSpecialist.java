@@ -149,6 +149,10 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 	public String getStreetAddress() {
 		return StringUtils.trimToEmpty(streetAddress);
     }
+	
+	public void setStreetAddressFromForm(String streetAddress) {
+		this.streetAddress = StringUtils.trimToNull(streetAddress);
+	}
 
 	public void setStreetAddress(String streetAddress) {
     	this.streetAddress = StringUtils.trimToNull(streetAddress);
@@ -313,6 +317,10 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 	public String getFormattedTitle() {
 		StringBuilder buf = new StringBuilder();
 		boolean isAppended = false;
+		
+		if(getSalutation() != null && !getSalutation().isEmpty()) {
+			buf.append(getSalutation() + " ");
+		}
 		
 		if (getLastName() != null && !getLastName().isEmpty()) {
 			buf.append(getLastName());
