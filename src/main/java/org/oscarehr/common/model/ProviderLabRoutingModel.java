@@ -57,6 +57,20 @@ public class ProviderLabRoutingModel extends AbstractModel<Integer> implements S
 		return id;
 	}
 	
+	public ProviderLabRoutingModel() {
+		//default
+	}
+	
+	public ProviderLabRoutingModel(ProviderLabRoutingModel providerLabRoutingModel) {
+		this.id = providerLabRoutingModel.getId();
+		this.providerNo = providerLabRoutingModel.getProviderNo();
+		this.labNo = providerLabRoutingModel.getLabNo();
+		this.status = providerLabRoutingModel.getStatus();
+		this.comment = providerLabRoutingModel.getComment();
+		this.timestamp = providerLabRoutingModel.getTimestamp();
+		this.labType = providerLabRoutingModel.getLabType();
+	}
+	
 	public String getProviderNo() {
 		return providerNo;
 	}

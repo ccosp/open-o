@@ -27,9 +27,11 @@ package oscar.oscarBilling.ca.bc.data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.velocity.tools.ConversionUtils;
 import org.oscarehr.PMmodule.dao.ProviderDao;
@@ -452,12 +454,12 @@ public class BillingFormData {
 
 	
 	public ArrayList<String> getRecentReferralDoctorsList(Integer demographicNo) {
-		ArrayList<String> recentList = new ArrayList<String>();
+		Set<String> recentList = new HashSet<String>();
 		
 		BillingmasterDAO dao = SpringUtils.getBean(BillingmasterDAO.class);
 		List<Object[]> results = dao.getRecentReferralDoctors(demographicNo);
 
-		if(!results.isEmpty()){
+		if(results != null && !results.isEmpty()){
 		String one;
 		String two;
 			
@@ -467,17 +469,17 @@ public class BillingFormData {
 				two = ConversionUtils.toString((results.get(i))[1]);
 				
 				if( one != null && !one.equals("")){	
-					recentList.add(ConversionUtils.toString( one ));
+					recentList.add( one );
 				}
 				
 				if( two != null && !two.equals("")){
-					recentList.add(ConversionUtils.toString( two ));
+					recentList.add( two );
 				}
 			}
 		
 		}
 		
-		return recentList;
+		return new ArrayList<String>(recentList);
 	}
 	
 }

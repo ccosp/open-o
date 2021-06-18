@@ -42,6 +42,7 @@ import org.oscarehr.common.dao.AppointmentArchiveDao;
 import org.oscarehr.common.dao.OscarAppointmentDao;
 import org.oscarehr.common.model.Appointment;
 import org.oscarehr.common.model.Billing;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
@@ -64,8 +65,9 @@ public class BillingSaveBillingAction extends Action {
 
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        if (request.getSession().getAttribute("user") == null) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        
+		if (request.getSession().getAttribute("user") == null) {
             return (mapping.findForward("Logout"));
         }
 
@@ -74,7 +76,9 @@ public class BillingSaveBillingAction extends Action {
         oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean bean = (BillingSessionBean) request.getSession().getAttribute("billingSessionBean");
         //  oscar.oscarBilling.data.BillingStoreData bsd = new oscar.oscarBilling.data.BillingStoreDate();
         //  bsd.storeBilling(bean);
-
+        
+        bean.setCreator(loggedInInfo.getLoggedInProviderNo());
+        
         //Get rid of this
         WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
         BillingmasterDAO billingmasterDAO = (BillingmasterDAO) ctx.getBean("BillingmasterDAO");
@@ -164,7 +168,7 @@ public class BillingSaveBillingAction extends Action {
                 n.addNote(billingMasterId, bean.getCreator(), bean.getNotes());
                 
             }
-            if (bean.getMessageNotes() != null || !bean.getMessageNotes().trim().equals("")) {
+            if (bean.getMessageNotes() != null && ! bean.getMessageNotes().trim().equals("")) {
                 BillingNote n = new BillingNote();
                 n.addNote(billingMasterId, bean.getCreator(), bean.getMessageNotes());
             }

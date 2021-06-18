@@ -85,83 +85,114 @@ int curDay = cal.get(Calendar.DAY_OF_MONTH);
 <link rel="stylesheet" href="../css/helpdetails.css" type="text/css">
 
 <style>
-body{background-color: #fff /*#f3f3f3*/;}
+body {
+	background-color: #fff;
+}
 
-sup{
-color:#000;
-font-weight:bold;
-}  
+sup {
+	color: #000;
+	font-weight: bold;
+}
 
-#main-wrapper{margin-top:70px;}
+#main-wrapper {
+	margin-top: 70px;
+}
 
-div.navbar div.dropdown:hover ul.dropdown-menu{
-    display: block;  
-    margin:0px;  
+div.navbar div.dropdown:hover ul.dropdown-menu {
+	display: block;
+	margin: 0px;
 }
 
 .navbar .dropdown-menu {
- margin-top: 0px;
+	margin-top: 0px;
 }
 
-.navbar .nav > li > a {
-padding:10px 10px;
+.navbar .nav>li>a {
+	padding: 10px 10px;
 }
 
-#caret-loggedIn{
-vertical-align: top; 
-opacity: 0.3;
-margin-top:18px;
+#caret-loggedIn {
+	vertical-align: top;
+	opacity: 0.3;
+	margin-top: 18px;
 }
 
-.accordion-heading{background-color:#fff;border-bottom:thin solid #C6C6C6;}
-
-.accordion-heading:hover{background-color:#e6e6e6;}
-.accordion-heading a:hover{text-decoration:none;}
-
-.icon-chevron-right{opacity:0.3;}
-
-.accordion-heading a:hover > .icon-chevron-right{opacity: 1;}
-
-.selected-heading{background-color:#e6e6e6;}
-
-.accordion-inner{background-color:#fff;border-bottom:thin solid #C6C6C6;}
-
-.accordion-inner a{color:#424242;}
-.accordion-inner a:hover{text-decoration:none;color:#000; cursor: pointer; cursor: hand;}
-
-.accordion-inner li{border-bottom: thin solid #c6c6c6;padding:2px 0px 2px 0px;}
-
-
-#side{
-position:absolute;
-padding-right:10px;
-padding-bottom:20px
+.accordion-heading {
+	background-color: #fff;
+	border-top: 1px solid #e5e5e5;
 }
 
-#side a{
-color:#333;
-text-decoration: none;
+.accordion-heading:first-of-type {
+	border:none;
 }
 
-#side a:hover{
-color:#0088cc;
+.accordion-heading:hover {
+	background-color: #e6e6e6;
 }
 
-#myFrame {
-    position: absolute;
-    height: 100%;
-    width: 75%;
+.accordion-heading a:hover {
+	text-decoration: none;
 }
 
-.icon-chevron-right{float:right;}  
-
-#adminNav{
--webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.065);
--moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.065);
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.065);
+.icon-chevron-right {
+	opacity: 0.3;
 }
 
-#adminNav ul{
+.accordion-heading a:hover>.icon-chevron-right {
+	opacity: 1;
+}
+
+.selected-heading {
+	background-color: #e6e6e6;
+}
+
+.accordion-inner ul li a {
+	color: #424242;
+	padding: 2px 0px;
+	margin: auto 5px;
+	display: block;
+	width: 100%;
+}
+
+.accordion-inner a:hover {
+	text-decoration: none;
+	color: #000;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.accordion-inner ul li:nth-child(even) {
+	background-color: white;
+}
+
+.accordion-inner ul li:nth-child(odd) {
+	background-color: whitesmoke;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+}
+
+#side a {
+	color: #333;
+	text-decoration: none;
+	outline: 0;
+}
+
+#side a:hover {
+	color: #0088cc;
+}
+
+.icon-chevron-right {
+	float: right;
+}
+
+#adminNav {
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+
+#adminNav ul {
 	padding: 0px;
 	margin: 0px;
 	list-style-type: none;
@@ -170,7 +201,8 @@ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.065);
 label.valid {
 	width: 24px;
 	height: 24px;
-	background: url(<%=request.getContextPath() %>/images/icons/valid.png) center center no-repeat;
+	background: url(/oscar-SNAPSHOT/images/icons/valid.png) center center
+		no-repeat;
 	display: inline-block;
 	text-indent: -9999px;
 }
@@ -185,83 +217,91 @@ label.error {
 }
 
 .table tbody tr:hover td, .table tbody tr:hover th {
-    background-color: #FFFFAA;
+	background-color: #FFFFAA;
 }
 
-.quick-links{
-display:inline-block;
-width:160px;
-height:100px;
-margin:10px;
-text-align:center;
-vertical-align:top;
+.quick-links {
+	display: inline-block;
+	width: 160px;
+	height: 100px;
+	margin: 10px;
+	text-align: center;
+	vertical-align: top;
 }
 
-.quick-links a{
-text-decoration:none;
-color:#333;
+.quick-links a {
+	text-decoration: none;
+	color: #333;
 }
 
-.quick-links a:hover{
-color:#0088cc;
+.quick-links a:hover {
+	color: #0088cc;
 }
 
-.used-heading{
-padding-bottom:0px;
-margin-bottom:0px;
+.used-heading {
+	padding-bottom: 0px;
+	margin-bottom: 0px;
 }
 
 /*remove font awesomes 'link' response to icons*/
-i[class*='icon-'] {color:#333 }
+i[class*='icon-'] {
+	color: #333
+}
+
 i[class*='icon-']:before {
 	display: inline-block;
 	text-decoration: none;
-	cursor: pointer; cursor: hand;
+	cursor: pointer;
+	cursor: hand;
 }
 
-i[class*='icon-']:hover {color:#0088cc;}
-.icon-trash:hover{color:#bd362f !important;}
+i[class*='icon-']:hover {
+	color: #0088cc;
+}
 
-@media (max-width: 767px) {
-     #side {
-         width:98%;
-         position:static;
-     }
-     
-     #main-wrapper{margin-top:30px;}
- }
-  
-@media (min-width: 768px) { 
-	
-	 #side{
-	 	width: 240px;
-	 	margin-right:15px;
-	  } 
-	  
-	  #dynamic-content{margin-left:260px;}
+.icon-trash:hover {
+	color: #bd362f !important;
 }
 
 .visible-print {
-  display: none !important;
-}  
+	display: none !important;
+}
+
+.dynamic-content, .dynamic-iframe-content {
+	position: relative;
+	overflow: hidden;
+}
+
+.dynamic-iframe-content {
+	padding-top: 80%;
+}
+
+iframe#myFrame {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+}
 
 @media print {
-  .visible-print {
-    display: inherit !important;
-  }
-  .hidden-print {
-    display: none !important;
-  }
-  #dynamic-content{margin-left:0px;}
-  
-  /*this is so the link locatons don't display*/
-  a:link:after, a:visited:after {
-    content: "";
-  }
+	.visible-print {
+		display: inherit !important;
+	}
+	.hidden-print {
+		display: none !important;
+	}
+
+	/*this is so the link locatons don't display*/
+	a:link:after, a:visited:after {
+		content: "";
+	}
 }
 </style>
 
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.js"></script>
 
 <oscar:customInterface section="main"/> <!--needs to be in header-->
 </head>
@@ -300,7 +340,7 @@ i[class*='icon-']:hover {color:#0088cc;}
 <%@ include file="leftNav.jspf"%>
 
 
-  <div class="span9" id="dynamic-content">
+  <div class="span9 dynamic-content" id="dynamic-content">
     
     <!-- ****DYNAMIC CONTENT**** -->
 <%
@@ -367,7 +407,7 @@ if(showMenu==null && loadPage==null){
    
     <!-- ****DYNAMIC CONTENT END**** -->
     
-    </div><!-- span8 end -->
+    </div>
 
 </div>
 </div>
@@ -383,9 +423,8 @@ if(showMenu==null && loadPage==null){
 <script type="text/javascript">
 $( document ).ready(function( $ ) {
 	$("a.contentLink").click(function(e) {
-		//alert('link click');
 		e.preventDefault();
-		//alert("You clicked the link");
+		$("#dynamic-content").removeClass("dynamic-iframe-content");
 		$("#dynamic-content").load($(this).attr("href"), 
 			function(response, status, xhr) {
 		  		if (status == "error") {
@@ -481,11 +520,11 @@ function validDate(value, format, separator){
 	}			
 }
 
-function resizeIframe(newHgt)
+/* function resizeIframe(newHgt)
 {
     $('#myFrame').height((parseInt(newHgt)+75)+'px');
     $("html, body").animate({ scrollTop: 0 }, "slow");
-}
+} */
 
 $(document).ready(function() {
 	

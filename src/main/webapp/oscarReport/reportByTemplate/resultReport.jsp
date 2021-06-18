@@ -23,81 +23,67 @@
     Ontario, Canada
 
 --%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-<%--This JSP displays the result of the report query--%>
 
+<%
+  if(session.getValue("user") == null) response.sendRedirect(request.getContextPath() + "/logout.jsp");
+  String roleName$ = (String)session.getAttribute("userrole") + "," + (String)session.getAttribute("user");
+%>
 
-<%@ page
-	import="java.util.*,oscar.oscarReport.reportByTemplate.*,java.sql.*, org.apache.commons.lang.StringEscapeUtils"%>
+<%@ page import="java.util.*,oscar.oscarReport.reportByTemplate.*,java.sql.*, org.apache.commons.lang.StringEscapeUtils"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
-<%
-      String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-      boolean authed=true;
-%>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_report,_admin.reporting,_admin" rights="r" reverse="<%=true%>">
-	<%authed=false; %>
-	<%response.sendRedirect("../../securityError.jsp?type=_report&type=_admin.reporting&type=_admin");%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<security:oscarSec roleName="<%=roleName$%>"
+	objectName="_admin,_report"	rights="r" reverse="<%=true%>">
+	<%
+		response.sendRedirect(request.getContextPath() + "/logout.jsp");
+	%>
 </security:oscarSec>
-<%
-if(!authed) {
-	return;
-}
-%>
+<!DOCTYPE html>
 
 <html:html locale="true">
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title>Report by Template</title>
-<link rel="stylesheet" type="text/css"
-	href="../../share/css/OscarStandardLayout.css">
-<link rel="stylesheet" type="text/css" href="reportByTemplate.css">
-<script type="text/javascript" language="JavaScript"
-	src="../../share/javascript/prototype.js"></script>
-<script type="text/javascript" language="JavaScript"
-	src="../../share/javascript/Oscar.js"></script>
-<script type="text/javascript" language="javascript">
-function clearSession(){
-    new Ajax.Request('clearSession.jsp','{asynchronous:true}');
 
-}
+	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="${pageContext.request.contextPath}/css/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="${pageContext.request.contextPath}/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/library/DataTables-1.10.12/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/Oscar.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/jquery-1.9.1.min.js"></script> 
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/library/DataTables-1.10.12/media/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+	function clearSession(){
+	    new Ajax.Request('clearSession.jsp','{asynchronous:true}');
+	}
+	jQuery(document).ready( function () {
+	    jQuery('.reportTable').DataTable();
+	});
 </script>
 <style type="text/css" media="print">
-.MainTableTopRow,.MainTableLeftColumn,.noprint,.showhidequery,.sqlBorderDiv,.MainTableBottomRow
+	.noprint,.showhidequery,.sqlBorderDiv,.controls,.dataTables_length,.dataTables_filter,.dataTables_paginate
 	{
-	display: none;
-}
+		display: none;
+	}
 
-.MainTableRightColumn {
-	border: 0;
-}
+	div.sub-actions a +.result-btn {
+		display:inline-block;
+		padding-left: 5px;
+		border-left:#0088cc 2px solid;
+	}
+
 </style>
 </head>
-
-<body vlink="#0000FF" class="BodyStyle" onunload="clearSession();">
-
-<table class="MainTable" id="scrollNumber1" name="encounterTable">
-	<tr class="MainTableTopRow">
-		<td class="MainTableTopRowLeftColumn"><bean:message
-			key="oscarReport.CDMReport.msgReport" /></td>
-		<td class="MainTableTopRowRightColumn">
-		<table class="TopStatusBar" style="width: 100%;">
-			<tr>
-				<td>Report by Template</td>
-			</tr>
-		</table>
-		</td>
-	</tr>
-	<tr>
-		<%
+<%
 		
 		ReportObjectGeneric curreport = (ReportObjectGeneric) request.getAttribute("reportobject");
-        
-		Integer sequenceLength = (Integer)request.getAttribute("sequenceLength");
-		
-		
+		Integer sequenceLength = (Integer)request.getAttribute("sequenceLength");		
 		List<String> sqlList = new ArrayList<String>();
 		List<String> htmlList = new ArrayList<String>();
 		List<String> csvList = new ArrayList<String>();
@@ -113,71 +99,75 @@ function clearSession(){
 			htmlList.add((String) request.getAttribute("resultsethtml"));
 			csvList.add((String) request.getAttribute("csv"));
 		}
-            
-          %>
-		<td class="MainTableLeftColumn" valign="top" width="160px;"><jsp:include
-			page="listTemplates.jsp">
-			<jsp:param name="templateviewid"
-				value="<%=curreport.getTemplateId()%>" />
-		</jsp:include></td>
-		<td class="MainTableRightColumn" valign="top">
-		<div class="reportTitle"><%=curreport.getTitle()%></div>
-		<div class="reportDescription"><%=curreport.getDescription()%></div>
-		<a href="#" style="font-size: 10px; text-decoration: none;"
-			class="showhidequery" onclick="showHideItem('sqlDiv')">Hide/Show
-		Query</a>
-		<div class="sqlBorderDiv" id="sqlDiv" style="display: none;"><b>Query:</b><br />
-		<code style="font-size: 11px;">
+		
+		pageContext.setAttribute("htmlList", htmlList);
+		          
+%>
+
+<body onunload="clearSession();">
+
+<%@ include file="rbtTopNav.jspf"%>
+
+<h3>
+	<c:out value="${ reportobject.title }" /><br />
+	<small><c:out value="${ reportobject.description }" /></small>
+</h3>
+
+		<div class="reportBorderDiv row-fluid">
+			<c:forEach items="${ htmlList }" var="htmlOut">
+				<c:choose>
+					<c:when test="${ not fn:startsWith(htmlOut, '<table') }">
+						<div class="alert alert-error" >
+					    	<a href="#" data-dismiss="alert" class="close">&times;</a>
+					    	<c:out value="${ htmlOut }" />
+					    </div>
+					</c:when>
+					<c:otherwise>
+						${ htmlOut }
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
+		
+		<div class="noprint form-actions">
+			
+			<div style="margin-bottom:15px;" class="controls controls-row">
+				<input type="button" class="btn btn-primary" value="Back" onclick="document.location='reportConfiguration.jsp?templateid=${ reportobject.templateId }'">
+				<input type="button" class="btn btn-primary" value="Print" onclick="window.print();">
+			
 			<%
-			for(int x=0;x<sqlList.size();x++) {
-				out.println((x+1) + ")" + org.apache.commons.lang.StringEscapeUtils.escapeHtml(sqlList.get(x).trim()) + "<br/>");
-			}
-			%>
-		</code>
-		</div>
-		<div class="reportBorderDiv">
-		<%
+				for(int x=0;x<csvList.size();x++) {
+			%>			
 		
-			for(int x=0;x<htmlList.size();x++) {
-				 out.println(htmlList.get(x));
-				 out.println("<br/>");
-				 
-			}
-			
-        %>
+				<html:form style="display:inline;" action="/oscarReport/reportByTemplate/generateOutFilesAction" >
+					<%if(x>1){ %>
+						<label><%=(x+1)%></label>
+					<%}%>
+					<input type="hidden" class="btn" name="csv" value="<%=StringEscapeUtils.escapeHtml(csvList.get(x))%>">
+					<input type="submit" class="btn" name="getCSV" value="Export to CSV">
+					<input type="submit" class="btn" name="getXLS" value="Export to XLS">
+				</html:form>
+				
+			<% } %>	
+			</div>
+			<div class="row-fluid sub-actions">
+				<a href="#" class="showhidequery result-btn" onclick="showHideItem('sqlDiv')">
+					Show/Hide Query
+				</a>
+				<a href="javascript:void(0)" class="edit result-btn" style="padding-left: 5px;border-left:#0088cc 2px solid;"
+					onclick="document.location='addEditTemplate.jsp?templateid=${ reportobject.templateId }&opentext=1'">
+					Edit Template
+				</a>
+				<div class="sqlBorderDiv" id="sqlDiv" style="display:none;background-color:white;padding:5px;">
+					<samp style="font-size: 11px;">
+						<%
+						for(int x=0;x<sqlList.size();x++) {
+							out.println((x+1) + ")" + org.apache.commons.lang.StringEscapeUtils.escapeHtml(sqlList.get(x).trim()));
+						}
+						%>
+					</samp>
+				</div>
+			</div>
 		</div>
-		<div class="noprint"
-			style="clear: left; float: left; margin-top: 15px;">
-			
-			<input type="button" value="<-- Back"
-				onclick="javascript: history.go(-1);return false;">
-			<input type="button" value="Print"
-				onclick="javascript: window.print();">
-			<br/><br/>
-	
-	<%
-		for(int x=0;x<csvList.size();x++) {
-	%>			
 
-			<html:form action="/oscarReport/reportByTemplate/generateOutFilesAction">
-			<%if(x>1){ %>
-			<label><%=(x+1)%></label>
-			<%}%>
-			<input type="hidden" name="csv"
-				value="<%=StringEscapeUtils.escapeHtml(csvList.get(x))%>">
-
-			<input type="submit" name="getCSV" value="Export to CSV">
-			<input type="submit" name="getXLS" value="Export to XLS">
-		</html:form>
-		
-	<% } %>	
-		</div>
-		</td>
-	</tr>
-	<tr class="MainTableBottomRow">
-		<td class="MainTableBottomRowLeftColumn">&nbsp;</td>
-
-		<td class="MainTableBottomRowRightColumn">&nbsp;</td>
-	</tr>
-</table>
 </html:html>

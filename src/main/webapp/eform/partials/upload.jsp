@@ -27,10 +27,8 @@
 <%@ page import="oscar.eform.data.*, oscar.eform.*, java.util.*"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-<%
-String status = (String) request.getAttribute("status");    		
-%>
 <html:html locale="true">
 
 <head>
@@ -39,33 +37,27 @@ String status = (String) request.getAttribute("status");
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
 
-<script>
-$(function() {
-    $( document ).tooltip();
-  });
-</script>
-
-</head>
-
 <style>
 body{background-color:#f5f5f5;}
 
 .uploadEformTitle{display:inline-block;}
 </style>
 
+</head>
+
 <body>
 
-<%if(status != null){ %>
+<c:if test="${ not empty status }">
     <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Success!</strong> Your eform was uploaded.
     </div>
+    
+    <script>
+		window.top.location.href = "<%=request.getContextPath()%>/administration/?show=Forms";
+	</script>
+</c:if>
 
-<script>
-window.top.location.href = "<%=request.getContextPath()%>/administration/?show=Forms";
-</script>
-
-<%}else{%>
 
 <html:form action="/eform/uploadHtml" method="POST" onsubmit="return checkFormAndDisable()" enctype="multipart/form-data">
 <div class="alert alert-error" style="display:none"> <html:errors /> </div>
@@ -95,19 +87,28 @@ window.top.location.href = "<%=request.getContextPath()%>/administration/?show=F
                                         </div>
                                         
                                         <div class='uploadEformTitle'>
-                                        <input type="checkbox" name="showLatestFormOnly" value="true"/><bean:message key="eform.uploadhtml.showLatestFormOnly"/><br>
-                                        <input type="checkbox" name="patientIndependent" value="true"/><bean:message key="eform.uploadhtml.patientIndependent"/>
+                                        	<div>
+	                                        <label class="checkbox">
+	                                        <input type="checkbox" name="showLatestFormOnly" value="true"/><bean:message key="eform.uploadhtml.showLatestFormOnly"/>
+	                                        </label>
+	                                        </div>
+	                                        <div>
+	                                        <label class="checkbox">
+	                                        <input type="checkbox" name="patientIndependent" value="true"/><bean:message key="eform.uploadhtml.patientIndependent"/>
+	                                        </label>
+	                                        </div>
                                         </div>
                                         
                                         <input type="file" name="formHtml" id="formHtml" class="check" size="50" required>
-                                        <span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img border="0" src="../../images/icon_alertsml.gif"/></span></span>
-                                        
+                                    	<span style="color:red;">
+								         <i class="icon-warning-sign" title="<bean:message key="global.uploadWarningBody"/>" ></i>
+								        </span>
                                         
                                         
                                         <input type="submit" name="subm" class="btn btn-primary upload" value="<bean:message key="eform.uploadhtml.btnUpload"/>" disabled>
                
 </html:form>
-<%}%>
+
 <div style="font-size:0%; line-height:0%">&nbsp;</div>
 
 <script src="<%=request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>  

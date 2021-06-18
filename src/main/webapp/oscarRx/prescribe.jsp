@@ -321,9 +321,9 @@ if(listRxDrugs!=null){
     <input tabindex="-1" type="text" id="drugName_<%=rand%>"  name="drugName_<%=rand%>"  size="30" <%if(gcn==0){%> onkeyup="saveCustomName(this);" value="<%=drugName%>"<%} else{%> value='<%=drugName%>'  onchange="changeDrugName('<%=rand%>','<%=drugName%>');" <%}%> TITLE="<%=drugName%>"/>&nbsp;<span id="inactive_<%=rand%>" style="color:red;"></span>
 
 	<!-- Allergy Alert Table-->
-	<table width="570px" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0" style="border-collapse: collapse;display: none;" id="alleg_tbl_<%=rand%>">
+	<table style="margin-top:5px; margin-bottom:5px; border-collapse: collapse; display: none; width:100%;" id="alleg_tbl_<%=rand%>">
 		<tr>
-			<td bgcolor="#CCCCCC" height="10px">
+			<td style="background-color:#CCCCCC;height:10px;width:100%;">
 				<!--spacer cell-->
 			</td>
 		</tr>

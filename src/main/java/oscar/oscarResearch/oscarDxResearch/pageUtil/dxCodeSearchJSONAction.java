@@ -183,11 +183,21 @@ public class dxCodeSearchJSONAction extends DispatchAction {
 
 		response.setContentType("text/x-json");
 		
-		String jsonstring = JsonUtil.pojoCollectionToJson(classList, ignoreMethods);
+		String jsonstring = null;
+		
+		if(classList != null && ! classList.isEmpty())
+		{
+			jsonstring = JsonUtil.pojoCollectionToJson(classList, ignoreMethods);
+		}
+		
+		if(jsonstring == null)
+		{
+			jsonstring = "{}";
+		}
+
 		try(PrintWriter pout = response.getWriter()) {
 			pout.write(jsonstring);
-		}
-		         
+		}         
     }
 	 
 		

@@ -1266,9 +1266,6 @@
 			type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ConfirmConsultationRequest.jsp" />
 			<forward name="failESend" path="/oscarEncounter/ViewRequest.do" />
-			<forward name="print" path="/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp" />
-			<forward name="printalt" path="/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp" />
-			<forward name="printpdf" path="/oscarEncounter/oscarConsultationRequest/printPdf.do" />
 			<forward name="printIndivica" path="/oscarEncounter/oscarConsultationRequest/printPdf2.do" />
 			<forward name="fax" path="/fax/CoverPage.jsp" />
 		</action>
@@ -1765,7 +1762,6 @@
 		<action input="/billing/CA/BC/billingBC.jsp" name="BillingCreateBillingForm" path="/billing" scope="session" type="oscar.oscarBilling.ca.bc.pageUtil.BillingAction" validate="false">
 			<forward name="BC" path="/billing/CA/BC/billingBC.jsp" />
 			<forward name="ON" path="/billing/CA/ON/billingOB.jsp" redirect="true" />
-			<forward name="CLINICAID" path="/billing/billingClinicAid.jsp" redirect="true" />
 		</action>
 		<action input="/billing/CA/BC/billingBC.jsp" name="BillingCreateBillingForm" path="/billing/CA/BC/CreateBilling" scope="session" type="oscar.oscarBilling.ca.bc.pageUtil.BillingCreateBillingAction">
 			<forward name="success" path="/billing/CA/BC/billingCreated.jsp" />
@@ -2377,6 +2373,7 @@
 			<forward name="fail" path="/oscarReport/reportByTemplate/reportConfiguration.jsp" />
 		</action>
 		<action input="/oscarReport/reportByTemplate/addEditTemplate.jsp" name="FrmForm" path="/oscarReport/reportByTemplate/addEditTemplatesAction" scope="request" type="oscar.oscarReport.reportByTemplate.actions.ManageTemplatesAction">
+			<forward name="done" path="/oscarReport/reportByTemplate/reportConfiguration.jsp"></forward>
 			<forward name="success" path="/oscarReport/reportByTemplate/addEditTemplate.jsp"></forward>
 			<forward name="fail" path="/oscarReport/reportByTemplate/addEditTemplate.jsp"></forward>
 			<forward name="deleted" path="/oscarReport/reportByTemplate/homePage.jsp"></forward>
@@ -2387,6 +2384,26 @@
 		<action input="/oscarReport/reportByTemplate/addEditTemplate.jsp" name="FrmForm" path="/oscarReport/reportByTemplate/uploadTemplates" scope="request" type="oscar.oscarReport.reportByTemplate.actions.UploadTemplates">
 			<forward name="success" path="/oscarReport/reportByTemplate/addEditTemplate.jsp"></forward>
 		</action>
+		<!-- RBT Groups -->
+		<action input="/oscarReport/reportByTemplate/homePage.jsp" path="/oscarReport/reportByTemplate/rbtGroup" scope="request" type="oscar.oscarReport.reportByTemplate.actions.RBTGetGroupAction">
+			<forward name="success" path="/oscarReport/reportByTemplate/templateGroups.jsp" />
+		</action>
+		<action input="/oscarReport/reportByTemplate/templateGroups.jsp" path="/oscarReport/reportByTemplate/actions/tempInGroup" scope="request" type="oscar.oscarReport.reportByTemplate.actions.RBTGetTemplatesInGroupAction">
+			<forward name="success" path="/oscarReport/reportByTemplate/templateGroups.jsp" />
+		</action>
+		<action input="/oscarReport/reportByTemplate/templateGroups.jsp" path="/oscarReport/reportByTemplate/actions/addGroup" scope="request" type="oscar.oscarReport.reportByTemplate.actions.RBTAddGroupAction">
+			<forward name="success" path="/oscarReport/reportByTemplate/rbtGroup.do" />
+		</action>
+		<action input="/oscarReport/reportByTemplate/templateGroups.jsp" path="/oscarReport/reportByTemplate/actions/rbtAddToGroup" scope="request" type="oscar.oscarReport.reportByTemplate.actions.RBTAddToGroupAction">
+			<forward name="success" path="/oscarReport/reportByTemplate/actions/tempInGroup.do" />
+		</action>
+		<action input="/oscarReport/reportByTemplate/templateGroups.jsp" path="/oscarReport/reportByTemplate/actions/remFromGroup" scope="request" type="oscar.oscarReport.reportByTemplate.actions.RBTRemoveFromGroupAction">
+			<forward name="success" path="/oscarReport/reportByTemplate/actions/tempInGroup.do" />
+		</action>
+		<action input="/oscarReport/reportByTemplate/templateGroups.jsp" path="/oscarReport/reportByTemplate/actions/delGroup" scope="request" type="oscar.oscarReport.reportByTemplate.actions.RBTDeleteGroupAction">
+			<forward name="success" path="/oscarReport/reportByTemplate/rbtGroup.do" />
+		</action>
+		<!-- RBT Groups END -->
 
 		<action path="/eyeform/OcularProc" type="org.oscarehr.eyeform.web.OcularProcAction" parameter="method" scope="request" validate="false" input="/eyeform/ocular_proc.jsp" name="ocularProcForm">
 			<forward name="form" path="/eyeform/ocular_proc.jsp" />

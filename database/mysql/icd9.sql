@@ -8,7 +8,7 @@
 -- Table structure for table `icd9`
 --
 
-CREATE TABLE icd9 (
+CREATE TABLE IF NOT EXISTS icd9 (
   id int(11) NOT NULL auto_increment,
   icd9 varchar(7) NOT NULL default '',
   description varchar(200) NOT NULL default '',

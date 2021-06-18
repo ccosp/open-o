@@ -89,6 +89,7 @@ if(!authed) {
   }
 %>
 <%
+	LoggedInInfo loggedInInfo =	LoggedInInfo.getLoggedInInfoFromSession(request);
   int year = 0; //Integer.parseInt(request.getParameter("year"));
   int month = 0; //Integer.parseInt(request.getParameter("month"));
   //int day = now.get(Calendar.DATE);
@@ -100,7 +101,8 @@ if(!authed) {
   String color = "", colorflag = "";
   BillingSessionBean bean = (BillingSessionBean) pageContext.findAttribute("billingSessionBean");
   oscar.oscarDemographic.data.DemographicData demoData = new oscar.oscarDemographic.data.DemographicData();
-  org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+  org.oscarehr.common.model.Demographic demo = demoData.getDemographic(loggedInInfo, bean.getPatientNo());
+  bean.setPatientName(demo.getFullName());
   oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic lgc = new oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic();
   BillingFormData billform = new BillingFormData();
   BillingFormData.BillingService[] billlist1 = lgc.filterServiceCodeList(billform.getServiceList("Group1", bean.getBillForm(), bean.getBillRegion(),new Date()), demo);
@@ -140,7 +142,7 @@ if(!authed) {
   String mRecRefDoctor = "";
   String mRecRefDoctorNum = "";
 
-  if(!demo.getFamilyDoctorNumber().equals("")){
+  if(! "".equals(demo.getFamilyDoctorNumber())){
    mRecRefDoctor = demo.getFamilyDoctorLastName() + ", " + demo.getFamilyDoctorFirstName();
    mRecRefDoctorNum = demo.getFamilyDoctorNumber();
   }else{
@@ -183,6 +185,9 @@ if(!authed) {
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery.validate-1.19.1.min.js"></script>
 
 <style type="text/css">
+	table {
+	  margin-bottom: 5px !important;
+	}
 	div#wcbForms p {
 		padding:0px;
 		margin:0px;
@@ -221,13 +226,34 @@ if(!authed) {
 	}
 	
 	.wrapper {
-		margin: auto 15px
+		margin: 40px 10px 10px 10px;
+	}
+	
+	div#page-header {
+		position: fixed;
+		width: 100%;
+		top: 0;
+		left: 0;
+		z-index: 100000;
+	}
+	
+	div#page-header::after {
+    	clear: both;
+	}
+	
+	div#page-header::before, div#page-header::after {
+	    display: table;
+	    content: " ";
+	}
+	
+	div#page-header table {
+		margin:0px !important;
 	}
 	
 	#oscarBillingHeader {
 		width: 100%;
 		border-collapse: collapse;
-		margin-top: .5%;
+		background-color: #F3F3F3;
 	}
 	
 	table#oscarBillingHeader tr td {
@@ -237,11 +263,11 @@ if(!authed) {
 	}
 	
 	#oscarBillingHeader #oscarBillingHeaderLeftColumn {
-		width: 19.5% !important;
-		background-color: white;
-		padding: 0px;
-		padding-right: .5% !important;
-		width: 20%;
+		width: 20% !important;
+		background-color: black;	
+		border-bottom: black 1px solid;
+		line-height: 1;
+		border-top: black 1px solid;	
 	}
 	
 	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
@@ -259,6 +285,11 @@ if(!authed) {
 		text-align: right;
 		padding-top: 3px !important;
 		padding-right: 3px !important;
+
+	}
+	
+	#oscarBillingHeader #oscarBillingHeaderRightColumn, #oscarBillingHeader #oscarBillingHeaderCenterColumn {
+		border-bottom: 1px solid #ccc;
 	}
 	
 	span.HelpAboutLogout a {
@@ -347,6 +378,11 @@ if(!authed) {
 		background-color: #f2dede;
 	}
 
+	@media only screen and (max-width: 820px) {
+		.wrapper {
+			margin: 80px 10px 10px 10px;
+		}
+	}
 	
 </style>
 <script type="text/javascript" >
@@ -443,11 +479,6 @@ function checkSelectedCodes(){
 	}
 }
 
-
-
-
-
-
 function HideElementById(ele){
 	document.getElementById(ele).style.display='none';
 }
@@ -463,18 +494,16 @@ function CheckType(){
 		HideElementById('ICBC');
 		document.BillingCreateBillingForm.mva_claim_code.options[0].selected = true;
 	}
-         toggleWCB();
-
-
-
-
+	
+    toggleWCB();
 }
 
 function callReplacementWebService(url,id){
                var ran_number=Math.round(Math.random()*1000000);
                var params = "demographicNo=<%=bean.getPatientNo()%>&wcb=&rand="+ran_number;  //hack to get around ie caching the page
                new Ajax.Updater(id,url, {method:'get',parameters:params,asynchronous:true}); 
-         } 
+} 
+
           <%
           String wcb = "";
           Integer wcbid = (Integer) request.getAttribute("WCBFormId");
@@ -486,20 +515,24 @@ function callReplacementWebService(url,id){
 
 function toggleWCB(){
         <%
-        if(!"1".equals(newWCBClaim)){
+       if(! "1".equals(newWCBClaim)){
         %>
-       if (document.BillingCreateBillingForm.xml_billtype.value == "WCB"){
-        document.BillingCreateBillingForm.fromBilling.value = "true";
-       }
-       else{
-          document.BillingCreateBillingForm.fromBilling.value = "false";
-       }
+		       if (document.BillingCreateBillingForm.xml_billtype.value == "WCB"){
+		        document.BillingCreateBillingForm.fromBilling.value = "true";
+		       }
+		       else{
+		          document.BillingCreateBillingForm.fromBilling.value = "false";
+		       }
         <%}
         %>
 
-       if (document.BillingCreateBillingForm.xml_billtype.value == "WCB"){
-         callReplacementWebService("wcbForms.jsp<%=wcb%>",'wcbForms');
-       }
+       	if (document.BillingCreateBillingForm.xml_billtype.value == "WCB"){
+          callReplacementWebService("wcbForms.jsp<%=wcb%>",'wcbForms');
+       	} 
+       	else
+    	{
+       		jQuery("#wcbForms").empty();
+    	}
 
 }
 
@@ -512,11 +545,18 @@ function replaceWCB(id){
 
 function gotoPrivate(){
    if (document.BillingCreateBillingForm.xml_billtype.value == "Pri"){
-      document.location.href = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=Pri&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&apptProvider_no=<%=bean.getApptProviderNo()%>&providerview=<%=bean.getProviderView()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=Pri";
-  }
-   if (document.BillingCreateBillingForm.xml_billtype.value == "MSP"){
-      document.location.href = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=<%=OscarProperties.getInstance().getProperty("default_view")%>&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&apptProvider_no=<%=bean.getApptProviderNo()%>&providerview=<%=bean.getProviderView()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=MSP";
+ 	  var url = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=Pri&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=Pri";
+	  url += "&providerview=" + jQuery("select[name='xml_provider']").val();
+	  url += "&apptProvider_no=" + jQuery("select[name='xml_provider']").val();
+
+ 	  window.location.href = url;
    }
+   if (document.BillingCreateBillingForm.xml_billtype.value == "MSP"){
+	  var url = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=<%=OscarProperties.getInstance().getProperty("default_view")%>&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=MSP";
+	  url += "&providerview=" + jQuery("select[name='xml_provider']").val();
+	  url += "&apptProvider_no=" + jQuery("select[name='xml_provider']").val(); 
+      window.location.href = url;
+   	}
 }
 
 function correspondenceNote(){
@@ -735,7 +775,55 @@ function setCodeToChecked(svcCode){
     
 }
 
+/*
+ * Sets the currently selected provider as the default on 
+ * this client computer.
+ */
+function setDefaultProvider() {
+	var selectedProvider = jQuery('select[name=xml_provider] option:selected');
+	var providerId = selectedProvider.val();
+	var providerName = selectedProvider.text();		
+	localStorage.setItem( 'default_billing_provider', providerId );		
+	alert(providerName + " is now set as the default billing physician on this computer.");
+
+}
+
+/*
+ * Loads the default provider - only if - the provider is not 
+ * already set from the billing or encounter interface.
+ */
+function loadDefaultProvder() {
+	var currentProvider = document.BillingCreateBillingForm.xml_provider.value;
+
+	if(! currentProvider)
+	{
+		var providerId = localStorage.getItem('default_billing_provider');
+		jQuery("select[name=xml_provider]").val(providerId);
+	}
+}
+
+function setReferralDoctor() {
+	jQuery(".referral-doctor").on('click', function() {
+
+		 mRecordRefDocNum = jQuery(this).attr('data-num');  
+		 mRecordRefDoc= jQuery(this).attr('data-doc');  
+		 
+		 one = jQuery('[name="xml_refer1"]');
+		 two = jQuery('[name="xml_refer2"]');
+		 
+		 if(one.val().length>0){
+		  two.val(mRecordRefDocNum);
+		  two.attr("title", mRecordRefDoc );
+		 }else{
+		  one.val(mRecordRefDocNum);
+		  one.attr("title", mRecordRefDoc );
+		 }
+	});
+}
+
 jQuery(document).ready(function(jQuery){
+	setReferralDoctor();
+	loadDefaultProvder();
 	
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
 	
@@ -748,7 +836,13 @@ jQuery(document).ready(function(jQuery){
     
 	/* New billing form selection method*/
     jQuery("#selectBillingForm").on('change',function() {
-      	window.location.replace("../../../" + this.value);
+    	var url = ctx + '/billing.do?demographic_no=' + <%=bean.getPatientNo()%> + '&appointment_no=' + <%=bean.getApptNo()%> + '&billRegion=BC&billForm=' + this.value;
+      	jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
+      		// re-bind all the javascript
+    		getDxInformation();
+    		bindDxJSONEvents();
+    		setReferralDoctor();
+      	});
     });
 
 	jQuery("#serviceStartTime").on('blur', function() {
@@ -784,23 +878,6 @@ jQuery(document).ready(function(jQuery){
 	    	alert("Warning: the start time is greater than the end time.");
 	    }	
 	 }
- 
-
-	jQuery(".referral-doctor").on('click', function() {
-		 mRecordRefDocNum = jQuery(this).attr('data-num');  
-		 mRecordRefDoc= jQuery(this).attr('data-doc');  
-		 
-		 one = jQuery('[name="xml_refer1"]');
-		 two = jQuery('[name="xml_refer2"]');
-		 
-		 if(one.val().length>0){
-		  two.val(mRecordRefDocNum);
-		  two.attr("title", mRecordRefDoc );
-		 }else{
-		  one.val(mRecordRefDocNum);
-		  one.attr("title", mRecordRefDoc );
-		 }
-	});
 	
 	/*
 	 * All form validation code following
@@ -814,6 +891,16 @@ jQuery(document).ready(function(jQuery){
 			  */
 			 xml_provider: {
 				 required: true
+			 },
+			 /*
+			  * Referral provider codes must be numeric
+			  */
+			 xml_refer1: {
+				 number: true
+			 },
+			 
+			 xml_refer2: {
+				 number: true
 			 },
 			 
 			 /*
@@ -832,12 +919,18 @@ jQuery(document).ready(function(jQuery){
 			 xml_other3_unit: {
 			      number: true
 			 },
-			 
+			 WCBid: {
+				 required: function(element){
+					 return document.BillingCreateBillingForm.xml_billtype.value == "WCB";
+				 }
+			 },
 			 /*
 			  * Validate all 3 Diagnostic codes.
 			  */
 		 	 xml_diagnostic_detail1: {
-		 		 required: true,
+		 		 required: function(element) {
+		 			return document.BillingCreateBillingForm.xml_billtype.value != "Pri";
+		 		 },
 		 		 remote: {
 		 			url: ctx + "\/dxCodeSearchJSON.do",
 		 			type: "post",
@@ -919,7 +1012,10 @@ jQuery(document).ready(function(jQuery){
 			 xml_other2_unit: "Service code units must be numeric",
 			 xml_other3_unit: "Service code units must be numeric",
 			 xml_provider: "Select a billing physician",
-			 xml_other1: "At least 1 service code is required"
+			 xml_other1: "At least 1 service code is required",
+			 xml_refer1: "1: Invalid Referral Doctor code",
+			 xml_refer2: "2: Invalid Referral Doctor code",
+			 WCBid: "A WCB Form must be selected."
 		 },
 		 
 		 /*
@@ -932,6 +1028,7 @@ jQuery(document).ready(function(jQuery){
         	 jQuery(element).removeClass('has-error'); 
          },
 		 submitHandler: function(form) {
+			 toggleWCB();
 		     form.submit();
 		 },
 		 onkeyup: false,
@@ -982,32 +1079,51 @@ jQuery(document).ready(function(jQuery){
   }
 %>
 <body style="background-color:#FFFFFF;" onLoad="CheckType();correspondenceNote();">
-<div class="wrapper">
-
-	<div id="page-header">	
-		<table id="oscarBillingHeader">
+	<div id="page-header" >	
+		<table id="oscarBillingHeader" class="table-borderless">
 			<tr>
 				<td id="oscarBillingHeaderLeftColumn"><h1><bean:message key="billing.bc.title"/></h1></td>
 
 				<td id="oscarBillingHeaderCenterColumn">				
 					<span class="badge badge-primary"><bean:message key="billing.patient"/></span>
-	                <strong class="label-text" ><%=demo.getLastName()%>, <%=demo.getFirstName()%></label>
+	                <label class="label-text" ><%=demo.getLastName()%>, <%=demo.getFirstName()%></label>
 	            	
 	            	<span class="badge badge-primary"><bean:message key="billing.patient.age"/></span>  
-	            	<strong class="label-text"><%=demo.getAge()%></label>
-	 			
+	            	<label class="label-text"><%=demo.getAge()%></label>
+
+<%-- 	Keep until confirmed not needed.			
+
 					<span class="badge badge-primary"><bean:message key="billing.patient.status"/></span> 
 					<strong class="label-text"><%=demo.getPatientStatus()%></label>
 	
-	  <%--               <span class="badge badge-primary"><bean:message key="billing.patient.roster"/></span> 
-	                <label><%=demo.getRosterStatus()%></label> --%>
-	         
-	                <span class="badge badge-primary"><bean:message key="billing.provider.assignedProvider"/></span>
-	                <strong class="label-text"><%=billform.getProviderName(demo.getProviderNo())%></label> 
-	                
-	                <a class="badge badge-primary" href="javascript: void();" onclick="popup(800, 1000, 'billStatus.jsp?lastName=<%=demo.getLastName()%>&firstName=<%=demo.getFirstName()%>&filterPatient=true&demographicNo=<%=demo.getDemographicNo()%>','InvoiceList');return false;">
+              <span class="badge badge-primary"><bean:message key="billing.patient.roster"/></span> 
+	                <label><%=demo.getRosterStatus()%></label> 
+--%>	         
+	                <span class="badge badge-primary" title="Most Responsible Provider"><bean:message key="billing.provider.assignedProvider"/></span>
+	                <label class="label-text">
+		                <c:choose>
+		                	<c:when test="<%= demo.getProviderNo() != null && ! demo.getProviderNo().trim().isEmpty() %>">
+		                		<%=billform.getProviderName(demo.getProviderNo())%> 
+		                	</c:when>
+		                	<c:otherwise>
+		                		Unknown
+		                	</c:otherwise>
+		                </c:choose>
+	                </label>
+
+					<security:oscarSec roleName="<%=roleName$%>" objectName="_eChart" rights="x" >
+		                <button type="button" class="btn btn-link" title="View this patient's Electronic Chart" onclick="popup(710, 1024,'${pageContext.servletContext.contextPath}/casemgmt/forward.jsp?action=view&demographicNo=<%=demo.getDemographicNo()%>&providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&providerName=<%=loggedInInfo.getLoggedInProvider().getFullName()%>&appointmentNo=&reason=null&appointmentDate=&start_time=&apptProvider=null&providerview=null&msgType=null&OscarMsgTypeLink=null&noteId=null','encounter',12556);return false;">
+							<bean:message key="billing.patient.encounter" />
+						</button>	
+					</security:oscarSec>
+					
+	                <button type="button" class="btn btn-link" title="View previous invoices for this patient" onclick="popup(800, 1000, 'billStatus.jsp?lastName=<%=demo.getLastName()%>&firstName=<%=demo.getFirstName()%>&filterPatient=true&demographicNo=<%=demo.getDemographicNo()%>','InvoiceList');return false;">
 						<bean:message key="demographic.demographiceditdemographic.msgInvoiceList"/>
-					</a>				
+					</button>
+					
+					<button type="button" class="btn btn-link" title="Set a default Billing Physician to use when a physician is not pre-selected" onclick="setDefaultProvider()">
+						<bean:message key="billing.provider.defaultProvider"/>
+					</button>				
 				</td>
 				<td id="oscarBillingHeaderRightColumn" align=right>
 					<span class="HelpAboutLogout"> 
@@ -1019,8 +1135,11 @@ jQuery(document).ready(function(jQuery){
 			</tr>
 		</table>
 	</div>
+<div class="wrapper">
 
 
+
+<div class="container-fluid">
 <html:errors/>
 
 <!-- end error row -->
@@ -1029,33 +1148,36 @@ jQuery(document).ready(function(jQuery){
 List<String> wcbneeds = (List) request.getAttribute("WCBFormNeeds");
 if(wcbneeds != null){%>
 <div>
-    <h3>WCB Form needs:
+    WCB Form needs:
     <ul>
     <%for (String s: wcbneeds) { %>
     <li><bean:message key="<%=s%>"/></li>
     <%}%>
-    </ul></h3>
+    </ul>
 </div>
 <%}%>
 
-<div class="container-fluid">
 <html:form styleId="bcBillingForm" styleClass="form-inline" action="/billing/CA/BC/CreateBilling" onsubmit="toggleWCB();">
 	<input autocomplete="false" name="hidden" type="text" style="display:none;">
   	<input type="hidden" name="fromBilling" value=""/>
 
 <%
-  BillingCreateBillingForm thisForm;
-  thisForm = (BillingCreateBillingForm) request.getSession().getAttribute("BillingCreateBillingForm");
+  BillingCreateBillingForm thisForm = (BillingCreateBillingForm) request.getSession().getAttribute("BillingCreateBillingForm");
   if (thisForm != null) {
     sxml_provider = ((String) thisForm.getXml_provider());
     sxml_location = ((String) thisForm.getXml_location());
     sxml_visittype = ((String) thisForm.getXml_visittype());
+    
+    if(sxml_provider == null || "".equals(sxml_provider) || "none".equals(sxml_provider))
+    {
+        sxml_provider = bean.getApptProviderNo();
+    }
+    thisForm.setXml_provider(sxml_provider);
+    
     if (sxml_location.compareTo("") == 0) {
       sxml_location = OscarProperties.getInstance().getProperty("visitlocation");
       sxml_visittype = OscarProperties.getInstance().getProperty("visittype");
-      sxml_provider = bean.getApptProviderNo();
       thisForm.setXml_location(sxml_location);
-      thisForm.setXml_provider(sxml_provider);
       thisForm.setXml_visittype(sxml_visittype);
       if ( OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING") != null && OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING").equalsIgnoreCase("YES")){
          thisForm.setXml_encounter("8");
@@ -1111,7 +1233,7 @@ if(wcbneeds != null){%>
           		       <option <% if( bean.getBillForm().equalsIgnoreCase( billformlist[i].getFormCode() ) ) {%> 
           		       				selected 
           		       			<% } %> 
-          		      		value="billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=<%=billformlist[i].getFormCode()%>&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=bean.getPatientName()%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&apptProvider_no=<%=bean.getApptProviderNo()%>&providerview=<%=bean.getProviderView()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=<%=bean.getBillForm()%>" >
+          		      		value="<%=billformlist[i].getFormCode()%>" >
           		      		<%= billformlist[i].getDescription() %>
           		      	</option>          		      
           		      <%} %>
@@ -1248,10 +1370,8 @@ if(wcbneeds != null){%>
 		                    <span class="input-group-addon">
 		                        <span class="glyphicon glyphicon-time"></span>
 		                    </span>
-		                </div>
-		            </div>
-			</td>
-			
+						</div>
+					</div>
 			<td>			
 
 		            <div class="form-group">
@@ -1347,10 +1467,6 @@ if(wcbneeds != null){%>
 	             	
 	            </div> 
 	        </td>
-         </div>
-        </div>  
-
-       </td>
      </tr>
    </table>
 </td>
@@ -1411,6 +1527,7 @@ if(wcbneeds != null){%>
 </tr>
 <tr>
 <td>
+<div id="billingFormTableWrapper">
         <table id="billingFormTable">
           <tr>
             <td valign="top" style="width:32%; padding-right:5px;" >
@@ -1475,7 +1592,7 @@ if(wcbneeds != null){%>
                         <div class="input-group">
                             <html:text styleClass="form-control" property="xml_refer1" onkeypress="return grabEnter(event,'ReferralScriptAttach1()')"/>
 	                     	<span class="input-group-btn">
-		                     	<button type="button" class="btn btn-primary" onclick="javascript:ReferralScriptAttach('xml_refer1')">
+		                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer1')">
 	                            	<span class="glyphicon glyphicon-search"></span>
 	                          	</button>
                           	</span>
@@ -1495,7 +1612,7 @@ if(wcbneeds != null){%>
                          	<div class="input-group">
 	                            <html:text styleClass="form-control" property="xml_refer2" onkeypress="return grabEnter(event,'ReferralScriptAttach2()')"/>
 	                            <span class="input-group-btn">
-			                     	<button type="button" class="btn btn-primary" onclick="javascript:ReferralScriptAttach('xml_refer2')">
+			                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer2')">
 		                            	<span class="glyphicon glyphicon-search"></span>
 		                          	</button>
 	                          	</span>
@@ -1526,20 +1643,25 @@ if(wcbneeds != null){%>
                   String bgColor="#fff";
                   String rProvider = "";
 
-		  if(recentList.size()>0){
-                  for (String r : recentList){ 
-                  rProvider = billingReferralDao.getReferralDocName(r);
-                  %>
-                	  <tr bgcolor="<%=bgColor%>"><td width="20%"><a href="javascript:void(0)" class="referral-doctor" data-num="<%=r%>" data-doc="<%=rProvider%>"><%=r%></a></td><td><%=rProvider%></td></tr> 
-                  <%
-                  if(bgColor=="#fff"){bgColor="#ccc";}else{bgColor="#fff";}
-                  
-                  }
-		  }else{
-		  %>
-                	  <tr><td width="20%"></td><td>none</td></tr> 
-		  <%
-		  }
+				  if(recentList.size()>0){
+		                  for (String r : recentList){ 
+		                  rProvider = billingReferralDao.getReferralDocName(r);
+		                  %>
+		                	  <tr bgcolor="<%=bgColor%>">
+		                	  <td width="20%">
+		                	  	<a href="javascript:void(0)" class="referral-doctor" data-num="<%=r%>" data-doc="<%=rProvider%>"><%=r%></a>
+		                	  </td>
+		                	  <td><%=rProvider%></td>
+		                	  </tr> 
+		                  <%
+		                  if(bgColor=="#fff"){bgColor="#ccc";}else{bgColor="#fff";}
+		                  
+		                  }
+				  }else{
+				  %>
+		                	  <tr><td width="20%"></td><td>none</td></tr> 
+				  <%
+				  }
                   %>
                  </table> 
                  
@@ -1548,7 +1670,12 @@ if(wcbneeds != null){%>
                  
                 <table class="table table-condensed table-borderless" style="background-color:#fff;">
                 <tr><td style="border-top:none;" colspan="2">Referral Doctor on Master Record</td></tr>
-                <tr><td width="20%"><a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a></td><td><%=mRecRefDoctor%></td></tr> 
+                <tr>
+                	<td width="20%">
+                		<a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a>
+                	</td>
+                	<td><%=mRecRefDoctor%></td>
+                </tr> 
                 </table>
                 
                 </td></tr>
@@ -1613,6 +1740,11 @@ if(wcbneeds != null){%>
 								1
 							</span>
                             <html:text styleClass="form-control" property="xml_other1" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+                           	<span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other1')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
                         </div>
                         </td>
                         <td>
@@ -1631,6 +1763,11 @@ if(wcbneeds != null){%>
 								2
 							</span>
                             <html:text styleClass="form-control" property="xml_other2" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+                            <span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other2')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
              			</div>
                         </td>
                         <td>
@@ -1649,6 +1786,11 @@ if(wcbneeds != null){%>
 								3
 							</span>
                             <html:text styleClass="form-control" property="xml_other3" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+                            <span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other3')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
                         </div> 
                         </td>
                         <td>
@@ -1660,14 +1802,14 @@ if(wcbneeds != null){%>
                         </div>
                         </td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                       <td></td>
                         <td>
                           <button class="btn btn-info pull-right btn-xs" onclick="javascript:OtherScriptAttach()">
                           	Code Search	
                           </button>
                         </td>
-                      </tr>
+                      </tr> -->
                     </table>
                   </td>
                 </tr>
@@ -1765,17 +1907,6 @@ if(wcbneeds != null){%>
 						</td>
 						<td rowspan="3" style="width:50%" valign="top" >
 							<div id="DX_REFERENCE"></div>
-	                        <oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
-		                         <script type="text/javascript">
-			                         function getDxInformation(origRequest){
-			                               var url = "DxReference.jsp";
-			                               var ran_number=Math.round(Math.random()*1000000);
-			                               var params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
-			                               new Ajax.Updater('DX_REFERENCE',url, {method:'get',parameters:params,asynchronous:true}); 
-			                         }
-			                         getDxInformation();
-		                         </script>
-	                       </oscar:oscarPropertiesCheck>
 						</td>
 						</tr>
 						<tr><td>
@@ -1813,18 +1944,11 @@ if(wcbneeds != null){%>
               
               <table class="tool-table table table-condensed table-borderless">
                 <tr>
-                  <td width="50%" style="padding-top:5px !important;">
+                  <td style="padding-top:5px !important;">
                       <label for="shortClaimNote"></label><label>Short Claim Note</label></label>
                     <html:text styleClass="form-control" property="shortClaimNote" />
                   </td>
-                  <td width="50%" style="padding-top:5px;">
-                    
-                    <label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">     
-	                    <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/> 
-	                     Ignore Warnings
-	                 </label>
                   
-                  </td>
                 </tr>
                 
                 <tr>
@@ -1839,7 +1963,7 @@ if(wcbneeds != null){%>
                 </tr>
                 <tr>
                   <td style="padding-bottom:5px !important;" colspan="2" valign="top">
-                    <div id="CORRESPONDENCENOTE">
+                    <div id="CORRESPONDENCENOTE" style="display:none;">
                       <html:textarea styleClass="form-control notes-box" property="notes" onkeyup="checkTextLimit(this.form.notes,400);"></html:textarea>
                       <small>400 characters max.</small>
                     </div>
@@ -1858,12 +1982,19 @@ if(wcbneeds != null){%>
             </td>
           </tr>
         </table>
+      </div>
       </td>
     </tr>
   </table>
 
-  	<div class="container-fluid ">
-		<div id="buttonRow" class="pull-right button-bar">
+  	<div class="row-fluid pull-right ">
+  		<div id="ignoreWarningsButton">
+				<label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">     
+				   <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/> 
+				    Ignore Warnings
+				</label>
+        </div>
+		<div id="buttonRow" class="button-bar">
             <input class="btn btn-md btn-primary" type="submit" name="Submit" value="Continue">
               <input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();"> 
 		</div>
@@ -1874,5 +2005,17 @@ if(wcbneeds != null){%>
 </html:form>
  </div>
  </div>
+ 
+<oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
+	<script type="text/javascript">
+		function getDxInformation(origRequest){
+		      var url = "DxReference.jsp";
+		      var ran_number=Math.round(Math.random()*1000000);
+		      var params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
+		      new Ajax.Updater('DX_REFERENCE',url, {method:'get',parameters:params,asynchronous:true}); 
+		}
+		getDxInformation();
+	</script>
+</oscar:oscarPropertiesCheck>
 </body>
 </html>

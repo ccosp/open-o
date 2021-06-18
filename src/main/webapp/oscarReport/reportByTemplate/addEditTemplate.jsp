@@ -23,48 +23,39 @@
     Ontario, Canada
 
 --%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-<%-- This JSP is the page that allows users to add templates by XML --%>
 
+<%
+  if(session.getValue("user") == null) response.sendRedirect(request.getContextPath() + "/logout.jsp");
+  String roleName$ = (String)session.getAttribute("userrole") + "," + (String)session.getAttribute("user");
+%>
 
-<%@ page
-	import="oscar.oscarReport.reportByTemplate.*, java.sql.*, org.apache.commons.lang.StringUtils"%>
+<%@ page import="oscar.oscarReport.reportByTemplate.*, java.sql.*, org.apache.commons.lang.StringUtils"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
-<%
-      String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-      boolean authed=true;
-%>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_report,_admin.reporting,_admin" rights="r" reverse="<%=true%>">
-	<%authed=false; %>
-	<%response.sendRedirect("../../securityError.jsp?type=_report&type=_admin.reporting&type=_admin");%>
+<security:oscarSec roleName="<%=roleName$%>"
+	objectName="_admin,_report"	rights="r" reverse="<%=true%>">
+	<%
+	response.sendRedirect(request.getContextPath() + "/logout.jsp");
+	%>
 </security:oscarSec>
-<%
-if(!authed) {
-	return;
-}
-%>
+<!DOCTYPE html>
 
 <html:html locale="true">
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<title>Report by Template</title>
-<link rel="stylesheet" type="text/css"
-	href="../../share/css/OscarStandardLayout.css">
-<link rel="stylesheet" type="text/css" href="reportByTemplate.css">
-<script type="text/javascript" language="JavaScript"
-	src="../../share/javascript/prototype.js"></script>
-<script type="text/javascript" language="JavaScript"
-	src="../../share/javascript/Oscar.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css"/>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="../../jquery-ui-1.10.2.custom.min.js"></script>
+	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/css/DT_bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath}/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/jquery-1.9.1.min.js"></script>  
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.2.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.10.2.custom.min.js"></script>
 <script>
 $(function() {
     $( document ).tooltip();
@@ -73,28 +64,15 @@ $(function() {
 
 </head>
 
-<body vlink="#0000FF" class="BodyStyle">
+<body>
 
-<table class="MainTable" id="scrollNumber1" name="encounterTable">
-	<tr class="MainTableTopRow">
-		<td class="MainTableTopRowLeftColumn"><bean:message
-			key="oscarReport.CDMReport.msgReport" /></td>
-		<td class="MainTableTopRowRightColumn">
-		<table class="TopStatusBar" style="width: 100%;">
-			<tr>
-				<td>Report by Template</td>
-			</tr>
-		</table>
-		</td>
-	</tr>
-	<tr>
-		<td class="MainTableLeftColumn" valign="top" width="160px;"><jsp:include
-			page="listTemplates.jsp" /></td>
+<%@ include file="rbtTopNav.jspf"%>
+
 		<%// can be three options: add/edit/upload
             // add --> no relevant request parameters/attributes
             // edit --> templateid in request parameter or attribute
             // upload --> templateXML in request parameter and no templateid
-          ReportManager rm = new ReportManager();
+          	ReportManager rm = new ReportManager();
             String action = "add";
             // try templateid from attribute and parameter - check to see if we are editing or adding
             String templateid = "";
@@ -109,65 +87,100 @@ $(function() {
                 templatexml = rm.getTemplateXml(templateid);
                 action = "edit";
             }
-            //open the XML editing textarea or no?
-            String openText = "0";
-            if (request.getAttribute("opentext") != null) {
-                openText = (String) request.getAttribute("opentext");
-            } else if (request.getParameter("opentext") != null) {
-                openText = request.getParameter("opentext");
+
+            if("edit".equals(action) && templateid != null) 
+            {
+              	ReportObject curreport = rm.getReportTemplateNoParam(templateid);    
+            	pageContext.setAttribute("curreport", curreport); 
+            	pageContext.setAttribute("templatexml", templatexml);
             }
-            // try templatexml in attribute, check to see if we are uploading
-            if (request.getAttribute("templatexml") != null) {
-                templatexml = (String) request.getAttribute("templatexml");
-            }
-            String message = (String) request.getAttribute("message");
-            if (message == null) message = "";
+            pageContext.setAttribute("action", action);
+            pageContext.setAttribute("templateid", templateid);
           %>
-		<td class="MainTableRightColumn" valign="top">
-		<div class="reportTitle"><%=StringUtils.capitalize(action)%>
-		Template</div>
-		<%if (message.toLowerCase().indexOf("success") != -1) {%>
-		<div class="green"><%=message%></div>
-		<%} else {%>
-		<div class="warning"><%=message%></div>
-		<%}%> <html:form action="/oscarReport/reportByTemplate/uploadTemplates"
-			enctype="multipart/form-data">
-                  Upload Templates: <input type="file"
-				name="templateFile">
-				<span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img border="0" src="../../images/icon_alertsml.gif"/></span></span>
-        
-			<input type="hidden" name="action" value="<%=action%>">
-			<input type="hidden" name="opentext" value="<%=openText%>">
-			<input type="hidden" name="templateid" value="<%=templateid%>">
-			<input type="submit"
-				value="Upload & <%=StringUtils.capitalize(action)%>">
-		</html:form>
-		<div id="editXml"
-			style="<%if (openText.equals("0")) {%>display: none;<%}%>"><html:form
-			action="/oscarReport/reportByTemplate/addEditTemplatesAction">
-                     OR:
-                     <textarea name="xmltext"
-				style="width: 100%; height: 400px;"><%=templatexml%></textarea>
-			<br />
-			<input type="hidden" name="action" value="<%=action%>">
-			<input type="hidden" name="opentext" value="<%=openText%>">
-			<input type="hidden" name="templateid" value="<%=templateid%>">
-			<br />
-			<input type="button" onclick="document.forms[1].submit()" value="<%if (action.equals("edit")){out.print("Save");}else{ out.print(StringUtils.capitalize(action));}%>">
-			
-			<%if (action.equals("edit")) {%> 
-			<input type="button" name="done" value="Done" onclick="document.location='reportConfiguration.jsp?templateid=<%=templateid%>'">
-			<%} else {%> 
-			<input type="button" name="cancel" value="Cancel" onclick="document.location='homePage.jsp'"> 
-			<%}%>
-		</html:form></div>
 
-		</td>
-	</tr>
-	<tr>
-		<td class="MainTableBottomRowLeftColumn">&nbsp;</td>
+<h3>
+	<%=StringUtils.capitalize(action)%>  
+	
+	<c:if test="${ action eq 'add' }">
+		Template
+	</c:if>
+	<c:if test="${ action eq 'edit' }">
+		: <c:out value="${ curreport.title }" /><br />
+		<small><c:out value="${ curreport.description }" /></small>
+	</c:if>
+</h3>
 
-		<td class="MainTableBottomRowRightColumn">&nbsp;</td>
-	</tr>
-</table>
+<c:if test="${ not empty message }">	
+	<c:choose>
+		<c:when test="${ not fn:startsWith(fn:toLowerCase(message), 'error') and not fn:startsWith(fn:toLowerCase(message), 'exception')}" >
+			<div class="alert alert-success" >
+		    	<a href="#" data-dismiss="alert" class="close">&times;</a>
+		    	<c:out value="${ message }" />
+			</div>		
+		</c:when>
+		<c:otherwise>
+			<div class="alert alert-error" >
+		    	<a href="#" data-dismiss="alert" class="close">&times;</a>
+		    	<c:out value="${ message }" />
+		    </div>
+		</c:otherwise>
+	</c:choose>
+</c:if>	
+<c:if test="${ empty opentext and empty param.opentext }">	
+	<html:form styleClass="form-horizontal" action="/oscarReport/reportByTemplate/uploadTemplates" enctype="multipart/form-data">
+	   <div class="row-fluid">
+		<div class="well">	
+	        <div class="control-group">
+	        	<label class="control-label" for="uploadReportXml">Select template</label>
+	        	<div class="controls">
+	        		<input type="file" id="uploadReportXml" class="input-file" name="templateFile">
+	        	</div>
+	        </div>
+			<input type="hidden" name="action" value="${ action }">
+			<input type="hidden" name="opentext" value="${ empty opentext ? param.opentext : opentext }">
+			<input type="hidden" name="templateid" value="${ templateid }">
+			<input type="hidden" name="uuid" value="${ curreport.uuid }">
+			<div class="control-group">
+				<div class="controls">
+					<input type="submit" class="btn btn-primary pull-right" value="Upload & <%=StringUtils.capitalize(action)%>">
+				</div>
+			</div>
+		</div>
+	</div>
+	</html:form>
+</c:if>	
+<c:if test="${ opentext eq '1' or param.opentext eq '1' }">	
+
+	<html:form styleClass="form" action="/oscarReport/reportByTemplate/addEditTemplatesAction">
+    <div class="row-fluid">    
+		<div class="well">          
+            <textarea id="xmltext" name="xmltext" style="width:99%;height:300px;overflow-y:scroll;">${ templatexml }</textarea>	
+			<input type="hidden" name="action" value="${ action }">
+			<input type="hidden" name="opentext" value="${ empty opentext ? param.opentext : opentext }">
+			<input type="hidden" name="templateid" value="${ templateid }">
+			<input type="hidden" name="uuid" value="${ curreport.uuid }">
+		</div>
+		
+		<div class="form-actions">
+			<input type="submit" class="btn pull-right" value="Save">
+
+			<c:if test="${ action eq 'edit' }">
+				<input type="submit" class="btn btn-primary pull-right" name="done" value="Done">
+			</c:if>
+			<c:if test="${ action ne 'edit' }">
+				<input type="button" class="btn pull-right" name="cancel" value="Cancel" onclick="document.location='homePage.jsp'"> 
+			</c:if>
+		</div>
+	</div>
+	</html:form>
+
+</c:if>
+
+<script type="text/javascript">
+	jQuery("#xmltext").keyup(function() {
+		jQuery(".alert").hide();
+	});
+</script>
+
+</body>
 </html:html>
