@@ -21,6 +21,10 @@
  * Hamilton 
  * Ontario, Canada 
  */
+* {
+	overscroll-behavior: none;
+}
+
 body {
 	background-color:#486ebd;
 	margin:0px;
@@ -46,7 +50,7 @@ body {
     left:0px;
     right:0px;
     background-color:white;
-    z-index:10000000;
+    z-index:1000;
     border-bottom: 1px solid #c0c0c0;
     height:40px;
  }
@@ -56,6 +60,14 @@ table#firstTable tr td.icon-container {
 
  table#scheduleTable {
 	 margin-top:69px;
+ }
+
+ table#caseloadTable {
+	margin-top:40px;
+
+ }
+ table#caseloadTable tr.caseloadRow td:first-of-type {
+	background-color: whitesmoke !important;
  }
 
  table#firstTable td#oscarLogo a {
@@ -80,11 +92,13 @@ table#firstTable td#firstMenu ul#navlist, table#firstTable td#userSettings ul#us
 
 table#firstTable td#userSettings {
 	text-align: right;
+	padding-right:10px;
+	min-width:250px;
 }
 
-table#firstTable td#userSettings #logoutButton {
+table#firstTable #logoutButton span {
     font-size:18px;
-	padding:5px 10px;
+	padding-right:10px;
 }
 
 table#firstTable td#userSettings ul#userSettingsMenu li {
@@ -329,6 +343,12 @@ p {
 	color: red;
 }
 
+.tabalert:hover{
+	color: white !important;
+}
+
+
+
 table#firstTable td#firstMenu #navlist li {
     line-height:1;
     display: inline-block;
@@ -341,6 +361,9 @@ table#firstTable td#firstMenu #navlist #logoutMobile { display:none; }
 table#firstTable td#firstMenu #navlist li a:not(.tabalert):not(.dashboardDropdown):not(.dashboardDropdown a) {
 	display:inline-block;
 	padding:10px 5px 10px 5px;
+}
+#unclaimedLabLink {
+	padding-right: 5px;
 }
 
 div.reason-tag a {
@@ -374,7 +397,7 @@ div.reason-tag a {
 	position: absolute;
 	background-color: #f9f9f9;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	z-index: 10000000;
+	z-index: 1000;
 }
 
 .dashboardDropdown a {

@@ -30,6 +30,8 @@
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@page import="org.oscarehr.util.MiscUtils"%>
 <%@page import="java.util.*,net.sf.json.*,java.lang.reflect.*,java.io.*,org.apache.xmlrpc.*,oscar.oscarRx.util.*,oscar.oscarRx.data.*"  %>
+<%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
+<%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -47,6 +49,8 @@
 
 <%
 LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
+SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
+boolean rxShowAllAllergyWarnings = systemPreferencesDao.isReadBooleanPreference("rx_show_highest_allergy_warning");
 String atcCode =  request.getParameter("atcCode");
 String id = request.getParameter("id");
 
@@ -54,7 +58,7 @@ String disabled = oscar.OscarProperties.getInstance().getProperty("rx3.disable_a
 if(disabled.equals("false")) {
 
 oscar.oscarRx.pageUtil.RxSessionBean rxSessionBean = (oscar.oscarRx.pageUtil.RxSessionBean) session.getAttribute("RxSessionBean");
-Allergy[] allergies = RxPatientData.getPatient(loggedInInfo, rxSessionBean.getDemographicNo()).getAllergies(loggedInInfo);
+Allergy[] allergies = RxPatientData.getPatient(loggedInInfo, rxSessionBean.getDemographicNo()).getActiveAllergies();
 
 if (loggedInInfo.getCurrentFacility().isIntegratorEnabled()) {
 	try {
@@ -73,27 +77,37 @@ Allergy[] allergyWarnings = null;
    List<Allergy> missing = new ArrayList<Allergy>();
    allergyWarnings = drugData.getAllergyWarnings(atcCode, allergies,missing);
 
+   Allergy highestSeverityAllergy = null;
 
-   // Hashtable d = new Hashtable();
-    Hashtable d2=new Hashtable();
-
-  //  d.put("id",id);
-    d2.put("id",id);
-    for(Allergy allg:allergyWarnings){
-   	 	String temp=StringUtils.trimToEmpty(allg.getDescription());
-        d2.put("DESCRIPTION", temp);
-
-        temp=StringUtils.trimToEmpty(allg.getReaction());
-        d2.put("reaction", temp);
-    }
-
-   try{
-    response.setContentType("text/x-json");
-    JSONObject jsonArray = (JSONObject) JSONSerializer.toJSON( d2 );
-    jsonArray.write(out);
-    }
-   catch(Exception e){
-	   MiscUtils.getLogger().error("Error", e);
-    }
+	JSONObject result = new JSONObject();
+	result.put("id", id);
+	JSONArray allergyResultArray = new JSONArray();
+	if (allergyWarnings != null && allergyWarnings.length > 0) {
+		highestSeverityAllergy = allergyWarnings[0];
+		for (Allergy allergy : allergyWarnings) {
+			JSONObject allergyResult = new JSONObject();
+			allergyResult.put("DESCRIPTION", StringUtils.trimToEmpty(allergy.getDescription()));
+			allergyResult.put("reaction", StringUtils.trimToEmpty(allergy.getReaction()));
+			allergyResult.put("severity", StringUtils.trimToEmpty(allergy.getSeverityOfReactionDesc()));
+			if (rxShowAllAllergyWarnings) {
+				Integer highestSeverity = Integer.valueOf(highestSeverityAllergy.getSeverityOfReaction());
+				Integer thisSeverity = Integer.valueOf(allergy.getSeverityOfReaction());
+				if (thisSeverity > highestSeverity) {
+					highestSeverityAllergy = allergy;
+				}
+			} else {
+				allergyResultArray.add(allergyResult);
+			}
+		}
+	}
+	if (rxShowAllAllergyWarnings && highestSeverityAllergy != null) {
+		JSONObject allergyResult = new JSONObject();
+		allergyResult.put("DESCRIPTION", StringUtils.trimToEmpty(highestSeverityAllergy.getDescription()));
+		allergyResult.put("reaction", StringUtils.trimToEmpty(highestSeverityAllergy.getReaction()));
+		allergyResult.put("severity", StringUtils.trimToEmpty(highestSeverityAllergy.getSeverityOfReactionDesc()));
+		allergyResultArray.add(allergyResult);
+	}
+	result.put("results", allergyResultArray);
+	result.write(out);
 }
 %>

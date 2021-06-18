@@ -64,11 +64,11 @@
 		</repository>
 		
 		<!-- MARC-HI (Everest & SHIC) -->
- 		<repository>
-			<id>marc-te-main</id>
-			<name>MARC-HI Technology Exchange Private Maven Repository</name>
-			<url>http://te.marc-hi.ca/mvn</url>
-		</repository>
+<!-- 		<repository>-->
+<!--			<id>marc-te-main</id>-->
+<!--			<name>MARC-HI Technology Exchange Private Maven Repository</name>-->
+<!--			<url>http://te.marc-hi.ca/mvn</url>-->
+<!--		</repository>-->
 	</repositories>
 
 	<pluginRepositories>

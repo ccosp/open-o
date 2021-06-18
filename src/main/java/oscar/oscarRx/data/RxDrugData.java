@@ -30,6 +30,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.oscarehr.common.model.Allergy;
 import org.oscarehr.util.MiscUtils;
@@ -92,7 +93,7 @@ public class RxDrugData {
 			name    = (String) hash.get("name");
 			atc     = (String) hash.get("atc");
 			product = (String) hash.get("product");
-			regionalIdentifier = (String) hash.get("regional_identifier");
+			regionalIdentifier = StringUtils.isEmpty((String) hash.get("regional_identifier")) ? null : (String) hash.get("regional_identifier");
 			drugForm = (String)hash.get("drugForm");
 			
 			Vector drugRoute=(Vector)hash.get("drugRoute");
@@ -298,8 +299,7 @@ public class RxDrugData {
 		}
 
 		MinDrug(Hashtable h){
-			//this.pKey = (String) h.get("id"); //pKey
-			this.pKey = ((Integer) h.get("id")).toString();
+			this.pKey = String.valueOf(h.get("id"));
 			this.name = (String) h.get("name");
 			//this.type = (String) h.get("category");//type
 			this.type = ((Integer) h.get("category")).toString();
@@ -648,7 +648,7 @@ public class RxDrugData {
 	public String getGenericName(String pKey) throws Exception{
 		RxDrugRef d = new RxDrugRef();
 		Hashtable h = d.getGenericName(pKey);
-		return (String) h.get("name");
+		return (String) h.getOrDefault("name", "");
 	}
 
 
@@ -811,11 +811,19 @@ public class RxDrugData {
 	
 	public Allergy[] getAllergyWarnings(String atcCode,Allergy[] allerg,List<Allergy> missing) throws Exception {
 		Vector vec = new Vector();
-		for (int i =0; i < allerg.length; i++){
+		for (int i = 0; i < allerg.length; i++) {
 			Hashtable h = new Hashtable();
-			h.put("id",""+i);
-			h.put("description",allerg[i].getDescription());
-			h.put("type",""+allerg[i].getTypeCode());
+			h.put("id", "" + i);
+			h.put("description", allerg[i].getDescription());
+			h.put("type", "" + allerg[i].getTypeCode());
+			if (allerg[i].getRegionalIdentifier() != null) {
+				h.put("din", allerg[i].getRegionalIdentifier());
+			}
+			if (allerg[i].getAtc() != null) {
+				h.put("atc", allerg[i].getAtc());
+			} else if (allerg[i].getTypeCode() == 8) {
+				h.put("atc", allerg[i].getDrugrefId());
+			}
 			vec.add(h);
 		}
 		RxDrugRef d = new RxDrugRef();
@@ -835,13 +843,14 @@ public class RxDrugData {
 				}
 				
 				Vector allmissing = (Vector) hashObject.get("missing");
-				for (int k = 0; k < allmissing.size(); k++){
-					String str = (String) allmissing.get(k);
-					int id = Integer.parseInt(str);
-					if(missing != null) {
-						missing.add(allerg[id]);
+				if (allmissing != null) {
+					for (int k = 0; k < allmissing.size(); k++) {
+						String str = (String) allmissing.get(k);
+						int id = Integer.parseInt(str);
+						if (missing != null) {
+							missing.add(allerg[id]);
+						}
 					}
-					
 				}
 			}
 		}

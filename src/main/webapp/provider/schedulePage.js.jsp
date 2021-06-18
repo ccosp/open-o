@@ -295,10 +295,20 @@ setTimeout("refreshTabAlerts('"+id+"')", 10);
 }
 
 function refreshTabAlerts(id) {
-var url = "../provider/tabAlertsRefresh.jsp";
-var pars = "id=" + id;
-
-var myAjax = new Ajax.Updater(id, url, {method: 'get', parameters: pars});
+    var url = "../provider/tabAlertsRefresh.jsp";
+    var pars = "id=" + id;
+    jQuery.ajax({
+        url: url,
+        type: "get",
+        dataType: "html",
+        data: pars,
+        success: function(returnData){
+            jQuery("#" + id).html(returnData);
+        },
+        error: function(e){
+            console.log(e);
+        }
+    });
 }
 
 function refreshSameLoc(mypage) {

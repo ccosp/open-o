@@ -40,7 +40,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
-
+import org.oscarehr.util.MiscUtils;
+import oscar.oscarRx.data.RxDrugData;
 
 @Entity
 @Table(name = "allergies")
@@ -99,8 +100,14 @@ public class Allergy extends AbstractModel<Integer> {
 	@Column(name = "regional_identifier")
 	private String regionalIdentifier;
 
+	@Column(name = "atc")
+	private String atc;
+
 	@Column(name = "life_stage")
 	private String lifeStage;
+
+	@Column(name = "reaction_type")
+	private String reactionType;
 
 	private int position=0;
 
@@ -257,6 +264,14 @@ public class Allergy extends AbstractModel<Integer> {
 		this.regionalIdentifier = StringUtils.trimToNull(regionalIdentifier);
 	}
 
+	public String getAtc() {
+		return atc;
+	}
+
+	public void setAtc(String atc) {
+		this.atc = atc;
+	}
+
 	public String getLifeStage() {
 		return lifeStage;
 	}
@@ -316,6 +331,14 @@ public class Allergy extends AbstractModel<Integer> {
 		return df.format(this.startDate);
 	}
 
+	public String getReactionType() {
+		return reactionType;
+	}
+
+	public void setReactionType(String reactionType) {
+		this.reactionType = reactionType;
+	}
+
 	@PreUpdate
 	@PrePersist
 	protected void autoSetUpdateTime()
@@ -355,7 +378,7 @@ public class Allergy extends AbstractModel<Integer> {
         if ("1".equals(onsetCode)) return("Immediate");
         if ("2".equals(onsetCode)) return("Gradual");
         if ("3".equals(onsetCode)) return("Slow");
-        else return("Unknown");
+        else return("Unknown "+onsetCode);
      }
 
     public String getTypeDesc() {
@@ -399,12 +422,6 @@ public class Allergy extends AbstractModel<Integer> {
             case 14:
                 s = "Ingredient";
                 break;
-            case 0:
-            	s = "Custom Allergy";
-            	break;
-            case -1:
-            	s = "Intolerance";
-            	break;
             default:
                 s = "";
         }
@@ -419,7 +436,7 @@ public class Allergy extends AbstractModel<Integer> {
         if ("1".equals(severityCode)) return("Mild");
         if ("2".equals(severityCode)) return("Moderate");
         if ("3".equals(severityCode)) return("Severe");
-        else return("Unknown");
+        else return("Unknown "+severityCode);
     }
 
     public String getAuditString() {
@@ -430,4 +447,37 @@ public class Allergy extends AbstractModel<Integer> {
         return this.getDescription() + " (" + getTypeDesc(getTypeCode()) + ")";
     }
 
+    public String getDatePattern(String startDate) {
+    	String datePattern = null;
+		if (startDate.length()>=8 && getCharOccur(startDate,'-')==2) {
+			datePattern = "yyyy-MM-dd";
+		} else if (startDate.length()>=6 && getCharOccur(startDate,'-')>=1) {
+			datePattern = "yyyy-MM";
+		} else if (startDate.length()>=4) {
+			datePattern = "yyyy";
+		}
+		return datePattern;
+	}
+
+	public RxDrugData.DrugMonograph isDrug(Integer type){
+		RxDrugData.DrugMonograph drugMonograph= null;
+		if (type != null && type > 0){
+			RxDrugData drugData = new RxDrugData();
+			try{
+				drugMonograph = drugData.getDrug(drugrefId);
+			}catch(Exception e){
+				MiscUtils.getLogger().error("Error", e);
+			}
+		}
+		return drugMonograph;
+	}
+
+	private int getCharOccur(String str, char ch) {
+		int occurence=0, from=0;
+		while (str.indexOf(ch,from)>=0) {
+			occurence++;
+			from = str.indexOf(ch,from)+1;
+		}
+		return occurence;
+	}
 }
