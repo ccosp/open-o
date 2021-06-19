@@ -831,7 +831,7 @@ function consentClearBtn(radioBtnName)
      	if(serviceAdmissions == null) {
      		serviceAdmissions = new ArrayList<Admission>();
      	}
-
+		pageContext.setAttribute("demographic", demographic, PageContext.PAGE_SCOPE);
 %>
 <table class="MainTable" id="scrollNumber1" name="encounterTable">
 	<tr class="MainTableTopRow">
@@ -3690,6 +3690,22 @@ if(oscarProps.getProperty("demographicExtJScript") != null) { out.println(oscarP
 						<table border="0" width="100%" cellpadding="0" cellspacing="0">
 							<tr>
 								<td width="30%" valign="top">
+
+									<oscar:oscarPropertiesCheck value="BC" property="billregion">
+										<security:oscarSec roleName="<%=roleName$%>" objectName="_careconnect" rights="r">
+											<c:set value="${ OscarProperties.getInstance()['BC_CARECONNECT_URL'] }" var="url" scope="page" />
+											<c:if test="${ not empty url }">
+												<script type="text/javascript" src="${ctx}/careconnect/careconnect.js"></script>
+												<input type="button" value="CareConnect"
+													   onclick="callCareConnect('${url}', '${ demographic.hin }', '${ demographic.firstName }',
+															   '${ demographic.lastName }', '${ demographic.formattedDob }', '${ demographic.sex }',
+															   '${ OscarProperties.getInstance()['BC_CARECONNECT_REGION'] }' )" />
+												<br />
+											</c:if>
+										</security:oscarSec>
+									</oscar:oscarPropertiesCheck>
+									<br />
+
 								<input type="hidden" name="dboperation" value="update_record"> 
 
 								 <security:oscarSec roleName="<%=roleName$%>" objectName="_demographicExport" rights="r" reverse="<%=false%>">
@@ -3697,6 +3713,8 @@ if(oscarProps.getProperty("demographicExtJScript") != null) { out.println(oscarP
 									onclick="window.open('demographicExport.jsp?demographicNo=<%=demographic.getDemographicNo()%>');">
 								</security:oscarSec>
 									<br>
+
+
 								<input
 									type="button" name="Button" id="cancelButton" class="leftButton top"
 									value="Exit Master Record"	onclick="self.close();">
