@@ -79,7 +79,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="myoscar" %>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
 <!-- Struts for i18n -->
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -1560,9 +1559,9 @@
                                                             if (nextStatus != null && !nextStatus.equals("")) {
                                                         %>
                                                         <!-- Short letters -->
-                                                        <a class="apptStatus" href=#
+                                                        <a class="apptStatus" href="javascript:void(0)"
                                                            onclick="refreshSameLoc('providercontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&status=&statusch=<%=nextStatus%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=addstatus&dboperation=updateapptstatus&viewall=<%=request.getParameter("viewall")==null?"0":(request.getParameter("viewall"))%>, <%=isWeekView?"&viewWeek=1":""%>');"
-                                                           title="<%=as.getTitleString(request.getLocale())%> ">
+                                                           title='<c:out value="<%=as.getTitleString(request.getLocale())%>" />' >
                                                             <%
                                                                 }
                                                                 if (nextStatus != null) {
@@ -1585,7 +1584,7 @@
 
                                                             <img src="../images/<%=as.getImageName()%>"
                                                                  border="0" height="10"
-                                                                 alt="<%=(as.getTitleString(request.getLocale()).length()>0)?as.getTitleString(request.getLocale()):as.getTitle()%>">
+                                                                 alt="<c:out value='<%=(as.getTitleString(request.getLocale()).length()>0)?as.getTitleString(request.getLocale()):as.getTitle()%>' /> ">
 
                                                             <%
                                                                     }
@@ -1648,7 +1647,7 @@
                                                         %>
 
 
-                                                        <a href=#
+                                                        <a href="javascript:void(0)"
                                                            onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=0&displaymode=edit&dboperation=search');return false;"
                                                            title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%>
                                                                     <%=name%>
@@ -1664,7 +1663,7 @@
                                                             <c:out value="<%=reason%>" />
                                                         </span>
 
-                                                    </td>
+
                                                             <%
                                                                     } else {
                                                                 %> <% if (tickler_no.compareTo("") != 0) {%>
@@ -1756,7 +1755,7 @@
                                                                             start_time += iSm + ":00";
                                                                             %>
 
-                                                    <a class="apptLink" href=#
+                                                    <a class="apptLink" href="javascript:void(0)"
                                                        onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
                                                             <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON_TOOLTIP" value="yes" defaultVal="true">
                                                                 title='<%=name%>
@@ -1819,7 +1818,7 @@
                                                                                 + curProvider_no[nProvider];%>
 
                                                             <% if (showOldEchartLink) { %>
-                                                    &#124; <a href=# class="encounterBtn"
+                                                    &#124; <a href="javascript:void(0)" class="encounterBtn"
                                                               onClick="popupWithApptNo(710, 1024,'<%=eURL%>','encounter',<%=appointment.getId()%>);return false;"
                                                               title="<bean:message key="global.encounter"/>">
                                                     <bean:message
@@ -1972,7 +1971,7 @@
                                                     </oscar:oscarPropertiesCheck>
 
                                                             <% }} %>
-                                                    </span></td>
+                                                    </td>
                                                             <%
                                                                     }
                                                                 }
