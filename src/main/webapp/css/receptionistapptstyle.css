@@ -21,6 +21,10 @@
  * Hamilton 
  * Ontario, Canada 
  */
+.hideReason {
+	display:none;
+}
+
 * {
 	overscroll-behavior: none;
 }
