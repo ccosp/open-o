@@ -79,7 +79,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="myoscar" %>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
 <!-- Struts for i18n -->
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -766,6 +765,13 @@
         java.util.Locale vLocale = (java.util.Locale) session.getAttribute(org.apache.struts.Globals.LOCALE_KEY);
     %>
 
+        <%-- set if reasons will be shown by default or not. --%>
+    <c:set value="false" var="hideReason" scope="page"/>
+    <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON" value="yes" defaultVal="no">
+        <c:set value="true" var="hideReason" scope="page"/>
+    </oscar:oscarPropertiesCheck>
+    <input type="hidden" value="${ hideReason }" id="hideReason" />
+
     <!-- menu goes here -->
     <jsp:include page="mainMenu.jsp"/>
 
@@ -1084,7 +1090,6 @@
             </td>
         </tr>
     </table>
-
     <table id="scheduleTable" BORDER="0" CELLPADDING="1" CELLSPACING="0" WIDTH="100%" BGCOLOR="#C0C0C0">
 
         <tr>
@@ -1279,12 +1284,9 @@
                                                    title='<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>' >
                                                     <c:out value='<%=curProviderName[nProvider]  + " (" + appointmentCount + ") " %>' />
                                                 </a>
-                                                <oscar:oscarPropertiesCheck value="yes" property="TOGGLE_REASON_BY_PROVIDER" defaultVal="true">
-                                                    <a id="expandReason" href="#"
-                                                       onclick="return toggleReason('<%=curProvider_no[nProvider]%>');"
+                                                <oscar:oscarPropertiesCheck value="yes" property="TOGGLE_REASON_BY_PROVIDER" defaultVal="yes">
+                                                    <a id="expandReason" href="#" onclick="return toggleReason('<%=curProvider_no[nProvider]%>');"
                                                        title="<bean:message key="provider.appointmentProviderAdminDay.expandreason"/>">*</a>
-                                                    <%-- Default is to hide inline reasons. --%>
-                                                    <c:set value="true" var="hideReason"/>
                                                 </oscar:oscarPropertiesCheck>
 
                                                     <% } %>
@@ -1557,9 +1559,9 @@
                                                             if (nextStatus != null && !nextStatus.equals("")) {
                                                         %>
                                                         <!-- Short letters -->
-                                                        <a class="apptStatus" href=#
+                                                        <a class="apptStatus" href="javascript:void(0)"
                                                            onclick="refreshSameLoc('providercontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&status=&statusch=<%=nextStatus%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&view=<%=view==0?"0":("1&curProvider="+request.getParameter("curProvider")+"&curProviderName="+URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") )%>&displaymode=addstatus&dboperation=updateapptstatus&viewall=<%=request.getParameter("viewall")==null?"0":(request.getParameter("viewall"))%>, <%=isWeekView?"&viewWeek=1":""%>');"
-                                                           title="<%=as.getTitleString(request.getLocale())%> ">
+                                                           title='<c:out value="<%=as.getTitleString(request.getLocale())%>" />' >
                                                             <%
                                                                 }
                                                                 if (nextStatus != null) {
@@ -1582,7 +1584,7 @@
 
                                                             <img src="../images/<%=as.getImageName()%>"
                                                                  border="0" height="10"
-                                                                 alt="<%=(as.getTitleString(request.getLocale()).length()>0)?as.getTitleString(request.getLocale()):as.getTitle()%>">
+                                                                 alt="<c:out value='<%=(as.getTitleString(request.getLocale()).length()>0)?as.getTitleString(request.getLocale()):as.getTitle()%>' /> ">
 
                                                             <%
                                                                     }
@@ -1645,7 +1647,7 @@
                                                         %>
 
 
-                                                        <a href=#
+                                                        <a href="javascript:void(0)"
                                                            onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=0&displaymode=edit&dboperation=search');return false;"
                                                            title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%>
                                                                     <%=name%>
@@ -1656,12 +1658,12 @@
                                                             .<%=(view == 0 && numAvailProvider != 1) ? (name.length() > len ? name.substring(0, len).toUpperCase() : name.toUpperCase()) : name.toUpperCase()%>
                                                             </span>
                                                         </a><!--Inline display of reason -->
-                                                        <oscar:oscarPropertiesCheck
-                                                                property="SHOW_APPT_REASON" value="yes"
-                                                                defaultVal="true">
-                                                            <span class="reason reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }"><%=UtilMisc.htmlEscape(reason)%></span>
-                                                        </oscar:oscarPropertiesCheck>
-                                                    </td>
+
+                                                        <span class="reason reason_<%=curProvider_no[nProvider]%> hideReason">
+                                                            <c:out value="<%=reason%>" />
+                                                        </span>
+
+
                                                             <%
                                                                     } else {
                                                                 %> <% if (tickler_no.compareTo("") != 0) {%>
@@ -1753,15 +1755,13 @@
                                                                             start_time += iSm + ":00";
                                                                             %>
 
-                                                    <a class="apptLink" href=#
+                                                    <a class="apptLink" href="javascript:void(0)"
                                                        onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
-                                                            <oscar:oscarPropertiesCheck
-                                                                    property="SHOW_APPT_REASON_TOOLTIP"
-                                                                    value="yes" defaultVal="true">
-                                                                title="<%=name%>
+                                                            <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON_TOOLTIP" value="yes" defaultVal="true">
+                                                                title='<%=name%>
                                                                 type: <%=type != null ? type : "" %>
                                                                 reason: <%=reasonCodeName != null ? reasonCodeName : ""%> <%if (reason != null && !reason.isEmpty()) {%><%=((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%><%}%>
-                                                                notes: <%=notes%>"
+                                                                notes: <%=notes%>'
                                                             </oscar:oscarPropertiesCheck> ><%=(view == 0) ? (name.length() > len ? name.substring(0, len) : name) : name%>
                                                     </a>
 
@@ -1818,7 +1818,7 @@
                                                                                 + curProvider_no[nProvider];%>
 
                                                             <% if (showOldEchartLink) { %>
-                                                    &#124; <a href=# class="encounterBtn"
+                                                    &#124; <a href="javascript:void(0)" class="encounterBtn"
                                                               onClick="popupWithApptNo(710, 1024,'<%=eURL%>','encounter',<%=appointment.getId()%>);return false;"
                                                               title="<bean:message key="global.encounter"/>">
                                                     <bean:message
@@ -1921,17 +1921,13 @@
                                                           %>
                                                     &#124;<b style="color:#FF0000">$</b>
                                                             <%}}%>
-                                                    <oscar:oscarPropertiesCheck
-                                                            property="SHOW_APPT_REASON" value="yes"
-                                                            defaultVal="true">
-                                                    <span class="reason_<%=curProvider_no[nProvider]%> ${ hideReason ? "hideReason" : "" }">
-                                                                        <strong><i>
-                                                                            &#124;<%=reasonCodeName == null ? "" : "&nbsp;" + reasonCodeName %>
-                                                                            <%=(reason == null || reason.isEmpty()) ? "" : ((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + reason%>
-                                                                        </i></strong>
-                                                                    </span>
-                                                    </oscar:oscarPropertiesCheck>
 
+                                                    <span class='reason reason_<%=curProvider_no[nProvider]%> hideReason'>
+                                                        <strong><i>
+                                                            &#124;<c:out value='<%=reasonCodeName == null ? "" : " " + reasonCodeName %>' />
+                                                            <c:out value='<%=(reason == null || reason.isEmpty()) ? "" : ((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + reason%>' />
+                                                        </i></strong>
+                                                    </span>
                                                     </security:oscarSec>
 
                                                     <!-- add one link to caisi Program Management Module -->
@@ -1975,7 +1971,7 @@
                                                     </oscar:oscarPropertiesCheck>
 
                                                             <% }} %>
-                                                    </span></td>
+                                                    </td>
                                                             <%
                                                                     }
                                                                 }
