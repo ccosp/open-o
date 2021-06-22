@@ -62,8 +62,8 @@
 <%@page import="org.oscarehr.casemgmt.web.NoteDisplayNonNote"%>
 <%@page import="org.oscarehr.common.dao.EncounterTemplateDao"%>
 <%@page import="org.oscarehr.casemgmt.web.CheckBoxBean"%>
-<%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
 <%@page import="org.oscarehr.managers.ProgramManager2" %>
+<%@ page import="org.oscarehr.managers.DemographicManager" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request" />
 
@@ -90,8 +90,10 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 String demoNo = request.getParameter("demographicNo");
 String privateConsentEnabledProperty = OscarProperties.getInstance().getProperty("privateConsentEnabled");
 boolean privateConsentEnabled = privateConsentEnabledProperty != null && privateConsentEnabledProperty.equals("true");
-DemographicExtDao demographicExtDao = SpringUtils.getBean(DemographicExtDao.class);
-DemographicExt infoExt = demographicExtDao.getDemographicExt(Integer.parseInt(demoNo), "informedConsent");
+DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
+Demographic demographic = demographicManager.getDemographic(loggedInInfo, Integer.parseInt(demoNo));
+DemographicExt infoExt = demographicManager.getDemographicExt(loggedInInfo, Integer.parseInt(demoNo), "informedConsent");
+pageContext.setAttribute("demographic", demographic);
 boolean showPopup = false;
 if(infoExt == null || !"yes".equalsIgnoreCase(infoExt.getValue())) {
 	showPopup=true;
@@ -145,8 +147,6 @@ try
 		request.setAttribute("caseManagementEntryForm", cform);
 	}
 %>
-
-
 
 <script type="text/javascript">
     ctx = "<c:out value="${ctx}"/>";
@@ -366,17 +366,12 @@ try
 			</table>
 		</div>
 
-		<div style="float: left; clear: both; margin-top: 5px; margin-bottom: 3px; width: 100%; text-align: center;">
-			<div style="display:inline-block">
+		<div style="float: left; clear: both; margin-top: 5px; margin-bottom: 3px; width: 100%;padding:10px;">
+			<div style="display:inline-block; margin-bottom: 5px;">
 				<img alt="<bean:message key="oscarEncounter.msgFind"/>" src="<c:out value="${ctx}/oscarEncounter/graphics/edit-find.png"/>">
 				<input id="enTemplate" tabindex="6" size="16" type="text" value="" onkeypress="return grabEnterGetTemplate(event)">
 
 				<div class="enTemplate_name_auto_complete" id="enTemplate_list" style="z-index: 1; display: none">&nbsp;</div>
-
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-				
 
 				<input type="text" id="keyword" name="keyword" value="" onkeypress="return grabEnter('searchButton',event)">
 				<input type="button" id="searchButton" name="button" value="<bean:message key="oscarEncounter.Index.btnSearch"/>" onClick="popupPage(600,800,'<bean:message key="oscarEncounter.Index.popupSearchPageWindow"/>',$('channel').options[$('channel').selectedIndex].value+urlencode($F('keyword')) ); return false;">
@@ -401,20 +396,32 @@ try
                     <option value="tripsearch.jsp?searchterm=">Trip Database</option>
                     <option value="macplussearch.jsp?searchterm=">MacPlus Database</option>
     	        </select>
-				</div>				
+				</div>
 
 			</div>
 			&nbsp;&nbsp;
-			<div style="display:inline-block;text-align: left;" id="toolbar">
+			<div style="display:inline-block;text-align:left;" id="toolbar">
+
+				<oscar:oscarPropertiesCheck value="BC" property="billregion">
+					<security:oscarSec roleName="<%=roleName$%>" objectName="_careconnect" rights="r" >
+						<c:if test="${ not empty careconnecturl }">
+							<input type="button" title="Connect to BC Care Connect" value="CareConnect"
+								   onclick="callCareConnect('${ careconnecturl }', '${ demographic.hin }', '${ demographic.firstName }',
+										   '${ demographic.lastName }', '${ demographic.formattedDob }', '${ demographic.sex }',
+										   '${ OscarProperties.getInstance()['BC_CARECONNECT_REGION'] }' )" />
+						</c:if>
+					</security:oscarSec>
+				</oscar:oscarPropertiesCheck>
+
 				<input type="button" value="<bean:message key="oscarEncounter.Filter.title"/>" onclick="showFilter();" />
 				<%
-					String roleName = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+					String roleName = session.getAttribute("userrole") + "," + session.getAttribute("user");
 					String pAge = Integer.toString(UtilDateUtilities.calcAge(bean.yearOfBirth,bean.monthOfBirth,bean.dateOfBirth));
 				%>
 				<security:oscarSec roleName="<%=roleName%>" objectName="_newCasemgmt.calculators" rights="r" reverse="false">
 					<%@include file="calculatorsSelectList.jspf" %>
 				</security:oscarSec>
-				<%--<security:oscarSec roleName="<%=roleName%>" objectName="_admin.templates" rights="r"> --%>
+
 				<security:oscarSec roleName="<%=roleName%>" objectName="_newCasemgmt.templates" rights="r">
 					<select style="width:100px;" onchange="javascript:popupPage(700,700,'Templates',this.value);">
 						<option value="-1"><bean:message key="oscarEncounter.Header.Templates"/></option>
