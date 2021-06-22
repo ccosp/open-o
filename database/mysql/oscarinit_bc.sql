@@ -6129,12 +6129,12 @@ create index  billingmaster_billing_no on billingmaster (billing_no);
 
 CREATE TABLE IF NOT EXISTS `formECARES` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `demographic_no` int(11) DEFAULT NULL,
-  `provider_no` varchar(11) DEFAULT NULL,
-  `formCreated` datetime DEFAULT NULL,
-  `formEdited` timestamp NULL DEFAULT NULL,
+  `demographic_no` int(11),
+  `provider_no` varchar(11),
+  `formCreated` datetime,
+  `formEdited` timestamp,
   `formData` blob,
-  `completed` tinyint(1) DEFAULT NULL,
-  `completedDate` datetime DEFAULT NULL,
+  `completed` tinyint(1),
+  `completedDate` datetime,
   PRIMARY KEY (`id`)
 );
