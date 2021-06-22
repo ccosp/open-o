@@ -1756,9 +1756,7 @@
                                                     <a class="apptLink" href="javascript:void(0)"
                                                        onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
                                                             <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON_TOOLTIP" value="yes" defaultVal="true">
-                                                                title='<%=name%>
-                                                                type: <%=type != null ? type : "" %>
-                                                                reason: <%=reasonCodeName != null ? reasonCodeName : ""%> <%if (reason != null && !reason.isEmpty()) {%><%=((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%><%}%>
+                                                                title='<%=name%>&#010;type: <%=type != null ? type : "" %>&#010;reason: <%=reasonCodeName != null ? reasonCodeName : ""%> <%if (reason != null && !reason.isEmpty()) {%><%=((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%><%}%>
                                                                 notes: <%=notes%>'
                                                             </oscar:oscarPropertiesCheck> ><%=(view == 0) ? (name.length() > len ? name.substring(0, len) : name) : name%>
                                                     </a>
