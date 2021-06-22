@@ -35,6 +35,7 @@ body {
 	padding:0px;
 	overscroll-behavior: none;
 	height: 100%;
+	line-height: 1 !important;
 }
 
 #main-container {
@@ -56,18 +57,18 @@ body {
     background-color:white;
     z-index:1000;
     border-bottom: 1px solid #c0c0c0;
-    height:40px;
+    height:35px;
  }
 table#firstTable tr td.icon-container {
 	padding-left: 10px;
 }
 
  table#scheduleTable {
-	 margin-top:69px;
+	 margin-top:64px;
  }
 
  table#caseloadTable {
-	margin-top:40px;
+	margin-top:35px;
 
  }
  table#caseloadTable tr.caseloadRow td:first-of-type {
@@ -87,8 +88,8 @@ table#firstTable tr td.icon-container {
     width:22px;
   }
 
-table#firstTable td#firstMenu ul#navlist:not(.dashboardDropdown *),
-table#firstTable td#userSettings ul#userSettingsMenu:not(.dashboardDropdown *){
+table#firstTable td#firstMenu ul#navlist:not(.dashboardDropdown),
+table#firstTable td#userSettings ul#userSettingsMenu:not(.dashboardDropdown){
 	margin: 0;
 	padding: 0;
 	white-space: nowrap;
@@ -117,7 +118,7 @@ tr#ivoryBar td, table#monthScheduleNavigation tr td {
 
 tr td.infirmaryView {
     position: sticky;
-    top:70px;
+    top:65px;
 	left:0;
 	margin-left: unset;
     height:25px;
@@ -133,7 +134,7 @@ td#group {
 
 table#scheduleNavigation, table#monthScheduleNavigation {
 	position:fixed;
-	top:40px;
+	top:35px;
 	right:0;
 	left:0;
 	height:30px;
@@ -146,9 +147,6 @@ table#scheduleNavigation tr td, table#monthScheduleNavigation tr td {
 }
 
 .providerSchedule {
-/* 	display:flex;
-	justify-content: flex-start;
-	flex-direction: row; */
 	background-color: #486ebd;
 }
 
@@ -162,7 +160,8 @@ td.appt {
 	vertical-align: top;
 	border-top: #486ebd 2px solid;
 	overflow: hidden;
-	padding: 3px;
+	padding-top: 3px;
+	padding-left: 3px;
 	border-bottom: #486ebd 2px solid;
 	border-left: #486ebd 2px solid;
 	border-right: #486ebd 2px solid;
@@ -177,10 +176,6 @@ td.appt .appt-container {
 	align-items: stretch;
 	justify-content: flex-start;
 }
-
-/* div.apt-tag {
-	min-width:18px;
-} */
 
 div.apt-tag a {
 	padding:1px 3px;
@@ -209,7 +204,7 @@ div.appt-container div.navigation-tag {
 }
 
 .hourmin {
-	padding:3px;
+	padding: 0px 3px;
 	border-top: #486ebd 2px solid;
 	border-bottom: #486ebd 2px solid;
 }
@@ -237,7 +232,7 @@ a.orange:Hover {
 	color: white;
 }
 
-A.black {
+a.black {
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
@@ -248,19 +243,18 @@ a.black:Hover {
 	color: white;
 }
 
-A {
+a {
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
 }
 
-A:Hover {
+a:Hover {
 	text-decoration: none;
 	color: red;
 }
 
 input,select,textarea {
-	font-size: 11px;
 	background-color: #F4EaD7;
 	border: 1px solid #0097cf;
 }
@@ -284,6 +278,8 @@ p {
 	font-family: "Arial";
 	font-size: 12px;
 	color: white;
+	display: block;
+	padding: 3px;
 }
 
 .small {
@@ -308,7 +304,6 @@ p {
 }
 
 .text3 {
-	background: ivory;
 	font-size: 12px;
 	font-family: "Arial";
 }
@@ -351,12 +346,12 @@ p {
 	color: white !important;
 }
 
-table#firstTable td#firstMenu ul#navlist li:not(.dashboardDropdown *) {
+table#firstTable td#firstMenu ul#navlist li:not(.dashboardDropdown) {
     line-height:1;
     display: inline-block;
 }
 
-table#firstTable td#firstMenu ul#navlist li a:not(.dashboardDropdown *){
+table#firstTable td#firstMenu ul#navlist li a:not(.dashboardDropdown){
 	display:inline-block;
 	padding:10px 5px 10px 5px;
 }
@@ -376,7 +371,6 @@ div.reason-tag a {
 
 #providerSchedule, #providerSchedule td {
     border-collapse: collapse;
-    border: 2px ridge #777777;
 }
 #providerSchedule td.noGrid { border:none; }
 
