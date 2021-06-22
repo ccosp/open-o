@@ -20867,3 +20867,7 @@ INSERT INTO `bcpEligibleCodes` VALUES ('77015', 'Vascular Surgery', 'VASCULAR SU
 INSERT INTO `bcpEligibleCodes` VALUES ('77707', 'Vascular Surgery', 'TELEHEALTH SUBSEQUENT OFFICE VISIT-VASCULAR SURGERY');
 INSERT INTO `bcpEligibleCodes` VALUES ('77710', 'Vascular Surgery', 'TELEHEALTH CONSULTATION - VASCULAR SURGERY: TO INCLUDE COMPLETE HISTORY AND PHYSICAL EXAMINATION, REVIEW OF X-RAY AND LABORATORY FINDINGS, IF REQUIRED, AND A WRITTEN REPORT');
 INSERT INTO `bcpEligibleCodes` VALUES ('77712', 'Vascular Surgery', 'TELEHEALTH REPEAT OR LIMITED CONSULTATION - VASCULAR SURGERY: TO APPLY WHERE A CONSULTATION IS REPEATED FOR THE SAME CONDITION WITHIN 6 MONTHS OF THE LAST VISIT BY THE CONSULTANT, ');
+
+INSERT INTO `secObjectName`(`objectName`, `description`, `orgapplicable`) VALUES ('_careconnect', 'Restrict visibility and access to BC Care Connect', 0);
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('doctor', '_careconnect', 'o', 0, '999998');
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('Pharmacist', '_careconnect', 'o', 0, '999998');

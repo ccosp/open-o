@@ -65,18 +65,42 @@ function getElementsByClass(searchClass,node,tag) {
 }
 
 jQuery("document").ready(function(){
-	jQuery(".hideReason").hide();
-	for( var i = 0; i < localStorage.length; i++ ) {
-		var key = localStorage.key(i);
-		if( localStorage.getItem(key) == "true" ) {
-			jQuery(key).show();
-		}
-	}
+    setDefaultReasonView();
 })
+
+function setDefaultReasonView() {
+    console.log(localStorage);
+    let currentDefault = jQuery("#hideReason").val();
+    console.log("Show all reasons: " + currentDefault);
+
+    // True to show the reason. Default is to hide.
+    if(currentDefault === "true") {
+        jQuery("span").removeClass("hideReason");
+    }
+
+    // toggle reason views for each of the provider preferences.
+    for( var i = 0; i < localStorage.length; i++ ) {
+        var key = localStorage.key(i);
+        var value = localStorage.getItem(key);
+
+        // If true show the reason. If false hide the reason
+        if(value === "false") {
+            jQuery(key).addClass("hideReason");
+        }
+        if (value === "true"){
+            jQuery(key).removeClass("hideReason");
+        }
+    }
+
+    jQuery(".hideReason").hide();
+}
+
 function toggleReason( providerNo ) { 
 	var id = ".reason_" + providerNo;
     jQuery( id ).toggle();
-    localStorage.setItem( id, jQuery( id ).is( ":visible" ) );
+    var isVisible = jQuery( id ).is( ":visible" );
+    console.log("ID: " + id + " Is Visible: " + isVisible);
+    localStorage.setItem( id, isVisible);
 }
     
 
