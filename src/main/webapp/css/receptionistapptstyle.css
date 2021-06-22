@@ -87,8 +87,8 @@ table#firstTable tr td.icon-container {
     width:22px;
   }
 
-table#firstTable td#firstMenu ul#navlist:not(.dashboardDropdown *),
-table#firstTable td#userSettings ul#userSettingsMenu:not(.dashboardDropdown *){
+table#firstTable td#firstMenu ul#navlist:not(.dashboardDropdown),
+table#firstTable td#userSettings ul#userSettingsMenu:not(.dashboardDropdown){
 	margin: 0;
 	padding: 0;
 	white-space: nowrap;
@@ -146,9 +146,6 @@ table#scheduleNavigation tr td, table#monthScheduleNavigation tr td {
 }
 
 .providerSchedule {
-/* 	display:flex;
-	justify-content: flex-start;
-	flex-direction: row; */
 	background-color: #486ebd;
 }
 
@@ -177,10 +174,6 @@ td.appt .appt-container {
 	align-items: stretch;
 	justify-content: flex-start;
 }
-
-/* div.apt-tag {
-	min-width:18px;
-} */
 
 div.apt-tag a {
 	padding:1px 3px;
@@ -351,12 +344,12 @@ p {
 	color: white !important;
 }
 
-table#firstTable td#firstMenu ul#navlist li:not(.dashboardDropdown *) {
+table#firstTable td#firstMenu ul#navlist li:not(.dashboardDropdown) {
     line-height:1;
     display: inline-block;
 }
 
-table#firstTable td#firstMenu ul#navlist li a:not(.dashboardDropdown *){
+table#firstTable td#firstMenu ul#navlist li a:not(.dashboardDropdown){
 	display:inline-block;
 	padding:10px 5px 10px 5px;
 }
