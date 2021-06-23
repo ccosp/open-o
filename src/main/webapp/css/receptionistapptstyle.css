@@ -162,6 +162,7 @@ td.appt {
 	overflow: hidden;
 	padding-top: 3px;
 	padding-left: 3px;
+	padding-right: 3px;
 	border-bottom: #486ebd 2px solid;
 	border-left: #486ebd 2px solid;
 	border-right: #486ebd 2px solid;
