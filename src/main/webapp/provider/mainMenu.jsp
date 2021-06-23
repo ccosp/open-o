@@ -450,8 +450,7 @@
                         <security:oscarSec roleName="<%=roleName$%>" objectName="_pref" rights="r">
                             <a href="javascript:void(0)"
                                onClick="popupPage(715,680,'providerpreference.jsp?provider_no=<%=curUser_no%>')"
-                               title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'
-                               OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>' ; return true">
+                               title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'>
 
                         </security:oscarSec>
                             <span class="glyphicon glyphicon-user"></span>
