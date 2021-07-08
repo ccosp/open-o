@@ -475,6 +475,7 @@
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>
+<%-- TODO: new dialog window for the user preferences --%>
 <script>
     function openPreferences(providerNumber) {
         const $div = jQuery('<div />').appendTo('body');
@@ -491,6 +492,5 @@
             title: "Provider Preferences",
         }).dialog("open");
     }
-
 </script>
 
