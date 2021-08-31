@@ -116,11 +116,6 @@ public class Security extends AbstractModel<Integer> {
 		setDateExpiredate(security.getDateExpiredate());
 		setBExpireset(security.getBExpireset());
 		setForcePasswordReset(security.isForcePasswordReset());
-//		setLastUpdateUser(security.getLastUpdateUser());
-//		setLastUpdateDate(security.getLastUpdateDate());
-//		setLoginIP(security.getLoginIP());
-//		setLoginDate(security.getLoginDate());
-//		setLoginStatus(security.getLoginStatus());		
 	}
 
 	/** full constructor */
