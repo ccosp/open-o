@@ -8,11 +8,10 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="oscar.*, org.oscarehr.util.*"%>
-<%@ page import="java.util.*, java.sql.*, java.net.URLEncoder "%>
+<%@ page import=" org.oscarehr.util.*"%>
+<%@ page import="java.util.*, java.net.URLEncoder "%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
@@ -21,8 +20,15 @@
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.util.LocaleUtils" %>
 <%@ page import="java.util.Locale" %>
-
+<%@ page import="org.owasp.encoder.Encode" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<jsp:useBean id="providerBean" class="java.util.Properties" scope="session" />
+<jsp:useBean id="as" class="oscar.appt.ApptStatusData" scope="page" />
+<jsp:useBean id="dateTimeCodeBean" class="java.util.Hashtable" scope="page" />
 <%
+
+	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 
 	String caseloadProv = (request.getParameter("clProv") != null) ? URLEncoder.encode(request.getParameter("clProv"), "UTF-8") : "";
 	String caseloadDx = (request.getParameter("clDx") != null) ? request.getParameter("clDx") : "";
@@ -37,9 +43,6 @@
 	String caseloadCurUser_no = (String) session.getAttribute("user");
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 	Integer facilityId = loggedInInfo.getCurrentFacility().getId();
-	
-	ProviderDao providerDao1 = SpringUtils.getBean(ProviderDao.class);
-	
 
 %>
 <tr><td colspan="3">
@@ -106,18 +109,18 @@ clH = ["<bean:message key="caseload.msgDemographic" />", "", "<bean:message key=
 						<option value='all'><bean:message key="caseload.msgAllProviders" /></option>
 					<%} %>
 		<%
-		List<Provider> providerList = providerDao1.getProviders();
+		List<Provider> providerList = providerDao.getActiveProviders();
 		for (Provider provider : providerList) {
 			if (caseloadProv.equals(provider.getProviderNo()) && !bDefaultAllProviders) {
 		%>
- 				<option value='<%=provider.getProviderNo()%>' selected><%=provider.getLastName()+", "+provider.getFirstName()%></option>
+ 				<option value='<%=provider.getProviderNo()%>' selected><%=Encode.forHtmlContent(provider.getLastName()+", "+provider.getFirstName())%></option>
  			<%} else {%>
-				<option value='<%=provider.getProviderNo()%>'><%=provider.getLastName()+", "+provider.getFirstName()%></option>
+				<option value='<%=provider.getProviderNo()%>'><%=Encode.forHtmlContent(provider.getLastName()+", "+provider.getFirstName())%></option>
 			<%}%>
 		<% } %>
 					</select>
 					<b>Rostered: </b>
-					<select id='caseloadRoster' onChange='search("search");' style='width: 120'>
+					<select id='caseloadRoster' onChange='search("search");' style='width: 120px'>
 						<option value='' selected></option>
 						<option value='RO'><bean:message key='demographic.demographiceditdemographic.optRostered'/></option>
 						<option value='NR'><bean:message key='demographic.demographiceditdemographic.optNotRostered'/></option>
