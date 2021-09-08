@@ -66,6 +66,14 @@ public class HRMReportParser {
 	
 	private HRMReportParser() {}
 
+	public static HRMReport parseReport(LoggedInInfo loggedInInfo, Integer hrmDocumentId) {
+		HRMDocumentDao hrmDocumentDao = SpringUtils.getBean(HRMDocumentDao.class);
+		HRMDocument hrmDocument = hrmDocumentDao.find(hrmDocumentId);
+		if (hrmDocument != null) {
+			return parseReport(loggedInInfo, hrmDocument.getReportFile());
+		}
+		return null;
+	}
 
 	public static HRMReport parseReport(LoggedInInfo loggedInInfo, String hrmReportFileLocation) {
 		OmdCds root = null;
@@ -352,9 +360,11 @@ public class HRMReportParser {
 				HRMDocument hrmDocument = hrmDocumentDao.find(matchingHrmDocument.getHrmDocumentId());
 
 				HRMReport hrmReport = HRMReportParser.parseReport(loggedInInfo, hrmDocument.getReportFile());
+				if (hrmReport != null) {
 				hrmReport.setHrmDocumentId(hrmDocument.getId());
 				hrmReport.setHrmParentDocumentId(hrmDocument.getParentReport());
 				allRoutedReports.add(hrmReport);
+				}
 			}
 		}
 

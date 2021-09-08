@@ -25,27 +25,13 @@
 
 package oscar.dms.actions;
 
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.http.impl.cookie.DateUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -53,29 +39,30 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.PMmodule.dao.SecUserRoleDao;
 import org.oscarehr.PMmodule.model.SecUserRole;
-import org.oscarehr.PMmodule.utility.UtilDateUtilities;
 import org.oscarehr.common.dao.DocumentDao;
-import org.oscarehr.common.dao.InboxResultsDao;
+import org.oscarehr.common.dao.InboxResultsRepository;
 import org.oscarehr.common.dao.ProviderInboxRoutingDao;
 import org.oscarehr.common.dao.QueueDao;
 import org.oscarehr.common.dao.QueueDocumentLinkDao;
+import org.oscarehr.common.dao.SystemPreferencesDao;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.ProviderInboxItem;
 import org.oscarehr.common.model.Queue;
 import org.oscarehr.common.model.QueueDocumentLink;
+import org.oscarehr.common.model.inbox.InboxQueryParameters;
+import org.oscarehr.common.model.inbox.InboxResponse;
+import org.oscarehr.common.model.inbox.OscarInboxQueryParameters;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
+import org.owasp.encoder.Encode;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
 import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
-import oscar.oscarLab.ca.on.HRMResultsData;
 import oscar.oscarLab.ca.on.LabResultData;
-import oscar.oscarMDS.data.CategoryData;
-import oscar.oscarMDS.data.PatientInfo;
 import oscar.util.OscarRoleObjectPrivilege;
 
 import com.quatro.dao.security.SecObjectNameDao;
@@ -83,13 +70,19 @@ import com.quatro.model.security.Secobjectname;
 
 public class DmsInboxManageAction extends DispatchAction {
 	
-	private static Logger logger=MiscUtils.getLogger();
+	private final Logger logger=MiscUtils.getLogger();
+
+	private final String PROVIDER_PATTERN = "[a-zA-Z0-9]{1,11}";
+	private final String STATUS_PATTERN = "[a-zA-Z]{1}";
+	private final String NAME_PATTERN = "[a-zA-Z]";
+	private final String PHN_PATTERN = "[0-9]{1,50}";
+	private final String ISO_DATE_PATTERN = "^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$";
 
 	private ProviderInboxRoutingDao providerInboxRoutingDAO = null;
 	private QueueDocumentLinkDao queueDocumentLinkDAO = null;
 	private SecObjectNameDao secObjectNameDao = null;
-	private SecUserRoleDao secUserRoleDao = (SecUserRoleDao) SpringUtils.getBean("secUserRoleDao");
-	private QueueDao queueDAO = (QueueDao) SpringUtils.getBean("queueDao");
+	private final SecUserRoleDao secUserRoleDao = SpringUtils.getBean(SecUserRoleDao.class);
+	private final QueueDao queueDAO = SpringUtils.getBean(QueueDao.class);
 
 	public void setProviderInboxRoutingDAO(ProviderInboxRoutingDao providerInboxRoutingDAO) {
 		this.providerInboxRoutingDAO = providerInboxRoutingDAO;
@@ -104,7 +97,6 @@ public class DmsInboxManageAction extends DispatchAction {
 	}
 
 	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
 		return null;
 	}
 
@@ -144,30 +136,33 @@ public class DmsInboxManageAction extends DispatchAction {
 		ArrayList<EDoc> docPreview = new ArrayList<EDoc>();
 		ArrayList<LabResultData> labPreview = new ArrayList<LabResultData>();
 
-		if (docs.length() == 0) {
-			// do nothing
-		} else {
-			String[] did = docs.split(",");
+		if (docs != null && docs.length() > 0) {
+			String[] did = new String[]{docs};
+			if(docs.contains(",")) {
+				did = docs.split(",");
+			}
 			List<String> didList = new ArrayList<String>();
-			for (int i = 0; i < did.length; i++) {
-				if (did[i].length() > 0) {
-					didList.add(did[i]);
+			for (String s : did) {
+				if (s.length() > 0) {
+					didList.add(s);
 				}
 			}
-			if (didList.size() > 0) docPreview = EDocUtil.listDocsPreviewInbox(didList);
-
+			if (didList.size() > 0) {
+				docPreview = EDocUtil.listDocsPreviewInbox(didList);
+			}
 		}
 
-		if (labs.length() == 0) {
-			// do nothing
-		} else {
-			String[] labids = labs.split(",");
-			List<String> ls = new ArrayList<String>();
-			for (int i = 0; i < labids.length; i++) {
-				if (labids.length > 0) ls.add(labids[i]);
+		if (labs != null && labs.length() > 0) {
+			String[] labids = new String[]{labs};
+			if(labs.contains(",")) {
+				labids = labs.split(",");
 			}
+			List<String> ls = new ArrayList<String>();
+			Collections.addAll(ls, labids);
 
-			if (ls.size() > 0) labPreview = Hl7textResultsData.getNotAckLabsFromLabNos(ls);
+			if (ls.size() > 0) {
+				labPreview = Hl7textResultsData.getNotAckLabsFromLabNos(ls);
+			}
 		}
 
 		request.setAttribute("docPreview", docPreview);
@@ -178,7 +173,9 @@ public class DmsInboxManageAction extends DispatchAction {
 		DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
 		Demographic demographic = demographicManager.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
 		String demoName = "Not,Assigned";
-		if (demographic != null) demoName = demographic.getFirstName() + "," + demographic.getLastName();
+		if (demographic != null) {
+			demoName = demographic.getFirstName() + "," + demographic.getLastName();
+		}
 		request.setAttribute("demoName", demoName);
 		return mapping.findForward("doclabPreview");
 	}
@@ -187,15 +184,17 @@ public class DmsInboxManageAction extends DispatchAction {
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		try {
-			if (session.getAttribute("userrole") == null)
+			if (session.getAttribute("userrole") == null) {
 				response.sendRedirect("../logout.jsp");
+			}
 		} catch (Exception e) {
 			MiscUtils.getLogger().error("error",e);
 		}
 
 		String providerNo = (String) session.getAttribute("user");
 		String searchProviderNo = request.getParameter("searchProviderNo");
-		Boolean searchAll = request.getParameter("searchProviderAll") != null;
+		boolean searchAll = "-1".equals(request.getParameter("searchProviderAll"));
+		boolean searchUnclaimed = "0".equals(request.getParameter("searchProviderAll"));
 		String status = request.getParameter("status");
 		List<String> abnormalStatusValues = Arrays.asList("all", "abnormalOnly", "normalOnly");
 		String abnormalStatus = request.getParameter("abnormalStatus");
@@ -214,60 +213,103 @@ public class DmsInboxManageAction extends DispatchAction {
 			providerNo = "";
 		}
 		
-		if( searchAll ) {
-			searchProviderNo = request.getParameter("searchProviderAll");
-		}
-		else if (searchProviderNo == null) {
+		if(searchAll) {
+			searchProviderNo = "";
+		} else if (searchUnclaimed) {
+			searchProviderNo = "0";
+		} else if (searchProviderNo == null) {
 			searchProviderNo = providerNo;
 		} // default to current provider
 
-		boolean providerSearch = !"-1".equals(searchProviderNo);
+		// boolean providerSearch = !"-1".equals(searchProviderNo);
 
-		MiscUtils.getLogger().debug("SEARCH " + searchProviderNo);
-		String patientFirstName = StringEscapeUtils.escapeSql(request.getParameter("fname"));
-		String patientLastName = StringEscapeUtils.escapeSql(request.getParameter("lname"));
-		String patientHealthNumber = StringEscapeUtils.escapeSql(request.getParameter("hnum"));
-		String startDate = StringEscapeUtils.escapeSql(request.getParameter("startDate"));
-		String endDate = StringEscapeUtils.escapeSql(request.getParameter("endDate"));
+		logger.debug("SEARCH " + searchProviderNo);
 
-		if (patientFirstName == null) {
+		String patientFirstName = request.getParameter("fname");
+		String patientLastName = request.getParameter("lname");
+		String patientHealthNumber = request.getParameter("hnum");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+
+		if (patientFirstName == null || ! Pattern.matches(NAME_PATTERN, patientFirstName)) {
 			patientFirstName = "";
 		}
-		if (patientLastName == null) {
+		if (patientLastName == null || ! Pattern.matches(NAME_PATTERN, patientLastName)) {
 			patientLastName = "";
 		}
-		if (patientHealthNumber == null) {
+		if (patientHealthNumber == null || ! Pattern.matches(PHN_PATTERN, patientHealthNumber)) {
 			patientHealthNumber = "";
 		}
-		boolean patientSearch = !"".equals(patientFirstName) || !"".equals(patientLastName)
-				|| !"".equals(patientHealthNumber);
-		try {
-			CategoryData cData = new CategoryData(patientLastName, patientFirstName, patientHealthNumber,
-					patientSearch, providerSearch, searchProviderNo, status, abnormalStatus, startDate, endDate);
-			cData.populateCountsAndPatients();
-			MiscUtils.getLogger().debug("LABS " + cData.getTotalLabs());
-			request.setAttribute("patientFirstName", patientFirstName);
-			request.setAttribute("patientLastName", patientLastName);
-			request.setAttribute("patientHealthNumber", patientHealthNumber);
-			request.setAttribute("patients", new ArrayList<PatientInfo>(cData.getPatients().values()));
-			request.setAttribute("unmatchedDocs", cData.getUnmatchedDocs());
-			request.setAttribute("unmatchedLabs", cData.getUnmatchedLabs());
-			request.setAttribute("totalDocs", cData.getTotalDocs());
-			request.setAttribute("totalLabs", cData.getTotalLabs());
-			request.setAttribute("abnormalCount", cData.getAbnormalCount());
-			request.setAttribute("normalCount", cData.getNormalCount());
-			request.setAttribute("totalNumDocs", cData.getTotalNumDocs());
-			request.setAttribute("providerNo", providerNo);
-			request.setAttribute("searchProviderNo", searchProviderNo);
-			request.setAttribute("ackStatus", status);
-			request.setAttribute("abnormalStatus", abnormalStatus);
-			request.setAttribute("categoryHash", cData.getCategoryHash());
+		// boolean patientSearch = !"".equals(patientFirstName) || !"".equals(patientLastName)|| !"".equals(patientHealthNumber);
+
+		patientFirstName = Encode.forJava(patientFirstName);
+		patientLastName = Encode.forJava(patientLastName);
+		patientHealthNumber = Encode.forJava(patientHealthNumber);
+
+		if(! Pattern.matches(PROVIDER_PATTERN, searchProviderNo)) {
+			searchProviderNo = providerNo;
+		} else {
+			searchProviderNo = Encode.forJava(searchProviderNo);
+		}
+
+		if(startDate == null || ! Pattern.matches(ISO_DATE_PATTERN, startDate)) {
+			startDate = "";
+		}
+
+		if(endDate == null || ! Pattern.matches(ISO_DATE_PATTERN, endDate)) {
+			endDate = "";
+		}
+
+
+		if (! "true".equals(searchPage))
+		{
+			InboxResultsRepository inboxResultsRepository = SpringUtils.getBean(InboxResultsRepository.class);
+			LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+            SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
+            boolean documentShowDescription = systemPreferencesDao.isPreferenceValueEquals("document_discipline_column_display", "document_description");
+
+			OscarInboxQueryParameters inboxQueryParameters = new OscarInboxQueryParameters(loggedInInfo.getLoggedInProvider());
+			inboxQueryParameters.whereProviderNumber(searchProviderNo)
+					.whereFirstName(patientFirstName).whereLastName(patientLastName).whereHin(patientHealthNumber)
+					.whereStartDate(startDate).whereEndDate(endDate)
+					.whereStatus(status).whereAbnormalStatus(abnormalStatus).whereMatchedStatus(InboxQueryParameters.MatchedStatus.ALL)
+					.whereSortBy("dateTime").whereSortOrder("descending")
+					.wherePage(0).whereResultsPerPage(0)
+					.whereShowDocuments(true).whereShowLabs(true).whereShowHrm(true).whereGetCounts(true).whereGetDemographicCounts(true).whereDocumentShowDescription(documentShowDescription);
+
+			InboxResponse inboxResponseResults = inboxResultsRepository.getInboxItems(inboxQueryParameters);
+			request.setAttribute("inboxResponse", inboxResponseResults);
+
+			Long categoryHash = Long.parseLong("" + (int)'A' + inboxResponseResults.getDocumentCount() + inboxResponseResults.getLabCount() + inboxResponseResults.getHrmCount())
+					+ Long.parseLong("" + (int)'D' + inboxResponseResults.getDocumentCount())
+					+ Long.parseLong("" + (int)'L' + inboxResponseResults.getLabCount())
+					+ Long.parseLong("" + (int)'H' + inboxResponseResults.getHrmCount());
+
+			request.setAttribute("patientFirstName", Encode.forHtmlContent(patientFirstName));
+			request.setAttribute("patientLastName", Encode.forHtmlContent(patientLastName));
+			request.setAttribute("patientHealthNumber", Encode.forHtmlContent(patientHealthNumber));
+			request.setAttribute("providerNo", Encode.forHtmlContent(providerNo));
+			request.setAttribute("searchProviderNo", Encode.forHtmlContent(searchProviderNo));
+			request.setAttribute("searchUnclaimed", Boolean.toString(searchUnclaimed));
+			request.setAttribute("ackStatus", Encode.forHtmlContent(status));
+			request.setAttribute("abnormalStatus", Encode.forHtmlContent(abnormalStatus));
+			request.setAttribute("categoryHash", categoryHash);
 			request.setAttribute("startDate", startDate);
 			request.setAttribute("endDate", endDate);
 			return mapping.findForward("dms_index");
-		} catch (SQLException e) {
-			return mapping.findForward("error");
 		}
+
+		request.setAttribute("patientFirstName", Encode.forHtmlContent(patientFirstName));
+		request.setAttribute("patientLastName", Encode.forHtmlContent(patientLastName));
+		request.setAttribute("patientHealthNumber", Encode.forHtmlContent(patientHealthNumber));
+		request.setAttribute("providerNo", Encode.forHtmlContent(providerNo));
+		request.setAttribute("searchProviderNo", Encode.forHtmlContent(searchProviderNo));
+		request.setAttribute("searchUnclaimed", Boolean.toString(searchUnclaimed));
+		request.setAttribute("abnormalStatus", Encode.forHtmlContent(abnormalStatus));
+		request.setAttribute("ackStatus", Encode.forHtmlContent(status));
+		request.setAttribute("startDate", startDate);
+		request.setAttribute("endDate", endDate);
+		return mapping.findForward("dms_index");
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -283,14 +325,22 @@ public class DmsInboxManageAction extends DispatchAction {
 		// can't use userrole from session, because it changes if provider A search for provider B's documents
 
 		// oscar.oscarMDS.data.MDSResultsData mDSData = new oscar.oscarMDS.data.MDSResultsData();
-		CommonLabResultData comLab = new CommonLabResultData();
+		// CommonLabResultData comLab = new CommonLabResultData();
 		// String providerNo = request.getParameter("providerNo");
 		String providerNo = (String) session.getAttribute("user");
-		String searchProviderNo = StringEscapeUtils.escapeSql(request.getParameter("searchProviderNo"));
-		String ackStatus = StringEscapeUtils.escapeSql(request.getParameter("status"));
-		String demographicNo = StringEscapeUtils.escapeSql(request.getParameter("demographicNo")); // used when searching for labs by patient instead of provider
-		String scannedDocStatus = StringEscapeUtils.escapeSql(request.getParameter("scannedDocument"));
-		Integer page = 0;
+		String searchProviderNo = request.getParameter("searchProviderNo");
+		boolean searchUnclaimed = Boolean.parseBoolean(request.getParameter("searchUnclaimed"));
+		String ackStatus = request.getParameter("status");
+		String demographicNo = request.getParameter("demographicNo"); // used when searching for labs by patient instead of provider
+		// String scannedDocStatus = StringEscapeUtils.escapeSql(request.getParameter("scannedDocument"));
+		String startDateStr = request.getParameter("startDate");
+		String endDateStr = request.getParameter("endDate");
+		String abnormalStatus = request.getParameter("abnormalStatus");
+		String patientFirstName = request.getParameter("fname");
+		String patientLastName = request.getParameter("lname");
+		String patientHealthNumber = request.getParameter("hnum");
+
+		int page = 0;
 		try {
 			page = Integer.parseInt(request.getParameter("page"));
 			if (page > 0) {
@@ -299,200 +349,91 @@ public class DmsInboxManageAction extends DispatchAction {
 		} catch (NumberFormatException nfe) {
 			page = 0;
 		}
-		Integer pageSize = 20;
+
+		int pageSize = 20;
 		try {
 			String tmp = request.getParameter("pageSize");
 			pageSize = Integer.parseInt(tmp);
 		} catch (NumberFormatException nfe) {
 			pageSize = 20;
 		}
-		scannedDocStatus = "I";
-
-		String startDateStr = StringEscapeUtils.escapeSql(request.getParameter("startDate"));
-		String endDateStr = StringEscapeUtils.escapeSql(request.getParameter("endDate"));
-
-
+		// scannedDocStatus = "I";
 
 		String view = request.getParameter("view");
 		if (view == null || "".equals(view)) {
 			view = "all";
 		}
 
-		boolean mixLabsAndDocs = "normal".equals(view) || "all".equals(view);
+//		boolean mixLabsAndDocs = "normal".equals(view) || "all".equals(view);
 
-		Date startDate = null;
-		Date endDate = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
-		//Tries to convert the start date to a Date object, if it fails then sets the date to null so it doesn't pass other checks
-		try {
-			startDate = sdf.parse(startDateStr);
-		} catch (Exception e) {
-			startDate = null;
-		}
-		//Tries to convert the end date to a Date object, if it fails then sets the date to null so it doesn't pass other checks
-		try {
-			endDate = sdf.parse(endDateStr);
-			endDate.setTime(endDate.getTime() + ((1000 * 3600 * 24) - 1));
-		} catch (Exception e) {
-			endDate = null;
+		if(endDateStr == null || ! Pattern.matches(ISO_DATE_PATTERN, endDateStr) ) {
+			endDateStr = "";
 		}
 
-		logger.debug("Got dates: " + startDate + "-" + endDate + " out of " + startDateStr + "-" + endDateStr);
-		
-		Boolean isAbnormal = null;
-		if ("abnormal".equals(view)) {
-			isAbnormal = true;
-		} else if ("normal".equals(view)) {
-			isAbnormal = false;
+		if(startDateStr == null || ! Pattern.matches(ISO_DATE_PATTERN, startDateStr) ) {
+			startDateStr = "";
 		}
 
-		if (ackStatus == null) {
+		if (patientFirstName == null || ! Pattern.matches(NAME_PATTERN, patientFirstName)) {
+			patientFirstName = "";
+		}
+		if (patientLastName == null || ! Pattern.matches(NAME_PATTERN, patientLastName)) {
+			patientLastName = "";
+		}
+		if (patientHealthNumber == null || ! Pattern.matches(PHN_PATTERN, patientHealthNumber)) {
+			patientHealthNumber = "";
+		}
+		// boolean patientSearch = !"".equals(patientFirstName) || !"".equals(patientLastName)|| !"".equals(patientHealthNumber);
+
+		patientFirstName = Encode.forJava(patientFirstName);
+		patientLastName = Encode.forJava(patientLastName);
+		patientHealthNumber = Encode.forJava(patientHealthNumber);
+
+		if (abnormalStatus == null || ! Pattern.matches(STATUS_PATTERN, abnormalStatus)) {
+			abnormalStatus = "L";
+		}
+
+		if (ackStatus == null || ! Pattern.matches(STATUS_PATTERN, ackStatus)) {
 			ackStatus = "N";
 		} // default to new labs only
-		if (providerNo == null) {
+
+		if (providerNo == null || ! Pattern.matches(PROVIDER_PATTERN, providerNo)) {
 			providerNo = "";
 		}
-		if (searchProviderNo == null) {
+
+		if (searchUnclaimed) {
+			searchProviderNo = "0";
+		}
+
+		if (searchProviderNo == null || ! Pattern.matches(PROVIDER_PATTERN, searchProviderNo)) {
 			searchProviderNo = providerNo;
 		}
-		String roleName = "";
-		List<SecUserRole> roles = secUserRoleDao.getUserRoles(searchProviderNo);
-		for (SecUserRole r : roles) {
-			if (roleName.length() == 0) {
-				roleName = r.getRoleName();
 
-			} else {
-				roleName += "," + r.getRoleName();
-			}
-		}
-		roleName += "," + searchProviderNo;
-
-		List<QueueDocumentLink> qd = queueDocumentLinkDAO.getQueueDocLinks();
-		HashMap<String, String> docQueue = new HashMap<String, String>();
-		for (QueueDocumentLink qdl : qd) {
-			Integer i = qdl.getDocId();
-			Integer n = qdl.getQueueId();
-			docQueue.put(i.toString(), n.toString());
+		InboxResultsRepository inboxResultsRepository = SpringUtils.getBean(InboxResultsRepository.class);
+		DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
+		Demographic demographic = demographicManager.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
+		if (demographic != null) {
+			patientFirstName = demographic.getFirstName();
+			patientLastName = demographic.getLastName();
+			patientHealthNumber = demographic.getHin();
 		}
 
-		InboxResultsDao inboxResultsDao = (InboxResultsDao) SpringUtils.getBean("inboxResultsDao");
-		String patientFirstName = StringEscapeUtils.escapeSql(request.getParameter("fname"));
-		String patientLastName = StringEscapeUtils.escapeSql(request.getParameter("lname"));
-		String patientHealthNumber = StringEscapeUtils.escapeSql(request.getParameter("hnum"));
+        SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
+        boolean documentShowDescription = systemPreferencesDao.isPreferenceValueEquals("document_discipline_column_display", "document_description");
 
-		ArrayList<LabResultData> labdocs = new ArrayList<LabResultData>();
+		InboxQueryParameters.MatchedStatus matchedStatusSearch = ("0".equals(demographicNo)) ? InboxQueryParameters.MatchedStatus.NOT_MATCHED : InboxQueryParameters.MatchedStatus.ALL;
+		OscarInboxQueryParameters inboxQueryParameters = new OscarInboxQueryParameters(loggedInInfo.getLoggedInProvider());
+		inboxQueryParameters.whereProviderNumber(searchProviderNo)
+				.whereFirstName(patientFirstName).whereLastName(patientLastName).whereHin(patientHealthNumber)
+				.whereStartDate(startDateStr).whereEndDate(endDateStr)
+				.whereStatus(ackStatus).whereAbnormalStatus(abnormalStatus).whereMatchedStatus(matchedStatusSearch)
+				.whereSortBy("dateTime").whereSortOrder("descending")
+				.wherePage(page).whereResultsPerPage(pageSize)
+				.whereShowDocuments("all".equals(view) || "documents".equals(view)).whereShowLabs("all".equals(view) || "labs".equals(view)).whereShowHrm("all".equals(view) || "hrms".equals(view))
+				.whereGetCounts(false).whereGetDemographicCounts(false).whereDocumentShowDescription(documentShowDescription);
 
-		if (!"labs".equals(view)) {
-			labdocs = inboxResultsDao.populateDocumentResultsData(searchProviderNo, demographicNo, patientFirstName,
-					patientLastName, patientHealthNumber, ackStatus, true, page, pageSize, mixLabsAndDocs, isAbnormal, startDate, endDate);
-		}
-		if (!"documents".equals(view)) {
-			labdocs.addAll(comLab.populateLabResultsData(loggedInInfo, searchProviderNo, demographicNo, patientFirstName,
-					patientLastName, patientHealthNumber, ackStatus, true, page, pageSize,
-					mixLabsAndDocs, isAbnormal, startDate, endDate));
-		}
-
-		// Find the oldest lab returned in labdocs, use that as the limit date for the HRM query
-		Date oldestLab = null;
-		Date newestLab = null;
-		if (request.getParameter("newestDate") != null) {
-			try {
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				newestLab = formatter.parse(request.getParameter("newestDate"));
-			} catch (Exception e) {
-				logger.error("Couldn't parse date + " + request.getParameter("newestDate"), e);
-			}
-		}
-
-		for (LabResultData result : labdocs) {
-			if (result.getDateObj() != null) {
-				if (oldestLab == null || oldestLab.compareTo(result.getDateObj()) > 0)
-					oldestLab = result.getDateObj();
-				if (request.getParameter("newestDate") != null && (newestLab == null || newestLab.compareTo(result.getDateObj()) < 0))
-					newestLab = result.getDateObj();
-			}
-		}
-
-		if (!"labs".equals(view) && !"abnormal".equals(view)) {
-			HRMResultsData hrmResult = new HRMResultsData();
-
-			Collection<LabResultData> hrmDocuments = hrmResult.populateHRMdocumentsResultsData(loggedInInfo, searchProviderNo, patientFirstName, patientLastName, patientHealthNumber, demographicNo, ackStatus,
-					endDate, startDate, true, page, pageSize);
-			if (oldestLab == null) {
-				for (LabResultData hrmDocument : hrmDocuments) {
-					if (oldestLab == null || (hrmDocument.getDateObj() != null && oldestLab.compareTo(hrmDocument.getDateObj()) > 0))
-						oldestLab = hrmDocument.getDateObj();
-				}
-			}
-
-			labdocs.addAll(hrmDocuments);
-		}
-		Collections.sort(labdocs);
-
-		HashMap<String,LabResultData> labMap = new HashMap<String,LabResultData>();
-		LinkedHashMap<String,ArrayList<String>> accessionMap = new LinkedHashMap<String,ArrayList<String>>();
-
-		int accessionNumCount = 0;
-		for (LabResultData result : labdocs) {
-			String segmentId = result.getSegmentID();
-			if (result.isDocument())
-				segmentId += "d";
-			else if (result.isHRM())
-				segmentId += "h";
-
-			labMap.put(segmentId, result);
-			ArrayList<String> labNums = new ArrayList<String>();
-
-			if (result.accessionNumber == null || result.accessionNumber.equals("null") || result.accessionNumber.isEmpty()) {
-				labNums.add(segmentId);
-				accessionNumCount++;
-				accessionMap.put("noAccessionNum" + accessionNumCount + result.labType, labNums);
-			} else if (!accessionMap.containsKey(result.accessionNumber + result.labType)) {
-				labNums.add(segmentId);
-				accessionMap.put(result.accessionNumber + result.labType, labNums);
-
-				// Different MDS Labs may have the same accession Number if they are seperated
-				// by two years. So accession numbers are limited to matching only if their
-				// labs are within one year of eachother
-			} else {
-				labNums = accessionMap.get(result.accessionNumber + result.labType);
-				boolean matchFlag = false;
-				for (int j = 0; j < labNums.size(); j++) {
-					LabResultData matchingResult = labMap.get(labNums.get(j));
-
-					Date dateA = result.getDateObj();
-					Date dateB = matchingResult.getDateObj();
-					int monthsBetween = 0;
-					if (dateA == null || dateB == null) {
-						monthsBetween = 5;
-					} else if (dateA.before(dateB)) {
-						monthsBetween = UtilDateUtilities.getNumMonths(dateA, dateB);
-					} else {
-						monthsBetween = UtilDateUtilities.getNumMonths(dateB, dateA);
-					}
-
-					if (monthsBetween < 4) {
-						matchFlag = true;
-						break;
-					}
-				}
-				if (!matchFlag) {
-					labNums.add(segmentId);
-					accessionMap.put(result.accessionNumber + result.labType, labNums);
-				}
-			}
-		}
-
-		labdocs.clear();
-
-		for (ArrayList<String> labNums : accessionMap.values()) {
-			// must sort through in reverse to keep the labs in the correct order
-			for (int j = labNums.size() - 1; j >= 0; j--) {
-				labdocs.add(labMap.get(labNums.get(j)));
-			}
-		}
-		logger.debug("labdocs.size()="+labdocs.size());
+		InboxResponse results = inboxResultsRepository.getInboxItems(inboxQueryParameters);
+		List<LabResultData> labdocs = results.getLabResultData(loggedInInfo);
 
 		/* find all data for the index.jsp page */
 		Hashtable patientDocs = new Hashtable();
@@ -536,8 +477,8 @@ public class DmsInboxManageAction extends DispatchAction {
 			} else {
 				segIDs.add(data.getSegmentID());
 				patientDocs.put(labPatientId, segIDs);
-				patientIdNames.put(labPatientId, data.patientName);
-				patientIdNamesStr += ";" + labPatientId + "=" + data.patientName;
+				patientIdNames.put(labPatientId, Encode.forHtmlContent(data.patientName));
+				patientIdNamesStr += ";" + labPatientId + "=" + Encode.forHtmlContent(data.patientName);
 			}
 			docStatus.put(data.getSegmentID(), data.getAcknowledgedStatus());
 			docType.put(data.getSegmentID(), data.labType);
@@ -579,13 +520,13 @@ public class DmsInboxManageAction extends DispatchAction {
 		Hashtable patientNumDoc = new Hashtable();
 		Enumeration patientIds = patientDocs.keys();
 		String patientIdStr = "";
-		Integer totalNumDocs = 0;
+		int totalNumDocs = 0;
 		while (patientIds.hasMoreElements()) {
 			String key = (String) patientIds.nextElement();
 			patientIdStr += key;
 			patientIdStr += ",";
 			List<String> val = (List<String>) patientDocs.get(key);
-			Integer numDoc = val.size();
+			int numDoc = val.size();
 			patientNumDoc.put(key, numDoc);
 			totalNumDocs += numDoc;
 		}
@@ -599,8 +540,8 @@ public class DmsInboxManageAction extends DispatchAction {
 		request.setAttribute("pageNum", page);
 		request.setAttribute("docType", docType);
 		request.setAttribute("patientDocs", patientDocs);
-		request.setAttribute("providerNo", providerNo);
-		request.setAttribute("searchProviderNo", searchProviderNo);
+		request.setAttribute("providerNo", Encode.forHtmlContent(providerNo));
+		request.setAttribute("searchProviderNo", Encode.forHtmlContent(searchProviderNo));
 		request.setAttribute("patientIdNames", patientIdNames);
 		request.setAttribute("docStatus", docStatus);
 		request.setAttribute("patientIdStr", patientIdStr);
@@ -615,7 +556,6 @@ public class DmsInboxManageAction extends DispatchAction {
 		request.setAttribute("abnormals", abnormals);
 		request.setAttribute("totalNumDocs", totalNumDocs);
 		request.setAttribute("patientIdNamesStr", patientIdNamesStr);
-		request.setAttribute("oldestLab", oldestLab != null ? DateUtils.formatDate(oldestLab, "yyyy-MM-dd HH:mm:ss") : null);
 
 		return mapping.findForward("dms_page");
 	}
@@ -645,44 +585,44 @@ public class DmsInboxManageAction extends DispatchAction {
 		return null;
 	}
 
-         public ActionForward isDocumentLinkedToDemographic(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-                boolean success = false;
-                String demoId = null;
-                try {
-                       String docId = request.getParameter("docId");
-                       logger.debug("DocId:"+docId);
-                       if (docId != null) {
-                            docId = docId.trim();
-                            if (docId.length() > 0) {
-                                EDoc doc = EDocUtil.getDoc(docId);
-                                demoId = doc.getModuleId();                                
-
-                                if (demoId != null) {
-                                    logger.debug("DemoId:"+demoId);
-                                    Integer demographicId = Integer.parseInt(demoId);
-                                    if (demographicId > 0) {
-                                        logger.debug("Success true");
-                                        success = true;
-                                    }
-                                }
-                            }
-                        }
-                } catch (Exception e) {
-                    logger.error("Error", e);
-                }
-
-                HashMap<String, Object> hm = new HashMap<String, Object>();
-                hm.put("isLinkedToDemographic", success);
-                hm.put("demoId", demoId);
-                JSONObject jsonObject = JSONObject.fromObject(hm);
-                try {
-                    response.getOutputStream().write(jsonObject.toString().getBytes());
-                } catch (java.io.IOException ioe) {
-                    logger.error("Error", ioe);
-                }
-
-                return null;
-	}
+//         public ActionForward isDocumentLinkedToDemographic(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+//                boolean success = false;
+//                String demoId = null;
+//                try {
+//                       String docId = request.getParameter("docId");
+//                       logger.debug("DocId:"+docId);
+//                       if (docId != null) {
+//                            docId = docId.trim();
+//                            if (docId.length() > 0) {
+//                                EDoc doc = EDocUtil.getDoc(docId);
+//                                demoId = doc.getModuleId();
+//
+//                                if (demoId != null) {
+//                                    logger.debug("DemoId:"+demoId);
+//                                    Integer demographicId = Integer.parseInt(demoId);
+//                                    if (demographicId > 0) {
+//                                        logger.debug("Success true");
+//                                        success = true;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                } catch (Exception e) {
+//                    logger.error("Error", e);
+//                }
+//
+//                HashMap<String, Object> hm = new HashMap<String, Object>();
+//                hm.put("isLinkedToDemographic", success);
+//                hm.put("demoId", demoId);
+//                JSONObject jsonObject = JSONObject.fromObject(hm);
+//                try {
+//                    response.getOutputStream().write(jsonObject.toString().getBytes());
+//                } catch (java.io.IOException ioe) {
+//                    logger.error("Error", ioe);
+//                }
+//
+//                return null;
+//	}
          
 	public ActionForward isLabLinkedToDemographic(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		boolean success = false;
@@ -790,8 +730,8 @@ public class DmsInboxManageAction extends DispatchAction {
 					patientIdNames.put(demoNo, "Not, Assigned");
 					patientIdNamesStr += ";" + demoNo + "=" + "Not, Assigned";
 				} else {
-					patientIdNames.put(demoNo, demo.getLastName() + ", " + demo.getFirstName());
-					patientIdNamesStr += ";" + demoNo + "=" + demo.getLastName() + ", " + demo.getFirstName();
+					patientIdNames.put(demoNo, Encode.forHtmlContent(demo.getLastName()) + ", " + Encode.forHtmlContent(demo.getFirstName()));
+					patientIdNamesStr += ";" + demoNo + "=" + Encode.forHtmlContent(demo.getLastName()) + ", " + Encode.forHtmlContent(demo.getFirstName());
 				}
 
 			}
