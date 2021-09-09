@@ -75,6 +75,7 @@ String statusString = "'IN','DE','IC','ID','MO','FI'";
 %>
 
 <html>
+<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title><bean:message key="demographic.demographicsearch2apptresults.title" />(demographicsearch2reportresults)</title>

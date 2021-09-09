@@ -448,6 +448,7 @@
     }
 %>
 <html:html locale="true">
+    <script src="${pageContext.request.contextPath}/csrfguard"></script>
     <head>
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/global.js"></script>
         <title><%=WordUtils.capitalize(userlastname + ", " + org.apache.commons.lang.StringUtils.substring(userfirstname, 0, 1)) + "-"%><bean:message
