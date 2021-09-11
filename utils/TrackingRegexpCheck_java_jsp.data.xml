@@ -1225,7 +1225,6 @@
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable patientNumDoc = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable&lt;String, List&lt;String&gt;&gt; ab_NormalDoc = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable&lt;String, List&lt;String&gt;&gt; typeDocLab = new Hashtable();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:import java.util.Hashtable;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, EForm&gt; eformTable = new Hashtable&lt;String,EForm&gt;(); //stores eforms constructed from eform.properties, no HTML</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, EForm&gt; eformTableFailed = new Hashtable&lt;String,EForm&gt;();  //stores eforms that are constructed from eform.properties that alredy exist and do not need to be imported</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, File&gt; tempFiles = new Hashtable&lt;String,File&gt;(); //references extracted files in the temp folder</ViolationValue>
