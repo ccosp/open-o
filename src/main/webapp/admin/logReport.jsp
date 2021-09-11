@@ -90,7 +90,9 @@ boolean authed=true;
   }
 %>
 
-<%@page import="oscar.Misc"%><html:html locale="true">
+<%@page import="oscar.Misc"%>
+<%@ page import="org.owasp.encoder.Encode" %>
+<html:html locale="true">
 <head>
 
 
@@ -149,7 +151,7 @@ label{margin-top:6px;margin-bottom:0px;}
 					%>
 					<option value="<%=prov %>"
 						<% if ((selected != null) && (selected.equals(prov))) { %> selected
-						<% } %>><%= ((Properties)vecProvider.get(i)).getProperty("name", "") %>
+						<% } %>><%= Encode.forHtmlContent(((Properties) vecProvider.get(i)).getProperty("name", "")) %>
 					</option>
 					<%
 		                }
@@ -233,13 +235,13 @@ label{margin-top:6px;margin-bottom:0px;}
       while (rs.next()) {
         prop = new Properties();
         prop.setProperty("dateTime", "" + rs.getTimestamp("dateTime"));
-        prop.setProperty("action", Misc.getString(rs,"action"));
-        prop.setProperty("content", Misc.getString(rs,"content"));
-        prop.setProperty("contentId", Misc.getString(rs,"contentId"));
+        prop.setProperty("action", Encode.forHtmlContent(Misc.getString(rs,"action")));
+        prop.setProperty("content", Encode.forHtmlContent(Misc.getString(rs,"content")));
+        prop.setProperty("contentId", Encode.forHtmlContent(Misc.getString(rs,"contentId")));
         prop.setProperty("ip", Misc.getString(rs,"ip"));
-        prop.setProperty("provider_no", Misc.getString(rs,"provider_no"));
-        prop.setProperty("demographic_no",Misc.getString(rs,"demographic_no"));
-        prop.setProperty("data", Misc.getString(rs, "data"));
+        prop.setProperty("provider_no", Encode.forHtmlContent(Misc.getString(rs,"provider_no")));
+        prop.setProperty("demographic_no",Encode.forHtmlContent(Misc.getString(rs,"demographic_no")));
+        prop.setProperty("data", Encode.forHtmlContent(Misc.getString(rs, "data")).replaceAll("\n", "\n<br/>"));
         vec.add(prop);
       }
 

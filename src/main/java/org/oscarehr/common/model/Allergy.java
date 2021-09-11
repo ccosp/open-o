@@ -102,8 +102,14 @@ public class Allergy extends AbstractModel<Integer> implements DemographicData {
 	@Column(name = "regional_identifier")
 	private String regionalIdentifier;
 
+	@Column(name = "atc")
+	private String atc;
+
 	@Column(name = "life_stage")
 	private String lifeStage;
+
+	@Column(name = "reaction_type")
+	private String reactionType;
 
 	private int position=0;
 
@@ -260,6 +266,14 @@ public class Allergy extends AbstractModel<Integer> implements DemographicData {
 		this.regionalIdentifier = StringUtils.trimToNull(regionalIdentifier);
 	}
 
+	public String getAtc() {
+		return atc;
+	}
+
+	public void setAtc(String atc) {
+		this.atc = atc;
+	}
+
 	public String getLifeStage() {
 		return lifeStage;
 	}
@@ -319,6 +333,14 @@ public class Allergy extends AbstractModel<Integer> implements DemographicData {
 		return df.format(this.startDate);
 	}
 
+	public String getReactionType() {
+		return reactionType;
+	}
+
+	public void setReactionType(String reactionType) {
+		this.reactionType = reactionType;
+	}
+
 	@PreUpdate
 	@PrePersist
 	protected void autoSetUpdateTime()
@@ -358,7 +380,7 @@ public class Allergy extends AbstractModel<Integer> implements DemographicData {
         if ("1".equals(onsetCode)) return("Immediate");
         if ("2".equals(onsetCode)) return("Gradual");
         if ("3".equals(onsetCode)) return("Slow");
-        else return("Unknown");
+        else return("Unknown "+onsetCode);
      }
 
     public String getTypeDesc() {
@@ -402,12 +424,6 @@ public class Allergy extends AbstractModel<Integer> implements DemographicData {
             case 14:
                 s = "Ingredient";
                 break;
-            case 0:
-            	s = "Custom Allergy";
-            	break;
-            case -1:
-            	s = "Intolerance";
-            	break;
             default:
                 s = "";
         }
@@ -442,5 +458,5 @@ public class Allergy extends AbstractModel<Integer> implements DemographicData {
 		this.nonDrug = nonDrug;
 	}
 
-    
+
 }

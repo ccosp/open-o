@@ -64,11 +64,11 @@
 		</repository>
 		
 		<!-- MARC-HI (Everest & SHIC) -->
- 		<repository>
-			<id>marc-te-main</id>
-			<name>MARC-HI Technology Exchange Private Maven Repository</name>
-			<url>http://te.marc-hi.ca/mvn</url>
-		</repository>
+<!-- 		<repository>-->
+<!--			<id>marc-te-main</id>-->
+<!--			<name>MARC-HI Technology Exchange Private Maven Repository</name>-->
+<!--			<url>http://te.marc-hi.ca/mvn</url>-->
+<!--		</repository>-->
 	</repositories>
 
 	<pluginRepositories>
@@ -85,12 +85,13 @@
 
 	<dependencies>
 
-		<!-- general libraries -->
+		<!-- https://mvnrepository.com/artifact/net.bull.javamelody/javamelody-core -->
 		<dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>1.53.0</version>
-        </dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-core</artifactId>
+			<version>1.87.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -280,11 +281,22 @@
 		</dependency>
 
 		<!--  pdfbox -->
-		 <dependency>
-	      <groupId>org.apache.pdfbox</groupId>
-	      <artifactId>pdfbox</artifactId>
-	      <version>1.2.1</version>
-	    </dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>jbig2-imageio</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+        <!-- https://github.com/haraldk/TwelveMonkeys/ Java imageIO extensions for wider image file format support-->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-jpeg</artifactId>
+			<version>3.3.1</version>
+		</dependency>
 
 		<!-- google collections lib -->
 	    <dependency>
@@ -1179,6 +1191,18 @@
 	
 
 	<dependency>
+		<groupId>org.owasp.encoder</groupId>
+		<artifactId>encoder</artifactId>
+		<version>1.2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.owasp</groupId>
+		<artifactId>csrfguard</artifactId>
+		<version>3.1.0</version>
+	</dependency>
+
+
+		<dependency>
 		<groupId>com.medseek.clinical.service</groupId>
 		<artifactId>SSOClinicalConnect</artifactId>
 		<version>20171101</version>
@@ -1215,13 +1239,6 @@
 	    <groupId>org.apache.commons</groupId>
 	    <artifactId>commons-compress</artifactId>
 	    <version>1.14</version>
-	</dependency>
-
-
-	<dependency>
-	    <groupId>net.rgielen</groupId>
-	    <artifactId>struts1filter</artifactId>
-	    <version>1.0.1-SNAPSHOT</version>
 	</dependency>
 
 <dependency>

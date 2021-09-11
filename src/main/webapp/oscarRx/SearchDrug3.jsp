@@ -717,7 +717,6 @@ function checkFav(){
                </style>
 
 <style type="text/css">
-<!-- .selected { font: Arial, Verdana; color:#000000; text-decoration: none; } -->
 
     .ControlPushButton{
         font-size:x-small !important;
@@ -741,10 +740,7 @@ function checkFav(){
 		height:30px;
 		padding-right:10px;
 	}
-            .highlight {
-                background-color : #99FFCC;
-                border: 1px solid #008000;
-            }
+
             .rxStr a:hover{
                 color:blue;
                 text-decoration:underline;
@@ -768,33 +764,6 @@ body {
 	margin:0;
 	padding:0;
 }
-
-
-/*THEMES
-
-     .currentDrug{
-        color:red;
-     }
-     .archivedDrug{
-        text-decoration: line-through;
-     }
-     .expireInReference{
-         color:orange;
-         font-weight:bold;
-     }
-     .expiredDrug{
-
-     }
-
-     .longTermMed{
-
-     }
-
-     .discontinued{
-
-     }
-
-THEME 2*/
 
      .currentDrug{
         font-weight:bold;
@@ -859,7 +828,7 @@ THEME 2*/
         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1" height="100%">
             <%@ include file="TopLinks2.jspf" %><!-- Row One included here-->
             <tr>
-                <td width="10%" height="100%" valign="top"><%@ include file="SideLinksEditFavorites2.jsp"%></td><%-- <td></td>Side Bar File --%>
+                <td width="10%" height="100%" valign="top"><%@ include file="SideLinksEditFavorites2.jsp"%></td>
                 <td style="border-left: 2px solid #A9A9A9;" height="100%" valign="top"><!--Column Two Row Two-->
 
 
@@ -1028,7 +997,7 @@ THEME 2*/
 																				<%if(show_current){%>
 																				<td >
 		                                                                            <a href="javascript:void(0);" onclick="callReplacementWebService('ListDrugs.jsp','drugProfile');CngClass(this);" 
-		                                                                            	id="selected_default" style="font: Arial; color:#000000; text-decoration: none;" 
+		                                                                            	id="selected_default" style="color:#000000; text-decoration: none;"
 		                                                                            	TITLE="<bean:message key='SearchDrug.msgShowCurrentDesc'/>">
 		                                                                            	<bean:message key="SearchDrug.msgShowCurrent"/>
 		                                                                            </a>
@@ -1157,7 +1126,7 @@ THEME 2*/
 </tr>
 
 <tr>
-    <td width="100%" height="0%" style="padding: 5" bgcolor="#DCDCDC" colspan="3">
+    <td width="100%" height="0%" style="padding: 5px" bgcolor="#DCDCDC" colspan="3">
 
     </td>
 </tr>
@@ -1617,25 +1586,27 @@ var skipParseInstr = false;
          var url="<c:out value="${ctx}"/>" + "/oscarRx/getAllergyData.jsp"  ;
          var data="atcCode="+atcCode+"&id="+id +"&rand="+ Math.floor(Math.random()*10001);
          new Ajax.Request(url,{method: 'post',postBody:data,onSuccess:function(transport){
-	         var response = JSON.parse(transport.responseText);       	 
-	       	 var items = response.items;
-	       	 var output = "";
-	       	 
-	       	 if(items != null && items.length>0) {
-		       	 for(var x=0;x<items.length;x++) {
-		       		 if(items[x].warning != null && items[x].warning == true) {
-		       			 var str = "<font color='red'>Warning: Allergy \""+ items[x].description + "\" with reaction  \""+items[x].reaction + "\" and "+items[x].severity + " severity Found.</font><br/>";                     
-	                     output += str;
-		       		 }
-		       		if(items[x].missing != null && items[x].missing == true) {
-		       			var str = "<font color='red'>Warning Allergy: \""+ items[x].description + "\" not Found in drug database. Please update this Allergy.</font><br/>";
-		       			output += str;
-		       		}
-		       	 }
-		       	$('alleg_'+response.id).innerHTML = output; 	 
-		       	document.getElementById('alleg_tbl_'+response.id).style.display='table';
-	       	 }
-         }});
+
+                 var jsonResults = transport.responseText.evalJSON();
+
+                 // if(jsonResults != null && jsonResults.id != null && jsonResults.results.length == 0) {
+                 //     console.log(jsonResults.id);
+                 //     var str = "<span style='color:blue'>No allergy to drug matched with patient profile. Please review patient allergies to ensure accuracy.</span>" ;
+                 //     $('alleg_'+jsonResults.id).innerHTML = str;
+                 //     document.getElementById('alleg_tbl_'+jsonResults.id).style.display='inline-block';
+                 // }
+                 let resultHtml = "";
+                 if (jsonResults != null && jsonResults.results.length != 0) {
+                     for (let i = 0; i < jsonResults.results.length; i++) {
+                         let result = jsonResults.results[i];
+                         resultHtml += "<span style='color:red'><b>Allergy: </b></span>" + result.DESCRIPTION;
+                         resultHtml += "<span style='color:red'><b> Reaction: </b></span>" + result.reaction;
+                         resultHtml += "<span style='color:red'><b> Severity: </b></span>" + result.severity;
+                     }
+                     $('alleg_' + jsonResults.id).innerHTML = resultHtml + '<br />';
+                     document.getElementById('alleg_tbl_' + jsonResults.id).style.display = 'inline-block';
+                 }
+            }});
    }
    function checkIfInactive(id,dinNumber){
         var url="<c:out value="${ctx}"/>" + "/oscarRx/getInactiveDate.jsp"  ;
@@ -1819,7 +1790,7 @@ function popForm2(scriptId){
                 //oscarLog( "preview2 done");
                 myLightWindow.activateWindow({
                     href: url,
-                    width: 1000,
+                    width: 980,
                     height: h
                 });
                 var editRxMsg='<bean:message key="oscarRx.Preview.EditRx"/>';

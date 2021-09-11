@@ -83,7 +83,7 @@
 <%@page import="org.oscarehr.common.model.Demographic"%>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="oscar.oscarDemographic.data.DemographicMerged" %>
-
+<%@ page import="org.owasp.encoder.Encode" %>
 <jsp:useBean id="providerBean" class="java.util.Properties"	scope="session" />
 
 <%
@@ -100,7 +100,10 @@
 
 	String displayMode = request.getParameter("displaymode");
 	String dboperation = request.getParameter("dboperation");
-	String keyword = request.getParameter("keyword");
+	String keyword = null;
+	if(request.getParameter("keyword")!=null){
+		keyword = Encode.forJava(request.getParameter("keyword"));
+	}
 	String orderBy = request.getParameter("orderby");
 	String ptStatus = request.getParameter("ptstatus");
 
@@ -114,6 +117,7 @@
 
 %>
 <html:html locale="true">
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <script type="text/javascript" src="<c:out value="${ctx}/share/javascript/Oscar.js"/>"></script>
@@ -225,11 +229,8 @@
 <div id="searchResults">
 <a href="#" onclick="showHideItem('demographicSearch');" id="searchPopUpButton" class="rightButton top">Search</a>
 <br>
-<%if(request.getParameter("keyword")!=null && request.getParameter("keyword").length()==0) { %>
-<i><bean:message key="demographic.demographicsearchresults.msgMostRecentPatients" /></i> :
-<% } else {%> 
-<i><bean:message key="demographic.demographicsearchresults.msgSearchKeys" /></i> : <%=request.getParameter("keyword")%>
-<%}%>
+<i><bean:message key="demographic.demographicsearchresults.msgSearchKeys" /></i> : <c:out value="${keyword}" />
+
     <table>
         <tr class="tableHeadings deep">
         
@@ -304,8 +305,8 @@
 	
 	
 	List<Demographic> demoList = null;
-	
-        if(request.getParameter("keyword")!=null && request.getParameter("keyword").length()==0) {
+
+        if(keyword!=null && keyword.length()==0) {
             int mostRecentPatientListSize=Integer.parseInt(OscarProperties.getInstance().getProperty("MOST_RECENT_PATIENT_LIST_SIZE","3"));
             List<Integer> results = oscarLogDao.getRecentDemographicsAccessedByProvider(providerNo,  0, mostRecentPatientListSize);
             demoList = new ArrayList<Demographic>();
@@ -372,7 +373,7 @@
 				   <td class="demoIdSearch">
 				   	<a title="Import" href="#"  onclick="popup(700,1027,'../appointment/copyRemoteDemographic.jsp?remoteFacilityId=<%=demographicTransfer.getIntegratorFacilityId()%>&demographic_no=<%=String.valueOf(demographicTransfer.getCaisiDemographicId())%>&originalPage=../demographic/demographiceditdemographic.jsp&provider_no=<%=curProvider_no%>')" >Import</a></td>
 				   <td class="links">Remote</td>
-				   <td class="name"><%=Misc.toUpperLowerCase(demographicTransfer.getLastName())%>, <%=Misc.toUpperLowerCase(demographicTransfer.getFirstName())%></td>
+				   <td class="name"><%=Encode.forHtml(Misc.toUpperLowerCase(demographicTransfer.getLastName()) + ", " + Misc.toUpperLowerCase(demographicTransfer.getFirstName()))%></td>
 				   <td class="chartNo"></td>
 				   <td class="sex"><%=demographicTransfer.getGender()%></td>
 				   <td class="dob"><%=demographicTransfer.getBirthDate() != null ?  DateFormatUtils.ISO_DATE_FORMAT.format(demographicTransfer.getBirthDate()) : ""%></td>
@@ -459,7 +460,7 @@
 		<td class="name"><a href="#" onclick="location.href='<%= request.getContextPath() %>/PMmodule/ClientManager.do?id=<%=dem_no%>'"><%=Misc.toUpperLowerCase(demo.getLastName())%>, <%=Misc.toUpperLowerCase(demo.getFirstName())%></a></td>
 		</caisi:isModuleLoad>
 		<caisi:isModuleLoad moduleName="caisi" reverse="true">
-		<td class="name"><%=Misc.toUpperLowerCase(demo.getLastName())%>, <%=Misc.toUpperLowerCase(demo.getFirstName())%></td>
+		<td class="name"><%=Encode.forHtml(Misc.toUpperLowerCase(demo.getLastName()+", "+Misc.toUpperLowerCase(demo.getFirstName())))%></td>
 		</caisi:isModuleLoad>
 		<td class="chartNo"><%=demo.getChartNo()==null||demo.getChartNo().equals("")?"&nbsp;":demo.getChartNo()%></td>
 		<td class="sex"><%=demo.getSex()%></td>

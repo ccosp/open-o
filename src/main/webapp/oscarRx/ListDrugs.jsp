@@ -499,7 +499,10 @@ String displayDrugReason(CodingSystemManager codingSystemManager, List<DrugReaso
 		if(multiLoop){
 			sb.append(", ");
 		}
-		String codeDescr = codingSystemManager.getCodeDescription( drugReason.getCodingSystem(), drugReason.getCode() );
+		String codeDescr = null;
+		if(drugReason.getCodingSystem() != null && ! drugReason.getCodingSystem().isEmpty()) {
+            codeDescr = codingSystemManager.getCodeDescription( drugReason.getCodingSystem(), drugReason.getCode() );
+        }
 		if(codeDescr != null) {
 			sb.append(StringEscapeUtils.escapeHtml(codeDescr));
 		} else {
