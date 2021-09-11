@@ -40,6 +40,7 @@
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi"%>
@@ -66,7 +67,7 @@
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="oscar.oscarDemographic.data.DemographicMerged" %>
 <%@page import="org.oscarehr.common.dao.OscarLogDao"%>
-
+<%@ page import="org.owasp.encoder.Encode" %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session" />
 
 <% 
@@ -211,7 +212,7 @@ function searchAll() {
         </li>
         <li>
             <div class="label"> </div>
-            <input type="text" class="wideInput" NAME="keyword" VALUE="<%=request.getParameter("keyword")%>" SIZE="17" MAXLENGTH="100"/>
+            <input type="text" class="wideInput" NAME="keyword" VALUE="<%=Encode.forHtmlAttribute(request.getParameter("keyword"))%>" SIZE="17" MAXLENGTH="100"/>
         </li>
         <li>
 	<INPUT TYPE="hidden" NAME="orderby" VALUE="last_name, first_name">
@@ -221,36 +222,37 @@ function searchAll() {
         <input type="hidden" name="displaymode" value="Search ">
         <INPUT TYPE="hidden" NAME="ptstatus" VALUE="active">
         
-        <input type="hidden" name="fromAppt" value="<%=request.getParameter("fromAppt")%>">
-		<input type="hidden" name="originalPage" value="<%=request.getParameter("originalPage")%>">
-		<input type="hidden" name="bFirstDisp" value="<%=request.getParameter("bFirstDisp")%>">
-		<input type="hidden" name="provider_no" value="<%=request.getParameter("provider_no")%>">
-		<input type="hidden" name="start_time" value="<%=request.getParameter("start_time")%>">
-		<input type="hidden" name="end_time" value="<%=request.getParameter("end_time")%>">
-		<input type="hidden" name="year" value="<%=request.getParameter("year")%>">
-		<input type="hidden" name="month" value="<%=request.getParameter("month")%>">
-		<input type="hidden" name="day" value="<%=request.getParameter("day")%>">
-		<input type="hidden" name="appointment_date" value="<%=request.getParameter("appointment_date")%>">
-		<input type="hidden" name="notes" value="<%=request.getParameter("notes")%>">
-		<input type="hidden" name="reason" value="<%=request.getParameter("reason")%>">
-		<input type="hidden" name="reasonCode" value="<%=request.getParameter("reasonCode")%>">
-		<input type="hidden" name="location" value="<%=request.getParameter("location")%>">
-		<input type="hidden" name="resources" value="<%=request.getParameter("resources")%>">
-		<input type="hidden" name="type" value="<%=request.getParameter("type")%>">
-		<input type="hidden" name="style" value="<%=request.getParameter("style")%>">
-		<input type="hidden" name="billing" value="<%=request.getParameter("billing")%>">
-		<input type="hidden" name="status" value="<%=request.getParameter("status")%>">
-		<input type="hidden" name="createdatetime" value="<%=request.getParameter("createdatetime")%>">
-		<input type="hidden" name="creator" value="<%=request.getParameter("creator")%>">
-		<input type="hidden" name="remarks" value="<%=request.getParameter("remarks")%>">
+        <input type="hidden" name="fromAppt" value="<%=Encode.forHtmlAttribute(request.getParameter("fromAppt"))%>">
+		<input type="hidden" name="originalPage" value="<%=Encode.forHtmlAttribute(request.getParameter("originalPage"))%>">
+		<input type="hidden" name="bFirstDisp" value="<%=Encode.forHtmlAttribute(request.getParameter("bFirstDisp"))%>">
+		<input type="hidden" name="provider_no" value="<%=Encode.forHtmlAttribute(request.getParameter("provider_no"))%>">
+		<input type="hidden" name="start_time" value="<%=Encode.forHtmlAttribute(request.getParameter("start_time"))%>">
+		<input type="hidden" name="end_time" value="<%=Encode.forHtmlAttribute(request.getParameter("end_time"))%>">
+		<input type="hidden" name="year" value="<%=Encode.forHtmlAttribute(request.getParameter("year"))%>">
+		<input type="hidden" name="month" value="<%=Encode.forHtmlAttribute(request.getParameter("month"))%>">
+		<input type="hidden" name="day" value="<%=Encode.forHtmlAttribute(request.getParameter("day"))%>">
+		<input type="hidden" name="appointment_date" value="<%=Encode.forHtmlAttribute(request.getParameter("appointment_date"))%>">
+		<input type="hidden" name="notes" value="<%=Encode.forHtmlAttribute(request.getParameter("notes"))%>">
+		<input type="hidden" name="reasonCode" value="<%=Encode.forHtmlAttribute(request.getParameter("reasonCode"))%>">
+		<input type="hidden" name="reason" value="<%=Encode.forHtmlAttribute(request.getParameter("reason"))%>">
+		<input type="hidden" name="location" value="<%=Encode.forHtmlAttribute(request.getParameter("location"))%>">
+		<input type="hidden" name="resources" value="<%=Encode.forHtmlAttribute(request.getParameter("resources"))%>">
+		<input type="hidden" name="type" value="<%=Encode.forHtmlAttribute(request.getParameter("type"))%>">
+		<input type="hidden" name="style" value="<%=Encode.forHtmlAttribute(request.getParameter("style"))%>">
+		<input type="hidden" name="billing" value="<%=Encode.forHtmlAttribute(request.getParameter("billing"))%>">
+		<input type="hidden" name="status" value="<%=Encode.forHtmlAttribute(request.getParameter("status"))%>">
+		<input type="hidden" name="createdatetime" value="<%=Encode.forHtmlAttribute(request.getParameter("createdatetime"))%>">
+		<input type="hidden" name="creator" value="<%=Encode.forHtmlAttribute(request.getParameter("creator"))%>">
+		<input type="hidden" name="remarks" value="<%=Encode.forHtmlAttribute(request.getParameter("remarks"))%>">
 		        
 <%
 	String temp=null;
 	for (Enumeration e = request.getParameterNames() ; e.hasMoreElements() ;) {
 		temp=e.nextElement().toString();
 		if(temp.equals("keyword") || temp.equals("dboperation") ||temp.equals("displaymode") ||temp.equals("search_mode") ||temp.equals("chart_no")  ||temp.equals("ptstatus") ||temp.equals("submit") || temp.equals("includeIntegratedResults")) continue;
-  	out.println("<input type='hidden' name='"+temp+"' value='"+request.getParameter(temp)+"'>");
-  }
+%>
+		<input type="hidden" name="<%=Encode.forHtmlAttribute(temp)%>" value="<%=Encode.forHtmlAttribute(request.getParameter(temp))%>">
+ <% }
 %>
        <a href="#" onclick="showHideItem('demographicSearch');" id="cancelButton" class="leftButton top"><bean:message key="global.btnCancel" /></a>
        <input type="SUBMIT" class="rightButton blueButton top" name="displaymode"
@@ -292,7 +294,7 @@ function searchAll() {
                     <%if(request.getParameter("keyword")!=null && request.getParameter("keyword").length()==0) { %>
                     <bean:message key="demographic.demographicsearch2apptresults.msgMostRecentPatients"/>
                     <% } else { %>
-                    <bean:message key="demographic.demographicsearch2apptresults.msgKeywords" /> <%=request.getParameter("keyword")%> <%}%></td>
+                    <bean:message key="demographic.demographicsearch2apptresults.msgKeywords" /> <%=Encode.forHtml(request.getParameter("keyword"))%> <%}%></td>
 	</tr>
 </table>
 
@@ -336,7 +338,8 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
 
 
 	<form method="post" name="addform" action="../appointment/addappointment.jsp">
-        
+	<input type="hidden" name="<csrf:tokenname/>" value="<csrf:tokenvalue/>"/>
+
 <table>
         <tr class="tableHeadings deep">
         
@@ -489,8 +492,8 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
 		<td class="demoId"><input type="submit" class="mbttn" name="demographic_no" value="<%=demo.getDemographicNo()%>"
 			onClick="<% if(caisi) {out.print("addNameCaisi");} else {out.print("addName");} %>('<%=demo.getDemographicNo()%>','<%=URLEncoder.encode(demo.getLastName())%>','<%=URLEncoder.encode(demo.getFirstName())%>','<%=URLEncoder.encode(demo.getChartNo() == null ? "" : demo.getChartNo())%>','<%=request.getParameter("messageId")%>','<%=demo.getProviderNo()%>','')">
         </td>
-		<td class="lastName"><%=Misc.toUpperLowerCase(demo.getLastName())%></td>
-		<td class="firstName"><%=Misc.toUpperLowerCase(demo.getFirstName())%></td>
+		<td class="lastName"><%=Encode.forHtml(Misc.toUpperLowerCase(demo.getLastName()))%></td>
+		<td class="firstName"><%=Encode.forHtml(Misc.toUpperLowerCase(demo.getFirstName()))%></td>
 		<td class="age"><%=demo.getAge()%></td>
 		<td class="rosterStatus"><%=demo.getRosterStatus()==null||demo.getRosterStatus().equals("")?"&nbsp;":demo.getRosterStatus()%></td>
 		<td class="sex"><%=demo.getSex()%></td>
@@ -550,7 +553,7 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
    			providerName=cachedProvider.getLastName()+", "+cachedProvider.getFirstName();
    		}
 %>
-        	<%=providerName%>
+        	<%=Encode.forHtml(providerName)%>
 			</td>
 		</tr>
 <%	  
@@ -558,9 +561,9 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
  	}
 	for (Enumeration e = request.getParameterNames() ; e.hasMoreElements() ;) {
 		temp=e.nextElement().toString();
-		if(temp.equals("keyword") || temp.equals("dboperation") ||temp.equals("displaymode")||temp.equals("submit") ||temp.equals("chart_no")) continue;
-  	out.println("<input type='hidden' name='"+temp+"' value='"+request.getParameter(temp)+"'>");
-  }
+		if(temp.equals("keyword") || temp.equals("dboperation") ||temp.equals("displaymode")||temp.equals("submit") ||temp.equals("chart_no")) continue; %>
+  	  	<input type="hidden" name="<%=Encode.forHtmlAttribute(temp)%>" value="<%=Encode.forHtmlAttribute(request.getParameter(temp))%>">
+  <% }
   
 %>
 	
@@ -611,7 +614,7 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
 %>
 	<bean:message key="demographic.search.noResultsWereFound" />
   <div class="createNew">
-		<a href="../demographic/demographicaddarecordhtm.jsp?fromAppt=1&originalPage=<%=request.getParameter("originalPage")%>&search_mode=<%=request.getParameter("search_mode")%>&keyword=<%=request.getParameter("keyword")%>&notes=<%=request.getParameter("notes")%>&appointment_date=<%=request.getParameter("appointment_date")%>&year=<%=request.getParameter("year")%>&month=<%=request.getParameter("month")%>&day=<%=request.getParameter("day")%>&start_time=<%=request.getParameter("start_time")%>&end_time=<%=request.getParameter("end_time")%>&duration=<%=request.getParameter("duration")%>&bFirstDisp=false&provider_no=<%=request.getParameter("provider_no")%>&notes=<%=request.getParameter("notes")%>&reason=<%=request.getParameter("reason")%>&reasonCode=<%=request.getParameter("reasonCode")%>&location=<%=request.getParameter("location")%>&resources=<%=request.getParameter("resources")%>&type=<%=request.getParameter("type")%>&style=<%=request.getParameter("style")%>&billing=<%=request.getParameter("billing")%>&status=<%=request.getParameter("status")%>&createdatetime=<%=request.getParameter("createdatetime")%>&creator=<%=request.getParameter("creator")%>&remarks=<%=request.getParameter("remarks")%>">
+		<a href="../demographic/demographicaddarecordhtm.jsp?fromAppt=1&originalPage=<%=request.getParameter("originalPage")%>&search_mode=<%=Encode.forUriComponent(request.getParameter("search_mode"))%>&keyword=<%=Encode.forUriComponent(request.getParameter("keyword"))%>&notes=<%=Encode.forUriComponent(request.getParameter("notes"))%>&appointment_date=<%=request.getParameter("appointment_date")%>&year=<%=request.getParameter("year")%>&month=<%=request.getParameter("month")%>&day=<%=request.getParameter("day")%>&start_time=<%=request.getParameter("start_time")%>&end_time=<%=request.getParameter("end_time")%>&duration=<%=request.getParameter("duration")%>&bFirstDisp=false&provider_no=<%=request.getParameter("provider_no")%>&notes=<%=Encode.forUriComponent(request.getParameter("notes"))%>&reasonCode=<%=Encode.forUriComponent(request.getParameter("reasonCode"))%>&reason=<%=Encode.forUriComponent(request.getParameter("reason"))%>&location=<%=Encode.forUriComponent(request.getParameter("location"))%>&resources=<%=request.getParameter("resources")%>&type=<%=request.getParameter("type")%>&style=<%=request.getParameter("style")%>&billing=<%=request.getParameter("billing")%>&status=<%=Encode.forUriComponent(request.getParameter("status"))%>&createdatetime=<%=request.getParameter("createdatetime")%>&creator=<%=Encode.forUriComponent(request.getParameter("creator"))%>&remarks=<%=request.getParameter("remarks")%>">
 		<bean:message key="demographic.search.btnCreateNew" /></a>
     </div>    
 <%
@@ -653,9 +656,9 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
 	}
 	for (Enumeration e = request.getParameterNames() ; e.hasMoreElements() ;) {
 		temp=e.nextElement().toString();
-		if(temp.equals("dboperation") ||temp.equals("displaymode") ||temp.equals("submit")  ||temp.equals("chart_no")) continue;
-  	out.println("<input type='hidden' name='"+temp+"' value='"+request.getParameter(temp)+"'>");
-	}
+		if(temp.equals("dboperation") ||temp.equals("displaymode") ||temp.equals("submit")  ||temp.equals("chart_no")) continue; %>
+  		<input type='hidden' name="<%=Encode.forHtmlAttribute(temp)%>" value="<%=Encode.forHtmlAttribute(request.getParameter(temp))%>">
+	<% }
 %>
 
 </form>
