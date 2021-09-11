@@ -12346,3 +12346,10 @@ CREATE TABLE IF NOT EXISTS `rbt_groups` (
 );
 
 
+create table if not exists `read_lab`
+(
+    id int null,
+    provider_no varchar(11) null,
+    lab_type varchar(20) null,
+    lab_id int null
+);
