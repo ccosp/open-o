@@ -60,6 +60,7 @@
 	Demographic demographic = demographicDao.getDemographic(demographicId);
 %>
 <html>
+<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <title>Follow-Up Request</title>
 </head>

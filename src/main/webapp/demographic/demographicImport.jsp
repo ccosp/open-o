@@ -57,7 +57,7 @@
 
 %>
 <html:html locale="true">
-
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <!--I18n-->
 <title><bean:message key="admin.admin.DemoImport"/></title>

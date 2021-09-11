@@ -46,6 +46,7 @@ String userlastname = (String) session.getAttribute("userlastname");
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 
 <%@ page
 	import="java.util.*, oscar.*, oscar.util.*, oscar.dms.*, oscar.dms.data.*, oscar.oscarProvider.data.ProviderData, org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.CtlDocClassDao"%><%
@@ -90,7 +91,7 @@ if (request.getAttribute("linkhtmlerrors") != null) {
 if (request.getAttribute("completedForm") != null) {
     formdata = (AddEditDocumentForm) request.getAttribute("completedForm");
     lastUpdate = EDocUtil.getDmsDateTime();
-} else if ((editDocumentNo != null) && (!editDocumentNo.equals(""))) {
+} else if ((editDocumentNo != null) && (!editDocumentNo.isEmpty())) {
     EDoc currentDoc = EDocUtil.getDoc(editDocumentNo);
     formdata.setFunction(currentDoc.getModule());
     formdata.setFunctionId(currentDoc.getModuleId());
@@ -153,6 +154,7 @@ for (String reportClass : reportClasses) {
    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
+<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title>Edit Document</title>
@@ -266,6 +268,7 @@ function newDocType(){
 <% } %> <html:form action="/dms/addEditHtml" method="POST"
 	enctype="multipart/form-data" styleClass="form"
 	onsubmit="return submitUpload(this);">
+	<input type="hidden" name="<csrf:tokenname/>" value="<csrf:tokenvalue/>"/>
 	<input type="hidden" name="function"
 		value="<%=formdata.getFunction()%>" size="20" />
 	<input type="hidden" name="functionId"
