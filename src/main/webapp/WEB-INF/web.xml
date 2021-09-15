@@ -296,6 +296,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+	<filter>
+		<filter-name>XforwardHeader</filter-name>
+		<filter-class>org.oscarehr.app.XforwardHeaderFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>XforwardHeader</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
     <servlet>
 		<servlet-name>action</servlet-name>
 		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>

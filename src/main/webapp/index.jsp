@@ -50,7 +50,6 @@ pageContext.setAttribute("isMobileDevice", isMobileDevice);
 Cookie prvCookie = new Cookie(CookieSecurity.providerCookie, "");
 prvCookie.setPath("/");
 prvCookie.setMaxAge(0);
-response.setHeader("Set-Cookie", "key=value; HttpOnly; SameSite=strict");
 response.addCookie(prvCookie);
 %>
 
@@ -87,8 +86,7 @@ response.addCookie(prvCookie);
                 document.getElementById(id).style.display = 'none';
            	}
         }
-        
-		  <!-- hide
+
 		  function setfocus() {
 		    document.loginForm.username.focus();
 		    document.loginForm.username.select();
@@ -98,7 +96,7 @@ response.addCookie(prvCookie);
 		    windowprops = "height="+vheight+",width="+vwidth+",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes";
 		    var popup=window.open(page, "gpl", windowprops);
 		  }
-		  -->
+
   			function addStartTime() {
             	document.getElementById("oneIdLogin").href += (Math.round(new Date().getTime() / 1000).toString());
 			}
