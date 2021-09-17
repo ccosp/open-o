@@ -629,4 +629,7 @@
 	</taglib>
 	</jsp-config>
 
+	<error-page>
+		<location>/errorpage.jsp</location>
+	</error-page>
 </web-app>
