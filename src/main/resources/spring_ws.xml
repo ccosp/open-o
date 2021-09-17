@@ -159,6 +159,7 @@
 		</jaxrs:features>
 
 		<jaxrs:serviceBeans>
+			<bean class="org.oscarehr.ws.csrf.CsrfTokenService" autowire="byName" />
 			<bean class="org.oscarehr.ws.rest.PharmacyService"  autowire="byName"/>
 			<bean class="org.oscarehr.ws.rest.DemographicService"  autowire="byName"/>
 			<bean class="org.oscarehr.ws.rest.ScheduleService"  autowire="byName"/>
