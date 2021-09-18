@@ -25,7 +25,8 @@ package org.oscarehr.app;
 
 import org.apache.commons.io.IOUtils;
 
-//import javax.servlet.ReadListener;
+
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -51,7 +52,7 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
             cacheInputStream();
         }
 
-        return new CachedServletInputStream();
+        return new CachedServletInputStream(cachedBytes);
     }
 
     @Override
@@ -68,32 +69,32 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
     }
 
     /* An inputstream which reads the cached request body */
-    public class CachedServletInputStream extends ServletInputStream {
-        private ByteArrayInputStream input;
+    private static class CachedServletInputStream extends ServletInputStream {
+        private final ByteArrayInputStream input;
 
-        public CachedServletInputStream() {
+        public CachedServletInputStream(ByteArrayOutputStream cachedBytes) {
             /* create a new input stream from the cached request body */
             input = new ByteArrayInputStream(cachedBytes.toByteArray());
         }
 
-//        @Override
-//        public boolean isFinished() {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean isReady() {
-//            return false;
-//        }
-//
-//        @Override
-//        public void setReadListener(ReadListener readListener) {
-//
-//        }
-
         @Override
         public int read() throws IOException {
             return input.read();
+        }
+
+        @Override
+        public boolean isFinished() {
+            return input.available() == 0;
+        }
+
+        @Override
+        public boolean isReady() {
+            return true;
+        }
+
+        @Override
+        public void setReadListener(ReadListener readListener) {
+
         }
     }
 }
