@@ -24,13 +24,14 @@
     Ontario, Canada
 
 --%>
-<%@ page errorPage="../errorpage.jsp"%>
+
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="oscar.login.*, oscar.oscarDB.*, oscar.MyDateFormat"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
 String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -93,6 +94,7 @@ boolean authed=true;
 <%@page import="oscar.Misc"%>
 <%@ page import="org.owasp.encoder.Encode" %>
 <html:html locale="true">
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 
 
@@ -280,17 +282,18 @@ for (int i = 0; i < vec.size(); i++) {
     color = i%2==0?tdInterlColor:"white";
 %>
 	<tr bgcolor="<%=color %>" align="center">
-		<td><%=prop.getProperty("dateTime")%>&nbsp;</td>
-		<td><%=prop.getProperty("action")%>&nbsp;</td>
-		<td><%=prop.getProperty("content")%>&nbsp;</td>
-		<td><%=prop.getProperty("contentId")%>&nbsp;</td>
-		<td><%=prop.getProperty("ip")%>&nbsp;</td>
+		<td><c:out value='<%=prop.getProperty("dateTime")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("action")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("content")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("contentId")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("ip")%>' /></td>
 		<% if(bAll) { %>
-		<td><%=propName.getProperty(prop.getProperty("provider_no"), "")%>&nbsp;</td>
+		<td><c:out value='<%=propName.getProperty(prop.getProperty("provider_no"), "")%>' /></td>
 		<% } %>
-        <td><%=prop.getProperty("demographic_no")%>&nbsp;</td>
-        <td><%=prop.getProperty("data") %>&nbsp;</td>
+		<td><c:out value='<%=prop.getProperty("demographic_no")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("data") %>' /></td>
 	</tr>
+
 	<% } %>
 
 <script type="text/javascript">
