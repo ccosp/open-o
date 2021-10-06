@@ -26,7 +26,6 @@ package org.oscarehr.integration.mchcv;
 import static junit.framework.Assert.assertEquals;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class HinValidatorTest {
@@ -35,7 +34,7 @@ public class HinValidatorTest {
     
     @BeforeClass
     public static void init() {
-        validator = HCValidationFactory.getSimpleValidator();
+        validator = HCValidationFactory.getHCValidator();
     }
 
     @Test
@@ -61,7 +60,7 @@ public class HinValidatorTest {
     }
     
     @Test
-    @Ignore("Valid only for online validation")
+    // @Ignore("Valid only for online validation")
     public void testResponseDescription() {
         HCValidationResult validationResult = validator.validate("1108809904", "CW");
         String actual = validationResult.getResponseDescription();
@@ -70,7 +69,7 @@ public class HinValidatorTest {
     }    
     
     @Test
-    @Ignore("Valid only for online validation")
+    // @Ignore("Valid only for online validation")
     public void testResponseAction() {
         HCValidationResult validationResult = validator.validate("1357557162", "");
         String actual = validationResult.getResponseAction();
@@ -79,7 +78,7 @@ public class HinValidatorTest {
     }    
     
     @Test
-    @Ignore("Valid only for online validation")
+    // @Ignore("Valid only for online validation")
     public void testFirstName() {
         HCValidationResult validationResult = validator.validate("1023947722", "J");
         String actual = validationResult.getFirstName();
@@ -88,7 +87,7 @@ public class HinValidatorTest {
     }
     
     @Test
-    @Ignore("Valid only for online validation")
+    // @Ignore("Valid only for online validation")
     public void testLastName() {
         HCValidationResult validationResult = validator.validate("1023947722", "J");
         String actual = validationResult.getLastName();
@@ -97,7 +96,7 @@ public class HinValidatorTest {
     }      
 
     @Test
-    @Ignore("Valid only for online validation")
+    // @Ignore("Valid only for online validation")
     public void testGender() {
         HCValidationResult validationResult = validator.validate("1023947722", "J");
         String actual = validationResult.getGender();
@@ -106,7 +105,7 @@ public class HinValidatorTest {
     }        
 
     @Test
-    @Ignore("Valid only for online validation")
+    // @Ignore("Valid only for online validation")
     public void testBirthDate() {
         HCValidationResult validationResult = validator.validate("1023947722", "J");
         String actual = validationResult.getBirthDate();
