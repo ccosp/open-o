@@ -252,6 +252,7 @@ if(!authed) {
 <head>
 <title><bean:message
 	key="demographic.demographiceditdemographic.title" /></title>
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <html:base />
 
 <oscar:oscarPropertiesCheck property="DEMOGRAPHIC_PATIENT_HEALTH_CARE_TEAM" value="true">

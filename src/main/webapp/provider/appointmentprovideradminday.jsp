@@ -62,8 +62,7 @@
 <%@ page import="org.oscarehr.managers.*" %>
 <%@ page import="java.util.*,java.text.*,java.net.*,oscar.*,oscar.util.*,org.oscarehr.provider.model.PreventionManager" %>
 <%@ page import="org.apache.commons.lang.*" %>
-<%@ page import="org.apache.commons.lang.StringUtils" %>
-<%@ page import="org.oscarehr.common.model.*" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 
 <!-- add by caisi -->
 <%@ taglib uri="http://www.caisi.ca/plugin-tag" prefix="plugin" %>
@@ -448,6 +447,7 @@
     }
 %>
 <html:html locale="true">
+    <script src="${pageContext.request.contextPath}/csrfguard"></script>
     <head>
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/global.js"></script>
         <title><%=WordUtils.capitalize(userlastname + ", " + org.apache.commons.lang.StringUtils.substring(userfirstname, 0, 1)) + "-"%><bean:message
@@ -554,7 +554,7 @@
                     if (self.location.href.lastIndexOf("&viewall=") > 0) a = self.location.href.substring(0, self.location.href.lastIndexOf("&viewall="));
                     else a = self.location.href;
                 } else {
-                    a = "providercontrol.jsp?year=" + document.jumptodate.year.value + "&month=" + document.jumptodate.month.value + "&day=" + document.jumptodate.day.value + "&view=0&displaymode=day&dboperation=searchappointmentday&site=" + "<%=(selectedSite==null? "none" : selectedSite)%>";
+                    a = "providercontrol.jsp?year=" + document.jumptodate.year.value + "&month=" + document.jumptodate.month.value + "&day=" + document.jumptodate.day.value + "&view=0&displaymode=day&dboperation=searchappointmentday&site=" + "<%=(selectedSite==null? "none" : Encode.forJavaScriptBlock(selectedSite) )%>";
                 }
                 self.location.href = a + "&viewall=" + key;
             }

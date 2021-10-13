@@ -24,13 +24,14 @@
     Ontario, Canada
 
 --%>
-<%@ page errorPage="../errorpage.jsp"%>
+
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="oscar.login.*, oscar.oscarDB.*, oscar.MyDateFormat"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
 String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -90,7 +91,10 @@ boolean authed=true;
   }
 %>
 
-<%@page import="oscar.Misc"%><html:html locale="true">
+<%@page import="oscar.Misc"%>
+<%@ page import="org.owasp.encoder.Encode" %>
+<html:html locale="true">
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 
 
@@ -149,7 +153,7 @@ label{margin-top:6px;margin-bottom:0px;}
 					%>
 					<option value="<%=prov %>"
 						<% if ((selected != null) && (selected.equals(prov))) { %> selected
-						<% } %>><%= ((Properties)vecProvider.get(i)).getProperty("name", "") %>
+						<% } %>><%= Encode.forHtmlContent(((Properties) vecProvider.get(i)).getProperty("name", "")) %>
 					</option>
 					<%
 		                }
@@ -233,13 +237,13 @@ label{margin-top:6px;margin-bottom:0px;}
       while (rs.next()) {
         prop = new Properties();
         prop.setProperty("dateTime", "" + rs.getTimestamp("dateTime"));
-        prop.setProperty("action", Misc.getString(rs,"action"));
-        prop.setProperty("content", Misc.getString(rs,"content"));
-        prop.setProperty("contentId", Misc.getString(rs,"contentId"));
+        prop.setProperty("action", Encode.forHtmlContent(Misc.getString(rs,"action")));
+        prop.setProperty("content", Encode.forHtmlContent(Misc.getString(rs,"content")));
+        prop.setProperty("contentId", Encode.forHtmlContent(Misc.getString(rs,"contentId")));
         prop.setProperty("ip", Misc.getString(rs,"ip"));
-        prop.setProperty("provider_no", Misc.getString(rs,"provider_no"));
-        prop.setProperty("demographic_no",Misc.getString(rs,"demographic_no"));
-        prop.setProperty("data", Misc.getString(rs, "data"));
+        prop.setProperty("provider_no", Encode.forHtmlContent(Misc.getString(rs,"provider_no")));
+        prop.setProperty("demographic_no",Encode.forHtmlContent(Misc.getString(rs,"demographic_no")));
+        prop.setProperty("data", Encode.forHtmlContent(Misc.getString(rs, "data")).replaceAll("\n", "\n<br/>"));
         vec.add(prop);
       }
 
@@ -278,17 +282,18 @@ for (int i = 0; i < vec.size(); i++) {
     color = i%2==0?tdInterlColor:"white";
 %>
 	<tr bgcolor="<%=color %>" align="center">
-		<td><%=prop.getProperty("dateTime")%>&nbsp;</td>
-		<td><%=prop.getProperty("action")%>&nbsp;</td>
-		<td><%=prop.getProperty("content")%>&nbsp;</td>
-		<td><%=prop.getProperty("contentId")%>&nbsp;</td>
-		<td><%=prop.getProperty("ip")%>&nbsp;</td>
+		<td><c:out value='<%=prop.getProperty("dateTime")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("action")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("content")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("contentId")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("ip")%>' /></td>
 		<% if(bAll) { %>
-		<td><%=propName.getProperty(prop.getProperty("provider_no"), "")%>&nbsp;</td>
+		<td><c:out value='<%=propName.getProperty(prop.getProperty("provider_no"), "")%>' /></td>
 		<% } %>
-        <td><%=prop.getProperty("demographic_no")%>&nbsp;</td>
-        <td><%=prop.getProperty("data") %>&nbsp;</td>
+		<td><c:out value='<%=prop.getProperty("demographic_no")%>' /></td>
+		<td><c:out value='<%=prop.getProperty("data") %>' /></td>
 	</tr>
+
 	<% } %>
 
 <script type="text/javascript">
