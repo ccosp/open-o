@@ -43,7 +43,7 @@
         <span class="pl-1">N</span>
     </label>
 
-    <span class="tt font-bold pl-8" data-toggle="tooltip" title="Code Status" style="width:200px;">
+    <span class="tt font-bold pl-8" data-toggle="tooltip" title="Code Status" style="width:210px;">
         <svg height="10" width="10">
             <circle cx="5" cy="5" r="4" stroke="black" stroke-width="1" fill="white" />
         </svg><input type="checkbox" class="action-required" name="action_required_code_status" data-score="1">

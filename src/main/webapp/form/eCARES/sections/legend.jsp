@@ -31,7 +31,7 @@
         ASST = Assisted
     </li>
     <li class="inline-block mr-2">
-        IND = Independen
+        IND = Independent
     </li>
     <li class="inline-block mr-2">
         DEP = Dependent

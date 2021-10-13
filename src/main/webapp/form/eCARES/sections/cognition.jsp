@@ -72,7 +72,7 @@
     <div class="flex pl-2 items-center">
         <label for="fast" class="inline-block font-bold highlight" data-field-name="fast">FAST:</label>
         <select id="fast" name="fast" class="ecares-input" style="width: 150px;">
-            <option disabled selected>Please select</option>
+            <option disabled selected></option>
             <option data-score="0" value="1" >1 - No functional decline</option>
             <option data-score="0" value="2" >2 - Personal awareness of some functional decline</option>
             <option data-score="0.5" value="3" >3 - Noticeable deficits in demanding tasks</option>

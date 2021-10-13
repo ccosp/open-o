@@ -27,15 +27,20 @@ package oscar.form.eCARES;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.Ostermiller.util.ExcelCSVPrinter;
 import net.sf.json.JSONObject;
 import org.apache.struts.action.*;
 import org.oscarehr.managers.FormeCARESManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import oscar.form.JSONAction;
 import org.oscarehr.managers.constants.Constants;
+
+import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 /*
  * Author: Dennis Warren 
@@ -52,7 +57,7 @@ public class EcaresFormAction extends JSONAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		return fetch(mapping,form,request,response);
 	}
-	
+
 	public ActionForward fetch(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 
@@ -67,7 +72,6 @@ public class EcaresFormAction extends JSONAction {
 			return mapping.findForward("success");
 		}
 
-		//TODO: add an error message
 		return null;
 	}
 
@@ -117,11 +121,45 @@ public class EcaresFormAction extends JSONAction {
 		return mapping.findForward("tickler");
 	}
 
-//	public void export(HttpServletRequest request,HttpServletResponse response){
-//		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
-//
-//
-//	}
+	public void export(ActionMapping mapping, ActionForm form,
+					   HttpServletRequest request,HttpServletResponse response){
+
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+
+		Integer demographicNo = demographicNumberToInteger(request);
+		Integer formId = Integer.parseInt( request.getParameter(Constants.Cares.FormField.formId.name()) );
+		JSONObject formData = formeCARESManager.getData(loggedInInfo, demographicNo, formId);
+		ExcelCSVPrinter printer = null;
+
+		try {
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "attachment; filename=\"ecga_form_data.csv\"");
+			printer = new ExcelCSVPrinter(response.getWriter());
+			printer.writeln(new String[] { "Element", "Value"});
+			Set keys = formData.keySet();
+			for (Object key : keys) {
+				printer.writeln(new String[] { (String)key, formData.getString((String)key)});
+			}
+		} catch (Exception e) {
+			MiscUtils.getLogger().warn("Export failed for ecga form id " + formId, e);
+			JSONObject responseMessage = new JSONObject();
+			responseMessage.put("success", "false");
+			jsonResponse(response, responseMessage);
+		} finally {
+			if(printer != null) {
+				try {
+					printer.flush();
+				} catch (IOException e) {
+					MiscUtils.getLogger().warn("Failed to flush stream for ecga form id " + formId, e);
+				}
+				try {
+					printer.close();
+				} catch (IOException e) {
+					MiscUtils.getLogger().warn("Failed to close stream for ecga form id " + formId, e);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Crazy OSCAR.  It may be possible that the demographic number

@@ -52,7 +52,7 @@
         <svg height="10" width="10">
             <circle cx="5" cy="5" r="4" stroke="black" stroke-width="1" fill="white" />
         </svg><input type="checkbox" class="action-required" name="action_required_smoke" data-score="1">
-        <strong>Smoker</strong>
+        <strong class="tt highlight" data-field-name="smoke">Smoker</strong>
     </span>
 
     <label class="flex items-center font-normal pl-4"><input type="radio" name="smoke" class="m-0" value="current"

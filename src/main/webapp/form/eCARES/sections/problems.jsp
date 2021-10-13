@@ -26,7 +26,7 @@
 <ul class="m-0 p-0 list-style-none">
     <li class="tt highlight" title="Number of Problems" data-toggle="tooltip" data-field-name="num_problem">
         <strong>Number of Problems:</strong>
-        <input type="number" name="num_problem" class="form-control" min="0" max="99" value="0" style="width:50px;" readonly/>
+        <input type="text" name="num_problem" class="form-control" value="0" style="width:50px;" readonly/>
     </li>
 </ul>
 <%--<span class="tt mt-2 inline-block" data-toggle="tooltip" title="List of problems">Problems:</span>--%>

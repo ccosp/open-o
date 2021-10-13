@@ -46,7 +46,7 @@
             <svg height="10" width="10">
                 <circle cx="5" cy="5" r="4" stroke="black" stroke-width="1" fill="white" />
             </svg><input type="checkbox" class="action-required" name="action_required_lives" data-score="1">
-            <strong>Lives</strong>
+            <strong class="tt highlight"  data-field-name="lives">Lives</strong>
         </span>
     </div>
     <div class="pl-2 flex items-center">

@@ -24,6 +24,10 @@
 let ecgaProblems = [];
 let ecgaMedications = [];
 let efi_scores = [];
+let ECGA_MANDATORY_FILTERED;
+let COMPLETED_MANDATORY;
+let EMPTY_MANDATORY;
+let INVALID_MANDATORY;
 
 /*
 	@field_name => Lower cased, with underscore
@@ -55,15 +59,6 @@ function isValidValue(field_name, value) {
 		}
 	}
 
-	if (field_name === 'fast') {
-		try {
-			const _value = parseInt(value)
-			return _value >= 0 && _value <= 7
-		} catch (e) {
-			return false
-		}
-	}
-
 	if (field_name === 'falls_number') {
 		try {
 			const _value = parseInt(value)
@@ -76,7 +71,7 @@ function isValidValue(field_name, value) {
 	if (field_name === 'five_times_sit_to_stand_time') {
 		try {
 			const _value = parseInt(value)
-			return _value >= 0 && _value <= 5
+			return _value >= 0 && _value <= 1000
 		} catch (e) {
 			return false
 		}
@@ -103,7 +98,7 @@ function getValue(type, field_name) {
 		}
 		value = $("input[name='" + field_name + "']:checked").val()
 	} else if (field_name === 'fast') {
-		value = $("select[name='" + field_name + "']").val()
+		value = $("select[name='" + field_name + "']").find(":selected").val()
 	} else {
 		value = $("input[name='" + field_name + "']").val()
 	}
@@ -113,9 +108,14 @@ function getValue(type, field_name) {
 	return value;
 }
 
+/*
+ * Must call checkmandatory first in order to set the
+ * global vars.
+ */
 function getMandatory() {
 	const results = [];
-	ECGA_MANDATORY.map(m => {
+	ECGA_MANDATORY_FILTERED = handleMocaMiniCogCase(ECGA_MANDATORY_FILTERED);
+	ECGA_MANDATORY_FILTERED.map(m => {
 		const name = m.field_name.toLowerCase().replace(/\s/g, "_")
 		let  $element = $("input[name='" + name + "']")
 		if (name === 'fast') {	
@@ -123,6 +123,7 @@ function getMandatory() {
 		}
 
 		if ($element.length === 0) {
+			// do nothing
 		} else {
 			const temp = Object.assign({}, m)
 			temp.value = getValue(m.field_type.toLowerCase(), name)
@@ -134,7 +135,6 @@ function getMandatory() {
 
 function getIncompleteMandatory() {
 	const mandatory = getMandatory();
-
 	return mandatory.filter(r => r.value === null)
 }
 
@@ -152,51 +152,42 @@ function getInvalidMandatory() {
 }
 
 function checkMandatory(options) {
-	const NUM_MANDATORY = ECGA_MANDATORY.length;
-	const filled = getCompleteMandatory();
-	let empty = getIncompleteMandatory();
-	let invalid = getInvalidMandatory();
 
+	ECGA_MANDATORY_FILTERED = options.mandatory;
+	COMPLETED_MANDATORY = getCompleteMandatory();
+	EMPTY_MANDATORY = getIncompleteMandatory();
+	INVALID_MANDATORY = getInvalidMandatory();
 
-	let isInvalid = false
-	let isOverThreshold = false
+	const NUM_MANDATORY = ECGA_MANDATORY_FILTERED.length;
+	let isOverThreshold = false;
 
-	filled.map(f => {
-		const name = f.field_name.toLowerCase().replace(/\s/g, "_")
-		const $element = $('[data-field-name=' + name + ']');
-		highlight($element[0], 'transparent')
-	})
-
-	invalid.map(f => {
-		const name = f.field_name.toLowerCase().replace(/\s/g, "_")
-		const $element = $('[data-field-name=' + name + ']');		
-		highlight($element[0], 'red')
-	})
+	// clear all highlights
+	highlightLabels(ECGA_MANDATORY, 'transparent');
+	highlightLabels(COMPLETED_MANDATORY, 'transparent');
+	highlightLabels(INVALID_MANDATORY, 'red');
 
 	function handleEdgeCase() {	
 		const moca = $('input[name="moca"]').val()	
 		const mini_cog = $('input[name="mini-cog"]').val()
-		if (moca) {	
-			empty = empty.filter(e => e.field_name.toLowerCase() !== 'mini-cog')	
-			invalid = invalid.filter(i => i.field_name.toLowerCase() !== 'mini-cog')	
-		} else if (mini_cog) {	
-			empty = empty.filter(e => e.field_name.toLowerCase() !== 'moca')	
-			invalid = invalid.filter(i => i.field_name.toLowerCase() !== 'moca')				
+		if (moca) {
+			EMPTY_MANDATORY = EMPTY_MANDATORY.filter(e => e.field_name.toLowerCase() !== 'mini-cog')
+			INVALID_MANDATORY = INVALID_MANDATORY.filter(i => i.field_name.toLowerCase() !== 'mini-cog')
+		} else if (mini_cog) {
+			EMPTY_MANDATORY = EMPTY_MANDATORY.filter(e => e.field_name.toLowerCase() !== 'moca')
+			INVALID_MANDATORY = INVALID_MANDATORY.filter(i => i.field_name.toLowerCase() !== 'moca')
 		}	
 	}	
 	handleEdgeCase();
 
-	if (invalid.length > 0) {
-		isInvalid = true
-	}
+	let isInvalid = INVALID_MANDATORY.length > 0
 
-	const percent = (filled.length / NUM_MANDATORY) * 100
+	const percent = (COMPLETED_MANDATORY.length / NUM_MANDATORY) * 100
 	const threshold = 80
 	if (percent >= threshold) {
 		isOverThreshold = true
-		if (empty.length === 0) {}
+		if (EMPTY_MANDATORY.length === 0) {}
 	} else {
-		highlightLabels(empty, 'lightpink')
+		highlightLabels(EMPTY_MANDATORY, 'lightpink')
 	}
 
 	if (options && options.showDialog === false) {
@@ -204,8 +195,9 @@ function checkMandatory(options) {
 	}
 
 	let message = ''
+
 	if (!isOverThreshold) {
-		message += '<div>Please complete the eCGA mandatory fields.</div>'
+		message += '<div>Please complete the mandatory fields for Frailty Index calculation.</div>'
 	}
 	if (isInvalid) {
 		message += '<div>These values do not appear to be correct. Please check that you have entered the correct values.</div>'
@@ -280,7 +272,6 @@ function saveForm() {
 
 
 $('.save').click(function () {
-
 	saveForm().done(function (data) {
 		if (data.saved) {
 			displayMessage('success', '<span class="glyphicon glyphicon-ok-circle"></span> All information entered on the eCGA has been saved.');
@@ -294,14 +285,20 @@ $('.save').click(function () {
 });
 
 $('.exit').click(function () {
-	checkMandatory({
-		showDialog: false
-	})
-	const emptyMandatory = getIncompleteMandatory();
-	if (emptyMandatory.length > 0) {
-		$('#myModal').modal('show');
-	}
+	saveForm().done( function() {
+		checkMandatory({
+			mandatory: ECGA_MANDATORY,
+			showDialog: false
+		})
 
+		if (EMPTY_MANDATORY.length > 0) {
+			$('#myModal').modal('show');
+		} else {
+			window.close()
+		}
+	}).fail(() => {
+		displayMessage('danger', '<span class="glyphicon glyphicon-times"></span> There was a problem during save. Please call support.');
+	});
 });
 
 $('.print').click(function () {
@@ -374,7 +371,7 @@ function renderGraph() {
 }
 
 $(document).ready(function ($) {
-	audit();
+	// audit();
 	handleFallsNumber();
 	const contextPath = $("#contextPath").html();
 	const formId = $('input[name="formId"]').val();
@@ -414,8 +411,13 @@ $(document).ready(function ($) {
 	$(".date").datepicker("setDate", new Date());
 
 	$(".closeWindowButton").on('click', function () {
-		window.close();
+		saveForm().done( function() {
+			window.close();
+		}).fail(() => {
+			displayMessage('danger', '<span class="glyphicon glyphicon-times"></span> There was a problem during save. Please call support.');
+		});
 	})
+
 
 	getSavedData(contextPath, demographicNo, appointmentNo, formId).done((data) => {
 		console.log('Load Data', data)
@@ -451,27 +453,38 @@ $(document).ready(function ($) {
     })
 
     $("#completed").change(function(){
-        if($(this).val() === "true") {
-            checkMandatory({
-                showDialog: false
-            })
-           	const emptyMandatory = getIncompleteMandatory();
-           	if (emptyMandatory.length > 0) {
-           		displayMessage('danger', 'Mandatory fields missing. Cannot complete form.')
-           		$(this).val("false");
-           	} else {
-           	    $('#myModal').modal('show');
-           	}
+    	const $completed = $(this);
+        if($completed.val() === "true") {
+			checkMandatory({
+				mandatory: ECGA_MANDATORY,
+				showDialog: false
+			})
+			const emptyMandatory = EMPTY_MANDATORY;
+			if (emptyMandatory.length > 0) {
+				displayMessage('danger', 'Mandatory fields missing. Cannot complete form.')
+				highlightLabels(emptyMandatory, 'red')
+				$completed.val("false");
+			} else {
+				const $myModal = $("#myModal").modal("show");
+				$myModal.find(".modal-body").html("<p>Close this eCGA form as complete and exit? (this action cannot be undone)</p>");
+				$myModal.find("button.continueButton").text("No Continue Editing");
+				$myModal.find("button.closeWindowButton").text("Exit");
+			}
+
         }
     })
 
 	$(".calculate").click((e) => {
 		e.preventDefault();
-		saveForm();
-		const isOverThreshold = checkMandatory();
+		const isOverThreshold = checkMandatory({
+			mandatory: ECGA_SCORE
+		});
+
 		if (isOverThreshold) {
 			calculate();
 		}
+
+		saveForm();
 	})
 
 });
@@ -529,23 +542,34 @@ function handleFallsNumber() {
 	})	
 }
 
-function calculate() {
+/*
+ * Case: only one of either a MOCA value OR Mini-Cog value is
+ * mandatory.
+ */
+function handleMocaMiniCogCase(MAP) {
 
+	const moca = $('input[name="moca"]').val()
+	const mini_cog = $('input[name="mini-cog"]').val()
+	let FILTERED_MAP = MAP;
+	if (moca) {
+		FILTERED_MAP = MAP.filter(e => e.field_name.toLowerCase() !== 'mini-cog')
+	} else if (mini_cog) {
+		FILTERED_MAP = MAP.filter(e => e.field_name.toLowerCase() !== 'moca')
+	}
+	return FILTERED_MAP;
+}
+
+/*
+ * Calculate the final Frailty score based on elements completed
+ * in the form.
+ */
+function calculate() {
 	let deficitSum = 0;
-	let N = 0;
 	let numProblems = 0;
-	
-	let ECGA_SCORE_FILTERED = ECGA_SCORE	
-	function handleEdgeCase() {	
-		const moca = $('input[name="moca"]').val()	
-		const mini_cog = $('input[name="mini-cog"]').val()
-		if (moca) {	
-			ECGA_SCORE_FILTERED = ECGA_SCORE.filter(e => e.field_name.toLowerCase() !== 'mini-cog')	
-		} else if (mini_cog) {	
-			ECGA_SCORE_FILTERED = ECGA_SCORE.filter(e => e.field_name.toLowerCase() !== 'moca')	
-		}	
-	}	
-	handleEdgeCase();
+	let ECGA_SCORE_FILTERED = handleMocaMiniCogCase(ECGA_SCORE);
+	let numberCompleted = COMPLETED_MANDATORY.length;
+	let numberMandatory = ECGA_SCORE_FILTERED.length;
+	let numberProblemsOffset = 18;
 
 	ECGA_SCORE_FILTERED.map(d => {
 		const name = d.field_name.toLowerCase().replace(/\s/g, "_")
@@ -559,7 +583,9 @@ function calculate() {
 			} else {
 				numProblems += value;
 			}
-			// N += 1;
+			// hack to remove Number of Problems from the items selected count
+			numberCompleted = (numberCompleted - 1);
+			numberMandatory = (numberMandatory - 1);
 		}
 
 		if (name === 'num_medication') {
@@ -568,39 +594,29 @@ function calculate() {
 			if(value == 0) {
 				return;
 			}
-			console.log(name + ": ");
 			if (value >= 8) {
 				deficitSum += 1;
-				console.log(1);
 			} else if (value <= 7 && value >= 5) {
 				deficitSum += 0.5;
-				console.log(0.5);
 			} else {
 				deficitSum += 0;
-				console.log(0);
 			}
-			// N += 1;
 		}
 
 		if (field_type === 'select') {
-			const $element = $("select[name='" + name + "']:selected");
+			const $element = $("select[name='" + name + "']").find(":selected");
 			const value = parseInt($element.val());
 			if(! value) {
 				return;
 			}
-			N += 1;
-			console.log(name + ": ");
 			switch(name) {
 				case 'fast':
 					if (value === 1 || value === 2) {
 						deficitSum += 0;
-						console.log(0);
 					} else if (value === 3 || value === 4) {
 						deficitSum += 0.5;
-						console.log(0.5);
 					} else {
 						deficitSum += 1;
-						console.log(1);
 					}
 					break;
 			}
@@ -614,84 +630,63 @@ function calculate() {
 					console.log("Undefined?", name)
 				} else {
 					deficitSum += score
-					N += 1
 				}
-				console.log(name + ": ");
-				console.log(score);
 			}
 		}
 
 		if (field_type === 'textbox') {
 			const $element = $("input[name='" + name + "']")
 			const value = parseInt($element.val());
-			console.log(name + ": ");
+
 			if (value || value === 0) {
-				N += 1;
 				switch (name) {
+
 					case 'mini-cog':
 						if (value == 5) {
 							deficitSum += 0;
-							console.log(0);
 						} else if (value == 4) {
 							deficitSum += 0.33;
-							console.log(0.33);
 						} else if (value <= 3 && value >= 2) {
 							deficitSum += 0.66;
-							console.log(0.66);
 						} else if (value <= 1) {
 							deficitSum += 1;
-							console.log(1);
 						} else {
 							deficitSum += 0;
-							console.log(0);
 						}
 						break;
 	
 					case 'moca':
 						if (value >= 25) {
 							deficitSum += 0;
-							console.log(0);
 						} else if (value <= 24 && value >= 20) {
 							deficitSum += 0.33;
-							console.log(0.33);
 						} else if (value <= 19 && value >= 11) {
 							deficitSum += 0.66;
-							console.log(0.66);
 						} else if (value <= 10) {
 							deficitSum += 1;
-							console.log(1);
 						} else {
 							deficitSum += 0;
-							console.log(0);
 						}
 						break;
 
 					case 'falls_number':
 						if (value === 1) {
 							deficitSum += 0.5;
-							console.log(0.5);
 						} else if (value > 1) {
 							deficitSum += 1;
-							console.log(1);
 						} else {
 							deficitSum += 0;
-							console.log(0);
 						}
-
 						break;
 	
 					case 'five_times_sit_to_stand_time':
 						if (value <= 9) {
 							deficitSum += 0;
-							console.log(0);
 						} else if (value <= 14 && value >= 10) {
 							deficitSum += 0.5;
-							console.log(0.5);
 						} else {
 							deficitSum += 1;
-							console.log(1);
 						}
-
 						break;
 				}
 
@@ -701,10 +696,16 @@ function calculate() {
 	})
 
 	console.log("Problems: " + numProblems + " Deficit Score: " + deficitSum + " Deficits Selected: "
-		+ N + " Percentage input: " + ((N/ECGA_SCORE.length)*100).toFixed(2));
-	const score = (numProblems + deficitSum) / ( N + 18 )
-	$('input[name="deficit_based_frailty_score"]').val(score); //.toFixed(2))
-	
+		+ numberCompleted + " Percentage input: " + ((numberCompleted/numberMandatory)*100).toFixed(2));
+
+	const score = ((numProblems + deficitSum) / (numberCompleted + numberProblemsOffset)).toFixed(3)
+	$('input[name="deficit_based_frailty_score"]').val(score)
+
+	// Display any remaining eFI score elements that are not completed.
+	console.log(EMPTY_MANDATORY)
+	displayMessage('warning', 'Complete these fields for a full eFI score')
+	highlightLabels(EMPTY_MANDATORY, "yellow");
+
 }
 
 function load(field_name, value) {
@@ -719,7 +720,12 @@ function load(field_name, value) {
             const $myModal = $("#myModal").modal("show");
             $myModal.find(".modal-body").html("<p>An incomplete eCGA form already exists. Start a new form anyway?</p>");
             $myModal.find("button.continueButton").text("Continue");
-            $myModal.find("button.closeWindowButton").text("Exit");
+            $myModal.find("button.closeWindowButton").off('click')
+				.removeClass("closeWindowButton")
+				.addClass("abortButton")
+				.text("Exit").on('click', function () {
+					window.close();
+				});
         }
     }
 
@@ -740,6 +746,11 @@ function load(field_name, value) {
 	}
 
 	if (field_name === 'fast') {	
+		loadSelect(field_name, value)
+		completeForm(value);
+	}
+
+	if (field_name === 'five_times_sit_to_stand_attempt') {
 		loadSelect(field_name, value)
 		completeForm(value);
 	}
@@ -869,8 +880,8 @@ function loadProblems(field_name, value) {
 		const disable = document.createElement('button')
 		const enable = document.createElement('button')
 
-		disable.classList.add("btn", "btn-default")
-		enable.classList.add("btn", "btn-default")
+		disable.classList.add("btn", "btn-danger")
+		enable.classList.add("btn", "btn-success")
 
 		disable.innerHTML = 'Disable'
 		enable.innerHTML = 'Enable'
@@ -888,8 +899,11 @@ function loadProblems(field_name, value) {
 			loadInfo('problems', ecgaProblems)
 		})
 
-		buttonContainer.appendChild(disable)
-		buttonContainer.appendChild(enable)
+		if(p.active === true) {
+			buttonContainer.appendChild(disable)
+		} else {
+			buttonContainer.appendChild(enable)
+		}
 
 		listItem.appendChild(buttonContainer)
 
@@ -925,14 +939,17 @@ function loadMedications(field_name, value) {
 			data.active = true;
 			loadInfo('medications', ecgaMedications)
 		})
-		disable.classList.add("btn", "btn-default")
-		enable.classList.add("btn", "btn-default")
+		disable.classList.add("btn", "btn-danger")
+		enable.classList.add("btn", "btn-success")
 
 		disable.innerHTML = 'Disable'
 		enable.innerHTML = 'Enable'
 
-		buttonContainer.appendChild(disable)
-		buttonContainer.appendChild(enable)
+		if(m.active === true) {
+			buttonContainer.appendChild(disable)
+		} else {
+			buttonContainer.appendChild(enable)
+		}
 		buttonContainer.classList.add('pbtn-group')
 		listItem.appendChild(buttonContainer)
 
@@ -983,43 +1000,4 @@ function loadCheckbox(field_name, value) {
 			fill: 'black'
 		});
 	}
-}
-
-
-/*
- * Get all the elements and display the score value.
- */
-function audit() {
-
-	console.log("Active Elements: ");
-	const elements = $("input[data-score]");
-	let length = 0;
-	let lastname = '';
-	var activeElements = [];
-	elements.each(function() {
-		if($(this).attr('value')) {
-			let name = $(this).attr('name');
-			if(name !== lastname) {
-				length++;
-			}
-			activeElements.push(name + " - " + $(this).attr('value') + ": " + $(this).data('score'));
-			lastname = name;
-		}
-	})
-	console.log(activeElements);
-	/*
-	 * 6 additional elements include:
-	 * five_times_sit_to_stand_time
-	 * falls_number
-	 * fast
-	 * moca | mini-cog
-	 * problems
-	 * medications
-	 */
-	console.log("Total Active Elements: " + (length + 6));
-
-	console.log("Mandatory Elements: ");
-	console.log(ECGA_SCORE);
-	console.log("Total Mandatory Elements: " + ECGA_SCORE.length);
-
 }

@@ -28,7 +28,7 @@
         <svg height="10" width="10">
             <circle cx="5" cy="5" r="4" stroke="black" stroke-width="1" fill="white" />
         </svg><input type="checkbox" class="action-required" name="action_required_enough_income" data-score="1">
-        <strong class="tt" data-toggle="tooltip"
+        <strong class="tt highlight"  data-field-name="enough_income" data-toggle="tooltip"
             title="Does the patient have enough income? Does the patient need SAFER rent grants, Fair Pharmacare, Disability tax credits?">
             Enough Income?
         </strong>
@@ -46,7 +46,7 @@
             <svg height="10" width="10">
                 <circle cx="5" cy="5" r="4" stroke="black" stroke-width="1" fill="white" />
             </svg><input type="checkbox" class="action-required" name="action_required_socially_engaged" data-score="1">
-            <strong>Socially Engaged</strong>
+            <strong class="tt highlight"  data-field-name="socially_engaged" >Socially Engaged</strong>
         </span>
 
         <label class="font-normal flex items-center ml-2"><input type="radio" name="socially_engaged" class="m-0" value="frequent"

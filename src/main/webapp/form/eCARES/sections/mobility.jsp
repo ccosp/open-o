@@ -142,17 +142,25 @@
             <div class="flex">
                 <label for="five_times_sit_to_stand_time" class="tt font-normal" data-toggle="tooltip"
                     title="Five Times Sit to Stand Score Time in Seconds">
-                    <span class="highlight" data-field-name="five_times_sit_to_stand_time">5TSTS Time:</span>
+                    <span class="font-bold highlight" data-field-name="five_times_sit_to_stand_time">5TSTS Time:</span>
                 </label>
-                <input type="number" min="0" max="5" id="five_times_sit_to_stand_time"
-                    name="five_times_sit_to_stand_time" class="h-si ecares-input" style="width:35px;">
+                <input type="number" id="five_times_sit_to_stand_time" min="0" max="1000"
+                    name="five_times_sit_to_stand_time" class="h-si ecares-input" style="width:45px;">
 
                 <label for="five_times_sit_to_stand_attempt" class="tt font-normal" data-toggle="tooltip"
                     title="Five Times Sit to Stand Number Attempts">
                     <span class="highlight" data-field-name="five_times_sit_to_stand_attempt">5TSTS ATPT:</span>
                 </label>
-                <input type="number" min="0" max="5" id="five_times_sit_to_stand_attempt"
-                    name="five_times_sit_to_stand_attempt" class="h-si ecares-input" style="width:35px;">
+
+                <select id="five_times_sit_to_stand_attempt"
+                        name="five_times_sit_to_stand_attempt" class="h-si ecares-input" style="width:30px;">
+                    <option disabled selected></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
 
                 <div class="tt control-label inline-block pl-1" data-toggle="tooltip"
                     title="Able to cross arms in front">

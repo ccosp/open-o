@@ -34,16 +34,16 @@
     </div>
 
     <label class="flex items-center font-normal pl-4">
-        <input type="radio" name="control_of_life_events" value="1" class="m-0" autocomplete="off" data-score="1">
+        <input type="radio" name="control_of_life_events" value="0" class="m-0" autocomplete="off" data-score="0">
         <span class="pl-1">Y</span>
     </label>
     <label class="flex items-center font-normal pl-6">
-        <input type="radio" name="control_of_life_events" value="0" class="m-0" autocomplete="off" data-score="0">
+        <input type="radio" name="control_of_life_events" value="1" class="m-0" autocomplete="off" data-score="1">
         <span class="pl-1">N</span>
     </label>
 
     <span class="tt inline-block pl-8 font-bold" data-toggle="tooltip"
-        title="No recent change in ability to conduct usual activities" style="width: 200px;">
+        title="No recent change in ability to conduct usual activities" style="width: 210px;">
         <svg height="10" width="10">
             <circle cx="5" cy="5" r="4" stroke="black" stroke-width="1" fill="white" />
         </svg><input type="checkbox" class="action-required" name="action_required_usual_activities" data-score="1">

@@ -24,6 +24,8 @@
 
 package org.oscarehr.common.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -51,6 +53,7 @@ public class FormeCARES  extends AbstractModel<Integer> {
     private Date completedDate;
 
     public FormeCARES() {
+        // default
     }
 
     @Override
@@ -120,13 +123,15 @@ public class FormeCARES  extends AbstractModel<Integer> {
 
     @Override
     public String toString() {
-        return "FormeCARES{" +
-                "id=" + id +
-                ", demographicNo=" + demographicNo +
-                ", providerNo=" + providerNo +
-                ", formCreated=" + formCreated +
-                ", formEdited=" + formEdited +
-                ", formData='" + formData + '\'' +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("demographicNo", demographicNo)
+                .append("providerNo", providerNo)
+                .append("formCreated", formCreated)
+                .append("formEdited", formEdited)
+                .append("formData", formData)
+                .append("completed", completed)
+                .append("completedDate", completedDate)
+                .toString();
     }
 }

@@ -46,5 +46,7 @@
         <label class="font-normal flex items-center ml-2 pl-4"><input type="radio" name="caregiver_relationship" class="m-0" value="other"
                 autocomplete="off">
                 <span class="pl-1">Other</span></label>
+        <label class="font-normal flex items-center ml-2 pl-4"><input type="radio" name="caregiver_relationship" class="m-0" value="na" autocomplete="off">
+            <span class="pl-1">NA</span></label>
     </div>
 </div>

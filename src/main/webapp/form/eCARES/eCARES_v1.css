@@ -425,19 +425,20 @@ table {
 *
 */
 svg {
+	display: none;
 	cursor: pointer;
 	cursor: hand;
 }
 
-.action-required {
+/*.action-required {
 	display: none
-}
+}*/
 
 select {
 	display: block;
-	font-size: 12px;
-	font-family: sans-serif;
-	line-height: 1.3em;
+	font-size: inherit;
+	font-family: inherit;
+	line-height: inherit;
 	padding: 1px;
 	box-sizing: border-box;
 	border: 0px solid #aaa;
@@ -477,6 +478,10 @@ select {
 .info-listitem-disabled {
 	text-decoration: line-through;
 	text-decoration-color: red;
+}
+
+.info-listitem-disabled strong {
+	font-weight: normal !important;
 }
 
 /*
@@ -619,14 +624,13 @@ label {
 		margin: 0px;
 	}
 	[type="checkbox"], [type="radio"] {
-		//transform: scale(.5);
 		margin: 0px;
 	}
 	select {
 		display: block;
-		font-size: 12px;
-		font-family: sans-serif;
-		line-height: 1.3em;
+		font-size: inherit;
+		font-family: inherit;
+		line-height: inherit;
 		padding: 1px;
 		box-sizing: border-box;
 		border: 0px solid #aaa;

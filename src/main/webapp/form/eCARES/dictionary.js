@@ -577,8 +577,8 @@ const ECGA_DICTIONARY = [
         score: true
 	},
 	{
-		field_name: 'Five Times Sit to Stand Attempts',
-        field_type: 'Textbox',
+		field_name: 'Five Times Sit to Stand Attempt',
+        field_type: 'Select',
         data_type: 'Number',
         mandatory: false,
         score: false
@@ -783,7 +783,7 @@ const ECGA_DICTIONARY = [
 		field_name: 'Problems',
         field_type: 'Textbox',
         data_type: 'Text',
-        mandatory: true,
+        mandatory: false,
         score: false
 	},
 	{
@@ -825,28 +825,28 @@ const ECGA_DICTIONARY = [
 		field_name: 'Clinical Frailty Score Patient',
         field_type: 'radio',
         data_type: 'discrete',
-        mandatory: false,
+        mandatory: true,
         score: false
 	},
 	{
 		field_name: 'Clinical Frailty Score Care Giver',
         field_type: 'radio',
         data_type: 'discrete',
-        mandatory: true,
+        mandatory: false,
         score: false
 	},
 	{
 		field_name: 'Num Problem',
         field_type: 'n/a',
         data_type: 'Number',
-        mandatory: true,
+        mandatory: false,
         score: true
 	},
 	{
 		field_name: 'Num Medication',
         field_type: 'n/a',
         data_type: 'Number',
-        mandatory: true,
+        mandatory: false,
         score: true
 	},
 	{
@@ -896,7 +896,7 @@ const ECGA_DICTIONARY = [
 
 const ECGA_DICTIONARY_FILTERED = ECGA_DICTIONARY.filter(d => {
     // We don't show this anywhere in the form
-    if (d.field_name === 'Five Times Sit to Stand Attempts') {
+    if (d.field_name === 'Five Times Sit to Stand Attempt') {
         return false
     }
     return true
