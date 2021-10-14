@@ -611,6 +611,7 @@
 
         <form-bean name="ValidateSwipeCard" type="org.oscarehr.integration.mchcv.ValidateSwipeCard" />
         <form-bean name="bpmh" type="oscar.form.pharmaForms.formBPMH.bean.BpmhFormBean" />
+		<form-bean name="eCaresForm" type="org.apache.struts.validator.LazyValidatorForm" />
 	</form-beans>
 
 	<global-forwards>
@@ -689,7 +690,12 @@
 	 			<forward name="saved" path="/formBPMH.do?method=fetch" />
 	 			<forward name="success" path="/form/pharmaForms/formBPMH.jsp" />
 		</action>
-	
+
+		<action path="/formeCARES" parameter="method" type="oscar.form.eCARES.EcaresFormAction" scope="request" validate="false">
+			<forward name="success" path="/form/eCARES/formeCARES.jsp" />
+			<forward name="tickler" path="/tickler/ticklerAddWidget.jsp" />
+		</action>
+
 	
         <!-- Notification Mappings -->
         <action path="/notification/create"
