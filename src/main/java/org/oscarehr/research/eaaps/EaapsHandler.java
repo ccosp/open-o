@@ -64,7 +64,7 @@ import oscar.oscarMessenger.data.MessengerSystemMessage;
 import oscar.util.ConversionUtils;
 import ca.uhn.hl7v2.HL7Exception;
 
-import com.lowagie.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfReader;
 import org.oscarehr.common.model.OscarMsgType;
 
 /**

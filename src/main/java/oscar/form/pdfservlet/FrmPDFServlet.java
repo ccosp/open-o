@@ -7,6 +7,7 @@
 // form/createpdf?__title=British+Columbia+Antenatal+Record+Part+1&__cfgfile=bcar1PrintCfgPg1&__cfgfile=bcar1PrintCfgPg2&__template=bcar1
 package oscar.form.pdfservlet;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -534,7 +535,12 @@ public class FrmPDFServlet extends HttpServlet {
 	                    
 	                    // write in a rectangle area
 	                    if (cfgVal.length >= 9) {
-	                        Font font = new Font(bf, Integer.parseInt(cfgVal[5].trim()), fontFlags);
+                            Font font;
+	                        if (fontFlags == Font.BOLD) { // Hack to stop blue outline from bold text
+                                font = new Font(bf, Integer.parseInt(cfgVal[5].trim()), fontFlags, Color.black);
+                            } else {
+                                font = new Font(bf, Integer.parseInt(cfgVal[5].trim()), fontFlags);
+                            }
 	                        //ct.setSimpleColumn(60, 300, 200, 500, 10,
 	                        // Element.ALIGN_LEFT);
 	                        //ct.addText(new Phrase(15, "xxxx xxxxx xxxxx xxxxx xxx

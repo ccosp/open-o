@@ -145,7 +145,7 @@ public class ConcatPDF {
                 }
                 PRAcroForm form = reader.getAcroForm();
                 if (form != null)
-                    writer.copyAcroForm(reader);
+                    writer.copyDocumentFields(reader);
                 f++;
             }
             if (master.size() > 0)

@@ -62,8 +62,6 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import com.lowagie.text.DocumentException;
-
 import oscar.OscarProperties;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.all.parsers.Factory;
@@ -94,7 +92,7 @@ public class CaseManagementPrint {
 	 *This method was in CaseManagementEntryAction but has been moved out so that both the classic Echart and the flat echart can use the same printing method.
 	 * 
 	 */
-	public void doPrint(LoggedInInfo loggedInInfo,Integer demographicNo, boolean printAllNotes,String[] noteIds,boolean printCPP,boolean printRx,boolean printLabs, boolean printPreventions, boolean useDateRange, Calendar startDate, Calendar endDate,   HttpServletRequest request, OutputStream os) throws IOException, DocumentException {
+	public void doPrint(LoggedInInfo loggedInInfo,Integer demographicNo, boolean printAllNotes,String[] noteIds,boolean printCPP,boolean printRx,boolean printLabs, boolean printPreventions, boolean useDateRange, Calendar startDate, Calendar endDate,   HttpServletRequest request, OutputStream os) throws IOException, com.lowagie.text.DocumentException, com.itextpdf.text.DocumentException{
 		
 		String providerNo=loggedInInfo.getLoggedInProviderNo();
 
