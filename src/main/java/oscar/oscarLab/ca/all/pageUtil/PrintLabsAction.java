@@ -48,8 +48,6 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import com.lowagie.text.DocumentException;
-
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 import oscar.oscarLab.ca.all.parsers.Factory;
@@ -96,10 +94,6 @@ public class PrintLabsAction extends Action{
 	            
 	            f.delete();
             }
-        }catch(DocumentException de) {
-            logger.error("DocumentException occured insided PrintLabsAction", de);
-            request.setAttribute("printError", new Boolean(true));
-            return mapping.findForward("error");
         }catch(IOException ioe) {
             logger.error("IOException occured insided PrintLabsAction", ioe);
             request.setAttribute("printError", new Boolean(true));

@@ -89,8 +89,6 @@ import ca.uhn.hl7v2.model.v26.message.ORU_R01;
 import ca.uhn.hl7v2.model.v26.message.REF_I12;
 import net.sf.json.JSONObject;
 
-import com.lowagie.text.DocumentException;
-
 public class EctConsultationFormRequestAction extends Action {
 
 	private static final Logger logger=MiscUtils.getLogger();
@@ -537,7 +535,7 @@ public class EctConsultationFormRequestAction extends Action {
 	            ORU_R01 hl7Message=OruR01.makeOruR01(clinic, demographic, observationData, sendingProvider, professionalSpecialist);        
 	            int statusCode=SendingUtils.send(loggedInInfo, hl7Message, professionalSpecialist);
 	            if (HttpServletResponse.SC_OK!=statusCode) throw(new ServletException("Error, received status code:"+statusCode));
-            } catch (DocumentException e) {
+            } catch (com.lowagie.text.DocumentException e) {
 	            logger.error("Unexpected error.", e);
             }	    	
 	    }

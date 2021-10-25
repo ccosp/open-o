@@ -21,6 +21,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
@@ -31,24 +34,11 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DigitalSignature;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Site;
-import org.oscarehr.common.printing.FontSettings;
-import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEventHelper;
 import oscar.OscarProperties;
 import oscar.oscarClinic.ClinicData;
 import oscar.oscarRx.data.RxProviderData;
@@ -109,7 +99,8 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 
 		// Create the document we are going to write to
 		document = new Document();
-		PdfWriterFactory.newInstance( document, os, FontSettings.HELVETICA_10PT );
+		PdfWriter.getInstance(document, os);
+//		PdfWriterFactory.newInstance( document, os, FontSettings.HELVETICA_10PT );
 		document.setPageSize( PageSize.LETTER );
 		document.addTitle( getResource("msgConsReq") );
 		document.addCreator( "OSCAR" );
@@ -251,7 +242,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		PdfPTable datelineborder = new PdfPTable(1);
 		datelineborder.setWidthPercentage(100f);
 		PdfPCell datecell = new PdfPCell();
-		datecell.setPhrase( new Phrase( String.format("%s %s", getResource("msgDate"), reqFrm.pwb.equals("1") ? getResource("pwb") : reqFrm.referalDate) ) ); 
+		datecell.setPhrase( new Phrase( String.format("%s %s", getResource("msgDate"), reqFrm.pwb.equals("1") ? getResource("pwb") : reqFrm.referalDate) ) );
 		datecell.setBorder(0);
 		datecell.setColspan(1);
 		datecell.setPaddingTop(5f);
