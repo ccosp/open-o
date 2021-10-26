@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.1.0.min.js"></script>
+<script src="<%=request.getContextPath() %>/library/jquery/jquery-1.12.0.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/library/moment.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/alertify.core.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/alertify.js"></script>

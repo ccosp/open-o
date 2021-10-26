@@ -65,9 +65,12 @@
     FrmBCAR2020Record rec = (FrmBCAR2020Record)(new FrmRecordFactory()).factory(formClass);
 	Properties props = rec.getFormRecord(LoggedInInfo.getLoggedInInfoFromSession(request),demoNo, formId, pageNo);
 %>
-
+<!DOCTYPE HTML>
 <html:html locale="true">
 <head>
+	<title>BC Antenatal Record 2020 Part 2 Page 1</title>
+
+
 
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/share/calendar/calendar.js"></script>
@@ -75,20 +78,21 @@
 	<script type="text/javascript" src="<%=request.getContextPath() %>/share/calendar/calendar-setup.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/formBCAR2020Record.js"></script>
 	<script src="<%=request.getContextPath() %>/library/jquery/jquery-1.12.0.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/fg.menu.js"></script>
 
 	<!-- Checkbox multi-select -->
     <script src="<%=request.getContextPath() %>/js/bootstrap.bundle.min.js"></script>
     <script src="<%=request.getContextPath() %>/js/bootstrap-select.min.js"></script>
+
+	<script src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
+
 	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath() %>/share/calendar/calendar.css" title="win2k-cold-1" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap4.1.1.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-select.css" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap4.1.1.min.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-select.css" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/jquery/jquery-ui.structure-1.12.1.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/jquery/jquery-ui.theme-1.12.1.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/formBCAR2020.css">
-	
-	<title>BC Antenatal Record 2020 Part 2 Page 1</title>
+
 
 	<!-- Field Naming Scheme throughout BCAR2020
 			c_XXXX Is a checkbox field
@@ -1140,35 +1144,39 @@
                 </html:form>
 		</div>
 	</div>
+
+	<div id="print-dialog" title="Print BCAR2020 Record">
+		<p class="validateTips"></p>
+		<p>Note: Remember to Save any changes before printing.</p>
+		<div>
+			<input type="checkbox" onclick="return printSelectAll();" id="print_all" class="text ui-widget-content ui-corner-all" />
+			<label for="print_all" class="small10">Select All</label>
+		</div>
+		<form>
+			<fieldset>
+				<input type="checkbox" name="print_pr1" id="print_pr1" class="text ui-widget-content ui-corner-all" />
+				<label for="print_pr1">Part 1</label>
+				<br/>
+				<input type="checkbox" name="print_pr2" id="print_pr2" checked="checked" class="text ui-widget-content ui-corner-all" />
+				<label for="print_pr2">Part 2 (Page 1)</label>
+				<br/>
+				<input type="checkbox" name="print_pr3" id="print_pr3" class="text ui-widget-content ui-corner-all" />
+				<label for="print_pr3">Part 2 (Page 2)</label>
+				<br/>
+				<input type="checkbox" name="print_att" id="print_att" class="text ui-widget-content ui-corner-all" />
+				<label for="print_att">Attachments/Additional Info</label>
+				<br/>
+				<input type="checkbox" name="print_pr4" id="print_pr4" class="text ui-widget-content ui-corner-all" />
+				<label for="print_pr4">Reference Page 1</label>
+				<br/>
+				<input type="checkbox" name="print_pr5" id="print_pr5" class="text ui-widget-content ui-corner-all" />
+				<label for="print_pr5">Reference Page 2</label>
+				<br/>
+			</fieldset>
+		</form>
+	</div>
 </body>
 
-<div id="print-dialog" title="Print BCAR2020 Record">
-	<p class="validateTips"></p>
-	<p>Note: Remember to Save any changes before printing.</p>
-	<a href="javascript:void(0);" onclick="return printSelectAll();" class="small10">Select All</a>
-	<br />
-	<form>
-		<fieldset>
-			<input type="checkbox" name="print_pr1" id="print_pr1" class="text ui-widget-content ui-corner-all" />
-			<label for="print_pr1">Part 1</label>
-			<br/>
-			<input type="checkbox" name="print_pr2" id="print_pr2" checked="checked" class="text ui-widget-content ui-corner-all" />
-			<label for="print_pr2">Part 2 (Page 1)</label>
-			<br/>
-			<input type="checkbox" name="print_pr3" id="print_pr3" class="text ui-widget-content ui-corner-all" />
-			<label for="print_pr3">Part 2 (Page 2)</label>
-			<br/>
-			<input type="checkbox" name="print_att" id="print_att" class="text ui-widget-content ui-corner-all" />
-			<label for="print_att">Attachments/Additional Info</label>
-			<br/>
-			<input type="checkbox" name="print_pr4" id="print_pr4" class="text ui-widget-content ui-corner-all" />
-			<label for="print_pr4">Reference Page 1</label>
-			<br/>
-			<input type="checkbox" name="print_pr5" id="print_pr5" class="text ui-widget-content ui-corner-all" />
-			<label for="print_pr5">Reference Page 2</label>
-			<br/>
-		</fieldset>
-	</form>
-</div>
+
 	
 </html:html>
