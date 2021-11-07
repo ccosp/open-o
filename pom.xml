@@ -39,6 +39,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<cxf.version>2.7.11</cxf.version>
+		<maven.compiler.version>3.1</maven.compiler.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 
 	<repositories>
@@ -58,10 +62,10 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
-		<repository>
-			<id>new_oscar_repo</id>
-			<url>http://mvn.oscar-emr.com/repository</url>
-		</repository>
+<!--		<repository>-->
+<!--			<id>new_oscar_repo</id>-->
+<!--			<url>http://mvn.oscar-emr.com/repository</url>-->
+<!--		</repository>-->
 		
 		<!-- MARC-HI (Everest & SHIC) -->
 <!-- 		<repository>-->
@@ -989,7 +993,7 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>apache-cxf</artifactId>
-			<version>2.7.11</version>
+			<version>${cxf.version}</version>
 			<type>pom</type>
 			<exclusions>
 				<exclusion>
@@ -1026,14 +1030,13 @@
 		<dependency>
     		<groupId>org.apache.cxf</groupId>
     		<artifactId>cxf-rt-frontend-jaxws</artifactId>
-    		<version>2.7.11</version>
+			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.cxf</groupId>
     		<artifactId>cxf-rt-transports-http</artifactId>
-    		<version>2.7.11</version>
+			<version>${cxf.version}</version>
 		</dependency>
-		
 
 		<dependency>
 			<groupId>org.oscarehr</groupId>
@@ -1156,32 +1159,22 @@
 				 <version>1.1</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>rome</groupId>
-			<artifactId>rome</artifactId>
-			<version>1.0</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>rome</groupId>-->
+<!--			<artifactId>rome</artifactId>-->
+<!--			<version>1.0</version>-->
+<!--		</dependency>-->
 		
         <dependency>
                 <groupId>org.oscarehr.integration.ebs</groupId>
                 <artifactId>ebs-client</artifactId>
-                <version>0.0.5</version>
+                <version>0.0.6</version>
                 <exclusions>
 						<exclusion>
 							<groupId>org.bouncycastle</groupId>
 							<artifactId>bcprov-jdk16</artifactId>
 						</exclusion>
                 </exclusions>
-        </dependency>
-        <dependency>
-                <groupId>org.oscarehr.integration.ebs</groupId>
-                <artifactId>edt-stubs</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-                <groupId>org.oscarehr.integration.ebs</groupId>
-                <artifactId>hcv-stubs</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
 	<dependency>
@@ -1529,10 +1522,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-                                <version>2.5.1</version>
+				<version>${maven.compiler.version}</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 
@@ -1580,36 +1573,36 @@
 						</configuration>
 					</execution>
 					
-					<execution>
-						<id>deploy_local_catalina_base</id>
-						<phase>package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<copy todir="catalina_base/webapps/oscar">
-									<fileset dir="target/${project.name}-${project.version}" />
-								</copy>
-							</tasks>
-						</configuration>
-					</execution>
-					<execution>
-						<id>clean_local_catalina_base</id>
-						<phase>clean</phase>
-						<configuration>
-							<tasks>
-								<delete dir="catalina_base/webapps/oscar" />
-								<delete includeemptydirs="true" quiet="true">
-									<fileset dir="catalina_base/logs" excludes=".gitignore" />
-									<fileset dir="catalina_base/work" excludes=".gitignore" />
-								</delete>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
+<!--					<execution>-->
+<!--						<id>deploy_local_catalina_base</id>-->
+<!--						<phase>package</phase>-->
+<!--						<goals>-->
+<!--							<goal>run</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<tasks>-->
+<!--								<copy todir="catalina_base/webapps/oscar">-->
+<!--									<fileset dir="target/${project.name}-${project.version}" />-->
+<!--								</copy>-->
+<!--							</tasks>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--					<execution>-->
+<!--						<id>clean_local_catalina_base</id>-->
+<!--						<phase>clean</phase>-->
+<!--						<configuration>-->
+<!--							<tasks>-->
+<!--								<delete dir="catalina_base/webapps/oscar" />-->
+<!--								<delete includeemptydirs="true" quiet="true">-->
+<!--									<fileset dir="catalina_base/logs" excludes=".gitignore" />-->
+<!--									<fileset dir="catalina_base/work" excludes=".gitignore" />-->
+<!--								</delete>-->
+<!--							</tasks>-->
+<!--						</configuration>-->
+<!--						<goals>-->
+<!--							<goal>run</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
 				</executions>
 			</plugin>
 
@@ -1663,6 +1656,7 @@
 					<rulesets>
 						<ruleset>utils/pmd_rules.xml</ruleset>
 					</rulesets>
+					<linkXRef>false</linkXRef>
 				</configuration>
 			</plugin>
 
@@ -1800,127 +1794,43 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- create WSDL java artifacts -->
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/config/MCEDT-WSDL-SNAPSHOT/hcv/HCValidationService_2021-11-05.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-client</extraarg>
+									</extraargs>
+								</wsdlOption>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/config/MCEDT-WSDL-SNAPSHOT/edt/EDTService_2021-11-05.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-client</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-antrun-plugin
-										</artifactId>
-										<versionRange>
-											[1.7,)
-										</versionRange>
-										<goals>
-											<goal>run</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-checkstyle-plugin
-										</artifactId>
-										<versionRange>
-											[2.15,)
-										</versionRange>
-										<goals>
-											<goal>checkstyle</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.codehaus.mojo
-										</groupId>
-										<artifactId>
-											native2ascii-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.0-beta-1,)
-										</versionRange>
-										<goals>
-											<goal>native2ascii</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<profiles>
-<!-- 		<profile>
-			<id>jdk6</id>
-			<activation>
-	<activeByDefault>false</activeByDefault>			
-	<jdk>1.6</jdk>
-			</activation>
-
-				<dependencies>
-					<dependency>
-						<groupId>org.oscarehr</groupId>
-						<artifactId>datasource-jdk6</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
-			<build>
-				<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.9</version>
-					<configuration>
-						<minmemory>128m</minmemory>
-          				<maxmemory>1g</maxmemory>
-						<tags>
-							<tag>
-								<name>todo</name>
-								<placement>a</placement>
-								<head>To Do:</head>
-							</tag>
-						</tags>
-						<quiet>true</quiet>
-					</configuration>
-					<executions>
-						<execution>
-							<phase>verify</phase>
-							<goals>
-								<goal>javadoc</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				</plugins>
-			</build>
-		</profile> -->
 		<profile>
 			<id>jdk7</id>
 			<activation>
