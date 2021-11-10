@@ -544,15 +544,15 @@
 														</div>
 														<div class="div-right">
 															<select class="selectpicker" id="ethnicitySelectPicker" multiple data-selected-text-format="count > 1" data-header="Select Ethnicity" data-width="80px">
-																<option value="Indigenous/Aboriginal" data-subtext="">Indigenous/Aboriginal</option>
+																<option value="Indigenous/Aboriginal" >Indigenous/Aboriginal</option>
 																<option value="European-Western" data-subtext="(eg. English, Italian)">European-Western</option>
 																<option value="European-Eastern" data-subtext="(eg. Russian, Polish)">European-Eastern</option>
 																<option value="Asian-East" data-subtext="(eg. Chinese, Japanese, Korean)">Asian-East</option>
 																<option value="Asian-South" data-subtext="(eg. Indian, Pakistani, Sri Lankan)">Asian-South</option>
 																<option value="Asian-South East" data-subtext="(eg. Malaysian, Filipino)">Asian-South East</option>
 																<option value="Middle Eastern" data-subtext="(eg. Iranian, Lebanese)">Middle Eastern</option>
-																<option value="African" data-subtext="(eg. Indian, Pakistani, Sri Lankan)">African</option>
-																<option value="Caribbean" data-subtext="(eg. Indian, Pakistani, Sri Lankan)">Caribbean</option>
+																<option value="African">African</option>
+																<option value="Caribbean">Caribbean</option>
 																<option value="Latin American" data-subtext="(eg. Argentinian, Chilean)">Latin American</option>
 																<option value="Do not know" data-subtext="">Do not know</option>
 																<option value="Prefer not to answer" data-subtext="">Prefer not to answer</option>
