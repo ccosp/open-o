@@ -48,8 +48,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<jsp:useBean id="oscarVariables" class="java.util.Properties" scope="session" />
-
 <%
 	String formClass = "BCAR2020";
 	Integer pageNo = 4;

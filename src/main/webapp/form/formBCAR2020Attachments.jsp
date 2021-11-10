@@ -40,7 +40,7 @@
     }
 %>
 
-<%@ page import=" oscar.form.*, oscar.form.data.*, java.util.Properties"%>
+<%@ page import=" oscar.form.*, java.util.Properties"%>
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="oscar.util.UtilMisc" %>
@@ -53,8 +53,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-
-<jsp:useBean id="oscarVariables" class="java.util.Properties" scope="session" />
 
 <%
     String formClass = "BCAR2020";

@@ -48,8 +48,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<jsp:useBean id="oscarVariables" class="java.util.Properties" scope="session" />
-
 <%
 	String formClass = "BCAR2020";
 	Integer pageNo = 2;
@@ -69,8 +67,6 @@
 <html:html locale="true">
 <head>
 	<title>BC Antenatal Record 2020 Part 2 Page 1</title>
-
-
 
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/share/calendar/calendar.js"></script>
