@@ -86,7 +86,7 @@
         <script src="<%=request.getContextPath() %>/library/jquery/jquery-1.12.0.min.js" type="text/javascript"></script>
 
         <script src="<%=request.getContextPath()%>/js/fg.menu.js"></script>
-
+        <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.are-you-sure.js"></script>
         <!-- Checkbox multi-select -->
         <script src="<%=request.getContextPath() %>/js/bootstrap.bundle.min.js"></script>
         <script src="<%=request.getContextPath() %>/js/bootstrap-select.min.js"></script>
@@ -122,7 +122,43 @@
                     data.demographicNo = <%= demoNo %>;
                     getClinicalData( data, target )
                 });
+
+                $('form').areYouSure({'addRemoveFieldsMarksDirty':true});
             });
+
+            /*
+            * JQuery dirty form check
+            */
+            $(function() {
+
+                //dirty form enable/disable save button.
+                $("form").find('input[value="Save"]').attr('disabled', true);
+                $("form").find('input[value="Save and Exit"]').attr('disabled', true);
+                $("form").find('input[value="Exit"]').removeAttr('disabled');
+
+                $('form').on('dirty.areYouSure', function() {
+
+                    $(this).find('input[value="Save"]').removeAttr('disabled');
+                    $(this).find('input[value="Save and Exit"]').removeAttr('disabled');
+                    $(this).find('input[value="Exit"]').attr('disabled', true);
+                });
+
+                $('form').on('clean.areYouSure', function() {
+
+                    $(this).find('input[value="Save"]').attr('disabled', true);
+                    $(this).find('input[value="Save and Exit"]').attr('disabled', true);
+                    $(this).find('input[value="Exit"]').removeAttr('disabled');
+                });
+
+            });
+
+            /*
+             * reload the are you sure form check. Usually after a
+             * javascript is run.
+             */
+            const recheckForm = function() {
+                $('form').trigger('checkform.areYouSure');
+            }
 
             function getClinicalData( data, target ) {
                 $.ajax({

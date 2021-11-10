@@ -100,8 +100,6 @@
 	<script src="<%=request.getContextPath()%>/js/fg.menu.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.are-you-sure.js"></script>
 
-
-
 	<!-- Field Naming Scheme throughout BCAR2020
 			c_XXXX Is a checkbox field
 			d_XXXX Is a textbox field containing a date
@@ -111,6 +109,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+
 			init(1);
 
 			// Set values in drop downs
@@ -123,28 +122,30 @@
 			$("select[name='s_obHistorySex4']").val('<%= Encode.forJavaScriptBlock(props.getProperty("s_obHistorySex4", "")) %>');
 			$("select[name='s_obHistorySex5']").val('<%= Encode.forJavaScriptBlock(props.getProperty("s_obHistorySex5", "")) %>');
 
+			$('form').areYouSure({'addRemoveFieldsMarksDirty':true});
 		});
 
 		/*
- * JQuery dirty form check
- */
+		* JQuery dirty form check
+		*/
 		$(function() {
-			$('form').areYouSure({'addRemoveFieldsMarksDirty':true});
 
 			//dirty form enable/disable save button.
-			$("form").find('input[value="Save"]').attr('disabled', 'disabled');
-			$("form").find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+			$("form").find('input[value="Save"]').attr('disabled', true);
+			$("form").find('input[value="Save and Exit"]').attr('disabled', true);
 			$("form").find('input[value="Exit"]').removeAttr('disabled');
 
 			$('form').on('dirty.areYouSure', function() {
+
 				$(this).find('input[value="Save"]').removeAttr('disabled');
 				$(this).find('input[value="Save and Exit"]').removeAttr('disabled');
-				$(this).find('input[value="Exit"]').attr('disabled', 'disabled');
+				$(this).find('input[value="Exit"]').attr('disabled', true);
 			});
 
 			$('form').on('clean.areYouSure', function() {
-				$(this).find('input[value="Save"]').attr('disabled', 'disabled');
-				$(this).find('input[value="Save and Exit"]').attr('disabled', 'disabled');
+
+				$(this).find('input[value="Save"]').attr('disabled', true);
+				$(this).find('input[value="Save and Exit"]').attr('disabled', true);
 				$(this).find('input[value="Exit"]').removeAttr('disabled');
 			});
 
@@ -154,23 +155,9 @@
          * reload the are you sure form check. Usually after a
          * javascript is run.
          */
-		function recheckForm() {
+		const recheckForm = function() {
 			$('form').trigger('checkform.areYouSure');
 		}
-
-		/*
-         * Only refresh if the parent window is formlist.jsp.
-         */
-		function refreshParent() {
-			if (window.opener != null && !window.opener.closed && window.opener.location.href.includes("formlist.jsp")) {
-				window.opener.location.reload();
-			}
-		}
-
-		$(window).on('beforeunload', function() {
-			refreshParent();
-		});
-
 	</script>
 
 	<%@ include file="demographicMeasurementModal.jsp"%>

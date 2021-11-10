@@ -14,6 +14,7 @@ var provNo;
 
 var page = 0;
 
+
 function init(pageNo){
     page = pageNo;
     if (page === 1) {
@@ -283,6 +284,7 @@ function init(pageNo){
         toggleFieldRulesSingle('c_attAllergies', ['mt_attAllergies','fetchAllergies\\|mt_attAllergies']);
         toggleFieldRulesSingle('c_attAdditionalInfo', ['mt_attAdditionalInfo','fetchAddInfoSocHistory','fetchAddInfoFamHistory','fetchAddInfoMedHistory','fetchAddInfoConcerns','fetchAddInfoOtherMeds','fetchAddInfoReminders','fetchRiskFactors\\|mt_attAdditionalInfo']);
     }
+
 }
 
 function allNo(section){
@@ -939,7 +941,7 @@ function calcAgeAtEDD(EDD, DOB, field) {
         }
         field.value =  age;
     }
-
+    recheckForm();
 }
 
 function calculateByLMP(field, ds = dtCh) {
@@ -962,6 +964,7 @@ function calculateByLMP(field, ds = dtCh) {
     } else {
         alert("Please enter a valid 'LMP' in Section 3 before calculating the 'EDD by LMP'.");
     }
+    recheckForm();
 }
 
 function dayDifference(day1, day2) {
@@ -1049,7 +1052,7 @@ function getGAByFieldDate(resultField, eddField, comparisonField) {
  * Setup Calendars
  */
 function setupCalendar(field) {
-    Calendar.setup({ inputField : field, ifFormat : '%d/%m/%Y', showsTime :false, button : field + '_cal', singleClick : true, step : 1 });
+    Calendar.setup({ onUpdate: function(){recheckForm()}, inputField : field, ifFormat : '%d/%m/%Y', showsTime :false, button : field + '_cal', singleClick : true, step : 1 });
 }
 
 function calendars(page){
@@ -1134,6 +1137,7 @@ function calendars(page){
 
 function onPrint() {
     $("#print-dialog").dialog("open");
+    recheckForm();
     return false;
 }
 
@@ -1203,3 +1207,11 @@ function onPageChange(pageNo) {
 
     return result;
 }
+
+
+
+
+
+
+
+
