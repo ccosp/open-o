@@ -109,6 +109,7 @@
 			// Set values in drop downs
             $("select[name='s_investigationsABO']").val('<%= Encode.forJavaScriptBlock(props.getProperty("s_investigationsABO", "UN")) %>');
             $("select[name='s_investigationsRhFactor']").val('<%= Encode.forJavaScriptBlock(props.getProperty("s_investigationsRhFactor", "UN")) %>');
+
 			$('form').areYouSure({'addRemoveFieldsMarksDirty':true});
 		});
 
@@ -324,8 +325,8 @@
 									</td>
 									<td>
                                         <select name="s_investigationsRhFactor" style="width: 100%">
-                                            <option value="+">+</option>
-                                            <option value="-">-</option>
+                                            <option value="POS">Pos</option>
+                                            <option value="NEG">Neg</option>
                                             <option value="UN">Unknown</option>
                                         </select>
 									</td>
