@@ -584,7 +584,6 @@ function onSave() {
     var ret = checkAllDates();
     if(ret == true && ret1==true) {
         reset();
-        ret = confirm("Are you sure you want to save this form?");
     }
     if (ret && ret1) {
         window.onunload=null;
@@ -599,7 +598,6 @@ function onSaveExit() {
     if(ret == true && ret1==true)
     {
         reset();
-        ret = confirm("Are you sure you wish to save and close this window?");
     }
     return ret && ret1;
 }
@@ -1195,7 +1193,7 @@ function onPageChange(pageNo) {
     var datesValid = checkAllDates();
     if(isValid === true && datesValid === true) {
         reset();
-        if(confirm("Would you like to save any changes to this page first?")) {
+        if($('form').hasClass('dirty') && confirm("Would you like to save the changes made on this page first?")) {
             result = true;
             document.forms[0].method.value="save";
             document.forms[0].forwardTo.value = pageNo;

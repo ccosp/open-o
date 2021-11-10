@@ -178,7 +178,7 @@
 							<input type="submit" class="saveBtn" value="Save" onclick="return onSave();" />
 							<input type="submit" class="saveBtn" value="Save and Exit" onclick="return onSaveExit();" />
 
-							<input type="submit" value="Exit" onclick="return onExit();" />
+							<input type="submit" value="Exit" onclick="window.close();" />
 							<input type="submit" value="Print" onclick="return onPrint();" />
 							<span style="display:none"><input id="printBtn" type="submit" value="PrintIt"/></span>
 

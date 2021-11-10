@@ -100,8 +100,6 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/library/jquery/jquery-ui.theme-1.12.1.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/formBCAR2020.css">
     
-
-    
         <!-- Field Naming Scheme throughout BCAR2020
         c_XXXX Is a checkbox field
         d_XXXX Is a textbox field containing a date
@@ -307,7 +305,7 @@
                                 <input type="submit" class="saveBtn" value="Save" onclick="return onSave();" />
                                 <input type="submit" class="saveBtn" value="Save and Exit" onclick="return onSaveExit();" />
                         
-                                <input type="submit" value="Exit" onclick="return onExit();" />
+                                <input type="submit" value="Exit" onclick="window.close();" />
                                 <input type="submit" value="Print" onclick="return onPrint();" />
                                 <span style="display:none"><input id="printBtn" type="submit" value="PrintIt"/></span>
                             </td>
