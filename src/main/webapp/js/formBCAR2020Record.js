@@ -156,8 +156,8 @@ function init(pageNo){
         toggleFieldRulesEx('c_substanceQuitAlcoholNo', 'c_substanceQuitAlcoholYes', ['d_substanceQuitAlcoholDate']);
 
         //Substance Use - Tobacco
-        toggleFieldRulesEx('c_substance3MoTobaccoNo', 'c_substance3MoTobaccoYes', ['t_substance3MoTobaccoNumCig', 'c_substance3MoTobaccoSecHndSmkNo', 'c_substance3MoTobaccoSecHndSmkYes']);
-        toggleFieldRulesEx('c_substancePregTobaccoNo', 'c_substancePregTobaccoYes', ['t_substancePregTobaccoNumCig', 'c_substancePregTobaccoSecHndSmkNo', 'c_substancePregTobaccoSecHndSmkYes']);
+        toggleFieldRulesEx('c_substance3MoTobaccoNo', 'c_substance3MoTobaccoYes', ['t_substance3MoTobaccoNumCig']);
+        toggleFieldRulesEx('c_substancePregTobaccoNo', 'c_substancePregTobaccoYes', ['t_substancePregTobaccoNumCig']);
         toggleFieldRulesUnique(['c_substance3MoTobaccoSecHndSmkNo', 'c_substance3MoTobaccoSecHndSmkYes']);
         toggleFieldRulesUnique(['c_substancePregTobaccoSecHndSmkNo', 'c_substancePregTobaccoSecHndSmkYes']);
         toggleFieldRulesEx('c_substanceQuitTobaccoNo', 'c_substanceQuitTobaccoYes', ['d_substanceQuitTobaccoDate']);
