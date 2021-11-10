@@ -1489,12 +1489,12 @@
 										</table>
 									</td>
 									<td width="33%" valign="top" rowspan="2">
-										<table width="100%" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border-style: hidden;">
+										<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
 											<tr>
 												<td>
 													<!-- Lifestyle/Social Concerns -->
 													<span class="title">8. Lifestyle/Social Concerns</span><br />
-													<table width="100%" border="0" cellspacing="0" cellpadding="2" class="noColumn">
+													<table width="100%" border="0" cellspacing="0" cellpadding="2"  style="border-bottom:black thin solid;" class="noColumn">
 														<tr>
 															<th width="8%"><span class="title"><a href="#" id="lifestyleSocialNo" class="noLink" title="Set all Lifestyle/Social concerns Questions to No">No</a></span></th>
 															<th width="8%"><span class="title">Yes</span></th>
@@ -1544,7 +1544,7 @@
 											<tr>
 												<td>
 													<!-- Substance Use -->
-													<table width="100%" border="0" cellspacing="0" cellpadding="2">
+													<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border-bottom:whitesmoke thin solid;">
 														<tr>
 															<th width="38%"><span class="title">9. Substance Use</span></th>
 															<th width="33%"><span class="sub-title">3Mo Before Preg</span></th>
@@ -1613,7 +1613,7 @@
 											<tr>
 												<td>
 													<!-- Tobacco -->
-													<table width="100%" border="0" cellspacing="0" cellpadding="2">
+													<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border-bottom:whitesmoke thin solid;"style="border-bottom:whitesmoke thin solid;">
 														<tr>
 															<td width="38%">
 																<span class="sub-title">Tobacco</span>
@@ -1677,7 +1677,7 @@
 											<tr>
 												<td>
 													<!-- Cannabis -->
-													<table width="100%" border="0" cellspacing="0" cellpadding="2">
+													<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border-bottom:whitesmoke thin solid;">
 														<tr>
 															<td width="38%">
 																<span class="sub-title">Cannabis</span>
