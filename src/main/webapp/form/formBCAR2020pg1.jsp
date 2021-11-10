@@ -168,6 +168,15 @@
 
 <body bgproperties="fixed">
 	<div id="maincontent" class="flex-container">
+
+		<logic:equal value="history" parameter="warning">
+			<script type="text/javascript">
+				if(! confirm("Warning: older version.\n\nContents of this form will overwrite newer versions if saved.\n\nSelect 'OK' to continue.")) {
+					window.close();
+				}
+			</script>
+		</logic:equal>
+
 		<div id="content_bar" class="innertube">
 			<html:form action="/form/BCAR2020">
 				<input type="hidden" id="demographicNo" name="demographicNo" value="<%=demoNo%>" />
