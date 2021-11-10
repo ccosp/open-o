@@ -373,14 +373,14 @@
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{t_patientSurnamePage1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{t_patientSurname}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="132" y="64" width="74" height="13" uuid="94229f55-82b8-4ce5-9db8-5a91df7a3f80"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{t_patientGivenNamePage1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{t_patientGivenName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="54" y="87" width="76" height="13" uuid="9ebb55e7-5c00-41ad-9704-00caa1c83235"/>
