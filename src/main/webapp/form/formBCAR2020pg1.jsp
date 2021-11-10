@@ -830,9 +830,9 @@
                                         <input type="text" name="t_obHistoryLabourDuration1" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryLabourDuration1", "")) %>" />
                                     </td>
                                     <td>
-                                        <div style="width:112px;">
-											<input type="text" list="birthmode" name="t_obHistoryBirthMode1" class="data-list-input" style="width:112px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode1", "")) %>" />
-                                            <datalist id="birthmode" style="width:112px;">
+                                        <div style="width:auto;">
+											<input type="text" list="birthmode" name="t_obHistoryBirthMode1" placeholder="double click for selection" class="data-list-input text-style" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode1", "")) %>" />
+                                            <datalist id="birthmode" >
                                                 <option value="">Other</option>
                                                 <option value="SVD">SVD</option>
                                                 <option value="CSec">C-section</option>
@@ -861,12 +861,12 @@
                                         <input type="text" name="t_obHistoryBreastFed1" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBreastFed1", "")) %>" />
                                     </td>
                                     <td>
-                                        <div style="width:85px;">
-                                            <datalist id="childhealth" style="width:85px;">
+                                        <div style="width:auto;">
+                                            <datalist id="childhealth" >
                                                 <option value="">Other</option>
                                                 <option value="A&W">A&W</option>
                                             </datalist>
-                                            <input type="text" list="childhealth"  name="t_obHistoryPresentHealth1" style="width:85px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth1", "")) %>" />
+                                            <input type="text" list="childhealth" placeholder="double click for selection" class="data-list-input text-style" name="t_obHistoryPresentHealth1"  maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth1", "")) %>" />
                                         </div>
                                     </td>
                                 </tr>
@@ -888,8 +888,8 @@
                                         <input type="text" name="t_obHistoryLabourDuration2" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryLabourDuration2", "")) %>" />
                                     </td>
                                     <td>
-                                        <div  style="width:112px;">
-                                            <datalist id="birthmode2" style="width:112px;">
+                                        <div  style="width:auto;">
+                                            <datalist id="birthmode2">
                                                 <option value="">Other</option>
                                                 <option value="SVD">SVD</option>
                                                 <option value="C-section">C-section</option>
@@ -898,7 +898,7 @@
                                                 <option value="Vacuum and Forceps">Vacuum and Forceps</option>
                                                 <option value="Forceps Trial and C-section">Forceps Trial and C-section</option>
                                             </datalist>
-                                            <input type="text" name="t_obHistoryBirthMode2" list="birthmode2" style="width:112px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode2", "")) %>" />
+                                            <input type="text" name="t_obHistoryBirthMode2" list="birthmode2" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode2", "")) %>" />
                                         </div>
                                     </td>
                                     <td>
@@ -920,12 +920,12 @@
                                         <input type="text" name="t_obHistoryBreastFed2" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBreastFed2", "")) %>" />
                                     </td>
                                     <td>
-                                        <div  style="width:85px;">
-                                            <datalist id="childhealth2" style="width:85px;">
+                                        <div  style="width:auto;">
+                                            <datalist id="childhealth2" >
                                                 <option value="">Other</option>
                                                 <option value="A&W">A&W</option>
                                             </datalist>
-                                            <input type="text" name="t_obHistoryPresentHealth2" list="childhealth2" style="width:85px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth2", "")) %>" />
+                                            <input type="text" name="t_obHistoryPresentHealth2" list="childhealth2" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth2", "")) %>" />
                                         </div>
                                     </td>
                                 </tr>
@@ -947,8 +947,8 @@
 										<input type="text" name="t_obHistoryLabourDuration3" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryLabourDuration3", "")) %>" />
 									</td>
 									<td>
-										<div style="width:112px;">
-											<datalist id="birthmode3" style="width:112px;">
+										<div style="width:auto;">
+											<datalist id="birthmode3">
 												<option value="">Other</option>
 												<option value="SVD">SVD</option>
 												<option value="C-section">C-section</option>
@@ -957,7 +957,7 @@
 												<option value="Vacuum and Forceps">Vacuum and Forceps</option>
 												<option value="Forceps Trial and C-section">Forceps Trial and C-section</option>
 											</datalist>
-											<input type="text" name="t_obHistoryBirthMode3" list="birthmode3" style="width:112px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode3", "")) %>" />
+											<input type="text" name="t_obHistoryBirthMode3" list="birthmode3" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode3", "")) %>" />
 										</div>
 									</td>
 									<td>
@@ -979,12 +979,12 @@
 										<input type="text" name="t_obHistoryBreastFed3" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBreastFed3", "")) %>" />
 									</td>
 									<td>
-										<div style="width:85px;">
-											<datalist  id="childhealth3" style="width:85px;">
+										<div style="width:auto;">
+											<datalist  id="childhealth3" >
 												<option value="">Other</option>
 												<option value="A&W">A&W</option>
 											</datalist>
-											<input type="text" name="t_obHistoryPresentHealth3" list="childhealth3" style="width:85px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth3", "")) %>" />
+											<input type="text" name="t_obHistoryPresentHealth3" list="childhealth3" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth3", "")) %>" />
 										</div>
 									</td>
 								</tr>
@@ -1006,8 +1006,8 @@
 										<input type="text" name="t_obHistoryLabourDuration4" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryLabourDuration4", "")) %>" />
 									</td>
 									<td>
-										<div  style="width:112px;">
-											<datalist id="birthmode4"  style="width:112px;">
+										<div  style="width:auto;">
+											<datalist id="birthmode4">
 												<option value="">Other</option>
 												<option value="SVD">SVD</option>
 												<option value="C-section">C-section</option>
@@ -1016,7 +1016,7 @@
 												<option value="Vacuum and Forceps">Vacuum and Forceps</option>
 												<option value="Forceps Trial and C-section">Forceps Trial and C-section</option>
 											</datalist>
-											<input type="text" name="t_obHistoryBirthMode4" list="birthmode4" style="width:112px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode4", "")) %>" />
+											<input type="text" name="t_obHistoryBirthMode4" list="birthmode4" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode4", "")) %>" />
 										</div>
 									</td>
 									<td>
@@ -1038,12 +1038,12 @@
 										<input type="text" name="t_obHistoryBreastFed4" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBreastFed4", "")) %>" />
 									</td>
 									<td>
-										<div style="width:85px;">
-											<datalist id="childhealth4" style="width:85px;">
+										<div style="width:auto;">
+											<datalist id="childhealth4">
 												<option value="">Other</option>
 												<option value="A&W">A&W</option>
 											</datalist>
-											<input type="text" name="t_obHistoryPresentHealth4" list="childhealth4" style="width:85px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth4", "")) %>" />
+											<input type="text" name="t_obHistoryPresentHealth4" list="childhealth4" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth4", "")) %>" />
 										</div>
 									</td>
 								</tr>
@@ -1065,8 +1065,8 @@
 										<input type="text" name="t_obHistoryLabourDuration5" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryLabourDuration5", "")) %>" />
 									</td>
 									<td>
-										<div  style="width:112px;">
-											<datalist id="birthmode5" style="width:112px;">
+										<div  style="width:auto;">
+											<datalist id="birthmode5">
 												<option value="">Other</option>
 												<option value="SVD">SVD</option>
 												<option value="C-section">C-section</option>
@@ -1075,7 +1075,7 @@
 												<option value="Vacuum and Forceps">Vacuum and Forceps</option>
 												<option value="Forceps Trial and C-section">Forceps Trial and C-section</option>
 											</datalist>
-											<input type="text" name="t_obHistoryBirthMode5" list="birthmode5" style="width:112px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode5", "")) %>" />
+											<input type="text" name="t_obHistoryBirthMode5" list="birthmode5" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBirthMode5", "")) %>" />
 										</div>
 									</td>
 									<td>
@@ -1097,12 +1097,12 @@
 										<input type="text" name="t_obHistoryBreastFed5" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryBreastFed5", "")) %>" />
 									</td>
 									<td>
-										<div style="width:85px;">
-											<datalist id="childhealth5" style="width:85px;">
+										<div style="width:auto;">
+											<datalist id="childhealth5" >
 												<option value="">Other</option>
 												<option value="A&W">A&W</option>
 											</datalist>
-											<input type="text" name="t_obHistoryPresentHealth5" list="childhealth5" style="width:85px;padding:2px 6px;border:0;margin:0;" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth5", "")) %>" />
+											<input type="text" name="t_obHistoryPresentHealth5" list="childhealth5" placeholder="double click for selection" class="data-list-input text-style" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_obHistoryPresentHealth5", "")) %>" />
 										</div>
 									</td>
 								</tr>
