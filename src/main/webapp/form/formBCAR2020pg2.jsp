@@ -262,7 +262,7 @@
 							<!-- Investigations -->
 							<table width="100%" class="ar-table-border">
 								<tr>
-									<td colspan="2" width="22%">
+									<td colspan="2" width="22%" class="alignTop">
 										<span class="title">13. Investigations</span>
 									</td>
 									<td width="32%">
@@ -274,22 +274,22 @@
 											Antibody Titre
 										</div>
 									</td>
-									<td width="28%">
+									<td width="28%"  class="alignTop">
 										Date RhIg given
 										<span class="sub-text">(dd/mm/yyyy)</span>
 									</td>
-									<td width="18%">
+									<td width="18%"  class="alignTop">
 										Hemoglobin
 										<span class="sub-text">(g/L)</span>
 									</td>
 								</tr>
 								<tr>
-									<td width="10%">
+									<td width="10%" class="alignTop">
 										<div class="div-center">
 											ABO
 										</div>
 									</td>
-									<td width="12%">
+									<td width="12%" class="alignTop">
 										<div class="div-center">
 											Rh factor
 										</div>
@@ -822,17 +822,17 @@
 									</td>
 								</tr>
 								<tr>
-									<td width="27%" class="div-center">
+									<th width="27%" class="div-center">
 										Date</br>
 										<span class="sub-text">(dd/mm/yyyy)</span>
-									</td>
-									<td width="10%" class="div-center">
+									</th>
+									<th width="10%" class="div-center">
 										GA</br>
 										<span class="sub-text">(wks/days)</span>
-									</td>
-									<td width="63%" class="div-center">
+									</th>
+									<th width="63%" class="div-center">
 										Comments
-									</td>
+									</th>
 								</tr>
 								<tr>
 									<td>
