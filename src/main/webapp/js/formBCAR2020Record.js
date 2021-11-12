@@ -1206,6 +1206,19 @@ function onPageChange(pageNo) {
     return result;
 }
 
+const wtEnglish2Metric = function(obj) {
+    let weight = obj.value;
+    if(! weight) {
+        alert("Enter a value in pounds.");
+    }
+    if(isNumber(weight) ) {
+        let weightM = Math.round(weight * 10 * 0.4536) / 10 ;
+        if(confirm("Are you sure you want to change " + weight + " pounds to " + weightM +"kg?") ) {
+            obj.value = weightM;
+        }
+    }
+}
+
 
 
 

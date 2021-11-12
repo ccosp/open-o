@@ -212,7 +212,7 @@ public class FrmBCAR2020Record extends FrmRecord {
                 "    <input type=\"text\" name=\"t_prenatalVisitUrine" + rowCount + "\" class=\"text-style\" size=\"10\" maxlength=\"150\" value=\"" + UtilMisc.htmlEscape(props.getProperty("t_prenatalVisitUrine" + rowCount, "")) + "\" />\n" +
                 "</td>\n" +
                 "<td>\n" +
-                "    <input type=\"text\" name=\"t_prenatalVisitWt" + rowCount + "\" class=\"text-style\" size=\"10\" maxlength=\"150\" value=\"" + UtilMisc.htmlEscape(props.getProperty("t_prenatalVisitWt" + rowCount, "")) + "\" />\n" +
+                "    <input type=\"text\" title=\"Enter a value in pounds(lbs) then double click to convert to kilograms(kg)\" name=\"t_prenatalVisitWt" + rowCount + "\" class=\"calcField\" size=\"10\" maxlength=\"150\" onDblClick=\"wtEnglish2Metric(this)\" value=\"" + UtilMisc.htmlEscape(props.getProperty("t_prenatalVisitWt" + rowCount, "")) + "\" />\n" +
                 "</td>\n" +
                 "<td>\n" +
                 "    <input type=\"text\" name=\"t_prenatalVisitFundus" + rowCount + "\" class=\"text-style\" size=\"10\" maxlength=\"150\" value=\"" + UtilMisc.htmlEscape(props.getProperty("t_prenatalVisitFundus" + rowCount, "")) + "\" />\n" +
