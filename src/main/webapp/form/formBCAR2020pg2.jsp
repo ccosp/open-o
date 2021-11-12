@@ -44,6 +44,7 @@
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="oscar.util.UtilMisc" %>
+<%@ page import="oscar.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -241,7 +242,7 @@
 										Copy to hospital
 									</td>
 									<td style="border-left: 1px solid black;border-right: 1px solid black;">
-										<input type="text" name="t_plannedBirthReferralHospital" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_plannedBirthReferralHospital", "")) %>" />
+										<input type="text" name="t_plannedBirthReferralHospital" class="text-style" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_plannedBirthReferralHospital", "")) == null || UtilMisc.htmlEscape(props.getProperty("t_plannedBirthReferralHospital", "")) == "" ? OscarProperties.getInstance().getProperty("BCAR_hospital") : ""  %>" />
 									</td>
 								</tr>
 								<tr>
