@@ -198,12 +198,12 @@
 				<!-- Option Header -->
 				<table class="sectionHeader hidePrint">
 					<tr>
-						<td align="left" rowspan="2" width="58%">
-							<input type="submit" class="saveBtn" value="Save" onclick="return onSave();" />
-							<input type="submit" class="saveBtn" value="Save and Exit" onclick="return onSaveExit();" />
+						<td align="left" rowspan="2" width="58%" style="padding:10px !important;">
+							<input type="submit" class="btn btn-primary" value="Save" onclick="return onSave();" />
+							<input type="submit" class="btn btn-secondary" value="Save and Exit" onclick="return onSaveExit();" />
 
-							<input type="submit" value="Exit" onclick="window.close();" />
-							<input type="submit" value="Print" onclick="return onPrint();" />
+							<input type="submit" class="btn btn-danger" value="Exit" onclick="window.close();" />
+							<input type="submit" class="btn btn-secondary" value="Print" onclick="return onPrint();" />
 							<span style="display:none"><input id="printBtn" type="submit" value="PrintIt"/></span>
 
 						</td>
@@ -234,23 +234,23 @@
 				</table>
 				
 				<!-- Page Heading -->
-				<table width="100%" border="0" cellspacing="0" cellpadding="1">
+				<table border="0" >
 					<tr>
 						<th align="left">British Columbia Antenatal Record Part 1 <font size="-2">PSBC 1905 - January 2020</font></th>
 					</tr>
 				</table>
 				
-				<table width="100%" border="0" cellspacing="1" cellpadding="1" class="small9">
+				<table border="0"   class="small9">
 					<tr>
-						<td width="60%" valign="top">
+						<td width="60%" >
 							<!-- Demographics and Background-->
-							<table width="100%" border="1" cellspacing="0" cellpadding="0">
+							<table border="1" >
 								<tr>
-									<td valign="top" width="50%" colspan="2">
+									<td  width="50%" colspan="2">
 										<span class="title">1.</span> Primary maternity care provider name<br/>
 										<input type="text" name="t_primaryCareProvider" style="width: 100%" size="30" maxlength="100" value="<%= UtilMisc.htmlEscape(props.getProperty("t_primaryCareProvider", "")) %>" />
 									</td>
-									<td valign="top" width="50%" colspan="2">
+									<td  width="50%" colspan="2">
 										Family physician/nurse practioner name<br/>
 										<input type="text" name="t_familyPhysician" style="width: 100%" size="30" maxlength="100" value="<%= UtilMisc.htmlEscape(props.getProperty("t_familyPhysician", "")) %>" />
 									</td>
@@ -497,16 +497,16 @@
 									</td>
 								</tr>
 								<tr>
-									<td width="100%" colspan="4">
-										<table width="100%" border="0" cellspacing="0" cellpadding="2">
+									<td colspan="4">
+										<table border="0" >
 											<tr>
-												<td width="35%" valign="top" style="border-right: 1px solid black;">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+												<td width="35%" class="alignTop borderRight">
+													<table border="0" >
 														<tr>
-															<td width="55%" valign="top">
+															<td width="55%" >
 																Indigenous identity*
 															</td>
-															<td width="45%" valign="top">
+															<td width="45%" >
 																<input type="checkbox" name="c_indIdentFirstNations" <%= Encode.forHtmlAttribute(props.getProperty("c_indIdentFirstNations", "").equals("X") ? "checked" : "") %> />First Nations
 															</td>
 														</tr>
@@ -528,16 +528,16 @@
 														</tr>
 													</table>
 												</td>
-												<td width="15%" valign="top" style="border-right: 1px solid black;">
+												<td width="15%" class="alignTop borderRight">
 													<input type="checkbox" name="c_indIdentStatus" <%=Encode.forHtmlAttribute(props.getProperty("c_indIdentStatus", "").equals("X") ? "checked" : "") %> />Status <br/>
 													<input type="checkbox" name="c_indIdentNonStatus" <%= Encode.forHtmlAttribute(props.getProperty("c_indIdentNonStatus", "").equals("X") ? "checked" : "") %> />Non-status
 												</td>
-												<td width="25%" valign="top" style="border-right: 1px solid black;">
+												<td width="25%" class="alignTop borderRight" >
 													<input type="checkbox" name="c_indIdentLiveOnReserve" <%=Encode.forHtmlAttribute(props.getProperty("c_indIdentLiveOnReserve", "").equals("X") ? "checked" : "") %> />Live on reserve <br/>
 													<input type="checkbox" name="c_indIdentLiveOffReserve" <%= Encode.forHtmlAttribute(props.getProperty("c_indIdentLiveOffReserve", "").equals("X") ? "checked" : "") %> />Live off reserve <br/>
 													<input type="checkbox" name="c_indIdentLiveOnOffReserve" <%= Encode.forHtmlAttribute(props.getProperty("c_indIdentLiveOnOffReserve", "").equals("X") ? "checked" : "") %> />Live on & off reserve
 												</td>
-												<td width="25%" valign="top">
+												<td width="25%" >
 													<div>
 														<div class="div-left">
 															Ethnicity
@@ -567,15 +567,15 @@
 								</tr>
 							</table>
 						</td>
-						<td width="40%" valign="top">
+						<td width="40%" >
 							<!-- Addressograph/Label -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="1">
+							<table border="0" >
 								<tr>
-									<td valign="top" width="50%">
+									<td  width="50%">
 										Surname<br/>
 										<input type="text" name="t_patientSurname" style="width: 100%" size="30" maxlength="100" value="<%= UtilMisc.htmlEscape(props.getProperty("t_patientSurname", "")) %>" title="This field is readonly, please update the master demographic" readonly/>
 									</td>
-									<td valign="top" width="50%" colspan="2">
+									<td  width="50%" colspan="2">
 										Given name<br/>
 										<input type="text" name="t_patientGivenName" style="width: 100%" size="30" maxlength="100" value="<%= UtilMisc.htmlEscape(props.getProperty("t_patientGivenName", "")) %>" title="This field is readonly, please update the master demographic" readonly/>
 									</td>
@@ -602,7 +602,7 @@
 								</tr>
 								<tr>
 									<td colspan="3">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<table border="0" >
 											<tr>
 												<td width="33%">
 													Home Phone Number
@@ -640,7 +640,7 @@
 					<tr>
 						<td colspan="2">
 							<!-- Partner Informations -->
-							<table width="100%" border="1" cellspacing="0" cellpadding="0">
+							<table border="1" >
 								<tr>
 									<td width="25%">
 										Partner: Surname, given name(s)<br/>
@@ -652,11 +652,11 @@
 									</td>
 									<td width="35%">
 										Biological father/donor: Surname, given name(s)<br/>
-										<div>
-											<div class="div-left">
+										<div class="flex-row">
+											<div class="flex-column" style="padding-right:5px;flex-wrap: nowrap;">
 												<input type="checkbox" name="biologicalFatherSameCheck" />Same as partner
 											</div>
-											<div class="div-right">
+											<div class="flex-double-column">
 												<input type="text" name="t_biologicalFatherName" size="30" maxlength="80" value="<%= UtilMisc.htmlEscape(props.getProperty("t_biologicalFatherName", "")) %>" />
 											</div>
 										</div>
@@ -676,34 +676,49 @@
 					<tr>
 						<td colspan="2">
 							<!-- Allergy Information -->
-							<table width="100%" border="1" cellspacing="0" cellpadding="0">
+							<table border="1" >
 								<tr>
-									<td width="25%">
-										<div>
-											<div class="div-left">
-												<span class="title">2.</span> <span class="allergy">Allergies</span> <span class="sub-text">(incl. reaction)</span>
+									<td width="25%" class="alignTop">
+										<div class="flex-row">
+											<div class="flex-row flex-justify">
+												<div>
+													<span class="title">2.</span> <span class="allergy">Allergies</span> <span class="sub-text">(incl. reaction)</span>
+												</div>
+												<div>
+													<input type="checkbox" name="c_allergiesNone" <%=Encode.forHtmlAttribute(props.getProperty("c_allergiesNone", "").equals("X") ? "checked" : "") %> />None
+												</div>
 											</div>
-											<div class="div-right">
-												<input type="checkbox" name="c_allergiesNone" <%=Encode.forHtmlAttribute(props.getProperty("c_allergiesNone", "").equals("X") ? "checked" : "") %> />None
+											<div class="flex-row">
+											<input type="text" name="t_allergies" style="width: 100%" size="60" maxlength="150" class="calcField" ondblclick="appendNotify(this);" value="<%= UtilMisc.htmlEscape(props.getProperty("t_allergies", "")) %>" />
 											</div>
 										</div>
-										<input type="text" name="t_allergies" style="width: 100%" size="60" maxlength="150" class="calcField" ondblclick="appendNotify(this);" value="<%= UtilMisc.htmlEscape(props.getProperty("t_allergies", "")) %>" />
 									</td>
 									<td width="50%">
-										<div>
-											<div class="div-left">
-												Medications / OTC drugs / herbals / vitamins<br />
-												<input type="text" name="t_medications" size="45" maxlength="150" style="margin-top:2px;"  class="calcField" ondblclick="appendNotify(this);" value="<%= UtilMisc.htmlEscape(props.getProperty("t_medications", "")) %>" />
+										<div class="flex-row flex-justify">
+											<div>
+												Medications / OTC drugs / herbals / vitamins<br \>
+												<input type="text" name="t_medications" size="45" maxlength="150" style=""  class="calcField" ondblclick="appendNotify(this);" value="<%= UtilMisc.htmlEscape(props.getProperty("t_medications", "")) %>" />
 											</div>
-											<div class="div-right">
-												<input type="checkbox" name="c_preconceptionFolicAcid" <%=Encode.forHtmlAttribute(props.getProperty("c_preconceptionFolicAcid", "").equals("X") ? "checked" : "") %> />Preconception folic acid<br />
+											<div class="flex-stack">
+												<div>
+												<input type="checkbox" name="c_preconceptionFolicAcid" <%=Encode.forHtmlAttribute(props.getProperty("c_preconceptionFolicAcid", "").equals("X") ? "checked" : "") %> />Preconception folic acid
+												</div>
+												<div>
 												<input type="checkbox" name="c_t1FolicAcid" <%=Encode.forHtmlAttribute(props.getProperty("c_t1FolicAcid", "").equals("X") ? "checked" : "") %> />T1 folic acid
+												</div>
 											</div>
 										</div>
+
 									</td>
 									<td width="25%">
-										Beliefs / practices <span class="sub-text">(eg. Jehovah's Witness)</span><br/>
-										<input type="text" name="t_beliefs" style="width: 100%;margin-top:2px;" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_beliefs", "")) %>" />
+										<div class="flex-row">
+											<div>
+												Beliefs / practices <span class="sub-text">(eg. Jehovah's Witness)</span>
+											</div>
+											<div>
+												<input type="text" name="t_beliefs" style="width: 100%;" size="60" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_beliefs", "")) %>" />
+											</div>
+										</div>
 									</td>
 								</tr>
 							</table>
@@ -712,7 +727,7 @@
 					<tr>
 						<td colspan="2">
 							<!-- Contraceptive Information -->
-							<table width="100%" border="1" cellspacing="0" cellpadding="0">
+							<table border="1" >
 								<tr>
 									<td width="14%">
 										<span class="title">3.</span> Contraceptives: Type<br />
@@ -773,7 +788,7 @@
                     <tr>
                         <td colspan="2">
                             <!-- Obstetrical History -->
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <table border="0" >
                                 <tr>
                                     <td width="16%">
                                         <span class="title">4. Obstetrical History</span>
@@ -799,7 +814,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <table width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <table border="1" >
                                 <tr class="th-small">
                                     <th width="11%">Date<br /><span class="sub-text">(dd/mm/yyyy)</span></th>
                                     <th width="10%">Place of<br />birth</th>
@@ -1111,12 +1126,12 @@
                     </tr>
 					<tr>
 						<td colspan="2">
-							<table width="100%" border="1" cellspacing="0" cellpadding="0">
+							<table border="1" >
 								<tr height="320px">
-									<td width="33%" valign="top">
+									<td width="33%" >
 										<!-- Present Pregnancy -->
 										<span class="title">5. Present Pregnancy</span><br />
-										<table width="100%" border="0" cellspacing="0" cellpadding="3" class="noColumn">
+										<table border="0" class="noColumn">
 											<tr>
 												<th width="8%"><span class="title"><a href="#" id="presentPregnancyNo" class="noLink" title="Set all Present Pregnancy Questions to No">No</a></span></th>
 												<th width="8%"><span class="title">Yes</span></th>
@@ -1188,10 +1203,10 @@
 											<%=((FrmBCAR2020Record)rec).createToggleOption(props, "presentPregnancyOther", "Other")%>
 										</table>
 									</td>
-									<td width="33%" valign="top" rowspan="2">
+									<td width="33%"  rowspan="2">
 										<!-- Medical History -->
 										<span class="title">7. Medical History</span><br />
-										<table width="100%" border="0" cellspacing="0" cellpadding="3" class="noColumn">
+										<table border="0" class="noColumn">
 											<tr>
 												<th width="8%"><span class="title"><a href="#" id="medicalHistoryNo" class="noLink" title="Set all Medical History Questions to No">No</a></span></th>
 												<th width="8%"><span class="title">Yes</span></th>
@@ -1246,7 +1261,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr valign="top">
+											<tr >
 												<td>
 													<input type="checkbox" name="c_medicalHistoryEndocrineNo" <%=Encode.forHtmlAttribute(props.getProperty("c_medicalHistoryEndocrineNo", "").equals("X") ? "checked" : "") %> />
 												</td>
@@ -1298,7 +1313,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr valign="top">
+											<tr >
 												<td>
 													<input type="checkbox" name="c_medicalHistoryMentalNo" <%=Encode.forHtmlAttribute(props.getProperty("c_medicalHistoryMentalNo", "").equals("X") ? "checked" : "") %> />
 												</td>
@@ -1387,7 +1402,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr valign="top">
+											<tr >
 												<td>
 													<input type="checkbox" name="c_medicalHistoryInfectiousNo" <%=Encode.forHtmlAttribute(props.getProperty("c_medicalHistoryInfectiousNo", "").equals("X") ? "checked" : "") %> />
 												</td>
@@ -1397,14 +1412,14 @@
 												<td>
 													<div class="flex-container">
                                                         <div class="flex-row">
-                                                            <div class="flex-column-title-alt">
+                                                            <div class="flex-column-title">
                                                                 Infectious diseases:
                                                             </div>
                                                             <div class="flex-quad-column">
                                                             </div>
                                                         </div>
 														<div class="flex-row">
-															<div class="flex-column-title-alt">
+															<div class="flex-column-title">
 															</div>
 															<div class="flex-quad-column">
 																<input type="checkbox" name="c_medicalHistoryIDVaricella" <%=Encode.forHtmlAttribute(props.getProperty("c_medicalHistoryIDVaricella", "").equals("X") ? "checked" : "") %> />
@@ -1412,7 +1427,7 @@
 															</div>
 														</div>
 														<div class="flex-row">
-															<div class="flex-column-title-alt">
+															<div class="flex-column-title">
 															</div>
 															<div class="flex-quad-column">
 																<input type="checkbox" name="c_medicalHistoryIDHSV" <%=Encode.forHtmlAttribute(props.getProperty("c_medicalHistoryIDHSV", "").equals("X") ? "checked" : "") %> />
@@ -1420,7 +1435,7 @@
 															</div>
 														</div>
 														<div class="flex-row">
-															<div class="flex-column-title-alt">
+															<div class="flex-column-title">
 															</div>
 															<div class="flex-quad-column">
 																<div class="divFlex">
@@ -1433,7 +1448,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr valign="top">
+											<tr >
 												<td>
 													<input type="checkbox" name="c_medicalHistoryImmunizationsNo" <%=Encode.forHtmlAttribute(props.getProperty("c_medicalHistoryImmunizationsNo", "").equals("X") ? "checked" : "") %> />
 												</td>
@@ -1488,13 +1503,13 @@
 											<%=((FrmBCAR2020Record)rec).createToggleOption(props, "medicalHistoryOther", "Other")%>
 										</table>
 									</td>
-									<td width="33%" valign="top" rowspan="2">
-										<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+									<td width="33%"  rowspan="2">
+										<table style="border-collapse: collapse;">
 											<tr>
 												<td>
 													<!-- Lifestyle/Social Concerns -->
 													<span class="title">8. Lifestyle/Social Concerns</span><br />
-													<table width="100%" border="0" cellspacing="0" cellpadding="2"  style="border-bottom:black thin solid;" class="noColumn">
+													<table border="0"   style="border-bottom:black thin solid;" class="noColumn">
 														<tr>
 															<th width="8%"><span class="title"><a href="#" id="lifestyleSocialNo" class="noLink" title="Set all Lifestyle/Social concerns Questions to No">No</a></span></th>
 															<th width="8%"><span class="title">Yes</span></th>
@@ -1506,7 +1521,7 @@
 														<%=((FrmBCAR2020Record)rec).createToggleOption(props, "lifestyleHousing", "Housing/food security")%>
 														<%=((FrmBCAR2020Record)rec).createToggleOption(props, "lifestyleTransportation", "Transportation")%>
 														<%=((FrmBCAR2020Record)rec).createToggleOption(props, "lifestyleSafety", "Safety")%>
-														<tr valign="top">
+														<tr >
 															<td>
 																<input type="checkbox" name="c_lifestyleGenderViolNo" <%=Encode.forHtmlAttribute(props.getProperty("c_lifestyleGenderViolNo", "").equals("X") ? "checked" : "") %> />
 															</td>
@@ -1544,7 +1559,7 @@
 											<tr>
 												<td>
 													<!-- Substance Use -->
-													<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border-bottom:whitesmoke thin solid;">
+													<table border="0"  style="border-bottom:whitesmoke thin solid;">
 														<tr>
 															<th width="38%"><span class="title">9. Substance Use</span></th>
 															<th width="33%"><span class="sub-title">3Mo Before Preg</span></th>
@@ -1613,7 +1628,7 @@
 											<tr>
 												<td>
 													<!-- Tobacco -->
-													<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border-bottom:whitesmoke thin solid;"style="border-bottom:whitesmoke thin solid;">
+													<table border="0"  style="border-bottom:whitesmoke thin solid;"style="border-bottom:whitesmoke thin solid;">
 														<tr>
 															<td width="38%">
 																<span class="sub-title">Tobacco</span>
@@ -1677,7 +1692,7 @@
 											<tr>
 												<td>
 													<!-- Cannabis -->
-													<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border-bottom:whitesmoke thin solid;">
+													<table border="0"  style="border-bottom:whitesmoke thin solid;">
 														<tr>
 															<td width="38%">
 																<span class="sub-title">Cannabis</span>
@@ -1724,7 +1739,7 @@
 															</td>
 														</tr>
 														<tr>
-															<td valign="top">
+															<td >
 																Primary route:<br/>
 																<span class="sub-text">(select one only)</span>
 															</td>
@@ -1773,7 +1788,7 @@
 											<tr>
 												<td>
 													<!-- Others During Preg -->
-													<table width="100%" border="0" cellspacing="0" cellpadding="2">
+													<table border="0" >
 														<tr>
 															<td>
 																<span class="sub-title">Other(s) During Preg</span>
@@ -1817,11 +1832,11 @@
 										</table>
 									</td>
 								</tr>
-								<tr valign="top">
+								<tr >
 									<td>
 										<!-- Family History -->
 										<span class="title">6. Family History</span><br />
-										<table width="100%" border="0" cellspacing="0" cellpadding="3" class="noColumn">
+										<table border="0" class="noColumn">
 											<tr>
 												<th width="8%"><span class="title"><a href="#" id="familyHistoryNo" class="noLink" title="Set all Family History Questions to No">No</a></span></th>
 												<th width="8%"><span class="title">Yes</span></th>
@@ -1868,9 +1883,7 @@
 											<%=((FrmBCAR2020Record)rec).createToggleOption(props, "familyHistoryOther", "Other")%>
 										</table>
 									</td>
-									<td>
-										
-									</td>
+
 								</tr>
 								<tr>
 									<td colspan="2">
@@ -1884,7 +1897,7 @@
 										Completed by
 										<span class="sub-text">(name)</span>
 										<input type="text" name="t_initialExamCompletedBy" size="18" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_initialExamCompletedBy", "")) %>" />
-										<table width="100%" border="1" cellspacing="0" cellpadding="2">
+										<table  style="border:whitesmoke thin solid;">
 											<tr>
 												<td width="10%">
 													<div class="divFlex">
@@ -1921,10 +1934,10 @@
 												</td>
 											</tr>
 										</table>
-										<table width="100%" border="0" cellspacing="0" cellpadding="2">
-											<tr valign="top">
+										<table border="0" >
+											<tr >
 												<td width="50%">
-													<table width="100%" border="0" cellspacing="0" cellpadding="2" class="noColumn">
+													<table border="0"  class="noColumn">
 														<tr>
 															<th width="8%"><span class="title"><a href="#" id="initialExam1Norm" class="noLink" title="Set all Initial Exam Questions to Normal">Norm</a></span></th>
 															<th width="8%" colspan="2"><span class="title">Abnorm</span></th>
@@ -2003,13 +2016,13 @@
 													</table>
 												</td>
 												<td width="50%">
-													<table width="100%" border="0" cellspacing="0" cellpadding="2" class="noColumn">
+													<table border="0"  class="noColumn">
 														<tr>
 															<th width="8%"><span class="title"><a href="#" id="initialExam2Norm" class="noLink" title="Set all Initial Exam Questions to Norm">Norm</a></span></th>
 															<th width="8%" colspan="2"><span class="title">Abnorm</span></th>
 															<th width="84%"><span class="sub-text">(specify)</span></th>
 														</tr>
-														<tr valign="top">
+														<tr >
 															<td>
 																<input type="checkbox" name="c_initialExamSkinNorm" <%=Encode.forHtmlAttribute(props.getProperty("c_initialExamSkinNorm", "").equals("X") ? "checked" : "") %> />
 															</td>
@@ -2099,7 +2112,7 @@
 										</table>
 										
 									</td>
-									<td width="34%" valign="bottom">
+									<td width="34%">
 										<!-- Comments -->
 										<span class="title">11. Comments/Follow-up</span><span class="sub-text">(incl. details from sections 5-10)</span>
 										<textarea name="t_comments" style="width: 100%; height:180px;" size="30" maxlength="200" title="<%= UtilMisc.htmlEscape(props.getProperty("t_comments", "")) %>"><%= UtilMisc.htmlEscape(props.getProperty("t_comments", "")) %></textarea>

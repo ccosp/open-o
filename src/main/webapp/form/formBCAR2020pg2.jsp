@@ -147,7 +147,7 @@
 
 </head>
 
-<body bgproperties="fixed" topmargin="0" leftmargin="1" rightmargin="1">
+<body bgproperties="fixed">
 	<div id="maincontent">
 		<div id="content_bar" class="innertube">
 			<html:form action="/form/BCAR2020">
@@ -171,12 +171,12 @@
 				<!-- Option Header -->
 				<table class="sectionHeader hidePrint">
 					<tr>
-						<td align="left" rowspan="2" width="58%">
-							<input type="submit" class="saveBtn" value="Save" onclick="return onSave();" />
-							<input type="submit" class="saveBtn" value="Save and Exit" onclick="return onSaveExit();" />
+						<td align="left" rowspan="2" width="58%" style="padding:10px !important;">
+							<input type="submit" class="btn btn-primary" value="Save" onclick="return onSave();" />
+							<input type="submit" class="btn btn-secondary" value="Save and Exit" onclick="return onSaveExit();" />
 
-							<input type="submit" value="Exit" onclick="window.close();" />
-							<input type="submit" value="Print" onclick="return onPrint();" />
+							<input type="submit" class="btn btn-danger" value="Exit" onclick="window.close();" />
+							<input type="submit" class="btn btn-secondary" value="Print" onclick="return onPrint();" />
 							<span style="display:none"><input id="printBtn" type="submit" value="PrintIt"/></span>
 
 						</td>
@@ -207,17 +207,17 @@
 				</table>
 				
 				<!-- Page Heading -->
-				<table width="100%" border="0" cellspacing="0" cellpadding="1">
+				<table width="100%" >
 					<tr>
-						<th align="left">British Columbia Antenatal Record Part 2 <font size="-2">PSBC 1905 - January 2020</font></th>
+						<th >British Columbia Antenatal Record Part 2 <font size="-2">PSBC 1905 - January 2020</font></th>
 					</tr>
 				</table>
 
-				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="small9">
+				<table width="100%" class="small9">
 					<tr>
 						<td width="60%" valign="top">
 							<!-- Planned place of birth -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" class="regular-border">
+							<table width="100%" class="regular-border">
 								<tr>
 									<td width="40%" style="border-right: 1px solid black;">
 										<span class="title">12.</span> Planned place of birth @ 20 wks
@@ -250,16 +250,16 @@
 										<input type="text" id="d_confirmedEDD" name="d_confirmedEDD" title="Section 12 - Confirmed EDD" size="10" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("d_confirmedEDD", "")) %>" />
 										<img src="../images/cal.gif" id="d_confirmedEDD_cal">
 										by:
-										<input type="checkbox" name="c_confirmedEDDUS" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_confirmedEDDUS", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_confirmedEDDUS" <%=Encode.forHtmlAttribute(props.getProperty("c_confirmedEDDUS", "").equals("X") ? "checked" : "") %> />
 										US
-										<input type="checkbox" name="c_confirmedEDDIVF" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_confirmedEDDIVF", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_confirmedEDDIVF" <%=Encode.forHtmlAttribute(props.getProperty("c_confirmedEDDIVF", "").equals("X") ? "checked" : "") %> />
 										IVF
 									</td>
 								</tr>
 							</table>
 
 							<!-- Investigations -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="1" class="ar-table-border">
+							<table width="100%" class="ar-table-border">
 								<tr>
 									<td colspan="2" width="22%">
 										<span class="title">13. Investigations</span>
@@ -344,7 +344,7 @@
 								</tr>
 							</table>
 
-							<table width="100%" border="0" cellspacing="0" cellpadding="1" class="outside-border-alt">
+							<table width="100%" class="outside-border-alt">
 								<tr>
 									<td width="17%">
 										<div class="div-center">
@@ -367,11 +367,11 @@
 										Rubella
 									</td>
 									<td width="10%">
-										<input type="checkbox" name="c_investigationsRubellaImm" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsRubellaImm", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsRubellaImm" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsRubellaImm", "").equals("X") ? "checked" : "") %> />
 										Imm
 									</td>
 									<td width="10%">
-										<input type="checkbox" name="c_investigationsRubellaNonImm" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsRubellaNonImm", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsRubellaNonImm" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsRubellaNonImm", "").equals("X") ? "checked" : "") %> />
 										N-Imm
 									</td>
 									<td width="32%">
@@ -384,7 +384,7 @@
 										</div>
 									</td>
 									<td width="31%">
-										<input type="checkbox" name="c_investigationsRubellaPPVaccine" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsRubellaPPVaccine", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsRubellaPPVaccine" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsRubellaPPVaccine", "").equals("X") ? "checked" : "") %> />
 										Postpartum vaccine required
 									</td>
 								</tr>
@@ -393,11 +393,11 @@
 										HIV
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsHIVNeg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHIVNeg", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHIVNeg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHIVNeg", "").equals("X") ? "checked" : "") %> />
 										Neg
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsHIVPos" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHIVPos", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHIVPos" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHIVPos", "").equals("X") ? "checked" : "") %> />
 										Pos
 									</td>
 									<td>
@@ -406,7 +406,7 @@
 										</div>
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsHIVT3Repeat" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHIVT3Repeat", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHIVT3Repeat" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHIVT3Repeat", "").equals("X") ? "checked" : "") %> />
 										T3 repeat if high-risk
 									</td>
 								</tr>
@@ -415,11 +415,11 @@
 										Syphilis
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsSyphilisNR" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsSyphilisNR", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsSyphilisNR" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsSyphilisNR", "").equals("X") ? "checked" : "") %> />
 										N/R
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsSyphilisR" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsSyphilisR", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsSyphilisR" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsSyphilisR", "").equals("X") ? "checked" : "") %> />
 										R
 									</td>
 									<td colspan="2">
@@ -433,11 +433,11 @@
 										HBsAg
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsHBsAgNR" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgNR", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHBsAgNR" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgNR", "").equals("X") ? "checked" : "") %> />
 										N/R
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsHBsAgR" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgR", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHBsAgR" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgR", "").equals("X") ? "checked" : "") %> />
 										R
 									</td>
 									<td>
@@ -446,17 +446,17 @@
 											<span class="sub-text">(IU/mL)</span>
 											<input type="text" name="t_investigationsHBsAgHBV" class="text-style" size="10" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_investigationsHBsAgHBV", "")) %>" />
 										</div>
-										<input type="checkbox" name="c_investigationsHBsAgPartner" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgPartner", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHBsAgPartner" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgPartner", "").equals("X") ? "checked" : "") %> />
 										Partner/household contact
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsHBsAgAntiViral" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgAntiViral", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHBsAgAntiViral" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgAntiViral", "").equals("X") ? "checked" : "") %> />
 										Anti-viral therapy required
 										<br />
-										<input type="checkbox" name="c_investigationsHBsAgNewbornVaccine" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgNewbornVaccine", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHBsAgNewbornVaccine" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgNewbornVaccine", "").equals("X") ? "checked" : "") %> />
 										Newborn vaccine required
 										<br />
-										<input type="checkbox" name="c_investigationsHBsAgNewbornHBIg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgNewbornHBIg", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsHBsAgNewbornHBIg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsHBsAgNewbornHBIg", "").equals("X") ? "checked" : "") %> />
 										Newborn HBIg required
 										<br />
 									</td>
@@ -466,11 +466,11 @@
 										Gonorrhea
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsGonorrheaNeg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGonorrheaNeg", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsGonorrheaNeg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGonorrheaNeg", "").equals("X") ? "checked" : "") %> />
 										Neg
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsGonorrheaPos" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGonorrheaPos", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsGonorrheaPos" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGonorrheaPos", "").equals("X") ? "checked" : "") %> />
 										Pos
 									</td>
 									<td>
@@ -479,7 +479,7 @@
 										</div>
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsGonorrheaT3Repeat" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGonorrheaT3Repeat", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsGonorrheaT3Repeat" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGonorrheaT3Repeat", "").equals("X") ? "checked" : "") %> />
 										T3 repeat if Pos
 									</td>
 								</tr>
@@ -488,11 +488,11 @@
 										Chlamydia
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsChlamydiaNeg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsChlamydiaNeg", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsChlamydiaNeg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsChlamydiaNeg", "").equals("X") ? "checked" : "") %> />
 										Neg
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsChlamydiaPos" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsChlamydiaPos", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsChlamydiaPos" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsChlamydiaPos", "").equals("X") ? "checked" : "") %> />
 										Pos
 									</td>
 									<td>
@@ -501,7 +501,7 @@
 										</div>
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsChlamydiaT3Repeat" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsChlamydiaT3Repeat", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsChlamydiaT3Repeat" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsChlamydiaT3Repeat", "").equals("X") ? "checked" : "") %> />
 										T3 repeat if Pos
 									</td>
 								</tr>
@@ -510,11 +510,11 @@
 										Urine C&S
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsUrineNeg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsUrineNeg", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsUrineNeg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsUrineNeg", "").equals("X") ? "checked" : "") %> />
 										Neg
 									</td>
 									<td>
-										<input type="checkbox" name="c_investigationsUrinePos" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsUrinePos", "").equals("X") ? "checked" : "") %> />
+										<input type="checkbox" name="c_investigationsUrinePos" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsUrinePos", "").equals("X") ? "checked" : "") %> />
 										Pos
 									</td>
 									<td>
@@ -539,14 +539,14 @@
                                     <td>
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGDMTestDeclined" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMTestDeclined", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGDMTestDeclined" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMTestDeclined", "").equals("X") ? "checked" : "") %> />
                                         GDM test declined
                                     </td>
                                     <td rowspan="2" valign="top">
-                                        <input type="checkbox" name="c_investigationsGDMDietControlled" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMDietControlled", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGDMDietControlled" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMDietControlled", "").equals("X") ? "checked" : "") %> />
                                         Diet controlled
                                         <br/>
-                                        <input type="checkbox" name="c_investigationsGDMInsulinReqd" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMInsulinReqd", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGDMInsulinReqd" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMInsulinReqd", "").equals("X") ? "checked" : "") %> />
                                         Insulin required
                                     </td>
                                 </tr>
@@ -556,11 +556,11 @@
                                         <span class="sub-text">(50 g)</span>
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGDMGCTNeg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGCTNeg", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGDMGCTNeg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGCTNeg", "").equals("X") ? "checked" : "") %> />
                                         Neg
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGDMGCTPos" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGCTPos", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGDMGCTPos" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGCTPos", "").equals("X") ? "checked" : "") %> />
                                         Pos
                                     </td>
                                     <td>
@@ -576,11 +576,11 @@
                                         <span class="sub-text">(75 g)</span>
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGDMGTTNeg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGTTNeg", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGDMGTTNeg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGTTNeg", "").equals("X") ? "checked" : "") %> />
                                         Neg
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGDMGTTPos" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGTTPos", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGDMGTTPos" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGDMGTTPos", "").equals("X") ? "checked" : "") %> />
                                         Pos
                                     </td>
                                     <td>
@@ -602,11 +602,11 @@
                                         <span class="sub-text">(@35-37 wks)</span>
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGBSNeg" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGBSNeg", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGBSNeg" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGBSNeg", "").equals("X") ? "checked" : "") %> />
                                         Neg
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGBSPos" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGBSPos", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGBSPos" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGBSPos", "").equals("X") ? "checked" : "") %> />
                                         Pos
                                     </td>
                                     <td>
@@ -616,7 +616,7 @@
                                         <img src="../images/cal.gif" id="d_investigationsGBSDate_cal">
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_investigationsGBSCopyHospital" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGBSCopyHospital", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_investigationsGBSCopyHospital" <%=Encode.forHtmlAttribute(props.getProperty("c_investigationsGBSCopyHospital", "").equals("X") ? "checked" : "") %> />
                                         Copy to hospital
                                     </td>
                                 </tr>
@@ -629,15 +629,15 @@
                                     </td>
                                 </tr>
 							</table>
-                            
+
                             <!-- Prenatal Genetic Investigations -->
-                            <table width="100%" border="0" cellspacing="0" cellpadding="1" class="outside-border">
+                            <table width="100%" class="outside-border">
                                 <tr>
                                     <td colspan="2">
                                         <div class="title">Prenatal Genetic Investigations</div>
                                     </td>
                                     <td colspan="2">
-                                        <input type="checkbox" name="c_prenatalGeneticDeclined" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticDeclined", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticDeclined" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticDeclined", "").equals("X") ? "checked" : "") %> />
                                         Declined
                                     </td>
                                     <td style="border-left: 1px solid black;">
@@ -646,19 +646,19 @@
                                 </tr>
                                 <tr>
                                     <td width="18%">
-                                        <input type="checkbox" name="c_prenatalGeneticSIPS" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticSIPS", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticSIPS" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticSIPS", "").equals("X") ? "checked" : "") %> />
                                         SIPS
                                     </td>
                                     <td width="20%">
-                                        <input type="checkbox" name="c_prenatalGeneticIPS" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticIPS", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticIPS" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticIPS", "").equals("X") ? "checked" : "") %> />
                                         IPS
                                     </td>
                                     <td width="20">
-                                        <input type="checkbox" name="c_prenatalGeneticQuad" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticQuad", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticQuad" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticQuad", "").equals("X") ? "checked" : "") %> />
                                         Quad
                                     </td>
                                     <td width="10%">
-                                        <input type="checkbox" name="c_prenatalGeneticCVS" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticCVS", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticCVS" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticCVS", "").equals("X") ? "checked" : "") %> />
                                         CVS
                                     </td>
                                     <td width="32%" style="border-left: 1px solid black;" rowspan="2">
@@ -669,35 +669,35 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" name="c_prenatalGeneticNIPTMSP" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticNIPTMSP", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticNIPTMSP" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticNIPTMSP", "").equals("X") ? "checked" : "") %> />
                                         NIPT (MSP)
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_prenatalGeneticNIPTSelf" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticNIPTSelf", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticNIPTSelf" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticNIPTSelf", "").equals("X") ? "checked" : "") %> />
                                         NIPT (self-pay)
                                     </td>
                                     <td>
                                         <div class="divFlex">
-                                            <input type="checkbox" name="c_prenatalGeneticOther" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticOther", "").equals("X") ? "checked" : "") %> />
+                                            <input type="checkbox" name="c_prenatalGeneticOther" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticOther", "").equals("X") ? "checked" : "") %> />
                                             Other
                                             <input type="text" name="t_prenatalGeneticOtherDetails" size="10" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_prenatalGeneticOtherDetails", "")) %>" />
                                         </div>
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="c_prenatalGeneticAmnio" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticAmnio", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_prenatalGeneticAmnio" <%=Encode.forHtmlAttribute(props.getProperty("c_prenatalGeneticAmnio", "").equals("X") ? "checked" : "") %> />
                                         Amnio
                                     </td>
                                 </tr>
                             </table>
-                            
+
                             <!-- Edinburgh Perinatal/Postnatal Depression Scale* -->
-                            <table width="100%" border="0" cellspacing="0" cellpadding="1" class="outside-border">
+                            <table width="100%" class="outside-border">
                                 <tr>
                                     <td width="61%">
                                         <div class="title">14. Edinburgh Perinatal/Postnatal Depression Scale *</div>
                                     </td>
                                     <td width="39%">
-                                        <input type="checkbox" name="c_edinburgDeclined" class="middleAlign" <%=Encode.forHtmlAttribute(props.getProperty("c_edinburgDeclined", "").equals("X") ? "checked" : "") %> />
+                                        <input type="checkbox" name="c_edinburgDeclined" <%=Encode.forHtmlAttribute(props.getProperty("c_edinburgDeclined", "").equals("X") ? "checked" : "") %> />
                                         Declined
                                     </td>
                                 </tr>
@@ -713,18 +713,22 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td colspan="2">
+										<div class="flex-row flex-justify">
+											<div>
                                         Total Score
                                         <input type="text" name="t_edinburgTotalScore" size="6" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_edinburgTotalScore", "")) %>" />
-                                        Anxiety subscore
+											</div><div>
+												Anxiety subscore
                                         <span class="sub-text">(questions 3-5)</span>
                                         <input type="text" name="t_edinburgAnxietySubscore" size="6" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_edinburgAnxietySubscore", "")) %>" />
-                                    </td>
-                                    <td>
+										</div><div>
                                         Self-harm subscore
                                         <span class="sub-text">(question 10)</span>
                                         <input type="text" name="t_edinburgSelfharmSubscore" size="6" maxlength="150" value="<%= UtilMisc.htmlEscape(props.getProperty("t_edinburgSelfharmSubscore", "")) %>" />
-                                    </td>
+										</div>
+										</div>
+									</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
@@ -735,11 +739,11 @@
                                     </td>
                                 </tr>
                             </table>
-                                
+
                             </td>
 						<td width="40%" valign="top">
 							<!-- Addressograph/Label -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="1" class="no-border">
+							<table width="100%" class="no-border">
 								<tr>
 									<td valign="top" width="50%">
 										Surname<br/>
@@ -772,7 +776,7 @@
 								</tr>
 								<tr>
 									<td colspan="3">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<table width="100%" >
 											<tr>
 												<td width="33%">
 													Home Phone Number
@@ -810,7 +814,7 @@
                             <br />
                             
 							<!-- Ultrasounds & Other Imaging Investigations -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" class="regular-border">
+							<table width="100%" class="regular-border">
 								<tr>
 									<td colspan="3">
 										<span class="title">15.</span> <span class="title">Ultrasounds & Other Imaging Investigations</span>
@@ -888,7 +892,7 @@
 							</table>
 
 							<!-- Perinatal Considerations & Referrals -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" class="outside-border">
+							<table width="100%" class="outside-border">
 								<tr>
 									<td colspan="2">
 										<span class="title">16.</span> <span class="title">Perinatal Considerations & Referrals</span>
@@ -1009,7 +1013,7 @@
 				</table>
                 
                 <!-- 17 Prenatal Visits Summary -->
-                <table width="100%" border="1" cellspacing="0" cellpadding="2" class="prenatalVisits">
+                <table width="100%" border="1" class="prenatalVisits">
                     <tr>
                         <th width="11%">
                             <span class="title">17.</span>
@@ -1086,7 +1090,7 @@
                     </tr>
 
                 </table>
-                <table width="100%" border="0" cellspacing="0" cellpadding="3" class="outside-border">
+                <table width="100%" class="outside-border">
                     <tr>
                         <td colspan="5">
                             <span class="title">18. Sign-Offs</span>

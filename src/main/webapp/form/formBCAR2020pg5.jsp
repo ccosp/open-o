@@ -143,7 +143,7 @@
 
 </head>
 
-<body bgproperties="fixed" topmargin="0" leftmargin="1" rightmargin="1">
+<body bgproperties="fixed">
 	<div id="maincontent">
 		<div id="content_bar" class="innertube">
 			<html:form action="/form/BCAR2020">
@@ -167,12 +167,12 @@
 				<!-- Option Header -->
 				<table class="sectionHeader hidePrint">
 					<tr>
-						<td align="left" rowspan="2" width="58%">
-							<input type="submit" class="saveBtn" value="Save" onclick="return onSave();" />
-							<input type="submit" class="saveBtn" value="Save and Exit" onclick="return onSaveExit();" />
+						<td align="left" rowspan="2" width="58%" style="padding:10px !important;">
+							<input type="submit" class="btn btn-primary" value="Save" onclick="return onSave();" />
+							<input type="submit" class="btn btn-secondary" value="Save and Exit" onclick="return onSaveExit();" />
 
-							<input type="submit" value="Exit" onclick="window.close();" />
-							<input type="submit" value="Print" onclick="return onPrint();" />
+							<input type="submit" class="btn btn-danger" value="Exit" onclick="window.close();" />
+							<input type="submit" class="btn btn-secondary" value="Print" onclick="return onPrint();" />
 							<span style="display:none"><input id="printBtn" type="submit" value="PrintIt"/></span>
 
 						</td>

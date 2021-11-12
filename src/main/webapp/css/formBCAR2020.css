@@ -1,5 +1,27 @@
 #maincontent {
     margin:auto 10px;
+    margin-bottom: 10px;
+}
+table {
+    border-collapse: collapse;
+    width:100%;
+}
+
+.alignTop {
+    vertical-align: top;
+}
+
+* table tr td:not(.sectionHeader *, .alignTop) {
+    vertical-align: text-top;
+    padding: 2px !important;
+}
+
+* table tr td {
+    text-align: left;
+}
+
+.borderRight {
+    border-right: 1px solid black;
 }
 
 .sectionHeader {
@@ -25,8 +47,13 @@ body {
     left:0px;
 }
 
-INPUT:read-only {
+input:read-only:not([type="submit"]) {
     background-color: lightgrey;
+}
+
+input:disabled {
+    background-color: lightgrey !important;
+    border-color: lightgrey !important;
 }
 
 .shrinkMe {
@@ -34,11 +61,11 @@ INPUT:read-only {
 }
 
 .small9 {
-    font-size: 9pt;
+    font-size: 10pt;
 }
 
 .small9 table td {
-    font-size: 9pt;
+    font-size: 10pt;
 }
 
 .small8 {
@@ -183,14 +210,22 @@ tr.noBorderTopBottom td {
     border-bottom: 0 !important;
 }
 
-.flex-container {
+.flex-justify {
+    justify-content: space-between
 }
+
 .flex-row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
 }
+
+.flex-stack {
+    display: flex;
+    flex-direction: column;
+}
+
 .flex-column-title {
     flex: 1;
     min-width: 80px;
@@ -215,6 +250,7 @@ tr.noBorderTopBottom td {
 
 .middleAlign {
     vertical-align: middle;
+    align-items: center;
 }
 
 .divFlex {
