@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -65,9 +66,7 @@ public class EctMeasurementsDataBeanHandler {
 
     public boolean init(Integer demo) {
         MeasurementDao dao = SpringUtils.getBean(MeasurementDao.class);
-        for(Object[] i : dao.findMeasurementsAndTypes(demo)) {
-        	MeasurementType mt = (MeasurementType) i[1];
-        	
+        for(MeasurementType mt : dao.findMeasurementsTypes(demo)) {
             EctMeasurementsDataBean data = new EctMeasurementsDataBean();
             data.setType(mt.getType());
             data.setTypeDisplayName(mt.getTypeDisplayName());

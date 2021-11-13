@@ -2760,6 +2760,15 @@
 			<forward name="pre-migrate" path="/pregnancy/premigrate.jsp" />
 		</action>
 
+		<action name="FrmForm" path="/form/BCAR2020" scope="request" type="oscar.form.FrmBCAR2020Action" parameter="method">
+			<forward name="pg1" path="/form/formBCAR2020pg1.jsp" />
+			<forward name="pg2" path="/form/formBCAR2020pg2.jsp" />
+			<forward name="pg3" path="/form/formBCAR2020pg3.jsp" />
+			<forward name="pg4" path="/form/formBCAR2020pg4.jsp" />
+			<forward name="pg5" path="/form/formBCAR2020pg5.jsp" />
+			<forward name="pg6" path="/form/formBCAR2020Attachments.jsp" />
+			<forward name="exit" path="/oscarEncounter/close.jsp" />
+		</action>
 
 		 <action path="/PageMonitoringService" scope="request" type="org.oscarehr.common.web.PageMonitoringAction" parameter="method" />
 

@@ -59,9 +59,10 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	public static final String ANONYMOUS = "ANONYMOUS";
 	public static final String UNIQUE_ANONYMOUS = "UNIQUE_ANONYMOUS";
 	
-	private final static Pattern FD_LAST_NAME = Pattern.compile(".*<rd>([^,]*),.*</rd>.*");
-	private final static Pattern FD_FIRST_NAME = Pattern.compile(".*<rd>[^,]*,(.*)</rd>.*");
-	private final static Pattern FD_OHIP = Pattern.compile("<rdohip>(.*)</rdohip>.*");
+	private final static Pattern FD_LAST_NAME = Pattern.compile(".*<([fr])d>([^,]*),.*</([fr])d>.*");
+	private final static Pattern FD_FIRST_NAME = Pattern.compile(".*<([fr])d>[^,]*,(.*)</([fr])d>.*");
+	private final static Pattern FD_FULL_NAME = Pattern.compile(".*<([fr])d>(.*)</([fr])d>.*");
+	private final static Pattern FD_OHIP = Pattern.compile("<([fr])dohip>(.*)</[fr]dohip>.*");
 	
 	
 	private int hashCode = Integer.MIN_VALUE;// primary key
@@ -82,8 +83,11 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	private String sexDesc;
 	private Date dateJoined;
 	private String familyDoctor;
+    private String familyPhysician;
 	private String city;
 	private String firstName;
+	private String prefName = "";
+	private String middleName;
 	private String postal;
 	private Date hcRenewDate;
 	private String phone2;
@@ -521,6 +525,22 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	}
 
 	/**
+	 * Set the value related to the column: family_physician
+	 *
+	 * @param familyPhysician the family_doctor value
+	 */
+	public void setFamilyPhysician(String familyPhysician) {
+		this.familyPhysician = familyPhysician;
+	}
+
+    /**
+     * Return the value associated with the column: family_physician
+     */
+    public String getFamilyPhysician() {
+        return familyPhysician;
+    }
+
+	/**
 	 * Return the last name as parsed from column: family_doctor
 	 */
 	public String getFamilyDoctorLastName() {
@@ -554,16 +574,42 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 * Return the doctor number as parsed from column: family_doctor
 	 */
 	public String getFamilyDoctorNumber() {
-		String doctorNumber = "";
+
 		Matcher m = FD_OHIP.matcher(getFamilyDoctor());
 
 		if( m.find() ) {
-			if(! "null".equalsIgnoreCase(m.group(1))){
-				doctorNumber = m.group(1);
-			}
+			return m.group(2);
 		}
-		
-		return doctorNumber;
+		return "";
+	}
+	public String getFamilyPhysicianLastName() {
+		Matcher m = FD_LAST_NAME.matcher(getFamilyPhysician());
+		if(m.find()) {
+			return m.group(2);
+		}
+		return "";
+	}
+	public String getFamilyPhysicianFirstName() {
+		Matcher m = FD_FIRST_NAME.matcher(getFamilyPhysician());
+		if(m.find()) {
+			return m.group(2);
+		}
+		return "";
+	}
+	public String getFamilyPhysicianFullName() {
+		Matcher m = FD_FULL_NAME.matcher(getFamilyPhysician());
+		if(m.find()) {
+			return m.group(2);
+		}
+		return "";
+	}
+	public String getFamilyPhysicianNumber() {
+		Matcher m = FD_OHIP.matcher(getFamilyPhysician());
+		if(m.find()) {
+			return m.group(2);
+		}
+
+		return "";
 	}
 
 	/**
@@ -607,6 +653,21 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
+	/**
+	 * Gets demographic's preferred name.
+	 *
+	 * @return
+	 * 		Returns the preferred name.
+	 */
+	public String getPrefName() {return prefName;}
+
+	/**
+	 * Set the value related to the column: pref_name
+	 *
+	 * @param prefName the pref_name value
+	 */
+	public void setPrefName(String prefName) {this.prefName = prefName;}
 
 	/**
 	 * Return the value associated with the column: postal
