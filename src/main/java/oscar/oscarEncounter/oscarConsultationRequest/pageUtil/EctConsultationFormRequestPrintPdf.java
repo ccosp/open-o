@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.*;
 import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.model.PatientLabRouting;
 import org.oscarehr.common.printing.FontSettings;
@@ -300,8 +301,6 @@ public class EctConsultationFormRequestPrintPdf {
                 pdf.printPdf();
                 pdfDocs.add(fileName);
             }
-        }catch(DocumentException de) {
-            request.setAttribute("printError", new Boolean(true));
         }catch(IOException ioe) {
             request.setAttribute("printError", new Boolean(true));
         }catch(Exception e){

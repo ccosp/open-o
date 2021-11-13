@@ -47,6 +47,8 @@
 <%@page import="org.oscarehr.common.service.BillingONService"%> 
 <%@page import="java.text.NumberFormat" %>
 
+<%@page import="org.apache.commons.lang.StringUtils"%>
+
 <%@taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -943,16 +945,16 @@ Pay Program:<br>
 %>
       <script>
 var _providers = [];
-<%	for (int i=0; i<sites.size(); i++) {  
+<%	for (int i=0; i<sites.size(); i++) { 
 	Set<Provider> siteProviders = sites.get(i).getProviders();
 	List<Provider>  siteProvidersList = new ArrayList<Provider> (siteProviders);
      Collections.sort(siteProvidersList,(new Provider()).ComparatorName());%>
 	_providers["<%= sites.get(i).getName() %>"]="<% Iterator<Provider> iter = siteProvidersList.iterator();
 	while (iter.hasNext()) {
 		Provider p=iter.next();
-		if (pros.contains(p.getProviderNo())) {
-	%><option value='<%= p.getProviderNo() %>'><%= p.getLastName() %>, <%= p.getFirstName() %></option><% }} %>";
-<% } %>
+		if ("1".equals(p.getStatus()) && StringUtils.isNotBlank(p.getOhipNo())) {
+	%><option value='<%= p.getProviderNo() %>' ><%=p.getLastName()%>, <%=p.getFirstName()%></option><%}}%>";
+<%}%>
 function changeSite(sel) {
 	sel.form.provider_no.innerHTML=sel.value=="none"?"":_providers[sel.value];
 	sel.style.backgroundColor=sel.options[sel.selectedIndex].style.backgroundColor;

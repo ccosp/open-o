@@ -24,7 +24,7 @@
 
 package oscar.oscarLab.ca.all.upload.handlers;
 
-import com.lowagie.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfReader;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
