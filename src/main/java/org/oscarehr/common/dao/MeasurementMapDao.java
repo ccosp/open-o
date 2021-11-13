@@ -129,6 +129,16 @@ public class MeasurementMapDao extends AbstractDao<MeasurementMap> {
 		return rs;    
 	}
 
+	public List<String> findDistinctLoincCodesByLabType(MeasurementMap.LAB_TYPE lab_type) {
+		String queryStr = "select distinct(m.loincCode) FROM MeasurementMap m WHERE m.labType LIKE :labType";
+		Query q = entityManager.createQuery(queryStr);
+		q.setParameter("labType", lab_type);
+		@SuppressWarnings("unchecked")
+		List<String> rs = q.getResultList();
+
+		return rs;
+	}
+
 	/**
 	 * Finds measurements for the specified lab type and ident code
 	 * 
