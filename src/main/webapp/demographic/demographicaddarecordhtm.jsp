@@ -162,6 +162,7 @@
 	String today = fmt.format(new Date());
 %>
 <html:html locale="true">
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.js"></script> 
@@ -1680,13 +1681,15 @@ document.forms[1].r_doctor_ohip.value = refNo;
 						LookupList ll = lookupListManager.findLookupListByName(LoggedInInfo.getLoggedInInfoFromSession(request), "phu");
 						if(ll != null) {
 							for(LookupListItem llItem : ll.getItems()) {
-								String selected = "";
-								if(llItem.getValue().equals(defaultPhu)) {
-									selected = " selected=\"selected\" ";	
+								if(llItem.isActive()) {
+									String selected = "";
+									if(llItem.getValue().equals(defaultPhu)) {
+										selected = " selected=\"selected\" ";
+									}
+									%>
+										<option value="<%=llItem.getValue()%>" <%=selected%>><%=llItem.getLabel()%></option>
+									<%
 								}
-								%>
-									<option value="<%=llItem.getValue()%>" <%=selected%>><%=llItem.getLabel()%></option>
-								<%
 							}
 						} else {
 							%>

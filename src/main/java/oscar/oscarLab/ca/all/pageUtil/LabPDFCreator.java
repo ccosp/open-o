@@ -32,7 +32,7 @@
 
 package oscar.oscarLab.ca.all.pageUtil;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,6 +46,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.html.simpleparser.HTMLWorker;
+import com.lowagie.text.pdf.*;
+import com.lowagie.text.rtf.RtfWriter2;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tika.io.IOUtils;
@@ -55,25 +61,6 @@ import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.ExceptionConverter;
-import com.lowagie.text.Font;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.html.simpleparser.HTMLWorker;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEventHelper;
-import com.lowagie.text.pdf.PdfWriter;
-import com.lowagie.text.rtf.RtfWriter2;
 
 import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.all.parsers.CLSHandler;
@@ -91,7 +78,7 @@ import oscar.util.UtilDateUtilities;
  *
  * @author wrighd
  */
-public class LabPDFCreator extends PdfPageEventHelper{
+public class LabPDFCreator extends PdfPageEventHelper {
     private OutputStream os;
     private boolean isUnstructuredDoc = false;
     private boolean isReportData = Boolean.FALSE;
@@ -182,7 +169,7 @@ public class LabPDFCreator extends PdfPageEventHelper{
     	document.close();
     	os.flush();
     }
-    public void printPdf() throws IOException, DocumentException{
+    public void printPdf() throws IOException, DocumentException {
 
         // check that we have data to print
         if (handler == null) {
@@ -512,8 +499,8 @@ public class LabPDFCreator extends PdfPageEventHelper{
 					if (handler.getOBXCommentCount(j, k) > 0) {
 						cell.setBorder( Rectangle.NO_BORDER );
 					}
-					cell.setBorderColor( Color.lightGray );
-					cell.setBackgroundColor( Color.white );
+					cell.setBorderColor( Color.LIGHT_GRAY );
+					cell.setBackgroundColor( Color.WHITE );
 					
 					String obxName = handler.getOBXName(j, k);
 					
@@ -543,10 +530,10 @@ public class LabPDFCreator extends PdfPageEventHelper{
 								} else {
 									cell.setColspan(7);
 								}
-								cell.setBorderColor(Color.black);
+								cell.setBorderColor(Color.BLACK);
 								table.setWidthPercentage(100);
 								table.addCell(cell);
-								cell.setBorderColor( Color.lightGray );
+								cell.setBorderColor( Color.LIGHT_GRAY );
 								cell.setColspan(1);
 								obrFlag = true;
 							}
@@ -557,7 +544,7 @@ public class LabPDFCreator extends PdfPageEventHelper{
 							if( this.isReportData ) {
 								cell.setColspan(2);
 								cell.setBorder(Rectangle.NO_BORDER);
-								cell.setBorderColor(Color.white);
+								cell.setBorderColor(Color.WHITE);
 								cell.setPadding(0);
 								cell.setPaddingLeft(10);
 
@@ -812,7 +799,7 @@ public class LabPDFCreator extends PdfPageEventHelper{
 	
 									}
 
-									cell.setBorderColor(Color.lightGray);
+									cell.setBorderColor(Color.LIGHT_GRAY);
 									cell.setColspan(1);
 								}
 								cell.setColspan(1);
@@ -825,7 +812,7 @@ public class LabPDFCreator extends PdfPageEventHelper{
 							){
 
 							cell.setBorder(Rectangle.NO_BORDER);
-							cell.setBorderColor(Color.white);
+							cell.setBorderColor(Color.WHITE);
 							cell.setPadding(0);
 							cell.setPaddingLeft(10);
 							cell.setColspan(7);
@@ -836,7 +823,7 @@ public class LabPDFCreator extends PdfPageEventHelper{
 							
 							cell.setColspan(1);
 							cell.setBorder(Rectangle.BOTTOM);
-							cell.setBorderColor(Color.lightGray);
+							cell.setBorderColor(Color.LIGHT_GRAY);
 							cell.setPadding(5);
 						}
 						if (handler.getMsgType().equals("PFHT") && !handler.getNteForOBX(j,k).equals("") && handler.getNteForOBX(j,k)!=null) {
@@ -917,10 +904,10 @@ public class LabPDFCreator extends PdfPageEventHelper{
 								Phrase phrase= new Phrase();
 								StringReader strReader = new StringReader(handler.getOBRComment(j, k));
 								@SuppressWarnings("rawtypes")
-                                ArrayList p = HTMLWorker.parseToList(strReader, null);
+                                ArrayList p = (ArrayList) HTMLWorker.parseToList(strReader, null);
 								strReader.close();
 								for (int h=0; h<p.size();h++) {
-									phrase.add(p.get(h));
+									phrase.add((String) p.get(h));
 									phrase.add("\n");
 								}
 								cell.setPhrase(phrase);

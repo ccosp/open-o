@@ -17,8 +17,9 @@ INSERT INTO encounterForm VALUES ('BC-NewBorn 2008','../form/formBCNewBorn2008.j
 INSERT INTO encounterForm VALUES ('BC Birth Sum 2008','../form/formbcbirthsummo2008.jsp?demographic_no=','formBCBirthSumMo2008',2);
 insert into encounterForm values ('Chart Checklist', '../form/formbcclientchartchecklist.jsp?demographic_no=', 'formBCClientChartChecklist', 0);                                       
 insert into encounterForm values ('BPMH', '../formBPMH.do?demographic_no=', 'formBPMH', 0);                                       
-INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2009', '../form/formrourke2009complete.jsp?demographic_no=', 'formRourke2009', 0);
 
+INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2009', '../form/formrourke2009complete.jsp?demographic_no=', 'formRourke2009', 0);
+INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('ECARES', '../formeCARES.do?method=fetch&demographicNo=', 'formECARES', 0);
 
 INSERT INTO billinglocation VALUES ('00','ABBOTSFORD','BC');
 INSERT INTO billinglocation VALUES ('00','AGASSIZ/HARRISON','BC');
@@ -264,19 +265,27 @@ INSERT INTO billinglocation VALUES ('Y1','YEKOOCHE','BC');
 INSERT INTO billinglocation VALUES ('Z1','ZEBALLOS','BC');
 INSERT INTO billinglocation VALUES ('MH','100 MILE HOUSE','BC');
 
-INSERT INTO billingvisit VALUES ('C','Continuing Care facility','BC');
-INSERT INTO billingvisit VALUES ('D','Diagnostic Facility','BC');
-INSERT INTO billingvisit VALUES ('E','Hospital Emergency Depart. or Diagnostic & Treatment Centre','BC');
-INSERT INTO billingvisit VALUES ('I','Hospital Inpatient','BC');
-INSERT INTO billingvisit VALUES ('P','Outpatient','BC');
-INSERT INTO billingvisit VALUES ('R','Patient\'s residence','BC');
-INSERT INTO billingvisit VALUES ('Z','None of the above','BC');
-INSERT INTO billingvisit VALUES ('M','Mental Health Centre','BC');
-INSERT INTO billingvisit VALUES ('T','Practitioner\'s Office - In Publicly Administered Facility','BC');
-INSERT INTO billingvisit VALUES ('G','Hospital - Day Care (Surgery) ','BC');
-INSERT INTO billingvisit VALUES ('F','Private Medical / Surgical Facility','BC');
-INSERT INTO billingvisit VALUES ('A','Practitioner\'s Office - In Community','BC');
-
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('A', 'Practitioner\'s Office - In Community', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('B', 'Community Health Centre', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('C', 'Continuing Care facility', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('D', 'Diagnostic Facility', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('E', 'Hospital Emergency Depart. or Diagnostic & Treatment Centre', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('F', 'Private Medical / Surgical Facility', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('G', 'Hospital - Day Care (Surgery) ', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('I', 'Hospital Inpatient', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('J', 'First Nations Primary Health Care Clinic', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('K', 'Hybrid Primary Care Practice (part-time longitudinal practice, part-time walk-in clinic)', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('L', 'Longitudinal Primary Care Practice (e.g. GP family practice or PCN clinic)', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('M', 'Mental Health Centre', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('N', 'Health Care Practitioner Office (non-physician)', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('P', 'Outpatient', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('Q', 'Specialist Physician Office', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('R', 'Patient\'s residence', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('T', 'Practitioner\'s Office - In Publicly Administered Facility', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('U', 'Urgent and Primary Care Centre', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('V', 'Virtual Care Clinic', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('W', 'Walk-In Clinic', 'BC');
+INSERT INTO `billingvisit`(`visittype`, `visit_desc`, `region`) VALUES ('Z', 'None of the above', 'BC');
 
 -- ----------------------------
 -- Records of ctl_billingservice
@@ -20859,3 +20868,7 @@ INSERT INTO `bcpEligibleCodes` VALUES ('77015', 'Vascular Surgery', 'VASCULAR SU
 INSERT INTO `bcpEligibleCodes` VALUES ('77707', 'Vascular Surgery', 'TELEHEALTH SUBSEQUENT OFFICE VISIT-VASCULAR SURGERY');
 INSERT INTO `bcpEligibleCodes` VALUES ('77710', 'Vascular Surgery', 'TELEHEALTH CONSULTATION - VASCULAR SURGERY: TO INCLUDE COMPLETE HISTORY AND PHYSICAL EXAMINATION, REVIEW OF X-RAY AND LABORATORY FINDINGS, IF REQUIRED, AND A WRITTEN REPORT');
 INSERT INTO `bcpEligibleCodes` VALUES ('77712', 'Vascular Surgery', 'TELEHEALTH REPEAT OR LIMITED CONSULTATION - VASCULAR SURGERY: TO APPLY WHERE A CONSULTATION IS REPEATED FOR THE SAME CONDITION WITHIN 6 MONTHS OF THE LAST VISIT BY THE CONSULTANT, ');
+
+INSERT INTO `secObjectName`(`objectName`, `description`, `orgapplicable`) VALUES ('_careconnect', 'Restrict visibility and access to BC Care Connect', 0);
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('doctor', '_careconnect', 'o', 0, '999998');
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('Pharmacist', '_careconnect', 'o', 0, '999998');

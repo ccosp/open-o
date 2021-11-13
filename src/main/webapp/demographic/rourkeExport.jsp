@@ -61,6 +61,7 @@ List<String> setsList = ds.getDemographicSets();
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <title>CIHI Export</title>
 <link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
@@ -68,6 +69,7 @@ List<String> setsList = ds.getDemographicSets();
 <body>
 <div class="container-fluid well">
 <html:form action="/demographic/eRourkeExport.do" method="post">
+
 <h3>Vender Information</h3>
 <table class="table-condensed">
 	<tr><td>Organization Name</td><td><html:text styleClass="right" property="orgName"></html:text></td></tr>

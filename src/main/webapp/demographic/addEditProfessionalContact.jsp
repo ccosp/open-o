@@ -33,6 +33,7 @@
 <%@ page import="org.oscarehr.common.model.ContactSpecialty" %>
 
 <html:html locale="true">
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title>Add/Edit Professional Contact</title>

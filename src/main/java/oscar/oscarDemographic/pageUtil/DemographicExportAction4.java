@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -163,6 +164,7 @@ import cdsDt.YnIndicator;
 import cdsDt.YnIndicatorsimple.Enum;
 import oscar.OscarProperties;
 import oscar.appt.ApptStatusData;
+
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
 import oscar.oscarClinic.ClinicData;
@@ -202,6 +204,8 @@ public class DemographicExportAction4 extends Action {
 	private static final Hl7TextInfoDao hl7TxtInfoDao = (Hl7TextInfoDao)SpringUtils.getBean("hl7TextInfoDao");
 	private static final Hl7TextMessageDao hl7TxtMssgDao = (Hl7TextMessageDao)SpringUtils.getBean("hl7TextMessageDao");
 	private static final DemographicExtDao demographicExtDao = (DemographicExtDao) SpringUtils.getBean("demographicExtDao");
+	private static final ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
+
 	private static final String PATIENTID = "Patient";
 	private static final String ALERT = "Alert";
 	private static final String ALLERGY = "Allergy";
@@ -367,6 +371,10 @@ public class DemographicExportAction4 extends Action {
 			legalName.setNamePurpose(cdsDt.PersonNamePurposeCode.L);
 
 			String name= StringUtils.noNull(demographic.getFirstName());
+			if(name!= null)
+			{
+				name = name.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+			}
 			if (StringUtils.filled(name)) {
 				firstName.setPart(name);
 				firstName.setPartType(cdsDt.PersonNamePartTypeCode.GIV);
@@ -375,6 +383,10 @@ public class DemographicExportAction4 extends Action {
 				exportError.add("Error! No First Name for Patient "+demoNo);
 			}
 			name = StringUtils.noNull(demographic.getLastName());
+			if(name != null)
+			{
+				name = name.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+			}
 			if (StringUtils.filled(name)) {
 				lastName.setPart(name);
 				lastName.setPartType(cdsDt.PersonNamePartTypeCode.FAMC);
@@ -2455,8 +2467,19 @@ public class DemographicExportAction4 extends Action {
 					throw new Exception("Temporary Export Directory does not exist!");
 				}
 
-				//Standard format for xml exported file : PatientFN_PatientLN_PatientUniqueID_DOB (DOB: ddmmyyyy)
-				String expFile = demographic.getFirstName()+"_"+demographic.getLastName();
+				String patientFirstName = demographic.getFirstName();
+				String patientLastName = demographic.getLastName();
+				
+				if(patientFirstName != null)
+				{
+					patientFirstName = patientFirstName.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+				}
+				if(patientLastName != null)
+				{
+					patientLastName = patientLastName.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
+				}
+				
+				String expFile = patientFirstName + "_" + patientLastName;
 				expFile += "_"+demoNo;
 				expFile += "_"+demographic.getDateOfBirth()+demographic.getMonthOfBirth()+demographic.getYearOfBirth();
 				files.add(new File(directory, expFile+".xml"));
@@ -2618,20 +2641,13 @@ public class DemographicExportAction4 extends Action {
 					} catch(Exception e) {
 						logger.error("Error", e);
 					}
-					BufferedWriter out = null;
-					try {
-						out = new BufferedWriter(new FileWriter(files.get(files.size()-1)));
+//					BufferedWriter out = null;
+					try(BufferedWriter out = new BufferedWriter(new FileWriter(files.get(files.size()-1)))) {
 						out.write(output);
 					} catch (IOException e) {
 						logger.error("Error", e);
 						throw new Exception("Cannot write .xml file(s) to export directory.\nPlease check directory permissions.");
-					} finally {
-						try {
-							out.close();
-						} catch(Exception e) {
-							//ignore
-						}
-					}
+					} 
 				}
 
 				// Create Export Log
@@ -3339,19 +3355,35 @@ public class DemographicExportAction4 extends Action {
 			else
 				labRoutingInfo.putAll(ProviderLabRouting.getInfo(lab_no, "CML"));
 
-			String timestamp = labRoutingInfo.get("timestamp").toString();
-			String lab_provider_no = (String)labRoutingInfo.get("provider_no");
+
+			Object timestamp = labRoutingInfo.get("timestamp");
 			
-			// ProviderLabRoutingDao assigns UNCLAIMED_PROVIDER = "0" 
-			if (UtilDateUtilities.StringToDate(timestamp,"yyyy-MM-dd HH:mm:ss")!=null &&
-					!"0".equals(lab_provider_no) && !"".equals(lab_provider_no)) {
+			if (timestamp != null)
+			{
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Calendar calendar = null; 
+				
+				try {
+					Date fulldatetime = simpleDateFormat.parse(timestamp.toString());
+					calendar = Calendar.getInstance();
+				    calendar.setTime(fulldatetime);
+				} catch (ParseException e) {
+					logger.error("Error while parsing Lab Routing date " + timestamp, e);
+				}
+				
 				LaboratoryResults.ResultReviewer reviewer = labResults.addNewResultReviewer();
-				reviewer.addNewDateTimeResultReviewed().setFullDateTime(Util.calDate(timestamp));
+				reviewer.addNewDateTimeResultReviewed().setFullDateTime(calendar);
+
 				//reviewer name
 				cdsDt.PersonNameSimple reviewerName = reviewer.addNewName();
-				ProviderData pvd = new ProviderData(lab_provider_no);
-				Util.writeNameSimple(reviewerName, pvd.getFirst_name(), pvd.getLast_name());
-				if (StringUtils.filled(pvd.getOhip_no()) && pvd.getOhip_no().length()<=6) reviewer.setOHIPPhysicianId(pvd.getOhip_no());
+				String lab_provider_no = (String)labRoutingInfo.get("provider_no");
+				if (!"0".equals(lab_provider_no)) {
+					Provider provider = providerDao.getProvider(lab_provider_no);
+
+					Util.writeNameSimple(reviewerName, provider.getFirstName(), provider.getLastName());
+					if (StringUtils.noNull(provider.getOhipNo()).length()<=6) reviewer.setOHIPPhysicianId(provider.getOhipNo());
+				}
+
 			}
 		}
 	}

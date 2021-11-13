@@ -22,7 +22,7 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@ include file="/taglibs.jsp"%>
+<%--<%@ include file="/taglibs.jsp"%>--%>
 
 <script>
     function ConfirmDelete(name)

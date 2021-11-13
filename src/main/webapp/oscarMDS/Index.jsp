@@ -8,13 +8,13 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@ page language="java" %>
-<%@ page import="java.util.*" %>
-<%@ page import="oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*,oscar.util.StringUtils,oscar.util.UtilDateUtilities, oscar.OscarProperties" %>
-<%@ page import="org.apache.commons.collections.MultiHashMap" %>
-<%@page import="org.oscarehr.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils"%>
-<%@page import="org.oscarehr.util.MiscUtils,org.apache.commons.lang.StringEscapeUtils"%>
 
+<%@ page import="oscar.oscarMDS.data.*,oscar.OscarProperties" %>
+<%@ page import="org.oscarehr.common.model.inbox.InboxResponse" %>
+<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="oscar.oscarLab.ca.on.LabResultData" %>
+<%@ page import="java.util.List" %>
+<%@ page import="org.oscarehr.common.model.inbox.InboxItemDemographicCount" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
@@ -23,7 +23,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-      String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+      String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
 	  boolean authed=true;
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_lab" rights="r" reverse="<%=true%>">
@@ -39,21 +39,19 @@ if(!authed) {
 <%
 //TODO all of this below needs to be removed. It is unsafe. Consider using proper JSTL.  
 @SuppressWarnings("unchecked")
-ArrayList<PatientInfo> patients = (ArrayList<PatientInfo>) request.getAttribute("patients");
-if (patients!=null) {
-	Collections.sort(patients);
-}
-Integer unmatchedDocs   = (Integer) request.getAttribute("unmatchedDocs");
-Integer unmatchedLabs   = (Integer) request.getAttribute("unmatchedLabs");
-Integer totalDocs		= (Integer) request.getAttribute("totalDocs");
-Integer totalLabs 		= (Integer) request.getAttribute("totalLabs");
-if (totalLabs==null) { totalLabs = 0;}
-Integer abnormalCount 	= (Integer) request.getAttribute("abnormalCount");
-Integer normalCount 	= (Integer) request.getAttribute("normalCount");
-Integer totalNumDocs    = (Integer) request.getAttribute("");
+//ArrayList<PatientInfo> patients = (ArrayList<PatientInfo>) request.getAttribute("patients");
+//if (patients!=null) {
+//	Collections.sort(patients);
+//}
+//LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(session);
+//InboxResponse inboxResponseResults = (InboxResponse) request.getAttribute("inboxResponse");
+//List<LabResultData> labResultData = inboxResponseResults.getLabResultData(loggedInInfo);
+//List<InboxItemDemographicCount> demographicCounts = inboxResponseResults.getInboxDemographicCounts();
+
 Long categoryHash       = (Long) request.getAttribute("categoryHash");
 String  providerNo		= (String) request.getAttribute("providerNo");
 String searchProviderNo = (String) request.getAttribute("searchProviderNo");
+boolean searchUnclaimed = Boolean.parseBoolean((String)request.getAttribute("searchUnclaimed"));
 String demographicNo	= (String) request.getAttribute("demographicNo");
 String ackStatus 		= (String) request.getAttribute("ackStatus");
 String abnormalStatus   = (String) request.getAttribute("abnormalStatus");
@@ -64,7 +62,7 @@ if ("normalOnly".equals(abnormalStatus)) {
 } else if ("abnormalOnly".equals(abnormalStatus)) {
     selectedCategory = "5";
 }
-String selectedCategoryPatient = request.getParameter("selectedCategoryPatient");
+//String selectedCategoryPatient = request.getParameter("selectedCategoryPatient");
 String selectedCategoryType    = request.getParameter("selectedCategoryType");
 String isListView			   = request.getParameter("isListView");
 String currentProviderNo 	   = request.getParameter("providerNo");
@@ -76,6 +74,7 @@ String patientHealthNumber = (String) request.getAttribute("patientHealthNumber"
 String startDate = (String) request.getAttribute("startDate");
 String endDate = (String) request.getAttribute("endDate");
 
+
 %>
 
 <!DOCTYPE html>
@@ -85,8 +84,8 @@ String endDate = (String) request.getAttribute("endDate");
 <bean:message key="oscarMDS.index.title"/>
 </title>
 <html:base/>
-
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/showDocument.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/css/oscarMDSIndex.css"  />
@@ -263,53 +262,78 @@ String endDate = (String) request.getAttribute("endDate");
 			                 </ul>
 			            </details>
 				</c:if>
-			
-				<% if(patients.size() > 0) { %>	
-									
+			<c:if test="${ not empty inboxResponse.inboxDemographicCounts }" >
+<%--				<% if(patients.size() > 0) { %>--%>
+
 				<div id="patientsdoclabs">
 				<details id="patientsdoclabsDetails" open>
 					<summary id="patientsdoclabsSummary" >Matched</summary>
-				
-				    <%
-				         for (PatientInfo info : patients) {
-				                        String patientId= info.id + "";
-				                        String patientName= info.toString();
-				                        int numDocs= info.getDocCount() + info.getLabCount();
-				   %>
+					<c:forEach items="${inboxResponse.inboxDemographicCounts}" var="inboxItemDemographicCount">
+<%--				    <%--%>
+<%--				         for (PatientInfo info : patients) {--%>
+<%--				                        String patientId= info.id + "";--%>
+<%--				                        String patientName= info.toString();--%>
+<%--				                        int numDocs= info.getDocCount() + info.getLabCount();--%>
+<%--				   %>--%>
+						<c:set var="patientId" value="${inboxItemDemographicCount.id.labPatientId}" />
+						<c:set var="patientName" value="${ inboxItemDemographicCount.lastName },  ${inboxItemDemographicCount.firstName}" />
+						<c:set var="numDocs" value="${ inboxItemDemographicCount.count }" />
+
+						<c:if test="${inboxItemDemographicCount.labType eq 'DOC'}">
+							<c:set var="docCount" value="${ inboxItemDemographicCount.count }" />
+						</c:if>
+						<c:if test="${inboxItemDemographicCount.labType eq 'HL7'}">
+							<c:set var="labCount" value="${ inboxItemDemographicCount.count }" />
+						</c:if>
+						<c:if test="${inboxItemDemographicCount.labType eq 'HRM'}">
+							<c:set var="hrmCount" value="${ inboxItemDemographicCount.count }" />
+						</c:if>
+
+
 					<details id="patientsdoclabsDetailList" >
    					   <summary>
-       						<a id="patient<%=patientId%>all" href="javascript:void(0);"  onclick="un_bold(this);changeView(CATEGORY_PATIENT,<%=patientId%>);" 
-       							title="<%=patientName%>" >
-       								<%=patientName%> (<span id="patientNumDocs<%=patientId%>"><%=numDocs%></span>)
+       						<a id="patient${patientId}all" href="javascript:void(0);"  onclick="un_bold(this);changeView(CATEGORY_PATIENT,${patientId});"
+       							title="<c:out value='${patientName}' />" >
+									<c:out value='${patientName}' /> (<span id="patientNumDocs${patientId}">${numDocs}</span>)
        						</a>
        					</summary>
-                    		<ul id="labdoc<%=patientId%>showSublist" >
-				                   <%if (info.getDocCount() > 0) {%>
+
+                    		<ul id="labdoc${patientId}showSublist" >
+				                    <c:if test="${not empty docCount}">
 				                        		<li>
-				                        			<a id="patient<%=patientId%>docs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,<%=patientId%>,CATEGORY_TYPE_DOC);" title="Documents">
-				                        				Documents (<span id="pDocNum_<%=patientId%>"><%=info.getDocCount()%></span>)
+				                        			<a id="patient${patientId}docs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,${patientId},CATEGORY_TYPE_DOC);" title="Documents">
+				                        				Documents (<span id="pDocNum_${patientId}">${docCount}</span>)
 				                       				</a>
 				                        		</li>
-				                   <%} if (info.getLabCount() > 0) {%>
+								    </c:if>
+									<c:if test="${not empty labCount}">
 				                     			<li>
-				                     				<a id="patient<%=patientId%>hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,<%=patientId%>,CATEGORY_TYPE_HL7);" title="HL7">
-				                     					HL7 (<span id="pLabNum_<%=patientId%>"><%=info.getLabCount()%></span>)
+				                     				<a id="patient${patientId}hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,${patientId},CATEGORY_TYPE_HL7);" title="HL7">
+				                     					HL7 (<span id="pLabNum_${patientId}">${labCount}</span>)
 				                   					</a>
 				                        		</li>
-				                   <%}%>
+									</c:if>
+									<c:if test="${not empty hrmCount}">
+										<li>
+											<a id="patient${patientId}hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,${patientId},CATEGORY_TYPE_HRM);" title="HL7">
+												HL7 (<span id="pLabNum_${patientId}">${hrmCount}</span>)
+											</a>
+										</li>
+									</c:if>
                     		</ul>
                   </details>
+						<c:if test="${selectedCategoryPatient eq patientId}">
 
-					<% if (selectedCategoryPatient != null) { 
-						if (selectedCategoryPatient.equals(Integer.toString(info.id))) { %>
 							<script>
-								un_bold($('patient<%=info.id%><%=(selectedCategoryType.equals("CATEGORY_TYPE_HL7"))?"hl7s":(selectedCategoryType.equals("CATEGORY_TYPE_DOC")?"docs":"all")%>'));
+								un_bold($("patient"+${patientId}<%=(selectedCategoryType.equals("CATEGORY_TYPE_HL7"))?"hl7s":(selectedCategoryType.equals("CATEGORY_TYPE_DOC")?"docs":"all")%>));
 							</script>
-					<% }} %>
-            	<%}  // end of for loop for patient list %>
+						</c:if>
+					</c:forEach>
+
 				</details>
-			<%} %>
-        </div>       
+
+        	</div>
+			</c:if>
 	</div>
 </td>
 	
@@ -374,7 +398,7 @@ String endDate = (String) request.getAttribute("endDate");
 		var page = 1;
 		var pageSize = 20;
 		var selected_category = <%=(selectedCategory == null ? "1" : selectedCategory)%>;
-		var selected_category_patient = <%=(selectedCategoryPatient == null ? "\"\"" : selectedCategoryPatient)%>;
+		let selected_category_patient = "${selectedCategoryPatient}";
 		var selected_category_type = <%=(selectedCategoryType == null ? "\"\"" : selectedCategoryType)%>;
 		var searchProviderNo = "<%=(searchProviderNo == null ? "" : searchProviderNo)%>";
 		var firstName = "<%=(patientFirstName == null ? "" : patientFirstName)%>";
@@ -382,9 +406,10 @@ String endDate = (String) request.getAttribute("endDate");
 		var hin = "<%=(patientHealthNumber == null ? "" : patientHealthNumber)%>";
 		var providerNo = "<%=(providerNo == null ? "" : providerNo)%>";
 		var searchStatus = "<%=(ackStatus == null ? "": ackStatus)%>";
+		var abnormalStatus = "<%=abnormalStatus == null || "all".equals(abnormalStatus) ? "L" : (abnormalStatus.equals("normalOnly") ? "N" : "A")%>"
 		var url = ctx + "/dms/inboxManage.do?";
-		var startDate = "<%= startDate %>";
-		var endDate = "<%= endDate %>";
+		const startDate = "${startDate}";
+		const endDate = "${endDate}";
 		var request = null;
 		var canLoad = true;
 		console.log("<%= isListView == null %>");
@@ -500,7 +525,7 @@ String endDate = (String) request.getAttribute("endDate");
 		}
 	
 		function getQuery() {
-			var CATEGORY_ALL = 1,CATEGORY_DOCUMENTS = 2,CATEGORY_HL7 = 3,CATEGORY_NORMAL = 4,CATEGORY_ABNORMAL = 5,CATEGORY_PATIENT = 6,CATEGORY_PATIENT_SUB = 7,CATEGORY_TYPE_DOC = 'DOC',CATEGORY_TYPE_HL7 = 'HL7';
+			var CATEGORY_ALL = 1,CATEGORY_DOCUMENTS = 2,CATEGORY_HL7 = 3,CATEGORY_NORMAL = 4,CATEGORY_ABNORMAL = 5,CATEGORY_PATIENT = 6,CATEGORY_PATIENT_SUB = 7,CATEGORY_HRM = 8,CATEGORY_TYPE_DOC = 'DOC',CATEGORY_TYPE_HL7 = 'HL7', CATEGORY_TYPE_HRM = 'HRM';
 			var query = "method=prepareForContentPage";
 			query +="&searchProviderNo="+searchProviderNo+"&providerNo="+providerNo+"&status="+searchStatus+"&page="+page
 				   +"&pageSize="+pageSize+"&isListView="+(isListView?"true":"false") 
@@ -513,17 +538,30 @@ String endDate = (String) request.getAttribute("endDate");
 			case CATEGORY_DOCUMENTS:
 				query  += "&view=documents";
 				query  += "&fname=" + firstName + "&lname=" + lastName + "&hnum=" + hin;
+				if (abnormalStatus !== '') {
+					query += "&abnormalStatus=" + abnormalStatus;
+				}
+				break;
+			case CATEGORY_HRM:
+				query  += "&view=hrms";
+				query  += "&fname=" + firstName + "&lname=" + lastName + "&hnum=" + hin;
+				if (abnormalStatus !== '') {
+					query += "&abnormalStatus=" + abnormalStatus;
+				}
 				break;
 			case CATEGORY_HL7:
 				query  += "&view=labs";
 				query  += "&fname=" + firstName + "&lname=" + lastName + "&hnum=" + hin;
+				if (abnormalStatus !== '') {
+					query += "&abnormalStatus=" + abnormalStatus;
+				}
 				break;
 			case CATEGORY_NORMAL:
-				query  += "&view=normal";
+				query  += "&abnormalStatus=N";
 				query  += "&fname=" + firstName + "&lname=" + lastName + "&hnum=" + hin;
 				break;
 			case CATEGORY_ABNORMAL:
-				query  += "&view=abnormal";
+				query  += "&abnormalStatus=A";
 				query  += "&fname=" + firstName + "&lname=" + lastName + "&hnum=" + hin;
 				break;
 			case CATEGORY_PATIENT:
@@ -537,6 +575,9 @@ String endDate = (String) request.getAttribute("endDate");
 						break;
 			    	case CATEGORY_TYPE_HL7:
 			    		query  += "&view=labs";
+						break;
+					case CATEGORY_TYPE_HRM:
+						query  += "&view=hrms";
 						break;
 		    	}
 		    	break;
@@ -571,7 +612,7 @@ String endDate = (String) request.getAttribute("endDate");
 	
 		jQuery(document).ready(function() {
 			if(isListView == null){
-				isListView = <%= (selectedCategoryPatient == null) %>;
+				isListView =  selected_category_patient.empty();
 			}
 			jQuery('input[name=isListView]').val(isListView);
 			
@@ -598,7 +639,7 @@ String endDate = (String) request.getAttribute("endDate");
 			currentBold = "totalAll";
 			refreshCategoryList();
 		});
-		function ForwardSelectedRows() {
+		/* function ForwardSelectedRows() {
 			var query = jQuery(document.reassignForm).formSerialize();
 			var labs = jQuery("input[name='flaggedLabs']:checked");
 			for (var i = 0; i < labs.length; i++) {
@@ -615,58 +656,8 @@ String endDate = (String) request.getAttribute("endDate");
 					});
 				}
 			});
-		}
-		window.FileSelectedRows = function () {
-			var query = jQuery(document.reassignForm).formSerialize();
-			var hrmQueryMethod = "method=signOff";
-			var hrmQuery = "";
-			var labs = jQuery("input[name='flaggedLabs']:checked");
-			for (var i = 0; i < labs.length; i++) {
-			    if(labs[i].next().value == "HRM"){
-			        hrmQuery += "&signedOff=1&reportId=" + labs[i].value;
-	            } else {
-	                query += "&flaggedLabs=" + labs[i].value;
-	                query += "&" + labs[i].next().name + "=" + labs[i].next().value;
-	            }
-	
-			}
-			if(!hrmQuery.empty()){
-	            jQuery.ajax({
-	                type: "POST",
-	                url: ctx + "/hospitalReportManager/Modify.do",
-	                data: hrmQueryMethod + hrmQuery,
-	                success: function(data) {
-	                    updateCategoryList();
-	
-	                    jQuery("input[name='flaggedLabs']:checked").each(function () {
-	                        jQuery(this).parent().parent().remove();
-	                    });
-	
-	                    fakeScroll();
-	                }
-	            });
-	        }
-	
-			jQuery.ajax({
-				type: "POST",
-				url:  ctx + "/oscarMDS/FileLabs.do",
-				data: query,
-				success: function (data) {
-					updateCategoryList();
-	
-					jQuery("input[name='flaggedLabs']:checked").each(function () {
-						jQuery(this).parent().parent().remove();
-					});
-	
-					// We may have removed enough items that the scroll bar is missing so we need to
-					// check and retrieve more items if so.
-					fakeScroll();
-				}
-			});
-	
-			location.reload();
-		}
-	
+		}*/
+
 		function refreshCategoryList() {
 			jQuery("#categoryHash").val("-1");
 			updateCategoryList();
@@ -692,11 +683,13 @@ String endDate = (String) request.getAttribute("endDate");
 		}
 
 	
-		window.removeReport = function (reportId) {
+ 		window.removeReport = function (reportId) {
 			var el = jQuery("#labdoc_" + reportId);
 			if (el != null) {
 				el.remove();
 			}
+			refreshCategoryList();
+			fakeScroll();
 		}
 		
 		// Jquery modal windows
@@ -706,14 +699,7 @@ String endDate = (String) request.getAttribute("endDate");
 					
 				jQuery( "#dialog" ).dialog({
 			      autoOpen: false,
-			      show: {
-			        effect: "blind",
-			        duration: 1000
-			      },
-			      hide: {
-			        effect: "explode",
-			        duration: 1000
-			      }
+			      modal: true
 			    });
 			 
 				jQuery(".dialog-link").on( "click", function(event) {
@@ -726,9 +712,12 @@ String endDate = (String) request.getAttribute("endDate");
 	</script>
 	
 </div> <!--  end wrapper  -->  
+<input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
+<div id="dialog" ></div> 
+
 </body>
 </html>
 
-<div id="dialog" ></div> 
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
+
 

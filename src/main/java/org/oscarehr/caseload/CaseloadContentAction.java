@@ -18,6 +18,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
+import org.owasp.encoder.Encode;
 import oscar.OscarProperties;
 import oscar.log.LogAction;
 import oscar.util.OscarRoleObjectPrivilege;
@@ -59,6 +61,18 @@ public class CaseloadContentAction extends DispatchAction {
 		String caseloadProv     = request.getParameter("clProv");
 		String caseloadQuery    = request.getParameter("clQ");
 		boolean sortAscending   = "true".equals(request.getParameter("clSortAsc"));
+
+		if(caseloadProv == null || ! Pattern.matches("[a-zA-Z0-9]{1,11}", caseloadProv)) {
+			caseloadProv = "";
+		} else {
+			caseloadProv = Encode.forJava(caseloadProv);
+		}
+
+		if(caseloadQuery != null) {
+			caseloadQuery = Encode.forJava(caseloadQuery);
+		} else {
+			caseloadQuery = "";
+		}
 
 		Integer caseloadPage;
 		Integer caseloadPageSize;
@@ -149,6 +163,35 @@ public class CaseloadContentAction extends DispatchAction {
 		String caseloadRoster   = request.getParameter("clRo");
 		String caseloadProgram	= request.getParameter("clProg");
 		boolean sortAscending   = "true".equals(request.getParameter("clSortAsc"));
+
+		/*
+		 * The following is a temporary defense against SQL injection.
+		 * Ideally the following database query structure following this
+		 * should be refactored to use parameterized queries and or JPA.
+		 */
+		if(caseloadDx != null) {
+			caseloadDx = Encode.forJava(caseloadDx);
+		} else {
+			caseloadDx = "";
+		}
+
+		if(caseloadProv == null || ! Pattern.matches("[a-zA-Z0-9]{1,11}", caseloadProv)) {
+			caseloadProv = "";
+		} else {
+			caseloadProv = Encode.forJava(caseloadProv);
+		}
+
+		if(caseloadRoster != null) {
+			caseloadRoster = Encode.forJava(caseloadRoster);
+		} else {
+			caseloadRoster = "";
+		}
+
+		if(caseloadProgram != null) {
+			caseloadProgram = Encode.forJava(caseloadProgram);
+		} else {
+			caseloadProgram = "";
+		}
 
 		Integer caseloadPage;
 		Integer caseloadPageSize;

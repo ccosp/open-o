@@ -69,7 +69,6 @@
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
 <%@page import="org.oscarehr.common.model.Consent" %>
 <%@page import="org.oscarehr.common.model.ConsentType" %>
-<%@ page import="org.oscarehr.ws.rest.util.QuestimedUtil" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <jsp:useBean id="apptMainBean" class="oscar.AppointmentMainBean" scope="session" />
 <%
@@ -254,6 +253,7 @@ if(!authed) {
 <head>
 <title><bean:message
 	key="demographic.demographiceditdemographic.title" /></title>
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <html:base />
 
 <oscar:oscarPropertiesCheck property="DEMOGRAPHIC_PATIENT_HEALTH_CARE_TEAM" value="true">
@@ -861,76 +861,25 @@ function consentClearBtn(radioBtnName)
 	    }
 	}
 }
-
-<%
-Demographic demographic = demographicDao.getDemographic(demographic_no);
-List<DemographicArchive> archives = demographicArchiveDao.findByDemographicNo(Integer.parseInt(demographic_no));
-List<DemographicExtArchive> extArchives = demographicExtArchiveDao.getDemographicExtArchiveByDemoAndKey(Integer.parseInt(demographic_no), "demo_cell");
-
-AdmissionManager admissionManager = SpringUtils.getBean(AdmissionManager.class);  
-	Admission bedAdmission = admissionManager.getCurrentBedProgramAdmission(demographic.getDemographicNo());
-	Admission communityAdmission = admissionManager.getCurrentCommunityProgramAdmission(demographic.getDemographicNo());
-	List<Admission> serviceAdmissions = admissionManager.getCurrentServiceProgramAdmission(demographic.getDemographicNo());
-	if(serviceAdmissions == null) {
-		serviceAdmissions = new ArrayList<Admission>();
-	}
-
-%>
-
-
-<%
-if("true".equals(OscarProperties.getInstance().getProperty("iso3166.2.enabled","false"))) {
-	if(Arrays.asList("BC","AB","SK","MB","ON","QC","NB","NS","NL","NS","PE","YT","NT").contains(demographic.getProvince())) {
-		demographic.setProvince("CA-" + demographic.getProvince());	
-	}
-	if(Arrays.asList("BC","AB","SK","MB","ON","QC","NB","NS","NL","NS","PE","YT","NT").contains(demographic.getResidentialProvince())) {
-		demographic.setResidentialProvince("CA-" + demographic.getResidentialProvince());	
-	}
-%>
-jQuery(document).ready(function(){
-	setProvince('<%=StringUtils.trimToEmpty(demographic.getProvince())%>');
-	setResidentialProvince('<%=demographic.getResidentialProvince()%>');
-});
-<% } %>
-
-function validateHC() {
-	var hin = jQuery("#hinBox").val();
-	var ver = jQuery("#verBox").val();
-	var hcType = jQuery("#hcTypeBox").val();
-	
-	//if (demo.hcType!="ON" || demo.hin==null || demo.hin=="") return;
-	//if (demo.ver==null) demo.ver = "";
-		
-    jQuery.ajax({
-        type: "GET",
-        url:  '<%=request.getContextPath()%>/ws/rs/patientDetailStatusService/validateHC?hin='+hin+'&ver='+ver,
-        dataType:'json',
-        contentType:'application/json',
-        success: function (data) {
-        	var responseCode = data.responseCode;
-        	var responseDescription = data.responseDescription;
-        	var responseAction = data.responseAction;
-        	var fName = data.firstName;
-        	var lName = data.lastName;
-        	var bDate = data.birthDate;
-        	var gender  = data.gender;
-        	var expDate = data.expiryDate;
-        	var issueDate = data.issueDate;
-        	var valid = data.valid;
-        	
-        	alert(Jdata.responseDescription);
-        },
-        error: function(data) {
-        	alert('An error occured.');
-        }
-	});
-}
 </script>
 
 </head>
 <body onLoad="setfocus(); checkONReferralNo(); formatPhoneNum(); checkRosterStatus2();"
 	topmargin="0" leftmargin="0" rightmargin="0" id="demographiceditdemographic">
-
+<%
+       Demographic demographic = demographicDao.getDemographic(demographic_no);
+       List<DemographicArchive> archives = demographicArchiveDao.findByDemographicNo(Integer.parseInt(demographic_no));
+       List<DemographicExtArchive> extArchives = demographicExtArchiveDao.getDemographicExtArchiveByDemoAndKey(Integer.parseInt(demographic_no), "demo_cell");
+       
+       AdmissionManager admissionManager = SpringUtils.getBean(AdmissionManager.class);  
+     	Admission bedAdmission = admissionManager.getCurrentBedProgramAdmission(demographic.getDemographicNo());
+     	Admission communityAdmission = admissionManager.getCurrentCommunityProgramAdmission(demographic.getDemographicNo());
+     	List<Admission> serviceAdmissions = admissionManager.getCurrentServiceProgramAdmission(demographic.getDemographicNo());
+     	if(serviceAdmissions == null) {
+     		serviceAdmissions = new ArrayList<Admission>();
+     	}
+		pageContext.setAttribute("demographic", demographic, PageContext.PAGE_SCOPE);
+%>
 <table class="MainTable" id="scrollNumber1" name="encounterTable">
 	<tr class="MainTableTopRow">
 		<td class="MainTableTopRowLeftColumn"><bean:message
@@ -1076,7 +1025,7 @@ if(wLReadonly.equals("")){
 
 
 						<br/>
-						<a  href="javascript: void();" onclick="return !showMenu('2', event);" onmouseover="callEligibilityWebService('../billing/CA/BC/ManageTeleplan.do','returnTeleplanMsg');"><bean:message key="demographic.demographiceditdemographic.btnCheckElig"/></a>
+						<a  href="javascript:void(0);" onclick="return !showMenu('2', event);" onmouseover="callEligibilityWebService('../billing/CA/BC/ManageTeleplan.do','returnTeleplanMsg');"><bean:message key="demographic.demographiceditdemographic.btnCheckElig"/></a>
 						<div id='menu2' class='menu' onclick='event.cancelBubble = true;' style="width:350px;">
 							<span id="search_spinner" ><bean:message key="demographic.demographiceditdemographic.msgLoading"/></span>
 							<span id="returnTeleplanMsg"></span>
@@ -1359,13 +1308,7 @@ if (iviewTag!=null && !"".equalsIgnoreCase(iviewTag.trim())){
 				<bean:message
 					key="demographic.demographiceditdemographic.btnAddEForm" /> </a></td>
 			</tr>
-                        <% if(OscarProperties.getInstance().getBooleanProperty("questimed.enabled","true") && QuestimedUtil.isServiceConnectionReady()) { %>
-			<tr>
-				<td><a href=# onclick="popupPage(700,960,'../questimed/launch.jsp?demographic_no=<%=demographic_no%>');return false;"					>
-				<bean:message
-					key="demographic.demographiceditdemographic.Questimed" /> </a></td>
-			</tr>
-                        <% } %>
+
 			<% if (isSharingCenterEnabled) { %>
 			<!-- Sharing Center Links -->
 			<tr>
@@ -1796,13 +1739,13 @@ if ( Dead.equals(PatStat) ) {%>
 									if(ll != null) {
 										LookupListItem phuItem =  lookupListManager.findLookupListItemByLookupListIdAndValue(loggedInInfo, ll.getId(), phu);
 										
-										if(phuItem != null) {
+										if(phuItem != null && phuItem.isActive()) {
 											phuName = phuItem.getLabel();	
 										}
 									}
 									
 								%>
-                                <span class="info"><%=StringUtils.trimToEmpty(phuName)%></span>
+                                <span class="info"><c:out value="<%=StringUtils.trimToEmpty(phuName)%>" /></span>
                             </li>
                             <%} %>
                                                         
@@ -3514,13 +3457,15 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 											<%
 												if(ll != null) {
 													for(LookupListItem llItem : ll.getItems()) {
-														String selected = "";
-														if(llItem.getValue().equals(StringUtils.trimToEmpty(demoExt.get("PHU")))) {
-															selected = " selected=\"selected\" ";	
+														if(llItem.isActive()) {
+															String selected = "";
+															if(llItem.getValue().equals(StringUtils.trimToEmpty(demoExt.get("PHU")))) {
+																selected = " selected=\"selected\" ";
+															}
+															%>
+																<option value="<%=llItem.getValue()%>" <%=selected%>><%=llItem.getLabel()%></option>
+															<%
 														}
-														%>
-															<option value="<%=llItem.getValue()%>" <%=selected%>><%=llItem.getLabel()%></option>
-														<%
 													}
 												}
 											
@@ -4090,6 +4035,22 @@ if(oscarProps.getProperty("demographicExtJScript") != null) { out.println(oscarP
 						<table border="0" width="100%" cellpadding="0" cellspacing="0">
 							<tr>
 								<td width="30%" valign="top">
+
+									<oscar:oscarPropertiesCheck value="BC" property="billregion">
+										<security:oscarSec roleName="<%=roleName$%>" objectName="_careconnect" rights="r">
+											<c:set value="${ OscarProperties.getInstance()['BC_CARECONNECT_URL'] }" var="url" scope="page" />
+											<c:if test="${ not empty url }">
+												<script type="text/javascript" src="${ctx}/careconnect/careconnect.js"></script>
+												<input type="button" value="CareConnect"
+													   onclick="callCareConnect('${url}', '${ demographic.hin }', '${ demographic.firstName }',
+															   '${ demographic.lastName }', '${ demographic.formattedDob }', '${ demographic.sex }',
+															   '${ OscarProperties.getInstance()['BC_CARECONNECT_REGION'] }' )" />
+												<br />
+											</c:if>
+										</security:oscarSec>
+									</oscar:oscarPropertiesCheck>
+									<br />
+
 								<input type="hidden" name="dboperation" value="update_record"> 
 
 								 <security:oscarSec roleName="<%=roleName$%>" objectName="_demographicExport" rights="r" reverse="<%=false%>">
@@ -4097,6 +4058,8 @@ if(oscarProps.getProperty("demographicExtJScript") != null) { out.println(oscarP
 									onclick="window.open('demographicExport.jsp?demographicNo=<%=demographic.getDemographicNo()%>');">
 								</security:oscarSec>
 									<br>
+
+
 								<input
 									type="button" name="Button" id="cancelButton" class="leftButton top"
 									value="Exit Master Record"	onclick="self.close();">

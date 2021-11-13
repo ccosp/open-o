@@ -26,7 +26,7 @@
 
 
 
-<%@ include file="/taglibs.jsp"%>
+<%--<%@ include file="/taglibs.jsp"%>--%>
 
 <%@ page import="org.oscarehr.PMmodule.web.formbean.*"%>
 <html:form action="/PMmodule/AgencyManager">

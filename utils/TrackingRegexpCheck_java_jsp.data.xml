@@ -245,8 +245,6 @@
         <ViolationValue>/src/main/java/oscar/oscarLab/ca/all/parsers/HHSEmrDownloadHandler.java:obrGroups = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarLab/ca/all/parsers/MDSHandler.java:obrGroups = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarLab/ca/bc/PathNet/PathnetLabTest.java:public ArrayList labResults = new ArrayList();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMDS/pageUtil/ReportReassignAction.java://Hashtable htable = new Hashtable();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMDS/pageUtil/ReportReassignAction.java:ArrayList listFlaggedLabs = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMDS/pageUtil/SendMostResponProvAction.java:ArrayList listFlaggedLabs = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgAddressBook.java:java.util.Vector vector = new java.util.Vector();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/data/MsgAddressBook.java:providerList = new java.util.Vector();</ViolationValue>
@@ -563,20 +561,6 @@
         <ViolationValue>/src/main/webapp/oscarEncounter/newEncounter.jsp:if( newDocArr == null ) newDocArr = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecPhones = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecPhones = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddress = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressBillingNo = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressFax = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressName = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressPhone = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecPhones = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddress = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressBillingNo = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressFax = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressName = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressPhone = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp:ArrayList tickerList = new ArrayList();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/config/DisplayService.jsp:displayServiceUtil.estSpecialistVector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/config/EditSpecialists.jsp:displayServiceUtil.estSpecialistVector();</ViolationValue>
@@ -816,6 +800,10 @@
         <ViolationValue>/src/main/java/org/oscarehr/phr/dao/hibernate/PHRDocumentDAOHibernate.java:import org.springframework.orm.hibernate3.support.HibernateDaoSupport;</ViolationValue>
         <ViolationValue>/src/main/java/org/oscarehr/phr/dao/hibernate/PHRDocumentDAOHibernate.java:public class PHRDocumentDAOHibernate extends HibernateDaoSupport</ViolationValue>
         <ViolationValue>/src/main/java/org/oscarehr/util/DbConnectionFilter.java:Connection c = ((DataSource) SpringUtils.getBean("dataSource")).getConnection();</ViolationValue>
+        <ViolationValue>/src/main/java/org/oscarehr/util/OscarTrackingBasicDataSource.java:public Connection getConnection() throws SQLException {</ViolationValue>
+        <ViolationValue>/src/main/java/org/oscarehr/util/OscarTrackingBasicDataSource.java:public Connection getConnection(String username, String password) throws SQLException {</ViolationValue>
+        <ViolationValue>/src/main/java/org/oscarehr/util/OscarTrackingBasicDataSource.java:return trackConnection(super.getConnection());</ViolationValue>
+        <ViolationValue>/src/main/java/org/oscarehr/util/OscarTrackingBasicDataSource.java:return trackConnection(super.getConnection(username, password));</ViolationValue>
         <ViolationValue>/src/main/java/oscar/AppointmentMainBean.java:dbPH=new DBPreparedHandler();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/AppointmentMainBean.java:if(aKeyword[0].getParamType().equals(DBPreparedHandlerParam.PARAM_STRING) &amp;&amp;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/AppointmentMainBean.java:import oscar.oscarDB.DBPreparedHandler;</ViolationValue>
@@ -969,8 +957,6 @@
         <ViolationValue>/src/main/java/oscar/oscarEncounter/data/EctType2DiabetesRecord.java:ResultSet rs1 = DBHandler.GetSQL("select nextval('formtype2diabetes_numeric_se')");</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarEncounter/data/EctType2DiabetesRecord.java:rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarLab/ca/bc/PathNet/PathNetInfo.java:ResultSet rsLab = DBHandler.GetSQL(select_not_signed);</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarLab/ca/on/CommonLabResultData.java:DBPreparedHandler db = new DBPreparedHandler();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarLab/ca/on/CommonLabResultData.java:import oscar.oscarDB.DBPreparedHandler;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/docxfer/send/MsgGenerate.java:ResultSet rs = DBHandler.GetSQL(sql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarReport/ClinicalReports/SQLDenominator.java:ResultSet rs = DBHandler.GetSQL(exeSql);</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarReport/ClinicalReports/SQLNumerator.java:ResultSet rs = DBHandler.GetSQL(sql.replaceAll("\\$\\{"+processString+"\\}", demographicNo));</ViolationValue>
@@ -1239,7 +1225,6 @@
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable patientNumDoc = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable&lt;String, List&lt;String&gt;&gt; ab_NormalDoc = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:Hashtable&lt;String, List&lt;String&gt;&gt; typeDocLab = new Hashtable();</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/dms/actions/DmsInboxManageAction.java:import java.util.Hashtable;</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, EForm&gt; eformTable = new Hashtable&lt;String,EForm&gt;(); //stores eforms constructed from eform.properties, no HTML</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, EForm&gt; eformTableFailed = new Hashtable&lt;String,EForm&gt;();  //stores eforms that are constructed from eform.properties that alredy exist and do not need to be imported</ViolationValue>
         <ViolationValue>/src/main/java/oscar/eform/EFormExportZip.java:Hashtable&lt;String, File&gt; tempFiles = new Hashtable&lt;String,File&gt;(); //references extracted files in the temp folder</ViolationValue>
@@ -1839,7 +1824,6 @@
         <ViolationValue>/src/main/java/oscar/oscarMDS/data/MDSSegmentData.java:Hashtable&lt;Integer, ArrayList&lt;String&gt;&gt; notes = new Hashtable&lt;Integer, ArrayList&lt;String&gt;&gt;();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMDS/data/MDSSegmentData.java:Hashtable&lt;String, Mnemonics&gt; mnemonics = new Hashtable&lt;String, Mnemonics&gt;();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMDS/data/MDSSegmentData.java:import java.util.Hashtable;</ViolationValue>
-        <ViolationValue>/src/main/java/oscar/oscarMDS/pageUtil/ReportReassignAction.java://Hashtable htable = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/config/data/MsgMessengerGroupData.java:groupMemberVector = new java.util.Vector&lt;String&gt;();</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/config/data/MsgMessengerGroupData.java:groupMemberVector.add(g.getProviderNo());</ViolationValue>
         <ViolationValue>/src/main/java/oscar/oscarMessenger/config/data/MsgMessengerGroupData.java:java.util.Vector&lt;String&gt; vector = membersInGroups(grpNo);</ViolationValue>
@@ -2716,30 +2700,6 @@
         <ViolationValue>/src/main/webapp/oscarEncounter/immunization/ScheduleConfig.jsp:Vector cfgSet = new EctImmConfigData().getImmunizationConfigName();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.jsp:Vector vecPhones = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddress = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddressBillingNo = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddressFax = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddressName = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecAddressPhone = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:Vector vecPhones = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddress = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressBillingNo = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressFax = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressName = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp:vecAddressPhone = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecAddress = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecAddressBillingNo = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecAddressFax = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecAddressName = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecAddressPhone = null;</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecFaxes  = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:Vector vecPhones = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddress = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressBillingNo = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressFax = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressName = new Vector();</ViolationValue>
-        <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp:vecAddressPhone = new Vector();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormRequest.jsp:Vector&lt;Integer&gt; siteIds = new Vector&lt;Integer&gt;();</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormRequest.jsp:Vector&lt;String&gt; bgColor = new Vector&lt;String&gt;() ;</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarEncounter/oscarConsultationRequest/ConsultationFormRequest.jsp:Vector&lt;String&gt; vecAddressName = new Vector&lt;String&gt;() ;</ViolationValue>
@@ -2965,7 +2925,6 @@
         <ViolationValue>/src/main/webapp/oscarRx/updateMyDrugrefResource.jsp:Hashtable hiddenResources = (Hashtable) request.getSession().getAttribute("hideResources");</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarWorkflow/WorkFlowList.jsp:Hashtable demoHash = deName.getNameAgeSexHashtable(LoggedInInfo.getLoggedInInfoFromSession(request), ""+h.get("demographic_no"));</ViolationValue>
         <ViolationValue>/src/main/webapp/oscarWorkflow/WorkFlowList.jsp:Hashtable h = (Hashtable) workList.get(j);</ViolationValue>
-        <ViolationValue>/src/main/webapp/provider/appointmentprovideradminday.jsp:&lt;jsp:useBean id="dateTimeCodeBean" class="java.util.Hashtable" scope="page" /&gt;</ViolationValue>
         <ViolationValue>/src/main/webapp/provider/appointmentprovideradminmonth.jsp:&lt;jsp:useBean id="scheduleHolidayBean" class="java.util.Hashtable"</ViolationValue>
         <ViolationValue>/src/main/webapp/report/ClinicalReports.jsp:ArrayList&lt;Hashtable&gt; list = (ArrayList) request.getAttribute("list");</ViolationValue>
         <ViolationValue>/src/main/webapp/report/ClinicalReports.jsp:Hashtable arrRepNum[] = new Hashtable[11];</ViolationValue>

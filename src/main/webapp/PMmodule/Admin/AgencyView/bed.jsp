@@ -26,7 +26,7 @@
 
 
 
-<%@ include file="/taglibs.jsp"%>
+<%--<%@ include file="/taglibs.jsp"%>--%>
 
 <table width="100%" summary="View rooms, and beds">
 	<tr>

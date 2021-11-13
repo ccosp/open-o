@@ -36,10 +36,10 @@
 		<developerConnection>scm:git:ssh://user@source.oscartools.org:29418/oscar</developerConnection>
 		<tag>master</tag>
 	</scm>
-<!-- 	<properties>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	 <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
-	</properties> -->
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
 	<repositories>
 		<repository>
@@ -64,11 +64,12 @@
 		</repository>
 		
 		<!-- MARC-HI (Everest & SHIC) -->
- 		<repository>
-			<id>marc-te-main</id>
-			<name>MARC-HI Technology Exchange Private Maven Repository</name>
-			<url>http://te.marc-hi.ca/mvn</url>
-		</repository>
+<!-- 		<repository>-->
+<!--			<id>marc-te-main</id>-->
+<!--			<name>MARC-HI Technology Exchange Private Maven Repository</name>-->
+<!--			<url>http://te.marc-hi.ca/mvn</url>-->
+<!--		</repository>-->
+
 	</repositories>
 
 	<pluginRepositories>
@@ -85,12 +86,21 @@
 
 	<dependencies>
 
-		<!-- general libraries -->
+		<!-- For Jasper Reports and backwards compatibility -->
 		<dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>1.53.0</version>
-        </dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7.js8</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/net.bull.javamelody/javamelody-core -->
+		<dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-core</artifactId>
+			<version>1.87.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -136,7 +146,7 @@
 		 <dependency>
                         <groupId>commons-fileupload</groupId>
                         <artifactId>commons-fileupload</artifactId>
-                        <version>1.3</version>
+                        <version>1.3.3</version>
                 </dependency>
 
 		<dependency>
@@ -152,8 +162,8 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -283,7 +293,17 @@
 		 <dependency>
 	      <groupId>org.apache.pdfbox</groupId>
 	      <artifactId>pdfbox</artifactId>
-	      <version>1.2.1</version>
+			<version>2.0.21</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>jbig2-imageio</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-jpeg</artifactId>
+			<version>3.3.1</version>
 	    </dependency>
 
 		<!-- google collections lib -->
@@ -334,23 +354,15 @@
 			<version>1.1.2</version>
 		</dependency>
 
-		<!-- pdf / lowagie -->
-		<!--
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-			<version>2.1.7</version>
-		</dependency>
-		-->
                 <dependency>
                         <groupId>com.itextpdf</groupId>
                         <artifactId>itextpdf</artifactId>
-                        <version>5.4.1</version>
+                        <version>5.5.13.1</version>
                 </dependency>
 		<dependency>
                         <groupId>com.itextpdf.tool</groupId>
                         <artifactId>xmlworker</artifactId>
-                        <version>5.4.1</version>
+                        <version>5.5.13.1</version>
                 </dependency>
 
 
@@ -383,7 +395,7 @@
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
-			<version>2.3</version>
+			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
 
@@ -405,7 +417,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>4.1.2</version>
+			<version>6.17.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>bouncycastle</groupId>
@@ -424,25 +436,48 @@
 					<artifactId>bctsp-jdk14</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>eclipse</groupId>
-					<artifactId>jdtcore</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.lowagie</groupId>
+					<artifactId>itext</artifactId>
+					<!--			<version>2.1.7.js8</version>-->
 				</exclusion>
 			</exclusions>
 		</dependency>
-        	<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports-fonts</artifactId>
-			<version>4.0.0</version>
+		<dependency>
+			<groupId>jasperreports</groupId>
+			<artifactId>htmlcomponent</artifactId>
+			<version>6.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.9</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.barbecue</groupId>
 			<artifactId>barbecue</artifactId>
 			<version>1.0.6b</version>
-		</dependency>
-	        <dependency>
-			<groupId>eclipse</groupId>
-			<artifactId>jdtcore</artifactId>
-			<version>3.2.0.v_658</version>
 		</dependency>
 
 		<!-- joda time -->
@@ -608,12 +643,12 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3</version>
+			<version>4.5.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
-			<version>4.2.2</version>
+			<version>4.5.6</version>
 		</dependency>
 
 		<!-- quartz -->
@@ -884,12 +919,12 @@
 	        <dependency>
                         <groupId>org.bouncycastle</groupId>
                         <artifactId>bcmail-jdk15on</artifactId>
-                        <version>1.51</version>
+                        <version>1.64</version>
                 </dependency>
                 <dependency>
                         <groupId>org.bouncycastle</groupId>
                         <artifactId>bcprov-jdk15on</artifactId>
-                        <version>1.51</version>
+                        <version>1.64</version>
                 </dependency>
 
 		<!-- AXIS2 (for OLIS) -->
@@ -1179,6 +1214,16 @@
 	
 
 	<dependency>
+		<groupId>org.owasp.encoder</groupId>
+		<artifactId>encoder</artifactId>
+		<version>1.2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.owasp</groupId>
+		<artifactId>csrfguard</artifactId>
+		<version>3.1.0</version>
+	</dependency>
+		<dependency>
 		<groupId>com.medseek.clinical.service</groupId>
 		<artifactId>SSOClinicalConnect</artifactId>
 		<version>20171101</version>
@@ -1216,14 +1261,11 @@
 	    <artifactId>commons-compress</artifactId>
 	    <version>1.14</version>
 	</dependency>
-
-
-	<dependency>
-	    <groupId>net.rgielen</groupId>
-	    <artifactId>struts1filter</artifactId>
-	    <version>1.0.1-SNAPSHOT</version>
-	</dependency>
-
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-base</artifactId>
@@ -1720,7 +1762,7 @@
 <plugin>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>native2ascii-maven-plugin</artifactId>  
-    <version>1.0-beta-1</version>  
+    <version>1.0-beta-1</version>
     <executions>
         <execution>
             <id>native2ascii-utf8-resources</id>
@@ -1776,6 +1818,25 @@
 		</configuration>
 	</plugin>
 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>timestamp-property</id>
+						<goals>
+							<goal>timestamp-property</goal>
+						</goals>
+						<configuration>
+							<name>build.time</name>
+							<pattern>yy.MM.dd-HHmmss</pattern>
+							<locale>en_US</locale>
+							<timeZone>Canada/Eastern</timeZone>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -1904,13 +1965,13 @@
 				<jdk>1.7</jdk>
 			</activation>
 
-				<dependencies>
-					<dependency>
-						<groupId>org.oscarehr</groupId>
-						<artifactId>datasource-jdk7</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
+<!--				<dependencies>-->
+<!--					<dependency>-->
+<!--						<groupId>org.oscarehr</groupId>-->
+<!--						<artifactId>datasource-jdk7</artifactId>-->
+<!--						<version>1.0</version>-->
+<!--					</dependency>-->
+<!--				</dependencies>-->
 			<build>
 				<plugins>
 				<plugin>
@@ -1948,13 +2009,13 @@
 				<activeByDefault>true</activeByDefault>
 				<jdk>1.8</jdk>
 			</activation>
-				<dependencies>
-					<dependency>
-						<groupId>org.oscarehr</groupId>
-						<artifactId>datasource-jdk7</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
+<!--				<dependencies>-->
+<!--					<dependency>-->
+<!--						<groupId>org.oscarehr</groupId>-->
+<!--						<artifactId>datasource-jdk7</artifactId>-->
+<!--						<version>1.0</version>-->
+<!--					</dependency>-->
+<!--				</dependencies>-->
 			<build>
 				<plugins>
 				<plugin>

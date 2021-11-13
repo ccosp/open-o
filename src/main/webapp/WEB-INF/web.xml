@@ -5,29 +5,37 @@
 	the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
 	Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. <OSCAR TEAM> This software was written for the Department of Family Medicine McMaster University Hamilton Ontario, Canada
 -->
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<display-name>oscar_mcmaster</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:applicationContext*.xml</param-value>
+		<param-value>
+			classpath:net/bull/javamelody/monitoring-spring.xml
+			classpath:applicationContext*.xml
+		</param-value>
 	</context-param>
 
         <filter>
-               <filter-name>monitoring</filter-name>
-               <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
-               <init-param>
-                        <param-name>system-actions-enabled</param-name>
-                        <param-value>true</param-value>
-                </init-param>
-                <init-param>
-				   <param-name>disabled</param-name>
-				   <param-value>true</param-value>
-				</init-param>                           
+		   <filter-name>monitoring</filter-name>
+		   <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+		   <async-supported>true</async-supported>
+		   <init-param>
+				<param-name>system-actions-enabled</param-name>
+				<param-value>true</param-value>
+			</init-param>
+			<init-param>
+				<param-name>disabled</param-name>
+				<param-value>true</param-value>
+			</init-param>
         </filter>
         <filter-mapping>
-                <filter-name>monitoring</filter-name>
-                <url-pattern>/*</url-pattern>
+			<filter-name>monitoring</filter-name>
+			<url-pattern>/*</url-pattern>
+			<dispatcher>REQUEST</dispatcher>
+			<dispatcher>ASYNC</dispatcher>
         </filter-mapping>
         
     <filter>
@@ -91,6 +99,15 @@
 		<url-pattern>*.htm</url-pattern>
 	</filter-mapping>
 
+    <filter>
+        <filter-name>UserActivityFilter</filter-name>
+        <filter-class>org.oscarehr.util.UserActivityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserActivityFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 	<filter>
 		<filter-name>ComponentFilter</filter-name>
 		<filter-class>org.caisi.comp.web.WebComponentFilter</filter-class>
@@ -153,11 +170,6 @@
 		<filter-class>org.oscarehr.PMmodule.web.PMMFilter</filter-class>
 	</filter>
 
-	<filter>
-    		<filter-name>ParamWrapperFilter</filter-name>
-		<filter-class>net.rgielen.struts1.filter.ParamWrapperFilter</filter-class>
-	</filter>
-
 	<filter-mapping>
 		<filter-name>ComponentFilter</filter-name>
 		<url-pattern>/mod/*</url-pattern>
@@ -190,10 +202,6 @@
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>ParamWrapperFilter</filter-name>
-		<servlet-name>*.do</servlet-name>
-	</filter-mapping>
 
 	<listener>
        	<listener-class>net.bull.javamelody.SessionListener</listener-class>
@@ -212,6 +220,58 @@
 		<listener-class>org.oscarehr.web.OscarSessionListener</listener-class>
 	</listener>
 
+    <!--  Cross Site Request Forgery Configuration  -->
+    <context-param>
+        <param-name>Owasp.CsrfGuard.Config</param-name>
+        <param-value>WEB-INF/Owasp.CsrfGuard.properties</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.owasp.csrfguard.CsrfGuardServletContextListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.owasp.csrfguard.CsrfGuardHttpSessionListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>Owasp.CsrfGuard.Config.Print</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <filter>
+        <filter-name>CSRFGuard</filter-name>
+        <filter-class>org.oscarehr.app.OscarCsrfGuardFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CSRFGuard</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>CsrfServlet</servlet-name>
+        <servlet-class>org.owasp.csrfguard.servlet.JavaScriptServlet</servlet-class>
+        <init-param>
+            <param-name>source-file</param-name>
+            <param-value>WEB-INF/csrfguard.js</param-value>
+        </init-param>
+        <init-param>
+            <param-name>inject-into-forms</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>inject-into-attributes</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>domain-strict</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>referer-pattern</param-name>
+            <param-value>.*</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CsrfServlet</servlet-name>
+        <url-pattern>/csrfguard</url-pattern>
+    </servlet-mapping>
+
 	<!-- CXF -->
 	<servlet>
 		<servlet-name>CXFServlet</servlet-name>
@@ -222,7 +282,30 @@
 		<url-pattern>/ws/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
+    <!-- HTTP header security -->
+    <filter>
+        <filter-name>ClickjackFilterSameOrigin</filter-name>
+        <filter-class>org.owasp.esapi.filters.ClickjackFilter</filter-class>
+        <init-param>
+            <param-name>mode</param-name>
+            <param-value>SAMEORIGIN</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>ClickjackFilterSameOrigin</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+	<filter>
+		<filter-name>XforwardHeader</filter-name>
+		<filter-class>org.oscarehr.app.XforwardHeaderFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>XforwardHeader</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+    <servlet>
 		<servlet-name>action</servlet-name>
 		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
 		<init-param>
@@ -313,22 +396,6 @@
 		<servlet-class>oscar.DocumentUploadServlet</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
-	<!--<servlet>-->
-		<!--<servlet-name>FileUpload</servlet-name>-->
-		<!--<servlet-class>FileUpload</servlet-class>-->
-	<!--</servlet>-->
-	<!--<servlet>-->
-		<!--<servlet-name>FileUpload2</servlet-name>-->
-		<!--<servlet-class>FileUpload2</servlet-class>-->
-	<!--</servlet>-->
-	<!--<servlet>-->
-		<!--<servlet-name>Uploader</servlet-name>-->
-		<!--<servlet-class>Uploader</servlet-class>-->
-	<!--</servlet>-->
-	<!--<servlet>-->
-		<!--<servlet-name>newUploader</servlet-name>-->
-		<!--<servlet-class>oscar.newOscarLab.Uploader</servlet-class>-->
-	<!--</servlet>-->
 	<servlet>
 		<servlet-name>HsfoQuartzSchedulerServlet</servlet-name>
 		<servlet-class>oscar.form.study.hsfo2.pageUtil.HsfoQuartzServlet</servlet-class>
@@ -338,10 +405,6 @@
 		<servlet-name>PatientListByAppointment</servlet-name>
 		<servlet-class>oscar.oscarReport.data.PatientListByAppt</servlet-class>
 	</servlet>
-	<!--<servlet>-->
-		<!--<servlet-name>RxCloneService</servlet-name>-->
-		<!--<servlet-class>oscar.oscarRx.server.service.RxCloneServiceImpl</servlet-class>-->
-	<!--</servlet>-->
 	<servlet>
 		<servlet-name>ImageRenderingServlet</servlet-name>
 		<servlet-class>org.oscarehr.ui.servlet.ImageRenderingServlet</servlet-class>
@@ -359,17 +422,21 @@
 		<servlet-name>EFormViewForPdfGenerationServlet</servlet-name>
 		<servlet-class>oscar.eform.util.EFormViewForPdfGenerationServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
         <servlet-name>jsp</servlet-name>
         <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
 
         <init-param>
-    <param-name>mappedfile</param-name>
-    <param-value>false</param-value>
-</init-param> 
-       
-</servlet>
+			<param-name>mappedfile</param-name>
+			<param-value>false</param-value>
+		</init-param>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HsfoQuartzSchedulerServlet</servlet-name>
+		<url-pattern>/HsfoQuartzSchedulerServlet</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>EFormViewForPdfGenerationServlet</servlet-name>
@@ -504,7 +571,7 @@
         <auth-method>BASIC</auth-method>
     	<realm-name>Monitoring</realm-name>
     </login-config>
-	
+
 	<security-role>
     	<role-name>monitoring</role-name>
     </security-role>
@@ -535,6 +602,7 @@
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
 	<jsp-config>
@@ -561,4 +629,7 @@
 	</taglib>
 	</jsp-config>
 
+	<error-page>
+		<location>/errorpage.jsp</location>
+	</error-page>
 </web-app>
