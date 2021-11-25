@@ -281,10 +281,9 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (Exception e) {
-			error = "DocumentException";
-			exception = e;
-		} finally { 
+		} catch (com.lowagie.text.DocumentException e) {
+			logger.error("error", e);
+		} finally {
 			// Cleaning up InputStreams created for concatenation.
 			for (InputStream is : streams) {
 				try {

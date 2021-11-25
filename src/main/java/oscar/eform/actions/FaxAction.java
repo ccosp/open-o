@@ -28,7 +28,7 @@ import org.oscarehr.util.WKHtmlToPdfUtils;
 
 import oscar.OscarProperties;
 
-import com.lowagie.text.DocumentException;
+import com.itextpdf.text.DocumentException;
 
 /**
  * 

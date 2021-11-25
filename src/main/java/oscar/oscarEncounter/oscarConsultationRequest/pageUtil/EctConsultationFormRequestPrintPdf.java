@@ -34,6 +34,7 @@
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
+import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -62,12 +63,18 @@ import oscar.util.ConcatPDF;
 import oscar.util.ConversionUtils;
 import oscar.util.UtilDateUtilities;
 
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.ColumnText;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfImportedPage;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfWriter;
 /**
  *
  * @author wrighd
@@ -130,7 +137,7 @@ public class EctConsultationFormRequestPrintPdf {
 
         cb = writer.getDirectContent();
         ct = new ColumnText(cb);
-        cb.setColorStroke(new BaseColor(0,0,0));
+        cb.setColorStroke(new Color(0,0,0));
 
         // start writing the pdf document
         PdfImportedPage page1 = writer.getImportedPage(reader, 1);

@@ -58,7 +58,7 @@ import org.oscarehr.common.model.ProviderLabRoutingModel;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import com.lowagie.text.pdf.codec.Base64;
+import com.itextpdf.text.pdf.codec.Base64;
 
 import oscar.OscarProperties;
 import oscar.dms.EDoc;

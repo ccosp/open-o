@@ -23,10 +23,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.itextpdf.text.pdf.*;
 import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
@@ -37,8 +34,6 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DigitalSignature;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Site;
-import org.oscarehr.common.printing.FontSettings;
-import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -105,7 +100,8 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 
 		// Create the document we are going to write to
 		document = new Document();
-		PdfWriterFactory.newInstance( document, os, FontSettings.HELVETICA_10PT );
+		PdfWriter.getInstance(document, os);
+//		PdfWriterFactory.newInstance( document, os, FontSettings.HELVETICA_10PT );
 		document.setPageSize( PageSize.LETTER );
 		document.addTitle( getResource("msgConsReq") );
 		document.addCreator( "OSCAR" );
@@ -247,7 +243,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		PdfPTable datelineborder = new PdfPTable(1);
 		datelineborder.setWidthPercentage(100f);
 		PdfPCell datecell = new PdfPCell();
-		datecell.setPhrase( new Phrase( String.format("%s %s", getResource("msgDate"), reqFrm.pwb.equals("1") ? getResource("pwb") : reqFrm.referalDate) ) ); 
+		datecell.setPhrase( new Phrase( String.format("%s %s", getResource("msgDate"), reqFrm.pwb.equals("1") ? getResource("pwb") : reqFrm.referalDate) ) );
 		datecell.setBorder(0);
 		datecell.setColspan(1);
 		datecell.setPaddingTop(5f);
@@ -296,8 +292,8 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 	
 	protected void addImage( PdfPTable pdfPTable, String filename, float width, float height ) {
 
-		try (FileInputStream fileInputStream = new FileInputStream( filename )){
-			
+		try(FileInputStream fileInputStream = new FileInputStream( filename )) {
+
 			PdfPCell cell = new PdfPCell();
 			byte[] faxLogImage = new byte[1024 * 256];				
 			fileInputStream.read( faxLogImage );
@@ -317,7 +313,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			logger.error("This image location is malformed " + filename, e);
 		} catch (IOException e) {
 			logger.error("Unexpected error.", e);
-		} 
+		}
 	}
 
 	protected PdfPTable createReplyHeader( Integer alignment ) {

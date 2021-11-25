@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.DocumentException;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -36,8 +37,6 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-
-import com.itextpdf.text.DocumentException;
 
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
@@ -176,7 +175,9 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} finally { 
+		} catch (com.lowagie.text.DocumentException e) {
+			logger.error("error", e);
+		} finally {
 			// Cleaning up InputStreams created for concatenation.
 			
 			for (InputStream is : streams) {

@@ -33,6 +33,7 @@
 
 <!DOCTYPE html > 
 <html lang="" >
+<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <title>Dashboard Drilldown</title>
 

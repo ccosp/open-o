@@ -57,14 +57,14 @@ body {
     background-color:white;
     z-index:1000;
     border-bottom: 1px solid #c0c0c0;
-    height:35px;
+	height:25px;
  }
 table#firstTable tr td.icon-container {
 	padding-left: 10px;
 }
 
  table#scheduleTable {
-	 margin-top:64px;
+	 margin-top: 49px;
  }
 
  table#caseloadTable {
@@ -118,7 +118,7 @@ tr#ivoryBar td, table#monthScheduleNavigation tr td {
 
 tr td.infirmaryView {
     position: sticky;
-    top:65px;
+    top:50px;
 	left:0;
 	margin-left: unset;
     height:25px;
@@ -134,10 +134,10 @@ td#group {
 
 table#scheduleNavigation, table#monthScheduleNavigation {
 	position:fixed;
-	top:35px;
+	top:25px;
 	right:0;
 	left:0;
-	height:30px;
+	height:25px;
 	width:100%;
 }
 
@@ -354,7 +354,7 @@ table#firstTable td#firstMenu ul#navlist li:not(.dashboardDropdown) {
 
 table#firstTable td#firstMenu ul#navlist li a:not(.dashboardDropdown){
 	display:inline-block;
-	padding:10px 5px 10px 5px;
+	padding:5px;
 }
 
 table#firstTable td#firstMenu #navlist li:hover { color: #fff; background-color: #486ebd; }

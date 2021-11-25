@@ -450,8 +450,7 @@
                         <security:oscarSec roleName="<%=roleName$%>" objectName="_pref" rights="r">
                             <a href="javascript:void(0)"
                                onClick="popupPage(715,680,'providerpreference.jsp?provider_no=<%=curUser_no%>')"
-                               title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'
-                               OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>' ; return true">
+                               title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'>
 
                         </security:oscarSec>
                             <span class="glyphicon glyphicon-user"></span>
@@ -476,6 +475,7 @@
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>
+<%-- TODO: new dialog window for the user preferences --%>
 <script>
     function openPreferences(providerNumber) {
         const $div = jQuery('<div />').appendTo('body');
@@ -492,6 +492,5 @@
             title: "Provider Preferences",
         }).dialog("open");
     }
-
 </script>
 

@@ -59,8 +59,6 @@ import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.FaxJob.Direction;
-import org.oscarehr.common.printing.FontSettings;
-import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.LocaleUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -655,8 +653,8 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 			// 285=left margin+width of box, 5f is space for looking nice
 			document.setMargins(15, pageSize.getWidth() - 285f + 5f, 170, 60);// left, right, top , bottom
 
-			// writer = PdfWriter.getInstance(document, baosPDF);
-			writer = PdfWriterFactory.newInstance(document, baosPDF, FontSettings.HELVETICA_10PT);
+			writer = PdfWriter.getInstance(document, baosPDF);
+			//writer = PdfWriterFactory.newInstance(document, baosPDF, FontSettings.HELVETICA_10PT);
 			writer.setPageEvent(new EndPage(clinicName, clinicTel, clinicFax, patientPhone, patientCityPostal, patientAddress, patientName,patientDOB, sigDoctorName, rxDate, origPrintDate, numPrint, imgFile, patientHIN, patientChartNo, pracNo, locale));
 			document.addTitle(title);
 			document.addSubject("");

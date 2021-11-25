@@ -156,7 +156,7 @@ public class LabPDFCreatorTest {
 		       e.printStackTrace();
 	        } catch (IOException e) {
 				e.printStackTrace();
-			} catch (DocumentException e) {
+			} catch (com.lowagie.text.DocumentException e) {
 				e.printStackTrace();
 			} finally {
 				try {
