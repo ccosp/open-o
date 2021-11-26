@@ -32,6 +32,7 @@ import java.util.Collections;
 
 import java.util.List;
 
+import com.lowagie.text.DocumentException;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
 
@@ -43,9 +44,6 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.itextpdf.text.DocumentException;
-
 import oscar.log.LogAction;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 

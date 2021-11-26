@@ -43,6 +43,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.lowagie.text.DocumentException;
 import org.apache.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.model.ProgramProvider;
@@ -295,7 +296,7 @@ public class CaseManagementPrint {
 				LabPDFCreator pdfCreator = new LabPDFCreator(os2, segmentId, loggedInInfo.getLoggedInProviderNo());
 				try {
 					pdfCreator.printPdf();
-				} catch (com.itextpdf.text.DocumentException documentException) {
+				} catch (DocumentException documentException) {
 					throw new DocumentException(documentException);
 				}
 				os2.close();

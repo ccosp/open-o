@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Rectangle;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -530,7 +532,7 @@ public class FrmPDFServlet extends HttpServlet {
 	                    if (cfgVal.length >= 9) {
                             Font font;
 	                        if (fontFlags == Font.BOLD) { // Hack to stop blue outline from bold text
-                                font = new Font(bf, Integer.parseInt(cfgVal[5].trim()), fontFlags, Color.black);
+                                font = new Font(bf, Integer.parseInt(cfgVal[5].trim()), fontFlags, BaseColor.BLACK);
                             } else {
                                 font = new Font(bf, Integer.parseInt(cfgVal[5].trim()), fontFlags);
                             }
@@ -611,7 +613,8 @@ public class FrmPDFServlet extends HttpServlet {
 	
 	                }
 	                
-                	
+
+
                 } //end if there are print properties
 
                 //graphic
