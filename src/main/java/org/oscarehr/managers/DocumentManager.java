@@ -55,9 +55,9 @@ import oscar.log.LogAction;
 
 @Service
 public class DocumentManager {
-	
+
 	private static final String PARENT_DIR = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-	
+
 	@Autowired
 	private DocumentDao documentDao;
 
@@ -153,7 +153,7 @@ public class DocumentManager {
 
 		return (results);
 	}
-	
+
 	public Integer saveDocument( LoggedInInfo loggedInInfo, EDoc edoc ) {
 		return this.saveDocument( loggedInInfo, edoc.getDocument(), edoc.getCtlDocument() );
 	}
@@ -203,8 +203,8 @@ public class DocumentManager {
 			if( toPath == null ) {
 				toPath = getParentDirectory();
 			}
-			Path from = FileSystems.getDefault().getPath( String.format("%1$s%2$s%3$s", fromPath, File.separator, document.getDocfilename() ) );
-			Path to = FileSystems.getDefault().getPath( String.format("%1$s%2$s%3$s", toPath, File.separator, document.getDocfilename() ) );
+			Path from = FileSystems.getDefault().getPath(fromPath, document.getDocfilename());
+			Path to = FileSystems.getDefault().getPath(toPath, document.getDocfilename());
 			Files.move( from, to, StandardCopyOption.REPLACE_EXISTING );
 			LogAction.addLog(loggedInInfo, "EformDataManager.moveDocument", "Document was moved", "Document No." + document.getDocumentNo(), "",fromPath + " to " + toPath);
 		
@@ -251,9 +251,9 @@ public class DocumentManager {
 	 * Fetch by demographic number and given document type 
 	 * ie: get only LAB documents for the given demographic number. 
 	 * 
-	 * @param LoggedInInfo loggedInInfo
-	 * @param int demographicNo
-	 * @param enum DocumentType
+	 * @param loggedInInfo
+	 * @param documentType
+	 * @param demographicNo
 	 * @return
 	 */
 	public List<Document> getDemographicDocumentsByDocumentType(LoggedInInfo loggedInInfo, int demographicNo, DocumentType documentType) {

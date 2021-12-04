@@ -23,15 +23,19 @@
  */
 package org.oscarehr.managers;
 
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import java.util.List;
 
+import com.lowagie.text.DocumentException;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
+
 import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.Hl7TextMessage;
@@ -40,9 +44,6 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.lowagie.text.DocumentException;
-
 import oscar.log.LogAction;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 
@@ -52,7 +53,7 @@ public class LabManager {
 
 	private static final String TEMP_PDF_DIRECTORY = "hl7PDF";
 	private static final String DEFAULT_FILE_SUFFIX = ".pdf";
-	
+
 	@Autowired
 	Hl7TextInfoDao hl7textInfoDao;
 
@@ -74,7 +75,7 @@ public class LabManager {
 
 		return results;
 	}
-	
+
 	public List<Hl7TextInfo> getHl7TextInfo(LoggedInInfo loggedInInfo, int demographicNo) {
 		checkPrivilege(loggedInInfo, "r");
 		

@@ -46,27 +46,11 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
 	public enum STATUS {RECEIVED,SENT,COMPLETE,ERROR,WAITING,CANCELLED,RESOLVED,UNKNOWN}
 	public static enum Direction {IN, OUT}
 	
-	public FaxJob() {		
-		this.id = null;
-		this.user = null;
-		this.password = null;
-		this.file_name = null;
-		this.fax_line = null;
-		this.destination = null;
-		this.recipient = null;
-		this.status = null;
-		this.statusString = null;
-		this.numPages = null;
-		this.stamp = null;
-		this.document = null;
-		this.jobId = null;
-		this.senderEmail = null;
-		this.direction = null;
-
+	public FaxJob() {
+		// default
 	}
-	
+
 	public FaxJob( FaxJob faxJob ) {		
-		this.id = null;
 		this.user = faxJob.getUser();
 		this.password = faxJob.getPassword();
 		this.file_name = faxJob.getFile_name();
@@ -81,11 +65,9 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
 		this.jobId = faxJob.getJobId();
 		this.senderEmail = faxJob.getSenderEmail();
 		this.direction = faxJob.getDirection();
-
+		this.demographicNo = faxJob.getDemographicNo();
+		this.oscarUser = faxJob.getOscarUser();
 	}
-
-    
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

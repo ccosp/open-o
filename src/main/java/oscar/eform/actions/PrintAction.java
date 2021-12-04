@@ -33,7 +33,6 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WKHtmlToPdfUtils;
 
-import com.lowagie.text.DocumentException;
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 
@@ -53,9 +52,7 @@ public class PrintAction extends Action {
 	private static final Logger logger = MiscUtils.getLogger();
 
 	private String localUri = null;
-	
-//	private boolean skipSave = false;
-	
+
 	private HttpServletResponse response;
 	
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
@@ -275,10 +272,7 @@ public class PrintAction extends Action {
 	        	 eFormDataDao.merge(eFormData);
 			}
 			*/
-		} catch (DocumentException e) {
-			//logger.error("Error converting and sending eform. id=" + eFormId, e);
-			MiscUtils.getLogger().error("",e);
-		} catch (IOException e) {
+		} catch (com.itextpdf.text.DocumentException | com.lowagie.text.DocumentException | IOException e) {
 			//logger.error("Error converting and sending eform. id=" + eFormId, e);
 			MiscUtils.getLogger().error("",e);
 		}

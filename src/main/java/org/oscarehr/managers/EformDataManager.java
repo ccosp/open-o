@@ -118,10 +118,15 @@ public class EformDataManager {
 			throw new RuntimeException("missing required security object (_eform)");
 		}
 
-		EFormData eformData = eFormDataDao.find( fdid );			
-		Path path = ConvertToEdoc.saveAsTempPDF(eformData);
+		Path path = null;
+
+		if(fdid > 0)
+		{
+			EFormData eformData = eFormDataDao.find( fdid );			
+			path = ConvertToEdoc.saveAsTempPDF(eformData);
+		}
 		
-		if( Files.isReadable(path) ) {
+		if(path != null && Files.isReadable(path) ) {
 			LogAction.addLogSynchronous(loggedInInfo, "EformDataManager.saveEformDataAsPDF", "Document saved at " + path.toString() );
 		} else {
 			LogAction.addLogSynchronous(loggedInInfo, "EformDataManager.saveEformDataAsPDF", "Document failed to save for eform id " + fdid);

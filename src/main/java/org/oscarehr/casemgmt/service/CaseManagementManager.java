@@ -2324,4 +2324,27 @@ private String updateApptStatus(String status, String type) {
 		}
 	}
 
+	public String listNotes(String code, String providerNo, String demoNo)
+	{
+		// filter the notes by the checked issues
+		List<Issue> issues = getIssueInfoByCode(providerNo, code);
+
+		String[] issueIds = new String[issues.size()];
+		int idx = 0;
+		for (Issue issue : issues)
+		{
+			issueIds[idx] = String.valueOf(issue.getId());
+		}
+
+		// need to apply issue filter
+		List<CaseManagementNote> notes = getNotes(demoNo, issueIds);
+		StringBuffer noteStr = new StringBuffer();
+		for (CaseManagementNote n : notes)
+		{
+			if (!n.isLocked() && !n.isArchived()) noteStr.append(n.getNote() + "\n");
+		}
+
+		return noteStr.toString();
+	}
+
 }

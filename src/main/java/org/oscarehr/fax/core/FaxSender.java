@@ -26,6 +26,9 @@ package org.oscarehr.fax.core;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -84,18 +87,15 @@ public class FaxSender {
 				log.info("SENDING " + faxJobList.size() + " FAXES");
 				
 				String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-				if(! path.endsWith(File.separator))
-				{
+
+				if(! path.endsWith(File.separator)) {
 					path = path + File.separator;
 				}
 				String filename;
-
 				for( FaxJob faxJob : faxJobList ) {
-					
-					FaxClientLog faxClientLog = faxClientLogDao.findClientLogbyFaxId(faxJob.getId()+"");
+					FaxClientLog faxClientLog = faxClientLogDao.findClientLogbyFaxId(faxJob.getId());
 					STATUS faxStatus = STATUS.ERROR;
-					
-					try(ByteArrayOutputStream pdfStream = new ByteArrayOutputStream()) {
+					try (ByteArrayOutputStream pdfStream = new ByteArrayOutputStream()) {
 
 						client.header("user", faxJob.getUser());
 						client.header("passwd", faxConfig.getFaxPasswd());
@@ -104,13 +104,20 @@ public class FaxSender {
 
 						filename = faxJob.getFile_name();
 						
-						if(filename.contains(File.separator))
-						{
-							filename.replace(File.separator, "");
-						}
 
-						FileUtils.copyFile(new File(path+filename), pdfStream);
+						if(filename.endsWith(File.separator)) {
+							filename = filename.replace(File.separator, "");
+						}
 						
+						Path filenamepath = Paths.get(filename);
+						
+						if(! Files.exists(filenamepath))
+						{
+							filenamepath = Paths.get(path, filename);
+						}
+			
+						FileUtils.copyFile(filenamepath.toFile(), pdfStream);
+
 						String base64 = Base64Utility.encode(pdfStream.toByteArray());
 						faxJob.setDocument(base64);
 						

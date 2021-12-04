@@ -74,7 +74,7 @@ public class ImagePDFCreator extends PdfPageEventHelper {
 		
 		int type = image.getOriginalType(); 
 		if (type == Image.ORIGINAL_TIFF) {
-			// The following is composed of code from com.lowagie.tools.plugins.Tiff2Pdf modified to create the 
+			// The following is composed of code from com.itextpdf.tools.plugins.Tiff2Pdf modified to create the 
 			// PDF in memory instead of on disk
 			RandomAccessFileOrArray ra = new RandomAccessFileOrArray((String)request.getAttribute("imagePath"));
             int comps = TiffImage.getNumberOfPages(ra);

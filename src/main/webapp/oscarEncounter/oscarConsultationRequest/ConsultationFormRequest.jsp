@@ -2705,6 +2705,7 @@ if (defaultSiteId!=0) aburl2+="&site="+defaultSiteId;
 
 <script type="text/javascript" >
 jQuery(document).ready( function() {
+	var ctx = "${pageContext.request.contextPath}";
 	//--> Autocomplete searches
 	jQuery( "#searchHealthCareTeamInput" ).autocomplete({				
 		source: function( request, response ) { 

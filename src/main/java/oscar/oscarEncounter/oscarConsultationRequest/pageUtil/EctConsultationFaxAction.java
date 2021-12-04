@@ -86,8 +86,6 @@ public class EctConsultationFaxAction extends Action {
       OscarProperties props = OscarProperties.getInstance();
       
       FaxJob faxJob = new FaxJob();
-      boolean errors = false;
-
       FaxClientLog faxClientLog = new FaxClientLog();
       faxClientLog.setProviderNo(curUser_no);
       faxClientLog.setStartTime(new Date());
@@ -227,42 +225,30 @@ public class EctConsultationFaxAction extends Action {
                request.setAttribute("jobId",OSFc.getJobId());
                MiscUtils.getLogger().debug("Request Id "+OSFc.getRequestId());
                request.setAttribute("requestId",OSFc.getRequestId());
-               faxClientLog.setRequestId(OSFc.getRequestId());
-               faxClientLog.setFaxId(OSFc.getJobId());
-               faxDao.merge(faxClientLog);
+               faxClientLog.setRequestId(Integer.parseInt(OSFc.getRequestId()));
+               faxClientLog.setFaxId(Integer.parseInt(OSFc.getJobId()));
             }else{
                MiscUtils.getLogger().debug("Error Message "+OSFc.getErrorMessage());
                request.setAttribute("oscarFaxError",OSFc.getErrorMessage());
-               errors = true;
                faxClientLog.setResult(OSFc.getErrorMessage());
                faxClientLog.setEndTime(new Date());
-               faxDao.merge(faxClientLog);
             }
+            faxDao.merge(faxClientLog);
          }catch(Exception e4){
         	 MiscUtils.getLogger().error("Error", e4);
             MiscUtils.getLogger().debug("Fax Service has Returned a Fatal Error ");
             request.setAttribute("oscarFaxError","Fax Service Is currently not available, please contact your Oscar Fax Administrator");
-            errors = true;
             faxClientLog.setResult("FAX SERVICE RETURNED NULL");
             faxClientLog.setEndTime(new Date());
             faxDao.merge(faxClientLog);
          }
       } catch(Exception e) {
-         errors = true;
          MiscUtils.getLogger().error("Error", e);
       }
       MiscUtils.getLogger().debug("Client Has Finished Running");
-      String print = request.getParameter("printType");
-      if(print!=null && !errors){
-         // do not print if there are errors
-         request.setAttribute("reqId", requestId);
-         return mapping.findForward(print);
-      }
-      else{
-         return mapping.findForward("success");
-      }
-
+      return mapping.findForward("success");
    }
+
    String getLocationId(){
       OscarCommLocationsDao dao = SpringUtils.getBean(OscarCommLocationsDao.class);
       List<OscarCommLocations> locations =  dao.findByCurrent1(1);

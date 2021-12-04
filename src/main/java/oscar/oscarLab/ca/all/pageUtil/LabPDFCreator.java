@@ -145,29 +145,30 @@ public class LabPDFCreator extends PdfPageEventHelper {
     public void printRtf()throws IOException, DocumentException{
     	//create an input stream from the rtf string bytes
     	byte[] rtfBytes = handler.getOBXResult(0, 0).getBytes();
-    	ByteArrayInputStream rtfStream = new ByteArrayInputStream(rtfBytes);
-    	
-    	//create & open the document we are going to write to and its writer
-    	document = new Document();
-    	RtfWriter2 writer = RtfWriter2.getInstance(document,os);
-    	document.setPageSize(PageSize.LETTER);
-    	document.addTitle("Title of the Document");
-    	document.addCreator("OSCAR");
-    	document.open();
-    	
-        //Create the fonts that we are going to use
-        bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-        font = new Font(bf, 11, Font.NORMAL);
-        boldFont = new Font(bf, 12, Font.BOLD);
+    	try(ByteArrayInputStream rtfStream = new ByteArrayInputStream(rtfBytes)) {
+			//create & open the document we are going to write to and its writer
+			com.lowagie.text.Document document = new com.lowagie.text.Document();
+			RtfWriter2 writer = RtfWriter2.getInstance(document, os);
+			document.setPageSize(com.lowagie.text.PageSize.LETTER);
+			document.addTitle("Title of the Document");
+			document.addCreator("OSCAR");
+			document.open();
 
-        //add the patient information
-        addRtfPatientInfo();
-        
-        //add the results
-    	writer.importRtfDocument(rtfStream, null);
-    	
-    	document.close();
-    	os.flush();
+			//Create the fonts that we are going to use
+			bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+			font = new Font(bf, 11, Font.NORMAL);
+			boldFont = new Font(bf, 12, Font.BOLD);
+
+			//add the patient information
+			addRtfPatientInfo();
+
+			//add the results
+			writer.importRtfDocument(rtfStream, null);
+
+			document.close();
+		} catch (com.lowagie.text.DocumentException e) {
+    		throw new DocumentException(e);
+		}
     }
     public void printPdf() throws IOException, DocumentException {
 
