@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -1147,8 +1146,6 @@ public final class EDocUtil {
 		 * 
 		 * @param fileName
 		 * 		Name of the file to use for saving the content
-		 * @param content
-		 * 		Content to be saved into the file
 		 * @return
 		 * 		Returns the content of the file
 		 * @throws IOException
@@ -1194,9 +1191,16 @@ public final class EDocUtil {
          * 		Returns the absolute path on the file system.
          */
         public static String resovePath(String fileName) {
-        	String docDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-        	File file = new File(docDir, fileName);
-        	return file.getAbsolutePath();
+			Path filePath = Paths.get(fileName);
+
+			// if not found in the given path then look in OSCAR's default.
+			if(! Files.exists(filePath))
+			{
+				String docDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+				filePath = Paths.get(docDir, filePath.getFileName().toString());
+			}
+			
+        	return filePath.toAbsolutePath().toString();
         }
         
         public static void writeContent(String fileName, byte[] content) throws IOException {
@@ -1230,22 +1234,22 @@ public final class EDocUtil {
          * 
          * @param fileName
          * @return number of pages
-         * @throws IOException 
-         * @throws URISyntaxException 
+         * @throws IOException
          */
         public static int getPDFPageCount(String fileName) {
         	int pagecount = 0;
 
-        	Path path = Paths.get(resovePath(fileName));      	
-        	if(Files.exists(path, new LinkOption[]{ LinkOption.NOFOLLOW_LINKS}))
+        	Path path = Paths.get(resovePath(fileName));
+        	if(Files.exists(path))
         	{
         		try {
 					PDDocument pdf = PDDocument.load(path.toFile());
 					pagecount = pdf.getNumberOfPages();
+					pdf.close();
 				} catch (IOException e) {
 					logger.error("Could not locate PDF file: " + fileName, e);
 				}
-        	}       	
+        	}
         	return pagecount;
         }
 

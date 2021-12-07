@@ -31,6 +31,7 @@ import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
+import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.fax.util.PdfCoverPageCreator;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -250,6 +251,7 @@ public class EctConsultationFormFaxAction extends Action {
 				    if( !validFaxNumber ) {
 				    	
 				    	faxJob.setStatus(FaxJob.STATUS.ERROR);
+				    	faxJob.setStatusString("Document outgoing fax number '"+faxNumber+"' is invalid.");
 				    	logger.error("PROBLEM CREATING FAX JOB", new DocumentException("Document outgoing fax number '"+faxNumber+"' is invalid."));
 				    }
 				    else {
@@ -261,10 +263,10 @@ public class EctConsultationFormFaxAction extends Action {
 				    
 				    // start up a log track each time the CLIENT was run.
 					FaxClientLog faxClientLog = new FaxClientLog();
-					faxClientLog.setFaxId(faxJob.getId()+""); // IMPORTANT! this is the id of the FaxJobID from the Faxes table. A 1:1 cardinality.
+					faxClientLog.setFaxId(faxJob.getId()); // IMPORTANT! this is the id of the FaxJobID from the Faxes table. A 1:1 cardinality.
 					faxClientLog.setProviderNo(faxJob.getOscarUser()); // the provider that sent this fax
 					faxClientLog.setStartTime(new Date(System.currentTimeMillis())); // the exact time the fax was sent
-					faxClientLog.setRequestId(reqId);
+					faxClientLog.setRequestId(Integer.parseInt(reqId));
 					faxClientLogDao.persist(faxClientLog);    
 				}
 
@@ -280,9 +282,8 @@ public class EctConsultationFormFaxAction extends Action {
 			error = "IOException";
 			exception = ioe;
 		} catch (com.lowagie.text.DocumentException e) {
-			error = "DocumentException";
-			exception = e;
-		} finally { 
+			logger.error("error", e);
+		} finally {
 			// Cleaning up InputStreams created for concatenation.
 			for (InputStream is : streams) {
 				try {

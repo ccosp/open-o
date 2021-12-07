@@ -52,6 +52,7 @@ import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.ProfessionalContact;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.DemographicContactCreator;
 import org.oscarehr.util.LoggedInInfo;
@@ -371,9 +372,9 @@ public class EctConsultationFormRequestUtil {
 	
 	private void getFaxLogs(String requestId) {
 
-		List<FaxClientLog> faxClientLogs = faxClientLogDao.findClientLogbyRequestId(requestId);
+		List<FaxClientLog> faxClientLogs = faxClientLogDao.findClientLogbyRequestId(Integer.parseInt(requestId));
 		for(FaxClientLog faxClientLog : faxClientLogs) {
-			FaxJob faxJob = faxJobDao.find(Integer.parseInt(faxClientLog.getFaxId()));
+			FaxJob faxJob = faxJobDao.find(faxClientLog.getFaxId());
 			FaxRecipient faxRecipient = null;
 			String specialistFax = "";
 			
