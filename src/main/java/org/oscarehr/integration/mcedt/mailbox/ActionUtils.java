@@ -323,9 +323,9 @@ public class ActionUtils {
 					if (new Date(file.lastModified()).after(startDate) && new Date(file.lastModified()).before(endDate)) copyFileToDirectory(file, outbox, false, true);
 				}
 			}
-			for (File file : toOutbox) {
-				if (new Date(file.lastModified()).after(startDate) && new Date(file.lastModified()).before(endDate)) copyFileToDirectory(file, outbox,false, true);
-			}
+//			for (File file : toOutbox) {
+//				if (new Date(file.lastModified()).after(startDate) && new Date(file.lastModified()).before(endDate)) copyFileToDirectory(file, outbox,false, true);
+//			}
 		} catch (Exception e) {
 			logger.error("Unable to copy OHIP files to outbox", e);
 		}
