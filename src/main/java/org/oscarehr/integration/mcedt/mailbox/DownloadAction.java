@@ -27,6 +27,10 @@ import static org.oscarehr.integration.mcedt.McedtConstants.REQUEST_ATTR_KEY_RES
 
 import java.io.File;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -273,18 +277,22 @@ public class DownloadAction extends DispatchAction{
 		String resourceID= "0";
 		String inboxFolder = OscarProperties.getInstance().getProperty("ONEDT_INBOX");
 		String lastDownloadedFile = OscarProperties.getInstance().getProperty("mcedt.last.downloadedID.file");
-		
-		try{
-			File document = new File(inboxFolder + File.separator + lastDownloadedFile);						
+		Path path = Paths.get(inboxFolder, lastDownloadedFile);
+		try {
+			File document;
+
+			if(Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+				document = path.toFile();
+			} else {
+				document = Files.createFile(path).toFile();
+			}
+
 			List<String> lastId = FileUtils.readLines(document);
-			
-			if(lastId!=null && StringUtils.isNumeric(lastId.get(0)))
+
+			if (lastId.size() > 0 && StringUtils.isNumeric(lastId.get(0))){
 				resourceID = lastId.get(0);
-			else
-				resourceID = "0";
-				
-		}
-		catch(Exception e){
+			}
+		} catch(Exception e) {
 			logger.error("Unable to get Last Download ID ", e);
 		}
 		
