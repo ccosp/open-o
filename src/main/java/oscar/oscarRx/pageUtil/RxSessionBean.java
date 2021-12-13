@@ -31,13 +31,17 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.log4j.Logger;
+import org.oscarehr.common.dao.DrugDao;
 import org.oscarehr.common.model.Allergy;
+import org.oscarehr.common.model.Drug;
 import org.oscarehr.phr.model.PHRMedication;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
+import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 import oscar.oscarRx.data.RxAllergyWarningWorker;
 import oscar.oscarRx.data.RxDrugData;
@@ -54,13 +58,14 @@ public class RxSessionBean  implements java.io.Serializable {
 
     private ArrayList<RxPrescriptionData.Prescription> stash = new ArrayList();
    // private ArrayList stash=new ArrayList();
+    private HashMap<Integer, Long> favIdRandomIdMap = new HashMap<Integer, Long>();
     private int stashIndex = -1;
     private Hashtable allergyWarnings = new Hashtable();
     private Hashtable missingAllergyWarnings = new Hashtable();
     private Hashtable workingAllergyWarnings = new Hashtable();
     private ArrayList attributeNames = new ArrayList();
     private String interactingDrugList="";//contains hash tables, each hashtable has the a
-    private List<String> reRxDrugIdList=new ArrayList();
+    private CopyOnWriteArrayList<String> reRxDrugIdList=new CopyOnWriteArrayList();
     private HashMap randomIdDrugIdPair=new HashMap();
     private List<HashMap<String,String>> listMedHistory=new ArrayList();
     private HashMap<Long,PHRMedication> pairPHRMed=new HashMap<Long,PHRMedication>();
@@ -110,13 +115,13 @@ public class RxSessionBean  implements java.io.Serializable {
         reRxDrugIdList.add(s);
     }
     public void setReRxDrugIdList(List<String> sList){
-        reRxDrugIdList=sList;
+        reRxDrugIdList = (CopyOnWriteArrayList)sList;
     }
-    public List<String> getReRxDrugIdList(){
+    public CopyOnWriteArrayList<String> getReRxDrugIdList(){
         return reRxDrugIdList;
     }
     public void clearReRxDrugIdList(){
-        reRxDrugIdList=new ArrayList();
+        reRxDrugIdList=new CopyOnWriteArrayList();
     }
     public String getInteractingDrugList(){
         return interactingDrugList;
@@ -273,6 +278,21 @@ public class RxSessionBean  implements java.io.Serializable {
         stash = new ArrayList();
     }
 
+    public HashMap<Integer, Long> getFavIdRandomIdMaps() {
+        return favIdRandomIdMap;
+    }
+
+    public void setFavIdRandomIdMap(HashMap<Integer, Long> stashedIds) {
+        this.favIdRandomIdMap = stashedIds;
+    }
+
+    public void addNewRandomIdToMap(Integer newId, Long newRandomId) {
+        this.favIdRandomIdMap.put(newId, newRandomId);
+    }
+
+    public Long getStashedFavId(Integer idToGet) {
+        return this.favIdRandomIdMap.get(idToGet);
+    }
 
     //--------------------------------------------------------------------------
 
