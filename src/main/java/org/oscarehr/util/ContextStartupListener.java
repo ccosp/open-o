@@ -23,7 +23,7 @@
 
 package org.oscarehr.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorUpdateTask;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
@@ -42,7 +42,7 @@ import com.quatro.dao.security.SecroleDao;
 import oscar.OscarProperties;
 
 public class ContextStartupListener implements javax.servlet.ServletContextListener {
-	private static final Logger logger = MiscUtils.getLogger();
+	private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	@Override
 	public void contextInitialized(javax.servlet.ServletContextEvent sce) {
@@ -54,7 +54,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 
 			logger.info("Server processes starting. context=" + contextPath);
 			
-			MiscUtils.addLoggingOverrideConfiguration(contextPath);
+			org.oscarehr.util.MiscUtils.addLoggingOverrideConfiguration(contextPath);
 
 			LocaleUtils.BASE_NAME="oscarResources";
 			
@@ -62,8 +62,8 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 			String vmstatLoggingPeriod = properties.getProperty("VMSTAT_LOGGING_PERIOD");
 			VmStat.startContinuousLogging(Long.parseLong(vmstatLoggingPeriod));
 
-			MiscUtilsOld.setShutdownSignaled(false);
-			MiscUtilsOld.registerShutdownHook();
+			MiscUtils.setShutdownSignaled(false);
+			MiscUtils.registerShutdownHook();
 
 			createOscarProgramIfNecessary();
 			
@@ -137,9 +137,9 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 			 logger.error("Error",e);
 		 }
 		try {
-			MiscUtilsOld.checkShutdownSignaled();
-			MiscUtilsOld.deregisterShutdownHook();
-			MiscUtilsOld.setShutdownSignaled(true);
+			MiscUtils.checkShutdownSignaled();
+			MiscUtils.deregisterShutdownHook();
+			MiscUtils.setShutdownSignaled(true);
 		} catch (ShutdownException e) {
 			// do nothing it's okay.
 		}

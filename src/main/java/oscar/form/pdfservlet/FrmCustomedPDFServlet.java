@@ -53,7 +53,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.FaxConfig;

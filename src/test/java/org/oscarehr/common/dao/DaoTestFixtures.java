@@ -59,7 +59,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.ConfigUtils;
@@ -88,10 +88,6 @@ public abstract class DaoTestFixtures
 	@BeforeClass
 	public static void classSetUp() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
 	{
-		
-		
-		Logger.getRootLogger().setLevel(Level.WARN);
-		
 		long start = System.currentTimeMillis();
 		if(!SchemaUtils.inited) {
 			logger.info("dropAndRecreateDatabase");

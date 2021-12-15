@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.common.dao.EFormValueDao;

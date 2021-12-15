@@ -110,22 +110,35 @@
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-core</artifactId>
-		    <version>2.14.0</version>
+		    <version>2.16.0</version>
 		</dependency>
-        <dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/apache-log4j-extras -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+			<version>1.2.17</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.30</version>
+			<version>1.7.32</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.7.30</version>
+			<version>1.7.32</version>
 		</dependency>
 		<dependency>
     		<groupId>org.slf4j</groupId>
     		<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.7.30</version>
+			<version>1.7.32</version>
 		</dependency>
                 
 		<dependency>
@@ -141,12 +154,12 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>2.11.0</version>
 		</dependency>
 		 <dependency>
                         <groupId>commons-fileupload</groupId>
                         <artifactId>commons-fileupload</artifactId>
-                        <version>1.3</version>
+                        <version>1.4</version>
                 </dependency>
 
 		<dependency>
@@ -643,7 +656,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3</version>
+			<version>4.5.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -774,7 +787,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.6</version>
+			<version>5.0.0</version>
 		</dependency>
 
 		<!-- ostermillerutils_1_04_03_for_java_1_4.jar 
@@ -1113,6 +1126,10 @@
 					<groupId>org.bouncycastle</groupId>
 					<artifactId>bcprov-jdk15</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1196,11 +1213,15 @@
                 <artifactId>ebs-client</artifactId>
                 <version>0.0.5</version>
                 <exclusions>
-						<exclusion>
-							<groupId>org.bouncycastle</groupId>
-							<artifactId>bcprov-jdk16</artifactId>
-						</exclusion>
-                </exclusions>
+					<exclusion>
+						<groupId>org.bouncycastle</groupId>
+						<artifactId>bcprov-jdk16</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+				</exclusions>
         </dependency>
         <dependency>
                 <groupId>org.oscarehr.integration.ebs</groupId>
@@ -1562,16 +1583,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-                                <version>2.5.1</version>
+				<version>3.8.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-                                <version>1.7</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>set_timestamp</id>

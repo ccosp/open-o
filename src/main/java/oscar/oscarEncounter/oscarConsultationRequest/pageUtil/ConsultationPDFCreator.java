@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.DigitalSignatureDao;

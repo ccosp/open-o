@@ -30,7 +30,7 @@ import java.util.List;
 
 import javax.xml.ws.WebServiceException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.common.dao.DemographicExtDao;
 import org.oscarehr.common.dao.FacilityDao;

@@ -37,7 +37,7 @@ import org.apache.cxf.common.util.Base64Utility;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.http.HttpStatus;
 import org.apache.http.conn.HttpHostConnectException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;

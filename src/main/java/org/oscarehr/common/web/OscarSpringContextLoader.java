@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.BeanUtils;

@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 public final class ProblemCheckFilter implements Filter
 {

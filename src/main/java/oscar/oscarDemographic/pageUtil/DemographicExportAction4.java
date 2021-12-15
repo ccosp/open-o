@@ -47,7 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

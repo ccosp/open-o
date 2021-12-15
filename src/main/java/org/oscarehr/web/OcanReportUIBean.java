@@ -47,7 +47,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.BindingProvider;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.ws.security.WSPasswordCallback;
 import org.apache.xmlbeans.XmlOptions;
 import org.oscarehr.PMmodule.dao.OcanSubmissionLogDao;

@@ -23,7 +23,7 @@
  */
 package org.oscarehr.integration.nclass.clientRegistry.impl;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.marc.everest.datatypes.AD;
 import org.marc.everest.datatypes.ADXP;
 import org.marc.everest.datatypes.AddressPartType;
@@ -48,7 +48,7 @@ import org.oscarehr.integration.nclass.clientRegistry.PersonComprehensivePlacer;
 
 public class PlaceholderPersonComprehensivePlacer extends BasePlacer implements PersonComprehensivePlacer {
 
-	private static Logger logger = Logger.getLogger(PlaceholderPersonComprehensivePlacer.class);
+	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	private PlaceholderPersonComprehensiveFulfiller personComprehensiveFulfiller = new PlaceholderPersonComprehensiveFulfiller();
 

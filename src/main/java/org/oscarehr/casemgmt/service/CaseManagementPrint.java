@@ -43,7 +43,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.PMmodule.service.ProgramManager;

@@ -24,7 +24,7 @@
 
 package org.oscarehr.common.web;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.ContextLoaderListener;

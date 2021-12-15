@@ -36,14 +36,14 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.cookierevolver.CRFactory;
 import net.sf.cookierevolver.service.RolesProvider;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 
 import oscar.OscarProperties;
 
 public class CRHelper implements RolesProvider {
-	private static Logger log = Logger.getLogger(CRHelper.class);
+	private static Logger log = org.oscarehr.util.MiscUtils.getLogger();
 	
 	static boolean enabled=false;
 	static HashMap userNameToProviderNO=new HashMap();

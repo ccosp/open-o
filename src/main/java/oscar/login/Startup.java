@@ -33,7 +33,7 @@ import java.util.Collections;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 
 /**

@@ -33,7 +33,7 @@ import java.util.TreeSet;
 
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;

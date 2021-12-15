@@ -32,7 +32,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.Allergy;
 import org.oscarehr.phr.model.PHRMedication;
 import org.oscarehr.util.LoggedInInfo;

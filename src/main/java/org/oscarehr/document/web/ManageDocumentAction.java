@@ -54,7 +54,7 @@ import com.sun.pdfview.PDFPage;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;

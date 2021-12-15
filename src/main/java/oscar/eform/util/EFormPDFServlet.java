@@ -51,7 +51,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.LoggedInInfo;
@@ -84,7 +84,7 @@ import com.lowagie.text.pdf.PdfWriter;
 public class EFormPDFServlet extends HttpServlet {
 
     public static final String HSFO_RX_DATA_KEY = "hsfo.rx.data";
-    Logger log = Logger.getLogger(EFormPDFServlet.class);
+    Logger log = org.oscarehr.util.MiscUtils.getLogger();
     /**
      *
      *

@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
