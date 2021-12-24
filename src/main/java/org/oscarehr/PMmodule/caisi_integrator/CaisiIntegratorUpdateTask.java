@@ -181,13 +181,7 @@ import org.oscarehr.managers.IntegratorFileLogManager;
 import org.oscarehr.managers.IntegratorPushManager;
 import org.oscarehr.managers.MessengerIntegratorManager;
 import org.oscarehr.managers.PatientConsentManager;
-import org.oscarehr.util.BenchmarkTimer;
-import org.oscarehr.util.CxfClientUtilsOld;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
-import org.oscarehr.util.XmlUtils;
+import org.oscarehr.util.*;
 import org.springframework.beans.BeanUtils;
 import org.w3c.dom.Document;
 
