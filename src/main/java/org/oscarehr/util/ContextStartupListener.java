@@ -39,8 +39,6 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import com.quatro.dao.security.SecroleDao;
 
-import oscar.OscarProperties;
-
 public class ContextStartupListener implements javax.servlet.ServletContextListener {
 	private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
@@ -57,10 +55,6 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 			org.oscarehr.util.MiscUtils.addLoggingOverrideConfiguration(contextPath);
 
 			LocaleUtils.BASE_NAME="oscarResources";
-			
-			OscarProperties properties = OscarProperties.getInstance();
-			String vmstatLoggingPeriod = properties.getProperty("VMSTAT_LOGGING_PERIOD");
-			VmStat.startContinuousLogging(Long.parseLong(vmstatLoggingPeriod));
 
 			MiscUtils.setShutdownSignaled(false);
 			MiscUtils.registerShutdownHook();
@@ -129,7 +123,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 
 		WaitListEmailThread.stopTask();
 		CaisiIntegratorUpdateTask.stopTask();
-		VmStat.stopContinuousLogging();
+//		VmStat.stopContinuousLogging();
 
 		try {
 			 StdSchedulerFactory.getDefaultScheduler().shutdown();
