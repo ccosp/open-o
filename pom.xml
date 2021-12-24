@@ -677,12 +677,18 @@
 			</exclusions>
 		</dependency>
 
-		<!-- cookie revolver -->
-		<dependency>
-			<groupId>net.sf.cookierevolver</groupId>
-			<artifactId>cookierevolver</artifactId>
-			<version>0.2.5</version>
-		</dependency>
+		<!-- OSCAR EHR cookie revolver -->
+<!--		<dependency>-->
+<!--			<groupId>net.sf.cookierevolver</groupId>-->
+<!--			<artifactId>cookierevolver</artifactId>-->
+<!--			<version>0.2.5</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>log4j</groupId>-->
+<!--					<artifactId>log4j</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 
 		<!-- commons-betwixt ... what is this for? -->
 		<dependency>

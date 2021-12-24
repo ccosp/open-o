@@ -37,8 +37,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.cookierevolver.CRFactory;
-
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 
@@ -128,10 +126,13 @@ public class LoginFilter implements Filter {
 	 */
 	public void init(FilterConfig config) throws ServletException {
 		logger.info("Starting Filter : "+getClass().getSimpleName());
-		
-		if (!CRHelper.isCRFrameworkEnabled()) {
-			CRFactory.getConfig().setProperty("cr.disabled", "true");
-		}
+
+		/*
+		 * not exactly the best place to put this
+		 */
+//		if (!CRHelper.isCRFrameworkEnabled()) {
+//			CRFactory.getConfig().setProperty("cr.disabled", "true");
+//		}
 	}
 
 	/*
@@ -140,7 +141,7 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		logger.debug("Entering LoginFilter.doFilter()");
 		
-		if (!CRHelper.isCRFrameworkEnabled()) {
+//		if (!CRHelper.isCRFrameworkEnabled()) {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
 			String contextPath = httpRequest.getContextPath();
@@ -206,7 +207,7 @@ public class LoginFilter implements Filter {
 					logger.error("ERROR checking for last activity. Limit Activity :"+InActivityLimitInMins, e);
 				}
 			}
-		}
+//		}
 
 		logger.debug("LoginFilter chainning");
 		chain.doFilter(request, response);
