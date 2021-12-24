@@ -109,11 +109,6 @@
     </filter-mapping>
 
 	<filter>
-		<filter-name>ComponentFilter</filter-name>
-		<filter-class>org.caisi.comp.web.WebComponentFilter</filter-class>
-	</filter>
-
-	<filter>
 		<filter-name>DbConnectionFilter</filter-name>
 		<filter-class>org.oscarehr.util.DbConnectionFilter</filter-class>
 	</filter>
@@ -134,10 +129,6 @@
 		<filter-class>org.oscarehr.PMmodule.web.PMMFilter</filter-class>
 	</filter>
 
-	<filter-mapping>
-		<filter-name>ComponentFilter</filter-name>
-		<url-pattern>/mod/*</url-pattern>
-	</filter-mapping>
 	<filter-mapping>
 		<filter-name>DbConnectionFilter</filter-name>
 		<url-pattern>/*</url-pattern>

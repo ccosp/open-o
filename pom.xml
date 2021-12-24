@@ -10,10 +10,10 @@
 		<system>SourceForge Tracker</system>
 		<url>https://sourceforge.net/tracker/?group_id=66701</url>
 	</issueManagement>
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>https://demo.oscarmcmaster.org:11042/</url>
-	</ciManagement>
+<!--	<ciManagement>-->
+<!--		<system>Jenkins</system>-->
+<!--		<url>https://demo.oscarmcmaster.org:11042/</url>-->
+<!--	</ciManagement>-->
 	<inceptionYear>2001</inceptionYear>
 	<mailingLists>
 		<mailingList>
@@ -30,16 +30,17 @@
 		</license>
 	</licenses>
 	<url>http://www.oscarcanada.org</url>
-	<scm>
-		<url>http://oscarmcmaster.git.sourceforge.net/git/gitweb.cgi?p=oscarmcmaster/oscar</url>
-		<connection>scm:git:git://oscarmcmaster.git.sourceforge.net/gitroot/oscarmcmaster/oscar</connection>
-		<developerConnection>scm:git:ssh://user@source.oscartools.org:29418/oscar</developerConnection>
-		<tag>master</tag>
-	</scm>
-<!-- 	<properties>
+<!--	<scm>-->
+<!--		<url>http://oscarmcmaster.git.sourceforge.net/git/gitweb.cgi?p=oscarmcmaster/oscar</url>-->
+<!--		<connection>scm:git:git://oscarmcmaster.git.sourceforge.net/gitroot/oscarmcmaster/oscar</connection>-->
+<!--		<developerConnection>scm:git:ssh://user@source.oscartools.org:29418/oscar</developerConnection>-->
+<!--		<tag>master</tag>-->
+<!--	</scm>-->
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	 <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
-	</properties> -->
+		<log4j2.version>2.17.0</log4j2.version>
+		<slf4j.version>1.7.32</slf4j.version>
+	</properties>
 
 	<repositories>
 		<repository>
@@ -58,10 +59,10 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
-		<repository>
-			<id>new_oscar_repo</id>
-			<url>http://mvn.oscar-emr.com/repository</url>
-		</repository>
+<!--		<repository>-->
+<!--			<id>new_oscar_repo</id>-->
+<!--			<url>http://mvn.oscar-emr.com/repository</url>-->
+<!--		</repository>-->
 		
 		<!-- MARC-HI (Everest & SHIC) -->
 <!-- 		<repository>-->
@@ -101,44 +102,77 @@
 			<version>1.87.0</version>
 		</dependency>
 
+		<!-- LOGGING -->
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		<!--Log4j-2 libraries-->
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-core</artifactId>
-		    <version>2.16.0</version>
+		    <version>${log4j2.version}</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/log4j/apache-log4j-extras -->
+<!--		<dependency>-->
+<!--			<groupId>log4j</groupId>-->
+<!--			<artifactId>apache-log4j-extras</artifactId>-->
+<!--			<version>1.2.17</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>log4j</groupId>-->
+<!--					<artifactId>log4j</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
+
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>apache-log4j-extras</artifactId>
-			<version>1.2.17</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+
+		<!--Enables log4j-2 binding from libraries that still use older Log4j-1 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+
+		<!--Bridge from Apache commons logging to log4j2  -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+
+		<!-- log4j2 bridge from slf4j -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-to-slf4j</artifactId>
+			<version>${log4j2.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.32</version>
+			<version>${slf4j.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.7.32</version>
+			<version>${slf4j.version}</version>
 		</dependency>
+
 		<dependency>
     		<groupId>org.slf4j</groupId>
     		<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.7.32</version>
+			<version>${slf4j.version}</version>
 		</dependency>
                 
 		<dependency>
@@ -154,7 +188,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.11.0</version>
+			<version>2.4</version>
 		</dependency>
 		 <dependency>
                         <groupId>commons-fileupload</groupId>
@@ -175,14 +209,14 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.3</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -275,7 +309,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.39</version>
+			<version>5.1.49</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -359,7 +393,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.1.2</version>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
@@ -661,7 +695,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
-			<version>4.2.2</version>
+			<version>4.5.6</version>
 		</dependency>
 
 		<!-- quartz -->
@@ -676,20 +710,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- OSCAR EHR cookie revolver -->
-<!--		<dependency>-->
-<!--			<groupId>net.sf.cookierevolver</groupId>-->
-<!--			<artifactId>cookierevolver</artifactId>-->
-<!--			<version>0.2.5</version>-->
-<!--			<exclusions>-->
-<!--				<exclusion>-->
-<!--					<groupId>log4j</groupId>-->
-<!--					<artifactId>log4j</artifactId>-->
-<!--				</exclusion>-->
-<!--			</exclusions>-->
-<!--		</dependency>-->
-
 		<!-- commons-betwixt ... what is this for? -->
 		<dependency>
 			<groupId>commons-betwixt</groupId>
@@ -900,16 +920,6 @@
 			<version>2.3.2</version>
 		</dependency>
 
-		<!-- *sigh* we really need to get rid of this -->
-		<dependency>
-			<groupId>pluginframework</groupId>
-			<artifactId>pluginframework</artifactId>
-			<version>0.9.13</version>
-		</dependency>
-
-		<!-- *sigh* I have no clue what this is -->
-		<!-- <dependency> <groupId>rx</groupId> <artifactId>rx</artifactId> <version>UNKNOWN</version> </dependency> -->
-
 		<!-- something something ocan something -->
 		<dependency>
 			<groupId>ocan</groupId>
@@ -1085,6 +1095,10 @@
 				<exclusion>
 					<groupId>log4j</groupId>
 					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.oscarehr</groupId>
+					<artifactId>util</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1591,8 +1605,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 
@@ -1693,13 +1707,12 @@
 						</goals>
 					</execution>
 				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.oscarehr</groupId>
-						<artifactId>util</artifactId>
-						<version>2013.03.06</version>
-					</dependency>
-				</dependencies>
+<!--				<dependencies>-->
+<!--					<dependency>-->
+<!--						<groupId>org.oscarehr</groupId>-->
+<!--						<artifactId>util</artifactId>-->
+<!--					</dependency>-->
+<!--				</dependencies>-->
 			</plugin>
 
 			<plugin>
