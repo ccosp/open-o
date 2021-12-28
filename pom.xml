@@ -1653,29 +1653,32 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.15</version>
+				<version>3.1.2</version>
 				<configuration>
 					<configLocation>utils/checkstyle.xml</configLocation>
+					<encoding>${project.build.sourceEncoding}</encoding>
 					<failsOnError>true</failsOnError>
 					<consoleOutput>true</consoleOutput>
-					<sourceDirectory>.</sourceDirectory>
+					<linkXRef>false</linkXRef>
 					<includes>src/main/**/*,database/**/*.sql</includes>
 					<excludes>**/*.jar, **/*.txt, **/*.rpt, **/*.fla, **/*.xml, **/*.dtd, **/*.xslt, **/*.doc, **/*.bak, **/*.tld, **/*.jpg, **/*.png, **/*.gif, **/*.pdf, **/*.swf, **/*.js, **/*.css, src/main/webapp/share/calendar/**, **/*svg.jsp, src/main/webapp/casemgmt/Index2.jsp, database/mysql/updates/update-2016-06-06.sql, src/main/java/oscar/oscarMessenger/util/MsgDemoMap.java, src/main/java/oscar/oscarEncounter/pageUtil/EctDisplayMsgAction.java, database/mysql/oscarinit.sql, src/main/webapp/oscarEncounter/Index.jsp, database/mysql/oscarinit_on.sql, database/mysql/oscardata.sql, database/mysql/oscarinit_bc.sql, src/main/java/oscar/oscarEncounter/data/EctPatientData.java</excludes>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>9.2.1</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
+						<id>process-sources</id>
 						<phase>process-sources</phase>
 						<goals>
 							<goal>checkstyle</goal>
 						</goals>
 					</execution>
 				</executions>
-<!--				<dependencies>-->
-<!--					<dependency>-->
-<!--						<groupId>org.oscarehr</groupId>-->
-<!--						<artifactId>util</artifactId>-->
-<!--					</dependency>-->
-<!--				</dependencies>-->
 			</plugin>
 
 			<plugin>
