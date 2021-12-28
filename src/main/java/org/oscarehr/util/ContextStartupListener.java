@@ -38,19 +38,26 @@ import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.quatro.dao.security.SecroleDao;
+import oscar.OscarProperties;
 
 public class ContextStartupListener implements javax.servlet.ServletContextListener {
 	private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
-
+	private static final OscarProperties oscarProperties = OscarProperties.getInstance();
 	@Override
 	public void contextInitialized(javax.servlet.ServletContextEvent sce) {
-		try {
-			// ensure cxf uses log4j
-			System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4jLogger");
 
+		// ensure cxf uses log4j2
+		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4j2Logger");
+
+		/*
+		 * Map log4j version 1 to version 2
+		 */
+		System.setProperty("log4j1.compatibility", "true");
+
+		try {
 			String contextPath=sce.getServletContext().getContextPath();
 
-			logger.info("Server processes starting. context=" + contextPath);
+			logger.info("Starting OSCAR context. context=" + contextPath);
 			
 			org.oscarehr.util.MiscUtils.addLoggingOverrideConfiguration(contextPath);
 
@@ -60,8 +67,10 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 			MiscUtils.registerShutdownHook();
 
 			createOscarProgramIfNecessary();
-			
-			CaisiIntegratorUpdateTask.startTask();
+
+			if(oscarProperties.getBooleanProperty("INTEGRATOR_ENABLED", "true")){
+				CaisiIntegratorUpdateTask.startTask();
+			}
 
 			OscarJobUtils.initializeJobExecutionFramework();
 			
@@ -69,7 +78,8 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 						
 			//Run some optimizations
 			loadCaches();
-			logger.info("Server processes starting completed. context=" + contextPath);
+
+			logger.info("OSCAR server processes started. context=" + contextPath);
 			
 			//bug 4195 - only runs once so long as it finishes..if you want it to not run, add entry
 			//try your property table called "HRMFixMissingReportHelper.Run" with value = 1
@@ -123,7 +133,6 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 
 		WaitListEmailThread.stopTask();
 		CaisiIntegratorUpdateTask.stopTask();
-//		VmStat.stopContinuousLogging();
 
 		try {
 			 StdSchedulerFactory.getDefaultScheduler().shutdown();
