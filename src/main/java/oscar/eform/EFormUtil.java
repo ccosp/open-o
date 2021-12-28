@@ -123,6 +123,7 @@ public class EFormUtil {
 	private static ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
 	private static TicklerDao ticklerDao = SpringUtils.getBean(TicklerDao.class);
 	private static PreventionManager preventionManager = SpringUtils.getBean(PreventionManager.class);
+	private static ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
 	private static ConsultationRequestDao consultationRequestDao = SpringUtils.getBean(ConsultationRequestDao.class);
 	private static ProfessionalSpecialistDao professionalSpecialistDao = SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	
