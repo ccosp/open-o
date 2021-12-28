@@ -157,18 +157,12 @@ public final class MiscUtils {
 	}
 
 	public static void serializeToFile(Serializable s, String filename) throws IOException {
-		FileOutputStream fos = new FileOutputStream(filename);
-
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
+		try(FileOutputStream fos = new FileOutputStream(filename);
+			ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			oos.writeObject(s);
 			oos.flush();
 			fos.flush();
-			oos.close();
-		} finally {
-			fos.close();
 		}
-
 	}
 
 	public static Serializable deserializeFromFile(String filename) throws IOException, ClassNotFoundException {
@@ -188,11 +182,12 @@ public final class MiscUtils {
 	}
 
 	public static byte[] readFileAsByteArray(String url) throws IOException {
-		InputStream is = MiscUtils.class.getResourceAsStream(url);
-		int size = is.available();
-		byte[] b = new byte[size];
-		is.read(b);
-		return b;
+		try(InputStream is = MiscUtils.class.getResourceAsStream(url)) {
+			int size = is.available();
+			byte[] b = new byte[size];
+			is.read(b);
+			return b;
+		}
 	}
 
 	public static String readFileAsString(String url) throws IOException {

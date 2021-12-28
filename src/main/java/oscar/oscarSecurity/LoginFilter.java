@@ -126,13 +126,6 @@ public class LoginFilter implements Filter {
 	 */
 	public void init(FilterConfig config) throws ServletException {
 		logger.info("Starting Filter : "+getClass().getSimpleName());
-
-		/*
-		 * not exactly the best place to put this
-		 */
-//		if (!CRHelper.isCRFrameworkEnabled()) {
-//			CRFactory.getConfig().setProperty("cr.disabled", "true");
-//		}
 	}
 
 	/*
@@ -140,74 +133,73 @@ public class LoginFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		logger.debug("Entering LoginFilter.doFilter()");
-		
-//		if (!CRHelper.isCRFrameworkEnabled()) {
-			HttpServletRequest httpRequest = (HttpServletRequest) request;
-			HttpServletResponse httpResponse = (HttpServletResponse) response;
-			String contextPath = httpRequest.getContextPath();
-			String requestURI = httpRequest.getRequestURI();
-			String InActivityLimitInMins = OscarProperties.getInstance().getProperty("INACTIVITY_LIMIT_MINS");
-			
-			SecurityTokenManager stm = SecurityTokenManager.getInstance();
-			if(stm != null) {
-				//token is being requested
-				if(request.getParameter("request_token")!=null && request.getParameter("request_token").equals("true")) {
-					stm.requestToken(httpRequest, httpResponse, chain);
+
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		String contextPath = httpRequest.getContextPath();
+		String requestURI = httpRequest.getRequestURI();
+		String InActivityLimitInMins = OscarProperties.getInstance().getProperty("INACTIVITY_LIMIT_MINS");
+
+		SecurityTokenManager stm = SecurityTokenManager.getInstance();
+		if(stm != null) {
+			//token is being requested
+			if(request.getParameter("request_token")!=null && request.getParameter("request_token").equals("true")) {
+				stm.requestToken(httpRequest, httpResponse, chain);
+				return;
+			}
+
+			//token is being sent..check if it's valid..this will set the "user" attribute in the session.
+			if(request.getParameter("token")!=null || request.getAttribute("token")!=null) {
+				boolean success = stm.handleToken(httpRequest, httpResponse, chain);
+				if(!success) {
 					return;
 				}
-				
-				//token is being sent..check if it's valid..this will set the "user" attribute in the session.
-				if(request.getParameter("token")!=null || request.getAttribute("token")!=null) {
-					boolean success = stm.handleToken(httpRequest, httpResponse, chain);
-					if(!success) {
+			}
+		}
+
+		HttpSession session = httpRequest.getSession(false);
+		if (session==null || session.getAttribute("user") == null) {
+
+
+
+			/*
+			 * If the requested resource is npt exempt then redirect to the logout page.
+			 *
+			 * bug fix: removed root directory auto-exemption. If you want to have a resource
+			 * be an exemption, you must explicitely add to EXEMPT_URLS array.
+			 */
+			if (!inListOfExemptions(requestURI, contextPath,EXEMPT_URLS)) {
+				httpResponse.sendRedirect(contextPath + "/logout.jsp");
+				return;
+			}
+		}else if(session!=null && InActivityLimitInMins != null){ //Tracking for last request time
+			try{
+				long minLimit = Long.parseLong(InActivityLimitInMins);
+
+				Date lastRequestDate = (Date) session.getAttribute("last_request_time");
+				Date thisRequestDate = new Date();
+				long timeSinceLastRequest = -1;
+				if (lastRequestDate != null){
+					long timeBeforeExpire = 60 * 1000 * minLimit; //TODO need to use this Also need to get it from a property
+					long lastRequest = lastRequestDate.getTime();
+					long thisRequest = thisRequestDate.getTime();
+					timeSinceLastRequest = thisRequest - lastRequest;
+					logger.debug("lastRequestDate.getTime() "+lastRequestDate.getTime()+" thisRequestDate.getTime() "+thisRequestDate.getTime()+" -- "+timeSinceLastRequest);
+					if (timeSinceLastRequest > timeBeforeExpire && !inListOfExemptions(requestURI,contextPath,EXEMPT_URLS_FOR_REQUEST_TIMEOUT_REDIRECT )){
+						httpResponse.sendRedirect(contextPath + "/logout.jsp");
 						return;
 					}
 				}
-			}
-			
-			HttpSession session = httpRequest.getSession(false);
-			if (session==null || session.getAttribute("user") == null) {
-				
-				
 
-				/*
-				 * If the requested resource is npt exempt then redirect to the logout page.
-				 * 
-				 * bug fix: removed root directory auto-exemption. If you want to have a resource
-				 * be an exemption, you must explicitely add to EXEMPT_URLS array.
-				 */
-				if (!inListOfExemptions(requestURI, contextPath,EXEMPT_URLS)) {
-					httpResponse.sendRedirect(contextPath + "/logout.jsp");
-					return;
-				}
-			}else if(session!=null && InActivityLimitInMins != null){ //Tracking for last request time
-				try{
-					long minLimit = Long.parseLong(InActivityLimitInMins);
-				
-					Date lastRequestDate = (Date) session.getAttribute("last_request_time");
-					Date thisRequestDate = new Date();	
-					long timeSinceLastRequest = -1;
-					if (lastRequestDate != null){ 
-						long timeBeforeExpire = 60 * 1000 * minLimit; //TODO need to use this Also need to get it from a property
-						long lastRequest = lastRequestDate.getTime();
-						long thisRequest = thisRequestDate.getTime();
-						timeSinceLastRequest = thisRequest - lastRequest;
-						logger.debug("lastRequestDate.getTime() "+lastRequestDate.getTime()+" thisRequestDate.getTime() "+thisRequestDate.getTime()+" -- "+timeSinceLastRequest);
-						if (timeSinceLastRequest > timeBeforeExpire && !inListOfExemptions(requestURI,contextPath,EXEMPT_URLS_FOR_REQUEST_TIMEOUT_REDIRECT )){
-							httpResponse.sendRedirect(contextPath + "/logout.jsp");
-							return;
-						}
-					}
-					
-				if(!inListOfExemptions(requestURI, contextPath,EXEMPT_URLS_FOR_REQUEST_TIMEOUT)) { 
-					logger.debug("reseting timer list uri "+httpRequest.getRequestURI());
-					session.setAttribute("last_request_time",thisRequestDate);
-				}
-				}catch(Exception e){
-					logger.error("ERROR checking for last activity. Limit Activity :"+InActivityLimitInMins, e);
-				}
+			if(!inListOfExemptions(requestURI, contextPath,EXEMPT_URLS_FOR_REQUEST_TIMEOUT)) {
+				logger.debug("reseting timer list uri "+httpRequest.getRequestURI());
+				session.setAttribute("last_request_time",thisRequestDate);
 			}
-//		}
+			}catch(Exception e){
+				logger.error("ERROR checking for last activity. Limit Activity :"+InActivityLimitInMins, e);
+			}
+		}
+
 
 		logger.debug("LoginFilter chainning");
 		chain.doFilter(request, response);

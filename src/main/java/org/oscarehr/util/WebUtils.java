@@ -98,6 +98,11 @@ public final class WebUtils {
         return sb.toString();
     }
 
+    public static String popErrorAndInfoMessagesAsHtml(HttpSession session)
+    {
+        return(popErrorMessagesAsHtml(session)+popInfoMessagesAsHtml(session));
+    }
+
     public static String popErrorMessagesAsHtml(HttpSession session, String styleClass, String style, String id, String name) {
         return renderMessagesAsHtml(session, ERROR_MESSAGE_SESSION_KEY, styleClass, style, id, name);
     }
