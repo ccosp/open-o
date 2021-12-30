@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.apache.logging.log4j.Logger;
 import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent;
@@ -56,7 +57,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.rest.client.IGenericClient;
+
 import oscar.OscarProperties;
 import oscar.log.LogAction;
 

@@ -40,6 +40,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<log4j2.version>2.17.0</log4j2.version>
 		<slf4j.version>1.7.32</slf4j.version>
+		<hapifhir.version>5.4.0</hapifhir.version>
 	</properties>
 
 	<repositories>
@@ -811,7 +812,7 @@
 			<version>UNKNOWN</version>
 		</dependency>
 
-		<!-- display tag Remove this. It's only used in 1 deprecated feature in OSCAR 
+		<!-- REMOVE displayTag. It's only used in 1 deprecated feature of OSCAR
 		and is not well maintained. -->
 		<dependency>
 			<groupId>displaytag</groupId>
@@ -1293,7 +1294,7 @@
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-base</artifactId>
-   <version>2.5</version>
+   <version>${hapifhir.version}</version>
 
    <exclusions>
    	<exclusion>
@@ -1309,12 +1310,12 @@
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-structures-dstu2</artifactId>
-   <version>2.5</version>
+   <version>${hapifhir.version}</version>
 </dependency>
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-structures-dstu3</artifactId>
-   <version>2.5</version>
+   <version>${hapifhir.version}</version>
 </dependency>
 
 	</dependencies>
