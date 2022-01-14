@@ -416,8 +416,7 @@ public final class RxRePrescribeAction extends DispatchAction {
 			response.sendRedirect("error.html");
 			return null;
 		}
-		CopyOnWriteArrayList<String> reRxDrugList = new CopyOnWriteArrayList<String>();
-		reRxDrugList = bean.getReRxDrugIdList();
+		CopyOnWriteArrayList<String> reRxDrugList = bean.getReRxDrugIdList();
 		MiscUtils.getLogger().debug(reRxDrugList);
 		CopyOnWriteArrayList<RxPrescriptionData.Prescription> listReRxDrug = new CopyOnWriteArrayList<Prescription>();
 		for (String drugId : reRxDrugList) {
