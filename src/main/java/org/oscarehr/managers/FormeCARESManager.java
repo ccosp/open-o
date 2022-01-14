@@ -26,7 +26,7 @@ package org.oscarehr.managers;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.caisi.service.IssueAdminManager;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
 import org.oscarehr.PMmodule.model.ProgramProvider;

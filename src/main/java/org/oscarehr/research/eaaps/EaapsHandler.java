@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.model.Program;
@@ -76,7 +76,7 @@ public class EaapsHandler extends DefaultGenericHandler implements oscar.oscarLa
 
 	private static final String SYSTEM_PROVIDER = SYSTEM_USER_ID;
 
-	private static Logger logger = Logger.getLogger(EaapsHandler.class);
+	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	private DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 

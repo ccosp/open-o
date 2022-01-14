@@ -42,7 +42,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.DynamicHapiLoaderUtils;
 import org.oscarehr.util.MiscUtils;
 
@@ -59,7 +59,7 @@ public class MDSHandler implements MessageHandler {
     Object terser;
     ArrayList obrGroups = null;
     HashMap<String,String> headerMaps = new HashMap<String,String>();
-    Logger logger = Logger.getLogger(MDSHandler.class);
+    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
     /** Creates a new instance of CMLHandler */
     public MDSHandler(){

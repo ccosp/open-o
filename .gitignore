@@ -21,3 +21,4 @@ src/main/resources/uiResources_*.properties
 /.run*
 /catalina_base*
 *.iml
+/catalina_base/*

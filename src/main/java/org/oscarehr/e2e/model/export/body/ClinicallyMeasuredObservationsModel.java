@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.marc.everest.datatypes.ANY;
 import org.marc.everest.datatypes.BL;
 import org.marc.everest.datatypes.ED;
@@ -59,7 +59,7 @@ import org.oscarehr.e2e.model.export.template.AuthorParticipationModel;
 import org.oscarehr.e2e.util.EverestUtils;
 
 public class ClinicallyMeasuredObservationsModel {
-	private static Logger log = Logger.getLogger(ClinicallyMeasuredObservationsModel.class.getName());
+	private static Logger log = org.oscarehr.util.MiscUtils.getLogger();
 	private Measurement measurement;
 
 	private SET<II> ids;

@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.encoders.Base64;
 import org.oscarehr.olis.dao.OLISRequestNomenclatureDao;
 import org.oscarehr.olis.dao.OLISResultNomenclatureDao;
@@ -59,7 +59,7 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
  */
 public class OLISHL7Handler implements MessageHandler {
 
-	Logger logger = Logger.getLogger(DefaultGenericHandler.class);
+	Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 	protected boolean isFinal = true;
 	protected boolean isCorrected = false;
 	protected Message msg = null;

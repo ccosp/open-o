@@ -8,7 +8,7 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@page import="org.oscarehr.util.WebUtilsOld"%>
+<%@page import="org.oscarehr.util.WebUtils"%>
 <%@page import="oscar.eform.actions.FaxAction"%>
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -73,7 +73,7 @@ function finishPage(secs){
 				}
 				%>
 				
-				<%=WebUtilsOld.popInfoMessagesAsHtml(session)%>
+				<%=WebUtils.popInfoMessagesAsHtml(session)%>
 				</td>
 			</tr>
 			<tr>

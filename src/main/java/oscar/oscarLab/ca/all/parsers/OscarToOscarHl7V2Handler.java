@@ -27,7 +27,7 @@ package oscar.oscarLab.ca.all.parsers;
 
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils;
 import org.oscarehr.util.MiscUtils;
 

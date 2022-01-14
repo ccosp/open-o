@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import oscar.util.UtilDateUtilities;
 import ca.uhn.hl7v2.HL7Exception;
@@ -46,7 +46,7 @@ import ca.uhn.hl7v2.util.Terser;
 import ca.uhn.hl7v2.validation.impl.NoValidation;
 
 public class TRUENORTHHandler implements MessageHandler {
-    Logger logger = Logger.getLogger(TRUENORTHHandler.class);	
+    Logger logger = org.oscarehr.util.MiscUtils.getLogger();	
 	ORU_R01 msg = null;
     ArrayList<String> headers = null;
     HashMap<OBR, ArrayList<OBX>> obrSegMap = null;

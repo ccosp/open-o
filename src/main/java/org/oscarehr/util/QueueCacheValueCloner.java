@@ -21,27 +21,8 @@
  * Toronto, Ontario, Canada
  */
 
+package org.oscarehr.util;
 
-package org.oscarehr.common.web;
-
-import org.apache.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.ContextLoaderListener;
-
-public class OscarSpringContextLoaderListener extends ContextLoaderListener {
-
-	private static Logger logger = MiscUtils.getLogger();
-
-	@Override
-    protected ContextLoader createContextLoader() {
-		try {
-			logger.info("Creating OscarContextLoader");
-			return new OscarSpringContextLoader();
-		} catch (Throwable t) {
-			logger.error("Unexpected error.", t);
-			throw (new RuntimeException(t));
-		}
-	}
-
+public interface QueueCacheValueCloner<V> {
+    V cloneBean(V var1);
 }
