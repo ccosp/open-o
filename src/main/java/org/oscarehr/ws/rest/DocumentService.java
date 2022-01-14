@@ -24,11 +24,11 @@
 package org.oscarehr.ws.rest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+
 import org.oscarehr.common.model.Document;
 import org.oscarehr.managers.DocumentManager;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+
 import org.oscarehr.ws.rest.conversion.DocumentConverter;
 import org.oscarehr.ws.rest.to.model.DocumentTo1;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +49,6 @@ import java.io.IOException;
 public class DocumentService extends AbstractServiceImpl{
     @Autowired
     DocumentManager documentManager;
-
-    Logger logger = MiscUtils.getLogger();
-
 
     @POST
     @Path("/saveDocumentToDemographic")
