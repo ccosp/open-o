@@ -1442,10 +1442,13 @@ if(wcbneeds != null){%>
                 }
               }
               request.setAttribute("paymentMethodList", types);
+              request.setAttribute("defaultPaymentMethod" , OscarProperties.getInstance().getProperty("DEFAULT_PAYMENT_METHOD",""));
             %>
-              <html:select styleClass="form-control" property="xml_encounter">
-                <html:options collection="paymentMethodList" property="id" labelProperty="paymentType"/>
-              </html:select>
+                <select class="form-control" id="xml_encounter" name="xml_encounter">
+                    <c:forEach items="${paymentMethodList}" var="paymentMethod" >
+                        <option value="${paymentMethod.id}" ${ defaultPaymentMethod eq paymentMethod.id ? 'selected' : ''}>${paymentMethod.paymentType}</option>
+                    </c:forEach>
+                </select>
               </div>
             
             </td>
