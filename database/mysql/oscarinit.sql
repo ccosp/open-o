@@ -12150,7 +12150,7 @@ CREATE TABLE IF NOT EXISTS `consentType` (
   `name` varchar(50),
   `description` varchar(500),
   `active` tinyint(1),
-  `provider_no` VARCHAR(11),
+  `providerNo` VARCHAR(11),
   `remoteEnabled` TINYINT(1),
   PRIMARY KEY (`id`)
 );
