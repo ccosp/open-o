@@ -1831,7 +1831,7 @@
                                                               else {
                                                                     nameSb.append(appointment.getName());
                                                               }
-                                                              String name = UtilMisc.toUpperLowerCase(nameSb.toString());
+                                                              String name = WordUtils.capitalizeFully(nameSb.toString(), new char[] {',','-','(','\''});
 
                                                               paramTickler[0]=String.valueOf(demographic_no);
                                                               paramTickler[1]=MyDateFormat.getSysDate(strDate);
