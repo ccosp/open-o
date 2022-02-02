@@ -152,7 +152,7 @@ public class CanadianVaccineCatalogueManager {
 
 	public void updateMedications(LoggedInInfo loggedInInfo) {
 		
-		IGenericClient client = ctx.newRestfulGenericClient(serverBase);
+		IGenericClient client = (IGenericClient) ctx.newRestfulGenericClient(serverBase);
 		Bundle bundle = client.search().forResource(Medication.class).withTag(null, "CVC2").returnBundle(Bundle.class).execute();
 		processMedicationBundle(loggedInInfo, bundle);
 		logger.debug("Retrieved Bundle ID + " + bundle.getId() + ", total records found = " + bundle.getTotal());
@@ -227,7 +227,7 @@ public class CanadianVaccineCatalogueManager {
 	}
 
 	public void updateBrandNameImmunizations(LoggedInInfo loggedInInfo) {
-		IGenericClient client = ctx.newRestfulGenericClient(serverBase);
+		IGenericClient client = (IGenericClient) ctx.newRestfulGenericClient(serverBase);
 		ValueSet vs = client.read().resource(ValueSet.class).withId("CVC-Tradename-ValueSet").execute();
 
 		for (ConceptSetComponent c : vs.getCompose().getInclude()) {
@@ -269,7 +269,7 @@ public class CanadianVaccineCatalogueManager {
 	}
 
 	public void updateGenericImmunizations(LoggedInInfo loggedInInfo) {
-		IGenericClient client = ctx.newRestfulGenericClient(serverBase);
+		IGenericClient client = (IGenericClient) ctx.newRestfulGenericClient(serverBase);
 		ValueSet vs = client.read().resource(ValueSet.class).withId("CVC-Generic-ValueSet").execute();
 
 		for (ConceptSetComponent c : vs.getCompose().getInclude()) {
