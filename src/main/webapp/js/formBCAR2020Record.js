@@ -176,16 +176,18 @@ function init(pageNo){
         toggleFieldRulesSingle('c_substanceOthersOther', ['t_substanceOthersOtherDetails']);
 
         //Initial Physical Exam
-        toggleFieldRulesEx('c_initialExamHeadNorm', 'c_initialExamHeadAbNorm', ['t_initialExamHeadDetails']);
-        toggleFieldRulesEx('c_initialExamBreastsNorm', 'c_initialExamBreastsAbNorm', ['t_initialExamBreastsDetails']);
-        toggleFieldRulesEx('c_initialExamHeartNorm', 'c_initialExamHeartAbNorm', ['t_initialExamHeartDetails']);
-        toggleFieldRulesEx('c_initialExamAbdomenNorm', 'c_initialExamAbdomenAbNorm', ['t_initialExamAbdomenDetails']);
-        toggleFieldRulesEx('c_initialExamMusculoNorm', 'c_initialExamMusculoAbNorm', ['t_initialExamMusculoDetails']);
-        toggleFieldRulesEx('c_initialExamSkinNorm', 'c_initialExamSkinAbNorm', ['c_initialExamSkinVaricosities', 't_initialExamSkinOtherDetails', 'c_initialExamSkinOther']);
+
+        toggleFieldRulesEx('c_initialExamHeadNorm', 'c_initialExamHeadAbNorm', []);
+        toggleFieldRulesEx('c_initialExamBreastsNorm', 'c_initialExamBreastsAbNorm',[] );
+        toggleFieldRulesEx('c_initialExamHeartNorm', 'c_initialExamHeartAbNorm', []);
+        toggleFieldRulesEx('c_initialExamAbdomenNorm', 'c_initialExamAbdomenAbNorm', []);
+        toggleFieldRulesEx('c_initialExamMusculoNorm', 'c_initialExamMusculoAbNorm', []);
+        toggleFieldRulesEx('c_initialExamSkinNorm', 'c_initialExamSkinAbNorm', []);
         toggleFieldRulesSingle('c_initialExamSkinOther', ['t_initialExamSkinOtherDetails']);
-        toggleFieldRulesEx('c_initialExamPelvicNorm', 'c_initialExamPelvicAbNorm', ['t_initialExamPelvicDetails']);
-        toggleFieldRulesMultiple(['c_initialExamPelvicNorm','c_initialExamPelvicAbNorm'], ['d_initialExamPelvicSTITest', 'd_initialExamPelvicPapTest']);
-        toggleFieldRulesEx('c_initialExamOtherNorm', 'c_initialExamOtherAbNorm', ['t_initialExamOtherDetails']);
+        toggleFieldRulesEx('c_initialExamPelvicNorm', 'c_initialExamPelvicAbNorm', []);
+        toggleFieldRulesMultiple(['c_initialExamPelvicNorm','c_initialExamPelvicAbNorm'], []);
+        toggleFieldRulesEx('c_initialExamOtherNorm', 'c_initialExamOtherAbNorm', []);
+
 
         //Indigenous identity
         toggleFieldRulesSingle('c_indIdentFirstNations', ['c_indIdentStatus', 'c_indIdentNonStatus', 'c_indIdentLiveOnReserve', 'c_indIdentLiveOffReserve', 'c_indIdentLiveOnOffReserve']);
