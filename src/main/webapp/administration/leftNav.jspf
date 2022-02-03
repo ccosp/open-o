@@ -23,11 +23,8 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
-<%@ page import="org.apache.commons.lang.StringUtils"%>
 
 <%
 String curProvider_no = (String)session.getAttribute("user");
@@ -865,7 +862,7 @@ String curProvider_no = (String)session.getAttribute("user");
 		                        %>		
 			
 					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/updateDrugref.jsp" ><bean:message key="admin.admin.UpdateDrugref"/></a></li>	
-					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/Know2actConfiguration.jsp" ><bean:message key="admin.admin.Know2ActConfig"/></a></li>
+<%--					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/Know2actConfiguration.jsp" ><bean:message key="admin.admin.Know2ActConfig"/></a></li>--%>
 					<li><a href="javascript:void(0);" class="xlink" rel="${ctx}/admin/surveillanceConfiguration.jsp" ><bean:message key="admin.admin.surveillanceConfig"/></a></li>						
 					<li><a  href='javascript:void(0);' class="xlink" rel="${ctx}/admin/integratorPushStatus.jsp"><bean:message key="admin.admin.integratorPush" /></a></li>
 
@@ -901,8 +898,8 @@ String curProvider_no = (String)session.getAttribute("user");
 						class="xlink" rel="${ctx}/demographic/demographicExport.jsp"><bean:message key="admin.admin.DemoExport"/></a></li>
 		                        <li><a href='javascript:void(0);'
 						class="xlink" rel="${ctx}/demographic/demographicImport.jsp"><bean:message key="admin.admin.DemoImport"/></a></li>
-					<li><a href='javascript:void(0);'
-						class="xlink" rel="${ctx}/admin/demographicmergerecord.jsp"><bean:message key="admin.admin.mergeRec"/></a></li>
+<%--					<li><a href='javascript:void(0);'--%>
+<%--						class="xlink" rel="${ctx}/admin/demographicmergerecord.jsp"><bean:message key="admin.admin.mergeRec"/></a></li>--%>
 					<li><a href='javascript:void(0);'
 						class="xlink" rel="${ctx}/admin/updatedemographicprovider.jsp"><bean:message
 						key="admin.admin.btnUpdatePatientProvider" /></a></li>
