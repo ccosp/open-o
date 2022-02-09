@@ -211,13 +211,13 @@ public class BulkPatientDashboardAction extends DispatchAction {
 		}
 
 		String subject = "Report on bulk setting of patients to inactive.";
-		String message = "Patient demographic_no(s) {" + patientIdsJson +
-			"} set inactive by " + providerNo;
+		String message = "Patient charts with demographic_no(s) {" + patientIdsJson +
+			"} have been set inactive by: " + loggedInInfo.getLoggedInProvider().getFormattedName();
 
-		messageHandler.notifyProvider(subject, message, providerNo, null); // patientIdList);
+		messageHandler.notifyProvider(subject, message, providerNo);
 		String mrp = getMRP(loggedInInfo);
 		if (mrp != null && !providerNo.equals(mrp)) {  // operation done by MOA for doctor
-			messageHandler.notifyProvider(subject, message, mrp, null); // patientIdList);
+			messageHandler.notifyProvider(subject, message, mrp);
 		}
 
 		logger.info(message);
