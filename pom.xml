@@ -12,7 +12,7 @@
 	</issueManagement>
 	<ciManagement>
 		<system>Jenkins</system>
-		<url>https://demo.oscarmcmaster.org:11042/</url>
+		<url>https://jenkins.openosp.ca</url>
 	</ciManagement>
 	<inceptionYear>2001</inceptionYear>
 	<mailingLists>
@@ -31,14 +31,17 @@
 	</licenses>
 	<url>http://www.oscarcanada.org</url>
 	<scm>
-		<url>http://oscarmcmaster.git.sourceforge.net/git/gitweb.cgi?p=oscarmcmaster/oscar</url>
-		<connection>scm:git:git://oscarmcmaster.git.sourceforge.net/gitroot/oscarmcmaster/oscar</connection>
-		<developerConnection>scm:git:ssh://user@source.oscartools.org:29418/oscar</developerConnection>
+		<url>https://bitbucket.org/openoscar/oscar/wiki/Home</url>
+		<connection>scm:git:https://bitbucket.org/openoscar/oscar/branch/master</connection>
+		<developerConnection>scm:git:ssh:git@bitbucket.org:openoscar/oscar.git</developerConnection>
 		<tag>master</tag>
 	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<log4j2.version>2.17.0</log4j2.version>
+		<slf4j.version>1.7.32</slf4j.version>
+		<hapifhir.version>5.4.0</hapifhir.version>
 	</properties>
 
 	<repositories>
@@ -58,11 +61,6 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
-		<repository>
-			<id>new_oscar_repo</id>
-			<url>http://mvn.oscar-emr.com/repository</url>
-		</repository>
-		
 		<!-- MARC-HI (Everest & SHIC) -->
 <!-- 		<repository>-->
 <!--			<id>marc-te-main</id>-->
@@ -98,36 +96,63 @@
 		<dependency>
 			<groupId>net.bull.javamelody</groupId>
 			<artifactId>javamelody-core</artifactId>
-			<version>1.87.0</version>
+			<version>1.90.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl-over-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
+		<!-- LOGGING -->
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		<!--Log4j-2 libraries-->
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-core</artifactId>
-		    <version>2.14.0</version>
+		    <version>${log4j2.version}</version>
 		</dependency>
-        <dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+
+		<!--Enables log4j-2 binding from libraries that still use older Log4j-1 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.30</version>
+			<version>${slf4j.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.7.30</version>
+			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-    		<groupId>org.slf4j</groupId>
-    		<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.7.30</version>
-		</dependency>
-                
+
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -141,13 +166,13 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>2.11.0</version>
 		</dependency>
-		 <dependency>
-                        <groupId>commons-fileupload</groupId>
-                        <artifactId>commons-fileupload</artifactId>
-                        <version>1.3.3</version>
-                </dependency>
+		<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>1.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -164,12 +189,6 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -251,7 +270,6 @@
 			<artifactId>spring-mock</artifactId>
 			<version>2.0.8</version>
 		</dependency>
-		
 
 		<!-- hibernate / sql -->
 		<dependency>
@@ -262,7 +280,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.39</version>
+			<version>8.0.25</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -280,7 +298,6 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.2</version>
 		</dependency>
-
 
 		<!-- pdf / jpedal -->
 		<dependency>
@@ -346,7 +363,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.1.2</version>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
@@ -450,7 +467,6 @@
 				<exclusion>
 					<groupId>com.lowagie</groupId>
 					<artifactId>itext</artifactId>
-					<!--			<version>2.1.7.js8</version>-->
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -625,13 +641,7 @@
                         <artifactId>hsfo2</artifactId>
                         <version>2.0</version>
                 </dependency>
-<!--
-		 <dependency>
-                        <groupId>wlws</groupId>
-                        <artifactId>wlws</artifactId>
-                        <version>1.0</version>
-                </dependency>
--->
+
 		<!-- apache xml beans -->
 		<dependency>
 			<groupId>org.apache.xmlbeans</groupId>
@@ -643,7 +653,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.6</version>
+			<version>4.5.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -663,14 +673,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- cookie revolver -->
-		<dependency>
-			<groupId>net.sf.cookierevolver</groupId>
-			<artifactId>cookierevolver</artifactId>
-			<version>0.2.5</version>
-		</dependency>
-
 		<!-- commons-betwixt ... what is this for? -->
 		<dependency>
 			<groupId>commons-betwixt</groupId>
@@ -774,7 +776,13 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.6</version>
+			<version>5.0.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl-over-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- ostermillerutils_1_04_03_for_java_1_4.jar 
@@ -799,7 +807,7 @@
 			<version>UNKNOWN</version>
 		</dependency>
 
-		<!-- display tag Remove this. It's only used in 1 deprecated feature in OSCAR 
+		<!-- REMOVE displayTag. It's only used in 1 deprecated feature of OSCAR
 		and is not well maintained. -->
 		<dependency>
 			<groupId>displaytag</groupId>
@@ -886,16 +894,6 @@
 			<artifactId>janino</artifactId>
 			<version>2.3.2</version>
 		</dependency>
-
-		<!-- *sigh* we really need to get rid of this -->
-		<dependency>
-			<groupId>pluginframework</groupId>
-			<artifactId>pluginframework</artifactId>
-			<version>0.9.13</version>
-		</dependency>
-
-		<!-- *sigh* I have no clue what this is -->
-		<!-- <dependency> <groupId>rx</groupId> <artifactId>rx</artifactId> <version>UNKNOWN</version> </dependency> -->
 
 		<!-- something something ocan something -->
 		<dependency>
@@ -1068,6 +1066,16 @@
 			<groupId>org.oscarehr</groupId>
 			<artifactId>myoscar_client_utils</artifactId>
 			<version>2013.07.22.TLS</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.oscarehr</groupId>
+					<artifactId>util</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -1112,6 +1120,10 @@
 				<exclusion>
 					<groupId>org.bouncycastle</groupId>
 					<artifactId>bcprov-jdk15</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1196,11 +1208,15 @@
                 <artifactId>ebs-client</artifactId>
                 <version>0.0.5</version>
                 <exclusions>
-						<exclusion>
-							<groupId>org.bouncycastle</groupId>
-							<artifactId>bcprov-jdk16</artifactId>
-						</exclusion>
-                </exclusions>
+					<exclusion>
+						<groupId>org.bouncycastle</groupId>
+						<artifactId>bcprov-jdk16</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+				</exclusions>
         </dependency>
         <dependency>
                 <groupId>org.oscarehr.integration.ebs</groupId>
@@ -1218,6 +1234,13 @@
 		<artifactId>jackson-jaxrs</artifactId>
 		<version>1.9.13</version>
 	</dependency>
+	
+	<dependency>
+		<groupId>org.xhtmlrenderer</groupId>
+		<artifactId>flying-saucer-pdf</artifactId>
+		<version>9.1.1</version>
+	</dependency>
+	
 
 	<dependency>
 		<groupId>org.owasp.encoder</groupId>
@@ -1260,9 +1283,15 @@
 
 	<!-- Caisi Integrator -->
 	<dependency>
-	  <groupId>org.oscarehr.caisi_integrator</groupId>
-	  <artifactId>integrator-objects</artifactId>
-	  <version>0.0.4</version>
+		<groupId>org.oscarehr.caisi_integrator</groupId>
+		<artifactId>integrator-objects</artifactId>
+		<version>0.0.4</version>
+		<exclusions>
+			<exclusion>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+			</exclusion>
+		</exclusions>
 	</dependency>
 	
 	<!-- This is a dependency for the Caisi Integrator Objects. Only required until
@@ -1286,7 +1315,7 @@
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-base</artifactId>
-   <version>2.5</version>
+   <version>${hapifhir.version}</version>
 
    <exclusions>
    	<exclusion>
@@ -1302,12 +1331,12 @@
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-structures-dstu2</artifactId>
-   <version>2.5</version>
+   <version>${hapifhir.version}</version>
 </dependency>
 <dependency>
    <groupId>ca.uhn.hapi.fhir</groupId>
    <artifactId>hapi-fhir-structures-dstu3</artifactId>
-   <version>2.5</version>
+   <version>${hapifhir.version}</version>
 </dependency>
 
 	</dependencies>
@@ -1356,26 +1385,16 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.0</version>
                 <dependencies>
-                  <!-- dependency>
-                  <groupId>org.apache.maven.doxia</groupId>
-                  <artifactId>doxia-core</artifactId>
-                  <version>1.2</version>
-                </dependency>
-                <dependency>
-                   <groupId>org.apache.maven.doxia</groupId>
-                   <artifactId>doxia-sink-api</artifactId>
-                   <version>1.3</version>
-                </dependency  -->
-                <dependency>
-                                    <groupId>org.apache.maven.doxia</groupId>
-                                    <artifactId>doxia-module-markdown</artifactId>
-                                    <version>1.3</version>
-                            </dependency>
-                    </dependencies>
-                    <configuration>
-                            <inputEncoding>UTF-8</inputEncoding>
-                            <outputEncoding>UTF-8</outputEncoding>
-                    </configuration>
+					<dependency>
+							<groupId>org.apache.maven.doxia</groupId>
+							<artifactId>doxia-module-markdown</artifactId>
+							<version>1.3</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+						<inputEncoding>UTF-8</inputEncoding>
+						<outputEncoding>UTF-8</outputEncoding>
+				</configuration>
         </plugin>
         <plugin>
             <groupId>com.mycila.maven-license-plugin</groupId>
@@ -1570,7 +1589,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-                                <version>2.5.1</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
@@ -1579,7 +1598,7 @@
 
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-                                <version>1.7</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>set_timestamp</id>
@@ -1620,67 +1639,38 @@
 							</tasks>
 						</configuration>
 					</execution>
-					
-					<execution>
-						<id>deploy_local_catalina_base</id>
-						<phase>package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<copy todir="catalina_base/webapps/oscar">
-									<fileset dir="target/${project.name}-${project.version}" />
-								</copy>
-							</tasks>
-						</configuration>
-					</execution>
-					<execution>
-						<id>clean_local_catalina_base</id>
-						<phase>clean</phase>
-						<configuration>
-							<tasks>
-								<delete dir="catalina_base/webapps/oscar" />
-								<delete includeemptydirs="true" quiet="true">
-									<fileset dir="catalina_base/logs" excludes=".gitignore" />
-									<fileset dir="catalina_base/work" excludes=".gitignore" />
-								</delete>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
 				</executions>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.15</version>
+				<version>3.1.2</version>
 				<configuration>
 					<configLocation>utils/checkstyle.xml</configLocation>
+					<encoding>${project.build.sourceEncoding}</encoding>
 					<failsOnError>true</failsOnError>
 					<consoleOutput>true</consoleOutput>
-					<sourceDirectory>.</sourceDirectory>
+					<linkXRef>false</linkXRef>
 					<includes>src/main/**/*,database/**/*.sql</includes>
 					<excludes>**/*.jar, **/*.txt, **/*.rpt, **/*.fla, **/*.xml, **/*.dtd, **/*.xslt, **/*.doc, **/*.bak, **/*.tld, **/*.jpg, **/*.png, **/*.gif, **/*.pdf, **/*.swf, **/*.js, **/*.css, src/main/webapp/share/calendar/**, **/*svg.jsp, src/main/webapp/casemgmt/Index2.jsp, database/mysql/updates/update-2016-06-06.sql, src/main/java/oscar/oscarMessenger/util/MsgDemoMap.java, src/main/java/oscar/oscarEncounter/pageUtil/EctDisplayMsgAction.java, database/mysql/oscarinit.sql, src/main/webapp/oscarEncounter/Index.jsp, database/mysql/oscarinit_on.sql, database/mysql/oscardata.sql, database/mysql/oscarinit_bc.sql, src/main/java/oscar/oscarEncounter/data/EctPatientData.java</excludes>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>9.2.1</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
+						<id>process-sources</id>
 						<phase>process-sources</phase>
 						<goals>
 							<goal>checkstyle</goal>
 						</goals>
 					</execution>
 				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.oscarehr</groupId>
-						<artifactId>util</artifactId>
-						<version>2013.03.06</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
 			<plugin>
@@ -1918,50 +1908,6 @@
 	</build>
 
 	<profiles>
-<!-- 		<profile>
-			<id>jdk6</id>
-			<activation>
-	<activeByDefault>false</activeByDefault>			
-	<jdk>1.6</jdk>
-			</activation>
-
-				<dependencies>
-					<dependency>
-						<groupId>org.oscarehr</groupId>
-						<artifactId>datasource-jdk6</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
-			<build>
-				<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.9</version>
-					<configuration>
-						<minmemory>128m</minmemory>
-          				<maxmemory>1g</maxmemory>
-						<tags>
-							<tag>
-								<name>todo</name>
-								<placement>a</placement>
-								<head>To Do:</head>
-							</tag>
-						</tags>
-						<quiet>true</quiet>
-					</configuration>
-					<executions>
-						<execution>
-							<phase>verify</phase>
-							<goals>
-								<goal>javadoc</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				</plugins>
-			</build>
-		</profile> -->
 		<profile>
 			<id>jdk7</id>
 			<activation>

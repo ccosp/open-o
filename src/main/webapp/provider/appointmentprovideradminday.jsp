@@ -45,8 +45,6 @@
 <%@ page import="org.apache.commons.lang.WordUtils" %>
 <%@ page import="org.oscarehr.common.model.*" %>
 
-<!-- add by caisi -->
-<%@ taglib uri="http://www.caisi.ca/plugin-tag" prefix="plugin" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -1079,41 +1077,6 @@
                                 </div>
                                 <%}%>
                             </li>
-                            <!-- plugins menu extension point add -->
-                            <%
-                                int pluginMenuTagNumber = 0;
-                            %>
-                            <plugin:pageContextExtension serviceName="oscarMenuExtension" stemFromPrefix="Oscar"/>
-                            <logic:iterate name="oscarMenuExtension.points" id="pt" scope="page"
-                                           type="oscar.caisi.OscarMenuExtension">
-                                <%
-                                    if (oscar.util.plugin.IsPropertiesOn.propertiesOn(pt.getName().toLowerCase())) {
-                                        pluginMenuTagNumber++;
-                                %>
-
-                                <li><a href='<html:rewrite page="<%=pt.getLink()%>"/>'>
-                                    <%=pt.getName()%>
-                                </a></li>
-                                <%
-                                    }
-                                %>
-                            </logic:iterate>
-
-                            <!-- plugin menu extension point add end-->
-
-
-                                <%--                        <caisi:isModuleLoad moduleName="caisi">--%>
-                                <%--                            <%--%>
-                                <%--                                int menuTagNumber = 0;--%>
-                                <%--                            %>--%>
-                                <%--                            <li>--%>
-                                <%--                                <a href='<html:rewrite page="/PMmodule/ProviderInfo.do"/>'>Program</a>--%>
-                                <%--                                <%--%>
-                                <%--                                    menuTagNumber++;--%>
-                                <%--                                %>--%>
-                                <%--                            </li>--%>
-                                <%--                        </caisi:isModuleLoad>--%>
-
                             <% if (isMobileOptimized) { %>
                         </ul>
                     </li> <!-- end menu list for mobile-->

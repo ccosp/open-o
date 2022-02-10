@@ -45,7 +45,7 @@
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@ page import="org.oscarehr.common.model.UserProperty" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="plugin" uri="http://www.caisi.ca/plugin-tag" %>
+
 <%
     GregorianCalendar cal = new GregorianCalendar();
     int curYear = cal.get(Calendar.YEAR);
@@ -396,40 +396,6 @@
                             </div>
                             <%}%>
                         </li>
-                        <!-- plugins menu extension point add -->
-                        <%
-                            int pluginMenuTagNumber = 0;
-                        %>
-                        <plugin:pageContextExtension serviceName="oscarMenuExtension" stemFromPrefix="Oscar"/>
-                        <logic:iterate name="oscarMenuExtension.points" id="pt" scope="page"
-                                       type="oscar.caisi.OscarMenuExtension">
-                            <%
-                                if (oscar.util.plugin.IsPropertiesOn.propertiesOn(pt.getName().toLowerCase())) {
-                                    pluginMenuTagNumber++;
-                            %>
-
-                            <li><a href='<html:rewrite page="<%=pt.getLink()%>"/>'>
-                                <%=pt.getName()%>
-                            </a></li>
-                            <%
-                                }
-                            %>
-                        </logic:iterate>
-
-                        <!-- plugin menu extension point add end-->
-
-
-<%--                        <caisi:isModuleLoad moduleName="caisi">--%>
-<%--                            <%--%>
-<%--                                int menuTagNumber = 0;--%>
-<%--                            %>--%>
-<%--                            <li>--%>
-<%--                                <a href='<html:rewrite page="/PMmodule/ProviderInfo.do"/>'>Program</a>--%>
-<%--                                <%--%>
-<%--                                    menuTagNumber++;--%>
-<%--                                %>--%>
-<%--                            </li>--%>
-<%--                        </caisi:isModuleLoad>--%>
 
                 <% if (isMobileOptimized) { %>
                     </ul>

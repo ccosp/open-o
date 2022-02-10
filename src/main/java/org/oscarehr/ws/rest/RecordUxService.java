@@ -46,7 +46,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.StreamingOutput;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.casemgmt.service.CaseManagementPrint;
 import org.oscarehr.common.dao.DemographicDao;
 import org.oscarehr.common.dao.EncounterTemplateDao;

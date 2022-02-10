@@ -25,7 +25,7 @@ package oscar.oscarLab.ca.all.parsers;
 
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.Segment;
@@ -39,7 +39,7 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
 
 public class AlphaHandler extends DefaultGenericHandler implements MessageHandler {
 
-    Logger logger = Logger.getLogger(AlphaHandler.class);
+    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
     ca.uhn.hl7v2.model.v22.message.ORU_R01 msg22 = null;
     ca.uhn.hl7v2.model.v23.message.ORU_R01 msg23 = null;
     String version=null;

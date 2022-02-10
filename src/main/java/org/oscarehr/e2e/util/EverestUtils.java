@@ -45,7 +45,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -83,7 +83,7 @@ import org.oscarehr.e2e.extension.ObservationWithConfidentialityCode;
 import org.oscarehr.util.SpringUtils;
 
 public class EverestUtils {
-	private static Logger log = Logger.getLogger(EverestUtils.class.getName());
+	private static Logger log = org.oscarehr.util.MiscUtils.getLogger();
 	private static final String OSCAR_PREVENTIONITEMS_FILE = "/oscar/oscarPrevention/PreventionItems.xml";
 	protected static Map<String, String> preventionTypeCodes = null;
 

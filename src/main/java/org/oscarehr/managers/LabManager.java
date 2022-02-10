@@ -23,19 +23,14 @@
  */
 package org.oscarehr.managers;
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
-
 import java.util.List;
 
-import com.lowagie.text.DocumentException;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
-
 import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.Hl7TextMessage;
@@ -44,6 +39,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.lowagie.text.DocumentException;
+
 import oscar.log.LogAction;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 
@@ -61,7 +59,6 @@ public class LabManager {
 	Hl7TextMessageDao hl7TextMessageDao;
 	
 	@Autowired
-
 	private PatientLabRoutingDao patientLabRoutingDao;
 	
 	@Autowired
@@ -76,16 +73,13 @@ public class LabManager {
 
 		return results;
 	}
-
+	
 	public List<Hl7TextInfo> getHl7TextInfo(LoggedInInfo loggedInInfo, int demographicNo) {
 		checkPrivilege(loggedInInfo, "r");
 		
 		List<PatientLabRouting> patientLabRoutingList = patientLabRoutingDao.findByDemographicAndLabType(demographicNo, PatientLabRoutingDao.HL7);
-		List<Integer> labIds = null;
-		List<Hl7TextInfo> hl7TextInfoList = Collections.emptyList();
-		
-		if(patientLabRoutingList != null && patientLabRoutingList.size() > 0) {
-			labIds = new ArrayList<Integer>();
+		List<Integer> labIds = new ArrayList<Integer>();
+		if(patientLabRoutingList != null) {
 			for(PatientLabRouting patientLabRouting : patientLabRoutingList) {
 				labIds.add(patientLabRouting.getLabNo());
 			}			
@@ -93,11 +87,7 @@ public class LabManager {
 		
 		LogAction.addLogSynchronous(loggedInInfo, "LabManager.getHl7TextInfo", "demographicNo="+demographicNo);
 		
-		if(labIds != null) {
-			hl7TextInfoList = hl7textInfoDao.findByLabIdList(labIds);
-		}
-		
-		return hl7TextInfoList;
+		return hl7textInfoDao.findByLabIdList(labIds);
 
 	}
 	

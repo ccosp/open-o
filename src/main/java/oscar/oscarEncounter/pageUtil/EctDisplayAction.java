@@ -36,7 +36,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsDateJsonBeanProcessor;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -57,7 +57,7 @@ import oscar.util.UtilDateUtilities;
  */
 public class EctDisplayAction extends Action {
 
-	private static Logger logger = Logger.getLogger(EctDisplayAction.class);
+	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 	
 	private static HashMap<String, String> Actions = null;
 	protected static final String ELLIPSES = "...";
