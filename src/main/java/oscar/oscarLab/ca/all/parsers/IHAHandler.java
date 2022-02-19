@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.DynamicHapiLoaderUtils;
 
 import oscar.util.UtilDateUtilities;
@@ -52,7 +52,7 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
  */
 public class IHAHandler implements MessageHandler {
     
-    Logger logger = Logger.getLogger(IHAHandler.class);
+    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
     protected Message msg = null;
     protected Terser terser;
     protected ArrayList<ArrayList<Segment>> obrGroups = null;

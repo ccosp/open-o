@@ -30,7 +30,7 @@ import java.io.StringReader;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -39,7 +39,7 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
 public class E2EXSDValidator {
-	private static Logger log = Logger.getLogger(E2EXSDValidator.class.getName());
+	private static Logger log = org.oscarehr.util.MiscUtils.getLogger();
 
 	E2EXSDValidator() {
 		throw new UnsupportedOperationException();

@@ -43,7 +43,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.Varies;
@@ -62,7 +62,7 @@ import oscar.util.UtilDateUtilities;
 
 public class ExcellerisOntarioHandler implements MessageHandler {
 
-    Logger logger = Logger.getLogger(ExcellerisOntarioHandler.class);
+    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
     ORU_R01 msg = null;
 
 	private static List<String> labDocuments = Arrays.asList("BCCACSP","BCCASMP","BLOODBANKT",

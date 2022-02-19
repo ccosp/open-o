@@ -44,7 +44,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.tools.ant.util.DateUtils;
 import org.oscarehr.appointment.search.SearchConfig;
 import org.oscarehr.common.dao.AppointmentSearchDao;

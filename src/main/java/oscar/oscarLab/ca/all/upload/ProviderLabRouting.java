@@ -41,7 +41,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.ProviderLabRoutingDao;
 import org.oscarehr.common.model.ProviderLabRoutingModel;
 import org.oscarehr.util.SpringUtils;
@@ -56,7 +56,7 @@ import oscar.util.ConversionUtils;
  */
 public class ProviderLabRouting {
 
-	Logger logger = Logger.getLogger(ProviderLabRouting.class);
+	Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 	private ProviderLabRoutingDao providerLabRoutingDao = SpringUtils.getBean(ProviderLabRoutingDao.class);
 
 	public ProviderLabRouting() {

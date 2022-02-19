@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.itextpdf.text.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.web.reports.ocan.beans.SummaryOfActionsAndCommentsDomainBean;
 import org.oscarehr.web.reports.ocan.beans.SummaryOfActionsAndCommentsOCANBean;

@@ -46,7 +46,7 @@ import java.util.zip.ZipFile;
 import org.apache.commons.io.IOUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.oscarehr.caisi_integrator.util.MiscUtils;
+import org.oscarehr.util.MiscUtils;
 import com.itextpdf.text.DocumentException;
 
 import ca.uhn.hl7v2.HL7Exception;

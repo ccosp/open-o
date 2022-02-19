@@ -38,7 +38,7 @@
 		return;
 	}
 %>
-<%@ page import="oscar.eform.actions.DisplayImageAction,java.lang.*,java.io.File,oscar.OscarProperties,java.io.*,oscar.eform.*,oscar.eform.data.*,java.util.*,org.apache.log4j.Logger"%>
+<%@ page import="oscar.eform.actions.DisplayImageAction,java.lang.*,java.io.File,oscar.OscarProperties,java.io.*,oscar.eform.*,oscar.eform.data.*,java.util.*,org.apache.logging.log4j.Logger"%>
 <!--
 /*  eForm Generator v6.0l reimagined by Peter Hutten-Czapski 2017-2018
  *

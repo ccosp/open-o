@@ -30,19 +30,18 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.CtlDocumentDao;
-import org.oscarehr.common.dao.DocumentDao;
-import org.oscarehr.common.dao.ProviderInboxRoutingDao;
-import org.oscarehr.common.model.ConsentType;
-import org.oscarehr.common.dao.DocumentDao.DocumentType;
-import org.oscarehr.common.model.CtlDocument;
-import org.oscarehr.common.model.Document;
-import org.oscarehr.common.model.ProviderInboxItem;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.oscarehr.common.dao.*;
+import org.oscarehr.common.model.*;
+
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,7 @@ import org.springframework.stereotype.Service;
 
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
+
 import oscar.log.LogAction;
 
 @Service
@@ -68,10 +67,17 @@ public class DocumentManager {
     protected SecurityInfoManager securityInfoManager;
 
 	@Autowired
+
 	private PatientConsentManager patientConsentManager;
 
 	@Autowired
 	private ProviderInboxRoutingDao providerInboxRoutingDao;
+
+	@Autowired
+	private ProviderLabRoutingDao providerLabRoutingDao;
+
+	@Autowired
+	private PatientLabRoutingDao patientLabRoutingDao;
 
 	public Document getDocument(LoggedInInfo loggedInInfo, Integer id)
 	{
@@ -118,6 +124,59 @@ public class DocumentManager {
 		return(result);
 	}
 	
+	public Document addDocument(LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) {
+		documentDao.persist(document);
+		ctlDocument.getId().setDocumentNo(document.getDocumentNo());
+		ctlDocumentDao.persist(ctlDocument);
+		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "id=" + document.getId());
+		return(document);
+	}
+
+	/**
+	 * Creates a document and saves it to the provided demographic
+	 * @param loggedInInfo The logged in info of the current user
+	 * @param document Document to create
+	 * @param demographicNo The demographic number to save the document to
+	 * @param providerNo The optional provider number to route the document to
+	 * @param documentData The document byte data
+	 * @return Document record from the database once it has been created
+	 * @throws IOException If actions related to getting document data fail
+	 */
+	public Document createDocument(LoggedInInfo loggedInInfo, Document document, Integer demographicNo, String providerNo, byte[] documentData) throws IOException {
+
+		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "w", "" ) ) {
+			throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
+		}
+
+		SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = new Date();
+		// Generates filename and path data and saves the document data to the file system
+		String documentPath = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		String fileName = dateTimeFormat.format(today) + "_" + document.getDocfilename();
+		File file = new File(documentPath + File.separator + fileName);
+		FileUtils.writeByteArrayToFile(file, documentData);
+
+		// Gets the number of pages for the document
+		int numberOfPages = 1;
+		if (fileName.toLowerCase().endsWith("pdf")) {
+			PDDocument pdDocument = PDDocument.load(file);
+			numberOfPages = pdDocument.getNumberOfPages();
+		} else if (fileName.toLowerCase().endsWith("html")) {
+			numberOfPages = 0;
+		}
+		document.setNumberofpages(numberOfPages);
+		document.setDoccreator(loggedInInfo.getLoggedInProviderNo());
+		document.setDocfilename(fileName);
+
+		// Creates and saves the document
+		saveDocument(document, demographicNo, providerNo);
+
+		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.createDocument()", "Document ID: " + document.getId().toString() + " Demographic: " + demographicNo.toString() + " FileName: " + document.getDocfilename());
+
+		return document;
+	}
+
 	public List<Document> getDocumentsUpdateAfterDate(LoggedInInfo loggedInInfo, Date updatedAfterThisDateExclusive, int itemsToReturn) {
 		
 		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "r", "" ) ) {
@@ -128,16 +187,6 @@ public class DocumentManager {
 
 		LogAction.addLog(loggedInInfo, "DocumentManager.getUpdateAfterDate", "updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive, "", "", "Number items " + itemsToReturn);
 
-		return (results);
-	}
-	
-	public List<Document> getDocumentsByDemographicIdUpdateAfterDate(LoggedInInfo loggedInInfo, Integer demographicId, Date updatedAfterThisDateExclusive) {
-		List<Document> results = new ArrayList<Document>();
-		ConsentType consentType = patientConsentManager.getProviderSpecificConsent(loggedInInfo);
-		if (patientConsentManager.hasPatientConsented(demographicId, consentType)) {
-			results = documentDao.findByDemographicUpdateAfterDate(demographicId, updatedAfterThisDateExclusive);
-			LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDocumentsByDemographicIdUpdateAfterDate", "demographicId="+demographicId+" updatedAfterThisDateExclusive="+updatedAfterThisDateExclusive);
-		}
 		return (results);
 	}
 
@@ -158,33 +207,67 @@ public class DocumentManager {
 		return this.saveDocument( loggedInInfo, edoc.getDocument(), edoc.getCtlDocument() );
 	}
 
-	public Integer saveDocument( LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument ) {
 
+	public Integer saveDocument( LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) {
 		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "w", "" ) ) {
             throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
         }
-		
-		Integer savedId = null;	
+
+		Integer savedId = null;
+	
 		if( document.getId() == null ) {
-			documentDao.persist( document );
-			savedId = document.getId();
-			ctlDocument.getId().setDocumentNo( savedId );
-			ctlDocumentDao.persist( ctlDocument );			
+			savedId = addDocument( loggedInInfo, document );
 		} else if( document.getId() > 0 ) {
-			savedId = updateDocument( loggedInInfo, document, ctlDocument);
+			savedId = updateDocument( loggedInInfo, document );
 		}
+		
+		ctlDocument.getId().setDocumentNo( savedId );
+		
+		if( savedId != null ) {
+			ctlDocumentDao.persist( ctlDocument );
+		}
+		
 		return savedId;
 	}
+
+	private void saveDocument(Document document, Integer demographicNo, String providerNo) {
+
+		// Saves the document
+		documentDao.persist(document);
+
+		// Check that the demographic number is a valid number for a demographic, sets it to -1 if it isn't
+		if (demographicNo == null || demographicNo < 1) {
+			demographicNo = -1;
+		}
+		// Creates and saves the CtlDocument record
+		CtlDocumentPK ctlDocumentPK = new CtlDocumentPK("demographic", demographicNo, document.getId());
+		CtlDocument ctlDocument = new CtlDocument();
+		ctlDocument.setId(ctlDocumentPK);
+		ctlDocument.setStatus(String.valueOf(document.getStatus()));
+		ctlDocumentDao.persist(ctlDocument);
+
+		// Saves the patient and provider lab routings if the provided numbers are valid
+		if (demographicNo > 0) {
+			PatientLabRouting patientLabRouting = new PatientLabRouting(document.getId(), "DOC", demographicNo);
+			patientLabRoutingDao.persist(patientLabRouting);
+		}
+
+		if (StringUtils.isNotEmpty(providerNo)) {
+			ProviderLabRoutingModel providerLabRouting = new ProviderLabRoutingModel(providerNo, document.getId(), "N", "", new Date(), "DOC");
+			providerLabRoutingDao.persist(providerLabRouting);
+		}
+	}
 	
-	public Integer updateDocument( LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument ) {
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "w", "" ) ) {
-            throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
-        }
-		document.setUpdatedatetime(new Date(System.currentTimeMillis()));
+	private Integer addDocument( LoggedInInfo loggedInInfo, Document document ) {
+
+		documentDao.persist( document );
+		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document saved ", "Document No." + document.getDocumentNo(), "","");
+		return document.getId();
+	}
+	
+	private Integer updateDocument( LoggedInInfo loggedInInfo, Document document ) {
 		documentDao.merge( document );
-		ctlDocument.getId().setDocumentNo( document.getId() );
-		ctlDocumentDao.merge( ctlDocument );
-		LogAction.addLog(loggedInInfo, "DocumentManager.updateDocument", "Document updated ", "Document No." + document.getDocumentNo(), "","");
+		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document updated ", "Document No." + document.getDocumentNo(), "","");
 		return document.getId();
 	}
 	
@@ -203,9 +286,11 @@ public class DocumentManager {
 			if( toPath == null ) {
 				toPath = getParentDirectory();
 			}
-			Path from = FileSystems.getDefault().getPath(fromPath, document.getDocfilename());
-			Path to = FileSystems.getDefault().getPath(toPath, document.getDocfilename());
+
+			Path from = FileSystems.getDefault().getPath( String.format("%1$s%2$s%3$s", fromPath, File.separator, document.getDocfilename() ) );
+			Path to = FileSystems.getDefault().getPath( String.format("%1$s%2$s%3$s", toPath, File.separator, document.getDocfilename() ) );
 			Files.move( from, to, StandardCopyOption.REPLACE_EXISTING );
+
 			LogAction.addLog(loggedInInfo, "EformDataManager.moveDocument", "Document was moved", "Document No." + document.getDocumentNo(), "",fromPath + " to " + toPath);
 		
 		} catch (IOException e) {
@@ -219,141 +304,18 @@ public class DocumentManager {
 	}
 	
 	public String getPathToDocument(LoggedInInfo loggedInInfo, int documentId) {
-		Document document = this.getDocument(loggedInInfo, documentId);		
-		String path = null; 
-		
-		if(document != null) {
-			path = getFullPathToDocument(document.getDocfilename());		
-		}
-		
-		return path;
-	}
-	
-	public String getFullPathToDocument(String filename) {
 
+		Document document = this.getDocument(loggedInInfo, documentId);
 		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-			
+		
 		if(! path.endsWith(File.separator)) {
-			path += File.separator;
+			path = path + File.separator;
 		}
-			
-		path += filename;
 		
-		if(! FileSystems.getDefault().getPath(path).toFile().exists())
-		{
-			path = null;
-		}
-
+		path = path + document.getDocfilename();		
+ 
 		return path;
-	}
-	
-	/**
-	 * Fetch by demographic number and given document type 
-	 * ie: get only LAB documents for the given demographic number. 
-	 * 
-	 * @param loggedInInfo
-	 * @param documentType
-	 * @param demographicNo
-	 * @return
-	 */
-	public List<Document> getDemographicDocumentsByDocumentType(LoggedInInfo loggedInInfo, int demographicNo, DocumentType documentType) {
-		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
-			throw new RuntimeException("Access Denied");
-		}
-		
-		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDemographicDocumentsByDocumentType", "fetching documents of type " + documentType.getName() + " for demographic " + demographicNo);
-		
-		return documentDao.findByDemographicAndDoctype(demographicNo, documentType);
-	}
-	
-	public Document getDocumentByDemographicAndFilename(LoggedInInfo loggedInInfo, int demographicNo, String fileName) {		
-		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
-			throw new RuntimeException("Access Denied");
-		}
-		
-		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDocumentByDemographicAndFilename", "fetching document with filename " + fileName + " for demographic " + demographicNo);
-		
-		return documentDao.findByDemographicAndFilename(demographicNo, fileName);		
-	}
-	
-	/**
-	 * Add a document to Oscar's document library.  
-	 * 
-	 *  This method actually saves the Document contents to the file system. The document resource
-	 *  MUST contain valid Base64 encoded document binary data.
-	 * 
-	 * @param loggedInInfo
-	 * @param document
-	 * @return
-	 * @throws Exception
-	 */
-	public Document addDocument(LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) throws Exception {
-		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.WRITE, null)) {
-			throw new RuntimeException("Access Denied");
-		}
-	
-		try {
-			
-			// is this new file or an update?
-			Document existingDocument = getDocumentByDemographicAndFilename(loggedInInfo, ctlDocument.getId().getModuleId(), document.getDocfilename());
-			
-			if(existingDocument != null && existingDocument.getId() != null && existingDocument.getId() > 0)
-			{
-				document.setDocumentNo(existingDocument.getId());
-			}
-			
-			// Always write to file system, updates will overwrite.
-			EDocUtil.writeDocContent(document.getDocfilename(), document.getBase64Binary());
-			
-			/*
-			 *  This ensures that all incoming documents contain the highly required default of 0.
-			 *  A null here will break other parts of Oscar functionality.
-			 */
-			if(document.getNumberofpages() == null) 
-			{
-				document.setNumberofpages(0);
-			}
-			
-			/*
-			 *  Get the page count if the document is PDF and the page count is not already given.
-			 *  The page count is usually missing in documents that are imported from external sources.
-			 *  This method is a catch-all to ensure that the page count is not missed in all PDFs.
-			 */
-			if("application/pdf".equalsIgnoreCase(document.getContenttype()) && document.getNumberofpages() == 0)
-			{
-				int pagecount = EDocUtil.getPDFPageCount(document.getDocfilename());
-				document.setNumberofpages(pagecount);
-			}
-			
-			// save document method handles both new saves and updates 
-			saveDocument(loggedInInfo, document, ctlDocument);
-
-			// confirm success if the file saved correctly.
-			if(document.getId() != null && document.getId() > 0)
-			{
-				LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Document Id: " + document.getId());				
-				return document;
-			}
-			
-		} catch (Exception e) {
-			// catch exception, document, and then throw.
-			LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Exception thrown during document save: " + e.getMessage());
-			throw e;
-		}
-	
-		return null;
-	}
-
-	public List<String> getProvidersThatHaveAcknowledgedDocument(LoggedInInfo loggedInInfo, Integer documentId) {
-		List<ProviderInboxItem> inboxList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", documentId);
-		List<String> providerList = new ArrayList<String>();
-		for(ProviderInboxItem item: inboxList) {
-			if(ProviderInboxItem.ACK.equals(item.getStatus())){ 
-				//If this has been acknowledge add the provider_no to the list.
-				providerList.add(item.getProviderNo());
-			}
-		}
-		return providerList;
 	}
 
 }
+
