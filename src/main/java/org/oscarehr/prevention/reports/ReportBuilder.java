@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.BillingONCHeader1Dao;
 import org.oscarehr.common.dao.OscarAppointmentDao;

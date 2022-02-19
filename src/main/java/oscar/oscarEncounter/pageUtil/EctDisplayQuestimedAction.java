@@ -32,7 +32,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts.util.MessageResources;
 import org.oscarehr.util.MiscUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.ws.rest.util.QuestimedUtil;
 import oscar.OscarProperties;

@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
 import org.oscarehr.common.model.Hl7TextMessage;
 import org.oscarehr.util.LoggedInInfo;

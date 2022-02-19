@@ -26,7 +26,7 @@ package org.oscarehr.appointment.search;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;

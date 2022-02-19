@@ -31,7 +31,7 @@
 <%@ page import="oscar.oscarProvider.data.ProSignatureData, oscar.oscarProvider.data.ProviderData"%>
 <%@ page import="oscar.log.*,oscar.oscarRx.data.*"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
-<%@ page import="org.apache.log4j.Logger,java.util.List" %>
+<%@ page import="org.apache.logging.log4j.Logger,java.util.List" %>
 
 <%@ page import="oscar.*,java.lang.*,java.util.Date,java.text.SimpleDateFormat,oscar.oscarRx.util.RxUtil,org.springframework.web.context.WebApplicationContext,
          org.springframework.web.context.support.WebApplicationContextUtils,

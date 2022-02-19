@@ -26,7 +26,7 @@ package org.oscarehr.hospitalReportManager.v2018;
 import java.io.File;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.jobs.OscarRunnable;
 import org.oscarehr.common.model.Provider;
