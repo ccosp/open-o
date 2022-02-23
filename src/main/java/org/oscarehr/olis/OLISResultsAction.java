@@ -64,8 +64,10 @@ public class OLISResultsAction extends DispatchAction {
         }
 		
 		try {
-			String olisResultString = (String) request.getAttribute("olisResponseContent");			
-			olisResultString = (String)request.getSession().getAttribute("olisResponseContent");
+			String olisResultString = (String) request.getAttribute("olisResponseContent");
+			if(olisResultString != null) {
+				olisResultString = (String)request.getSession().getAttribute("olisResponseContent");
+			}
 			if(olisResultString == null && "no".equals(OscarProperties.getInstance().getProperty("olis_simulate","no"))) {
 				olisResultString = oscar.Misc.getStr(request.getParameter("olisResponseContent"), "");
 				request.setAttribute("olisResponseContent", olisResultString);

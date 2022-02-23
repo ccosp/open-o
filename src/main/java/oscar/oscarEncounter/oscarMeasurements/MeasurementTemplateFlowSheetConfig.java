@@ -82,11 +82,17 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
     Hashtable<String, String> flowsheetDisplayNames = new Hashtable<String, String>();
     ArrayList<String> universalFlowSheets = new ArrayList<String>();
 
+    Hashtable<String, File> flowsheetFiles = new Hashtable<String, File>();
+
     static MeasurementTemplateFlowSheetConfig measurementTemplateFlowSheetConfig;
 
     Hashtable<String, MeasurementFlowSheet> flowsheets = null;
 
     HashMap<String,Flowsheet> flowsheetSettings = null;
+
+    public Hashtable<String,File> getFileMap() {
+    	return flowsheetFiles;
+    }
 
     public void afterPropertiesSet() throws Exception {
         measurementTemplateFlowSheetConfig = this;

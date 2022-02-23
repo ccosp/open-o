@@ -40,6 +40,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -48,7 +49,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.caisi_integrator.util.MiscUtils;
+
 import org.oscarehr.common.dao.HrmLogDao;
 import org.oscarehr.common.dao.HrmLogEntryDao;
 import org.oscarehr.common.dao.OscarJobDao;
@@ -75,6 +76,7 @@ import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.hospitalReportManager.model.HRMProviderConfidentialityStatement;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.OscarProperties;
