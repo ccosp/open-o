@@ -40,7 +40,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import oscar.oscarLab.ca.all.spireHapiExt.v23.message.ORU_R01;
 import oscar.util.UtilDateUtilities;
@@ -260,7 +260,7 @@ class Lines {
 public class SpireHandler implements MessageHandler {
     
     ORU_R01 msg = null;
-    Logger logger = Logger.getLogger(SpireHandler.class);
+    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
     
     /** Creates a new instance of SpireHandler */
     public SpireHandler(){

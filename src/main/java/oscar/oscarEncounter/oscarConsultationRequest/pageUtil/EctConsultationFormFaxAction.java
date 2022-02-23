@@ -20,7 +20,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -35,6 +35,7 @@ import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.ProfessionalSpecialist;
+import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.fax.util.PdfCoverPageCreator;
 import org.oscarehr.hospitalReportManager.HRMPDFCreator;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao;
@@ -276,7 +277,7 @@ public class EctConsultationFormFaxAction extends Action {
 				boolean validFaxNumber;
 
 				for (FaxRecipient faxRecipient : ectConsultationFaxForm.getAllFaxRecipients()) {	
-	
+
 				    String faxNo = faxRecipient.getFax();
 				    
 				    if(faxNo == null) {
@@ -318,6 +319,7 @@ public class EctConsultationFormFaxAction extends Action {
 				    if( !validFaxNumber ) {
 				    	
 				    	faxJob.setStatus(FaxJob.STATUS.ERROR);
+				    	faxJob.setStatusString("Document outgoing fax number '"+faxNumber+"' is invalid.");
 				    	logger.error("PROBLEM CREATING FAX JOB", new DocumentException("Document outgoing fax number '"+faxNumber+"' is invalid."));
 				    }
 				    else {
@@ -329,16 +331,15 @@ public class EctConsultationFormFaxAction extends Action {
 				    
 				    // start up a log track each time the CLIENT was run.
 					FaxClientLog faxClientLog = new FaxClientLog();
-					faxClientLog.setFaxId(faxJob.getId()+""); // IMPORTANT! this is the id of the FaxJobID from the Faxes table. A 1:1 cardinality.
+					faxClientLog.setFaxId(faxJob.getId()); // IMPORTANT! this is the id of the FaxJobID from the Faxes table. A 1:1 cardinality.
 					faxClientLog.setProviderNo(faxJob.getOscarUser()); // the provider that sent this fax
 					faxClientLog.setStartTime(new Date(System.currentTimeMillis())); // the exact time the fax was sent
-					faxClientLog.setRequestId(reqId);
+					faxClientLog.setRequestId(Integer.parseInt(reqId));
 					faxClientLogDao.persist(faxClientLog);    
 				}
 
 				LogAction.addLog(provider_no, LogConst.SENT, LogConst.CON_FAX, "CONSULT "+ reqId);
 				request.setAttribute("faxSuccessful", true);
-
 				return mapping.findForward("success");
 			}
 
@@ -348,7 +349,7 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (com.lowagie.text.DocumentException e) {
+		} catch (com.itextpdf.text.DocumentException e) {
 			logger.error("error", e);
 		} finally {
 			// Cleaning up InputStreams created for concatenation.

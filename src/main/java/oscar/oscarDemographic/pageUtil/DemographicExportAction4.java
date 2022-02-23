@@ -32,7 +32,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URL;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +60,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -164,7 +163,6 @@ import cdsDt.YnIndicator;
 import cdsDt.YnIndicatorsimple.Enum;
 import oscar.OscarProperties;
 import oscar.appt.ApptStatusData;
-
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
 import oscar.oscarClinic.ClinicData;
@@ -204,8 +202,6 @@ public class DemographicExportAction4 extends Action {
 	private static final Hl7TextInfoDao hl7TxtInfoDao = (Hl7TextInfoDao)SpringUtils.getBean("hl7TextInfoDao");
 	private static final Hl7TextMessageDao hl7TxtMssgDao = (Hl7TextMessageDao)SpringUtils.getBean("hl7TextMessageDao");
 	private static final DemographicExtDao demographicExtDao = (DemographicExtDao) SpringUtils.getBean("demographicExtDao");
-	private static final ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
-
 	private static final String PATIENTID = "Patient";
 	private static final String ALERT = "Alert";
 	private static final String ALLERGY = "Allergy";
@@ -231,7 +227,7 @@ public class DemographicExportAction4 extends Action {
 	ArrayList<String> exportError = null;
 	HashMap<String, Integer> entries = new HashMap<String, Integer>();
 	OscarProperties oscarProperties = OscarProperties.getInstance();
-	
+
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -266,7 +262,7 @@ public class DemographicExportAction4 extends Action {
 		boolean exReportsReceived = WebUtils.isChecked(request, "exReportsReceived");
 		boolean exAlertsAndSpecialNeeds = WebUtils.isChecked(request, "exAlertsAndSpecialNeeds");
 		boolean exCareElements = WebUtils.isChecked(request, "exCareElements");
-		
+
 		String providerNoMRP = defrm.getProviderNo();
 
 		List<String> list = new ArrayList<String>();
@@ -293,14 +289,14 @@ public class DemographicExportAction4 extends Action {
 				list.add(String.valueOf(dn));
 			}
 		}
-		
+
 	} else {
 		list.add(demographicNo);
 	}
 
 	String ffwd = "fail";
 	String tmpDir = oscarProperties.getProperty("TMP_DIR") + File.separator +  RandomStringUtils.random(8, true, false);
-	
+
 	
 	// Sharing Center - holds the ID that will 'potentially' be exported.
 	int documentExportId = 0;
@@ -322,7 +318,7 @@ public class DemographicExportAction4 extends Action {
 		options.put( XmlOptions.SAVE_PRETTY_PRINT );
 		options.put( XmlOptions.SAVE_PRETTY_PRINT_INDENT, 3 );
 		options.put( XmlOptions.SAVE_AGGRESSIVE_NAMESPACES );
-		
+
 		HashMap<String,String> suggestedPrefix = new HashMap<String,String>();
 		suggestedPrefix.put("cds_dt","cdsd");
 		options.setSaveSuggestedPrefixes(suggestedPrefix);
@@ -336,9 +332,9 @@ public class DemographicExportAction4 extends Action {
 				exportError.add("Error! No Demographic Number");
 				continue;
 			}
-			
+
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			
+
 
 			// DEMOGRAPHICS
 			DemographicData d = new DemographicData();
@@ -371,10 +367,6 @@ public class DemographicExportAction4 extends Action {
 			legalName.setNamePurpose(cdsDt.PersonNamePurposeCode.L);
 
 			String name= StringUtils.noNull(demographic.getFirstName());
-			if(name!= null)
-			{
-				name = name.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
-			}
 			if (StringUtils.filled(name)) {
 				firstName.setPart(name);
 				firstName.setPartType(cdsDt.PersonNamePartTypeCode.GIV);
@@ -383,10 +375,6 @@ public class DemographicExportAction4 extends Action {
 				exportError.add("Error! No First Name for Patient "+demoNo);
 			}
 			name = StringUtils.noNull(demographic.getLastName());
-			if(name != null)
-			{
-				name = name.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
-			}
 			if (StringUtils.filled(name)) {
 				lastName.setPart(name);
 				lastName.setPartType(cdsDt.PersonNamePartTypeCode.FAMC);
@@ -394,7 +382,7 @@ public class DemographicExportAction4 extends Action {
 			} else {
 				exportError.add("Error! No Last Name for Patient "+demoNo);
 			}
-			
+
 			name = StringUtils.noNull(demographic.getMiddleNames());
 			if (StringUtils.filled(name)) {
 				cdsDt.PersonNameStandard.OtherNames otherNames = personName.addNewOtherNames();
@@ -403,8 +391,8 @@ public class DemographicExportAction4 extends Action {
 				otherName.setPart(name);
 				otherName.setPartType(cdsDt.PersonNamePartTypeCode.GIV);
 				otherName.setPartQualifier(cdsDt.PersonNamePartQualifierCode.CL);
-			} 
-			
+			}
+
 
 			String title = demographic.getTitle();
 			if (StringUtils.filled(title)) {
@@ -423,8 +411,8 @@ public class DemographicExportAction4 extends Action {
 				if (title.equalsIgnoreCase("FR")) personName.setNamePrefix(cdsDt.PersonNamePrefixCode.FR);
 				if (title.equalsIgnoreCase("HON")) personName.setNamePrefix(cdsDt.PersonNamePrefixCode.HON);
 				if (title.equalsIgnoreCase("LT")) personName.setNamePrefix(cdsDt.PersonNamePrefixCode.LT);
-				
-				
+
+
 				if (title.equalsIgnoreCase("MISS")) personName.setNamePrefix(cdsDt.PersonNamePrefixCode.MISS);
 				if (title.equalsIgnoreCase("MR")) personName.setNamePrefix(cdsDt.PersonNamePrefixCode.MR);
 				if (title.equalsIgnoreCase("MRS")) personName.setNamePrefix(cdsDt.PersonNamePrefixCode.MRS);
@@ -464,15 +452,15 @@ public class DemographicExportAction4 extends Action {
 			if (StringUtils.filled(sin) && sin.length()==9) {
 				demo.setSIN(sin);
 			}
-			
+
 
 			List<DemographicArchive> DAs = demoArchiveDao.findRosterStatusHistoryByDemographicNo(Integer.valueOf(demoNo));
 			Collections.reverse(DAs);
-			
+
 			List<Enrolment> enList = new ArrayList<Enrolment>();
 			Enrolment en = null;
 			for(DemographicArchive da:DAs) {
-				
+
 				if(!"".equals(da.getRosterStatus())) {
 					//no previous record
 					if(en == null) {
@@ -503,7 +491,7 @@ public class DemographicExportAction4 extends Action {
 					}
 				}
 			}
-		
+
 			if(!"".equals(demographic.getRosterStatus())) {
 				if(sameEnrolment(demographic,en)) {
 					en.status = demographic.getRosterStatus();
@@ -524,7 +512,7 @@ public class DemographicExportAction4 extends Action {
 			if(en != null) {
 				enList.add(en);
 			}
-			
+
 			if(enList.size()>0) {
 				DemographicsDocument.Demographics.Enrolment demoEnrolment = demo.addNewEnrolment();
 				for(int x=0;x<enList.size();x++) {
@@ -543,8 +531,8 @@ public class DemographicExportAction4 extends Action {
 						}
                     }
 					ehx.setEnrollmentDate(Util.calDate(enrolment.date));
-					
-					
+
+
 					if(enrolment.terminationDate != null) {
 						ehx.setEnrollmentTerminationDate(Util.calDate(enrolment.terminationDate));
 						ehx.setTerminationReason(cdsDt.TerminationReasonCode.Enum.forString(enrolment.terminationReason));
@@ -633,7 +621,7 @@ public class DemographicExportAction4 extends Action {
 					address.addNewPostalZipCode().setPostalCode(StringUtils.noNull(demographic.getPostal()).replace(" ",""));
 				}
 			}
-			
+
 			if (StringUtils.filled(demographic.getResidentialAddress())) {
 				cdsDt.Address addr = demo.addNewAddress();
 				cdsDt.AddressStructured address = addr.addNewStructured();
@@ -675,7 +663,7 @@ public class DemographicExportAction4 extends Action {
 
 			DemographicPharmacyDao demographicPharmacyDao = SpringUtils.getBean(DemographicPharmacyDao.class);
 			PharmacyInfoDao pharmacyInfoDao = SpringUtils.getBean(PharmacyInfoDao.class);
-			
+
 			List<DemographicPharmacy> dpList = demographicPharmacyDao.findByDemographicId(demographic.getDemographicNo());
 			if(dpList.size()>0) {
 				DemographicPharmacy dp = dpList.get(0);
@@ -686,8 +674,8 @@ public class DemographicExportAction4 extends Action {
 					if(!StringUtils.isNullOrEmpty(pi.getFax())) {
 						addPhone(pi.getFax(), "", cdsDt.PhoneNumberType.W,pn);
 					}
-					
-					
+
+
 					cdsDt.Address addr = preferredPharmacy.addNewAddress();
 					cdsDt.AddressStructured address = addr.addNewStructured();
 
@@ -699,7 +687,7 @@ public class DemographicExportAction4 extends Action {
 						if(!StringUtils.isNullOrEmpty(pi.getCity())) {
 							address.setCity(StringUtils.maxLenString(StringUtils.noNull(pi.getCity()), 80, 79, ""));
 						}
-						if("true".equals(OscarProperties.getInstance().getProperty("iso3166.2.enabled","false"))) { 	
+						if("true".equals(OscarProperties.getInstance().getProperty("iso3166.2.enabled","false"))) {
 							if(!StringUtils.isNullOrEmpty(pi.getProvince())) {
 								address.setCountrySubdivisionCode(pi.getProvince());
 							}
@@ -711,7 +699,7 @@ public class DemographicExportAction4 extends Action {
 								if (prov.length() == 2) { // ON, BC, etc.
 									address.setCountrySubdivisionCode(Util.setCountrySubDivCode(prov.toUpperCase()));
 								} else if (Arrays.asList("ONTARIO","ONT","ONT.").contains(prov.toUpperCase())) {
-									address.setCountrySubdivisionCode(Util.setCountrySubDivCode("ON"));	
+									address.setCountrySubdivisionCode(Util.setCountrySubDivCode("ON"));
 								} else {
 									exportError.add("Preferred pharmacy countrySubdivisionCode '" + prov +
 											"' for Patient ID '" + demoNo + "' may not conform to ISO 3166-2.");
@@ -725,16 +713,16 @@ public class DemographicExportAction4 extends Action {
 							address.addNewPostalZipCode().setPostalCode(StringUtils.noNull(pi.getPostalCode()).replace(" ",""));
 						}
 					}
-					
-					
+
+
 					if (StringUtils.filled(pi.getEmail()) && pi.getEmail().contains("@")) preferredPharmacy.setEmailAddress(pi.getEmail());
 					preferredPharmacy.setName(pi.getName());
-					
+
 				}
 			}
-			
+
 			addReferringAndFamilyDoctor(loggedInInfo,demographic.getDemographicNo(),demo);
-			
+
 			List<CaseManagementNote> lcmn = cmm.getNotes(demoNo);
 
 			//find all "header"; cms4 only
@@ -783,8 +771,8 @@ public class DemographicExportAction4 extends Action {
 
 				annotation = getNonDumpNote(CaseManagementNoteLink.CASEMGMTNOTE, cmn.getId(), null);
 				List<CaseManagementNoteExt> cmeList = cmm.getExtByNote(cmn.getId());
-				
-				
+
+
 				if (exPersonalHistory) {
 					// PERSONAL HISTORY (SocHistory)
 					if (StringUtils.filled(socHist)) {
@@ -824,8 +812,8 @@ public class DemographicExportAction4 extends Action {
 							addResidualInformation(fHist.addNewResidualInfo(),"string","ProblemDiagnosisProcedureDescription",famHist);
 						}
 						fHist.setProblemDiagnosisProcedureDescription(StringUtils.maxLenString(famHist, 250, 23, "... (see residual)"));
-						
-						
+
+
 						summary = Util.addSummary("Problem Description", famHist);
 
 						boolean diagnosisAssigned = false;
@@ -951,7 +939,7 @@ public class DemographicExportAction4 extends Action {
 									summary = Util.addSummary(summary, CaseManagementNoteExt.LIFESTAGE, cme.getValue());
 								}
 								bLIFESTAGE = true;
-						
+
 							} else if (cme.getKeyVal().equals(CaseManagementNoteExt.PROBLEMSTATUS)) {
 								if (bPROBLEMSTATUS) continue;
 								if (StringUtils.filled(cme.getValue())) {
@@ -965,13 +953,13 @@ public class DemographicExportAction4 extends Action {
 							addResidualInformation(pHealth.addNewResidualInfo(),"string","PastHealthProblemDescriptionOrProcedures",medHist);
 						}
 						pHealth.setPastHealthProblemDescriptionOrProcedures(StringUtils.maxLenString(medHist, 250, 230, "... (see residual)"));
-						
+
 						if (StringUtils.filled(annotation)) {
 							pHealth.setNotes(annotation);
 							summary = Util.addSummary(summary, "Notes", annotation);
 						}
 					//	pHealth.setCategorySummaryLine(summary);
-						
+
 					}
 				}
 
@@ -1191,7 +1179,7 @@ public class DemographicExportAction4 extends Action {
 							addResidualInformation(alerts.addNewResidualInfo(),"string","AlertDescription",reminders);
 						}
 						alerts.setAlertDescription(StringUtils.maxLenString(reminders, 1000, 980, "... (see residual)"));
-						
+
 						addOneEntry(ALERT);
 
 						summary = Util.addSummary("Alert Description", reminders);
@@ -1243,7 +1231,7 @@ public class DemographicExportAction4 extends Action {
 						diagnosis.setStandardCodingSystem(dx.getCodingSystem());
 						String code = dx.getCodingSystem().equalsIgnoreCase("icd9") ? Util.formatIcd9(dx.getDxresearchCode()) : dx.getDxresearchCode();
 						diagnosis.setStandardCode(code);
-						
+
 						AbstractCodeSystemDao dao = (AbstractCodeSystemDao)SpringUtils.getBean(WordUtils.uncapitalize(dx.getCodingSystem()) + "Dao");
 						if(dao != null) {
 							 AbstractCodeSystemModel result = dao.findByCode(dx.getDxresearchCode());
@@ -1254,11 +1242,11 @@ public class DemographicExportAction4 extends Action {
 						//pList.setProblemDescription(arg0);
 						//pList.setProblemStatus(arg0);
 						addOneEntry(PROBLEMLIST);
-						
+
 					}
 				}
 			}
-			
+
 			if (exProblemList) {
 				EpisodeDao episodeDao = SpringUtils.getBean(EpisodeDao.class);
 				List<Episode> episodes = episodeDao.findAll(demographic.getDemographicNo());
@@ -1275,7 +1263,7 @@ public class DemographicExportAction4 extends Action {
 					diagnosis.setStandardCodingSystem(episode.getCodingSystem());
 					String code = episode.getCodingSystem().equalsIgnoreCase("icd9") ? Util.formatIcd9(episode.getCode()) : episode.getCode();
 					diagnosis.setStandardCode(code);
-					
+
 					AbstractCodeSystemDao dao = (AbstractCodeSystemDao)SpringUtils.getBean(WordUtils.uncapitalize(episode.getCodingSystem()) + "Dao");
 					if(dao != null) {
 						 AbstractCodeSystemModel result = dao.findByCode(episode.getCode());
@@ -1334,7 +1322,7 @@ public class DemographicExportAction4 extends Action {
 						aSummary = Util.addSummary(aSummary, "Reaction", allergyReaction);
 					}
 					String severity = allergy.getSeverityOfReaction();
-					
+
 					if (StringUtils.filled(severity)) {
 						if (severity.equals("1")) {
 							alr.setSeverity(cdsDt.AdverseReactionSeverity.MI);
@@ -1348,14 +1336,14 @@ public class DemographicExportAction4 extends Action {
 						if (alr.getSeverity()!=null)
 							aSummary = Util.addSummary(aSummary,"Adverse Reaction Severity",alr.getSeverity().toString());
 					}
-					
+
 					if(!StringUtils.isNullOrEmpty(allergy.getDrugrefId())) {
 						alr.setReactionType(AdverseReactionType.AR);
 					} else {
 						alr.setReactionType(AdverseReactionType.AL);
 					}
-					
-					
+
+
 					if (allergy.getStartDate()!=null) {
 						dateFormat = partialDateDao.getFormat(PartialDate.ALLERGIES, allergies[j].getAllergyId(), PartialDate.ALLERGIES_STARTDATE);
 						Util.putPartialDate(alr.addNewStartDate(), allergy.getStartDate(), dateFormat);
@@ -1434,7 +1422,7 @@ public class DemographicExportAction4 extends Action {
 							pHealth.setNotes(extra);
 							phSummary = Util.addSummary(phSummary, "Comments", extra);
 						}
-						//pHealth.setCategorySummaryLine(phSummary);
+						pHealth.setNotes(phSummary);
 					}
 				} else if (exImmunizations) {
 					imSummary = null;
@@ -1696,7 +1684,7 @@ public class DemographicExportAction4 extends Action {
 						medi.setDispenseInterval(String.valueOf(arr[p].getDispenseInterval()));
 						mSummary = Util.addLine(mSummary, "Dispense Interval", arr[p].getDispenseInterval().toString());
 					}
-					if (arr[p].getRefillDuration()!=null) {						
+					if (arr[p].getRefillDuration()!=null) {
 						medi.setRefillDuration(String.valueOf(arr[p].getRefillDuration()));
 						mSummary = Util.addSummary(mSummary, "Refill Duration", arr[p].getRefillDuration().toString());
 					}
@@ -1704,7 +1692,7 @@ public class DemographicExportAction4 extends Action {
 						medi.setRefillQuantity(String.valueOf(arr[p].getRefillQuantity()));
 						mSummary = Util.addSummary(mSummary, "Refill Quantity", arr[p].getRefillQuantity().toString());
 					}
-					
+
 					Boolean isLongTerm = arr[p].getLongTerm();
 					String longTerm =  "No";
 					if(isLongTerm == null) {
@@ -1757,7 +1745,7 @@ public class DemographicExportAction4 extends Action {
 							mSummary = Util.addSummary(mSummary, "Prescribed by", StringUtils.noNull(prvd.getFirst_name())+" "+StringUtils.noNull(prvd.getLast_name()));
 						}
 					}
-					
+
 					// TODO: Can this be null for Y,N,unknown?
 					String data = arr[p].isNonAuthoritative() ? "Y" : "N";
 					medi.setNonAuthoritativeIndicator(data);
@@ -1772,16 +1760,16 @@ public class DemographicExportAction4 extends Action {
 						medi.setPriorPrescriptionReferenceIdentifier(arr[p].getPriorRxProtocol());
 						mSummary = Util.addSummary(mSummary, "Prior Prescription Reference Identifier", medi.getPriorPrescriptionReferenceIdentifier());
 					}
-					
+
 					if (StringUtils.filled(arr[p].getProtocol())) {
 						medi.setProtocolIdentifier(arr[p].getProtocol());
 						mSummary = Util.addSummary(mSummary, "Prior Prescription Reference Identifier", arr[p].getProtocol());
 					}
-					
+
 					if (StringUtils.filled(arr[p].getComment())) {
 						medi.setNotes(arr[p].getComment());
 						mSummary = Util.addSummary(mSummary, "Notes", arr[p].getComment());
-					} else { // can't have more than one note.			
+					} else { // can't have more than one note.
 						annotation = getNonDumpNote(CaseManagementNoteLink.DRUGS, (long)arr[p].getDrugId(), null);
 						if (StringUtils.filled(annotation)) {
 							medi.setNotes(annotation);
@@ -1853,7 +1841,7 @@ public class DemographicExportAction4 extends Action {
 	                        			labMeaValues.put("maximum", rangeLimits[1]);
 	                    			}
 	                    		}
-								
+
 								LaboratoryResults labResults2 = patientRec.addNewLaboratoryResults();
 								exportLabResult(labMeaValues, labResults2, demoNo);
 							}
@@ -2042,7 +2030,7 @@ public class DemographicExportAction4 extends Action {
 							String ohipNo = StringUtils.noNull(edoc.getReviewerOhip());
 							if (ohipNo.length()<=6) reportReviewed.setReviewingOHIPPhysicianId(ohipNo);
 						}
-						
+
 						if (StringUtils.filled(edoc.getSource())) {
 							Util.writeNameSimple(rpr.addNewSourceAuthorPhysician().addNewAuthorName(), edoc.getSource());
 						}
@@ -2058,14 +2046,14 @@ public class DemographicExportAction4 extends Action {
 				//HRM reports
 				List<HRMDocumentToDemographic> hrmDocToDemographics = hrmDocToDemographicDao.findByDemographicNo(demoNo);
 				for (HRMDocumentToDemographic hrmDocToDemographic : hrmDocToDemographics) {
-					Integer hrmDocumentId = hrmDocToDemographic.getHrmDocumentId();
+					String hrmDocumentId = hrmDocToDemographic.getHrmDocumentId()+"";
 					List<HRMDocument> hrmDocs = hrmDocDao.findById(Integer.valueOf(hrmDocumentId));
 					for (HRMDocument hrmDoc : hrmDocs) {
 						String reportFile = hrmDoc.getReportFile();
 						if (StringUtils.empty(reportFile)) continue;
 
 						File hrmFile = new File(reportFile);
-						
+
 						//check the DOCUMENT_DIR
 						if (!hrmFile.exists()) {
 							String place= OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
@@ -2078,7 +2066,7 @@ public class DemographicExportAction4 extends Action {
 							logger.error("Error! HRM report file '"+reportFile+"' does not exist! HRM report not exported.");
 							continue;
 						}
-						
+
 						ReadHRMFile hrm = new ReadHRMFile(reportFile);
 						for (int i=0; i<hrm.getReportsReceivedTotal(); i++) {
 							Reports rpr = patientRec.addNewReports();
@@ -2104,7 +2092,7 @@ public class DemographicExportAction4 extends Action {
 										rpr.addNewSourceAuthorPhysician().setAuthorFreeText(reportAuthor.get("lastname"));
 									}
 								}
-					
+
 							}
 
 							if (reportContent!=null) {
@@ -2173,7 +2161,7 @@ public class DemographicExportAction4 extends Action {
 								//Sending Facility Report Number
 								if (reportStrings.get("sendingfacilityreportnumber")!=null) {
 									rpr.setSendingFacilityReport(reportStrings.get("sendingfacilityreportnumber"));
-								} else {	
+								} else {
 									if (hrmDoc.getSourceFacilityReportNo()!=null) {
 										rpr.setSendingFacilityReport(hrmDoc.getSourceFacilityReportNo());
 									}
@@ -2201,7 +2189,7 @@ public class DemographicExportAction4 extends Action {
 
 							ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 							HRMDocumentToProviderDao hrmDocumentToProviderDao = SpringUtils.getBean(HRMDocumentToProviderDao.class);
-							for(HRMDocumentToProvider hrmDocumentToProvider: hrmDocumentToProviderDao.findByHrmDocumentId(hrmDocumentId)) {
+							for(HRMDocumentToProvider hrmDocumentToProvider: hrmDocumentToProviderDao.findByHrmDocumentId(Integer.parseInt(hrmDocumentId))) {
 								if(hrmDocumentToProvider.getSignedOff() != null && hrmDocumentToProvider.getSignedOff() == 1) {
 									ReportReviewed reviewed = rpr.addNewReportReviewed();
 									Provider provider = providerDao.getProvider(hrmDocumentToProvider.getProviderNo());
@@ -2224,7 +2212,7 @@ public class DemographicExportAction4 extends Action {
 							}*/
 
 							//Notes
-							List<HRMDocumentComment> comments = hrmDocCommentDao.getCommentsForDocument(hrmDocToDemographic.getHrmDocumentId());
+							List<HRMDocumentComment> comments = hrmDocCommentDao.getCommentsForDocument(Integer.parseInt(hrmDocumentId));
 							String notes = null;
 							for (HRMDocumentComment comment : comments) {
 								notes = Util.addLine(notes, comment.getComment());
@@ -2467,19 +2455,8 @@ public class DemographicExportAction4 extends Action {
 					throw new Exception("Temporary Export Directory does not exist!");
 				}
 
-				String patientFirstName = demographic.getFirstName();
-				String patientLastName = demographic.getLastName();
-				
-				if(patientFirstName != null)
-				{
-					patientFirstName = patientFirstName.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
-				}
-				if(patientLastName != null)
-				{
-					patientLastName = patientLastName.replaceAll("[^a-zA-Z ]", "").trim().replaceAll("\\s+", "_");
-				}
-				
-				String expFile = patientFirstName + "_" + patientLastName;
+				//Standard format for xml exported file : PatientFN_PatientLN_PatientUniqueID_DOB (DOB: ddmmyyyy)
+				String expFile = demographic.getFirstName()+"_"+demographic.getLastName();
 				expFile += "_"+demoNo;
 				expFile += "_"+demographic.getDateOfBirth()+demographic.getMonthOfBirth()+demographic.getYearOfBirth();
 				files.add(new File(directory, expFile+".xml"));
@@ -2492,9 +2469,9 @@ public class DemographicExportAction4 extends Action {
 				omdCdsDoc.save(fw,options);
 				fw.flush();
 				fw.close();
-				
+
 					//omdCdsDoc.save(files.get(files.size()-1), options);
-					
+
 			} catch (IOException ex) {logger.error("Error", ex);
 					throw new Exception("Cannot write .xml file(s) to export directory.\n Please check directory permissions.");
 		}
@@ -2512,12 +2489,12 @@ public class DemographicExportAction4 extends Action {
 		}
 
 	}
-	
+
 	if(files.isEmpty()) {
 		logger.warn("no files to export");
 		return mapping.findForward("fail");
 	}
-		
+
 	//create ReadMe.txt & ExportEvent.log
 	files.add(makeReadMe(files));
 	dirs.add("");
@@ -2533,7 +2510,7 @@ public class DemographicExportAction4 extends Action {
 		String name = p.getFirstName() + "_" + p.getLastName() + "_" + p.getOhipNo();
 		zipName = "export_"+name+"_"+UtilDateUtilities.getToday("yyyyMMddHHmmss")+".zip";
 	}
-//	
+//
 //	if (setName!=null) zipName = "export_"+setName.replace(" ","")+"_"+UtilDateUtilities.getToday("yyyyMMddHHmmss")+".pgp";
 	if (!Util.zipFiles(files, dirs, zipName, tmpDir)) {
 			logger.debug("Error! Failed to zip export files");
@@ -2558,10 +2535,10 @@ public class DemographicExportAction4 extends Action {
 				request.getSession().setAttribute("pgp_ready", "No");
 			}
 		} else {
-			
+
 			if(!"true".equals(OscarProperties.getInstance().getProperty("demographic.export.encryptedOnly","false"))) {
 				logger.info("Warning: PGP Encryption NOT available - unencrypted file exported!");
-				
+
 				// Sharing Center - Skip download if sharing with affinity domain
 				if (request.getParameter("SendToAffinityDomain") == null) {
 					Util.downloadFile(zipName, tmpDir, response);
@@ -2575,8 +2552,8 @@ public class DemographicExportAction4 extends Action {
 				ffwd="fail";
 			}
 			
-			
-			
+
+
 		}
 		
 		// Sharing Center - Store the exported data for later retrieval while sending to the affinity domain
@@ -2641,13 +2618,20 @@ public class DemographicExportAction4 extends Action {
 					} catch(Exception e) {
 						logger.error("Error", e);
 					}
-//					BufferedWriter out = null;
-					try(BufferedWriter out = new BufferedWriter(new FileWriter(files.get(files.size()-1)))) {
+					BufferedWriter out = null;
+					try {
+						out = new BufferedWriter(new FileWriter(files.get(files.size()-1)));
 						out.write(output);
 					} catch (IOException e) {
 						logger.error("Error", e);
 						throw new Exception("Cannot write .xml file(s) to export directory.\nPlease check directory permissions.");
-					} 
+					} finally {
+						try {
+							out.close();
+						} catch(Exception e) {
+							//ignore
+						}
+					}
 				}
 
 				// Create Export Log
@@ -2751,7 +2735,7 @@ public class DemographicExportAction4 extends Action {
 		out.write(getIDInExportFilename(fs.get(fs.size()-1).getName()));
 		out.newLine();
 		out.close();
-	
+
 		return readMe;
 	}
 
@@ -2867,7 +2851,7 @@ public class DemographicExportAction4 extends Action {
 		}
 		return false;
 	}
-	
+
 	private boolean sameEnrolment(DemographicArchive demographic,Enrolment en) {
 		if(en != null && en.date != null && demographic.getRosterDate() != null) {
 			//if(demographic.getRosterStatus().equals(en.status)) {
@@ -2880,7 +2864,7 @@ public class DemographicExportAction4 extends Action {
 		}
 		return false;
 	}
-	
+
 	private String getIDInExportFilename(String filename) {
 		if (filename==null) return null;
 
@@ -2951,12 +2935,12 @@ public class DemographicExportAction4 extends Action {
 		//if (hrmEnumF.equals("Medical Records Report")) hrmEnumF = "Medical Record Report"; //HRM & CDS class names not match
 		return hrmEnumF;
 	}
-	
+
 	protected void addReferringAndFamilyDoctor(LoggedInInfo loggedInInfo, Integer demoNo, Demographics demo) {
 		ProfessionalSpecialistDao professionalSpecialistDao = SpringUtils.getBean(ProfessionalSpecialistDao.class);
 		ContactDao cDao = SpringUtils.getBean(ContactDao.class);
-		
-		
+
+
 		List<DemographicContact> demoContacts = contactDao.findByDemographicNoAndCategory(demoNo,"professional");
 		for(DemographicContact dc : demoContacts) {
 			if("Referring Doctor".equals(dc.getRole())) {
@@ -2974,7 +2958,7 @@ public class DemographicExportAction4 extends Action {
 					pns.setFirstName(c.getFirstName());
 					pns.setLastName(c.getLastName());
 				}
-				
+
 			}
 			if("Family Doctor".equals(dc.getRole())) {
 				if(dc.getType() == DemographicContact.TYPE_PROFESSIONALSPECIALIST) {
@@ -2991,7 +2975,7 @@ public class DemographicExportAction4 extends Action {
 					pns.setFirstName(c.getFirstName());
 					pns.setLastName(c.getLastName());
 				}
-				
+
 			}
 		}
 	}
@@ -3112,7 +3096,7 @@ public class DemographicExportAction4 extends Action {
 			org.oscarehr.common.model.Demographic relDemo = new DemographicData().getDemographic(loggedInInfo, contactId);
 			HashMap<String,String> relDemoExt = new HashMap<String,String>();
 			relDemoExt.putAll(demographicExtDao.getAllValuesForDemo(Integer.parseInt(contactId)));
-	
+
 			Util.writeNameSimple(contact.addNewName(), relDemo.getFirstName(), relDemo.getLastName());
 			if (StringUtils.empty(relDemo.getFirstName())) {
 				exportError.add("Error! No First Name for contact ("+index+") for Patient "+demoNo);
@@ -3120,9 +3104,9 @@ public class DemographicExportAction4 extends Action {
 			if (StringUtils.empty(relDemo.getLastName())) {
 				exportError.add("Error! No Last Name for contact ("+index+") for Patient "+demoNo);
 			}
-	
+
 			if (StringUtils.filled(relDemo.getEmail())) contact.setEmailAddress(relDemo.getEmail());
-	
+
 			boolean phoneExtTooLong = false;
 			if (phoneNoValid(relDemo.getPhone())) {
 				phoneExtTooLong = addPhone(relDemo.getPhone(), relDemoExt.get("hPhoneExt"), cdsDt.PhoneNumberType.R, contact.addNewPhoneNumber());
@@ -3130,19 +3114,19 @@ public class DemographicExportAction4 extends Action {
 					exportError.add("Home phone extension too long, export trimmed for contact ("+(index+1)+") of Patient "+demoNo);
 				}
 			}
-	
+
 			if (phoneNoValid(relDemo.getPhone2())) {
 				phoneExtTooLong = addPhone(relDemo.getPhone2(), relDemoExt.get("wPhoneExt"), cdsDt.PhoneNumberType.W, contact.addNewPhoneNumber());
 				if (phoneExtTooLong) {
 					exportError.add("Work phone extension too long, export trimmed for contact ("+(index+1)+") of Patient "+demoNo);
 				}
 			}
-	
+
 			if (phoneNoValid(relDemoExt.get("demo_cell"))) {
 				addPhone(relDemoExt.get("demo_cell"), null, cdsDt.PhoneNumberType.C, contact.addNewPhoneNumber());
 			}
 		}
-		
+
 		if(type == DemographicContact.TYPE_CONTACT) {
 			ContactDao cDao = SpringUtils.getBean(ContactDao.class);
 			Contact c = cDao.find(Integer.parseInt(contactId));
@@ -3154,9 +3138,9 @@ public class DemographicExportAction4 extends Action {
 				if (StringUtils.empty(c.getLastName())) {
 					exportError.add("Error! No Last Name for contact ("+index+") for Patient "+demoNo);
 				}
-		
+
 				if (StringUtils.filled(c.getEmail())) contact.setEmailAddress(c.getEmail());
-					
+
 				boolean phoneExtTooLong = false;
 				if (phoneNoValid(c.getPhone())) {
 					phoneExtTooLong = addPhone(c.getPhone(), "", cdsDt.PhoneNumberType.R, contact.addNewPhoneNumber());
@@ -3164,21 +3148,21 @@ public class DemographicExportAction4 extends Action {
 						exportError.add("Home phone extension too long, export trimmed for contact ("+(index+1)+") of Patient "+demoNo);
 					}
 				}
-		
+
 				if (phoneNoValid(c.getWorkPhone())) {
 					phoneExtTooLong = addPhone(c.getWorkPhone(), c.getWorkPhoneExtension(), cdsDt.PhoneNumberType.W, contact.addNewPhoneNumber());
 					if (phoneExtTooLong) {
 						exportError.add("Work phone extension too long, export trimmed for contact ("+(index+1)+") of Patient "+demoNo);
 					}
 				}
-		
+
 				if (phoneNoValid(c.getCellPhone())) {
 					addPhone(c.getCellPhone(), null, cdsDt.PhoneNumberType.C, contact.addNewPhoneNumber());
 				}
 			} else {
 				exportError.add("Contact not found in DB");
 			}
-			
+
 		}
 	}
 
@@ -3300,7 +3284,7 @@ public class DemographicExportAction4 extends Action {
 		if (StringUtils.filled(labComments)) {
 			labResults.setNotesFromLab(Util.replaceTags(labComments));
 		}
-				
+
 		ResultNormalAbnormalFlag rnaf = labResults.addNewResultNormalAbnormalFlag();
 		rnaf.setResultNormalAbnormalFlagAsPlainText(labMea.get("abnormal"));
 		//labResults.setResultNormalAbnormalFlag(rnaf);
@@ -3326,12 +3310,12 @@ public class DemographicExportAction4 extends Action {
 		//OLIS test result status
 		String olis_status = labMea.get("olis_status");
 		if (StringUtils.filled(olis_status)) labResults.setTestResultStatus(olis_status);
-		
+
 		//
 		if ("BLOCKED".equals(labMea.get("blocked"))) {
 			labResults.setBlockedTestResult(cdsDt.YIndicator.Y);
 		}
-		
+
 		Integer labTable = CaseManagementNoteLink.LABTEST;
 		String lab_no = labMea.get("lab_no");
 		if (StringUtils.empty(lab_no)) {
@@ -3355,35 +3339,19 @@ public class DemographicExportAction4 extends Action {
 			else
 				labRoutingInfo.putAll(ProviderLabRouting.getInfo(lab_no, "CML"));
 
-
-			Object timestamp = labRoutingInfo.get("timestamp");
+			String timestamp = labRoutingInfo.get("timestamp").toString();
+			String lab_provider_no = (String)labRoutingInfo.get("provider_no");
 			
-			if (timestamp != null)
-			{
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Calendar calendar = null; 
-				
-				try {
-					Date fulldatetime = simpleDateFormat.parse(timestamp.toString());
-					calendar = Calendar.getInstance();
-				    calendar.setTime(fulldatetime);
-				} catch (ParseException e) {
-					logger.error("Error while parsing Lab Routing date " + timestamp, e);
-				}
-				
+			// ProviderLabRoutingDao assigns UNCLAIMED_PROVIDER = "0"
+			if (UtilDateUtilities.StringToDate(timestamp,"yyyy-MM-dd HH:mm:ss")!=null &&
+					!"0".equals(lab_provider_no) && !"".equals(lab_provider_no)) {
 				LaboratoryResults.ResultReviewer reviewer = labResults.addNewResultReviewer();
-				reviewer.addNewDateTimeResultReviewed().setFullDateTime(calendar);
-
+				reviewer.addNewDateTimeResultReviewed().setFullDateTime(Util.calDate(timestamp));
 				//reviewer name
 				cdsDt.PersonNameSimple reviewerName = reviewer.addNewName();
-				String lab_provider_no = (String)labRoutingInfo.get("provider_no");
-				if (!"0".equals(lab_provider_no)) {
-					Provider provider = providerDao.getProvider(lab_provider_no);
-
-					Util.writeNameSimple(reviewerName, provider.getFirstName(), provider.getLastName());
-					if (StringUtils.noNull(provider.getOhipNo()).length()<=6) reviewer.setOHIPPhysicianId(provider.getOhipNo());
-				}
-
+				ProviderData pvd = new ProviderData(lab_provider_no);
+				Util.writeNameSimple(reviewerName, pvd.getFirst_name(), pvd.getLast_name());
+				if (StringUtils.filled(pvd.getOhip_no()) && pvd.getOhip_no().length()<=6) reviewer.setOHIPPhysicianId(pvd.getOhip_no());
 			}
 		}
 	}
@@ -3408,22 +3376,22 @@ public class DemographicExportAction4 extends Action {
 		String[] dosageMultiple = dosage.split("/");
 		return dosageMultiple[0].trim();
 	}
-	
+
 	private String getProviderName(String providerNo) {
 		if(StringUtils.isNullOrEmpty(providerNo)) {
 			return "";
-		} 
+		}
 		ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
-		
+
 		Provider p = providerDao.getProvider(providerNo);
-		
+
 		if(p == null) {
 			return "";
 		}
-		
+
 		return p.getFirstName() + "_" + p.getLastName() + "_" + p.getOhipNo();
 	}
-	
+
 	public Boolean validateExport(File f) {
 		Boolean result = true;
 
@@ -3446,7 +3414,7 @@ public class DemographicExportAction4 extends Action {
 		} catch (SAXException e) {
 			logger.error("Parse exception", e);
 			return false;
-		}  
+		}
 		factory.setSchema(schema);
 
 
@@ -3479,7 +3447,7 @@ public class DemographicExportAction4 extends Action {
 	private String getSimpleDateFormatFromPatientDateFormat(String fmt) {
 		if(fmt == null)
 			return null;
-		
+
 		if("YYYY".equals(fmt)) {
 			return "yyyy";
 		}
@@ -3488,7 +3456,7 @@ public class DemographicExportAction4 extends Action {
 		}
 		return null;
 	}
-	
+
 	protected void addResidualInformation(ResidualInformation ri, String dataType, String name, String value) {
 		DataElement de = ri.addNewDataElement();
 		de.setContent(value);
@@ -3503,7 +3471,7 @@ class Enrolment {
 	public String enrolledTo;
 	public Date terminationDate;
 	public String terminationReason;
-	
+
 	public String toString() {
 		return "Enrolment: status=" + status + ",date=" + date + ",enroledTo=" + enrolledTo + ",terminationDate="+ terminationDate + ",terminationReason=" + terminationReason;
 	}

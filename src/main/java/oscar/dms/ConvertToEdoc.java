@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
+ * Copyright (c) 2015-2019. The Pharmacists Clinic, Faculty of Pharmaceutical Sciences, University of British Columbia. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
+ * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,10 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * This software was written for the
- * Department of Family Medicine
- * McMaster University
- * Hamilton
- * Ontario, Canada
+ * The Pharmacists Clinic
+ * Faculty of Pharmaceutical Sciences
+ * University of British Columbia
+ * Vancouver, British Columbia, Canada
  */
 package oscar.dms;
 
@@ -52,7 +52,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.util.MiscUtils;
 import org.w3c.dom.Document;
@@ -77,11 +77,11 @@ import oscar.form.util.FormTransportContainer;
  * NOT ALL DOCUMENTS ARE CONVERTABLE. USE AT OWN RISK.
  */
 public class ConvertToEdoc {
-	
-	private static final Logger logger = MiscUtils.getLogger(); 
+
+	private static final Logger logger = MiscUtils.getLogger();
 
 	public static final String CUSTOM_STYLESHEET_ID = "pdfMediaStylesheet";
-	
+
 	public static enum DocumentType { eForm, form }
 
 	private static final String TEMP_PDF_DIRECTORY = "tempPDF";
@@ -177,8 +177,8 @@ public class ConvertToEdoc {
 		
 		if(Files.isReadable(path)) {
 			edoc = buildEDoc( filename, 
-					subject, 
-					htmlString, 
+					subject,
+					htmlString,
 					providerNo, 
 					demographicNo, 
 					formTransportContainer.getDocumentType(), 
@@ -224,7 +224,7 @@ public class ConvertToEdoc {
 	 * Execute building and saving PDF to temp directory.
 	 */
 	private static Path execute( final String eformString, final String filename ) {
-		
+
 		String correctedDocument = tidyDocument( eformString );			
 		Document document = buildDocument( correctedDocument );
 		ByteArrayOutputStream os = new ByteArrayOutputStream();	
@@ -270,7 +270,7 @@ public class ConvertToEdoc {
 	/**
 	 * Builds an EDoc instance.
 	 */
-	public static EDoc buildEDoc( final String filename, final String subject, final String sourceHtml, 
+	public static EDoc buildEDoc( final String filename, final String subject, final String sourceHtml,
 			final String providerNo, final String demographicNo, final DocumentType documentType, final String filePath) {
 
 		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat( DEFAULT_DATE_FORMAT ); 		
@@ -299,7 +299,7 @@ public class ConvertToEdoc {
 
 		return eDoc;
 	}
-	
+
 	/**
 	 * File manager to save final PDF output stream to the file system.
 	 * @throws IOException 
@@ -314,7 +314,7 @@ public class ConvertToEdoc {
 		return path;
 
 	}
-	
+
 	/**
 	 * Use the Flying Saucer tools to render a PDF from a 
 	 * well formed w3c XHTML document
@@ -323,7 +323,7 @@ public class ConvertToEdoc {
 	private static final void renderPDF( final Document document, ByteArrayOutputStream os ) 
 			throws DocumentException {		
 		ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocument( document,null);	
+		renderer.setDocument( document,null);
 		renderer.layout();
 		renderer.createPDF( os );
 	}
@@ -334,7 +334,7 @@ public class ConvertToEdoc {
 	 * - inserts custom stylesheets.
 	 */
 	private static final Document buildDocument( final String documentString ) {
-		
+
 		Document document = getDocument( documentString );
 		if( document != null ) {
 			translateResourcePaths( document );
@@ -469,7 +469,7 @@ public class ConvertToEdoc {
 	 * This method handles paths set into a link element
 	 */
 	private static void translateLinkPaths( Document document ) {
-		NodeList linkNodeList = document.getElementsByTagName("link");	
+		NodeList linkNodeList = document.getElementsByTagName("link");
 		if( linkNodeList != null ) {
 			translatePaths( linkNodeList, PathAttribute.href );
 		}
@@ -478,8 +478,8 @@ public class ConvertToEdoc {
 	/**
 	 * This method handles paths set into an image element.
 	 */
-	private static void translateImagePaths( Document document ) {		
-		NodeList imageNodeList = document.getElementsByTagName("img");		
+	private static void translateImagePaths( Document document ) {
+		NodeList imageNodeList = document.getElementsByTagName("img");
 		if( imageNodeList != null ) {
 			translatePaths( imageNodeList, PathAttribute.src );
 		}
@@ -530,7 +530,7 @@ public class ConvertToEdoc {
 				path = buildImageDirectoryPath( parameters.split("=")[1] );
 				potentialFilePaths.add( path );
 			}
-			
+
 			// there really should be only one valid path.
 			// Only use the one that validates
 			validLink = validateLink( potentialFilePaths );
@@ -552,7 +552,6 @@ public class ConvertToEdoc {
 	
 	/**
 	 * Convert a given context path into a file system absolute path.
-	 * @param contextPath
 	 * @return
 	 */
 	private static final String getRealPath( String uri ) {
@@ -575,7 +574,7 @@ public class ConvertToEdoc {
 			logger.debug( "Absolute file path " + contextRealPath );
 	
 		}
-		
+
 		return contextRealPath;
 	}
 	
@@ -610,7 +609,7 @@ public class ConvertToEdoc {
 	 * Returns the first valid file link from a list of potential valid links.
 	 */
 	private static final String validateLink( List<String> potentialLinks ) {
-		
+
 		logger.debug( "Validating potential file paths " + potentialLinks );
 		
 		List<String> validLinks = validateLinks( potentialLinks );
@@ -626,7 +625,7 @@ public class ConvertToEdoc {
 	 * Returns only 1 valid file link.
 	 */
 	private static final String validateLink( String potentialLink ) {
-		
+
 		File file = null;
 		String absolutePath = null;
 				
@@ -674,7 +673,7 @@ public class ConvertToEdoc {
 	 */
 	private static final Tidy getTidy() {
 		Tidy tidy = new Tidy();
-		Properties properties = new Properties(); 
+		Properties properties = new Properties();
 		InputStream is = null;
 		
 		// these can be overriden with the properties file.
@@ -710,7 +709,7 @@ public class ConvertToEdoc {
 				}
 			}
 		}
-		
+
 		tidy.getConfiguration().addProps( properties );
 		
 		logger.debug( printTidyConfig( tidy ) );
@@ -786,7 +785,7 @@ public class ConvertToEdoc {
 				logger.error("Error", e);
 			}
 		}
-		
+
 		return log;
 	}
 

@@ -260,14 +260,14 @@ public class PatientConsentManager {
 	}
 	
 	public ConsentType addConsentType(LoggedInInfo loggedinInfo, ConsentType consentType ) {
-		
+
 		LogAction.addLog(loggedinInfo.getLoggedInProviderNo(), "PatientConsentManager.addConsentType", consentType.getType(), consentType.toString());
-		
+
 		consentTypeDao.persist(consentType);
 		return consentType;
 	}
-	
-	
+
+
 	/**
 	 * Returns a list of all the patient consent types currently active. 
 	 */
@@ -412,20 +412,20 @@ public class PatientConsentManager {
 	}
 
 	public boolean hasProviderSpecificConsent(LoggedInInfo loggedInInfo) {
-			ConsentType conType = consentTypeDao.findConsentTypeForProvider(ConsentType.PROVIDER_CONSENT_FILTER ,loggedInInfo.getLoggedInProviderNo()); 
+			ConsentType conType = consentTypeDao.findConsentTypeForProvider(ConsentType.PROVIDER_CONSENT_FILTER ,loggedInInfo.getLoggedInProviderNo());
 			if(conType == null) {
 				return false;
 			}
 		return true;
 	}
-	
+
 	public ConsentType getProviderSpecificConsent(LoggedInInfo loggedInInfo) {
-		ConsentType conType = consentTypeDao.findConsentTypeForProvider(ConsentType.PROVIDER_CONSENT_FILTER ,loggedInInfo.getLoggedInProviderNo()); 
+		ConsentType conType = consentTypeDao.findConsentTypeForProvider(ConsentType.PROVIDER_CONSENT_FILTER ,loggedInInfo.getLoggedInProviderNo());
 		return conType;
 	}
-	
-	public List<? extends DemographicData> filterProviderSpecificConsent(LoggedInInfo loggedInInfo,List<? extends DemographicData> demographicResults){
-		ConsentType consentType = getProviderSpecificConsent(loggedInInfo); 
+
+	public List<? extends DemographicData> filterProviderSpecificConsent(LoggedInInfo loggedInInfo, List<? extends DemographicData> demographicResults){
+		ConsentType consentType = getProviderSpecificConsent(loggedInInfo);
 		if(consentType != null) {
 			ListIterator<? extends DemographicData> iter = demographicResults.listIterator();
 			while(iter.hasNext()){
@@ -435,12 +435,11 @@ public class PatientConsentManager {
 			    }
 			}
 		}
-		
+
 		return demographicResults;
 	}
-	
-	public List<Integer> getAllDemographicsWithOptinConsentByType(LoggedInInfo loggedinInfo, ConsentType consentTypeId ) {
-		return consentDao.findAllDemoIdsConsentedToType(consentTypeId.getId());		
-	}
 
+	public List<Integer> getAllDemographicsWithOptinConsentByType(LoggedInInfo loggedinInfo, ConsentType consentTypeId ) {
+		return consentDao.findAllDemoIdsConsentedToType(consentTypeId.getId());
+	}
 }

@@ -37,7 +37,7 @@ import java.util.Vector;
 
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;

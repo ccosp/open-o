@@ -25,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.HL7HandlerMSHMappingDao;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
@@ -57,7 +57,7 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
  */
 public class TDISHandler implements MessageHandler {
 
-	Logger logger = Logger.getLogger(TDISHandler.class);
+	Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	private ca.uhn.hl7v2.model.v25.message.ORU_R01 msg = null;
 	private ArrayList<String> headers = null;

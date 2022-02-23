@@ -9,7 +9,7 @@
 
 package org.oscarehr.common.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.inbox.InboxItem;
 import org.oscarehr.common.model.inbox.InboxItemDemographicCount;

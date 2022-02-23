@@ -34,7 +34,7 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.upload.FormFile;
 import org.oscarehr.common.model.CtlDocument;
 import org.oscarehr.common.model.CtlDocumentPK;
@@ -82,7 +82,6 @@ public class EDoc extends TagObject implements Comparable<EDoc> {
 	private int numberOfPages = 0;
 	private Integer appointmentNo = -1;
 	private boolean restrictToProgram=false;
-
 	private String fileSignature;
 
 	private org.oscarehr.common.model.Document document;
@@ -90,7 +89,6 @@ public class EDoc extends TagObject implements Comparable<EDoc> {
 	private String filePath;
 	private String abnormal = "0";
 	private String receivedDate = "";
-
 
 	/** Creates a new instance of EDoc */
 	public EDoc() {

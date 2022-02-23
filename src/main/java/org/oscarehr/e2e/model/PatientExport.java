@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.casemgmt.dao.CaseManagementIssueDAO;
 import org.oscarehr.casemgmt.dao.CaseManagementNoteDAO;
 import org.oscarehr.casemgmt.dao.CaseManagementNoteExtDAO;
@@ -62,7 +62,7 @@ import org.oscarehr.e2e.util.EverestUtils;
 import org.oscarehr.util.SpringUtils;
 
 public class PatientExport {
-	private static Logger log = Logger.getLogger(PatientExport.class.getName());
+	private static Logger log = org.oscarehr.util.MiscUtils.getLogger();
 
 	private DemographicDao demographicDao = null;
 	private AllergyDao allergyDao = null;

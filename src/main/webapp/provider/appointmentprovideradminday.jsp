@@ -26,29 +26,8 @@
 <!DOCTYPE html>
 <%@ page import="org.oscarehr.common.model.Appointment.BookingSource" %>
 <%@ page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
-<%@ page import="org.oscarehr.common.dao.MyGroupAccessRestrictionDao" %>
-<%@ page import="org.oscarehr.common.dao.DemographicStudyDao" %>
-<%@ page import="org.oscarehr.common.dao.StudyDao" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.common.dao.SiteDao" %>
-<%@ page import="org.oscarehr.common.model.Site" %>
-<%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
-<%@ page import="org.oscarehr.common.model.MyGroup" %>
-<%@ page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
-<%@ page import="org.oscarehr.common.dao.ScheduleDateDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleDate" %>
-<%@ page import="org.oscarehr.common.dao.ProviderSiteDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleTemplate" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.common.model.Tickler" %>
 <%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@ page import="org.oscarehr.common.model.LookupList" %>
-<%@ page import="org.oscarehr.common.model.LookupListItem" %>
 
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
@@ -61,11 +40,11 @@
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@ page import="org.oscarehr.managers.*" %>
 <%@ page import="java.util.*,java.text.*,java.net.*,oscar.*,oscar.util.*,org.oscarehr.provider.model.PreventionManager" %>
-<%@ page import="org.apache.commons.lang.*" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="org.oscarehr.common.dao.*" %>
+<%@ page import="org.apache.commons.lang.WordUtils" %>
+<%@ page import="org.oscarehr.common.model.*" %>
 
-<!-- add by caisi -->
-<%@ taglib uri="http://www.caisi.ca/plugin-tag" prefix="plugin" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -105,6 +84,7 @@
     AppManager appManager = SpringUtils.getBean(AppManager.class);
     String resourcehelpHtml = "";
     UserProperty rbuHtml = userPropertyDao.getProp("resource_helpHtml");
+    MyGroupAccessRestrictionDao myGroupAccessRestrictionDao = SpringUtils.getBean(MyGroupAccessRestrictionDao.class);
 %>
 <%
     if(rbuHtml != null){
@@ -121,8 +101,6 @@
 
     boolean isSiteAccessPrivacy = false;
     boolean isTeamAccessPrivacy = false;
-
-    MyGroupAccessRestrictionDao myGroupAccessRestrictionDao = SpringUtils.getBean(MyGroupAccessRestrictionDao.class);
     boolean authed = true;
 %>
 
@@ -952,7 +930,7 @@
                                     <span>eConsult</span></a>
                             </li>
                             <% } %>
-                            <%if (!StringUtils.isEmpty(OscarProperties.getInstance().getProperty("clinicalConnect.CMS.url", ""))) { %>
+                            <%if (! OscarProperties.getInstance().getProperty("clinicalConnect.CMS.url", "").isEmpty()) { %>
                             <li id="clinical_connect">
                                 <a href="#"
                                    onclick="popupOscarRx(625, 1024, '../clinicalConnectEHRViewer.do?method=launchNonPatientContext')"
@@ -1047,7 +1025,7 @@
                             <security:oscarSec roleName="<%=roleName$%>" objectName="_dashboardDisplay" rights="r">
                                 <%
                                     DashboardManager dashboardManager = SpringUtils.getBean(DashboardManager.class);
-                                    List<Dashboard> dashboards = dashboardManager.getActiveDashboards(loggedInInfo1);
+                                    List<org.oscarehr.common.model.Dashboard> dashboards = dashboardManager.getActiveDashboards(loggedInInfo1);
                                     pageContext.setAttribute("dashboards", dashboards);
                                 %>
 
@@ -1099,41 +1077,6 @@
                                 </div>
                                 <%}%>
                             </li>
-                            <!-- plugins menu extension point add -->
-                            <%
-                                int pluginMenuTagNumber = 0;
-                            %>
-                            <plugin:pageContextExtension serviceName="oscarMenuExtension" stemFromPrefix="Oscar"/>
-                            <logic:iterate name="oscarMenuExtension.points" id="pt" scope="page"
-                                           type="oscar.caisi.OscarMenuExtension">
-                                <%
-                                    if (oscar.util.plugin.IsPropertiesOn.propertiesOn(pt.getName().toLowerCase())) {
-                                        pluginMenuTagNumber++;
-                                %>
-
-                                <li><a href='<html:rewrite page="<%=pt.getLink()%>"/>'>
-                                    <%=pt.getName()%>
-                                </a></li>
-                                <%
-                                    }
-                                %>
-                            </logic:iterate>
-
-                            <!-- plugin menu extension point add end-->
-
-
-                                <%--                        <caisi:isModuleLoad moduleName="caisi">--%>
-                                <%--                            <%--%>
-                                <%--                                int menuTagNumber = 0;--%>
-                                <%--                            %>--%>
-                                <%--                            <li>--%>
-                                <%--                                <a href='<html:rewrite page="/PMmodule/ProviderInfo.do"/>'>Program</a>--%>
-                                <%--                                <%--%>
-                                <%--                                    menuTagNumber++;--%>
-                                <%--                                %>--%>
-                                <%--                            </li>--%>
-                                <%--                        </caisi:isModuleLoad>--%>
-
                             <% if (isMobileOptimized) { %>
                         </ul>
                     </li> <!-- end menu list for mobile-->
@@ -1680,7 +1623,7 @@
                                                       onClick="goFilpView('<%=curProvider_no[nProvider]%>')"
                                                       title="Flip view">
                                                 <a href=#
-                                                   onClick="goZoomView('<%=curProvider_no[nProvider]%>','<%=StringEscapeUtils.escapeJavaScript(curProviderName[nProvider])%>')"
+                                                   onClick="goZoomView('<%=curProvider_no[nProvider]%>','<%= Encode.forJavaScript(curProviderName[nProvider])%>')"
                                                    onDblClick="goFilpView('<%=curProvider_no[nProvider]%>')"
                                                    title='<bean:message key="provider.appointmentProviderAdminDay.zoomView"/>' >
                                                     <c:out value='<%=curProviderName[nProvider]  + " (" + appointmentCount + ") " %>' />
@@ -1851,7 +1794,7 @@
                                                               else {
                                                                     nameSb.append(appointment.getName());
                                                               }
-                                                              String name = UtilMisc.toUpperLowerCase(nameSb.toString());
+                                                              String name = WordUtils.capitalizeFully(nameSb.toString(), new char[] {',','-','(','\''});
 
                                                               paramTickler[0]=String.valueOf(demographic_no);
                                                               paramTickler[1]=MyDateFormat.getSysDate(strDate);
@@ -2029,7 +1972,7 @@
                                                         <% if (OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) { %>
                                                         <% if (dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
                                                         <a href="#" onClick="return false;"
-                                                           title="<%=StringEscapeUtils.escapeHtml(dCust.getAlert())%>">A</a>
+                                                           title="<%=Encode.forHtmlContent(dCust.getAlert())%>">A</a>
                                                         <%
                                                                 }
                                                             }
@@ -2039,7 +1982,7 @@
                                                         <% if (OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) { %>
                                                         <% if (dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
                                                         <a href="#" onClick="return false;"
-                                                           title="<%=StringEscapeUtils.escapeHtml(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+                                                           title="<%=Encode.forHtmlContent(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
                                                         <%
                                                                 }
                                                             }
@@ -2085,14 +2028,14 @@
                                                             <% if(OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) {%>
                                                             <% if(dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
                                                     <a href="#" onClick="return false;"
-                                                       title="<%=StringEscapeUtils.escapeHtml(dCust.getAlert())%>">A</a>
+                                                       title="<%=Encode.forHtmlContent(dCust.getAlert())%>">A</a>
                                                             <%} } %>
 
                                                     <!--  notes -->
                                                             <% if(OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) {%>
                                                             <% if(dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
                                                     <a href="#" onClick="return false;"
-                                                       title="<%=StringEscapeUtils.escapeHtml(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+                                                       title="<%=Encode.forHtmlContent(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
                                                             <%} }%>
 
                                                     <!-- doctor code block 1 -->

@@ -124,14 +124,20 @@ public class EctDisplayContactsAction extends EctDisplayAction {
 		    		}
 		    	} else if(contact.getType() == DemographicContact.TYPE_PROVIDER) {
 		    		Provider p = providerDao.getProvider(contact.getContactId());
-		    		name = p.getFormattedName();
-		    		specialty = p.getSpecialty();
-		    		workPhone = p.getWorkPhone();
+		    		if(p != null) 
+		    		{
+			    		name = p.getFormattedName();
+			    		specialty = p.getSpecialty();
+			    		workPhone = p.getWorkPhone();
+		    		}
 		    	} else if(contact.getType() == DemographicContact.TYPE_PROFESSIONALSPECIALIST) {
 		    		ProfessionalSpecialist p = professionalSpecialistDao.find(Integer.parseInt(contact.getContactId()));
-		    		name = p.getFormattedName();
-		    		specialty = p.getSpecialtyType()!=null?p.getSpecialtyType():"";
-		    		workPhone = p.getPhoneNumber();
+		    		if(p != null) 
+		    		{
+			    		name = p.getFormattedName();
+			    		specialty = p.getSpecialtyType()!=null?p.getSpecialtyType():"";
+			    		workPhone = p.getPhoneNumber();
+		    		}
 		    	}
 		    	//contactDao.find(Integer.parseInt(contact.getContactId()));
 		    	NavBarDisplayDAO.Item item = NavBarDisplayDAO.Item();

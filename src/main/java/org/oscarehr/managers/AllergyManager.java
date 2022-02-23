@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.oscarehr.common.dao.AllergyDao;
+import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Allergy;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.util.LoggedInInfo;
@@ -97,5 +98,26 @@ public class AllergyManager {
 		LogAction.addLogSynchronous(loggedInInfo, "AllergyManager.getUpdatedAfterDate", "programId=" + programId + ", providerNo=" + providerNo + ", demographicId=" + demographicId + ", updatedAfterThisDateInclusive=" + updatedAfterThisDateInclusive.getTime());
 
 		return (results);
+	}
+
+	public void createAllergies(List<Allergy> allergies){
+		List<AbstractModel<?>> toPersist = new ArrayList<>();
+		for(Allergy allergy : allergies){
+			allergy.setId(null);
+			toPersist.add(allergy);
+		}
+		allergyDao.batchPersist(toPersist);
+	}
+	public void saveAllergies(List<Allergy> allergies){
+		List<AbstractModel<?>> toPersist = new ArrayList<>();
+		for(Allergy allergy : allergies){
+			if(allergy.getId() == null){
+				toPersist.add(allergy);
+			}
+			else{
+				allergyDao.merge(allergy);
+			}
+		}
+		allergyDao.batchPersist(toPersist);
 	}
 }

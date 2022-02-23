@@ -33,7 +33,7 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
 import org.oscarehr.billing.CA.BC.dao.Hl7MshDao;
@@ -108,7 +108,7 @@ public class CommonLabResultData {
 	public ArrayList<LabResultData> populateLabResultsDataEForm(LoggedInInfo loggedInInfo, String demographicNo, String reqId, boolean attach) {
 		return populateLabResultsDataEForm(loggedInInfo, demographicNo, reqId, attach, false);
 	}
-	
+
 	//Populate Lab data for consultation response
 	public ArrayList<LabResultData> populateLabResultsDataConsultResponse(LoggedInInfo loggedInInfo, String demographicNo, String respId, boolean attach) {
 		return populateLabResultsData(loggedInInfo, demographicNo, respId, attach, true);
@@ -162,9 +162,9 @@ public class CommonLabResultData {
 
 		return labs;
 	}
-	
-	
-	
+
+
+
 	private ArrayList<LabResultData> populateLabResultsDataEForm(LoggedInInfo loggedInInfo, String demographicNo, String fdid, boolean attach, boolean isConsultResponse) {
 		ArrayList<LabResultData> labs = new ArrayList<LabResultData>();
 		oscar.oscarMDS.data.MDSResultsData mDSData = new oscar.oscarMDS.data.MDSResultsData();
@@ -172,7 +172,7 @@ public class CommonLabResultData {
 		if(StringUtils.isEmpty(fdid)) {
 			return labs;
 		}
-		
+
 		OscarProperties op = OscarProperties.getInstance();
 
 		String cml = op.getProperty("CML_LABS");
@@ -208,7 +208,7 @@ public class CommonLabResultData {
 	}
 
 
-    public ArrayList<LabResultData> populateLabResultsData(LoggedInInfo loggedInInfo, String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal, Date startDate, Date endDate) {
+	public ArrayList<LabResultData> populateLabResultsData(LoggedInInfo loggedInInfo, String providerNo, String demographicNo, String patientFirstName, String patientLastName, String patientHealthNumber, String status, boolean isPaged, Integer page, Integer pageSize, boolean mixLabsAndDocs, Boolean isAbnormal, Date startDate, Date endDate) {
 
     		ArrayList<LabResultData> labs = new ArrayList<LabResultData>();
     		oscar.oscarMDS.data.MDSResultsData mDSData = new oscar.oscarMDS.data.MDSResultsData();
@@ -240,7 +240,7 @@ public class CommonLabResultData {
     		if (hl7text != null && hl7text.trim().equals("yes")){
     			if (isPaged) {
     		        ArrayList<LabResultData> hl7Labs = Hl7textResultsData.populateHl7ResultsData(providerNo, demographicNo, patientFirstName, patientLastName,
-    		        												   patientHealthNumber, status, true, page, pageSize, mixLabsAndDocs, isAbnormal, startDate, endDate);
+    		        												   patientHealthNumber, status, true, page, pageSize, mixLabsAndDocs, isAbnormal);
     		        labs.addAll(hl7Labs);
                 }
                 else {
@@ -411,7 +411,7 @@ public class CommonLabResultData {
 	public static boolean updateReportStatus(int labNo, String providerNo, char status, String comment, String labType) {
 		return updateReportStatus(labNo,providerNo,status,comment,labType,false);
 	}
-	
+
 	public static boolean updateReportStatus(int labNo, String providerNo, char status, String comment, String labType,boolean skipCommentOnUpdate) {
 
 		/*
@@ -549,7 +549,7 @@ public class CommonLabResultData {
 			return result;
 
 		} catch (Exception e) {
-			Logger l = Logger.getLogger(CommonLabResultData.class);
+			Logger l = org.oscarehr.util.MiscUtils.getLogger();
 			l.error("exception in CommonLabResultData.updateLabRouting()", e);
 			return false;
 		}
@@ -598,7 +598,7 @@ public class CommonLabResultData {
 
 			return true;
 		} catch (Exception e) {
-			Logger l = Logger.getLogger(CommonLabResultData.class);
+			Logger l = org.oscarehr.util.MiscUtils.getLogger();
 			l.error("exception in CommonLabResultData.updateLabRouting()", e);
 			return false;
 		}

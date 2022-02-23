@@ -43,6 +43,10 @@ import org.oscarehr.util.SpringUtils;
 
 import oscar.util.UtilDateUtilities;
 
+/**
+ * @Deprecated: use DemographicManager.  There is no need for this.
+ */
+@Deprecated
 public class DemographicData {
 
 	private DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean("demographicCustDao");

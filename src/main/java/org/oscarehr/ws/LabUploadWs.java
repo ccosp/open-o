@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.cxf.annotations.GZIP;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.LoggedInInfo;
 

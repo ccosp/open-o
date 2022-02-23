@@ -31,6 +31,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
+import org.oscarehr.fax.core.FaxRecipient;
 
 import net.sf.json.JSONObject;
 
@@ -137,10 +138,8 @@ public final class EctConsultationFaxForm extends ActionForm {
 		if(copiedTo == null) {
 			copiedTo = new HashSet<FaxRecipient>();
 			for(String faxRecipient : getFaxRecipients()) {
-				JSONObject jsonObject = JSONObject.fromObject(faxRecipient);
-				String fax = jsonObject.getString("fax");
-				String name = jsonObject.getString("name");
-				copiedTo.add(new FaxRecipient(name, fax));
+				JSONObject jsonObject = JSONObject.fromObject("{" + faxRecipient + "}");
+				copiedTo.add(new FaxRecipient(jsonObject));
 			}
 		}
 		return copiedTo;

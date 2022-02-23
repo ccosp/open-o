@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.DocumentException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -85,6 +85,10 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 		String demoNo = request.getParameter("demographicNo");
 		ArrayList<EDoc> docs = EDocUtil.listDocs(loggedInInfo, demoNo, reqId, EDocUtil.ATTACHED);
 		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		if(! path.endsWith(File.separator))
+		{
+			path = path + File.separator;
+		}
 		ArrayList<Object> alist = new ArrayList<Object>();
 		
 		CommonLabResultData consultLabs = new CommonLabResultData();

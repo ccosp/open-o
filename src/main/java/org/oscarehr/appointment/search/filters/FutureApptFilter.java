@@ -30,7 +30,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.appointment.search.SearchConfig;
 import org.oscarehr.appointment.search.TimeSlot;
 import org.oscarehr.managers.DayWorkSchedule;

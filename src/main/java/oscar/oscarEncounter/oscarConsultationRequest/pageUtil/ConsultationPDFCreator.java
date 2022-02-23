@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.DigitalSignatureDao;
@@ -34,6 +34,7 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DigitalSignature;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Site;
+import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -280,7 +281,6 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			filename = props.getProperty("faxLogoInConsultation");	
 		}
 
-		//TODO: tiff, png, jpeg, epg, 
 		Path path = Paths.get(filename);
 		if(Files.exists(path))
 		{
@@ -313,7 +313,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			logger.error("This image location is malformed " + filename, e);
 		} catch (IOException e) {
 			logger.error("Unexpected error.", e);
-		} 	
+		}
 	}
 
 	protected PdfPTable createReplyHeader( Integer alignment ) {
@@ -405,9 +405,9 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		// add the address details
 		Phrase addressPhrase = new Phrase("");
 		if( reqFrm.letterheadAddress != null && reqFrm.letterheadAddress.trim().length() > 0 ) {
-			addressPhrase.add( String.format("%s", reqFrm.letterheadAddress) );
+			addressPhrase.add( reqFrm.getLetterheadAddress() );
 		} else {
-			addressPhrase.add( String.format("%s",clinic.getClinicAddress() ) );
+			addressPhrase.add( clinic.getClinicAddress() );
 			
 			addressPhrase.add(String.format("%s, %s. %s", clinic.getClinicCity(),
 					clinic.getClinicProvince(), 
@@ -420,13 +420,13 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		// add the telecom info
 		Phrase telecomPhrase = new Phrase("");
 		if( reqFrm.letterheadPhone != null && reqFrm.letterheadPhone.trim().length() > 0 ) {
-			telecomPhrase.add( String.format("Phone: %s", reqFrm.letterheadPhone ) );
+			telecomPhrase.add( String.format("Phone: %s", reqFrm.getLetterheadPhone()) );
 		} else {
 			telecomPhrase.add( String.format("Phone: %s", clinic.getClinicPhone() ) );
 		}
 		
 		if( reqFrm.letterheadFax != null && reqFrm.letterheadFax.trim().length() > 0 ) {
-			telecomPhrase.add( String.format(" Fax: %s", reqFrm.letterheadFax ) );
+			telecomPhrase.add( String.format(" Fax: %s", reqFrm.getLetterheadFax() ) );
 		} else {
 			telecomPhrase.add( String.format(" Fax: %s", clinic.getClinicFax() ) );
 		}

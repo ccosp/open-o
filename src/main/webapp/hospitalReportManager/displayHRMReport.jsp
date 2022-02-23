@@ -50,7 +50,7 @@ HRMProviderConfidentialityStatementDao hrmProviderConfidentialityStatementDao = 
 
 <%@page import="org.oscarehr.hospitalReportManager.*, org.oscarehr.hospitalReportManager.model.*, org.oscarehr.util.SpringUtils, org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="org.apache.logging.log4j.Logger" %>
 <%@ page import="org.oscarehr.util.MiscUtils" %>
 <%@ page import="org.oscarehr.hospitalReportManager.dao.*" %>
 <%@ page import="oscar.oscarEncounter.data.EctFormData" %>

@@ -41,7 +41,7 @@ import javax.xml.validation.SchemaFactory;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.util.LoggedInInfo;
@@ -111,8 +111,8 @@ public class OLISUtils {
 		}
 		return isDuplicate(loggedInInfo, msg);
 	}
-	
-	
+
+
 	public static boolean isDuplicate(LoggedInInfo loggedInInfo, OLISHL7Handler h,String msg) {
 		
 		String sendingFacility = h.getPlacerGroupNumber();//getPerformingFacilityNameOnly();
@@ -130,10 +130,10 @@ public class OLISUtils {
 		logger.debug("Facility "+sendingFacility+" Accession # "+olisAccessionNum);
 
 		//CML
-		if(sendingFacility != null &&  sendingFacility.equals(CMLIndentifier)){ 
+		if(sendingFacility != null &&  sendingFacility.equals(CMLIndentifier)){
 			//OLIS ACCESSION NUM LOOKS LIKE Q18OPUT-1215, CML ONE LOOKS LIKE Q18OPUT
 			olisAccessionNum = olisAccessionNum.indexOf("-") != -1 ? olisAccessionNum.split("-")[0] : olisAccessionNum;
-			
+
 			for(Hl7TextInfo dupResult: hl7TextInfoDao.searchByAccessionNumber(olisAccessionNum)) {
 				String cmlAccessionNum = dupResult.getAccessionNumber();
 				cmlAccessionNum = cmlAccessionNum.indexOf("-1") != -1 ? cmlAccessionNum.split("-")[0]:cmlAccessionNum;
@@ -146,7 +146,7 @@ public class OLISUtils {
 					}
 				}
 			}
-		} 
+		}
 		//LIFELABS
 		else if( sendingFacility != null && sendingFacility.equals(LifeLabsIndentifier)){
 			//OLIS ACCESSION LOOKS LIKE 2015-Q20OUTPUT, DIRECT LOOKS LIKE 16660-Q20OUTPUT-1 (hl7TextInfo.accession would be Q20OUTPUT)
@@ -161,20 +161,20 @@ public class OLISUtils {
 						return true;
 					}
 				}
-			}			
+			}
 		}
 		//GDML
 		else if (sendingFacility != null && sendingFacility.equals(GammaDyancareIndentifier)){
 			//OLIS ACCNUM LOOKS LIKE 201512Q19OUPUT and direct looks like 12-Q19OUPUT
 			olisAccessionNum = olisAccessionNum.substring(4);
-			
+
 			List<Hl7TextInfo> dupResults = new ArrayList<Hl7TextInfo>();
 			String directAcc = null;
 			try {
 				directAcc = olisAccessionNum.substring(0,2) + "-" + olisAccessionNum.substring(2);
 				dupResults = hl7TextInfoDao.searchByAccessionNumber(directAcc);
 			}catch(Exception e) {
-				
+
 			}
 			
 			for(Hl7TextInfo dupResult:dupResults) {

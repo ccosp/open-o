@@ -23,87 +23,265 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
-public class DocumentTo1 implements Comparable<DocumentTo1> {
-	
-	private int id;
-	private String name;
-	private String category;
-	private String documentDate;
-	private String documentTable;
-	private String documentDescription;
-	private String contentType;
-	
-	public DocumentTo1( int id, String name, String documentDate, String category, String contentType) {
-		setId(id);
-		setName(name);
-		setDocumentDate(documentDate);
-		setCategory(category);
-		setDocumentTable("");
-		setContentType(contentType);
-	}
-	
-	public DocumentTo1( int id, String name, String documentDate, String category, String contentType, String documentTable) {
-		this(id, name, documentDate, category, contentType);
-		setDocumentTable(documentTable);
-	}
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-	public String getDocumentDate() {
-		return documentDate;
-	}
+@XmlRootElement
+public class DocumentTo1 implements Serializable {
+    private Integer id;
+    private String type = "";
+    private String docClass = "";
+    private String subClass = "";
+    private String fileName;
+    private String description = "";
+    private String xml = "";
+    private String creator;
+    private String responsible = "";
+    private String source = "";
+    private String sourceFacility = "";
+    private Integer programId = -1;
+    private Date updateDateTime = new Date();
+    private char status = 'A';
+    private String contentType;
+    private Date contentDateTime = new Date();
+    private String reportMedia;
+    private Date sentDateTime;
+    private int public1 = 0;
+    private Date observationDate = new Date();
+    private Integer numberOfPages;
+    private Integer appointmentNo = -1;
+    private Boolean abnormal = false;
+    private Boolean restrictToProgram=false;
 
-	public void setDocumentDate(String documentDate) {
-		this.documentDate = documentDate;
-	}
+    private String providerNo;
+    private Integer demographicNo;
 
-	public String getDocumentTable() {
-		return documentTable;
-	}
+    private byte[] fileContents;
 
-	public void setDocumentTable(String documentTable) {
-		this.documentTable = documentTable;
-	}
+    private List<DocumentReviewTo1> reviews = new ArrayList<>();
 
-	public String getDocumentDescription() {
-		return documentDescription;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setDocumentDescription(String documentDescription) {
-		this.documentDescription = documentDescription;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getContentType() {
-		return contentType;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	@Override
-	public int compareTo(DocumentTo1 arg0) {
-		if (arg0.getDocumentDate() == null || arg0.getDocumentDate() == null) {
-			return 0;
-		}
-		return getDocumentDate().compareTo(arg0.getDocumentDate());
-	}
+    public String getDocClass() {
+        return docClass;
+    }
 
+    public void setDocClass(String docClass) {
+        this.docClass = docClass;
+    }
+
+    public String getSubClass() {
+        return subClass;
+    }
+
+    public void setSubClass(String subClass) {
+        this.subClass = subClass;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getXml() {
+        return xml;
+    }
+
+    public void setXml(String xml) {
+        this.xml = xml;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(String responsible) {
+        this.responsible = responsible;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getSourceFacility() {
+        return sourceFacility;
+    }
+
+    public void setSourceFacility(String sourceFacility) {
+        this.sourceFacility = sourceFacility;
+    }
+
+    public Integer getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(Integer programId) {
+        this.programId = programId;
+    }
+
+    public Date getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(Date updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public Date getContentDateTime() {
+        return contentDateTime;
+    }
+
+    public void setContentDateTime(Date contentDateTime) {
+        this.contentDateTime = contentDateTime;
+    }
+
+    public String getReportMedia() {
+        return reportMedia;
+    }
+
+    public void setReportMedia(String reportMedia) {
+        this.reportMedia = reportMedia;
+    }
+
+    public Date getSentDateTime() {
+        return sentDateTime;
+    }
+
+    public void setSentDateTime(Date sentDateTime) {
+        this.sentDateTime = sentDateTime;
+    }
+
+    public int getPublic1() {
+        return public1;
+    }
+
+    public void setPublic1(int public1) {
+        this.public1 = public1;
+    }
+
+    public Date getObservationDate() {
+        return observationDate;
+    }
+
+    public void setObservationDate(Date observationDate) {
+        this.observationDate = observationDate;
+    }
+
+    public Integer getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(Integer numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public Integer getAppointmentNo() {
+        return appointmentNo;
+    }
+
+    public void setAppointmentNo(Integer appointmentNo) {
+        this.appointmentNo = appointmentNo;
+    }
+
+    public Boolean getAbnormal() {
+        return abnormal;
+    }
+
+    public void setAbnormal(Boolean abnormal) {
+        this.abnormal = abnormal;
+    }
+
+    public Boolean getRestrictToProgram() {
+        return restrictToProgram;
+    }
+
+    public void setRestrictToProgram(Boolean restrictToProgram) {
+        this.restrictToProgram = restrictToProgram;
+    }
+
+    public List<DocumentReviewTo1> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<DocumentReviewTo1> reviews) {
+        this.reviews = reviews;
+    }
+
+    public byte[] getFileContents() {
+        return fileContents;
+    }
+
+    public void setFileContents(byte[] fileContents) {
+        this.fileContents = fileContents;
+    }
+
+    public String getProviderNo() {
+        return providerNo;
+    }
+    public void setProviderNo(String providerNo) {
+        this.providerNo = providerNo;
+    }
+
+    public Integer getDemographicNo() {
+        return demographicNo;
+    }
+    public void setDemographicNo(Integer demographicNo) {
+        this.demographicNo = demographicNo;
+    }
 }

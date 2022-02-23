@@ -295,6 +295,7 @@ public class DocumentDao extends AbstractDao<Document> {
 	 * 		Returns a list containing array with CtlDocument and Document pairs in the corresponding order. 
 	 */
 	@SuppressWarnings("unchecked")
+	@Deprecated
     public List<Object[]> findDocuments(String module, String moduleid, String docType, boolean includePublic, boolean includeDeleted, boolean includeActive, EDocSort sort, Date since) {
 		Map<String, Object> params = new HashMap<String, Object>();
 	
@@ -380,7 +381,7 @@ public class DocumentDao extends AbstractDao<Document> {
         }
         return documents;
     }
-    
+
     @SuppressWarnings("unchecked")
 	public List<Document> findByDemographicUpdateAfterDate(Integer demographicId, Date updatedAfterThisDate) {
 	    	String sql = "select d from "
@@ -400,7 +401,7 @@ public class DocumentDao extends AbstractDao<Document> {
         }
         return documents;
     }
-    
+
 	/**
 	 * @return results ordered by updatedatetime
 	 */

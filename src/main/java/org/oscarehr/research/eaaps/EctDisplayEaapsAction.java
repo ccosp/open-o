@@ -32,8 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.net.util.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -59,9 +58,9 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 
 	private static final String EAAPS = "eaaps";
 	
-	private static final String EAAPS_ERROR_MESSAGE = "Patient not found in eAMS database";
+	private static final String EAAPS_ERROR_MESSAGE = "Patient not found in eAAPS database";
 
-	private static Logger logger = Logger.getLogger(EctDisplayEaapsAction.class);
+	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 	
 	private DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 	
@@ -104,23 +103,17 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 		
 		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 		EaapsHash hash = new EaapsHash(demographic);
-		//If user doesn't have 493 in there dx registry or they are under 16
 		if(!dxresearchDAO.activeEntryExists(demographic.getDemographicNo(), "icd9", "493")){
 			if (logger.isDebugEnabled()) {
-				logger.debug("Demographic " + demographic + " does not have 493 in there dx registry");
-			}
-			return true;
-		}else if(demographic.getAgeInYears() <16){
-			if (logger.isDebugEnabled()) {
-				logger.debug("Demographic " + demographic + " is younger than 16");
+				logger.debug("Demographic " + demographic + " is not entered for a study");
 			}
 			return true;
 		}
-		logger.debug("eaams module should show!");
-		Dao.setLeftHeading("Asthma Management System");
+		
+		Dao.setLeftHeading("eAAPS");
 		Dao.setHeadingColour("FF6600"); // orange
 		Dao.setMenuHeader("Menu Header");  
-        Dao.setRightHeadingID("eams");
+        Dao.setRightHeadingID("eaaps");
 		
 		EaapsPatientData patientData;
 		try {
@@ -149,7 +142,7 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 		
 		String eaapsUrl = null;
 		if (patientData.isUrlProvided()) {
-			eaapsUrl = getEaapsUrl(patientData.getUrl(), false);
+			eaapsUrl = getEaapsUrl(patientData.getUrl(), true);
 		}
 		
 		String widgetMessage = patientData.getWidgetMessage();
@@ -186,15 +179,8 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 	    } else {
 	    	buf.append("?");
 	    }
-	    buf.append("mrp=").append(mrpProviderNo);
+	    buf.append("isMrp=").append(isMrpPhysicianLookingAtTheRecord);
 	    buf.append("&pNo=").append(loggedInInfo.getLoggedInProviderNo());
-	    buf.append("&pNa=").append(Base64.encodeBase64URLSafeString(loggedInInfo.getLoggedInProvider().getFormattedName().getBytes()));
-	    
-		String clinic = OscarProperties.getInstance().getProperty("eaaps.clinic", "");
-		if(!clinic.equals("")) {
-			buf.append("&clinic=").append(clinic);
-		}
-		
 	    patientData.replaceUrl(buf.toString());
     }
 
@@ -237,7 +223,7 @@ public class EctDisplayEaapsAction extends EctDisplayAction {
 
 	@Override
 	public String getCmd() {
-		return "eams";
+		return "eaaps";
 	}
 
 }
