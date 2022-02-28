@@ -46,7 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -70,6 +70,7 @@ import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.managers.FaxManager;
@@ -97,8 +98,9 @@ public class EctConsultationFormRequestAction extends Action {
 
 	private static final Logger logger=MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+	private ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
 	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
-	
+
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -259,28 +261,31 @@ public class EctConsultationFormRequestAction extends Action {
                                 		consultationRequestExtDao.persist(createExtEntry(requestId,name.substring(name.indexOf("_")+1),value));
                                 	}
                                 }
+
                                 // now that we have consultation id we can save any attached docs as well  
                                 
                                 ConsultationAttachDocs consultationAttachDocs = new ConsultationAttachDocs(providerNo,demographicNo,requestId,attachedDocuments);
                                 consultationAttachDocs.attach(loggedInInfo);
             				  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
             				  	consultationAttachLabs.attach(loggedInInfo);
-  
-								
+
 			}
 	        catch (ParseException e) {
 	                MiscUtils.getLogger().error("Invalid Date", e);
 	        }
 
-
+	        request.setAttribute("reqId", requestId);
 			request.setAttribute("transType", "2");
 
 		} else
 
 		if (submission.startsWith("Update")) {
 
+		
 			requestId = frm.getRequestId();
 
+			consultationManager.archiveConsultationRequest(Integer.parseInt(requestId));
+			
 			try {				     
 				
 				if (newSignature) {
@@ -299,6 +304,7 @@ public class EctConsultationFormRequestAction extends Action {
                 consult.setReferralDate(date);
                 consult.setServiceId(new Integer(frm.getService()));
                 consult.setSignatureImg(signatureId);
+                consult.setProviderNo(frm.getProviderNo());
         		consult.setLetterheadName(frm.getLetterheadName());
         		consult.setLetterheadAddress(frm.getLetterheadAddress());
         		consult.setLetterheadPhone(frm.getLetterheadPhone());

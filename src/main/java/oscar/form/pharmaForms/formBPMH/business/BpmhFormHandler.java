@@ -30,7 +30,7 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.AllergyDao;
 import org.oscarehr.common.dao.ContactSpecialtyDao;
@@ -104,7 +104,7 @@ import oscar.oscarRx.data.RxDrugData;
  */
 public class BpmhFormHandler {
 
-	private static final Logger logger = Logger.getLogger("BpmhFormHandler");
+	private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 	private static final String[] IGNORE_METHODS = new String [] {
 		"handler", 
 		"hibernateLazyInitializer",

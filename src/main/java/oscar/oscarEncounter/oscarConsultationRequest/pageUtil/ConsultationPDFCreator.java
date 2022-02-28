@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.DigitalSignatureDao;
@@ -586,7 +586,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			infoTable.addCell(setDataCell(cell, divy(reqFrm.clinicalInformation)));
 		}
 
-		if(getlen(reqFrm.concurrentProblems) > 1) {
+		if(getlen(reqFrm.concurrentProblems) > 0) {
 			if (props.getProperty("significantConcurrentProblemsTitle", "")
 					.length() > 1) {
 				infoTable.addCell(setInfoCell(cell, props.getProperty("significantConcurrentProblemsTitle", ""), heading));

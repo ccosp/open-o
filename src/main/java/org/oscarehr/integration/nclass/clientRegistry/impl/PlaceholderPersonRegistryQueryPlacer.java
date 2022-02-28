@@ -25,7 +25,7 @@ package org.oscarehr.integration.nclass.clientRegistry.impl;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.marc.everest.datatypes.EN;
 import org.marc.everest.datatypes.ENXP;
 import org.marc.everest.datatypes.EntityNamePartType;
@@ -64,7 +64,7 @@ import org.oscarehr.integration.nclass.clientRegistry.model.PersonDemographics;
 
 public class PlaceholderPersonRegistryQueryPlacer extends BasePlacer implements PersonRegistryQueryPlacer {
 
-	private static Logger logger = Logger.getLogger(PlaceholderPersonRegistryQueryPlacer.class);
+	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	private PlaceholderPersonRegistryQueryFulfiller placeholderPersonRegistryQueryFulfiller = new PlaceholderPersonRegistryQueryFulfiller();
 

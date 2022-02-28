@@ -45,7 +45,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -65,8 +65,10 @@ public class ManageFaxes extends FaxAction {
 	
 	private Logger log = MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+
 	private NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
 	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+
 	@SuppressWarnings("unused")
 	public ActionForward CancelFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		

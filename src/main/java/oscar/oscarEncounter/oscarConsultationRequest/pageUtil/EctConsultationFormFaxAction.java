@@ -20,38 +20,52 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.oscarehr.common.dao.ConsultationRequestDao;
+import org.oscarehr.common.dao.EFormDataDao;
 import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
+import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.fax.util.PdfCoverPageCreator;
+import org.oscarehr.hospitalReportManager.HRMPDFCreator;
+import org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao;
+import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
+import org.oscarehr.util.WKHtmlToPdfUtils;
+
+import com.itextpdf.text.pdf.PdfReader;
+import com.lowagie.text.DocumentException;
+import com.sun.xml.messaging.saaj.util.ByteInputStream;
+import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.eform.EFormUtil;
+import oscar.eform.actions.PrintAction;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import oscar.oscarLab.ca.all.pageUtil.OLISLabPDFCreator;
+import oscar.oscarLab.ca.all.parsers.Factory;
+import oscar.oscarLab.ca.all.parsers.MessageHandler;
+import oscar.oscarLab.ca.all.parsers.OLISHL7Handler;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.ConcatPDF;
-
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.DocumentException;
-import com.sun.xml.messaging.saaj.util.ByteInputStream;
-import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 
 public class EctConsultationFormFaxAction extends Action {
 
@@ -60,7 +74,9 @@ public class EctConsultationFormFaxAction extends Action {
     private static FaxClientLogDao faxClientLogDao = SpringUtils.getBean(FaxClientLogDao.class);
 	private static FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);				
 	private static FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-    
+	private ConsultationRequestDao consultationRequestDao = SpringUtils.getBean(ConsultationRequestDao.class);
+	private EFormDataDao eformDataDao = SpringUtils.getBean(EFormDataDao.class);
+	
 	public EctConsultationFormFaxAction() {
 	}
 	    
@@ -98,6 +114,8 @@ public class EctConsultationFormFaxAction extends Action {
 		ByteInputStream bis;
 		ByteOutputStream bos;
 		CommonLabResultData consultLabs = new CommonLabResultData();
+		HRMDocumentToDemographicDao hrmDocumentToDemographicDao = SpringUtils.getBean(HRMDocumentToDemographicDao.class);
+		List<HRMDocumentToDemographic> attachedHRMReports = hrmDocumentToDemographicDao.findHRMDocumentsAttachedToConsultation(reqId);
 		ArrayList<InputStream> streams = new ArrayList<InputStream>();
 		String provider_no = loggedInInfo.getLoggedInProviderNo();		
 
@@ -177,8 +195,17 @@ public class EctConsultationFormFaxAction extends Action {
 				// Storing the lab in PDF format inside a byte stream.
 				bos = new ByteOutputStream();
 				request.setAttribute("segmentID", labs.get(i).segmentID);
-				LabPDFCreator lpdfc = new LabPDFCreator(request, bos);
-				lpdfc.printPdf();
+				MessageHandler messageHandler = Factory.getHandler(labs.get(i).getSegmentID()); 
+				//Checks if the lab is HL7
+				if (messageHandler instanceof OLISHL7Handler){
+					//If the lab is HL7, use the OLISLabPDFCreator to print the lab
+					OLISLabPDFCreator olisLabPdfCreator = new OLISLabPDFCreator(request, bos);
+					olisLabPdfCreator.printPdf();
+				}
+				else {
+					LabPDFCreator lpdfc = new LabPDFCreator(request, bos);
+					lpdfc.printPdf();
+				}
 
 				// Transferring PDF to an input stream to be concatenated with
 				// the rest of the documents.
@@ -190,13 +217,54 @@ public class EctConsultationFormFaxAction extends Action {
 
 			}
 			
+			for (HRMDocumentToDemographic attachedHRM : attachedHRMReports) {
+				bos = new ByteOutputStream();
+				HRMPDFCreator hrmPdfCreator = new HRMPDFCreator(bos, attachedHRM.getHrmDocumentId(), loggedInInfo);
+				hrmPdfCreator.printPdf();
+
+				buffer = bos.getBytes();
+				bis = new ByteInputStream(buffer, bos.getCount());
+				bos.close();
+				streams.add(bis);
+				pdfDocumentList.add(bis);
+			}
+
+            //Get attached eForms
+            List<EFormData> eForms = EFormUtil.listPatientEformsCurrentAttachedToConsult(reqId);
+            for (EFormData eForm : eForms) {
+                String localUri = PrintAction.getEformRequestUrl(request);
+                buffer = WKHtmlToPdfUtils.convertToPdf(localUri + eForm.getId());
+                bis = new ByteInputStream(buffer, buffer.length);
+                streams.add(bis);
+                pdfDocumentList.add(bis);
+            }
+
+
+			if(reqId!=null && !reqId.trim().equals("") && consultationRequestDao.getConsultation(Integer.parseInt(reqId))!=null){
+				ProfessionalSpecialist professionalSpecialist = consultationRequestDao.getConsultation(Integer.parseInt(reqId)).getProfessionalSpecialist();
+				if (professionalSpecialist!=null && professionalSpecialist.getEformId()!=null && professionalSpecialist.getEformId()!=0){
+					//need to get FDID. Get latest form
+					List<EFormData> eformDataList = eformDataDao.findByDemographicIdAndFormId(Integer.parseInt(demoNo), professionalSpecialist.getEformId());
+					if(!eformDataList.isEmpty()) {
+						EFormData efd = eformDataList.get(0);
+						String localUri = PrintAction.getEformRequestUrl(request);
+						buffer = WKHtmlToPdfUtils.convertToPdf(localUri + efd.getId() + "&blankForm=true");
+						bis = new ByteInputStream(buffer, buffer.length);
+						streams.add(bis);
+						pdfDocumentList.add(bis);
+					}
+
+				}
+			}
+			
+			
 			if (pdfDocumentList.size() > 0) {
  
 				// Writing consultation request to disk as a pdf.
 				String faxPath = path;
 				String filename = "Consult_" + reqId + System.currentTimeMillis() + ".pdf";
 				String faxPdf = String.format("%s%s", faxPath, filename);
-				
+
 				FileOutputStream fos = new FileOutputStream(faxPdf);				
 				ConcatPDF.concat(pdfDocumentList, fos);				
 				fos.close();
@@ -207,9 +275,9 @@ public class EctConsultationFormFaxAction extends Action {
 
 				List<FaxConfig> faxConfigs = faxConfigDao.findAll(null, null);
 				boolean validFaxNumber;
-				
+
 				for (FaxRecipient faxRecipient : ectConsultationFaxForm.getAllFaxRecipients()) {	
-					
+
 				    String faxNo = faxRecipient.getFax();
 				    
 				    if(faxNo == null) {
@@ -281,7 +349,7 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (com.lowagie.text.DocumentException e) {
+		} catch (com.itextpdf.text.DocumentException e) {
 			logger.error("error", e);
 		} finally {
 			// Cleaning up InputStreams created for concatenation.
@@ -294,8 +362,9 @@ public class EctConsultationFormFaxAction extends Action {
 			}
 		}
 		if (!error.equals("")) {
-			logger.error(error + " occured insided ConsultationPrintAction", exception);
-			request.setAttribute("printError", new Boolean(true));
+			logger.error(error + " occurred inside ConsultationFormFaxAction", exception);
+			request.setAttribute("faxError", exception.getMessage());
+			request.setAttribute("de", demoNo);
 			return mapping.findForward("error");
 		}
 		return null;		

@@ -19,4 +19,6 @@ src/main/resources/uiResources_*.properties
 *.scp
 /out
 /.run*
+/catalina_base*
 *.iml
+/catalina_base/*

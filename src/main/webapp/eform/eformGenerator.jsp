@@ -38,7 +38,7 @@
 		return;
 	}
 %>
-<%@ page import="oscar.eform.actions.DisplayImageAction,java.lang.*,java.io.File,oscar.OscarProperties,java.io.*,oscar.eform.*,oscar.eform.data.*,java.util.*,org.apache.log4j.Logger"%>
+<%@ page import="oscar.eform.actions.DisplayImageAction,java.lang.*,java.io.File,oscar.OscarProperties,java.io.*,oscar.eform.*,oscar.eform.data.*,java.util.*,org.apache.logging.log4j.Logger"%>
 <!--
 /*  eForm Generator v6.0l reimagined by Peter Hutten-Czapski 2017-2018
  *
@@ -666,10 +666,12 @@ function GetTextTop(){
     textTop += "&lt;/title&gt;\n"
     textTop += "&lt;style type=&quot;text/css&quot; media=&quot;screen&quot; &gt;\n";
     textTop += " input {\n\t-moz-box-sizing: content-box;\n\t-webkit-print-color-adjust: exact;\n\t-webkit-box-sizing: content-box;\n\tbox-sizing: content-box\n }\n"
+
     if (document.getElementById('AddSignature').checked){
         textTop += " .sig {\n\tborder: "+SignatureBorder+";\n\tcolor: "+SignatureColor+";\n\tbackground-color: white;\n }\n"
     }
-    textTop += "/* Drawing the 'gripper' for touch-enabled devices */\n html.touch #content {\n\tfloat:left;\n\twidth:92%;\n}\n html.touch #scrollgrabber {\n\tfloat:right;\n\twidth:4%;\n\tmargin-right:2%;\n\tbackground-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)\n }\n html.borderradius #scrollgrabber {\n\tborder-radius: 1em;\n }\n"
+    
+	textTop += "/* Drawing the 'gripper' for touch-enabled devices */\n html.touch #content {\n\tfloat:left;\n\twidth:92%;\n}\n html.touch #scrollgrabber {\n\tfloat:right;\n\twidth:4%;\n\tmargin-right:2%;\n\tbackground-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)\n }\n html.borderradius #scrollgrabber {\n\tborder-radius: 1em;\n }\n"
     textTop += "&lt;/style&gt;\n";
  
     textTop += "&lt;style type=&quot;text/css&quot; media=&quot;print&quot;&gt;\n"
@@ -680,6 +682,8 @@ function GetTextTop(){
     if (document.getElementById('AddSignature').checked){
         textTop += " .sig {\n\tborder-style: solid;\n\tborder-color: transparent;\n\tcolor: "+SignatureColor+";\n\tbackground-color: transparent;\n }\n\n "
     }
+    
+	
     textTop += "&lt;/style&gt;\n\n";
  
     
@@ -707,7 +711,7 @@ function GetTextTop(){
 	    // ole darn it, I knew I left a copy of jQuery lying around somewhere... perhaps under my nose?
 	    textTop += "&lt;script&gt; window.jQuery || document.write('&lt;script src=&quot;jquery-1.7.1.min.js&quot;&gt;&lt; &#92;/script&gt;') &lt;/script&gt;\n\n";
     }
-    	
+
     //Peter Hutten-Czapski's Xbox scripts   
     if (xPresent){
         textTop += "&lt;!-- scripts for Xbox functions --&gt;\n"
@@ -749,6 +753,7 @@ function GetTextTop(){
         textTop += "});\n"
         textTop += "&lt;/script&gt;\n\n"
     }
+        
     
     if (parentPresent  || document.getElementById('radioX').checked){   
         // Adding jquery code for checkbox parent-child-fields (Bell Eapen, nuchange.ca)
@@ -766,7 +771,8 @@ function GetTextTop(){
         textTop += "\n\t\t\t$( this ).val('X');\n\t\t}\n\t});\n});\n";
         textTop += "&lt;/script&gt;\n";       
     }
-    //  textTop += "&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.7.1.min.js&quot;&gt;&lt;/script&gt;\n";
+    
+	//  textTop += "&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.7.1.min.js&quot;&gt;&lt;/script&gt;\n";
     //textTop += "&lt;script type=&quot;text/javascript&quot; src=&quot;${oscar_javascript_path}jquery/jquery-1.4.2.js&quot;&gt;&lt;/script&gt;\n";
  
     //reference built in functions as desired
@@ -1079,8 +1085,6 @@ function GetTextTop(){
     //textTop += "\t}\n"
     //textTop += "}\n&lt;/script&gt\n"
  
-    
- 
 
 	//</head>
 	textTop += "&lt;/head&gt;\n\n"
@@ -1099,6 +1103,7 @@ function GetTextTop(){
 	if (document.getElementById('AddSignature').checked){
 		textTop += "loadSig();"
 	}
+
 	<% if (OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_fax_enabled")) { %>
 	if ((document.getElementById('faxno').value.length >0)){
 		textTop += "setFaxNo();"

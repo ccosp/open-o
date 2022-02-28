@@ -26,6 +26,7 @@
 package org.oscarehr.common.dao;
 
 import java.io.UnsupportedEncodingException;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -182,7 +183,8 @@ public class Hl7TextInfoDao extends AbstractDao<Hl7TextInfo> {
     	}
     	return null;
     }
-    
+
+
     public List<Hl7TextInfo> getAllLabsByLabNumberResultStatus() {
     	String sql = "SELECT x FROM Hl7TextInfo x";
     	Query query = entityManager.createQuery(sql);

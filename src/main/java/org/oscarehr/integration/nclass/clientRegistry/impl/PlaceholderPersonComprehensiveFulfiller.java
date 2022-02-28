@@ -25,7 +25,7 @@ package org.oscarehr.integration.nclass.clientRegistry.impl;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.marc.everest.datatypes.II;
 import org.marc.everest.datatypes.TS;
 import org.marc.everest.datatypes.generic.SET;
@@ -39,7 +39,7 @@ import org.marc.everest.rmim.ca.r020403.vocabulary.ResponseMode;
 
 public class PlaceholderPersonComprehensiveFulfiller extends BaseFulfiller {
 
-	private static Logger logger = Logger.getLogger(PlaceholderPersonComprehensiveFulfiller.class);
+	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	public PRPA_IN101202CA addPerson(PRPA_IN101201CA query) {
 		if (query == null) {

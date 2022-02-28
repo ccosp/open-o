@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.marc.everest.datatypes.ED;
 import org.marc.everest.datatypes.II;
 import org.marc.everest.datatypes.NullFlavor;
@@ -50,7 +50,7 @@ import org.oscarehr.e2e.model.export.template.ConsumableModel;
 import org.oscarehr.e2e.util.EverestUtils;
 
 public class DoseObservationModel {
-	private static Logger log = Logger.getLogger(DoseObservationModel.class.getName());
+	private static Logger log = org.oscarehr.util.MiscUtils.getLogger();
 
 	private Drug drug;
 

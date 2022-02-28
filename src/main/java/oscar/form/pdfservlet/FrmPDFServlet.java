@@ -36,7 +36,7 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.util.LoggedInInfo;
@@ -63,7 +63,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class FrmPDFServlet extends HttpServlet {
 
     public static final String HSFO_RX_DATA_KEY = "hsfo.rx.data";
-    Logger log = Logger.getLogger(FrmPDFServlet.class);
+    Logger log = org.oscarehr.util.MiscUtils.getLogger();
     /**
      *
      *
