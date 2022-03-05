@@ -118,32 +118,17 @@ public class ResourceAction extends DispatchAction {
 	public ActionForward loadSentList(ActionMapping mapping, ActionForm form, HttpServletRequest request, 
 			HttpServletResponse response) throws Exception {
 		ResourceForm resourceForm = (ResourceForm) form;
-		//resourceForm.setStatus("");
 		resetPage(form);
 		List<DetailDataCustom> resourceList;		
 		List<DetailDataCustom> resourceListFiltered = new ArrayList<DetailDataCustom>();
 		
 		try{
 			if(request.getSession().getAttribute("resourceTypeList")==null){
-				EDTDelegate delegate = DelegateFactory.newDelegate();
+				EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance();
 				resourceForm.setTypeListResult(getTypeList(request, delegate));
-				//request.getSession().setAttribute("resourceTypeList",resourceForm.getTypeListResult());
-				//List<TypeListData> typeListData = getTypeList(request, delegate).getData();
-				//request.getSession().setAttribute("typeListData",typeListData);
 			}
-			//resourceForm.setResourceType("");
-			//resourceForm.setPageNo(1);
 			resourceForm.setStatus("UPLOADED");			
 			resourceList = loadList(form,request,response,ResourceStatus.UPLOADED);
-			/*if(resourceList.size()>0){
-				for(DetailDataCustom detailDataK:resourceList){
-					//if(ActionUtils.filterResourceStatus(detailDataK)){
-						resourceListFiltered.add(detailDataK);
-					//}
-				}				
-
-				request.getSession().setAttribute("resourceListSent",resourceListFiltered);
-			}*/
 			request.getSession().setAttribute("resourceListSent",resourceList);
 			request.getSession().setAttribute("resourceStatus","UPLOADED");
 		}
@@ -159,7 +144,7 @@ public class ResourceAction extends DispatchAction {
 			ResourceForm resourceForm = (ResourceForm) form;						
 			
 			try{
-				EDTDelegate delegate = DelegateFactory.newDelegate();			
+				EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance();
 				
 				
 				if(request.getSession().getAttribute("resourceTypeList")==null){

@@ -134,7 +134,7 @@ public class UploadAction extends DispatchAction {
 			}*/
 
 			try {
-				EDTDelegate delegate = DelegateFactory.newDelegate(ActionUtils.getServiceId(uploadForm.getDescription()));
+				EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(ActionUtils.getServiceId(uploadForm.getDescription()));
 				ResourceResult result = new ResourceResult();
 				
 				try {
@@ -193,7 +193,7 @@ public class UploadAction extends DispatchAction {
 			}*/
 
 			try {
-				EDTDelegate delegate = DelegateFactory.newDelegate(ActionUtils.getServiceId(submitForm.getFileName()));
+				EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(ActionUtils.getServiceId(submitForm.getFileName()));
 				ResourceResult result = new ResourceResult();
 				
 				try {
@@ -235,7 +235,7 @@ public class UploadAction extends DispatchAction {
 			for (UploadData upload: uploads) {
 				List<UploadData> uploadData= new ArrayList<UploadData>();
 				uploadData.add(upload);
-				EDTDelegate delegate = DelegateFactory.newDelegate(ActionUtils.getServiceId(upload.getDescription()));
+				EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(ActionUtils.getServiceId(upload.getDescription()));
 				ResourceResult result = new ResourceResult();
 				
 				try {

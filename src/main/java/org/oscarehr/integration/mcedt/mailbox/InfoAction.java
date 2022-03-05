@@ -76,7 +76,7 @@ public class InfoAction extends DispatchAction {
 			request.getSession().setAttribute("info", "true");*/
 			//----------
 			
-		EDTDelegate delegate = DelegateFactory.newDelegate(serviceId);
+		EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(serviceId);
 		Detail detail = delegate.info(resourceIds);
 		request.setAttribute("detail", detail);				
 		request.getSession().setAttribute("info", "true");
@@ -90,30 +90,6 @@ public class InfoAction extends DispatchAction {
 		}
 	}
 	
-	/*public ActionForward reSubmit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<BigInteger> resourceIds = getResourceIds(request);
-
-		try{				
-			ResourceResult result=null;
-			EDTDelegate delegate = DelegateFactory.newDelegate();
-			if (resourceIds.size()>0) result =delegate.submit(resourceIds);
-			for (ResponseResult edtResponse: result.getResponse()) {
-				if (edtResponse.getResult().getCode().equals("IEDTS0001")) {
-					saveMessages(request, ActionUtils.addMessage("uploadAction.submit.success", McedtMessageCreator.resourceResultToString(result)));
-				} else {
-					saveErrors(request, ActionUtils.addMessage("uploadAction.submit.failure", edtResponse.getDescription()+": "+edtResponse.getResult().getMsg()));			
-				}
-			}				
-
-			return mapping.findForward("success");
-		}catch(Exception e){
-			logger.error("Unable to submit resource ", e);
-			saveErrors(request, ActionUtils.addMessage("uploadAction.submit.failure", McedtMessageCreator.exceptionToString(e)));			
-			return mapping.findForward("success");
-		}
-		
-	}*/		
-	
 	public ActionForward deleteFiles(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {		
 		List<BigInteger> ids = getResourceIds(request);
@@ -122,7 +98,7 @@ public class InfoAction extends DispatchAction {
 		
 		ResourceResult result = null;
 		try {
-			EDTDelegate delegate = DelegateFactory.newDelegate(serviceId);
+			EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(serviceId);
 			result = delegate.delete(ids);
 		} catch (Exception e) {
 			logger.error("Unable to delete", e);
@@ -162,7 +138,7 @@ public class InfoAction extends DispatchAction {
 	    			    	
 		    	BigInteger resultSize = null;
 		    	
-		    	EDTDelegate delegate = DelegateFactory.newDelegate(resourceForm.getServiceIdSent());		    	
+		    	EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(resourceForm.getServiceIdSent());
 		    	result = delegate.list(resourceType, resourceForm.getStatusAsResourceStatus(), resourceForm.getPageNoAsBigInt());								
 		    	
 		    	if(result!=null)

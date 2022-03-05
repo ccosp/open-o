@@ -28,40 +28,35 @@ import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.integration.ebs.client.EdtClientBuilder;
 import org.oscarehr.integration.ebs.client.EdtClientBuilderConfig;
+import org.oscarehr.integration.mcedt.mailbox.ActionUtils;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.OscarProperties;
 import ca.ontario.health.edt.EDTDelegate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DelegateFactory {
 	
 	private static Logger logger = MiscUtils.getLogger();
 	private static UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
+	private static Map<String, EDTDelegate> edtDelegates = new HashMap<>();
 
-	public static EDTDelegate newDelegate() {
-		OscarProperties props = OscarProperties.getInstance();
-		EdtClientBuilderConfig config = new EdtClientBuilderConfig();
-		config.setLoggingRequired(!Boolean.valueOf(props.getProperty("mcedt.logging.skip")));
-		config.setKeystoreUser(props.getProperty("mcedt.keystore.user"));
-		config.setKeystorePassword(props.getProperty("mcedt.keystore.pass"));
-		config.setUserNameTokenUser(props.getProperty("mcedt.service.user"));
-		//config.setUserNameTokenPassword(props.getProperty("mcedt.service.pass"));
-		UserProperty prop = userPropertyDAO.getProp(UserProperty.MCEDT_ACCOUNT_PASSWORD);
-		config.setUserNameTokenPassword((prop==null||prop.getValue()==null || prop.getValue().trim().equals(""))?props.getProperty("mcedt.service.pass"):prop.getValue());
-		config.setServiceUrl(props.getProperty("mcedt.service.url"));
-		config.setConformanceKey(props.getProperty("mcedt.service.conformanceKey"));
-		config.setServiceId(props.getProperty("mcedt.service.id"));
-		config.setMtomEnabled(true);
-		EdtClientBuilder builder = new EdtClientBuilder(config);
-		EDTDelegate result = builder.build(EDTDelegate.class);
-		if (logger.isInfoEnabled()) {
-			logger.info("Created new EDT delegate " + result);
+	public static EDTDelegate getEDTDelegateInstance(String serviceId) {
+		if (edtDelegates.get(serviceId) == null) {
+			edtDelegates.put(serviceId, newDelegate(serviceId));
 		}
-		return result;
-    }
+		return edtDelegates.get(serviceId);
+	}
+
+	public static EDTDelegate getEDTDelegateInstance() {
+		OscarProperties props = OscarProperties.getInstance();
+		return getEDTDelegateInstance(props.getProperty("mcedt.service.id"));
+	}
 	
-	public static EDTDelegate newDelegate(String serviceId) {
+	private static EDTDelegate newDelegate(String serviceId) {
 		OscarProperties props = OscarProperties.getInstance();
 		EdtClientBuilderConfig config = new EdtClientBuilderConfig();
 		config.setLoggingRequired(!Boolean.valueOf(props.getProperty("mcedt.logging.skip")));
@@ -76,12 +71,24 @@ public class DelegateFactory {
 		config.setServiceId((serviceId==null ||serviceId.trim().equals(""))?props.getProperty("mcedt.service.id"):serviceId);
 		config.setMtomEnabled(true);
 		EdtClientBuilder builder = new EdtClientBuilder(config);
-		EDTDelegate result = builder.build(EDTDelegate.class);
+		EDTDelegate edtDelegate = builder.build(EDTDelegate.class);
 		if (logger.isInfoEnabled()) {
-			logger.info("Created new EDT delegate " + result);
+			logger.info("Created new EDT delegate " + edtDelegate);
 		}
-		return result;
-    }
+		return edtDelegate;
+	}
+
+	/**
+	 * Refreshes created delegates in the event that information has been updated
+	 */
+	public static void refreshDelegates() {
+		// For each service id, create a new updated delegate
+		for (String serviceId : ActionUtils.getServiceIds()){
+			edtDelegates.put(serviceId, newDelegate(serviceId));
+		}
+		// Suggests for the Garbage Collector to run in an effort to clean up any lingering connections
+		System.gc();
+	}
 	
 	public static UserPropertyDAO getUserPropertyDAO() {
 		return userPropertyDAO;
