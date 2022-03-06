@@ -60,13 +60,6 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
-		<!-- MARC-HI (Everest & SHIC) -->
-<!-- 		<repository>-->
-<!--			<id>marc-te-main</id>-->
-<!--			<name>MARC-HI Technology Exchange Private Maven Repository</name>-->
-<!--			<url>http://te.marc-hi.ca/mvn</url>-->
-<!--		</repository>-->
-
 	</repositories>
 
 	<pluginRepositories>
@@ -611,7 +604,7 @@
 		<dependency>
 			<groupId>cds</groupId>
 			<artifactId>cds_hrm</artifactId>
-			<version>4.3.1</version>
+			<version>1.1.2</version>
 		</dependency>
 
 		<!-- HRM module -->
@@ -1077,33 +1070,6 @@
 			<version>2014.10.24</version>
 		</dependency>
 
-		<!-- MARC-HI - Everest Framework -->
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-core</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-rmim-ca-r02-04-03</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-rmim-uv-cdar2</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-formatters-xml-its1</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-formatters-xml-dt-r1</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		
 		<!-- MARC-HI - Shared Health Integration Components (SHIC) Library -->
 		<dependency>
 			<groupId>org.marc.shic</groupId>
