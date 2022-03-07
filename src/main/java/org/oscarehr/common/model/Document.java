@@ -156,8 +156,8 @@ public class Document extends AbstractModel<Integer> implements Serializable {
     private Integer numberofpages;
     @Column(name="appointment_no")
     private Integer appointmentNo;
-    @Column(name="abnormal")
-    private Boolean abnormal;
+    @Column(name="abnormal", columnDefinition = "integer default 0")
+    private boolean abnormal;
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "document_no", insertable = false, updatable = false)
     private List<DocumentReview> reviews = new ArrayList<DocumentReview>();
@@ -375,9 +375,6 @@ public class Document extends AbstractModel<Integer> implements Serializable {
 	}
 
 	public boolean isAbnormal() {
-		if (abnormal == null)
-			abnormal = false;
-
 		return abnormal;
 	}
 	public void setAbnormal(boolean abnormal) {

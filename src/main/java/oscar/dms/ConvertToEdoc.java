@@ -54,7 +54,9 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EFormData;
+import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.SpringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -80,22 +82,20 @@ public class ConvertToEdoc {
 
 	private static final Logger logger = MiscUtils.getLogger();
 
-	public static final String CUSTOM_STYLESHEET_ID = "pdfMediaStylesheet";
-
 	public static enum DocumentType { eForm, form }
+	private static enum PathAttribute { src, href }
+	private static enum FileType { pdf, css, jpeg, png, gif }
 
-	private static final String TEMP_PDF_DIRECTORY = "tempPDF";
+	public static final String CUSTOM_STYLESHEET_ID = "pdfMediaStylesheet";
 	private static final String DEFAULT_IMAGE_DIRECTORY = String.format( "%1$s", OscarProperties.getInstance().getProperty( "eform_image" ) );
 	private static final String DEFAULT_FILENAME = "temporaryPDF";
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 	private static final String DEFAULT_CONTENT_TYPE = "application/pdf";
 	private static final String SYSTEM_ID = "-1";
-	private static final String DEFAULT_FILE_SUFFIX = ".pdf";
-	private static enum PathAttribute { src, href }
-	private static enum FileType { pdf, css, jpeg, png, gif }
-	
 	private static String contextPath;
 	private static String realPath;
+
+	private static NioFileManager nioFileManager = SpringUtils.getBean( NioFileManager.class );
 
 	/**
 	 * Convert EForm to EDoc
@@ -114,13 +114,13 @@ public class ConvertToEdoc {
 		Path path = execute( eformString, filename );
 		
 		if(Files.isReadable(path)) {
-			edoc = buildEDoc( filename, 
+			edoc = buildEDoc( path.getFileName().toString(),
 					eform.getSubject(), 
-					eformString, 
+					null,
 					eform.getProviderNo(), 
 					demographicNo, 
 					DocumentType.eForm,
-					path.toString());
+					path.getParent().toString());
 		} else {
 			logger.error("Could not read temporary PDF file " + filename);
 		}		
@@ -178,7 +178,7 @@ public class ConvertToEdoc {
 		if(Files.isReadable(path)) {
 			edoc = buildEDoc( filename, 
 					subject,
-					htmlString,
+					null,
 					providerNo, 
 					demographicNo, 
 					formTransportContainer.getDocumentType(), 
@@ -227,24 +227,15 @@ public class ConvertToEdoc {
 
 		String correctedDocument = tidyDocument( eformString );			
 		Document document = buildDocument( correctedDocument );
-		ByteArrayOutputStream os = new ByteArrayOutputStream();	
 		Path path = null;
 		
-		try {
+		try(ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 			renderPDF( document, os );
-			path = saveFile( filename, os );
+			path = nioFileManager.saveTempFile( filename, os );
 		} catch (DocumentException e1) {
 			logger.error( "Exception parsing file to PDF. File not saved. ", e1 );
 		} catch (IOException e) {
 			logger.error("Problem while writing PDF file to filesystem. " + filename, e);
-		} finally {
-			if( os != null ) {
-				try {
-					os.close();
-				} catch (IOException e) {
-					logger.error( "", e );
-				}
-			}
 		}
 
 		return path;
@@ -263,7 +254,6 @@ public class ConvertToEdoc {
 		filename = filename.replaceAll(" ", "_");
 		filename = String.format("%1$s_%2$s", filename, demographicNo );
 		filename = String.format("%1$s_%2$s", filename, new Date().getTime() );
-
 		return filename;
 	}
 	
@@ -298,21 +288,6 @@ public class ConvertToEdoc {
 		eDoc.setFilePath(filePath);
 
 		return eDoc;
-	}
-
-	/**
-	 * File manager to save final PDF output stream to the file system.
-	 * @throws IOException 
-	 * 
-	 */
-	private static final Path saveFile( final String fileName, ByteArrayOutputStream os ) throws IOException {
-
-		Path directory = Files.createTempDirectory(TEMP_PDF_DIRECTORY + System.currentTimeMillis());			
-		Path file = Files.createTempFile(directory, fileName, DEFAULT_FILE_SUFFIX);
-		Path path = Files.write(file, os.toByteArray());
-
-		return path;
-
 	}
 
 	/**

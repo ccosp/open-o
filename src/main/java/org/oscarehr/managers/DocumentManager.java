@@ -39,16 +39,9 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.oscarehr.common.dao.CtlDocumentDao;
-import org.oscarehr.common.dao.DocumentDao;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.dao.ProviderLabRoutingDao;
-import org.oscarehr.common.model.ConsentType;
-import org.oscarehr.common.model.CtlDocument;
-import org.oscarehr.common.model.CtlDocumentPK;
-import org.oscarehr.common.model.Document;
-import org.oscarehr.common.model.PatientLabRouting;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
+import org.oscarehr.common.dao.*;
+import org.oscarehr.common.model.*;
+
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +49,7 @@ import org.springframework.stereotype.Service;
 
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
+
 import oscar.dms.EDocUtil;
 import oscar.log.LogAction;
 
@@ -72,6 +66,9 @@ public class DocumentManager {
 
 	@Autowired
 	protected SecurityInfoManager securityInfoManager;
+
+	@Autowired
+	private ProviderInboxRoutingDao providerInboxRoutingDao;
 
 	@Autowired
 	private PatientConsentManager patientConsentManager;
@@ -290,9 +287,8 @@ public class DocumentManager {
 			if (toPath == null) {
 				toPath = getParentDirectory();
 			}
-
-			Path from = FileSystems.getDefault().getPath(String.format("%1$s%2$s%3$s", fromPath, File.separator, document.getDocfilename()));
-			Path to = FileSystems.getDefault().getPath(String.format("%1$s%2$s%3$s", toPath, File.separator, document.getDocfilename()));
+			Path from = FileSystems.getDefault().getPath(fromPath, document.getDocfilename());
+			Path to = FileSystems.getDefault().getPath(toPath, document.getDocfilename());
 			Files.move(from, to, StandardCopyOption.REPLACE_EXISTING);
 
 			LogAction.addLog(loggedInInfo, "EformDataManager.moveDocument", "Document was moved", "Document No." + document.getDocumentNo(), "", fromPath + " to " + toPath);
@@ -308,15 +304,29 @@ public class DocumentManager {
 	}
 
 	public String getPathToDocument(LoggedInInfo loggedInInfo, int documentId) {
-
 		Document document = this.getDocument(loggedInInfo, documentId);
+		String path = null;
+
+		if (document != null) {
+			path = getFullPathToDocument(document.getDocfilename());
+		}
+
+		return path;
+	}
+
+	public String getFullPathToDocument(String filename) {
+
 		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 
 		if (!path.endsWith(File.separator)) {
-			path = path + File.separator;
+			path += File.separator;
 		}
 
-		path = path + document.getDocfilename();
+		path += filename;
+
+		if (!FileSystems.getDefault().getPath(path).toFile().exists()) {
+			path = null;
+		}
 
 		return path;
 	}
@@ -324,8 +334,6 @@ public class DocumentManager {
 	/**
 	 * Fetch by demographic number and given document type
 	 * ie: get only LAB documents for the given demographic number.
-	 *
-	 * @return
 	 */
 	public List<Document> getDemographicDocumentsByDocumentType(LoggedInInfo loggedInInfo, int demographicNo, DocumentDao.DocumentType documentType) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
@@ -409,5 +417,17 @@ public class DocumentManager {
 		}
 
 		return null;
+	}
+
+	public List<String> getProvidersThatHaveAcknowledgedDocument(LoggedInInfo loggedInInfo, Integer documentId) {
+		List<ProviderInboxItem> inboxList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", documentId);
+		List<String> providerList = new ArrayList<String>();
+		for(ProviderInboxItem item: inboxList) {
+			if(ProviderInboxItem.ACK.equals(item.getStatus())){
+				//If this has been acknowledge add the provider_no to the list.
+				providerList.add(item.getProviderNo());
+			}
+		}
+		return providerList;
 	}
 }
