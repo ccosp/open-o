@@ -68,13 +68,6 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
-		<!-- MARC-HI (Everest & SHIC) -->
-<!-- 		<repository>-->
-<!--			<id>marc-te-main</id>-->
-<!--			<name>MARC-HI Technology Exchange Private Maven Repository</name>-->
-<!--			<url>http://te.marc-hi.ca/mvn</url>-->
-<!--		</repository>-->
-
 	</repositories>
 
 	<pluginRepositories>
@@ -619,7 +612,7 @@
 		<dependency>
 			<groupId>cds</groupId>
 			<artifactId>cds_hrm</artifactId>
-			<version>4.3.1</version>
+			<version>1.1.2</version>
 		</dependency>
 
 		<!-- HRM module -->
@@ -1083,33 +1076,6 @@
 			<version>2014.10.24</version>
 		</dependency>
 
-		<!-- MARC-HI - Everest Framework -->
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-core</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-rmim-ca-r02-04-03</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-rmim-uv-cdar2</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-formatters-xml-its1</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.marc.everest</groupId>
-			<artifactId>everest-formatters-xml-dt-r1</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		
 		<!-- MARC-HI - Shared Health Integration Components (SHIC) Library -->
 		<dependency>
 			<groupId>org.marc.shic</groupId>
@@ -1706,15 +1672,16 @@
 		        <configuration>
 		          <skipTests>false</skipTests>
 		          <argLine>-Xms512m -Xmx512m -Xss256k -XX:MaxNewSize=64m -XX:MaxPermSize=192m</argLine>
-			  <excludes>
-		            <exclude>**/AR2005*.java</exclude>
-		            <exclude>**/OntarioMDSpec4DataTest.java</exclude>
-		            <exclude>**/ONAREnhancedBornConnectorTest.java</exclude>
-		          </excludes>
-			  <systemPropertyVariables>
-		             <oscar.dbinit.skip>${oscar.dbinit.skip}</oscar.dbinit.skip>
-		             <buildDirectory>${project.build.directory}</buildDirectory>
-			  </systemPropertyVariables>
+					<excludes>
+						<exclude>**/AR2005*.java</exclude>
+						<exclude>**/OntarioMDSpec4DataTest.java</exclude>
+						<exclude>**/ONAREnhancedBornConnectorTest.java</exclude>
+						<exclude>org/oscarehr/e2e/**/*.java</exclude>
+					</excludes>
+				  <systemPropertyVariables>
+						 <oscar.dbinit.skip>${oscar.dbinit.skip}</oscar.dbinit.skip>
+						 <buildDirectory>${project.build.directory}</buildDirectory>
+				  </systemPropertyVariables>
 		        </configuration>
 			<version>2.10</version>
 		      </plugin>
