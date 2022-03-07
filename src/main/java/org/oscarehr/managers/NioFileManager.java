@@ -57,7 +57,7 @@ public final class NioFileManager {
 	private static final String DOCUMENT_CACHE_DIRECTORY = "document_cache";
 	public static final String DOCUMENT_DIRECTORY = "document";
 	private static final String TEMP_PDF_DIRECTORY = "tempPDF";
-	private static final String DEFAULT_FILE_SUFFIX = ".pdf";
+	private static final String DEFAULT_FILE_SUFFIX = "pdf";
 	private static final String BASE_DOCUMENT_DIR = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR");
 	
 	public Path hasCacheVersion2(LoggedInInfo loggedInInfo, String filename, Integer pageNum) {
@@ -183,7 +183,7 @@ public final class NioFileManager {
 		{
 			fileType = DEFAULT_FILE_SUFFIX;
 		}
-		Path file = Files.createTempFile(directory, fileName, fileType);
+		Path file = Files.createFile( Paths.get(directory.toString(), String.format("%1$s.%2$s", fileName, fileType)) );
 		return Files.write(file, os.toByteArray());
 	}
 	

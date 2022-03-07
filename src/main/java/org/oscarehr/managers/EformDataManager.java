@@ -84,8 +84,6 @@ public class EformDataManager {
 		if ( ! securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.UPDATE, null)) {
 			throw new RuntimeException("missing required security object (_eform)");
 		}
-
-		// Integer formid = saveEformData( loggedInInfo, eform );
 		Integer documentId = null;
 		Integer formid = null;
 		

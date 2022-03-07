@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,7 @@ import org.springframework.stereotype.Service;
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
 
+import oscar.dms.EDocUtil;
 import oscar.log.LogAction;
 
 @Service
@@ -62,13 +64,9 @@ public class DocumentManager {
 
 	@Autowired
 	private CtlDocumentDao ctlDocumentDao;
-	
-    @Autowired
-    protected SecurityInfoManager securityInfoManager;
 
 	@Autowired
-
-	private PatientConsentManager patientConsentManager;
+	protected SecurityInfoManager securityInfoManager;
 
 	@Autowired
 	private ProviderInboxRoutingDao providerInboxRoutingDao;
@@ -79,73 +77,63 @@ public class DocumentManager {
 	@Autowired
 	private PatientLabRoutingDao patientLabRoutingDao;
 
-	public Document getDocument(LoggedInInfo loggedInInfo, Integer id)
-	{
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "r", "" ) ) {
-            throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
-        }
-		
-		Document result=documentDao.find(id);
-		
-		//--- log action ---
-		if (result != null) {
-            LogAction.addLog(loggedInInfo, "DocumentManager.getDocument", "id=" + id, "","","");
+	public Document getDocument(LoggedInInfo loggedInInfo, Integer id) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "r", "")) {
+			throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo());
 		}
 
-		return(result);
-	}
-	
-	public List<Document> getDocumentsByDemographicNo(LoggedInInfo loggedInInfo, Integer demographicNo)
-	{
-		List<Document> result = documentDao.findByDemographicId(demographicNo+"");
-		
+		Document result = documentDao.find(id);
+
 		//--- log action ---
 		if (result != null) {
-			LogAction.addLog(loggedInInfo, "DocumentManager.getDocumentsByDemographicNo", "demographicNo=" + demographicNo, "","","");
+			LogAction.addLog(loggedInInfo, "DocumentManager.getDocument", "id=" + id, "", "", "");
+		}
+
+		return (result);
+	}
+
+	public List<Document> getDocumentsByDemographicNo(LoggedInInfo loggedInInfo, Integer demographicNo) {
+		List<Document> result = documentDao.findByDemographicId(demographicNo + "");
+
+		//--- log action ---
+		if (result != null) {
+			LogAction.addLog(loggedInInfo, "DocumentManager.getDocumentsByDemographicNo", "demographicNo=" + demographicNo, "", "", "");
 		}
 
 		return result;
 	}
-	
-	public CtlDocument getCtlDocumentByDocumentId(LoggedInInfo loggedInInfo, Integer documentId)
-	{
-		
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "r", "" ) ) {
-            throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
-        }
-		
-		CtlDocument result=ctlDocumentDao.getCtrlDocument(documentId);
-		
-		//--- log action ---
-		if (result != null) {
-			LogAction.addLog(loggedInInfo, "DocumentManager.getCtlDocumentByDocumentNoAndModule", "id=" + documentId, "","","");
+
+	public CtlDocument getCtlDocumentByDocumentId(LoggedInInfo loggedInInfo, Integer documentId) {
+
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "r", "")) {
+			throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo());
 		}
 
-		return(result);
-	}
-	
-	public Document addDocument(LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) {
-		documentDao.persist(document);
-		ctlDocument.getId().setDocumentNo(document.getDocumentNo());
-		ctlDocumentDao.persist(ctlDocument);
-		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "id=" + document.getId());
-		return(document);
+		CtlDocument result = ctlDocumentDao.getCtrlDocument(documentId);
+
+		//--- log action ---
+		if (result != null) {
+			LogAction.addLog(loggedInInfo, "DocumentManager.getCtlDocumentByDocumentNoAndModule", "id=" + documentId, "", "", "");
+		}
+
+		return (result);
 	}
 
 	/**
 	 * Creates a document and saves it to the provided demographic
-	 * @param loggedInInfo The logged in info of the current user
-	 * @param document Document to create
+	 *
+	 * @param loggedInInfo  The logged in info of the current user
+	 * @param document      Document to create
 	 * @param demographicNo The demographic number to save the document to
-	 * @param providerNo The optional provider number to route the document to
-	 * @param documentData The document byte data
+	 * @param providerNo    The optional provider number to route the document to
+	 * @param documentData  The document byte data
 	 * @return Document record from the database once it has been created
 	 * @throws IOException If actions related to getting document data fail
 	 */
 	public Document createDocument(LoggedInInfo loggedInInfo, Document document, Integer demographicNo, String providerNo, byte[] documentData) throws IOException {
 
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "w", "" ) ) {
-			throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "w", "")) {
+			throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo());
 		}
 
 		SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -178,11 +166,11 @@ public class DocumentManager {
 	}
 
 	public List<Document> getDocumentsUpdateAfterDate(LoggedInInfo loggedInInfo, Date updatedAfterThisDateExclusive, int itemsToReturn) {
-		
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "r", "" ) ) {
-            throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
-        }
-		
+
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "r", "")) {
+			throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo());
+		}
+
 		List<Document> results = documentDao.findByUpdateDate(updatedAfterThisDateExclusive, itemsToReturn);
 
 		LogAction.addLog(loggedInInfo, "DocumentManager.getUpdateAfterDate", "updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive, "", "", "Number items " + itemsToReturn);
@@ -191,42 +179,42 @@ public class DocumentManager {
 	}
 
 	public List<Document> getDocumentsByProgramProviderDemographicDate(LoggedInInfo loggedInInfo, Integer programId, String providerNo, Integer demographicId, Calendar updatedAfterThisDateExclusive, int itemsToReturn) {
-		
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "r", "" ) ) {
-            throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
-        }
-		
+
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "r", "")) {
+			throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo());
+		}
+
 		List<Document> results = documentDao.findByProgramProviderDemographicUpdateDate(programId, providerNo, demographicId, updatedAfterThisDateExclusive.getTime(), itemsToReturn);
 
-		LogAction.addLog(loggedInInfo, "DocumentManager.getDocumentsByProgramProviderDemographicDate", "programId=" + programId, "providerNo="+providerNo, demographicId+"", "updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive.getTime() );
+		LogAction.addLog(loggedInInfo, "DocumentManager.getDocumentsByProgramProviderDemographicDate", "programId=" + programId, "providerNo=" + providerNo, demographicId + "", "updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive.getTime());
 
 		return (results);
 	}
 
-	public Integer saveDocument( LoggedInInfo loggedInInfo, EDoc edoc ) {
-		return this.saveDocument( loggedInInfo, edoc.getDocument(), edoc.getCtlDocument() );
+	public Integer saveDocument(LoggedInInfo loggedInInfo, EDoc edoc) {
+		return this.saveDocument(loggedInInfo, edoc.getDocument(), edoc.getCtlDocument());
 	}
 
 
-	public Integer saveDocument( LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) {
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "w", "" ) ) {
-            throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
-        }
+	public Integer saveDocument(LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "w", "")) {
+			throw new RuntimeException("Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo());
+		}
 
 		Integer savedId = null;
-	
-		if( document.getId() == null ) {
-			savedId = addDocument( loggedInInfo, document );
-		} else if( document.getId() > 0 ) {
-			savedId = updateDocument( loggedInInfo, document );
+
+		if (document.getId() == null) {
+			savedId = addDocument(loggedInInfo, document);
+		} else if (document.getId() > 0) {
+			savedId = updateDocument(loggedInInfo, document);
 		}
-		
-		ctlDocument.getId().setDocumentNo( savedId );
-		
-		if( savedId != null ) {
-			ctlDocumentDao.persist( ctlDocument );
+
+		ctlDocument.getId().setDocumentNo(savedId);
+
+		if (savedId != null) {
+			ctlDocumentDao.persist(ctlDocument);
 		}
-		
+
 		return savedId;
 	}
 
@@ -257,65 +245,176 @@ public class DocumentManager {
 			providerLabRoutingDao.persist(providerLabRouting);
 		}
 	}
-	
-	private Integer addDocument( LoggedInInfo loggedInInfo, Document document ) {
 
-		documentDao.persist( document );
-		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document saved ", "Document No." + document.getDocumentNo(), "","");
+	private Integer addDocument(LoggedInInfo loggedInInfo, Document document) {
+
+		documentDao.persist(document);
+		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document saved ", "Document No." + document.getDocumentNo(), "", "");
 		return document.getId();
 	}
-	
-	private Integer updateDocument( LoggedInInfo loggedInInfo, Document document ) {
-		documentDao.merge( document );
-		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document updated ", "Document No." + document.getDocumentNo(), "","");
+
+	private Integer updateDocument(LoggedInInfo loggedInInfo, Document document) {
+		documentDao.merge(document);
+		LogAction.addLog(loggedInInfo, "DocumentManager.saveDocument", "Document updated ", "Document No." + document.getDocumentNo(), "", "");
 		return document.getId();
 	}
-	
-	public void moveDocumentToOscarDocuments( LoggedInInfo loggedInInfo, Document document, String fromPath) {
-		moveDocument( loggedInInfo, document, fromPath, null );
+
+	public void moveDocumentToOscarDocuments(LoggedInInfo loggedInInfo, Document document, String fromPath) {
+		moveDocument(loggedInInfo, document, fromPath, null);
 	}
-	
-	public void moveDocument( LoggedInInfo loggedInInfo, Document document, String fromPath, String toPath ) {
-		
-		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", "x", "" ) ) {
-            throw new RuntimeException("Read and Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
-        }
-		
+
+	public void moveDocument(LoggedInInfo loggedInInfo, Document document, String fromPath, String toPath) {
+
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", "x", "")) {
+			throw new RuntimeException("Read and Write Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo());
+		}
+
 		// move the PDF from the temp location to Oscar's document directory.
 		try {
-			if( toPath == null ) {
+			if (toPath == null) {
 				toPath = getParentDirectory();
 			}
+			Path from = FileSystems.getDefault().getPath(fromPath, document.getDocfilename());
+			Path to = FileSystems.getDefault().getPath(toPath, document.getDocfilename());
+			Files.move(from, to, StandardCopyOption.REPLACE_EXISTING);
 
-			Path from = FileSystems.getDefault().getPath( String.format("%1$s%2$s%3$s", fromPath, File.separator, document.getDocfilename() ) );
-			Path to = FileSystems.getDefault().getPath( String.format("%1$s%2$s%3$s", toPath, File.separator, document.getDocfilename() ) );
-			Files.move( from, to, StandardCopyOption.REPLACE_EXISTING );
+			LogAction.addLog(loggedInInfo, "EformDataManager.moveDocument", "Document was moved", "Document No." + document.getDocumentNo(), "", fromPath + " to " + toPath);
 
-			LogAction.addLog(loggedInInfo, "EformDataManager.moveDocument", "Document was moved", "Document No." + document.getDocumentNo(), "",fromPath + " to " + toPath);
-		
 		} catch (IOException e) {
-			MiscUtils.getLogger().error("Document failed move. Id: " + document.getDocumentNo() + " From: " + fromPath + " To: " + toPath , e);
-			LogAction.addLog(loggedInInfo, "EformDataManager.moveDocument", "Document failed move ", "Document No." + document.getDocumentNo(), "",fromPath + " to " + toPath);
+			MiscUtils.getLogger().error("Document failed move. Id: " + document.getDocumentNo() + " From: " + fromPath + " To: " + toPath, e);
+			LogAction.addLog(loggedInInfo, "EformDataManager.moveDocument", "Document failed move ", "Document No." + document.getDocumentNo(), "", fromPath + " to " + toPath);
 		}
 	}
-	
+
 	public static final String getParentDirectory() {
 		return PARENT_DIR;
 	}
-	
-	public String getPathToDocument(LoggedInInfo loggedInInfo, int documentId) {
 
+	public String getPathToDocument(LoggedInInfo loggedInInfo, int documentId) {
 		Document document = this.getDocument(loggedInInfo, documentId);
-		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		
-		if(! path.endsWith(File.separator)) {
-			path = path + File.separator;
+		String path = null;
+
+		if (document != null) {
+			path = getFullPathToDocument(document.getDocfilename());
 		}
-		
-		path = path + document.getDocfilename();		
- 
+
 		return path;
 	}
 
-}
+	public String getFullPathToDocument(String filename) {
 
+		String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+
+		if (!path.endsWith(File.separator)) {
+			path += File.separator;
+		}
+
+		path += filename;
+
+		if (!FileSystems.getDefault().getPath(path).toFile().exists()) {
+			path = null;
+		}
+
+		return path;
+	}
+
+	/**
+	 * Fetch by demographic number and given document type
+	 * ie: get only LAB documents for the given demographic number.
+	 */
+	public List<Document> getDemographicDocumentsByDocumentType(LoggedInInfo loggedInInfo, int demographicNo, DocumentDao.DocumentType documentType) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("Access Denied");
+		}
+
+		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDemographicDocumentsByDocumentType", "fetching documents of type " + documentType.getName() + " for demographic " + demographicNo);
+
+		return documentDao.findByDemographicAndDoctype(demographicNo, documentType);
+	}
+
+	public Document getDocumentByDemographicAndFilename(LoggedInInfo loggedInInfo, int demographicNo, String fileName) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("Access Denied");
+		}
+
+		LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.getDocumentByDemographicAndFilename", "fetching document with filename " + fileName + " for demographic " + demographicNo);
+
+		return documentDao.findByDemographicAndFilename(demographicNo, fileName);
+	}
+
+	/**
+	 * Add a document to Oscar's document library.
+	 * <p>
+	 * This method actually saves the Document contents to the file system. The document resource
+	 * MUST contain valid Base64 encoded document binary data.
+	 *
+	 * @param loggedInInfo
+	 * @param document
+	 * @return
+	 * @throws Exception
+	 */
+	public Document addDocument(LoggedInInfo loggedInInfo, Document document, CtlDocument ctlDocument) throws Exception {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("Access Denied");
+		}
+
+		try {
+
+			// is this new file or an update?
+			Document existingDocument = getDocumentByDemographicAndFilename(loggedInInfo, ctlDocument.getId().getModuleId(), document.getDocfilename());
+
+			if (existingDocument != null && existingDocument.getId() != null && existingDocument.getId() > 0) {
+				document.setDocumentNo(existingDocument.getId());
+			}
+
+			// Always write to file system, updates will overwrite.
+			EDocUtil.writeDocContent(document.getDocfilename(), document.getBase64Binary());
+
+			/*
+			 *  This ensures that all incoming documents contain the highly required default of 0.
+			 *  A null here will break other parts of Oscar functionality.
+			 */
+			if (document.getNumberofpages() == null) {
+				document.setNumberofpages(0);
+			}
+
+			/*
+			 *  Get the page count if the document is PDF and the page count is not already given.
+			 *  The page count is usually missing in documents that are imported from external sources.
+			 *  This method is a catch-all to ensure that the page count is not missed in all PDFs.
+			 */
+			if ("application/pdf".equalsIgnoreCase(document.getContenttype()) && document.getNumberofpages() == 0) {
+				int pagecount = EDocUtil.getPDFPageCount(document.getDocfilename());
+				document.setNumberofpages(pagecount);
+			}
+
+			// save document method handles both new saves and updates
+			saveDocument(loggedInInfo, document, ctlDocument);
+
+			// confirm success if the file saved correctly.
+			if (document.getId() != null && document.getId() > 0) {
+				LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Document Id: " + document.getId());
+				return document;
+			}
+
+		} catch (Exception e) {
+			// catch exception, document, and then throw.
+			LogAction.addLogSynchronous(loggedInInfo, "DocumentManager.addDocument", "Exception thrown during document save: " + e.getMessage());
+			throw e;
+		}
+
+		return null;
+	}
+
+	public List<String> getProvidersThatHaveAcknowledgedDocument(LoggedInInfo loggedInInfo, Integer documentId) {
+		List<ProviderInboxItem> inboxList = providerInboxRoutingDao.getProvidersWithRoutingForDocument("DOC", documentId);
+		List<String> providerList = new ArrayList<String>();
+		for(ProviderInboxItem item: inboxList) {
+			if(ProviderInboxItem.ACK.equals(item.getStatus())){
+				//If this has been acknowledge add the provider_no to the list.
+				providerList.add(item.getProviderNo());
+			}
+		}
+		return providerList;
+	}
+}
