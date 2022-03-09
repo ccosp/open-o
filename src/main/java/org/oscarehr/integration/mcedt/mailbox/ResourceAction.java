@@ -86,11 +86,7 @@ public class ResourceAction extends DispatchAction {
 	HttpServletResponse response) throws Exception {		
 
 		List<DetailDataCustom> resourceList;
-		try{			
-			
-			/*ResourceForm resourceForm= (ResourceForm)form;
-			resourceForm.setResourceType("");
-			resourceForm.setPageNo(1);*/
+		try{
 			resetPage(form);
 			resourceList = loadList(form,request,response,ResourceStatus.DOWNLOADABLE);			
 			
@@ -232,83 +228,4 @@ public class ResourceAction extends DispatchAction {
 		}
 		return result;
     }
-	
-	/*public ActionForward delete(ActionMapping mapping, ActionForm form, 
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ResourceForm resourceForm = (ResourceForm) form;
-		List<BigInteger> ids = getResourceIds(request);
-		
-		ResourceResult result = null;
-		try {
-			EDTDelegate delegate = DelegateFactory.newDelegate();
-			result = delegate.delete(ids);
-		} catch (Exception e) {
-			logger.error("Unable to delete", e);
-			saveErrors(request, ActionUtils.addMessage("resourceAction.delete.fault", McedtMessageCreator.exceptionToString(e)));
-		}
-		reset(mapping, resourceForm, request, response);
-		
-		ActionMessages messages = new ActionMessages();
-		if (result != null) {
-			for(ResponseResult r : result.getResponse()) {
-				messages.add(ActionUtils.addMessage("resourceAction.delete.success", McedtMessageCreator.responseResultToString(r)));
-			}
-		}
-		saveMessages(request, messages);
-		
-		return mapping.findForward("success");
-	}*/
-	
-	/*public ActionForward submit(ActionMapping mapping, ActionForm form, 
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<BigInteger> ids = getResourceIds(request);
-		
-		try {
-			EDTDelegate delegate = DelegateFactory.newDelegate();
-			ResourceResult result = delegate.submit(ids);
-			
-			reset(mapping, form, request, response);
-			saveMessages(request, ActionUtils.addMessage("resourceAction.submit.success", McedtMessageCreator.resourceResultToString(result)));
-		} catch (Exception e) {
-			logger.error("Unable to submit", e);
-			saveErrors(request, ActionUtils.addMessage("resourceAction.submit.failure", McedtMessageCreator.exceptionToString(e)));
-		}
-		
-		return mapping.findForward("success");
-	}*/
-
-	/*public ActionForward download(ActionMapping mapping, ActionForm form, 
-			HttpServletRequest request, HttpServletResponse response) throws Exception {		
-		List<BigInteger> ids = getResourceIds(request);		
-		DownloadResult downloadResult = null;
-		try {
-			EDTDelegate delegate = DelegateFactory.newDelegate();
-			downloadResult = delegate.download(ids);
-		} catch (Exception e) {
-			saveErrors(request, ActionUtils.addMessage("resourceAction.download.fault", McedtMessageCreator.exceptionToString(e)));
-			return mapping.findForward("success");
-		}
-
-		response.setContentType("application/zip");
-		response.setHeader("Content-Transfer-Encoding", "binary");
-		response.setHeader("Content-Disposition","attachment; filename=\"mcedt_download_" + System.currentTimeMillis() + ".zip\"");
-		
-		ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
-		for(DownloadData d : downloadResult.getData()) {
-			byte[] inputBytes = d.getContent();
-			
-			String name = d.getResourceID().toString();
-			ZipEntry ze = new ZipEntry(name);
-			ze.setComment(d.getDescription());
-			ze.setSize(inputBytes.length);
-			
-			zos.putNextEntry(ze);
-			zos.write(inputBytes);
-			zos.closeEntry();
-			zos.flush();
-		}
-		zos.close();
-
-		return null;
-	}*/
 }

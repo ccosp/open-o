@@ -39,7 +39,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Upload</title>
-<script src="../../js/jquery-1.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js" type="application/javascript"></script>
 <script type="text/javascript" >
 $(window).load(function(){
 	$('input[type="checkbox"]').click(function () {

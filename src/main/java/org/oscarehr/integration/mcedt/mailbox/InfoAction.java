@@ -141,9 +141,9 @@ public class InfoAction extends DispatchAction {
 		    	EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(resourceForm.getServiceIdSent());
 		    	result = delegate.list(resourceType, resourceForm.getStatusAsResourceStatus(), resourceForm.getPageNoAsBigInt());								
 		    	
-		    	if(result!=null)
-		    		resultSize = result.getResultSize();
-		    	
+		    	if(result!=null) {
+					resultSize = result.getResultSize();
+				}
 				request.getSession().setAttribute("resultSize",resultSize);
 				
 		    	if(request.getSession().getAttribute("resourceTypeList")==null){
