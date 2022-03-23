@@ -57,7 +57,6 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
@@ -78,7 +77,7 @@
 %>
 
 
-<%@ page import="java.util.*, java.sql.*, java.net.URLEncoder, oscar.*, oscar.util.*" errorPage="errorpage.jsp" %>
+<%@ page import="java.util.*, java.sql.*, java.net.URLEncoder, oscar.*, oscar.util.*" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic"%>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
