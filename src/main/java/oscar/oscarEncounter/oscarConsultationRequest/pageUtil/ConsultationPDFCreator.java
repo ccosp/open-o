@@ -23,8 +23,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import com.itextpdf.text.*;
+
 import com.itextpdf.text.pdf.*;
 import org.apache.logging.log4j.Logger;
+
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.DigitalSignatureDao;
@@ -258,6 +260,9 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		return datelineborder;		
 	}
 
+	/**
+	 * @deprecated use the createLogo method in the ClinicLogoUtility at org.oscarehr.util
+	 */
 	private PdfPTable createLogoHeader() {
 
 		PdfPTable infoTable = new PdfPTable(1);

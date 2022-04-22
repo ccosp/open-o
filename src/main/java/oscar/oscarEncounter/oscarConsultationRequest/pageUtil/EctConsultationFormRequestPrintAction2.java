@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.DocumentException;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -232,14 +233,15 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 				
 			}
 
+		} catch (com.lowagie.text.DocumentException de) {
+			error = "DocumentException";
+			exception = de;
 		} catch (DocumentException de) {
 			error = "DocumentException";
 			exception = de;
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (com.lowagie.text.DocumentException e) {
-			logger.error("error", e);
 		} finally {
 			// Cleaning up InputStreams created for concatenation.
 			

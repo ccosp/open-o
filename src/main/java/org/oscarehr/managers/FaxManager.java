@@ -30,10 +30,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.DynaActionForm;
@@ -44,6 +41,7 @@ import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.FaxJob.STATUS;
+import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -447,22 +445,36 @@ public class FaxManager {
 	 * @throws IOException
 	 */
 	public Path addCoverPage(LoggedInInfo loggedInInfo, String note, Path currentDocument) throws IOException {
-  		
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.WRITE, null)) {
 			throw new RuntimeException("missing required security object (_fax)");
 		}
-  		
-  		byte[] coverPage = faxDocumentManager.createCoverPage(loggedInInfo, note);
-  		
-		try(OutputStream currentDocumentStream = Files.newOutputStream(currentDocument);
-				ByteArrayInputStream coverPageStream = new ByteArrayInputStream(coverPage))
-		{		
-			List<Object> documentList = new ArrayList<Object>();
-			documentList.add(coverPageStream);
-			ConcatPDF.concat(documentList, currentDocumentStream);				
+		int numberpages = EDocUtil.getPDFPageCount(currentDocument.getFileName().toString());
+  		byte[] coverPage = faxDocumentManager.createCoverPage(loggedInInfo, note, numberpages);
+		return addCoverPage(coverPage, currentDocument);
+	}
+
+	public Path addCoverPage(LoggedInInfo loggedInInfo, String note, FaxRecipient recipient, FaxAccount sender, Path currentDocument) throws IOException {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_fax)");
 		}
-  			
-		return currentDocument;
+		int numberpages = EDocUtil.getPDFPageCount(currentDocument.getFileName().toString());
+		byte[] coverPage = faxDocumentManager.createCoverPage(loggedInInfo, note, recipient, sender, numberpages);
+		return addCoverPage(coverPage, currentDocument);
+	}
+
+	private Path addCoverPage(byte[] coverPage, Path currentDocument) throws IOException {
+		Path newCurrentDocument = Paths.get(currentDocument.getParent().toString(), "Cover_" + UUID.randomUUID() + "_" + currentDocument.getFileName());
+		Files.createFile(newCurrentDocument);
+		try(ByteArrayInputStream currentDocumentStream = new ByteArrayInputStream(Files.readAllBytes(currentDocument));
+			OutputStream newDocumentStream = Files.newOutputStream(newCurrentDocument);
+			ByteArrayInputStream coverPageStream = new ByteArrayInputStream(coverPage))
+		{
+			List<Object> documentList = new ArrayList<>();
+			documentList.add(coverPageStream);
+			documentList.add(currentDocumentStream);
+			ConcatPDF.concat(documentList, newDocumentStream);
+		}
+		return newCurrentDocument;
 	}
 
 	/**

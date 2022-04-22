@@ -10756,6 +10756,7 @@ CREATE TABLE IF NOT EXISTS `fax_config` (
   `active` tinyint(1),
   `faxNumber` varchar(10),
   `senderEmail` varchar(255),
+  `accountName` varchar(55),
   PRIMARY KEY (`id`)
 );
 

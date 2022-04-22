@@ -38,11 +38,6 @@ public class PdfWriterFactory {
 	private static String confidentialtyStatement = OscarProperties.getConfidentialityStatement();
 	private static String promoText = OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT");
 
-	public static com.itextpdf.text.pdf.PdfContentByte setFont(com.itextpdf.text.pdf.PdfContentByte pdfContentByte, FontSettings settings) {
-		pdfContentByte.setFontAndSize(settings.createFont(), settings.getFontSize());
-		return pdfContentByte;
-	}
-
 	/**
 	 * @Deprecated:  use the newer Itext PDF method with the same signature.
 	 * @param pdfContentByte
@@ -94,7 +89,7 @@ public class PdfWriterFactory {
 
 		return result;
 	}
-	
+
 	/**
 	 * Creates a new instance of the PDF writer.
 	 * 
