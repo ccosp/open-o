@@ -26,6 +26,8 @@ package org.oscarehr.managers;
 
 import java.nio.file.Path;
 
+import org.oscarehr.fax.core.FaxAccount;
+import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.fax.util.PdfCoverPageCreator;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +84,22 @@ public class FaxDocumentManager {
 		PdfCoverPageCreator pdfCoverPageCreator = new PdfCoverPageCreator(note);		
 		return pdfCoverPageCreator.createCoverPage();
 		
+	}
+
+	public byte[] createCoverPage(LoggedInInfo loggedInInfo, String note, int numberPages) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_fax)");
+		}
+		PdfCoverPageCreator pdfCoverPageCreator = new PdfCoverPageCreator(note, numberPages);
+		return pdfCoverPageCreator.createCoverPage();
+	}
+
+	public byte[] createCoverPage(LoggedInInfo loggedInInfo, String note, FaxRecipient recipient, FaxAccount sender, int numberPages) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_fax)");
+		}
+		PdfCoverPageCreator pdfCoverPageCreator = new PdfCoverPageCreator(note, numberPages, recipient, sender);
+		return pdfCoverPageCreator.createCoverPage();
 	}
 
 }

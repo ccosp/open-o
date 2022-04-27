@@ -1,4 +1,4 @@
-<%--
+<%@ page import="oscar.OscarProperties" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -30,6 +30,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib prefix="html" uri="http://www.springframework.org/tags/form" %>
 
 <%
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -355,11 +356,11 @@
 						  	<div class="row" >
 								<div class="col-sm-12">
 									<label class="radio-inline" for="coverpageyes">
-										<input type="radio" name="isCoverpage" id="coverpageyes" value="true" 
+										<input type="radio" name="coverpage" id="coverpageyes" value="true"
 											onchange="document.getElementById('comments_container').style.display = 'block';"  />Yes
 									</label>
 									<label class="radio-inline" for="coverpageno">
-										<input type="radio" checked="checked" name="isCoverpage" id="coverpageno" 
+										<input type="radio" checked="checked" name="coverpage" id="coverpageno"
 											value="false" onchange="document.getElementById('comments_container').style.display = 'none';" />No
 									</label>
 								</div>
@@ -367,7 +368,7 @@
 							<div class="row" id="comments_container" style="display:none;" >
 								<div class="col-sm-12">
 									<label for="commentsTextArea">Comments</label>
-									<textarea class="form-control" name="comments" id="commentsTextArea" rows="5" ></textarea>
+									<textarea class="form-control" name="comments" id="commentsTextArea" rows="5"><%= OscarProperties.getInstance().getProperty("DEFAULT_FAX_COVERPAGE_COMMENT" ,"") %></textarea>
 								</div>
 							</div>
 						</div>				

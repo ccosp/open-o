@@ -825,10 +825,10 @@ public class ManageDocumentAction extends DispatchAction {
 		response.setContentLength(contentBytes.length);
 		response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
 		log.debug("about to Print to stream");
-		ServletOutputStream outs = response.getOutputStream();
-		outs.write(contentBytes);
-		outs.flush();
-		outs.close();
+		try(ServletOutputStream outs = response.getOutputStream()) {
+			outs.write(contentBytes);
+			outs.flush();
+		}
 	}
 
         public void viewDocumentInfo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

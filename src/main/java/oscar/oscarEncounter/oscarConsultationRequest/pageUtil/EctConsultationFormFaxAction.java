@@ -9,13 +9,14 @@
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,47 +26,36 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.ConsultationRequestDao;
-import org.oscarehr.common.dao.EFormDataDao;
+import org.oscarehr.common.dao.ClinicDAO;
 import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
-import org.oscarehr.common.model.EFormData;
+import org.oscarehr.common.model.Clinic;
 import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
-import org.oscarehr.common.model.ProfessionalSpecialist;
+import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
-import org.oscarehr.fax.util.PdfCoverPageCreator;
-import org.oscarehr.hospitalReportManager.HRMPDFCreator;
-import org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao;
-import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
+
+import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import org.oscarehr.util.WKHtmlToPdfUtils;
-
-import com.itextpdf.text.pdf.PdfReader;
-import com.lowagie.text.DocumentException;
-import com.sun.xml.messaging.saaj.util.ByteInputStream;
-import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
-import oscar.eform.EFormUtil;
-import oscar.eform.actions.PrintAction;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import oscar.oscarLab.ca.all.pageUtil.OLISLabPDFCreator;
-import oscar.oscarLab.ca.all.parsers.Factory;
-import oscar.oscarLab.ca.all.parsers.MessageHandler;
-import oscar.oscarLab.ca.all.parsers.OLISHL7Handler;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.ConcatPDF;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.DocumentException;
+import com.sun.xml.messaging.saaj.util.ByteInputStream;
+import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 
 public class EctConsultationFormFaxAction extends Action {
 
@@ -74,9 +64,9 @@ public class EctConsultationFormFaxAction extends Action {
     private static FaxClientLogDao faxClientLogDao = SpringUtils.getBean(FaxClientLogDao.class);
 	private static FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);				
 	private static FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-	private ConsultationRequestDao consultationRequestDao = SpringUtils.getBean(ConsultationRequestDao.class);
-	private EFormDataDao eformDataDao = SpringUtils.getBean(EFormDataDao.class);
-	
+	private static FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+	private static ClinicDAO clinicDAO = SpringUtils.getBean(ClinicDAO.class);
+    
 	public EctConsultationFormFaxAction() {
 	}
 	    
@@ -96,6 +86,19 @@ public class EctConsultationFormFaxAction extends Action {
 		String faxNumber = ectConsultationFaxForm.getSendersFax();
 		String consultResponsePage = request.getParameter("consultResponsePage");
 		boolean doCoverPage = ectConsultationFaxForm.isCoverpage();
+		String note = "";
+		if( doCoverPage ) {
+			note = request.getParameter("note") == null ? "" : request.getParameter("note");
+			// dont ask!
+			if (note.isEmpty()) {
+				note = ectConsultationFaxForm.getComments();
+			}
+		}
+		FaxAccount sender = ectConsultationFaxForm.getSender();
+		Clinic clinic = clinicDAO.getClinic();
+		sender.setSubText(clinic.getClinicName());
+		sender.setAddress(clinic.getClinicAddress());
+		sender.setFacilityName(clinic.getClinicName());
 
 		ArrayList<EDoc> docs;
 		if (consultResponsePage==null) {
@@ -114,8 +117,6 @@ public class EctConsultationFormFaxAction extends Action {
 		ByteInputStream bis;
 		ByteOutputStream bos;
 		CommonLabResultData consultLabs = new CommonLabResultData();
-		HRMDocumentToDemographicDao hrmDocumentToDemographicDao = SpringUtils.getBean(HRMDocumentToDemographicDao.class);
-		List<HRMDocumentToDemographic> attachedHRMReports = hrmDocumentToDemographicDao.findHRMDocumentsAttachedToConsultation(reqId);
 		ArrayList<InputStream> streams = new ArrayList<InputStream>();
 		String provider_no = loggedInInfo.getLoggedInProviderNo();		
 
@@ -129,22 +130,6 @@ public class EctConsultationFormFaxAction extends Action {
 		String error = "";
 		Exception exception = null;
 		try {
-			
-			if( doCoverPage ) {
-				String note = request.getParameter("note") == null ? "" : request.getParameter("note");
-				// dont ask!
-				if( note.isEmpty() ) {
-					note = ectConsultationFaxForm.getComments();
-				}
-				
-				PdfCoverPageCreator pdfCoverPageCreator = new PdfCoverPageCreator(note);
-				
-				buffer = pdfCoverPageCreator.createCoverPage();
-				bis = new ByteInputStream(buffer, buffer.length);
-				streams.add(bis);
-				pdfDocumentList.add(bis);
-				
-			}
 
 			if (consultResponsePage==null) { //fax for consultation request
 				bos = new ByteOutputStream();
@@ -195,17 +180,8 @@ public class EctConsultationFormFaxAction extends Action {
 				// Storing the lab in PDF format inside a byte stream.
 				bos = new ByteOutputStream();
 				request.setAttribute("segmentID", labs.get(i).segmentID);
-				MessageHandler messageHandler = Factory.getHandler(labs.get(i).getSegmentID()); 
-				//Checks if the lab is HL7
-				if (messageHandler instanceof OLISHL7Handler){
-					//If the lab is HL7, use the OLISLabPDFCreator to print the lab
-					OLISLabPDFCreator olisLabPdfCreator = new OLISLabPDFCreator(request, bos);
-					olisLabPdfCreator.printPdf();
-				}
-				else {
-					LabPDFCreator lpdfc = new LabPDFCreator(request, bos);
-					lpdfc.printPdf();
-				}
+				LabPDFCreator lpdfc = new LabPDFCreator(request, bos);
+				lpdfc.printPdf();
 
 				// Transferring PDF to an input stream to be concatenated with
 				// the rest of the documents.
@@ -217,66 +193,26 @@ public class EctConsultationFormFaxAction extends Action {
 
 			}
 			
-			for (HRMDocumentToDemographic attachedHRM : attachedHRMReports) {
-				bos = new ByteOutputStream();
-				HRMPDFCreator hrmPdfCreator = new HRMPDFCreator(bos, attachedHRM.getHrmDocumentId(), loggedInInfo);
-				hrmPdfCreator.printPdf();
-
-				buffer = bos.getBytes();
-				bis = new ByteInputStream(buffer, bos.getCount());
-				bos.close();
-				streams.add(bis);
-				pdfDocumentList.add(bis);
-			}
-
-            //Get attached eForms
-            List<EFormData> eForms = EFormUtil.listPatientEformsCurrentAttachedToConsult(reqId);
-            for (EFormData eForm : eForms) {
-                String localUri = PrintAction.getEformRequestUrl(request);
-                buffer = WKHtmlToPdfUtils.convertToPdf(localUri + eForm.getId());
-                bis = new ByteInputStream(buffer, buffer.length);
-                streams.add(bis);
-                pdfDocumentList.add(bis);
-            }
-
-
-			if(reqId!=null && !reqId.trim().equals("") && consultationRequestDao.getConsultation(Integer.parseInt(reqId))!=null){
-				ProfessionalSpecialist professionalSpecialist = consultationRequestDao.getConsultation(Integer.parseInt(reqId)).getProfessionalSpecialist();
-				if (professionalSpecialist!=null && professionalSpecialist.getEformId()!=null && professionalSpecialist.getEformId()!=0){
-					//need to get FDID. Get latest form
-					List<EFormData> eformDataList = eformDataDao.findByDemographicIdAndFormId(Integer.parseInt(demoNo), professionalSpecialist.getEformId());
-					if(!eformDataList.isEmpty()) {
-						EFormData efd = eformDataList.get(0);
-						String localUri = PrintAction.getEformRequestUrl(request);
-						buffer = WKHtmlToPdfUtils.convertToPdf(localUri + efd.getId() + "&blankForm=true");
-						bis = new ByteInputStream(buffer, buffer.length);
-						streams.add(bis);
-						pdfDocumentList.add(bis);
-					}
-
-				}
-			}
-			
-			
 			if (pdfDocumentList.size() > 0) {
  
 				// Writing consultation request to disk as a pdf.
 				String faxPath = path;
 				String filename = "Consult_" + reqId + System.currentTimeMillis() + ".pdf";
-				String faxPdf = String.format("%s%s", faxPath, filename);
+//				String faxPdf = String.format("%s%s%s", faxPath, File.separator, filename);
+				Path faxPdf = Paths.get(faxPath, filename);
+				try(FileOutputStream pdfOut = new FileOutputStream(faxPdf.toString())) {
+					ConcatPDF.concat(pdfDocumentList, pdfOut);
+				}
 
-				FileOutputStream fos = new FileOutputStream(faxPdf);				
-				ConcatPDF.concat(pdfDocumentList, fos);				
-				fos.close();
-				
-				PdfReader pdfReader = new PdfReader(faxPdf);
-				int numPages = pdfReader.getNumberOfPages();
-				pdfReader.close();
-
+				Path pdfToFax;
 				List<FaxConfig> faxConfigs = faxConfigDao.findAll(null, null);
 				boolean validFaxNumber;
+				int count = 0;
+				Set<FaxRecipient> faxRecipients = ectConsultationFaxForm.getAllFaxRecipients();
+				for (FaxRecipient faxRecipient : faxRecipients) {
 
-				for (FaxRecipient faxRecipient : ectConsultationFaxForm.getAllFaxRecipients()) {	
+					// reset target pdf.
+					pdfToFax = faxPdf;
 
 				    String faxNo = faxRecipient.getFax();
 				    
@@ -297,20 +233,17 @@ public class EctConsultationFormFaxAction extends Action {
 				    FaxJob faxJob = new FaxJob();
 		    		faxJob.setDestination(faxNo);
 		    		faxJob.setRecipient(faxRecipient.getName());
-		    		faxJob.setFile_name(filename);
-		    		faxJob.setNumPages(numPages);
 		    		faxJob.setFax_line(faxNumber);
 		    		faxJob.setStamp(new Date());
 		    		faxJob.setOscarUser(provider_no);
 		    		faxJob.setDemographicNo(Integer.parseInt(demoNo));
 				    
 				    inner : for( FaxConfig faxConfig : faxConfigs ) {
-				    	
 				    	if( faxConfig.getFaxNumber().equals(faxNumber) ) {
 				    						    		
 				    		faxJob.setStatus(FaxJob.STATUS.WAITING);
 				    		faxJob.setUser(faxConfig.getFaxUser());
-				    
+							sender.setFaxNumberOwner(faxConfig.getAccountName());
 				    		validFaxNumber = true;
 				    		break inner;
 				    	}
@@ -326,7 +259,22 @@ public class EctConsultationFormFaxAction extends Action {
 				    	// redundant, but, what the heck!
 				    	faxJob.setStatus(FaxJob.STATUS.WAITING);
 				    }
-				    				    
+
+					//todo rethink this process.  It takes up too much disc space.
+					if( doCoverPage ) {
+						pdfToFax = faxManager.addCoverPage(loggedInInfo, note, faxRecipient, sender, faxPdf);
+
+						// delete the source file to save some disc space
+						if(count == (faxRecipients.size() -1)) {
+							Files.deleteIfExists(faxPdf);
+						}
+					}
+
+					int numPages = EDocUtil.getPDFPageCount(pdfToFax.toString());
+
+					faxJob.setFile_name(pdfToFax.getFileName().toString());
+					faxJob.setNumPages(numPages);
+
 				    faxJobDao.persist(faxJob);
 				    
 				    // start up a log track each time the CLIENT was run.
@@ -335,7 +283,9 @@ public class EctConsultationFormFaxAction extends Action {
 					faxClientLog.setProviderNo(faxJob.getOscarUser()); // the provider that sent this fax
 					faxClientLog.setStartTime(new Date(System.currentTimeMillis())); // the exact time the fax was sent
 					faxClientLog.setRequestId(Integer.parseInt(reqId));
-					faxClientLogDao.persist(faxClientLog);    
+					faxClientLogDao.persist(faxClientLog);
+
+					count++;
 				}
 
 				LogAction.addLog(provider_no, LogConst.SENT, LogConst.CON_FAX, "CONSULT "+ reqId);
@@ -349,7 +299,7 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (com.itextpdf.text.DocumentException e) {
+		} catch (com.lowagie.text.DocumentException e) {
 			logger.error("error", e);
 		} finally {
 			// Cleaning up InputStreams created for concatenation.
@@ -362,11 +312,10 @@ public class EctConsultationFormFaxAction extends Action {
 			}
 		}
 		if (!error.equals("")) {
-			logger.error(error + " occurred inside ConsultationFormFaxAction", exception);
-			request.setAttribute("faxError", exception.getMessage());
-			request.setAttribute("de", demoNo);
+			logger.error(error + " occured insided ConsultationPrintAction", exception);
+			request.setAttribute("printError", new Boolean(true));
 			return mapping.findForward("error");
 		}
 		return null;		
-    }   
+    }
 }
