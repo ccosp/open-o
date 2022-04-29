@@ -11968,6 +11968,7 @@ CREATE TABLE IF NOT EXISTS `AppDefinition` (
   `active` tinyint(1),
   `addedBy` varchar(8),
   `added` datetime,
+  `consentTypeId` int(15),
   PRIMARY KEY (`id`)
 );
 
