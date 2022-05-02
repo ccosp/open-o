@@ -1,3 +1,7 @@
+# If you wish to do testing, make a copy of this template, name it
+# "over_ride_config.properties", and change the configurations to 
+# conform to your testing environment
+
 buildDateTime=foo
 db_driver=com.mysql.cj.jdbc.Driver
 db_user=root
