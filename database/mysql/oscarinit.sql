@@ -7942,6 +7942,7 @@ CREATE TABLE IF NOT EXISTS `demographicExt` (
   `date_time` datetime default NULL,
   `hidden` char(1) default '0',
   PRIMARY KEY  (`id`),
+  UNIQUE KEY `uk_demo_ext` (`demographic_no`,`key_val`),
   INDEX (demographic_no)
 ) ;
 
