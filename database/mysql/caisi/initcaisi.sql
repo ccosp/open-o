@@ -2046,7 +2046,8 @@ CREATE TABLE IF NOT EXISTS IntegratorControl (
         facilityId int not null,
         control varchar(80),
         execute boolean,
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        KEY `facilityId` (`facilityId`)
 );
 
 
