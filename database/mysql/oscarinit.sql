@@ -10439,6 +10439,13 @@ CREATE TABLE IF NOT EXISTS  documentDescriptionTemplate (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS DocumentExtraReviewer (
+  `id` int(11) NOT NULL auto_increment,
+  `documentNo` integer,
+  `reviewerProviderNo` varchar(40),
+  `reviewDateTime` timestamp,
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE IF NOT EXISTS ORNPreImplementationReportLog (
   id int(10) NOT NULL auto_increment,
