@@ -10741,15 +10741,18 @@ CREATE TABLE IF NOT EXISTS ORNCkdScreeningReportLog (
 
 
 CREATE TABLE IF NOT EXISTS DrugProduct(
-        id int(9) NOT NULL auto_increment,
-        name varchar(255),
-        code varchar(255),
-        lotNumber varchar(255),
-        dispensingEvent int(9),
-        amount int not null,
-        expiryDate date,
-        location int,
-        primary key (id)
+  id int(9) NOT NULL auto_increment,
+  name varchar(255),
+  code varchar(255),
+  lotNumber varchar(255),
+  dispensingEvent int(9),
+  amount int not null,
+  expiryDate date,
+  location int,
+  `dateCreated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `lastUpdateDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `lastUpdateUser` varchar(10) DEFAULT NULL,
+  primary key (id)
 );
 
 CREATE TABLE IF NOT EXISTS DrugDispensing (
