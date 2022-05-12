@@ -9472,6 +9472,12 @@ CREATE TABLE IF NOT EXISTS FlowSheetUserCreated(
   topHTML text,
   archived tinyint(1),
   createdDate date,
+  `createdBy` varchar(100) DEFAULT NULL,
+  `scope` varchar(100) DEFAULT NULL,
+  `scopeProviderNo` varchar(100) DEFAULT NULL,
+  `scopeDemographicNo` int(10) DEFAULT NULL,
+  `template` varchar(100) DEFAULT NULL,
+  `xmlContent` text DEFAULT NULL,
   KEY FlowSheetUserCreated_archived (archived)
 );
 
