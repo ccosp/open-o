@@ -9383,7 +9383,8 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentToProvider` (
   `hrmDocumentId` varchar(20) ,
   `signedOff` int(11) ,
   `signedOffTimestamp` datetime ,
-  `viewed` int(11) ,
+  `viewed` int(11),
+  `filed` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ;
 
