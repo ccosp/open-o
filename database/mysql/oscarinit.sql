@@ -819,6 +819,13 @@ CREATE TABLE IF NOT EXISTS `dx_associations` (
         `update_date` timestamp not null
 );
 
+CREATE TABLE IF NOT EXISTS `dxCodeTranslations` (
+  `dxCode` varchar(10) NOT NULL,
+  `patientFriendly` varchar(250) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+);
+
 --
 -- Table structure for table `eChart`
 --
