@@ -518,6 +518,7 @@ CREATE TABLE IF NOT EXISTS demographic (
   roster_date date,
   roster_termination_date date,
   roster_termination_reason varchar(2),
+  `roster_enrolled_to` varchar(20) DEFAULT NULL,
   patient_status varchar(20),
   patient_status_date date,
   date_joined date,
@@ -543,6 +544,12 @@ CREATE TABLE IF NOT EXISTS demographic (
   anonymous varchar(32),
   lastUpdateUser varchar(6),
   lastUpdateDate datetime not null,
+  `consentToUseEmailForCare` tinyint(1) DEFAULT NULL,
+  `middleNames` varchar(100) DEFAULT NULL,
+  `residentialAddress` varchar(60) DEFAULT NULL,
+  `residentialCity` varchar(50) DEFAULT NULL,
+  `residentialProvince` varchar(20) DEFAULT NULL,
+  `residentialPostal` varchar(9) DEFAULT NULL,
   PRIMARY KEY  (demographic_no),
   KEY hin (hin),
   KEY name (last_name,first_name),
@@ -8926,6 +8933,7 @@ CREATE TABLE IF NOT EXISTS demographicArchive (
   roster_date date,
   roster_termination_date date,
   roster_termination_reason varchar(2),
+  `roster_enrolled_to` varchar(20) DEFAULT NULL,
   patient_status varchar(20),
   patient_status_date date,
   date_joined date,
@@ -8950,7 +8958,12 @@ CREATE TABLE IF NOT EXISTS demographicArchive (
   newsletter varchar(32),
   anonymous varchar(32),
   lastUpdateUser varchar(6),
-  lastUpdateDate date
+  lastUpdateDate date,
+  `middleNames` varchar(100) DEFAULT NULL,
+  `residentialAddress` varchar(60) DEFAULT NULL,
+  `residentialCity` varchar(50) DEFAULT NULL,
+  `residentialProvince` varchar(20) DEFAULT NULL,
+  `residentialPostal` varchar(9) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS providerArchive (
