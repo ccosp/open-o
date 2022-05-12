@@ -101,7 +101,8 @@ CREATE TABLE IF NOT EXISTS appointment (
   PRIMARY KEY  (appointment_no),
   KEY appointment_date (appointment_date,start_time,demographic_no),
   KEY demographic_no (demographic_no),
-  KEY location (location)
+  KEY location (location),
+  KEY `appointment_ikey` (`demographic_no`,`updatedatetime`)
 ) ;
 
 --
@@ -691,7 +692,8 @@ CREATE TABLE IF NOT EXISTS document (
   restrictToProgram tinyint(1) NOT NULL,
   abnormal int(1),
   receivedDate date,
-  PRIMARY KEY  (document_no)
+  PRIMARY KEY  (document_no),
+  KEY `document_ikey` (`public1`,`doctype`,`status`,`updatedatetime`)
 ) ;
 
 --
@@ -791,7 +793,9 @@ CREATE TABLE IF NOT EXISTS dxresearch (
   coding_system varchar(20),
   association tinyint(1) not null default 0,
   providerNo varchar(6),
-  PRIMARY KEY  (dxresearch_no)
+  PRIMARY KEY  (dxresearch_no),
+  KEY `dxresearch_ikey` (`demographic_no`,`status`,`update_date`),
+  KEY `dxresearch_integrator` (`demographic_no`,`update_date`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS `dx_associations` (
@@ -6677,7 +6681,8 @@ CREATE TABLE IF NOT EXISTS mdsMSH (
   acceptAckType char(2) default NULL,
   appAckType char(2) default NULL,
   demographic_no int(10) default '0',
-  PRIMARY KEY  (segmentID)
+  PRIMARY KEY  (segmentID),
+  KEY `mdsMSH_ikey` (`dateTime`)
 ) ;
 
 --
@@ -6890,7 +6895,8 @@ CREATE TABLE IF NOT EXISTS measurements(
   PRIMARY KEY(id),
   KEY type (type),
   KEY measuringInstruction (measuringInstruction),
-  KEY demographicNo (demographicNo)
+  KEY demographicNo (demographicNo),
+  KEY measurement_integrator (demographicNo,dateEntered)
 ) ;
 
 --
@@ -7085,7 +7091,8 @@ CREATE TABLE IF NOT EXISTS patientLabRouting (
   KEY `demographic` (`demographic_no`),
   KEY `lab_type_index` (`lab_type`),
   KEY `lab_no_index` (`lab_no`),
-  KEY `all_index` (`lab_type`,`lab_no`,`demographic_no`)
+  KEY `all_index` (`lab_type`,`lab_no`,`demographic_no`),
+  KEY `patientLabRouting_ikey` (`created`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS ProviderPreference
@@ -7227,7 +7234,8 @@ CREATE TABLE IF NOT EXISTS provider (
   `lastUpdateDate` datetime not null,
   `signed_confidentiality` datetime,
   `practitionerNoType` varchar(255),
-  PRIMARY KEY  (provider_no)
+  PRIMARY KEY  (provider_no),
+  KEY `provider_ikey` (`lastUpdateDate`)
 );
 
 --
@@ -7788,6 +7796,7 @@ CREATE TABLE IF NOT EXISTS preventions (
   creator int(10) default NULL,
   lastUpdateDate datetime NOT NULL,
   snomedId varchar(255),
+  PRIMARY KEY  (`id`),
   INDEX `preventions_demographic_no` (`demographic_no`),
   INDEX `preventions_provider_no` (provider_no(6)),
   INDEX `preventions_prevention_type` (prevention_type(10)),
@@ -7796,7 +7805,7 @@ CREATE TABLE IF NOT EXISTS preventions (
   INDEX `preventions_never` (never),
   INDEX `preventions_creation_date` (`creation_date`),
   INDEX `preventions_next_date` (next_date),
-  PRIMARY KEY  (`id`)
+  KEY `preventions_ikey` (`lastUpdateDate`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS preventionsExt (
@@ -7826,7 +7835,8 @@ CREATE TABLE IF NOT EXISTS secUserRole(
   `orgcd` VARCHAR(80) default 'R0000001',
   `activeyn`    int(1),
   `lastUpdateDate` datetime not null,
-  primary key (id)
+  primary key (id),
+  KEY `secUserRole_ikey` (`lastUpdateDate`)
 );
 
 CREATE TABLE IF NOT EXISTS `secPrivilege` (
@@ -8071,7 +8081,8 @@ CREATE TABLE IF NOT EXISTS hl7TextMessage(
 	message longtext NOT NULL,
 	type varchar(100) not null,
 	serviceName varchar(100) not null,
-	created datetime not null
+	created datetime not null,
+  KEY `hl7TextMessage_ikey` (`created`)
 );
 
 CREATE TABLE IF NOT EXISTS oscarKeys(
@@ -9691,14 +9702,14 @@ CREATE TABLE IF NOT EXISTS `program` (
   `capacity_funding` int(10),
   `capacity_space` int(10),
   `lastUpdateUser` varchar(6),
- lastUpdateDate datetime not null,
+  lastUpdateDate datetime not null,
   `enableEncounterTime` tinyint(1),
   `enableEncounterTransportationTime` tinyint(1),
   `siteSpecificField` varchar(255),
 	emailNotificationAddressesCsv varchar(255),
 	lastReferralNotification datetime,
-  `enableOCAN` tinyint(1) not null
-
+  `enableOCAN` tinyint(1) not null,
+  KEY `program_ikey` (`facilityId`,`lastUpdateDate`)
 );
 
 --
@@ -10348,7 +10359,8 @@ CREATE TABLE IF NOT EXISTS labPatientPhysicianInfo(
   patient_phone varchar(20),
   doc_phone varchar(20),
   collection_date varchar(20),
-  lastUpdateDate datetime not null
+  lastUpdateDate datetime not null,
+  KEY `labPatientPhysicianInfo_ikey` (`lastUpdateDate`)
 );
 
 

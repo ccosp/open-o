@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `admission` (
   PRIMARY KEY  (`am_id`),
   KEY `FK1A21809DAA8624B` (`team_id`),
 	index (program_id),
-	index (client_id)
+	index (client_id),
+  KEY `admission_ikey` (`client_id`,`program_id`,`lastUpdateDate`)
 );
 
 --
@@ -271,7 +272,8 @@ CREATE TABLE IF NOT EXISTS `casemgmt_issue` (
   `type` varchar(100) NOT NULL default '',
   `update_date` datetime NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `FK718D130B49CFB32F` (`issue_id`)
+  KEY `FK718D130B49CFB32F` (`issue_id`),
+  KEY `casemgmt_issue_ikey` (`demographic_no`,`update_date`)
 );
 
 --
@@ -320,7 +322,8 @@ CREATE TABLE IF NOT EXISTS `casemgmt_note` (
 	index(demographic_no),
 	index(uuid),
 	index(program_no),
-	index(observation_date) 
+	index(observation_date),
+  KEY `casemgmt_note_ikey` (`demographic_no`,`update_date`,`locked`)
 );
 
 --
