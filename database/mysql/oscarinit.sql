@@ -6630,7 +6630,8 @@ CREATE TABLE IF NOT EXISTS groupMembers_tbl (
   groupID int(10) default NULL,
   provider_No varchar(6) default NULL,
   facilityId int(6),
-  clinicLocationNo int(6),
+  `destinationFacilityId` int(6) DEFAULT NULL,
+  clinicLocationNo int(11),
   PRIMARY KEY  (id)
 ) ;
 
