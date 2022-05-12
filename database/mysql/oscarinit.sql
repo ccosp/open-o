@@ -692,8 +692,23 @@ CREATE TABLE IF NOT EXISTS document (
   restrictToProgram tinyint(1) NOT NULL,
   abnormal int(1),
   receivedDate date,
+  `report_media` int(11) DEFAULT NULL,
+  `sent_date_time` datetime DEFAULT NULL,
   PRIMARY KEY  (document_no),
   KEY `document_ikey` (`public1`,`doctype`,`status`,`updatedatetime`)
+) ;
+
+--
+-- Table structure for table `document_review`
+--
+
+CREATE TABLE IF NOT EXISTS document_review (
+  `id` int auto_increment primary key,
+  `document_no` int(20) not null,
+  `provider_no` varchar(6) not null,
+  `date_reviewed` datetime,
+  foreign key(document_no) references document(document_no),
+  foreign key(provider_no) references provider(provider_no)
 ) ;
 
 --
