@@ -7731,7 +7731,7 @@ CREATE TABLE IF NOT EXISTS tickler (
 CREATE TABLE IF NOT EXISTS validations(
   id int UNSIGNED AUTO_INCREMENT,
   name varchar(100) NOT NULL,
-  regularExp varchar(100) ,
+  regularExp varchar(250) ,
   `maxValue1` double,
   minValue double,
   maxLength int(3),
