@@ -7519,10 +7519,10 @@ CREATE TABLE IF NOT EXISTS `scheduledate` (
   `hour` varchar(255) default NULL,
   `creator` varchar(50) default NULL,
   `status` char(1) NOT NULL default '',
-   key(sdate),
-   key(provider_no),
-   key(status),
-   key(sdate,provider_no,hour,status),
+  KEY `scheduledate_sdate` (`sdate`),
+  KEY `scheduledate_pno` (`provider_no`),
+  KEY `scheduledate_status` (`status`),
+  KEY `scheduledate_key1` (`sdate`,`provider_no`,`hour`,`status`),
   PRIMARY KEY  (`id`)
 ) ;
 
