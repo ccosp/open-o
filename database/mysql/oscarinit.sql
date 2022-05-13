@@ -7846,6 +7846,8 @@ CREATE TABLE IF NOT EXISTS preventions (
   never char(1) default '0',
   creator int(10) default NULL,
   lastUpdateDate datetime NOT NULL,
+  `restrictToProgram` tinyint(1) DEFAULT NULL,
+  `programNo` int(11) DEFAULT NULL,
   snomedId varchar(255),
   PRIMARY KEY  (`id`),
   INDEX `preventions_demographic_no` (`demographic_no`),
