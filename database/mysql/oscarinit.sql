@@ -9173,6 +9173,13 @@ CREATE TABLE IF NOT EXISTS `EyeformTestBook` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE ISO36612 (
+    id int(11) auto_increment,
+    code varchar(255),
+    province varchar(255),
+    country varchar(255),
+    PRIMARY KEY(id)
+);
 
 CREATE TABLE IF NOT EXISTS `issue` (
   `issue_id` int(10) NOT NULL auto_increment,
