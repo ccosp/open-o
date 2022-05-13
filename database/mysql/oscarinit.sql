@@ -7212,10 +7212,6 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
   `lastUpdated` datetime NOT NULL,
   `annotation` text DEFAULT NULL,
   `referralNo` varchar(6) DEFAULT NULL,
-  `eReferralUrl` varchar(255) DEFAULT NULL,
-  `eReferralOscarKey` varchar(1024) DEFAULT NULL,
-  `eReferralServiceKey` varchar(1024) DEFAULT NULL,
-  `eReferralServiceName` varchar(255) DEFAULT NULL,
   `privatePhoneNumber` varchar(30) DEFAULT NULL,
   `cellPhoneNumber` varchar(30) DEFAULT NULL,
   `pagerNumber` varchar(30) DEFAULT NULL,
@@ -7224,6 +7220,7 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
   `departmentId` int(10) NOT NULL,
   `eformId` int(10) DEFAULT NULL,
   `hideFromView` tinyint(1) DEFAULT 0,
+  `deleted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`specId`)
 );
 
