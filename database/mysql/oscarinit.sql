@@ -699,19 +699,6 @@ CREATE TABLE IF NOT EXISTS document (
 ) ;
 
 --
--- Table structure for table `document_review`
---
-
-CREATE TABLE IF NOT EXISTS document_review (
-  `id` int auto_increment primary key,
-  `document_no` int(20) not null,
-  `provider_no` varchar(6) not null,
-  `date_reviewed` datetime,
-  foreign key(document_no) references document(document_no),
-  foreign key(provider_no) references provider(provider_no)
-) ;
-
---
 -- Table structure for table `reportTemplates`
 --
 CREATE TABLE IF NOT EXISTS reportTemplates (
@@ -7252,6 +7239,20 @@ CREATE TABLE IF NOT EXISTS provider (
   PRIMARY KEY  (provider_no),
   KEY `provider_ikey` (`lastUpdateDate`)
 );
+
+
+--
+-- Table structure for table `document_review`
+--
+
+CREATE TABLE IF NOT EXISTS document_review (
+  `id` int auto_increment primary key,
+  `document_no` int(20) not null,
+  `provider_no` varchar(6) not null,
+  `date_reviewed` datetime,
+  foreign key(document_no) references document(document_no),
+  foreign key(provider_no) references provider(provider_no)
+) ;
 
 --
 -- Table structure for table `providerExt`
