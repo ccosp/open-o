@@ -9292,6 +9292,16 @@ CREATE TABLE IF NOT EXISTS `HRMDocument` (
   `sourceFacility` varchar(120) ,
   `hrmCategoryId` int ,
   `description` varchar(255),
+  `formattedName` varchar(100) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `gender` varchar(1) DEFAULT NULL,
+  `hcn` varchar(20) DEFAULT NULL,
+  `recipientId` varchar(15) DEFAULT NULL,
+  `recipientName` varchar(255) DEFAULT NULL,
+  `recipientProviderNo` varchar(25) DEFAULT NULL,
+  `className` varchar(255) DEFAULT NULL,
+  `subClassName` varchar(255) DEFAULT NULL,
+  `sourceFacilityReportNo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ;
 
@@ -9322,6 +9332,35 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentToProvider` (
   `signedOff` int(11) ,
   `signedOffTimestamp` datetime ,
   `viewed` int(11) ,
+  PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE IF NOT EXISTS `HrmLog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `started` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `initiatingProviderNo` varchar(25) DEFAULT NULL,
+  `transactionType` varchar(25) DEFAULT NULL,
+  `externalSystem` varchar(50) DEFAULT NULL,
+  `error` varchar(255) DEFAULT NULL,
+  `connected` tinyint(1) DEFAULT NULL,
+  `downloadedFiles` tinyint(1) DEFAULT NULL,
+  `numFilesDownloaded` int(11) DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE `HrmLogEntry` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hrmLogId` int(11) DEFAULT NULL,
+  `encryptedFileName` varchar(255) DEFAULT NULL,
+  `decrypted` tinyint(1) DEFAULT NULL,
+  `decryptedFileName` varchar(255) DEFAULT NULL,
+  `filename` varchar(255) DEFAULT NULL,
+  `error` varchar(255) DEFAULT NULL,
+  `parsed` tinyint(1) DEFAULT NULL,
+  `recipientId` varchar(100) DEFAULT NULL,
+  `recipientName` varchar(255) DEFAULT NULL,
+  `distributed` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ;
 

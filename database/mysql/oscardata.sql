@@ -1500,9 +1500,9 @@ insert into `secRole` (role_name, description) values('property staff','property
 insert into `secRole` (role_name, description) values('Support Counsellor','Support Counsellor');
 insert into `secRole` (role_name, description) values('Counselling Intern', 'Counselling Intern');
 insert into `secRole` (role_name, description) values('Field Note Admin', 'Field Note Admin');
-INSERT INTO `secRole` (`role_name`, `description` ) VALUES ('student', 'Student (OSCAR Learning)');
-INSERT INTO `secRole` (`role_name`, `description` ) VALUES ('moderator', 'Moderator (OSCAR Learning)');
-
+insert into `secRole` (role_name, description) values('student', 'Student (OSCAR Learning)');
+insert into `secRole` (role_name, description) values('moderator', 'Moderator (OSCAR Learning)');
+insert into `secRole` (role_name, description) values('HRMAdmin','HRM Administator');
 
 insert into `secUserRole` (`provider_no`,`role_name`,`orgcd`,`activeyn`,lastUpdateDate) values('999998', 'doctor', 'R0000001',1,now());
 insert into `secUserRole` (`provider_no`,`role_name`,`orgcd`,`activeyn`,lastUpdateDate) values('999998', 'admin', 'R0000001',1,now());
@@ -1614,6 +1614,9 @@ insert into `secObjectName` (`objectName`) values ('_dashboardDrilldown');
 insert into `secObjectName` (`objectName`) values ('_dashboardChgUser');
 
 insert into `secObjectName` (`objectName`) values ('_admin.demographic');
+
+insert into `secObjectName` (`objectName`)  values ('_admin.hrm');
+insert into `secObjectName` (`objectName`)  values ('_hrm.administrator');
 
 insert into `secObjPrivilege` values('receptionist', '_appointment', 'x', 0, '999998');
 insert into `secObjPrivilege` values('receptionist', '_demographic', 'x', 0, '999998');
@@ -1810,7 +1813,8 @@ insert into `secObjPrivilege` values('admin','_demographicExport','x',0,'999998'
 insert into `secObjPrivilege` values('admin','_admin.document','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_admin.demographic','u',0,'999998');
 
-
+insert into `secObjPrivilege` values('admin','_admin.hrm','x',0,'999998');
+insert into `secObjPrivilege` values('HRMAdmin','_hrm.administrator','x',0,'999998');
 
 -- for defaultqueue
 insert into queue values(1,'default');
@@ -2203,7 +2207,7 @@ VALUES
         ('eyeformProblem', 'Problem List Item for Eyeform', 'nurse', NOW(), NULL, 'system',0);
 
 
-insert into HRMCategory values (null, 'General Oscar Lab', 'DEFAULT',null);
+insert into HRMCategory values (null, 'Oscar HRM Category Uncategorized', 'DEFAULT',null);
 insert into HRMCategory values (null, 'Oscar HRM Category CT:ABDW' ,'CT:ABDW',null);
 insert into HRMCategory values (null, 'Oscar HRM Category RAD:CSP5' ,'RAD:CSP5',null);
 insert into HRMCategory values (null, 'Oscar HRM Category NM:THYSAN' ,'NM:THYSAN',null);
