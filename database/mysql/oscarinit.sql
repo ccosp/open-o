@@ -7763,7 +7763,6 @@ CREATE TABLE IF NOT EXISTS `waitingList` (
 --
 CREATE TABLE IF NOT EXISTS pharmacyInfo (
   `recordID` int(10) NOT NULL AUTO_INCREMENT,
-  `ID` int(10) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `address` text,
   `city` varchar(255) DEFAULT NULL,
