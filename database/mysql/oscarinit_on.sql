@@ -1377,6 +1377,7 @@ CREATE TABLE billing_on_cheader1 (
   creator varchar(6) default NULL,
   timestamp1 timestamp,
   clinic varchar(30) default NULL,
+  `programNo` int(10) DEFAULT NULL,
 
   PRIMARY KEY  (id),
   KEY appointment_no (appointment_no,demographic_no),
