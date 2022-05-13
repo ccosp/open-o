@@ -9257,7 +9257,7 @@ CREATE TABLE IF NOT EXISTS RemoteDataLog
 	actionDate datetime not null,
 	action varchar(32) not null,
 	documentId varchar(255) not null,
-	documentContents blob not null
+	documentContents mediumblob not null
 );
 
 CREATE TABLE IF NOT EXISTS DemographicContact (
