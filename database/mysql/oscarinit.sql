@@ -10530,6 +10530,7 @@ CREATE TABLE IF NOT EXISTS `ServiceClient` (
   `clientSecret` varchar(255) NOT NULL,
   `uri` varchar(255) DEFAULT NULL,
   `dateCreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `lifetime` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
