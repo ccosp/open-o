@@ -1318,10 +1318,8 @@ public class OLISLabPDFCreator extends PdfPageEventHelper{
     	splitNames = docNames.split(", ");
     	
     	for(String docName : splitNames){
-    		
-    		for(Object chunk : getDoctorNamePhrase(docName).getChunks()){
-    			ccDocNames.add(chunk);
-    		}
+
+			ccDocNames.addAll(getDoctorNamePhrase(docName).getChunks());
     		ccDocNames.add(new Chunk(", ", font));
     	}
     	ccDocNames.remove(ccDocNames.size() - 1);
