@@ -12157,17 +12157,6 @@ CREATE TABLE IF NOT EXISTS `ContactSpecialty` (
   PRIMARY KEY (`id`)
 );
 
-
---
--- Table structure for table 'specialty'
---
-
-CREATE TABLE IF NOT EXISTS specialty (
-  region varchar(5) default '',
-  specialty char(2) default '',
-  specialtydesc varchar(100) default ''
-) ;
-
 CREATE TABLE IF NOT EXISTS `EFormDocs` (
   `id` int(10) NOT NULL auto_increment PRIMARY KEY,
   `fdid` int(10) NOT NULL,

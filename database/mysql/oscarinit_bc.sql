@@ -6167,3 +6167,13 @@ CREATE TABLE IF NOT EXISTS `formBCAR2020Text` (
                                                   `field_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                                                   UNIQUE KEY `form_data` (`form_id`,`page_no`,`field`)
 );
+
+--
+-- Table structure for table 'specialty'
+--
+
+CREATE TABLE IF NOT EXISTS specialty (
+  region varchar(5) default '',
+  specialty char(2) default '',
+  specialtydesc varchar(100) default ''
+) ;
