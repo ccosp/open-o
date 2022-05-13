@@ -788,7 +788,8 @@ CREATE TABLE IF NOT EXISTS drugs (
   protocol varchar(255),
   priorRxProtocol varchar(255),
   pharmacyId int(11),
-  PRIMARY KEY  (drugid)
+  PRIMARY KEY  (drugid),
+  KEY `drugs_demographic_no` (`demographic_no`)
 ) ;
 
 
