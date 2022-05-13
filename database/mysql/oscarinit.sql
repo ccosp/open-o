@@ -9020,7 +9020,7 @@ CREATE TABLE IF NOT EXISTS providerArchive (
   `title` varchar(20),
   `lastUpdateUser` varchar(6),
   `lastUpdateDate` date,
-  `signed_confidentiality` date,
+  `signed_confidentiality` datetime,
   `practitionerNoType` varchar(255)
 );
 
