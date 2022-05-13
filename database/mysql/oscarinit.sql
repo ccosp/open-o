@@ -7052,7 +7052,8 @@ CREATE TABLE IF NOT EXISTS msgDemoMap (
   messageID mediumint(9),
   demographic_no int(10),
   PRIMARY KEY (id),
-  KEY  (messageID, demographic_no)
+  KEY (messageID, demographic_no),
+  KEY `demoMap_messageID_demographic_no` (`messageID`,`demographic_no`)
 ) ;
 
 --
