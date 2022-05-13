@@ -7230,7 +7230,7 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
 
  CREATE TABLE IF NOT EXISTS `property` (
   name varchar(255) NOT NULL default '',
-  value varchar(255) default NULL,
+  value varchar(2000) default NULL,
   id int(10) NOT NULL auto_increment,
   provider_no varchar(6) default '',
   PRIMARY KEY  (`id`)
