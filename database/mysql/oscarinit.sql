@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS allergies (
   providerNo varchar(6),
   atc varchar(55),
   `reaction_type` varchar(20),
+  `nonDrug` tinyint(1) DEFAULT NULL,
   PRIMARY KEY  (allergyid)
 ) ;
 
