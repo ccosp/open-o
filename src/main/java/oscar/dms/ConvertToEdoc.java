@@ -23,14 +23,7 @@
  */
 package oscar.dms;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -51,7 +44,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
+import io.woo.htmltopdf.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.managers.NioFileManager;
@@ -63,6 +57,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.w3c.tidy.Tidy;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 import com.lowagie.text.DocumentException;
@@ -82,9 +77,9 @@ public class ConvertToEdoc {
 
 	private static final Logger logger = MiscUtils.getLogger();
 
-	public static enum DocumentType { eForm, form }
-	private static enum PathAttribute { src, href }
-	private static enum FileType { pdf, css, jpeg, png, gif }
+	public enum DocumentType { eForm, form }
+	private enum PathAttribute { src, href }
+	private enum FileType { pdf, css, jpeg, png, gif }
 
 	public static final String CUSTOM_STYLESHEET_ID = "pdfMediaStylesheet";
 	private static final String DEFAULT_IMAGE_DIRECTORY = String.format( "%1$s", OscarProperties.getInstance().getProperty( "eform_image" ) );
@@ -95,7 +90,7 @@ public class ConvertToEdoc {
 	private static String contextPath;
 	private static String realPath;
 
-	private static NioFileManager nioFileManager = SpringUtils.getBean( NioFileManager.class );
+	private static final NioFileManager nioFileManager = SpringUtils.getBean( NioFileManager.class );
 
 	/**
 	 * Convert EForm to EDoc
@@ -105,7 +100,7 @@ public class ConvertToEdoc {
 	 * temporary path to a file storage path prior to persisting this Object to the 
 	 * database. 
 	 */
-	public synchronized static final EDoc from( EFormData eform ) {
+	public synchronized static EDoc from( EFormData eform ) {
 		
 		String eformString = eform.getFormData();	
 		String demographicNo = eform.getDemographicId() + "";
@@ -158,7 +153,7 @@ public class ConvertToEdoc {
 		}
 	 * 
 	 */
-	public synchronized static final EDoc from( FormTransportContainer formTransportContainer ) {
+	public synchronized static EDoc from( FormTransportContainer formTransportContainer ) {
 	
 		String htmlString = formTransportContainer.getHTML();
 		String demographicNo = formTransportContainer.getDemographicNo();
@@ -197,12 +192,10 @@ public class ConvertToEdoc {
 	 * 
 	 * @return temporary path to the produced PDF.. 
 	 */
-	public synchronized static final Path saveAsTempPDF( EFormData eform ) {
+	public synchronized static Path saveAsTempPDF( EFormData eform ) {
 		String eformString = eform.getFormData();
 		String filename = buildFilename( eform.getFormName(), eform.getDemographicId()+"" );
-		Path filePath = execute( eformString, filename );
-
-		return filePath;
+		return execute( eformString, filename );
 	}
 	
 	/**
@@ -212,12 +205,10 @@ public class ConvertToEdoc {
 	 * 
 	 * @return temporary path to the produced PDF. 
 	 */
-	public synchronized static final Path saveAsTempPDF(FormTransportContainer formTransportContainer) {
+	public synchronized static Path saveAsTempPDF(FormTransportContainer formTransportContainer) {
 		String htmlString = formTransportContainer.getHTML();
 		String filename = buildFilename( formTransportContainer.getFormName(), formTransportContainer.getDemographicNo() );
-		Path filePath = execute( htmlString, filename );
-
-		return filePath;
+		return execute( htmlString, filename );
 	}
 	
 	/**
@@ -225,13 +216,21 @@ public class ConvertToEdoc {
 	 */
 	private static Path execute( final String eformString, final String filename ) {
 
-		String correctedDocument = tidyDocument( eformString );			
-		Document document = buildDocument( correctedDocument );
+		String correctedDocument = tidyDocument( eformString );
 		Path path = null;
-		
+		Document document = buildDocument(correctedDocument);
 		try(ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 			renderPDF( document, os );
 			path = nioFileManager.saveTempFile( filename, os );
+//			// flatten the pdf * doesnt work
+//			PdfReader reader = new PdfReader(path.toString());
+//			try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+//				PdfStamper stamper = new PdfStamper(reader, byteArrayOutputStream);
+//				stamper.setFormFlattening(true);
+//				stamper.close();
+//			} catch (IOException | com.itextpdf.text.DocumentException e) {
+//				throw new RuntimeException(e);
+//			}
 		} catch (DocumentException e1) {
 			logger.error( "Exception parsing file to PDF. File not saved. ", e1 );
 		} catch (IOException e) {
@@ -244,7 +243,7 @@ public class ConvertToEdoc {
 	/**
 	 * creates a filename
 	 */
-	private static final String buildFilename( String filename, String demographicNo ) {
+	private static String buildFilename( String filename, String demographicNo ) {
 		
 		if( filename == null || filename.isEmpty() ) {
 			filename = DEFAULT_FILENAME;
@@ -291,34 +290,44 @@ public class ConvertToEdoc {
 	}
 
 	/**
-	 * Use the Flying Saucer tools to render a PDF from a 
-	 * well formed w3c XHTML document
-	 * @throws DocumentException 
+	 * Use the io.woo.htmltopdf tools for HTML to PDF or
+	 * use the Flying Saucer tools if there is a failure.
+	 * Flying Saucer requires a well formed w3c XHTML document - which is usually
+	 * not the case.
 	 */
-	private static final void renderPDF( final Document document, ByteArrayOutputStream os ) 
-			throws DocumentException {		
-		ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocument( document,null);
-		renderer.layout();
-		renderer.createPDF( os );
+	private static void renderPDF( final Document document, ByteArrayOutputStream os )
+			throws DocumentException, IOException {
+		String documentString = printDocument( document );
+		System.out.println("Document " + documentString);
+		try(InputStream inputStream = HtmlToPdf.create()
+				.object(HtmlToPdfObject.forHtml(documentString)).convert()) {
+			IOUtils.copy(inputStream, os);
+		} catch (IOException e) {
+			ITextRenderer renderer = new ITextRenderer();
+			SharedContext sharedContext = renderer.getSharedContext();
+			sharedContext.setPrint(true);
+			sharedContext.setInteractive(false);
+			sharedContext.setReplacedElementFactory(new ReplacedElementFactoryImpl());
+			sharedContext.getTextRenderer().setSmoothingThreshold(0);
+			renderer.setDocument( document,null);
+			renderer.layout();
+			renderer.createPDF( os, true );
+			logger.error("Document conversion exception thrown, attempting with alternate conversion library.", e);
+		}
 	}
-	
+
 	/**
 	 * Build this HTML document. 
 	 * - adds translated image paths
 	 * - inserts custom stylesheets.
 	 */
-	private static final Document buildDocument( final String documentString ) {
-
+	private static Document buildDocument( final String documentString ) {
 		Document document = getDocument( documentString );
 		if( document != null ) {
 			translateResourcePaths( document );
 			setHeadElement( document );
 			addCss( document );
 		}
-		
-		logger.debug( printDocument( document ) );
-
 		return document;
 	}
 	
@@ -329,27 +338,14 @@ public class ConvertToEdoc {
 
 		DocumentBuilder builder;
 		Document document = null;					
-		ByteArrayInputStream bais = new ByteArrayInputStream( documentString.getBytes() );
 
-		try {
+		try(ByteArrayInputStream bais = new ByteArrayInputStream( documentString.getBytes() )) {
 			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			document = builder.parse(bais);			
-		} catch (SAXException e) {
+		} catch (SAXException | ParserConfigurationException | IOException e) {
 			logger.error( "", e );
-		} catch (IOException e) {
-			logger.error( "", e );
-		} catch (ParserConfigurationException e) {
-			logger.error( "", e );
-		} finally {
-			if( bais != null ) {
-				try {
-					bais.close();
-				} catch (IOException e) {
-					logger.error( "", e );
-				}
-			}
 		}
-		
+
 		return document;
 	}
 	
@@ -473,10 +469,10 @@ public class ConvertToEdoc {
 			
 			Element element = (Element) nodeList.item(i);			
 			String path = element.getAttribute( pathAttribute.name() );
-			String validLink = null;
+			String validLink;
 			String parameters = null;
 			String[] parameterList = null;		
-			List<String> potentialFilePaths = new ArrayList<String>();
+			List<String> potentialFilePaths = new ArrayList<>();
 
 			if( path.contains("?") ) {
 				// image or link paths with parameters
@@ -527,9 +523,8 @@ public class ConvertToEdoc {
 	
 	/**
 	 * Convert a given context path into a file system absolute path.
-	 * @return
 	 */
-	private static final String getRealPath( String uri ) {
+	private static String getRealPath(String uri ) {
 		String contextRealPath = "";
 		
 		logger.debug( "Context path set to " + contextPath );
@@ -556,10 +551,10 @@ public class ConvertToEdoc {
 	/**
 	 * Returns a List of valid file links from a list of potential valid links.
 	 */
-	private static final List<String> validateLinks( List<String> potentialLinks ) {
+	private static List<String> validateLinks( List<String> potentialLinks ) {
 
 		List<String> finalLinks = null;
-		String validLink = null;
+		String validLink;
 		
 		for( String potentialLink : potentialLinks ) {
 			if( potentialLink.isEmpty() ) {
@@ -569,7 +564,7 @@ public class ConvertToEdoc {
 			validLink = validateLink( potentialLink );
 			
 			if( finalLinks == null && validLink != null ) {
-				finalLinks = new ArrayList<String>();
+				finalLinks = new ArrayList<>();
 			}
 
 			if( validLink != null ) {
@@ -583,7 +578,7 @@ public class ConvertToEdoc {
 	/**
 	 * Returns the first valid file link from a list of potential valid links.
 	 */
-	private static final String validateLink( List<String> potentialLinks ) {
+	private static String validateLink( List<String> potentialLinks ) {
 
 		logger.debug( "Validating potential file paths " + potentialLinks );
 		
@@ -599,7 +594,7 @@ public class ConvertToEdoc {
 	/**
 	 * Returns only 1 valid file link.
 	 */
-	private static final String validateLink( String potentialLink ) {
+	private static String validateLink( String potentialLink ) {
 
 		File file = null;
 		String absolutePath = null;
@@ -627,10 +622,10 @@ public class ConvertToEdoc {
 		Tidy tidy = getTidy();
 		StringReader reader = new StringReader( documentString );
 		StringWriter writer = new StringWriter();
-		String correctedDocument = null;
+		String correctedDocument;
 		
 		tidy.parse( reader, writer );
-		correctedDocument = new String( writer.toString() );	
+		correctedDocument = writer.toString();
 
 		writer.flush();
 		
@@ -646,7 +641,7 @@ public class ConvertToEdoc {
 	/**
 	 * Instantiate the Tidy HTML validator
 	 */
-	private static final Tidy getTidy() {
+	private static Tidy getTidy() {
 		Tidy tidy = new Tidy();
 		Properties properties = new Properties();
 		InputStream is = null;
@@ -704,7 +699,7 @@ public class ConvertToEdoc {
 //		return DEFAULT_FILE_PATH;
 //	}
 //	
-	private static final String getImageDirectory() {
+	private static String getImageDirectory() {
 		return DEFAULT_IMAGE_DIRECTORY;
 	}
 	
@@ -712,7 +707,6 @@ public class ConvertToEdoc {
 	 * Prints the document contents to console. Used for debugging.
 	 */
 	private static String printDocument( Document doc ) {
-
 	    TransformerFactory tf = TransformerFactory.newInstance();
 	    StreamResult streamResult = null;
 	    try {
@@ -737,8 +731,9 @@ public class ConvertToEdoc {
 				}
 			}
 		}
-	    
-	    return streamResult.getOutputStream().toString();
+
+		assert streamResult != null;
+		return streamResult.getOutputStream().toString();
 	}
 	
 	public static String printTidyConfig( Tidy tidy ) {
@@ -747,7 +742,7 @@ public class ConvertToEdoc {
 		OutputStreamWriter osw = new OutputStreamWriter( baos );
 		tidy.getConfiguration().printConfigOptions( osw, true );
 		
-		String log = new String( baos.toString() );
+		String log = baos.toString();
 		
 		try {
 			baos.close();
