@@ -399,7 +399,7 @@ public class EctConsultationFormRequestUtil {
 			MiscUtils.getLogger().debug("Does this fax number " + specialistFax + " equal this fax number " + faxRecipient.getFax());
 			
 			// isolate the main specialist fax log
-			if(faxRecipient != null && specialistFax.equals(faxRecipient.getFax())) {
+			if(faxRecipient != null && faxRecipient.getFax().equals(specialistFax)) {
 				setSpecialistFaxLog(faxRecipient);
 			} 
 			
