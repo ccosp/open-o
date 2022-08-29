@@ -395,11 +395,11 @@
 <!--			</exclusions>-->
 <!--		</dependency>-->
 
-		<!-- https://mvnrepository.com/artifact/com.github.UltraBuk/htmltopdf-java -->
+		<!-- https://mvnrepository.com/artifact/com.github.MagentaHealth/htmltopdf-java -->
 		<dependency>
-			<groupId>com.github.UltraBuk</groupId>
+			<groupId>com.github.MagentaHealth</groupId>
 			<artifactId>htmltopdf-java</artifactId>
-			<version>1.0.9.2</version>
+			<version>1.0.9.1</version>
 			<exclusions>
 				<!-- excluded due to known vulnerability: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15250 -->
 				<exclusion>
