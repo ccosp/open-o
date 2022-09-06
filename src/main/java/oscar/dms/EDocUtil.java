@@ -1249,7 +1249,9 @@ public final class EDocUtil {
 				} catch (IOException e) {
 					logger.error("Could not locate PDF file: " + fileName, e);
 				}
-        	}
+        	} else {
+				logger.warn("File " + fileName + " not found for page count.");
+			}
         	return pagecount;
         }
 
