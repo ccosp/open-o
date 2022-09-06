@@ -298,11 +298,10 @@ public class ConvertToEdoc {
 	private static void renderPDF( final Document document, ByteArrayOutputStream os )
 			throws DocumentException, IOException {
 		String documentString = printDocument( document );
-		System.out.println("Document " + documentString);
 		try(InputStream inputStream = HtmlToPdf.create()
 				.object(HtmlToPdfObject.forHtml(documentString)).convert()) {
 			IOUtils.copy(inputStream, os);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			ITextRenderer renderer = new ITextRenderer();
 			SharedContext sharedContext = renderer.getSharedContext();
 			sharedContext.setPrint(true);
