@@ -78,6 +78,7 @@ import ca.uhn.hl7v2.model.v26.message.REF_I12;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
 import oscar.log.LogAction;
+import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -103,6 +104,12 @@ public class ConsultationManager {
 	Hl7TextInfoDao hl7TextInfoDao;
 	@Autowired
 	ClinicDAO clinicDao;
+	@Autowired
+	private ConsultDocsDao consultDocsDao;
+
+	@Autowired
+	private FormsManager formsManager;
+
 	@Autowired
 	DemographicManager demographicManager;
 	@Autowired
@@ -476,5 +483,28 @@ public class ConsultationManager {
 		
 		return results;
 	}
-	
+
+	public List<ConsultDocs> getAttachedDocumentsByType(LoggedInInfo loggedInInfo, Integer consultRequestId, String docType) {
+		return consultDocsDao.findByRequestIdDocType(consultRequestId, docType);
+	}
+
+	public List<EctFormData.PatientForm> getAttachedForms(LoggedInInfo loggedInInfo, int consultRequestId, int demographicNo) {
+		List<ConsultDocs> attachedForms = getAttachedDocumentsByType(loggedInInfo, consultRequestId, ConsultDocs.DOCTYPE_FORM);
+		List<EctFormData.PatientForm> filteredForms = new ArrayList<>(attachedForms.size());
+		/*
+		 * Sure wish we didn't have to do this.  It's the only option without having to refactor a
+		 * whole string of dated code.
+		 */
+		List<EctFormData.PatientForm> allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, demographicNo);
+		for(EctFormData.PatientForm form : allForms) {
+			for(ConsultDocs attached : attachedForms) {
+				if((form.getFormId()).equals((attached.getDocumentNo()+""))) {
+					filteredForms.add(form);
+					break;
+				}
+			}
+		}
+
+		return filteredForms;
+	}
 }

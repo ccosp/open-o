@@ -93,13 +93,36 @@ function toggleSelectAll(element) {
 						 <c:forEach items="${ allLabs }" var="lab">
 		                	<li class="lab">
 		                		<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ lab.discipline }" />
-		                		<label for="docNo${document.docId}"><c:out value="${ lab.discipline } ${ lab.dateObj }" /></label>
+		                		<label for="labNo${lab.segmentID}"><c:out value="${ lab.discipline } ${ lab.dateObj }" /></label>
 		                	</li>
 		                </c:forEach>
 	            	</ul> 
 	            </td>
        		</tr>
        		</c:if>
+
+		<tr>
+			<td><h2>Forms (current only)</h2></td>
+		</tr>
+		<tr>
+			<td>
+				<ul id="formList" style="list-style-type: none;padding:0px;">
+					<li class="selectAllHeading" >
+						<input id="selectAllForms" type="checkbox" onclick="toggleSelectAll(this);" value="form_check" title="Select/un-select all forms."/>
+						<label for="selectAllForms">Select all</label>
+					</li>
+					<c:forEach items="${ allForms }" var="form">
+						<li class="lab">
+							<input class="form_check" type="checkbox" name="formNo" id="formNo${ form.formId }" value="${form.formId}" title="${form.formName}" />
+							<label for="formNo${form.formId}">
+								<c:out value="${ form.formName } ${ form.getEdited() }" />
+							</label>
+						</li>
+					</c:forEach>
+				</ul>
+			</td>
+		</tr>
+
 	</table>
 </form>	
 </body>

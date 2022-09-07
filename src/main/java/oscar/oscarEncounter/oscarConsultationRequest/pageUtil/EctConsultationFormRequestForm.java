@@ -119,6 +119,8 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 	
 	private String[] docNo;
 	private String[] labNo;
+
+	private String[] formNo;
 	
 	public String getProfessionalSpecialistName() {
 		return (StringUtils.trimToEmpty(professionalSpecialistName));
@@ -635,5 +637,16 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 
 	public void setLabNo(String[] labNo) {
 		this.labNo = labNo;
+	}
+
+	public String[] getFormNo() {
+		if(formNo == null) {
+			return new String[]{};
+		}
+		return formNo;
+	}
+
+	public void setFormNo(String[] formNo) {
+		this.formNo = formNo;
 	}
 }

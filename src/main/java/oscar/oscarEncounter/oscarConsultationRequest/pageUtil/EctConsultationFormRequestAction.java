@@ -113,6 +113,7 @@ public class EctConsultationFormRequestAction extends Action {
 		String appointmentPm = frm.getAppointmentPm();
         String[] attachedDocuments = frm.getDocNo();
         String[] attachedLabs = frm.getLabNo();
+		String[] attachedForms = frm.getFormNo();
         List<String> documents = new ArrayList<String>();
 
 		if (appointmentPm.equals("PM") && Integer.parseInt(appointmentHour) < 12 ) {
@@ -265,7 +266,8 @@ public class EctConsultationFormRequestAction extends Action {
                                 consultationAttachDocs.attach(loggedInInfo);
             				  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
             				  	consultationAttachLabs.attach(loggedInInfo);
-  
+								ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
+								consultationAttachForms.attach(loggedInInfo);
 								
 			}
 	        catch (ParseException e) {
@@ -381,6 +383,8 @@ public class EctConsultationFormRequestAction extends Action {
                 consultationAttachDocs.attach(loggedInInfo); 
 			  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
 			  	consultationAttachLabs.attach(loggedInInfo);
+				ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
+				consultationAttachForms.attach(loggedInInfo);
 
 			}
 

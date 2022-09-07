@@ -166,13 +166,9 @@ public class FormsManager {
   			}
   		}
 
-    	if (patientFormList != null && patientFormList.size() > 0) {
-			LogAction.addLogSynchronous(loggedInInfo, "FormsManager.getEncounterFormsbyDemographicNumber", "demo" + demographicId);
-		}
-    	
     	return patientFormList;
 	}
-		
+
 	/**
 	 * Saves a form as PDF EDoc. 
 	 * Returns the id of the converted document. 
