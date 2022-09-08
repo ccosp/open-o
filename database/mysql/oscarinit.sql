@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS allergies (
   TYPECODE tinyint(4) NOT NULL default '0',
   reaction text,
   drugref_id varchar(100) default NULL,
-  archived char(1) default '0',
+  archived tinyint(1) NOT NULL,
   start_date date default NULL,
   age_of_onset char(4) default '0',
   severity_of_reaction char(1) default '0',
