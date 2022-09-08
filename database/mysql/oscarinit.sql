@@ -9688,7 +9688,8 @@ CREATE TABLE IF NOT EXISTS `RemoteIntegratedDataCopy` (
 CREATE TABLE IF NOT EXISTS billing_payment_type (
   id int(11) NOT NULL auto_increment,
   payment_type varchar(25) NOT NULL default '',
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (id),
+  UNIQUE KEY `payment_type` (`payment_type`)
 );
 
 CREATE TABLE IF NOT EXISTS `billing_on_3rdPartyAddress` (
