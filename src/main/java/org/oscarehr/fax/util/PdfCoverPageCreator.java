@@ -112,7 +112,10 @@ public class PdfCoverPageCreator {
 			document.setPageSize( PageSize.LETTER );
 			document.addTitle( "Fax Cover Page" );
 
-			document.addCreator(sender.getLetterheadName());
+			if(sender != null) {
+				document.addCreator(sender.getLetterheadName());
+			}
+
 			document.addAuthor("OSCAR EMR");
 			document.open();
 
@@ -183,6 +186,10 @@ public class PdfCoverPageCreator {
 	private PdfPTable createClinicInfoHeader() {
 
 		PdfPTable infoTable = new PdfPTable(1);
+
+		if(sender == null) {
+			return infoTable;
+		}
 
 		PdfPCell cell = new PdfPCell( new Phrase( sender.getFaxNumberOwner(), LETTERHEAD ) );
 		cell.setBorder(0);

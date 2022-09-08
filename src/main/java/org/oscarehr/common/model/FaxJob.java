@@ -23,6 +23,9 @@
  */
 package org.oscarehr.common.model;
 
+import org.oscarehr.fax.core.FaxAccount;
+import org.oscarehr.fax.core.FaxRecipient;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -67,6 +70,7 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
 		this.direction = faxJob.getDirection();
 		this.demographicNo = faxJob.getDemographicNo();
 		this.oscarUser = faxJob.getOscarUser();
+        this.faxAccount = faxJob.getFaxAccount();
 	}
 
     @Id
@@ -112,7 +116,10 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
     
     @Transient
     private Direction direction;
-    
+
+    @Transient
+    private FaxAccount faxAccount;
+
     /**
      * @return the id
      */
@@ -325,5 +332,19 @@ public class FaxJob extends AbstractModel<Integer> implements Comparable<FaxJob>
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
+
+    @Transient
+    public FaxRecipient getFaxRecipient() {
+        return new FaxRecipient(this.getRecipient(), this.getDestination());
+    }
+
+
+    public FaxAccount getFaxAccount() {
+        return this.faxAccount;
+    }
+
+    public void setFaxAccount(FaxAccount faxAccount) {
+        this.faxAccount = faxAccount;
+    }
 
 }
