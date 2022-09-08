@@ -457,7 +457,11 @@ var beginD = "1900-01-01"
         var url = "<c:out value="${ctx}"/>/saveWorkView.do";
         var role = "<%=(String)session.getAttribute("userrole")%>";
         var provider_no = "<%=(String) session.getAttribute("user")%>";
-        var params = "method=save&view_name=tickler&userrole=" + role + "&providerno=" + provider_no + "&name=ticklerview&value=" + $F("ticklerview") + "&name=dateBegin&value=" + $F("xml_vdate") + "&name=dateEnd&value=" + $F("xml_appointment_date") + "&name=providerview&value=" + encodeURI($F("providerview")) + "&name=assignedTo&value=" + encodeURI($F("assignedTo"))  + "&name=mrpview&value=" + encodeURI($F("mrpview"));
+        var params = "method=save&view_name=tickler&userrole=" + role + "&providerno=" + provider_no +
+            "&name=ticklerview&value=" + $F("ticklerview") +
+            // "&name=dateBegin&value=" + $F("xml_vdate") + "&name=dateEnd&value=" + $F("xml_appointment_date") +
+            "&name=providerview&value=" + encodeURI($F("providerview")) +
+            "&name=assignedTo&value=" + encodeURI($F("assignedTo"))  + "&name=mrpview&value=" + encodeURI($F("mrpview"));
         var sortables = document.getElementsByClassName('tableSortArrow');
 
         var attrib = null;
@@ -552,13 +556,17 @@ var beginD = "1900-01-01"
 	SPAN.bold             {font-weight: bold  ;                                                                                            background-color: #666699   ;}
 	.sbttn {background: #EEEEFF;border-bottom: 1px solid #104A7B;border-right: 1px solid #104A7B;border-left: 1px solid #AFC4D5;border-top:1px solid #AFC4D5;color:#000066;height:19px;text-decoration:none;cursor: hand}
 .mbttn {background: #D7DBF2;border-bottom: 1px solid #104A7B;border-right: 1px solid #104A7B;border-left: 1px solid #AFC4D5;border-top:1px solid #AFC4D5;color:#000066;height:19px;text-decoration:none;cursor: hand}
+.container {
+    margin:auto 10px;
 
+}
 	-->
 </style>
 </head>
 
 <oscar:customInterface section="ticklerMain"/>
 <body bgcolor="#FFFFFF" text="#000000" leftmargin="0" rightmargin="0" topmargin="10">
+<div class="container">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr bgcolor="#FFFFFF">
     <td height="10" width="70%"> </td>
@@ -1013,7 +1021,7 @@ function changeSite(sel) {
                         
 <p><font face="Arial, Helvetica, sans-serif" size="2"> </font></p>
   <p></p>
-<%@ include file="../demographic/zfooterbackclose.jsp" %>
+<%--<%@ include file="../demographic/zfooterbackclose.jsp" %>--%>
   
   
 <p class="yesprint">
@@ -1056,6 +1064,6 @@ function changeSite(sel) {
 	</form>	
 </div>
 
-
+</div>
 </body>
 </html:html>
