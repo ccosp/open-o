@@ -362,7 +362,7 @@ CREATE TABLE consultationRequestsArchive (
   followUpDate date default NULL,
   site_name varchar(255),
   signature_img VARCHAR(20),
-  letterheadName VARCHAR(20),
+  letterheadName VARCHAR(255),
   letterheadAddress TEXT,
   letterheadPhone VARCHAR(50),
   letterheadFax VARCHAR(50),
