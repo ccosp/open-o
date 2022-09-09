@@ -12339,13 +12339,13 @@ CREATE TABLE IF NOT EXISTS `consentType` (
 
 
 
-CREATE TABLE IF NOT EXISTS billingperclimit (
-  service_code varchar(10) NOT NULL ,
-  min varchar(8),
-  max varchar(8),
-  effective_date date,
-  id int auto_increment,
-  PRIMARY KEY  (id)
+CREATE TABLE IF NOT EXISTS `billingperclimit` (
+  `service_code` varchar(10) NOT NULL,
+  `min` varchar(8) DEFAULT '0',
+  `max` varchar(8) DEFAULT '0',
+  `effective_date` date DEFAULT '1970-01-01',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS resident_oscarMsg (
