@@ -732,7 +732,7 @@ CREATE TABLE IF NOT EXISTS document (
   number_of_pages int(6),
   appointment_no int(11) default NULL,
   restrictToProgram tinyint(1) NOT NULL,
-  abnormal int(1),
+  abnormal int(1) NOT NULL DEFAULT 0,
   receivedDate date,
   `report_media` int(11) DEFAULT NULL,
   `sent_date_time` datetime DEFAULT NULL,
