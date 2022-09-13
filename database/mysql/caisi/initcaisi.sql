@@ -2084,7 +2084,7 @@ result varchar(255),
 transactionId varchar(100),
 resultMessage text,
 submissionData longtext,
-submissionType varchar(30),
+submissionType varchar(30) NOT NULL,
 KEY `submitDateIndex` (`submitDateTime`),
 KEY `submissionTypeIndex` (`submissionType`)
 );
