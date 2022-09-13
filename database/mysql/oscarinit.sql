@@ -7085,8 +7085,8 @@ CREATE TABLE IF NOT EXISTS messagetbl (
 
 CREATE TABLE IF NOT EXISTS msgDemoMap (
   id int(11) auto_increment,
-  messageID mediumint(9),
-  demographic_no int(10),
+  messageID mediumint(9) NOT NULL DEFAULT 0,
+  demographic_no int(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   KEY (messageID, demographic_no),
   KEY `demoMap_messageID_demographic_no` (`messageID`,`demographic_no`)
