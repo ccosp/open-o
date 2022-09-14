@@ -41,6 +41,11 @@ if [ $LOCATION = 'bc' ]; then
 
   echo 'loading bc_pharmacies.sql...'
   $mysql_cmd < bc_pharmacies.sql
+else
+  echo 'loading olisinit.sql...'
+  cd olis
+  $mysql_cmd < olisinit.sql
+  cd ..
 fi
 
 echo "loading icd$ICD.sql..."
