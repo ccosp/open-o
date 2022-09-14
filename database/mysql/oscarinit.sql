@@ -9841,7 +9841,7 @@ CREATE TABLE IF NOT EXISTS `provider_facility` (
 	unique (provider_no, facility_id),
 	index (facility_id),
 	foreign key (provider_no) references provider(provider_no),
-	foreign key (facility_id) references facility(id)
+	foreign key (facility_id) references Facility(id)
 );
 
 CREATE TABLE IF NOT EXISTS `vacancy_template` (
