@@ -235,15 +235,23 @@
 	}
 	
 	function moveSubjectReverse() {
-		var subjectElement = document.forms[0].elements["subject"];
-		var subjectElementValue;
-		
+		let subjectElement = document.forms[0].elements["subject"];
+		let subjectElementValue;
+
 		if(subjectElement)
 		{
 			subjectElementValue = subjectElement.value;
 		}
-		
-		var localSubject = document.getElementById("remote_eform_subject");
+		else // create the subject element for later
+		{
+			subjectElement = document.createElement("input");
+			subjectElement.id = "subject";
+			subjectElement.name = "subject";
+			subjectElement.type = "hidden";
+			document.forms[0].appendChild(subjectElement);
+		}
+
+		let localSubject = document.getElementById("remote_eform_subject");
 		if(localSubject )
 		{
 			localSubject.value = subjectElementValue;
@@ -380,8 +388,8 @@
 		/*
 		 * Get the total height of the current eform
 		 */
-		var body = document.body;
-	    html = document.documentElement;
+		let body = document.body;
+	    let html = document.documentElement;
 		var documentheight = Math.max( body.scrollHeight, body.offsetHeight, 
 		                       html.clientHeight, html.scrollHeight, html.offsetHeight );
 		
