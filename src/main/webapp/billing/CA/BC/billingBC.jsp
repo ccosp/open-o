@@ -896,11 +896,11 @@ jQuery(document).ready(function(jQuery){
 			  * Referral provider codes must be numeric
 			  */
 			 xml_refer1: {
-				 number: true
+				 alphanumeric: true
 			 },
-			 
+
 			 xml_refer2: {
-				 number: true
+                 alphanumeric: true
 			 },
 			 
 			 /*
