@@ -143,7 +143,7 @@ if(!authed) {
   String mRecRefDoctorNum = "";
 
   if(! "".equals(demo.getFamilyDoctorNumber())){
-   mRecRefDoctor = demo.getFamilyDoctorLastName() + ", " + demo.getFamilyDoctorFirstName();
+   mRecRefDoctor = demo.getFamilyDoctorName();
    mRecRefDoctorNum = demo.getFamilyDoctorNumber();
   }else{
    mRecRefDoctor = "none";
