@@ -38,10 +38,7 @@ package oscar.oscarLab.ca.all.parsers;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -239,6 +236,14 @@ public class PATHL7Handler implements MessageHandler {
     public String getOBRName(int i){
         try{
             return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getUniversalServiceIdentifier().getText().getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
+    public String getOBRIdentifier(int i) {
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getUniversalServiceIdentifier().getCe1_Identifier().getValue()));
         }catch(Exception e){
             return("");
         }
@@ -442,6 +447,15 @@ public class PATHL7Handler implements MessageHandler {
         		return getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getUniversalServiceIdentifier().getText().getValue());
         	}
             return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getText().getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
+    @Override
+    public String getOBXNameLong(int i, int j) {
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getComponent(2).toString()));
         }catch(Exception e){
             return("");
         }
@@ -653,6 +667,28 @@ public class PATHL7Handler implements MessageHandler {
             return(null);
         }
 
+    }
+
+    /**
+     * Get the OBR universal service identifier(s) as the label for this lab.
+     */
+    public String getLabel() {
+        Set<String> labels = new HashSet<>();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i=0; i < msg.getRESPONSE().getORDER_OBSERVATIONReps(); i++){
+            String usi = getOBXName(i, 0);
+            labels.add(usi);
+        }
+
+        String comma = "";
+        for(String label : labels) {
+            stringBuilder.append(comma);
+            comma =", ";
+            stringBuilder.append(label);
+        }
+
+        return stringBuilder.toString();
     }
 
     public String audit(){

@@ -37,7 +37,7 @@
 <%@ page import="org.w3c.dom.Document"%>
 <%@ page import="org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult"%>
 <%@ page import="oscar.oscarLab.ca.all.web.LabDisplayHelper"%>
-<%@ page errorPage="../../../provider/errorpage.jsp" %>
+
 <%@ page import="java.util.*,
 		 java.sql.*,
 		 oscar.oscarDB.*, oscar.oscarLab.FileUploadCheck, oscar.util.UtilDateUtilities,
@@ -60,6 +60,7 @@
 <jsp:useBean id="oscarVariables" class="java.util.Properties" scope="session" />
 <%@	page import="javax.swing.text.rtf.RTFEditorKit"%>
 <%@	page import="java.io.ByteArrayInputStream"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -1134,11 +1135,11 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
 							   	<tr>
 							   	<td><b>Priority:</b> <%=flag%> <%=tickler.getPriority()%></td>
 							   	<td><b>Service Date:</b> <%=tickler.getServiceDate()%></td>   	
-							   	<td><b>Assigned To:</b> <%=tickler.getAssignee() != null ? tickler.getAssignee().getLastName() + ", " + tickler.getAssignee().getFirstName() : "N/A"%></td>
+							   	<td><b>Assigned To:</b> <%=tickler.getAssignee() != null ? Encode.forHtml(tickler.getAssignee().getLastName() + ", " + tickler.getAssignee().getFirstName()) : "N/A"%></td>
 							   	<td width="90px"><b>Status:</b> <%=ticklerStatus.equals("C") ? "Completed" : "Active" %></td> 
 							   	</tr>
 							   	<tr>
-							   	<td colspan="4"><%=tickler.getMessage()%></td>
+							   	<td colspan="4"><%=Encode.forHtml(tickler.getMessage())%></td>
 							   	</tr>
 							   	</table>
 							   </div>	
@@ -1176,7 +1177,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                                                 <!--center-->
                                                                     <% for (int i=0; i < ackList.size(); i++) {
                                                                         report = ackList.get(i); %>
-                                                                        <%= report.getProviderName() %> :
+                                                                        <%= Encode.forHtml(report.getProviderName()) %> :
 
                                                                         <% String ackStatus = report.getStatus();
                                                                             if(ackStatus.equals("A")){
@@ -1381,6 +1382,10 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                for (k=0; k < obxCount; k++){
 
                                	String obxName = handler.getOBXName(j, k);
+                               	String nameLong = handler.getOBXNameLong(j ,k);
+                               	if (StringUtils.isNotEmpty(nameLong)) {
+                               	    nameLong = ": " + nameLong;
+                                }
 
 								boolean isAllowedDuplicate = false;
 								if(handler.getMsgType().equals("PATHL7")){

@@ -106,6 +106,8 @@ public abstract class ChainnedMessageAdapter<T extends AbstractMessage> implemen
 		return (null);
 	}
 
+	public String getOBRIdentifier(int i) {return (null); }
+
 	public String getTimeStamp(int i, int j) {
 		return (null);
 	}
@@ -131,6 +133,11 @@ public abstract class ChainnedMessageAdapter<T extends AbstractMessage> implemen
 	}
 
 	public String getOBXName(int i, int j) {
+		return (null);
+	}
+
+	@Override
+	public String getOBXNameLong(int i, int j) {
 		return (null);
 	}
 

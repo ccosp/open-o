@@ -116,6 +116,14 @@ public class CMLHandler implements MessageHandler {
         }
     }
 
+    public String getOBRIdentifier(int i){
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getUniversalServiceIdentifier().getCe1_Identifier().getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
     public String getTimeStamp(int i, int j){
         try{
             return(formatDateTime(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getObservationDateTime().getTimeOfAnEvent().getValue())));
@@ -179,6 +187,14 @@ public class CMLHandler implements MessageHandler {
     public String getOBXName(int i, int j){
         try{
             return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getText().getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
+    public String getOBXNameLong(int i, int j){
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getComponent(2).toString()));
         }catch(Exception e){
             return("");
         }
