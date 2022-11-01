@@ -121,12 +121,26 @@ public final class MessageUploader {
 		String sendingFacility = h.getPatientLocation();
 		ArrayList<String> docNums = h.getDocNums();
 		int finalResultCount = h.getOBXFinalResultCount();
-		String obrDate = h.getMsgDate();
+
+
+		/*
+		 * start with OBR date because the date in the MSH segment may not be related to
+		 * when the actual lab result was observed.
+		 * Sometimes the "message date" is altered in data transfers or HL7 re-issues.
+		 */
+		String obrDate = h.getServiceDate();
+		if(obrDate == null || obrDate.isEmpty()) {
+			obrDate = h.getMsgDate();
+		}
+
+		/*
+		 * Temporary test for Excelleris labs.  This method should be added to the
+		 * interface if useful with other HL7 labs.
+		 */
 		String label = "";
 		if(h instanceof PATHL7Handler){
 			label = ((PATHL7Handler) h).getLabel();
 		}
-
 
 		if(h instanceof HHSEmrDownloadHandler) {
 			try{

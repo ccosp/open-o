@@ -294,6 +294,14 @@ public class PATHL7Handler implements MessageHandler {
         }
     }
 
+    public String getObservationDate(int i) {
+        try{
+            return formatDateTime( getString( msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getObservationDateTime().getTimeOfAnEvent().getValue() ) ) ;
+        }catch(Exception e){
+            return("");
+        }
+    }
+
     public String getOrderStatus(){
         try{
             String orderStatus = getString(msg.getRESPONSE().getORDER_OBSERVATION(0).getOBR().getResultStatus().getValue());
