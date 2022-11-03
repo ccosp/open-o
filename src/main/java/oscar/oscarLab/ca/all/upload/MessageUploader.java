@@ -219,7 +219,7 @@ public final class MessageUploader {
 			}
 		}
 
-		boolean isTDIS = type.equals("TDIS");
+		boolean isTDIS = "TDIS".equals(type);
 		boolean hasBeenUpdated = false;
 		Hl7TextMessage hl7TextMessage = new Hl7TextMessage();
 		Hl7TextInfo hl7TextInfo = new Hl7TextInfo();
