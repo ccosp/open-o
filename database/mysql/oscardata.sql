@@ -1618,6 +1618,8 @@ insert into `secObjectName` (`objectName`) values ('_admin.demographic');
 insert into `secObjectName` (`objectName`)  values ('_admin.hrm');
 insert into `secObjectName` (`objectName`)  values ('_hrm.administrator');
 
+insert into `secObjectName` (`objectName`) values ('_newCasemgmt.eaaps');
+
 insert into `secObjPrivilege` values('receptionist', '_appointment', 'x', 0, '999998');
 insert into `secObjPrivilege` values('receptionist', '_demographic', 'x', 0, '999998');
 insert into `secObjPrivilege` values('receptionist', '_billing', 'x', 0, '999998');
@@ -1733,6 +1735,7 @@ insert into `secObjPrivilege` values('doctor','_eyeform','x',0,'999998');
 insert into `secObjPrivilege` values('doctor','_phr','o',0,'999998');
 insert into `secObjPrivilege` values('doctor','_admin.document','x',0,'999998');
 
+insert into `secObjPrivilege` values('doctor','_newCasemgmt.eaaps','x',0,'999998');
 
 insert into `secObjPrivilege` values('admin', '_admin', 'x', 0, '999998');
 insert into `secObjPrivilege` values('admin','_masterLink','x',0,999998);
