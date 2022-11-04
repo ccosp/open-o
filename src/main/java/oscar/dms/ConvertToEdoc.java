@@ -26,6 +26,7 @@ package oscar.dms;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -517,7 +518,8 @@ public class ConvertToEdoc {
 	 * Feed this method a filename and it will return a full path to the Oscar images directory. 
 	 */
 	private static String buildImageDirectoryPath( String filename ) {
-		return String.format( "%1$s%2$s%3$s", getImageDirectory(), File.separator, filename );
+		return Paths.get(getImageDirectory(), filename).toString();
+		// return String.format( "%1$s%2$s%3$s", getImageDirectory(), File.separator, filename );
 	}
 	
 	/**
