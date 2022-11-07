@@ -214,7 +214,7 @@ public class FaxAction extends DispatchAction {
 		
 		if(pdfPath != null)
 		{
-			List<Path> documents = new ArrayList<Path>();
+			List<Path> documents = new ArrayList<>();
 			documents.add(pdfPath);
 			request.setAttribute("accounts", accounts);
 			request.setAttribute("demographicNo", demographicNo);

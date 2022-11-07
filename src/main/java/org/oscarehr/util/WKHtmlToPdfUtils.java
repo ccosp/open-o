@@ -36,6 +36,7 @@ import org.apache.logging.log4j.Logger;
 
 import oscar.OscarProperties;
 
+@Deprecated
 public class WKHtmlToPdfUtils {
 	private static final Logger logger = MiscUtils.getLogger();
 	private static final int PROCESS_COMPLETION_CYCLE_CHECK_PERIOD = 250;

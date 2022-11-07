@@ -68,6 +68,12 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
+		<!-- for the com.github.UltraBuk dependency only. Upgrades
+		from this dependency are welcome -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -88,7 +94,7 @@
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
-			<version>2.1.7.js8</version>
+			<version>4.2.2</version>
 		</dependency>
 
 
@@ -382,6 +388,33 @@
                         <version>5.5.13.1</version>
                 </dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>io.woo</groupId>-->
+<!--			<artifactId>htmltopdf</artifactId>-->
+<!--			<version>1.0.8</version>-->
+<!--			<scope>compile</scope>-->
+<!--			<exclusions>-->
+<!--				&lt;!&ndash; excluded due to known vulnerability: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15250 &ndash;&gt;-->
+<!--				<exclusion>-->
+<!--					<groupId>junit</groupId>-->
+<!--					<artifactId>junit</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/com.github.MagentaHealth/htmltopdf-java -->
+		<dependency>
+			<groupId>com.github.MagentaHealth</groupId>
+			<artifactId>htmltopdf-java</artifactId>
+			<version>1.0.9.1</version>
+			<exclusions>
+				<!-- excluded due to known vulnerability: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15250 -->
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 		<!-- rtf / lowagie -->
 		<dependency>
@@ -612,7 +645,7 @@
 		<dependency>
 			<groupId>cds</groupId>
 			<artifactId>cds_hrm</artifactId>
-			<version>1.1.2</version>
+			<version>4.3.1</version>
 		</dependency>
 
 		<!-- HRM module -->
@@ -1193,7 +1226,13 @@
 	<dependency>
 		<groupId>org.xhtmlrenderer</groupId>
 		<artifactId>flying-saucer-pdf</artifactId>
-		<version>9.1.1</version>
+		<version>9.1.22</version>
+		<exclusions>
+			<exclusion>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bctsp-jdk14</artifactId>
+			</exclusion>
+		</exclusions>
 	</dependency>
 	
 
@@ -1227,13 +1266,13 @@
 	<dependency>
 	    <groupId>org.xhtmlrenderer</groupId>
 	    <artifactId>flying-saucer-core</artifactId>
-	    <version>9.1.20</version>
+	    <version>9.1.22</version>
 	</dependency>
 	
 	<dependency>
 	    <groupId>org.xhtmlrenderer</groupId>
 	    <artifactId>flying-saucer-pdf-openpdf</artifactId>
-	    <version>9.1.20</version>
+	    <version>9.1.22</version>
 	</dependency>
 
 	<!-- Caisi Integrator -->

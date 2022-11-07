@@ -34,9 +34,11 @@ import java.util.*;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.DynaActionForm;
+import org.oscarehr.common.dao.ClinicDAO;
 import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
+import org.oscarehr.common.model.Clinic;
 import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
@@ -74,11 +76,14 @@ public class FaxManager {
 	
 	@Autowired
 	private NioFileManager nioFileManager;
+
+	@Autowired
+	private ClinicDAO clinicDAO;
 	
 	private Logger logger = MiscUtils.getLogger();
 	
 	public enum TransactionType {CONSULTATION, EFORM, FORM, RX, DOCUMENT}
-	
+
 	/**
 	 * Render a fax document from the given parameters.
 	 * Return a path to the fax document so it can be reviewed by the sender.
@@ -195,9 +200,10 @@ public class FaxManager {
 	 */
 	public List<FaxJob> createAndSaveFaxJob(LoggedInInfo loggedInInfo, Map<String, Object> faxJobMap) {
 		
-		FaxJob faxJob = createFaxJob(loggedInInfo, faxJobMap);	
-		List<FaxJob> faxJobList	= new ArrayList<FaxJob>();
-		
+		FaxJob faxJob 				= createFaxJob(loggedInInfo, faxJobMap);
+		List<FaxJob> faxJobList		= new ArrayList<FaxJob>();
+		boolean isCoverpage 		= Boolean.parseBoolean((String) faxJobMap.get("coverpage"));
+
 		/*
 		 * add the first job that contains the original recipient.
 		 */
@@ -212,6 +218,30 @@ public class FaxManager {
 		{
 			List<FaxJob> faxJobRecipients = addRecipients(loggedInInfo, faxJob, copytoRecipients);
 			faxJobList.addAll(faxJobRecipients);
+		}
+
+		/*
+		 * Create a cover page for each of the fax jobs if requested by the user.
+		 */
+		if(isCoverpage)
+		{
+			String comments = (String) faxJobMap.get("comments");
+
+			for(FaxJob faxJobObject : faxJobList) {
+				Path faxDocument = Paths.get(faxJobObject.getFile_name());
+				try {
+					faxDocument = addCoverPage(loggedInInfo, comments, faxJobObject.getFaxRecipient(), faxJobObject.getFaxAccount(), faxDocument);
+					faxJob.setNumPages(faxJobObject.getNumPages() + 1);
+				} catch (IOException e) {
+					logger.error("failed to add cover page ", e);
+					faxJobObject.setStatus(STATUS.ERROR);
+				} finally {
+					/*
+					 * set the final document retrieval path.
+					 */
+					faxJobObject.setFile_name(faxDocument.toString());
+				}
+			}
 		}
 
 		return saveFaxJob(loggedInInfo, faxJobList);
@@ -246,8 +276,6 @@ public class FaxManager {
 		String faxFilePath 			= (String) faxJobMap.get("faxFilePath");
 		String recipient 			= (String) faxJobMap.get("recipient");
 		String recipientFaxNumber 	= (String) faxJobMap.get("recipientFaxNumber");
-		String comments 			= (String) faxJobMap.get("comments");
-		String isCoverpage 			= (String) faxJobMap.get("isCoverpage");
 		String senderFaxNumber 		= (String) faxJobMap.get("senderFaxNumber");
 		Integer demographicNo		= (Integer) faxJobMap.get("demographicNo");
 		recipientFaxNumber			= recipientFaxNumber.replaceAll("\\D", "");
@@ -255,17 +283,17 @@ public class FaxManager {
 		
 //		String isOverrideFaxNumber	= faxActionForm.getString("isOverrideFaxNumber");
 //		String overrideFaxNumber	= faxActionForm.getString("overrideFaxNumber");
-
 	    FaxJob faxJob 				= new FaxJob();   
 		Path faxDocument 			= Paths.get(faxFilePath);
+
+		//TODO Possible that this could be multiple accounts using the same return fax line.
 		FaxConfig faxConfig 		= faxConfigDao.getActiveConfigByNumber(senderFaxNumber);
-		
 		/*
 		 * Build the foundation of a faxJob
-		 */		
-		faxJob.setFile_name(faxFilePath);
-		faxJob.setNumPages(EDocUtil.getPDFPageCount(faxFilePath));	
-		faxJob.setFax_line(senderFaxNumber);
+		 */
+		faxJob.setFile_name(faxDocument.toString());
+		faxJob.setNumPages(EDocUtil.getPDFPageCount(faxDocument.toString()));
+		faxJob.setFax_line(faxConfig.getFaxNumber());
 		faxJob.setStamp(new Date());
 		faxJob.setOscarUser(loggedInInfo.getLoggedInProviderNo());
 		faxJob.setDemographicNo(demographicNo);
@@ -281,10 +309,22 @@ public class FaxManager {
 		{
 			logger.error("Fax account " + faxJob.getFax_line() + " is not found, invalid, or inactive");
 			faxJob.setStatus(STATUS.ERROR);
+			faxJob.setStatusString("Fax account " + faxJob.getFax_line() + " is not found, invalid, or inactive");
 			return faxJob;
 		}
 		
 	    faxJob.setUser(faxConfig.getFaxUser());
+		/*
+		 * Create the sender profile
+		 * This is set with the clinic address by default.
+		 */
+		//TODO override with specific sender information.
+		FaxAccount faxAccount = new FaxAccount(faxConfig);
+		Clinic clinic = clinicDAO.getClinic();
+		faxAccount.setSubText(clinic.getClinicName());
+		faxAccount.setAddress(clinic.getClinicAddress());
+		faxAccount.setFacilityName(clinic.getClinicName());
+		faxJob.setFaxAccount(faxAccount);
 		
 		/*
 		 * No document - No Fax. Return an error. 
@@ -292,23 +332,10 @@ public class FaxManager {
 		if(! Files.exists(faxDocument))
 		{
 			faxJob.setStatus(STATUS.ERROR);
+			faxJob.setStatusString("File missing on local storage.");
 			return faxJob;
 		}
-			
-		/*
-		 * Add a cover page if the user checked "yes" 
-		 */
-		if("true".equalsIgnoreCase(isCoverpage))
-		{
-			try {
-				faxDocument = addCoverPage(loggedInInfo, comments, faxDocument);
-			} catch (IOException e) {
-				logger.error("failed to add cover page ", e);
-				faxJob.setStatus(STATUS.ERROR);
-				return faxJob;
-			}
-		}
-		
+
 		return faxJob;
 
 	}
@@ -457,7 +484,7 @@ public class FaxManager {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.WRITE, null)) {
 			throw new RuntimeException("missing required security object (_fax)");
 		}
-		int numberpages = EDocUtil.getPDFPageCount(currentDocument.getFileName().toString());
+		int numberpages = EDocUtil.getPDFPageCount(currentDocument.toString());
 		byte[] coverPage = faxDocumentManager.createCoverPage(loggedInInfo, note, recipient, sender, numberpages);
 		return addCoverPage(coverPage, currentDocument);
 	}

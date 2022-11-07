@@ -618,12 +618,10 @@
 			<form-property name="recipientFaxNumber" type="java.lang.String" />
 			<form-property name="comments" type="java.lang.String" />
 			<form-property name="demographicNo" type="java.lang.Integer" />
-			<form-property name="isCoverpage" type="java.lang.String" />
+			<form-property name="coverpage" type="java.lang.String" />
 			<form-property name="senderFaxNumber" type="java.lang.String" />			
 			<form-property name="transactionId" type="java.lang.Integer" />
 			<form-property name="transactionType" type="java.lang.String" />
-			<form-property name="isOverrideFaxNumber" type="java.lang.String" />
-			<form-property name="overrideFaxNumber" type="java.lang.String" />			
  			<form-property name="documents" type="java.lang.String[]" />			
 			<form-property name="copyToRecipients" type="java.lang.String[]" />
 		</form-bean>
