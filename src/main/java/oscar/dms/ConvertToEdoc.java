@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -299,8 +300,14 @@ public class ConvertToEdoc {
 	private static void renderPDF( final Document document, ByteArrayOutputStream os )
 			throws DocumentException, IOException {
 		String documentString = printDocument( document );
+
+    HashMap<String, String> htmlToPdfSettings = new HashMap<String, String>() {{
+			put("load.blockLocalFileAccess", "false");
+		}};
+
 		try(InputStream inputStream = HtmlToPdf.create()
-				.object(HtmlToPdfObject.forHtml(documentString)).convert()) {
+				.object(HtmlToPdfObject.forHtml(documentString, htmlToPdfSettings)).convert()) {
+
 			IOUtils.copy(inputStream, os);
 		} catch (Exception e) {
 			ITextRenderer renderer = new ITextRenderer();
