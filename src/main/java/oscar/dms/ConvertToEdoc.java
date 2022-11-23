@@ -224,15 +224,6 @@ public class ConvertToEdoc {
 		try(ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 			renderPDF( document, os );
 			path = nioFileManager.saveTempFile( filename, os );
-//			// flatten the pdf * doesnt work
-//			PdfReader reader = new PdfReader(path.toString());
-//			try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-//				PdfStamper stamper = new PdfStamper(reader, byteArrayOutputStream);
-//				stamper.setFormFlattening(true);
-//				stamper.close();
-//			} catch (IOException | com.itextpdf.text.DocumentException e) {
-//				throw new RuntimeException(e);
-//			}
 		} catch (DocumentException e1) {
 			logger.error( "Exception parsing file to PDF. File not saved. ", e1 );
 		} catch (IOException e) {
@@ -526,7 +517,6 @@ public class ConvertToEdoc {
 	 */
 	private static String buildImageDirectoryPath( String filename ) {
 		return Paths.get(getImageDirectory(), filename).toString();
-		// return String.format( "%1$s%2$s%3$s", getImageDirectory(), File.separator, filename );
 	}
 	
 	/**
@@ -538,20 +528,11 @@ public class ConvertToEdoc {
 		logger.debug( "Context path set to " + contextPath );
 		
 		if( ConvertToEdoc.contextPath != null && ConvertToEdoc.realPath != null ) {
-			
 			logger.debug( "Relative file path " + uri );
-
-			String filePath = uri.substring( contextPath.length(), uri.length() );
-			filePath = filePath.replaceFirst( File.separator , "" );
-			contextRealPath = ConvertToEdoc.realPath;
-			if( ! contextRealPath.endsWith( File.separator )) {
-				contextRealPath = contextRealPath + File.separator;
-			}
-			contextRealPath = String.format( "%1$s%2$s", contextRealPath, filePath );
-
-			logger.debug( "Absolute file path " + contextRealPath );
-	
+			contextRealPath = Paths.get(ConvertToEdoc.realPath, ConvertToEdoc.realPath).toAbsolutePath().toString();
 		}
+
+		logger.debug( "Absolute file path " + contextRealPath );
 
 		return contextRealPath;
 	}
