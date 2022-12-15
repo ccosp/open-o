@@ -28,13 +28,6 @@
 if(!authed) {
 	return;
 }
-
-//HRMDocument hrmDocument = (HRMDocument) request.getAttribute("hrmDocument");
-//
-//Integer hrmReportId = (Integer) request.getAttribute("hrmReportId");
-//if(hrmReportId == null){
-//	hrmReportId = Integer.parseInt(request.getParameter("segmentID"));
-//}
 Logger logger= MiscUtils.getLogger();
 HRMDocumentDao hrmDocumentDao = (HRMDocumentDao) SpringUtils.getBean("HRMDocumentDao");
 HRMDocumentToDemographicDao hrmDocumentToDemographicDao = (HRMDocumentToDemographicDao) SpringUtils.getBean("HRMDocumentToDemographicDao");
@@ -198,26 +191,27 @@ String csrfTokenJs = "{'" + CsrfGuard.getInstance().getTokenName() + "': '" + Cs
 <head>
 <title>HRM Report</title>
 	<script src="${pageContext.request.contextPath}/csrfguard"></script>
-<script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="../js/jquery-ui-1.8.18.custom.min.js"></script>
-<script language="javascript" type="text/javascript" src="../share/javascript/Oscar.js" ></script>
-<script type="text/javascript" src="../share/javascript/prototype.js"></script>
-<script type="text/javascript" src="../share/javascript/effects.js"></script>
-<script type="text/javascript" src="../share/javascript/controls.js"></script>
 
-<script type="text/javascript" src="../share/yui/js/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="../share/yui/js/connection-min.js"></script>
-<script type="text/javascript" src="../share/yui/js/animation-min.js"></script>
-<script type="text/javascript" src="../share/yui/js/datasource-min.js"></script>
-<script type="text/javascript" src="../share/yui/js/autocomplete-min.js"></script>
-<script type="text/javascript" src="../js/demographicProviderAutocomplete.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>
+<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/Oscar.js" ></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/prototype.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/effects.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/javascript/controls.js"></script>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/connection-min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/animation-min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/datasource-min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/share/yui/js/autocomplete-min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/demographicProviderAutocomplete.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/hospitalReportManager/hrmActions.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/global.js"></script>
 
-<link rel="stylesheet" href="../js/jquery_css/smoothness/jquery-ui-1.7.3.custom.css" type="text/css" />  
-<link rel="stylesheet" type="text/css" href="../share/yui/css/fonts-min.css"/>
-<link rel="stylesheet" type="text/css" href="../share/yui/css/autocomplete.css"/>
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/demographicProviderAutocomplete.css"  />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/share/yui/css/fonts-min.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/share/yui/css/autocomplete.css"/>
+<link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/share/css/demographicProviderAutocomplete.css"  />
 
 <style>
 
@@ -491,16 +485,12 @@ popupPage(700,1200,'Display.do?id='+id);
 					hrmReport.getFirstAccompanyingSubClassDateTime()) %></td>
 		</tr>
 		<tr>
-			<th>Demographic Info</th>
+			<th>Demographic Info:</th>
 			<td>
 				<%=hrmReport.getLegalName() %><br />
-				<% try { %>
-					<%=hrmReport.getAddressLine1() %><br />
-					<%=hrmReport.getAddressLine2() != null ? hrmReport.getAddressLine2() : "" %><br />
-					<%=hrmReport.getAddressCity() %>
-				<% } catch(Exception e) { %>
-					NO ADDRESS IN RECORD<br>
-				<% } %>
+				<%=hrmReport.getAddressLine1() %><br />
+				<%=hrmReport.getAddressLine2() != null ? hrmReport.getAddressLine2() : "" %><br />
+				<%=hrmReport.getAddressCity() %>
 			</td>
 		</tr>
 
@@ -567,25 +557,25 @@ popupPage(700,1200,'Display.do?id='+id);
 		</tr>
 
 		<tr>
-			<th>Linked with Demographic</th>
+			<th>Linked with Demographic:</th>
 			<td>
-				<div id="demostatus<%=hrmReportId %>"></div>
-				<input type="hidden" id="demofind<%=hrmReportId %>hrm" value="<%=demographicNo%>" />
-				<% if (demographicLink != null) { %>
-					<oscar:nameage demographicNo="<%=demographicLink.getDemographicNo().toString()%>" /> <a href="#" onclick="removeDemoFromHrm('<%=hrmReportId %>')">(remove)</a>
-				<% } else { %>
+				<div id="demostatus<%=hrmReportId %>">
+					<% if (demographicLink != null) { %>
+					<oscar:nameage demographicNo="<%=demographicLink.getDemographicNo().toString()%>" /> <br />
+					<a href="#" onclick="removeDemoFromHrm('<%=hrmReportId %>', <%=csrfTokenJs%>)">(remove)</a>
+					<% } else { %>
 					<i>Not currently linked</i>
-					<input type="hidden" id="demofind<%=hrmReportId %>hrm" value="" />
-					<input type="hidden" id="routetodemo<%=hrmReportId %>hrm" value="" />
-					<input type="checkbox" id="activeOnly<%=hrmReportId%>" name="activeOnly" checked="checked" value="true" onclick="setupDemoAutoCompletion('<%=hrmReportId%>')">Active Only<br>
-					<input type="text" id="autocompletedemo<%=hrmReportId %>hrm" onchange="checkSave('<%=hrmReportId%>hrm')" name="demographicKeyword" />
-					<div id="autocomplete_choices<%=hrmReportId%>hrm" class="autocomplete"></div>
-                                            
-				<% } %>
+					<% } %>
+				</div>
+				<input type="hidden" id="demofind<%=hrmReportId %>hrm" value="<%=demographicNo%>" />
+					<input type="hidden" id="demofind<%=hrmReportId %>hrm" value=""/>
+					<input type="hidden" id="routetodemo<%=hrmReportId %>hrm" value=""/>
+					<input type="checkbox" id="activeOnly<%=hrmReportId%>hrm" name="activeOnly" checked="checked" value="true" onclick="setupHrmDemoAutoCompletion('<%=hrmReportId%>', <%=csrfTokenJs%>)">Active Only<br>
+					<input type="text" id="autocompletedemo<%=hrmReportId %>hrm" onchange="checkSave('<%=hrmReportId%>hrm')" name="demographicKeyword" style="display:<%=(demographicLink != null) ? "none" : "block"%> " />
 			</td>
 		</tr>
 		<tr>
-			<th>Assigned Providers</th>
+			<th>Assigned Providers:</th>
 			<td>
 				<div id="provstatus<%=hrmReportId %>"></div>
 				<% if (providerLinkList != null && providerLinkList.size()>0) {
@@ -610,30 +600,15 @@ popupPage(700,1200,'Display.do?id='+id);
 			</td>
 		</tr>
 		<tr>
-
-			<th>EMR Category:</th>
-			<td>
-				<div id="catList<%=hrmReportId %>hrm">
-				<%
-					if (category != null){
-				%>
-				<%=Encode.forHtml(category.getCategoryName())%>
-				<%  }%> 
-				 </div>
-				<input type="hidden" name="cati" id="catfind<%=hrmReportId%>hrm" />
-				<input type="text" id="autocompletecat<%=hrmReportId%>hrm" name="categoryKeyword"/>
-                <div id="autocomplete_choicescat<%=hrmReportId%>hrm" class="autocomplete"></div>
-               
-			</td>
 			<td colspan=2><hr /></td>
 		</tr>
 		<tr>
-			<th>Report Class</th>
+			<th>Report Class:</th>
 			<td><%=hrmReport.getFirstReportClass() %></td>
 		</tr>
 		<% if (hrmReport.getFirstReportClass().equalsIgnoreCase("Diagnostic Imaging Report") || hrmReport.getFirstReportClass().equalsIgnoreCase("Cardio Respiratory Report")) { %>
 		<tr>
-			<th>Accompanying Subclass</th>
+			<th>Accompanying Subclass:</th>
 			<td>
 				<%
 				List<List<Object>> subClassListFromReport = hrmReport.getAccompanyingSubclassList();
@@ -659,7 +634,7 @@ popupPage(700,1200,'Display.do?id='+id);
 		</tr>
 		<% } else { %>
 		<tr>
-			<th>Subclass</th>
+			<th>Subclass:</th>
 			<td>
 				<%
 				String[] subClassFromReport = hrmReport.getFirstReportSubClass().split("\\^");
@@ -671,7 +646,7 @@ popupPage(700,1200,'Display.do?id='+id);
 		</tr>
 		<% } %>
 		<tr>
-			<th>Categorization</th>
+			<th>Categorization:</th>
 			<td>
 				<span id="chooseCategory_<%=hrmReportId%>" onchange="updateCategory('<%=hrmReportId %>');" style="display:none">
 					<select id="selectedCategory_<%=hrmReportId%>" >
@@ -844,62 +819,7 @@ if (documentComments != null) {
 
 
 <script type="text/javascript">
-
-var resultFormatter4 = function(oResultData, sQuery, sResultMatch) {
-	return oResultData[1] + " " + oResultData[2];
-};
-
-function saveCategory(reportId, categoryId) {
-	jQuery.ajax({
-		type: "POST",
-		url: "<%=request.getContextPath() %>/hospitalReportManager/hrm.do",
-		data: "method=saveCategory&hrmDocumentId="+reportId+"&categoryId="+categoryId,
-		dataType:'json',
-		success: function(data) {
-			if (data != null && data.value != null) {
-				jQuery("#catList<%=hrmReportId %>hrm").html(data.value);
-			}
-			jQuery("#autocompletecat<%=hrmReportId%>hrm").val('');
-		}
-	});
-}
-
-YAHOO.example.BasicRemote = function() {
-    if($("autocompletedemo<%=hrmReportId%>hrm") && $("autocomplete_choices<%=hrmReportId%>hrm")){
-           oscarLog('in basic remote');
-		  var url = "../demographic/SearchDemographic.do?activeOnly=" + jQuery("#activeOnly<%=hrmReportId%>").val();
-          var oDS = new YAHOO.util.XHRDataSource(url,{connMethodPost:true,connXhrMode:'ignoreStaleResponses'});
-          oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;// Set the responseType
-          // Define the schema of the delimited resultsTEST, PATIENT(1985-06-15)
-          oDS.responseSchema = {
-              resultsList : "results",
-              fields : ["formattedName","fomattedDob","demographicNo"]
-          };
-          // Enable caching
-          oDS.maxCacheEntries = 0;
-          // Instantiate the AutoComplete
-          var oAC = new YAHOO.widget.AutoComplete("autocompletedemo<%=hrmReportId%>hrm","autocomplete_choices<%=hrmReportId%>hrm",oDS);
-          oAC.queryMatchSubset = true;
-          oAC.minQueryLength = 3;
-          oAC.maxResultsDisplayed = 25;
-          oAC.formatResult = resultFormatter2;
-          oAC.queryMatchContains = true;
-          oAC.itemSelectEvent.subscribe(function(type, args) {
-             var str = args[0].getInputEl().id.replace("autocompletedemo","demofind");
-             $(str).value = args[2][2];//li.id;
-             args[0].getInputEl().value = args[2][0] + "("+args[2][1]+")";
-             $("routetodemo<%=hrmReportId %>hrm").value = args[0].getInputEl().value;
-          	 
-             addDemoToHrm('<%=hrmReportId %>');
-          });
-
-
-          return {
-              oDS: oDS,
-              oAC: oAC
-          };
-      }
-      }();
+    jQuery(setupHrmDemoAutoCompletion(<%=hrmReportId%>, <%=csrfTokenJs%>));
       
       YAHOO.example.BasicRemote = function() {
           var url = "<%= request.getContextPath() %>/provider/SearchProvider.do";
@@ -939,62 +859,6 @@ YAHOO.example.BasicRemote = function() {
              myAC.getInputEl().value = '';//;oData.fname + " " + oData.lname ;
 
              addProvToHrm('<%=hrmReportId %>', args[2][0]);
-          });
-
-
-          return {
-              oDS: oDS,
-              oAC: oAC
-          };
-      }();
-      
-      
-      YAHOO.example.BasicRemote = function() {
-          var url = "<%= request.getContextPath() %>/hospitalReportManager/hrm.do?method=searchCategory";
-          var oDS = new YAHOO.util.XHRDataSource(url,{connMethodPost:true,connXhrMode:'ignoreStaleResponses'});
-          oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
-          oDS.responseSchema = {
-              resultsList : "results",
-              fields : ["id","mnemonic","name"]
-          };
-          // Enable caching
-          oDS.maxCacheEntries = 0;
-          // Instantiate the AutoComplete
-          var oAC = new YAHOO.widget.AutoComplete("autocompletecat<%=hrmReportId%>hrm", "autocomplete_choicescat<%=hrmReportId%>hrm", oDS);
-          oAC.queryMatchSubset = true;
-          oAC.minQueryLength = 3;
-          oAC.maxResultsDisplayed = 25;
-          oAC.formatResult = resultFormatter4;
-          oAC.queryMatchContains = true;
-          oAC.itemSelectEvent.subscribe(function(type, args) {
-        	  if(type == "itemSelect") {
-        		  var id = args[2][0];
-        		  var displayName = args[2][1] + ":" + args[2][2];
-        		  args[0].getInputEl().value = displayName;
-        		  saveCategory('<%=hrmReportId %>',id);  
-        	  }
-			
-        	  /*
-        	 var myAC = args[0];
-             var str = myAC.getInputEl().id.replace("autocompletecat","catfind");
-             var oData=args[2];
-             $(str).value = args[2][0];//li.id;
-             myAC.getInputEl().value = args[2][2] + ","+args[2][1];
-             var adoc = document.createElement('div');
-             adoc.appendChild(document.createTextNode(oData[1]));
-             var idoc = document.createElement('input');
-             idoc.setAttribute("type", "hidden");
-             idoc.setAttribute("name","flagcats");
-             idoc.setAttribute("value",oData[0]);
-             adoc.appendChild(idoc);
-
-             var providerList = $('providerList<%=hrmReportId%>hrm');
-             providerList.appendChild(adoc);
-
-             myAC.getInputEl().value = '';//;oData.fname + " " + oData.lname ;
-
-             addProvToHrm('<%=hrmReportId %>', args[2][0]);
-             */
           });
 
 
