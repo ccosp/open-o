@@ -2563,8 +2563,8 @@ insert into ProductLocation (name) values ('Default');
 
 INSERT INTO `OscarJobType` VALUES (null,'OSCAR MSG REVIEW','Sends OSCAR Messages to Residents Supervisors when charts need to be reviewed','org.oscarehr.jobs.OscarMsgReviewSender',0,now());
 INSERT INTO `OscarJob` VALUES (null,'OSCAR Message Review','',(select id from OscarJobType where name = 'OSCAR MSG REVIEW') ,'0 0/30 * * * *','999998',0,now(),null);
-INSERT INTO `consentType` VALUES ('1', 'default_consent_entry', 'Demonstraton Consent', 'This is a demonstration consent. Modify the consentType and Consent tables to replace this message with a desired consent description, or to add new consents.', '0');
-INSERT INTO `consentType`(`type`, `name`, `description`, `active`) VALUES ( 'electronic_communication_consent', 'Electronic Communication Consent', 'This patient has consented to being contacted by all forms of electronic communication including, but not limited to, email, telephone, and video conferencing.', 1);
+INSERT INTO `consentType` VALUES ('1', 'default_consent_entry', 'Demonstraton Consent', 'This is a demonstration consent. Modify the consentType and Consent tables to replace this message with a desired consent description, or to add new consents.', 1, NULL, 0);
+INSERT INTO `consentType`(`type`, `name`, `description`, `active`, `providerNo`, `remoteEnabled`) VALUES ( 'electronic_communication_consent', 'Electronic Communication Consent', 'This patient has consented to being contacted by all forms of electronic communication including, but not limited to, email, telephone, and video conferencing.', 1, NULL, 0);
 
 INSERT INTO `LookupList` (`listTitle`,`name`, description, categoryId, active, createdBy, dateCreated) VALUES('Consultation Request Appointment Instructions List', 'consultApptInst', 'Select list for the consultation appointment instruction select list', NULL, '1', 'oscar', NOW() );
 INSERT INTO `LookupListItem` (lookupListId, value, label, displayOrder, active, createdBy, dateCreated)( 
