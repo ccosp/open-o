@@ -34,9 +34,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.xmlbeans.XmlOptions;
 
 import cds.DemographicsDocument;
@@ -106,7 +103,7 @@ public class CreateHRMFile {
         try {
             omdCdsDoc.save(file, options);
         } catch (IOException ex) {
-            Logger.getLogger(CreateHRMFile.class.getName()).log(Level.SEVERE, null, ex);
+            org.oscarehr.util.MiscUtils.getLogger();
         }
     }
 
@@ -139,7 +136,7 @@ public class CreateHRMFile {
 	            }	
         	}
         } else {
-        	Logger.getLogger(CreateHRMFile.class.getName()).log(Level.WARNING, null, "Error! No Legal Name or Other Name");
+        	org.oscarehr.util.MiscUtils.getLogger();
         }
 
         PersonNameStandard HRMpersonName = HRMdemo.addNewNames();

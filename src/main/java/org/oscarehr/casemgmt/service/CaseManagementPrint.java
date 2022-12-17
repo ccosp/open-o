@@ -43,7 +43,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import com.lowagie.text.DocumentException;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.PMmodule.service.ProgramManager;
@@ -61,8 +62,6 @@ import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-
-import com.lowagie.text.DocumentException;
 
 import oscar.OscarProperties;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
@@ -94,7 +93,7 @@ public class CaseManagementPrint {
 	 *This method was in CaseManagementEntryAction but has been moved out so that both the classic Echart and the flat echart can use the same printing method.
 	 * 
 	 */
-	public void doPrint(LoggedInInfo loggedInInfo,Integer demographicNo, boolean printAllNotes,String[] noteIds,boolean printCPP,boolean printRx,boolean printLabs, boolean printPreventions, boolean useDateRange, Calendar startDate, Calendar endDate,   HttpServletRequest request, OutputStream os) throws IOException, DocumentException {
+	public void doPrint(LoggedInInfo loggedInInfo,Integer demographicNo, boolean printAllNotes,String[] noteIds,boolean printCPP,boolean printRx,boolean printLabs, boolean printPreventions, boolean useDateRange, Calendar startDate, Calendar endDate,   HttpServletRequest request, OutputStream os) throws IOException, com.lowagie.text.DocumentException, com.itextpdf.text.DocumentException{
 		
 		String providerNo=loggedInInfo.getLoggedInProviderNo();
 
@@ -295,7 +294,11 @@ public class CaseManagementPrint {
                                 file2= new File(fileName2);
 				os2 = new FileOutputStream(file2);
 				LabPDFCreator pdfCreator = new LabPDFCreator(os2, segmentId, loggedInInfo.getLoggedInProviderNo());
-				pdfCreator.printPdf();
+				try {
+					pdfCreator.printPdf();
+				} catch (DocumentException documentException) {
+					throw new DocumentException(documentException);
+				}
 				os2.close();
 				
 				String fileName3 = OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "//" + handler.getPatientName().replaceAll("\\s", "_") + "_" + handler.getMsgDate() + "_LabReport.1.pdf";

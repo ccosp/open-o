@@ -61,6 +61,7 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic"%>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 
 <jsp:useBean id="providerBean" class="java.util.Properties"	scope="session" />
 
@@ -75,6 +76,7 @@ String statusString = "'IN','DE','IC','ID','MO','FI'";
 %>
 
 <html>
+<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title><bean:message key="demographic.demographicsearch2apptresults.title" />(demographicsearch2reportresults)</title>
@@ -221,8 +223,8 @@ String bgColor = toggleLine?"#EEEEFF":"white";
 			onClick="<% if(caisi) {out.print("addNameCaisi");} 
 					else { out.print("addName");} %>('<%=demo.getDemographicNo()%>','<%=URLEncoder.encode(demo.getLastName())%>','<%=URLEncoder.encode(demo.getFirstName())%>','<%=URLEncoder.encode(demo.getChartNo())%>','<%=request.getParameter("messageId")%>','<%=demo.getProviderNo()%>')">
 			</td>
-		<td><%=Misc.toUpperLowerCase(demo.getLastName())%></td>
-		<td><%=Misc.toUpperLowerCase(demo.getFirstName())%></td>
+		<td><%=Encode.forHtml(Misc.toUpperLowerCase(demo.getLastName()))%></td>
+		<td><%=Encode.forHtml(Misc.toUpperLowerCase(demo.getFirstName()))%></td>
 		<td><%=demo.getAge()%></td>
 		<td><%=demo.getRosterStatus()%></td>
 		<td><%=demo.getSex()%></td>

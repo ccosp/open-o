@@ -158,7 +158,6 @@ if(!authed) {
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic"
 	prefix="logic"%>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
-<%@ taglib uri="http://www.caisi.ca/plugin-tag" prefix="plugin" %>
 
 <c:set var="ctx" value="${ pageContext.request.contextPath }" />
 <%
@@ -252,6 +251,7 @@ if(!authed) {
 <head>
 <title><bean:message
 	key="demographic.demographiceditdemographic.title" /></title>
+	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <html:base />
 
 <oscar:oscarPropertiesCheck property="DEMOGRAPHIC_PATIENT_HEALTH_CARE_TEAM" value="true">
@@ -1094,33 +1094,6 @@ if(wLReadonly.equals("")){
 					<bean:message key="oscarEncounter.LeftNavBar.Prevent" /></a></td>
 				</tr>
 			</security:oscarSec>
-                <plugin:hideWhenCompExists componentName="specialencounterComp" reverse="true">
-<%session.setAttribute("encounter_oscar_baseurl",request.getContextPath());
-%>
-      			<special:SpecialEncounterTag moduleName="eyeform" exactEqual="true">
-
-				<tr><td>
-      			<a href="#" style="color: brown;" onclick="popupPage(600,800,'<%=request.getContextPath()%>/mod/specialencounterComp/PatientLog.do?method=editPatientLog&demographicNo=<%=demographic_no%>&providerNo=<%=curProvider_no%>&providerName=<%=URLEncoder.encode( userfirstname+" "+userlastname)%>');return false;">patient log</a>
-      			</td>
-      			</tr>
-      			</special:SpecialEncounterTag>
-      			<special:SpecialEncounterTag moduleName="eyeform">
-      			<tr><td>
-      			<a href="#" style="color: brown;" onclick="popupPage(600,600,'<%=request.getContextPath()%>/mod/specialencounterComp/EyeForm.do?method=eyeFormHistory&demographicNo=<%=demographic_no%>&providerNo=<%=curProvider_no%>&providerName=<%=URLEncoder.encode( userfirstname+" "+userlastname)%>');return false;">eyeForm Hx</a>
-      			</td>
-      			</tr>
-      			<tr>
-      			<td>
-				<a href="#" style="color: brown;" onclick="popupPage(600,600,'<%=request.getContextPath()%>/mod/specialencounterComp/EyeForm.do?method=chooseField&&demographicNo=<%=demographic_no%>&providerNo=<%=curProvider_no%>&providerName=<%=URLEncoder.encode( userfirstname+" "+userlastname)%>');return false;">Exam Hx</a>
-				</td>
-				</tr>
-				<tr>
-				<td>
-				<a href="#" style="color: brown;" onclick="popupPage(600,1000,'<%=request.getContextPath()%>/mod/specialencounterComp/ConReportList.do?method=list&&dno=<%=demographic_no%>');return false;">ConReport Hx</a>
-
-      			</td></tr>
-      			</special:SpecialEncounterTag>
-      		</plugin:hideWhenCompExists>
 			<tr>
 				<td>
 <%if( org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable() ) {%>
@@ -1155,40 +1128,40 @@ if(wLReadonly.equals("")){
                </td>
            </tr>
            <% } %>
-				<phr:indivoRegistered provider="<%=curProvider_no%>"
-					demographic="<%=demographic_no%>">
-                                <tr class="Header">
-				     <td style="font-weight: bold"><bean:message key="global.personalHealthRecord"/></td>
-                                </tr>
-					<tr>
-						<td>
-							<%
-								String onclickString="alert('Please login to MyOscar first.')";
+<%--				<phr:indivoRegistered provider="<%=curProvider_no%>"--%>
+<%--					demographic="<%=demographic_no%>">--%>
+<%--                                <tr class="Header">--%>
+<%--				     <td style="font-weight: bold"><bean:message key="global.personalHealthRecord"/></td>--%>
+<%--                                </tr>--%>
+<%--					<tr>--%>
+<%--						<td>--%>
+<%--							<%--%>
+<%--								String onclickString="alert('Please login to MyOscar first.')";--%>
 
-								MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);
-								if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn()) onclickString="popupOscarRx(600,900,'../phr/PhrMessage.do?method=createMessage&providerNo="+curProvider_no+"&demographicNo="+demographic_no+"')";
-							%>
-							<a href="javascript: function myFunction() {return false; }" ONCLICK="<%=onclickString%>"	title="myOscar">
-								<bean:message key="demographic.demographiceditdemographic.msgSendMsgPHR"/>
-							</a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="" onclick="popup(600, 1000, '<%=request.getContextPath()%>/demographic/viewPhrRecord.do?demographic_no=<%=demographic_no%>', 'viewPatientPHR'); return false;">View PHR Record</a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<%
-								if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn()) onclickString="popupOscarRx(600,900,'"+request.getContextPath()+"/admin/oscar_myoscar_sync_config_redirect.jsp')";
-							%>
-							<a href="javascript: function myFunction() {return false; }" ONCLICK="<%=onclickString%>"	title="myOscar">
-								<bean:message key="demographic.demographiceditdemographic.MyOscarDataSync"/>
-							</a>
-						</td>
-					</tr>
-				</phr:indivoRegistered>
+<%--								MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);--%>
+<%--								if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn()) onclickString="popupOscarRx(600,900,'../phr/PhrMessage.do?method=createMessage&providerNo="+curProvider_no+"&demographicNo="+demographic_no+"')";--%>
+<%--							%>--%>
+<%--							<a href="javascript: function myFunction() {return false; }" ONCLICK="<%=onclickString%>"	title="myOscar">--%>
+<%--								<bean:message key="demographic.demographiceditdemographic.msgSendMsgPHR"/>--%>
+<%--							</a>--%>
+<%--						</td>--%>
+<%--					</tr>--%>
+<%--					<tr>--%>
+<%--						<td>--%>
+<%--							<a href="" onclick="popup(600, 1000, '<%=request.getContextPath()%>/demographic/viewPhrRecord.do?demographic_no=<%=demographic_no%>', 'viewPatientPHR'); return false;">View PHR Record</a>--%>
+<%--						</td>--%>
+<%--					</tr>--%>
+<%--					<tr>--%>
+<%--						<td>--%>
+<%--							<%--%>
+<%--								if (myOscarLoggedInInfo!=null && myOscarLoggedInInfo.isLoggedIn()) onclickString="popupOscarRx(600,900,'"+request.getContextPath()+"/admin/oscar_myoscar_sync_config_redirect.jsp')";--%>
+<%--							%>--%>
+<%--							<a href="javascript: function myFunction() {return false; }" ONCLICK="<%=onclickString%>"	title="myOscar">--%>
+<%--								<bean:message key="demographic.demographiceditdemographic.MyOscarDataSync"/>--%>
+<%--							</a>--%>
+<%--						</td>--%>
+<%--					</tr>--%>
+<%--				</phr:indivoRegistered>--%>
 			
 <% if (oscarProps.getProperty("clinic_no", "").startsWith("1022")) { // quick hack to make Dr. Hunter happy
 %>

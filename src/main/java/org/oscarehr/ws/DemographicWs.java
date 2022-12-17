@@ -32,7 +32,7 @@ import java.util.List;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import org.apache.cxf.annotations.GZIP;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.Gender;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.PHRVerification;

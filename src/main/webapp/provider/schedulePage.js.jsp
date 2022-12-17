@@ -338,7 +338,7 @@ function refreshTabAlerts(id) {
 function refreshSameLoc(mypage) {
  var X =  (window.pageXOffset?window.pageXOffset:window.document.body.scrollLeft);
  var Y =  (window.pageYOffset?window.pageYOffset:window.document.body.scrollTop);
- window.location.href = mypage+"&x="+X+"&y="+Y;
+ window.location.href = mypage + "&x=" + X + "&y=" + Y;
 }
 
 function scrollOnLoad() {

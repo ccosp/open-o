@@ -38,7 +38,8 @@
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="myoscar" %>
-<%@ taglib uri="http://www.caisi.ca/plugin-tag" prefix="plugin" %>
+
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 
 <%
 if (session.getAttribute("userrole") == null) response.sendRedirect(request.getContextPath()+"/logout.jsp");
@@ -201,8 +202,7 @@ div.navbar div.dropdown:hover ul.dropdown-menu {
 label.valid {
 	width: 24px;
 	height: 24px;
-	background: url(/oscar-SNAPSHOT/images/icons/valid.png) center center
-		no-repeat;
+	background: url(<%=request.getContextPath() %>/images/icons/valid.png) center center no-repeat;
 	display: inline-block;
 	text-indent: -9999px;
 }
@@ -439,20 +439,35 @@ $( document ).ready(function( $ ) {
 });
 
 function registerFormSubmit(formId, divId) {
-	$('#'+formId).submit(function() {
-		if(!$('#'+formId).valid()){
+	let thisForm = $('#'+formId);
+	$(thisForm.submit(function() {
+		if(thisForm.valid != null && !thisForm.valid()){
 			return false;
 		}
 		// gather the form data
-		var data = $(this).serialize();
+		let data = $(this).serialize();
+		// get csrf token and place it in the header for a ajax request
+		let headerToken = null;
+
+		thisForm.serializeArray().forEach(function(field) {
+			if (field.name === '<csrf:tokenname/>' && headerToken === null) {
+				headerToken = { '<csrf:tokenname/>' : field.value };
+			}
+		});
 		// post data
-		$.post($('#'+formId).attr('action'), data, function(returnData) {
-			// insert returned html 
-			$('#'+divId).html(returnData)
-		})
+		$.ajax({
+			url: thisForm.attr('action'),
+			type: thisForm.attr('method'),
+			data: data,
+			headers: headerToken,
+			success: function (returnData) {
+				// insert returned html
+				$('#' + divId).html(returnData)
+			}
+		});
 
 		return false; // stops browser from doing default submit process
-	});
+	}));
 }
 
 function submitForm(formId, divId){

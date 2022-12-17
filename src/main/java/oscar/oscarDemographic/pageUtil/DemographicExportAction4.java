@@ -47,7 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -75,8 +75,8 @@ import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.Hl7TextMessage;
 import org.oscarehr.common.model.PartialDate;
 import org.oscarehr.common.model.Provider;
-import org.oscarehr.e2e.director.E2ECreator;
-import org.oscarehr.e2e.util.EverestUtils;
+//import org.oscarehr.e2e.director.E2ECreator;
+//import org.oscarehr.e2e.util.EverestUtils;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentCommentDao;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentDao;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao;
@@ -2121,110 +2121,112 @@ public class DemographicExportAction4 extends Action {
 		}
 
 		//Remove zip & export files from temp dir
-		Util.cleanFile(zipName, tmpDir);
-		Util.cleanFiles(files);
+		//Util.cleanFile(zipName, tmpDir);
+		//Util.cleanFiles(files);
 	}
 			break;
-		case E2E:
-			if (!Util.checkDir(tmpDir)) {
-				logger.debug("Error! Cannot write to TMP_DIR - Check oscar.properties or dir permissions.");
-			} else {
-				ArrayList<File> files = new ArrayList<File>();
-				StringBuilder exportLog = new StringBuilder();
-				for (String demoNo : list) {
-					if (StringUtils.empty(demoNo)) {
-						String msg = "Error! No Demographic Number";
-						logger.error(msg);
-						exportLog.append(msg);
-						continue;
-					}
 
-					// Populate Clinical Document
-					ClinicalDocument clinicalDocument = E2ECreator.createEmrConversionDocument(Integer.parseInt(demoNo));
-					if(clinicalDocument == null) {
-						String msg = "[Demo ".concat(demoNo).concat("] Not active or failed to populate");
-						logger.info(msg);
-						exportLog.append(msg);
-						continue;
-					}
-
-					// Output Clinical Document as String
-					String output = EverestUtils.generateDocumentToString(clinicalDocument, true);
-
-					//export file to temp directory
-					try {
-						File directory = new File(tmpDir);
-						if(!directory.exists()){
-							throw new Exception("Temporary Export Directory does not exist!");
-						}
-
-						//Standard format for xml exported file : Demographic_PatientUniqueID
-						String expFile = "Demographic_".concat(demoNo);
-						files.add(new File(directory, expFile+".xml"));
-					} catch(Exception e) {
-						logger.error("Error", e);
-					}
-//					BufferedWriter out = null;
-					try(BufferedWriter out = new BufferedWriter(new FileWriter(files.get(files.size()-1)))) {
-						out.write(output);
-					} catch (IOException e) {
-						logger.error("Error", e);
-						throw new Exception("Cannot write .xml file(s) to export directory.\nPlease check directory permissions.");
-					} 
-				}
-
-				// Create Export Log
-				try {
-					File exportLogFile = new File(files.get(0).getParentFile(), "ExportEvent.log");
-					BufferedWriter out = new BufferedWriter(new FileWriter(exportLogFile));
-					String pidRange = "Patient ID Range: ".concat(list.get(0));
-					pidRange = pidRange.concat("-").concat(list.get(list.size()-1));
-
-					out.write(pidRange.concat(System.getProperty("line.separator")));
-					out.write(System.getProperty("line.separator"));
-					if(exportLog.toString().length() == 0) {
-						out.write("Export contains no errors".concat(System.getProperty("line.separator")));
-					} else {
-						out.write(exportLog.toString());
-					}
-					out.close();
-
-					files.add(exportLogFile);
-				} catch (IOException e) {
-					logger.error("Error", e);
-					throw new Exception("Cannot write .xml file(s) to export directory.\nPlease check directory permissions.");
-				}
-
-				// Zip all export files
-				String zipName = files.get(0).getName().replace(".xml", ".zip");
-				if (setName!=null) zipName = "export_"+setName.replace(" ","")+"_"+UtilDateUtilities.getToday("yyyyMMddHHmmss")+".zip";
-				//	if (setName!=null) zipName = "export_"+setName.replace(" ","")+"_"+UtilDateUtilities.getToday("yyyyMMddHHmmss")+".pgp";
-				if (!Util.zipFiles(files, zipName, tmpDir)) {
-					logger.debug("Error! Failed to zip export files");
-				}
-
-				// Apply PGP if installed
-				if (pgpReady.equals("Yes")) {
-					//PGP encrypt zip file
-					PGPEncrypt pgp = new PGPEncrypt();
-					if (pgp.encrypt(zipName, tmpDir)) {
-						Util.downloadFile(zipName+".pgp", tmpDir, response);
-						Util.cleanFile(zipName+".pgp", tmpDir);
-						ffwd = "success";
-					} else {
-						request.getSession().setAttribute("pgp_ready", "No");
-					}
-				} else {
-					logger.info("Warning: PGP Encryption NOT available - unencrypted file exported!");
-					Util.downloadFile(zipName, tmpDir, response);
-					ffwd = "success";
-				}
-
-				// Remove zip & export files from temp dir
-				Util.cleanFile(zipName, tmpDir);
-				Util.cleanFiles(files);
-			}
-			break;
+	// Remove unused E2E tools.
+//		case E2E:
+//			if (!Util.checkDir(tmpDir)) {
+//				logger.debug("Error! Cannot write to TMP_DIR - Check oscar.properties or dir permissions.");
+//			} else {
+//				ArrayList<File> files = new ArrayList<File>();
+//				StringBuilder exportLog = new StringBuilder();
+//				for (String demoNo : list) {
+//					if (StringUtils.empty(demoNo)) {
+//						String msg = "Error! No Demographic Number";
+//						logger.error(msg);
+//						exportLog.append(msg);
+//						continue;
+//					}
+//
+//					// Populate Clinical Document
+//					ClinicalDocument clinicalDocument = E2ECreator.createEmrConversionDocument(Integer.parseInt(demoNo));
+//					if(clinicalDocument == null) {
+//						String msg = "[Demo ".concat(demoNo).concat("] Not active or failed to populate");
+//						logger.info(msg);
+//						exportLog.append(msg);
+//						continue;
+//					}
+//
+//					// Output Clinical Document as String
+//					String output = EverestUtils.generateDocumentToString(clinicalDocument, true);
+//
+//					//export file to temp directory
+//					try {
+//						File directory = new File(tmpDir);
+//						if(!directory.exists()){
+//							throw new Exception("Temporary Export Directory does not exist!");
+//						}
+//
+//						//Standard format for xml exported file : Demographic_PatientUniqueID
+//						String expFile = "Demographic_".concat(demoNo);
+//						files.add(new File(directory, expFile+".xml"));
+//					} catch(Exception e) {
+//						logger.error("Error", e);
+//					}
+////					BufferedWriter out = null;
+//					try(BufferedWriter out = new BufferedWriter(new FileWriter(files.get(files.size()-1)))) {
+//						out.write(output);
+//					} catch (IOException e) {
+//						logger.error("Error", e);
+//						throw new Exception("Cannot write .xml file(s) to export directory.\nPlease check directory permissions.");
+//					}
+//				}
+//
+//				// Create Export Log
+//				try {
+//					File exportLogFile = new File(files.get(0).getParentFile(), "ExportEvent.log");
+//					BufferedWriter out = new BufferedWriter(new FileWriter(exportLogFile));
+//					String pidRange = "Patient ID Range: ".concat(list.get(0));
+//					pidRange = pidRange.concat("-").concat(list.get(list.size()-1));
+//
+//					out.write(pidRange.concat(System.getProperty("line.separator")));
+//					out.write(System.getProperty("line.separator"));
+//					if(exportLog.toString().length() == 0) {
+//						out.write("Export contains no errors".concat(System.getProperty("line.separator")));
+//					} else {
+//						out.write(exportLog.toString());
+//					}
+//					out.close();
+//
+//					files.add(exportLogFile);
+//				} catch (IOException e) {
+//					logger.error("Error", e);
+//					throw new Exception("Cannot write .xml file(s) to export directory.\nPlease check directory permissions.");
+//				}
+//
+//				// Zip all export files
+//				String zipName = files.get(0).getName().replace(".xml", ".zip");
+//				if (setName!=null) zipName = "export_"+setName.replace(" ","")+"_"+UtilDateUtilities.getToday("yyyyMMddHHmmss")+".zip";
+//				//	if (setName!=null) zipName = "export_"+setName.replace(" ","")+"_"+UtilDateUtilities.getToday("yyyyMMddHHmmss")+".pgp";
+//				if (!Util.zipFiles(files, zipName, tmpDir)) {
+//					logger.debug("Error! Failed to zip export files");
+//				}
+//
+//				// Apply PGP if installed
+//				if (pgpReady.equals("Yes")) {
+//					//PGP encrypt zip file
+//					PGPEncrypt pgp = new PGPEncrypt();
+//					if (pgp.encrypt(zipName, tmpDir)) {
+//						Util.downloadFile(zipName+".pgp", tmpDir, response);
+//						Util.cleanFile(zipName+".pgp", tmpDir);
+//						ffwd = "success";
+//					} else {
+//						request.getSession().setAttribute("pgp_ready", "No");
+//					}
+//				} else {
+//					logger.info("Warning: PGP Encryption NOT available - unencrypted file exported!");
+//					Util.downloadFile(zipName, tmpDir, response);
+//					ffwd = "success";
+//				}
+//
+//				// Remove zip & export files from temp dir
+//				Util.cleanFile(zipName, tmpDir);
+//				Util.cleanFiles(files);
+//			}
+//			break;
 		default:
 			break;
 	}

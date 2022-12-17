@@ -28,7 +28,7 @@ package oscar.oscarLab.ca.all.parsers.OscarToOscarHl7V2;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.Gender;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.DataTypeUtils;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils;

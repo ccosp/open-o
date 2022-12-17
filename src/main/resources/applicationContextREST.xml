@@ -80,6 +80,7 @@
 
         <jaxrs:serviceBeans>
 			<bean class="org.oscarehr.ws.oauth.OAuthStatusService" autowire="byName" />
+			<bean class="org.oscarehr.ws.csrf.CsrfTokenService" autowire="byName" />
 			<bean class="org.oscarehr.ws.rest.PharmacyService"  autowire="byName"/>
 			<bean class="org.oscarehr.ws.rest.DemographicService"  autowire="byName"/>
 			<bean class="org.oscarehr.ws.rest.ScheduleService"  autowire="byName"/>
@@ -111,6 +112,7 @@
 			<bean class="org.oscarehr.ws.rest.DiseaseRegistryService" autowire="byName" />
 			<bean class="org.oscarehr.ws.rest.LabService" autowire="byName" />
 			<bean class="org.oscarehr.ws.rest.MeasurementService" autowire="byName" />
+			<bean class="org.oscarehr.ws.rest.DocumentService" autowire="byName" />
         </jaxrs:serviceBeans>
              
         <jaxrs:providers>

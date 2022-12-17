@@ -24,7 +24,7 @@
 
 package org.oscarehr.ws.rest.conversion;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.Drug;
 import org.oscarehr.managers.DrugLookUp;
 import org.oscarehr.util.LoggedInInfo;
