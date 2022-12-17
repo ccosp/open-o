@@ -43,6 +43,8 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
+    String roleName = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+
     oscar.oscarEncounter.pageUtil.EctSessionBean bean = null;
     String beanName = "casemgmt_oscar_bean" + (String) request.getAttribute("demographicNo");
 
@@ -140,8 +142,19 @@ var Colour = {
 };
 </script>
 
+
 <!--js code for newCaseManagementView.jsp -->
 <script type="text/javascript" src="<c:out value="${ctx}/js/newCaseManagementView.js.jsp"/>"></script>
+
+		<%-- Javascripts for the BC Care Connect Button --%>
+<oscar:oscarPropertiesCheck value="BC" property="billregion">
+	<security:oscarSec roleName="<%=roleName%>" objectName="_careconnect" rights="r" >
+		<c:set value="${ OscarProperties.getInstance()['BC_CARECONNECT_URL'] }" var="careconnecturl" scope="application" />
+		<c:if test="${ not empty careconnecturl }">
+			<script type="text/javascript" src="${pageContext.servletContext.contextPath}/careconnect/careconnect.js"></script>
+		</c:if>
+	</security:oscarSec>
+</oscar:oscarPropertiesCheck>
 
 <% if (OscarProperties.getInstance().getBooleanProperty("note_program_ui_enabled", "true")) { %>
 	<link rel="stylesheet" href="<c:out value="${ctx}/casemgmt/noteProgram.css" />" />
@@ -977,9 +990,7 @@ window.onbeforeunload = onClosing;
 						value="selected">
 					<bean:message key="oscarEncounter.Index.PrintSelect" /></td>
 					<td>
-						<%
-	              					String roleName = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-              					%> <security:oscarSec roleName="<%=roleName%>"
+						<security:oscarSec roleName="<%=roleName%>"
 							objectName="_newCasemgmt.cpp" rights="r" reverse="false">
 							<img style="cursor: pointer;"
 								title="<bean:message key="oscarEncounter.print.title"/>"

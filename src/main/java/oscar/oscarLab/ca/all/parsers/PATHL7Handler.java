@@ -44,7 +44,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.Type;
@@ -68,7 +68,7 @@ import oscar.util.UtilDateUtilities;
  */
 public class PATHL7Handler implements MessageHandler {
 
-    Logger logger = Logger.getLogger(PATHL7Handler.class);
+    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
     ORU_R01 msg = null;
 
 	private static List<String> labDocuments = Arrays.asList("BCCACSP","BCCASMP","BLOODBANKT",

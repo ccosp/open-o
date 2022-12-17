@@ -399,9 +399,36 @@ public class PatientConsentManager {
 			consentDao.merge(consent);
 		}		
 	}
-	
-	public List<Integer> getAllDemographicsWithOptinConsentByType(LoggedInInfo loggedinInfo, ConsentType consentTypeId ) {		
-		return consentDao.findAllDemoIdsConsentedToType(consentTypeId.getId());		
+
+	public boolean hasProviderSpecificConsent(LoggedInInfo loggedInInfo) {
+			ConsentType conType = consentTypeDao.findConsentTypeForProvider(ConsentType.PROVIDER_CONSENT_FILTER ,loggedInInfo.getLoggedInProviderNo());
+			if(conType == null) {
+				return false;
+			}
+		return true;
 	}
-	
+
+	public ConsentType getProviderSpecificConsent(LoggedInInfo loggedInInfo) {
+		ConsentType conType = consentTypeDao.findConsentTypeForProvider(ConsentType.PROVIDER_CONSENT_FILTER ,loggedInInfo.getLoggedInProviderNo());
+		return conType;
+	}
+
+//	public List<? extends DemographicData> filterProviderSpecificConsent(LoggedInInfo loggedInInfo,List<? extends DemographicData> demographicResults){
+//		ConsentType consentType = getProviderSpecificConsent(loggedInInfo);
+//		if(consentType != null) {
+//			ListIterator<? extends DemographicData> iter = demographicResults.listIterator();
+//			while(iter.hasNext()){
+//				int demographicNo = iter.next().getDemographicNo();
+//				if (!hasPatientConsented(demographicNo, consentType)){
+//			        iter.remove();
+//			    }
+//			}
+//		}
+//
+//		return demographicResults;
+//	}
+
+	public List<Integer> getAllDemographicsWithOptinConsentByType(LoggedInInfo loggedinInfo, ConsentType consentTypeId ) {
+		return consentDao.findAllDemoIdsConsentedToType(consentTypeId.getId());
+	}
 }

@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.model.Hl7TextMessageInfo;
 import org.oscarehr.util.SpringUtils;
@@ -40,7 +40,7 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
 
 public class PFHTHandler implements MessageHandler {
 
-	Logger logger = Logger.getLogger(PFHTHandler.class);
+	Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	private ORU_R01 msg = null;
 	//private MDM_R01 mdmMsg = null;

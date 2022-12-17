@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -1293,9 +1293,12 @@ public class ContactAction extends DispatchAction {
 					city = addressArray[1].trim();
 					province = addressArray[2].trim();
 					country = addressArray[3].trim();
-				} else {
+				} else if (addressArray.length > 2){
 					province = addressArray[1].trim();
 					country = addressArray[2].trim();
+				} else {
+					province = addressArray[1].trim();
+					country = "";
 				}
 			}
 			

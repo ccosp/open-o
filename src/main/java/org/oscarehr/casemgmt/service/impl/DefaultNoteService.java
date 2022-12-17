@@ -35,7 +35,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicNote;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicNoteCompositePk;
@@ -71,7 +71,7 @@ import oscar.util.ConversionUtils;
 @Component
 public class DefaultNoteService implements NoteService {
 
-	private static Logger logger = Logger.getLogger(DefaultNoteService.class);
+	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
 	@Autowired
 	@Qualifier("caseManagementNoteDAO")

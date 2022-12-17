@@ -35,7 +35,7 @@
 <%@page import="org.oscarehr.common.model.Consent"%>
 <%@page import="org.oscarehr.common.dao.ConsentDao"%>
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
-<%@page import="org.oscarehr.util.WebUtilsOld"%>
+<%@page import="org.oscarehr.util.WebUtils"%>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo"%>
 <%@page import="oscar.OscarProperties"%>
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*"%>
@@ -546,7 +546,7 @@ function disableNonISPAWarning() {
 
 <body class="BodyStyle">
 <!--  -->
-<%=WebUtilsOld.popErrorAndInfoMessagesAsHtml(session)%>
+<%=WebUtils.popErrorAndInfoMessagesAsHtml(session)%>
 <%
 List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf"});
 %>

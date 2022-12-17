@@ -76,7 +76,7 @@ import oscar.log.LogConst;
 import oscar.oscarEncounter.data.EctProgram;
 import oscar.util.UtilDateUtilities;
 
-import com.lowagie.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfReader;
 
 public class AddEditDocumentAction extends DispatchAction {
 	

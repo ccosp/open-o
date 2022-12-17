@@ -48,8 +48,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -268,11 +267,11 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
                 }
             }
         } catch (MalformedURLException ex) {
-            Logger.getLogger(DiabetesExportAction.class.getName()).log(Level.ERROR, null, ex);
+            org.oscarehr.util.MiscUtils.getLogger();
         } catch (JDOMException ex) {
-            Logger.getLogger(DiabetesExportAction.class.getName()).log(Level.ERROR, null, ex);
+            org.oscarehr.util.MiscUtils.getLogger();
         } catch (IOException ex) {
-            Logger.getLogger(DiabetesExportAction.class.getName()).log(Level.ERROR, null, ex);
+            org.oscarehr.util.MiscUtils.getLogger();
         }
 
         if (listOfDINS.isEmpty())

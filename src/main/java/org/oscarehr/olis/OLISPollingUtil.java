@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.http.impl.cookie.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.Provider;

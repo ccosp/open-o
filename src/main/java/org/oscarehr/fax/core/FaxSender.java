@@ -23,21 +23,22 @@
  */
 package org.oscarehr.fax.core;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.cxf.common.util.Base64Utility;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.http.HttpStatus;
 import org.apache.http.conn.HttpHostConnectException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
@@ -65,7 +66,9 @@ public class FaxSender {
 		List<FaxJob> faxJobList;
 		
 		WebClient client;
-		
+
+		String document_dir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+
 		for( FaxConfig faxConfig : faxConfigList ) {
 			if( faxConfig.isActive() ) {
 				
@@ -80,39 +83,34 @@ public class FaxSender {
 
 				faxJobList = faxJobDao.getReadyToSendFaxes(faxConfig.getFaxNumber());
 				FaxJob faxJobId;
-				
-				log.info("SENDING " + faxJobList.size() + " FAXES");
-				
-				String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-				if(! path.endsWith(File.separator))
-				{
-					path = path + File.separator;
-				}
+
+				log.info("SENDING " + faxJobList.size() + " faxes from fax account " + faxConfig.getSiteUser());
+
 				String filename;
 
 				for( FaxJob faxJob : faxJobList ) {
-					
-					FaxClientLog faxClientLog = faxClientLogDao.findClientLogbyFaxId(faxJob.getId()+"");
+
+					FaxClientLog faxClientLog = faxClientLogDao.findClientLogbyFaxId(faxJob.getId());
 					STATUS faxStatus = STATUS.ERROR;
-					
-					try(ByteArrayOutputStream pdfStream = new ByteArrayOutputStream()) {
 
-						client.header("user", faxJob.getUser());
-						client.header("passwd", faxConfig.getFaxPasswd());
-						
-						faxJob.setSenderEmail( faxConfig.getSenderEmail() );
-						filename = faxJob.getFile_name();
-						
-						if(filename.contains(File.separator))
-						{
-							filename.replace(File.separator, "");
-						}
+					client.header("user", faxJob.getUser());
+					client.header("passwd", faxConfig.getFaxPasswd());
 
-						FileUtils.copyFile(new File(path+filename), pdfStream);
-						
-						String base64 = Base64Utility.encode(pdfStream.toByteArray());
+					faxJob.setSenderEmail( faxConfig.getSenderEmail() );
+					filename = faxJob.getFile_name();
+
+					if(filename.contains(File.separator))
+					{
+						filename.replace(File.separator, "");
+					}
+
+					Path filePath = Paths.get(document_dir, filename);
+					try {
+						String base64 = Base64Utility.encode(Files.readAllBytes(filePath));
 						faxJob.setDocument(base64);
-						
+
+						log.info("sending fax from file path " + filePath);
+
 						Response httpResponse = client.post(faxJob);
 						
 						if( httpResponse.getStatus() == HttpStatus.SC_OK ) {							

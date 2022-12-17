@@ -36,7 +36,7 @@ import net.sf.json.JSONArray;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionMessages;
 import org.oscarehr.common.OtherIdManager;
 import org.oscarehr.common.dao.EFormDataDao;
