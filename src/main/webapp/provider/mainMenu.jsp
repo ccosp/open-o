@@ -45,7 +45,7 @@
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@ page import="org.oscarehr.common.model.UserProperty" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="plugin" uri="http://www.caisi.ca/plugin-tag" %>
+
 <%
     GregorianCalendar cal = new GregorianCalendar();
     int curYear = cal.get(Calendar.YEAR);
@@ -396,40 +396,6 @@
                             </div>
                             <%}%>
                         </li>
-                        <!-- plugins menu extension point add -->
-                        <%
-                            int pluginMenuTagNumber = 0;
-                        %>
-                        <plugin:pageContextExtension serviceName="oscarMenuExtension" stemFromPrefix="Oscar"/>
-                        <logic:iterate name="oscarMenuExtension.points" id="pt" scope="page"
-                                       type="oscar.caisi.OscarMenuExtension">
-                            <%
-                                if (oscar.util.plugin.IsPropertiesOn.propertiesOn(pt.getName().toLowerCase())) {
-                                    pluginMenuTagNumber++;
-                            %>
-
-                            <li><a href='<html:rewrite page="<%=pt.getLink()%>"/>'>
-                                <%=pt.getName()%>
-                            </a></li>
-                            <%
-                                }
-                            %>
-                        </logic:iterate>
-
-                        <!-- plugin menu extension point add end-->
-
-
-<%--                        <caisi:isModuleLoad moduleName="caisi">--%>
-<%--                            <%--%>
-<%--                                int menuTagNumber = 0;--%>
-<%--                            %>--%>
-<%--                            <li>--%>
-<%--                                <a href='<html:rewrite page="/PMmodule/ProviderInfo.do"/>'>Program</a>--%>
-<%--                                <%--%>
-<%--                                    menuTagNumber++;--%>
-<%--                                %>--%>
-<%--                            </li>--%>
-<%--                        </caisi:isModuleLoad>--%>
 
                 <% if (isMobileOptimized) { %>
                     </ul>
@@ -450,8 +416,7 @@
                         <security:oscarSec roleName="<%=roleName$%>" objectName="_pref" rights="r">
                             <a href="javascript:void(0)"
                                onClick="popupPage(715,680,'providerpreference.jsp?provider_no=<%=curUser_no%>')"
-                               title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'
-                               OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>' ; return true">
+                               title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'>
 
                         </security:oscarSec>
                             <span class="glyphicon glyphicon-user"></span>
@@ -476,6 +441,7 @@
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script>
+<%-- TODO: new dialog window for the user preferences --%>
 <script>
     function openPreferences(providerNumber) {
         const $div = jQuery('<div />').appendTo('body');
@@ -492,6 +458,5 @@
             title: "Provider Preferences",
         }).dialog("open");
     }
-
 </script>
 

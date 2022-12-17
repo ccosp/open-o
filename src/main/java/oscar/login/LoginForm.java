@@ -22,7 +22,6 @@
  * Ontario, Canada
  */
 
-
 package oscar.login;
 
 import javax.servlet.http.HttpServletRequest;

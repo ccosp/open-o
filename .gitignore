@@ -16,8 +16,9 @@ oscar.iml
 src/test/resources/over_ride_config.properties
 src/main/resources/uiResources_*.properties
 *.DS_Store
-*.swp
+*.scp
 /out
-*.iml
 /.run*
-
+/catalina_base*
+*.iml
+/catalina_base/*

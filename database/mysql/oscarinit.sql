@@ -691,7 +691,9 @@ CREATE TABLE IF NOT EXISTS document (
   restrictToProgram tinyint(1) NOT NULL,
   abnormal int(1),
   receivedDate date,
-  PRIMARY KEY  (document_no)
+  report_media INT(11),
+  sent_date_time DATETIME,
+  PRIMARY KEY (document_no)
 ) ;
 
 --
@@ -10756,6 +10758,7 @@ CREATE TABLE IF NOT EXISTS `fax_config` (
   `active` tinyint(1),
   `faxNumber` varchar(10),
   `senderEmail` varchar(255),
+  `accountName` varchar(55),
   PRIMARY KEY (`id`)
 );
 
@@ -12150,6 +12153,8 @@ CREATE TABLE IF NOT EXISTS `consentType` (
   `name` varchar(50),
   `description` varchar(500),
   `active` tinyint(1),
+  `providerNo` VARCHAR(11),
+  `remoteEnabled` TINYINT(1),
   PRIMARY KEY (`id`)
 );
 
@@ -12345,4 +12350,11 @@ CREATE TABLE IF NOT EXISTS `rbt_groups` (
   PRIMARY KEY (`id`)
 );
 
-
+CREATE TABLE IF NOT EXISTS `document_review` (
+     `id` int auto_increment primary key,
+     `document_no` int(20) not null,
+     `provider_no` varchar(6) not null,
+     `date_reviewed` datetime,
+     foreign key(document_no) references document(document_no),
+     foreign key(provider_no) references provider(provider_no)
+);

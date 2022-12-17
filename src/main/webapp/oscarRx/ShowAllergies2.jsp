@@ -24,7 +24,7 @@
 
 --%>
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
-<%@page import="org.oscarehr.util.WebUtilsOld"%>
+<%@page import="org.oscarehr.util.WebUtils"%>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo"%>
 <%@page import="org.oscarehr.util.WebUtils"%>
 <%@page import="org.oscarehr.util.LocaleUtils"%>
@@ -362,7 +362,7 @@ function addCustomNKDA(){
 <bean:define id="patient" type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient" />
 
 <body>
-<%=WebUtilsOld.popErrorAndInfoMessagesAsHtml(session)%>
+<%=WebUtils.popErrorAndInfoMessagesAsHtml(session)%>
 
 <table id="AutoNumber1">
 <tr id="allergiesRowOne" >

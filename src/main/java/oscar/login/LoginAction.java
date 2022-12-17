@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -52,12 +53,12 @@ import org.oscarehr.common.dao.*;
 import org.oscarehr.common.model.*;
 import org.oscarehr.decisionSupport.service.DSService;
 import org.oscarehr.managers.AppManager;
-import org.oscarehr.phr.util.MyOscarUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.LoggedInUserFilter;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SessionConstants;
 import org.oscarehr.util.SpringUtils;
+import org.owasp.encoder.Encode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -66,7 +67,6 @@ import com.quatro.model.security.LdapSecurity;
 import oscar.OscarProperties;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
-import oscar.oscarSecurity.CRHelper;
 import oscar.util.AlertTimer;
 import oscar.util.CBIUtil;
 import oscar.util.ParameterActionForward;
@@ -95,13 +95,10 @@ public final class LoginAction extends DispatchAction {
     	
     	boolean isMobileOptimized = false;
     	    	
-    	String ip = request.getHeader("X-FORWARDED-FOR");  
-    	if (ip == null || ip.isEmpty()) {  
-    	    ip = request.getRemoteAddr();  
-    	}
-
+    	String ip = request.getRemoteAddr();
         String userAgent = request.getHeader("user-agent");
-        String accept = request.getHeader("Accept");       
+        String accept = request.getHeader("Accept");
+
         UAgentInfo userAgentInfo = new UAgentInfo(userAgent, accept); 
         isMobileOptimized = userAgentInfo.detectMobileQuick();
         
@@ -124,10 +121,22 @@ public final class LoginAction extends DispatchAction {
         String where = "failure";
         
     	if (request.getParameter("forcedpasswordchange") != null && request.getParameter("forcedpasswordchange").equalsIgnoreCase("true")) {
-    		//Coming back from force password change.
+    		// Coming back from force password change.
     	    userName = (String) request.getSession().getAttribute("userName");
+
+    	    // Username is only letters and numbers
+			if(! Pattern.matches("[a-zA-Z0-9]{1,10}", userName)) {
+				userName = "Invalid Username";
+			}
+
     	    password = (String) request.getSession().getAttribute("password");
+
     	    pin = (String) request.getSession().getAttribute("pin");
+
+    	    // pins are integers only
+    	   if(! Pattern.matches("[0-9]{4}", pin) ) {
+				pin = "";
+		   }
     	    nextPage = (String) request.getSession().getAttribute("nextPage");
     	    
     	    String newPassword = ((LoginForm) form).getNewPassword();
@@ -168,9 +177,21 @@ public final class LoginAction extends DispatchAction {
     	    
     	} else {
     		userName = ((LoginForm) form).getUsername();
+
+			// Username is only letters and numbers
+			// Username is only letters and numbers
+			if(! Pattern.matches("[a-zA-Z0-9]{1,10}", userName)) {
+				userName = "Invalid Username";
+			}
     	    password = ((LoginForm) form).getPassword();
     	    pin = ((LoginForm) form).getPin();
-    	    nextPage=request.getParameter("nextPage");
+
+			// pins are integers only
+			// pins are integers only
+			if(! Pattern.matches("[0-9]{4}", pin) ) {
+				pin = "";
+			}
+			nextPage=request.getParameter("nextPage");
     		        
 	        logger.debug("nextPage: "+nextPage);
 	        if (nextPage!=null) {
@@ -282,6 +303,7 @@ public final class LoginAction extends DispatchAction {
             	}
             }
             session = request.getSession(); // Create a new session for this user
+			session.setMaxInactiveInterval(7200); // 2 hours
 
           //If the ondIdKey parameter is not null and is not an empty string
         	if (oneIdKey != null && !oneIdKey.equals("")) {
@@ -306,8 +328,6 @@ public final class LoginAction extends DispatchAction {
 
             // initial db setting
             Properties pvar = OscarProperties.getInstance();
-            MyOscarUtils.setDeterministicallyMangledPasswordSecretKeyIntoSession(session, password);
-            
 
             String providerNo = strAuth[0];
             session.setAttribute("user", strAuth[0]);
@@ -394,7 +414,7 @@ public final class LoginAction extends DispatchAction {
                     AlertTimer.getInstance(alertCodes, longFreq.longValue());
                 }
             }
-            CRHelper.recordLoginSuccess(userName, strAuth[0], request);
+//            CRHelper.recordLoginSuccess(userName, strAuth[0], request);
 
             String username = (String) session.getAttribute("user");
             Provider provider = providerManager.getProvider(username);
@@ -410,9 +430,7 @@ public final class LoginAction extends DispatchAction {
                     service.fetchGuidelinesFromServiceInBackground(loggedInInfo);
                 }
             }
-            
-		    MyOscarUtils.attemptMyOscarAutoLoginIfNotAlreadyLoggedIn(loggedInInfo, true);
-            
+
             List<Integer> facilityIds = providerDao.getFacilityIds(provider.getProviderNo());
             if (facilityIds.size() > 1) {
                 return(new ActionForward("/select_facility.jsp?nextPage=" + where));
@@ -480,7 +498,7 @@ public final class LoginAction extends DispatchAction {
         	logger.debug("go to normal directory");
 
             cl.updateLoginList(ip, userName);
-            CRHelper.recordLoginFailure(userName, request);
+//            CRHelper.recordLoginFailure(userName, request);
             
             if(ajaxResponse) {
             	JSONObject json = new JSONObject();
@@ -516,7 +534,7 @@ public final class LoginAction extends DispatchAction {
         	Provider prov = providerDao.getProvider((String)request.getSession().getAttribute("user"));
         	JSONObject json = new JSONObject();
         	json.put("success", true);
-        	json.put("providerName", prov.getFormattedName());
+        	json.put("providerName", Encode.forJavaScript(prov.getFormattedName()));
         	json.put("providerNo", prov.getProviderNo());
         	response.setContentType("text/x-json");
         	json.write(response.getWriter());

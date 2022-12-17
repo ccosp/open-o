@@ -18,4 +18,5 @@
 <!-- The contents of this file will be loaded for each web application -->
 <Context>
     <Resources cacheMaxSize="102400" />
+    <CookieProcessor sameSiteCookies="strict" />
 </Context>

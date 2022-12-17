@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.dao.SecUserRoleDao;
 import org.oscarehr.PMmodule.model.SecUserRole;
@@ -39,6 +39,7 @@ import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
+import org.owasp.encoder.Encode;
 import oscar.OscarProperties;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
@@ -156,7 +157,7 @@ public final class LoginCheckLoginBean {
 
 	private String[] cleanNullObj(String errorMsg) {
 		logger.warn(errorMsg);
-		LogAction.addLogSynchronous("", "failed", LogConst.CON_LOGIN, username, ip);
+		LogAction.addLogSynchronous("", "failed", LogConst.CON_LOGIN, Encode.forHtmlContent(username), ip);
 		userpassword = null;
 		password = null;
 		return null;
@@ -164,7 +165,7 @@ public final class LoginCheckLoginBean {
 
 	private String[] cleanNullObjExpire(String errorMsg) {
 		logger.warn(errorMsg);
-		LogAction.addLogSynchronous("", "expired", LogConst.CON_LOGIN, username, ip);
+		LogAction.addLogSynchronous("", "expired", LogConst.CON_LOGIN, Encode.forHtmlContent(username), ip);
 		userpassword = null;
 		password = null;
 		return new String[] { "expired" };

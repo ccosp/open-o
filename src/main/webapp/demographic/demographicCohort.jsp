@@ -51,6 +51,7 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
+<script src="${pageContext.request.contextPath}/csrfguard"></script>
     <head>
         <title>JSP Page</title>
         <style type="text/css">

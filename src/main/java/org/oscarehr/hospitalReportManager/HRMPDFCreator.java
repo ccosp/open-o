@@ -25,10 +25,10 @@ package org.oscarehr.hospitalReportManager;
 
 
 import com.itextpdf.text.Element;
-import com.lowagie.text.*;
-import com.lowagie.text.Font;
-import com.lowagie.text.pdf.*;
-import org.apache.log4j.Logger;
+import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.*;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentDao;
 import org.oscarehr.hospitalReportManager.dao.HRMProviderConfidentialityStatementDao;
 import org.oscarehr.hospitalReportManager.model.HRMDocument;
