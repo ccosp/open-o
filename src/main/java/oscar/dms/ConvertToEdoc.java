@@ -632,13 +632,11 @@ public class ConvertToEdoc {
 	 */
 	private static Tidy getTidy() {
 		Tidy tidy = new Tidy();
-		Properties properties = new Properties();
-		InputStream is = null;
-		
-		// these can be overriden with the properties file.
+
+		// these are overriden with the properties file.
 		tidy.setForceOutput( Boolean.TRUE ); 	// output the XHTML even if it fails the validator.
 		tidy.setXHTML( Boolean.TRUE ); // only reading XHTML here.
-		tidy.setDropEmptyParas(false);
+		tidy.setDropEmptyParas(Boolean.TRUE);
 		tidy.setDocType( "omit" ); // everything will fail horribly if doctype is strict.
 		tidy.setMakeClean( Boolean.TRUE );
 		tidy.setLogicalEmphasis( Boolean.TRUE ); // replace the b and em tags with proper <strong> tags
@@ -652,26 +650,17 @@ public class ConvertToEdoc {
 			tidy.setQuiet( Boolean.TRUE );
 		}
 
-		try {
-			is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" );
+		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" )) {
 			if( is != null ) {
+				Properties properties = new Properties();
 				properties.load( is );
+				tidy.getConfiguration().addProps( properties );
 			}
 		} catch (IOException e) {
 			logger.warn("Could not load Tidy properties ", e);
-		} finally {
-			if( is != null ) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					logger.error("Error", e);
-				}
-			}
 		}
 
-		tidy.getConfiguration().addProps( properties );
-		
-		logger.debug( printTidyConfig( tidy ) );
+		System.out.println( printTidyConfig( tidy ) );
 		
 		return tidy;
 	}
@@ -700,8 +689,8 @@ public class ConvertToEdoc {
 	    StreamResult streamResult = null;
 	    try {
 			Transformer transformer = tf.newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-			transformer.setOutputProperty(OutputKeys.METHOD, "xhml");
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			transformer.setOutputProperty(OutputKeys.METHOD, "html");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");

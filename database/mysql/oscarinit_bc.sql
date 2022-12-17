@@ -6523,7 +6523,7 @@ CREATE TABLE IF NOT EXISTS `formRourke2009` (
   `p4_physical48m` text,
   `p4_nippisingattained` text,
   PRIMARY KEY (`ID`)
-);
+) ENGINE MyISAM;
 
 
 -- ----------------------------

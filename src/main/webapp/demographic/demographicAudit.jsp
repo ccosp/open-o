@@ -78,7 +78,7 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="http://www.caisi.ca/plugin-tag" prefix="plugin" %>
+
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -153,7 +153,7 @@
 			<tr>
 				<td>Audit Log Information for <%=demographic.getFormattedName()%>(<%=demographic.getDemographicNo()%>)</td>
 				<td>&nbsp;</td>
-				<td style="text-align: right" <a href="javascript:popupStart(300,400,'../About.jsp')">
+				<td style="text-align: right" ><a href="javascript:popupStart(300,400,'../About.jsp')">
 					<bean:message key="global.about" /></a> | <a href="javascript:popupStart(300,400,'../License.jsp')">
 					<bean:message key="global.license" /></a>
 				</td>
