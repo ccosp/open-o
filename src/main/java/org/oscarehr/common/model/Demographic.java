@@ -557,8 +557,8 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		Matcher m = FD_LAST_NAME.matcher(getFamilyDoctor());
 
 		if( m.find() ) {
-			if(! "null".equalsIgnoreCase(m.group(1))){
-				doctorName = m.group(1);
+			if(! "null".equalsIgnoreCase(m.group(2))){
+				doctorName = m.group(2);
 			}
 		}
 		return doctorName;
@@ -572,8 +572,23 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		Matcher m = FD_FIRST_NAME.matcher(getFamilyDoctor());
 
 		if( m.find()) {
-			if(! "null".equalsIgnoreCase(m.group(1))){
-				doctorName = m.group(1);
+			if(! "null".equalsIgnoreCase(m.group(2))){
+				doctorName = m.group(2);
+			}
+		}
+		return doctorName;
+	}
+
+	public String getFamilyDoctorName(){
+		String doctorName = "";
+
+		if(! getFamilyDoctorLastName().isEmpty() && ! getFamilyDoctorFirstName().isEmpty()) {
+			doctorName = getFamilyDoctorLastName() + ", " + getFamilyDoctorFirstName();
+		}
+		else {
+			Matcher m = FD_FULL_NAME.matcher(getFamilyDoctor());
+			if(m.find() && ! "null".equalsIgnoreCase(m.group(2))) {
+				doctorName = m.group(2);
 			}
 		}
 		return doctorName;

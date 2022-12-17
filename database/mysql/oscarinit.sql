@@ -12529,7 +12529,6 @@ CREATE TABLE IF NOT EXISTS `rbt_groups` (
   PRIMARY KEY (`id`)
 );
 
-
 create table if not exists `read_lab`
 (
     id int null,
@@ -12537,3 +12536,4 @@ create table if not exists `read_lab`
     lab_type varchar(20) null,
     lab_id int null
 );
+
