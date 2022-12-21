@@ -268,19 +268,22 @@ public class SchemaUtils
         String[] commandString={"mysql","--user="+ConfigUtils.getProperty("db_user"),"--password="+ConfigUtils.getProperty("db_password"),"--host="+ConfigUtils.getProperty("db_host"),"-e","source "+filename,ConfigUtils.getProperty("db_schema")};
         logger.info("Runtime exec command string : "+Arrays.toString(commandString));
 		Process p = Runtime.getRuntime().exec(commandString,env, new File(dir));
+
+		try(
 		BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()))) {
 
-        // read the output from the command
-        String s= null;
-        while ((s = stdInput.readLine()) != null) {
-            MiscUtils.getLogger().info(s);
-        }
+			// read the output from the command
+			String s = null;
+			while ((s = stdInput.readLine()) != null) {
+				MiscUtils.getLogger().info(s);
+			}
 
-        // read any errors from the attempted command
-        while ((s = stdError.readLine()) != null) {
-        	 MiscUtils.getLogger().info(s);
-        }
+			// read any errors from the attempted command
+			while ((s = stdError.readLine()) != null) {
+				MiscUtils.getLogger().info(s);
+			}
+		}
 
         int exitValue = -1;
         try {
@@ -289,20 +292,18 @@ public class SchemaUtils
         	throw new IOException("error with process");
         }
 
-        stdInput.close();
-        stdError.close();
-
 		return exitValue;
 	}
 
 	private static void runCreateTablesScript(Connection c) throws IOException
 	{
 		boolean skipDbInit = false;
-		if(System.getProperty("oscar.dbinit.skip") != null && System.getProperty("oscar.dbinit.skip").equalsIgnoreCase("true")) 
-			skipDbInit=true;
-		
+		if(System.getProperty("oscar.dbinit.skip") != null && System.getProperty("oscar.dbinit.skip").equalsIgnoreCase("true")) {
+			skipDbInit = true;
+		}
+
 		if(!skipDbInit) {
-			String baseDir=System.getProperty("basedir");
+			String baseDir=System.getProperty("user.dir");
 			logger.info("using baseDir : "+baseDir);
 					
 			assertEquals(loadFileIntoMySQL(baseDir + "/database/mysql/oscarinit.sql"),0);
