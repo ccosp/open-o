@@ -43,11 +43,12 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.ServletContextAware;
 
 @Service
-public final class NioFileManager {
+public final class NioFileManager implements ServletContextAware {
 	
-	@Autowired
+
 	private ServletContext context;
 	
 	@Autowired
@@ -59,7 +60,11 @@ public final class NioFileManager {
 	private static final String TEMP_PDF_DIRECTORY = "tempPDF";
 	private static final String DEFAULT_FILE_SUFFIX = "pdf";
 	private static final String BASE_DOCUMENT_DIR = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR");
-	
+
+	public void setServletContext(ServletContext servletContext) {
+		this.context = servletContext;
+	}
+
 	public Path hasCacheVersion2(LoggedInInfo loggedInInfo, String filename, Integer pageNum) {
 		
 		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", SecurityInfoManager.READ, "" ) ) {
