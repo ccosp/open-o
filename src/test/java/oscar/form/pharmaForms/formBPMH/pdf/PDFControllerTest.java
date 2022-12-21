@@ -62,7 +62,7 @@ public class PDFControllerTest {
 		url = loader.getResource("oscar/form/prop/bpmh_template_marked.pdf");
 
 		pdfController = new PDFController(url.getPath());			
-		pdfController.setOutputPath("/var/lib/tomcat6");
+		pdfController.setOutputPath("/var/lib/OscarDocument");
 		
 		demographic = new Demographic();
 		demographic.setDemographicNo(12345);
