@@ -84,12 +84,19 @@ public class PreventionPrintPdf {
     private final float LEADING = 12;
     
     private final Map<String,String> readableStatuses = new HashMap<String,String>();
+    private final Map<String,String> readableStatusesForSmoking = new HashMap<String,String>();
     
-    /** Creates a new instance of PreventionPrintPdf */
+    // Creates a new instance of PreventionPrintPdf 
     public PreventionPrintPdf() {
     	readableStatuses.put("0","Completed or Normal");
     	readableStatuses.put("1","Refused");
     	readableStatuses.put("2","Ineligible");
+    	// This is for "Completed Externally" status 
+    	readableStatuses.put("3", "Completed externally");
+    	// This is for the smoking status because it has different data
+    	readableStatusesForSmoking.put("0","Yes");
+    	readableStatusesForSmoking.put("1","Never");
+    	readableStatusesForSmoking.put("2","Previous");
     }
     
     public void printPdf(HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
@@ -236,7 +243,11 @@ public class PreventionPrintPdf {
             while( (procedureAge = request.getParameter("preventProcedureAge" + headerIds[idx] + "-" + subIdx)) != null ) {
                 procedureDate = request.getParameter("preventProcedureDate" + headerIds[idx] + "-" + subIdx);
                 procedureStatus = request.getParameter("preventProcedureStatus" + headerIds[idx] + "-" + subIdx);
-                procedureStatus = readableStatuses.get(procedureStatus);              
+                if (preventionHeader.equals("Smoking")) {
+                	procedureStatus = readableStatusesForSmoking.get(procedureStatus);
+                } else {
+                	procedureStatus = readableStatuses.get(procedureStatus);
+                }              
                 
                 String providerName = request.getParameter("preventProcedureProvider" + headerIds[idx] + "-"+ subIdx);
                 if( procedureStatus == null ) {
