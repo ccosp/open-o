@@ -28,7 +28,7 @@
 <%@page import="org.oscarehr.managers.LookupListManager"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
-    String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+    String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
     boolean authed=true;
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_demographic" rights="r" reverse="<%=true%>">
@@ -46,7 +46,6 @@
 <%@page import="org.oscarehr.sharingcenter.SharingCenterUtil"%>
 <%@page import="oscar.util.ConversionUtils"%>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo"%>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils"%>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.ConformanceTestHelper"%>
 <%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
@@ -67,8 +66,6 @@
 <%@page import="org.oscarehr.PMmodule.web.GenericIntakeEditAction" %>
 <%@page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
-<%@page import="org.oscarehr.common.model.Consent" %>
-<%@page import="org.oscarehr.common.model.ConsentType" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <jsp:useBean id="apptMainBean" class="oscar.AppointmentMainBean" scope="session" />
 <%
@@ -109,7 +106,7 @@ if(!authed) {
 }
 
 %>
-<%@ page import="java.util.*, java.sql.*, java.net.*,java.text.DecimalFormat, oscar.*, oscar.oscarDemographic.data.ProvinceNames, oscar.oscarWaitingList.WaitingList, oscar.oscarReport.data.DemographicSets,oscar.log.*"%>
+<%@ page import="java.util.*, java.net.*,java.text.DecimalFormat, oscar.*, oscar.oscarDemographic.data.ProvinceNames, oscar.oscarWaitingList.WaitingList, oscar.oscarReport.data.DemographicSets,oscar.log.*"%>
 <%@ page import="oscar.oscarDemographic.data.*"%>
 <%@ page import="oscar.oscarDemographic.pageUtil.Util" %>
 <%@ page import="org.springframework.web.context.*,org.springframework.web.context.support.*" %>
@@ -132,8 +129,6 @@ if(!authed) {
 <%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
 <%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
-<%@ page import="org.oscarehr.common.dao.SpecialtyDao" %>
-<%@ page import="org.oscarehr.common.model.Specialty" %>
 <%
 	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
 	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean("demographicCustDao");
@@ -362,7 +357,7 @@ function checkDate(yyyy,mm,dd,err_msg) {
 		//alert(yyyy + " | " + mm + " | " + dd + " " + year + " " + month + " " +date);
 
 		var young = new Date(year,month,date);
-		var old = new Date(1800,01,01);
+		var old = new Date(1800,1,1);
 		//alert(check_date.getTime() + " | " + young.getTime() + " | " + old.getTime());
 		if (check_date.getTime() <= young.getTime() && check_date.getTime() >= old.getTime() && yyyy.length==4) {
 		    typeInOK = true;
@@ -1467,7 +1462,7 @@ if(oscarProps.getProperty("new_label_print") != null && oscarProps.getProperty("
 							for (String key : demoExt.keySet()) {
 							    if (key.endsWith("_id")) {
 						%>
-						<input type="hidden" name="<%=key%>" value="<%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demoExt.get(key)))%>"/>
+						<input type="hidden" name="<%= key %>" value="<%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demoExt.get(key)))%>"/>
 						<%
 							    }
 							}
@@ -2848,11 +2843,11 @@ if ( Dead.equals(PatStat) ) {%>
 								<td align="right"><b><bean:message key="demographic.demographiceditdemographic.consentToUseEmailForCare" /></b></td>
 								<td align="left" nowrap>
 									 <label for="consentToUseEmailForCareY"><bean:message key="WriteScript.msgYes"/></label> 
-            								<input type="radio" value="yes" name="consentToUseEmailForCare" <% if (demographic.getConsentToUseEmailForCare() != null && demographic.getConsentToUseEmailForCare()){ out.write("checked"); }%> />
+            								<input type="radio" value="yes" id="consentToUseEmailForCareY" name="consentToUseEmailForCare" <% if (demographic.getConsentToUseEmailForCare() != null && demographic.getConsentToUseEmailForCare()){ out.write("checked"); }%> />
           							 <label for="consentToUseEmailForCareN"><bean:message key="WriteScript.msgNo"/></label>
-            								<input type="radio" value="no" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() != null && !demographic.getConsentToUseEmailForCare()){ out.write("checked");}%> />
+            								<input type="radio" value="no" id="consentToUseEmailForCareN" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() != null && !demographic.getConsentToUseEmailForCare()){ out.write("checked");}%> />
 									 <label for="consentToUseEmailForCareE"><bean:message key="WriteScript.msgUnset"/></label>
-            								<input type="radio" value="unset" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() == null){ out.write("checked"); } %> />
+            								<input type="radio" value="unset" id="consentToUseEmailForCareE" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() == null){ out.write("checked"); } %> />
 								</td>
 							</tr>
 							<tr valign="top">
@@ -3228,7 +3223,7 @@ document.updatedelete.r_doctor_ohip.value = refNo;
                                   }
                                   %>
                                 <input type="hidden" name="initial_rosterstatus" value="<%=rosterStatus%>"/>
-								<select id="roster_status" name="roster_status" style="width: 120" <%=getDisabled("roster_status")%> onchange="checkRosterStatus2()">
+								<select id="roster_status" name="roster_status" style="width: 120px;" <%=getDisabled("roster_status")%> onchange="checkRosterStatus2()">
 									<option value=""></option>
 									<option value="RO"
 										<%="RO".equals(rosterStatus)?" selected":""%>>
@@ -3366,7 +3361,7 @@ document.updatedelete.r_doctor_ohip.value = refNo;
                                 String patientStatus = demographic.getPatientStatus();
                                  if(patientStatus==null) patientStatus="";%>
                                 <input type="hidden" name="initial_patientstatus" value="<%=patientStatus%>">
-								<select name="patient_status" style="width: 120" <%=getDisabled("patient_status")%> onChange="updatePatientStatusDate()">
+								<select name="patient_status" style="width: 120px" <%=getDisabled("patient_status")%> onChange="updatePatientStatusDate()">
 									<option value="AC"
 										<%="AC".equals(patientStatus)?" selected":""%>>
 									<bean:message key="demographic.demographiceditdemographic.optActive"/></option>
@@ -3576,10 +3571,10 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 			<tr>
 			<td >
 				<div id="usSigned">
-					<input type="radio" name="usSigned" id="usSigned" value="signed" <%=usSigned.equals("signed") ? "checked" : ""%>>
+					<input type="radio" name="usSigned" id="usSignedYes" value="signed" <%=usSigned.equals("signed") ? "checked" : ""%>>
 						<label style="font-weight:bold;" for="usSigned">U.S. Resident Consent Form Signed </label>
 			
-				    <input type="radio" name="usSigned" id="usSigned" value="unsigned" <%=usSigned.equals("unsigned") ? "checked" : ""%>>
+				    <input type="radio" name="usSigned" id="usSignedNo" value="unsigned" <%=usSigned.equals("unsigned") ? "checked" : ""%>>
 				    	<label style="font-weight:bold;" for="usSigned">U.S. Resident Consent Form NOT Signed</label>
 			    </div>
 			</td>
@@ -3858,7 +3853,7 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 <%		if (hasHasPrimary) {
 %>								<td><b><%=hasPrimary.replace(" ", "&nbsp;")%>:</b></td>
 								<td>
-									<select name="<%=hasPrimary.replace(" ", "")%>">
+									<select name='<%=hasPrimary.replace(" ", "")%>' >
 										<option value="N/A" <%="N/A".equals(hasPrimaryCarePhysician)?"selected":""%>>N/A</option>
 										<option value="Yes" <%="Yes".equals(hasPrimaryCarePhysician)?"selected":""%>>Yes</option>
 										<option value="No" <%="No".equals(hasPrimaryCarePhysician)?"selected":""%>>No</option>
@@ -3868,7 +3863,7 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 		if (hasEmpStatus) {
 %>								<td><b><%=empStatus.replace(" ", "&nbsp;")%>:</b></td>
 								<td>
-									<select name="<%=empStatus.replace(" ", "")%>">
+									<select name='<%=empStatus.replace(" ", "")%>' >
 										<option value="N/A" <%="N/A".equals(employmentStatus)?"selected":""%>>N/A</option>
 										<option value="FULL TIME" <%="FULL TIME".equals(employmentStatus)?"selected":""%>>FULL TIME</option>
 										<option value="ODSP" <%="ODSP".equals(employmentStatus)?"selected":""%>>ODSP</option>
