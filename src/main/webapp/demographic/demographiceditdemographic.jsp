@@ -148,7 +148,7 @@ if(!authed) {
 <jsp:useBean id="providerBean" class="java.util.Properties"	scope="session" />
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr"%>
+<%--<%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr"%>--%>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic"
@@ -940,7 +940,7 @@ function consentClearBtn(radioBtnName)
                         %> <%=demographic.getLastName()%>,
 				<%=demographic.getFirstName()%> <%=demographic.getSex()%>
 				<%=age%> years &nbsp;
-				<oscar:phrverification demographicNo='<%=demographic.getDemographicNo().toString()%>' ><bean:message key="phr.verification.link"/></oscar:phrverification>
+<%--				<oscar:phrverification demographicNo='<%=demographic.getDemographicNo().toString()%>' ><bean:message key="phr.verification.link"/></oscar:phrverification>--%>
 
 				<span style="margin-left: 20px;font-style:italic">
 				<bean:message key="demographic.demographiceditdemographic.msgNextAppt"/>: <oscar:nextAppt demographicNo='<%=demographic.getDemographicNo().toString()%>' />
@@ -2796,48 +2796,48 @@ if ( Dead.equals(PatStat) ) {%>
 								<td align="left"><input type="text" name="email" size="30" <%=getDisabled("email")%>
 									value="<%=demographic.getEmail()!=null? demographic.getEmail() : ""%>">
 								</td>
-								<td align="right"><b><bean:message
-									key="demographic.demographiceditdemographic.formPHRUserName" />: </b></td>
-								<td align="left">
-								<input type="text" name="myOscarUserName" size="30" <%=getDisabled("myOscarUserName")%>
-									value="<%=demographic.getMyOscarUserName()!=null? demographic.getMyOscarUserName() : ""%>">
-								<%if (demographic.getEmail()!=null && !demographic.getEmail().equals("") && (demographic.getMyOscarUserName()==null ||demographic.getMyOscarUserName().equals(""))) {%>
-									<input type="button" id="emailInvite" value="<bean:message key="demographic.demographiceditdemographic.btnEmailInvite"/>" onclick="sendEmailInvite('<%=demographic.getDemographicNo()%>')"/>
-									<script>
-										function sendEmailInvite(demoNo) {
-											var http = new XMLHttpRequest();
-											var url = "../ws/rs/app/PHREmailInvite/"+demoNo;
-											http.open("GET", url, true);
-											http.onreadystatechange = function() {
-												if(http.readyState == 4 && http.status == 200) {
-													var success = http.responseXML.getElementsByTagName("success")[0].childNodes[0].nodeValue=="true";
-													var btn = document.getElementById("emailInvite");
-													btn.disabled = true;
-													if (success) btn.value = "<bean:message key="demographic.demographiceditdemographic.btnEmailInviteSent"/>";
-													else btn.value = "<bean:message key="demographic.demographiceditdemographic.btnEmailInviteError"/>";
-												}
-											}
-											http.send(null);
-										}
-									</script>
+<%--								<td align="right"><b><bean:message--%>
+<%--									key="demographic.demographiceditdemographic.formPHRUserName" />: </b></td>--%>
+<%--								<td align="left">--%>
+<%--								<input type="text" name="myOscarUserName" size="30" <%=getDisabled("myOscarUserName")%>--%>
+<%--									value="<%=demographic.getMyOscarUserName()!=null? demographic.getMyOscarUserName() : ""%>">--%>
+<%--								<%if (demographic.getEmail()!=null && !demographic.getEmail().equals("") && (demographic.getMyOscarUserName()==null ||demographic.getMyOscarUserName().equals(""))) {%>--%>
+<%--									<input type="button" id="emailInvite" value="<bean:message key="demographic.demographiceditdemographic.btnEmailInvite"/>" onclick="sendEmailInvite('<%=demographic.getDemographicNo()%>')"/>--%>
+<%--									<script>--%>
+<%--										function sendEmailInvite(demoNo) {--%>
+<%--											var http = new XMLHttpRequest();--%>
+<%--											var url = "../ws/rs/app/PHREmailInvite/"+demoNo;--%>
+<%--											http.open("GET", url, true);--%>
+<%--											http.onreadystatechange = function() {--%>
+<%--												if(http.readyState == 4 && http.status == 200) {--%>
+<%--													var success = http.responseXML.getElementsByTagName("success")[0].childNodes[0].nodeValue=="true";--%>
+<%--													var btn = document.getElementById("emailInvite");--%>
+<%--													btn.disabled = true;--%>
+<%--													if (success) btn.value = "<bean:message key="demographic.demographiceditdemographic.btnEmailInviteSent"/>";--%>
+<%--													else btn.value = "<bean:message key="demographic.demographiceditdemographic.btnEmailInviteError"/>";--%>
+<%--												}--%>
+<%--											}--%>
+<%--											http.send(null);--%>
+<%--										}--%>
+<%--									</script>--%>
 									
-								<%}%>
+<%--								<%}%>--%>
 									
-								<%if (demographic.getMyOscarUserName()==null ||demographic.getMyOscarUserName().equals("")) {%>
+<%--								<%if (demographic.getMyOscarUserName()==null ||demographic.getMyOscarUserName().equals("")) {%>--%>
 
-								<%
-									String onclickString="popup(900, 800, '../phr/indivo/RegisterIndivo.jsp?demographicNo="+demographic_no+"', 'indivoRegistration');";
-									MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);
-									if (myOscarLoggedInInfo==null || !myOscarLoggedInInfo.isLoggedIn()) onclickString="alert('Please login to MyOscar first.')";
-								%>
-								<br />
-								<a href="javascript:"
-									onclick="<%=onclickString%>"><sub
-									style="white-space: nowrap;"><bean:message key="demographic.demographiceditdemographic.msgRegisterPHR"/></sub></a> 
-								<%}else{%>
-									<input type="button" id="phrConsent" style="display:none;" title="<bean:message key="demographic.demographiceditdemographic.confirmAccount"/>"  value="Confirm" />
-								<%}%>
-								</td>
+<%--								<%--%>
+<%--									String onclickString="popup(900, 800, '../phr/indivo/RegisterIndivo.jsp?demographicNo="+demographic_no+"', 'indivoRegistration');";--%>
+<%--									MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);--%>
+<%--									if (myOscarLoggedInInfo==null || !myOscarLoggedInInfo.isLoggedIn()) onclickString="alert('Please login to MyOscar first.')";--%>
+<%--								%>--%>
+<%--								<br />--%>
+<%--								<a href="javascript:"--%>
+<%--									onclick="<%=onclickString%>"><sub--%>
+<%--									style="white-space: nowrap;"><bean:message key="demographic.demographiceditdemographic.msgRegisterPHR"/></sub></a> --%>
+<%--								<%}else{%>--%>
+<%--									<input type="button" id="phrConsent" style="display:none;" title="<bean:message key="demographic.demographiceditdemographic.confirmAccount"/>"  value="Confirm" />--%>
+<%--								<%}%>--%>
+<%--								</td>--%>
 							</tr>
 							<tr valign="top">
 								<td align="right"><b><bean:message key="demographic.demographiceditdemographic.consentToUseEmailForCare" /></b></td>
@@ -3178,7 +3178,7 @@ if ( Dead.equals(PatStat) ) {%>
  	                      	
  	                       %>
                                   </select> <script type="text/javascript" language="Javascript">
-<!--
+//<!--
 function changeRefDoc() {
 //alert(document.updatedelete.r_doctor.value);
 var refName = document.updatedelete.r_doctor.options[document.updatedelete.r_doctor.selectedIndex].value;
@@ -4159,55 +4159,55 @@ jQuery(document).ready(function(){
 }
 %>
 
-jQuery(document).ready(function(){
-	//Check if PHR is active and if patient has consented	
-	/*
-	PHR inactive                    FALSE      INACTIVE
-	PHR active & Consent Needed     TRUE       NEED_CONSENT
-	PHR Active & Consent exists.    TRUE       CONSENTED
-	*/
-	jQuery.ajax({
-		url: "<%=request.getContextPath()%>/ws/rs/app/PHRActive/consentGiven/<%=demographic_no%>",
-		dataType: 'json',
-		success: function (data) {
-			console.log("PHR CONSENT",data);
-			if(data.success && data.message === "NEED_CONSENT"){
-				jQuery("#phrConsent").show();
-			}else{
-				jQuery("#phrConsent").hide();
-			}
-		}
-	});
-	
-	jQuery.ajax({
-		url: "<%=request.getContextPath()%>/ws/rs/app/PHRActive/",
-		dataType: 'json',
-		success: function (data) {
-			console.log("PHR Active",data);
-			if(!data.success){
-				jQuery("#emailInvite").hide();
-			}
-		}
-	});
-		
-	jQuery("#phrConsent").click(function() {
-  		jQuery.ajax({
-  			type: "POST",
-	        url: "<%=request.getContextPath()%>/ws/rs/app/PHRActive/consentGiven/<%=demographic_no%>",
-	        dataType: 'json',
-	        success: function (data) {
-	       		console.log("PHR CONSENT POST",data);
-	       		if(data.success && data.message === "NEED_CONSENT"){
-	       			jQuery("#phrConsent").show();
-	       		}else{
-	       			alert("Successfully confirmed");
-	       			jQuery("#phrConsent").hide();
-	       		}
-	    		}
-		});
-	});
-	
-});
+<%--jQuery(document).ready(function(){--%>
+<%--	//Check if PHR is active and if patient has consented	--%>
+<%--	/*--%>
+<%--	PHR inactive                    FALSE      INACTIVE--%>
+<%--	PHR active & Consent Needed     TRUE       NEED_CONSENT--%>
+<%--	PHR Active & Consent exists.    TRUE       CONSENTED--%>
+<%--	*/--%>
+<%--	jQuery.ajax({--%>
+<%--		url: "<%=request.getContextPath()%>/ws/rs/app/PHRActive/consentGiven/<%=demographic_no%>",--%>
+<%--		dataType: 'json',--%>
+<%--		success: function (data) {--%>
+<%--			console.log("PHR CONSENT",data);--%>
+<%--			if(data.success && data.message === "NEED_CONSENT"){--%>
+<%--				jQuery("#phrConsent").show();--%>
+<%--			}else{--%>
+<%--				jQuery("#phrConsent").hide();--%>
+<%--			}--%>
+<%--		}--%>
+<%--	});--%>
+<%--	--%>
+<%--	jQuery.ajax({--%>
+<%--		url: "<%=request.getContextPath()%>/ws/rs/app/PHRActive/",--%>
+<%--		dataType: 'json',--%>
+<%--		success: function (data) {--%>
+<%--			console.log("PHR Active",data);--%>
+<%--			if(!data.success){--%>
+<%--				jQuery("#emailInvite").hide();--%>
+<%--			}--%>
+<%--		}--%>
+<%--	});--%>
+<%--		--%>
+<%--	jQuery("#phrConsent").click(function() {--%>
+<%--  		jQuery.ajax({--%>
+<%--  			type: "POST",--%>
+<%--	        url: "<%=request.getContextPath()%>/ws/rs/app/PHRActive/consentGiven/<%=demographic_no%>",--%>
+<%--	        dataType: 'json',--%>
+<%--	        success: function (data) {--%>
+<%--	       		console.log("PHR CONSENT POST",data);--%>
+<%--	       		if(data.success && data.message === "NEED_CONSENT"){--%>
+<%--	       			jQuery("#phrConsent").show();--%>
+<%--	       		}else{--%>
+<%--	       			alert("Successfully confirmed");--%>
+<%--	       			jQuery("#phrConsent").hide();--%>
+<%--	       		}--%>
+<%--	    		}--%>
+<%--		});--%>
+<%--	});--%>
+<%--	--%>
+<%--});--%>
 
 </script>
 </body>
