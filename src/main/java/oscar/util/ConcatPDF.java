@@ -76,44 +76,49 @@ public class ConcatPDF {
      */
     public static void concat(List<Object> fileOrInputStreamPdfList, OutputStream outputStream) {
         PDFMergerUtility pdfMerger = new PDFMergerUtility();
+        PDDocument documentReader;
+        for (Object o : fileOrInputStreamPdfList) {
 
-        try {
-            for (Object o : fileOrInputStreamPdfList) {
-                PDDocument documentReader;
-
-                //load pdf file
+            //load pdf file
+            try {
                 if (o instanceof InputStream) {
                     documentReader = PDDocument.load((InputStream) o);
                 } else {
                     String fileName = (String) o;
                     documentReader = PDDocument.load(new File(fileName));
                 }
+            } catch (Exception e) {
+                MiscUtils.getLogger().error("Failed to locate file for concatenation: " + o, e);
+                continue;
+            }
 
-                // check if encrypted, if so de-encrypt
-                if (documentReader.isEncrypted()){
-                    try {
-                        documentReader.setAllSecurityToBeRemoved(true);
-                    }
-                    catch (Exception e) {
-                        MiscUtils.getLogger().error("The document is encrypted and can't be decrypted", e);
-                    }
+            // check if encrypted, if so de-encrypt
+            if (documentReader != null && documentReader.isEncrypted()){
+                try {
+                    documentReader.setAllSecurityToBeRemoved(true);
                 }
-
-                // save document to output stream and add resulting data to merger
-                try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    InputStream inputStream = new ByteArrayInputStream(baos.toByteArray())) {
-                    documentReader.save(baos);
-                    pdfMerger.addSource(inputStream);
-                    documentReader.close();
-                } catch (IOException e) {
-                    MiscUtils.getLogger().error("Document could not be written to disk", e);
+                catch (Exception e) {
+                    MiscUtils.getLogger().error("This document is encrypted and can't be decrypted for concatenation " + o, e);
+                    continue;
                 }
             }
 
+            // save document to output stream and add resulting data to merger
+            try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                InputStream inputStream = new ByteArrayInputStream(baos.toByteArray())) {
+                documentReader.save(baos);
+                pdfMerger.addSource(inputStream);
+                documentReader.close();
+            } catch (Exception e) {
+                MiscUtils.getLogger().error("Concatenated document could not be written to disk", e);
+            }
+        }
+
+        try {
             pdfMerger.setDestinationStream(outputStream);
             pdfMerger.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
-        } catch (IOException e) {
-            MiscUtils.getLogger().error("Error", e);
+        } catch (Exception e) {
+            MiscUtils.getLogger().error("Document merge failed.", e);
         }
     }
 
