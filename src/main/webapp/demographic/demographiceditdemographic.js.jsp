@@ -264,12 +264,16 @@ return true;
 
 function isCanadian(){
 	e = document.updatedelete.province;
-    var province = e.options[e.selectedIndex].value;
-    
-    if ( province.indexOf("US")>-1 || province=="OT"){ //if not canadian
-            return false;
+    try {
+        var province = e.options[e.selectedIndex].value;
+
+        if ( province.indexOf("US")>-1 || province=="OT"){ //if not canadian
+                return false;
+        }
+        return true;
+    } catch {
+        return false;
     }
-    return true;
 }
 
 
