@@ -36,6 +36,7 @@ import org.oscarehr.common.dao.SecurityDao;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.SSOUtility;
 import org.oscarehr.util.SpringUtils;
 import com.quatro.model.security.LdapSecurity;
 import org.owasp.encoder.Encode;
@@ -49,7 +50,7 @@ public final class LoginCheckLoginBean {
 
 	private String username = "";
 	private String password = "";
-	private String pin = "";
+	private String pin;
 	private String ip = "";
 	private String ssoKey = "";
 
@@ -83,7 +84,19 @@ public final class LoginCheckLoginBean {
 		// check pin if needed
 
 		String sPin = pin;
-		if (oscar.OscarProperties.getInstance().isPINEncripted()) sPin = oscar.Misc.encryptPIN(sPin);
+
+		if (sPin != null && oscar.OscarProperties.getInstance().isPINEncripted()) sPin = oscar.Misc.encryptPIN(sPin);
+
+		/*
+		 * Override PIN requirement when SSO is enabled
+		 * The pin parameter is set to null in the LoginCheckLogin bean and
+		 * is changed back to default empty after the pin requirement is disabled.
+		 */
+		if(sPin == null && SSOUtility.isSSOEnabled()) {
+			security.setBRemotelockset(0);
+			security.setBLocallockset(0);
+			sPin = "";
+		}
 
 		if (isWAN() && security.getBRemotelockset() != null && security.getBRemotelockset().intValue() == 1 && (!sPin.equals(security.getPin()) || pin.length() < 3)) {
 			return cleanNullObj(LOG_PRE + "Pin-remote needed: " + username);
@@ -260,7 +273,9 @@ public final class LoginCheckLoginBean {
 	}
 
 	public void setPin(String pin1) {
-		this.pin = pin1.replace(' ', '\b');
+		if(pin1 != null) {
+			this.pin = pin1.replace(' ', '\b');
+		}
 	}
 
 	public void setIp(String ip1) {
