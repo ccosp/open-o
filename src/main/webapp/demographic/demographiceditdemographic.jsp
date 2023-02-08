@@ -803,7 +803,7 @@ function updatePatientStatusDate() {
 jQuery(document).ready(function() {
 	var addresses;
 	
-	 jQuery.getJSON("../demographicSupport.do",
+	 jQuery.getJSON("${ctx}/demographicSupport.do",
              {
                      method: "getAddressAndPhoneHistoryAsJson",
                      demographicNo: demographicNo
@@ -855,17 +855,12 @@ function consentClearBtn(radioBtnName)
 	    }
 	}
 }
-</script>
-
-</head>
-<body onLoad="setfocus(); checkONReferralNo(); formatPhoneNum(); checkRosterStatus2();"
-	topmargin="0" leftmargin="0" rightmargin="0" id="demographiceditdemographic">
 <%
        Demographic demographic = demographicDao.getDemographic(demographic_no);
        List<DemographicArchive> archives = demographicArchiveDao.findByDemographicNo(Integer.parseInt(demographic_no));
        List<DemographicExtArchive> extArchives = demographicExtArchiveDao.getDemographicExtArchiveByDemoAndKey(Integer.parseInt(demographic_no), "demo_cell");
-       
-       AdmissionManager admissionManager = SpringUtils.getBean(AdmissionManager.class);  
+
+       AdmissionManager admissionManager = SpringUtils.getBean(AdmissionManager.class);
      	Admission bedAdmission = admissionManager.getCurrentBedProgramAdmission(demographic.getDemographicNo());
      	Admission communityAdmission = admissionManager.getCurrentCommunityProgramAdmission(demographic.getDemographicNo());
      	List<Admission> serviceAdmissions = admissionManager.getCurrentServiceProgramAdmission(demographic.getDemographicNo());
@@ -873,7 +868,56 @@ function consentClearBtn(radioBtnName)
      		serviceAdmissions = new ArrayList<Admission>();
      	}
 		pageContext.setAttribute("demographic", demographic, PageContext.PAGE_SCOPE);
-%>
+
+	if("true".equals(OscarProperties.getInstance().getProperty("iso3166.2.enabled","false"))) {
+		if(Arrays.asList("BC","AB","SK","MB","ON","QC","NB","NS","NL","NS","PE","YT","NT").contains(demographic.getProvince())) {
+			demographic.setProvince("CA-" + demographic.getProvince());
+		}
+		if(Arrays.asList("BC","AB","SK","MB","ON","QC","NB","NS","NL","NS","PE","YT","NT").contains(demographic.getResidentialProvince())) {
+			demographic.setResidentialProvince("CA-" + demographic.getResidentialProvince());
+		}
+	%>
+		jQuery(document).ready(function(){
+			setProvince('<%=StringUtils.trimToEmpty(demographic.getProvince())%>');
+			setResidentialProvince('<%=demographic.getResidentialProvince()%>');
+		});
+	<% } %>
+
+	function validateHC() {
+		var hin = jQuery("#hinBox").val();
+		var ver = jQuery("#verBox").val();
+		var hcType = jQuery("#hcTypeBox").val();
+
+		jQuery.ajax({
+			type: "GET",
+			url:  '<%=request.getContextPath()%>/ws/rs/patientDetailStatusService/validateHC?hin='+hin+'&ver='+ver,
+			dataType:'json',
+			contentType:'application/json',
+			success: function (data) {
+				var responseCode = data.responseCode;
+				var responseDescription = data.responseDescription;
+				var responseAction = data.responseAction;
+				var fName = data.firstName;
+				var lName = data.lastName;
+				var bDate = data.birthDate;
+				var gender  = data.gender;
+				var expDate = data.expiryDate;
+				var issueDate = data.issueDate;
+				var valid = data.valid;
+
+				alert(Jdata.responseDescription);
+			},
+			error: function(data) {
+				alert('An error occured.');
+			}
+		});
+	}
+</script>
+
+</head>
+<body onLoad="setfocus(); checkONReferralNo(); formatPhoneNum(); checkRosterStatus2();"
+	topmargin="0" leftmargin="0" rightmargin="0" id="demographiceditdemographic">
+
 <table class="MainTable" id="scrollNumber1" name="encounterTable">
 	<tr class="MainTableTopRow">
 		<td class="MainTableTopRowLeftColumn"><bean:message
@@ -1320,9 +1364,8 @@ if (iviewTag!=null && !"".equalsIgnoreCase(iviewTag.trim())){
 				<td>
 				<form method="post" name="updatedelete" id="updatedelete"
 					action="demographiccontrol.jsp"
-					onSubmit="return checkTypeInEdit();"><input type="hidden"
-					name="demographic_no"
-					value="<%=demographic.getDemographicNo()%>">
+					onSubmit="return checkTypeInEdit();">
+					<input type="hidden" name="demographic_no" value="<%=demographic.getDemographicNo()%>">
 				<table width="100%" class="demographicDetail">
 					<tr>
 						<td class="RowTop">
