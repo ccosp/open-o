@@ -54,12 +54,14 @@ public final class LoginCheckLoginBean {
 	private String ip = "";
 	private String ssoKey = "";
 
-	private String userpassword = null; // your password in the table
+	private String userpassword; // your password in the table
 
-	private String firstname = null;
-	private String lastname = null;
-	private String profession = null;
-	private String rolename = null;
+	private String firstname;
+	private String lastname;
+	private String profession;
+	private String rolename;
+
+	private String email;
 
 	private Security security = null;
 
@@ -107,6 +109,7 @@ public final class LoginCheckLoginBean {
 		if (security.getBExpireset() != null && security.getBExpireset().intValue() == 1 && (security.getDateExpiredate() == null || security.getDateExpiredate().before(new Date()))) {
 			return cleanNullObjExpire(LOG_PRE + "Expired: " + username);
 		}
+
 		String expired_days = "";
 		if (security.getBExpireset() != null && security.getBExpireset().intValue() == 1) {
 			// Give warning if the password will be expired in 10 days.
@@ -130,13 +133,14 @@ public final class LoginCheckLoginBean {
 		}
 
 		if (auth) { // login successfully
-			String[] strAuth = new String[6];
+			String[] strAuth = new String[7];
 			strAuth[0] = security.getProviderNo();
 			strAuth[1] = firstname;
 			strAuth[2] = lastname;
 			strAuth[3] = profession;
 			strAuth[4] = rolename;
 			strAuth[5] = expired_days;
+			strAuth[6] = email;
 			return strAuth;
 		} else { // login failed
 			return cleanNullObj(LOG_PRE + "password failed: " + username);
@@ -155,7 +159,7 @@ public final class LoginCheckLoginBean {
 			strAuth[3] = profession;
 			strAuth[4] = rolename;
 			strAuth[5] = expired_days;
-			strAuth[6] = security.getDelagateOneIdEmail();
+			strAuth[6] = email;
 			
 		}
 		else {
@@ -202,6 +206,7 @@ public final class LoginCheckLoginBean {
 			firstname = provider.getFirstName();
 			lastname = provider.getLastName();
 			profession = provider.getProviderType();
+			email = provider.getEmail();
 		}
 
 		// retrieve the oscar roles for this Provider as a comma separated list

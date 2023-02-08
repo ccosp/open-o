@@ -22,15 +22,10 @@
  * Ontario, Canada
  */
 
-
 package oscar.login;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
@@ -40,6 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.onelogin.saml2.Auth;
+import com.onelogin.saml2.settings.Saml2Settings;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +45,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionRedirect;
-import org.apache.struts.actions.MappingDispatchAction;
+import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.service.ProviderManager;
 import org.oscarehr.PMmodule.web.OcanForm;
@@ -65,12 +62,9 @@ import org.oscarehr.common.model.ServiceRequestToken;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.decisionSupport.service.DSService;
 import org.oscarehr.managers.AppManager;
+import org.oscarehr.managers.SsoAuthenticationManager;
 import org.oscarehr.phr.util.MyOscarUtils;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.LoggedInUserFilter;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SessionConstants;
-import org.oscarehr.util.SpringUtils;
+import org.oscarehr.util.*;
 
 import net.sf.json.JSONObject;
 import oscar.OscarProperties;
@@ -80,7 +74,7 @@ import oscar.util.AlertTimer;
 import oscar.util.CBIUtil;
 import oscar.util.ParameterActionForward;
 
-public final class SSOLoginAction extends MappingDispatchAction {
+public final class SSOLoginAction extends DispatchAction {
 	
 	/**
 	 * This variable is only intended to be used by this class and the jsp which sets the selected facility.
@@ -110,6 +104,10 @@ public final class SSOLoginAction extends MappingDispatchAction {
     //Declares providerInformation String Array
 	String[] providerInformation;
 	String providerNumber = "";
+
+	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		return authenticationRedirect(mapping, form, request, response);
+	}
 	
     public ActionForward econsultLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)  throws IOException {
         boolean ajaxResponse = request.getParameter("ajaxResponse") != null ? Boolean.valueOf(request.getParameter("ajaxResponse")) : false;
@@ -123,7 +121,7 @@ public final class SSOLoginAction extends MappingDispatchAction {
         oneIdKey = request.getParameter("nameId");
         oneIdEmail = request.getParameter("email");
         requestStartTime = request.getParameter("ts");
- String encryptedOneIdToken = request.getParameter("encryptedOneIdToken");
+        String encryptedOneIdToken = request.getParameter("encryptedOneIdToken");
         
         String signature = request.getParameter("signature");
         String ts = request.getParameter("ts");
@@ -423,8 +421,6 @@ public final class SSOLoginAction extends MappingDispatchAction {
             
          // get preferences from preference table
         	ProviderPreference providerPreference=providerPreferenceDao.find(providerNo);
-        	
-            
                 
         	if (providerPreference==null) providerPreference=new ProviderPreference();
          	
@@ -527,17 +523,6 @@ public final class SSOLoginAction extends MappingDispatchAction {
             	}
             }
 
-            if( pvar.getProperty("LOGINTEST","").equalsIgnoreCase("yes")) {
-                String proceedURL = mapping.findForward(destination).getPath();
-                request.getSession().setAttribute("proceedURL", proceedURL);               
-                return mapping.findForward("LoginTest");
-            }
-            
-            //are they using the new UI?
-            UserProperty prop = propDao.getProp(provider.getProviderNo(), UserProperty.COBALT);
-            if(prop != null && prop.getValue() != null && prop.getValue().equals("yes")) {
-            	destination="cobalt";
-            }
         }
         else {
         	//If the key does not match a user, return the key asking the user to input the OSCAR credentials of the account to tie it to.
@@ -585,6 +570,27 @@ public final class SSOLoginAction extends MappingDispatchAction {
         
         //Returns the destination ActionForward
     	return mapping.findForward(destination);
+    }
+
+    /**
+     * A basic Action method to redirect a user login to the SSO Identity Provider when
+     * SSO authentication is enabled in the oscar.properties file.
+     * This method sends an authentication request to the IDP and then handles the
+     * reply.
+     */
+    public ActionForward authenticationRedirect(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
+		String ssoSpEntityId = request.getParameter("ssoSpEntityId");
+		String context = request.getRequestURL().toString();
+		SsoAuthenticationManager ssoAuthenticationManager = SpringUtils.getBean(SsoAuthenticationManager.class);
+        try {
+	        Saml2Settings saml2Settings = ssoAuthenticationManager.buildAuthenticationRequestSettings(ssoSpEntityId, context);
+            Auth auth = new Auth(saml2Settings, request, response);
+            auth.login();
+        } catch (Exception e) {
+            // handle error
+	        System.out.println(e);
+        }
+		return null;
     }
 
     private Boolean isSessionValid() {
