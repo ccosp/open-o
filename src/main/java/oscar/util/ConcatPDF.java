@@ -44,6 +44,8 @@ package oscar.util;
  */
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,39 +80,35 @@ public class ConcatPDF {
         PDFMergerUtility pdfMerger = new PDFMergerUtility();
         PDDocument documentReader;
         for (Object o : fileOrInputStreamPdfList) {
-
             //load pdf file
             try {
                 if (o instanceof InputStream) {
                     documentReader = PDDocument.load((InputStream) o);
                 } else {
-                    String fileName = (String) o;
-                    documentReader = PDDocument.load(new File(fileName));
+                    Path fileName = Paths.get((String) o);
+                    documentReader = PDDocument.load(fileName.toFile());
                 }
-            } catch (Exception e) {
-                MiscUtils.getLogger().error("Failed to locate file for concatenation: " + o, e);
+
+                // remove encryption
+                if (documentReader != null && documentReader.isEncrypted()) {
+                    documentReader.setAllSecurityToBeRemoved(true);
+                }
+            } catch (IOException e) {
+                MiscUtils.getLogger().error("Failed to open file for concatenation: " + o, e);
                 continue;
             }
 
-            // check if encrypted, if so de-encrypt
-            if (documentReader != null && documentReader.isEncrypted()){
-                try {
-                    documentReader.setAllSecurityToBeRemoved(true);
-                }
-                catch (Exception e) {
-                    MiscUtils.getLogger().error("This document is encrypted and can't be decrypted for concatenation " + o, e);
-                    continue;
-                }
-            }
-
             // save document to output stream and add resulting data to merger
-            try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                InputStream inputStream = new ByteArrayInputStream(baos.toByteArray())) {
-                documentReader.save(baos);
-                pdfMerger.addSource(inputStream);
-                documentReader.close();
-            } catch (Exception e) {
-                MiscUtils.getLogger().error("Concatenated document could not be written to disk", e);
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                if (documentReader != null) {
+                    documentReader.save(baos);
+                    try (InputStream inputStream = new ByteArrayInputStream(baos.toByteArray())) {
+                        pdfMerger.addSource(inputStream);
+                        documentReader.close();
+                    }
+                }
+            } catch (IOException e) {
+                MiscUtils.getLogger().error("Document could not be added to merge " + o, e);
             }
         }
 
