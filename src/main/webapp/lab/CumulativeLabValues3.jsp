@@ -190,11 +190,6 @@ function newWindow(file,window) {
 //-->
         </script>
 
-
-
-
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
-
 <script language="JavaScript">
 
 
@@ -312,7 +307,7 @@ function reportWindow(page) {
                             %>
 
 				<th><a
-					href="javascript:reportWindow('../lab/CA/ALL/labDisplay.jsp?segmentID=<%=lab_no%>&providerNo=<%= session.getValue("user") %>')"><%=UtilDateUtilities.DateToString( labDate , "dd-MMM yy")%></a>
+					href="javascript:reportWindow('../lab/CA/ALL/labDisplay.jsp?segmentID=<%=lab_no%>&providerNo=<%= session.getValue("user") %>')"><%=UtilDateUtilities.DateToString( labDate , "dd MMM yy")%></a>
 				</th>
 				<%}%>
 			</tr>
