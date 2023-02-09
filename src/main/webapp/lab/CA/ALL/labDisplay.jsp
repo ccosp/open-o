@@ -270,6 +270,7 @@ if (request.getAttribute("printError") != null && (Boolean) request.getAttribute
       	<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery.form.js"></script>
        <script  type="text/javascript" charset="utf-8">
            var contextpath = "${pageContext.servletContext.contextPath}";
+           const ctx = contextpath;
      	  jQuery.noConflict();
 		</script>
 		
@@ -620,7 +621,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
     </head>
 
     <body onLoad="javascript:matchMe();">
-        <input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
+
         <!-- form forwarding of the lab -->
         <%        
         	for( int idx = 0; idx < segmentIDs.length; ++idx ) {
