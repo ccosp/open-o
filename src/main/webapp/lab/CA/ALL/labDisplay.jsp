@@ -273,11 +273,7 @@ if (request.getAttribute("printError") != null && (Boolean) request.getAttribute
            const ctx = contextpath;
      	  jQuery.noConflict();
 		</script>
-		
-	
-	<!-- <oscar:customInterface section="labView"/> -->
 
-		
         <script language="javascript" type="text/javascript">
             // alternately refer to this function in oscarMDSindex.js as labDisplayAjax.jsp does
 		function updateLabDemoStatus(labno){
@@ -614,7 +610,10 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
         }
 
         function submitLabel(lblval, segmentID){
-       		document.forms['TDISLabelForm_'+segmentID].label.value = document.forms['acknowledgeForm_'+segmentID].label.value;
+            let newlabelvalue = document.forms['acknowledgeForm_'+segmentID].label.value;
+       		if(newlabelvalue.length > 1) {
+                document.forms['TDISLabelForm_' + segmentID].label.value = newlabelvalue;
+            }
        	}
         </script>
 
@@ -673,7 +672,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
       	      dataType: "json",
       	      data: { lab_no: jQuery("#labNum_<%=segmentID%>").val(), accessionNum: jQuery("#accNum").val(), label: jQuery("#label_<%=segmentID%>").val(), ajaxcall: true }
       	    })
-              jQuery("#labelspan_<%=segmentID%> i").html("Label: " +  jQuery("#label_<%=segmentID%>").val());
+              jQuery("#labelspan_<%=segmentID%> i").html(jQuery("#label_<%=segmentID%>").val());
               document.forms['acknowledgeForm_<%=segmentID%>'].label.value = "";
           });
       });
