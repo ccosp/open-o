@@ -173,6 +173,10 @@ public class HRMXMLHandler implements MessageHandler {
 		// return (val = obrSegKeySet.get(i).getUniversalServiceIdentifier().getText().getValue()) == null ? " " : val;
 	}
 
+	public String getOBRIdentifier (int i) {
+	    return "";
+    }
+
 	public String getTimeStamp(int i, int j) {
 		return "";
 	}
@@ -212,6 +216,11 @@ public class HRMXMLHandler implements MessageHandler {
 
 	public String getOBXName(int i, int j) {
 		return getOBXName(i, j, false);
+	}
+
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		return "";
 	}
 
 	/**

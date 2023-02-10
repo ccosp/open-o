@@ -92,8 +92,8 @@ function toggleSelectAll(element) {
 			            </li>
 						 <c:forEach items="${ allLabs }" var="lab">
 		                	<li class="lab">
-		                		<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ lab.discipline }" />
-		                		<label for="docNo${document.docId}"><c:out value="${ lab.discipline } ${ lab.dateObj }" /></label>
+		                		<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ lab.label }" />
+		                		<label for="labNo${lab.segmentID}"><c:out value="${ lab.label } ${ lab.dateObj }" /></label>
 		                	</li>
 		                </c:forEach>
 	            	</ul> 
