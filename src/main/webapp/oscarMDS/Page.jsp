@@ -134,9 +134,9 @@ String curUser_no = (String) session.getAttribute("user");
                                 <bean:message key="oscarMDS.index.msgDateTest"/>
                                 <% } %>
                             </th>
-                            <th>
-                                <bean:message key="oscarMDS.index.msgOrderPriority"/>
-                            </th>
+<%--                            <th>--%>
+<%--                                <bean:message key="oscarMDS.index.msgOrderPriority"/>--%>
+<%--                            </th>--%>
                             <th>
                                 <bean:message key="oscarMDS.index.msgRequestingClient"/>
                             </th>
@@ -379,9 +379,9 @@ String curUser_no = (String) session.getAttribute("user");
                                 <td>
                                     <%=result.getDateTime() + (result.isDocument() ? " / " + result.lastUpdateDate : "")%>
                                 </td>
-                                <td>
-                                    <%=result.getPriority()%>
-                                </td>
+<%--                                <td>--%>
+<%--                                    <%=result.getPriority()%>--%>
+<%--                                </td>--%>
                                 <td>
                                     <c:out value="<%=result.getRequestingClient()%>" />
                                 </td>
