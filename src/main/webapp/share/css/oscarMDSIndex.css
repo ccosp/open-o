@@ -42,6 +42,8 @@ table {
 
 table#summaryView tr td {
 	padding: 2px 5px !important;
+	text-align: left !important;
+	vertical-align: top !important;
 }
 
 table#summaryView tr th {
