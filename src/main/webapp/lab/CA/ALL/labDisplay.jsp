@@ -702,9 +702,9 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
             <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td valign="top">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                        <table class="MainTableTopRowRightColumn" width="100%" border="0" cellspacing="0" cellpadding="3">
                             <tr>
-                                <td align="left" class="MainTableTopRowRightColumn" width="100%">
+                                <td>
                                     <input type="hidden" name="segmentID" value="<%= segmentID %>"/>
                                     <input type="hidden" name="multiID" value="<%= multiLabId %>" />
                                     <input type="hidden" name="providerNo" id="providerNo" value="<%= providerNo %>"/>
@@ -746,26 +746,32 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
 										if(remoteLabKey == null || "".equals(remoteLabKey.length())) {
 									%>
 									
-                                    <% if (!label.equals(null) && !label.equals("")) { %>
-										<button type="button" id="createLabel_<%=segmentID%>" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
-										<%} else { %>
-										<button type="button" id="createLabel_<%=segmentID%>" style="background-color:#6699FF" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
-										<%} %>
-										<input type="hidden" id="labNum_<%=segmentID %>" name="lab_no" value="<%=lab_no%>">
-						                <input type="text" id="acklabel_<%=segmentID %>" name="label" value=""/>
 
-						                 <% String labelval="";
-						                 if (label!="" && label!=null) {
-						                 	labelval = label;
-						                 }else {
-						                	 labelval = "(not set)";
-
-						                 } %>
-					                 <span id="labelspan_<%=segmentID%>" class="Field2"><i>Label: <%=labelval %> </i></span>
-
-									<% } %>
                                     <span class="Field2"><i>Next Appointment: <oscar:nextAppt demographicNo="<%=demographicID%>"/></i></span>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <% if (!label.equals(null) && !label.equals("")) { %>
+                                    <button type="button" id="createLabel_<%=segmentID%>" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
+                                    <%} else { %>
+                                    <button type="button" id="createLabel_<%=segmentID%>" style="background-color:#6699FF" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
+                                    <%} %>
+                                    <input type="hidden" id="labNum_<%=segmentID %>" name="lab_no" value="<%=lab_no%>">
+                                    <input type="text" id="acklabel_<%=segmentID %>" name="label" value=""/>
+
+                                    <% String labelval="";
+                                        if (label!="" && label!=null) {
+                                            labelval = label;
+                                        }else {
+                                            labelval = "(not set)";
+
+                                        } %>
+                                    <span id="labelspan_<%=segmentID%>" class="Field2"><i><%= Encode.forHtml(labelval) %> </i></span>
+
+                                    <% } %>
+                                </td>
+
                             </tr>
                         </table>
                         <table width="100%" border="1" cellspacing="0" cellpadding="3" bgcolor="#9999CC" bordercolordark="#bfcbe3">
