@@ -24,12 +24,9 @@
 
 package org.oscarehr.managers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.oscarehr.common.dao.PreventionDao;
 import org.oscarehr.common.dao.PreventionExtDao;
@@ -38,11 +35,14 @@ import org.oscarehr.common.model.Prevention;
 import org.oscarehr.common.model.PreventionExt;
 import org.oscarehr.common.model.Property;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import oscar.log.LogAction;
+import oscar.oscarPrevention.PreventionDS;
+import oscar.oscarPrevention.PreventionData;
 import oscar.oscarPrevention.PreventionDisplayConfig;
 import oscar.util.StringUtils;
 
@@ -54,6 +54,8 @@ public class PreventionManager {
 	private PreventionExtDao preventionExtDao;
 	@Autowired
 	private PropertyDao propertyDao;
+	@Autowired
+	private PreventionDS preventionDS;
 		
 	private static final String HIDE_PREVENTION_ITEM = "hide_prevention_item";
 
@@ -188,4 +190,125 @@ public class PreventionManager {
 
 		return (results);
 	}
+
+	public String getWarnings(LoggedInInfo loggedInInfo, String demo) {
+
+		oscar.oscarPrevention.Prevention prev = PreventionData.getLocalandRemotePreventions(loggedInInfo, Integer.parseInt(demo));
+		String message = "";
+
+		try {
+			preventionDS.getMessages(prev);
+
+			Map<String,Object> warningMsgs = prev.getWarningMsgs();
+			Set<String> keySet = warningMsgs.keySet();
+
+			String value;
+			for(String key : keySet) {
+				value = (String) warningMsgs.get(key);
+				if(! org.oscarehr.provider.model.PreventionManager.isPrevDisabled(value)) {
+					message += "["+key+"="+value+"]";
+				}
+			}
+		} catch (Exception e) {
+			MiscUtils.getLogger().error("Error", e);
+		}
+
+		return message;
+
+	}
+
+
+	public static String checkNames(String k){
+		String rebuilt="";
+		Pattern pattern = Pattern.compile("(\\[)(.*?)(\\])");
+		Matcher matcher = pattern.matcher(k);
+
+		while(matcher.find()){
+			String[] key = matcher.group(2).split("=");
+			boolean prevCheck = org.oscarehr.provider.model.PreventionManager.isPrevDisabled(key[0]);
+
+			if(prevCheck==false){
+				rebuilt=rebuilt+"["+key[1]+"]";
+			}
+		}
+
+		return rebuilt;
+	}
+
+
+	public boolean isDisabled(){
+		List<Property> pList = propertyDao.findByName("hide_prevention_stop_signs");
+
+		if (pList.size() > 0 && pList.get(0).getValue().equals("master")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	public boolean isCreated(){
+		List<Property> pList = propertyDao.findByName("hide_prevention_stop_signs");
+		return (pList.size() > 0);
+	}
+
+	public boolean isPrevDisabled(String name){
+		return getDisabledPreventions().contains(name);
+	}
+
+	public List<String> getDisabledPreventions(){
+
+		List<Property> pList = propertyDao.findByName("hide_prevention_stop_signs");
+
+		String disabledNames = "";
+		for (Property prop : pList) {
+			disabledNames += prop.getValue();
+		}
+		//remove '[' since it always precedes a name
+		disabledNames = disabledNames.replace("[", "");
+		//split on ']' since it always follows a name
+		return Arrays.asList(disabledNames.split("]"));
+	}
+
+	public boolean setDisabledPreventions(List<String> newDisabledPreventions){
+
+		if (newDisabledPreventions == null) {
+			return false;
+		}
+
+		propertyDao.removeByName("hide_prevention_stop_signs");
+
+		if (newDisabledPreventions.get(0).equals("master") || newDisabledPreventions.get(0).equals("false")) {
+			Property newProp = new Property();
+			newProp.setName("hide_prevention_stop_signs");
+			newProp.setValue(newDisabledPreventions.get(0));
+			propertyDao.persist(newProp);
+			return true;
+		}
+
+		String newDisabled = "";
+		for(String preventionName : newDisabledPreventions){
+
+
+			if ((newDisabled + "["+ preventionName +"]").length() > 255) { //a value in the property table holds a max of 255 characters
+
+				Property newProp = new Property();
+				newProp.setName("hide_prevention_stop_signs");
+				newProp.setValue(newDisabled);
+				propertyDao.persist(newProp);
+
+				newDisabled = "[" + preventionName + "]";
+			} else {
+				newDisabled += "[" + preventionName + "]";
+			}
+		}
+		if (!newDisabled.isEmpty()) {
+			Property newProp = new Property();
+			newProp.setName("hide_prevention_stop_signs");
+			newProp.setValue(newDisabled);
+			propertyDao.persist(newProp);
+		}
+		return true;
+	}
+
 }
