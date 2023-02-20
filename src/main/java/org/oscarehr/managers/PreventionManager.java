@@ -24,6 +24,7 @@
 
 package org.oscarehr.managers;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +48,7 @@ import oscar.oscarPrevention.PreventionDisplayConfig;
 import oscar.util.StringUtils;
 
 @Service
-public class PreventionManager {
+public class PreventionManager implements Serializable {
 	@Autowired
 	private PreventionDao preventionDao;
 	@Autowired
@@ -60,6 +61,9 @@ public class PreventionManager {
 	private static final String HIDE_PREVENTION_ITEM = "hide_prevention_item";
 
 	private ArrayList<String> preventionTypeList = new ArrayList<String>();
+
+	private Set<String> listMatches;
+
 
 	public List<Prevention> getUpdatedAfterDate(LoggedInInfo loggedInInfo, Date updatedAfterThisDateExclusive, int itemsToReturn) {
 		List<Prevention> results = preventionDao.findByUpdateDate(updatedAfterThisDateExclusive, itemsToReturn);
@@ -192,21 +196,30 @@ public class PreventionManager {
 	}
 
 	public String getWarnings(LoggedInInfo loggedInInfo, String demo) {
-
 		oscar.oscarPrevention.Prevention prev = PreventionData.getLocalandRemotePreventions(loggedInInfo, Integer.parseInt(demo));
 		String message = "";
 
 		try {
+			/*
+			 * Get defined messages for each prevention from Drools
+			 * This method populates the given Prevention class
+			 */
 			preventionDS.getMessages(prev);
 
+			/*
+			 * get the populated prevention warnings from the Prevention class
+			 */
 			Map<String,Object> warningMsgs = prev.getWarningMsgs();
 			Set<String> keySet = warningMsgs.keySet();
 
+			/*
+			 * check if display of each warning message has been disabled
+			 */
 			String value;
 			for(String key : keySet) {
 				value = (String) warningMsgs.get(key);
-				if(! org.oscarehr.provider.model.PreventionManager.isPrevDisabled(value)) {
-					message += "["+key+"="+value+"]";
+				if(! isPrevDisabled(key)) {
+					message += "["+key+"="+value+"]" + "\n";
 				}
 			}
 		} catch (Exception e) {
@@ -217,15 +230,14 @@ public class PreventionManager {
 
 	}
 
-
-	public static String checkNames(String k){
+	public String checkNames(String k){
 		String rebuilt="";
 		Pattern pattern = Pattern.compile("(\\[)(.*?)(\\])");
 		Matcher matcher = pattern.matcher(k);
 
 		while(matcher.find()){
 			String[] key = matcher.group(2).split("=");
-			boolean prevCheck = org.oscarehr.provider.model.PreventionManager.isPrevDisabled(key[0]);
+			boolean prevCheck = isPrevDisabled(key[0]);
 
 			if(prevCheck==false){
 				rebuilt=rebuilt+"["+key[1]+"]";
@@ -236,38 +248,98 @@ public class PreventionManager {
 	}
 
 
+	/**
+	 * refresh the prevention stop sign list with the newest list from the
+	 * database and then check if the module is enabled.
+	 * @return
+	 */
 	public boolean isDisabled(){
-		List<Property> pList = propertyDao.findByName("hide_prevention_stop_signs");
-
-		if (pList.size() > 0 && pList.get(0).getValue().equals("master")) {
-			return true;
-		} else {
-			return false;
-		}
+		this.listMatches = null;
+		Set<String> preventionStopSigns = getPreventionStopSigns();
+		return (preventionStopSigns.size() > 0 && preventionStopSigns.contains("master"));
 	}
 
 
 	public boolean isCreated(){
-		List<Property> pList = propertyDao.findByName("hide_prevention_stop_signs");
-		return (pList.size() > 0);
+		return getPreventionStopSigns().size() > 0;
 	}
 
-	public boolean isPrevDisabled(String name){
-		return getDisabledPreventions().contains(name);
-	}
+	/**
+	 * A value set in this set indicates the specified prevention is disabled.
+	 * These values are cached until GC or until reset by the prevention settings.
+	 * Use getDisabledPreventions() directly to get the values currently set in the database.
+	 *
+	 * Tried my best to refactor this using the current - odd - structure.
+	 */
+	public Set<String> getPreventionStopSigns() {
+		if(this.listMatches == null) {
+			listMatches = new HashSet<>();
+			String preventionStopSigns = getDisabledPreventionList();
 
-	public List<String> getDisabledPreventions(){
+			/*
+			 * short circuit if "master" indicates that the
+			 * entire module is disabled.
+			 */
+			if("master".equals(preventionStopSigns)) {
+				listMatches.add(preventionStopSigns);
+				return listMatches;
+			}
 
-		List<Property> pList = propertyDao.findByName("hide_prevention_stop_signs");
+			/*
+			 * Values are stored in the database as a delim string.
+			 */
+			Pattern pattern = Pattern.compile("(\\[)(.*?)(\\])");
+			assert preventionStopSigns != null;
+			Matcher matcher = pattern.matcher(preventionStopSigns);
 
-		String disabledNames = "";
-		for (Property prop : pList) {
-			disabledNames += prop.getValue();
+			/*
+			 * This list should get loaded once.
+			 */
+			while (matcher.find()) {
+				listMatches.add(matcher.group(2));
+			}
 		}
+		return listMatches;
+	}
+
+	/**
+	 * Check if a specific prevention warning stop sign
+	 * is disabled.
+	 * @param name prevention name
+	 * @return boolean
+	 */
+	public boolean isPrevDisabled(String name){
+		return getPreventionStopSigns().contains(name);
+	}
+
+	/**
+	 * Call from the database
+	 * @return String list of prevention values separated by []
+	 */
+	private String getDisabledPreventionList() {
+		List<Property> preventionStopSigns = propertyDao.findByName("hide_prevention_stop_signs");
+		Iterator<Property> propertyIterator = preventionStopSigns.iterator();
+		String disabledList = null;
+		while (propertyIterator.hasNext()) {
+			Property item = propertyIterator.next();
+			disabledList = item.getValue();
+		}
+		return disabledList;
+	}
+
+	/**
+	 * Call list from database then return as a List Collection of
+	 * String values
+	 * This method signature pre-existed therefore could not
+	 * change the name to something more meaningful
+	 * @return List of string values.
+	 */
+	public List<String> getDisabledPreventions() {
+		String disabledPreventionList = getDisabledPreventionList();
 		//remove '[' since it always precedes a name
-		disabledNames = disabledNames.replace("[", "");
+		disabledPreventionList = disabledPreventionList.replace("[", "");
 		//split on ']' since it always follows a name
-		return Arrays.asList(disabledNames.split("]"));
+		return Arrays.asList(disabledPreventionList.split("]"));
 	}
 
 	public boolean setDisabledPreventions(List<String> newDisabledPreventions){

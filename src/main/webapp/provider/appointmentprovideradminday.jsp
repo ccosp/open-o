@@ -60,10 +60,12 @@
 <%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@ page import="org.oscarehr.managers.*" %>
-<%@ page import="java.util.*,java.text.*,java.net.*,oscar.*,oscar.util.*,org.oscarehr.provider.model.PreventionManager" %>
+<%@ page import="java.util.*,java.text.*,java.net.*,oscar.*,oscar.util.*" %>
 <%@ page import="org.apache.commons.lang.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.oscarehr.common.model.*" %>
+<%@ page import="org.oscarehr.managers.PreventionManager" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
@@ -104,6 +106,7 @@
     AppManager appManager = SpringUtils.getBean(AppManager.class);
     String resourcehelpHtml = "";
     UserProperty rbuHtml = userPropertyDao.getProp("resource_helpHtml");
+    PreventionManager providerPreventionManager = SpringUtils.getBean(PreventionManager.class);
 %>
 <%
     if(rbuHtml != null){
@@ -134,6 +137,8 @@
     if (!authed) {
         return;
     }
+	// are prevention stop sign icons being loaded? This needs to be known when loading the schedule
+    pageContext.setAttribute("isPreventionWarningDisabled", providerPreventionManager.isDisabled());
 %>
 
 <security:oscarSec objectName="_site_access_privacy" roleName="<%=roleName$%>" rights="r" reverse="false">
@@ -272,7 +277,6 @@
     int endHour = providerPreference2.getEndHour();
     int everyMin = providerPreference2.getEveryMin();
     String defaultServiceType = (String) session.getAttribute("default_servicetype");
-    ProviderPreference providerPreference = ProviderPreferencesUIBean.getProviderPreference(loggedInInfo1.getLoggedInProviderNo());
     if (defaultServiceType == null && providerPreference != null) {
         defaultServiceType = providerPreference.getDefaultServiceType();
     }
@@ -2084,38 +2088,24 @@
                                                     <!-- /security:oscarSec -->
                                                             <% } %>
                                                     <!-- doctor code block 2 -->
-                                                            <%
+                                                        <c:if test="${not isPreventionWarningDisabled}">
+                                                            <%String warning = providerPreventionManager.getWarnings(loggedInInfo1, String.valueOf(demographic_no));
+                                                            if( !warning.isEmpty()) { %>
+                                                                  <img src="${pageContext.servletContext.contextPath}/images/stop_sign.png" height="14" width="14" title="<%=Encode.forHtmlContent(warning)%>" />&nbsp;
+                                                            <% } %>
+                                                        </c:if>
+                                                        <%
+                                                    String start_time = "";
+                                                    if( iS < 10 ) {
+                                                            start_time = "0";
+                                                    }
+                                                    start_time +=  iS + ":";
+                                                    if( iSm < 10 ) {
+                                                            start_time += "0";
+                                                    }
 
-                                                                            boolean disableStopSigns = PreventionManager.isDisabled();
-                                                                            boolean propertyExists = PreventionManager.isCreated();
-                                                                            if(disableStopSigns!=true){
-                                                                            if( OscarProperties.getInstance().getProperty("SHOW_PREVENTION_STOP_SIGNS","false").equals("true") || propertyExists==true) {
-
-                                                                                    String warning = prevMgr.getWarnings(loggedInInfo1, String.valueOf(demographic_no));
-                                                                                    warning = PreventionManager.checkNames(warning);
-
-                                                                                    String htmlWarning = "";
-
-                                                                                    if( !warning.equals("")) {
-                                                                                          htmlWarning = "<img src=\"../images/stop_sign.png\" height=\"14\" width=\"14\" title=\"" + warning +"\">&nbsp;";
-                                                                                    }
-
-                                                                                    out.print(htmlWarning);
-
-                                                                            }
-                                                                            }
-
-                                                                            String start_time = "";
-                                                                            if( iS < 10 ) {
-                                                                                    start_time = "0";
-                                                                            }
-                                                                            start_time +=  iS + ":";
-                                                                            if( iSm < 10 ) {
-                                                                                    start_time += "0";
-                                                                            }
-
-                                                                            start_time += iSm + ":00";
-                                                                            %>
+                                                    start_time += iSm + ":00";
+                                                    %>
 
                                                     <a class="apptLink" href="javascript:void(0)"
                                                        onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
