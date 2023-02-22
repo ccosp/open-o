@@ -56,6 +56,7 @@ import ca.uhn.hl7v2.parser.PipeParser;
 import ca.uhn.hl7v2.parser.XMLParser;
 import ca.uhn.hl7v2.util.Terser;
 import ca.uhn.hl7v2.validation.impl.NoValidation;
+import org.oscarehr.util.MiscUtils;
 import oscar.util.UtilDateUtilities;
 
 
@@ -124,7 +125,7 @@ public class PATHL7Handler implements MessageHandler {
 
     public String getDOB() {
         try {
-            return (formatDateTime(getString(msg.getRESPONSE().getPATIENT().getPID().getDateOfBirth().getTimeOfAnEvent().getValue())).substring(0, 10));
+            return (formatDate(getString(msg.getRESPONSE().getPATIENT().getPID().getDateOfBirth().getTimeOfAnEvent().getValue())));
         } catch (Exception e) {
             return ("");
         }
@@ -141,8 +142,7 @@ public class PATHL7Handler implements MessageHandler {
             java.util.Date serviceDate = formatter.parse(service);
             age = UtilDateUtilities.calcAgeAtDate(birthDate, serviceDate);
         } catch (ParseException e) {
-            logger.error("Could not get age", e);
-
+            logger.error("Could not get age from DOB: " + dob, e);
         }
         return age;
     }
@@ -292,7 +292,6 @@ public class PATHL7Handler implements MessageHandler {
     public String getServiceDate(){
         try{
             return(formatDateTime(getString(msg.getRESPONSE().getORDER_OBSERVATION(0).getOBR().getObservationDateTime().getTimeOfAnEvent().getValue())));
-            //return(formatDateTime(getString(msg.getRESPONSE().getORDER_OBSERVATION(0).getOBR().getObservationDateTime().getTimeOfAnEvent().getValue())));
         }catch(Exception e){
             return("");
         }
@@ -746,16 +745,41 @@ public class PATHL7Handler implements MessageHandler {
     }
 
 
+    /**
+     * Format HL7 datetime into ISO standard date.
+     * @param plain date string
+     * @return ISO standard
+     */
     protected static String formatDateTime(String plain){
-    	if (plain==null || plain.trim().equals("")) return "";
+    	if (plain==null) {
+            plain = "";
+        }
+        SimpleDateFormat stringToDate = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat dateToString = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        String dateFormat = "yyyyMMddHHmmss";
-        dateFormat = dateFormat.substring(0, plain.length());
-        String stringFormat = "yyyy-MM-dd HH:mm:ss";
-        stringFormat = stringFormat.substring(0, stringFormat.lastIndexOf(dateFormat.charAt(dateFormat.length()-1))+1);
+        try {
+            Date date = stringToDate.parse(plain);
+            plain = dateToString.format(date);
+        } catch (ParseException e) {
+           MiscUtils.getLogger().error("error while parsing date time: " + plain, e);
+        }
+        return plain;
+    }
 
-        Date date = UtilDateUtilities.StringToDate(plain, dateFormat);
-        return UtilDateUtilities.DateToString(date, stringFormat);
+    protected static String formatDate(String plain) {
+        if (plain == null) {
+            plain = "";
+        }
+        SimpleDateFormat stringToDate = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat dateToString = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date date = stringToDate.parse(plain);
+            plain = dateToString.format(date);
+        } catch (ParseException e) {
+            MiscUtils.getLogger().error("error while parsing date: " + plain, e);
+        }
+        return plain;
     }
 
     private String getString(String retrieve){
