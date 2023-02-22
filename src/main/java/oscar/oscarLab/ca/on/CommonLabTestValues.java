@@ -471,18 +471,11 @@ public class CommonLabTestValues {
 									h.put("units", handler.getOBXUnits(i, j));
 									h.put("lab_no", lab_no);
 
-									String collDate = handler.getTimeStamp(i, j);
+									String collDate = handler.getServiceDate();
 									if(collDate == null || collDate.isEmpty()) {
-										collDate = handler.getServiceDate();
+										collDate = handler.getTimeStamp(i, j);
 									}
 									h.put("collDate", collDate);
-									if (collDate.length() == 10) {
-										h.put("collDate", UtilDateUtilities.getDateFromString(collDate, "yyyy-MM-dd"));
-									} else if (collDate.length() == 16) {
-										h.put("collDate", UtilDateUtilities.getDateFromString(collDate, "yyyy-MM-dd HH:mm"));
-									} else {
-										h.put("collDate", UtilDateUtilities.getDateFromString(collDate, "yyyy-MM-dd HH:mm:ss"));
-									}
 									labList.add(h);
 									break;
 								}
