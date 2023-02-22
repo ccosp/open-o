@@ -58,7 +58,7 @@ public final class SSOUtility {
 		 * Callback URL for OSCAR is #!/ssoLogin.do?loginStart={timestamp}&method={method}
 		 */
 		URIBuilder ssoUrl = new URIBuilder(context);
-		ssoUrl.addParameter("loginStart", Calendar.getInstance().getTimeInMillis()+"");
+//		ssoUrl.addParameter("loginStart", Calendar.getInstance().getTimeInMillis()+"");
 		return ssoUrl;
 	}
 
