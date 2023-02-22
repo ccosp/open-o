@@ -37,6 +37,16 @@ public final class SSOUtility {
 
 	private static final OscarProperties oscarProperties = OscarProperties.getInstance();
 
+	public enum SSO_SETTING {
+		sso_entity_id,
+		sso_url_login,
+		sso_url_logout,
+		sso_entity_metadata,
+		sso_idp_x509cert,
+		sso_sp_entity_id,
+		sp_encryption_key
+	}
+
 	public static String getLoginRedirectUrl(String context) throws URISyntaxException {
 		URIBuilder ssoUrl = getRedirectUrl(context);
 		ssoUrl.addParameter("method", "ssoLogin");
@@ -67,22 +77,26 @@ public final class SSOUtility {
 	 * Values are mapped directly to standard OneLogin SAML properties settings
 	 * @return Map of preset values
 	 */
-	public static Map<String, String> getSSOPresetsFromOscarProperties() {
+	public static Map<SSO_SETTING, String> getSSOPresetsFromOscarProperties() {
 
-		Map<String, String> presets = new HashMap<>();
+		//TODO this can be overriden with values accepted from the user interface via the Properties table.
+		Map<SSO_SETTING, String> presets = new HashMap<>();
 		String idp_login = oscarProperties.getProperty("sso.url.login");
 		String idp_logout = oscarProperties.getProperty("sso.url.logout");
 		String idp_entity_id = oscarProperties.getProperty("sso.entity.id");
 		String idp_metadata = oscarProperties.getProperty("sso.entity.metadata");
 		String idp_x509cert = oscarProperties.getProperty("sso.idp.x509cert");
 		String sp_entity_id = oscarProperties.getProperty("sso.sp.entity.id");
+		String sp_encryption_key = oscarProperties.getProperty("sso.encryptionKey");
 
-		presets.put("sso.entity.id", idp_entity_id);
-		presets.put("sso.url.login", idp_login);
-		presets.put("sso.url.logout", idp_logout);
-		presets.put("sso.entity.metadata", idp_metadata);
-		presets.put("sso.idp.x509cert", idp_x509cert);
-		presets.put("sso.sp.entity.id", sp_entity_id );
+		// use the global variable SSO_SETTING only.
+		presets.put(SSO_SETTING.sso_entity_id, idp_entity_id);
+		presets.put(SSO_SETTING.sso_url_login, idp_login);
+		presets.put(SSO_SETTING.sso_url_logout, idp_logout);
+		presets.put(SSO_SETTING.sso_entity_metadata, idp_metadata);
+		presets.put(SSO_SETTING.sso_idp_x509cert, idp_x509cert);
+		presets.put(SSO_SETTING.sso_sp_entity_id, sp_entity_id);
+		presets.put(SSO_SETTING.sp_encryption_key, sp_encryption_key);
 
 		return presets;
 	}

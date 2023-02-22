@@ -63,12 +63,12 @@ public class SSOUtilityTest {
 	@Test
 	public void getSSOPresetsFromOscarProperties() {
 		System.out.println("Test: getSSOPresetsFromOscarProperties");
-		Map<String, String> settings = SSOUtility.getSSOPresetsFromOscarProperties();
-		Assert.isTrue(settings.containsKey("sso.url.login"));
-		Assert.isTrue(settings.containsKey("sso.url.logout"));
-		Assert.isTrue(settings.containsKey("sso.entity.id"));
-		Assert.isTrue(settings.containsKey("sso.entity.metadata"));
-		Assert.isTrue(settings.containsKey("sso.idp.x509cert"));
+		Map<SSOUtility.SSO_SETTING, String> settings = SSOUtility.getSSOPresetsFromOscarProperties();
+		Assert.isTrue(settings.containsKey(SSOUtility.SSO_SETTING.sso_url_login));
+		Assert.isTrue(settings.containsKey(SSOUtility.SSO_SETTING.sso_url_logout));
+		Assert.isTrue(settings.containsKey(SSOUtility.SSO_SETTING.sso_entity_id));
+		Assert.isTrue(settings.containsKey(SSOUtility.SSO_SETTING.sso_entity_metadata));
+		Assert.isTrue(settings.containsKey(SSOUtility.SSO_SETTING.sso_idp_x509cert));
 	}
 
 	@Test

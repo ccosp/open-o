@@ -80,18 +80,18 @@ public class SsoAuthenticationManager {
                     new URL(SSOUtility.getLogoutRedirectUrl(context)));
         }
 
-        // do something with user email here.
+        // do something with user_email here.
 
         /*
          * Set identity provider data:
          * Data about the IDP OSCAR will use for SSO authentication
          */
-        Map<String, String> sso_presets = SSOUtility.getSSOPresetsFromOscarProperties();
-        samlData.put("onelogin.saml2.sp.entityid", sso_presets.get("sso.sp.entity.id"));
-        samlData.put("onelogin.saml2.idp.entityid", sso_presets.get("sso.entity.id"));
-        samlData.put("onelogin.saml2.idp.single_sign_on_service.url", sso_presets.get("sso.url.login"));
-        samlData.put("onelogin.saml2.idp.single_logout_service.url", sso_presets.get("sso.url.logout"));
-        samlData.put("onelogin.saml2.idp.x509cert", sso_presets.get("sso.idp.x509cert"));
+        Map<SSOUtility.SSO_SETTING, String> sso_presets = SSOUtility.getSSOPresetsFromOscarProperties();
+        samlData.put("onelogin.saml2.sp.entityid", sso_presets.get(SSOUtility.SSO_SETTING.sso_sp_entity_id));
+        samlData.put("onelogin.saml2.idp.entityid", sso_presets.get(SSOUtility.SSO_SETTING.sso_entity_id));
+        samlData.put("onelogin.saml2.idp.single_sign_on_service.url", sso_presets.get(SSOUtility.SSO_SETTING.sso_url_login));
+        samlData.put("onelogin.saml2.idp.single_logout_service.url", sso_presets.get(SSOUtility.SSO_SETTING.sso_url_logout));
+        samlData.put("onelogin.saml2.idp.x509cert", sso_presets.get(SSOUtility.SSO_SETTING.sso_idp_x509cert));
 
         SettingsBuilder builder = new SettingsBuilder();
         Saml2Settings saml2Settings = builder.fromValues(typeCast(samlData)).build();
