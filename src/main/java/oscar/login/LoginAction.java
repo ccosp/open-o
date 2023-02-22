@@ -323,7 +323,7 @@ public final class LoginAction extends DispatchAction {
 	         */
 	        if(SSOUtility.isSSOEnabled()) {
 		        ActionRedirect redirect = new ActionRedirect(mapping.findForward("ssoLogin"));
-		        redirect.addParameter("ssoSpEntityId", strAuth[6]);
+		        redirect.addParameter("user_email", strAuth[6]);
 		        return redirect;
 	        }
 

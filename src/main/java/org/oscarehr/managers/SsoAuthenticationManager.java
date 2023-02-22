@@ -63,7 +63,7 @@ public class SsoAuthenticationManager {
      * @return Saml2Settings object for use with OneLogin tools.
      * @throws IOException
      */
-    public Saml2Settings buildAuthenticationRequestSettings(String ssoSpEntityId, String context) throws IOException, URISyntaxException {
+    public Saml2Settings buildAuthenticationRequestSettings(String user_email, String context) throws IOException, URISyntaxException {
 
         Properties samlData = new Properties();
         try(InputStream inputStream = getClass().getResourceAsStream(samlPropertiesFile)) {
@@ -80,13 +80,14 @@ public class SsoAuthenticationManager {
                     new URL(SSOUtility.getLogoutRedirectUrl(context)));
         }
 
-        samlData.put("onelogin.saml2.sp.entityid", ssoSpEntityId);
+        // do something with user email here.
 
         /*
          * Set identity provider data:
          * Data about the IDP OSCAR will use for SSO authentication
          */
         Map<String, String> sso_presets = SSOUtility.getSSOPresetsFromOscarProperties();
+        samlData.put("onelogin.saml2.sp.entityid", sso_presets.get("sso.sp.entity.id"));
         samlData.put("onelogin.saml2.idp.entityid", sso_presets.get("sso.entity.id"));
         samlData.put("onelogin.saml2.idp.single_sign_on_service.url", sso_presets.get("sso.url.login"));
         samlData.put("onelogin.saml2.idp.single_logout_service.url", sso_presets.get("sso.url.logout"));

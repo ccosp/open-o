@@ -579,11 +579,11 @@ public final class SSOLoginAction extends DispatchAction {
      * reply.
      */
     public ActionForward authenticationRedirect(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-		String ssoSpEntityId = request.getParameter("ssoSpEntityId");
+		String user_email = request.getParameter("user_email");
 		String context = request.getRequestURL().toString();
 		SsoAuthenticationManager ssoAuthenticationManager = SpringUtils.getBean(SsoAuthenticationManager.class);
         try {
-	        Saml2Settings saml2Settings = ssoAuthenticationManager.buildAuthenticationRequestSettings(ssoSpEntityId, context);
+	        Saml2Settings saml2Settings = ssoAuthenticationManager.buildAuthenticationRequestSettings(user_email, context);
             Auth auth = new Auth(saml2Settings, request, response);
             auth.login();
         } catch (Exception e) {

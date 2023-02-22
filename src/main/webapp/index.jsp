@@ -600,15 +600,16 @@ response.addCookie(prvCookie);
    	                        	value="" size="15" maxlength="32" autocomplete="off" 
    	                        	class="form-control" ng-model="password" required/>
    	                        </div>
-   	                        
-   	                        <div class="form-group ${ login_error }">
-   	                        	<input type="password" name="pin" placeholder="Enter your PIN" value="" 
-   	                        	size="15" maxlength="15" autocomplete="off" class="form-control" ng-model="pin"/>
-   	                        	<span class="extrasmall">
-   		                            <bean:message key="loginApplication.formCmt"/>
-   		                        </span>
-   	                        </div>
-   	                        
+
+							<c:if test="${not LoginResourceBean.ssoEnabled}">
+								<div class="form-group ${ login_error }">
+									<input type="password" name="pin" placeholder="Enter your PIN" value=""
+									size="15" maxlength="15" autocomplete="off" class="form-control" ng-model="pin"/>
+									<span class="extrasmall">
+										<bean:message key="loginApplication.formCmt"/>
+									</span>
+								</div>
+							</c:if>
    	                        <input type="hidden" id="oneIdKey" name="nameId" value="${ nameId }"/>
 							<input type="hidden" id="loginType" name="loginType" value=""/>
    	                        <input type=hidden name='propname' value='<bean:message key="loginApplication.propertyFile"/>' />

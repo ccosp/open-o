@@ -75,12 +75,14 @@ public final class SSOUtility {
 		String idp_entity_id = oscarProperties.getProperty("sso.entity.id");
 		String idp_metadata = oscarProperties.getProperty("sso.entity.metadata");
 		String idp_x509cert = oscarProperties.getProperty("sso.idp.x509cert");
+		String sp_entity_id = oscarProperties.getProperty("sso.sp.entity.id");
 
 		presets.put("sso.entity.id", idp_entity_id);
 		presets.put("sso.url.login", idp_login);
 		presets.put("sso.url.logout", idp_logout);
 		presets.put("sso.entity.metadata", idp_metadata);
 		presets.put("sso.idp.x509cert", idp_x509cert);
+		presets.put("sso.sp.entity.id", sp_entity_id );
 
 		return presets;
 	}
