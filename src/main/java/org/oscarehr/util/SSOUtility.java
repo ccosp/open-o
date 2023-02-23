@@ -68,6 +68,12 @@ public final class SSOUtility {
 		 * Callback URL for OSCAR is #!/ssoLogin.do?loginStart={timestamp}&method={method}
 		 */
 		URIBuilder ssoUrl = new URIBuilder(context);
+
+		/* all call back links MUST BE secured. This accounts for secure connections by
+		 * proxy.  ie: NGINX, HaProxy etc...
+		 */
+		ssoUrl.setScheme("https");
+
 //		ssoUrl.addParameter("loginStart", Calendar.getInstance().getTimeInMillis()+"");
 		return ssoUrl;
 	}

@@ -35,8 +35,9 @@ public class SSOUtilityTest {
 	@Test
 	public void getLoginRedirectUrl() {
 		System.out.println("Test: getLoginRedirectUrl");
-		String context = "https://localhost/oscar/ssoLogin.do";
+		String context = "http://localhost/oscar/ssoLogin.do";
 		try {
+			System.out.println(SSOUtility.getLoginRedirectUrl(context));
 			URL url = new URL(SSOUtility.getLoginRedirectUrl(context));
 			Assert.isTrue(url.getQuery().contains("ssoLogin"));
 			Assert.isTrue(url.getPath().contains("ssoLogin.do"));
@@ -50,7 +51,7 @@ public class SSOUtilityTest {
 	@Test
 	public void getLogoutRedirectUrl() {
 		System.out.println("Test: getLogoutRedirectUrl");
-		String context = "https://localhost/oscar/ssoLogin.do";
+		String context = "http://localhost/oscar/ssoLogin.do";
 		try {
 			URL url = new URL(SSOUtility.getLogoutRedirectUrl(context));
 			Assert.isTrue(url.getQuery().contains("ssoLogout"));
