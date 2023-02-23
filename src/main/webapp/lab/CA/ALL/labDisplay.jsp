@@ -37,7 +37,7 @@
 <%@ page import="org.w3c.dom.Document"%>
 <%@ page import="org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult"%>
 <%@ page import="oscar.oscarLab.ca.all.web.LabDisplayHelper"%>
-<%@ page errorPage="../../../provider/errorpage.jsp" %>
+
 <%@ page import="java.util.*,
 		 java.sql.*,
 		 oscar.oscarDB.*, oscar.oscarLab.FileUploadCheck, oscar.util.UtilDateUtilities,
@@ -60,6 +60,7 @@
 <jsp:useBean id="oscarVariables" class="java.util.Properties" scope="session" />
 <%@	page import="javax.swing.text.rtf.RTFEditorKit"%>
 <%@	page import="java.io.ByteArrayInputStream"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -269,13 +270,10 @@ if (request.getAttribute("printError") != null && (Boolean) request.getAttribute
       	<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/jquery/jquery.form.js"></script>
        <script  type="text/javascript" charset="utf-8">
            var contextpath = "${pageContext.servletContext.contextPath}";
+           const ctx = contextpath;
      	  jQuery.noConflict();
 		</script>
-		
-	
-	<!-- <oscar:customInterface section="labView"/> -->
 
-		
         <script language="javascript" type="text/javascript">
             // alternately refer to this function in oscarMDSindex.js as labDisplayAjax.jsp does
 		function updateLabDemoStatus(labno){
@@ -612,14 +610,17 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
         }
 
         function submitLabel(lblval, segmentID){
-       		document.forms['TDISLabelForm_'+segmentID].label.value = document.forms['acknowledgeForm_'+segmentID].label.value;
+            let newlabelvalue = document.forms['acknowledgeForm_'+segmentID].label.value;
+       		if(newlabelvalue.length > 1) {
+                document.forms['TDISLabelForm_' + segmentID].label.value = newlabelvalue;
+            }
        	}
         </script>
 
     </head>
 
     <body onLoad="javascript:matchMe();">
-        <input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
+
         <!-- form forwarding of the lab -->
         <%        
         	for( int idx = 0; idx < segmentIDs.length; ++idx ) {
@@ -671,7 +672,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
       	      dataType: "json",
       	      data: { lab_no: jQuery("#labNum_<%=segmentID%>").val(), accessionNum: jQuery("#accNum").val(), label: jQuery("#label_<%=segmentID%>").val(), ajaxcall: true }
       	    })
-              jQuery("#labelspan_<%=segmentID%> i").html("Label: " +  jQuery("#label_<%=segmentID%>").val());
+              jQuery("#labelspan_<%=segmentID%> i").html(jQuery("#label_<%=segmentID%>").val());
               document.forms['acknowledgeForm_<%=segmentID%>'].label.value = "";
           });
       });
@@ -700,9 +701,9 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
             <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td valign="top">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                        <table class="MainTableTopRowRightColumn" width="100%" border="0" cellspacing="0" cellpadding="3">
                             <tr>
-                                <td align="left" class="MainTableTopRowRightColumn" width="100%">
+                                <td>
                                     <input type="hidden" name="segmentID" value="<%= segmentID %>"/>
                                     <input type="hidden" name="multiID" value="<%= multiLabId %>" />
                                     <input type="hidden" name="providerNo" id="providerNo" value="<%= providerNo %>"/>
@@ -744,26 +745,32 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
 										if(remoteLabKey == null || "".equals(remoteLabKey.length())) {
 									%>
 									
-                                    <% if (!label.equals(null) && !label.equals("")) { %>
-										<button type="button" id="createLabel_<%=segmentID%>" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
-										<%} else { %>
-										<button type="button" id="createLabel_<%=segmentID%>" style="background-color:#6699FF" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
-										<%} %>
-										<input type="hidden" id="labNum_<%=segmentID %>" name="lab_no" value="<%=lab_no%>">
-						                <input type="text" id="acklabel_<%=segmentID %>" name="label" value=""/>
 
-						                 <% String labelval="";
-						                 if (label!="" && label!=null) {
-						                 	labelval = label;
-						                 }else {
-						                	 labelval = "(not set)";
-
-						                 } %>
-					                 <span id="labelspan_<%=segmentID%>" class="Field2"><i>Label: <%=labelval %> </i></span>
-
-									<% } %>
                                     <span class="Field2"><i>Next Appointment: <oscar:nextAppt demographicNo="<%=demographicID%>"/></i></span>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <% if (!label.equals(null) && !label.equals("")) { %>
+                                    <button type="button" id="createLabel_<%=segmentID%>" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
+                                    <%} else { %>
+                                    <button type="button" id="createLabel_<%=segmentID%>" style="background-color:#6699FF" value="Label" onclick="submitLabel(this, '<%=segmentID%>');">Label</button>
+                                    <%} %>
+                                    <input type="hidden" id="labNum_<%=segmentID %>" name="lab_no" value="<%=lab_no%>">
+                                    <input type="text" id="acklabel_<%=segmentID %>" name="label" value=""/>
+
+                                    <% String labelval="";
+                                        if (label!="" && label!=null) {
+                                            labelval = label;
+                                        }else {
+                                            labelval = "(not set)";
+
+                                        } %>
+                                    <span id="labelspan_<%=segmentID%>" class="Field2"><i><%= Encode.forHtml(labelval) %> </i></span>
+
+                                    <% } %>
+                                </td>
+
                             </tr>
                         </table>
                         <table width="100%" border="1" cellspacing="0" cellpadding="3" bgcolor="#9999CC" bordercolordark="#bfcbe3">
@@ -1134,11 +1141,11 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
 							   	<tr>
 							   	<td><b>Priority:</b> <%=flag%> <%=tickler.getPriority()%></td>
 							   	<td><b>Service Date:</b> <%=tickler.getServiceDate()%></td>   	
-							   	<td><b>Assigned To:</b> <%=tickler.getAssignee() != null ? tickler.getAssignee().getLastName() + ", " + tickler.getAssignee().getFirstName() : "N/A"%></td>
+							   	<td><b>Assigned To:</b> <%=tickler.getAssignee() != null ? Encode.forHtml(tickler.getAssignee().getLastName() + ", " + tickler.getAssignee().getFirstName()) : "N/A"%></td>
 							   	<td width="90px"><b>Status:</b> <%=ticklerStatus.equals("C") ? "Completed" : "Active" %></td> 
 							   	</tr>
 							   	<tr>
-							   	<td colspan="4"><%=tickler.getMessage()%></td>
+							   	<td colspan="4"><%=Encode.forHtml(tickler.getMessage())%></td>
 							   	</tr>
 							   	</table>
 							   </div>	
@@ -1176,7 +1183,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                                                 <!--center-->
                                                                     <% for (int i=0; i < ackList.size(); i++) {
                                                                         report = ackList.get(i); %>
-                                                                        <%= report.getProviderName() %> :
+                                                                        <%= Encode.forHtml(report.getProviderName()) %> :
 
                                                                         <% String ackStatus = report.getStatus();
                                                                             if(ackStatus.equals("A")){
@@ -1381,6 +1388,10 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                for (k=0; k < obxCount; k++){
 
                                	String obxName = handler.getOBXName(j, k);
+                               	String nameLong = handler.getOBXNameLong(j ,k);
+                               	if (StringUtils.isNotEmpty(nameLong)) {
+                               	    nameLong = ": " + nameLong;
+                                }
 
 								boolean isAllowedDuplicate = false;
 								if(handler.getMsgType().equals("PATHL7")){
