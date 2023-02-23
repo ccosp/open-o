@@ -157,7 +157,8 @@ public class PreventionPrintPdf {
                 .append(demo.getVer());
               
         //Header will be printed at top of every page beginning with p2
-        Phrase titlePhrase = new Phrase(16, "Immunizations", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, Font.BOLD, Color.BLACK));
+        String heading = ("true".equals(request.getParameter("immunizationOnly"))) ? "Immunizations" : "Immunizations and Screenings";
+        Phrase titlePhrase = new Phrase(16, heading, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, Font.BOLD, Color.BLACK));
         titlePhrase.add(Chunk.NEWLINE);
         titlePhrase.add(new Chunk(demo.getFormattedName(),FontFactory.getFont(FontFactory.HELVETICA, 14, Font.NORMAL, Color.BLACK)));
         titlePhrase.add(Chunk.NEWLINE);         
