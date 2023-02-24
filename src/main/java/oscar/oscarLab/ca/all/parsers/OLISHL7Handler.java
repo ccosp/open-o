@@ -1491,6 +1491,11 @@ public class OLISHL7Handler implements MessageHandler {
 	}
 
 	@Override
+	public String getOBRIdentifier(int i) {
+		return null;
+	}
+
+	@Override
 	public String getTimeStamp(int i, int j) {
 		String timeStamp;
 		i++;
@@ -1599,6 +1604,11 @@ public class OLISHL7Handler implements MessageHandler {
 		// If we're unable to find a LOINC match for the identifier then try to parse out the obx name.
 		obxName = getOBXField(i, j, 3, 0, 2);
 		return "".equals(obxName) ? " " : obxName.indexOf(":") == -1 ? obxName : obxName.substring(0, obxName.indexOf(":"));
+	}
+
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		return null;
 	}
 
 	public String getOBXCEName(int i, int j) {

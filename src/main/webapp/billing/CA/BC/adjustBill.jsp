@@ -663,7 +663,7 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
             <option value="W" <%=allFields.getProperty("afterHour").equals("W")?"selected":""%>>Weekend Call</option>
         </select>
     </td>
-    <td class="bCellData">Time Call Recieved<!--TIME-CALL-RECVD-SRV-->
+    <td class="bCellData">Time Call Received<!--TIME-CALL-RECVD-SRV-->
        <input type="text" name="timeCallRec" value="<%=allFields.getProperty("timeCall")%>" size="4" maxlength="4"/>
        <input type="hidden" name="anatomicalArea" value="<%=allFields.getProperty("anatomicalArea")%>" />
     </td>
@@ -864,7 +864,7 @@ if(billService != null){
        </tr>-->
        <!--
        <tr>
-            <td>Time Call Recieved</td><%!/*TIME-CALL-RECVD-SRV*/%>
+            <td>Time Call Received</td><%!/*TIME-CALL-RECVD-SRV*/%>
             <td><input type="text" name="timeCallRec" value="<%=allFields.getProperty("timeCall")%>" size="4"/></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -1263,7 +1263,7 @@ if(billService != null){
             <td>Y</td>
        </tr>
        <tr>
-            <td>Time Call Recieved</td><!--TIME-CALL-RECVD-SRV-->
+            <td>Time Call Received</td><!--TIME-CALL-RECVD-SRV-->
             <td><%=allFields.getProperty("timeCall")%></td>
             <td>4</td>
             <td>Y</td>

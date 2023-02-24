@@ -392,6 +392,14 @@ public class SpireHandler implements MessageHandler {
         }
     }
     
+    public String getOBRIdentifier(int i){
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getUniversalServiceIdentifier().getCe1_Identifier().getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
     public String getTimeStamp(int i, int j){
         try{
             return(formatDateTime(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getObservationDateTime().getTimeOfAnEvent().getValue())));
@@ -469,8 +477,17 @@ public class SpireHandler implements MessageHandler {
             return("");
         }
     }
-    
-    public String getOBXResult(int i, int j){
+
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		try{
+			return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getComponent(2).toString()));
+		}catch(Exception e){
+			return("");
+		}
+	}
+
+	public String getOBXResult(int i, int j){
         try{
             Terser terser = new Terser(msg);
             return(getString(Terser.get(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX(),5,0,1,1)));
