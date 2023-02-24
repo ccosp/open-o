@@ -38,7 +38,6 @@ import javax.servlet.http.HttpSession;
 import com.onelogin.saml2.Auth;
 import com.onelogin.saml2.exception.Error;
 import com.onelogin.saml2.exception.SettingsException;
-import com.onelogin.saml2.servlet.ServletUtils;
 import com.onelogin.saml2.settings.Saml2Settings;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
@@ -99,6 +98,12 @@ public final class SSOLoginAction extends DispatchAction {
 	String providerNumber = "";
 
 	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
+		String relayState = request.getParameter("RelayState");
+		if (relayState != null) {
+			logger.error("Relay state parameter sent to unspecified. Is the relay missing method parameters? " + relayState);
+		}
+
 		return authenticationRedirect(mapping, form, request, response);
 	}
 	
@@ -284,30 +289,36 @@ public final class SSOLoginAction extends DispatchAction {
 
 	public ActionForward ssoLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		String relayState = request.getParameter("RelayState");
+		String user_email = request.getParameter("user_email");
+		String context = request.getRequestURL().toString();
 		String destination = "failure";
-
+		List<String> errors = Collections.emptyList();
 		Auth auth = null;
+
 		try {
-			auth = new Auth(request, response);
+			Saml2Settings saml2Settings = ssoAuthenticationManager.buildAuthenticationRequestSettings(user_email, context);
+			auth = new Auth(saml2Settings, request, response);
 			auth.processResponse();
 		} catch (IOException e) {
 			logger.error("Found IOException ", e);
 		} catch (SettingsException e) {
-			logger.error("Found exception error in settings " + auth.getSettings(), e);
+			logger.error("Found exception error in settings: " + auth == null ? "" : auth.getSettings(), e);
 		} catch (Error e) {
 			logger.error("Found exception error in SAML response ", e);
 		} catch (Exception e) {
 			logger.error("Found unexpected exception", e);
 		}
 
-		List<String> errors = auth.getErrors();
+		if(auth != null) {
+			errors = auth.getErrors();
 
-		if (!auth.isAuthenticated()) {
-			logger.error("Authentication failed. " + StringUtils.join(errors, ", "));
-			destination = "ssoLoginError";
+			if (! auth.isAuthenticated()) {
+				logger.error("Authentication failed. " + StringUtils.join(errors, ", "));
+				destination = "ssoLoginError";
+			}
 		}
 
-		if (!errors.isEmpty()) {
+		if (! errors.isEmpty()) {
 			logger.error("Errors while attempting to authenticate " + StringUtils.join(errors, ", "));
 			if (auth.isDebugActive()) {
 				String errorReason = auth.getLastErrorReason();
@@ -329,9 +340,12 @@ public final class SSOLoginAction extends DispatchAction {
 //			String email = auth.getAttribute("email");
 //			String oneIdToken = auth.getAttribute("encryptedOneIdToken");
 
-			if (relayState != null && relayState != ServletUtils.getSelfRoutedURLNoQuery(request)) {
-				logger.error("SSO relay state is set");
-			} else {
+			if (relayState != null) {
+//					&& relayState != ServletUtils.getSelfRoutedURLNoQuery(request)) {
+
+				// usually means redirect to auth request if this is not set??
+				logger.error("SSO relay state is set: " + relayState);
+
 				if (attributes.isEmpty()) {
 					logger.error("No authentication response attributes found: " + StringUtils.join(attributes, ", "));
 					destination = "ssoLoginError";
@@ -401,7 +415,7 @@ public final class SSOLoginAction extends DispatchAction {
 		}
 
 		ActionRedirect redirect = new ActionRedirect(mapping.findForward(destination));
-		// additional parameters here.
+		// additional error message parameters here.
 		return redirect;
 	}
 
@@ -720,6 +734,11 @@ public final class SSOLoginAction extends DispatchAction {
     public ActionForward authenticationRedirect(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
 		String user_email = request.getParameter("user_email");
 		String context = request.getRequestURL().toString();
+	    String relayState = request.getParameter("RelayState");
+
+		if(relayState != null) {
+			logger.error("Should the relay state parameter be present while redirecting for SSO authentication? " + relayState);
+		}
 
         try {
 	        Saml2Settings saml2Settings = ssoAuthenticationManager.buildAuthenticationRequestSettings(user_email, context);
