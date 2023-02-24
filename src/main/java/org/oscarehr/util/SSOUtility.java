@@ -61,9 +61,10 @@ public final class SSOUtility {
 
 	/**
 	 * Build the base redirect url from the given context path.
+	 * Do not add parameters to this path. It is used only for validation
 	 * @return URIBuilder
 	 */
-	private static URIBuilder getRedirectUrl(String context) throws URISyntaxException {
+	public static URIBuilder getRedirectUrl(String context) throws URISyntaxException {
 		/*
 		 * Callback URL for OSCAR is #!/ssoLogin.do?loginStart={timestamp}&method={method}
 		 */
@@ -73,8 +74,6 @@ public final class SSOUtility {
 		 * proxy.  ie: NGINX, HaProxy etc...
 		 */
 		ssoUrl.setScheme("https");
-
-//		ssoUrl.addParameter("loginStart", Calendar.getInstance().getTimeInMillis()+"");
 		return ssoUrl;
 	}
 

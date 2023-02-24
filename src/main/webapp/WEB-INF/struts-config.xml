@@ -823,6 +823,7 @@
 			<forward name="LoginTest" path="/login/LoginTest.jsp" redirect="true" />
 			<forward name="programLocation" path="/location.jsp" redirect="true"/>
 			<forward name="cobalt" path="/web/" redirect="true" />
+			<forward name="logout" path="/logout.jsp" redirect="true"/>
 		</action>
 		
 		<action input="/login.jsp" name="loginForm" path="/econsultSSOLogin" scope="request" type="oscar.login.SSOLoginAction" validate="true" parameter="econsultLogin">

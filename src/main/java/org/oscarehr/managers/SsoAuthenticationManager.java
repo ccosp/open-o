@@ -26,33 +26,35 @@ package org.oscarehr.managers;
 import com.onelogin.saml2.settings.Saml2Settings;
 import com.onelogin.saml2.settings.SettingsBuilder;
 import org.apache.logging.log4j.Logger;
-//import org.oscarehr.PMmodule.dao.ProviderDao;
-//import org.oscarehr.common.dao.FacilityDao;
-//import org.oscarehr.common.dao.ProviderPreferenceDao;
+import org.oscarehr.PMmodule.dao.ProviderDao;
+import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SSOUtility;
-//import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import oscar.login.LoginCheckLogin;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import oscar.log.LogAction;
+
 @Service
-public class SsoAuthenticationManager {
+public class SsoAuthenticationManager implements Serializable {
 
     private static final Logger logger = MiscUtils.getLogger();
 
-//    @Autowired
-//    private ProviderDao providerDao;
-//    @Autowired
-//    private ProviderPreferenceDao providerPreferenceDao;
-//    @Autowired
-//    private FacilityDao facilityDao;
+    private LoginCheckLogin loginCheck;
+
+    @Autowired
+    private ProviderDao providerDao;
 
     private final String samlPropertiesFile = "/onelogin.saml.properties";
 
@@ -97,6 +99,36 @@ public class SsoAuthenticationManager {
         Saml2Settings saml2Settings = builder.fromValues(typeCast(samlData)).build();
 
         return saml2Settings;
+    }
+
+    public String validateContextPath(String contextPath) {
+        try {
+            return SSOUtility.getRedirectUrl(contextPath).toString();
+        } catch (URISyntaxException e) {
+            logger.error("Context path is invalid " + contextPath, e);
+        }
+        return "";
+    }
+
+    public String[] checkLogin(String nameId) {
+        loginCheck = new LoginCheckLogin();
+        String[] providerInformation = loginCheck.ssoAuth(nameId);
+        String providerNumber = providerInformation[0];
+        Provider provider = getProvider(providerNumber);
+        if(provider == null || (provider.getStatus() != null && provider.getStatus().equals("0"))) {
+            logger.error("Provider account is missing or inactive. Provider number: " + providerNumber);
+            LogAction.addLog(providerNumber, "login", "failed", "inactive");
+            providerInformation = new String[0];
+        }
+        return providerInformation;
+    }
+
+    public Provider getProvider(String providerNumber) {
+        return providerDao.getProvider(providerNumber);
+    }
+
+    public Security getSecurity() {
+        return loginCheck.getSecurity();
     }
 
     private static HashMap<String, Object> typeCast(Properties properties) {
