@@ -587,7 +587,7 @@ response.addCookie(prvCookie);
 
     			<div class="panel-body">
     			    <div class="leftinput" ng-app="indexApp" ng-controller="indexCtrl">
-   				    	<html:form action="login" >
+   				    	<html:form action="login" method="POST" >
    				    
    							<div class="form-group ${ login_error }"> 
    	                        	<input type="text" name="username" placeholder="Enter your username" 

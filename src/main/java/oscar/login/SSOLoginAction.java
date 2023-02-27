@@ -275,7 +275,7 @@ public final class SSOLoginAction extends DispatchAction {
 			auth.processSLO();
 			errors = auth.getErrors();
 			if (errors.isEmpty()) {
-				logger.info("Sucessfully logged out");
+				logger.info("Successfully logged out");
 			} else {
 				for(String error : errors) {
 					logger.error(error);
@@ -288,10 +288,10 @@ public final class SSOLoginAction extends DispatchAction {
 	}
 
 	public ActionForward ssoLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		String relayState = request.getParameter("RelayState");
+//		String relayState = request.getParameter("RelayState");
 		String user_email = request.getParameter("user_email");
 		String context = request.getRequestURL().toString();
-		String destination = "failure";
+		String destination = "ssoLoginError";
 		List<String> errors = Collections.emptyList();
 		Auth auth = null;
 
@@ -309,110 +309,109 @@ public final class SSOLoginAction extends DispatchAction {
 			logger.error("Found unexpected exception", e);
 		}
 
-		if(auth != null) {
+		if(auth != null ) {
+
 			errors = auth.getErrors();
 
-			if (! auth.isAuthenticated()) {
-				logger.error("Authentication failed. " + StringUtils.join(errors, ", "));
-				destination = "ssoLoginError";
-			}
-		}
+			if (! errors.isEmpty()) {
+				logger.error("Errors found while attempting to authenticate SSO response: " + StringUtils.join(errors, ", "));
 
-		if (! errors.isEmpty()) {
-			logger.error("Errors while attempting to authenticate " + StringUtils.join(errors, ", "));
-			if (auth.isDebugActive()) {
 				String errorReason = auth.getLastErrorReason();
 				if (errorReason != null && !errorReason.isEmpty()) {
 					logger.error("Possible reason for last error " + auth.getLastErrorReason());
 				}
-			}
-			destination = "ssoLoginError";
-		} else {
 
-			String[] providerInformation = new String[0];
-			Map<String, List<String>> attributes = auth.getAttributes();
-			String nameId = auth.getNameId();
-			String nameIdFormat = auth.getNameIdFormat();
-			String sessionIndex = auth.getSessionIndex();
-			String nameidNameQualifier = auth.getNameIdNameQualifier();
-			String nameidSPNameQualifier = auth.getNameIdSPNameQualifier();
+			} else if( auth.isAuthenticated() ) {
 
-//			String email = auth.getAttribute("email");
-//			String oneIdToken = auth.getAttribute("encryptedOneIdToken");
+				Map<String, List<String>> attributes = auth.getAttributes();
+				String nameId = auth.getNameId();
+				String nameIdFormat = auth.getNameIdFormat();
+				String sessionIndex = auth.getSessionIndex();
+				String nameidNameQualifier = auth.getNameIdNameQualifier();
+				String nameidSPNameQualifier = auth.getNameIdSPNameQualifier();
 
-			if (relayState != null) {
-//					&& relayState != ServletUtils.getSelfRoutedURLNoQuery(request)) {
+				//			String email = auth.getAttribute("email");
+				//			String oneIdToken = auth.getAttribute("encryptedOneIdToken");
 
-				// usually means redirect to auth request if this is not set??
-				logger.error("SSO relay state is set: " + relayState);
+//				if (relayState != null) {
+//					//					&& relayState != ServletUtils.getSelfRoutedURLNoQuery(request)) {
+//
+//					// usually means redirect to auth request if this is not set??
+//					logger.error("SSO relay state is set: " + relayState);
+//
+//					if (attributes.isEmpty()) {
+//						logger.error("No authentication response attributes found: " + StringUtils.join(attributes, ", "));
+//						destination = "ssoLoginError";
+//					} else {
+//						Collection<String> keys = attributes.keySet();
+//						for (String name : keys) {
+//							logger.info(name);
+//							List<String> values = attributes.get(name);
+//							for (String value : values) {
+//								logger.info(" - " + value);
+//							}
+//						}
+//
+//
+//					}
+//				}
 
-				if (attributes.isEmpty()) {
-					logger.error("No authentication response attributes found: " + StringUtils.join(attributes, ", "));
-					destination = "ssoLoginError";
-				} else {
-					Collection<String> keys = attributes.keySet();
-					for (String name : keys) {
-						logger.info(name);
-						List<String> values = attributes.get(name);
-						for (String value : values) {
-							logger.info(" - " + value);
+				String[] providerInformation = ssoAuthenticationManager.checkLogin(nameId);
+
+				if (providerInformation != null && providerInformation.length < 0) {
+
+					HttpSession session = request.getSession(false);
+					if (session != null) {
+						if (request.getParameter("invalidate_session") != null && request.getParameter("invalidate_session").equals("false")) {
+							//don't invalidate in this case, it messes up authenticity of OAUTH
+						} else {
+							session.invalidate();
 						}
 					}
 
-					providerInformation = ssoAuthenticationManager.checkLogin(nameId);
-				}
-			}
+					// Create a new session for this user
+					session = request.getSession();
 
-			if (providerInformation.length < 0) {
+					/* add session attributes;
+					 * NOTE: these are the ONLY attributes we add to a session.
+					 * NO provider preferences here.
+					 */
+					session.setAttribute("attributes", attributes);
+					session.setAttribute("nameId", nameId);
+					session.setAttribute("nameIdFormat", nameIdFormat);
+					session.setAttribute("sessionIndex", sessionIndex);
+					session.setAttribute("nameidNameQualifier", nameidNameQualifier);
+					session.setAttribute("nameidSPNameQualifier", nameidSPNameQualifier);
 
-				HttpSession session = request.getSession(false);
-				if (session != null) {
-					if (request.getParameter("invalidate_session") != null && request.getParameter("invalidate_session").equals("false")) {
-						//don't invalidate in this case, it messes up authenticity of OAUTH
-					} else {
-						session.invalidate();
+					session.setAttribute("user", providerInformation[0]);
+					session.setAttribute("userfirstname", providerInformation[1]);
+					session.setAttribute("userlastname", providerInformation[2]);
+					session.setAttribute("userrole", providerInformation[4]);
+					session.setAttribute("oscar_context_path", ssoAuthenticationManager.validateContextPath(request.getContextPath()));
+					session.setAttribute("expired_days", providerInformation[5]);
+
+					//				session.setAttribute("oneIdEmail", email);
+					//				session.setAttribute("oneid_token", oneIdToken);
+
+					// this will set ONLY if the user login checks out from ssoAuthenticationManager.checkLogin(nameId)
+					session.setAttribute(SessionConstants.LOGGED_IN_SECURITY, ssoAuthenticationManager.getSecurity());
+
+					// only the provider class info here.  Nothing more.
+					session.setAttribute(SessionConstants.LOGGED_IN_PROVIDER, ssoAuthenticationManager.getProvider(providerInformation[0]));
+
+					if (providerInformation[6] != null && !providerInformation[6].equals("")) {
+						session.setAttribute("delegateOneIdEmail", providerInformation[6]);
 					}
+
+					destination = "provider";
+
+					LogAction.addLog(providerInformation[0], LogConst.LOGIN, LogConst.CON_LOGIN, "", request.getRemoteAddr());
 				}
-
-				// Create a new session for this user
-				session = request.getSession();
-
-				/* add session attributes;
-				 * NOTE: these are the ONLY attributes we add to a session.
-				 * NO provider preferences here.
-				 */
-				session.setAttribute("attributes", attributes);
-				session.setAttribute("nameId", nameId);
-				session.setAttribute("nameIdFormat", nameIdFormat);
-				session.setAttribute("sessionIndex", sessionIndex);
-				session.setAttribute("nameidNameQualifier", nameidNameQualifier);
-				session.setAttribute("nameidSPNameQualifier", nameidSPNameQualifier);
-
-				session.setAttribute("user", providerInformation[0]);
-				session.setAttribute("userfirstname", providerInformation[1]);
-				session.setAttribute("userlastname", providerInformation[2]);
-				session.setAttribute("userrole", providerInformation[4]);
-				session.setAttribute("oscar_context_path", ssoAuthenticationManager.validateContextPath(request.getContextPath()));
-				session.setAttribute("expired_days", providerInformation[5]);
-
-//				session.setAttribute("oneIdEmail", email);
-//				session.setAttribute("oneid_token", oneIdToken);
-
-				// this will set ONLY if the user login checks out from ssoAuthenticationManager.checkLogin(nameId)
-				session.setAttribute(SessionConstants.LOGGED_IN_SECURITY, ssoAuthenticationManager.getSecurity());
-
-				// only the provider class info here.  Nothing more.
-				session.setAttribute(SessionConstants.LOGGED_IN_PROVIDER, ssoAuthenticationManager.getProvider(providerInformation[0]));
-
-				if (providerInformation[6] != null && !providerInformation[6].equals("")) {
-					session.setAttribute("delegateOneIdEmail", providerInformation[6]);
-				}
-
-				destination = "provider";
-
-				LogAction.addLog(providerInformation[0], LogConst.LOGIN, LogConst.CON_LOGIN, "", request.getRemoteAddr());
+			} else {
+				logger.error("SSO authentication failed: " + StringUtils.join(errors, ", "));
+				logger.debug("SSO authentication settings: " + auth.getSettings());
 			}
-		}
+		} // end if Auth != null. An exception will be thrown before this point.
 
 		ActionRedirect redirect = new ActionRedirect(mapping.findForward(destination));
 		// additional error message parameters here.
