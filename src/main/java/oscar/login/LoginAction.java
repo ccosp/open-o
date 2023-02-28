@@ -300,18 +300,6 @@ public final class LoginAction extends DispatchAction {
 
                 return(new ActionForward(newURL));            	
             }
-                        
-            // invalidate the existing session
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-            	if(request.getParameter("invalidate_session") != null && request.getParameter("invalidate_session").equals("false")) {
-            		//don't invalidate in this case it messes up authenticity of OAUTH
-            	} else {
-            		session.invalidate();
-            	}
-            }
-            session = request.getSession(); // Create a new session for this user
-			session.setMaxInactiveInterval(7200); // 2 hours
 
 	        /*
 	         * User has authenticated in OSCAR at this point.
@@ -326,6 +314,19 @@ public final class LoginAction extends DispatchAction {
 		        redirect.addParameter("user_email", strAuth[6]);
 		        return redirect;
 	        }
+
+
+	        // invalidate the existing session
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+		        if(request.getParameter("invalidate_session") != null && request.getParameter("invalidate_session").equals("false")) {
+			        //don't invalidate in this case it messes up authenticity of OAUTH
+		        } else {
+			        session.invalidate();
+		        }
+	        }
+	        session = request.getSession(); // Create a new session for this user
+	        session.setMaxInactiveInterval(7200); // 2 hours
 
 
           //If the ondIdKey parameter is not null and is not an empty string

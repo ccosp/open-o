@@ -288,7 +288,9 @@ public final class SSOLoginAction extends DispatchAction {
 	}
 
 	public ActionForward ssoLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
 //		String relayState = request.getParameter("RelayState");
+
 		String user_email = request.getParameter("user_email");
 		String context = request.getRequestURL().toString();
 		String destination = "ssoLoginError";
@@ -329,6 +331,15 @@ public final class SSOLoginAction extends DispatchAction {
 				String sessionIndex = auth.getSessionIndex();
 				String nameidNameQualifier = auth.getNameIdNameQualifier();
 				String nameidSPNameQualifier = auth.getNameIdSPNameQualifier();
+				String contextPath = ssoAuthenticationManager.validateContextPath(request.getContextPath());
+				String ipAddress = request.getRemoteAddr();
+
+//				session.setAttribute("user", providerInformation[0]);
+//				session.setAttribute("userfirstname", providerInformation[1]);
+//				session.setAttribute("userlastname", providerInformation[2]);
+//				session.setAttribute("userrole", providerInformation[4]);
+//				session.setAttribute("oscar_context_path", contextPath);
+//				session.setAttribute("expired_days", providerInformation[5]);
 
 				//			String email = auth.getAttribute("email");
 				//			String oneIdToken = auth.getAttribute("encryptedOneIdToken");
@@ -364,18 +375,26 @@ public final class SSOLoginAction extends DispatchAction {
 					if (session != null) {
 						if (request.getParameter("invalidate_session") != null && request.getParameter("invalidate_session").equals("false")) {
 							//don't invalidate in this case, it messes up authenticity of OAUTH
+							logger.debug("Session NOT invalidated: " + session.getId());
 						} else {
 							session.invalidate();
+							logger.debug("Session invalidated: " + session.getId());
 						}
 					}
 
 					// Create a new session for this user
-					session = request.getSession();
+					session = request.getSession(true);
+					session.setMaxInactiveInterval(7200);
+
+					logger.debug("New session created: " + session.getId());
 
 					/* add session attributes;
 					 * NOTE: these are the ONLY attributes we add to a session.
 					 * NO provider preferences here.
 					 */
+					logger.debug("Setting session SSO attributes: ");
+					attributes.forEach((key, value) -> logger.debug(" => " + key + ":" + value));
+
 					session.setAttribute("attributes", attributes);
 					session.setAttribute("nameId", nameId);
 					session.setAttribute("nameIdFormat", nameIdFormat);
@@ -383,35 +402,56 @@ public final class SSOLoginAction extends DispatchAction {
 					session.setAttribute("nameidNameQualifier", nameidNameQualifier);
 					session.setAttribute("nameidSPNameQualifier", nameidSPNameQualifier);
 
+					logger.debug("Setting provider information: " + Arrays.toString(providerInformation));
+
 					session.setAttribute("user", providerInformation[0]);
 					session.setAttribute("userfirstname", providerInformation[1]);
 					session.setAttribute("userlastname", providerInformation[2]);
 					session.setAttribute("userrole", providerInformation[4]);
-					session.setAttribute("oscar_context_path", ssoAuthenticationManager.validateContextPath(request.getContextPath()));
+					session.setAttribute("oscar_context_path", contextPath);
 					session.setAttribute("expired_days", providerInformation[5]);
 
-					//				session.setAttribute("oneIdEmail", email);
-					//				session.setAttribute("oneid_token", oneIdToken);
+					// if the nameId is in an email format
+					logger.debug("SSO email: " + nameId);
+					session.setAttribute("oneIdEmail", nameId);
 
-					// this will set ONLY if the user login checks out from ssoAuthenticationManager.checkLogin(nameId)
-					session.setAttribute(SessionConstants.LOGGED_IN_SECURITY, ssoAuthenticationManager.getSecurity());
+					// if in token format
+					logger.debug("SSO token: " + nameId);
+					session.setAttribute("oneid_token", nameId);
+
+					// full site or mobile
+					session.setAttribute("fullSite","true");
 
 					// only the provider class info here.  Nothing more.
 					session.setAttribute(SessionConstants.LOGGED_IN_PROVIDER, ssoAuthenticationManager.getProvider(providerInformation[0]));
 
-					if (providerInformation[6] != null && !providerInformation[6].equals("")) {
-						session.setAttribute("delegateOneIdEmail", providerInformation[6]);
+					// this will set ONLY if the user login checks out from ssoAuthenticationManager.checkLogin(nameId)
+					session.setAttribute(SessionConstants.LOGGED_IN_SECURITY, ssoAuthenticationManager.getSecurity());
+
+					// session.setAttribute("currentFacility", facility);
+
+					logger.debug("New session set: ");
+					Enumeration<String> sessionAttributeNames = session.getAttributeNames();
+					while(sessionAttributeNames.hasMoreElements()) {
+						String attributeName = sessionAttributeNames.nextElement();
+						logger.debug("=> " + attributeName + ":" + session.getAttribute(attributeName));
 					}
+
+					ssoAuthenticationManager.updateLogin(ipAddress, providerInformation[0]);
+
+					logger.debug("SSO login updated forwarding to provider schedule.");
 
 					destination = "provider";
 
-					LogAction.addLog(providerInformation[0], LogConst.LOGIN, LogConst.CON_LOGIN, "", request.getRemoteAddr());
+					LogAction.addLog(providerInformation[0], LogConst.LOGIN, LogConst.CON_LOGIN, "", ipAddress);
 				}
 			} else {
 				logger.error("SSO authentication failed: " + StringUtils.join(errors, ", "));
 				logger.debug("SSO authentication settings: " + auth.getSettings());
 			}
 		} // end if Auth != null. An exception will be thrown before this point.
+
+		//TODO add something about ajax here.
 
 		ActionRedirect redirect = new ActionRedirect(mapping.findForward(destination));
 		// additional error message parameters here.

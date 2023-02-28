@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -111,16 +112,43 @@ public class SsoAuthenticationManager implements Serializable {
     }
 
     public String[] checkLogin(String nameId) {
+
+        /* short circuit any null or empty values saves processing power
+         * TODO validate if format is URI.
+         */
+        if(nameId == null || nameId.isEmpty()) {
+            return null;
+        }
+
+        /* otherwise validate that the SSO authentication request is
+         * for a valid user.
+         */
         loginCheck = new LoginCheckLogin();
         String[] providerInformation = loginCheck.ssoAuth(nameId);
-        String providerNumber = providerInformation[0];
-        Provider provider = getProvider(providerNumber);
-        if(provider == null || (provider.getStatus() != null && provider.getStatus().equals("0"))) {
-            logger.error("Provider account is missing or inactive. Provider number: " + providerNumber);
-            LogAction.addLog(providerNumber, "login", "failed", "inactive");
-            providerInformation = new String[0];
+
+        /*
+         * the nameId of the SOO authResponse is used to check the security
+         * logs of this user. This could be an email or special token etc...
+         */
+        if(providerInformation != null && providerInformation.length > 0) {
+            String providerNumber = providerInformation[0];
+            Provider provider = getProvider(providerNumber);
+            if (provider == null || (provider.getStatus() != null && provider.getStatus().equals("0"))) {
+                String error = "Provider account is missing or inactive. Provider number: " + providerNumber;
+                logger.error(error);
+                LogAction.addLog(providerNumber, "login", "failed", "inactive");
+                providerInformation = null;
+            }
         }
+
+        logger.debug("SSO login confirmed with provider info: " + Arrays.toString(providerInformation));
+
         return providerInformation;
+    }
+
+    public void updateLogin(String username, String ipAddress) {
+        logger.debug("Updating login list: username " + username + " ipAddress: " + ipAddress);
+        loginCheck.updateLoginList(username, ipAddress);
     }
 
     public Provider getProvider(String providerNumber) {
