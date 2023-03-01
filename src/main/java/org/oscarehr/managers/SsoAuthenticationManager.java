@@ -23,14 +23,18 @@
  */
 package org.oscarehr.managers;
 
+import com.onelogin.saml2.Auth;
 import com.onelogin.saml2.settings.Saml2Settings;
 import com.onelogin.saml2.settings.SettingsBuilder;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
+import org.oscarehr.common.dao.ProviderPreferenceDao;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.ProviderPreference;
 import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SSOUtility;
+import org.oscarehr.util.SessionConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oscar.login.LoginCheckLogin;
@@ -40,12 +44,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
-import oscar.log.LogAction;
 
 @Service
 public class SsoAuthenticationManager implements Serializable {
@@ -57,7 +57,10 @@ public class SsoAuthenticationManager implements Serializable {
     @Autowired
     private ProviderDao providerDao;
 
-    private final String samlPropertiesFile = "/onelogin.saml.properties";
+    @Autowired
+    private ProviderPreferenceDao providerPreferenceDao;
+
+    private static final String samlPropertiesFile = "/onelogin.saml.properties";
 
     /**
      * Manager method that builds a settings object for an IDP authentication request.
@@ -97,26 +100,101 @@ public class SsoAuthenticationManager implements Serializable {
         samlData.put("onelogin.saml2.idp.x509cert", sso_presets.get(SSOUtility.SSO_SETTING.sso_idp_x509cert));
 
         SettingsBuilder builder = new SettingsBuilder();
-        Saml2Settings saml2Settings = builder.fromValues(typeCast(samlData)).build();
-
-        return saml2Settings;
+        return builder.fromValues(typeCast(samlData)).build();
     }
 
-    public String validateContextPath(String contextPath) {
-        try {
-            return SSOUtility.getRedirectUrl(contextPath).toString();
-        } catch (URISyntaxException e) {
-            logger.error("Context path is invalid " + contextPath, e);
+    /**
+     *
+     * @return Map of attributes for use in new login session
+     */
+    public Map<String,Object> checkSSOLogin(Auth auth) {
+        Map<String, List<String>> attributes = auth.getAttributes();
+        String nameId = auth.getNameId();
+        String nameIdFormat = auth.getNameIdFormat();
+        String sessionIndex = auth.getSessionIndex();
+        String nameidNameQualifier = auth.getNameIdNameQualifier();
+        String nameidSPNameQualifier = auth.getNameIdSPNameQualifier();
+
+        /* add session attributes;
+         * NOTE: these are the ONLY attributes we add to a session.
+         * NO provider preferences here.
+         */
+        logger.debug("Setting session SSO attributes: ");
+        Collection<String> keys = attributes.keySet();
+        for (String name : keys) {
+            logger.debug(name);
+            List<String> values = attributes.get(name);
+            for (String value : values) {
+                logger.debug(" - " + value);
+            }
         }
-        return "";
+
+        Map<String, Object> sessionData = checkLogin(new HashMap<>(), nameId);
+        if(sessionData != null && ! sessionData.isEmpty()) {
+            sessionData.put("attributes", attributes);
+            sessionData.put("nameId", nameId);
+            sessionData.put("nameIdFormat", nameIdFormat);
+            sessionData.put("sessionIndex", sessionIndex);
+            sessionData.put("nameidNameQualifier", nameidNameQualifier);
+            sessionData.put("nameidSPNameQualifier", nameidSPNameQualifier);
+
+            // if the nameId is in an email format
+            logger.debug("SSO email: " + nameId);
+            sessionData.put("oneIdEmail", nameId);
+
+            // if in token format
+            logger.debug("SSO token: " + nameId);
+            sessionData.put("oneid_token", nameId);
+        }
+        return sessionData;
     }
 
-    public String[] checkLogin(String nameId) {
+    /**
+     * Validate the user and then return valid session data.
+     * Null data if user does not authenticate.
+     *
+     * @param sessionData new or existing hashmap
+     * @param nameId URI being authenticated
+     * @return session data or NULL
+     */
+    public Map<String,Object> checkLogin(Map<String,Object> sessionData, String nameId) {
+
+        String[] providerInformation = checkLogin(nameId);
+        if(providerInformation != null && providerInformation.length > 0) {
+
+            logger.debug("SSO login confirmed with provider info: " + Arrays.toString(providerInformation));
+
+            sessionData.put("user", providerInformation[0]);
+            sessionData.put("userfirstname", providerInformation[1]);
+            sessionData.put("userlastname", providerInformation[2]);
+            sessionData.put("userrole", providerInformation[4]);
+            sessionData.put("expired_days", providerInformation[5]);
+
+            // only the provider class info here.  Nothing more.
+            sessionData.put(SessionConstants.LOGGED_IN_PROVIDER, getProvider(providerInformation[0]));
+
+            // this will set ONLY if the user login checks out from ssoAuthenticationManager.checkLogin(nameId)
+            sessionData.put(SessionConstants.LOGGED_IN_SECURITY, getSecurity());
+
+            // provider preferences.  Let's stop putting this into session
+            setUserPreferences(sessionData, providerInformation[0]);
+
+            // not sure if this is needed yet
+            // session.setAttribute("currentFacility", facility);
+
+            // determines if this user should be locked out or not.
+            // updateLogin("", providerInformation[0]);
+        }
+
+        return sessionData;
+    }
+
+    private String[] checkLogin(String nameId) {
 
         /* short circuit any null or empty values saves processing power
-         * TODO validate if format is URI.
          */
         if(nameId == null || nameId.isEmpty()) {
+            loginCheck = null;
             return null;
         }
 
@@ -124,26 +202,22 @@ public class SsoAuthenticationManager implements Serializable {
          * for a valid user.
          */
         loginCheck = new LoginCheckLogin();
-        String[] providerInformation = loginCheck.ssoAuth(nameId);
+        return loginCheck.ssoAuth(nameId);
+    }
 
-        /*
-         * the nameId of the SOO authResponse is used to check the security
-         * logs of this user. This could be an email or special token etc...
-         */
-        if(providerInformation != null && providerInformation.length > 0) {
-            String providerNumber = providerInformation[0];
-            Provider provider = getProvider(providerNumber);
-            if (provider == null || (provider.getStatus() != null && provider.getStatus().equals("0"))) {
-                String error = "Provider account is missing or inactive. Provider number: " + providerNumber;
-                logger.error(error);
-                LogAction.addLog(providerNumber, "login", "failed", "inactive");
-                providerInformation = null;
-            }
+    /**
+     * @Deprecated trying to get away from putting this data into the session.
+     */
+    private Map<String,Object> setUserPreferences(Map<String,Object> sessionData, String providerNo) {
+        ProviderPreference providerPreferences = providerPreferenceDao.find(providerNo);
+
+        if (providerPreferences==null) {
+            providerPreferences = new ProviderPreference();
         }
 
-        logger.debug("SSO login confirmed with provider info: " + Arrays.toString(providerInformation));
+        sessionData.put(SessionConstants.LOGGED_IN_PROVIDER_PREFERENCE, providerPreferences);
 
-        return providerInformation;
+        return sessionData;
     }
 
     public void updateLogin(String username, String ipAddress) {

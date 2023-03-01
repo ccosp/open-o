@@ -241,7 +241,12 @@ public final class LoginCheckLoginBean {
 			ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
 			Provider provider = providerDao.getProvider(securityRecord.getProviderNo());
 
-			if (provider != null) {
+			if (provider == null || (provider.getStatus() != null && provider.getStatus().equals("0"))) {
+				String error = "Provider account is missing or inactive. Provider number: " + securityRecord.getProviderNo();
+				logger.error(error);
+				LogAction.addLog(securityRecord.getProviderNo(), "login", "failed", "inactive");
+				return null;
+			} else {
 				firstname = provider.getFirstName();
 				lastname = provider.getLastName();
 			}
