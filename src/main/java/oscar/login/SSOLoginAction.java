@@ -394,7 +394,7 @@ public final class SSOLoginAction extends DispatchAction {
 
 					destination = "provider";
 
-					LogAction.addLog(providerInformation[0], LogConst.LOGIN, LogConst.CON_LOGIN, "", ipAddress);
+					LogAction.addLog((String) newSession.getAttribute("user"), LogConst.LOGIN, LogConst.CON_LOGIN, "", ipAddress);
 				} else {
 					logger.error("OSCAR SSO login failed");
 					// find out why.
