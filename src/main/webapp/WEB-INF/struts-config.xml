@@ -631,13 +631,21 @@
 	</form-beans>
 
 	<global-forwards>
-		<forward name="Logout" path="/logout.jsp" redirect="true" />
-		<forward name="SessionTimeOut" path="/sessiontimeout.jsp" redirect="true" />
-		<forward name="failure" path="/failure.jsp" redirect="true" />
-		<forward name="auth" path="/survey/auth.jsp" />
+		<forward name="/Logout.jsp" path="/logout" redirect="true" />
+		<forward name="/logout.jsp" path="/logout" redirect="true" />
+		<forward name="SessionTimeOut" path="/logout?method=sessionTimeout" redirect="true" />
+		<forward name="sessiontimeout.jsp" path="/logout?method=sessionTimeout" redirect="true" />
+		<forward name="failure" path="/logout?method=failure" redirect="true" />
+		<forward name="logoutSSO.jsp" path="/logout?method=ssoLogout" redirect="true" />
+		<forward name="loginfailed.jsp" path="/logout?method=failure" />
 	</global-forwards>
 
 	<action-mappings>
+
+		<action path="/logout" type="oscar.login.LogoutAction" scope="request" validate="false" parameter="method">
+			<forward name="success" path="/index.jsp" />
+			<forward name="logoutsso" path="/ssoLogin.do?method=ssoLogout" />
+		</action>
 	
 		<action path="/lookupListManagerAction" type="org.oscarehr.admin.lookUpLists.LookupListManagerAction" 
 			scope="request" validate="false" parameter="method">
