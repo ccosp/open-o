@@ -2445,7 +2445,7 @@ if ( Dead.equals(PatStat) ) {%>
 							    </td>
 							    <td>
 								<%String spokenLang = oscar.util.StringUtils.noNull(demographic.getSpokenLanguage()); %>
-									<select name="spoken_lang" <%=getDisabled("spoken_lang")%>>
+									<select name="spoken_lang" style="width: 200px;" <%=getDisabled("spoken_lang")%>>
 <%for (String splang : Util.spokenLangProperties.getLangSorted()) { %>
                                         <option value="<%=splang %>" <%=spokenLang.equals(splang)?"selected":"" %>><%=splang %></option>
 <%} %>
@@ -3049,7 +3049,7 @@ if ( Dead.equals(PatStat) ) {%>
 							</tr>
 							<tr valign="top">
 								<td align="right"><b><bean:message key="demographic.demographiceditdemographic.msgCountryOfOrigin"/>: </b></td>
-								<td align="left"><select id="countryOfOrigin" name="countryOfOrigin" <%=getDisabled("countryOfOrigin")%>>
+								<td align="left"><select id="countryOfOrigin" name="countryOfOrigin" style="width: 200px;" <%=getDisabled("countryOfOrigin")%>>
 									<option value="-1"><bean:message key="demographic.demographiceditdemographic.msgNotSet"/></option>
 									<%for(CountryCode cc : countryList){ %>
 									<option value="<%=cc.getCountryId()%>"
@@ -3331,7 +3331,7 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 								<td align="right" nowrap><b><bean:message
 									key="demographic.demographiceditdemographic.RosterTerminationReason" />: </b></td>
 								<td align="left" colspan="3">
-									<select  name="roster_termination_reason">
+									<select  name="roster_termination_reason" style="width: 200px;">
 										<option value="">N/A</option>
 <%for (String code : Util.rosterTermReasonProperties.getTermReasonCodes()) { %>
 										<option value="<%=code %>" <%=code.equals(rosterTerminationReason)?"selected":"" %> ><%=Util.rosterTermReasonProperties.getReasonByCode(code) %></option>
