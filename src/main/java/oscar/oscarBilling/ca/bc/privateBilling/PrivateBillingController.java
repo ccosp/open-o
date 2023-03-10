@@ -1,12 +1,10 @@
 package oscar.oscarBilling.ca.bc.privateBilling;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +22,6 @@ import org.oscarehr.PMmodule.dao.ProviderDao;
 import oscar.oscarDemographic.data.DemographicData;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
-import oscar.oscarBilling.ca.bc.privateBilling.PrivateBillingDAO;
 import oscar.oscarClinic.ClinicData;
 
 /*
