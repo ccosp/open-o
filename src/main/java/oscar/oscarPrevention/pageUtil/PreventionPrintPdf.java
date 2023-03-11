@@ -110,9 +110,10 @@ public class PreventionPrintPdf {
     public void printPdf(String[] headerIds1, HttpServletRequest request, OutputStream outputStream) throws IOException, DocumentException{
         
         //make sure we have data to print      
-        if( headerIds1 == null )
+        if( headerIds1 == null ) {
             throw new DocumentException();
-        
+        }
+
         String[] headerIds = null;
         List<String> validImmunizationsIds = new ArrayList<String>();
         List<String> validScreeningsIds = new ArrayList<String>();
@@ -557,7 +558,7 @@ public class PreventionPrintPdf {
         return paragraph;
     }
 
-    private void addTextInColumn(ColumnText ct, Chunk chunk, Paragraph paragraph, float indent, int alignment){
+    private void addTextInColumn(ColumnText ct, Chunk chunk, Paragraph paragraph, float indent, int alignment) throws DocumentException {
         if (chunk != null) {
             ct.addText(chunk);
         } else {
