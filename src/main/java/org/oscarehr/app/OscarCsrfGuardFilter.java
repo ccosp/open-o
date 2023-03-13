@@ -24,6 +24,7 @@
 package org.oscarehr.app;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.oscarehr.util.MiscUtils;
 import org.owasp.csrfguard.CsrfGuard;
 import org.owasp.csrfguard.CsrfGuardException;
 import org.owasp.csrfguard.action.IAction;
@@ -45,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Oscar OscarCsrfGuardFilter
@@ -63,8 +65,10 @@ public class OscarCsrfGuardFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
+		CsrfGuard csrfGuard = CsrfGuard.getInstance();
+
 		//maybe the short circuit to disable is set
-		if (!CsrfGuard.getInstance().isEnabled()) {
+		if (!csrfGuard.isEnabled()) {
 			filterChain.doFilter(request, response);
 			return;
 		}
@@ -75,15 +79,19 @@ public class OscarCsrfGuardFilter implements Filter {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpSession session = httpRequest.getSession(false);
 
-			//if there is no session and we aren't validating when no session exists
-			if (session == null && !CsrfGuard.getInstance().isValidateWhenNoSessionExists()) {
-				// If there is no session, no harm can be done
-				filterChain.doFilter(httpRequest, (HttpServletResponse) response);
+			/*
+			 * if there is no session and we aren't validating when no session exists.
+			 * OR if this page request is indicated as unprotected in the CsrfGuard properties.
+			 * This mainly applies to uploads coming through the authenticated SOAP or REST API.
+			 * If true: short circuit the process.
+			 */
+			if ( (session == null && !csrfGuard.isValidateWhenNoSessionExists())
+					|| ! csrfGuard.isProtectedPage(httpRequest.getRequestURI()) )  {
+				filterChain.doFilter(httpRequest, response);
 				return;
 			}
 
-			CsrfGuard csrfGuard = CsrfGuard.getInstance();
-			csrfGuard.getLogger().log(String.format("CsrfGuard analyzing request %s", httpRequest.getRequestURI()));
+			MiscUtils.getLogger().debug(String.format("CsrfGuard Filter analyzing request %s", httpRequest.getRequestURI()));
 
 			// Default to not redirect unless csrf_do_redirect is set 
             // TODO: reverse this when there are more pages by csrf covered 

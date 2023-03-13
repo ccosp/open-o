@@ -149,6 +149,7 @@ String endDate = (String) request.getAttribute("endDate");
                                 <% if (demographicNo == null) { %>
                                     <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnSearch"/>" onClick="window.location='${pageContext.servletContext.contextPath}/oscarMDS/Search.jsp?providerNo=<%= providerNo %>'" />
                                 <% } %>
+                                <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnLoadAll"/>" onClick="showAllInbox()" />
                                 <input type="button" class="smallButton" value="<bean:message key="oscarMDS.index.btnClose"/>" onClick="wrapUp()" />
                       		</td>
 
@@ -380,8 +381,8 @@ String endDate = (String) request.getAttribute("endDate");
 	<script type="text/javascript" >
 		jQuery.noConflict();
 		
-		var ctx = "${pageContext.servletContext.contextPath}";
-		var contextpath = "${pageContext.servletContext.contextPath}";
+		const ctx = "${pageContext.servletContext.contextPath}";
+		var contextpath = ctx;
 		
 	 	jQuery(window).on("scroll",handleScroll());
 		 
@@ -459,7 +460,13 @@ String endDate = (String) request.getAttribute("endDate");
 			}
 	 		handleScroll(scroller);
 		}
-	
+
+		function showAllInbox() {
+			page = 1;
+			pageSize = 1000;
+			updateListView();
+		}
+
 		function updateListView() {
 			var query = getQuery();
 			if (page == 1) {
@@ -712,7 +719,7 @@ String endDate = (String) request.getAttribute("endDate");
 	</script>
 	
 </div> <!--  end wrapper  -->  
-<input type="hidden" id="ctx" value="${pageContext.servletContext.contextPath}" />
+
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/oscarMDSIndex.js"></script>
 <div id="dialog" ></div> 
 
