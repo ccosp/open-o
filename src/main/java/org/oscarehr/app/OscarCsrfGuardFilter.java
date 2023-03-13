@@ -75,6 +75,12 @@ public class OscarCsrfGuardFilter implements Filter {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpSession session = httpRequest.getSession(false);
 
+			if(httpRequest.getRequestURI().contains("ws/LoginService") || httpRequest.getRequestURI().contains("ws/LabUploadService")) {
+				// SOAP web services that - for some reason - use Servlet Requests.
+				filterChain.doFilter(httpRequest, response);
+				return;
+			}
+
 			//if there is no session and we aren't validating when no session exists
 			if (session == null && !CsrfGuard.getInstance().isValidateWhenNoSessionExists()) {
 				// If there is no session, no harm can be done
