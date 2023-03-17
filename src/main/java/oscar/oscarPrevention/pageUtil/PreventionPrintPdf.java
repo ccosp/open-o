@@ -211,8 +211,7 @@ public class PreventionPrintPdf {
         upperYcoord = document.top() - header.getHeight() -(clinicParagraph.getLeading()*4f) - font.getCalculatedLeading(LINESPACING);
         
         int subIdx;
-        String preventionHeader, procedureAge, procedureDate, procedureStatus;
-            procedureResult, procedureReason, procedureComments, procedureLocationOfShot,
+        String preventionHeader, procedureAge, procedureDate, procedureStatus, procedureResult, procedureReason, procedureComments, procedureLocationOfShot,
             procedureManufacturer, procedureNameOfVaccine, procedureLotID, procedureDoseAdministered;
 
         //boolean values for headers of Immunizations and Screenings
