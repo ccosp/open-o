@@ -1774,18 +1774,18 @@
 
                                                               //Pull the appointment name from the demographic information if the appointment is attached to a specific demographic.
                                                               //Otherwise get the name associated with the appointment from the appointment information
-                                                              StringBuilder nameSb = new StringBuilder();
+                                                              String name = ".";
                                                               if (demographic_no != 0) {
                                                                   demographic = demographicManager.getDemographic(loggedInInfo1, demographic_no);
-
-                                                                    nameSb.append(demographic.getLastName())
-                                                                          .append(",")
-                                                                          .append(demographic.getFirstName());
+																  name = UtilMisc.toUpperLowerCase(demographic.getLastName()) + ", " + UtilMisc.toUpperLowerCase(demographic.getFirstName());
                                                               }
                                                               else {
-                                                                    nameSb.append(appointment.getName());
+																  name = appointment.getName();
                                                               }
+<<<<<<< HEAD
                                                               String name = WordUtils.capitalizeFully(nameSb.toString(), new char[] {',','-','(','\''});
+=======
+>>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
 
                                                               paramTickler[0]=String.valueOf(demographic_no);
                                                               paramTickler[1]=MyDateFormat.getSysDate(strDate);
@@ -1865,6 +1865,7 @@
                                                                                 + ((type != null && ! type.isEmpty()) ? " : " : "")
                                                                                 + reasonCodeName );
                                                                     }
+																	reasonCodeName = reasonCodeName;
 
                                                                   bFirstTimeRs=true;
                                                             as.setApptStatus(status);
@@ -1873,7 +1874,7 @@
                                                    if (!bMultisites || (selectedSite == null && CurrentSiteMap.get(sitename) != null) || sitename.equals(selectedSite)) {
                                                     %>
                                                     <td class="appt" bgcolor='<%=as.getBgColor()%>'
-                                                        rowspan="<%=iRows%>" <%-- =view==0?(len==lenLimitedL?"nowrap":""):"nowrap"--%>
+                                                        rowspan="<%=iRows%>"
                                                         nowrap>
                                                         <%
                                                             if (BookingSource.MYOSCAR_SELF_BOOKING == appointment.getBookingSource()) {
@@ -1945,13 +1946,13 @@
                                                                                 reverse="true">
                                                                 <a href="#"
                                                                    onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=0');return false;"
-                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>">
+                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=Encode.forHtmlContent(tickler_note)%>">
                                                                     <span color="red">!</span></a>
                                                             </caisi:isModuleLoad>
                                                             <caisi:isModuleLoad
                                                                     moduleName="ticklerplus">
                                                                 <a href="../ticklerPlus/index.jsp"
-                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>">
+                                                                   title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=Encode.forHtmlContent(tickler_note)%>">
                                                                     <span color="red">!</span></a>
                                                             </caisi:isModuleLoad>
                                                             <%} %>
@@ -1961,7 +1962,11 @@
                                                         <% if (OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) { %>
                                                         <% if (dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
                                                         <a href="#" onClick="return false;"
+<<<<<<< HEAD
                                                            title="<%=Encode.forHtmlContent(dCust.getAlert())%>">A</a>
+=======
+                                                           title="<%=Encode.forHtmlAttribute(dCust.getAlert())%>">A</a>
+>>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
                                                         <%
                                                                 }
                                                             }
@@ -1971,7 +1976,11 @@
                                                         <% if (OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) { %>
                                                         <% if (dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
                                                         <a href="#" onClick="return false;"
+<<<<<<< HEAD
                                                            title="<%=Encode.forHtmlContent(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+=======
+                                                           title="<%=Encode.forHtmlAttribute(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+>>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
                                                         <%
                                                                 }
                                                             }
@@ -1980,13 +1989,10 @@
 
                                                         <a href="javascript:void(0)"
                                                            onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=0&displaymode=edit&dboperation=search');return false;"
-                                                           title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%>
-                                                                    <%=name%>
-                                                                        <%=type != null ? "type: " + type : "" %>
-                                                                        reason: <%=reasonCodeName!=null?reasonCodeName:""%> <%if(reason!=null && !reason.isEmpty()){%><%=((reasonCodeName != null && ! reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%>
-                                                                    <%}%>	<bean:message key="provider.appointmentProviderAdminDay.notes"/>: <%=UtilMisc.htmlEscape(notes)%>" >
+                                                           title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%> <%=Encode.forHtmlAttribute(name)%>&#013;&#010;<%=" type: " + Encode.forHtmlAttribute(type)%>&#013;&#010;<%= " reason: " + Encode.forHtmlAttribute(reasonCodeName)%> <%=Encode.forHtmlAttribute(reason)%>&#013;&#010;<%=" notes: " + Encode.forHtmlAttribute(notes)%>"
+                                                        >
                                                             <span>
-                                                            .<%=(view == 0 && numAvailProvider != 1) ? (name.length() > len ? name.substring(0, len).toUpperCase() : name.toUpperCase()) : name.toUpperCase()%>
+                                                            .<%=(view == 0 && numAvailProvider != 1) ? (name.length() > len ? name.substring(0, len).toUpperCase() : Encode.forHtmlContent(name.toUpperCase())) : Encode.forHtmlContent(name.toUpperCase())%>
                                                             </span>
                                                         </a><!--Inline display of reason -->
 
@@ -2017,14 +2023,22 @@
                                                             <% if(OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) {%>
                                                             <% if(dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
                                                     <a href="#" onClick="return false;"
+<<<<<<< HEAD
                                                        title="<%=Encode.forHtmlContent(dCust.getAlert())%>">A</a>
+=======
+                                                       title="<%=Encode.forHtmlAttribute(dCust.getAlert())%>">A</a>
+>>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
                                                             <%} } %>
 
                                                     <!--  notes -->
                                                             <% if(OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) {%>
                                                             <% if(dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
                                                     <a href="#" onClick="return false;"
+<<<<<<< HEAD
                                                        title="<%=Encode.forHtmlContent(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+=======
+                                                       title="<%=Encode.forHtmlAttribute(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
+>>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
                                                             <%} }%>
 
                                                     <!-- doctor code block 1 -->
@@ -2075,9 +2089,9 @@
                                                     <a class="apptLink" href="javascript:void(0)"
                                                        onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
                                                             <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON_TOOLTIP" value="yes" defaultVal="true">
-                                                                title='<%=name%>&#010;type: <%=type != null ? type : "" %>&#010;reason: <%=reasonCodeName != null ? reasonCodeName : ""%> <%if (reason != null && !reason.isEmpty()) {%><%=((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + UtilMisc.htmlEscape(reason)%><%}%>
-                                                                notes: <%=notes%>'
-                                                            </oscar:oscarPropertiesCheck> ><%=(view == 0) ? (name.length() > len ? name.substring(0, len) : name) : name%>
+                                                                title="<%=Encode.forHtmlAttribute(name)%>&#013;&#010;<%=" type: " + Encode.forHtmlAttribute(type)%>&#013;&#010;<%= " reason: " + Encode.forHtmlAttribute(reasonCodeName)%> <%=Encode.forHtmlAttribute(reason)%>&#013;&#010;<%=" notes: " + Encode.forHtmlAttribute(notes)%>"
+                                                            </oscar:oscarPropertiesCheck> >
+                                                        <%=(view == 0) ? (name.length() > len ? Encode.forHtmlContent(name.substring(0, len)) : Encode.forHtmlContent(name)) : Encode.forHtmlContent(name)%>
                                                     </a>
 
                                                             <% if(len==lenLimitedL || view!=0 || numAvailProvider==1 ) {%>
@@ -2116,7 +2130,7 @@
                                                                                 +"&curProviderNo="
                                                                                 +curProvider_no[nProvider]
                                                                                 +"&reason="
-                                                                                +URLEncoder.encode(reason)
+                                                                                +URLEncoder.encode(Encode.forHtmlContent(reason))
                                                                                 +"&encType="
                                                                                 +URLEncoder.encode("face to face encounter with client","UTF-8")
                                                                                 +"&userName="
