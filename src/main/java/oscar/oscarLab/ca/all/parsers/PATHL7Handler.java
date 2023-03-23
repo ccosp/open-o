@@ -751,9 +751,17 @@ public class PATHL7Handler implements MessageHandler {
      * @return ISO standard
      */
     protected static String formatDateTime(String plain){
-    	if (plain==null) {
-            plain = "";
+    	if (plain==null || plain.isEmpty()) {
+            return "";
         }
+
+        /* pad with "000000" for time if the time string
+         * does not contain the time.
+         */
+        if(plain.trim().length() == 8) {
+            plain += "000100";
+        }
+
         SimpleDateFormat stringToDate = new SimpleDateFormat("yyyyMMddHHmmss");
         SimpleDateFormat dateToString = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
@@ -838,6 +846,13 @@ public class PATHL7Handler implements MessageHandler {
 		return result;
 	}
     
+
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
+    }
+    
+
 	public String getXML() {
 
 		XMLParser xmlParser = new DefaultXMLParser();
@@ -851,4 +866,5 @@ public class PATHL7Handler implements MessageHandler {
 		return messageInXML;
 
 	}
+
 }

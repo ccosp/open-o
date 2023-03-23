@@ -829,5 +829,10 @@ public class PFHTHandler implements MessageHandler {
 	    	
 	    	return "";
 	    }
+	    
+	    //for OMD validation
+	    public boolean isTestResultBlocked(int i, int j) {
+	    	return false;
+	    }
 
 }

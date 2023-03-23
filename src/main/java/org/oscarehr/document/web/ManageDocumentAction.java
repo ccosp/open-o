@@ -746,9 +746,9 @@ public class ManageDocumentAction extends DispatchAction {
 			String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 
 			File documentDir = new File(docdownload);
-			log.debug("Document Dir is a dir" + documentDir.isDirectory());
-
+		
 			Document d = documentDao.getDocument(doc_no);
+
 			log.debug("Document Name :" + d.getDocfilename());
 
 			docxml = d.getDocxml();

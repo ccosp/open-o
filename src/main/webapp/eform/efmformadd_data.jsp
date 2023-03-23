@@ -24,8 +24,8 @@
 
 --%>
 
-<%@ page import="oscar.util.*, oscar.eform.data.*"%>
-<%@ page import="java.util.*, org.oscarehr.managers.FaxManager, org.oscarehr.util.LoggedInInfo"%>
+<%@ page import="oscar.eform.data.*"%>
+<%@ page import="org.oscarehr.managers.FaxManager, org.oscarehr.util.LoggedInInfo"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -60,7 +60,7 @@
 	
 	<div id="hideshow" style="position: relative; z-index: 999;">
 		<a href="javascript:hideDiv()">Hide Errors</a> 
-		<span style="font-size: 10; font-color: darkred;"> <html:errors /> </span>
+		<span style="font-size: 10px; font-color: darkred;"> <html:errors /> </span>
 	</div>
 </c:if>
 

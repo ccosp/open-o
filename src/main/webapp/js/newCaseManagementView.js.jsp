@@ -405,6 +405,7 @@ var notesIncrement = 20;
 var notesRetrieveOk = false;
 var notesCurrentTop = null;
 var notesScrollCheckInterval = null;
+const MAXNOTES = Number.MAX_SAFE_INTEGER;
 
 function notesIncrementAndLoadMore() {
 	if (notesRetrieveOk && $("encMainDiv").scrollTop == 0) {				
@@ -412,9 +413,21 @@ function notesIncrementAndLoadMore() {
 			notesOffset += notesIncrement;
 			notesRetrieveOk = false;
 			notesCurrentTop = $("encMainDiv").children[0].id;
-			notesLoader(notesOffset, notesIncrement, demographicNo);
+			if (notesOffset < MAXNOTES) {
+				notesLoader(notesOffset, notesIncrement, demographicNo);
+			}
 		}
 	}
+}
+
+function notesLoadAll() {
+    notesOffset += notesIncrement;
+    notesRetrieveOk = false;
+    notesCurrentTop = $("encMainDiv").children[0].id;
+    if (notesOffset < MAXNOTES) {
+        notesLoader(notesOffset, MAXNOTES, demographicNo);
+    }
+    notesOffset += MAXNOTES;
 }
 
 /**
@@ -489,9 +502,10 @@ function navBarLoader() {
                   ctx + "/eaaps/displayEctEaaps.do?hC=",
                   ctx + "/oscarEncounter/displayEconsultation.do?hC=",
                   ctx + "/oscarEncounter/displayEHR.do?hC=",
+                  ctx + "/oscarEncounter/displayQuestimed.do?hC=",
               ];
 
-            var leftNavBarTitles = [ "preventions", "tickler", "Dx", "forms", "eforms", "docs","labs", "msgs", "measurements", "consultation", "HRM","PHR", "eaaps", "eConsult","ehr"];
+            var leftNavBarTitles = [ "preventions", "tickler", "Dx", "forms", "eforms", "docs","labs", "msgs", "measurements", "consultation", "HRM","PHR", "eams", "eConsult","ehr","Questimed"];
             var rightNavBar = [
                   ctx + "/oscarEncounter/displayAllergy.do?hC=" + Colour.allergy,
                   ctx + "/oscarEncounter/displayRx.do?hC=" + Colour.rx + "&numToDisplay=12",
@@ -873,8 +887,9 @@ function getCPP(issueCode) {
     return "";
 }
 
-var exFields = new Array(11);
-var exKeys = new Array(11);
+var exFields = new Array(12);
+var exKeys = new Array(12);
+
 exFields[0] = "startdate";
 exFields[1] = "resolutiondate";
 exFields[2] = "proceduredate";
@@ -886,6 +901,8 @@ exFields[7] = "relationship";
 exFields[8] = "lifestage";
 exFields[9] = "hidecpp";
 exFields[10] = "problemdescription";
+exFields[11] = "procedure";
+
 exKeys[0] = "Start Date";
 exKeys[1] = "Resolution Date";
 exKeys[2] = "Procedure Date";
@@ -897,16 +914,20 @@ exKeys[7] = "Relationship";
 exKeys[8] = "Life Stage";
 exKeys[9] = "Hide Cpp";
 exKeys[10] = "Problem Description";
+exKeys[11] = "Procedure";
 
 function prepareExtraFields(cpp,exts) {
 	//commented out..this causes a problem in Firefox
-	//console.log("prepare Extra Fields");
-    var rowIDs = new Array(10);
+
+	console.log("prepare Extra Fields");
+    var rowIDs = new Array(12);
     for (var i=2; i<exFields.length; i++) {
-	rowIDs[i] = "Item"+exFields[i];
-	$(rowIDs[i]).hide();
+    	console.log(i);
+		rowIDs[i] = "Item"+exFields[i];
+		$(rowIDs[i]).hide();
     }
-    if (cpp==cppNames[1]) $(rowIDs[2],rowIDs[4],rowIDs[8],rowIDs[9]).invoke("show");
+
+    if (cpp==cppNames[1]) $(rowIDs[2],rowIDs[4],rowIDs[5],rowIDs[8],rowIDs[9],rowIDs[11]).invoke("show");
     if (cpp==cppNames[2]) $(rowIDs[3],rowIDs[4],rowIDs[7],rowIDs[8],rowIDs[9]).invoke("show");
     if (cpp==cppNames[3]) $(rowIDs[5],rowIDs[8],rowIDs[9],rowIDs[10]).invoke("show");
     if (cpp==cppNames[4]) $(rowIDs[3],rowIDs[6],rowIDs[8],rowIDs[9]).invoke("show");
@@ -924,6 +945,7 @@ function prepareExtraFields(cpp,exts) {
 	    	}
 		}
     }
+    
 }
 
 function openAnnotation() {
@@ -1318,7 +1340,7 @@ function largeNote(note) {
 function resetView(frm, error, e) {
     var parent = Event.element(e).parentNode.id;
     var nId = parent.substr(1);
-    var img = "<img id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+    var img = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
 
 
     Element.remove(Event.element(e).id);
@@ -1499,7 +1521,7 @@ function changeToView(id) {
        // }
 
         var printImg = "print" + nId;
-        var img = "<img title='Minimize' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+        var img = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
         var printimg = "<img title='Print' id='" + printImg + "' alt='Toggle Print Note' onclick='togglePrint(" + nId + ", event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
         var input = "<div id='txt" + nId + "'>" + tmp + "<\/div>";
 
@@ -1568,7 +1590,7 @@ function completeChangeToView(note,newId) {
 
     var imgId = "quitImg" + newId;
     var printId = "print" + newId;
-    var img = "<img title='Minimize' id='" + imgId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'/>";
+    var img = "<img title='Minimize Display' id='" + imgId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'/>";
     var printimg = "<img title='Print' id='" + printId + "' alt='Toggle Print Note' onclick='togglePrint(" + newId + ", event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
     if( $(printId) != null ) {
         Element.remove(printId);
@@ -1678,7 +1700,7 @@ function xpandViewById(id) {
     var content = "c" + nId;
     var date = "d" + nId;
 
-    var imgTag = "<img id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+    var imgTag = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
 
 
     Element.remove(img);
@@ -1719,11 +1741,17 @@ function fetchNote(nId) {
 
 }
 
-function toggleFullViewForAll(f) {
+function toggleFullViewForAll() {
 	jQuery('[name="fullViewTrigger"]').each(function(){
 		$(this).click();
 	});
 	jQuery('[name="expandViewTrigger"]').each(function(){
+		$(this).click();
+	});
+}
+
+function toggleCollapseViewForAll() {
+	jQuery('[title="Minimize Display"]').each(function(){
 		$(this).click();
 	});
 }
@@ -1769,7 +1797,7 @@ function fullViewById(id) {
                     }
                );
 
-    var imgTag = "<img id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+    var imgTag = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
 
 
     Element.remove(img);
@@ -1784,7 +1812,7 @@ function resetEdit(e) {
     var txt = Event.element(e).id;
     var nId = txt.substr(1);
 
-    var img = "<img id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+    var img = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
     var divHeight = 14;
     var divSize = "size";
 
@@ -3765,7 +3793,7 @@ function autoCompleteShowMenuCPP(element, update) {
                    // }
 
                     var printImg = "print" + nId;
-                    var img = "<img title='Minimize' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+                    var img = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
                     var printimg = "<img title='Print' id='" + printImg + "' alt='Toggle Print Note' onclick='togglePrint(" + nId + ", event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
                     var input = "<div id='txt" + nId + "'>" + tmp + "<\/div>";
 
@@ -3939,8 +3967,11 @@ function assignNoteAjax(method, chain,programId,demographicNo) {
 window.addEventListener("message", receiveMessage, false);
 	
 function receiveMessage(event) {
-	var data = JSON.parse(event.data);
-	if(data.encounterText != null && data.encounterText.length > 0) {
+	var data = event.data;
+	if(!(typeof data === 'object')) {
+		data = JSON.parse(event.data);
+	}
+	if(data != null && data.encounterText != null && data.encounterText.length > 0) {
 		var x = {};
 		x.responseText = data.encounterText;
 		writeToEncounterNote(x);

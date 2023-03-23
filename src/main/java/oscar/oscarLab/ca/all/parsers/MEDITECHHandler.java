@@ -1102,5 +1102,10 @@ public class MEDITECHHandler implements MessageHandler {
 
 		return (docName);
 	}
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
+    }
 
 }

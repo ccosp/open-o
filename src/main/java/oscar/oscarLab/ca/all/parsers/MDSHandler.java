@@ -262,7 +262,7 @@ public class MDSHandler implements MessageHandler {
 
     @Override
     public String getOBXNameLong(int i, int j) {
-        return null;
+        return(getOBXField("3-3", i, j));
     }
 
     public String getOBXResult(int i, int j){
@@ -949,6 +949,11 @@ public class MDSHandler implements MessageHandler {
     }
     public String getNteForPID() {
     	return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 
 }

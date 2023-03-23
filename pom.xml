@@ -3,7 +3,7 @@
 	<groupId>org.oscarehr</groupId>
 	<artifactId>oscar</artifactId>
 	<packaging>war</packaging>
-	<version>15.0.0-SNAPSHOT</version>
+	<version>0.0.0-SNAPSHOT</version>
 	<name>oscar</name>
 	<description>OSCAR McMaster is a web-based electronic medical record (EMR) system initially developed for academic primary care clinics. It has grown into a comprehensive EMR and billing system used by many doctor's offices and private medical clinics in Canada and other parts of the world. The name is derived from where it was created and an acronym; OSCAR stands for Open Source Clinical Application and Resource and McMaster refers to McMaster University, where it was developed. It enables the delivery of evidence resources at the point of care.</description>
 	<issueManagement>
@@ -61,6 +61,12 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
+		<!-- for the com.github.MagentaHealth dependency only. Upgrades
+		from this dependency are welcome -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -81,7 +87,7 @@
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
-			<version>2.1.7.js8</version>
+			<version>4.2.2</version>
 		</dependency>
 
 
@@ -272,6 +278,12 @@
 			<version>2.0.8</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.onelogin</groupId>
+			<artifactId>java-saml</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
 		<!-- hibernate / sql -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -383,6 +395,18 @@
                         <version>5.5.13.1</version>
                 </dependency>
 
+		<dependency>
+			<groupId>com.github.MagentaHealth</groupId>
+			<artifactId>htmltopdf-java</artifactId>
+			<version>1.0.9.6</version>
+			<exclusions>
+				<!-- excluded due to known vulnerability: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15250 -->
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 		<!-- rtf / lowagie -->
 		<dependency>
@@ -497,13 +521,6 @@
 			<version>1.0.6b</version>
 		</dependency>
 
-		<!-- joda time -->
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.4</version>
-		</dependency>
-
 		<!-- caisi integrator -->
 		<dependency>
 			<groupId>org.oscarehr.caisi_integrator</groupId>
@@ -585,7 +602,7 @@
 		<dependency>
 			<groupId>cds</groupId>
 			<artifactId>cds</artifactId>
-			<version>0.0-SNAPSHOT</version>
+			<version>5.2.3</version>
 		</dependency>
 
 		<!-- cds cihi phc vrs -->
@@ -613,7 +630,7 @@
 		<dependency>
 			<groupId>cds</groupId>
 			<artifactId>cds_hrm</artifactId>
-			<version>1.1.2</version>
+			<version>4.3.1</version>
 		</dependency>
 
 		<!-- HRM module -->
@@ -647,7 +664,7 @@
 		<dependency>
 			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans</artifactId>
-			<version>2.4.0</version>
+			<version>2.5.0</version>
 		</dependency>
 
 		<!-- HttpClient -->
@@ -693,18 +710,11 @@
 			<version>1.1</version>
 		</dependency>
 
-		<!-- jfree charts -->
+		<!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
 		<dependency>
-			<groupId>jfree</groupId>
+			<groupId>org.jfree</groupId>
 			<artifactId>jfreechart</artifactId>
-			<version>1.0.12</version>
-		</dependency>
-
-		<!-- dm.jar , suspect this is generated classes and should be removed as a jar in the future -->
-		<dependency>
-			<groupId>dm</groupId>
-			<artifactId>dm</artifactId>
-			<version>0.0-SNAPSHOT</version>
+			<version>1.5.4</version>
 		</dependency>
 
 		<!-- ocan.jar , suspect this is generated classes and should be removed as a jar in the future -->
@@ -936,7 +946,7 @@
                 <dependency>
                         <groupId>org.bouncycastle</groupId>
                         <artifactId>bcprov-jdk15on</artifactId>
-                        <version>1.64</version>
+                        <version>1.70</version>
                 </dependency>
 
 		<!-- AXIS2 (for OLIS) -->
@@ -1044,6 +1054,10 @@
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>joda-time</groupId>
+					<artifactId>joda-time</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1122,6 +1136,10 @@
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>joda-time</groupId>
+					<artifactId>joda-time</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1180,7 +1198,7 @@
         <dependency>
                 <groupId>org.oscarehr.integration.ebs</groupId>
                 <artifactId>ebs-client</artifactId>
-                <version>0.0.5</version>
+                <version>0.0.6</version>
                 <exclusions>
 					<exclusion>
 						<groupId>org.bouncycastle</groupId>
@@ -1212,7 +1230,13 @@
 	<dependency>
 		<groupId>org.xhtmlrenderer</groupId>
 		<artifactId>flying-saucer-pdf</artifactId>
-		<version>9.1.1</version>
+		<version>9.1.22</version>
+		<exclusions>
+			<exclusion>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bctsp-jdk14</artifactId>
+			</exclusion>
+		</exclusions>
 	</dependency>
 	
 
@@ -1246,13 +1270,13 @@
 	<dependency>
 	    <groupId>org.xhtmlrenderer</groupId>
 	    <artifactId>flying-saucer-core</artifactId>
-	    <version>9.1.20</version>
+	    <version>9.1.22</version>
 	</dependency>
 	
 	<dependency>
 	    <groupId>org.xhtmlrenderer</groupId>
 	    <artifactId>flying-saucer-pdf-openpdf</artifactId>
-	    <version>9.1.20</version>
+	    <version>9.1.22</version>
 	</dependency>
 
 	<!-- Caisi Integrator -->
@@ -1312,6 +1336,19 @@
    <artifactId>hapi-fhir-structures-dstu3</artifactId>
    <version>${hapifhir.version}</version>
 </dependency>
+
+<dependency>
+   <groupId>org.oscarehr</groupId>
+   <artifactId>flowsheets</artifactId>
+   <version>1.0</version>
+</dependency>
+<!-- JAVA 11 -->
+<!--<dependency>-->
+<!--    <groupId>com.sun.xml.ws</groupId>-->
+<!--    <artifactId>jaxws-ri</artifactId>-->
+<!--    <version>2.3.0</version>-->
+<!--    <type>pom</type>-->
+<!--</dependency>-->
 
 	</dependencies>
 
@@ -1565,8 +1602,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 

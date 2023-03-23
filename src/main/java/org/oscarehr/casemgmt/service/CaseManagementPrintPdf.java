@@ -202,7 +202,8 @@ public class CaseManagementPrintPdf {
         // appropriate size in relation to the right column in the event the right column is larger.
         // rowCount has + 1 to account for the blank line created by the getCalculatedLeading above.
         Phrase dummy = new Phrase();
-        dummy.addAll(Collections.nCopies((int)rowCount + 1, "\n"));
+        Collection dummyphrase = Collections.nCopies((int)rowCount + 1, "\n");
+        dummy.addAll(dummyphrase);
         p.add(dummy);
         document.add(p);
 

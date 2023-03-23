@@ -1042,4 +1042,9 @@ public class SpireHandler implements MessageHandler {
     	
     	return "";
     }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
+    }
 }
