@@ -1782,10 +1782,6 @@
                                                               else {
 																  name = appointment.getName();
                                                               }
-<<<<<<< HEAD
-                                                              String name = WordUtils.capitalizeFully(nameSb.toString(), new char[] {',','-','(','\''});
-=======
->>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
 
                                                               paramTickler[0]=String.valueOf(demographic_no);
                                                               paramTickler[1]=MyDateFormat.getSysDate(strDate);
@@ -1962,11 +1958,9 @@
                                                         <% if (OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) { %>
                                                         <% if (dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
                                                         <a href="#" onClick="return false;"
-<<<<<<< HEAD
-                                                           title="<%=Encode.forHtmlContent(dCust.getAlert())%>">A</a>
-=======
+
                                                            title="<%=Encode.forHtmlAttribute(dCust.getAlert())%>">A</a>
->>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
+
                                                         <%
                                                                 }
                                                             }
@@ -1976,11 +1970,9 @@
                                                         <% if (OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) { %>
                                                         <% if (dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
                                                         <a href="#" onClick="return false;"
-<<<<<<< HEAD
-                                                           title="<%=Encode.forHtmlContent(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
-=======
+
                                                            title="<%=Encode.forHtmlAttribute(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
->>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
+
                                                         <%
                                                                 }
                                                             }
@@ -2023,22 +2015,17 @@
                                                             <% if(OscarProperties.getInstance().getProperty("displayAlertsOnScheduleScreen", "").equals("true")) {%>
                                                             <% if(dCust != null && dCust.getAlert() != null && !dCust.getAlert().isEmpty()) { %>
                                                     <a href="#" onClick="return false;"
-<<<<<<< HEAD
-                                                       title="<%=Encode.forHtmlContent(dCust.getAlert())%>">A</a>
-=======
+
                                                        title="<%=Encode.forHtmlAttribute(dCust.getAlert())%>">A</a>
->>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
                                                             <%} } %>
 
                                                     <!--  notes -->
                                                             <% if(OscarProperties.getInstance().getProperty("displayNotesOnScheduleScreen", "").equals("true")) {%>
                                                             <% if(dCust != null && dCust.getNotes() != null && !SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>").isEmpty()) { %>
                                                     <a href="#" onClick="return false;"
-<<<<<<< HEAD
-                                                       title="<%=Encode.forHtmlContent(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
-=======
+
                                                        title="<%=Encode.forHtmlAttribute(SxmlMisc.getXmlContent(dCust.getNotes(), "<unotes>", "</unotes>"))%>">N</a>
->>>>>>> 709bc71a1e... improve owasp encoding on schedule pages
+
                                                             <%} }%>
 
                                                     <!-- doctor code block 1 -->
