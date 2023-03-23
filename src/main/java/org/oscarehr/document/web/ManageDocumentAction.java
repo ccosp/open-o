@@ -595,6 +595,8 @@ public class ManageDocumentAction extends DispatchAction {
 		log.debug("name " + name);
 
 		File outfile = hasCacheVersion2(d, pn);
+		response.setContentType("image/png");
+		response.setHeader("Content-Disposition", "attachment;filename=\"" + name + "\"");
 
 		if (outfile != null) {
 			setResponse(response, outfile);
@@ -603,8 +605,6 @@ public class ManageDocumentAction extends DispatchAction {
 			setResponse(response, pdfBytes);
 		}
 
-		response.setContentType("image/png");
-		response.setHeader("Content-Disposition", "attachment;filename=\"" + d.getDocfilename() + "\"");
 	}
 
 	public void view2(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -746,9 +746,9 @@ public class ManageDocumentAction extends DispatchAction {
 			String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 
 			File documentDir = new File(docdownload);
-			log.debug("Document Dir is a dir" + documentDir.isDirectory());
-
+		
 			Document d = documentDao.getDocument(doc_no);
+
 			log.debug("Document Name :" + d.getDocfilename());
 
 			docxml = d.getDocxml();

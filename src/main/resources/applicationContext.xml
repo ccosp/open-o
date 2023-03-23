@@ -104,7 +104,8 @@
 
 	<bean id="caseloadDao" class="org.oscarehr.common.dao.CaseloadDao" autowire="byName" />
 	<bean id="inboxResultsDao" class="org.oscarehr.common.dao.InboxResultsDao" autowire="byName" />
-	
+    <bean id="inboxResultsRepository" class="org.oscarehr.common.dao.InboxResultsRepository" autowire="byName" />
+
 	<!-- Dao classes that implement OscarSuperDao -->
 	<bean id="providerSuperDao" class="oscar.dao.ProviderDao" autowire="byName" />
 	

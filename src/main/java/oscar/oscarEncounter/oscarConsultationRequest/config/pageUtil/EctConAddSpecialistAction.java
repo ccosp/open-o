@@ -143,6 +143,7 @@ public class EctConAddSpecialistAction extends Action {
 		professionalSpecialist.setFirstName(addSpecailistForm.getFirstName());
 		professionalSpecialist.setLastName(addSpecailistForm.getLastName());
 		professionalSpecialist.setProfessionalLetters(addSpecailistForm.getProLetters());
+
 		professionalSpecialist.setStreetAddressFromForm(addSpecailistForm.getAddress());
 	
 		professionalSpecialist.setPhoneNumber(addSpecailistForm.getPhone());

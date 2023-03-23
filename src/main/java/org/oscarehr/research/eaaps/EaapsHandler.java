@@ -155,7 +155,7 @@ public class EaapsHandler extends DefaultGenericHandler implements oscar.oscarLa
 		if (fileName != null) {
 			String provider = getProvider(message, demo); 
 						
-			String description = "eAAPS Action plan for " + demo.getFormattedName();
+			String description = "Asthma Action Plan for " + demo.getFormattedName();
 
 			EDoc doc = createEDoc(message, fileName, demo, description);
 			// save edoc

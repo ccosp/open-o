@@ -158,6 +158,11 @@ public class MEDVUEHandler implements MessageHandler {
 		return (val = obrseg.getUniversalServiceIdentifier().getText().getValue()) == null ? " " : val;
 	}
 
+	@Override
+	public String getOBRIdentifier(int i) {
+		return null;
+	}
+
 	public String getTimeStamp(int i, int j) {
 		try {
 			if (isReport(i, j)) {
@@ -245,6 +250,15 @@ public class MEDVUEHandler implements MessageHandler {
 
 	public String getOBXName(int i, int j) {
 		return getString(obxseg.getObservationIdentifier().getText().getValue());
+	}
+
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		try{
+			return getString(obxseg.getObservationIdentifier().getComponent(2).toString());
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 
@@ -705,6 +719,11 @@ public class MEDVUEHandler implements MessageHandler {
 	
 	public String getNteForPID() {
     	return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 	
 }

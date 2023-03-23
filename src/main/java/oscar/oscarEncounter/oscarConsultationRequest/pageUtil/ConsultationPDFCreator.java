@@ -591,7 +591,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			infoTable.addCell(setDataCell(cell, divy(reqFrm.clinicalInformation)));
 		}
 
-		if(getlen(reqFrm.concurrentProblems) > 1) {
+		if(getlen(reqFrm.concurrentProblems) > 0) {
 			if (props.getProperty("significantConcurrentProblemsTitle", "")
 					.length() > 1) {
 				infoTable.addCell(setInfoCell(cell, props.getProperty("significantConcurrentProblemsTitle", ""), heading));

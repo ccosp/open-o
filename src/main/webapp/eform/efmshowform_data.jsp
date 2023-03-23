@@ -50,6 +50,8 @@
       EForm eForm = new EForm(id);
       eForm.setContextPath(request.getContextPath());
       eForm.setOscarOPEN(request.getRequestURI());
+      eForm.setFdid(id);
+      
       if ( appointmentNo != null ) eForm.setAppointmentNo(appointmentNo);
       if ( eformLink != null ) eForm.setEformLink(eformLink);
 
@@ -62,6 +64,7 @@
       eForm.setupInputFields();
       eForm.setOscarOPEN(request.getRequestURI());
       eForm.setImagePath();
+      eForm.setFdid("");
       out.print(eForm.getFormHtml());
   }
 %>

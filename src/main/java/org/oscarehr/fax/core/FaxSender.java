@@ -87,6 +87,7 @@ public class FaxSender {
 				log.info("SENDING " + faxJobList.size() + " faxes from fax account " + faxConfig.getSiteUser());
 
 				String filename;
+				Path filePath;
 
 				for( FaxJob faxJob : faxJobList ) {
 
@@ -98,18 +99,58 @@ public class FaxSender {
 
 					faxJob.setSenderEmail( faxConfig.getSenderEmail() );
 					filename = faxJob.getFile_name();
+					filePath = Paths.get(filename);
 
-					if(filename.contains(File.separator))
-					{
-						filename.replace(File.separator, "");
+					/*
+					 * the filename variable may be an absolute path to a temp directory
+					 * at this point. Do a check to verify
+					 */
+					if(! Files.exists(filePath)) {
+
+						/*
+						 * The filename variable must point to a file name, not a file path
+						 * Remove any file separators that may have slipped into the filename.
+						 */
+						if(filename.contains(File.separator))
+						{
+							filename.replaceAll(File.separator, "");
+						}
+
+						/*
+						 * the file may be located in the default documents directory if the filename
+						 * is not a path to a temp directory
+						 */
+						filePath = Paths.get(document_dir, filename);
 					}
 
-					Path filePath = Paths.get(document_dir, filename);
-					try {
-						String base64 = Base64Utility.encode(Files.readAllBytes(filePath));
-						faxJob.setDocument(base64);
+					log.info("sending fax from file path " + filePath);
 
-						log.info("sending fax from file path " + filePath);
+					try {
+
+						/*
+						 * If the filepath still does not exist at this point; it is possible that
+						 * the file was removed from the temp directory or document directory
+						 * before a second or 3rd attempt to send this document out.
+						 * A backup copy of the document should still exist in the database table
+						 * This condition avoids overwriting
+						 */
+						if(Files.exists(filePath) && Files.isReadable(filePath)) {
+							String base64 = Base64Utility.encode(Files.readAllBytes(filePath));
+
+							/*
+							 * The database will hol\d a temp backup copy of the document
+							 * until a successful send is done.
+							 */
+							faxJob.setDocument(base64);
+						}
+
+						/*
+						 * It's very bad if the document does not exist at this point.
+						 */
+						if(faxJob.getDocument() == null) {
+							log.error("Fatal error locating document. Not found in any directory or database.");
+							throw new IOException();
+						}
 
 						Response httpResponse = client.post(faxJob);
 						
@@ -130,13 +171,13 @@ public class FaxSender {
 					catch(HttpHostConnectException e) 
 					{
 						faxStatus = FaxJob.STATUS.WAITING;
-						faxJob.setStatusString("Connection error. Check internet connection " + faxJob.getFile_name());
-						log.error("Connection error. Check internet connection " + faxJob.getFile_name());
+						faxJob.setStatusString("Connection error. Check internet connection. Filepath: " + filePath);
+						log.error("Connection error. Check internet connection Filepath: " + filePath);
 					}
 					catch(IOException e ) 
 					{
-						faxJob.setStatusString("CANNOT FIND " + faxJob.getFile_name());
-						log.error("CANNOT FIND " + faxJob.getFile_name());
+						faxJob.setStatusString("CANNOT FIND Filepath: " + filePath);
+						log.error("CANNOT FIND Filepath: " + filePath);
 					}
 					catch( Exception e ) {
 						faxJob.setStatusString("PROBLEM COMMUNICATING WITH WEB SERVICE");

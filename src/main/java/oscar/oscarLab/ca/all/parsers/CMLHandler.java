@@ -116,6 +116,14 @@ public class CMLHandler implements MessageHandler {
         }
     }
 
+    public String getOBRIdentifier(int i){
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getUniversalServiceIdentifier().getCe1_Identifier().getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
     public String getTimeStamp(int i, int j){
         try{
             return(formatDateTime(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBR().getObservationDateTime().getTimeOfAnEvent().getValue())));
@@ -140,6 +148,14 @@ public class CMLHandler implements MessageHandler {
     public String getOBXAbnormalFlag(int i, int j){
         try{
             return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getAbnormalFlags(0).getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
+    public String getOBXBlocked(int i, int j){
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getUserDefinedAccessChecks().getValue()));
         }catch(Exception e){
             return("");
         }
@@ -179,6 +195,14 @@ public class CMLHandler implements MessageHandler {
     public String getOBXName(int i, int j){
         try{
             return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getText().getValue()));
+        }catch(Exception e){
+            return("");
+        }
+    }
+
+    public String getOBXNameLong(int i, int j){
+        try{
+            return(getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getComponent(2).toString()));
         }catch(Exception e){
             return("");
         }
@@ -625,5 +649,21 @@ public class CMLHandler implements MessageHandler {
     }
     public String getNteForPID() {
     	return "";
+    }
+    
+    
+    
+    /*
+     * for OMD validation (imported files)
+     */
+    public boolean isTestResultBlocked(int i, int j){
+        try{
+            String status = getOBXBlocked(i, j);
+            return "BLOCKED".equals(status);
+            
+        }catch(Exception e){
+            logger.error("error returning obx identifier", e);
+            return false;
+        }
     }
 }
