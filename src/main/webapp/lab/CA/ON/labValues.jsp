@@ -69,7 +69,7 @@ org.oscarehr.common.model.Demographic demographic =  dData.getDemographic(logged
 
 ArrayList list = null;
 
-if (!(demographicNo == null || demographicNo.equals("null"))){
+if (! (demographicNo == null || "null".equals(demographicNo) || "undefined".equals(demographicNo)) ){
 	if(remoteFacilityIdString==null)
 	{
 		list = CommonLabTestValues.findValuesForTest(labType, Integer.valueOf(demographicNo), testName, identifier);

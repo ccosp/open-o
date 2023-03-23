@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS billingmaster (
   phn varchar(10) default '0000000000',
   name_verify varchar(4) default '',
   dependent_num char(2) default '00',
-  billing_unit char(3) default '000',
+  billing_unit varchar(3) default '000',
   clarification_code char(2) default '00',
   anatomical_area char(2) default NULL,
   after_hour char(1) default '0',
@@ -6581,3 +6581,13 @@ CREATE TABLE IF NOT EXISTS `formBCAR2020Text` (
                                                   `field_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                                                   UNIQUE KEY `form_data` (`form_id`,`page_no`,`field`)
 );
+
+--
+-- Table structure for table 'specialty'
+--
+
+CREATE TABLE IF NOT EXISTS specialty (
+  region varchar(5) default '',
+  specialty char(2) default '',
+  specialtydesc varchar(100) default ''
+) ;

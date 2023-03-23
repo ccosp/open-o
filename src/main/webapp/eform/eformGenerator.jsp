@@ -690,10 +690,12 @@ function GetTextTop(){
     textTop += "&lt;style type=&quot;text/css&quot; media=&quot;screen&quot; &gt;\n";
     textTop += " input {\n\t-moz-box-sizing: content-box;\n\t-webkit-print-color-adjust: exact;\n\t-webkit-box-sizing: content-box;\n\tbox-sizing: content-box\n }\n"
 	textTop += " .noborder {\n\border: 1px solid #d2d2d2 !important;\n }\n"
+
     if (document.getElementById('AddSignature').checked){
         textTop += " .sig {\n\tborder: "+SignatureBorder+";\n\tcolor: "+SignatureColor+";\n\tbackground-color: white;\n }\n"
     }
-    textTop += "/* Drawing the 'gripper' for touch-enabled devices */\n html.touch #content {\n\tfloat:left;\n\twidth:92%;\n}\n html.touch #scrollgrabber {\n\tfloat:right;\n\twidth:4%;\n\tmargin-right:2%;\n\tbackground-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)\n }\n html.borderradius #scrollgrabber {\n\tborder-radius: 1em;\n }\n"
+    
+	textTop += "/* Drawing the 'gripper' for touch-enabled devices */\n html.touch #content {\n\tfloat:left;\n\twidth:92%;\n}\n html.touch #scrollgrabber {\n\tfloat:right;\n\twidth:4%;\n\tmargin-right:2%;\n\tbackground-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)\n }\n html.borderradius #scrollgrabber {\n\tborder-radius: 1em;\n }\n"
     textTop += "&lt;/style&gt;\n";
  
     textTop += "&lt;style type=&quot;text/css&quot; media=&quot;print&quot;&gt;\n"
@@ -704,6 +706,8 @@ function GetTextTop(){
     if (document.getElementById('AddSignature').checked){
         textTop += " .sig {\n\tborder-style: solid;\n\tborder-color: transparent;\n\tcolor: "+SignatureColor+";\n\tbackground-color: transparent;\n }\n\n "
     }
+    
+	
     textTop += "&lt;/style&gt;\n\n";
  
     
@@ -732,7 +736,17 @@ function GetTextTop(){
 		//textTop += "&lt;script&gt;\nwindow.jQuery || document.write('&lt;script src=&quot;../js/jquery-1.7.1.min.js&quot;&gt;&lt;\/script&gt;');\n\n"
 		 textTop += "&lt;script&gt; window.jQuery || document.write('&lt;script src=&quot;../js/jquery-1.7.1.min.js&quot;&gt;&lt; &#92;/script&gt;') &lt;/script&gt;\n";
 	}
- 
+
+	if ( <% if (OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_print_enabled")) { %>(document.getElementById('includePdfPrintControl').checked) || <%}%> <% if (OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_fax_enabled")) { %>(document.getElementById("includeFaxControl").checked) || <% } %> (document.getElementById('AddSignature').checked) || (document.getElementById('XboxType').checked) || (xPresent) ) {
+     	textTop += "&lt;!-- jQuery for greater functionality --&gt;\n"
+	    // dependency on jquery up to version 2.2.1 for pdf and faxing hack. (3.1.1 does NOT work.)  Lets reference something off the OSCAR server
+	    textTop += "&lt;script type=&quot;text/javascript&quot; src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js&quot;&gt;&lt;/script&gt;\n";	
+	    // if unavailable reference the one in OSCAR
+	    textTop += "&lt;script&gt; window.jQuery || document.write('&lt;script src=&quot;../js/jquery-1.7.1.min.js&quot;&gt;&lt; &#92;/script&gt;') &lt;/script&gt;\n";
+	    // ole darn it, I knew I left a copy of jQuery lying around somewhere... perhaps under my nose?
+	    textTop += "&lt;script&gt; window.jQuery || document.write('&lt;script src=&quot;jquery-1.7.1.min.js&quot;&gt;&lt; &#92;/script&gt;') &lt;/script&gt;\n\n";
+    }
+
     //Peter Hutten-Czapski's Xbox scripts   
     if (xPresent){
         textTop += "&lt;!-- scripts for Xbox functions --&gt;\n"
@@ -774,6 +788,7 @@ function GetTextTop(){
         textTop += "});\n"
         textTop += "&lt;/script&gt;\n\n"
     }
+        
     
     if (parentPresent  || document.getElementById('radioX').checked || document.getElementById('radio').checked || document.getElementById('preCheckGender').checked) {   
         // Adding jquery code for checkbox parent-child-fields (Bell Eapen, nuchange.ca)
@@ -791,7 +806,9 @@ function GetTextTop(){
         textTop += "\n\t\t\t$( this ).val('X');\n\t\t}\n\t});\n});\n";
         textTop += "&lt;/script&gt;\n";       
     }
- 
+
+	//  textTop += "&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.7.1.min.js&quot;&gt;&lt;/script&gt;\n";
+    //textTop += "&lt;script type=&quot;text/javascript&quot; src=&quot;${oscar_javascript_path}jquery/jquery-1.4.2.js&quot;&gt;&lt;/script&gt;\n";
     //reference built in functions as desired
    
 	if (document.getElementById('includePdfPrintControl').checked) {
@@ -1167,6 +1184,26 @@ function GetTextTop(){
 
 	}
 
+    //stand alone code    
+    //textTop += "&lt;script type=&quot;text/javascript&quot;&gt;\n"
+    //textTop += "function reImg(){\n"
+    //textTop += "// for stand alone development without uploading to OSCAR\n"
+    //textTop += "\tvar strLoc = window.location.href.toLowerCase();\n"
+    //textTop += "\tif(strLoc.indexOf(&quot;https&quot;) == -1) {\n"
+    
+ 
+    //for (j=0; (j < (DrawData.length) ); j++){
+        //var P = DrawData[j].split("|");
+        //if (P[0]=="Page") {
+            //var pg = parseInt(P[1]);
+            //var im = P[2];
+            //var width = parseInt(P[3]);
+            //textTop += "\t\tvar src"+pg+" = document.getElementById(&quot;BGImage"+pg+"&quot;).src;\n"
+            //textTop += "\t\tdocument.getElementById(&quot;BGImage"+pg+"&quot;).src = src"+pg+".replace(&quot;$%7Boscar_image_path%7D&quot;,&quot;&quot;);\n"
+        //}
+    //}
+    //textTop += "\t}\n"
+    //textTop += "}\n&lt;/script&gt\n"
 	//</head>
 	textTop += "&lt;/head&gt;\n\n"
 	//<body>
@@ -1187,7 +1224,9 @@ function GetTextTop(){
 	if ((document.getElementById('preCheckGender').checked)||(document.getElementById('XboxType').checked)){
 		textTop += "checkGender();"
 	}
-	<% if (eformGeneratorIndivicaFaxEnabled) { %>
+
+	<% if (OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_fax_enabled")) { %>
+
 	if ((document.getElementById('faxno').value.length >0)){
 		textTop += "setFaxNo();"
 	}

@@ -76,7 +76,7 @@ public class MatchManager implements IMatchManager {
 		case SCHEDULED_EVENT:
 			return processScheduledEvent();
 		default:
-			throw new MatchManagerException("Illegal event received. It should be one of " + Event.values());
+			throw new MatchManagerException("Illegal event recieved. It should be one of " + Event.values());
 		}
 	}
 }

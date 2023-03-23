@@ -265,12 +265,26 @@ function EnablePrint(button) {
         display(checkboxes);
         var spaces = document.getElementsByName("printSp");
         display(spaces);
-        button.form.sendToPhrButton.style.display = 'block';
+        if(button.form.sendToPhrButton != null) {
+        	button.form.sendToPhrButton.style.display = 'block';
+        }
+        showImmunizationOnlyPrintButton();
     }
     else {
         if( onPrint() )
             document.printFrm.submit();
     }
+}
+
+function printImmOnly() { 
+	 document.printFrm.immunizationOnly.value = "true";
+	 document.printFrm.submit();
+	 document.printFrm.immunizationOnly.value = "false";
+}
+
+function showImmunizationOnlyPrintButton() {
+		console.log("test");
+		$("#print_buttons").append("<input type=\"button\" class=\"noPrint\" name=\"printImmButton\" onclick=\"printImmOnly()\" value=\"Print Immunizations Only\">");
 }
 
 function onPrint() {
@@ -682,6 +696,7 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
 
 		<form name="printFrm" method="post" onsubmit="return onPrint();"
 			action="<rewrite:reWrite jspPage="printPrevention.do"/>">
+			<input type="hidden" name="immunizationOnly" value="false"/>
 		<td valign="top" class="MainTableRightColumn">
 		
 		<%if(dhirEnabled && !isSSOLoggedIn && !hideSSOWarning) {%>
@@ -877,7 +892,7 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
                         if (hdata.get("id")==null) onClickCode="popup(300,500,'display_remote_prevention.jsp?remoteFacilityId="+hdata.get("integratorFacilityId")+"&remotePreventionId="+hdata.get("integratorPreventionId")+"&amp;demographic_no="+demographic_no+"')";
                         %>
              
-		<div class="preventionProcedure" onclick="<%=onClickCode%>" title="fade=[on] header=[<%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> -- Date:<%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>] body=[<%=StringEscapeUtils.escapeHtml((String)hExt.get("comments"))%>&lt;br/&gt;Entered By: <%=StringEscapeUtils.escapeHtml((String)hdata.get("provider_name"))%>]">
+		<div class="preventionProcedure" onclick="<%=onClickCode%>" title="fade=[on] header=[<%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> -- Date:<%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>] body=[<%=StringEscapeUtils.escapeHtml((String)hExt.get("comments"))%>&lt;br/&gt;Administered By: <%=StringEscapeUtils.escapeHtml((String)hdata.get("provider_name"))%>]">
 		
 	
 		<p <%=r(hdata.get("refused"),result)%> >Age: <%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> <%if(result!=null && result.equals("abnormal")){out.print("result:"+StringEscapeUtils.escapeHtml(result));}%> <br />
@@ -958,7 +973,7 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
                             Map<String,String> hExt = PreventionData.getPreventionKeyValues(hdata.get("id"));
                             result = hExt.get("result");
                             %>
-		<div class="preventionProcedure" onclick="javascript:popup(600,900,'AddPreventionData.jsp?id=<%=hdata.get("id")%>&amp;demographic_no=<%=demographic_no%>','addPreventionData')" title="fade=[on] header=[<%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> -- Date:<%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>] body=[<%=StringEscapeUtils.escapeHtml((String)hExt.get("comments"))%>&lt;br/&gt;Entered By: <%=StringEscapeUtils.escapeHtml((String)hdata.get("provider_name"))%>]">
+		<div class="preventionProcedure" onclick="javascript:popup(600,900,'AddPreventionData.jsp?id=<%=hdata.get("id")%>&amp;demographic_no=<%=demographic_no%>','addPreventionData')" title="fade=[on] header=[<%=StringEscapeUtils.escapeHtml((String)hdata.get("age"))%> -- Date:<%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>] body=[<%=StringEscapeUtils.escapeHtml((String)hExt.get("comments"))%>&lt;br/&gt;Administered By: <%=StringEscapeUtils.escapeHtml((String)hdata.get("provider_name"))%>]">
 		<p <%=r(hdata.get("refused"), result)%>>Age: <%=hdata.get("age")%> <br />
 		<!--<%=refused(hdata.get("refused"))%>-->Date: <%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>
 		<%if (hExt.get("comments") != null && (hExt.get("comments")).length()>0) {
@@ -1055,7 +1070,9 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
 	</tr>
 	<tr>
 		<td class="MainTableBottomRowLeftColumn">
-			<input type="button" class="noPrint" name="printButton" onclick="EnablePrint(this)" value="Enable Print">
+			<span id="print_buttons">
+				<input type="button" class="noPrint" name="printButton" onclick="EnablePrint(this)" value="Enable Print">
+			</input>
 <!--
 			<br>
 			<input type="button" name="sendToPhrButton" value="Send To MyOscar (PDF)" style="display: none;" onclick="sendToPhr(this)">
@@ -1079,6 +1096,10 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
 		            	Map<String,Object> hdata = alist.get(k);
                                 Map<String,String> hExt = PreventionData.getPreventionKeyValues((String)hdata.get("id"));
 		    %>
+		    
+		<input type="hidden" id="preventProcedureProvider<%=i%>-<%=k%>"
+			name="preventProcedureProvider<%=i%>-<%=k%>" value="<%=hdata.get("provider_name")%>"/>
+			
 		<input type="hidden" id="preventProcedureStatus<%=i%>-<%=k%>"
 			name="preventProcedureStatus<%=i%>-<%=k%>"
 			value="<%=hdata.get("refused")%>">
@@ -1088,12 +1109,61 @@ List<String> OTHERS = Arrays.asList(new String[]{"DTaP-Hib","TdP-IPV-Hib","HBTmf
 		<input type="hidden" id="preventProcedureDate<%=i%>-<%=k%>"
 			name="preventProcedureDate<%=i%>-<%=k%>"
 			value="<%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>">
-                    <%  String comments = hExt.get("comments");
-                        if (comments != null && !comments.isEmpty() && OscarProperties.getInstance().getBooleanProperty("prevention_show_comments","true")) {%>      
-                <input type="hidden" id="preventProcedureComments<%=i%>-<%=k%>"
-			name="preventProcedureComments<%=i%>-<%=k%>"
-			value="<%=StringEscapeUtils.escapeHtml(comments)%>">
-                    <% }
+		<%  String comments = hExt.get("comments");
+			if (comments != null && !comments.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureComments<%=i%>-<%=k%>"
+					name="preventProcedureComments<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(comments)%>">
+		<%  } %>
+
+		<%  String result = hExt.get("result");
+			if (result != null && !result.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureResult<%=i%>-<%=k%>"
+					name="preventProcedureResult<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(result)%>">
+		<%  } %>
+
+		<%  String reason = hExt.get("reason");
+			if (reason != null && !reason.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureReason<%=i%>-<%=k%>"
+					name="preventProcedureReason<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(reason)%>">
+		<%  } %>
+
+		<%  String nameOfVaccine = hExt.get("name");
+			if (nameOfVaccine != null && !nameOfVaccine.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureNameOfVaccine<%=i%>-<%=k%>"
+					name="preventProcedureNameOfVaccine<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(nameOfVaccine)%>">
+		<%  } %> 
+
+		<%  String manufacture = hExt.get("manufacture");
+			if (manufacture != null && !manufacture.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureManufacture<%=i%>-<%=k%>"
+					name="preventProcedureManufacture<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(manufacture)%>">
+		<%  } %> 
+
+		<%  String lotID = hExt.get("lot");
+			if (lotID != null && !lotID.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureLotID<%=i%>-<%=k%>"
+					name="preventProcedureLotID<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(lotID)%>">
+		<%  } %> 
+
+		<%  String doseAdministered = hExt.get("dose");
+			if (doseAdministered != null && !doseAdministered.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureDoseAdministered<%=i%>-<%=k%>"
+					name="preventProcedureDoseAdministered<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(doseAdministered)%>">
+		<%  } %> 
+
+		<%  String locationOfShot = hExt.get("location");
+			if (locationOfShot != null && !locationOfShot.isEmpty()) {%>      
+				<input type="hidden" id="preventProcedureLocationOfShot<%=i%>-<%=k%>"
+					name="preventProcedureLocationOfShot<%=i%>-<%=k%>"
+					value="<%=StringEscapeUtils.escapeHtml(locationOfShot)%>">
+		<%  }
                             	     }
                                        }
 		    } //for there are preventions

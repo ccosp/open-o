@@ -638,6 +638,7 @@ public class CaisiIntegratorManager {
 		Demographic demographic = new Demographic();
 		demographic.setFirstName(demographicTransfer.getFirstName());
 		demographic.setLastName(demographicTransfer.getLastName());
+		demographic.setMiddleNames("");
 		
 		if (demographicTransfer.getBirthDate()!=null) demographic.setBirthDay(demographicTransfer.getBirthDate());		
 		if (demographicTransfer.getGender()!=null) demographic.setSex(demographicTransfer.getGender().name());
