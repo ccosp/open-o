@@ -691,7 +691,9 @@ CREATE TABLE IF NOT EXISTS document (
   restrictToProgram tinyint(1) NOT NULL,
   abnormal int(1),
   receivedDate date,
-  PRIMARY KEY  (document_no)
+  report_media INT(11),
+  sent_date_time DATETIME,
+  PRIMARY KEY (document_no)
 ) ;
 
 --
@@ -8985,9 +8987,12 @@ CREATE TABLE IF NOT EXISTS appointmentArchive (
   bookingSource varchar(32)
 );
 
-CREATE TABLE IF NOT EXISTS ProviderPreferenceAppointmentScreenForm(providerNo varchar(6) not null, appointmentScreenForm varchar(128) not null);
-CREATE TABLE IF NOT EXISTS ProviderPreferenceAppointmentScreenEForm(providerNo varchar(6) not null, appointmentScreenEForm int not null);
-
+create table if not exists ProviderPreferenceAppointmentScreenEForm
+(
+    providerNo             varchar(6)   not null,
+    appointmentScreenEForm int          not null,
+    eFormName              varchar(255) null
+);
 
 CREATE TABLE IF NOT EXISTS `Eyeform` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -12348,4 +12353,11 @@ CREATE TABLE IF NOT EXISTS `rbt_groups` (
   PRIMARY KEY (`id`)
 );
 
-
+CREATE TABLE IF NOT EXISTS `document_review` (
+     `id` int auto_increment primary key,
+     `document_no` int(20) not null,
+     `provider_no` varchar(6) not null,
+     `date_reviewed` datetime,
+     foreign key(document_no) references document(document_no),
+     foreign key(provider_no) references provider(provider_no)
+);

@@ -141,6 +141,10 @@ public class TRUENORTHHandler implements MessageHandler {
         return (( obrSegKeySet.get(i)).getUniversalServiceIdentifier().getText().getValue());
     }
 
+    public String getOBRIdentifier(int i){
+        return (( obrSegKeySet.get(i)).getUniversalServiceIdentifier().getCe1_Identifier().getValue());
+    }
+
     public String getTimeStamp(int i, int j){
         try{
             String ret = ( obrSegKeySet.get(i)).getResultsRptStatusChngDateTime().getTimeOfAnEvent().getValue();
@@ -227,6 +231,20 @@ public class TRUENORTHHandler implements MessageHandler {
             logger.error("Error returning OBX name", e);
         }
 
+        return ret;
+    }
+
+    @Override
+    public String getOBXNameLong(int i, int j) {
+        String ret = "";
+        try{
+            OBX obxSeg = (obrSegMap.get(obrSegKeySet.get(i))).get(j);
+            if (obxSeg.getValueType().getValue()!=null && (!obxSeg.getValueType().getValue().equals("FT"))) {
+                ret = getString(obxSeg.getObservationIdentifier().getComponent(2).toString());
+            }
+        }catch(Exception e){
+            logger.error("Error returning OBX name", e);
+        }
         return ret;
     }
 

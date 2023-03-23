@@ -136,6 +136,10 @@ public class GDMLHandler implements MessageHandler {
         return (( obrSegKeySet.get(i)).getUniversalServiceIdentifier().getText().getValue());
     }
 
+    public String getOBRIdentifier(int i){
+        return (( obrSegKeySet.get(i)).getUniversalServiceIdentifier().getCe1_Identifier().getValue());
+    }
+
     public String getTimeStamp(int i, int j){
         try{
             String ret = ( obrSegKeySet.get(i)).getResultsRptStatusChngDateTime().getTimeOfAnEvent().getValue();
@@ -215,6 +219,17 @@ public class GDMLHandler implements MessageHandler {
                 ret = getString(obxSeg.getObservationIdentifier().getText().getValue());
         }catch(Exception e){
             logger.error("Error returning OBX name", e);
+        }
+
+        return ret;
+    }
+
+    public String getOBXNameLong(int i, int j){
+        String ret = "";
+        try{
+            ret = getString(msg.getRESPONSE().getORDER_OBSERVATION(i).getOBSERVATION(j).getOBX().getObservationIdentifier().getComponent(2).toString());
+        }catch(Exception e){
+            logger.error("Error returning OBX test name", e);
         }
 
         return ret;

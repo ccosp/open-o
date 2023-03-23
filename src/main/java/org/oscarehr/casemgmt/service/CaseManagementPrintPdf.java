@@ -28,13 +28,15 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.Rectangle;
+import org.apache.commons.lang.StringUtils;
 import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
@@ -45,15 +47,6 @@ import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
-
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.ColumnText;
 import com.lowagie.text.pdf.PdfContentByte;
@@ -144,7 +137,7 @@ public class CaseManagementPrintPdf {
         String dob = propResource.getString("oscarEncounter.pdfPrint.dob") + " " + (String)request.getAttribute("demoDOB") + "\n";
         String age = propResource.getString("oscarEncounter.pdfPrint.age") + " " + (String)request.getAttribute("demoAge") + "\n";
         String mrp = propResource.getString("oscarEncounter.pdfPrint.mrp") + " " + (String)request.getAttribute("mrp") + "\n";
-        String[] info = null;
+        String[] info;
         if("true".equals(OscarProperties.getInstance().getProperty("print.includeMRP", "true"))) {
         	info = new String[] { title, gender, dob, age, mrp };
         } else {
@@ -155,7 +148,7 @@ public class CaseManagementPrintPdf {
         clinicData.refreshClinicData();
         String[] clinic = new String[] {clinicData.getClinicName(), clinicData.getClinicAddress(),
         clinicData.getClinicCity() + ", " + clinicData.getClinicProvince(),
-        clinicData.getClinicPostal(), clinicData.getClinicPhone()};
+        clinicData.getClinicPostal(), "Phone: " + clinicData.getClinicPhone(), "Fax: " + clinicData.getClinicFax()};
 
         if("true".equals(OscarProperties.getInstance().getProperty("print.useCurrentProgramInfoInHeader", "false"))) {
         	ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
@@ -190,18 +183,26 @@ public class CaseManagementPrintPdf {
         Paragraph p = new Paragraph();
         p.setAlignment(Paragraph.ALIGN_LEFT);
         Phrase phrase = new Phrase();
-        Phrase dummy = new Phrase();
-        for( int idx = 0; idx < clinic.length; ++idx ) {
-            phrase.add(clinic[idx] + "\n");
-            dummy.add("\n");
-            upperYcoord -= phrase.getLeading();
-        }
 
-        dummy.add("\n");
+        float rowCount = Math.max(info.length, clinic.length);
+        // Calculates header height based on the leading line space * rowCount
+        upperYcoord -= phrase.getLeading() * rowCount;
+
+        String del = "";
+        for( int idx = 0; idx < clinic.length; ++idx ) {
+            String clinicItem = del + StringUtils.trimToEmpty(clinic[idx]);
+            phrase.add(clinicItem);
+            del = "\n";
+        }
         ct.setSimpleColumn(document.left(), upperYcoord, document.right()/2f, document.top());
         ct.addElement(phrase);
         ct.go();
 
+        // Create and fill a dummy phrase with only new lines to keep the left column the
+        // appropriate size in relation to the right column in the event the right column is larger.
+        // rowCount has + 1 to account for the blank line created by the getCalculatedLeading above.
+        Phrase dummy = new Phrase();
+        dummy.addAll(Collections.nCopies((int)rowCount + 1, "\n"));
         p.add(dummy);
         document.add(p);
 

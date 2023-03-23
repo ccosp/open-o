@@ -143,7 +143,7 @@ if(!authed) {
   String mRecRefDoctorNum = "";
 
   if(! "".equals(demo.getFamilyDoctorNumber())){
-   mRecRefDoctor = demo.getFamilyDoctorLastName() + ", " + demo.getFamilyDoctorFirstName();
+   mRecRefDoctor = demo.getFamilyDoctorName();
    mRecRefDoctorNum = demo.getFamilyDoctorNumber();
   }else{
    mRecRefDoctor = "none";
@@ -896,11 +896,11 @@ jQuery(document).ready(function(jQuery){
 			  * Referral provider codes must be numeric
 			  */
 			 xml_refer1: {
-				 number: true
+				 alphanumeric: true
 			 },
-			 
+
 			 xml_refer2: {
-				 number: true
+                 alphanumeric: true
 			 },
 			 
 			 /*
