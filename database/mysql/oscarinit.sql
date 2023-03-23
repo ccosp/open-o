@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS allergies (
   TYPECODE tinyint(4) NOT NULL default '0',
   reaction text,
   drugref_id varchar(100) default NULL,
-  archived char(1) default '0',
+  archived tinyint(1) NOT NULL,
   start_date date default NULL,
   age_of_onset char(4) default '0',
   severity_of_reaction char(1) default '0',
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS billactivity (
 --
 
 CREATE TABLE IF NOT EXISTS billcenter (
-  billcenter_code char(2) NOT NULL,
+  billcenter_code char(2) NOT NULL DEFAULT '',
   billcenter_desc varchar(20) default NULL,
   primary key(billcenter_code)
 ) ;
@@ -336,6 +336,40 @@ CREATE TABLE IF NOT EXISTS consultationRequests (
   fdid int(10),
   source varchar(50),
   PRIMARY KEY  (requestId)
+) ;
+
+CREATE TABLE consultationRequestsArchive (
+  Id int(10) NOT NULL auto_increment,
+  referalDate date default NULL,
+  serviceId int(10) default NULL,
+  specId int(10) default NULL,
+  appointmentDate date default NULL,
+  appointmentTime time default NULL,
+  reason text,
+  clinicalInfo text,
+  currentMeds text,
+  allergies text,
+  providerNo varchar(6) default NULL,
+  demographicNo int(10) default NULL,
+  status char(2) default NULL,
+  statusText text,
+  sendTo varchar(20) default NULL,
+  requestId int(10) NOT NULL,
+  concurrentProblems text,
+  urgency char(2) default NULL,
+  appointmentInstructions VARCHAR(256),
+  patientWillBook tinyint(1),
+  followUpDate date default NULL,
+  site_name varchar(255),
+  signature_img VARCHAR(20),
+  letterheadName VARCHAR(255),
+  letterheadAddress TEXT,
+  letterheadPhone VARCHAR(50),
+  letterheadFax VARCHAR(50),
+  `lastUpdateDate` datetime not null,
+  fdid int(10),
+  source varchar(50),
+  PRIMARY KEY  (id)
 ) ;
 
 --
@@ -698,7 +732,7 @@ CREATE TABLE IF NOT EXISTS document (
   number_of_pages int(6),
   appointment_no int(11) default NULL,
   restrictToProgram tinyint(1) NOT NULL,
-  abnormal int(1),
+  abnormal int(1) NOT NULL DEFAULT 0,
   receivedDate date,
   `report_media` int(11) DEFAULT NULL,
   `sent_date_time` datetime DEFAULT NULL,
@@ -7051,8 +7085,8 @@ CREATE TABLE IF NOT EXISTS messagetbl (
 
 CREATE TABLE IF NOT EXISTS msgDemoMap (
   id int(11) auto_increment,
-  messageID mediumint(9),
-  demographic_no int(10),
+  messageID mediumint(9) NOT NULL DEFAULT 0,
+  demographic_no int(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   KEY (messageID, demographic_no),
   KEY `demoMap_messageID_demographic_no` (`messageID`,`demographic_no`)
@@ -7221,7 +7255,7 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
   `institutionId` int(10) NOT NULL,
   `departmentId` int(10) NOT NULL,
   `eformId` int(10) DEFAULT NULL,
-  `hideFromView` tinyint(1) DEFAULT 0,
+  `hideFromView` tinyint(1) NOT NULL,
   `deleted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`specId`)
 );
@@ -9056,7 +9090,7 @@ CREATE TABLE IF NOT EXISTS appointmentArchive (
 );
 
 CREATE TABLE IF NOT EXISTS ProviderPreferenceAppointmentScreenForm(providerNo varchar(6) not null, appointmentScreenForm varchar(128) not null);
-CREATE TABLE IF NOT EXISTS ProviderPreferenceAppointmentScreenEForm(providerNo varchar(6) not null, appointmentScreenEForm int not null);
+CREATE TABLE IF NOT EXISTS ProviderPreferenceAppointmentScreenEForm(providerNo varchar(6) not null, appointmentScreenEForm int not null, eFormName varchar(255));
 
 
 CREATE TABLE IF NOT EXISTS `Eyeform` (
@@ -9223,6 +9257,17 @@ CREATE TABLE IF NOT EXISTS consultationRequestExt(
  key(requestId)
 );
 
+create table consultationRequestExtArchive(
+ id int(10) NOT NULL auto_increment,
+ originalId int(10) NOT NULL,
+ requestId int(10) NOT NULL,
+ name varchar(100) NOT NULL,
+ value text NOT NULL,
+ dateCreated date not null,
+ consultationRequestArchiveId int(10) NOT NULL,
+ primary key(id),
+ key(requestId)
+);
 
 CREATE TABLE IF NOT EXISTS EyeformConsultationReport (
  id int(10) NOT NULL auto_increment,
@@ -9643,7 +9688,8 @@ CREATE TABLE IF NOT EXISTS `RemoteIntegratedDataCopy` (
 CREATE TABLE IF NOT EXISTS billing_payment_type (
   id int(11) NOT NULL auto_increment,
   payment_type varchar(25) NOT NULL default '',
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (id),
+  UNIQUE KEY `payment_type` (`payment_type`)
 );
 
 CREATE TABLE IF NOT EXISTS `billing_on_3rdPartyAddress` (
@@ -9715,7 +9761,7 @@ CREATE TABLE IF NOT EXISTS `Facility` (
         enableCbiForm tinyint(1) not null,
 	enableAnonymous tinyint(1) unsigned NOT NULL,
 	enablePhoneEncounter tinyint(1) unsigned NOT NULL,
-	enableGroupNotes tinyint(1) unsigned NOT NULL,
+	enableGroupNotes tinyint(1) unsigned NOT NULL DEFAULT 0,
 	lastUpdated datetime not null,
 	enableEncounterTime tinyint(1) not null,
 	enableEncounterTransportationTime tinyint(1) not null,
@@ -9769,9 +9815,9 @@ CREATE TABLE IF NOT EXISTS `program` (
 	defaultServiceRestrictionDays int,
 	ageMin int not null,
 	ageMax int not null,
-  `userDefined` int(1),
-  `shelter_id` int(11),
-  `facility_id` int(10),
+  `userDefined` int(1) DEFAULT 1,
+  `shelter_id` int(11) DEFAULT 0,
+  `facility_id` int(10) DEFAULT 0,
   `capacity_funding` int(10),
   `capacity_space` int(10),
   `lastUpdateUser` varchar(6),
@@ -9795,7 +9841,7 @@ CREATE TABLE IF NOT EXISTS `provider_facility` (
 	unique (provider_no, facility_id),
 	index (facility_id),
 	foreign key (provider_no) references provider(provider_no),
-	foreign key (facility_id) references facility(id)
+	foreign key (facility_id) references Facility(id)
 );
 
 CREATE TABLE IF NOT EXISTS `vacancy_template` (
@@ -12293,13 +12339,13 @@ CREATE TABLE IF NOT EXISTS `consentType` (
 
 
 
-CREATE TABLE IF NOT EXISTS billingperclimit (
-  service_code varchar(10) NOT NULL ,
-  min varchar(8),
-  max varchar(8),
-  effective_date date,
-  id int auto_increment,
-  PRIMARY KEY  (id)
+CREATE TABLE IF NOT EXISTS `billingperclimit` (
+  `service_code` varchar(10) NOT NULL,
+  `min` varchar(8) DEFAULT '0',
+  `max` varchar(8) DEFAULT '0',
+  `effective_date` date DEFAULT '1970-01-01',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS resident_oscarMsg (
@@ -12483,7 +12529,6 @@ CREATE TABLE IF NOT EXISTS `rbt_groups` (
   PRIMARY KEY (`id`)
 );
 
-
 create table if not exists `read_lab`
 (
     id int null,
@@ -12491,3 +12536,4 @@ create table if not exists `read_lab`
     lab_type varchar(20) null,
     lab_id int null
 );
+

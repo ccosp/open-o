@@ -24,6 +24,8 @@
 
 package org.oscarehr.fax.core;
 
+import org.oscarehr.common.model.FaxConfig;
+
 public class FaxAccount {
 
     private String facilityName;
@@ -34,6 +36,16 @@ public class FaxAccount {
     private String fax;
     private String phone;
     private String address;
+
+    public FaxAccount() {
+        // default constructor
+    }
+
+    public FaxAccount(FaxConfig faxConfig) {
+        fax = faxConfig.getFaxNumber();
+        faxNumberOwner = faxConfig.getAccountName();
+
+    }
 
     public String getFacilityName() {
         return facilityName;

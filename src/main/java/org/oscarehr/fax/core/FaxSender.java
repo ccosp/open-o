@@ -113,7 +113,7 @@ public class FaxSender {
 						 */
 						if(filename.contains(File.separator))
 						{
-							filename.replace(File.separator, "");
+							filename.replaceAll(File.separator, "");
 						}
 
 						/*

@@ -27,10 +27,7 @@ package oscar.login;
 
 import java.io.IOException;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -44,6 +41,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.service.ProviderManager;
@@ -53,11 +51,8 @@ import org.oscarehr.common.dao.*;
 import org.oscarehr.common.model.*;
 import org.oscarehr.decisionSupport.service.DSService;
 import org.oscarehr.managers.AppManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.LoggedInUserFilter;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SessionConstants;
-import org.oscarehr.util.SpringUtils;
+//import org.oscarehr.managers.SsoAuthenticationManager;
+import org.oscarehr.util.*;
 import org.owasp.encoder.Encode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -89,8 +84,13 @@ public final class LoginAction extends DispatchAction {
     private ProviderPreferenceDao providerPreferenceDao = SpringUtils.getBean(ProviderPreferenceDao.class);
     private ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
     private UserPropertyDAO propDao = SpringUtils.getBean(UserPropertyDAO.class);
-	
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	// remove after testing is done
+//	private SsoAuthenticationManager ssoAuthenticationManager = SpringUtils.getBean(SsoAuthenticationManager.class);
+	/**
+	 * TODO: for the love of god - please help me clean-up this nightmare
+	 */
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	boolean ajaxResponse = request.getParameter("ajaxResponse") != null?Boolean.valueOf(request.getParameter("ajaxResponse")):false;
     	
     	boolean isMobileOptimized = false;
@@ -229,10 +229,20 @@ public final class LoginAction extends DispatchAction {
 	        logger.debug("ip was not blocked: "+ip);
         
     	}
-        
+
+		/*
+		 * THIS IS THE GATEWAY.
+		 */
         String[] strAuth;
         try {
-            strAuth = cl.auth(userName, password, pin, ip);
+			/*
+			 * the pin code is not required for SSO IDP.
+			 */
+	        if(SSOUtility.isSSOEnabled()) {
+		        strAuth = cl.auth(userName, password, ip);
+	        } else {
+		        strAuth = cl.auth(userName, password, pin, ip);
+	        }
         }
         catch (Exception e) {
         	logger.error("Error", e);
@@ -257,9 +267,7 @@ public final class LoginAction extends DispatchAction {
         }
         logger.debug("strAuth : "+Arrays.toString(strAuth));
         if (strAuth != null && strAuth.length != 1) { // login successfully
-        	
-        	
-        	
+
         	//is the provider record inactive?
         	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
             Provider p = providerDao.getProvider(strAuth[0]);
@@ -292,18 +300,58 @@ public final class LoginAction extends DispatchAction {
 
                 return(new ActionForward(newURL));            	
             }
-                        
-            // invalidate the existing session
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-            	if(request.getParameter("invalidate_session") != null && request.getParameter("invalidate_session").equals("false")) {
-            		//don't invalidate in this case..messes up authenticity of OAUTH
-            	} else {
-            		session.invalidate();
-            	}
-            }
-            session = request.getSession(); // Create a new session for this user
-			session.setMaxInactiveInterval(7200); // 2 hours
+
+
+// ################----------------------->
+// REMOVE AFTER TESTING IS DONE.
+//	        if(true) {
+//		        String[] authenticationParameters = new String[]{userName, password, pin, ip};
+//		        Map<String, Object> sessionData = ssoAuthenticationManager.checkLogin(new HashMap<>(), authenticationParameters);
+//		        HttpSession newSession = request.getSession(true);
+//
+//		        logger.debug("New session created: " + newSession.getId());
+//
+//		        newSession.setMaxInactiveInterval(7200);
+//		        newSession.setAttribute("oscar_context_path", request.getContextPath());
+//
+//		        // full site or mobile
+//		        newSession.setAttribute("fullSite", "true");
+//
+//		        for (String key : sessionData.keySet()) {
+//			        newSession.setAttribute(key, sessionData.get(key));
+//		        }
+//
+//		        return mapping.findForward("provider");
+//	        }
+// <-----------------------################
+
+	        /*
+	         * User has authenticated in OSCAR at this point.
+	         * The following will redirect to the selected IDP for
+	         * an authentication request if SSO is enabled
+	         * The remainder of the login process will be handled through the
+	         * SSOLoginAction class.
+	         *
+	         */
+	        if(SSOUtility.isSSOEnabled()) {
+		        ActionRedirect redirect = new ActionRedirect(mapping.findForward("ssoLogin"));
+		        redirect.addParameter("user_email", strAuth[6]);
+		        return redirect;
+	        }
+
+
+	        // invalidate the existing session
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+		        if(request.getParameter("invalidate_session") != null && request.getParameter("invalidate_session").equals("false")) {
+			        //don't invalidate in this case it messes up authenticity of OAUTH
+		        } else {
+			        session.invalidate();
+		        }
+	        }
+	        session = request.getSession(); // Create a new session for this user
+	        session.setMaxInactiveInterval(7200); // 2 hours
+
 
           //If the ondIdKey parameter is not null and is not an empty string
         	if (oneIdKey != null && !oneIdKey.equals("")) {
@@ -414,7 +462,6 @@ public final class LoginAction extends DispatchAction {
                     AlertTimer.getInstance(alertCodes, longFreq.longValue());
                 }
             }
-//            CRHelper.recordLoginSuccess(userName, strAuth[0], request);
 
             String username = (String) session.getAttribute("user");
             Provider provider = providerManager.getProvider(username);
@@ -459,23 +506,10 @@ public final class LoginAction extends DispatchAction {
             	}
             }
 
-            if( pvar.getProperty("LOGINTEST","").equalsIgnoreCase("yes")) {
-                String proceedURL = mapping.findForward(where).getPath();
-                request.getSession().setAttribute("proceedURL", proceedURL);               
-                return mapping.findForward("LoginTest");
-            }
-
 			if (UserRoleUtils.hasRole(request, "Patient Intake")) {
 				return mapping.findForward("patientIntake");
 			}
-            
-            //are they using the new UI?
-            if("true".equals(OscarProperties.getInstance().getProperty("newui.enabled", "false"))) {
-	            UserProperty prop = propDao.getProp(provider.getProviderNo(), UserProperty.COBALT);
-	            if(prop != null && prop.getValue() != null && prop.getValue().equals("yes")) {
-	            	where="cobalt";
-	            }
-            }
+
 
         }
         // expired password
@@ -500,8 +534,7 @@ public final class LoginAction extends DispatchAction {
         	logger.debug("go to normal directory");
 
             cl.updateLoginList(ip, userName);
-//            CRHelper.recordLoginFailure(userName, request);
-            
+
             if(ajaxResponse) {
             	JSONObject json = new JSONObject();
             	json.put("success", false);
@@ -520,8 +553,8 @@ public final class LoginAction extends DispatchAction {
             return forward;
         }
 
-    	logger.debug("checking oauth_token");
         if(request.getParameter("oauth_token") != null) {
+	        logger.debug("checking oauth_token");
     		String proNo = (String)request.getSession().getAttribute("user");
     		ServiceRequestTokenDao serviceRequestTokenDao = SpringUtils.getBean(ServiceRequestTokenDao.class);
     		ServiceRequestToken srt = serviceRequestTokenDao.findByTokenId(request.getParameter("oauth_token"));

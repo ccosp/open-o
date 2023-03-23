@@ -26,9 +26,11 @@ package oscar.dms;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -215,22 +217,11 @@ public class ConvertToEdoc {
 	 * Execute building and saving PDF to temp directory.
 	 */
 	private static Path execute( final String eformString, final String filename ) {
-
-		String correctedDocument = tidyDocument( eformString );
 		Path path = null;
-		Document document = buildDocument(correctedDocument);
+		String document = tidyDocument( eformString );
 		try(ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 			renderPDF( document, os );
 			path = nioFileManager.saveTempFile( filename, os );
-//			// flatten the pdf * doesnt work
-//			PdfReader reader = new PdfReader(path.toString());
-//			try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-//				PdfStamper stamper = new PdfStamper(reader, byteArrayOutputStream);
-//				stamper.setFormFlattening(true);
-//				stamper.close();
-//			} catch (IOException | com.itextpdf.text.DocumentException e) {
-//				throw new RuntimeException(e);
-//			}
 		} catch (DocumentException e1) {
 			logger.error( "Exception parsing file to PDF. File not saved. ", e1 );
 		} catch (IOException e) {
@@ -295,21 +286,35 @@ public class ConvertToEdoc {
 	 * Flying Saucer requires a well formed w3c XHTML document - which is usually
 	 * not the case.
 	 */
-	private static void renderPDF( final Document document, ByteArrayOutputStream os )
+	private static void renderPDF( final String document, ByteArrayOutputStream os )
 			throws DocumentException, IOException {
-		String documentString = printDocument( document );
-		System.out.println("Document " + documentString);
+
+        HashMap<String, String> htmlToPdfSettings = new HashMap<String, String>() {{
+			put("load.blockLocalFileAccess", "false");
+			put("web.enableIntelligentShrinking", "true");
+	        put("web.minimumFontSize", "10");
+	        put("load.zoomFactor", "0.92");
+	        put("web.printMediaType", "false");
+	        put("web.defaultEncoding", "utf-8");
+	        put("s", "letter");
+	        put("T", "10mm");
+	        put("L", "8mm");
+	        put("R", "8mm");
+		}};
+
 		try(InputStream inputStream = HtmlToPdf.create()
-				.object(HtmlToPdfObject.forHtml(documentString)).convert()) {
+						.object(HtmlToPdfObject.forHtml(document, htmlToPdfSettings))
+						.convert()
+		){
 			IOUtils.copy(inputStream, os);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			ITextRenderer renderer = new ITextRenderer();
 			SharedContext sharedContext = renderer.getSharedContext();
 			sharedContext.setPrint(true);
 			sharedContext.setInteractive(false);
 			sharedContext.setReplacedElementFactory(new ReplacedElementFactoryImpl());
 			sharedContext.getTextRenderer().setSmoothingThreshold(0);
-			renderer.setDocument( document,null);
+			renderer.setDocument( getDocument(document),null);
 			renderer.layout();
 			renderer.createPDF( os, true );
 			logger.error("Document conversion exception thrown, attempting with alternate conversion library.", e);
@@ -483,8 +488,9 @@ public class ConvertToEdoc {
 				potentialFilePaths.add( path );
 			}
 			
-			// parse the parameters and test if any are links to the eForm 
-			// images library. Otherwise these resources are no good.
+			/* parse the parameters and test if any are links to the eForm
+			 * images library. Otherwise these resources are no good.
+			 */
 			if( parameters != null && parameters.contains("&") ) {
 				parameterList = parameters.split("&");
 			}
@@ -502,12 +508,14 @@ public class ConvertToEdoc {
 				potentialFilePaths.add( path );
 			}
 
-			// there really should be only one valid path.
-			// Only use the one that validates
+			/* there really should be only one valid path.
+			 * Only use the one that validates
+			 */
 			validLink = validateLink( potentialFilePaths );
 			
-			// change the element resource link to something absolute  
-			// that can be used by the PDF creator. 
+			/* change the element resource link to something absolute
+			 * that can be used by the PDF creator.
+			 */
 			if( validLink != null ) {
 				element.setAttribute( pathAttribute.name(), validLink );
 			}
@@ -518,7 +526,7 @@ public class ConvertToEdoc {
 	 * Feed this method a filename and it will return a full path to the Oscar images directory. 
 	 */
 	private static String buildImageDirectoryPath( String filename ) {
-		return String.format( "%1$s%2$s%3$s", getImageDirectory(), File.separator, filename );
+		return Paths.get(getImageDirectory(), filename).toString();
 	}
 	
 	/**
@@ -530,20 +538,11 @@ public class ConvertToEdoc {
 		logger.debug( "Context path set to " + contextPath );
 		
 		if( ConvertToEdoc.contextPath != null && ConvertToEdoc.realPath != null ) {
-			
 			logger.debug( "Relative file path " + uri );
-
-			String filePath = uri.substring( contextPath.length(), uri.length() );
-			filePath = filePath.replaceFirst( File.separator , "" );
-			contextRealPath = ConvertToEdoc.realPath;
-			if( ! contextRealPath.endsWith( File.separator )) {
-				contextRealPath = contextRealPath + File.separator;
-			}
-			contextRealPath = String.format( "%1$s%2$s", contextRealPath, filePath );
-
-			logger.debug( "Absolute file path " + contextRealPath );
-	
+			contextRealPath = Paths.get(ConvertToEdoc.realPath, ConvertToEdoc.realPath).toAbsolutePath().toString();
 		}
+
+		logger.debug( "Absolute file path " + contextRealPath );
 
 		return contextRealPath;
 	}
@@ -622,13 +621,34 @@ public class ConvertToEdoc {
 		Tidy tidy = getTidy();
 		StringReader reader = new StringReader( documentString );
 		StringWriter writer = new StringWriter();
-		String correctedDocument;
-		
-		tidy.parse( reader, writer );
-		correctedDocument = writer.toString();
+		String correctedDocument = "";
+
+		/*
+		 * clean the HTML document with JTidy tools
+		 */
+		Document document = tidy.parseDOM( reader, writer );
+
+		/*
+		 * Use the w3c Document output to interpret the external image
+		 * and css links into absolute links that can be
+		 * read by the HTMLtoPDF parser.
+		 */
+		translateResourcePaths( document );
+		setHeadElement( document );
+		addCss( document );
+
+		/*
+		 * Pretty print the final HTML output for use with the HTMLtoPDF parser.
+		 */
+		try(OutputStream os = new ByteArrayOutputStream()) {
+			tidy.pprint(document, os);
+			correctedDocument = os.toString();
+		} catch (IOException e) {
+			logger.error("JTidy pretty print document error ", e);
+		}
 
 		writer.flush();
-		
+
 		try {
 			writer.close();
 		} catch (IOException e) {
@@ -643,18 +663,18 @@ public class ConvertToEdoc {
 	 */
 	private static Tidy getTidy() {
 		Tidy tidy = new Tidy();
-		Properties properties = new Properties();
-		InputStream is = null;
-		
-		// these can be overriden with the properties file.
+
+		/* Properties intentionally hard-coded.
+		 * These settings cannot be overriden in the properties file.
+		 */
 		tidy.setForceOutput( Boolean.TRUE ); 	// output the XHTML even if it fails the validator.
-		tidy.setXHTML( Boolean.TRUE ); // only reading XHTML here.
-		tidy.setDropEmptyParas(false);
-		tidy.setDocType( "omit" ); // everything will fail horribly if doctype is strict.
+		tidy.setDropEmptyParas(Boolean.TRUE);
 		tidy.setMakeClean( Boolean.TRUE );
 		tidy.setLogicalEmphasis( Boolean.TRUE ); // replace the b and em tags with proper <strong> tags
+		tidy.setInputEncoding("UTF-8");
+		tidy.setOutputEncoding("UTF-8");
 
-		// logging
+		// For debug logging only.
 		if( logger.isDebugEnabled() ) {
 			tidy.setHideComments( Boolean.FALSE );
 			tidy.setQuiet( Boolean.FALSE );
@@ -663,42 +683,21 @@ public class ConvertToEdoc {
 			tidy.setQuiet( Boolean.TRUE );
 		}
 
-		try {
-			is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" );
+		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" )) {
 			if( is != null ) {
+				Properties properties = new Properties();
 				properties.load( is );
+				tidy.getConfiguration().addProps( properties );
 			}
 		} catch (IOException e) {
 			logger.warn("Could not load Tidy properties ", e);
-		} finally {
-			if( is != null ) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					logger.error("Error", e);
-				}
-			}
 		}
 
-		tidy.getConfiguration().addProps( properties );
-		
 		logger.debug( printTidyConfig( tidy ) );
 		
 		return tidy;
 	}
-	
-//	/**
-//	 * Returns the temporary path where the new PDF was saved. 
-//	 * It may be desired to move the file at this path to a permanent document directory
-//	 */
-//	public static final String getFilePath() {
-//		return new String( getTempDirectory().replaceAll("//", File.separator ) );
-//	}
-	
-//	private static final String getTempDirectory() {
-//		return DEFAULT_FILE_PATH;
-//	}
-//	
+
 	private static String getImageDirectory() {
 		return DEFAULT_IMAGE_DIRECTORY;
 	}
@@ -711,8 +710,8 @@ public class ConvertToEdoc {
 	    StreamResult streamResult = null;
 	    try {
 			Transformer transformer = tf.newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-			transformer.setOutputProperty(OutputKeys.METHOD, "xhml");
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			transformer.setOutputProperty(OutputKeys.METHOD, "html");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -738,25 +737,15 @@ public class ConvertToEdoc {
 	
 	public static String printTidyConfig( Tidy tidy ) {
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		OutputStreamWriter osw = new OutputStreamWriter( baos );
-		tidy.getConfiguration().printConfigOptions( osw, true );
-		
-		String log = baos.toString();
-		
-		try {
-			baos.close();
+		String log = "No config found";
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		     OutputStreamWriter osw = new OutputStreamWriter( baos );){
+			tidy.getConfiguration().printConfigOptions( osw, true );
+			log = baos.toString();
 		} catch (IOException e) {
 			logger.error("Error", e);
-		} finally {
-			try {
-				osw.close();
-			} catch (IOException e) {
-				logger.error("Error", e);
-			}
 		}
 
 		return log;
 	}
-
 }

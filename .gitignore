@@ -22,3 +22,6 @@ src/main/resources/uiResources_*.properties
 /catalina_base*
 *.iml
 /catalina_base/*
+.settings/
+.vscode/
+tmp/
