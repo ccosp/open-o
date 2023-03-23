@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
+ * Copyright (c) 2015-2019. The Pharmacists Clinic, Faculty of Pharmaceutical Sciences, University of British Columbia. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,19 +23,14 @@
  */
 package oscar.dms;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -51,7 +46,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
+import io.woo.htmltopdf.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.managers.NioFileManager;
@@ -63,6 +59,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.w3c.tidy.Tidy;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 import com.lowagie.text.DocumentException;
@@ -79,12 +76,12 @@ import oscar.form.util.FormTransportContainer;
  * NOT ALL DOCUMENTS ARE CONVERTABLE. USE AT OWN RISK.
  */
 public class ConvertToEdoc {
-	
+
 	private static final Logger logger = MiscUtils.getLogger();
 
-	public static enum DocumentType { eForm, form }
-	private static enum PathAttribute { src, href }
-	private static enum FileType { pdf, css, jpeg, png, gif }
+	public enum DocumentType { eForm, form }
+	private enum PathAttribute { src, href }
+	private enum FileType { pdf, css, jpeg, png, gif }
 
 	public static final String CUSTOM_STYLESHEET_ID = "pdfMediaStylesheet";
 	private static final String DEFAULT_IMAGE_DIRECTORY = String.format( "%1$s", OscarProperties.getInstance().getProperty( "eform_image" ) );
@@ -95,7 +92,7 @@ public class ConvertToEdoc {
 	private static String contextPath;
 	private static String realPath;
 
-	private static NioFileManager nioFileManager = SpringUtils.getBean( NioFileManager.class );
+	private static final NioFileManager nioFileManager = SpringUtils.getBean( NioFileManager.class );
 
 	/**
 	 * Convert EForm to EDoc
@@ -105,7 +102,7 @@ public class ConvertToEdoc {
 	 * temporary path to a file storage path prior to persisting this Object to the 
 	 * database. 
 	 */
-	public synchronized static final EDoc from( EFormData eform ) {
+	public synchronized static EDoc from( EFormData eform ) {
 		
 		String eformString = eform.getFormData();	
 		String demographicNo = eform.getDemographicId() + "";
@@ -158,7 +155,7 @@ public class ConvertToEdoc {
 		}
 	 * 
 	 */
-	public synchronized static final EDoc from( FormTransportContainer formTransportContainer ) {
+	public synchronized static EDoc from( FormTransportContainer formTransportContainer ) {
 	
 		String htmlString = formTransportContainer.getHTML();
 		String demographicNo = formTransportContainer.getDemographicNo();
@@ -197,12 +194,10 @@ public class ConvertToEdoc {
 	 * 
 	 * @return temporary path to the produced PDF.. 
 	 */
-	public synchronized static final Path saveAsTempPDF( EFormData eform ) {
+	public synchronized static Path saveAsTempPDF( EFormData eform ) {
 		String eformString = eform.getFormData();
 		String filename = buildFilename( eform.getFormName(), eform.getDemographicId()+"" );
-		Path filePath = execute( eformString, filename );
-
-		return filePath;
+		return execute( eformString, filename );
 	}
 	
 	/**
@@ -212,23 +207,18 @@ public class ConvertToEdoc {
 	 * 
 	 * @return temporary path to the produced PDF. 
 	 */
-	public synchronized static final Path saveAsTempPDF(FormTransportContainer formTransportContainer) {
+	public synchronized static Path saveAsTempPDF(FormTransportContainer formTransportContainer) {
 		String htmlString = formTransportContainer.getHTML();
 		String filename = buildFilename( formTransportContainer.getFormName(), formTransportContainer.getDemographicNo() );
-		Path filePath = execute( htmlString, filename );
-
-		return filePath;
+		return execute( htmlString, filename );
 	}
 	
 	/**
 	 * Execute building and saving PDF to temp directory.
 	 */
 	private static Path execute( final String eformString, final String filename ) {
-
-		String correctedDocument = tidyDocument( eformString );			
-		Document document = buildDocument( correctedDocument );
 		Path path = null;
-		
+		String document = tidyDocument( eformString );
 		try(ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 			renderPDF( document, os );
 			path = nioFileManager.saveTempFile( filename, os );
@@ -244,7 +234,7 @@ public class ConvertToEdoc {
 	/**
 	 * creates a filename
 	 */
-	private static final String buildFilename( String filename, String demographicNo ) {
+	private static String buildFilename( String filename, String demographicNo ) {
 		
 		if( filename == null || filename.isEmpty() ) {
 			filename = DEFAULT_FILENAME;
@@ -291,34 +281,58 @@ public class ConvertToEdoc {
 	}
 
 	/**
-	 * Use the Flying Saucer tools to render a PDF from a 
-	 * well formed w3c XHTML document
-	 * @throws DocumentException 
+	 * Use the io.woo.htmltopdf tools for HTML to PDF or
+	 * use the Flying Saucer tools if there is a failure.
+	 * Flying Saucer requires a well formed w3c XHTML document - which is usually
+	 * not the case.
 	 */
-	private static final void renderPDF( final Document document, ByteArrayOutputStream os ) 
-			throws DocumentException {		
-		ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocument( document,null);
-		renderer.layout();
-		renderer.createPDF( os );
+	private static void renderPDF( final String document, ByteArrayOutputStream os )
+			throws DocumentException, IOException {
+
+        HashMap<String, String> htmlToPdfSettings = new HashMap<String, String>() {{
+			put("load.blockLocalFileAccess", "false");
+			put("web.enableIntelligentShrinking", "true");
+	        put("web.minimumFontSize", "10");
+	        put("load.zoomFactor", "0.92");
+	        put("web.printMediaType", "false");
+	        put("web.defaultEncoding", "utf-8");
+	        put("s", "letter");
+	        put("T", "10mm");
+	        put("L", "8mm");
+	        put("R", "8mm");
+		}};
+
+		try(InputStream inputStream = HtmlToPdf.create()
+						.object(HtmlToPdfObject.forHtml(document, htmlToPdfSettings))
+						.convert()
+		){
+			IOUtils.copy(inputStream, os);
+		} catch (Exception e) {
+			ITextRenderer renderer = new ITextRenderer();
+			SharedContext sharedContext = renderer.getSharedContext();
+			sharedContext.setPrint(true);
+			sharedContext.setInteractive(false);
+			sharedContext.setReplacedElementFactory(new ReplacedElementFactoryImpl());
+			sharedContext.getTextRenderer().setSmoothingThreshold(0);
+			renderer.setDocument( getDocument(document),null);
+			renderer.layout();
+			renderer.createPDF( os, true );
+			logger.error("Document conversion exception thrown, attempting with alternate conversion library.", e);
+		}
 	}
-	
+
 	/**
 	 * Build this HTML document. 
 	 * - adds translated image paths
 	 * - inserts custom stylesheets.
 	 */
-	private static final Document buildDocument( final String documentString ) {
-		
+	private static Document buildDocument( final String documentString ) {
 		Document document = getDocument( documentString );
 		if( document != null ) {
 			translateResourcePaths( document );
 			setHeadElement( document );
 			addCss( document );
 		}
-		
-		logger.debug( printDocument( document ) );
-
 		return document;
 	}
 	
@@ -329,27 +343,14 @@ public class ConvertToEdoc {
 
 		DocumentBuilder builder;
 		Document document = null;					
-		ByteArrayInputStream bais = new ByteArrayInputStream( documentString.getBytes() );
 
-		try {
+		try(ByteArrayInputStream bais = new ByteArrayInputStream( documentString.getBytes() )) {
 			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			document = builder.parse(bais);			
-		} catch (SAXException e) {
+		} catch (SAXException | ParserConfigurationException | IOException e) {
 			logger.error( "", e );
-		} catch (IOException e) {
-			logger.error( "", e );
-		} catch (ParserConfigurationException e) {
-			logger.error( "", e );
-		} finally {
-			if( bais != null ) {
-				try {
-					bais.close();
-				} catch (IOException e) {
-					logger.error( "", e );
-				}
-			}
 		}
-		
+
 		return document;
 	}
 	
@@ -473,10 +474,10 @@ public class ConvertToEdoc {
 			
 			Element element = (Element) nodeList.item(i);			
 			String path = element.getAttribute( pathAttribute.name() );
-			String validLink = null;
+			String validLink;
 			String parameters = null;
 			String[] parameterList = null;		
-			List<String> potentialFilePaths = new ArrayList<String>();
+			List<String> potentialFilePaths = new ArrayList<>();
 
 			if( path.contains("?") ) {
 				// image or link paths with parameters
@@ -487,8 +488,9 @@ public class ConvertToEdoc {
 				potentialFilePaths.add( path );
 			}
 			
-			// parse the parameters and test if any are links to the eForm 
-			// images library. Otherwise these resources are no good.
+			/* parse the parameters and test if any are links to the eForm
+			 * images library. Otherwise these resources are no good.
+			 */
 			if( parameters != null && parameters.contains("&") ) {
 				parameterList = parameters.split("&");
 			}
@@ -506,12 +508,14 @@ public class ConvertToEdoc {
 				potentialFilePaths.add( path );
 			}
 
-			// there really should be only one valid path.
-			// Only use the one that validates
+			/* there really should be only one valid path.
+			 * Only use the one that validates
+			 */
 			validLink = validateLink( potentialFilePaths );
 			
-			// change the element resource link to something absolute  
-			// that can be used by the PDF creator. 
+			/* change the element resource link to something absolute
+			 * that can be used by the PDF creator.
+			 */
 			if( validLink != null ) {
 				element.setAttribute( pathAttribute.name(), validLink );
 			}
@@ -522,33 +526,23 @@ public class ConvertToEdoc {
 	 * Feed this method a filename and it will return a full path to the Oscar images directory. 
 	 */
 	private static String buildImageDirectoryPath( String filename ) {
-		return String.format( "%1$s%2$s%3$s", getImageDirectory(), File.separator, filename );
+		return Paths.get(getImageDirectory(), filename).toString();
 	}
 	
 	/**
 	 * Convert a given context path into a file system absolute path.
-	 * @return
 	 */
-	private static final String getRealPath( String uri ) {
+	private static String getRealPath(String uri ) {
 		String contextRealPath = "";
 		
 		logger.debug( "Context path set to " + contextPath );
 		
 		if( ConvertToEdoc.contextPath != null && ConvertToEdoc.realPath != null ) {
-			
 			logger.debug( "Relative file path " + uri );
-
-			String filePath = uri.substring( contextPath.length(), uri.length() );
-			filePath = filePath.replaceFirst( File.separator , "" );
-			contextRealPath = ConvertToEdoc.realPath;
-			if( ! contextRealPath.endsWith( File.separator )) {
-				contextRealPath = contextRealPath + File.separator;
-			}
-			contextRealPath = String.format( "%1$s%2$s", contextRealPath, filePath );
-
-			logger.debug( "Absolute file path " + contextRealPath );
-	
+			contextRealPath = Paths.get(ConvertToEdoc.realPath, ConvertToEdoc.realPath).toAbsolutePath().toString();
 		}
+
+		logger.debug( "Absolute file path " + contextRealPath );
 
 		return contextRealPath;
 	}
@@ -556,10 +550,10 @@ public class ConvertToEdoc {
 	/**
 	 * Returns a List of valid file links from a list of potential valid links.
 	 */
-	private static final List<String> validateLinks( List<String> potentialLinks ) {
+	private static List<String> validateLinks( List<String> potentialLinks ) {
 
 		List<String> finalLinks = null;
-		String validLink = null;
+		String validLink;
 		
 		for( String potentialLink : potentialLinks ) {
 			if( potentialLink.isEmpty() ) {
@@ -569,7 +563,7 @@ public class ConvertToEdoc {
 			validLink = validateLink( potentialLink );
 			
 			if( finalLinks == null && validLink != null ) {
-				finalLinks = new ArrayList<String>();
+				finalLinks = new ArrayList<>();
 			}
 
 			if( validLink != null ) {
@@ -583,7 +577,7 @@ public class ConvertToEdoc {
 	/**
 	 * Returns the first valid file link from a list of potential valid links.
 	 */
-	private static final String validateLink( List<String> potentialLinks ) {
+	private static String validateLink( List<String> potentialLinks ) {
 
 		logger.debug( "Validating potential file paths " + potentialLinks );
 		
@@ -599,7 +593,7 @@ public class ConvertToEdoc {
 	/**
 	 * Returns only 1 valid file link.
 	 */
-	private static final String validateLink( String potentialLink ) {
+	private static String validateLink( String potentialLink ) {
 
 		File file = null;
 		String absolutePath = null;
@@ -627,13 +621,34 @@ public class ConvertToEdoc {
 		Tidy tidy = getTidy();
 		StringReader reader = new StringReader( documentString );
 		StringWriter writer = new StringWriter();
-		String correctedDocument = null;
-		
-		tidy.parse( reader, writer );
-		correctedDocument = new String( writer.toString() );	
+		String correctedDocument = "";
+
+		/*
+		 * clean the HTML document with JTidy tools
+		 */
+		Document document = tidy.parseDOM( reader, writer );
+
+		/*
+		 * Use the w3c Document output to interpret the external image
+		 * and css links into absolute links that can be
+		 * read by the HTMLtoPDF parser.
+		 */
+		translateResourcePaths( document );
+		setHeadElement( document );
+		addCss( document );
+
+		/*
+		 * Pretty print the final HTML output for use with the HTMLtoPDF parser.
+		 */
+		try(OutputStream os = new ByteArrayOutputStream()) {
+			tidy.pprint(document, os);
+			correctedDocument = os.toString();
+		} catch (IOException e) {
+			logger.error("JTidy pretty print document error ", e);
+		}
 
 		writer.flush();
-		
+
 		try {
 			writer.close();
 		} catch (IOException e) {
@@ -646,20 +661,20 @@ public class ConvertToEdoc {
 	/**
 	 * Instantiate the Tidy HTML validator
 	 */
-	private static final Tidy getTidy() {
+	private static Tidy getTidy() {
 		Tidy tidy = new Tidy();
-		Properties properties = new Properties();
-		InputStream is = null;
-		
-		// these can be overriden with the properties file.
+
+		/* Properties intentionally hard-coded.
+		 * These settings cannot be overriden in the properties file.
+		 */
 		tidy.setForceOutput( Boolean.TRUE ); 	// output the XHTML even if it fails the validator.
-		tidy.setXHTML( Boolean.TRUE ); // only reading XHTML here.
-		tidy.setDropEmptyParas(false);
-		tidy.setDocType( "omit" ); // everything will fail horribly if doctype is strict.
+		tidy.setDropEmptyParas(Boolean.TRUE);
 		tidy.setMakeClean( Boolean.TRUE );
 		tidy.setLogicalEmphasis( Boolean.TRUE ); // replace the b and em tags with proper <strong> tags
+		tidy.setInputEncoding("UTF-8");
+		tidy.setOutputEncoding("UTF-8");
 
-		// logging
+		// For debug logging only.
 		if( logger.isDebugEnabled() ) {
 			tidy.setHideComments( Boolean.FALSE );
 			tidy.setQuiet( Boolean.FALSE );
@@ -668,43 +683,22 @@ public class ConvertToEdoc {
 			tidy.setQuiet( Boolean.TRUE );
 		}
 
-		try {
-			is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" );
+		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" )) {
 			if( is != null ) {
+				Properties properties = new Properties();
 				properties.load( is );
+				tidy.getConfiguration().addProps( properties );
 			}
 		} catch (IOException e) {
 			logger.warn("Could not load Tidy properties ", e);
-		} finally {
-			if( is != null ) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					logger.error("Error", e);
-				}
-			}
 		}
 
-		tidy.getConfiguration().addProps( properties );
-		
 		logger.debug( printTidyConfig( tidy ) );
 		
 		return tidy;
 	}
-	
-//	/**
-//	 * Returns the temporary path where the new PDF was saved. 
-//	 * It may be desired to move the file at this path to a permanent document directory
-//	 */
-//	public static final String getFilePath() {
-//		return new String( getTempDirectory().replaceAll("//", File.separator ) );
-//	}
-	
-//	private static final String getTempDirectory() {
-//		return DEFAULT_FILE_PATH;
-//	}
-//	
-	private static final String getImageDirectory() {
+
+	private static String getImageDirectory() {
 		return DEFAULT_IMAGE_DIRECTORY;
 	}
 	
@@ -712,13 +706,12 @@ public class ConvertToEdoc {
 	 * Prints the document contents to console. Used for debugging.
 	 */
 	private static String printDocument( Document doc ) {
-
 	    TransformerFactory tf = TransformerFactory.newInstance();
 	    StreamResult streamResult = null;
 	    try {
 			Transformer transformer = tf.newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-			transformer.setOutputProperty(OutputKeys.METHOD, "xhml");
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			transformer.setOutputProperty(OutputKeys.METHOD, "html");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -737,31 +730,22 @@ public class ConvertToEdoc {
 				}
 			}
 		}
-	    
-	    return streamResult.getOutputStream().toString();
+
+		assert streamResult != null;
+		return streamResult.getOutputStream().toString();
 	}
 	
 	public static String printTidyConfig( Tidy tidy ) {
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		OutputStreamWriter osw = new OutputStreamWriter( baos );
-		tidy.getConfiguration().printConfigOptions( osw, true );
-		
-		String log = new String( baos.toString() );
-		
-		try {
-			baos.close();
+		String log = "No config found";
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		     OutputStreamWriter osw = new OutputStreamWriter( baos );){
+			tidy.getConfiguration().printConfigOptions( osw, true );
+			log = baos.toString();
 		} catch (IOException e) {
 			logger.error("Error", e);
-		} finally {
-			try {
-				osw.close();
-			} catch (IOException e) {
-				logger.error("Error", e);
-			}
 		}
 
 		return log;
 	}
-
 }

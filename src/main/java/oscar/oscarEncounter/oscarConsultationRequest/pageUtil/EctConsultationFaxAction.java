@@ -86,8 +86,6 @@ public class EctConsultationFaxAction extends Action {
       OscarProperties props = OscarProperties.getInstance();
       
       FaxJob faxJob = new FaxJob();
-     
-
       FaxClientLog faxClientLog = new FaxClientLog();
       faxClientLog.setProviderNo(curUser_no);
       faxClientLog.setStartTime(new Date());
@@ -229,14 +227,13 @@ public class EctConsultationFaxAction extends Action {
                request.setAttribute("requestId",OSFc.getRequestId());
                faxClientLog.setRequestId(Integer.parseInt(OSFc.getRequestId()));
                faxClientLog.setFaxId(Integer.parseInt(OSFc.getJobId()));
-               faxDao.merge(faxClientLog);
             }else{
                MiscUtils.getLogger().debug("Error Message "+OSFc.getErrorMessage());
                request.setAttribute("oscarFaxError",OSFc.getErrorMessage());
                faxClientLog.setResult(OSFc.getErrorMessage());
                faxClientLog.setEndTime(new Date());
-               faxDao.merge(faxClientLog);
             }
+            faxDao.merge(faxClientLog);
          }catch(Exception e4){
         	 MiscUtils.getLogger().error("Error", e4);
             MiscUtils.getLogger().debug("Fax Service has Returned a Fatal Error ");
@@ -249,16 +246,9 @@ public class EctConsultationFaxAction extends Action {
          MiscUtils.getLogger().error("Error", e);
       }
       MiscUtils.getLogger().debug("Client Has Finished Running");
-
-
-
-
-
-
-
       return mapping.findForward("success");
-
    }
+
    String getLocationId(){
       OscarCommLocationsDao dao = SpringUtils.getBean(OscarCommLocationsDao.class);
       List<OscarCommLocations> locations =  dao.findByCurrent1(1);

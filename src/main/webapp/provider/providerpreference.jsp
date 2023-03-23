@@ -451,11 +451,18 @@ function showHideERxPref() {
 				<td class="preferenceValue">
 					<div style="height:10em;border:solid grey 1px;overflow:auto;white-space:nowrap;width:45em">
 					<%
-						List<EForm> eforms=ProviderPreferencesUIBean.getAllEForms();
-						Collection<Integer> checkedEFormIds=ProviderPreferencesUIBean.getCheckedEFormIds(providerNo);
+						List<EForm> eforms = ProviderPreferencesUIBean.getAllEForms();
+						Collection<ProviderPreference.EformLink> checkedEFormIds = ProviderPreferencesUIBean.getCheckedEFormIds(providerNo);
 						for(EForm eform : eforms)
 						{
-							String checkedString=(checkedEFormIds.contains(eform.getId())?"checked=\"checked\"":"");
+							String checkedString="";
+							inner:for(ProviderPreference.EformLink eformLink : checkedEFormIds) {
+								if(eform.getId().equals(eformLink.getAppointmentScreenEForm())) {
+									checkedString="checked";
+									break inner;
+								}
+							}
+
 							%>
 								<input type="checkbox" name="eformId" value="<%=eform.getId()%>" <%=checkedString%> /> <%=StringEscapeUtils.escapeHtml(eform.getFormName())%>
 								<br />
@@ -869,6 +876,12 @@ Event.observe('rxInteractionWarningLevel', 'change', function(event) {
     	<td align="center"><a href=# onClick ="popupPage(230,860,'../setProviderStaleDate.do?method=viewClinicalConnectPrefs');return false;"><bean:message key="provider.btnViewClinicalConnectPrefs"/></a></td>
     </tr>
 
+    <tr>
+    	<td align="center"><a href=# onClick ="popupPage(700,860,'../setProviderStaleDate.do?method=viewLabMacroPrefs');return false;"><bean:message key="provider.btnViewLabMacroPrefs"/></a></td>
+    </tr>
+   <tr>
+    	<td align="center"><a href=# onClick ="popupPage(280,730,'../setTicklerPreferences.do?method=viewTicklerTaskAssignee');return false;"><bean:message key="provider.btnViewTicklerPreferences"/></a></td>
+    </tr>
 </table>
 </FORM>
 

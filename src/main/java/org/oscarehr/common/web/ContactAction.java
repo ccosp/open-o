@@ -352,17 +352,27 @@ public class ContactAction extends DispatchAction {
 			arrayListIds = new ArrayList<String>(); 
 			
 			if(proContactIds != null) {
-				arrayListIds.addAll(Arrays.asList( proContactIds ) );
+				for(String x:Arrays.asList( proContactIds ) ) {
+					if(x != null && !x.isEmpty()) {
+						arrayListIds.add(x);
+					}
+				}
 			}
 			
 			if(contactIds != null) {
-				arrayListIds.addAll(Arrays.asList( contactIds ) );
+				for(String x:Arrays.asList( contactIds ) ) {
+					if(x != null && !x.isEmpty()) {
+						arrayListIds.add(x);
+					}
+				}
 			}
 			
-			ids = (String[]) arrayListIds.toArray();
+			if(arrayListIds != null && !arrayListIds.isEmpty()) {
+				ids = (String[]) arrayListIds.toArray();
+			}
 		}
 		
-    	if( ids != null ) {
+    	if( ids != null && ids.length>0) {
     		int contactId;
     		for( String id : ids ) {
     			contactId = Integer.parseInt(id);
@@ -494,6 +504,18 @@ public class ContactAction extends DispatchAction {
 		
 		return mapping.findForward("cForm");
 	}
+	
+	public ActionForward viewContact(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("contact.id");
+		Contact contact = null;
+		if(StringUtils.isNotBlank(id)) {
+			id = id.trim();
+			contact = contactDao.find(Integer.parseInt(id));
+			request.setAttribute("contact", contact);
+		}
+		return mapping.findForward("view");
+	}
 
 	@SuppressWarnings("unused")
 	public ActionForward editProContact(ActionMapping mapping, ActionForm form, 
@@ -527,7 +549,7 @@ public class ContactAction extends DispatchAction {
 		Contact contact = (Contact)dform.get("contact");
 		String id = request.getParameter("contact.id");
 		
-		if(id != null && id.length()>0) {
+		if(id != null && id.length()>0 && !"0".equals(id)) {
 			Contact savedContact = contactDao.find(Integer.parseInt(id));
 			if(savedContact != null) {
 				BeanUtils.copyProperties(contact, savedContact, new String[]{"id"});

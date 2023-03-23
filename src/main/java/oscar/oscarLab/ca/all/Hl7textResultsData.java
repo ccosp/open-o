@@ -24,6 +24,7 @@
 
 package oscar.oscarLab.ca.all;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -36,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.ConsultResponseDocDao;
+import org.oscarehr.common.dao.EFormDocsDao;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
 import org.oscarehr.common.dao.MeasurementDao;
@@ -46,6 +48,7 @@ import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.ConsultResponseDoc;
+import org.oscarehr.common.model.EFormDocs;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.Hl7TextMessage;
 import org.oscarehr.common.model.Measurement;
@@ -76,14 +79,15 @@ public class Hl7textResultsData {
 	private static Hl7TextInfoDao hl7TxtInfoDao = SpringUtils.getBean(Hl7TextInfoDao.class);
 	private static Hl7TextMessageDao hl7TxtMsgDao = SpringUtils.getBean(Hl7TextMessageDao.class);
 	private static PatientLabRoutingDao patientLabRoutingDao = SpringUtils.getBean(PatientLabRoutingDao.class);
-
+	private static EFormDocsDao eformDocsDao = SpringUtils.getBean(EFormDocsDao.class);
+	
 	private Hl7textResultsData() {
 		// no one should instantiate this
 	}
 
 	public static void populateMeasurementsTable(String lab_no, String demographic_no) {
 		MessageHandler h = Factory.getHandler(lab_no);
-
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Calendar calender = Calendar.getInstance();
 		String day = Integer.toString(calender.get(Calendar.DAY_OF_MONTH));
 		String month = Integer.toString(calender.get(Calendar.MONTH) + 1);
@@ -154,7 +158,14 @@ public class Hl7textResultsData {
 				String labname = h.getPatientLocation();
 				String accession = h.getAccessionNum();
 				String req_datetime = h.getRequestDate(i);
-				String datetime = h.getTimeStamp(i, j);
+				String observationDate = h.getTimeStamp(i, j);
+
+				// temporary for Excelleris labs. This method be added to the MessageHandler interface if
+				// it is useful for other HL7 labs
+				if(h instanceof oscar.oscarLab.ca.all.parsers.PATHL7Handler) {
+					observationDate = ((oscar.oscarLab.ca.all.parsers.PATHL7Handler) h).getObservationDate(i);
+				}
+
 				String olis_status = h.getOBXResultStatus(i, j);
 				String abnormal = h.getOBXAbnormalFlag(i, j);
 				if (abnormal != null && (abnormal.equals("A") || abnormal.startsWith("H"))) {
@@ -165,6 +176,7 @@ public class Hl7textResultsData {
 					abnormal = "N";
 				}
 				String[] refRange = splitRefRange(h.getOBXReferenceRange(i, j));
+				String blocked = h.isTestResultBlocked(i, j) ? "BLOCKED" : null;
 				String comments = "";
 				for (int l = 0; l < h.getOBXCommentCount(i, j); l++) {
 					comments += comments.length() > 0 ? "\n" + h.getOBXComment(i, j, l) : h.getOBXComment(i, j, l);
@@ -215,18 +227,21 @@ public class Hl7textResultsData {
                     m.setProviderNo("0");
                     m.setDataField(matcher.group());
                     m.setMeasuringInstruction(measInst);
+					try {
+						m.setCreateDate(simpleDateFormat.parse(dateEntered));
+					} catch(Exception e){
+						m.setCreateDate(new Date());
+					}
 
-                    if (datetime != null && datetime.length() > 0) {
-                        m.setDateObserved(UtilDateUtilities.StringToDate(datetime, "yyyy-MM-dd hh:mm:ss"));
-                    }
+					/*
+					 * This should be the OBR date - not the date the lab or measurement was received.
+					 */
+					try {
+						m.setDateObserved(simpleDateFormat.parse(observationDate));
+					} catch(Exception e){
+						m.setDateObserved(new Date());
+					}
 
-                    if (m.getDateObserved() == null && datetime != null && datetime.length() > 0) {
-                        m.setDateObserved(UtilDateUtilities.StringToDate(datetime, "yyyy-MM-dd"));
-                    }
-
-                    if (m.getDateObserved() == null) {
-                        m.setDateObserved(UtilDateUtilities.StringToDate(dateEntered, "yyyy-MM-dd hh:mm:ss"));
-                    }
                     m.setAppointmentNo(0);
                     
                     /*
@@ -283,7 +298,7 @@ public class Hl7textResultsData {
                     me = new MeasurementsExt();
                     me.setMeasurementId(mId);
                     me.setKeyVal("datetime");
-                    me.setVal(datetime);
+                    me.setVal(observationDate);
                     measurementsExts.add(me);
 
                     if (olis_status != null && olis_status.length() > 0) {
@@ -309,6 +324,8 @@ public class Hl7textResultsData {
                         me.setVal(refRange[0]);
                         measurementsExts.add(me);
                     } else {
+                    	
+                    	
                         if (refRange[1].length() > 0) {
                             me = new MeasurementsExt();
                             me.setMeasurementId(mId);
@@ -324,12 +341,21 @@ public class Hl7textResultsData {
                             measurementsExts.add(me);
                         }
                     }
+                    
+    				if (blocked!=null) {
+    					me = new MeasurementsExt();
+    					me.setMeasurementId(mId);
+    					me.setKeyVal("blocked");
+    					me.setVal(blocked);
+    					measurementsExtDao.persist(me);
+    				}
 
                     me = new MeasurementsExt();
                     me.setMeasurementId(mId);
                     me.setKeyVal("other_id");
                     me.setVal(i + "-" + j);
                     measurementsExts.add(me);
+
 				}
 			}
 		}
@@ -346,6 +372,7 @@ public class Hl7textResultsData {
 			int labNo = a.getLabNumber();
 			if(lab_no.equals(String.valueOf(labNo))) {
 				self = a;
+
 			}
 			ret = ret + "," + labNo;
 			idList.add(labNo);
@@ -376,10 +403,8 @@ public class Hl7textResultsData {
 		}
 		
 		return sb.toString();
-	//	if (ret.equals("")) return (lab_no);
-	//	else return (ret.substring(1));
 	}
-	
+
 	public static String getMatchingLabs(String lab_no) {
 		String ret = "";
 		int monthsBetween = 0;
@@ -430,6 +455,18 @@ public class Hl7textResultsData {
 		List<LabResultData> attachedLabs = new ArrayList<LabResultData>();
 		for (Object[] o : consultDocsDao.findLabs(ConversionUtils.fromIntString(consultationId))) {
 			ConsultDocs c = (ConsultDocs) o[0];
+			LabResultData lbData = new LabResultData(LabResultData.HL7TEXT);
+			lbData.labPatientId = ConversionUtils.toIntString(c.getDocumentNo());
+			attachedLabs.add(lbData);
+		}
+		List<Object[]> labsHl7 = hl7TxtInfoDao.findByDemographicId(ConversionUtils.fromIntString(demographicNo));
+		return populateHL7ResultsData(attachedLabs, labsHl7, attached);
+	}
+	
+	public static ArrayList<LabResultData> populateHL7ResultsDataEForm(String demographicNo, String fdid, boolean attached) {
+		List<LabResultData> attachedLabs = new ArrayList<LabResultData>();
+		for (Object[] o : eformDocsDao.findLabs(ConversionUtils.fromIntString(fdid))) {
+			EFormDocs c = (EFormDocs) o[0];
 			LabResultData lbData = new LabResultData(LabResultData.HL7TEXT);
 			lbData.labPatientId = ConversionUtils.toIntString(c.getDocumentNo());
 			attachedLabs.add(lbData);

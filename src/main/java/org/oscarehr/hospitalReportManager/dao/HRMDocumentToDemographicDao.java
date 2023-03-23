@@ -10,13 +10,14 @@
 package org.oscarehr.hospitalReportManager.dao;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.commons.lang3.StringUtils;
 import org.oscarehr.common.dao.AbstractDao;
 import org.oscarehr.common.model.ConsultDocs;
+import org.oscarehr.common.model.EFormDocs;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
@@ -28,26 +29,12 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 		super(HRMDocumentToDemographic.class);
 	}
 	
-	/**
-	 * @deprecated use findByDemographicNo(Integer demographicNo)
-	 */
-	@Deprecated
-	public List<HRMDocumentToDemographic> findByDemographicNo(String demographicNo) {
-		List<HRMDocumentToDemographic> hrmDocumentToDemographicList = Collections.emptyList();
-		
-		try {
-			hrmDocumentToDemographicList = findByDemographicNo(Integer.parseInt(demographicNo));
-		} catch (NumberFormatException e) {
-			//TODO need to do this until this deprecated method is purged. Demographic number is NEVER a string. 
-		}
-		
-		return hrmDocumentToDemographicList;
-	}
 	
-	public List<HRMDocumentToDemographic> findByDemographicNo(Integer demographicNo) {
-		String sql = "select x from " + this.modelClass.getName() + " x where x.demographicNo=?";
+	public List<HRMDocumentToDemographic> findByDemographicNo(String demographicNo) {
+		String sql = "select x from " + this.modelClass.getName() + " x, HRMDocument h where x.hrmDocumentId = h.id and  x.demographicNo=? order by h.reportDate DESC";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, demographicNo);
+		Integer demographicNoInteger = Integer.parseInt(demographicNo);
+		query.setParameter(1, demographicNoInteger);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToDemographic> documentToDemographics = query.getResultList();
 		return documentToDemographics;
@@ -86,6 +73,7 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 		List<HRMDocumentToDemographic> attachedHRMDocumentToDemographics = new ArrayList<HRMDocumentToDemographic>();
 		
 		if (consultationId != null && !consultationId.equalsIgnoreCase("null") && !consultationId.equals("")) {
+
 			try {
 				//Parses the consultationId to an integer
 				Integer parsedConsultationId = Integer.parseInt(consultationId);
@@ -117,4 +105,53 @@ public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemogr
 		
 		return attachedHRMDocumentToDemographics;
 	}
+
+	
+	@SuppressWarnings("unchecked")
+	public List<HRMDocumentToDemographic> findHRMDocumentsAttachedToEForm(String fdid) {
+		//Creates a new empty list, it remains empty if an error occurs
+		List<HRMDocumentToDemographic> attachedHRMDocumentToDemographics = new ArrayList<HRMDocumentToDemographic>();
+		
+		if(StringUtils.isEmpty(fdid)) {
+			return attachedHRMDocumentToDemographics;
+		}
+		
+		if(fdid == null) {
+			return attachedHRMDocumentToDemographics;
+		}
+		
+		if (!fdid.equalsIgnoreCase("null") || !fdid.equals("") || !fdid.equals(null))
+		{
+			try {
+				//Parses the fdid to an integer
+				Integer parsedFdid = Integer.parseInt(fdid);
+
+				//Creates the SQL
+				String sql = "SELECT hdtd "
+						+ "FROM " + this.modelClass.getName() + " hdtd "
+						+ "WHERE hdtd.hrmDocumentId IN (SELECT cd.documentNo "
+						+ "FROM " + EFormDocs.class.getName() + " cd "
+						+ "WHERE cd.fdid = ? AND cd.docType = 'H' AND cd.deleted IS NULL)";
+
+				//Creates the query using the SQL
+				Query query = entityManager.createQuery(sql);
+				//Sets the query parameters
+				query.setParameter(1, parsedFdid);
+				//Gets the query results and converts them to EFormDocs
+				attachedHRMDocumentToDemographics = query.getResultList();
+			}
+			catch (NumberFormatException nfe) {
+				MiscUtils.getLogger().error("The fdid is not a valid integer. fdid: " + fdid);
+			}
+			catch (IllegalStateException ise) {
+				MiscUtils.getLogger().error("The entity manager has been closed" + System.getProperty("line.separator") + ise.getMessage());
+			}
+			catch (IllegalArgumentException iae) {
+				MiscUtils.getLogger().error("An IllegalArgumentException has occured, the cause could be from the SQL or the fdid" + System.getProperty("line.separator") + iae.getMessage());
+			}
+		}
+		
+		return attachedHRMDocumentToDemographics;
+	}
+
 }

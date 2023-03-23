@@ -104,6 +104,11 @@ public interface MessageHandler {
     public String getOBRName( int i);
 
     /**
+     * Return the cell identifier of the ith OBR Segment
+     */
+    public String getOBRIdentifier(int i);
+
+    /**
      *  Return the date and time of the observation refered to by the jth obx
      *  segment of the ith obr group. If the date and time is not specified
      *  within the obx segment it should be specified within the obr segment.
@@ -122,6 +127,12 @@ public interface MessageHandler {
      *  the ith OBR group.
      */
     public String getOBXAbnormalFlag( int i, int j);
+
+    /**
+     *  Return true if a text result is BLOCKED. Return false otherwise.
+     *  for OMD validation
+     */
+    public boolean isTestResultBlocked(int i, int j);
 
     /**
      *  Return the observation header which represents the observation stored in
@@ -153,6 +164,8 @@ public interface MessageHandler {
      *  segment.
      */
     public String getOBXName( int i, int j);
+
+    public String getOBXNameLong( int i, int j);
 
     /**
      *  Return the result from the jth OBX segment of the ith OBR group

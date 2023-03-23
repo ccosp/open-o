@@ -246,6 +246,11 @@ public class TDISHandler implements MessageHandler {
 		return (val = obrSegKeySet.get(i).getUniversalServiceIdentifier().getText().getValue()) == null ? " " : val;
 	}
 
+    public String getOBRIdentifier(int i) {
+        String val = "";
+        return (val = obrSegKeySet.get(i).getUniversalServiceIdentifier().getCe1_Identifier().getValue()) == null ? " " : val;
+    }
+
 	public String getTimeStamp(int i, int j) {
 		try {
 			if (isReport(i, j)) {
@@ -348,6 +353,22 @@ public class TDISHandler implements MessageHandler {
 
 	public String getOBXName(int i, int j) {
 		return getOBXName(i, j, false);
+	}
+
+	@Override
+	public String getOBXNameLong(int i, int j) {
+		String ret = "";
+		try {
+			OBX obx = ( obrSegMap.get(obrSegKeySet.get(i))).get(j);
+
+			if (!obx.getValueType().getValue().equals("FT") && !ret.contains("ITS") && !ret.contains("DEPARTMENTAL")) {
+				ret = getString(obx.getObservationIdentifier().getText().getValue());
+			}
+		} catch (Exception e) {
+			logger.error("Error returning OBX name", e);
+		}
+
+		return ret;
 	}
 
 	/**
@@ -1022,5 +1043,10 @@ public class TDISHandler implements MessageHandler {
     public String getNteForPID(){
     	
     	return "";
+    }
+    
+    //for OMD validation
+    public boolean isTestResultBlocked(int i, int j) {
+    	return false;
     }
 }

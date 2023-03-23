@@ -65,8 +65,10 @@ public class ManageFaxes extends FaxAction {
 	
 	private Logger log = MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+
 	private NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
 	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+
 	@SuppressWarnings("unused")
 	public ActionForward CancelFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		
