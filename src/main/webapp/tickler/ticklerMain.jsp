@@ -51,6 +51,7 @@
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 
 <%
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -523,12 +524,6 @@ var beginD = "1900-01-01"
       <h2><bean:message key="tickler.ticklerMain.msgTickler"/> Manager
       </h2>
     </td>
-<%--	<td>--%>
-<%--            <i class="icon-question-sign"></i>--%>
-<%--            <a href="javascript:void(0)" target="_blank"><bean:message key="app.top1"/></a>--%>
-<%--            <i class=" icon-info-sign" style="margin-left:10px;"></i>--%>
-<%--            <a href="javascript:void(0)"  onClick="window.open('${pageContext.request.contextPath}/oscarEncounter/About.jsp','About OSCAR','scrollbars=1,resizable=1,width=800,height=600,left=0,top=0')" ><bean:message key="global.about" /></a>--%>
-<%--    </td>--%>
   </tr>        
 </table>
              
@@ -591,7 +586,7 @@ var beginD = "1900-01-01"
           	List<Site> sites = siteDao.getActiveSitesByProviderNo(user_no);
 %>
       <script>
-var _providers = [];
+let _providers = [];
 <%for (int i=0; i<sites.size(); i++) {%>
 	_providers["<%=sites.get(i).getSiteId()%>"]="<%Iterator<Provider> iter = sites.get(i).getProviders().iterator();
 	while (iter.hasNext()) {
@@ -668,7 +663,7 @@ function changeSite(sel) {
             boolean ticklerEditEnabled = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("tickler_edit_enabled")); 
             if (ticklerEditEnabled) { 
 %>
-            <th>&nbsp;</th>
+            <td>&nbsp;</td>
 <%          
             }
 %>            
@@ -704,7 +699,7 @@ function changeSite(sel) {
                 Comment
 
             </th>
-            <th></th>
+            <td></td>
         </tr>
     </thead>
     <tfoot>
@@ -799,23 +794,30 @@ function changeSite(sel) {
 								      String cellColour = rowColour + warnColour;
                             %>
 
-                                <tr <%=warning?"class='error'":""%>>
+                                <tr <%=warning?"class='error'":""%> >
                                     <td class="<%=cellColour%>"><input type="checkbox" name="checkbox" value="<%=t.getId()%>" class="noprint"></td>
                                     <%
                                     	if (ticklerEditEnabled) {
                                     %>
-                                    <td width="3%" ROWSPAN="1" class="<%=cellColour%>"><a href=# title="<bean:message key="tickler.ticklerMain.editTickler"/>" onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=t.getId()%>')"><i class="icon-pencil"></i></a></td>
+                                    <td rowspan="1" class="<%=cellColour%>">
+                                        <a href="javascript:void(0)" title="<bean:message key="tickler.ticklerMain.editTickler"/>"
+                                           onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=t.getId()%>')">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                    </td>
                                     <%
                                     	}
                                     %>                                    
-                                    <TD  class="<%=cellColour%>"><a href=# onClick="popupPage(600,800,'../demographic/demographiccontrol.jsp?demographic_no=<%=demo.getDemographicNo()%>&displaymode=edit&dboperation=search_detail')"><%=demo.getLastName()%>,<%=demo.getFirstName()%></a></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getProvider() == null ? "N/A" : t.getProvider().getFormattedName()%></TD>
+                                    <TD  class="<%=cellColour%>"><a href="javascript:void(0)" onClick="popupPage(600,800,'../demographic/demographiccontrol.jsp?demographic_no=<%=demo.getDemographicNo()%>&displaymode=edit&dboperation=search_detail')">
+                                        <%=Encode.forHtmlContent(demo.getLastName())%>,<%=Encode.forHtmlContent(demo.getFirstName())%>
+                                    </a></TD>
+                                    <TD  class="<%=cellColour%>"><%=t.getProvider() == null ? "N/A" : Encode.forHtmlContent(t.getProvider().getFormattedName())%></TD>
                                     <TD  class="<%=cellColour%>"><%=t.getServiceDate()%></TD>
                                     <TD  class="<%=cellColour%>"><%=t.getUpdateDate()%></TD>
                                     <TD  class="<%=cellColour%>"><%=t.getPriority()%></TD>
                                     <TD  class="<%=cellColour%>"><%=t.getAssignee() != null ? t.getAssignee().getLastName() + ", " + t.getAssignee().getFirstName() : "N/A"%></TD>
                                     <TD  class="<%=cellColour%>"><%=t.getStatusDesc(locale)%></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getMessage()%>
+                                    <TD  class="<%=cellColour%>"><%=Encode.forHtmlContent(t.getMessage())%>
                                         
                                         <%
                                                                                 	List<TicklerLink> linkList = ticklerLinkDao.getLinkByTickler(t.getId().intValue());
@@ -843,7 +845,7 @@ function changeSite(sel) {
                                                 <%
                                                 	}else if (LabResultData.isHRM(type)){
                                                 %>
-                                                <a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>')">ATT</a>                                                
+                                                <a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>')">ATT</a>
                                                 <%
                                                 	}else {
                                                 %>
@@ -872,7 +874,7 @@ function changeSite(sel) {
                                         <td class="<%=cellColour%>"></td>
                                         <td class="<%=cellColour%>"></td>
                                         <td class="<%=cellColour%>"></td>
-                                        <td class="<%=cellColour%>"><%=tc.getProvider().getLastName()%>,<%=tc.getProvider().getFirstName()%></td>
+                                        <td class="<%=cellColour%>"><%=Encode.forHtmlContent(tc.getProvider().getLastName())%>,<%=Encode.forHtmlContent(tc.getProvider().getFirstName())%></td>
                                         <td class="<%=cellColour%>"></td>
                                         <% if (tc.isUpdateDateToday()) { %>
                                         <td  class="<%=cellColour%>"><%=tc.getUpdateTime(locale)%></td>
@@ -882,7 +884,7 @@ function changeSite(sel) {
                                         <td  class="<%=cellColour%>"></td>
                                         <td  class="<%=cellColour%>"></td>
                                         <td  class="<%=cellColour%>"></td>
-                                        <td  class="<%=cellColour%>"><%=tc.getMessage()%></td>
+                                        <td  class="<%=cellColour%>"><%=Encode.forHtmlContent(tc.getMessage())%></td>
                                         <td  class="<%=cellColour%>"></td>
                                     </tr>
                                 <%      }                                        
