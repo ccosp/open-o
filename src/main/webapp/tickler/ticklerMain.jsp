@@ -201,14 +201,15 @@ jQuery(document).ready(function() {
 		height: 340,
 		width: 450,
 		modal: true,
-		
 		close: function() {
 			
 		}
 	});
 
     jQuery("#ticklerResults").dataTable({
-        "searching": false
+        "searching": false,
+        "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+        "iDisplayLength": 25,
     })
 		
 });
@@ -923,7 +924,7 @@ function changeSite(sel) {
 			</table>
         <button class="btn btn-primary" href="javascript:void(0)" onclick="saveNoteDialog()">Save</button>
         <button class="btn btn-danger"  href="javascript:void(0)" onclick="closeNoteDialog()">Exit</button>
-	<input type='button' class="btn btn-default" name='print' value='<bean:message key="global.btnPrint"/>' onClick='window.print()' >
+
 	</form>	
 </div>
 
