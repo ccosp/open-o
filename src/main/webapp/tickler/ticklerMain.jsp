@@ -30,10 +30,9 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.*"%>
 <%@ page import="oscar.oscarLab.ca.on.*"%>
-<%@ page import="org.oscarehr.util.DbConnectionFilter"%>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.dao.ViewDao" %>
-<%@ page import="org.oscarehr.common.model.View,org.oscarehr.util.LocaleUtils" %>
+<%@ page import="org.oscarehr.common.model.View" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.List" %>
@@ -47,7 +46,6 @@
 <%@ page import="org.oscarehr.common.dao.SiteDao" %>
 <%@ page import="org.oscarehr.common.model.Tickler" %>
 <%@ page import="org.oscarehr.common.model.TicklerComment" %>
-<%@ page import="org.oscarehr.common.model.TicklerUpdate" %>
 <%@ page import="org.oscarehr.common.model.CustomFilter" %>
 <%@ page import="org.oscarehr.managers.TicklerManager" %>
 <%@ page import="java.text.DateFormat" %>
@@ -174,26 +172,28 @@
 <head>
 <title><bean:message key="tickler.ticklerMain.title"/> Manager</title>
 
-    <script src="${pageContext.request.contextPath}/library/jquery/jquery-1.12.0.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/library/jquery/jquery-3.6.4.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/library/DataTables-1.10.12/media/js/jquery.dataTables.min.js"></script>
-    <script src="${pageContext.request.contextPath}/share/javascript/prototype.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/share/javascript/scriptaculous.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
-
     <link href="${pageContext.request.contextPath}/library/DataTables-1.10.12/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/css/print.css" />
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.css">
-    <link href="${pageContext.request.contextPath}/library/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
+    <link href="${pageContext.request.contextPath}/library/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css" type="text/css">
 <style>
     tr.error td {
         color:red !important;
     }
+    a.noteDialogLink {
+        text-decoration: none !important;
+        text-underline: none !important;
+    }
 </style>
     <script type="application/javascript">
 jQuery.noConflict();
+
+const ctx = '${pageContext.request.contextPath}';
 
 jQuery(document).ready(function() {
 	jQuery( "#note-form" ).dialog({
@@ -214,10 +214,9 @@ jQuery(document).ready(function() {
 });
 
 function openNoteDialog(demographicNo, ticklerNo) {
-	jQuery("#tickler_note_demographicNo").val(demographicNo);
-	jQuery("#tickler_note_ticklerNo").val(ticklerNo);
-	
 
+    jQuery("#tickler_note_demographicNo").val(demographicNo);
+	jQuery("#tickler_note_ticklerNo").val(ticklerNo);
 	jQuery("#tickler_note_noteId").val('');
 	jQuery("#tickler_note").val('');
 	jQuery("#tickler_note_revision").html('');
@@ -226,33 +225,37 @@ function openNoteDialog(demographicNo, ticklerNo) {
 	jQuery("#tickler_note_obsDate").html('');
 		
 	//is there an existing note?
-	jQuery.ajax({url:'../CaseManagementEntry.do',
+	jQuery.ajax({method: "POST", url:ctx + '/CaseManagementEntry.do',
 		data: { method: "ticklerGetNote", ticklerNo: jQuery('#tickler_note_ticklerNo').val()  },
 		async:false, 
 		dataType: 'json',
 		success:function(data) {
+        console.log(data);
 			if(data != null) {
 				jQuery("#tickler_note_noteId").val(data.noteId);
 				jQuery("#tickler_note").val(data.note);
 				jQuery("#tickler_note_revision").html(data.revision);
-				jQuery("#tickler_note_revision_url").attr('onclick','window.open(\'../CaseManagementEntry.do?method=notehistory&noteId='+data.noteId+'\');return false;');
+				jQuery("#tickler_note_revision_url").attr("onclick","window.open(" + ctx + "'/CaseManagementEntry.do?method=notehistory&noteId='+data.noteId')')");
 				jQuery("#tickler_note_editor").html(data.editor);
 				jQuery("#tickler_note_obsDate").html(data.obsDate);
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown ) {
+            console.log(jqXHR);
 			alert(errorThrown);
 		}
 		});
 	
 	jQuery( "#note-form" ).dialog( "open" );
 }
+
 function closeNoteDialog() {
 	jQuery( "#note-form" ).dialog( "close" );
 }
+
 function saveNoteDialog() {
 	//alert('not yet implemented');
-	jQuery.ajax({url:'../CaseManagementEntry.do',
+	jQuery.ajax({url:ctx + '/CaseManagementEntry.do',
 		data: { method: "ticklerSaveNote", noteId: jQuery("#tickler_note_noteId").val(), value: jQuery('#tickler_note').val(), demographicNo: jQuery('#tickler_note_demographicNo').val(), ticklerNo: jQuery('#tickler_note_ticklerNo').val()  },
 		async:false, 
 		success:function(data) {
@@ -500,8 +503,8 @@ var beginD = "1900-01-01"
     }
     
     function generateRenalLabReq(demographicNo) {
-		var url = '${pageContext.request.contextPath}/form/formlabreq<%=labReqVer%>.jsp?demographic_no='+demographicNo+'&formId=0&provNo=<%=session.getAttribute("user")%>&fromSession=true';
-		jQuery.ajax({url:'${pageContext.request.contextPath}/renal/Renal.do?method=createLabReq&demographicNo='+demographicNo,async:false, success:function(data) {
+		var url = ctx + '/form/formlabreq<%=labReqVer%>.jsp?demographic_no='+demographicNo+'&formId=0&provNo=<%=session.getAttribute("user")%>&fromSession=true';
+		jQuery.ajax({url:ctx + '/renal/Renal.do?method=createLabReq&demographicNo='+demographicNo,async:false, success:function(data) {
 			popupPage(900,850,url);
 		}});
 	}
@@ -521,7 +524,7 @@ var beginD = "1900-01-01"
     </td>
 <%--	<td>--%>
 <%--            <i class="icon-question-sign"></i>--%>
-<%--            <a href="#" target="_blank"><bean:message key="app.top1"/></a>--%>
+<%--            <a href="javascript:void(0)" target="_blank"><bean:message key="app.top1"/></a>--%>
 <%--            <i class=" icon-info-sign" style="margin-left:10px;"></i>--%>
 <%--            <a href="javascript:void(0)"  onClick="window.open('${pageContext.request.contextPath}/oscarEncounter/About.jsp','About OSCAR','scrollbars=1,resizable=1,width=800,height=600,left=0,top=0')" ><bean:message key="global.about" /></a>--%>
 <%--    </td>--%>
@@ -530,7 +533,7 @@ var beginD = "1900-01-01"
              
 <form name="serviceform" method="get" action="ticklerMain.jsp" class="form-inline">
     <div class="control-container">
-    <label for=""><bean:message key="tickler.ticklerMain.formDateRange"/>  <a href="#" onClick="allYear()"><bean:message key="tickler.ticklerMain.btnViewAll"/></a></label>
+    <label for="dateRange"><bean:message key="tickler.ticklerMain.formDateRange"/>  <a href="javascript:void(0)" id="dateRange" onClick="allYear()"><bean:message key="tickler.ticklerMain.btnViewAll"/></a></label>
     <div class="form-group">
         <label for="xml_vdate">From</label>
         <input type="date" class="form-control" name="xml_vdate" id="xml_vdate">
@@ -854,8 +857,8 @@ function changeSite(sel) {
                                         
                                     </td>
                                     <td  class="<%=cellColour%> noprint">
-                                    	<a href="#" onClick="return openNoteDialog('<%=demo.getDemographicNo() %>','<%=t.getId() %>');return false;" title="note">
-                                    		<i class="icon-comment"></i>
+                                    	<a href="javascript:void(0)" class="noteDialogLink" onClick="openNoteDialog('<%=demo.getDemographicNo() %>','<%=t.getId() %>')" title="note">
+                                    		<span class="glyphicon glyphicon-comment"></span>
                                     	</a>
                                     </td>
                                 </tr>
@@ -868,8 +871,8 @@ function changeSite(sel) {
                                         <td class="<%=cellColour%>"></td>
                                         <td class="<%=cellColour%>"></td>
                                         <td class="<%=cellColour%>"></td>
-                                        <td  class="<%=cellColour%>"><%=tc.getProvider().getLastName()%>,<%=tc.getProvider().getFirstName()%></td>
-                                        <td  class="<%=cellColour%>"></td>
+                                        <td class="<%=cellColour%>"><%=tc.getProvider().getLastName()%>,<%=tc.getProvider().getFirstName()%></td>
+                                        <td class="<%=cellColour%>"></td>
                                         <% if (tc.isUpdateDateToday()) { %>
                                         <td  class="<%=cellColour%>"><%=tc.getUpdateTime(locale)%></td>
                                         <% } else { %>
@@ -898,36 +901,29 @@ function changeSite(sel) {
 	<%=OscarProperties.getConfidentialityStatement()%>
 </p>
 
-<div id="note-form" title="Tickler Note">
+<div id="note-form" title="Edit Tickler Note">
 	<form>
 		
 			<table>
 				<tbody>
-					<textarea id="tickler_note" name="tickler_note" style="width:100%;height:80%"></textarea>		
+					<textarea id="tickler_note" name="tickler_note" style="width:100%;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' onfocus='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
 					<input type="hidden" name="tickler_note_demographicNo" id="tickler_note_demographicNo" value=""/>	
 					<input type="hidden" name="tickler_note_ticklerNo" id="tickler_note_ticklerNo" value=""/>	
 					<input type="hidden" name="tickler_note_noteId" id="tickler_note_noteId" value=""/>	
 				</tbody>
 			</table>
-			<br/>
 			<table>
 				<tr>
-					<td >
-						<a href="javascript:void(0)" onclick="saveNoteDialog();return false;">
-							<img src="${pageContext.request.contextPath}/oscarEncounter/graphics/note-save.png"/>
-						</a>
-						<a href="javascript:void(0)" onclick="closeNoteDialog();return false;">
-							<img src="${pageContext.request.contextPath}/oscarEncounter/graphics/system-log-out.png"/>
-						</a>
-					</td>
-					<td style="width:40%" nowrap="nowrap">
+					<td nowrap="nowrap">
 					Date: <span id="tickler_note_obsDate"></span> rev <a id="tickler_note_revision_url" href="javascript:void(0)" onClick=""><span id="tickler_note_revision"></span></a><br/>
 					Editor: <span id="tickler_note_editor"></span>
 					</td>
 				</tr>
 			
 			</table>
-	<input type='button' class="btn" name='print' value='<bean:message key="global.btnPrint"/>' onClick='window.print()' class="sbttn">
+        <button class="btn btn-primary" href="javascript:void(0)" onclick="saveNoteDialog()">Save</button>
+        <button class="btn btn-danger"  href="javascript:void(0)" onclick="closeNoteDialog()">Exit</button>
+	<input type='button' class="btn btn-default" name='print' value='<bean:message key="global.btnPrint"/>' onClick='window.print()' >
 	</form>	
 </div>
 
