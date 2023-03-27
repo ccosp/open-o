@@ -176,8 +176,8 @@
     <script src="${pageContext.request.contextPath}/library/jquery/jquery-3.6.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/library/DataTables-1.10.12/media/js/jquery.dataTables.min.js"></script>
-    <link href="${pageContext.request.contextPath}/library/DataTables-1.10.12/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/library/DataTables/DataTables-1.13.4/js/jquery.dataTables.js"></script>
+    <link href="${pageContext.request.contextPath}/library/DataTables/DataTables-1.13.4/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/css/print.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.css" />
     <link href="${pageContext.request.contextPath}/library/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -637,17 +637,10 @@ function changeSite(sel) {
 		<% Locale locale = request.getLocale();%>
 
 <table id="ticklerResults" class="table table-striped table-compact" >
-    <thead>
+<thead>
         <tr>
+            <th>&nbsp</th>
             <th>&nbsp;</th>
-<% 
-            boolean ticklerEditEnabled = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("tickler_edit_enabled")); 
-            if (ticklerEditEnabled) { 
-%>
-            <th>&nbsp;</th>
-<%          
-            }
-%>            
             <th>
 
                     <bean:message key="tickler.ticklerMain.msgDemographicName"/>
@@ -682,35 +675,8 @@ function changeSite(sel) {
             </th>
             <th></th>
         </tr>
-    </thead>
-    <tfoot>
-<%
-                                Integer footerColSpan = 10;
-                                if (ticklerEditEnabled) {
-                                    footerColSpan = 11;
-                                }
-%>
-                                <tr class="noprint"><td colspan="<%=footerColSpan%>" class="white"><a id="checkAllLink" name="checkAllLink" href="javascript:CheckAll();"><bean:message key="tickler.ticklerMain.btnCheckAll"/></a> - <a href="javascript:ClearAll();"><bean:message key="tickler.ticklerMain.btnClearAll"/></a>     
-                                    <input type="button" class="btn" name="button" value="<bean:message key="tickler.ticklerMain.btnAddTickler"/>" onClick="window.open('ticklerAdd.jsp')" class="sbttn">
-                                    <input type="hidden" name="submit_form" value="">
-                                    <%
-                                    	if (ticklerview.compareTo("D") == 0){
-                                    %>
-                                    <input type="button" class="btn" value="<bean:message key="tickler.ticklerMain.btnEraseCompletely"/>" class="sbttn" onclick="document.forms['ticklerform'].submit_form.value='Erase Completely'; document.forms['ticklerform'].submit();">
-                                    <%
-                                    	} else{
-                                    %>
-                                    <input type="button" class="btn" value="<bean:message key="tickler.ticklerMain.btnComplete"/>" class="sbttn" onclick="document.forms['ticklerform'].submit_form.value='Complete'; document.forms['ticklerform'].submit();">
-                                    <input type="button" class="btn btn-danger" value="<bean:message key="tickler.ticklerMain.btnDelete"/>" class="sbttn" onclick="document.forms['ticklerform'].submit_form.value='Delete'; document.forms['ticklerform'].submit();">
-                                    <%
-                                    	}
-                                    %>
-                            <input type="button" name="button" class="btn" value="<bean:message key="global.btnCancel"/>" onClick="window.close()" class="sbttn"> </td></tr>
-                        </tfoot>
-
-
-                        <tbody>
-
+</thead>
+    <tbody>
                             <%
                             	String dateBegin = xml_vdate;
 								  String dateEnd = xml_appointment_date;
@@ -777,28 +743,22 @@ function changeSite(sel) {
 
                                 <tr <%=warning?"class='error'":""%> >
                                     <td class="<%=cellColour%>"><input type="checkbox" name="checkbox" value="<%=t.getId()%>" class="noprint"></td>
-                                    <%
-                                    	if (ticklerEditEnabled) {
-                                    %>
-                                    <td rowspan="1" class="<%=cellColour%>">
+                                    <td class="<%=cellColour%>">
                                         <a href="javascript:void(0)" title="<bean:message key="tickler.ticklerMain.editTickler"/>"
                                            onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=t.getId()%>')" >
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
                                     </td>
-                                    <%
-                                    	}
-                                    %>                                    
-                                    <TD  class="<%=cellColour%>"><a href="javascript:void(0)" onClick="popupPage(600,800,'../demographic/demographiccontrol.jsp?demographic_no=<%=demo.getDemographicNo()%>&displaymode=edit&dboperation=search_detail')">
+                                    <td  class="<%=cellColour%>"><a href="javascript:void(0)" onClick="popupPage(600,800,'../demographic/demographiccontrol.jsp?demographic_no=<%=demo.getDemographicNo()%>&displaymode=edit&dboperation=search_detail')">
                                         <%=Encode.forHtmlContent(demo.getLastName())%>,<%=Encode.forHtmlContent(demo.getFirstName())%>
-                                    </a></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getProvider() == null ? "N/A" : Encode.forHtmlContent(t.getProvider().getFormattedName())%></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getServiceDate()%></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getUpdateDate()%></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getPriority()%></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getAssignee() != null ? t.getAssignee().getLastName() + ", " + t.getAssignee().getFirstName() : "N/A"%></TD>
-                                    <TD  class="<%=cellColour%>"><%=t.getStatusDesc(locale)%></TD>
-                                    <TD  class="<%=cellColour%>"><%=Encode.forHtmlContent(t.getMessage())%>
+                                    </a></td>
+                                    <td  class="<%=cellColour%>"><%=t.getProvider() == null ? "N/A" : Encode.forHtmlContent(t.getProvider().getFormattedName())%></td>
+                                    <td  class="<%=cellColour%>"><%=t.getServiceDate()%></td>
+                                    <td  class="<%=cellColour%>"><%=t.getUpdateDate()%></td>
+                                    <td  class="<%=cellColour%>"><%=t.getPriority()%></td>
+                                    <td  class="<%=cellColour%>"><%=t.getAssignee() != null ? t.getAssignee().getLastName() + ", " + t.getAssignee().getFirstName() : "N/A"%></td>
+                                    <td  class="<%=cellColour%>"><%=t.getStatusDesc(locale)%></td>
+                                    <td  class="<%=cellColour%>"><%=Encode.forHtmlContent(t.getMessage())%>
                                         
                                         <%
                                                                                 	List<TicklerLink> linkList = ticklerLinkDao.getLinkByTickler(t.getId().intValue());
@@ -846,40 +806,57 @@ function changeSite(sel) {
                                     	</a>
                                     </td>
                                 </tr>
-                                <%
-                                	Set<TicklerComment> tcomments = t.getComments();
-                                                                    if (ticklerEditEnabled && !tcomments.isEmpty()) {
-                                                                        for(TicklerComment tc : tcomments) {
-                                %>
+                                <% Set<TicklerComment> tcomments = t.getComments();
+                                    for(TicklerComment tc : tcomments) { %>
+
                                     <tr>
                                         <td class="<%=cellColour%>"></td>
                                         <td class="<%=cellColour%>"></td>
                                         <td class="<%=cellColour%>"></td>
                                         <td class="<%=cellColour%>"><%=Encode.forHtmlContent(tc.getProvider().getLastName())%>,<%=Encode.forHtmlContent(tc.getProvider().getFirstName())%></td>
                                         <td class="<%=cellColour%>"></td>
-                                        <% if (tc.isUpdateDateToday()) { %>
-                                        <td  class="<%=cellColour%>"><%=tc.getUpdateTime(locale)%></td>
-                                        <% } else { %>
-                                        <td  class="<%=cellColour%>"><%=tc.getUpdateDate(locale)%></td>
-                                        <% } %>
+
+                                        <td  class="<%=cellColour%>">
+                                            <% if (tc.isUpdateDateToday()) { %>
+                                                <%=tc.getUpdateTime(locale)%>
+                                            <% } else { %>
+                                                <%=tc.getUpdateDate(locale)%>
+                                            <% } %>
+                                        </td>
+
                                         <td  class="<%=cellColour%>"></td>
                                         <td  class="<%=cellColour%>"></td>
                                         <td  class="<%=cellColour%>"></td>
                                         <td  class="<%=cellColour%>"><%=Encode.forHtmlContent(tc.getMessage())%></td>
                                         <td  class="<%=cellColour%>"></td>
                                     </tr>
-                                <%      }                                        
-                                    }
-                            }
+                              <% }  } %>
+    </tbody>
+</table>
 
-                            if (ticklers.isEmpty()) {
-                            %>
-                            <tr><td colspan="10" class="white"><bean:message key="tickler.ticklerMain.msgNoMessages"/></td></tr>                                                            
-                            <%}%>
-                        </tbody>
+    <table id="tablefoot">
 
-        
-</table></form>
+    <tr class="noprint"><td class="white"><a id="checkAllLink" name="checkAllLink" href="javascript:CheckAll();"><bean:message key="tickler.ticklerMain.btnCheckAll"/></a> - <a href="javascript:ClearAll();"><bean:message key="tickler.ticklerMain.btnClearAll"/></a>
+
+        <input type="hidden" name="submit_form" value="">
+        <%
+            if (ticklerview.compareTo("D") == 0){
+        %>
+        <input type="button" class="btn" value="<bean:message key="tickler.ticklerMain.btnEraseCompletely"/>" class="sbttn" onclick="document.forms['ticklerform'].submit_form.value='Erase Completely'; document.forms['ticklerform'].submit();">
+        <%
+        } else{
+        %>
+        <input type="button" class="btn" value="<bean:message key="tickler.ticklerMain.btnComplete"/>" class="sbttn" onclick="document.forms['ticklerform'].submit_form.value='Complete'; document.forms['ticklerform'].submit();">
+        <input type="button" class="btn btn-danger" value="<bean:message key="tickler.ticklerMain.btnDelete"/>" class="sbttn" onclick="document.forms['ticklerform'].submit_form.value='Delete'; document.forms['ticklerform'].submit();">
+        <%
+            }
+        %>
+        <input type="button" class="btn btn-primary" name="button" value="<bean:message key="tickler.ticklerMain.btnAddTickler"/>" onClick="window.open('ticklerAdd.jsp')" class="sbttn">
+        <input type="button" name="button" class="btn btn-warning" value="<bean:message key="global.btnCancel"/>" onClick="window.close()" class="sbttn"> </td></tr>
+    </table>
+
+
+</form>
     
 <p class="yesprint">
 	<%=OscarProperties.getConfidentialityStatement()%>
