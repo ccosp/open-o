@@ -54,7 +54,7 @@
 <%@ page import="org.owasp.encoder.Encode" %>
 
 <%
-    String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+    String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
     boolean authed=true;
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_tickler" rights="r" reverse="<%=true%>">
@@ -75,16 +75,16 @@
 
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 
-	String user_no;
-     user_no = (String) session.getAttribute("user");
+	String user_no = (String) session.getAttribute("user");
 
-     TicklerLinkDao ticklerLinkDao = (TicklerLinkDao) SpringUtils.getBean("ticklerLinkDao");
+     TicklerLinkDao ticklerLinkDao = SpringUtils.getBean(TicklerLinkDao.class);
 
      String createReport = request.getParameter("Submit");
      boolean doCreateReport = createReport != null && createReport.equals("Create Report");
 
-     ViewDao viewDao = (ViewDao) SpringUtils.getBean("viewDao");
+     ViewDao viewDao = SpringUtils.getBean(ViewDao.class);
      String userRole = (String) session.getAttribute("userrole");
+
      Map<String, View> ticklerView = viewDao.getView("tickler", userRole, user_no);
 
      String providerview = "all";
@@ -192,7 +192,7 @@
     }
 </style>
     <script type="application/javascript">
-jQuery.noConflict();
+
 
 const ctx = '${pageContext.request.contextPath}';
 
@@ -206,6 +206,14 @@ jQuery(document).ready(function() {
 			
 		}
 	});
+
+    const editFormDialog = jQuery( "#edit-form" ).dialog({
+        autoOpen: false,
+        modal: true,
+        close: function() {
+
+        }
+    });
 
     jQuery("#ticklerResults").dataTable({
         "searching": false,
@@ -232,7 +240,6 @@ function openNoteDialog(demographicNo, ticklerNo) {
 		async:false, 
 		dataType: 'json',
 		success:function(data) {
-        console.log(data);
 			if(data != null) {
 				jQuery("#tickler_note_noteId").val(data.noteId);
 				jQuery("#tickler_note").val(data.note);
@@ -243,8 +250,7 @@ function openNoteDialog(demographicNo, ticklerNo) {
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown ) {
-            console.log(jqXHR);
-			alert(errorThrown);
+			console.log(errorThrown);
 		}
 		});
 	
@@ -261,7 +267,6 @@ function saveNoteDialog() {
 		data: { method: "ticklerSaveNote", noteId: jQuery("#tickler_note_noteId").val(), value: jQuery('#tickler_note').val(), demographicNo: jQuery('#tickler_note_demographicNo').val(), ticklerNo: jQuery('#tickler_note_ticklerNo').val()  },
 		async:false, 
 		success:function(data) {
-		 // alert('ok');		  
 		},
 		error: function(jqXHR, textStatus, errorThrown ) {
 			alert(errorThrown);
@@ -407,103 +412,79 @@ var beginD = "1900-01-01"
 
     function Delete()
     {
-	var ml=document.messageList;
-	ml.DEL.value = "1";
-	ml.submit();
+        var ml=document.messageList;
+        ml.DEL.value = "1";
+        ml.submit();
     }
 
-    function SynchMoves(which) {
-	var ml=document.messageList;
-	if(which==1) {
-	    ml.destBox2.selectedIndex=ml.destBox.selectedIndex;
-	}
-	else {
-	    ml.destBox.selectedIndex=ml.destBox2.selectedIndex;
-	}
-    }
+    // function SynchMoves(which) {
+	// var ml=document.messageList;
+	// if(which==1) {
+	//     ml.destBox2.selectedIndex=ml.destBox.selectedIndex;
+	// }
+	// else {
+	//     ml.destBox.selectedIndex=ml.destBox2.selectedIndex;
+	// }
+    // }
 
-    function SynchFlags(which)
-    {
-	var ml=document.messageList;
-	if (which == 1) {
-	    ml.flags2.selectedIndex = ml.flags.selectedIndex;
-	}
-	else {
-	    ml.flags.selectedIndex = ml.flags2.selectedIndex;
-	}
-    }
+    // function SynchFlags(which)
+    // {
+	// var ml=document.messageList;
+	// if (which == 1) {
+	//     ml.flags2.selectedIndex = ml.flags.selectedIndex;
+	// }
+	// else {
+	//     ml.flags.selectedIndex = ml.flags2.selectedIndex;
+	// }
+    // }
 
-    function SetFlags()
-    {
-	var ml = document.messageList;
-	ml.FLG.value = "1";
-	ml.submit();
-    }
+    <%--function SetFlags()--%>
+    <%--{--%>
+	<%--var ml = document.messageList;--%>
+	<%--ml.FLG.value = "1";--%>
+	<%--ml.submit();--%>
+    <%--}--%>
 
-    function Move() {
-	var ml = document.messageList;
-	var dbox = ml.destBox;
-	if(dbox.options[dbox.selectedIndex].value == "@NEW") {
-	    nn = window.prompt("<bean:message key="tickler.ticklerMain.msgFolderName"/>","");
-	    if(nn == null || nn == "null" || nn == "") {
-		dbox.selectedIndex = 0;
-		ml.destBox2.selectedIndex = 0;
-	    }
-	    else {
-		ml.NewFol.value = nn;
-		ml.MOV.value = "1";
-		ml.submit();
-	    }
-	}
-	else {
-	    ml.MOV.value = "1";
-	    ml.submit();
-	}
-    }
+    <%--function Move() {--%>
+	<%--var ml = document.messageList;--%>
+	<%--var dbox = ml.destBox;--%>
+	<%--if(dbox.options[dbox.selectedIndex].value == "@NEW") {--%>
+	<%--    nn = window.prompt("<bean:message key="tickler.ticklerMain.msgFolderName"/>","");--%>
+	<%--    if(nn == null || nn == "null" || nn == "") {--%>
+	<%--	dbox.selectedIndex = 0;--%>
+	<%--	ml.destBox2.selectedIndex = 0;--%>
+	<%--    }--%>
+	<%--    else {--%>
+	<%--	ml.NewFol.value = nn;--%>
+	<%--	ml.MOV.value = "1";--%>
+	<%--	ml.submit();--%>
+	<%--    }--%>
+	<%--}--%>
+	<%--else {--%>
+	<%--    ml.MOV.value = "1";--%>
+	<%--    ml.submit();--%>
+	<%--}--%>
+    <%--}--%>
 
     function saveView() {
-
-        var url = "<c:out value="${ctx}"/>/saveWorkView.do";
-        var role = "<%=(String)session.getAttribute("userrole")%>";
-        var provider_no = "<%=(String) session.getAttribute("user")%>";
-        var params = "method=save&view_name=tickler&userrole=" + role + "&providerno=" + provider_no +
-            "&name=ticklerview&value=" + $F("ticklerview") +
-            // "&name=dateBegin&value=" + $F("xml_vdate") + "&name=dateEnd&value=" + $F("xml_appointment_date") +
-            "&name=providerview&value=" + encodeURI($F("providerview")) +
-            "&name=assignedTo&value=" + encodeURI($F("assignedTo"))  + "&name=mrpview&value=" + encodeURI($F("mrpview"));
-        var sortables = document.getElementsByClassName('tableSortArrow');
-
-        var attrib = null;
-        var columnId = -1;
-        for( var idx = 0; idx < sortables.length; ++idx ) {
-            attrib = sortables[idx].readAttribute("sortOrder");
-            if( attrib != null ) {
-                columnId = sortables[idx].previous().readAttribute("columnId");
-                break;
-            }
-        }
-
-        if( columnId != -1 ) {
-            params += "&name=columnId&value=" + columnId + "&name=sortOrder&value=" + attrib;
-        }
-
-        //console.log(params);
-        new Ajax.Request (
-            url,
-            {
-                method: "post",
-                postBody: params,
-                onSuccess: function(response) {
-                    alert("View Saved");
-                },
-                onFailure: function(request) {
-                    alert("View not saved! " + request.status);
-                }
-            }
-        );
-
+        let url = ctx + "/saveWorkView.do";
+        let params = {
+            method: 'save',
+            view_name: 'tickler',
+            userrole: '${userrole}',
+            providerno: '${user}',
+            ticklerview: document.getElementById('ticklerview').value,
+            // dateBegin: document.getElementById('xml_vdate').value,
+            // dateEnd: document.getElementById('xml_appointment_date').value,
+            providerview: document.getElementById('providerview').value,
+            assignedTo: document.getElementById('assignedTo').value,
+            mrpview: document.getElementById('mrpview').value
+        };
+        console.log(params)
+        jQuery.post(url,params).done(function(){jQuery("#saveViewButton").attr('class', 'btn btn-success')})
+            .fail(function(){jQuery("#saveViewButton").attr('class', 'btn btn-danger')});
     }
-    
+
     function generateRenalLabReq(demographicNo) {
 		var url = ctx + '/form/formlabreq<%=labReqVer%>.jsp?demographic_no='+demographicNo+'&formId=0&provNo=<%=session.getAttribute("user")%>&fromSession=true';
 		jQuery.ajax({url:ctx + '/renal/Renal.do?method=createLabReq&demographicNo='+demographicNo,async:false, success:function(data) {
@@ -647,7 +628,7 @@ function changeSite(sel) {
         <div class="button-container pull-right">
         <input type="hidden" name="Submit" value="">
         <input type="button" class="btn btn-primary" value="<bean:message key="tickler.ticklerMain.btnCreateReport"/>" class="mbttn noprint" onclick="document.forms['serviceform'].Submit.value='Create Report'; document.forms['serviceform'].submit();">
-        <input type="button" class="btn" value="<bean:message key="tickler.ticklerMain.msgSaveView"/>" class="mbttn" onclick="saveView();">
+        <input type="button" class="btn" id="saveViewButton" value="<bean:message key="tickler.ticklerMain.msgSaveView"/>" onclick="saveView();">
         </div>
 
 </form>
@@ -663,7 +644,7 @@ function changeSite(sel) {
             boolean ticklerEditEnabled = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("tickler_edit_enabled")); 
             if (ticklerEditEnabled) { 
 %>
-            <td>&nbsp;</td>
+            <th>&nbsp;</th>
 <%          
             }
 %>            
@@ -699,7 +680,7 @@ function changeSite(sel) {
                 Comment
 
             </th>
-            <td></td>
+            <th></th>
         </tr>
     </thead>
     <tfoot>
@@ -801,7 +782,7 @@ function changeSite(sel) {
                                     %>
                                     <td rowspan="1" class="<%=cellColour%>">
                                         <a href="javascript:void(0)" title="<bean:message key="tickler.ticklerMain.editTickler"/>"
-                                           onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=t.getId()%>')">
+                                           onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=t.getId()%>')" >
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
                                     </td>
@@ -928,6 +909,10 @@ function changeSite(sel) {
         <button class="btn btn-danger"  href="javascript:void(0)" onclick="closeNoteDialog()">Exit</button>
 
 	</form>	
+</div>
+
+<div id="edit-form" title="Edit Tickler">
+<%--    onclick="editFormDialog.load('${pageContext.request.contextPath}/tickler/ticklerEdit.jsp?tickler_no=<%=t.getId()%>').dialog('open')">--%>
 </div>
 
 </div>
