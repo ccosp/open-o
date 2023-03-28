@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 import org.oscarehr.common.dao.PreventionDao;
 import org.oscarehr.common.dao.PreventionExtDao;
 import org.oscarehr.common.dao.PropertyDao;
-import org.oscarehr.common.interfaces.Immunization.ImmunizationProperty;
 import org.oscarehr.common.model.Prevention;
 import org.oscarehr.common.model.PreventionExt;
 import org.oscarehr.common.model.Property;
@@ -58,8 +57,7 @@ public class PreventionManager implements Serializable {
 	private PropertyDao propertyDao;
 	@Autowired
 	private PreventionDS preventionDS;
-	@Autowired
-	private SecurityInfoManager securityInfoManager;
+		
 	private static final String HIDE_PREVENTION_ITEM = "hide_prevention_item";
 
 	private ArrayList<String> preventionTypeList = new ArrayList<String>();
@@ -71,13 +69,6 @@ public class PreventionManager implements Serializable {
 		List<Prevention> results = preventionDao.findByUpdateDate(updatedAfterThisDateExclusive, itemsToReturn);
 
 		LogAction.addLogSynchronous(loggedInInfo, "PreventionManager.getUpdatedAfterDate", "updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive);
-
-		return (results);
-	}
-
-	public List<Prevention> getByDemographicIdUpdatedAfterDate(LoggedInInfo loggedInInfo, Integer demographicId, Date updatedAfterThisDateExclusive) {
-		List<Prevention> results = preventionDao.findByDemographicIdAfterDatetimeExclusive(demographicId, updatedAfterThisDateExclusive);
-		LogAction.addLogSynchronous(loggedInInfo, "PreventionManager.getByDemographicIdUpdatedAfterDate", "demographicId="+demographicId+" updatedAfterThisDateExclusive=" + updatedAfterThisDateExclusive);
 
 		return (results);
 	}
@@ -197,10 +188,6 @@ public class PreventionManager implements Serializable {
 	}
 	
 	public List<Prevention> getPreventionsByDemographicNo(LoggedInInfo loggedInInfo, Integer demographicNo) {
-		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_prevention", SecurityInfoManager.READ, demographicNo)) {
-			throw new RuntimeException("missing required security object (_prevention)");
-		}
-
 		List<Prevention> results = preventionDao.findUniqueByDemographicId(demographicNo);
 		
 		LogAction.addLogSynchronous(loggedInInfo, "PreventionManager.getPreventionsByDemographicNo", "demographicNo=" + demographicNo);
@@ -269,7 +256,17 @@ public class PreventionManager implements Serializable {
 	public boolean isDisabled(){
 		this.listMatches = null;
 		Set<String> preventionStopSigns = getPreventionStopSigns();
-		return preventionStopSigns.contains("master");
+		// anyone up for a logic puzzle? I tried to keep existing code. But yikes.
+		if (preventionStopSigns.contains("master")) {
+			return true;
+		}
+		if(preventionStopSigns.contains("false")) {
+			return false;
+		}
+		if(preventionStopSigns.size() == 0) {
+			return true;
+		}
+		return false;
 	}
 
 
@@ -290,6 +287,15 @@ public class PreventionManager implements Serializable {
 			String preventionStopSigns = getDisabledPreventionList();
 
 			/*
+			 * short circuit if "false" indicates that the
+			 * entire module is enabled with no restrictions.
+			 */
+			if("false".equals(preventionStopSigns)) {
+				listMatches.add(preventionStopSigns);
+				return listMatches;
+			}
+
+			/*
 			 * short circuit if "master" indicates that the
 			 * entire module is disabled.
 			 */
@@ -302,15 +308,16 @@ public class PreventionManager implements Serializable {
 			 * Values are stored in the database as a delim string.
 			 */
 			Pattern pattern = Pattern.compile("(\\[)(.*?)(\\])");
-			if(preventionStopSigns != null) {
-				Matcher matcher = pattern.matcher(preventionStopSigns);
+			Matcher matcher = null;
 
-				/*
-				 * This list should get loaded once.
-				 */
-				while (matcher.find()) {
-					listMatches.add(matcher.group(2));
-				}
+			if(preventionStopSigns != null) {
+				matcher = pattern.matcher(preventionStopSigns);
+			}
+			/*
+			 * This list should get loaded once.
+			 */
+			while (matcher != null && matcher.find()) {
+				listMatches.add(matcher.group(2));
 			}
 		}
 		return listMatches;
@@ -395,33 +402,6 @@ public class PreventionManager implements Serializable {
 			propertyDao.persist(newProp);
 		}
 		return true;
-	}
-
-	public List<Prevention> getImmunizationsByDemographic(LoggedInInfo loggedInInfo, Integer demographicNo) {
-
-		List<Prevention> results = getPreventionsByDemographicNo(loggedInInfo, demographicNo);
-
-		// the ImmunizationInterface should really be located in Oscar/Common.
-		List<Prevention> immunizations = new ArrayList<Prevention>();
-
-		if(results == null) {
-			results = Collections.emptyList();
-		}
-
-		for(Prevention prevention : results) {
-
-			// this sets the PreventionExt values for use in the Immunization interface.
-			prevention.setPreventionExtendedProperties();
-
-			if(prevention.isImmunization() || prevention.getImmunizationProperty(ImmunizationProperty.dose) != null) {
-				// this splits out a new Immunizations list of preventions.
-				immunizations.add(prevention);
-			}
-		}
-
-		LogAction.addLogSynchronous(loggedInInfo, "PreventionManager.getImmunizationsByDemographic", "demographicNo=" + demographicNo);
-
-		return immunizations;
 	}
 
 }
