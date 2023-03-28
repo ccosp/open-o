@@ -256,7 +256,17 @@ public class PreventionManager implements Serializable {
 	public boolean isDisabled(){
 		this.listMatches = null;
 		Set<String> preventionStopSigns = getPreventionStopSigns();
-		return (preventionStopSigns.size() > 0 && preventionStopSigns.contains("master"));
+		// anyone up for a logic puzzle? I tried to keep existing code. But yikes.
+		if (preventionStopSigns.contains("master")) {
+			return true;
+		}
+		if(preventionStopSigns.contains("false")) {
+			return false;
+		}
+		if(preventionStopSigns.size() == 0) {
+			return true;
+		}
+		return false;
 	}
 
 
@@ -277,6 +287,15 @@ public class PreventionManager implements Serializable {
 			String preventionStopSigns = getDisabledPreventionList();
 
 			/*
+			 * short circuit if "false" indicates that the
+			 * entire module is enabled with no restrictions.
+			 */
+			if("false".equals(preventionStopSigns)) {
+				listMatches.add(preventionStopSigns);
+				return listMatches;
+			}
+
+			/*
 			 * short circuit if "master" indicates that the
 			 * entire module is disabled.
 			 */
@@ -289,13 +308,15 @@ public class PreventionManager implements Serializable {
 			 * Values are stored in the database as a delim string.
 			 */
 			Pattern pattern = Pattern.compile("(\\[)(.*?)(\\])");
-			assert preventionStopSigns != null;
-			Matcher matcher = pattern.matcher(preventionStopSigns);
+			Matcher matcher = null;
 
+			if(preventionStopSigns != null) {
+				matcher = pattern.matcher(preventionStopSigns);
+			}
 			/*
 			 * This list should get loaded once.
 			 */
-			while (matcher.find()) {
+			while (matcher != null && matcher.find()) {
 				listMatches.add(matcher.group(2));
 			}
 		}
