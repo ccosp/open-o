@@ -190,6 +190,11 @@
         text-decoration: none !important;
         text-underline: none !important;
     }
+
+    *:not(h2){
+        line-height: 1 !important;
+        font-size: 12px !important;
+    }
 </style>
     <script type="application/javascript">
 
@@ -206,14 +211,14 @@ jQuery(document).ready(function() {
 			
 		}
 	});
-
-    const editFormDialog = jQuery( "#edit-form" ).dialog({
-        autoOpen: false,
-        modal: true,
-        close: function() {
-
-        }
-    });
+    //
+    // const editFormDialog = jQuery( "#edit-form" ).dialog({
+    //     autoOpen: false,
+    //     modal: true,
+    //     close: function() {
+    //
+    //     }
+    // });
 
     jQuery("#ticklerResults").dataTable({
         "searching": false,

@@ -63,7 +63,7 @@
 module_id = request.getParameter("demographic_no");
 doccreator = request.getParameter("user_no");
 docdate = request.getParameter("xml_appointment_date");
-docfilename =request.getParameter("textarea");
+docfilename =request.getParameter("ticklerMessage");
 docpriority =request.getParameter("priority");
 docassigned =request.getParameter("task_assigned_to");
 
