@@ -33,13 +33,8 @@
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.dao.ViewDao" %>
 <%@ page import="org.oscarehr.common.model.View" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="org.oscarehr.common.model.TicklerLink" %>
 <%@ page import="org.oscarehr.common.dao.TicklerLinkDao" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="oscar.MyDateFormat" %>
 <%@ page import="oscar.OscarProperties" %>
 <%@ page import="org.oscarehr.common.model.Site" %>
@@ -50,8 +45,8 @@
 <%@ page import="org.oscarehr.managers.TicklerManager" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Locale" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="java.util.*" %>
 
 <%
     String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
@@ -85,12 +80,20 @@
      ViewDao viewDao = SpringUtils.getBean(ViewDao.class);
      String userRole = (String) session.getAttribute("userrole");
 
+	 String demographic_no = request.getParameter("demoview");
+	 if(demographic_no == null || demographic_no.isEmpty()) {
+		 demographic_no = "0";
+     }
+
      Map<String, View> ticklerView = viewDao.getView("tickler", userRole, user_no);
 
      String providerview = "all";
      View providerView = ticklerView.get("providerview");
 
-     if( providerView != null  && !doCreateReport)
+    if(demographic_no != null || ! demographic_no.isEmpty()) {
+        // do nothing
+    }
+    else if( providerView != null  && !doCreateReport)
      {
          providerview = providerView.getValue();
      }
@@ -102,7 +105,10 @@
      String assignedTo = "all";
      View assignedToView = ticklerView.get("assignedTo");
 
-     if( assignedToView != null && !doCreateReport)
+    if(demographic_no != null || ! demographic_no.isEmpty()) {
+        // do nothing
+    }
+    else if( assignedToView != null && !doCreateReport)
      {
          assignedTo = assignedToView.getValue();
      }
@@ -113,8 +119,10 @@
 
      String mrpview = "all";
      View mrpView = ticklerView.get("mrpview");
-
-     if( mrpView != null && !doCreateReport)
+    if(demographic_no != null || ! demographic_no.isEmpty()) {
+		// do nothing
+    }
+     else if( mrpView != null && !doCreateReport)
      {
    	  mrpview = mrpView.getValue();
      }
@@ -154,8 +162,10 @@
 
     String xml_appointment_date = MyDateFormat.getMysqlStandardDate(curYear, curMonth, curDay);
     View endDateView = ticklerView.get("dateEnd");
-
-    if( endDateView != null && !doCreateReport)
+    if(demographic_no != null || ! demographic_no.isEmpty()) {
+        xml_appointment_date = "8888-12-31";
+    }
+    else if( endDateView != null && !doCreateReport)
     {
         xml_appointment_date = endDateView.getValue();
     }
@@ -163,6 +173,7 @@
     {
         xml_appointment_date = request.getParameter("xml_appointment_date");
     }
+
 %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -195,16 +206,21 @@
         line-height: 1 !important;
         font-size: 12px !important;
     }
+
+    tr.comment-row td{
+        color: grey;
+        background-color: white !important;
+    }
 </style>
     <script type="application/javascript">
 
 
 const ctx = '${pageContext.request.contextPath}';
-
+let ticklerResultsTable;
 jQuery(document).ready(function() {
 	jQuery( "#note-form" ).dialog({
 		autoOpen: false,
-		height: 340,
+		height: 200,
 		width: 450,
 		modal: true,
 		close: function() {
@@ -219,12 +235,48 @@ jQuery(document).ready(function() {
     //
     //     }
     // });
-
-    jQuery("#ticklerResults").dataTable({
+    let groupColumn = 11;
+    ticklerResultsTable = jQuery("#ticklerResults").dataTable({
         "searching": false,
         "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
         "iDisplayLength": 25,
+        columns: [
+            {orderable: false},
+            {orderable: false},
+            {},
+            {},
+            {},
+            {orderable: false},
+            {},
+            {},
+            {},
+            {},
+            {orderable: false},
+            {orderable: false}
+        ],
+        columnDefs: [
+            { visible: false, targets: groupColumn }
+        ],
+        drawCallback: function (settings) {
+            let api = this.api();
+            let rows = api.rows({ page: 'current' }).nodes();
+            let last = null;
+
+            api.column(groupColumn, { page: 'current' })
+                .data()
+                .each(function (group, i) {
+                    if (last !== group) {
+                        jQuery(rows)
+                            .eq(i)
+                            .after(jQuery(".followup-comment-" + group))
+                        last = group;
+                    }
+                });
+        },
+        order: [[4, 'desc']]
+
     })
+
 		
 });
 
@@ -270,15 +322,16 @@ function saveNoteDialog() {
 	//alert('not yet implemented');
 	jQuery.ajax({url:ctx + '/CaseManagementEntry.do',
 		data: { method: "ticklerSaveNote", noteId: jQuery("#tickler_note_noteId").val(), value: jQuery('#tickler_note').val(), demographicNo: jQuery('#tickler_note_demographicNo').val(), ticklerNo: jQuery('#tickler_note_ticklerNo').val()  },
-		async:false, 
+		async:false,
 		success:function(data) {
+            jQuery( "#note-form" ).dialog( "close" );
 		},
 		error: function(jqXHR, textStatus, errorThrown ) {
 			alert(errorThrown);
 		}
-		});	
+    });
 	
-	jQuery( "#note-form" ).dialog( "close" );
+
 }
 
 function popupPage(vheight,vwidth,varpage) { //open a new popup window
@@ -512,8 +565,9 @@ var beginD = "1900-01-01"
     </td>
   </tr>        
 </table>
-             
+
 <form name="serviceform" method="get" action="ticklerMain.jsp" class="form-inline">
+    <c:if test="${empty param.demoview}">
     <div class="control-container">
     <label for="dateRange"><bean:message key="tickler.ticklerMain.formDateRange"/>  <a href="javascript:void(0)" id="dateRange" onClick="allYear()"><bean:message key="tickler.ticklerMain.btnViewAll"/></a></label>
     <div class="form-group">
@@ -524,7 +578,7 @@ var beginD = "1900-01-01"
         <label for="xml_appointment_date">To</label>
         <input type="date" class="form-control" name="xml_appointment_date" id="xml_appointment_date" value="<%=xml_appointment_date%>">
     </div>
-
+    </c:if>
 
             <div class="form-group">
                 <label for="ticklerview"><bean:message key="tickler.ticklerMain.formMoveTo"/></label>
@@ -534,6 +588,7 @@ var beginD = "1900-01-01"
                 <option value="D" <%=ticklerview.equals("D")?"selected":""%>><bean:message key="tickler.ticklerMain.formDeleted"/></option>
                 </select>
             </div>
+        <c:if test="${empty param.demoview}">
             <div class="form-group">
                  <label for="mrpview"> <bean:message key="tickler.ticklerMain.MRP"/></label>
                 <select id="mrpview" class="form-control" name="mrpview">
@@ -629,18 +684,19 @@ function changeSite(sel) {
 	}
 %>
     </div>
+
     </div>
         <div class="button-container pull-right">
         <input type="hidden" name="Submit" value="">
         <input type="button" class="btn btn-primary" value="<bean:message key="tickler.ticklerMain.btnCreateReport"/>" class="mbttn noprint" onclick="document.forms['serviceform'].Submit.value='Create Report'; document.forms['serviceform'].submit();">
         <input type="button" class="btn" id="saveViewButton" value="<bean:message key="tickler.ticklerMain.msgSaveView"/>" onclick="saveView();">
         </div>
-
+        </c:if>
 </form>
 
 <form name="ticklerform" method="post" action="dbTicklerMain.jsp">
 		<% Locale locale = request.getLocale();%>
-
+    <input type="hidden" name="parentAjaxId" value="<c:out value='${param.parentAjaxId}' />" />
 <table id="ticklerResults" class="table table-striped table-compact" >
 <thead>
         <tr>
@@ -679,6 +735,7 @@ function changeSite(sel) {
 
             </th>
             <th></th>
+            <th></th>
         </tr>
 </thead>
     <tbody>
@@ -687,7 +744,7 @@ function changeSite(sel) {
 								  String dateEnd = xml_appointment_date;
 								  
 								  String vGrantdate = "1980-01-07 00:00:00.0";
-								  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:ss:mm.SSS", locale);
+								  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:ss:mm", locale);
 								
 								  if (dateEnd.compareTo("") == 0) dateEnd = MyDateFormat.getMysqlStandardDate(curYear, curMonth, curDay);
 								  if (dateBegin.compareTo("") == 0) dateBegin="1950-01-01"; // any early start date should suffice for selecting since the beginning
@@ -714,16 +771,21 @@ function changeSite(sel) {
 								  }
                                                  
                                   filter.setSort_order("desc");
-                                                                  
-								  List<Tickler> ticklers = ticklerManager.getTicklers(loggedInInfo, filter);
-								  
+
+								  int targetDemographic = Integer.parseInt(demographic_no);
+								  List<Tickler> ticklers = Collections.emptyList();
+								  if(targetDemographic > 0) {
+                                      ticklers = ticklerManager.search_tickler_bydemo(loggedInInfo, targetDemographic, ticklerview, filter.getStartDate(), filter.getEndDate());
+                                  } else {
+                                      ticklers = ticklerManager.getTicklers(loggedInInfo, filter);
+                                  }
 
 								  String rowColour = "white";
 								
 								  for (Tickler t : ticklers) {
 								      Demographic demo = t.getDemographic(); 
 								     
-								      vGrantdate = t.getServiceDate() + " 00:00:00.0";
+								      vGrantdate = t.getServiceDate() + " 00:00:00";
 								      java.util.Date grantdate = dateFormat.parse(vGrantdate);
 								      java.util.Date toDate = new java.util.Date();
 								      long millisDifference = toDate.getTime() - grantdate.getTime();
@@ -806,22 +868,23 @@ function changeSite(sel) {
                                         
                                     </td>
                                     <td  class="<%=cellColour%> noprint">
-                                    	<a href="javascript:void(0)" class="noteDialogLink" onClick="openNoteDialog('<%=demo.getDemographicNo() %>','<%=t.getId() %>')" title="note">
+                                    	<a href="javascript:void(0)" class="noteDialogLink" onClick="openNoteDialog('<%=demo.getDemographicNo() %>','<%=t.getId() %>')" title="Add Encounter Note">
                                     		<span class="glyphicon glyphicon-comment"></span>
                                     	</a>
                                     </td>
+                                    <td><%=t.getId()%></td>
                                 </tr>
                                 <% Set<TicklerComment> tcomments = t.getComments();
                                     for(TicklerComment tc : tcomments) { %>
 
-                                    <tr>
-                                        <td class="<%=cellColour%>"></td>
-                                        <td class="<%=cellColour%>"></td>
-                                        <td class="<%=cellColour%>"></td>
-                                        <td class="<%=cellColour%>"><%=Encode.forHtmlContent(tc.getProvider().getLastName())%>,<%=Encode.forHtmlContent(tc.getProvider().getFirstName())%></td>
-                                        <td class="<%=cellColour%>"></td>
+                                    <tr class="followup-comment-<%=t.getId()%> comment-row no-sort">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="no sort"><%=Encode.forHtmlContent(tc.getProvider().getLastName())%>,<%=Encode.forHtmlContent(tc.getProvider().getFirstName())%></td>
+                                        <td></td>
 
-                                        <td  class="<%=cellColour%>">
+                                        <td class="no-sort">
                                             <% if (tc.isUpdateDateToday()) { %>
                                                 <%=tc.getUpdateTime(locale)%>
                                             <% } else { %>
@@ -829,11 +892,12 @@ function changeSite(sel) {
                                             <% } %>
                                         </td>
 
-                                        <td  class="<%=cellColour%>"></td>
-                                        <td  class="<%=cellColour%>"></td>
-                                        <td  class="<%=cellColour%>"></td>
-                                        <td  class="<%=cellColour%>"><%=Encode.forHtmlContent(tc.getMessage())%></td>
-                                        <td  class="<%=cellColour%>"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="no sort"><%=Encode.forHtmlContent(tc.getMessage())%></td>
+                                        <td></td>
+                                        <td><%=t.getId()%></td>
                                     </tr>
                               <% }  } %>
     </tbody>
@@ -856,7 +920,7 @@ function changeSite(sel) {
         <%
             }
         %>
-        <input type="button" class="btn btn-primary" name="button" value="<bean:message key="tickler.ticklerMain.btnAddTickler"/>" onClick="window.open('ticklerAdd.jsp')" class="sbttn">
+        <input type="button" class="btn btn-primary" name="button" value="<bean:message key="tickler.ticklerMain.btnAddTickler"/>" onClick="popupPage('500','800', 'ticklerAdd.jsp?updateParent=true&parentAjaxId=${parentAjaxId}&bFirstDisp=false&messageID=null&demographic_no=${param.demoview}')" class="sbttn">
         <input type="button" name="button" class="btn btn-warning" value="<bean:message key="global.btnCancel"/>" onClick="window.close()" class="sbttn"> </td></tr>
     </table>
 
@@ -887,8 +951,8 @@ function changeSite(sel) {
 				</tr>
 			
 			</table>
-        <button class="btn btn-primary" href="javascript:void(0)" onclick="saveNoteDialog()">Save</button>
-        <button class="btn btn-danger"  href="javascript:void(0)" onclick="closeNoteDialog()">Exit</button>
+        <button class="btn btn-primary" onclick="saveNoteDialog()">Save</button>
+        <button class="btn btn-danger"  onclick="closeNoteDialog()">Exit</button>
 
 	</form>	
 </div>

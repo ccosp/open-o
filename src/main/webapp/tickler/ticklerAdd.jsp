@@ -52,7 +52,6 @@ if(request.getParameter("limit2")!=null) strLimit2 = request.getParameter("limit
 boolean bFirstDisp=true; //this is the first time to display the window
 if (request.getParameter("bFirstDisp")!=null) bFirstDisp= (request.getParameter("bFirstDisp")).equals("true");
 String ChartNo;
-String demoNo = "";
 String demoMRP = "";
 String demoName = request.getParameter("name");
 String defaultTaskAssignee = ""; 
@@ -62,13 +61,12 @@ Demographic demographic = demographicDao.getDemographic(request.getParameter("de
 if(demographic != null) {
 	demoName = demographic.getFormattedName();
 	demoMRP = demographic.getProviderNo();
-}
-if ( request.getAttribute("demographic_no") != null){
-    demoNo = (String) request.getAttribute("demographic_no");
-    demoName = (String) request.getAttribute("demoName");
     bFirstDisp = false;
 }
-if(demoName == null){demoName ="";}
+
+if(demoName == null){
+	demoName ="";
+}
 
 Boolean writeToEncounter = false;
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -320,7 +318,7 @@ function refresh() {
         <td width="65%">
 
                     <div class="input-group">
-                        <input type="text" class="form-control" name="keyword" placeholder="Search Demographic" size="25" value="<%=bFirstDisp?"":demoName.equals("")?session.getAttribute("appointmentname"):demoName%>">
+                        <input type="text" class="form-control" name="keyword" placeholder="Search Demographic" size="25" value="<%=demoName%>">
                         <span class="input-group-btn">
                             <input type="submit" name="Submit" class="btn btn-default"  value="<bean:message key="tickler.ticklerAdd.btnSearch"/>">
                         </span>
