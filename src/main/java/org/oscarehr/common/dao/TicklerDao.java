@@ -197,9 +197,7 @@ public class TicklerDao extends AbstractDao<Tickler>{
 		}
 		query.setFirstResult(offset);
 		setLimit(query,limit);
-		List<Tickler> results = query.getResultList();
-		
-		return results;
+		return query.getResultList();
 	}
 	
 	
@@ -240,7 +238,7 @@ public class TicklerDao extends AbstractDao<Tickler>{
 	 * @return
 	 */
 	private String getTicklerQueryString(String selectQuery, List<Object> paramList, CustomFilter filter) {
-		String tickler_date_order = filter.getSort_order();
+//		String tickler_date_order = filter.getSort_order();
         
 		String query = selectQuery + " FROM Tickler t WHERE 1=1 ";
 		boolean includeMRPClause = true;
@@ -369,8 +367,8 @@ public class TicklerDao extends AbstractDao<Tickler>{
         	paramList.add(filter.getMessage());
         }
 		 
-		query = query + " order by t.serviceDate " + tickler_date_order;
-		 
+//		query = query + " order by t.serviceDate " + tickler_date_order;
+//
 		return query;
 	}
 
