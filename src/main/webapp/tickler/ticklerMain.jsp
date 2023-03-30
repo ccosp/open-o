@@ -47,6 +47,12 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="org.joda.time.Days" %>
+<%@ page import="java.time.ZoneId" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="static org.joda.time.Days.daysBetween" %>
+<%@ page import="java.time.Duration" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -786,19 +792,17 @@
 
 					String rowColour = "white";
 					String numDaysUntilWarn = OscarProperties.getInstance().getProperty("tickler_warn_period");
-
+					if(numDaysUntilWarn == null || numDaysUntilWarn.isEmpty()) {
+						numDaysUntilWarn = "0";
+					}
 					for (Tickler tickler : ticklers) {
 						Demographic demo = tickler.getDemographic();
+						LocalDateTime serviceDate = tickler.getServiceDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+						LocalDateTime currentDate = LocalDateTime.now();
 
-						vGrantdate = tickler.getServiceDate() + " 00:00:00";
-						java.util.Date grantdate = dateFormat.parse(vGrantdate);
-						java.util.Date toDate = new java.util.Date();
-						long millisDifference = toDate.getTime() - grantdate.getTime();
-
-						long ONE_DAY_IN_MS = (1000 * 60 * 60 * 24);
-						long daysDifference = millisDifference / (ONE_DAY_IN_MS);
+						long daysDifference = Duration.between(serviceDate, currentDate).toDays();
 						long ticklerWarnDays = Long.parseLong(numDaysUntilWarn);
-						boolean ignoreWarning = (ticklerWarnDays < 0);
+						boolean ignoreWarning = (ticklerWarnDays <= 0);
 						boolean warning = false;
 
 						//Set the colour of the table cell
