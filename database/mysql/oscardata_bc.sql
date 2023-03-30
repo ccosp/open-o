@@ -8875,16 +8875,54 @@ INSERT INTO billingtypes VALUES ('Pri',3);
 INSERT INTO billingtypes VALUES ('WCB',4);
 
 
-INSERT INTO `billing_msp_servicecode_times` VALUES (1,'00112',0);
-INSERT INTO `billing_msp_servicecode_times` VALUES (2,'01200',0);
-INSERT INTO `billing_msp_servicecode_times` VALUES (3,'01201',0);
-INSERT INTO `billing_msp_servicecode_times` VALUES (4,'01205',1);
-INSERT INTO `billing_msp_servicecode_times` VALUES (5,'01206',1);
-INSERT INTO `billing_msp_servicecode_times` VALUES (6,'01207',1);
-INSERT INTO `billing_msp_servicecode_times` VALUES (7,'01210',0);
-INSERT INTO `billing_msp_servicecode_times` VALUES (8,'01211',0);
-INSERT INTO `billing_msp_servicecode_times` VALUES (9,'14015',1);
-INSERT INTO `billing_msp_servicecode_times` VALUES (10,'14016',1);
+INSERT INTO `billing_msp_servicecode_times`(`id`, `billingservice_no`, `timeRange`) VALUES
+(1, '00112', 0),
+(2, '01200', 0),
+(3, '01201', 0),
+(4, '01205', 1),
+(5, '01206', 1),
+(6, '01207', 1),
+(7, '01210', 0),
+(8, '01211', 0),
+(9, '14015', 1),
+(10, '14016', 1),
+(11, '00103', 0),
+(12, '00115', 0),
+(13, '01202', 0),
+(14, '01212', 1),
+(15, '04118', 1),
+(16, '04119', 1),
+(17, '10001', 1),
+(18, '10002', 1),
+(19, '10003', 1),
+(20, '14018', 0),
+(21, '14021', 1),
+(22, '14022', 1),
+(23, '14023', 1),
+(24, '14043', 0),
+(25, '14044', 1),
+(26, '14045', 1),
+(27, '14046', 1),
+(28, '14047', 1),
+(29, '14048', 1),
+(30, '14063', 0),
+(31, '14077', 1),
+(32, '14199', 1),
+(33, '12120', 1),
+(34, '00120', 1),
+(35, '15320', 1),
+(36, '16120', 1),
+(37, '17120', 1),
+(38, '18120', 1),
+(39, '12220', 1),
+(40, '13220', 1),
+(41, '15220', 1),
+(42, '16220', 1),
+(43, '17220', 1),
+(44, '18220', 1),
+(45, '98010', 1),
+(46, '98011', 1),
+(47, '98012', 1);
 
 --
 -- Dumping data for table `billing_service_code_conditions`

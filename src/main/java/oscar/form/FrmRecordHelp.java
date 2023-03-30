@@ -137,7 +137,7 @@ public class FrmRecordHelp {
 
             String value = props.getProperty(name, null);
 
-            System.out.println("FORM TABLE: " + md.getTableName(i) + "; COLUMN: " + md.getColumnName(i) + "; TYPE: " + md.getColumnTypeName(i) + "; VALUE: " + value);
+            MiscUtils.getLogger().debug("FORM TABLE: " + md.getTableName(i) + "; COLUMN: " + md.getColumnName(i) + "; TYPE: " + md.getColumnTypeName(i) + "; VALUE: " + value);
 
             /* To whomever sees this:
              * Don't ever ever ever filter column types with a string comparator in order to translate "hacked"
