@@ -48,11 +48,10 @@ String strLimit1="0";
 String strLimit2="5";
 if(request.getParameter("limit1")!=null) strLimit1 = request.getParameter("limit1");
 if(request.getParameter("limit2")!=null) strLimit2 = request.getParameter("limit2");
-String providerview = request.getParameter("providerview")==null?"all":request.getParameter("providerview") ;
+//String providerview = request.getParameter("providerview")==null?"all":request.getParameter("providerview") ;
 boolean bFirstDisp=true; //this is the first time to display the window
 if (request.getParameter("bFirstDisp")!=null) bFirstDisp= (request.getParameter("bFirstDisp")).equals("true");
 String ChartNo;
-String demoNo = "";
 String demoMRP = "";
 String demoName = request.getParameter("name");
 String defaultTaskAssignee = ""; 
@@ -62,13 +61,12 @@ Demographic demographic = demographicDao.getDemographic(request.getParameter("de
 if(demographic != null) {
 	demoName = demographic.getFormattedName();
 	demoMRP = demographic.getProviderNo();
-}
-if ( request.getAttribute("demographic_no") != null){
-    demoNo = (String) request.getAttribute("demographic_no");
-    demoName = (String) request.getAttribute("demoName");
     bFirstDisp = false;
 }
-if(demoName == null){demoName ="";}
+
+if(demoName == null){
+	demoName ="";
+}
 
 Boolean writeToEncounter = false;
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -123,7 +121,7 @@ if(prop!=null) {
 
 
 %>
-<%@ page import="java.util.*, java.sql.*, oscar.*, java.net.*, oscar.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="java.util.*, oscar.*" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
@@ -298,6 +296,9 @@ function refresh() {
         table {
             width:100%;
         }
+        * {
+            font-size:12px !important;
+        }
     </style>
 </head>
 
@@ -317,7 +318,7 @@ function refresh() {
         <td width="65%">
 
                     <div class="input-group">
-                        <input type="text" class="form-control" name="keyword" placeholder="Search Demographic" size="25" value="<%=bFirstDisp?"":demoName.equals("")?session.getAttribute("appointmentname"):demoName%>">
+                        <input type="text" class="form-control" name="keyword" placeholder="Search Demographic" size="25" value="<%=demoName%>">
                         <span class="input-group-btn">
                             <input type="submit" name="Submit" class="btn btn-default"  value="<bean:message key="tickler.ticklerAdd.btnSearch"/>">
                         </span>
@@ -325,38 +326,38 @@ function refresh() {
 
         </td>
     </tr>
-  <INPUT TYPE="hidden" NAME="orderby" VALUE="last_name" >
+  <INPUT TYPE="hidden" name="orderby" VALUE="last_name" >
   <%
     String searchMode = request.getParameter("search_mode");
     if (searchMode == null || searchMode.isEmpty()) {
         searchMode = OscarProperties.getInstance().getProperty("default_search_mode","search_name");
     }
 %>
-				      <INPUT TYPE="hidden" NAME="search_mode" VALUE="<%=searchMode%>" >
-				      <INPUT TYPE="hidden" NAME="originalpage" VALUE="../tickler/ticklerAdd.jsp" >
-				      <INPUT TYPE="hidden" NAME="limit1" VALUE="0" >
-				      <INPUT TYPE="hidden" NAME="limit2" VALUE="5" >
+				      <INPUT TYPE="hidden" name="search_mode" VALUE="<%=searchMode%>" >
+				      <INPUT TYPE="hidden" name="originalpage" VALUE="../tickler/ticklerAdd.jsp" >
+				      <INPUT TYPE="hidden" name="limit1" VALUE="0" >
+				      <INPUT TYPE="hidden" name="limit2" VALUE="5" >
               <!--input type="hidden" name="displaymode" value="TicklerSearch" -->
-              <INPUT TYPE="hidden" NAME="displaymode" VALUE="Search "> 
+              <INPUT TYPE="hidden" name="displaymode" VALUE="Search "> 
 
 <% ChartNo = bFirstDisp?"":request.getParameter("chart_no")==null?"":request.getParameter("chart_no"); %>
-   <INPUT TYPE="hidden" NAME="appointment_date" VALUE="2002-10-01" WIDTH="25" HEIGHT="20" border="0" hspace="2">
-       <INPUT TYPE="hidden" NAME="status" VALUE="t"  WIDTH="25" HEIGHT="20" border="0" hspace="2">
-              <INPUT TYPE="hidden" NAME="start_time" VALUE="10:45" WIDTH="25" HEIGHT="20" border="0"  onChange="checkTimeTypeIn(this)">
-              <INPUT TYPE="hidden" NAME="type" VALUE="" WIDTH="25" HEIGHT="20" border="0" hspace="2">
-              <INPUT TYPE="hidden" NAME="duration" VALUE="15" WIDTH="25" HEIGHT="20" border="0" hspace="2" >
-              <INPUT TYPE="hidden" NAME="end_time" VALUE="10:59" WIDTH="25" HEIGHT="20" border="0" hspace="2"  onChange="checkTimeTypeIn(this)">
+   <INPUT TYPE="hidden" name="appointment_date" VALUE="2002-10-01" WIDTH="25" HEIGHT="20" border="0" hspace="2">
+       <INPUT TYPE="hidden" name="status" VALUE="t"  WIDTH="25" HEIGHT="20" border="0" hspace="2">
+              <INPUT TYPE="hidden" name="start_time" VALUE="10:45" WIDTH="25" HEIGHT="20" border="0"  onChange="checkTimeTypeIn(this)">
+              <INPUT TYPE="hidden" name="type" VALUE="" WIDTH="25" HEIGHT="20" border="0" hspace="2">
+              <INPUT TYPE="hidden" name="duration" VALUE="15" WIDTH="25" HEIGHT="20" border="0" hspace="2" >
+              <INPUT TYPE="hidden" name="end_time" VALUE="10:59" WIDTH="25" HEIGHT="20" border="0" hspace="2"  onChange="checkTimeTypeIn(this)">
        
 
  <input type="hidden" name="demographic_no"  readonly value="" width="25" height="20" border="0" hspace="2">
          <input type="hidden" name="location"  tabindex="4" value="" width="25" height="20" border="0" hspace="2">
               <input type="hidden" name="resources"  tabindex="5" value="" width="25" height="20" border="0" hspace="2">
-              <INPUT TYPE="hidden" NAME="user_id" readonly VALUE='oscardoc, doctor' WIDTH="25" HEIGHT="20" border="0" hspace="2">
-     	        <INPUT TYPE="hidden" NAME="dboperation" VALUE="search_demorecord">
-              <INPUT TYPE="hidden" NAME="createdatetime" readonly VALUE="2002-10-1 17:53:50" WIDTH="25" HEIGHT="20" border="0" hspace="2">
-              <INPUT TYPE="hidden" NAME="provider_no" VALUE="115">
-              <INPUT TYPE="hidden" NAME="creator" VALUE="oscardoc, doctor">
-              <INPUT TYPE="hidden" NAME="remarks" VALUE="">
+              <INPUT TYPE="hidden" name="user_id" readonly VALUE='oscardoc, doctor' WIDTH="25" HEIGHT="20" border="0" hspace="2">
+     	        <INPUT TYPE="hidden" name="dboperation" VALUE="search_demorecord">
+              <INPUT TYPE="hidden" name="createdatetime" readonly VALUE="2002-10-1 17:53:50" WIDTH="25" HEIGHT="20" border="0" hspace="2">
+              <INPUT TYPE="hidden" name="provider_no" VALUE="115">
+              <INPUT TYPE="hidden" name="creator" VALUE="oscardoc, doctor">
+              <INPUT TYPE="hidden" name="remarks" VALUE="">
               <input type="hidden" name="parentAjaxId" value="<%=parentAjaxId%>"/>
               <input type="hidden" name="updateParent" value="<%=updateParent%>"/> 
 
@@ -370,7 +371,7 @@ function refresh() {
  
      <tr> 
       <td width="35%" class="tickler-label"> <bean:message key="tickler.ticklerAdd.formChartNo"/>:</td>
-      <td width="65%"> <span><INPUT TYPE="hidden" NAME="demographic_no" VALUE="<%=bFirstDisp?"":request.getParameter("demographic_no").equals("")?"":request.getParameter("demographic_no")%>"><%=ChartNo%></span></td>
+      <td width="65%"> <span><INPUT TYPE="hidden" name="demographic_no" VALUE="<%=bFirstDisp?"":request.getParameter("demographic_no").equals("")?"":request.getParameter("demographic_no")%>"><%=ChartNo%></span></td>
     </tr>
 
     <tr> 
@@ -546,14 +547,15 @@ changeSite(selSite);
     </tr>
     <tr> 
       <td class="tickler-label"><bean:message key="tickler.ticklerAdd.formReminder"/>:</td>
-          <td> <textarea class="form-control"></textarea></td>
+          <td> <textarea name="ticklerMessage" class="form-control"></textarea></td>
       </tr>
-     <INPUT TYPE="hidden" NAME="user_no" VALUE="<%=user_no%>">
+     <INPUT TYPE="hidden" name="user_no" VALUE="<%=user_no%>">
       <input type="hidden" name="writeToEncounter" value="<%=writeToEncounter%>"/>
     <tr>
-      <td><input type="button" name="Button" class="btn btn-warning" value="<bean:message key="tickler.ticklerAdd.btnCancel"/>" onClick="window.close()"></td>
+
       <td><input type="button" name="Button" class="btn btn-primary" value="<bean:message key="tickler.ticklerAdd.btnSubmit"/>" onClick="event.preventDefault();validate(this.form);">
-          <input type="button" name="Button" class="btn btn-primary" value="<bean:message key="tickler.ticklerAdd.btnWriteSubmit"/>" onClick="validate(this.form, true)">
+
+          <input type="button" name="Button" class="btn btn-danger" value="<bean:message key="tickler.ticklerAdd.btnCancel"/>" onClick="window.close()">
       </td>
           </tr>
 
