@@ -7744,6 +7744,7 @@ CREATE TABLE IF NOT EXISTS tickler (
   priority varchar(6) default 'Normal',
   task_assigned_to varchar(255),
   category_id int(11),
+  creation_date timestamp not null,
   PRIMARY KEY  (tickler_no),
   KEY `statusIndex` (`status`),
   KEY `demo_status_date_Index` (demographic_no,status,service_date)

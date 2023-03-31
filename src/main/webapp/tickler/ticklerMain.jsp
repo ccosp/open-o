@@ -729,7 +729,8 @@
 						<bean:message key="tickler.ticklerMain.msgDate"/>
 					</th>
 					<th>
-						<bean:message key="tickler.ticklerMain.msgCreationDate"/>
+						<bean:message key="tickler.ticklerMain.msgUpdateDate"/>
+<%--						<bean:message key="tickler.ticklerMain.msgCreationDate"/>--%>
 					</th>
 
 					<th>
