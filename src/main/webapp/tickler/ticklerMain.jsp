@@ -47,11 +47,8 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.time.LocalDate" %>
-<%@ page import="org.joda.time.Days" %>
 <%@ page import="java.time.ZoneId" %>
 <%@ page import="java.time.LocalDateTime" %>
-<%@ page import="static org.joda.time.Days.daysBetween" %>
 <%@ page import="java.time.Duration" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -264,6 +261,13 @@
 
 				})
 
+				/*
+				 * Reload the search results with the Tickler status is changed.
+				 */
+				jQuery("#ticklerview").change(function(){
+					document.forms['serviceform'].Submit.value='Create Report';
+					document.forms['serviceform'].submit();
+				})
 
 			});
 
@@ -559,6 +563,9 @@
 		</table>
 
 		<form name="serviceform" method="get" action="ticklerMain.jsp" class="form-inline">
+			<input type="hidden" name="Submit" value="">
+			<input type="hidden" name="demoview" value="${param.demoview}">
+
 			<c:if test="${empty param.demoview}">
 			<div class="control-container">
 				<label for="dateRange"><bean:message key="tickler.ticklerMain.formDateRange"/> <a
@@ -573,20 +580,7 @@
 					<input type="date" class="form-control" name="xml_appointment_date" id="xml_appointment_date"
 					       value="<%=xml_appointment_date%>">
 				</div>
-				</c:if>
 
-				<div class="form-group">
-					<label for="ticklerview"><bean:message key="tickler.ticklerMain.formMoveTo"/></label>
-					<select id="ticklerview" class="form-control" name="ticklerview">
-						<option value="A" <%=ticklerview.equals("A") ? "selected" : ""%>><bean:message
-								key="tickler.ticklerMain.formActive"/></option>
-						<option value="C" <%=ticklerview.equals("C") ? "selected" : ""%>><bean:message
-								key="tickler.ticklerMain.formCompleted"/></option>
-						<option value="D" <%=ticklerview.equals("D") ? "selected" : ""%>><bean:message
-								key="tickler.ticklerMain.formDeleted"/></option>
-					</select>
-				</div>
-				<c:if test="${empty param.demoview}">
 				<div class="form-group">
 					<label for="mrpview"> <bean:message key="tickler.ticklerMain.MRP"/></label>
 					<select id="mrpview" class="form-control" name="mrpview">
@@ -691,17 +685,30 @@
 						}
 					%>
 				</div>
+				<div class="pull-right" style="text-align: right; vertical-align: bottom; padding:20px 15px 15px 15px;">
+					<label for="formSubmitBtn"></label>
+					<input type="button" class="btn btn-primary mbttn noprint" id="formSubmitBtn"
+					       value="<bean:message key="tickler.ticklerMain.btnCreateReport"/>"
+					       onclick="document.forms['serviceform'].Submit.value='Create Report'; document.forms['serviceform'].submit();">
+					<label for="saveViewButton"> </label>
+					<input type="button" class="btn" id="saveViewButton"
+					       value="<bean:message key="tickler.ticklerMain.msgSaveView"/>" onclick="saveView();">
+				</div>
 
 			</div>
-			<div class="button-container pull-right">
-				<input type="hidden" name="Submit" value="">
-				<input type="button" class="btn btn-primary"
-				       value="<bean:message key="tickler.ticklerMain.btnCreateReport"/>" class="mbttn noprint"
-				       onclick="document.forms['serviceform'].Submit.value='Create Report'; document.forms['serviceform'].submit();">
-				<input type="button" class="btn" id="saveViewButton"
-				       value="<bean:message key="tickler.ticklerMain.msgSaveView"/>" onclick="saveView();">
-			</div>
+
 			</c:if>
+			<div class="pull-left" style="margin-bottom:10px;">
+					<label for="ticklerview"></label>
+				<select id="ticklerview" class="form-control" name="ticklerview">
+					<option value="A" <%=ticklerview.equals("A") ? "selected" : ""%>><bean:message
+							key="tickler.ticklerMain.formActive"/></option>
+					<option value="C" <%=ticklerview.equals("C") ? "selected" : ""%>><bean:message
+							key="tickler.ticklerMain.formCompleted"/></option>
+					<option value="D" <%=ticklerview.equals("D") ? "selected" : ""%>><bean:message
+							key="tickler.ticklerMain.formDeleted"/></option>
+				</select>
+			</div>
 		</form>
 
 		<form name="ticklerform" method="post" action="dbTicklerMain.jsp">
