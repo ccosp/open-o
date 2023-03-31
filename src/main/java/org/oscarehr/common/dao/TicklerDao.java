@@ -42,7 +42,12 @@ public class TicklerDao extends AbstractDao<Tickler>{
 	public TicklerDao() {
 		super(Tickler.class);
 	}
-	
+
+	public Tickler find(Integer id) {
+		Tickler tickler = super.find(id);
+		tickler.getUpdates().size();
+		return tickler;
+	}
 
 	public List<Tickler> findActiveByMessageForPatients(List<Integer> demographicNos, String remString) {
 		

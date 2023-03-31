@@ -122,14 +122,15 @@ public class Tickler extends AbstractModel<Integer> {
 	@NotFound(action=NotFoundAction.IGNORE)
 	private TicklerCategory ticklerCategory;
 	
-	@OneToMany(fetch=FetchType.EAGER)
+	@OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name="tickler_no", referencedColumnName="tickler_no")
-	@OrderBy("updateDate ASC")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Set<TicklerUpdate> updates = new HashSet<TicklerUpdate>();
 	
-	@OneToMany( fetch=FetchType.EAGER)
+	@OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="tickler_no", referencedColumnName="tickler_no")
-	@OrderBy("updateDate ASC")
+	@OrderBy("updateDate DESC")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Set<TicklerComment> comments = new HashSet<TicklerComment>();
 	
 	
