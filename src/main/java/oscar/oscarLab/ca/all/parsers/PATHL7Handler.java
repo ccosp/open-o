@@ -71,7 +71,7 @@ public class PATHL7Handler implements MessageHandler {
 
     private static List<String> labDocuments = Arrays.asList("BCCACSP", "BCCASMP", "BLOODBANKT",
             "CELLPATH", "CELLPATHR", "DIAG IMAGE", "MICRO3T",
-            "MICROGCMT", "MICROGRT", "MICROBCT", "TRANSCRIP", "NOTIF", "CYTO");
+            "MICROGCMT", "MICROGRT", "MICROBCT", "TRANSCRIP", "NOTIF", "CYTO","TRANSPDF");
 
     public static final String VIHARTF = "CELLPATHR";
 
@@ -328,14 +328,34 @@ public class PATHL7Handler implements MessageHandler {
                 }
             }
             if(count >= 1){//if any of the OBX's have been corrected, mark the entire report as corrected
-            	orderStatus = "C";
-            	return orderStatus;
-            }else{
-            	return orderStatus;
+            	return "corrected";
+            }
+
+            if("P".equals(orderStatus)) {
+                return "preliminary";
+            }
+            if("I".equals(orderStatus)) {
+                return "pending";
+            }
+            if("A".equals(orderStatus)) {
+                return "partial results";
+            }
+            if("F".equals(orderStatus)) {
+                return "complete";
+            }
+            if("R".equals(orderStatus)) {
+                return "retransmitted";
+            }
+            if("C".equals(orderStatus)) {
+                return "corrected";
+            }
+            if("X".equals(orderStatus)) {
+                return "deleted";
             }
         }catch(Exception e){
             return("");
         }
+        return "N/A";
     }
 
     public String getClientRef(){
