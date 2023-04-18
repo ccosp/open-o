@@ -294,7 +294,7 @@ if (rx_enhance!=null && rx_enhance.equals("true")) {
                 var url="<c:out value="${ctx}"/>" + "/oscarRx/deleteRx.do?parameterValue=clearReRxDrugList";
                        var data = "rand="+rand;
                        new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
-                    	   updateCurrentInteractions();
+                    	   // updateCurrentInteractions();
                         }});
             }
             function onPrint(cfgPage) {
@@ -1445,7 +1445,7 @@ function changeLt(drugId){
                var url="<c:out value="${ctx}"/>" + "/oscarRx/deleteRx.do?parameterValue=clearStash";
                var data = "rand=" + Math.floor(Math.random()*10001);
                new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
             }});
                $('rxText').innerHTML="";//make pending prescriptions disappear.
                $("searchString").focus();
@@ -1455,7 +1455,7 @@ function changeLt(drugId){
         var data="rand="+ Math.floor(Math.random()*10001);
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,asynchronous:true,evalScripts:true,
             insertion: Insertion.Bottom,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
         }});
 
     }
@@ -1483,7 +1483,7 @@ function changeLt(drugId){
         var data="randomId="+randomId;
         var url="<c:out value="${ctx}"/>" + "/oscarRx/rxStashDelete.do?parameterValue=deletePrescribe";
         new Ajax.Request(url, {method: 'get',parameters:data,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
                 if($('deleteOnCloseRxBox').value=='true'){
                     deleteRxOnCloseRxBox(randomId);
                 }
@@ -1508,7 +1508,7 @@ function changeLt(drugId){
                              $(del).style.textDecoration='line-through';
                              $(discont).style.textDecoration='line-through';
                              $(prescrip).style.textDecoration='line-through';
-			     updateCurrentInteractions();
+			     // updateCurrentInteractions();
                     }
                 }});
 
@@ -1557,7 +1557,7 @@ function changeLt(drugId){
                   $(del).style.textDecoration='line-through';
                   $(discont).style.textDecoration='line-through';
                   $(prescrip).style.textDecoration='line-through';
-		  updateCurrentInteractions();
+		  // updateCurrentInteractions();
             }});
         }
         return false;
@@ -1653,11 +1653,14 @@ function changeLt(drugId){
                   $('del_'+json.id).style.textDecoration='line-through';
                   $('discont_'+json.id).innerHTML = json.reason;
                   $('prescrip_'+json.id).style.textDecoration='line-through';
-                  updateCurrentInteractions();
+                  // updateCurrentInteractions();
             }});
 
     }
 
+	/*
+	 * deprecated: causes speed and accuracy issues.
+	 */
     function updateCurrentInteractions(){
         new Ajax.Request("GetmyDrugrefInfo.do?method=findInteractingDrugList&rand="+ Math.floor(Math.random()*10001), {method:'get',onSuccess:function(transport){
                             new Ajax.Request("UpdateInteractingDrugs.jsp?rand="+ Math.floor(Math.random()*10001), {method:'get',onSuccess:function(transport){
@@ -1677,7 +1680,7 @@ function changeLt(drugId){
         var data="demoNo="+demoNo+"&showall=<%=showall%>&rand=" +  Math.floor(Math.random()*10001);
         var url= "<c:out value="${ctx}"/>" + "/oscarRx/rePrescribe2.do?method=repcbAllLongTerm";
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,asynchronous:true,insertion: Insertion.Bottom,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
             }});
         return false;
     }
@@ -1845,7 +1848,7 @@ YAHOO.example.FnMultipleFields = function(){
                     var params = "demographicNo=<%=demoNo%>&drugId="+arr.id+"&text="+name+"&randomId="+ran_number;  //hack to get around ie caching the page
                    new Ajax.Updater('rxText',url, {method:'get',parameters:params,evalScripts:true,
                         insertion: Insertion.Bottom,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
                         }});
 
                     $('searchString').value = "";
@@ -2006,7 +2009,7 @@ function setSearchedDrug(drugId,name){
     name=encodeURIComponent(name);
     var params = "demographicNo=<%=demoNo%>&drugId="+drugId+"&text="+name+"&randomId="+ran_number;
     new Ajax.Updater('rxText',url, {method:'get',parameters:params,asynchronous:true,evalScripts:true,insertion: Insertion.Bottom,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
             }});
     $('searchString').value = "";
 }
@@ -2045,7 +2048,7 @@ function represcribe(element, toArchive){
         var url= "<c:out value="${ctx}"/>" + "/oscarRx/rePrescribe2.do?method=represcribeMultiple&rand="+Math.floor(Math.random()*10001);
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,asynchronous:false,evalScripts:true,
             insertion: Insertion.Bottom,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
             }});
     }else if(drugId!=null){
         var dataUpdateId="reRxDrugId="+toArchive+"&action=addToReRxDrugIdList&rand="+Math.floor(Math.random()*10001);
@@ -2056,7 +2059,7 @@ function represcribe(element, toArchive){
         var url= "<c:out value="${ctx}"/>" + "/oscarRx/rePrescribe2.do?method=represcribe2&rand="+Math.floor(Math.random()*10001);
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,evalScripts:true,
             insertion: Insertion.Bottom,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
             }});
 
    }
