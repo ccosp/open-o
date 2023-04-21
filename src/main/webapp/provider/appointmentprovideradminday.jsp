@@ -1941,7 +1941,7 @@
                                                             <caisi:isModuleLoad moduleName="ticklerplus"
                                                                                 reverse="true">
                                                                 <a href="#"
-                                                                   onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=0');return false;"
+                                                                   onClick="popupPage(700,1024, '../tickler/ticklerMain.jsp?demoview=0');return false;"
                                                                    title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=Encode.forHtmlContent(tickler_note)%>">
                                                                     <span color="red">!</span></a>
                                                             </caisi:isModuleLoad>
@@ -1999,7 +1999,7 @@
                                                     <caisi:isModuleLoad moduleName="ticklerplus"
                                                                         reverse="true">
                                                     <a href="#"
-                                                       onClick="popupPage(700,1024, '../tickler/ticklerDemoMain.jsp?demoview=<%=demographic_no%>');return false;"
+                                                       onClick="popupPage(700,1024, '../tickler/ticklerMain.jsp?demoview=<%=demographic_no%>');return false;"
                                                        title="<bean:message key="provider.appointmentProviderAdminDay.ticklerMsg"/>: <%=UtilMisc.htmlEscape(tickler_note)%>"><span
                                                             color="red">!</span></a>
                                                     </caisi:isModuleLoad>
