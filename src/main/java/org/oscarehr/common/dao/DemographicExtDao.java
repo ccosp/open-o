@@ -25,16 +25,12 @@
 
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.persistence.Query;
 
 import org.oscarehr.common.model.DemographicExt;
+import org.oscarehr.common.model.enumerator.DemographicExtKey;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -63,6 +59,14 @@ public class DemographicExtDao extends AbstractDao<DemographicExt>{
  		return results;
  	}
 
+	public DemographicExt getDemographicExt(Integer demographicNo, DemographicExtKey demographicExtKey) {
+		return getDemographicExt(demographicNo, demographicExtKey.getKey());
+	}
+
+	/**
+	 * @Deprecated: use alternate method with DemographicExtKey parameter
+	 */
+	 @Deprecated
  	public DemographicExt getDemographicExt(Integer demographicNo, String key) {
 
  		if (demographicNo == null || demographicNo.intValue() <= 0) {
@@ -86,17 +90,20 @@ public class DemographicExtDao extends AbstractDao<DemographicExt>{
  		return result;
  	}
 
- 	
+	public List<DemographicExt> getDemographicExtByKeyAndValue(DemographicExtKey demographicExtKey,String value) {
+		return getDemographicExtByKeyAndValue(demographicExtKey.getKey(), value);
+	}
+
+	/**
+	 * @Deprecated: use alternate method with DemographicExtKey parameter
+	 */
+	 @Deprecated
  	public List<DemographicExt> getDemographicExtByKeyAndValue(String key,String value) {
 
  		Query query = entityManager.createQuery("SELECT d from DemographicExt d where d.key = ? and d.value=? order by d.dateCreated DESC");
  		query.setParameter(1, key);
  		query.setParameter(2, value);
-
- 	    @SuppressWarnings("unchecked")
- 		List<DemographicExt> results = query.getResultList();
-
- 	    return results;
+ 		return query.getResultList();
  	}
  	
  	
@@ -262,8 +269,19 @@ public class DemographicExtDao extends AbstractDao<DemographicExt>{
     	 }
     	 return null;
      }
-     
-	 public List<Integer> findDemographicIdsByKeyVal(String key, String val) {
+
+	public List<Integer> findDemographicIdsByKeyVal(DemographicExtKey demographicExtKey, String val) {
+		return findDemographicIdsByKeyVal(demographicExtKey.getKey(), val);
+	}
+
+	/**
+	 * @Deprecated: use alternate method with DemographicExtKey parameter
+	 * @param key
+	 * @param val
+	 * @return
+	 */
+	@Deprecated
+	public List<Integer> findDemographicIdsByKeyVal(String key, String val) {
 	 		Query query = entityManager.createQuery("SELECT distinct d.demographicNo from DemographicExt d where d.key=? and d.value=?");
 	 		query.setParameter(1, key);
 	 		query.setParameter(2, val);
