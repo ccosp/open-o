@@ -285,11 +285,42 @@ public class DemographicExtDao extends AbstractDao<DemographicExt>{
 	 		Query query = entityManager.createQuery("SELECT distinct d.demographicNo from DemographicExt d where d.key=? and d.value=?");
 	 		query.setParameter(1, key);
 	 		query.setParameter(2, val);
-	 		
-	 		@SuppressWarnings("unchecked")
-	 		List<Integer> results = query.getResultList();
 
-	 		return results;
-	 	 }
-	 	 
+	 		return query.getResultList();
+	}
+
+	public List<DemographicExt> getMultipleDemographicExtKeyForDemographicNumbersByProviderNumber(
+			final DemographicExtKey demographicExtKey,
+			final Collection<Integer> demographicNumbers,
+			final String midwifeNumber
+	) {
+		String sql = "select x from DemographicExt x where x.demographicNo IN (?1) "
+				+ "and x.key = ?2 "
+				+ "and x.value = ?3";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter(1, demographicNumbers);
+		query.setParameter(2, demographicExtKey.getKey());
+		query.setParameter(3, midwifeNumber);
+
+		return query.getResultList();
+	}
+
+
+	public List<Integer> getDemographicNumbersByDemographicExtKeyAndProviderNumberAndDemographicLastNameRegex(
+			final DemographicExtKey key,
+			final String providerNumber,
+			final String lastNameRegex
+	) {
+		String sql = "select d.demographic_no from demographic d, demographicExt e "
+				+ "where e.key_val = ? "
+				+ "and e.value = ? "
+				+ "and d.demographic_no = e.demographic_no "
+				+ "and d.last_name REGEXP ?";
+		Query query = entityManager.createNativeQuery(sql);
+		query.setParameter(1, key.getKey());
+		query.setParameter(2, providerNumber);
+		query.setParameter(3, lastNameRegex);
+
+		return query.getResultList();
+	}
 }
