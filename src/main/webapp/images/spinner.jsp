@@ -56,7 +56,7 @@
             display: none;
  }
 </style>
-<script src="<%= request.getContextPath() %>/js/jquery-1.7.1.min.js"></script>
+<script src="<%= request.getContextPath() %>/library/jquery/jquery-1.12.0.min.js"></script>
 
 <script type="text/javascript">
 
@@ -86,8 +86,8 @@ function HideSpin()
     $("#spinner").fadeOut(300);
 }
 </script>
-<link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/library/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet">
     <div id="screen" class="screen"></div>
-<div id="spinner" class="spinner" style="display:none;">
+<div id="spinner" class="spinner" >
     <img id="img-spinner" src="<%=request.getContextPath() %>/images/spinner.jpg" alt="Loading"/>
 </div>

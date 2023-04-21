@@ -171,7 +171,7 @@ window.close();
 
 										</td>
 										<td colspan="2">
-										<div class="FieldData"="nowrap"><strong><bean:message
+										<div class="" nowrap><strong><bean:message
 											key="oscarMDS.segmentDisplay.formSex" />: </strong><%=demographic.getSex()%>
 										</div>
 										</td>
