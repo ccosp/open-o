@@ -8,8 +8,8 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%-- This JSP is the first page you see when you enter 'report by template' --%>
+<!DOCTYPE html>
+
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
@@ -35,63 +35,47 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<html:html locale="true">
+
+<html:html locale="true" >
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
+<html:base />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Hospital Report Manager</title>
+
+    <script src="<%= request.getContextPath() %>/js/global.js"></script>
+
 	<link href="<%=request.getContextPath() %>/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<%=request.getContextPath() %>/css/datepicker.css" rel="stylesheet" type="text/css">
-	<link href="<%=request.getContextPath() %>/css/DT_bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<%=request.getContextPath() %>/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/font-awesome.min.css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/cupertino/jquery-ui-1.8.18.custom.css">
-	
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-ui-1.8.18.custom.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/bootstrap.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/bootstrap-datepicker.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.validate.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.dataTables.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/DT_bootstrap.js"></script>   
-	
-	<script type="text/javascript" language="JavaScript" src="../share/javascript/prototype.js"></script>
-	<script type="text/javascript" language="JavaScript" src="../share/javascript/Oscar.js"></script>
-	
-	<script type="text/javascript">
+	<link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/hospitalReportManager/inbox.css" >
+
+
+	<script>
 	function runFetch() {
 		window.location = "<%=request.getContextPath() %>/hospitalReportManager/hospitalReportManager.jsp?fetch=true";
 	}
 	</script>
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css"/>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
 
 
-<script>
-jQuery.noConflict();
-jQuery(function() {
-	jQuery( document ).tooltip();
-  });
-</script>
 </head>
 <body>
+<div class="container">
 <h4>Hospital Report Manager</h4>
 <% if (request.getParameter("fetch") != null && request.getParameter("fetch").equalsIgnoreCase("true"))
 		new SFTPConnector(loggedInInfo).startAutoFetch(loggedInInfo);
 %>
 <p>
-	HRM Status: <%=SFTPConnector.isFetchRunning() ? "Fetching data from HRM" : "Idle" %><br />
+	HRM Status: <%=SFTPConnector.isFetchRunning() ? "Fetching data from HRM" : "Idle" %><br>
 	<% if (!SFTPConnector.isFetchRunning()) { %>
-		<input type="button" class="btn" onClick="runFetch()" value="Fetch New Data from HRM" />
+		<input type="button" class="btn" onClick="runFetch()" value="Fetch New Data from HRM" >
 	<% } else { %>
 		Please wait until the current fetch task completes before requesting another data fetch.
 	<% } %>
 </p>
 <form enctype="multipart/form-data" action="<%=request.getContextPath() %>/hospitalReportManager/UploadLab.do" method="post">
     Upload an HRM report from your computer: <input type="file" name="importFile" />
-    <span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img border="0" src="../images/icon_alertsml.gif"/></span></span>
-        
-     <input type="submit" class="btn" name="submit" value="Upload" />
+    <span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img alt="alert" src="../images/icon_alertsml.gif"></span>
+
+     <input type="submit" class="btn" name="submit" value="Upload" >
 </form>
 <%
 	HRMProviderConfidentialityStatementDao hrmProviderConfidentialityStatementDao = (HRMProviderConfidentialityStatementDao) SpringUtils.getBean("HRMProviderConfidentialityStatementDao");
@@ -105,7 +89,7 @@ jQuery(function() {
 		</div>
 	</div>
 	<div>
-		<input type="submit" class="btn btn-primary" name="submit" value="Save Statement" />
+		<input type="submit" class="btn btn-primary" name="submit" value="Save Statement" >
 		<% if (request.getAttribute("statementSuccess") != null && (Boolean) request.getAttribute("statementSuccess")) { %>
 			Success
 		<% } else if (request.getAttribute("statementSuccess") != null && !((Boolean) request.getAttribute("statementSuccess")))  { %>
@@ -113,6 +97,7 @@ jQuery(function() {
 		<% } %>
 	</div>
 </form>
-<input type="button" class="btn" value="I don't want to receive any more HRM outtage messages for this outtage instance" onclick="window.location='disable_msg_action.jsp'" />
+<input type="button" class="btn" value="I don't want to receive any more HRM outtage messages for this outtage instance" onclick="window.location='disable_msg_action.jsp'" >
+</div>
 </body>
 </html:html>
