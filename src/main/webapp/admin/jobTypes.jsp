@@ -143,10 +143,7 @@
 	}
     function initiate(){
 	    $('#jobTypeTable').DataTable({
-             "order": [],
-            "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/<bean:message key="global.i18nLanguagecode"/>.json"
-                    }
+             "order": []
         });
         return;
     }
