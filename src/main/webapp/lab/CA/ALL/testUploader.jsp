@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-
+<!DOCTYPE html>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -54,29 +54,24 @@ String outcome = (String) request.getAttribute("outcome");
 <title><bean:message key="lab.ca.all.testUploader.labUploadUtility" /></title>
 
 <link href="<%=request.getContextPath() %>/css/bootstrap.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath() %>/css/datepicker.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath() %>/css/DT_bootstrap.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath() %>/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/library/jquery/jquery-ui.structure-1.12.1.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/library/jquery/jquery-ui.theme-1.12.1.min.css">
 
-<script type="text/javascript">
-            function selectOther(){                
+<script src="<%=request.getContextPath() %>/library/jquery/jquery-3.6.4.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/bootstrap.js"></script>
+<script src="<%=request.getContextPath() %>/js/jquery.validate.js"></script>
+<script src="<%=request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>
+
+<script>
+            function selectOther(){
                 if (document.UPLOAD.type.value == "OTHER")
                     document.getElementById('OTHER').style.display = "block";
                 else
-                    document.getElementById('OTHER').style.display = "none";                
+                    document.getElementById('OTHER').style.display = "none";
             }
 </script>
 
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/bootstrap.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.validate.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/DT_bootstrap.js"></script> 
 
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css"/>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
 
 <script>
 $(function() {
@@ -92,31 +87,30 @@ $(function() {
 <div class="well">
 
     <div class="alert" style="display:none;">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>  
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
     <div id="errorMsg">
-		
+
 	</div>
     </div>
 
 <form method='POST' name="UPLOAD" id="uploadForm" enctype="multipart/form-data"	action='${ctx}/lab/CA/ALL/insideLabUpload.do'>
-						
-<bean:message key="lab.ca.all.testUploader.pleaseSelectTheLabfile" />: <i class="icon-question-sign"></i> <oscar:help keywords="lab" key="app.top1"/> <br />
-				
+
+<bean:message key="lab.ca.all.testUploader.pleaseSelectTheLabfile" />: <i class="icon-question-sign"></i> <oscar:help keywords="lab" key="app.top1"/> <br>
+
 <div style="position:relative;">
-<a class='btn' href='javascript:;'>
+<span class='btn'>
     Choose File...
-    <input type="file" name="importFile" id="importFile" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
-</a>
+    <input type="file" name="importFile" id="importFile" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' size="40"  onchange='$("#upload-file-info").html($(this).val());'>
 </span>
-     
+
 &nbsp;
 <span class='label label-success' id="upload-file-info"></span>
 
 </div>
-	<span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img border="0" src="../../../images/icon_alertsml.gif"/></span>
-  
-	<br /><br />
-				<bean:message key="lab.ca.all.testUploader.labType" /><br />
+	<span title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img alt="alert" src="../../../images/icon_alertsml.gif"/></span>
+
+	<br><br>
+				<bean:message key="lab.ca.all.testUploader.labType" /><br>
 				<select name="type" id="type" onchange="selectOther()">
 					<option value="0">Select Lab Type:</option>
 					<option value="ALPHA">ALPHA</option>
@@ -145,15 +139,16 @@ $(function() {
 					<option value="CLS">Calgary Lab Services (CLS)</option>
 					<option value="CDL">CDL</option>
 					<option value="TRUENORTH">TRUENORTH</option>
+					<option value="MEDITECH">MEDITECH</option>
 					<option value="OTHER">Other</option>
 				</select>
-			<br />
+			<br>
 			<div id="OTHER" style="display: none;">
-				<bean:message key="lab.ca.all.testUploader.pleaseSpecifyTheOtherLabType" />:<br />
+				<bean:message key="lab.ca.all.testUploader.pleaseSpecifyTheOtherLabType" />:<br>
 				<input type="text" name="otherType">
 			</div>
-			
-			<br />
+
+			<br>
 			<button type="submit" class="btn btn-primary"><i class="icon-upload"></i> Upload</button>
 
 </form>
@@ -165,39 +160,39 @@ var pageTitle = $(document).attr('title');
 $(document).attr('title', 'Administration Panel | <bean:message key="lab.ca.all.testUploader.labUploadUtility" />');
 
 $("#uploadForm").submit(function() {
-	
+
 	var lab = $('#importFile').val();
-	var ext = lab.substring((lab.length - 3), lab.length);
+	var ext = lab.substring((lab.length - 3), lab.length).toLowerCase();
 
 	var type=$('#type').val();
 	var other = $('input[name=otherType]').val();
 
-		
+
 	if (lab==""){
         $('.alert').removeClass('alert-success');
         $('.alert').addClass('alert-error');
         $('.alert').show();
-         
+
         $('#errorMsg').html("<strong>Error!</strong> Please select a lab for upload.");
 
-        
+
         return false;
-        
+
 	}else if(ext != 'hl7' && ext != 'xml'){
 
 	        $('.alert').removeClass('alert-success');
 	        $('.alert').addClass('alert-error');
 	        $('.alert').show();
-	         
+
 	        $('#errorMsg').html("<strong>Error!</strong> The lab must be either a .xml or .hl7 file.");
 
-	       
+
 	        return false;
 	}else if(type=="0" || type==""){
 	    $('.alert').removeClass('alert-success');
         $('.alert').addClass('alert-error');
         $('.alert').show();
-         
+
         $('#errorMsg').html("<strong>Error!</strong> Please specify a lab type.");
         return false;
 	}else if(type=="OTHER" && other==""){
@@ -205,11 +200,11 @@ $("#uploadForm").submit(function() {
 		    $('.alert').removeClass('alert-success');
 	        $('.alert').addClass('alert-error');
 	        $('.alert').show();
-	         
+
 	        $('#errorMsg').html("<strong>Error!</strong> Please specify the <strong>other</strong> lab type.");
-	        return false; 
+	        return false;
 	}
-	
+
 
 });
 
@@ -229,11 +224,11 @@ if(outcome != null){
      $('.alert').addClass('alert-error');
 	 $('#errorMsg').html("Lab has already been uploaded");
 	 $('.alert').show();
-	<%    
+	<%
 	    }else if(outcome.equals("exception")){
 	%>
 	  $('.alert').removeClass('alert-success');
-      $('.alert').addClass('alert-error');  	
+      $('.alert').addClass('alert-error');
 	  $('#errorMsg').html("Exception uploading the lab");
 	  $('.alert').show();
 	<%
@@ -243,12 +238,12 @@ if(outcome != null){
       $('.alert').addClass('alert-error');
 	  $('#errorMsg').html("Failed to upload lab");
 	  $('.alert').show();
-	
+
 	<%
 	    }
 	}
 	%>
-	
+
 });
 
 </script>
