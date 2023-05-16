@@ -97,7 +97,7 @@ if(!authed) {
 		<% } %>
 	</div>
 </form>
-<input type="button" class="btn" value="I don't want to receive any more HRM outtage messages for this outtage instance" onclick="window.location='disable_msg_action.jsp'" >
+<input type="button" class="btn" value="I don't want to receive any more HRM outage messages for this outage instance" onclick="window.location='disable_msg_action.jsp'" >
 </div>
 </body>
 </html:html>
