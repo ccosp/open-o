@@ -378,13 +378,13 @@
 	<databaseap>
 		<ap-name>ageComplex2</ap-name>
 		<ap-sql>SELECT
-			(IF ( (TO_DAYS(CURRENT_DATE) - TO_DAYS(@bdate))&lt; 365,<!--IF Less than 
+			(IF ( (TO_DAYS(CURRENT_DATE) - TO_DAYS(@bdate))&lt; 365,<!--IF Less than
 				one year Old -->
-			(IF ((TO_DAYS(CURRENT_DATE)-TO_DAYS(@bdate))&lt; 31,<!-- {IF less than 
+			(IF ((TO_DAYS(CURRENT_DATE)-TO_DAYS(@bdate))&lt; 31,<!-- {IF less than
 				31 days old -->
-			CONCAT((TO_DAYS(CURRENT_DATE)-TO_DAYS(@bdate)), ' days old'),<!-- {Print 
+			CONCAT((TO_DAYS(CURRENT_DATE)-TO_DAYS(@bdate)), ' days old'),<!-- {Print
 				Age in Days} -->
-			(IF ((DAY(CURRENT_DATE)-DAY(@bdate))&lt;0,<!-- ELSE { print in months 
+			(IF ((DAY(CURRENT_DATE)-DAY(@bdate))&lt;0,<!-- ELSE { print in months
 				and week}} -->
 			CONCAT((((YEAR(CURRENT_DATE) - 1) * 12 + MONTH(CURRENT_DATE)-1) -
 			((YEAR(@bdate) - 1) * 12 + MONTH(@bdate))) - (MID(@bdate, 9, 2) &lt;
@@ -2503,11 +2503,14 @@
 			'id', latest.id,
 			'labNo', labNo.val,
 			'dateObserved', latest.dateObserved,
+			'monthsAgo', TIMESTAMPDIFF(MONTH, latest.dateObserved, NOW()),
 			'type', latest.type,
 			'loincCode', latest.loincCode,
 			'name', `name`.val,
 			'abnormal', abnormal.val,
-			'measurementValue', CONCAT(latest.datafield, " ", IFNULL(unit.val, ''))
+			'measurementValue', latest.datafield,
+			'unit', IFNULL(unit.val,''),
+			'range', IFNULL(latest.`range`,'')
 			)
 			) AS 'labvalues'
 			FROM (
@@ -2517,11 +2520,12 @@
 			m.type,
 			TRIM(REGEXP_REPLACE(m.dataField, '[^[:alnum:]^\.]+', ' '))AS datafield,
 			m.dateObserved,
-			me.val AS loincCode
+			me.val AS loincCode,
+			m.measuringInstruction AS 'range'
 			FROM measurements m
 			LEFT JOIN measurementsExt me
 			ON (m.id = measurement_id)
-			WHERE m.demographicNo = ${demographic}
+			WHERE m.demographicNo = 753
 			AND me.id IS NOT NULL
 			AND me.keyval = "identifier"
 			) latest
@@ -2533,7 +2537,7 @@
 			ON (`name`.measurement_id = latest.id AND `name`.keyval LIKE "name")
 			LEFT JOIN measurementsExt abnormal
 			ON (abnormal.measurement_id = latest.id AND abnormal.keyval LIKE "abnormal")
-			WHERE latest.ranking = 1;
+			WHERE latest.ranking = 1
 		</ap-sql>
 		<ap-output>${labvalues}</ap-output>
 	</databaseap>
@@ -2658,10 +2662,10 @@
 			AND ps.demographic_no= ${demographic}
 			AND ps.prevention_type='HbA1'
 			AND NOT EXISTS (
-				SELECT
-				* FROM preventions pv
-				WHERE ps.demographic_no=pv.demographic_no
-				AND pv.prevention_type=ps.prevention_type
+			SELECT
+			* FROM preventions pv
+			WHERE ps.demographic_no=pv.demographic_no
+			AND pv.prevention_type=ps.prevention_type
 			AND ps.lastUpdateDate &lt; pv.lastUpdateDate )
 		</ap-sql>
 		<ap-output>${val}</ap-output>
@@ -2762,11 +2766,11 @@
 			AND ps.demographic_no= ${demographic}
 			AND ps.prevention_type='HIV'
 			AND NOT EXISTS (
-				SELECT *
-				FROM preventions pv
-				WHERE ps.demographic_no=pv.demographic_no
-				AND pv.prevention_type=ps.prevention_type
-				AND ps.lastUpdateDate &lt; pv.lastUpdateDate )
+			SELECT *
+			FROM preventions pv
+			WHERE ps.demographic_no=pv.demographic_no
+			AND pv.prevention_type=ps.prevention_type
+			AND ps.lastUpdateDate &lt; pv.lastUpdateDate )
 		</ap-sql>
 		<ap-output>${val}</ap-output>
 	</databaseap>
