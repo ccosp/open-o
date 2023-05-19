@@ -27,11 +27,8 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.util.ResourceBundle"%>
-<%@ page import="java.sql.*" %>
-<%@ page import="oscar.util.*,oscar.*" %>
-<%@ page import="oscar.login.*" %>
+<%@ page import="oscar.*" %>
 <%@ page import="oscar.log.*" %>
-<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.springframework.util.StringUtils" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.PMmodule.model.Program" %>
@@ -375,8 +372,8 @@ if(newCaseManagement) {
     </head>
     <body onLoad="setfocus()">
 
-    <div id="header"><H4><i class="icon-lock"></i>&nbsp;<bean:message	key="global.update" />&nbsp;<bean:message
-			key="admin.admin.provider" />&nbsp;<bean:message key="role" /></H4>
+    <div id="header" class="navbar"><div class="navbar-inner"><div class="brand"><i class="icon-lock"></i>&nbsp;<bean:message	key="global.update" />&nbsp;<bean:message
+		    key="admin.admin.provider" />&nbsp;<bean:message key="role" /></div></div>
     </div>
 
 
@@ -388,10 +385,13 @@ if(newCaseManagement) {
         </div>
     <% } %>
     <div class="well">
-    <bean:message key="admin.securityrecord.formUserName" />
-              <input type="text" name="keyword" value="<%=Encode.forHtmlAttribute(keyword)%>" />
-              <input type="submit" class="btn btn-primary" name="search" value="<bean:message
-			key="global.search" />">
+
+		    <div class="controls">
+			    <div class="input-append">
+              <input type="text" placeholder="<bean:message key="admin.securityrecord.formUserName" />" name="keyword" value="<%=Encode.forHtmlAttribute(keyword)%>" />
+              <input type="submit" class="btn btn-primary" name="search" value="<bean:message key="global.search" />" >
+			    </div>
+		    </div>
 
     </div>
 </form>
@@ -424,12 +424,12 @@ if(newCaseManagement) {
           	Properties item = vec.get(i);
           	String providerNo = item.getProperty("provider_no", "");
 %>
-      <form name="myform<%= providerNo %>" action="providerRole.jsp" method="POST">
+      <form name="myform" action="providerRole.jsp" method="POST">
             <tr >
               <td><%= providerNo %></td>
               <td><%= Encode.forHtmlContent(item.getProperty("first_name", "")) %></td>
               <td><%= Encode.forHtmlContent(item.getProperty("last_name", "")) %></td>
-              <td style="text-align: center;">
+              <td >
               <select name="roleNew">
                       <option value="-" >-</option>
 <%
@@ -444,21 +444,21 @@ if(newCaseManagement) {
             </select>
             </td>
 			<% if( newCaseManagement ) { %>
-            <td style="text-align: center;">
+            <td >
              <%=(primaries.get(i)!=null && (primaries.get(i)).booleanValue()==true)? oscarRec.getString("global.yes") : "" %>
             </td>
 			<% } %>
 
-            <td style="text-align: center;">
+            <td >
               <input type="hidden" name="keyword" value="<%=Encode.forHtmlAttribute(keyword)%>" />
               <input type="hidden" name="providerId" value="<%=providerNo%>">
               <input type="hidden" name="roleId" value="<%= item.getProperty("role_id", "")%>">
               <input type="hidden" name="roleOld" value="<%= Encode.forHtmlAttribute(item.getProperty("role_name", ""))%>">
-              <input type="submit" name="submit" class="btn" value="<bean:message key="global.btnAdd" />">
-              -
-              <input type="submit" name="buttonUpdate" class="btn" value="<bean:message	key="global.update" />" <%= StringUtils.hasText(item.getProperty("role_id"))?"":"disabled"%>>
-              -
-              <input type="submit" name="submit" class="btn-link" value="<bean:message key="global.btnDelete" />" <%= StringUtils.hasText(item.getProperty("role_id"))?"":"disabled"%>>
+	            <div class="button-group">
+	              <input type="submit" name="submit" class="btn btn-primary" value="<bean:message key="global.btnAdd" />">
+	              <input type="submit" name="buttonUpdate" class="btn btn-info" value="<bean:message	key="global.update" />" <%= StringUtils.hasText(item.getProperty("role_id"))?"":"disabled"%>>
+	              <input type="submit" name="submit" class="btn-link" style="color:red;" value="<bean:message key="global.btnDelete" />" <%= StringUtils.hasText(item.getProperty("role_id"))?"":"disabled"%>>
+	            </div>
             </td>
             </tr>
       </form>
@@ -470,15 +470,15 @@ if(newCaseManagement) {
       <hr>
 
       <% if( newCaseManagement ) { %>
-
+<div class="well">
        <form name="myform" action="providerRole.jsp" method="POST">
       <table>
       <tr>
-        <td colspan="2"><bean:message key="global.update" />&nbsp;<bean:message key="demographic.demographiceditdemographic.primaryEMR" />&nbsp;<bean:message key="role" /></td>
+        <td><bean:message key="global.update" />&nbsp;<bean:message key="demographic.demographiceditdemographic.primaryEMR" />&nbsp;<bean:message key="role" /></td>
       </tr>
       <tr>
-        <td><bean:message key="admin.admin.provider" />:</td>
         <td>
+	        <label class="control-label" for="primaryRoleProvider"><bean:message key="admin.admin.provider" />:</label>
                 <select id="primaryRoleProvider" name="primaryRoleProvider" onChange="primaryRoleChooseProvider()">
                         <option value="">Select Below</option>
                         <%
@@ -498,19 +498,20 @@ if(newCaseManagement) {
         </tr>
 
       <tr>
-        <td><bean:message key="role" />:</td>
         <td>
+	        <label class="control-label" for="primaryRoleRole"><bean:message key="role" />:</label>
                 <select id="primaryRoleRole" name="primaryRoleRole">
                 </select>
         </td>
       </tr>
       <tr>
-        <td colspan="2">
+        <td>
                 <input type="submit" name="buttonSetPrimaryRole" value="<bean:message key="global.update" />&nbsp;<bean:message key="demographic.demographiceditdemographic.primaryEMR" />&nbsp;<bean:message key="role" />" class="btn btn-primary" onClick="return setPrimaryRole();" >
         </td>
       </tr>
       </table>
        </form>
+</div>
        <% } %>
 
 
