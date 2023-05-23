@@ -26,7 +26,7 @@
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
-    String roleName2$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+    String roleName2$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
     boolean authed=true;
 %>
 <security:oscarSec roleName="<%=roleName2$%>" objectName="_form" rights="r" reverse="<%=true%>">
@@ -91,10 +91,11 @@
 
 
 
-    <div style="display:block; width:100%; text-align:center; background-color: #FFFFFF;"><img alt="copyright" src="graphics/Rourke2020Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight"/>')"
-                                                   onMouseOut="hideLayer()">
-    </div>
-<div id="object1" style="position: absolute; background-color: FFFFDD; color: black; border-color: black; border-width: 20; left: 25px; top: -100px; z-index: +1" onmouseover="overdiv=1;" onmouseout="overdiv=0; setTimeout('hideLayer()',1000)">pop up description layer</div>
+<div style="width:100%;">
+	<img alt="copyright" width="80%" src="graphics/Rourke2020Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')" onMouseOut="hideLayer()" />
+</div>
+
+<div id="object1" style="position: absolute; background-color: #FFFFDD; color: black; border-color: black; border-width: 20px; left: 25px; top: -100px; z-index: +1" onmouseover="overdiv=1;" onmouseout="overdiv=0; setTimeout('hideLayer()',1000)">pop up description layer</div>
 	
 	<table cellpadding="0" cellspacing="0" class="Header" class="hidePrint">
 		<tr>

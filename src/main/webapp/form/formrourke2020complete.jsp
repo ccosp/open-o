@@ -60,8 +60,33 @@ java.util.Properties props = rec.getFormRecord(LoggedInInfo.getLoggedInInfoFromS
 request.setAttribute("frmProperties", props);
 request.setAttribute("frmRecord", rec);
 %>
+<!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.css" />
+	<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-3.6.4.min.js"></script>
+	<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>
+
+	<script>
+		jQuery(document).ready(function(){
+			jQuery( function() {
+				jQuery( "#rourke2020-tabs" ).tabs({
+					activate: function(event, ui) {
+						let selected = ui.newPanel[0];
+						if (selected.id === "tab-all") {
+							// tab button that shows all tabs.
+							jQuery(".tab-page").show();
+							// selected.hide();
+						} else {
+							jQuery(".tab-page").hide();
+							selected.show();
+						}
+						adjustSizes();
+					}
+				});
+			});
+		})
+	</script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/share/javascript/forms/forms-timed-autosave.js"></script>
 <title><%= "Rourke2020 Record for " + Encode.forHtmlAttribute(props.getProperty("c_pName", "")) + " DOB: " + props.getProperty("c_birthDate", "")%></title>
@@ -667,18 +692,37 @@ function init() {
 }
 
 </script>
+	<style>
+        .panel-page {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            width:100% !important;
+            align-items: stretch;
+        }
+        .ui-widget-content {
+            border:none !important;
+        }
+	</style>
 </head>
 <body onload="init()">
 <html:form styleId="frmP1" action="/form/formname">
-<table>
-<tr>
-<td id="cp1"><jsp:include page="formRourke2020p1.jsp" /></td>
-<td id="cp2"><jsp:include page="formRourke2020p2.jsp" /></td>
-<td id="cp3"><jsp:include page="formRourke2020p3.jsp" /></td>
-<td id="cp4"><jsp:include page="formRourke2020p4.jsp" /></td>
-
-</tr>
-</table>
+<div id="rourke2020-tabs">
+	<ul id="tab-list">
+		<li><a href="#tab-cp1">Page I</a></li>
+		<li><a href="#tab-cp2">Page II</a></li>
+		<li><a href="#tab-cp3">Page III</a></li>
+		<li><a href="#tab-cp4">Page IV</a></li>
+		<li><a href="#tab-all">All</a></li>
+	</ul>
+	<div class="panel-page" id="panel-page">
+		<div class="tab-page" id="tab-cp1"><jsp:include page="formRourke2020p1.jsp" /></div>
+		<div class="tab-page" id="tab-cp2"><jsp:include page="formRourke2020p2.jsp" /></div>
+		<div class="tab-page" id="tab-cp3"><jsp:include page="formRourke2020p3.jsp" /></div>
+		<div class="tab-page" id="tab-cp4"><jsp:include page="formRourke2020p4.jsp" /></div>
+		<div class="tab-page" id="tab-all"></div>
+	</div>
+</div>
 </html:form>
 <form id="frmPopUp" method="get" action=""></form>
 <form id="graph" method="post" action=""></form>

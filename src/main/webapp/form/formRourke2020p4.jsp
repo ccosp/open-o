@@ -83,9 +83,9 @@
 %>
 
 <body bgproperties="fixed" topmargin="0" leftmargin="0" rightmargin="0">
-    <div style="display:block; width:100%; text-align:center; background-color: #FFFFFF;">
-		<img alt="copyright" src="graphics/Rourke2020Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight"/>')" onMouseOut="hideLayer()">
-    </div>
+<div style="display:block; width:100%;">
+	<img alt="copyright" width="80%" src="graphics/Rourke2020Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')" onMouseOut="hideLayer()">
+</div>
 	<div id="object1" style="position: absolute; background-color: #FFFFDD; color: black; border-color: black; border-width: 20px; left: 25px; top: -100px; z-index: +1" onmouseover="overdiv=1;" onmouseout="overdiv=0; setTimeout('hideLayer()',1000)">pop up description layer</div>
 	<table cellpadding="0" cellspacing="0" class="Header" class="hidePrint">
 		<tr>

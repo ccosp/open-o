@@ -88,7 +88,8 @@
     
 %>
 
-    <div style="display:block; width:100%; text-align:center; background-color: #FFFFFF;"><img alt="copyright" src="graphics/Rourke2020Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')" onMouseOut="hideLayer()">
+    <div style="display:block; width:100%;">
+	    <img alt="copyright" width="80%" src="graphics/Rourke2020Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')" onMouseOut="hideLayer()">
     </div>
 <div id="object1" style="position: absolute; background-color: #FFFFDD; color: black; border-color: black; border-width: 20px; left: 25px; top: -100px; z-index: +1" onmouseover="overdiv=1;" onmouseout="overdiv=0; setTimeout('hideLayer()',1000)">pop up description layer</div>
 
@@ -776,7 +777,7 @@
 				</tr>				
 				<tr>
 					<rourke:discussionRadioSelect sectionName="p1_startles1m" formProperties="<%=props%>" showNoOption="<%=false%>" showNotDiscussedOption="<%=true%>"/>
-					<td>><bean:message key="oscarEncounter.formRourke1.formSuddenNoise" /></td>
+					<td><bean:message key="oscarEncounter.formRourke1.formSuddenNoise" /></td>
 				</tr>				
 				<tr>
 					<rourke:discussionRadioSelect sectionName="p1_calms1m" formProperties="<%=props%>" showNoOption="<%=false%>" showNotDiscussedOption="<%=true%>"/>

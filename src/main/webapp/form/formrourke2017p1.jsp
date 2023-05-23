@@ -41,7 +41,7 @@
 %>
 
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
-<%@ page import="oscar.util.*, oscar.form.*, oscar.form.data.*"%>
+<%@ page import="oscar.util.*, oscar.form.*"%>
 <%@ page import="oscar.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
@@ -88,7 +88,8 @@
     
 %>
 
-    <div style="display:block; width:100%; text-align:center; background-color: #FFFFFF;"><img alt="copyright" src="graphics/rourke2017Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')" onMouseOut="hideLayer()">
+    <div style="display:block; width:100%;">
+	    <img alt="copyright" src="graphics/rourke2017Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')" onMouseOut="hideLayer()">
     </div>
 <div id="object1" style="position: absolute; background-color: #FFFFDD; color: black; border-color: black; border-width: 20px; left: 25px; top: -100px; z-index: +1" onmouseover="overdiv=1;" onmouseout="overdiv=0; setTimeout('hideLayer()',1000)">pop up description layer</div>
 
@@ -134,7 +135,7 @@
 			<th><bean:message key="oscarEncounter.formRourke1.msgRourkeBabyRecord" /></th>
 		</tr>
 	</table>
-	<div id="patientInfop1" style="height:10%; overflow:auto;">
+	<div id="patientInfop1" style="overflow:auto;">
 	<table cellpadding="0" cellspacing="0" width="100%" border="0">
 		<tr valign="top">
 			<td align="center">
@@ -775,7 +776,7 @@
 				</tr>				
 				<tr>
 					<rourke:discussionRadioSelect sectionName="p1_startles1m" formProperties="<%=props%>" showNoOption="<%=false%>" showNotDiscussedOption="<%=true%>"/>
-					<td>><bean:message key="oscarEncounter.formRourke1.formSuddenNoise" /></td>
+					<td><bean:message key="oscarEncounter.formRourke1.formSuddenNoise" /></td>
 				</tr>				
 				<tr>
 					<rourke:discussionRadioSelect sectionName="p1_calms1m" formProperties="<%=props%>" showNoOption="<%=false%>" showNotDiscussedOption="<%=true%>"/>
