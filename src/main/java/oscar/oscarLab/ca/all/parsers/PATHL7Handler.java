@@ -70,8 +70,7 @@ public class PATHL7Handler implements MessageHandler {
     ORU_R01 msg = null;
 
     private static List<String> labDocuments = Arrays.asList("BCCACSP", "BCCASMP", "BLOODBANKT",
-            "CELLPATH", "CELLPATHR", "DIAG IMAGE", "MICRO3T",
-            "MICROGCMT", "MICROGRT", "MICROBCT", "TRANSCRIP", "NOTIF", "CYTO","TRANSPDF");
+            "CELLPATH", "CELLPATHR", "DIAG IMAGE", "MICRO3T", "MICROGCMT", "MICROGRT", "MICROBCT", "TRANSCRIP", "NOTIF", "CYTO");
 
     public static final String VIHARTF = "CELLPATHR";
 
@@ -713,7 +712,7 @@ public class PATHL7Handler implements MessageHandler {
      */
     public String getLabel() {
         Set<String> labels = new HashSet<>();
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder(" ");
 
         for (int i=0; i < msg.getRESPONSE().getORDER_OBSERVATIONReps(); i++){
             String usi = getUniversalServiceIdentifier(i);
@@ -727,7 +726,7 @@ public class PATHL7Handler implements MessageHandler {
             stringBuilder.append(label);
         }
 
-        return stringBuilder.toString();
+        return stringBuilder.toString().trim();
     }
 
     public String audit(){
