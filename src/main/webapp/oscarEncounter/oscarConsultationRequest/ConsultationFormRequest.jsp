@@ -436,8 +436,6 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 	var appointmentNo = '<%=appNo%>';
 </script>
 
-
-<%--<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/js/jquery_css/smoothness/jquery-ui-1.7.3.custom.css" />--%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-3.6.4.min.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js" ></script>
@@ -457,7 +455,7 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
    </script>
 
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/css/healthCareTeam.css" />
-<oscar:customInterface section="conreq"/>
+<%--<oscar:customInterface section="conreq"/>--%>
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/oscarEncounter/encounterStyles.css">
 
 <style type="text/css">
