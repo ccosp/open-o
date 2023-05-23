@@ -111,6 +111,7 @@ public final class FrmAction extends JSONAction {
                    String name = (String) e.nextElement();
                    request.setAttribute(name,props.getProperty(name));                   
                }
+               newID = 0;
             }
             //if we are printing all pages of form, grab info from db and merge with current page info
             else if( request.getParameter("submit").equals("printAll") || request.getParameter("submit").equals("printAllJasperReport")) {
@@ -136,7 +137,8 @@ public final class FrmAction extends JSONAction {
                         response.setHeader("Content-Disposition", "attachment; filename=\"Rourke2017_" + formId + ".pdf\"");
                     }
                     ((JasperReportPdfPrint) rec).PrintJasperPdf(response.getOutputStream(), loggedInInfo, demographicNo, formId, pagesToPrint);
-                    return null;
+	                newID = 0;
+					return null;
                 } else {
                     props = rec.getFormRecord(loggedInInfo, Integer.parseInt(request.getParameter("demographic_no")), Integer.parseInt(request.getParameter("formId")));
 
