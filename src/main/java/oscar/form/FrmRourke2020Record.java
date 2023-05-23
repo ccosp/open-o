@@ -34,6 +34,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.oscarehr.common.dao.MeasurementDao;
+import org.oscarehr.common.dao.forms.Rourke2020Dao;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Measurement;
 import org.oscarehr.util.LoggedInInfo;
@@ -41,7 +42,6 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.oscarehr.common.dao.forms.Rourke2020Dao;
 import oscar.form.model.FormRourke2020;
 import oscar.form.util.JasperReportPdfPrint;
 import oscar.oscarEncounter.data.EctFormData;
@@ -196,7 +196,7 @@ public class FrmRourke2020Record extends FrmRecord implements JasperReportPdfPri
                      "p4_wt18m", "p4_wt24m", "p1_ht1w", "p1_ht2w", "p1_ht1m", "p2_ht2m", "p2_ht4m", "p2_ht6m", "p3_ht9m",
                      "p3_ht12m", "p3_ht15m", "p4_ht18m", "p4_ht24m"};
 
-                Rourke2020Dao rourkeDao = (Rourke2020Dao)SpringUtils.getBean("Rourke2020Dao");
+                Rourke2020Dao rourkeDao = SpringUtils.getBean(Rourke2020Dao.class);
                 FormRourke2020 frmRourke = rourkeDao.find(existingID);
 
                 if (frmRourke != null) {

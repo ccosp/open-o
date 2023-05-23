@@ -88,7 +88,7 @@
     
 %>
 
-    <div style="display:block; width:100%; text-align:center; background-color: #FFFFFF;"><img alt="copyright" src="graphics/rourke2017Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')"
+    <div style="width:100%;"><img alt="copyright" src="graphics/rourke2017Banner.png" onMouseOver="popLayer('<bean:message key="oscarEncounter.formRourke2009.formCopyRight" />')"
                                                    onMouseOut="hideLayer()">
     </div>
 <div id="object1"
