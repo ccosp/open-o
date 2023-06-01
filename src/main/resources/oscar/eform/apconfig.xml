@@ -3152,4 +3152,16 @@
 		<ap-output>${source_names}</ap-output>
 	</databaseap>
 
+	<databaseap>
+		<ap-name>newsletter</ap-name>
+		<ap-sql>SELECT newsletter FROM demographic WHERE demographic_no=${demographic}</ap-sql>
+		<ap-output>${newsletter}</ap-output>
+	</databaseap>
+
+	<databaseap>
+		<ap-name>doctor_address_label</ap-name>
+		<ap-sql>SELECT * FROM provider JOIN demographic ON provider.provider_no = demographic.provider_no where demographic.demographic_no=${demographic}</ap-sql>
+		<ap-output>${address}</ap-output>
+	</databaseap>
+
 </eformap-config>
