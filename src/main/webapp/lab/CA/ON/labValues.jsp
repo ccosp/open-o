@@ -116,6 +116,12 @@ if (! (demographicNo == null || "null".equals(demographicNo) || "undefined".equa
         .LoRes {
             color: blue;
         }
+        table {
+	        border-collapse: collapse;
+	        width:100%;
+	        margin:0;
+	        padding: 0;
+        }
 	</style>
 
 	<style media="print">
@@ -151,178 +157,144 @@ window.close();
 </script>
 
     <%} else{%>
-<form name="acknowledgeForm" method="post"
-	action="../../../oscarMDS/UpdateStatus.do">
+  <div class="container">
+<form name="acknowledgeForm" method="post" action="../../../oscarMDS/UpdateStatus.do">
 
-<table width="100%" height="100%" border="0" cellspacing="0"
-	cellpadding="0">
+<table>
 	<tr>
-		<td valign="top">
-
-		<table width="100%" border="1" cellspacing="0" cellpadding="3"
-			bgcolor="#9999CC" bordercolordark="#bfcbe3">
+		<td>
+		<table>
 			<tr>
-				<td width="66%" align="middle" class="Cell">
-				<div class="Field2"><bean:message
-					key="oscarMDS.segmentDisplay.formDetailResults" /></div>
+				<td>
+				<div class="Field2" style="text-align: center;">
+					<bean:message key="oscarMDS.segmentDisplay.formDetailResults" />
+				</div>
 				</td>
 			</tr>
 			<tr>
-				<td bgcolor="white" valign="top">
-				<table valign="top" border="0" cellpadding="2" cellspacing="0"
-					width="100%">
-					<tr valign="top">
-						<td valign="top" width="33%" align="left">
-						<table width="100%" border="0" cellpadding="2" cellspacing="0"
-							valign="top">
+				<td>
+				<table>
+					<tr>
+						<td>
+						<table>
 							<tr>
-								<td valign="top" align="left">
-								<table valign="top" border="0" cellpadding="3" cellspacing="0"
-									width="50%">
+								<td>
+								<table>
 									<tr>
-										<td colspan="2">
+										<td>
 										<div class="FieldData"><strong><bean:message
 											key="oscarMDS.segmentDisplay.formPatientName" />: </strong>
 											<%=Encode.forHtml(demographic.getFormattedName())%>
 										</div>
 
 										</td>
-										<td colspan="2">
+										<td>
 										<div class="" nowrap><strong><bean:message
 											key="oscarMDS.segmentDisplay.formSex" />: </strong><%=demographic.getSex()%>
 										</div>
 										</td>
 									</tr>
 									<tr>
-										<td colspan="2">
+										<td>
 										<div class="FieldData"><strong><bean:message
 											key="oscarMDS.segmentDisplay.formDateBirth" />: </strong> <%=DemographicData.getDob(demographic,"-")%>
 										</div>
 										</td>
-										<td colspan="2">
+										<td>
 										<div class="FieldData"><strong><bean:message
 											key="oscarMDS.segmentDisplay.formAge" />: </strong><%=demographic.getAge()%>
 										</div>
 										</td>
 									</tr>
-
-
 								</table>
 								</td>
-								<td width="33%" valign="top"></td>
+								<td width="33%"></td>
 							</tr>
 						</table>
 						</td>
 					</tr>
 				</table>
 				</td>
-
 			</tr>
-
-<%--			<tr>--%>
-<%--				<td align="center" bgcolor="white" colspan="2">--%>
-<%--				<table width="100%" height="20" border="0" cellpadding="0"--%>
-<%--					cellspacing="0">--%>
-<%--					<tr>--%>
-<%--						<td align="center" bgcolor="white">--%>
-<%--						<div class="FieldData">--%>
-<%--						<center></center>--%>
-<%--						</div>--%>
-<%--						</td>--%>
-<%--					</tr>--%>
-<%--				</table>--%>
-<%--				</td>--%>
-<%--			</tr>--%>
 		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table name="tblDiscs" id="tblDiscs" class="table table-condensed table-striped">
+				<thead>
+				<tr class="Field2">
+					<th class="Cell"><bean:message
+						key="oscarMDS.segmentDisplay.formTestName" /></th>
+					<th class="Cell"><bean:message
+						key="oscarMDS.segmentDisplay.formResult" /></th>
+					<th class="Cell"><bean:message
+						key="oscarMDS.segmentDisplay.formAbn" /></th>
+					<th class="Cell"><bean:message
+						key="oscarMDS.segmentDisplay.formReferenceRange" /></th>
+					<th class="Cell"><bean:message
+						key="oscarMDS.segmentDisplay.formUnits" /></th>
+					<th class="Cell"><bean:message
+						key="oscarMDS.segmentDisplay.formDateTimeCompleted" /></th>
+				</tr>
+				</thead>
+				<tbody>
+				<%
+	                            if (list != null){
+	                               for (int i = 0 ;  i < list.size(); i++){
+	                                   Map h = (Map) list.get(i);
+	                                   String lineClass = "NormalRes";
+	                                   if ( h.get("abn") != null && h.get("abn").equals("A")){
+	                                      lineClass = "AbnormalRes";
+	                                   }
+		                               if ( h.get("abn") != null && (h.get("abn").toString().toLowerCase().contains("l")) ){
 
+			                               lineClass = "LoRes";
 
+		                               }
 
-<%--		<table style="page-break-inside: avoid;" bgcolor="#003399" border="0"--%>
-<%--			cellpadding="0" cellspacing="0" width="100%">--%>
-<%--			<tr>--%>
-<%--				<td colspan="4" height="7">&nbsp;</td>--%>
-<%--			</tr>--%>
-<%--			<tr>--%>
-<%--				<td colspan="4" height="7">&nbsp;</td>--%>
-<%--			</tr>--%>
+		                               if ( h.get("abn") != null && (h.get("abn").toString().toLowerCase().contains("h")) ){
 
-<%--		</table>--%>
+			                               lineClass = "AbnormalRes";
 
-		<table bordercolor="#9966FF" bordercolordark="#bfcbe3"
-			name="tblDiscs" id="tblDiscs" class= "table table-condensed table-striped">
-			<tr class="Field2">
-				<th class="Cell"><bean:message
-					key="oscarMDS.segmentDisplay.formTestName" /></th>
-				<th class="Cell"><bean:message
-					key="oscarMDS.segmentDisplay.formResult" /></th>
-				<th class="Cell"><bean:message
-					key="oscarMDS.segmentDisplay.formAbn" /></th>
-				<th class="Cell"><bean:message
-					key="oscarMDS.segmentDisplay.formReferenceRange" /></th>
-				<th class="Cell"><bean:message
-					key="oscarMDS.segmentDisplay.formUnits" /></th>
-				<th class="Cell"><bean:message
-					key="oscarMDS.segmentDisplay.formDateTimeCompleted" /></th>
-			</tr>
-			<%  int linenum = 0;
-				
-                            if (list != null){
-                               for (int i = 0 ;  i < list.size(); i++){                            	                               		                               	   
-                                   Map h = (Map) list.get(i);
-                                   String lineClass = "NormalRes";
-                                   if ( h.get("abn") != null && h.get("abn").equals("A")){
-                                      lineClass = "AbnormalRes";
-                                   }
-	                               if ( h.get("abn") != null && (h.get("abn").toString().toLowerCase().contains("l")) ){
+		                               }
+				%>
 
-		                               lineClass = "LoRes";
+				<tr class="<%=lineClass%>">
+					<td><%=h.get("testName") %></td>
+					<td><%=h.get("result") %></td>
+					<td><%=h.get("abn") %></td>
+					<td><%=h.get("range")%></td>
+					<td><%=h.get("units") %></td>
+					<td><%=h.get("collDate")%></td>
+				</tr>
 
-	                               }
-
-	                               if ( h.get("abn") != null && (h.get("abn").toString().toLowerCase().contains("h")) ){
-
-		                               lineClass = "AbnormalRes";
-
-	                               }
-%>
-
-			<tr bgcolor="<%=(linenum % 2 == 1 ? highlight : "")%>"
-				class="<%=lineClass%>">
-				<td><%=h.get("testName") %></td>
-				<td><%=h.get("result") %></td>
-				<td><%=h.get("abn") %></td>
-				<td><%=h.get("range")%></td>
-				<td><%=h.get("units") %></td>
-				<td><%=h.get("collDate")%></td>
-			</tr>
-
-			<%     }
-                            } %>
-
-		</table>
-
-		<table width="100%" border="0" cellspacing="0" cellpadding="3"
-			class="MainTableBottomRowRightColumn" bgcolor="#003399">
+				<%     }
+	                            } %>
+				</tbody>
+			</table>
+		</td>
+		<tr>
+			<td>
+			<table class="MainTableBottomRowRightColumn" bgcolor="#003399">
 			<tr>
-				<td align="left"><input type="button" class="btn DoNotPrint"
+				<td align="left"><input type="button" class="btn btn-danger DoNotPrint"
 					value=" <bean:message key="global.btnClose"/> "
 					onClick="window.close()"> <input type="button" class="btn DoNotPrint"
 					value=" <bean:message key="global.btnPrint"/> "
 					onClick="window.print()">
-                               <%-- <input type="button" value="Plot"
-                                onclick="window.open('../../../oscarEncounter/GraphMeasurements.do?method=actualLab&demographic_no=<%=demographicNo%>&labType=<%=labType%>&identifier=<%=identifier%>&testName=<%=testName%>');"/>
-                                --%>
-                               <input type="button" value="Plot" class="btn DoNotPrint"
+                               <input type="button" value="Plot" class="btn btn-primary DoNotPrint"
                                 onclick="window.location = 'labValuesGraph.jsp?demographic_no=<%=demographicNo%>&labType=<%=labType%>&identifier=<%=identifier%>&testName=<%=testName%>';"/>
 
                                 </td>
 			</tr>
 		</table>
-		</td>
-	</tr>
+			</td>
+		</tr>
 </table>
 
 </form>
+  </div>
 <%}%>
 </body>
 </html>

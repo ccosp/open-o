@@ -2525,7 +2525,7 @@
 			FROM measurements m
 			LEFT JOIN measurementsExt me
 			ON (m.id = measurement_id)
-			WHERE m.demographicNo = 753
+			WHERE m.demographicNo = ${demographic}
 			AND me.id IS NOT NULL
 			AND me.keyval = "identifier"
 			) latest

@@ -197,10 +197,10 @@
                             <logic:match name="data" property="measuringInstrc" value="NULL" >&nbsp;</logic:match>
                             <logic:notMatch name="data" property="measuringInstrc" value="NULL" ><bean:write name="data" property="measuringInstrc" /></logic:notMatch>
                         </td>
-						<td><bean:write name="data" property="dataField" /></td>
-						<td><bean:write name="data" property="comments" /></td>
-						<td><bean:write name="data" property="dateObservedAsDate" format="yyyy-MM-dd" /></td>
-						<td><bean:write name="data" property="dateEnteredAsDate" format="yyyy-MM-dd"/></td>
+						<td title="data"><bean:write name="data" property="dataField" /></td>
+						<td title="comments"><bean:write name="data" property="comments" /></td>
+						<td title="observed date"><bean:write name="data" property="dateObservedAsDate" format="yyyy-MM-dd" /></td>
+						<td title="entered date"><bean:write name="data" property="dateEnteredAsDate" format="yyyy-MM-dd"/></td>
 						<security:oscarSec roleName="<%=roleName$%>" objectName="_flowsheet" rights="w">
 						<td class="DoNotPrint" >
 						    <logic:present name="data" property="remoteFacility">
