@@ -876,7 +876,7 @@
 						<%
 						} else if (LabResultData.isHRM(type)) {
 						%>
-						<a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>')">ATT</a>
+						<a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>&segmentID=<%=tl.getTableId()%>')">ATT</a>
 						<%
 						} else {
 						%>

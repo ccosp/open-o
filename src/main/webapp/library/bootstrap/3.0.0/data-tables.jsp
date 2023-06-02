@@ -505,11 +505,7 @@
 
 	/* The patch Boot3/Datatables patch*/
 	$(document).ready(function() {
-		$('#example').DataTable( {
-            "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/<bean:message key="global.i18nLanguagecode"/>.json"
-                    }
-            } );
+		$('#example').DataTable();
 
 	//The patch Boot3/Datatables patch - insert after you initialise dataTable
 	$('div.dataTables_filter label select').addClass('form-control');

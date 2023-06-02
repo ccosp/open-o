@@ -968,7 +968,6 @@ public class MSPReconcile {
 	/**
 	 * Updates the paymentMethod of the specified bill with the supplied paymentMethod code
 	 * @param billingMasterNo String - The uid of the bill to be updated
-	 * @param paymentMethod String - The paymentMethod code
 	 */
 	private void updatePaymentMethodHlp(String billingMasterNo, String paymentMethod) {
 		Billingmaster b = billingmasterDao.getBillingmaster(Integer.parseInt(billingMasterNo));
@@ -2036,11 +2035,13 @@ public class MSPReconcile {
 		BillingHistoryDAO dao = new BillingHistoryDAO();
 		//get all bills with explanation of type 'BG'
 		TeleplanS00Dao sDao = SpringUtils.getBean(TeleplanS00Dao.class);
+		BillingmasterDAO bDao = SpringUtils.getBean(BillingmasterDAO.class);
 		//for each bill, get amount owing
 		for (TeleplanS00 s : sDao.findBgs()) {
 			int billingmaster_no = UtilMisc.safeParseInt(s.getOfficeNo());
+			Billingmaster billingMaster = bDao.getBillingmaster(billingmaster_no);
 			//if billingmaster_no = 0 indicates corrupt record id
-			if (billingmaster_no != 0) {
+			if (shouldMakeInternalAdjustment(billingmaster_no, billingMaster)) {
 				String strBmNo = String.valueOf(billingmaster_no);
 				double parseAmt = UtilMisc.safeParseDouble(s.getBillAmount()) * .01;//ensure correct decimal position
 				double amountOwing = this.getAmountOwing(strBmNo, String.valueOf(parseAmt), "");
@@ -2052,5 +2053,12 @@ public class MSPReconcile {
 				}
 			}
 		}
+	}
+
+	private boolean shouldMakeInternalAdjustment(int billingMasterNumber,
+			Billingmaster billingMaster) {
+		return billingMasterNumber != 0
+				&& billingMaster != null
+				&& "E".equals(billingMaster.getBillingstatus());
 	}
 }
