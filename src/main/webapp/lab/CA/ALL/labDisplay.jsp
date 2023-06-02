@@ -1878,6 +1878,7 @@ for(int mcount=0; mcount<multiID.length; mcount++){
                                            	%>
 											
 											<%
+												// for Excelleris Embedded Content - ie: PDF, RTF, etc...
 												if((handler.getMsgType().equals("ExcellerisON") || handler.getMsgType().equals("PATHL7")) && handler.getOBXValueType(j,k).equals("ED")) {
 													String legacy = "";
 													if(handler.getMsgType().equals("PATHL7") && ((PATHL7Handler)handler).isLegacy(j,k) ) {
