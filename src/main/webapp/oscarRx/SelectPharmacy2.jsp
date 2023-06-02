@@ -23,15 +23,12 @@
     Ontario, Canada
 
 --%>
-<%@page import="java.io.StringWriter"%>
-<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
-<%@page import="org.apache.commons.lang.StringEscapeUtils"%>
+
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%@ page import="oscar.oscarRx.data.*,java.util.*"%>
-<%@ page import="org.oscarehr.common.model.PharmacyInfo" %>
 <%@ page import="oscar.OscarProperties" %>
 
 <%
@@ -51,11 +48,9 @@
 <html:html locale="true">
 <head>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-ui-1.10.2.custom.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-3.6.4.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/Oscar.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title><bean:message key="SelectPharmacy.title" /></title>
 <html:base />
 
@@ -84,9 +79,7 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 .ui-autocomplete {
 	background-color: #CEF6CE;
 	border: 3px outset #2EFE2E;
-    width:300px;
-    overflow-y: auto;
-    max-height: 500px;
+	width:300px;
 }
 
 .ui-menu-item:hover {
@@ -95,598 +88,371 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 }
 
 </style>
-
 <script type="text/javascript">
+( function($) {
+	$(function() {
+		var demo = $("#demographicNo").val();
+		$.get("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=getPharmacyFromDemographic&demographicNo="%>"+demo,
+			function( data ) {
+				if(data.length > 0){
+					$("#preferredList").html("");
+					var json;
+					var preferredPharmacyInfo;
+					for( var idx = 0; idx < data.length; ++idx  ) {
+						preferredPharmacyInfo = data[idx];
+						json = JSON.stringify(preferredPharmacyInfo);
 
-$(function() {
-	 
-    $( "#autocompletepharmacy" ).autocomplete({
-      source: function( request, response ) {
-    	  
-    	  var city = $("#autocompletepharmacyCity").val();
-    	  var searchTerm = request.term;
-    	  
-    	  if( city != null && city != "") {
-    		searchTerm += "," + city;  
-    	  }
-    	  
-    	  $.ajax({
-    		  url: "<%= request.getContextPath() %>/oscarRx/managePharmacy.do?method=search",
-    		  type: "GET",
-    		  dataType: "json",
-    		  data: {
-    			  term: searchTerm   			  
-    		  },
-    		  contentType: "application/json",
-    		  success: function( data ) {
-    			  response($.map(data, function( item ) {
-    				  return {
-    					  label: item.name + " " + item.address + " " + item.city,
-    					  value: item.name,
-    					  pharmacy: item
-    				  }
-    			  }));
-    		  }
-    	  });
-      },
-      minLength: 2,  
-      focus: function( event, ui ) {
-    	  $( "#autocompletepharmacy" ).val( ui.item.value );
-          return false;
-      },
-      select: function(event, ui) {    	  
-    	  $('#pharmacyId').val(ui.item.pharmacy.id);
-    	  $('#pharmacyName').val(ui.item.pharmacy.name);
-    	  $('#pharmacyAddress').val(ui.item.pharmacy.address);
-    	  $('#pharmacyCity').val(ui.item.pharmacy.city);
-    	  $('#pharmacyProvince').val(ui.item.pharmacy.province);
-    	  $('#pharmacyPostalCode').val(ui.item.pharmacy.postalCode);
-    	  $('#pharmacyPhone1').val(ui.item.pharmacy.phone1);
-    	  $('#pharmacyPhone2').val(ui.item.pharmacy.phone2);
-    	  $('#pharmacyFax').val(ui.item.pharmacy.fax);
-    	  $('#pharmacyEmail').val(ui.item.pharmacy.email);
-    	  $('#pharmacyServiceLocationId').val(ui.item.pharmacy.serviceLocationIdentifier);
-    	  $('#pharmacyNotes').val(ui.item.pharmacy.notes);
-    	  return false;
-      }      
-    });
-    
-    $( "#autocompletepharmacyCity" ).autocomplete({
-        source: function( request, response ) {
-        	
-      	  $.ajax({
-      		  url: "<%= request.getContextPath() %>/oscarRx/managePharmacy.do?method=searchCity",
-      		  type: "GET",
-      		  dataType: "json",
-      		  data: {
-      			  term: request.term    			  
-      		  },
-      		  contentType: "application/json",
-      		  success: function( data ) {
-      			  response($.map(data, function( item ) {
-      				  
-      				  return {
-      					  label: item,
-      					  value: item      					  
-      				  }
-      			  }));
-      		  }
-      	  });
-        },
-        minLength: 2,  
-        focus: function( event, ui ) {
-      	  $( "#autocompletepharmacyCity" ).val( ui.item.value );
-            return false;
-        },
-        select: function(event, ui) {    	  
-      	  return false;
-        }      
+                            var pharm = "<div prefOrder='"+idx+"' pharmId='"+preferredPharmacyInfo.id+"'><table><tr><td class='prefAction prefUp'> Up </td>";
+                            pharm += "<td rowspan='3' style='padding-left: 5px'>" + preferredPharmacyInfo.name + "<br /> ";
+                            pharm += preferredPharmacyInfo.address + ", " + preferredPharmacyInfo.city + " " +preferredPharmacyInfo.province + "<br /> ";
+                            pharm += preferredPharmacyInfo.postalCode + "<br />";
+                            pharm += "Main Phone: " + preferredPharmacyInfo.phone1 + "<br />";
+                            pharm += "Fax: " + preferredPharmacyInfo.fax + "<br />";
+                            pharm += "<a href='#'  onclick='viewPharmacy(" + preferredPharmacyInfo.id  + ");'>View More</a>" + "</td>";
+                            pharm += "</tr><tr><td class='prefAction prefUnlink'> Unlink </td></tr><tr><td class='prefAction prefDown'>Down</td></tr></table></div>";
+
+						$("#preferredList").append(pharm);
+					}
+
+					$(".prefUnlink").click(function(){
+						  var data = "pharmacyId=" + $(this).closest("div").attr("pharmId") + "&demographicNo=" + demo;
+						  $.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=unlink",
+							  data, function( data ) {
+								if( data.id ) {
+									window.location.reload(false);
+								}
+								else {
+									alert("Unable to unlink pharmacy");
+								}
+							}, "json");
+					  });
+
+					$(".prefUp").click(function(){
+						if($(this).closest("div").prev() != null){
+							var $curr = $(this).closest("div");
+							var $prev = $(this).closest("div").prev();
+
+							var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) - 1);
+							$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+							  data, function( data2 ) {
+									if( data2.id ) {
+										data = "pharmId=" + $prev.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($prev.attr("prefOrder")) + 1);
+										$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+										  data, function( data3 ) {
+												if( data3.id ) {
+													window.location.reload(false);
+												}
+										}, "json");
+									}
+							}, "json");
+						}
+					  });
+
+					$(".prefDown").click(function(){
+						if($(this).closest("div").next() != null){
+							var $curr = $(this).closest("div");
+							var $next = $(this).closest("div").next();
+
+							var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) + 1);
+							$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+							  data, function( data2 ) {
+									if( data2.id ) {
+										data = "pharmId=" + $next.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($next.attr("prefOrder")) - 1);
+										$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+										  data, function( data3 ) {
+												if( data3.id ) {
+													window.location.reload(false);
+												}
+										}, "json");
+									}
+							}, "json");
+						}
+					  });
+				}
+		}, "json");
+
+		var pharmacyNameKey = new RegExp($("#pharmacySearch").val(), "i");
+		var pharmacyCityKey = new RegExp($("#pharmacyCitySearch").val(), "i");
+		var pharmacyPostalCodeKey =  new RegExp($("#pharmacyPostalCodeSearch").val(), "i");
+		var pharmacyFaxKey = new RegExp($("#pharmacyFaxSearch").val(), "i");
+		var pharmacyPhoneKey = new RegExp($("#pharmacyPhoneSearch").val(), "i");
+		var pharmacyAddressKey =  new RegExp($("#pharmacyAddressSearch").val(), "i");
+
+		$("#pharmacySearch").keyup(function(){
+			updateSearchKeys();
+		  $(".pharmacyItem").hide();
+		  $.each($(".pharmacyName"), function( key, value ) {
+			if($(value).html().toLowerCase().search(pharmacyNameKey) >= 0){
+				if($(value).siblings(".city").html().search(pharmacyCityKey) >= 0){
+                    if($(value).siblings(".postalCode").html().search(pharmacyPostalCodeKey) >= 0) {
+                        if ($(value).siblings(".fax").html().search(pharmacyFaxKey) >= 0) {
+							if ($(value).siblings(".fax").html().search(pharmacyAddressKey) >= 0) {
+								$(value).parent().show();
+							}
+                        }
+                    }
+				}
+			}
+		  });
+	  });
+
+	  $("#pharmacyCitySearch").keyup(function(){
+		  updateSearchKeys();
+		  $(".pharmacyItem").hide();
+		  $.each($(".city"), function( key, value ) {
+			if($(value).html().toLowerCase().search(pharmacyCityKey) >= 0){
+				if($(value).siblings(".pharmacyName").html().search(pharmacyNameKey) >= 0){
+                    if($(value).siblings(".postalCode").html().search(pharmacyPostalCodeKey) >= 0) {
+                        if ($(value).siblings(".fax").html().search(pharmacyFaxKey) >= 0) {
+							if ($(value).siblings(".fax").html().search(pharmacyAddressKey) >= 0) {
+								$(value).parent().show();
+							}
+                        }
+                    }
+				}
+			}
+		  });
+	  });
+
+        $("#pharmacyPostalCodeSearch").keyup(function(){
+			updateSearchKeys();
+            $(".pharmacyItem").hide();
+            $.each($(".postalCode"), function( key, value ) {
+                if($(value).html().toLowerCase().search(pharmacyPostalCodeKey) >= 0){
+                    if($(value).siblings(".pharmacyName").html().search(pharmacyNameKey) >= 0){
+                        if($(value).siblings(".city").html().search(pharmacyCityKey) >= 0){
+                            if($(value).siblings(".fax").html().search(pharmacyFaxKey) >= 0){
+                                $(value).parent().show();
+                            }
+                        }
+					}
+                }
+            });
+        });
+
+	  $("#pharmacyFaxSearch").keyup(function(){
+		  updateSearchKeys();
+		  $(".pharmacyItem").hide();
+		  $.each($(".fax"), function( key, value ) {
+			if($(value).html().search(pharmacyFaxKey) >= 0 || $(value).html().split("-").join("").search(pharmacyFaxKey) >= 0){
+				if($(value).siblings(".pharmacyName").html().search(pharmacyNameKey) >= 0) {
+					if ($(value).siblings(".city").html().search(pharmacyCityKey) >= 0) {
+						if ($(value).siblings(".postalCode").html().search(pharmacyPostalCodeKey) >= 0) {
+							$(value).parent().show();
+						}
+					}
+				}
+			}
+		  });
+	  });
+
+        $("#pharmacyPhoneSearch").keyup(function(){
+			updateSearchKeys();
+            $(".pharmacyItem").hide();
+            $.each($(".phone"), function( key, value ) {
+                if($(value).html().search(pharmacyPhoneKey) >= 0 || $(value).html().split("-").join("").search(pharmacyPhoneKey) >= 0){
+                    if($(value).siblings(".pharmacyName").html().search(pharmacyNameKey) >= 0){
+                        if($(value).siblings(".city").html().search(pharmacyCityKey) >= 0){
+                            if($(value).siblings(".postalCode").html().search(pharmacyPostalCodeKey) >= 0) {
+                                $(value).parent().show();
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+		$("#pharmacyAddressSearch").keyup(function(){
+			updateSearchKeys()
+			$(".pharmacyItem").hide();
+			$.each($(".address"), function( key, value ) {
+				if($(value).html().search(pharmacyAddressKey) >= 0 || $(value).html().split("-").join("").search(pharmacyAddressKey) >= 0){
+					if($(value).siblings(".pharmacyName").html().search(pharmacyNameKey) >= 0){
+						if($(value).siblings(".city").html().search(pharmacyCityKey) >= 0){
+							if($(value).siblings(".postalCode").html().search(pharmacyPostalCodeKey) >= 0) {
+								$(value).parent().show();
+							}
+						}
+					}
+				}
+			});
+		});
+
+      $(".pharmacyItem").click(function(){
+		  var pharmId = $(this).attr("pharmId");
+
+		  $("#preferredList div").each(function(){
+			  if($(this).attr("pharmId") == pharmId){
+				  alert("Selected pharamacy is already selected");
+				  return false;
+			  }
+		  });
+
+		  var data = "pharmId=" + pharmId + "&demographicNo=" + demo + "&preferredOrder=" + $("#preferredList div").length;
+
+		  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=setPreferred"%>", data, function( data ) {
+			if( data.id ) {
+				window.location.reload(false);
+			}
+			else {
+				alert("There was an error setting your preferred Pharmacy");
+			}
+		  },"json");
       });
-    
-    var length = $('#preferedPharmacy>option').length;
-    
-    if(  length > 0 ) {
-    	    
-    	var select = $('#preferedPharmacy>option:selected');
-		editPharmacy($(select).val());
-		
-    }
-    
-  });
   
-  function isFaxNumberCorrect() {
-	  
-	  var faxNumber = $("#pharmacyFax").val().trim();
-	  var isCorrect = faxNumber.match(/^1?\s?\(?[0-9]{3}\)?[\-\s]?[0-9]{3}[\-\s]?[0-9]{4}$/);
-  	
-	  if( !isCorrect  ) {
-	  		
-	  	alert("Please enter the fax number in the format 9051234567");
-	  	setTimeout( function() {
-	  			$("#pharmacyFax").focus();	
-	  	},1);
-	  		
- 	  }
-	  
-	  return isCorrect;
-  	
-  }
-  
-  function editPharmacy(data) {
-	  resetForm();
-	  var json = JSON.parse(data);
-	  
-	  $('#pharmacyId').val(json["id"]);
-	  $('#pharmacyName').val(json["name"]);
-	  $('#pharmacyAddress').val(json["address"]);
-	  $('#pharmacyCity').val(json["city"]);
-	  $('#pharmacyProvince').val(json["province"]);
-	  $('#pharmacyPostalCode').val(json["postalCode"]);
-	  $('#pharmacyPhone1').val(json["phone1"]);
-	  $('#pharmacyPhone2').val(json["phone2"]);
-	  $('#pharmacyFax').val(json["fax"]);
-	  $('#pharmacyServiceLocationId').val(json["serviceLocationIdentifier"]);
-	  $('#pharmacyNotes').val(json["notes"]);
-	  
-  }
-  
-  function resetForm() {
-	  $('#pharmacyId').val("");
-	  $('#pharmacyName').val("");
-	  $('#pharmacyAddress').val("");
-	  $('#pharmacyCity').val("");
-	  $('#pharmacyProvince').val("");
-	  $('#pharmacyPostalCode').val("");
-	  $('#pharmacyPhone1').val("");
-	  $('#pharmacyPhone2').val("");
-	  $('#pharmacyFax').val("");
-	  $('#pharmacyEmail').val("");
-	  $('#pharmacyServiceLocationId').val("");
-	  $('#pharmacyNotes').val("");
-	  
-	  return false;
-  }
-  
-  function savePharmacy() {
-	  
-	  if( !confirm("You are about to edit/add a pharmacy to the database.  Is this what you want?\nSelect set Preferred Pharmacy to add pharmacy to the patient.")) {
-		  return false;
-	  }
-	  
-	  if( !isFaxNumberCorrect() ) {
-		  return false;
-	  }
-	  
-	  
-	  if( $("#pharmacyId").val() != null && $("#pharmacyId").val() != "" ) {
-	  	  
-		  var data = $("#pharmacyForm").serialize();
-		  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=save"%>",
-			  data, function( data ) {
-		      	if( data.id ) {
-		      		
-		      		if( $('#preferedPharmacy option').length > 0 ) {
-		      			var select = $('#preferedPharmacy>option:selected');
-		      			var json = JSON.parse($(select).val());
-		      			if( data.id = json.id ) {	      			
-		      				$(select).val(JSON.stringify(data));
-		      			}
-		      		}
-		      	    alert("Record saved!");
-		      	    resetForm();
-		      	    
-		      	}
-		      	else {
-		      	    alert("There was a problem saving your record");
-		      	}
-		  },
-		  "json"	  
-		  );
-	  }
-	  else {
-		  addPharmacy();
-	  }
-	  
-	  return false;
-  }
-  
-  function setPreferredPharmacy() {
-	  
-	  if( $('#preferredOrder>option:selected').val() == -1 ) {
-		  alert("You have not set the preference order for this pharmacy");
-		  return false;
-	  }
-	  
-	  if( $("#pharmacyId").val() == "" ) {
-		  alert("You must save or add the pharmacy first before setting it as a preferred pharmacy");
-		  return false;
-	  }
-	  	  
-	  if( $('#preferredOrder > option:selected').val() > $('#preferedPharmacy > option').length) {
-		  
-		  $('#preferredOrder').val($('#preferedPharmacy > option').length+1);
-		  
-	  }
-	  
-	  var data = $("#pharmacyForm").serialize();
-	  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=setPreferred"%>",
-		  data, function( data ) {
-		  
-		  	if( data.id ) {
-			  
-		  		populatePreferredPharmacy();	
-		  		
-		  		setTimeout( function() {
-		  			$("#preferedPharmacy > option").each( function() {
-			  			
-			  			var val = JSON.parse($(this).val());
-			  			
-			  			if( val.id == data.id ) {
-			  				$(this).prop("selected",true);
-			  			}
-			  		});
-			  		
-		  			alert("Preferred Pharmacy set");	
-		  		}, 1000);
-			  	
-		  		
-	  			
-	  		}
-	  		else {
-	  			
-	  			alert("There was an error setting your preferred Pharmacy");
-	  			
-	  		}
-		},
-		"json"
-	);
-
-	return false;
-  }
-  
-  
-  function addPharmacy() {
-	  
-	  if( $("#pharmacyName").val() == "" ) {
-		  alert("Please fill in at least the name of a pharmacy");
-		  return false;
-	  } 
-	  
-	  var data = $("#pharmacyForm").serialize();
-	  
-	  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=add"%>",
-			  data, function( data ) {
-		  		if( data.success ) {
-		  			alert("Pharmacy was added!");
-		  			resetForm();
-		  		}
-		  		else {
-		  			alert("There was an error saving your Pharmacy");
-		  		}
-	  		},
-	  		"json"
-	  	);
-	  
-	  return false;
-  }
-  
-  function unlinkPharmacy(data) {
-	  
-	  if( $('#preferedPharmacy > option').length == 0 ) {
-		  alert("There are no Pharmacies to unlink!");
-		  return false;
-	  }
-	  
-	  
-	  var data = $("#pharmacyForm").serialize();
-	  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=unlink"%>",
-		  data, function( data ) {
-		  	
-		  	if( data.id ) {
-			  
-		  		populatePreferredPharmacy();			  	
-			  	
-			  	alert("Pharmacy was successfully removed from the preferred pharmacy list");
-	  			
-	  		}
-	  		else {
-	  			
-	  			alert("There was an error setting your preferred Pharmacy");
-	  			
-	  		}
-		},
-		"json"
-	);
-	  
-
-	return false;
-	  
-  }
-  
-  function deletePharmacy(data) {
-	  
-	  if( $("#pharmacyId").val() == "" ) {
-		  alert("Please select a pharmacy to delete!");
-		  return false;
-	  }
-	  
-	  
-	  if( confirm("You are about to remove this pharmacy from EVERY patient's preferred list.  Are you sure you want to continue?")) {
-		  
-		  var data = $("#pharmacyForm").serialize();
-		  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=delete"%>",
-				  data, function( data ) {
-				  
-				  	if( data.success ) {
-					  
-				  		populatePreferredPharmacy();			  	
-					  	
-					  	alert("Pharmacy was successfully removed from the pharmacy list");
-			  			resetForm();
-			  		}
-			  		else {
-			  			
-			  			alert("There was an error deleting the Pharmacy");
-			  			
-			  		}
-				},
-				"json"
-			);
-	  }
-	  
-	  return false;
-  }
-  
-  function populatePreferredPharmacy() {
-	  
-	  var demo = $("#demographicNo").val();
-	  	$.get("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=getPharmacyFromDemographic&demographicNo="%>"+demo,
-	  			function( data ) {
-	  				$("#preferedPharmacy").find("option").remove();
-	  				
-	  				var json;
-	  				var preferredPharmacyInfo;
-	  				for( var idx = 0; idx < data.length; ++idx  ) {
-	  					preferredPharmacyInfo = data[idx];
-	  					json = JSON.stringify(preferredPharmacyInfo);
-	  					$("#preferedPharmacy").append($("<option></option>").val(json).text(preferredPharmacyInfo.name + " " + preferredPharmacyInfo.city));
-	  				}			
-	  	},
-	  	"json"
-	  	);
-  }
-</script>
-
-<script>
-<%
-if("true".equals(OscarProperties.getInstance().getProperty("iso3166.2.enabled","false"))) { 	
-%>
-jQuery(document).ready(function(){
-	
-	jQuery("#country").bind('change',function(){
-		updateProvinces('');
+	$(".deletePharm").click(function(){
+		if( confirm("You are about to remove this pharmacy for all users. Are you sure you want to continue?")) {
+			var data = "pharmacyId=" + $(this).closest("tr").attr("pharmId");
+			$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=delete",
+					data, function( data ) {
+				if( data.success ) {
+					window.location.reload(false);
+				}
+				else {
+					alert("There was an error deleting the Pharmacy");
+				}
+			},"json");
+		}
 	});
-	
-    jQuery.ajax({
-        type: "POST",
-        url:  '../demographicSupport.do',
-        data: 'method=getCountryAndProvinceCodes',
-        dataType: 'json',
-        success: function (data) {
-        	jQuery('#country').append(jQuery('<option>').text('').attr('value', ''));
-        	jQuery.each(data, function(i, value) {
-                 jQuery('#country').append(jQuery('<option>').text(value.label).attr('value', value.value));
-             });
-        	
-        	var defaultProvince = '<%=OscarProperties.getInstance().getProperty("demographic.default_province","")%>';
-        	var defaultCountry = '';
-        	
-        	if(defaultProvince == '' && defaultCountry == '') {
-        		defaultProvince = 'CA-ON';
-        	}
-        	defaultCountry = defaultProvince.substring(0,defaultProvince.indexOf('-'));
-        	
-        	jQuery("#country").val(defaultCountry);
-        	
-        	updateProvinces(defaultProvince);
-        	
-        }
-	});
-	
-});
 
 
-function updateProvinces(province) {
-	var country = jQuery("#country").val();
-	
-	console.log('country=' + country);
-	
-	jQuery.ajax({
-        type: "POST",
-        url:  '../demographicSupport.do',
-        data: 'method=getCountryAndProvinceCodes&country=' + country,
-        dataType: 'json',
-        success: function (data) {
-        	jQuery('#pharmacyProvince').empty();
-        	 
-        	jQuery.each(data, function(i, value) {
-                 jQuery('#pharmacyProvince').append(jQuery('<option>').text(value.label).attr('value', value.value));
-             });
-        	
-        	
-        	if(province != null) {
-        		jQuery("#pharmacyProvince").val(province);
-        	}
-        	
-        	
-        }
+		function updateSearchKeys() {
+			pharmacyNameKey = new RegExp($("#pharmacySearch").val(), "i");
+			pharmacyCityKey = new RegExp($("#pharmacyCitySearch").val(), "i");
+			pharmacyPostalCodeKey =  new RegExp($("#pharmacyPostalCodeSearch").val(), "i");
+			pharmacyFaxKey = new RegExp($("#pharmacyFaxSearch").val(), "i");
+			pharmacyPhoneKey = new RegExp($("#pharmacyPhoneSearch").val(), "i");
+			pharmacyAddressKey =  new RegExp($("#pharmacyAddressSearch").val(), "i");
+		}
+})}) ( jQuery );
+
+function addPharmacy(){
+	myLightWindow.activateWindow({
+		href: "<%= request.getContextPath() %>/oscarRx/ManagePharmacy2.jsp?type=Add",
+		width: 400,
+		height: 500
 	});
 }
 
+function editPharmacy(id){
+	myLightWindow.activateWindow({
+		href: "<%= request.getContextPath() %>/oscarRx/ManagePharmacy2.jsp?type=Edit&ID=" + id,
+		width: 400,
+		height: 500
+	});
+}
 
-<% }  %>
+function viewPharmacy(id){
+    myLightWindow.activateWindow({
+        href: "<%= request.getContextPath() %>/oscarRx/ViewPharmacy.jsp?type=View&ID=" + id,
+        width: 400,
+        height: 500
+    });
+}
 
 
-</script>
+function returnToRx(){
+	var rx_enhance = <%=OscarProperties.getInstance().getProperty("rx_enhance")%>;
+
+	if(rx_enhance){
+	    opener.window.refresh();
+	    window.close();
+	} else {
+        window.location.href="SearchDrug3.jsp";
+	}
+}
+
 </script>
 </head>
 <body topmargin="0" leftmargin="0" vlink="#0000FF">
 <form id="pharmacyForm">
+<input type="hidden" id="demographicNo" name="demographicNo" value="<%=bean.getDemographicNo()%>"/>
 <table border="0" cellpadding="0" cellspacing="0"
 	style="border-collapse: collapse" bordercolor="#111111" width="100%"
 	id="AutoNumber1" height="100%">
-	<%@ include file="TopLinks.jsp"%><!-- Row One included here-->
+
 	<tr>
 		<td width="100%" style="border-left: 2px solid #A9A9A9;" height="100%"
-			valign="top">
+			valign="top" colspan="2">
 		<table cellpadding="0" cellspacing="2"
 			style="border-collapse: collapse" bordercolor="#111111" width="100%"
 			height="100%">
-			<tr>
-				<td width="0%" valign="top">
-				<div class="DivCCBreadCrumbs"><a href="SearchDrug3.jsp"> <bean:message
-					key="SearchDrug.title" /></a> >  <bean:message key="SelectPharmacy.title" /></div>
-				</td>
-			</tr>
+
 			<!----Start new rows here-->
 			<tr>
-				<td>
+				<td colspan="2">
 				<div class="DivContentTitle"><b><bean:message
 					key="SearchDrug.nameText" /></b> <jsp:getProperty name="patient"
 					property="surname" />, <jsp:getProperty name="patient"
-					property="firstName" /></div>
-				<br />
-				&nbsp; <bean:message key="SelectPharmacy.instructions" /></td>
+					property="firstName" />
+
+					<input type=button class="ControlPushButton ReturnToRx" onclick="returnToRx();" value="Return to RX" />
+				</div>
+
 			</tr>			
 			<tr>
-				<td>				
-				Search Pharmacy&nbsp;&nbsp;<input type="text" id="autocompletepharmacy"/>&nbsp;&nbsp;
-				Narrow Search By City&nbsp;&nbsp;<input type="text" id="autocompletepharmacyCity"/> 
-				
-				Preferred Pharmacies&nbsp;&nbsp;<select id="preferedPharmacy" name="preferedPharmacy">
-				<%
-					RxPharmacyData pharmacyData = new RxPharmacyData();
-			        List<PharmacyInfo> pharmacyList;
-			        pharmacyList = pharmacyData.getPharmacyFromDemographic(Integer.toString(bean.getDemographicNo()));
-			        if( pharmacyList != null ) {
-			            ObjectMapper mapper = new ObjectMapper();
-			            StringWriter jsonObject;
-			        	for( PharmacyInfo pharmacyInfo : pharmacyList ) {
-			        		jsonObject = new StringWriter();
-			        		mapper.writeValue(jsonObject, pharmacyInfo);
-				%>
-							<option value='<%=jsonObject.toString().replaceAll("'", "")%>'><%=pharmacyInfo.getName() + " " + pharmacyInfo.getCity()%></option>
-				<%
-			        	}
-			        }
-				%>
-				</select>
-
-				<input type="button" value="<bean:message key="SelectPharmacy.editLink" />" onclick="editPharmacy($('#preferedPharmacy>option:selected').val())"/>&nbsp;
-				<input type="button" value="Unlink" onclick="unlinkPharmacy($('#preferedPharmacy>option:selected').val())"/>
-				<input type="hidden" id="pharmacyId" name="pharmacyId"/>
-				<input type="hidden" id="demographicNo" name="demographicNo" value="<%=bean.getDemographicNo()%>"/>
-                <div style=" width:860px; height:460px; overflow:auto;">
-				<table>
-					<tr>
-						<td><bean:message key="SelectPharmacy.table.pharmacyName" /></td>
-						<td><bean:message key="SelectPharmacy.table.address" /></td>
-						<td><bean:message key="SelectPharmacy.table.city" /></td>						
-					</tr>
-					<tr>
-						<td>
-						<input type="text" id="pharmacyName" name="pharmacyName"/>
-						
-						<!-- a
-							href="LinkPharmacy2.do?ID=&DemoId=<jsp:getProperty name="patient" property="demographicNo"/>"></a--></td>
-						<td><input type="text" id="pharmacyAddress" name="pharmacyAddress" size="32"/></td>
-						<td><input type="text" id="pharmacyCity" name="pharmacyCity" size="32"/></td>							
-					</tr>
-					<tr>
-						<td>Province</td>
-						<td colspan="2">Postal Code</td>
-					</tr>
-					<tr>
-						<td>
-						<%
-						if("true".equals(OscarProperties.getInstance().getProperty("iso3166.2.enabled","false"))) { 	
-						%>
-							<select name="pharmacyProvince" id="pharmacyProvince"></select> 
-							<br/>
-							Filter by Country: <select name="country" id="country" ></select>		
-						<% } else  {  %>
-							<input type="text" id="pharmacyProvince" name="pharmacyProvince" size="32"/>
-						<% } %>
-						</td>
-						
-						<td colspan="2"><input type="text" id="pharmacyPostalCode" name="pharmacyPostalCode" size="12"/></td>
-					</tr>
-					<tr>
-						<td><bean:message key="SelectPharmacy.table.phone"/></td>
-						<td>Phone 2</td>
-						<td><bean:message key="SelectPharmacy.table.fax" /></td>
-					</tr>
-					<tr>											
-						<td><input type="text" id="pharmacyPhone1" name="pharmacyPhone1" size="12"/></td>
-						<td><input type="text" id="pharmacyPhone2" name="pharmacyPhone2" size="12"/></td>
-						<td><input type="text" id="pharmacyFax" name="pharmacyFax" size="12"/></td>
-					</tr>
-					<tr>
-						<td>Email</td>
-						<td><bean:message key="ManagePharmacy.txtfld.label.serviceLocationIdentifier" />
-					</tr>
-					<tr>
-						<td><input type="text" id="pharmacyEmail" name="pharmacyEmail" size="32"/></td>
-						<td colspan="2"><input type="text" id="pharmacyServiceLocationId" name="pharmacyServiceLocationId" size="32"/></td>
-					</tr>
-					<tr>
-						<td colspan="3">Notes</td>
-					</tr>
-					<tr>
-						<td colspan="3"><textarea id="pharmacyNotes" name="pharmacyNotes" cols="32" rows="5"></textarea></td>
-					</tr>
-					<tr>
-						<td>
-						
-						<input type="button" value="Set Preferred Pharmacy" onclick="return setPreferredPharmacy();"/> &nbsp;
-						<select id="preferredOrder" name="preferredOrder">
-						<%
-							for( int idx = 1; idx <= 10; ++idx ) {
-						%>
-								<option value="<%=idx%>"><%=idx%></option>
-						<%							    
-							}
-						
-						%>
-						
-						</select>	
-							</td>
-						<td style="text-align:right;padding-right:250px;" colspan="2">
-						<input type="button" value="Reset" onclick="return resetForm();"/>&nbsp;
-						<security:oscarSec roleName="<%=roleName$%>" objectName="_rx" rights="w" reverse="<%=false%>">
-						<input type="button" value="Save" onclick="return savePharmacy();"/>&nbsp;&nbsp;
-<!-- 							<input type="button" value="<bean:message key="SelectPharmacy.deleteLink" />" onclick="return deletePharmacy($('#preferedPharmacy>option:selected').val())"/> -->
-						</security:oscarSec>
-						</td>
-					</tr>
-					
-				</table>
-                </div>
-                
-				</td>
+				<th width="33%" class="DivContentSectionHead">
+					Preferred Pharmacies
+				</th>
+				<th class="DivContentSectionHead">
+					Search Pharmacy&nbsp;&nbsp;<input type="text" id="pharmacySearch"/>&nbsp;&nbsp;
+					City&nbsp;&nbsp;<input type="text" id="pharmacyCitySearch" style="width: 75px"/> &nbsp;&nbsp;
+					Postal Code&nbsp;&nbsp;<input type="text" id="pharmacyPostalCodeSearch" style="width: 75px"/> &nbsp;&nbsp;
+					Phone&nbsp;&nbsp;<input type="text" id="pharmacyPhoneSearch" style="width: 75px"/> &nbsp;&nbsp;
+					Fax&nbsp;&nbsp;<input type="text" id="pharmacyFaxSearch" style="width: 75px"/> &nbsp;&nbsp;
+					Address&nbsp;&nbsp;<input type="text" id="pharmacyAddressSearch" style="width: 75px"/> &nbsp;&nbsp;
+					<a href="javascript:void(0)" onclick="addPharmacy();"><bean:message key="SelectPharmacy.addLink" /></a>
+				</th>
 			</tr>
-
 			<tr>
+				<td id="preferredList">
+					<div>
+							No pharmacies selected
+					</div>
+				</td>
 				<td>
-				<%
-                        String sBack="SearchDrug3.jsp";
-                      %> <input type=button class="ControlPushButton"
-					onclick="javascript:window.location.href='<%=sBack%>';"
-					value="Back to Rx" /></td>
+					<% RxPharmacyData pharmacy = new RxPharmacyData();
+                         List< org.oscarehr.common.model.PharmacyInfo> pharList = pharmacy.getAllPharmacies();
+                       %>
+					<div style="width:100%; height:360px; overflow:auto;">
+					<table id="pharmacyList" style="width:100%;">
+						<tr>
+							<th><bean:message key="SelectPharmacy.table.pharmacyName" /></th>
+							<th><bean:message key="SelectPharmacy.table.address" /></th>
+							<th><bean:message key="SelectPharmacy.table.city" /></th>
+							<th><bean:message key="SelectPharmacy.table.postalCode" /></th>
+							<th><bean:message key="SelectPharmacy.table.phone" /></th>
+							<th><bean:message key="SelectPharmacy.table.fax" /></th>
+							<th>&nbsp;</th>
+							<th>&nbsp;</th>
+						</tr>
+						<% for (int i = 0 ; i < pharList.size(); i++){
+								   org.oscarehr.common.model.PharmacyInfo ph = pharList.get(i);
+								%>
+						<tr class="pharmacyItem" pharmId="<%=ph.getId()%>">
+							<td class="pharmacyName" ><%=ph.getName()%></td>
+							<td class="address" ><%=ph.getAddress()%></td>
+							<td class="city" ><%=ph.getCity()%></td>
+							<td class="postalCode" ><%=ph.getPostalCode()%></td>
+							<td class="phone" ><%=ph.getPhone1()%></td>
+							<td class="fax" ><%=ph.getFax()%></td>
+							<security:oscarSec roleName="<%=roleName$%>" objectName="_rx.editPharmacy" rights="w" reverse="false">
+
+							<td onclick='event.stopPropagation();return false;'><a href="#"  onclick="editPharmacy(<%=ph.getId()%>);"><bean:message
+								key="SelectPharmacy.editLink" /></a></td>
+							<td onclick='event.stopPropagation();return false;'><a href="#" class="deletePharm"><bean:message
+								key="SelectPharmacy.deleteLink" /></a></td>
+
+							</security:oscarSec>
+						</tr>
+						<% } %>
+					</table>
+					</div>
+				</td>
 			</tr>
 			<!----End new rows here-->
 			<tr height="100%">
-				<td></td>
+				<td colspan="2"></td>
 			</tr>
 		</table>
 		</td>
@@ -701,7 +467,7 @@ function updateProvinces(province) {
 		<td width="100%" height="0%" colspan="2">&nbsp;</td>
 	</tr>
 	<tr>
-		<td width="100%" height="0%" style="padding: 5" bgcolor="#DCDCDC"
+		<td width="100%" height="0%" style="padding: 5px" bgcolor="#DCDCDC"
 			colspan="2"></td>
 	</tr>
 </table>
