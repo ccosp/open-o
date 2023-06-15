@@ -116,8 +116,6 @@
 		<ap-sql>SELECT team FROM provider WHERE provider_no='${provider}' </ap-sql>
 		<ap-output>${team}</ap-output>
 	</databaseap>
-
-
 	<!-- Patient demographic information -->
 	<databaseap>
 		<ap-name>patient_name</ap-name>
