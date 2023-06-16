@@ -2532,63 +2532,72 @@ jQuery(document).ready(function(){
 		var triggerId = "#" + trigger.attr('id');
 		var title = trigger.attr("title");
 		
-		jQuery("#attachDocumentDisplay").load( trigger.data('poload') ).dialog({    		
-			title: title,
-			modal:false,
-			closeText: "Close",
-			height: 250,
-			width: 'auto',
-			resizable: true,
-			position: { my: "left", at:"right", of: triggerId },
- 			beforeClose: function(event, ui) {
- 				// before the dialog is closed:
+		var dialog = jQuery("#attachDocumentDisplay").dialog({
+						title: title,
+						modal:false,
+						closeText: "Close",
+						height: 250,
+						width: 'auto',
+						resizable: true,
+						position: { my: "left", at: "right", of: triggerId },
+						autoOpen: true, // Set autoOpen to true to prevent the dialog from opening immediately
 
- 			    // pass the checked elements to the consultation request form
- 				jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled'])").each(function(index,data){
- 					var element = jQuery(this);
- 					var input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
- 					var row = jQuery("<tr>", {id: "entry_" + element.attr("name") + element.val()});
- 					var column = jQuery("<td>");
- 	 				var target = "#attachedDocumentsTable";
- 	 				
- 					if("lab_check".indexOf(element.attr("class")) != -1) 
- 					{
- 						target = "#attachedLabsTable";
- 					} 
+						show: { 
+							//use this effect to give the data a bit of time to load, reduces perception of slowness
+							effect: "slide",
+							duration: 1000 
+						},
+																		
+						beforeClose: function(event, ui) {
+							// before the dialog is closed:
 
- 					column.text(element.attr("title"));
- 					column.append(input);
- 					row.append(column);
+							// pass the checked elements to the consultation request form
+							jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled'])").each(function(index,data){
+								var element = jQuery(this);
+								var input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
+								var row = jQuery("<tr>", {id: "entry_" + element.attr("name") + element.val()});
+								var column = jQuery("<td>");
+								var target = "#attachedDocumentsTable";
+								
+								if("lab_check".indexOf(element.attr("class")) != -1) 
+								{
+									target = "#attachedLabsTable";
+								} 
 
- 					jQuery('#consultationRequestForm').find(target).append(row);
- 				});
-			
-				// remove unchecked elements from the request form.
-				jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled'])").each(function(index,data){
-					var checkedElement = jQuery(this);
-				
-					if( !checkedElement.is(':checked') ) {
-						var checkedElementClass = checkedElement.attr("class");
-						jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
-						checkedElement.attr("class", checkedElementClass.split("_")[0] + "_check");
-					}		
-				});
-			},
-			
-			// pre check all selected elements after the dialog panel fully loads.
-			show: { 
-				effect: "slide",
-				duration: 600,
-				complete: function(){
-					jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
-						var delegate = "#" + this.id.split("_")[1];
-						var element = jQuery('#attachDocumentsForm').find(delegate);
-						var elementClassType = element.attr("class").split("_")[0];						
-						element.attr("checked", true).attr("class", elementClassType + "_pre_check");				
+								column.text(element.attr("title"));
+								column.append(input);
+								row.append(column);
+
+								jQuery('#consultationRequestForm').find(target).append(row);
+							});
+						
+							// remove unchecked elements from the request form.
+							jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled'])").each(function(index,data){
+								var checkedElement = jQuery(this);
+							
+								if( !checkedElement.is(':checked') ) {
+									var checkedElementClass = checkedElement.attr("class");
+									jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
+									checkedElement.attr("class", checkedElementClass.split("_")[0] + "_check");
+								}		
+							});
+						}
 					});
-				} 
+		
+		jQuery("#attachDocumentDisplay").load(trigger.data('poload'), function(response, status, xhr) {
+			if (status === "success") {
+				// pre check all selected elements after the dialog panel fully loads.
+				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
+					var delegate = "#" + this.id.split("_")[1];
+					var element = jQuery('#attachDocumentsForm').find(delegate);
+					var elementClassType = element.attr("class").split("_")[0];
+					element.attr("checked", true).attr("class", elementClassType + "_pre_check");				
+				});
+			} else {
+				console.log("There was an error loading a list of all documents");
+				alert("There was an error loading a list of all documents.");
 			}
-		});
+			});	
 	
 	})
 
