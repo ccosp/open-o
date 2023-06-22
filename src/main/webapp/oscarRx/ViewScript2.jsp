@@ -47,6 +47,9 @@
 <%@ page import="org.oscarehr.common.dao.FaxConfigDao, org.oscarehr.common.model.FaxConfig" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
 <%
 	OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -330,26 +333,22 @@ function printPaste2Parent(print, fax, pasteRx){
 	   text += "**********************************************************************************\n";
      <% } %>
 
-     // if(print) {
+     if(print) {
 	   text += "Prescribed and printed by <%= Encode.forJavaScript(loggedInInfo.getLoggedInProvider().getFormattedName())%>\n";
-     // }
+     } else if(fax) {
+<%--    	 <% if(echartPreferencesMap.getOrDefault("echart_paste_fax_note", false)) {--%>
+    		 <% String timeStamp = new SimpleDateFormat("dd-MMM-yyyy hh:mm a").format(Calendar.getInstance().getTime()); %>
+    	 // %>
+    	 	text ="[Rx faxed to "+'<%= pharmacy!=null?StringEscapeUtils.escapeJavaScript(pharmacy.getName()):""%>'+" Fax#: "+'<%= pharmacy!=null?pharmacy.getFax():""%>';
 
-	 <%--else if(fax) {--%>
-    	<%-- <% if(echartPreferencesMap.getOrDefault("echart_paste_fax_note", false)) {--%>
-    	<%--	 String timeStamp = new SimpleDateFormat("dd-MMM-yyyy hh:mm a").format(Calendar.getInstance().getTime());--%>
-    	<%-- 	--%>
-    	<%-- --%>
-    	<%-- %>--%>
-    	<%-- 	text ="[Faxed to "+'<%= pharmacy!=null?StringEscapeUtils.escapeJavaScript(pharmacy.getName()):""%>'+" Fax#: "+'<%= pharmacy!=null?pharmacy.getFax():""%>';--%>
-
-    	<%-- <% if (rxPreferencesMap.getOrDefault("rx_paste_provider_to_echart", false)) { %>--%>
-    	<%--	text += " prescribed by <%= Encode.forJavaScript(loggedInInfo.getLoggedInProvider().getFormattedName())%>";    	 	--%>
-    	<%-- <% } %>--%>
-   	<%--		text += ", <%= timeStamp %>]\n";   		  		 --%>
-   	<%--	 <%--%>
-    	<%-- }--%>
-    	<%-- %>    	--%>
-     <%--}--%>
+<%--    	 <% if (rxPreferencesMap.getOrDefault("rx_paste_provider_to_echart", false)) { %>--%>
+    		text += " prescribed by <%= Encode.forJavaScript(loggedInInfo.getLoggedInProvider().getFormattedName())%>";
+<%--    	 <% } %>--%>
+   			text += ", <%= timeStamp %>]\n";
+<%--   		 <%--%>
+<%--    	 }--%>
+<%--    	 %>    	--%>
+     }
 
 	if(pasteRx) {
 		if (document.all){
@@ -762,9 +761,9 @@ function toggleView(form) {
 					</tr>
 					<tr>
 						<td style="padding-top: 0"><span><input type=button
-							<%=reprint.equals("true")?"disabled='true'":""%> value="<bean:message key="ViewScript.msgPrintPasteEmr"/>"
-							class="ControlPushButton" style="width: 150px"
-							onClick="javascript:printPaste2Parent(true, false, true);" /></span></td>
+							<%=reprint.equals("true")?"disabled='true'":""%> value="Print &amp; Add to encounter note"
+							class="ControlPushButton" style="width: 210px"
+							onClick="printPaste2Parent(true, false, true);" /></span></td>
 					</tr>
 					<% if (OscarProperties.getInstance().isRxFaxEnabled()) {
 					    	FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
