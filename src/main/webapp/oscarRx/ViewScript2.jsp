@@ -214,7 +214,7 @@ if (userAgent != null) {
 }
 %>
 <link rel="stylesheet" type="text/css" href="styles.css" />
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
+
 <script type="text/javascript" src="../share/javascript/prototype.js"></script>
 <script type="text/javascript" src="../share/javascript/Oscar.js"></script>
 
@@ -773,15 +773,14 @@ function toggleView(form) {
 					    %>
 					<tr>
 						<td style="padding-bottom: 0"><span><input type=button value="Fax"
-										 class="ControlPushButton" id="faxButton" style="width: 150px"
-										 onClick="printPaste2Parent(false, false, false);sendFax();" /></span>
+										 class="ControlPushButton" id="faxButton" style="width: 210px"
+										 onClick="sendFax();" disabled/></span>
 						</td>
 					</tr>
 					<tr>
-                            <td style="padding-top: 0"><span><input type=button value="Fax & Paste into EMR"
-                                    class="ControlPushButton" id="faxPasteButton" style="width: 150px"
-                                    onClick="printPaste2Parent(false, true, true);sendFax();" /></span>
-                                    
+                            <td style="padding-top: 0"><span><input type=button value="Fax &amp; Add to encounter note"
+                                    class="ControlPushButton" id="faxPasteButton" style="width: 210px"
+                                    onClick="printPaste2Parent(false, true, true);sendFax();" disabled/></span>
                                  <span>
                                  	<select id="faxNumber" name="faxNumber">
                                  	<%
