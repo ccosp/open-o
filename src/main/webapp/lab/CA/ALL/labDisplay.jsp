@@ -25,12 +25,10 @@
 --%>
 
 <%@ page import="org.oscarehr.util.LoggedInInfo"%>
-<%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ page import="oscar.util.ConversionUtils"%>
 <%@ page import="org.oscarehr.common.dao.PatientLabRoutingDao"%>
 <%@ page import="org.oscarehr.common.model.PatientLabRouting"%>
 <%@ page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo"%>
-<%@ page import="org.oscarehr.phr.util.MyOscarUtils"%>
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="org.apache.commons.lang.builder.ReflectionToStringBuilder"%>
 <%@ page import="org.oscarehr.util.MiscUtils"%>
@@ -486,6 +484,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
             var url='../../../dms/inboxManage.do';
                                            var data='method=isLabLinkedToDemographic&labid='+labid;
                                            new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
+											   console.log("TRANSPORT: " + transport);
                                                                     var json=transport.responseText.evalJSON();
                                                                     if(json!=null){
                                                                         var success=json.isLinkedToDemographic;
@@ -513,12 +512,13 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                                                             }
                                                                             else if( action === 'addComment' ) {
                                                                             	addComment(formid,labid);
-                                                                            } else if (action === 'unlinkDemo') {
-                                                                                unlinkDemographic(labid);
                                                                             }
+																			// else if (action === 'unlinkDemo') {
+                                                                            //     unlinkDemographic(labid);
+                                                                            // }
 
                                                                         }else{
-                                                                            if(action=='ackLab'){
+                                                                            if(action === 'ackLab'){
                                                                                 if(confirmAckUnmatched()) {
                                                                                 	jQuery("#labStatus_"+labid).val("A")
                                                                                     updateStatus(formid,labid);
@@ -578,7 +578,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
             reason = prompt('<bean:message key="oscarMDS.segmentDisplay.msgUnlink"/>', reason);
 
             //must include reason
-            if( reason == null || reason.length == 0) {
+            if( reason == null || reason.length === 0) {
             	return false;
             }
             
@@ -589,8 +589,12 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
     			url:  urlStr,
     			data: dataStr,
     			success: function (data) {
-                            top.opener.location.reload();
-                            window.close();
+				    if(data.success) {
+						// refresh the opening page with new results
+					    top.opener.location.reload();
+						// refresh the lab display page and offer dialog to rematch.
+					    window.location.reload();
+				    }
     			}
             });                            
         }
@@ -723,7 +727,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
 
                                     <input type="button" value="Msg" onclick="handleLab('','<%=segmentID%>','msgLab');"/>
                                     <input type="button" value="Tickler" onclick="handleLab('','<%=segmentID%>','ticklerLab');"/>
-                                    <input type="button" value="<bean:message key="oscarMDS.segmentDisplay.btnUnlinkDemo"/>" onclick="handleLab('','<%=segmentID%>','unlinkDemo');"/>
+                                    <input type="button" value="<bean:message key="oscarMDS.segmentDisplay.btnUnlinkDemo"/>" onclick="unlinkDemographic(<%=segmentID%>)"/>
 
                                     <% if ( searchProviderNo != null ) { // null if we were called from e-chart%>
                                     <input type="button" value=" <bean:message key="oscarMDS.segmentDisplay.btnEChart"/>" onClick="popupStart(360, 680, '../../../oscarMDS/SearchPatient.do?labType=HL7&segmentID=<%= segmentID %>&name=<%=java.net.URLEncoder.encode(handler.getLastName()+", "+handler.getFirstName())%>', 'encounter')">
