@@ -125,7 +125,27 @@ function toggleSelectAll(element, startClassName) {
 				</ul>
 			</td>
 		</tr>
-
+		<tr>
+			<td><h2>eForms</h2></td>
+		</tr>
+		<tr>
+			<td>
+				<ul id="eFormList" style="list-style-type: none;padding:0px;">
+					<li class="selectAllHeading" >
+						<input id="selectAllForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
+						<label for="selectAllForms">Select all</label>
+					</li>
+					<c:forEach items="${ allEForms }" var="eForm">
+						<li class="eForm">
+							<input class="eForm_check" type="checkbox" name="eFormNo" id="eFormNo${ eForm.id }" value="${eForm.id}" title="${eForm.formName}" />
+							<label for="eFormNo${eForm.id}">
+								<c:out value="${ eForm.formName } ${ eForm.getFormDate() }" />
+							</label>
+						</li>
+					</c:forEach>
+				</ul>
+			</td>
+		</tr>
 	</table>
 </form>	
 </body>
