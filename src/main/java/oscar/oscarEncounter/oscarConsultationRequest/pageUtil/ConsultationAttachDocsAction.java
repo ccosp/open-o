@@ -34,12 +34,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.managers.FormsManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -67,12 +69,20 @@ public class ConsultationAttachDocsAction extends DispatchAction {
         List<String> attachedDocumentIds = new ArrayList<String>();
         List<String> attachedLabIds = new ArrayList<String>();
         List<String> attachedFormIds = new ArrayList<String>();
+        List<String> attachedEFormIds = new ArrayList<String>();
 
         List<EctFormData.PatientForm> allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, Integer.parseInt(demographicNo));
 
         List<EctFormData.PatientForm> attachedForms = null;
         if(requestId != null && ! requestId.isEmpty() && ! "null".equals(requestId)) {
            attachedForms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+        }
+
+        List<EFormData> allEForms = EFormUtil.listPatientEformsCurrent(new Integer(demographicNo), true, 0, 100);
+
+        List<EFormData> attachedEForms = null;
+        if(requestId != null && ! requestId.isEmpty() && ! "null".equals(requestId)) {
+           attachedEForms = EFormUtil.listPatientEformsCurrentAttachedToConsult(requestId);
         }
 
         if(attachedDocuments != null) {      	
@@ -92,15 +102,24 @@ public class ConsultationAttachDocsAction extends DispatchAction {
                 attachedFormIds.add(attachedForm.formId+"");
             }
         }
+
+        if(attachedEForms != null) {
+            for(EFormData attachedEForm : attachedEForms) {
+                attachedEFormIds.add(attachedEForm.getId()+"");
+            }
+        }
         
         request.setAttribute("attachedDocumentIds", attachedDocumentIds);
         request.setAttribute("attachedLabIds", attachedLabIds);
         request.setAttribute("attachedFormIds", attachedFormIds);
+        request.setAttribute("attachedEFormIds", attachedEFormIds);
+
 
         request.setAttribute("allDocuments", allDocuments);
         request.setAttribute("allLabs", allLabs);
         request.setAttribute("allForms", allForms);
-        
+        request.setAttribute("allEForms", allEForms);
+
 		return mapping.findForward("fetchAll");
 	} 
 }

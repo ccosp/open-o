@@ -116,6 +116,7 @@ public class EctConsultationFormRequestAction extends Action {
         String[] attachedDocuments = frm.getDocNo();
         String[] attachedLabs = frm.getLabNo();
 		String[] attachedForms = frm.getFormNo();
+		String[] attachedEForms = frm.geteFormNo();
         List<String> documents = new ArrayList<String>();
 
 		if (appointmentPm.equals("PM") && Integer.parseInt(appointmentHour) < 12 ) {
@@ -273,6 +274,8 @@ public class EctConsultationFormRequestAction extends Action {
 								ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
 								consultationAttachForms.attach(loggedInInfo);
 
+								ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
+								consultationAttachEForms.attach(loggedInInfo);
 			}
 	        catch (ParseException e) {
 	                MiscUtils.getLogger().error("Invalid Date", e);
@@ -393,7 +396,8 @@ public class EctConsultationFormRequestAction extends Action {
 			  	consultationAttachLabs.attach(loggedInInfo);
 				ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
 				consultationAttachForms.attach(loggedInInfo);
-
+				ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
+				consultationAttachEForms.attach(loggedInInfo);
 			}
 
 			catch (ParseException e) {

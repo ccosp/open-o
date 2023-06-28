@@ -81,6 +81,8 @@ if(!authed) {
 <%@page import="org.oscarehr.common.model.ContactSpecialty" %>
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
 <%@ page import="oscar.oscarEncounter.data.EctFormData" %>
+<%@ page import="org.oscarehr.common.model.EFormData" %>
+<%@ page import="oscar.eform.EFormUtil" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
@@ -192,10 +194,13 @@ if(!authed) {
         List<LabResultData> attachedLabs = commonLabResultData.populateLabResultsData(loggedInInfo, demo, requestId, CommonLabResultData.ATTACHED);
 		ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
 		List<EctFormData.PatientForm> attachedForms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demo));
+		List<EFormData> attachedEForms = EFormUtil.listPatientEformsCurrentAttachedToConsult(requestId);
 
         pageContext.setAttribute("attachedDocuments", attachedDocuments);
         pageContext.setAttribute("attachedLabs", attachedLabs);
 		pageContext.setAttribute("attachedForms", attachedForms);
+		pageContext.setAttribute("attachedEForms", attachedEForms);
+
 	}
 %>		
 		<%--
@@ -479,13 +484,22 @@ background-color: #ddddff;
     width:100%;
 }
 
-#attachedDocumentsTable h3, #attachedLabsTable h3 {
+#attachedDocumentsTable h3, #attachedLabsTable h3, #attachedFormsTable h3, #attachedEFormsTable h3 {
     margin: 0px !important;
     padding: 0px !important;
     border-bottom: grey thin solid;
 }
 
 #attachedLabsTable {
+    border-collapse: collapse;
+    width:100%;
+}
+#attachedFormsTable {
+    border-collapse: collapse;
+    width:100%;
+}
+
+#attachedEFormsTable {
     border-collapse: collapse;
     width:100%;
 }
@@ -1630,7 +1644,20 @@ function updateFaxButton() {
 								</tr>
 							</c:forEach>
 						</table></td></tr>
-						
+						<tr><td><table id="attachedEFormsTable">
+							<tr>
+								<td><h3>eForms</h3></td>
+							</tr>
+							<c:forEach items="${ attachedEForms }" var="attachedEForm">
+								<tr id="entry_eFormNo${ attachedEForm.id }">
+									<td>
+										<c:out value="${ attachedEForm.formName }" />
+
+										<input name="eFormNo" value="${ attachedEForm.id }" id="delegate_eFormNo${ attachedEForm.id }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
 					</table>
 					</td>
 				</tr>
@@ -2567,7 +2594,7 @@ jQuery(document).ready(function(){
 							// before the dialog is closed:
 
 							// pass the checked elements to the consultation request form
-							jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled'])").each(function(index,data){
+							jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled']), .eForm_check:checked:not(input[disabled='disabled'])").each(function(index,data){
 								var element = jQuery(this);
 								var input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
 								var row = jQuery("<tr>", {id: "entry_" + element.attr("name") + element.val()});
@@ -2579,6 +2606,10 @@ jQuery(document).ready(function(){
 									target = "#attachedLabsTable";
 								} 
 
+								if("eForm_check".indexOf(element.attr("class")) != -1)
+								{
+									target = "#attachedEFormsTable";
+								}
 								column.text(element.attr("title"));
 								column.append(input);
 								row.append(column);
@@ -2587,7 +2618,7 @@ jQuery(document).ready(function(){
 							});
 						
 							// remove unchecked elements from the request form.
-							jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled'])").each(function(index,data){
+							jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .eForm_pre_check:not(input[disabled='disabled'])").each(function(index,data){
 								var checkedElement = jQuery(this);
 							
 								if( !checkedElement.is(':checked') ) {
