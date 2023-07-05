@@ -320,21 +320,6 @@
 		<ap-output>${phone2}</ap-output>
 	</databaseap>
 	<databaseap>
-		<ap-name>preferredPhone</ap-name>
-		<ap-sql>SELECT CASE
-			WHEN e.value = 'H' THEN d.phone
-			WHEN e.value = 'W' THEN d.phone2
-			WHEN e.value = 'C' AND e2.value IS NOT NULL THEN e2.value
-			ELSE ''
-			END AS preferredPhone
-			FROM demographic AS d
-			LEFT JOIN demographicExt AS e on d.demographic_no = e.demographic_no AND e.key_val = 'phone_preference'
-			LEFT JOIN demographicExt e2 ON d.demographic_no = e2.demographic_no AND e2.key_val = 'demo_cell'
-			WHERE d.demographic_no=${demographic}
-		</ap-sql>
-		<ap-output>${preferredPhone}</ap-output>
-	</databaseap>
-	<databaseap>
 		<ap-name>cell</ap-name>
 		<ap-sql>SELECT value FROM demographicExt WHERE demographic_no=${demographic} and key_val ='demo_cell';</ap-sql>
 		<ap-output>${value}</ap-output>
