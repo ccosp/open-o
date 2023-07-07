@@ -47,6 +47,9 @@
 <%@ page import="org.oscarehr.common.dao.FaxConfigDao, org.oscarehr.common.model.FaxConfig" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
 <%
 	OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -214,7 +217,7 @@ if (userAgent != null) {
 }
 %>
 <link rel="stylesheet" type="text/css" href="styles.css" />
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
+
 <script type="text/javascript" src="../share/javascript/prototype.js"></script>
 <script type="text/javascript" src="../share/javascript/Oscar.js"></script>
 
@@ -331,26 +334,22 @@ function printPaste2Parent(print, fax, pasteRx){
 	   text += "**********************************************************************************\n";
      <% } %>
 
-     // if(print) {
+     if(print) {
 	   text += "Prescribed and printed by <%= Encode.forJavaScript(loggedInInfo.getLoggedInProvider().getFormattedName())%>\n";
-     // }
+     } else if(fax) {
+<%--    	 <% if(echartPreferencesMap.getOrDefault("echart_paste_fax_note", false)) {--%>
+    		 <% String timeStamp = new SimpleDateFormat("dd-MMM-yyyy hh:mm a").format(Calendar.getInstance().getTime()); %>
+    	 // %>
+    	 	text ="[Rx faxed to "+'<%= pharmacy!=null?StringEscapeUtils.escapeJavaScript(pharmacy.getName()):""%>'+" Fax#: "+'<%= pharmacy!=null?pharmacy.getFax():""%>';
 
-	 <%--else if(fax) {--%>
-    	<%-- <% if(echartPreferencesMap.getOrDefault("echart_paste_fax_note", false)) {--%>
-    	<%--	 String timeStamp = new SimpleDateFormat("dd-MMM-yyyy hh:mm a").format(Calendar.getInstance().getTime());--%>
-    	<%-- 	--%>
-    	<%-- --%>
-    	<%-- %>--%>
-    	<%-- 	text ="[Faxed to "+'<%= pharmacy!=null?StringEscapeUtils.escapeJavaScript(pharmacy.getName()):""%>'+" Fax#: "+'<%= pharmacy!=null?pharmacy.getFax():""%>';--%>
-
-    	<%-- <% if (rxPreferencesMap.getOrDefault("rx_paste_provider_to_echart", false)) { %>--%>
-    	<%--	text += " prescribed by <%= Encode.forJavaScript(loggedInInfo.getLoggedInProvider().getFormattedName())%>";    	 	--%>
-    	<%-- <% } %>--%>
-   	<%--		text += ", <%= timeStamp %>]\n";   		  		 --%>
-   	<%--	 <%--%>
-    	<%-- }--%>
-    	<%-- %>    	--%>
-     <%--}--%>
+<%--    	 <% if (rxPreferencesMap.getOrDefault("rx_paste_provider_to_echart", false)) { %>--%>
+    		text += " prescribed by <%= Encode.forJavaScript(loggedInInfo.getLoggedInProvider().getFormattedName())%>";
+<%--    	 <% } %>--%>
+   			text += ", <%= timeStamp %>]\n";
+<%--   		 <%--%>
+<%--    	 }--%>
+<%--    	 %>    	--%>
+     }
 
 	if(pasteRx) {
 		if (document.all){
@@ -572,7 +571,7 @@ var requestIdKey = "<%=signatureRequestId %>";
 </head>
 
 <body topmargin="0" leftmargin="0" vlink="#0000FF"
-	onload="addressSelect();">
+	onload="addressSelect();printPharmacy('<%=prefPharmacyId%>','<%=prefPharmacy%>')">
 
 <!-- added by vic, hsfo -->
 <%
@@ -673,15 +672,21 @@ function toggleView(form) {
                                 function printPharmacy(id,name){
                                     //ajax call to get all info about a pharmacy
                                     //use json to write to html
+	                                if(! id) {
+										return;
+	                                }
                                     var url="<c:out value="${ctx}"/>"+"/oscarRx/managePharmacy2.do?";
                                     var data="method=getPharmacyInfo&pharmacyId="+id;
                                     new Ajax.Request(url, {method: 'get',parameters:data, onSuccess:function(transport){
                                         var json=transport.responseText.evalJSON();
 
                                             if(json!=null){
-                                                var text=json.name+"<br>"+json.address+"<br>"+json.city+","+json.province+","
-                                                    +json.postalCode+"<br>Tel:"+json.phone1+","+json.phone2+"<br>Fax:"+json.fax+"<br>Email:"+json.email+"<br>Note:"+json.notes;
+                                                var text=json.name+"<br>"+json.address+"<br>"+json.city+", "+json.province+", "
+                                                    +json.postalCode+"<br>Tel:"+json.phone1+" "+json.phone2+"<br>Fax:"+json.fax+"<br>Email:"+json.email+"<br>Note:"+json.notes;
+
                                                     text+='<br><br><a class="noprint" style="text-align:center;" onclick="parent.reducePreview();" href="javascript:void(0);">Remove Pharmacy Info</a>';
+
+													text += "<input type='hidden' name='pharmacyInfo' value='" + JSON.stringify(json) + "' />"
                                                 expandPreview(text);
                                             }
                                         }});
@@ -758,14 +763,14 @@ function toggleView(form) {
 					<tr>
 						<!--td width=10px></td-->
 						<td style="padding-bottom: 0"><span><input type=button value="<bean:message key="ViewScript.msgPrint"/>"
-							class="ControlPushButton" style="width: 150px"
+							class="ControlPushButton" style="width: 210px"
 							onClick="javascript:printIframe();" /></span></td>
 					</tr>
 					<tr>
 						<td style="padding-top: 0"><span><input type=button
-							<%=reprint.equals("true")?"disabled='true'":""%> value="<bean:message key="ViewScript.msgPrintPasteEmr"/>"
-							class="ControlPushButton" style="width: 150px"
-							onClick="javascript:printPaste2Parent(true, false, true);" /></span></td>
+							<%=reprint.equals("true")?"disabled='true'":""%> value="Print &amp; Add to encounter note"
+							class="ControlPushButton" style="width: 210px"
+							onClick="printPaste2Parent(true, false, true);" /></span></td>
 					</tr>
 					<% if (OscarProperties.getInstance().isRxFaxEnabled()) {
 					    	FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
@@ -774,15 +779,14 @@ function toggleView(form) {
 					    %>
 					<tr>
 						<td style="padding-bottom: 0"><span><input type=button value="Fax"
-										 class="ControlPushButton" id="faxButton" style="width: 150px"
-										 onClick="printPaste2Parent(false, false, false);sendFax();" /></span>
+										 class="ControlPushButton" id="faxButton" style="width: 210px"
+										 onClick="sendFax();" disabled/></span>
 						</td>
 					</tr>
 					<tr>
-                            <td style="padding-top: 0"><span><input type=button value="Fax & Paste into EMR"
-                                    class="ControlPushButton" id="faxPasteButton" style="width: 150px"
-                                    onClick="printPaste2Parent(false, true, true);sendFax();" /></span>
-                                    
+                            <td style="padding-top: 0"><span><input type=button value="Fax &amp; Add to encounter note"
+                                    class="ControlPushButton" id="faxPasteButton" style="width: 210px"
+                                    onClick="printPaste2Parent(false, true, true);sendFax();" disabled/></span>
                                  <span>
                                  	<select id="faxNumber" name="faxNumber">
                                  	<%
@@ -801,25 +805,25 @@ function toggleView(form) {
 						<!--td width=10px></td-->
 						<td><span><input type=button
 							value="<bean:message key="ViewScript.msgCreateNewRx"/>" class="ControlPushButton"
-                                                        style="width: 150px"  onClick="resetStash();resetReRxDrugList();javascript:parent.myLightWindow.deactivate();" /></span></td>
+                                                        style="width: 210px"  onClick="resetStash();resetReRxDrugList();javascript:parent.myLightWindow.deactivate();" /></span></td>
 					</tr>
 					<tr>
 						<!--td width=10px></td-->
 						<td><span><input type=button value="<bean:message key="ViewScript.msgBackToOscar"/>"
-							class="ControlPushButton" style="width: 150px" onClick="javascript:clearPending('close');parent.window.close();" /></span></td>
+							class="ControlPushButton" style="width: 210px" onClick="javascript:clearPending('close');parent.window.close();" /></span></td>
 					</tr>
-                                       <%if(prefPharmacy.length()>0 && prefPharmacyId.length()>0){   %>
-                                           <tr><td><span><input id="selectPharmacyButton" type=button value="<bean:message key='oscarRx.printPharmacyInfo.addPharmacyButton'/>" class="ControlPushButton" style="width:150px;"
-                                                             onclick="printPharmacy('<%=prefPharmacyId%>','<%=prefPharmacy%>');"/>
-                                                </span>
+<%--                                       <%if(prefPharmacy.length()>0 && prefPharmacyId.length()>0){   %>--%>
+<%--                                           <tr><td><span><input id="selectPharmacyButton" type=button value="<bean:message key='oscarRx.printPharmacyInfo.addPharmacyButton'/>" class="ControlPushButton" style="width:150px;"--%>
+<%--                                                             onclick="printPharmacy('<%=prefPharmacyId%>','<%=prefPharmacy%>');"/>--%>
+<%--                                                </span>--%>
 
-                                            </td>
-                                        </tr><%}%>
-                                        <tr>
-                                            <td>
-                                                <a id="selectedPharmacy" style="color:red"></a>
-                                            </td>
-                                        </tr>
+<%--                                            </td>--%>
+<%--                                        </tr><%}%>--%>
+<%--                                        <tr>--%>
+<%--                                            <td>--%>
+<%--                                                <a id="selectedPharmacy" style="color:red"></a>--%>
+<%--                                            </td>--%>
+<%--                                        </tr>--%>
 
                                         <%
                         if (request.getSession().getAttribute("rePrint") == null ){%>
@@ -831,7 +835,7 @@ function toggleView(form) {
                                                 <!--td width=10px></td-->
                                                 <td>
                                                     <textarea id="additionalNotes" style="width: 200px" onchange="javascript:addNotes();" ></textarea>
-                                                    <input type="button" value="<bean:message key="ViewScript.msgAddToRx"/>" onclick="javascript:addNotes();"/>
+                                                    <input type="button" value="Additional Rx Notes" onclick="javascript:addNotes();"/>
                                                 </td>
                                         </tr>
 

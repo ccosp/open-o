@@ -27,6 +27,10 @@
 		Peri-operative Anticoagulation
 	</option>
 
+	<option onclick="popperup(650,775,'https://www.mdcalc.com/calc/2200/fibrosis-4-fib-4-index-liver-fibrosis','Fibrosis-4');">
+		Fibrosis 4 (FIB-4)
+	</option>
+
 	<option onclick="popperup(650,775,'http://www.mcw.edu/calculators/body-mass-index.htm','BodyMassIndex');">
 		<bean:message key="oscarEncounter.Index.bodyMass"/>
 	</option>
