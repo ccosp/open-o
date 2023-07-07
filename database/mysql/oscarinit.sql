@@ -9367,7 +9367,7 @@ CREATE TABLE IF NOT EXISTS `ProviderPreferenceAppointmentScreenEForm` (
       `providerNo` varchar(6) NOT NULL,
       `appointmentScreenEForm` int(11) NOT NULL,
       `eFormName` varchar(255)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 --
@@ -9377,7 +9377,7 @@ CREATE TABLE IF NOT EXISTS `ProviderPreferenceAppointmentScreenEForm` (
 CREATE TABLE IF NOT EXISTS `ProviderPreferenceAppointmentScreenForm` (
      `providerNo` varchar(6) NOT NULL,
      `appointmentScreenForm` varchar(128) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+);
 
 --
 -- Table structure for table `ProviderPreferenceAppointmentScreenQuickLink`
@@ -9387,7 +9387,7 @@ CREATE TABLE IF NOT EXISTS `ProviderPreferenceAppointmentScreenQuickLink` (
   `providerNo` varchar(6) NOT NULL,
   `name` varchar(64) NOT NULL,
   `url` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 CREATE TABLE IF NOT EXISTS drugReason (

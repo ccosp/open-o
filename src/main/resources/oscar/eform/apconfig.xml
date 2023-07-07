@@ -81,7 +81,41 @@
 		<ap-sql>SELECT providerExt.signature FROM providerExt WHERE providerExt.provider_no='${provider}'</ap-sql>
 		<ap-output>${signature}</ap-output>
 	</databaseap>
-
+	<databaseap>
+		<ap-name>current_user_address</ap-name>
+		<ap-sql>SELECT address FROM provider WHERE provider_no='${provider}' </ap-sql>
+		<ap-output>${address}</ap-output>
+	</databaseap>
+	<databaseap>
+		<ap-name>current_user_phone</ap-name>
+		<ap-sql>SELECT phone FROM provider WHERE provider_no='${provider}' </ap-sql>
+		<ap-output>${phone}</ap-output>
+	</databaseap>
+	<databaseap>
+		<ap-name>current_user_workphone</ap-name>
+		<ap-sql>SELECT work_phone FROM provider WHERE provider_no='${provider}' </ap-sql>
+		<ap-output>${work_phone}</ap-output>
+	</databaseap>
+	<databaseap>
+		<ap-name>current_user_email</ap-name>
+		<ap-sql>SELECT email FROM provider WHERE provider_no='${provider}' </ap-sql>
+		<ap-output>${email}</ap-output>
+	</databaseap>
+	<databaseap>
+		<ap-name>current_user_fax</ap-name>
+		<ap-sql>SELECT
+			MID( comments,
+			INSTR(comments,'&lt;xml_p_fax&gt;')+11,
+			INSTR(comments,'&lt;/xml_p_fax&gt;')-INSTR(comments,'&lt;xml_p_fax&gt;')-11
+			) AS fax
+			FROM provider WHERE provider_no='${provider}' </ap-sql>
+		<ap-output>${fax}</ap-output>
+	</databaseap>
+	<databaseap>
+		<ap-name>current_user_team</ap-name>
+		<ap-sql>SELECT team FROM provider WHERE provider_no='${provider}' </ap-sql>
+		<ap-output>${team}</ap-output>
+	</databaseap>
 	<!-- Patient demographic information -->
 	<databaseap>
 		<ap-name>patient_name</ap-name>
@@ -284,21 +318,6 @@
 		<ap-name>phone2</ap-name>
 		<ap-sql>SELECT phone2 FROM demographic WHERE demographic_no=${demographic}</ap-sql>
 		<ap-output>${phone2}</ap-output>
-	</databaseap>
-	<databaseap>
-		<ap-name>preferredPhone</ap-name>
-		<ap-sql>SELECT CASE
-			WHEN e.value = 'H' THEN d.phone
-			WHEN e.value = 'W' THEN d.phone2
-			WHEN e.value = 'C' AND e2.value IS NOT NULL THEN e2.value
-			ELSE ''
-			END AS preferredPhone
-			FROM demographic AS d
-			LEFT JOIN demographicExt AS e on d.demographic_no = e.demographic_no AND e.key_val = 'phone_preference'
-			LEFT JOIN demographicExt e2 ON d.demographic_no = e2.demographic_no AND e2.key_val = 'demo_cell'
-			WHERE d.demographic_no=${demographic}
-		</ap-sql>
-		<ap-output>${preferredPhone}</ap-output>
 	</databaseap>
 	<databaseap>
 		<ap-name>cell</ap-name>
@@ -3150,6 +3169,18 @@
 			WHERE order_lab_test_source.ui_id='T_therapeutic_drug_monitor'
 		</ap-sql>
 		<ap-output>${source_names}</ap-output>
+	</databaseap>
+
+	<databaseap>
+		<ap-name>newsletter</ap-name>
+		<ap-sql>SELECT newsletter FROM demographic WHERE demographic_no=${demographic}</ap-sql>
+		<ap-output>${newsletter}</ap-output>
+	</databaseap>
+
+	<databaseap>
+		<ap-name>doctor_address_label</ap-name>
+		<ap-sql>SELECT * FROM provider JOIN demographic ON provider.provider_no = demographic.provider_no where demographic.demographic_no=${demographic}</ap-sql>
+		<ap-output>${address}</ap-output>
 	</databaseap>
 
 </eformap-config>
