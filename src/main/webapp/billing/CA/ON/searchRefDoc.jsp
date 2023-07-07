@@ -48,9 +48,36 @@
     String tophone = request.getParameter("tophone")==null?"":request.getParameter("tophone") ;
     String tofax = request.getParameter("tofax")==null?"":request.getParameter("tofax") ;
     String keyword = request.getParameter("keyword");
+      List<ProfessionalSpecialist> professionalSpecialists = null;
 
-    List<ProfessionalSpecialist> professionalSpecialists = null;
-    professionalSpecialists = professionalSpecialistDao.findAll();
+	if (request.getParameter("submit") != null && (request.getParameter("submit").equals("Search")
+		|| request.getParameter("submit").equals("Next Page") || request.getParameter("submit").equals("Last Page")) ) {
+
+
+	  String search_mode = request.getParameter("search_mode")==null?"search_name":request.getParameter("search_mode");
+	  String orderBy = request.getParameter("orderby")==null?"last_name,first_name":request.getParameter("orderby");
+	  String where = "";
+
+
+
+	  if ("search_name".equals(search_mode)) {
+	    String[] temp = keyword.split("\\,\\p{Space}*");
+
+	    if (temp.length>1) {
+	      professionalSpecialists = professionalSpecialistDao.findByFullName(temp[0], temp[1]);
+	    } else {
+	    	professionalSpecialists = professionalSpecialistDao.findByLastName(temp[0]);
+	    }
+	  } else if("specialty".equals(search_mode)){
+		  professionalSpecialists = professionalSpecialistDao.findBySpecialty(keyword);
+	  } else if("referral_no".equals(search_mode)) {
+		  professionalSpecialists = professionalSpecialistDao.findByReferralNo(keyword);
+}
+}
+
+    if (professionalSpecialists == null) {
+        professionalSpecialists = professionalSpecialistDao.findAll();
+    }
     if (professionalSpecialists != null) {
 		 for (ProfessionalSpecialist professionalSpecialist : professionalSpecialists) {
 		  	prop = new Properties();
@@ -65,6 +92,7 @@
 		  	alist.add(prop);
 		 }
 	  }
+
 %>
 
 <%@ page import="java.util.ArrayList"%>
@@ -132,7 +160,7 @@
     </script>
 </head>
 <body>
-    <h3><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.optChooseSpec" /></h3>
+    <h3><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.optChooseSpec" /></h3>&nbsp;<%=keyword == null?"":keyword %>&nbsp;<input type="button" class="btn-link" value="<bean:message key="report.reportindex.formAllProviders" />" onclick="location = location.href.replace(/(\?|\&)(keyword)([^&]*)/, '').replace(/(\?|\&)(submit)([^&]*)/, '');">
     <div class="container-fluid">
         <table style="width:100%" id="tblDocs" class="table table-condensed">
             <thead>
@@ -172,7 +200,8 @@
             </tbody>
         </table>
         <br>
-        <a href="<%=request.getContextPath() %>/oscarEncounter/oscarConsultationRequest/config/EditSpecialists.jsp"><bean:message key="oscarEncounter.oscarConsultationRequest.config.EditSpecialists.title" /></a>
+        <a class="btn" href="${pageContext.request.contextPath}/oscarEncounter/oscarConsultationRequest/config/EditSpecialists.jsp"><bean:message key="oscarEncounter.oscarConsultationRequest.config.EditSpecialists.title" /></a>
+
     </div>
 </body>
 </html:html>
