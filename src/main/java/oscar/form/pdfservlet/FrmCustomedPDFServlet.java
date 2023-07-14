@@ -55,6 +55,7 @@ import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.FaxJob.Direction;
+import org.oscarehr.common.model.PharmacyInfo;
 import org.oscarehr.util.LocaleUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -65,6 +66,7 @@ import org.owasp.encoder.Encode;
 import oscar.OscarProperties;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
+import oscar.oscarRx.data.RxPharmacyData;
 
 public class FrmCustomedPDFServlet extends HttpServlet {
 
@@ -252,7 +254,7 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 		Locale locale = null;
 		private String billingNumber;
 
-		private JSONObject pharmacyInfo;
+		private PharmacyInfo pharmacyInfo;
 
 		public EndPage() {
 		}
@@ -283,8 +285,8 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 			this.locale = locale;
 
 			if(pharmacyInfo != null && ! pharmacyInfo.isEmpty()) {
-				pharmacyInfo = Encode.forXmlContent(pharmacyInfo);
-				this.pharmacyInfo = JSONObject.fromObject(pharmacyInfo);
+				RxPharmacyData pharmacyData = new RxPharmacyData();
+				this.pharmacyInfo = pharmacyData.getPharmacy(pharmacyInfo);
 			}
 		}
 
@@ -342,11 +344,11 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 				if(this.pharmacyInfo != null) {
 					List<String> pharmacy = new ArrayList<>();
 					pharmacy.add("ATTENTION:");
-					pharmacy.add(pharmacyInfo.getString("name"));
-					pharmacy.add(pharmacyInfo.getString("address"));
-					pharmacy.add(pharmacyInfo.getString("city") + ", " + pharmacyInfo.getString("province") + ", " + pharmacyInfo.getString("postalCode"));
-					pharmacy.add(pharmacyInfo.getString("phone1"));
-					pharmacy.add(pharmacyInfo.getString("fax"));
+					pharmacy.add(pharmacyInfo.getName());
+					pharmacy.add(pharmacyInfo.getAddress());
+					pharmacy.add(pharmacyInfo.getCity() + ", " + pharmacyInfo.getProvince() + ", " + pharmacyInfo.getPostalCode());
+					pharmacy.add(pharmacyInfo.getPhone1());
+					pharmacy.add(pharmacyInfo.getFax());
 					float position = height - 26f;
 					for(String pharmacyItem : pharmacy) {
 						writeDirectContent(cb, bf, 10, PdfContentByte.ALIGN_LEFT, pharmacyItem, 300, position, 0);

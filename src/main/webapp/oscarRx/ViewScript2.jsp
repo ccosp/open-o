@@ -684,8 +684,7 @@ function toggleView(form) {
                                                     +json.postalCode+"<br>Tel:"+json.phone1+" "+json.phone2+"<br>Fax:"+json.fax+"<br>Email:"+json.email+"<br>Note:"+json.notes;
 
                                                     text+='<br><br><a class="noprint" style="text-align:center;" onclick="parent.reducePreview();" href="javascript:void(0);">Remove Pharmacy Info</a>';
-
-													text += "<input type='hidden' name='pharmacyInfo' value='" + JSON.stringify(json) + "' />"
+													text += "<input type='hidden' name='pharmacyInfo' value=" + id + " />"
                                                 expandPreview(text);
                                             }
                                         }});
