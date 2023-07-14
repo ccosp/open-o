@@ -98,7 +98,7 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 				String demo = req.getParameter("demographic_no");
 
 				if (faxNo != null && faxNo.length() < 7) {
-					writer.println("<script>alert('Error: Valid fax number not found!');window.close();</script>");
+					writer.println("<div id='fax-failure'><h3>Error: Valid fax number not found!</h3></div>");
 				} else {
 					// write to file
 					String pdfid = req.getParameter("pdfId");
@@ -159,10 +159,8 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 					}
 
 					if (validFaxNumber) {
-
 						LogAction.addLog(provider_no, LogConst.SENT, LogConst.CON_FAX, "PRESCRIPTION " + pdfFile);
-						writer.println("<script>alert('Fax sent to: " + req.getParameter("pharmaName") + " (" + req.getParameter("pharmaFax") + ")');window.close();</script>");
-
+						writer.println("<div id='fax-success' style='color:green;'><h3>Fax successfully generated</h3><p>" + pharmaName + " (" + faxNo + ")</p></div>");
 					}
 				}
 			} else {

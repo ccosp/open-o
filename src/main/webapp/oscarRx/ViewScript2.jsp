@@ -216,7 +216,7 @@ if (userAgent != null) {
 	}
 }
 %>
-<link rel="stylesheet" type="text/css" href="styles.css" />
+<%--<link rel="stylesheet" type="text/css" href="styles.css" />--%>
 
 <script type="text/javascript" src="../share/javascript/prototype.js"></script>
 <script type="text/javascript" src="../share/javascript/Oscar.js"></script>
@@ -268,7 +268,7 @@ if (userAgent != null) {
         }%>
 	    let action="../form/createcustomedpdf?__title=Rx&__method=" +  method+"&useSC="+useSC+"&scAddress="+scAddress+"&rxPageSize="+rxPageSize+"&scriptId="+scriptId;
 	    document.getElementById("preview").contentWindow.document.getElementById("preview2Form").action = action;
-	    if (method!="oscarRxFax"){
+	    if (method !== "oscarRxFax"){
 		    document.getElementById("preview").contentWindow.document.getElementById("preview2Form").target="_blank";
 	    }
 	    document.getElementById("preview").contentWindow.document.getElementById("preview2Form").submit();
@@ -567,6 +567,12 @@ function enableExistingSignature() {
 var requestIdKey = "<%=signatureRequestId %>";
 
 </script>
+	<style media="all">
+        * {
+	        font:13px/1.231 arial,helvetica,clean,sans-serif;
+        }
+	</style>
+
 </head>
 
 <body topmargin="0" leftmargin="0" vlink="#0000FF"
