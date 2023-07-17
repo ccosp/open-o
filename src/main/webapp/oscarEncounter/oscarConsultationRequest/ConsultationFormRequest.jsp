@@ -80,6 +80,7 @@ if(!authed) {
 <%@page import="org.oscarehr.common.dao.DemographicContactDao" %>
 <%@page import="org.oscarehr.common.model.ContactSpecialty" %>
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
+<%@ page import="oscar.oscarEncounter.data.EctFormData" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
