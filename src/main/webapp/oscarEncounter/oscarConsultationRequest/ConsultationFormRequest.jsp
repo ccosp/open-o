@@ -1613,7 +1613,6 @@ function updateFaxButton() {
 								</c:forEach>
 							</table></td></tr>
 
-						<c:if test="${ not empty attachedLabs }">
 							<tr><td><table id="attachedLabsTable">
 								<tr>
 									<td><h3>Labs</h3></td>
@@ -1628,7 +1627,6 @@ function updateFaxButton() {
 									</tr>
 								</c:forEach>
 							</table></td></tr>
-						</c:if>
 
 						<tr><td><table id="attachedFormsTable">
 							<tr>
