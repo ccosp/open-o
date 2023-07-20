@@ -1292,7 +1292,7 @@
 		</action>
 
 		<action input="/oscarConsultationRequest/ConsultationFormRequest.jsp" path="/attachDocs" validate="false" parameter="method"
-			type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocsAction" scope="request">
+			type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachAction" scope="request">
 			<forward name="fetchAll" path="/oscarEncounter/oscarConsultationRequest/attachConsultation.jsp" />
 		</action>
 
