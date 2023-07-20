@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,7 +38,9 @@ import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 
+import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.managers.FaxManager;
+import org.oscarehr.managers.FormsManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -46,8 +49,10 @@ import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
+import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -66,7 +71,11 @@ public class EctConsultationFormFaxAction extends Action {
 	private static FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
 	private static FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 	private static ClinicDAO clinicDAO = SpringUtils.getBean(ClinicDAO.class);
-    
+
+	private ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
+
+	private FormsManager formsManager = SpringUtils.getBean(FormsManager.class);
+
 	public EctConsultationFormFaxAction() {
 	}
 	    
@@ -126,9 +135,12 @@ public class EctConsultationFormFaxAction extends Action {
 		} else {
 			labs = consultLabs.populateLabResultsDataConsultResponse(loggedInInfo, demoNo, reqId, CommonLabResultData.ATTACHED);
 		}
-		
+
+		List<EctFormData.PatientForm> forms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(reqId), Integer.parseInt(demoNo));
+
 		String error = "";
 		Exception exception = null;
+
 		try {
 
 			if (consultResponsePage==null) { //fax for consultation request
@@ -190,7 +202,25 @@ public class EctConsultationFormFaxAction extends Action {
 				bos.close();
 				streams.add(bis);
 				pdfDocumentList.add(bis);
+			}
 
+			// convert forms to PDF
+			for(EctFormData.PatientForm  formItem : forms) {
+				FormTransportContainer formTransportContainer = new FormTransportContainer(
+						response, request, mapping.findForward("attachform").getPath()
+						+ "?method=fetch&formname="
+						+ formItem.getFormName()
+						+ "&demographic_no="
+						+ formItem.getDemoNo()
+						+ "&formId="
+						+ formItem.getFormId());
+				formTransportContainer.setDemographicNo( demoNo );
+				formTransportContainer.setProviderNo( provider_no );
+				formTransportContainer.setSubject( formItem.getFormName() + " Form ID " + formItem.getFormId() );
+				formTransportContainer.setFormName( formItem.getFormName() );
+				formTransportContainer.setRealPath( getServlet().getServletContext().getRealPath( File.separator ) );
+				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.FORM, formTransportContainer);
+				pdfDocumentList.add(Files.newInputStream(attachedForm));
 			}
 			
 			if (pdfDocumentList.size() > 0) {
@@ -299,8 +329,8 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (com.lowagie.text.DocumentException e) {
-			logger.error("error", e);
+		} catch (ServletException e) {
+			throw new RuntimeException(e);
 		} finally {
 			// Cleaning up InputStreams created for concatenation.
 			for (InputStream is : streams) {

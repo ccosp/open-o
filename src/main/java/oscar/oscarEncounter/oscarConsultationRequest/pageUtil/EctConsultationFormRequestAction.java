@@ -85,6 +85,7 @@ import org.oscarehr.util.WebUtils;
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -436,7 +437,9 @@ public class EctConsultationFormRequestAction extends Action {
 			List<EDoc> attachedDocumentList = EDocUtil.listDocs(loggedInInfo, demographicNo, requestId, EDocUtil.ATTACHED);
 	        CommonLabResultData commonLabResultData = new CommonLabResultData();
 			List<LabResultData> attachedLabList = commonLabResultData.populateLabResultsData(loggedInInfo, demographicNo, requestId, CommonLabResultData.ATTACHED);
-			
+
+			List<EctFormData.PatientForm> attachedFormsList = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+
 	        if(attachedDocumentList != null) {      	
 	        	for(EDoc documentItem : attachedDocumentList) {
 	        		String description = documentItem.getDescription();
@@ -452,7 +455,13 @@ public class EctConsultationFormRequestAction extends Action {
 	           		documents.add(labResultData.getDisciplineDisplayString());
 	        	}
 	        }
-	        
+
+			if(attachedFormsList != null && ! attachedFormsList.isEmpty()) {
+				for(EctFormData.PatientForm attachedForm : attachedFormsList) {
+					documents.add(attachedForm.formName);
+				}
+			}
+
 			List<FaxConfig>	accounts = faxManager.getFaxGatewayAccounts(loggedInInfo);
 			
 	        request.setAttribute("letterheadFax", frm.getLetterheadFax());
