@@ -2612,18 +2612,18 @@ jQuery(document).ready(function(){
  					column.append(input);
  					row.append(column);
 
-								jQuery('#consultationRequestForm').find(target).append(row);
-							});
-						
-							// remove unchecked elements from the request form.
-							jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .form_pre_check:not(input[disabled='disabled']), .eForm_pre_check:not(input[disabled='disabled'])").each(function(index,data){
-								var checkedElement = jQuery(this);
-							
-								if( !checkedElement.is(':checked') ) {
-									var checkedElementClass = checkedElement.attr("class");
-									jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
-									checkedElement.attr("class", checkedElementClass.split("_")[0] + "_check");
-								}		
+					jQuery('#consultationRequestForm').find(target).append(row);
+				});
+			
+				// remove unchecked elements from the request form.
+				jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .form_pre_check:not(input[disabled='disabled']), .eForm_pre_check:not(input[disabled='disabled'])").each(function(index,data){
+					var checkedElement = jQuery(this);
+				
+					if( !checkedElement.is(':checked') ) {
+						var checkedElementClass = checkedElement.attr("class");
+						jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
+						checkedElement.attr("class", checkedElementClass.split("_")[0] + "_check");
+					}
 							});
 						}
 					});
@@ -2641,8 +2641,7 @@ jQuery(document).ready(function(){
 				console.log("There was an error loading a list of all documents");
 				alert("There was an error loading a list of all documents.");
 			}
-			});	
-	
+		});		
 	})
 
 })
