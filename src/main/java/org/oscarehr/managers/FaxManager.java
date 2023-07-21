@@ -53,6 +53,7 @@ import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
 import oscar.dms.EDocUtil;
+import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 import oscar.util.ConcatPDF;
 
@@ -84,32 +85,45 @@ public class FaxManager {
 	
 	public enum TransactionType {CONSULTATION, EFORM, FORM, RX, DOCUMENT}
 
+	public Path renderFaxDocument(LoggedInInfo loggedInInfo, TransactionType transactionType, FormTransportContainer formTransportContainer) {
+		return renderFaxDocument(loggedInInfo, transactionType, 0, 0, formTransportContainer);
+	}
+
+	public Path renderFaxDocument(LoggedInInfo loggedInInfo, TransactionType transactionType, int transactionId, int demographicNo) {
+		return renderFaxDocument(loggedInInfo, transactionType, transactionId, demographicNo, null);
+	}
+
 	/**
 	 * Render a fax document from the given parameters.
 	 * Return a path to the fax document so it can be reviewed by the sender.
 	 * 
 	 * @return
 	 */
-	public Path renderFaxDocument(LoggedInInfo loggedInInfo, TransactionType transactionType, int transactionId, int demographicNo) {
-		
+	public Path renderFaxDocument(LoggedInInfo loggedInInfo, TransactionType transactionType, int transactionId, int demographicNo, FormTransportContainer formTransportContainer) {
+
 		Path renderedDocument;
-		
-		switch(transactionType)
-		{
-			case CONSULTATION: 	renderedDocument = renderConsultationRequest(loggedInInfo, transactionId, demographicNo);
+
+		switch (transactionType) {
+			case CONSULTATION:
+				renderedDocument = renderConsultationRequest(loggedInInfo, transactionId, demographicNo);
 				break;
-			case DOCUMENT: 		renderedDocument = renderDocument(loggedInInfo, transactionId, demographicNo);
+			case DOCUMENT:
+				renderedDocument = renderDocument(loggedInInfo, transactionId, demographicNo);
 				break;
-			case EFORM: 		renderedDocument = renderEform(loggedInInfo, transactionId, demographicNo);
+			case EFORM:
+				renderedDocument = renderEform(loggedInInfo, transactionId, demographicNo);
 				break;
-			case FORM: 			renderedDocument = renderForm(loggedInInfo, transactionId, demographicNo);
+			case FORM:
+				renderedDocument = renderForm(loggedInInfo, formTransportContainer);
 				break;
-			case RX: 			renderedDocument = renderPrescription(loggedInInfo, transactionId, demographicNo);
+			case RX:
+				renderedDocument = renderPrescription(loggedInInfo, transactionId, demographicNo);
 				break;
-			default:			renderedDocument = null;
+			default:
+				renderedDocument = null;
 				break;
-		}	
-		
+		}
+
 		return renderedDocument;
 	}
 	
@@ -148,15 +162,15 @@ public class FaxManager {
 
 		return null;
 	}
-	
-	public Path renderForm(LoggedInInfo loggedInInfo, int formId, int demographicNo) {
-		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.WRITE, demographicNo)) {
+
+	public Path renderForm(LoggedInInfo loggedInInfo, FormTransportContainer formTransportContainer) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.WRITE, formTransportContainer.getDemographicNo())) {
 			throw new RuntimeException("missing required security object (_form)");
 		}
-		
-		logger.info("Rendering form number " + formId + " for fax preview.");
-		
-		return null;
+
+		logger.info("Rendering form number " + formTransportContainer.getFormName() + " for fax preview.");
+
+		return faxDocumentManager.getFormFaxDocument(loggedInInfo, formTransportContainer);
 	}
 	
 	/**
