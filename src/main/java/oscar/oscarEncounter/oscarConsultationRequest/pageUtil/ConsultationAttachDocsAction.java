@@ -46,7 +46,7 @@ import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
 
-public class ConsultationAttachAction extends DispatchAction {
+public class ConsultationAttachDocsAction extends DispatchAction {
 
 
 	@SuppressWarnings("unused")
