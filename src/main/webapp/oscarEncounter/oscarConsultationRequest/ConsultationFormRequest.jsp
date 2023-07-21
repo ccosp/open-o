@@ -2624,26 +2624,10 @@ jQuery(document).ready(function(){
 						jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
 						checkedElement.attr("class", checkedElementClass.split("_")[0] + "_check");
 					}
-							});
-						}
-					});
-		
-		jQuery("#attachDocumentDisplay").load(trigger.data('poload'), function(response, status, xhr) {
-			if (status === "success") {
-				// pre check all selected elements after the dialog panel fully loads.
-				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
-					var delegate = "#" + this.id.split("_")[1];
-					var element = jQuery('#attachDocumentsForm').find(delegate);
-					var elementClassType = element.attr("class").split("_")[0];
-					element.attr("checked", true).attr("class", elementClassType + "_pre_check");				
 				});
-			} else {
-				console.log("There was an error loading a list of all documents");
-				alert("There was an error loading a list of all documents.");
 			}
-		});		
+		});
 	})
-
 })
 
 </script>
