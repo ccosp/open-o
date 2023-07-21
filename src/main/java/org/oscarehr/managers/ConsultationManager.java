@@ -70,6 +70,7 @@ import org.oscarehr.common.model.CtlDocument;
 import org.oscarehr.common.model.CtlDocumentPK;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Document;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Property;
@@ -90,6 +91,7 @@ import ca.uhn.hl7v2.model.v26.message.ORU_R01;
 import ca.uhn.hl7v2.model.v26.message.REF_I12;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.eform.EFormUtil;
 import oscar.log.LogAction;
 import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
@@ -558,6 +560,10 @@ public class ConsultationManager {
 		}
 
 		return filteredForms;
+	}
+
+	public List<EFormData> getAttachedEForms(String requestId) {
+		return EFormUtil.listPatientEformsCurrentAttachedToConsult(requestId);
 	}
 
 	public void archiveConsultationRequest(Integer requestId) {

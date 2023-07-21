@@ -82,7 +82,7 @@ public class ConsultationAttachDocsAction extends DispatchAction {
 
         List<EFormData> attachedEForms = null;
         if(requestId != null && ! requestId.isEmpty() && ! "null".equals(requestId)) {
-           attachedEForms = EFormUtil.listPatientEformsCurrentAttachedToConsult(requestId);
+           attachedEForms = consultationManager.getAttachedEForms(requestId);
         }
 
         if(attachedDocuments != null) {      	

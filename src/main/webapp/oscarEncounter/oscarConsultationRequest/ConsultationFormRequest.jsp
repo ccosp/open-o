@@ -194,7 +194,7 @@ if(!authed) {
         List<LabResultData> attachedLabs = commonLabResultData.populateLabResultsData(loggedInInfo, demo, requestId, CommonLabResultData.ATTACHED);
 		ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
 		List<EctFormData.PatientForm> attachedForms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demo));
-		List<EFormData> attachedEForms = EFormUtil.listPatientEformsCurrentAttachedToConsult(requestId);
+		List<EFormData> attachedEForms = consultationManager.getAttachedEForms(requestId);
 
         pageContext.setAttribute("attachedDocuments", attachedDocuments);
         pageContext.setAttribute("attachedLabs", attachedLabs);
