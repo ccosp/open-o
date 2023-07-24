@@ -32,6 +32,7 @@ import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.Clinic;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
@@ -220,6 +221,14 @@ public class EctConsultationFormFaxAction extends Action {
 				formTransportContainer.setFormName( formItem.getFormName() );
 				formTransportContainer.setRealPath( getServlet().getServletContext().getRealPath( File.separator ) );
 				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.FORM, formTransportContainer);
+				pdfDocumentList.add(Files.newInputStream(attachedForm));
+			}
+
+			// attached eForms
+			List<EFormData> eForms = consultationManager.getAttachedEForms(reqId);
+
+			for(EFormData eFormItem : eForms) {
+				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.EFORM, eFormItem.getId(), eFormItem.getDemographicId());
 				pdfDocumentList.add(Files.newInputStream(attachedForm));
 			}
 			
