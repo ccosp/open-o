@@ -1624,7 +1624,7 @@ function updateFaxButton() {
 								<td><h3>Forms</h3></td>
 							</tr>
 							<c:forEach items="${ attachedForms }" var="attachedForm">
-								<tr id="entry_formNo${ attachedForm.formId }">
+								<tr id="entry_formNo${ attachedForm.formId }" data-formName="${ attachedForm.formName }" data-formDate="${ attachedForm.getEdited() }">
 									<td>
 										<c:out value="${ attachedForm.formName }" />
 
@@ -2553,6 +2553,34 @@ Calendar.setup( { inputField : "appointmentDate", ifFormat : "%Y/%m/%d", showsTi
 	Calendar.setup( { inputField : "referalDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "referalDate", singleClick : true, step : 1 } );
 <%}%>
 jQuery(document).ready(function(){
+	function addFormIfNotFound(form, delegate) {
+		const checkboxName = form.getAttribute('name');
+		const formValue = form.getAttribute('value');
+		const formId = "formNo" + formValue;
+		const formName = document.getElementById("entry_" + formId).getAttribute('data-formName');
+		const formDate = document.getElementById("entry_" + formId).getAttribute('data-formDate');
+
+		const checkbox = jQuery('<input>', {
+			class: 'form_check',
+			type: 'checkbox',
+			name: checkboxName,
+			id: formId,
+			value: formValue,
+			title: formName
+		});
+
+		const label = jQuery('<label>', {
+			for: formId,
+			text: "(Not Latest Version) " + formName + " " + formDate
+		});
+
+		const newLiFormElement = jQuery('<li>', {
+			class: 'form',
+		}).append(checkbox).append(label);
+		jQuery('#formList').find('.selectAllHeading').after(newLiFormElement);
+		
+		return jQuery('#attachDocumentsForm').find(delegate);
+	}
 
 	/**
 		DOCUMENT ATTACHMENT MANAGER JAVASCRIPT		
@@ -2567,9 +2595,10 @@ jQuery(document).ready(function(){
 		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
 			if (status === "success") {
 				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
-					var delegate = "#" + this.id.split("_")[1];
-					var element = jQuery('#attachDocumentsForm').find(delegate);
-					var elementClassType = element.attr("class").split("_")[0];
+					let delegate = "#" + this.id.split("_")[1];
+					let element = jQuery('#attachDocumentsForm').find(delegate);
+					if (element.length === 0) { element = addFormIfNotFound(data, delegate); }
+					let elementClassType = element.attr("class").split("_")[0];
 					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
 				});
 			}

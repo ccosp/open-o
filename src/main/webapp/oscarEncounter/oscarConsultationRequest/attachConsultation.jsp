@@ -116,7 +116,7 @@ function toggleSelectAll(element, startClassName) {
 						<label for="selectAllForms">Select all</label>
 					</li>
 					<c:forEach items="${ allForms }" var="form">
-						<li class="lab">
+						<li class="form">
 							<input class="form_check" type="checkbox" name="formNo" id="formNo${ form.formId }" value="${form.formId}" title="${form.formName}" />
 							<label for="formNo${form.formId}">
 								<c:out value="${ form.formName } ${ form.getEdited() }" />

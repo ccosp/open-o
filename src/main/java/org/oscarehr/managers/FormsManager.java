@@ -147,26 +147,39 @@ public class FormsManager {
 		return (results);
 	}
 	
-	public List<PatientForm> getEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId) {
-  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", SecurityInfoManager.READ, null)) {
+	public List<PatientForm> getLatestVersionOfEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId) {
+  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_form)");
 		}
-  		
-  		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
-  		
-  		List<EncounterForm> encounterFormList = getAllEncounterForms();
-  		for(EncounterForm encounterForm : encounterFormList) {
-  			String table = encounterForm.getFormTable();
-  			PatientForm[] patientFormArray = EctFormData.getPatientForms(demographicId+"", table);
-  			if(patientFormArray.length > 0) {
-	  			PatientForm patientForm = patientFormArray[0];
-	  			patientForm.setTable(table);
-	  			patientForm.setFormName(encounterForm.getFormName());
-	  			patientFormList.add(patientForm);
-  			}
-  		}
 
-  		return patientFormList;
+		return processEncounterForms(loggedInInfo, demographicId, false);
+	}
+
+	public List<PatientForm> getAllVersionsOfEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_form)");
+		}
+
+		return processEncounterForms(loggedInInfo, demographicId, true);
+	}
+
+	private List<PatientForm> processEncounterForms(LoggedInInfo loggedInInfo, Integer demographicId, boolean showAllVersions) {
+		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
+		List<EncounterForm> encounterFormList = getAllEncounterForms();
+
+		for (EncounterForm encounterForm : encounterFormList) {
+			String table = encounterForm.getFormTable();
+			PatientForm[] patientFormArray = EctFormData.getPatientForms(demographicId + "", table);
+			int maxFormsToProcess = showAllVersions ? patientFormArray.length : Math.min(1, patientFormArray.length);
+			for (int i = 0; i < maxFormsToProcess; i++) {
+				PatientForm patientForm = patientFormArray[i];
+				patientForm.setTable(table);
+				patientForm.setFormName(encounterForm.getFormName());
+				patientFormList.add(patientForm);
+			}
+		}
+
+		return patientFormList;
 	}
 
 	/**
