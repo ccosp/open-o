@@ -66,6 +66,7 @@ import org.oscarehr.common.model.ConsultationRequestExt;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DemographicContact;
 import org.oscarehr.common.model.DigitalSignature;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
@@ -444,6 +445,8 @@ public class EctConsultationFormRequestAction extends Action {
 
 			List<EctFormData.PatientForm> attachedFormsList = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
 
+			List<EFormData> attachedEFormsList = consultationManager.getAttachedEForms(requestId);
+
 	        if(attachedDocumentList != null) {      	
 	        	for(EDoc documentItem : attachedDocumentList) {
 	        		String description = documentItem.getDescription();
@@ -463,6 +466,12 @@ public class EctConsultationFormRequestAction extends Action {
 			if(attachedFormsList != null && ! attachedFormsList.isEmpty()) {
 				for(EctFormData.PatientForm attachedForm : attachedFormsList) {
 					documents.add(attachedForm.formName);
+				}
+			}
+
+			if(attachedEFormsList != null && ! attachedEFormsList.isEmpty()) {
+				for(EFormData attachedEForm : attachedEFormsList) {
+					documents.add(attachedEForm.getFormName());
 				}
 			}
 
