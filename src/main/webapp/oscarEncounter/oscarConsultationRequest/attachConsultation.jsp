@@ -133,8 +133,8 @@ function toggleSelectAll(element, startClassName) {
 			<td>
 				<ul id="eFormList" style="list-style-type: none;padding:0px;">
 					<li class="selectAllHeading" >
-						<input id="selectAllForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
-						<label for="selectAllForms">Select all</label>
+						<input id="selectAllEForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
+						<label for="selectAllEForms">Select all</label>
 					</li>
 					<c:forEach items="${ allEForms }" var="eForm">
 						<li class="eForm">
