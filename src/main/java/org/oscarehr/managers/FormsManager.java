@@ -27,6 +27,7 @@ package org.oscarehr.managers;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.oscarehr.common.dao.EFormDao;
@@ -147,34 +148,30 @@ public class FormsManager {
 		return (results);
 	}
 	
-	public List<PatientForm> getLatestVersionOfEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId) {
+	public List<PatientForm> getEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId, boolean getAllVersions, boolean getOnlyPDFReadyForms) {
   		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_form)");
 		}
 
-		return processEncounterForms(loggedInInfo, demographicId, false);
+		return processEncounterForms(loggedInInfo, demographicId, getAllVersions, getOnlyPDFReadyForms);
 	}
 
-	public List<PatientForm> getAllVersionsOfEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId) {
-		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
-			throw new RuntimeException("missing required security object (_form)");
-		}
-
-		return processEncounterForms(loggedInInfo, demographicId, true);
-	}
-
-	private List<PatientForm> processEncounterForms(LoggedInInfo loggedInInfo, Integer demographicId, boolean showAllVersions) {
+	private List<PatientForm> processEncounterForms(LoggedInInfo loggedInInfo, Integer demographicId, boolean getAllVersions, boolean getOnlyPDFReadyForms) {
 		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
 		List<EncounterForm> encounterFormList = getAllEncounterForms();
+		String[] pdfReadyFormNames = {"Annual"};
 
 		for (EncounterForm encounterForm : encounterFormList) {
+			String formName = encounterForm.getFormName();
+			if (getOnlyPDFReadyForms && !Arrays.asList(pdfReadyFormNames).contains(formName)) { continue; }
+
 			String table = encounterForm.getFormTable();
 			PatientForm[] patientFormArray = EctFormData.getPatientForms(demographicId + "", table);
-			int maxFormsToProcess = showAllVersions ? patientFormArray.length : Math.min(1, patientFormArray.length);
+			int maxFormsToProcess = getAllVersions ? patientFormArray.length : Math.min(1, patientFormArray.length);
 			for (int i = 0; i < maxFormsToProcess; i++) {
 				PatientForm patientForm = patientFormArray[i];
 				patientForm.setTable(table);
-				patientForm.setFormName(encounterForm.getFormName());
+				patientForm.setFormName(formName);
 				patientFormList.add(patientForm);
 			}
 		}

@@ -549,7 +549,7 @@ public class ConsultationManager {
 		 * Sure wish we didn't have to do this.  It's the only option without having to refactor a
 		 * whole string of dated code.
 		 */
-		List<EctFormData.PatientForm> allForms = formsManager.getAllVersionsOfEncounterFormsbyDemographicNumber(loggedInInfo, demographicNo);
+		List<EctFormData.PatientForm> allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, demographicNo, true, true);
 		for (ConsultDocs attached : attachedForms) {
 			for (EctFormData.PatientForm form : allForms) {
 				if ((form.getFormId()).equals((attached.getDocumentNo() + ""))) {

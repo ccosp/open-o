@@ -71,7 +71,7 @@ public class ConsultationAttachDocsAction extends DispatchAction {
         List<String> attachedFormIds = new ArrayList<String>();
         List<String> attachedEFormIds = new ArrayList<String>();
 
-        List<EctFormData.PatientForm> allForms = formsManager.getLatestVersionOfEncounterFormsbyDemographicNumber(loggedInInfo, Integer.parseInt(demographicNo));
+        List<EctFormData.PatientForm> allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, Integer.parseInt(demographicNo), false, true);
 
         List<EctFormData.PatientForm> attachedForms = null;
         if(requestId != null && ! requestId.isEmpty() && ! "null".equals(requestId)) {
