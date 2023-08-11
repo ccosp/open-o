@@ -602,7 +602,7 @@ public class FaxManager {
 			throw new RuntimeException("missing required security object (_fax)");
 		}
 
-		List<FaxConfig> accounts = faxConfigDao.findAll(0, 50);
+		List<FaxConfig> accounts = faxConfigDao.findAll(0,null);
 		List<FaxConfig> sanitizedAccounts = new ArrayList<FaxConfig>();
 		for (FaxConfig account : accounts) {
 			if (account.isActive()) {
@@ -620,7 +620,7 @@ public class FaxManager {
 			throw new RuntimeException("missing required security object (_fax)");
 		}
 
-		return faxConfigDao.findAll(0, 50);
+		return faxConfigDao.findAll(0,null);
 	}
 
 	/**
@@ -671,7 +671,7 @@ public class FaxManager {
 			throw new RuntimeException("missing required security object (_fax)");
 		}
 		FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-  		List<FaxConfig> accounts = faxConfigDao.findAll(0, 50);
+  		List<FaxConfig> accounts = faxConfigDao.findAll(0,null);
   		for(FaxConfig account : accounts)
   		{
   			if(account.isActive())
