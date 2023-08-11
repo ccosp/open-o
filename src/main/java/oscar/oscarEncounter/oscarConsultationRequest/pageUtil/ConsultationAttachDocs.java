@@ -24,12 +24,8 @@
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.util.LoggedInInfo;
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
 
 /**
  *
@@ -37,42 +33,13 @@ import oscar.dms.EDocUtil;
  */
 public class ConsultationAttachDocs extends ConsultationAttach {
 
-	private static final String DOCTYPE = ConsultDocs.DOCTYPE_DOC;
+    private static final String DOCTYPE = ConsultDocs.DOCTYPE_DOC;
 
-	public ConsultationAttachDocs(String prov, String demo, String req, String[] d) {
-		super(prov, demo, req, d);
-	}
+    public ConsultationAttachDocs(String provNo, String demo, String req, String[] d) {
+        super(provNo, demo, req, d);
+    }
 
-	public void attach(LoggedInInfo loggedInInfo) {
-
-		//first we get a list of currently attached docs
-		//TODO not sure why all this database exercise - but - didnt have enough time to fix everything correctly.
-		List<EDoc> oldlist = EDocUtil.listDocs(loggedInInfo, getDemoNo(), getReqId(), EDocUtil.ATTACHED);
-		List<String> newlist = new ArrayList<>();
-		List<EDoc> keeplist = new ArrayList<>();
-		List<String> currentList = super.getDocs();
-		boolean alreadyAttached;
-		//add new documents to list and get ids of docs to keep attached
-		for (int i = 0; i < currentList.size(); ++i) {
-			alreadyAttached = false;
-			for (int j = 0; j < oldlist.size(); ++j) {
-				if ((oldlist.get(j)).getDocId().equals(currentList.get(i))) {
-					alreadyAttached = true;
-					keeplist.add(oldlist.get(j));
-					break;
-				}
-			}
-			if (!alreadyAttached) newlist.add(currentList.get(i));
-		}
-
-		//now compare what we need to keep with what we have and remove association
-		for (EDoc old : oldlist) {
-			if (keeplist.contains(old)) {
-				continue;
-			}
-			super.detach(loggedInInfo, old.getDocId(), DOCTYPE);
-		}
-
-		super.attach(loggedInInfo, newlist, DOCTYPE);
-	} //end attach
+    public void attach(LoggedInInfo loggedInInfo) {
+        super.attach(loggedInInfo, DOCTYPE);
+    }
 }

@@ -82,6 +82,8 @@ if(!authed) {
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
 <%@ page import="oscar.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="org.oscarehr.common.model.EFormData" %>
+<%@ page import="oscar.eform.EFormUtil" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
@@ -193,10 +195,13 @@ if(!authed) {
         List<LabResultData> attachedLabs = commonLabResultData.populateLabResultsData(loggedInInfo, demo, requestId, CommonLabResultData.ATTACHED);
 		ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
 		List<EctFormData.PatientForm> attachedForms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demo));
+		List<EFormData> attachedEForms = consultationManager.getAttachedEForms(requestId);
 
         pageContext.setAttribute("attachedDocuments", attachedDocuments);
         pageContext.setAttribute("attachedLabs", attachedLabs);
 		pageContext.setAttribute("attachedForms", attachedForms);
+		pageContext.setAttribute("attachedEForms", attachedEForms);
+
 	}
 %>		
 		<%--
@@ -480,13 +485,13 @@ background-color: #ddddff;
     width:100%;
 }
 
-#attachedDocumentsTable h3, #attachedLabsTable h3, #attachedFormsTable h3 {
+#attachedDocumentsTable h3, #attachedLabsTable h3, #attachedFormsTable h3, #attachedEFormsTable h3 {
     margin: 0px !important;
     padding: 0px !important;
     border-bottom: grey thin solid;
 }
 
-#attachedLabsTable, #attachedFormsTable, #attachedDocumentsTable {
+#attachedLabsTable, #attachedFormsTable, #attachedDocumentsTable, #attachedEFormsTable {
     border-collapse: collapse;
     width:100%;
 }
@@ -1600,7 +1605,6 @@ function updateFaxButton() {
 								</c:forEach>
 							</table></td></tr>
 
-						<c:if test="${ not empty attachedLabs }">
 							<tr><td><table id="attachedLabsTable">
 								<tr>
 									<td><h3>Labs</h3></td>
@@ -1615,14 +1619,13 @@ function updateFaxButton() {
 									</tr>
 								</c:forEach>
 							</table></td></tr>
-						</c:if>
 
 						<tr><td><table id="attachedFormsTable">
 							<tr>
 								<td><h3>Forms</h3></td>
 							</tr>
 							<c:forEach items="${ attachedForms }" var="attachedForm">
-								<tr id="entry_formNo${ attachedForm.formId }">
+								<tr id="entry_formNo${ attachedForm.formId }" data-formName="${ attachedForm.formName }" data-formDate="${ attachedForm.getEdited() }">
 									<td>
 										<c:out value="${ attachedForm.formName }" />
 
@@ -1631,7 +1634,20 @@ function updateFaxButton() {
 								</tr>
 							</c:forEach>
 						</table></td></tr>
-						
+						<tr><td><table id="attachedEFormsTable">
+							<tr>
+								<td><h3>eForms</h3></td>
+							</tr>
+							<c:forEach items="${ attachedEForms }" var="attachedEForm">
+								<tr id="entry_eFormNo${ attachedEForm.id }">
+									<td>
+										<c:out value="${ attachedEForm.formName }" />
+
+										<input name="eFormNo" value="${ attachedEForm.id }" id="delegate_eFormNo${ attachedEForm.id }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
 					</table>
 					</td>
 				</tr>
@@ -2538,6 +2554,34 @@ Calendar.setup( { inputField : "appointmentDate", ifFormat : "%Y/%m/%d", showsTi
 	Calendar.setup( { inputField : "referalDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "referalDate", singleClick : true, step : 1 } );
 <%}%>
 jQuery(document).ready(function(){
+	function addFormIfNotFound(form, delegate) {
+		const checkboxName = form.getAttribute('name');
+		const formValue = form.getAttribute('value');
+		const formId = "formNo" + formValue;
+		const formName = document.getElementById("entry_" + formId).getAttribute('data-formName');
+		const formDate = document.getElementById("entry_" + formId).getAttribute('data-formDate');
+
+		const checkbox = jQuery('<input>', {
+			class: 'form_check',
+			type: 'checkbox',
+			name: checkboxName,
+			id: formId,
+			value: formValue,
+			title: formName
+		});
+
+		const label = jQuery('<label>', {
+			for: formId,
+			text: "(Not Latest Version) " + formName + " " + formDate
+		});
+
+		const newLiFormElement = jQuery('<li>', {
+			class: 'form',
+		}).append(checkbox).append(label);
+		jQuery('#formList').find('.selectAllHeading').after(newLiFormElement);
+		
+		return jQuery('#attachDocumentsForm').find(delegate);
+	}
 
 	/**
 		DOCUMENT ATTACHMENT MANAGER JAVASCRIPT		
@@ -2552,9 +2596,10 @@ jQuery(document).ready(function(){
 		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
 			if (status === "success") {
 				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
-					var delegate = "#" + this.id.split("_")[1];
-					var element = jQuery('#attachDocumentsForm').find(delegate);
-					var elementClassType = element.attr("class").split("_")[0];
+					let delegate = "#" + this.id.split("_")[1];
+					let element = jQuery('#attachDocumentsForm').find(delegate);
+					if (element.length === 0) { element = addFormIfNotFound(data, delegate); }
+					let elementClassType = element.attr("class").split("_")[0];
 					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
 				});
 			}
@@ -2571,7 +2616,7 @@ jQuery(document).ready(function(){
  				// before the dialog is closed:
 
  			    // pass the checked elements to the consultation request form
- 				jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled']), .form_check:checked:not(input[disabled='disabled'])"
+ 				jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled']), .form_check:checked:not(input[disabled='disabled']), .eForm_check:checked:not(input[disabled='disabled'])"
 				).each(function(index,data){
  					var element = jQuery(this);
  					var input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
@@ -2589,17 +2634,21 @@ jQuery(document).ready(function(){
 						target = "#attachedFormsTable";
 					}
 
+					if("eForm_check".indexOf(element.attr("class")) != -1)
+					{
+						target = "#attachedEFormsTable";
+					}
 					column.text(element.attr("title"));
  					column.append(input);
  					row.append(column);
 
- 					jQuery('#consultationRequestForm').find(target).append(row);
- 				});
-
+					jQuery('#consultationRequestForm').find(target).append(row);
+				});
+			
 				// remove unchecked elements from the request form.
-				jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .form_pre_check:not(input[disabled='disabled'])").each(function(index,data){
+				jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .form_pre_check:not(input[disabled='disabled']), .eForm_pre_check:not(input[disabled='disabled'])").each(function(index,data){
 					var checkedElement = jQuery(this);
-
+				
 					if( !checkedElement.is(':checked') ) {
 						var checkedElementClass = checkedElement.attr("class");
 						jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
@@ -2607,11 +2656,8 @@ jQuery(document).ready(function(){
 					}
 				});
 			}
-
 		});
-	
 	})
-
 })
 
 </script>

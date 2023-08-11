@@ -25,59 +25,19 @@
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.util.LoggedInInfo;
-import oscar.oscarLab.ca.on.CommonLabResultData;
-import oscar.oscarLab.ca.on.LabResultData;
 
-/**
- *
- * @author rjonasz
- */
-public class ConsultationAttachLabs extends ConsultationAttach{
-    private final String DOCTYPE = ConsultDocs.DOCTYPE_LAB;
+public class ConsultationAttachLabs extends ConsultationAttach {
 
-    /** Creates a new instance of ConsultationAttachLabs */
+    private static final String DOCTYPE = ConsultDocs.DOCTYPE_LAB;
+
     public ConsultationAttachLabs(String provNo, String demo, String req, String[] d) {
         super(provNo, demo, req, d);
     }
 
     public void attach(LoggedInInfo loggedInInfo) {
-
-        //first we get a list of currently attached labs
-        CommonLabResultData labResData = new CommonLabResultData();
-        List<LabResultData> oldlist = labResData.populateLabResultsData(loggedInInfo, getDemoNo(), getReqId(), CommonLabResultData.ATTACHED);
-        List<String> newlist = new ArrayList<>();
-        List<LabResultData> keeplist = new ArrayList<>();
-        List<String> currentList = super.getDocs();
-
-        boolean alreadyAttached;
-        //add new documents to list and get ids of docs to keep attached
-        for(int i = 0; i < currentList.size(); ++i) {
-            alreadyAttached = false;
-            for(int j = 0; j < oldlist.size(); ++j) {
-                if( (oldlist.get(j)).labPatientId.equals(currentList.get(i)) ) {
-                    alreadyAttached = true;
-                    keeplist.add(oldlist.get(j));
-                    break;
-                }
-            }
-            if( !alreadyAttached ) {
-                newlist.add(currentList.get(i));
-            }
-        }
-
-        //now compare what we need to keep with what we have and remove association
-        for (LabResultData old : oldlist) {
-            if (keeplist.contains(old)) {
-                continue;
-            }
-            super.detach(loggedInInfo, old.labPatientId, DOCTYPE);
-        }
-
-        super.attach(loggedInInfo, newlist, DOCTYPE);
+        super.attach(loggedInInfo, DOCTYPE);
     }
 
 }

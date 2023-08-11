@@ -94,8 +94,9 @@ function toggleSelectAll(element, startClassName) {
 						 <c:forEach items="${ allLabs }" var="lab">
 		                	<li class="lab">
 
-		                		<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ lab.label }" />
-								<label for="labNo${lab.segmentID}" title="${ lab.label }" ><c:out value="${fn:substring(lab.label, 0, 30)} ${ lab.dateObj }" /></label>
+								<c:set var="labName" value="${fn:trim(lab.label) != '' ? fn:substring(lab.label, 0, 30) : fn:substring(lab.discipline, 0, 30)}" />
+		                		<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
+								<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } ${ lab.dateObj }" /></label>
 
 		                	</li>
 		                </c:forEach>
@@ -115,7 +116,7 @@ function toggleSelectAll(element, startClassName) {
 						<label for="selectAllForms">Select all</label>
 					</li>
 					<c:forEach items="${ allForms }" var="form">
-						<li class="lab">
+						<li class="form">
 							<input class="form_check" type="checkbox" name="formNo" id="formNo${ form.formId }" value="${form.formId}" title="${form.formName}" />
 							<label for="formNo${form.formId}">
 								<c:out value="${ form.formName } ${ form.getEdited() }" />
@@ -125,7 +126,27 @@ function toggleSelectAll(element, startClassName) {
 				</ul>
 			</td>
 		</tr>
-
+		<tr>
+			<td><h2>eForms</h2></td>
+		</tr>
+		<tr>
+			<td>
+				<ul id="eFormList" style="list-style-type: none;padding:0px;">
+					<li class="selectAllHeading" >
+						<input id="selectAllEForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
+						<label for="selectAllEForms">Select all</label>
+					</li>
+					<c:forEach items="${ allEForms }" var="eForm">
+						<li class="eForm">
+							<input class="eForm_check" type="checkbox" name="eFormNo" id="eFormNo${ eForm.id }" value="${eForm.id}" title="${eForm.formName}" />
+							<label for="eFormNo${eForm.id}">
+								<c:out value="${ eForm.formName } ${ eForm.getFormDate() }" />
+							</label>
+						</li>
+					</c:forEach>
+				</ul>
+			</td>
+		</tr>
 	</table>
 </form>	
 </body>

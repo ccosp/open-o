@@ -247,6 +247,11 @@ public class EFormUtil {
 	public static List<EFormData> listPatientEformsCurrent(Integer demographicNo, Boolean current, int startIndex, int numToReturn) {
 		return eFormDataDao.findByDemographicIdCurrent(demographicNo, current, startIndex, numToReturn);
 	}
+
+	public static List<EFormData> listPatientEformsCurrent(Integer demographicNo, Boolean current) {
+		return eFormDataDao.findByDemographicIdCurrent(demographicNo, current);
+	}
+
     public static List<EFormData> listPatientEformsCurrentAttachedToConsult(String consultationId) {
         return eFormDataDao.findByDemographicIdCurrentAttachedToConsult(consultationId);
     }

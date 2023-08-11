@@ -35,8 +35,10 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.managers.FaxManager;
+import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -174,6 +176,14 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 				formTransportContainer.setFormName( formItem.getFormName() );
 				formTransportContainer.setRealPath( getServlet().getServletContext().getRealPath( File.separator ) );
 				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.FORM, formTransportContainer);
+				alist.add(Files.newInputStream(attachedForm));
+			}
+
+			// attached eForms
+			List<EFormData> eForms = consultationManager.getAttachedEForms(reqId);
+
+			for(EFormData eFormItem : eForms) {
+				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.EFORM, eFormItem.getId(), eFormItem.getDemographicId());
 				alist.add(Files.newInputStream(attachedForm));
 			}
 
