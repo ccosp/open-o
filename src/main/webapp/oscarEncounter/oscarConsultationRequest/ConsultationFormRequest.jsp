@@ -81,6 +81,7 @@ if(!authed) {
 <%@page import="org.oscarehr.common.model.ContactSpecialty" %>
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
 <%@ page import="oscar.oscarEncounter.data.EctFormData" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
 <%@ page import="oscar.eform.EFormUtil" %>
 
@@ -2148,7 +2149,7 @@ function updateFaxButton() {
 								<%
 									for( FaxConfig faxConfig : faxConfigs ) {
 								%>
-										<option value="<%=faxConfig.getFaxNumber()%>" <%=faxConfig.getFaxNumber().equalsIgnoreCase(consultUtil.letterheadFax) ? "selected" : ""%>><%=faxConfig.getFaxUser()%></option>								
+										<option value="<%=faxConfig.getFaxNumber()%>" <%=faxConfig.getFaxNumber().equalsIgnoreCase(consultUtil.letterheadFax) ? "selected" : ""%>><%=Encode.forHtmlAttribute(faxConfig.getAccountName())%></option>
 								<%	    
 									}								
 								%>
