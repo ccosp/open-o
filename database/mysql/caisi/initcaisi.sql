@@ -242,17 +242,17 @@ CREATE TABLE IF NOT EXISTS `casemgmt_cpp` (
   `id` int(10) NOT NULL auto_increment,
   `demographic_no` varchar(10) NOT NULL default '',
   `provider_no` varchar(6) NOT NULL,
-  `socialHistory` text,
-  `familyHistory` text,
-  `medicalHistory` text,
-  `ongoingConcerns` text,
-  `reminders` text,
+  `socialHistory` mediumtext,
+  `familyHistory` mediumtext,
+  `medicalHistory` mediumtext,
+  `ongoingConcerns` mediumtext,
+  `reminders` mediumtext,
   `update_date` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `primaryPhysician` varchar(255) default NULL,
   `primaryCounsellor` varchar(255) default NULL,
   `otherFileNumber` varchar(100) default null,
-  `otherSupportSystems` text default null,
-  `pastMedications` text default null,  
+  `otherSupportSystems` mediumtext default null,
+  `pastMedications` mediumtext default null,  
   PRIMARY KEY  (`id`)
 );
 
@@ -1268,7 +1268,8 @@ CREATE TABLE IF NOT EXISTS tickler_comments (
 	message text,
 	provider_no varchar(6) not null,
 	update_date datetime not null,
-	primary key(id)
+	primary key(id),
+  KEY `ticklerno` (`tickler_no`)
 );
 
 CREATE TABLE IF NOT EXISTS `formDischargeSummary` (
