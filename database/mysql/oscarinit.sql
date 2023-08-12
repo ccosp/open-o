@@ -7850,8 +7850,8 @@ CREATE TABLE IF NOT EXISTS demographicPharmacy (
 
 CREATE TABLE IF NOT EXISTS `log` (
   id bigint auto_increment primary key,
-  `dateTime` datetime not null,  
-  `provider_no` varchar(10),  
+  `dateTime` datetime not null,
+  `provider_no` varchar(10),
   index datetime (`dateTime`, `provider_no`),
   `action` varchar(100),
   INDEX `action` (`action`),
