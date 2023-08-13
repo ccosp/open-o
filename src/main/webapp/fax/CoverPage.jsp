@@ -273,7 +273,7 @@
 									<input class="form-control" type="text" name="recipientFaxNumber" value="${ not empty fax ? fax : param.fax }"
 										id="searchProfessionalSpecialist_fax" placeholder="xxx-xxx-xxxx"  required/>
 									<%-- to be removed soon below --%>
-							  		<input type="hidden" name="recipientsFaxNumber" value="${ not empty fax ? fax : param.fax }" />
+							  		<input type="hidden" name="recipientFaxNumber" value="${ not empty fax ? fax : param.fax }" />
 								</div>				
 							</div>
 						</div>
