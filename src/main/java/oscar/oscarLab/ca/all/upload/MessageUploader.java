@@ -38,10 +38,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -263,26 +260,10 @@ public final class MessageUploader {
 			hl7TextInfo.setAccessionNumber(accessionNum);
 			hl7TextInfo.setSendingFacility(sendingFacility);
 			hl7TextInfo.setFillerOrderNum(fillerOrderNum);
+
+			label = mergeLabLabels(hl7TextInfoDao.searchByAccessionNumberOrderByObrDate(accessionNum), label);
 			hl7TextInfo.setLabel(label);
 
-			// If a past lab with the same AccessionNumber exist carry over the label
-			List<Hl7TextInfo> matchingLabs = hl7TextInfoDao.searchByAccessionNumberOrderByObrDate(accessionNum);
-			for (Hl7TextInfo matchingLab : matchingLabs) {
-				String currentLabel = matchingLab.getLabel();
-				// if the lab has an entered label to carry over
-				if (!StringUtils.isBlank(currentLabel) && !StringUtils.isBlank(label)) {
-					// compare labels and eliminate duplicates.
-					String[] labelArray = label.split(" \\| ");
-					if(labelArray != null && labelArray.length > 0) {
-						for (String labelItem : labelArray) {
-							String regex = "\\|?\\s?" + labelItem;
-							currentLabel = currentLabel.replaceAll(regex, "");
-						}
-					}
-					currentLabel.trim();
-					hl7TextInfo.setLabel( currentLabel.isEmpty() ? label : currentLabel + " | " + label);
-				}
-			}
 			hl7TextInfoDao.persist(hl7TextInfo);
 		}
 		
@@ -719,8 +700,42 @@ public final class MessageUploader {
 			
 			fileUploadCheckDao.remove(fuc.getId());
 		}
+	}
 
-			
-			
+	/**
+	 * Merge lab label arrays into one array.
+	 * String arrays are delineated with a pipe |
+	 */
+	public static String mergeLabLabels(List<Hl7TextInfo> currentLabs, String incoming) {
+		// If a past lab with the same AccessionNumber exist carry over the label
+		String mergedLabel = StringUtils.trimToEmpty(incoming);
+		if(currentLabs == null) {
+			currentLabs = Collections.emptyList();
+		}
+		for (Hl7TextInfo matchingLab : currentLabs) {
+			String currentLabel = matchingLab.getLabel();
+			// if the lab has an entered label to carry over
+			if (!StringUtils.isBlank(currentLabel) && !StringUtils.isBlank(mergedLabel)) {
+				// compare labels and eliminate duplicates.
+				String[] labelArray = mergedLabel.split("\\s?\\|\\s?");
+				for (String labelItem : labelArray) {
+					if(! labelItem.isEmpty()) {
+						String regex = labelItem + "\\s?\\|?\\s?";
+						currentLabel = currentLabel.replaceAll(regex, "");
+					}
+				}
+				currentLabel = StringUtils.trimToEmpty(currentLabel);
+
+				if(! currentLabel.isEmpty()) {
+					mergedLabel = currentLabel + " | " + mergedLabel;
+				}
+
+				if(mergedLabel.startsWith("|")) {
+					mergedLabel = mergedLabel.substring(1);
+					mergedLabel = mergedLabel.trim();
+				}
+			}
+		}
+		return mergedLabel;
 	}
 }
