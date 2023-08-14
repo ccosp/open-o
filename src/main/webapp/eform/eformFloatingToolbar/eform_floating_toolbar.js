@@ -4,6 +4,7 @@
 		 */
 
 			removeElements();
+			hideElements();
 			addNavElement();
 			moveSubjectReverse();
 			
@@ -345,6 +346,21 @@
 	    	element.parentNode.removeChild(element); 
 	    }
 	
+	}
+
+	/**
+	 * Many eforms will already have various buttons for printing, submitting, etc.
+	 * These buttons should not necessarily be removed because remotesave() and remoteprint() may rely on these buttons
+	 * To avoid uesr confusion as to which button to click, this function hides these buttons
+	 */
+	function hideElements() {	    
+		const idsOfButtonsToHide = ["SubmitButton","ResetButton","PrintButton","PrintSubmitButton"];
+		for (let i = 0; i < idsOfButtonsToHide.length; i++) {
+			let el = document.getElementById(idsOfButtonsToHide[i]);
+			if (el) {
+				el.style.display = "none";
+			}
+		}	
 	}
 	
 	/**
