@@ -323,8 +323,9 @@ public class PATHL7Handler implements MessageHandler {
                 obxCount = getOBXCount(i);
                 for (int j=0; j < obxCount; j++){
                     String obxStatus = getOBXResultStatus(i, j);
-                    if (obxStatus.equalsIgnoreCase("C"))
+                    if (obxStatus.equalsIgnoreCase("C")) {
                         count++;
+                    }
                 }
             }
             if(count >= 1){//if any of the OBX's have been corrected, mark the entire report as corrected
@@ -605,8 +606,9 @@ public class PATHL7Handler implements MessageHandler {
             obxCount = getOBXCount(i);
             for (int j=0; j < obxCount; j++){
                 String status = getOBXResultStatus(i, j);
-                if (status.equalsIgnoreCase("F") || status.equalsIgnoreCase("C"))
+                if (status.equalsIgnoreCase("F") || status.equalsIgnoreCase("C")) {
                     count++;
+                }
             }
         }
 
@@ -614,11 +616,12 @@ public class PATHL7Handler implements MessageHandler {
         String orderStatus = getOrderStatus();
         // add extra so final reports are always the ordered as the latest except
         // if the report has been changed in which case that report should be the latest
-        if (orderStatus.equalsIgnoreCase("F"))
+        if ("complete".equalsIgnoreCase(orderStatus)) {
             count = count + 100;
-        else if (orderStatus.equalsIgnoreCase("C"))
+        }
+        else if ("corrected".equalsIgnoreCase(orderStatus)) {
             count = count + 150;
-
+        }
         return count;
     }
 
