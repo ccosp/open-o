@@ -463,7 +463,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			infoTable.addCell(setDataCell(cell, "" ));
 		}
 		
-		infoTable.addCell(setInfoCell(cell, getResource("msgStatus")));
+		infoTable.addCell(setInfoCell(cell, getResource("msgUrgency")));
 		infoTable.addCell(setDataCell(cell, (reqFrm.urgency.equals("1") ?  getResource("msgUrgent") :
 			(reqFrm.urgency.equals("2") ?  getResource("msgNUrgent") :
 				(reqFrm.urgency.equals("3")) ? getResource("msgReturn")
@@ -587,31 +587,31 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		infoTable.addCell(setDataCell(cell, reqFrm.reasonForConsultation));
 
 		if(getlen(reqFrm.clinicalInformation) > 1) {
-			infoTable.addCell(setInfoCell( cell, getResource("msgClinicalInfom"), heading ));
+			infoTable.addCell(setInfoCell( cell, getResource("msgClinicalInfom"), boldFontHeading ));
 			infoTable.addCell(setDataCell(cell, divy(reqFrm.clinicalInformation)));
 		}
 
 		if(getlen(reqFrm.concurrentProblems) > 0) {
 			if (props.getProperty("significantConcurrentProblemsTitle", "")
 					.length() > 1) {
-				infoTable.addCell(setInfoCell(cell, props.getProperty("significantConcurrentProblemsTitle", ""), heading));
+				infoTable.addCell(setInfoCell(cell, props.getProperty("significantConcurrentProblemsTitle", ""), boldFontHeading));
 			} else {
-				infoTable.addCell(setInfoCell(cell,getResource("msgSigProb"),heading));
+				infoTable.addCell(setInfoCell(cell,getResource("msgSigProb"),boldFontHeading));
 			}
 			infoTable.addCell(setDataCell(cell, divy(reqFrm.concurrentProblems)));
 		}
 
 		if(getlen(reqFrm.currentMedications) > 1) {
 			if (props.getProperty("currentMedicationsTitle", "").length() > 1) {
-				infoTable.addCell(setInfoCell(cell, props.getProperty("currentMedicationsTitle", ""),heading));
+				infoTable.addCell(setInfoCell(cell, props.getProperty("currentMedicationsTitle", ""),boldFontHeading));
 			} else {
-				infoTable.addCell(setInfoCell(cell, getResource("msgCurrMed")));
+				infoTable.addCell(setInfoCell(cell, getResource("msgCurrMed"),boldFontHeading));
 			}
 			infoTable.addCell(setDataCell(cell, divy(reqFrm.currentMedications)));
 		}
 
 		if(getlen(reqFrm.allergies) > 1) {
-			infoTable.addCell(setInfoCell(cell, getResource("msgAllergies"),heading));
+			infoTable.addCell(setInfoCell(cell, getResource("msgAllergies"),boldFontHeading));
 			infoTable.addCell(setDataCell(cell, divy(reqFrm.allergies)));
 		}
 
@@ -695,16 +695,8 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 			phrase = "";
 		}
 		
-		Phrase phraseObj = new Phrase( phrase );
-		
-		cell.setPhrase( phraseObj );
-		
-		if( font != null ) {
-			phraseObj.setFont( font );
-		} else {
-			phraseObj.setFont( this.font );
-		}
-
+		Phrase phraseObj = new Phrase( phrase , font != null ? font : this.font);				
+		cell.setPhrase( phraseObj );			
 		cell.setBorder(0);
 		return cell;
 	}
