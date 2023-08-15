@@ -986,7 +986,7 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                             </td>
                                             <td>
                                                 <div class="FieldData" nowrap="nowrap">
-                                                    <%= ( handler.getOrderStatus().equals("F") ? "Final" : handler.getOrderStatus().equals("C") ? "Corrected" : (handler.getMsgType().equals("PATHL7") && handler.getOrderStatus().equals("P")) ? "Preliminary": handler.getOrderStatus().equals("X") ? "DELETED": handler.getOrderStatus()) %>
+	                                                <%=handler.getOrderStatus()%>
                                                 </div>
                                             </td>
                                         </tr>
