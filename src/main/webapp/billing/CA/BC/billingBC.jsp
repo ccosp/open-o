@@ -226,36 +226,18 @@ if(!authed) {
 	}
 	
 	.wrapper {
-		margin: 40px 10px 10px 10px;
+		margin: 0 10px 10px 10px;
 	}
 	
 	div#page-header {
-		position: fixed;
+		position: sticky;
 		width: 100%;
 		top: 0;
 		left: 0;
+		right: 0;
 		z-index: 100000;
 	}
-	
-	div#page-header::after {
-    	clear: both;
-	}
-	
-	div#page-header::before, div#page-header::after {
-	    display: table;
-	    content: " ";
-	}
-	
-	div#page-header table {
-		margin:0px !important;
-	}
-	
-	#oscarBillingHeader {
-		width: 100%;
-		border-collapse: collapse;
-		background-color: #F3F3F3;
-	}
-	
+
 	table#oscarBillingHeader tr td {
 		padding: 1px 5px;
 		background-color: #F3F3F3;
@@ -267,7 +249,8 @@ if(!authed) {
 		background-color: black;	
 		border-bottom: black 1px solid;
 		line-height: 1;
-		border-top: black 1px solid;	
+		border-top: black 1px solid;
+        vertical-align: top;
 	}
 	
 	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
@@ -376,12 +359,6 @@ if(!authed) {
 	}
 	.has-error {
 		background-color: #f2dede;
-	}
-
-	@media only screen and (max-width: 820px) {
-		.wrapper {
-			margin: 80px 10px 10px 10px;
-		}
 	}
 	
 </style>
