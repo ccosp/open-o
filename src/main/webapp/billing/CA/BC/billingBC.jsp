@@ -885,7 +885,15 @@ jQuery(document).ready(function(jQuery){
 	 */
 	 jQuery("#bcBillingForm").validate({
  
-		 rules: {			 
+		 rules: {
+			 /*
+			  * Service date absolutely required
+			  */
+			 xml_appointment_date: {
+				 required: function(element) {
+					 return element.value.length === 0;
+				 }
+			 },
 			 /*
 			  * Is provider selected
 			  */
@@ -990,6 +998,9 @@ jQuery(document).ready(function(jQuery){
 		  * Error messages to return on each validation
 		  */
 		 messages: {
+			 xml_appointment_date: {
+				 required: "Service date is required"
+			 },
 		 	 xml_diagnostic_detail1: {
 		 		 required: "At least 1 diagnostic code is required",
 		 		 remote: "Invalid diagnostic code 1"
