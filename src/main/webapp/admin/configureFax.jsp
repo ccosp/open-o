@@ -281,10 +281,10 @@ if(!authed) {
 		$(div).find("#of").attr("id","of" + userCount);
 		$(div).find("#activeState").val("");
 		$(div).find("#activeState").attr("id","activeState"+userCount);
-		$(div).find("#on").attr("name","download" + userCount);
-		$(div).find("#of").attr("name","download" + userCount);
+		$(div).find("#download_on").attr("name","download" + userCount);
+		$(div).find("#download_of").attr("name","download" + userCount);
 		$(div).find("#downloadState").val("");
-		$(div).find("#downloadState").attr("id","downloadState"+userCount);
+		$(div).find("#downloadState").attr("name","downloadState" + userCount);
 		$(div).find("#id").val("-1");
 		$(div).find("#id").attr("id","id"+userCount);
 		
@@ -351,7 +351,12 @@ if(!authed) {
 	}
 	
 	function setState(elem) {
-		var id = "#activeState" + elem.id.substring(2);
+		var id;
+		if (elem.id.startsWith("download")) {
+			id = "#downloadState" + elem.id.substring(11);
+		} else {
+			id = "#activeState" + elem.id.substring(2);
+		}
 		$(id).val($(elem).val());
 	}
 	
@@ -486,13 +491,13 @@ if(!authed) {
 							<input type="hidden" id="activeState<%=count == 0 ? "" : count%>" name="activeState" value="<%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive()%>" />
 						</div>
 						<div class="span6">
-							<label>Attempt to downloaded Faxes</label>
+							<label>Attempt to Download Faxes</label>
 
 							<label class="radio inline control-label">
-								<input type="radio" id="on<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="true" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload() ? "checked" : ""%>  />
+								<input type="radio" id="download_on<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="true" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload() ? "checked" : ""%>  />
 								On</label>
 							<label class="radio inline control-label">
-								<input type="radio" id="of<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="false" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload()  ? "" : "checked"%> />
+								<input type="radio" id="download_of<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="false" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload()  ? "" : "checked"%> />
 								Off</label>
 							<input type="hidden" id="downloadState<%=count == 0 ? "" : count%>" name="downloadState" value="<%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload()%>" />
 						</div>
