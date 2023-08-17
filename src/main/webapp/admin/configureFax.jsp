@@ -356,8 +356,10 @@ if(!authed) {
 		var id;
 		if (elem.id.startsWith("download")) {
 			id = "#downloadState" + elem.id.substring(11);
-		} else {
+		} else if (elem.id.startsWith("active")) { {
 			id = "#activeState" + elem.id.substring(2);
+		} else {
+			alert("Error setting state of " + elem);
 		}
 		$(id).val($(elem).val());
 	}
@@ -493,7 +495,7 @@ if(!authed) {
 							<input type="hidden" id="activeState<%=count == 0 ? "" : count%>" name="activeState" value="<%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive()%>" />
 						</div>
 						<div class="span6">
-							<label>Attempt to Download Faxes</label>
+							<label>Attempt to Download Faxes (if Gateway Enabled)</label>
 
 							<label class="radio inline control-label">
 								<input type="radio" id="download_on<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="true" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload() ? "checked" : ""%>  />
