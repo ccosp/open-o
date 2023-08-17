@@ -356,11 +356,9 @@ if(!authed) {
 		var id;
 		if (elem.id.startsWith("download")) {
 			id = "#downloadState" + elem.id.substring(11);
-		} else if (elem.id.startsWith("active")) { 
+		} else { 
 			id = "#activeState" + elem.id.substring(2);
-		} else {
-			alert("Error setting state of " + elem);
-		}
+		} 
 		$(id).val($(elem).val());
 	}
 	
