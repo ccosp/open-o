@@ -325,7 +325,7 @@ if(!authed) {
 	}
 	
 	function verify() {
-		var names = ["faxUrl","siteUser","sitePasswd","faxUser","faxPassword","faxNumber","activeState","inboxQueue"];
+		var names = ["faxUrl","siteUser","sitePasswd","faxUser","faxPassword","faxNumber","activeState","inboxQueue", "downloadState"];
 		var valid = true;
 		var incomplete = new Object();
 		
