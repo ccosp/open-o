@@ -281,10 +281,12 @@ if(!authed) {
 		$(div).find("#of").attr("id","of" + userCount);
 		$(div).find("#activeState").val("");
 		$(div).find("#activeState").attr("id","activeState"+userCount);
+		$(div).find("#download_on").attr("id","download_on" + userCount);
+		$(div).find("#download_of").attr("id","download_of" + userCount);
 		$(div).find("#download_on").attr("name","download" + userCount);
 		$(div).find("#download_of").attr("name","download" + userCount);
 		$(div).find("#downloadState").val("");
-		$(div).find("#downloadState").attr("name","downloadState" + userCount);
+		$(div).find("#downloadState").attr("id","downloadState" + userCount);
 		$(div).find("#id").val("-1");
 		$(div).find("#id").attr("id","id"+userCount);
 		
