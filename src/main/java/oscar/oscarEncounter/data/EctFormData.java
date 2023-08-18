@@ -307,8 +307,8 @@ public class EctFormData {
 	 */
 	public static class PatientForm {
 
-		private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		private SimpleDateFormat dateTimeFormat = new SimpleDateFormat(EctFormData.DATETIME_FORMAT);
+		private SimpleDateFormat dateFormat = new SimpleDateFormat(EctFormData.DATE_FORMAT);
 
 		/**
 		 * This comparator sorts PatientForm descending based on the created date
