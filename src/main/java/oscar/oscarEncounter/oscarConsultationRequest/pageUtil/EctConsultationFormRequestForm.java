@@ -122,6 +122,7 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 
 	private String[] formNo;
 	private String[] eFormNo;
+	private String[] hrmNo;
 	
 
 	public String getProfessionalSpecialistName() {
@@ -661,5 +662,16 @@ public final class EctConsultationFormRequestForm extends ActionForm {
 
 	public void seteFormNo(String[] eFormNo) {
 		this.eFormNo = eFormNo;
+	}
+
+	public String[] getHrmNo() {
+		if(hrmNo == null) {
+			return new String[]{};
+		}
+		return hrmNo;
+	}
+	
+	public void setHrmNo(String[] hrmNo) {
+		this.hrmNo = hrmNo;
 	}
 }

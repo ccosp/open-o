@@ -44,7 +44,7 @@ public class ConsultDocs extends AbstractModel<Integer>{
 	public static final String DOCTYPE_LAB = "L";
 
 	public static final String DOCTYPE_FORM = "F";
-
+	public static final String DOCTYPE_HRM = "H";
 	public static final String DELETED = "Y";
 
 	@Id

@@ -31,6 +31,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
@@ -78,6 +79,7 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter.SORTDIR;
 import org.oscarehr.consultations.ConsultationResponseSearchFilter;
+import org.oscarehr.hospitalReportManager.HRMUtil;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.ws.rest.conversion.OtnEconsultConverter;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
@@ -565,6 +567,25 @@ public class ConsultationManager {
 	public List<EFormData> getAttachedEForms(String requestId) {
 		return EFormUtil.listPatientEformsCurrentAttachedToConsult(requestId);
 	}
+
+	public ArrayList<HashMap<String, ? extends Object>> getAttachedHRMDocuments(LoggedInInfo loggedInInfo, String demographicNo, String requestId) {
+		List<ConsultDocs> attachedHRMDocuments = getAttachedDocumentsByType(loggedInInfo, Integer.parseInt(requestId), ConsultDocs.DOCTYPE_HRM);
+		//TODO: refactor HRMUtil so that it's possible to call a function, pass in a particular HRM ID, and return the same information for that HRM that listHRMDocuments does		
+		//		once this is done, would be possible to simply iterate over attachedHRMDocuments 
+		//		In the absence of the above refactoring, the following gets the full listHRMDocuments and then filters for only the items that are actually attached to the consult
+		ArrayList<HashMap<String, ? extends Object>> allHRMDocuments = HRMUtil.listHRMDocuments(loggedInInfo, "report_date", false, demographicNo,false);		
+		ArrayList<HashMap<String, ? extends Object>> filteredHRMDocuments = new ArrayList<>(attachedHRMDocuments.size());
+		for (ConsultDocs attachedHRMDocument : attachedHRMDocuments) {
+			for (HashMap<String, ? extends Object> hrmDocument: allHRMDocuments) {
+				if (((Integer)hrmDocument.get("id")) == attachedHRMDocument.getDocumentNo()) {
+					filteredHRMDocuments.add(hrmDocument);
+				}
+			}
+		}
+		//return the subset of listHRMDocuments that is attached
+		return filteredHRMDocuments;
+	}
+
 
 	public void archiveConsultationRequest(Integer requestId) {
 		ConsultationRequest c =  consultationRequestDao.find(requestId);

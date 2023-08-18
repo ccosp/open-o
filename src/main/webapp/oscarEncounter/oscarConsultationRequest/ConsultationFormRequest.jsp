@@ -196,11 +196,13 @@ if(!authed) {
 		ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
 		List<EctFormData.PatientForm> attachedForms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demo));
 		List<EFormData> attachedEForms = consultationManager.getAttachedEForms(requestId);
+		ArrayList<HashMap<String,? extends Object>> attachedHRMDocuments = consultationManager.getAttachedHRMDocuments(loggedInInfo, demo, requestId);
 
         pageContext.setAttribute("attachedDocuments", attachedDocuments);
         pageContext.setAttribute("attachedLabs", attachedLabs);
 		pageContext.setAttribute("attachedForms", attachedForms);
 		pageContext.setAttribute("attachedEForms", attachedEForms);
+		pageContext.setAttribute("attachedHRMDocuments", attachedHRMDocuments);
 
 	}
 %>		
@@ -485,24 +487,26 @@ background-color: #ddddff;
     width:100%;
 }
 
-#attachedDocumentsTable h3, #attachedLabsTable h3, #attachedFormsTable h3, #attachedEFormsTable h3 {
+#attachedDocumentsTable h3, #attachedLabsTable h3, #attachedFormsTable h3, #attachedEFormsTable h3, #attachedHRMDocumentsTable h3 {
     margin: 0px !important;
     padding: 0px !important;
     border-bottom: grey thin solid;
 }
 
-#attachedLabsTable, #attachedFormsTable, #attachedDocumentsTable, #attachedEFormsTable {
+#attachedLabsTable, #attachedFormsTable, #attachedDocumentsTable, #attachedEFormsTable, #attachedHRMDocumentsTable {
     border-collapse: collapse;
     width:100%;
 }
 
 .ui-dialog {
-    width:400px !important;
-    height: auto !important;
     font-size: small !important;
 }
 .ui-autocomplete{
      font-size: small !important;
+}
+
+.save-and-close-button {
+	width: auto !important;
 }
 
 th, td.tite1 {
@@ -1648,6 +1652,20 @@ function updateFaxButton() {
 								</tr>
 							</c:forEach>
 						</table></td></tr>
+						<tr><td><table id="attachedHRMDocumentsTable">
+							<tr>
+								<td><h3>HRM</h3></td>
+							</tr>
+							<c:forEach items="${ attachedHRMDocuments }" var="attachedHrm">
+								<tr id="entry_hrmNo${ attachedHrm['id'] }">
+									<td>
+										<c:out value="${ attachedHrm['name'] }" />
+
+										<input name="hrmNo" value="${ attachedHrm['id'] }" id="delegate_hrmNo${ attachedHrm['id'] }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
 					</table>
 					</td>
 				</tr>
@@ -2606,17 +2624,27 @@ jQuery(document).ready(function(){
 		}).dialog({
 			title: title,
 			modal:true,
-			closeText: "Close",
+			closeText: "Save and Close",
 			height: 'auto',
 			width: 'auto',
 			resizable: true,
-			position: { my: "left", at:"right", of: triggerId },
+			open: function(event, ui) {
+				jQuery(this).parent().css({
+					top: 0,
+					left: 0
+				});
+
+				let closeBtn = jQuery(this).parent().find(".ui-dialog-titlebar-close");
+				closeBtn.removeClass("ui-button-icon-only");
+				closeBtn.addClass("save-and-close-button");
+				closeBtn.html("Save and Close");
+			},
 
  			beforeClose: function(event, ui) {
  				// before the dialog is closed:
 
  			    // pass the checked elements to the consultation request form
- 				jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled']), .form_check:checked:not(input[disabled='disabled']), .eForm_check:checked:not(input[disabled='disabled'])"
+ 				jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled']), .form_check:checked:not(input[disabled='disabled']), .eForm_check:checked:not(input[disabled='disabled']), .hrm_check:checked:not(input[disabled='disabled'])"
 				).each(function(index,data){
  					var element = jQuery(this);
  					var input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
@@ -2638,6 +2666,11 @@ jQuery(document).ready(function(){
 					{
 						target = "#attachedEFormsTable";
 					}
+
+					if("hrm_check".indexOf(element.attr("class")) != -1)
+					{
+						target = "#attachedHRMDocumentsTable";
+					}
 					column.text(element.attr("title"));
  					column.append(input);
  					row.append(column);
@@ -2646,7 +2679,7 @@ jQuery(document).ready(function(){
 				});
 			
 				// remove unchecked elements from the request form.
-				jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .form_pre_check:not(input[disabled='disabled']), .eForm_pre_check:not(input[disabled='disabled'])").each(function(index,data){
+				jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .form_pre_check:not(input[disabled='disabled']), .eForm_pre_check:not(input[disabled='disabled']), .hrm_pre_check:not(input[disabled='disabled'])").each(function(index,data){
 					var checkedElement = jQuery(this);
 				
 					if( !checkedElement.is(':checked') ) {

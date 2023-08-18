@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -119,6 +120,7 @@ public class EctConsultationFormRequestAction extends Action {
         String[] attachedLabs = frm.getLabNo();
 		String[] attachedForms = frm.getFormNo();
 		String[] attachedEForms = frm.geteFormNo();
+		String[] attachedHRMDocuments = frm.getHrmNo();
         List<String> documents = new ArrayList<String>();
 
 		if (appointmentPm.equals("PM") && Integer.parseInt(appointmentHour) < 12 ) {
@@ -278,6 +280,9 @@ public class EctConsultationFormRequestAction extends Action {
 
 								ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
 								consultationAttachEForms.attach(loggedInInfo);
+
+								ConsultationAttachHRMs consultationAttachHRMs = new ConsultationAttachHRMs(providerNo,demographicNo,requestId,attachedHRMDocuments);
+								consultationAttachHRMs.attach(loggedInInfo);
 			}
 	        catch (ParseException e) {
 	                MiscUtils.getLogger().error("Invalid Date", e);
@@ -400,6 +405,8 @@ public class EctConsultationFormRequestAction extends Action {
 				consultationAttachForms.attach(loggedInInfo);
 				ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
 				consultationAttachEForms.attach(loggedInInfo);
+				ConsultationAttachHRMs consultationAttachHRMs = new ConsultationAttachHRMs(providerNo,demographicNo,requestId,attachedHRMDocuments);
+				consultationAttachHRMs.attach(loggedInInfo);
 			}
 
 			catch (ParseException e) {
@@ -447,7 +454,9 @@ public class EctConsultationFormRequestAction extends Action {
 
 			List<EFormData> attachedEFormsList = consultationManager.getAttachedEForms(requestId);
 
-	        if(attachedDocumentList != null) {      	
+			ArrayList<HashMap<String, ? extends Object>> attachedHRMDocumentsList = consultationManager.getAttachedHRMDocuments(loggedInInfo, demographicNo, requestId);
+
+	        if(attachedDocumentList != null) {
 	        	for(EDoc documentItem : attachedDocumentList) {
 	        		String description = documentItem.getDescription();
 	        		if( description == null || description == "") {
@@ -472,6 +481,12 @@ public class EctConsultationFormRequestAction extends Action {
 			if(attachedEFormsList != null && ! attachedEFormsList.isEmpty()) {
 				for(EFormData attachedEForm : attachedEFormsList) {
 					documents.add(attachedEForm.getFormName());
+				}
+			}
+
+			if (attachedHRMDocumentsList != null && !attachedHRMDocumentsList.isEmpty()) {
+				for (HashMap<String, ? extends Object> attachedHRMDocument : attachedHRMDocumentsList) {
+					documents.add(attachedHRMDocument.get("name")+"");
 				}
 			}
 
