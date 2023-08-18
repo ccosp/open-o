@@ -60,9 +60,10 @@ import oscar.oscarBilling.ca.bc.data.BillingmasterDAO;
 public class BillingSaveBillingAction extends Action {
 
     private static Logger log = MiscUtils.getLogger();
-    AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao)SpringUtils.getBean("appointmentArchiveDao");
-    OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean("oscarAppointmentDao");
+    private AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao)SpringUtils.getBean("appointmentArchiveDao");
+    private OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean("oscarAppointmentDao");
 
+    private BillingmasterDAO billingmasterDAO = SpringUtils.getBean(BillingmasterDAO.class);
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -74,14 +75,9 @@ public class BillingSaveBillingAction extends Action {
         BillingSaveBillingForm frm = (BillingSaveBillingForm) form;
 
         oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean bean = (BillingSessionBean) request.getSession().getAttribute("billingSessionBean");
-        //  oscar.oscarBilling.data.BillingStoreData bsd = new oscar.oscarBilling.data.BillingStoreDate();
-        //  bsd.storeBilling(bean);
         
         bean.setCreator(loggedInInfo.getLoggedInProviderNo());
-        
-        //Get rid of this
-        WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-        BillingmasterDAO billingmasterDAO = (BillingmasterDAO) ctx.getBean("BillingmasterDAO");
+
         MiscUtils.getLogger().debug("appointment_no---: " + bean.getApptNo());
         oscar.appt.ApptStatusData as = new oscar.appt.ApptStatusData();
         
@@ -119,10 +115,7 @@ public class BillingSaveBillingAction extends Action {
             
         }
 
-
         char billingAccountStatus = getBillingAccountStatus( bean);
-
-       
 
         ArrayList<oscar.oscarBilling.ca.bc.pageUtil.BillingBillingManager.BillingItem> billItem = bean.getBillItem();
 
@@ -302,7 +295,6 @@ public class BillingSaveBillingAction extends Action {
 
     /**
      * Adds a new entry into the billing_history table
-     * @param newInvNo String
      */
     private void createBillArchive(String billingMasterNo) {
         BillingHistoryDAO dao = new BillingHistoryDAO();
