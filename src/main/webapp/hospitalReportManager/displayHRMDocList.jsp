@@ -41,7 +41,7 @@ if(!authed) {
 	boolean asc = new Boolean(orderAsc);
 
 	ArrayList<HashMap<String,? extends Object>> hrmdocs;
-	hrmdocs = HRMUtil.listHRMDocuments(loggedInInfo,orderBy, asc, demographic_no);
+	hrmdocs = HRMUtil.listHRMDocuments(loggedInInfo,orderBy, asc, demographic_no,true);
 
 %>
 
