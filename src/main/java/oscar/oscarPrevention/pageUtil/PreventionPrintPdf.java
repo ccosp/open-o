@@ -89,7 +89,7 @@ public class PreventionPrintPdf {
     
     // Creates a new instance of PreventionPrintPdf 
     public PreventionPrintPdf() {
-    	readableStatuses.put("0","Completed or Normal");
+        readableStatuses.put("0","Completed");
     	readableStatuses.put("1","Refused");
     	readableStatuses.put("2","Ineligible");
     	// This is for "Completed Externally" status 
