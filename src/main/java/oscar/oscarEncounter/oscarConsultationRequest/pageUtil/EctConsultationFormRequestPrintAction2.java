@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,6 +37,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.oscarehr.common.model.EFormData;
+import org.oscarehr.hospitalReportManager.HRMPDFCreator;
 import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.FaxManager.TransactionType;
@@ -48,6 +50,7 @@ import oscar.OscarProperties;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
 import oscar.form.util.FormTransportContainer;
+import oscar.oscarDemographic.pageUtil.HRMCreateFile;
 import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
@@ -185,6 +188,19 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
 			for(EFormData eFormItem : eForms) {
 				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.EFORM, eFormItem.getId(), eFormItem.getDemographicId());
 				alist.add(Files.newInputStream(attachedForm));
+			}
+
+			// attached HRMs
+			ArrayList<HashMap<String,? extends Object>> attachedHRMDocuments = consultationManager.getAttachedHRMDocuments(loggedInInfo, demoNo, reqId);
+			for (HashMap<String,? extends Object> attachedHRMDocument : attachedHRMDocuments) {
+				bos = new ByteOutputStream();
+				HRMPDFCreator hrmPdf = new HRMPDFCreator(bos, (Integer)attachedHRMDocument.get("id"), loggedInInfo);
+				hrmPdf.printPdf();
+				buffer = bos.getBytes();
+				bis = new ByteInputStream(buffer, bos.getCount());
+				bos.close();
+				streams.add(bis);
+				alist.add(bis);
 			}
 
 			if (alist.size() > 0) {

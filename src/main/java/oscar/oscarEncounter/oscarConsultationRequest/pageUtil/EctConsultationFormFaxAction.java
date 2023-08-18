@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,7 @@ import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 
+import org.oscarehr.hospitalReportManager.HRMPDFCreator;
 import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.FormsManager;
@@ -230,6 +232,19 @@ public class EctConsultationFormFaxAction extends Action {
 			for(EFormData eFormItem : eForms) {
 				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.EFORM, eFormItem.getId(), eFormItem.getDemographicId());
 				pdfDocumentList.add(Files.newInputStream(attachedForm));
+			}
+
+			// attached HRMs
+			ArrayList<HashMap<String,? extends Object>> attachedHRMDocuments = consultationManager.getAttachedHRMDocuments(loggedInInfo, demoNo, reqId);
+			for (HashMap<String,? extends Object> attachedHRMDocument : attachedHRMDocuments) {
+				bos = new ByteOutputStream();
+				HRMPDFCreator hrmPdf = new HRMPDFCreator(bos, (Integer)attachedHRMDocument.get("id"), loggedInInfo);
+				hrmPdf.printPdf();
+				buffer = bos.getBytes();
+				bis = new ByteInputStream(buffer, bos.getCount());
+				bos.close();
+				streams.add(bis);
+				pdfDocumentList.add(bis);
 			}
 			
 			if (pdfDocumentList.size() > 0) {
