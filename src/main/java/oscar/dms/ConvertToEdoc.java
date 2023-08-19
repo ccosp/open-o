@@ -275,22 +275,8 @@ public class ConvertToEdoc {
 				Boolean.FALSE );
 		
 		eDoc.setContentType( DEFAULT_CONTENT_TYPE );
-		eDoc.setContentDateTime( new Date() );
-
-		int numOfPages = 0;
-        PdfReader reader = null;
-        try {
-			reader = new PdfReader(filePath + "/" + filename);
-            numOfPages = reader.getNumberOfPages();
-        } catch (Exception e) {
-            MiscUtils.getLogger().error("Error", e);
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-        
-		eDoc.setNumberOfPages(numOfPages);
+		eDoc.setContentDateTime( new Date() );		
+		eDoc.setNumberOfPages(EDocUtil.getPDFPageCount(filePath + "/" + filename));
 		eDoc.setFilePath(filePath);
 
 		return eDoc;
