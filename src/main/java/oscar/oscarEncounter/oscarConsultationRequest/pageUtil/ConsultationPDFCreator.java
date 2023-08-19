@@ -150,9 +150,13 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 
 		//TODO: ADD SWITCHES FOR PDF SEGMENTS BELOW.
 
+
+		// Add a consultation request header
+		addToTable( border, createConsultationRequestHeader( PdfPCell.ALIGN_CENTER ), false );
+
 		// Add a date line
 		addToTable( border, createDateLine( PdfPCell.ALIGN_RIGHT ), false );
-		
+
 		// Add the reply info
 		addToTable( border, createReplyHeader( PdfPCell.ALIGN_CENTER ), false );
 				
@@ -258,6 +262,26 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 		datelineborder.addCell(datecell);
 		
 		return datelineborder;		
+	}
+
+	protected PdfPTable createConsultationRequestHeader( Integer alignment ) {
+		
+		PdfPTable headerborder = new PdfPTable(1);
+		headerborder.setWidthPercentage(100f);
+		PdfPCell headercell = new PdfPCell();	
+		headercell.setPhrase(new Phrase( getResource("consultationRequestHeader"),boldFontHeading));
+		headercell.setBorder(0);
+		headercell.setColspan(1);
+		headercell.setPaddingTop(5f);
+		headercell.setPaddingBottom(5f);
+
+		if( alignment != null ) {
+			headercell.setHorizontalAlignment( alignment );
+		}
+
+		headerborder.addCell(headercell);
+		
+		return headerborder;		
 	}
 
 	/**
