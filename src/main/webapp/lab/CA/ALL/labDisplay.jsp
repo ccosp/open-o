@@ -901,13 +901,13 @@ input[type=button], button, input[id^='acklabel_']{ font-size:12px !important;pa
                                                         }
                                                     }
                                                 }
-                                                if( multiID.length > 1 ) {
+//                                                if( multiID.length > 1 ) {
                                                     if ( searchProviderNo != null ) { // null if we were called from e-chart
                                                         %><a href="labDisplay.jsp?segmentID=<%=segmentID%>&multiID=<%=multiLabId%>&providerNo=<%= providerNo %>&searchProviderNo=<%= searchProviderNo %>&all=true">All</a>&#160;<%
                                                     }else{
                                                         %><a href="labDisplay.jsp?segmentID=<%=segmentID%>&multiID=<%=multiLabId%>&providerNo=<%= providerNo %>&all=true">All</a>&#160;<%
                                                     }
-                                                }
+//                                                }
                                                 %>
                                             </div>
                                         </td>
