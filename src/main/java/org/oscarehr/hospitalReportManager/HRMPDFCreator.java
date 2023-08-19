@@ -267,6 +267,14 @@ public class HRMPDFCreator extends PdfPageEventHelper {
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
         metaDataBox.addCell(cell);
 
+        cell.setPhrase(new Phrase("Sending Author: ", boldFont));
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        metaDataBox.addCell(cell);
+        
+        cell.setPhrase(new Phrase(hrmReport.getSendingAuthor(), font));
+        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        metaDataBox.addCell(cell);
+        
         cell.setPhrase(new Phrase("Sending Facility ID: ", boldFont));
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         metaDataBox.addCell(cell);
