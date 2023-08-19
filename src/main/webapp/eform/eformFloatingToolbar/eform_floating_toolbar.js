@@ -351,7 +351,7 @@
 	/**
 	 * Many eforms will already have various buttons for printing, submitting, etc.
 	 * These buttons should not necessarily be removed because remotesave() and remoteprint() may rely on these buttons
-	 * To avoid uesr confusion as to which button to click, this function hides these buttons
+	 * To avoid user confusion as to which button to click, this function hides these buttons
 	 */
 	function hideElements() {	    
 		const idsOfButtonsToHide = ["SubmitButton","ResetButton","PrintButton","PrintSubmitButton"];

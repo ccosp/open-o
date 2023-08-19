@@ -63,7 +63,6 @@ import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
-import com.itextpdf.text.pdf.PdfReader;
 import com.lowagie.text.DocumentException;
 import oscar.OscarProperties;
 import oscar.form.util.FormTransportContainer;
@@ -275,7 +274,7 @@ public class ConvertToEdoc {
 				Boolean.FALSE );
 		
 		eDoc.setContentType( DEFAULT_CONTENT_TYPE );
-		eDoc.setContentDateTime( new Date() );		
+		eDoc.setContentDateTime( new Date() );
 		eDoc.setNumberOfPages(EDocUtil.getPDFPageCount(filePath + "/" + filename));
 		eDoc.setFilePath(filePath);
 
