@@ -23,21 +23,14 @@
     Ontario, Canada
 
 --%>
-<%@ page import="java.sql.*, oscar.eform.data.*, org.oscarehr.managers.FaxManager, org.oscarehr.util.LoggedInInfo"%>
+<%@ page import="java.sql.*, oscar.eform.data.*"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
-<%
-  LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-  pageContext.setAttribute("faxActive", FaxManager.isEnabled(loggedInInfo));
-%>
 
 <%--
 	Addition of a floating global toolbar specifically for activation of the 
 	Fax and eDocument functions.
 --%>
-<c:if test="${ faxActive }">
 	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
-</c:if>
 
 <%
 	String id = request.getParameter("fid");
