@@ -243,6 +243,7 @@ public class ConvertToEdoc {
 		
 		filename = filename.trim();
 		filename = filename.replaceAll(" ", "_");
+		filename = filename.replaceAll("/", "_");
 		filename = String.format("%1$s_%2$s", filename, demographicNo );
 		filename = String.format("%1$s_%2$s", filename, new Date().getTime() );
 		return filename;
