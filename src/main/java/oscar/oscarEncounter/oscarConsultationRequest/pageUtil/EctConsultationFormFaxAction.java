@@ -80,6 +80,11 @@ public class EctConsultationFormFaxAction extends Action {
 		}
     	
     	EctConsultationFaxForm ectConsultationFaxForm = (EctConsultationFaxForm) form;
+
+		if ("cancel".equals(ectConsultationFaxForm.getMethod())){
+			return mapping.findForward("cancel");
+		}
+
     	ectConsultationFaxForm.setRequest(request);
 	   	String reqId = ectConsultationFaxForm.getRequestId();
 		String demoNo = ectConsultationFaxForm.getDemographicNo();
