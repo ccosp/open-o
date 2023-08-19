@@ -209,18 +209,41 @@ if(!authed) {
 	  }
   }
 
-  List<Map<String, String>>  providers = ProviderData.getProviderList();
+  List<Map<String, String>> allProviders = ProviderData.getProviderListOfAllTypes(true);
+  List<Map<String, String>> providers = ProviderData.getProviderList(); 
+
+  //because inactive providers can be the original provider for an entry, the next two blocks checks if that's the case 
+  //and if so, dynamically adds the inactive original provider into the providers List for later use when constructing the GUI while continuing to exclude other inactive providers
+  Boolean providerFoundInActiveList = false;
+  for (int i=0;i < providers.size(); i++){
+      Map<String,String> h = providers.get(i);
+      if (h.get("providerNo").equals(provider)){
+         providerFoundInActiveList = true;
+      }
+  }
+  if (!providerFoundInActiveList){
+      for (int i=0;i < allProviders.size() && !providerFoundInActiveList; i++){
+         Map<String,String> h = allProviders.get(i);
+         if (h.get("providerNo").equals(provider)){
+            providers.add(h);
+            providerFoundInActiveList = true;
+         }
+      }
+  }
+
+  //Ensuring creator information is found/set. Note, the original creator can be inactive, so should iterate over allProviders list
+  //the creatorProvider was deliberately not mixed into the providers List the same was the provider was, because the creatorProvider is only relevant here
   if (creatorProviderNo == "")
   { 
 	  creatorProviderNo = provider;
   }
-  for (int i=0; i < providers.size(); i++) {
-       Map<String,String> h = providers.get(i);
-	   if (h.get("providerNo").equals(creatorProviderNo))
-	   {
-	   		creatorName = h.get("lastName") + " " +  h.get("firstName");
-	   }
-  }
+  for (int i=0; i < allProviders.size(); i++) {
+      Map<String,String> h = allProviders.get(i);
+      if (h.get("providerNo").equals(creatorProviderNo))
+      {
+            creatorName = h.get("lastName") + " " +  h.get("firstName");
+      }
+  }    
   
   //calc age at time of prevention
   Date dob = PreventionData.getDemographicDateOfBirth(LoggedInInfo.getLoggedInInfoFromSession(request), Integer.valueOf(demographic_no));
@@ -713,12 +736,11 @@ function changeSite(el) {
                             <label for="provider" class="fields">Provider:</label> <input type="text" name="providerName" id="providerName" value="<%=providerName%>"/>
                                   <select onchange="javascript:hideExtraName(this);" id="providerDrop" name="provider">
                                       <%
-                                      Boolean found = false; 
                                       for (int i=0; i < providers.size(); i++) {                                          
                                           Map<String,String> h = providers.get(i);%>
-                                        <option value="<%= h.get("providerNo")%>" <%= ( h.get("providerNo").equals(provider) ? " selected" : "" ) %>><%= h.get("lastName") %> <%= h.get("firstName") %></option>
-                                      <% if (h.get("providerNo").equals(provider)) {found = true;} }%>
-                                      <option value="-1" <%= ( "-1".equals(provider) || !found ? " selected" : "" ) %> >Other</option>
+                                          <option value="<%= h.get("providerNo")%>" <%= ( h.get("providerNo").equals(provider) ? " selected" : "" ) %>><%= h.get("lastName") %> <%= h.get("firstName") %></option>
+                                      <%}%>
+                                      <option value="-1" <%= ( "-1".equals(provider)  ? " selected" : "" ) %> >Other</option>
                                   </select>
                                   <br/>
                              <label for="creator" class="fields" >Creator:</label> <input type="text" name="creator" value="<%=creatorName%>" readonly/> <br/>
