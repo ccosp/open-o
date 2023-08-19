@@ -493,7 +493,7 @@ if(!authed) {
 							<input type="hidden" id="activeState<%=count == 0 ? "" : count%>" name="activeState" value="<%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive()%>" />
 						</div>
 						<div class="span6">
-							<label>Attempt to Download Faxes (if Gateway Enabled)</label>
+							<label>Enable/Disable Receiving Faxes (If Gateway Enabled)</label>
 
 							<label class="radio inline control-label">
 								<input type="radio" id="download_on<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="true" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload() ? "checked" : ""%>  />
