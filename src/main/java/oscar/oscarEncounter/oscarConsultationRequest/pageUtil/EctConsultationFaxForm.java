@@ -38,7 +38,8 @@ import net.sf.json.JSONObject;
 
 public final class EctConsultationFaxForm extends ActionForm {
 
-    private String recipient;
+    private String method;
+	private String recipient;
     private String from;
     private String recipientsFaxNumber;
     private String sendersPhone;
@@ -54,6 +55,12 @@ public final class EctConsultationFaxForm extends ActionForm {
     private HttpServletRequest request;
 	private FaxAccount sender;
     
+	public String getMethod() {
+		return method;
+	}
+	public void setMethod(String method) {
+		this.method = method;
+	}
 	public String getRecipient() {
 		return recipient;
 	}
