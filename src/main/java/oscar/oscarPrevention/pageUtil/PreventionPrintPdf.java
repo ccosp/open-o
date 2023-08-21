@@ -579,6 +579,12 @@ public class PreventionPrintPdf {
             }
             procedure.add(new Chunk(labelValue, font));
             procedure.add(Chunk.NEWLINE);
+        } else {
+            if (labelParameter.equalsIgnoreCase("preventProcedureProvider")) {
+                procedure.add(label);
+                procedure.add(new Chunk("Unknown", font));
+                procedure.add(Chunk.NEWLINE);
+            }
         }
     }
 
