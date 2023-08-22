@@ -235,7 +235,7 @@ public class PreventionPrintPdf {
             //check if this is an immunization!
             HashMap<String,String> prev = pdc.getPrevention(preventionHeader);
 
-            if (prev != null && prev.get("headingName") != null && !"Screenings".equals(prev.get("headingName"))
+            if (prev != null && ((prev.get("headingName") != null && !"Screenings".equals(prev.get("headingName")) || prev.get("headingName") == null))
                     && !isImmunizationHeaderAdded && "false".equals(request.getParameter("immunizationOnly"))) {
                 //adding immunizations header before start adding immunizations into the pdf
                 Paragraph iParagraph = addParagraph("\nImmunizations: \n", 12, Font.BOLD);
