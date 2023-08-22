@@ -168,17 +168,17 @@ public class ConsultationAttachDocsAction extends DispatchAction {
         String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         if (!path.endsWith(File.separator)) { path = path + File.separator; }
 
+        request.setAttribute("imagePath", path + fileName);
+        request.setAttribute("imageTitle", description);
+
         if (Objects.equals(isImage, "true")) {
-            ByteOutputStream byteOutputStream = new ByteOutputStream();
-            request.setAttribute("imagePath", path + fileName);
-            request.setAttribute("imageTitle", description);
-            ImagePDFCreator imagePDFCreator = new ImagePDFCreator(request, byteOutputStream);
-            try {
+            try (ByteOutputStream byteOutputStream = new ByteOutputStream()) {
+                ImagePDFCreator imagePDFCreator = new ImagePDFCreator(request, byteOutputStream);
                 imagePDFCreator.printPdf();
+                generateResponse(response, getBase64(byteOutputStream.getBytes()));
             } catch (DocumentException | IOException e) {
                 logger.error("An error occurred while creating the pdf of the image: " + e.getMessage(), e);
             }
-            generateResponse(response, getBase64(byteOutputStream.getBytes()));
         }
         else if (Objects.equals(isPDF, "true")) {
             Path eDocPDFPath = Paths.get(path + fileName);
@@ -193,14 +193,13 @@ public class ConsultationAttachDocsAction extends DispatchAction {
 
         String segmentID = request.getParameter("segmentID");
         request.setAttribute("segmentID", segmentID);
-        ByteOutputStream byteOutputStream = new ByteOutputStream();
-        LabPDFCreator labPDFCreator = new LabPDFCreator(request, byteOutputStream);
-        try {
+        try (ByteOutputStream byteOutputStream = new ByteOutputStream()) {
+            LabPDFCreator labPDFCreator = new LabPDFCreator(request, byteOutputStream);
             labPDFCreator.printPdf();
+            generateResponse(response, getBase64(byteOutputStream.getBytes()));
         } catch (IOException e) {
-            logger.error("An error occurred while creating the font: " + e.getMessage(), e);
+            logger.error("An error occurred while closing the output stream: " + e.getMessage(), e);
         }
-        generateResponse(response, getBase64(byteOutputStream.getBytes()));
     }
 
     public void getFormPDF(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -252,10 +251,11 @@ public class ConsultationAttachDocsAction extends DispatchAction {
         
         String hrmId = request.getParameter("hrmId");
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        ByteOutputStream byteOutputStream = new ByteOutputStream();
-        HRMPDFCreator hrmPdf = new HRMPDFCreator(byteOutputStream, Integer.parseInt(hrmId), loggedInInfo);
-        hrmPdf.printPdf();
-        generateResponse(response, getBase64(byteOutputStream.getBytes()));
+        try (ByteOutputStream byteOutputStream = new ByteOutputStream()) {
+            HRMPDFCreator hrmPdf = new HRMPDFCreator(byteOutputStream, Integer.parseInt(hrmId), loggedInInfo);
+            hrmPdf.printPdf();
+            generateResponse(response, getBase64(byteOutputStream.getBytes()));
+        }
     }
 
     private void generateResponse(HttpServletResponse response, String base64Data) {
