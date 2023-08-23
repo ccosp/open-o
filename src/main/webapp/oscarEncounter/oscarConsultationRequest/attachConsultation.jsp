@@ -91,36 +91,6 @@ if(!authed) {
 			height: 100%;
 		}
 
-		.loading-screen {
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-			display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 9999;
-        }
-
-		.loading-spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #ffffff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        .loading-message {
-            color: white;
-            margin-top: 10px;
-        }
-
-		@keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
 		.flex {
 			display: flex !important;
 		}
@@ -166,11 +136,11 @@ if(!authed) {
 		}
 
 		function getPdf(attachmentName, attachmentId, parameters) {
-			showLoadingScreen();
+			ShowSpin(true);
 			const base64Data = getPdfAttachment(attachmentName, attachmentId);
 			if (base64Data !== null) {
 				showPDF(base64Data);
-				hideLoadingScreen();
+				HideSpin();
 				return;
 			}
 
@@ -181,11 +151,11 @@ if(!authed) {
 				success: function (data) {
 					addPdfAttachment(attachmentName, attachmentId, data.base64Data);
 					showPDF(data.base64Data);
-					hideLoadingScreen();
+					HideSpin();
 				},
 				error: function (xhr, status, error) {
 					console.error("Failed to generate PDF:", xhr.status, xhr.statusText);
-					hideLoadingScreen();
+					HideSpin();
 				}
 			});
 		}
@@ -198,22 +168,11 @@ if(!authed) {
 			showButton.classList.add('hide');
 			showButton.parentNode.classList.remove('flex');
 		}
-
-		function showLoadingScreen() {
-			const loadingScreen = document.querySelector('.loading-screen');
-			const pdfObject = document.getElementById('pdfObject');
-			loadingScreen.classList.add('flex');
-			pdfObject.classList.add('hide');
-		}
-
-		function hideLoadingScreen() {
-			const loadingScreen = document.querySelector('.loading-screen');
-			loadingScreen.classList.remove('flex');
-		}
 	</script>
 
 </head>
 <body>
+<jsp:include page="../../mcedt/mailbox/spinner.jsp" flush="true"/>
 <form id="attachDocumentsForm">
 	<div class="container">
 		<div class="attachmentList">
@@ -341,10 +300,6 @@ if(!authed) {
 		<div id="pdfPreview">
 			<object id="pdfObject" type="application/pdf" data="">
 			</object>
-			<div class="loading-screen">
-				<div class="loading-spinner"></div>
-				<div class="loading-message">Preview Loading...</div>
-			</div>
 		</div>
 	</div>
 </form>
