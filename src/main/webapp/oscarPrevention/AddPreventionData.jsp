@@ -902,8 +902,8 @@ function changeSite(el) {
                    <fieldset>
                       <legend>Prevention : <%=prevention%></legend>
                          <div>
-                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%>>Completed</input><br/>
-                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%>>Completed externally</input><br/>
+                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%> onClick="$('#providerDrop').val('<%=LoggedInInfo.getLoggedInInfoFromSession(request).getLoggedInProviderNo() %>');hideExtraName(document.getElementById('providerDrop'))">Completed</input><br/>
+                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%> onClick="$('#providerDrop').val('-1');hideExtraName(document.getElementById('providerDrop'))">Completed externally</input><br/>
                             <input name="given" type="radio" value="refused"    <%=checked(completed,"1")%>>Refused</input><br/>
                             <input name="given" type="radio" value="ineligible" <%=checked(completed,"2")%>>Ineligible</input>
                          </div>
@@ -1000,8 +1000,8 @@ function changeSite(el) {
                    <fieldset>
                       <legend>Prevention : <%=prevention%></legend>
                          <div>
-                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%>>Completed</input><br/>
-                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%>>Completed externally</input><br/>
+                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%> onClick="$('#providerDrop').val('<%=LoggedInInfo.getLoggedInInfoFromSession(request).getLoggedInProviderNo() %>');hideExtraName(document.getElementById('providerDrop'))">Completed</input><br/>
+                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%> onClick="$('#providerDrop').val('-1');hideExtraName(document.getElementById('providerDrop'))">Completed externally</input><br/>
                             <input name="given" type="radio" value="refused"    <%=checked(completed,"1")%>>Refused</input><br/>
                             <input name="given" type="radio" value="ineligible" <%=checked(completed,"2")%>>Ineligible</input>
                          </div>
@@ -1014,7 +1014,7 @@ function changeSite(el) {
                                            Map<String,String> h = providers.get(i);%>
                                         <option value="<%= h.get("providerNo")%>" <%= ( h.get("providerNo").equals(provider) ? " selected" : "" ) %>><%= h.get("lastName") %> <%= h.get("firstName") %></option>
                                       <%}%>
-                                      <option value="-1" >Other</option>
+                                      <option value="-1" <%= ( "-1".equals(provider) ? " selected" : "" ) %> >Other</option>
                                   </select>
                                   <br/>
                                   <label for="creator" class="fields" >Creator:</label> <input type="text" name="creator" value="<%=creatorName%>" readonly/> <br/>
