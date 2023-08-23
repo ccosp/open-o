@@ -49,10 +49,7 @@ if(!authed) {
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
-<%@ page import="org.springframework.web.context.WebApplicationContext"%>
-<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="oscar.oscarDemographic.data.*"%>
-<%@page import="java.text.*, java.util.*, oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.entities.*"%>
+<%@page import="java.util.*, oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.entities.*"%>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
 <%@ page import="oscar.oscarResearch.oscarDxResearch.util.dxResearchCodingSystem"%>
@@ -226,36 +223,18 @@ if(!authed) {
 	}
 	
 	.wrapper {
-		margin: 40px 10px 10px 10px;
+		margin: 0 10px 10px 10px;
 	}
 	
 	div#page-header {
-		position: fixed;
+		position: sticky;
 		width: 100%;
 		top: 0;
 		left: 0;
+		right: 0;
 		z-index: 100000;
 	}
-	
-	div#page-header::after {
-    	clear: both;
-	}
-	
-	div#page-header::before, div#page-header::after {
-	    display: table;
-	    content: " ";
-	}
-	
-	div#page-header table {
-		margin:0px !important;
-	}
-	
-	#oscarBillingHeader {
-		width: 100%;
-		border-collapse: collapse;
-		background-color: #F3F3F3;
-	}
-	
+
 	table#oscarBillingHeader tr td {
 		padding: 1px 5px;
 		background-color: #F3F3F3;
@@ -267,7 +246,8 @@ if(!authed) {
 		background-color: black;	
 		border-bottom: black 1px solid;
 		line-height: 1;
-		border-top: black 1px solid;	
+		border-top: black 1px solid;
+        vertical-align: top;
 	}
 	
 	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
@@ -376,12 +356,6 @@ if(!authed) {
 	}
 	.has-error {
 		background-color: #f2dede;
-	}
-
-	@media only screen and (max-width: 820px) {
-		.wrapper {
-			margin: 80px 10px 10px 10px;
-		}
 	}
 	
 </style>
@@ -885,7 +859,15 @@ jQuery(document).ready(function(jQuery){
 	 */
 	 jQuery("#bcBillingForm").validate({
  
-		 rules: {			 
+		 rules: {
+			 /*
+			  * Service date absolutely required
+			  */
+			 xml_appointment_date: {
+				 required: function(element) {
+					 return element.value.length === 0;
+				 }
+			 },
 			 /*
 			  * Is provider selected
 			  */
@@ -990,6 +972,9 @@ jQuery(document).ready(function(jQuery){
 		  * Error messages to return on each validation
 		  */
 		 messages: {
+			 xml_appointment_date: {
+				 required: "Service date is required"
+			 },
 		 	 xml_diagnostic_detail1: {
 		 		 required: "At least 1 diagnostic code is required",
 		 		 remote: "Invalid diagnostic code 1"
@@ -1162,6 +1147,9 @@ if(wcbneeds != null){%>
     {
         sxml_provider = bean.getApptProviderNo();
     }
+	if("none".equals(sxml_provider)) {
+		sxml_provider = bean.getBillingProvider();
+	}
     thisForm.setXml_provider(sxml_provider);
     
     if (sxml_location.compareTo("") == 0) {
