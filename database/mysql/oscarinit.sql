@@ -575,7 +575,7 @@ CREATE TABLE IF NOT EXISTS demographic (
   citizenship varchar(40),
   sin varchar(15),
   country_of_origin char(4),
-  newsletter varchar(1),
+  newsletter varchar(10),
   anonymous varchar(32),
   lastUpdateUser varchar(6),
   lastUpdateDate datetime not null,
@@ -7815,7 +7815,7 @@ CREATE TABLE IF NOT EXISTS `waitingList` (
 CREATE TABLE IF NOT EXISTS pharmacyInfo (
   `recordID` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `address` varchar(60),
+  `address` varchar(255),
   `city` varchar(60) DEFAULT NULL,
   `province` varchar(255) DEFAULT NULL,
   `postalCode` varchar(20) DEFAULT NULL,
@@ -7823,10 +7823,10 @@ CREATE TABLE IF NOT EXISTS pharmacyInfo (
   `phone2` varchar(20) DEFAULT NULL,
   `fax` varchar(20) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `notes` varchar(25),
+  `notes` tinytext,
   `addDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` char(1) DEFAULT '1',
-  `serviceLocationIdentifier` varchar(25) DEFAULT NULL,
+  `serviceLocationIdentifier` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`recordID`)
 );
 
@@ -7863,7 +7863,8 @@ CREATE TABLE IF NOT EXISTS `log` (
   `demographic_no` int(10),
   INDEX `demographic_no` (`demographic_no`),
   `data` text,
-  securityId int
+  securityId int,
+  KEY `provider_noIndex` (`provider_no`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS preventions (
@@ -8043,7 +8044,8 @@ CREATE TABLE IF NOT EXISTS `demographicExtArchive` (
   `date_time` datetime default NULL,
   `hidden` char(1) default '0',
   PRIMARY KEY  (`id`),
-  INDEX (demographic_no)
+  INDEX (demographic_no),
+  KEY `archiveId` (`archiveId`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS `relationships` (
@@ -8819,7 +8821,8 @@ CREATE TABLE IF NOT EXISTS `casemgmt_note_link` (
   `table_id` int(10) NOT NULL,
   `note_id` int(10) NOT NULL,
   `other_id` varchar(25),
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `note_idIndex` (`note_id`)
 );
 
 
@@ -8829,7 +8832,8 @@ CREATE TABLE IF NOT EXISTS `casemgmt_note_ext` (
   `key_val` varchar(64) NOT NULL,
   `value` text,
   `date_value` date,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `note_idIndex` (`note_id`)
 );
 
 
@@ -13090,7 +13094,7 @@ CREATE TABLE IF NOT EXISTS `formRourke2020` (
                                                 `archived` tinyint(1) NOT NULL DEFAULT 0,
                                                 PRIMARY KEY (`ID`),
                                                 KEY `formRourke2020_demographic_no` (`demographic_no`)
-);
+ ) ENGINE = ARIA DEFAULT CHARSET=latin1;
 
 INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2017', '../form/formrourke2017complete.jsp?demographic_no=', 'formRourke2017', 38);
 INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2020', '../form/formrourke2020complete.jsp?demographic_no=', 'formRourke2020', 0);
