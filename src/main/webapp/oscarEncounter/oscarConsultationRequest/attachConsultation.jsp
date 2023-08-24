@@ -80,6 +80,7 @@ if(!authed) {
 			border-radius: 2px;
 			cursor: pointer;
 			margin-left: auto;
+			background-color:lightblue;
 		}
 
 		#pdfPreview {
@@ -186,7 +187,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allDocuments.size() > 10 ? 'flex' : ''}">
 								<input id="selectAllDocuments" type="checkbox" onclick="toggleSelectAll(this, 'document_');" value="document_check" title="Select/un-select all documents."/>
 								<label for="selectAllDocuments">Select all</label>
-								<button class="show-all-button ${allDocuments.size() > 10 ? '' : 'hide'}" type="button" title="Show All" onclick="showAll(this, 'doc')">Show All</button>
+								<button class="show-all-button ${allDocuments.size() > 10 ? '' : 'hide'}" type="button" title="Show All Documents" onclick="showAll(this, 'doc')">Show All Documents</button>
 							</li>
 							<c:forEach items="${ allDocuments }" var="document" varStatus="loop">
 								<li class="doc ${loop.index > 9 ? 'hide' : ''}">
@@ -210,7 +211,7 @@ if(!authed) {
 								<li class="selectAllHeading ${allLabs.size() > 10 ? 'flex' : ''}">
 									<input id="selectAllLabs" type="checkbox" onclick="toggleSelectAll(this, 'lab_');" value="lab_check" title="Select/un-select all documents."/>
 									<label for="selectAllLabs">Select all</label>
-									<button class="show-all-button ${allLabs.size() > 10 ? '' : 'hide'}" type="button" title="Show All" onclick="showAll(this, 'lab')">Show All</button>
+									<button class="show-all-button ${allLabs.size() > 10 ? '' : 'hide'}" type="button" title="Show All Labs" onclick="showAll(this, 'lab')">Show All Labs</button>
 								</li>
 								<c:forEach items="${ allLabs }" var="lab" varStatus="loop">
 									<li class="lab ${loop.index > 9 ? 'hide' : ''}">
@@ -234,7 +235,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allForms.size() > 10 ? 'flex' : ''}">
 								<input id="selectAllForms" type="checkbox" onclick="toggleSelectAll(this, 'form_');" value="form_check" title="Select/un-select all forms."/>
 								<label for="selectAllForms">Select all</label>
-								<button class="show-all-button ${allForms.size() > 10 ? '' : 'hide'}" type="button" title="Show All" onclick="showAll(this, 'form')">Show All</button>
+								<button class="show-all-button ${allForms.size() > 10 ? '' : 'hide'}" type="button" title="Show All Forms" onclick="showAll(this, 'form')">Show All Forms</button>
 							</li>
 							<c:forEach items="${ allForms }" var="form" varStatus="loop">
 								<li class="form ${loop.index > 9 ? 'hide' : ''}">
@@ -257,7 +258,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allEForms.size() > 10 ? 'flex' : ''}">
 								<input id="selectAllEForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
 								<label for="selectAllEForms">Select all</label>
-								<button class="show-all-button ${allEForms.size() > 10 ? '' : 'hide'}" type="button" title="Show All" onclick="showAll(this, 'eForm')">Show All</button>
+								<button class="show-all-button ${allEForms.size() > 10 ? '' : 'hide'}" type="button" title="Show All eForms" onclick="showAll(this, 'eForm')">Show All eForms</button>
 							</li>
 							<c:forEach items="${ allEForms }" var="eForm" varStatus="loop">
 								<li class="eForm ${loop.index > 9 ? 'hide' : ''}">
@@ -280,7 +281,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allHRMDocuments.size() > 10 ? 'flex' : ''}">
 								<input id="selectAllHRMS" type="checkbox" onclick="toggleSelectAll(this, 'hrm_');" value="hrm_check" title="Select/un-select all HRM documents."/>
 								<label for="selectAllHRMS">Select all</label>
-								<button class="show-all-button ${allHRMDocuments.size() > 10 ? '' : 'hide'}" type="button" title="Show All" onclick="showAll(this, 'hrm')">Show All</button>
+								<button class="show-all-button ${allHRMDocuments.size() > 10 ? '' : 'hide'}" type="button" title="Show All HRM" onclick="showAll(this, 'hrm')">Show All HRM</button>
 							</li>
 							<c:forEach items="${ allHRMDocuments }" var="hrm" varStatus="loop">
 								<li class="hrm ${loop.index > 9 ? 'hide' : ''}">
