@@ -1262,8 +1262,8 @@ if(wcbneeds != null){%>
             <td>
                <div class="form-group" > 
 		      
-                <label>Clarification Code</label>
-                <html:select styleClass="form-control" property="xml_location">
+                <label for="xml_location">Clarification Code</label>
+                <html:select styleClass="form-control" styleId="xml_location" property="xml_location">
                 <%
                   for (int i = 0; i < billlocation.length; i++) {
                     String locationDescription = billlocation[i].getBillingLocation() + "|" + billlocation[i].getDescription();
@@ -1278,8 +1278,8 @@ if(wcbneeds != null){%>
             <td>
              <div class="form-group" > 
 		      		      
-		      <label>Service Location</label>
-                <html:select styleClass="form-control" property="xml_visittype">
+		      <label for="xml_visittype">Service Location</label>
+                <html:select styleClass="form-control" styleId="xml_visittype" property="xml_visittype">
                 <%
                   for (int i = 0; i < billvisit.length; i++) {
                     String visitTypeDescription = billvisit[i].getVisitType() + "|" + billvisit[i].getDescription();
@@ -1303,7 +1303,7 @@ if(wcbneeds != null){%>
 			  <div class="form-group" > 
 		     
 	              <a href="javascript:void(0)" id="hlSDate">
-	                  <label><bean:message key="billing.servicedate"/></label>
+	                  <label for="xml_appointment_date"><bean:message key="billing.servicedate"/></label>
 	              </a>
 	              <html:text style="min-width:100px;" styleClass="form-control" property="xml_appointment_date" size="10" readonly="true" styleId="xml_appointment_date"/>
               </div>
@@ -1313,7 +1313,7 @@ if(wcbneeds != null){%>
 			<div class="form-group" > 
 		     
               <a href="javascript:void(0)" id="serviceToDate">
-                  <label>To Date</label>
+                  <label for="service_to_date">To Date</label>
               </a>
              
               <html:text styleClass="form-control" property="service_to_date" size="2" maxlength="2" styleId="service_to_date"/>
@@ -1323,8 +1323,8 @@ if(wcbneeds != null){%>
             <td>              
             <div class="form-group" > 
 		      
-           <label>After Hours</label>
-              <html:select styleClass="form-control" property="afterHours">
+           <label for="afterHours">After Hours</label>
+              <html:select styleClass="form-control" property="afterHours" styleId="afterHours">
                 <html:option value="0">No</html:option>
                 <html:option value="E">Evening</html:option>
                 <html:option value="N">Night</html:option>
@@ -1336,8 +1336,8 @@ if(wcbneeds != null){%>
             <td title="(HHMM 24hr):">
             <div class="form-group">
 		         
-                <label>Time Call</label>
-              <html:text styleClass="form-control" property="timeCall" />
+                <label for="timeCall">Time Call</label>
+              <html:text styleClass="form-control" property="timeCall" styleId="timeCall" />
               
               </div>
             </td>
@@ -1345,8 +1345,8 @@ if(wcbneeds != null){%>
 			<td>
 		
 		            <div class="form-group">
-		             <label>Start</label>
-		                <div class='input-group date datetimepicker'> 
+		             <label for="serviceStartTime">Start</label>
+		                <div class='input-group date datetimepicker'>
 		 
 		                    <input type='text' id="serviceStartTime" class="form-control" />
 		                  	<input type=hidden id="xml_starttime_hr" name="xml_starttime_hr" />
@@ -1359,7 +1359,7 @@ if(wcbneeds != null){%>
 			<td>			
 
 		            <div class="form-group">
-		            <label>End</label>
+		            <label for="serviceEndTime" >End</label>
 		                <div class='input-group date datetimepicker'>
 		                    <input type='text' id="serviceEndTime" class="form-control" />
 		                    <input type=hidden id="xml_endtime_hr" name="xml_endtime_hr" />
@@ -1375,8 +1375,8 @@ if(wcbneeds != null){%>
             <td>
                <div class="form-group" > 
 		                 
-                <label>Dependent</label>
-              <html:select styleClass="form-control"  property="dependent">
+                <label for="dependent">Dependent</label>
+              <html:select styleClass="form-control"  property="dependent" styleId="dependent">
                 <html:option value="00">No</html:option>
                 <html:option value="66">Yes</html:option>
               </html:select>
@@ -1386,8 +1386,8 @@ if(wcbneeds != null){%>
             <td title="Submission Code">              
              <div class="form-group" > 
 		     
-            	<label>Sub Code</label>
-              <html:select styleClass="form-control" property="submissionCode">
+            	<label for="submissionCode">Sub Code</label>
+              <html:select styleClass="form-control" property="submissionCode" styleId="submissionCode">
                 <html:option value="0">O - Normal</html:option>
                 <html:option value="D">D - Duplicate</html:option>
                 <html:option value="E">E - Debit</html:option>
@@ -1404,7 +1404,7 @@ if(wcbneeds != null){%>
             <td>
             <div class="form-group" > 
 		    
-                <label>Payment Method</label>
+                <label for="xml_encounter">Payment Method</label>
             <%
               ArrayList types = billform.getPaymentTypes();
               if ("Pri".equalsIgnoreCase(thisForm.getXml_billtype())) {
@@ -1439,8 +1439,8 @@ if(wcbneeds != null){%>
             <td>
 	            
 	            <div class="form-group">
-			       <label>BCP Facility</label> 
-	              	<html:text styleClass="form-control"  property="facilityNum" size="5" maxlength="5"/>
+			       <label for="facilityNum">BCP Facility</label>
+	              	<html:text styleClass="form-control"  property="facilityNum" styleId="facilityNum" size="5" maxlength="5"/>
 	             	
 	            </div> 
 	        </td>
@@ -1449,8 +1449,8 @@ if(wcbneeds != null){%>
 	       <td style="display: none;">
 	            
 	            <div class="form-group">
-			        <label>Sub Facility</label>
-	              		<html:text styleClass="form-control"  property="facilitySubNum" size="5" maxlength="5"/> 
+			        <label for="facilitySubNum">Sub Facility</label>
+	              		<html:text styleClass="form-control"  property="facilitySubNum" styleId="facilitySubNum" size="5" maxlength="5"/>
 	             	
 	            </div> 
 	        </td>
@@ -1492,12 +1492,12 @@ if(wcbneeds != null){%>
               <td>
     
 		      <div class='form-group'>
-                 <label>ICBC Claim No</label>
-					<html:text styleClass="form-control" property="icbc_claim_no" maxlength="8"/>
+                 <label for="icbc_claim_no">ICBC Claim No</label>
+					<html:text styleClass="form-control" property="icbc_claim_no" styleId="icbc_claim_no" maxlength="8"/>
 				</div>
 				<div class='form-group'> 
-					<label>MVA?</label>
-	                <html:select styleClass="form-control" property="mva_claim_code">
+					<label for="mva_claim_code">MVA?</label>
+	                <html:select styleClass="form-control" property="mva_claim_code" styleId="mva_claim_code">
 	                  <html:option value="N">No</html:option>
 	                  <html:option value="Y">Yes</html:option>
 	                </html:select>
