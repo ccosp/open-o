@@ -53,6 +53,7 @@ if(!authed) {
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
 <%@ page import="oscar.oscarResearch.oscarDxResearch.util.dxResearchCodingSystem"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 
 <%!
   public void fillDxcodeList(BillingFormData.BillingService[] servicelist, Map dxcodeList) {
@@ -807,11 +808,12 @@ jQuery(document).ready(function(jQuery){
             format: 'HH:mm'
         });
     });
-    
+
 	/* New billing form selection method*/
     jQuery("#selectBillingForm").on('change',function() {
-    	var url = ctx + '/billing.do?demographic_no=' + <%=bean.getPatientNo()%> + '&appointment_no=' + <%=bean.getApptNo()%> + '&billRegion=BC&billForm=' + this.value;
-      	jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
+    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&billRegion=BC&billForm=' + this.value ;
+      	console.log(url);
+		jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
       		// re-bind all the javascript
     		getDxInformation();
     		bindDxJSONEvents();
@@ -1161,17 +1163,20 @@ if(wcbneeds != null){%>
          thisForm.setXml_encounter("8");
       }
     }
-    String apDate = thisForm.getXml_appointment_date();
-    if (apDate != null && apDate.trim().length() == 0) {
-      thisForm.setXml_appointment_date(bean.getApptDate());
-    }
-    if (bean != null && bean.getBillType() != null) {
+
+	String serviceDate = bean.getServiceDate();
+	if(serviceDate == null || serviceDate.isEmpty()) {
+		serviceDate = bean.getApptDate();
+	}
+	thisForm.setXml_appointment_date(serviceDate);
+
+    if (bean.getBillType() != null) {
       thisForm.setXml_billtype(bean.getBillType());
     }
     else if (request.getParameter("billType") != null) {
       thisForm.setXml_billtype(request.getParameter("billType"));
     }
-    if (demo != null && demo.getVer() != null && demo.getVer().equals("66")) {
+    if (demo.getVer() != null && demo.getVer().equals("66")) {
       thisForm.setDependent("66");
     }
     thisForm.setCorrespondenceCode(bean.getCorrespondenceCode());
@@ -1204,7 +1209,7 @@ if(wcbneeds != null){%>
 
 	          	<div class="form-group" > 
 			      
-			        <label><bean:message key="billing.billingform"/></label>
+			        <label for="selectBillingForm" ><bean:message key="billing.billingform"/></label>
 			        
           		    <select class="form-control" id="selectBillingForm">
           		      <% for (int i = 0; i < billformlist.length; i++) { %>
@@ -1224,8 +1229,8 @@ if(wcbneeds != null){%>
              <td>
               <div class="form-group" > 
 
-		        <label><bean:message key="billing.provider.billProvider"/></label>
-                <html:select styleClass="form-control" property="xml_provider" value="<%=sxml_provider%>">
+		        <label for="xml_provider" ><bean:message key="billing.provider.billProvider"/></label>
+                <html:select styleId="xml_provider" styleClass="form-control" property="xml_provider" value="<%=sxml_provider%>">
                   <html:option value="">
                     Select Provider
                   </html:option>
@@ -1242,8 +1247,8 @@ if(wcbneeds != null){%>
             <td>
                          <div class="form-group" > 
 		     
-           		 <label><bean:message key="billing.billingtype"/></label>
-                <html:select styleClass="form-control" property="xml_billtype" onchange="CheckType();gotoPrivate();">
+           		 <label for="xml_billtype" ><bean:message key="billing.billingtype"/></label>
+                <html:select styleClass="form-control" styleId="xml_billtype" property="xml_billtype" onchange="CheckType();gotoPrivate();">
                   <html:option value="MSP">Bill MSP</html:option>
                   <html:option value="WCB">Bill WCB</html:option>
                   <html:option value="ICBC">Bill ICBC</html:option>
@@ -1928,7 +1933,7 @@ if(wcbneeds != null){%>
                 <tr>
                   <td style="padding-top:5px !important;">
                       <label for="shortClaimNote"></label><label>Short Claim Note</label></label>
-                    <html:text styleClass="form-control" property="shortClaimNote" />
+                    <html:text styleId="shortClaimNote" styleClass="form-control" property="shortClaimNote" />
                   </td>
                   
                 </tr>
