@@ -25,21 +25,15 @@
 --%>
 
 <%@ page import="oscar.eform.data.*"%>
-<%@ page import="org.oscarehr.managers.FaxManager, org.oscarehr.util.LoggedInInfo"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%
-  LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-  pageContext.setAttribute("faxActive", FaxManager.isEnabled(loggedInInfo));
-%>
-
 <%--
 	Addition of a floating global toolbar specifically for activation of the 
 	Fax and eDocument functions.
 --%>
-<c:if test="${ faxActive }">
-	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
-</c:if>
+
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
+
 
 <c:if test="${ not empty reqestScope.page_errors }">
 	<script type='text/javascript'>

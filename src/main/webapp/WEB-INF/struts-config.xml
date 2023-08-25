@@ -1330,6 +1330,7 @@
 			<forward name="error" path="/oscarEncounter/ViewRequest.do?error=error" />
 			<!-- locate and forward to the given form name -->
 			<forward name="attachform" path="/form/forwardshortcutname.jsp" />
+			<forward name="cancel" path="/oscarEncounter/ViewRequest.do" />
 		</action>
 		<action input="/oscarEncounter/oscarConsultationRequest/attachmentReport.jsp" name="FrmForm" path="/oscarEncounter/oscarConsultation/printAttached" scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPrintDocsAction">
 			<forward name="noprint" path="/oscarEncounter/oscarConsultationRequest/nothingtoPrint.jsp" />

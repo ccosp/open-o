@@ -223,20 +223,20 @@
 				ticklerResultsTable = jQuery("#ticklerResults").dataTable({
 					"searching": false,
 					"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
-					"iDisplayLength": 25,
+					"iDisplayLength": 50,
 					columns: [
-						{orderable: false},
-						{orderable: false},
-						{},
-						{},
-						{},
-						{orderable: false},
-						{},
-						{},
-						{},
-						{},
-						{orderable: false},
-						{orderable: false}
+						{orderable: false}, //checkbox column, so shouldn't be orderable
+						{orderable: false}, //edit icon column, so shouldn't be orderable
+						{orderable: false}, //demographic name column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{orderable: false}, //creator column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{}, //service date column
+						{orderable: false}, //update date column
+						{}, //priority column
+						{orderable: false}, //assigned to column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{orderable: false}, //status column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{orderable: false}, //comment column.
+						{orderable: false}, //note icon column, so shouldn't be orderable
+						{orderable: false} //hidden group id column, so shouldn't be orderable
 					],
 					columnDefs: [
 						{visible: false, targets: groupColumn}
@@ -246,7 +246,11 @@
 						let rows = api.rows({page: 'current'}).nodes();
 						let last = null;
 
-						api.column(groupColumn, {page: 'current'})
+						api.column(groupColumn, {page: 'current'}) //TODO: this code reorders the rows on the current page, the global order based on the current sort.  
+															 	   //      this means if a global sort is done that results in the tickler comments to NOT be on the current page
+																   //      they will not be visible.  A workaround has been implemented by adding the service date and priority
+																   //      into the tickler comment rows as well.  The datatables row group plugin might be a better approach,
+																   //      but will require refactoring of this code
 							.data()
 							.each(function (group, i) {
 								if (last !== group) {
@@ -714,7 +718,7 @@
 		<form name="ticklerform" method="post" action="dbTicklerMain.jsp">
 			<% Locale locale = request.getLocale();%>
 			<input type="hidden" name="parentAjaxId" value="<c:out value='${param.parentAjaxId}' />"/>
-			<table id="ticklerResults" class="table table-striped table-compact">
+			<table id="ticklerResults" class="table table-striped table-compact" style="width:100%">
 				<thead>
 				<tr>
 					<th>&nbsp</th>
@@ -906,11 +910,12 @@
 				<tr class="followup-comment-<%=tickler.getId()%> comment-row no-sort">
 					<td></td>
 					<td></td>
-					<td></td>
-					<td class="no sort"><%=Encode.forHtmlContent(tc.getProvider().getLastName())%>
-						,<%=Encode.forHtmlContent(tc.getProvider().getFirstName())%>
+					<td><%=Encode.forHtmlContent(demo.getLastName())%>,<%=Encode.forHtmlContent(demo.getFirstName())%> 
 					</td>
-					<td></td>
+					<td class="no sort"><%=Encode.forHtmlContent(tc.getProvider().getFormattedName())%>
+					</td>
+					<td><%=tickler.getServiceDate()%>
+					</td>
 
 					<td class="no-sort">
 						<% if (tc.isUpdateDateToday()) { %>
@@ -920,7 +925,8 @@
 						<% } %>
 					</td>
 
-					<td></td>
+					<td><%=tickler.getPriority()%>
+					</td>
 					<td></td>
 					<td></td>
 					<td class="no sort"><%=Encode.forHtmlContent(tc.getMessage())%>

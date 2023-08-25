@@ -62,6 +62,7 @@ import org.w3c.tidy.Tidy;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
+
 import com.lowagie.text.DocumentException;
 import oscar.OscarProperties;
 import oscar.form.util.FormTransportContainer;
@@ -244,6 +245,7 @@ public class ConvertToEdoc {
 		
 		filename = filename.trim();
 		filename = filename.replaceAll(" ", "_");
+		filename = filename.replaceAll("/", "_");
 		filename = String.format("%1$s_%2$s", filename, demographicNo );
 		filename = String.format("%1$s_%2$s", filename, new Date().getTime() );
 		return filename;
@@ -276,7 +278,7 @@ public class ConvertToEdoc {
 		
 		eDoc.setContentType( DEFAULT_CONTENT_TYPE );
 		eDoc.setContentDateTime( new Date() );
-		eDoc.setNumberOfPages(0);
+		eDoc.setNumberOfPages(EDocUtil.getPDFPageCount(filePath + "/" + filename));
 		eDoc.setFilePath(filePath);
 
 		return eDoc;
@@ -296,16 +298,17 @@ public class ConvertToEdoc {
 			put("web.enableIntelligentShrinking", "true");
 	        put("web.minimumFontSize", "10");
 	        put("load.zoomFactor", "0.92");
-	        put("web.printMediaType", "false");
+	        put("web.printMediaType", "true");
 	        put("web.defaultEncoding", "utf-8");
-	        put("s", "letter");
 	        put("T", "10mm");
 	        put("L", "8mm");
-	        put("R", "8mm");
+	        put("R", "8mm");			
+			put("web.enableJavascript", "false");
 		}};
 
 		try(InputStream inputStream = HtmlToPdf.create()
 						.object(HtmlToPdfObject.forHtml(document, htmlToPdfSettings))
+						.pageSize(PdfPageSize.Letter)
 						.convert()
 		){
 			IOUtils.copy(inputStream, os);

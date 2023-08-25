@@ -41,7 +41,7 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.oscarehr.util.SpringUtils"%>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao"%>
-<%@ page import="org.oscarehr.common.dao.FaxConfigDao" %>
+<%@ page import="org.oscarehr.managers.FaxManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
@@ -786,9 +786,8 @@ function toggleView(form) {
 							onClick="printPaste2Parent(true, false, true);" /></span></td>
 					</tr>
 					<% if (OscarProperties.getInstance().isRxFaxEnabled()) {
-					    	FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-					    	List<FaxConfig> faxConfigs = faxConfigDao.findAll(null, null);
-					    
+							FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+							List<FaxConfig> faxConfigs = faxManager.getFaxGatewayAccounts(loggedInInfo);																							    
 					    %>
 					<tr>
 						<td style="padding-bottom: 0"><span><input type=button value="Fax"
