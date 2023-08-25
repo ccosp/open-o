@@ -127,8 +127,7 @@ public final class BillingAction extends Action {
         }
 
         request.getSession().setAttribute("billingSessionBean", bean);
- //       this.validateCodeLastBilled(request, errors,
- //                                   request.getParameter("demographic_no"));
+
         try{
             _log.debug("Start of billing rules");
             List<DSConsequence> list = BillingGuidelines.getInstance().evaluateAndGetConsequences(loggedInInfo, request.getParameter("demographic_no"), (String) request.getSession().getAttribute("user"));

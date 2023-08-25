@@ -718,7 +718,7 @@
 		<form name="ticklerform" method="post" action="dbTicklerMain.jsp">
 			<% Locale locale = request.getLocale();%>
 			<input type="hidden" name="parentAjaxId" value="<c:out value='${param.parentAjaxId}' />"/>
-			<table id="ticklerResults" class="table table-striped table-compact">
+			<table id="ticklerResults" class="table table-striped table-compact" style="width:100%">
 				<thead>
 				<tr>
 					<th>&nbsp</th>

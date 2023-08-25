@@ -49,6 +49,7 @@ public class FaxConfig extends AbstractModel<Integer> {
 	private Boolean active;
 	private Integer queue;
 	private String accountName;
+	private Boolean download;
 
 	@Override
     public Integer getId() {
@@ -227,5 +228,14 @@ public class FaxConfig extends AbstractModel<Integer> {
 
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
+	}
+
+	public Boolean isDownload() {
+		return download;
+	}
+
+
+	public void setDownload(Boolean download) {
+		this.download = download;
 	}
 }
