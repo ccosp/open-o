@@ -191,7 +191,6 @@ public class BillingSaveBillingAction extends Action {
 
         ActionForward af = mapping.findForward("success");
         if (frm.getSubmit().equals("Another Bill")) {
-            bean.setBillForm( OscarProperties.getInstance().getProperty("default_view", "GP") );
             af = mapping.findForward("anotherBill");
 
         } else if (frm.getSubmit().equals("Save & Print Receipt")) {
@@ -351,7 +350,7 @@ public class BillingSaveBillingAction extends Action {
         bill.setBillingCode(serviceCode);//billItem.getServiceCode());
         bill.setBillAmount(billedAmount);
         bill.setPaymentMode(paymentMode);
-        bill.setServiceDate(convertDate8Char(bean.getServiceDate()));
+        bill.setServiceDate(convertDate8Char(bean.getServiceDate())); //aka: xml_appointment_date
         bill.setServiceToDay(bean.getService_to_date());
         bill.setSubmissionCode(bean.getSubmissionCode());
         bill.setExtendedSubmissionCode(" ");

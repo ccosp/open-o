@@ -1796,7 +1796,7 @@ function updateFaxButton() {
 							<td class="tite4">
 								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formPhone" />
 							</td>
-							<td  class="tite3"><input type="text" name="phone" class="righty" value="<%=thisForm.getProfessionalSpecialistPhone()%>" /></td>
+							<td  class="tite3"><input readonly type="text" name="phone" class="righty" value="<%=thisForm.getProfessionalSpecialistPhone()%>" /></td>
 						</tr>
 						<tr>
 							<td class="tite4">
@@ -1806,7 +1806,7 @@ function updateFaxButton() {
 								</c:if>
 							</td>
 							<td  class="tite3">							
-								<input type="text" name="fax" class="righty" />
+								<input readonly type="text" name="fax" class="righty" />
 							</td>
 						</tr>
 
@@ -1815,7 +1815,7 @@ function updateFaxButton() {
 								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAddr" />
 							</td>
 							<td  class="tite3">
-								<textarea name="address" rows="5" ><%=thisForm.getProfessionalSpecialistAddress()%></textarea>
+								<textarea readonly name="address" rows="5" ><%=thisForm.getProfessionalSpecialistAddress()%></textarea>
 							</td>
 						</tr>
 	
