@@ -264,7 +264,7 @@ if(!authed) {
 								<li class="eForm ${loop.index > 9 ? 'hide' : ''}">
 									<input class="eForm_check" type="checkbox" name="eFormNo" id="eFormNo${ eForm.id }" value="${eForm.id}" title="${eForm.formName}" />
 									<label for="eFormNo${eForm.id}">
-										<c:out value="${ eForm.formName } ${ eForm.getFormDate() }" />
+										<c:out value="${eForm.subject.length() > 0 ? eForm.subject : eForm.formName} ${ eForm.getFormDate() }" />
 									</label>
 									<button class="preview-button" type="button" title="Preview" onclick="getPdf('EFORM', '${eForm.id}', 'method=getEFormPDF&eFormId=${eForm.id}&demographicNo=${eForm.demographicId}')">Preview</button>
 								</li>
