@@ -139,13 +139,13 @@
 	<table cellpadding="0" cellspacing="0" width="100%" border="0">
 		<tr valign="top">
 			<td align="center">
-				<input type="radio" id="p1_birthRemarksr1" name="p1_birthRemarksr1" onclick="onCheck(this,'p1_birthRemarksr')" <%= props.getProperty("p1_birthRemarksr1", "") %>>
 				<bean:message key="oscarEncounter.formRourke2009.formBirhtRemarks" /><br>
-				<bean:message key="oscarEncounter.formRourke2009.formPremature" />&nbsp;
+				<input type="radio" id="p1_birthRemarksr1" name="p1_birthRemarksr1" onclick="onCheck(this,'p1_birthRemarksr')" <%= props.getProperty("p1_birthRemarksr1", "") %>>
+				<label for="p1_birthRemarksr1"><bean:message key="oscarEncounter.formRourke2009.formPremature" /></label>&nbsp;
 				<input type="radio" id="p1_birthRemarksr2" name="p1_birthRemarksr2" onclick="onCheck(this,'p1_birthRemarksr')" <%= props.getProperty("p1_birthRemarksr2", "") %>>
-				<bean:message key="oscarEncounter.formRourke2009.formHighRisk" />&nbsp;<br>
+				<label for="p1_birthRemarksr2"><bean:message key="oscarEncounter.formRourke2009.formHighRisk" /></label>&nbsp;<br>
 				<input type="radio" id="p1_birthRemarksr3" name="p1_birthRemarksr3" onclick="onCheck(this,'p1_birthRemarksr')"<%= props.getProperty("p1_birthRemarksr3", "") %>>
-				<bean:message key="oscarEncounter.formRourke2009.formNoConcerns" />&nbsp;
+				<label for="p1_birthRemarksr3"><bean:message key="oscarEncounter.formRourke2009.formNoConcerns" /></label>&nbsp;
 			</td>                        
 			<td width="65%" nowrap align="center">
 			<p>
