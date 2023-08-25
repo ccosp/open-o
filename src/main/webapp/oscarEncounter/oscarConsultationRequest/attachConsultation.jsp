@@ -173,7 +173,7 @@ if(!authed) {
 
 </head>
 <body>
-<jsp:include page="../../mcedt/mailbox/spinner.jsp" flush="true"/>
+<jsp:include page="../../images/spinner.jsp" flush="true"/>
 <form id="attachDocumentsForm">
 	<div class="container">
 		<div class="attachmentList">
