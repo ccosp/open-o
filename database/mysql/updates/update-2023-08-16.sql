@@ -1,0 +1,1 @@
+alter table fax_config add column download tinyint(1) default 1;

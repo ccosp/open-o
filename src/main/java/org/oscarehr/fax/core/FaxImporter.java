@@ -84,7 +84,7 @@ public class FaxImporter {
 
 		
 		for( FaxConfig faxConfig : faxConfigList ) {
-			if( faxConfig.isActive() ) {
+			if( faxConfig.isActive() && faxConfig.isDownload() ) {
 				
 				Credentials credentials = new UsernamePasswordCredentials( faxConfig.getSiteUser(), faxConfig.getPasswd() );	
 				CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
