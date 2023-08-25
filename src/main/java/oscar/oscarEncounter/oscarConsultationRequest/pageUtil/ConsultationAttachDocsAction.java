@@ -154,4 +154,131 @@ public class ConsultationAttachDocsAction extends DispatchAction {
 
         return mapping.findForward("fetchAll");
     } 
+
+    public void getDocumentPDF(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        //TODO: refactor this function, and similar code in EctConsultationFormRequestPrincAction2.java
+        //      and EctConsultationFormFaxAction.java as part of extending this attach item functionality
+        //      to eforms and ticklers
+
+        String isImage = request.getParameter("isImage");
+        String isPDF = request.getParameter("isPDF");
+        String fileName = request.getParameter("fileName");
+        String description = request.getParameter("description");
+
+        String path = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        if (!path.endsWith(File.separator)) { path = path + File.separator; }
+
+        request.setAttribute("imagePath", path + fileName);
+        request.setAttribute("imageTitle", description);
+
+        if (Objects.equals(isImage, "true")) {
+            try (ByteOutputStream byteOutputStream = new ByteOutputStream()) {
+                ImagePDFCreator imagePDFCreator = new ImagePDFCreator(request, byteOutputStream);
+                imagePDFCreator.printPdf();
+                generateResponse(response, getBase64(byteOutputStream.getBytes()));
+            } catch (DocumentException | IOException e) {
+                logger.error("An error occurred while creating the pdf of the image: " + e.getMessage(), e);
+            }
+        }
+        else if (Objects.equals(isPDF, "true")) {
+            Path eDocPDFPath = Paths.get(path + fileName);
+            generateResponse(response, getBase64(eDocPDFPath));
+        }
+    }
+
+    public void getLabPDF(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        //TODO: refactor this function, and similar code in EctConsultationFormRequestPrincAction2.java
+        //      and EctConsultationFormFaxAction.java as part of extending this attach item functionality
+        //      to eforms and ticklers
+
+        String segmentID = request.getParameter("segmentID");
+        request.setAttribute("segmentID", segmentID);
+        try (ByteOutputStream byteOutputStream = new ByteOutputStream()) {
+            LabPDFCreator labPDFCreator = new LabPDFCreator(request, byteOutputStream);
+            labPDFCreator.printPdf();
+            generateResponse(response, getBase64(byteOutputStream.getBytes()));
+        } catch (IOException e) {
+            logger.error("An error occurred while closing the output stream: " + e.getMessage(), e);
+        }
+    }
+
+    public void getFormPDF(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        //TODO: refactor this function, and similar code in EctConsultationFormRequestPrincAction2.java
+        //      and EctConsultationFormFaxAction.java as part of extending this attach item functionality
+        //      to eforms and ticklers
+
+        String formId = request.getParameter("formId");
+        String formName = request.getParameter("formName");
+        String demographicNo = request.getParameter("demographicNo");
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        try {
+            FormTransportContainer formTransportContainer = new FormTransportContainer(
+                    response, request, "/form/forwardshortcutname.jsp"
+                    + "?method=fetch&formname="
+                    + formName
+                    + "&demographic_no="
+                    + demographicNo
+                    + "&formId="
+                    + formId);
+            formTransportContainer.setDemographicNo(demographicNo);
+            formTransportContainer.setProviderNo(loggedInInfo.getLoggedInProviderNo());
+            formTransportContainer.setSubject(formName + " Form ID " + formId);
+            formTransportContainer.setFormName(formName);
+            formTransportContainer.setRealPath(getServlet().getServletContext().getRealPath(File.separator));
+            Path formPDF = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.FORM, formTransportContainer);
+            generateResponse(response, getBase64(formPDF));
+        } catch (ServletException | IOException e) {
+            logger.error("An error occurred while processing the form: " + e.getMessage(), e);
+        }
+    }
+
+    public void getEFormPDF(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        //TODO: refactor this function, and similar code in EctConsultationFormRequestPrincAction2.java
+        //      and EctConsultationFormFaxAction.java as part of extending this attach item functionality
+        //      to eforms and ticklers
+
+        String eFormId = request.getParameter("eFormId");
+        String demographicNo = request.getParameter("demographicNo");
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        Path eFormPDF = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.EFORM, Integer.parseInt(eFormId), Integer.parseInt(demographicNo));
+        generateResponse(response, getBase64(eFormPDF));
+    }
+
+    public void getHRMPDF(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        //TODO: refactor this function, and similar code in EctConsultationFormRequestPrincAction2.java
+        //      and EctConsultationFormFaxAction.java as part of extending this attach item functionality
+        //      to eforms and ticklers
+        
+        String hrmId = request.getParameter("hrmId");
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        try (ByteOutputStream byteOutputStream = new ByteOutputStream()) {
+            HRMPDFCreator hrmPdf = new HRMPDFCreator(byteOutputStream, Integer.parseInt(hrmId), loggedInInfo);
+            hrmPdf.printPdf();
+            generateResponse(response, getBase64(byteOutputStream.getBytes()));
+        }
+    }
+
+    private void generateResponse(HttpServletResponse response, String base64Data) {
+        JSONObject json = new JSONObject();
+        json.put("base64Data", base64Data);
+        response.setContentType("text/javascript");
+        try {
+            response.getWriter().write(json.toString());
+        } catch (IOException e) {
+            logger.error("An error occurred while writing JSON response to the output stream: " + e.getMessage(), e);
+        }
+    }
+
+    private String getBase64(byte[] bytes) {
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
+    private String getBase64(Path pdfPath) {
+        try {
+            return getBase64(Files.readAllBytes(pdfPath));
+        } catch (IOException e) {
+            logger.error("An error occurred while processing the PDF file: " + e.getMessage(), e);
+            return null;
+        }
+    }
 }
