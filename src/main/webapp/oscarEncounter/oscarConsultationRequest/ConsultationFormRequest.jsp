@@ -79,10 +79,13 @@ if(!authed) {
 <%@page import="org.oscarehr.common.dao.ContactSpecialtyDao" %>
 <%@page import="org.oscarehr.common.dao.DemographicContactDao" %>
 <%@page import="org.oscarehr.common.model.ContactSpecialty" %>
+<%@ page import="org.oscarehr.managers.ConsultationManager" %>
+<%@ page import="oscar.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="org.oscarehr.common.model.EFormData" %>
+<%@ page import="oscar.eform.EFormUtil" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
-
 <!DOCTYPE html>
 <html:html locale="true">
 
@@ -190,9 +193,17 @@ if(!authed) {
 		List<EDoc> attachedDocuments = EDocUtil.listDocs(loggedInInfo, demo, requestId, EDocUtil.ATTACHED);
         CommonLabResultData commonLabResultData = new CommonLabResultData();
         List<LabResultData> attachedLabs = commonLabResultData.populateLabResultsData(loggedInInfo, demo, requestId, CommonLabResultData.ATTACHED);
-		
+		ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
+		List<EctFormData.PatientForm> attachedForms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demo));
+		List<EFormData> attachedEForms = consultationManager.getAttachedEForms(requestId);
+		ArrayList<HashMap<String,? extends Object>> attachedHRMDocuments = consultationManager.getAttachedHRMDocuments(loggedInInfo, demo, requestId);
+
         pageContext.setAttribute("attachedDocuments", attachedDocuments);
         pageContext.setAttribute("attachedLabs", attachedLabs);
+		pageContext.setAttribute("attachedForms", attachedForms);
+		pageContext.setAttribute("attachedEForms", attachedEForms);
+		pageContext.setAttribute("attachedHRMDocuments", attachedHRMDocuments);
+
 	}
 %>		
 		<%--
@@ -476,24 +487,26 @@ background-color: #ddddff;
     width:100%;
 }
 
-#attachedDocumentsTable h3, #attachedLabsTable h3 {
+#attachedDocumentsTable h3, #attachedLabsTable h3, #attachedFormsTable h3, #attachedEFormsTable h3, #attachedHRMDocumentsTable h3 {
     margin: 0px !important;
     padding: 0px !important;
     border-bottom: grey thin solid;
 }
 
-#attachedLabsTable {
+#attachedLabsTable, #attachedFormsTable, #attachedDocumentsTable, #attachedEFormsTable, #attachedHRMDocumentsTable {
     border-collapse: collapse;
     width:100%;
 }
 
 .ui-dialog {
-    width:400px !important;
-    height: auto !important;
     font-size: small !important;
 }
 .ui-autocomplete{
      font-size: small !important;
+}
+
+.save-and-close-button {
+	width: auto !important;
 }
 
 th, td.tite1 {
@@ -522,11 +535,7 @@ td.stat{
 font-size: 10pt;
 }
 
-.consultDemographicData input {
-    width: 98% !important;
-} 
-
-.consultDemographicData select{
+.consultDemographicData input, .consultDemographicData select, .consultDemographicData textarea {
     width: 100% !important;
 }
 
@@ -547,12 +556,7 @@ input#referalDate, input#appointmentDate, input#followUpDate {
 
 
 textarea {
-    width: 98% !important;
-    padding:1%;
-}
-
-.MainTableLeftColumn td {
-    background-color: #ddddff;
+    width: 100%;
 }
 
 .controlPanel {
@@ -1490,7 +1494,7 @@ function updateFaxButton() {
 				<tr>
 					<td class="Header"
 						style="padding-left: 2px; padding-right: 2px; border-right: 2px solid #003399; text-align: left; font-size: 80%; font-weight: bold; width: 100%;"
-						NOWRAP>
+						>
 						<h2>
 						<%=thisForm.getPatientName()%> <%=thisForm.getPatientSex()%>	<%=thisForm.getPatientAge()%>
 						</h2>
@@ -1509,7 +1513,7 @@ function updateFaxButton() {
 							<td class="stat" colspan="2"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgCreated" /></td>
 						</tr>
 						<tr>
-							<td class="stat" colspan="2"  nowrap><%=thisForm.getProviderName()%>
+							<td class="stat" colspan="2"  ><%=thisForm.getProviderName()%>
 							</td>
 						</tr>
 					</table>
@@ -1571,8 +1575,24 @@ function updateFaxButton() {
 					<td colspan="2">
 					<table id="attachedDocumentTable">
 						<tr>
-							<td class="tite4" >
-								Attachments
+							<td>
+
+							<%
+							if (thisForm.iseReferral())
+							{
+								%>
+									<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.attachDoc" />
+								<%
+							}
+							else
+							{ %>
+								<a href="javascript:void(0);" id="attachDocumentPanelBtn" title="Add Attachment"
+									data-poload="${ ctx }/attachDocs.do?method=fetchAll&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
+									Manage Attachments
+								</a>
+
+							<% } %>
+
 							</td>
 						</tr>	
 							<tr><td><table id="attachedDocumentsTable">
@@ -1582,15 +1602,13 @@ function updateFaxButton() {
 								<c:forEach items="${ attachedDocuments }" var="attachedDocument">
 									<tr id="entry_docNo${ attachedDocument.docId }">
 										<td> 
-											<a target="_blank" href="${ ctx }/dms/ManageDocument.do?method=display&amp;doc_no=${ attachedDocument.docId }" alt="${ attachedDocument.description }" title="${ attachedDocument.description }">
-												<c:out value="${ attachedDocument.description }" />
-											</a>
+											<c:out value="${ attachedDocument.description }" />
 											<input name="docNo" value="${ attachedDocument.docId }" id="delegate_docNo${ attachedDocument.docId }" class="delegateAttachment" type="hidden">
 										</td>
 									</tr>
 								</c:forEach>
 							</table></td></tr>
-		
+
 							<tr><td><table id="attachedLabsTable">
 								<tr>
 									<td><h3>Labs</h3></td>
@@ -1598,32 +1616,65 @@ function updateFaxButton() {
 								<c:forEach items="${ attachedLabs }" var="attachedLab">
 									<tr id="entry_labNo${ attachedLab.segmentID }">
 										<td> 
-											<a target="_blank" href="${ ctx }/lab/CA/ALL/labDisplay.jsp?segmentID=${ attachedLab.segmentID }" alt="${ attachedLab.discipline }" title="${ attachedLab.discipline }">
-												<c:out value="${ attachedLab.discipline }" /> 
-												<c:out value="${ attachedLab.dateTime }" />
-											</a>	
+											<c:out value="${ attachedLab.discipline }" />
+											<c:out value="${ attachedLab.dateTime }" />
 											<input name="labNo" value="${ attachedLab.segmentID }" id="delegate_labNo${ attachedLab.segmentID }" class="delegateAttachment" type="hidden">
 										</td>
 									</tr>
 								</c:forEach>
 							</table></td></tr>
 
-									<c:if test="${ not EctConsultationFormRequestForm.eReferral }">
-										<tr>
-											<td style="text-align: right;"><a
-												href="javascript:void(0);" id="attachDocumentPanelBtn"
-												title="Add/Remove Attachment"
-												data-poload="${ ctx }/attachDocs.do?method=fetchAll&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
-													Add Attachment </a></td>
-										</tr>
-									</c:if>
-								</table>
+						<tr><td><table id="attachedFormsTable">
+							<tr>
+								<td><h3>Forms</h3></td>
+							</tr>
+							<c:forEach items="${ attachedForms }" var="attachedForm">
+								<tr id="entry_formNo${ attachedForm.formId }" data-formName="${ attachedForm.formName }" data-formDate="${ attachedForm.getEdited() }">
+									<td>
+										<c:out value="${ attachedForm.formName }" />
+
+										<input name="formNo" value="${ attachedForm.formId }" id="delegate_formNo${ attachedForm.formId }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
+						<tr><td><table id="attachedEFormsTable">
+							<tr>
+								<td><h3>eForms</h3></td>
+							</tr>
+							<c:forEach items="${ attachedEForms }" var="attachedEForm">
+								<tr id="entry_eFormNo${ attachedEForm.id }">
+									<td>
+										<c:out value="${ attachedEForm.formName }" />
+
+										<input name="eFormNo" value="${ attachedEForm.id }" id="delegate_eFormNo${ attachedEForm.id }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
+						<tr><td><table id="attachedHRMDocumentsTable">
+							<tr>
+								<td><h3>HRM</h3></td>
+							</tr>
+							<c:forEach items="${ attachedHRMDocuments }" var="attachedHrm">
+								<tr id="entry_hrmNo${ attachedHrm['id'] }">
+									<td>
+										<c:out value="${ attachedHrm['name'] }" />
+
+										<input name="hrmNo" value="${ attachedHrm['id'] }" id="delegate_hrmNo${ attachedHrm['id'] }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
+					</table>
 					</td>
 				</tr>
 			</table>
 			</td>
 			<td class="MainTableRightColumn">
-			<table width="100%" height="100%">
+			<table cellpadding="0" cellspacing="2"
+				style="border-collapse: collapse" bordercolor="#111111" width="100%"
+				height="100%" border=1>
 
 				<!----Start new rows here-->
 				<tr>
@@ -1669,8 +1720,8 @@ function updateFaxButton() {
 					<table height="100%" width="100%">
 						<% if (props.isConsultationFaxEnabled() && OscarProperties.getInstance().isPropertyActive("consultation_dynamic_labelling_enabled")) { %>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.consultationFormPrint.msgAssociated2" /></td>
-							<td  class="tite3">
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.consultationFormPrint.msgAssociated2" />:</td>
+							<td  class="tite1">
 								<html:select property="providerNo" onchange="switchProvider(this.value)">
 									<%
 										for (Provider p : prList) {
@@ -2435,20 +2486,19 @@ function updateFaxButton() {
 		
 		<oscar:oscarPropertiesCheck value="true" property="ENABLE_HEALTH_CARE_TEAM_IN_CONSULTATION_REQUESTS" defaultVal="false" >
 			<script type="text/javascript">
-			//<!--
-				var specialist = "${ consultUtil.specialist }";
-				var service = "${ consultUtil.service }";
+				const specialist = "${ consultUtil.specialist }";
+				const servicevalue = "${ consultUtil.service }";
 
 				document.EctConsultationFormRequestForm.specialist.value = specialist;
+				document.EctConsultationFormRequestForm.service.value = servicevalue;
+
 				if(  typeof healthCareTeam !== 'undefined' && healthCareTeam !== null ) {
 					document.EctConsultationFormRequestForm.annotation.value = healthCareTeam[ specialist ].note; 
 					document.EctConsultationFormRequestForm.phone.value = healthCareTeam[ specialist ].phoneNum;
 					document.EctConsultationFormRequestForm.fax.value = healthCareTeam[ specialist ].specFax;					
 					document.EctConsultationFormRequestForm.address.value = healthCareTeam[ specialist ].specAddress;
 				}
-				document.EctConsultationFormRequestForm.service.value = service
-				
-			//-->
+
 			</script>
 		</oscar:oscarPropertiesCheck>
 
@@ -2522,6 +2572,34 @@ Calendar.setup( { inputField : "appointmentDate", ifFormat : "%Y/%m/%d", showsTi
 	Calendar.setup( { inputField : "referalDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "referalDate", singleClick : true, step : 1 } );
 <%}%>
 jQuery(document).ready(function(){
+	function addFormIfNotFound(form, delegate) {
+		const checkboxName = form.getAttribute('name');
+		const formValue = form.getAttribute('value');
+		const formId = "formNo" + formValue;
+		const formName = document.getElementById("entry_" + formId).getAttribute('data-formName');
+		const formDate = document.getElementById("entry_" + formId).getAttribute('data-formDate');
+
+		const checkbox = jQuery('<input>', {
+			class: 'form_check',
+			type: 'checkbox',
+			name: checkboxName,
+			id: formId,
+			value: formValue,
+			title: formName
+		});
+
+		const label = jQuery('<label>', {
+			for: formId,
+			text: "(Not Latest Version) " + formName + " " + formDate
+		});
+
+		const newLiFormElement = jQuery('<li>', {
+			class: 'form',
+		}).append(checkbox).append(label);
+		jQuery('#formList').find('.selectAllHeading').after(newLiFormElement);
+		
+		return jQuery('#attachDocumentsForm').find(delegate);
+	}
 
 	/**
 		DOCUMENT ATTACHMENT MANAGER JAVASCRIPT		
@@ -2532,76 +2610,87 @@ jQuery(document).ready(function(){
 		trigger.off('click');
 		var triggerId = "#" + trigger.attr('id');
 		var title = trigger.attr("title");
-		
-		var dialog = jQuery("#attachDocumentDisplay").dialog({
-						title: title,
-						modal:false,
-						closeText: "Close",
-						height: 250,
-						width: 'auto',
-						resizable: true,
-						position: { my: "left", at: "right", of: triggerId },
-						autoOpen: true, // Set autoOpen to true to prevent the dialog from opening immediately
 
-						show: { 
-							//use this effect to give the data a bit of time to load, reduces perception of slowness
-							effect: "slide",
-							duration: 1000 
-						},
-																		
-						beforeClose: function(event, ui) {
-							// before the dialog is closed:
-
-							// pass the checked elements to the consultation request form
-							jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled'])").each(function(index,data){
-								var element = jQuery(this);
-								var input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
-								var row = jQuery("<tr>", {id: "entry_" + element.attr("name") + element.val()});
-								var column = jQuery("<td>");
-								var target = "#attachedDocumentsTable";
-								
-								if("lab_check".indexOf(element.attr("class")) != -1) 
-								{
-									target = "#attachedLabsTable";
-								} 
-
-								column.text(element.attr("title"));
-								column.append(input);
-								row.append(column);
-
-								jQuery('#consultationRequestForm').find(target).append(row);
-							});
-						
-							// remove unchecked elements from the request form.
-							jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled'])").each(function(index,data){
-								var checkedElement = jQuery(this);
-							
-								if( !checkedElement.is(':checked') ) {
-									var checkedElementClass = checkedElement.attr("class");
-									jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
-									checkedElement.attr("class", checkedElementClass.split("_")[0] + "_check");
-								}		
-							});
-						}
-					});
-		
-		jQuery("#attachDocumentDisplay").load(trigger.data('poload'), function(response, status, xhr) {
+		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
 			if (status === "success") {
-				// pre check all selected elements after the dialog panel fully loads.
 				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
-					var delegate = "#" + this.id.split("_")[1];
-					var element = jQuery('#attachDocumentsForm').find(delegate);
-					var elementClassType = element.attr("class").split("_")[0];
-					element.attr("checked", true).attr("class", elementClassType + "_pre_check");				
+					let delegate = "#" + this.id.split("_")[1];
+					let element = jQuery('#attachDocumentsForm').find(delegate);
+					if (element.length === 0) { element = addFormIfNotFound(data, delegate); }
+					let elementClassType = element.attr("class").split("_")[0];
+					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
 				});
-			} else {
-				console.log("There was an error loading a list of all documents");
-				alert("There was an error loading a list of all documents.");
 			}
-			});	
-	
-	})
+		}).dialog({
+			title: title,
+			modal:true,
+			closeText: "Save and Close",
+			height: 'auto',
+			width: 'auto',
+			resizable: true,
+			open: function(event, ui) {
+				jQuery(this).parent().css({
+					top: 0,
+					left: 0
+				});
 
+				let closeBtn = jQuery(this).parent().find(".ui-dialog-titlebar-close");
+				closeBtn.removeClass("ui-button-icon-only");
+				closeBtn.addClass("save-and-close-button");
+				closeBtn.html("Save and Close");
+			},
+
+ 			beforeClose: function(event, ui) {
+ 				// before the dialog is closed:
+
+ 			    // pass the checked elements to the consultation request form
+ 				jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled']), .form_check:checked:not(input[disabled='disabled']), .eForm_check:checked:not(input[disabled='disabled']), .hrm_check:checked:not(input[disabled='disabled'])"
+				).each(function(index,data){
+ 					var element = jQuery(this);
+ 					var input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
+ 					var row = jQuery("<tr>", {id: "entry_" + element.attr("name") + element.val()});
+ 					var column = jQuery("<td>");
+ 	 				var target = "#attachedDocumentsTable";
+
+ 					if("lab_check".indexOf(element.attr("class")) !== -1)
+ 					{
+ 						target = "#attachedLabsTable";
+ 					}
+
+					if("form_check".indexOf(element.attr("class")) !== -1)
+					{
+						target = "#attachedFormsTable";
+					}
+
+					if("eForm_check".indexOf(element.attr("class")) != -1)
+					{
+						target = "#attachedEFormsTable";
+					}
+
+					if("hrm_check".indexOf(element.attr("class")) != -1)
+					{
+						target = "#attachedHRMDocumentsTable";
+					}
+					column.text(element.attr("title"));
+ 					column.append(input);
+ 					row.append(column);
+
+					jQuery('#consultationRequestForm').find(target).append(row);
+				});
+			
+				// remove unchecked elements from the request form.
+				jQuery('#attachDocumentsForm').find(".document_pre_check:not(input[disabled='disabled']), .lab_pre_check:not(input[disabled='disabled']), .form_pre_check:not(input[disabled='disabled']), .eForm_pre_check:not(input[disabled='disabled']), .hrm_pre_check:not(input[disabled='disabled'])").each(function(index,data){
+					var checkedElement = jQuery(this);
+				
+					if( !checkedElement.is(':checked') ) {
+						var checkedElementClass = checkedElement.attr("class");
+						jQuery('#consultationRequestForm').find("#entry_" + checkedElement.attr("id")).remove();
+						checkedElement.attr("class", checkedElementClass.split("_")[0] + "_check");
+					}
+				});
+			}
+		});
+	})
 })
 
 </script>
