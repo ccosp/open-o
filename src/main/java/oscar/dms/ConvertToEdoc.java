@@ -210,6 +210,8 @@ public class ConvertToEdoc {
 	 */
 	public synchronized static Path saveAsTempPDF(FormTransportContainer formTransportContainer) {
 		String htmlString = formTransportContainer.getHTML();
+		ConvertToEdoc.contextPath = formTransportContainer.getContextPath();
+		ConvertToEdoc.realPath = formTransportContainer.getRealPath();
 		String filename = buildFilename( formTransportContainer.getFormName(), formTransportContainer.getDemographicNo() );
 		return execute( htmlString, filename );
 	}
