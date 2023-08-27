@@ -120,7 +120,9 @@ String paymentEndDate    = request.getParameter("paymentEndDate");
 if ( statusType == null ) { statusType = "O"; } 
 if ( "_".equals(statusType) ) { demoNo = "";}
 if ( startDate == null ) { startDate = ""; } 
+if ( startDate == "" ) { startDate = DateUtils.sumDate("yyyy-MM-dd","-180"); }
 if ( endDate == null ) { endDate = ""; } 
+if ( endDate == "" ) { endDate = DateUtils.sumDate("yyyy-MM-dd","0"); }
 if ( demoNo == null ) { demoNo = ""; filename = "";} 
 if ( providerNo == null ) { providerNo = "" ; } 
 if ( raCode == null ) { raCode = "" ; } 
@@ -327,6 +329,23 @@ updateSort = function(name) {
 	document.serviceform.submit();
 }
 
+let isFiltered = false;
+function filterChecked() {
+	isFiltered = !isFiltered;
+	let billingErrorRows = document.getElementsByName("BillingErrorRow");
+	for (let i = 0; i < billingErrorRows.length; i++){
+		let rowId = billingErrorRows[i].id.split("_")[1];
+		let billingErrorRowStatus = document.getElementById("status"+rowId);
+		if (billingErrorRowStatus.checked){
+			if (isFiltered) {
+				billingErrorRows[i].style.display="none";
+			} else {
+				billingErrorRows[i].style.display="";
+			}
+		}	
+	}
+}
+
 </script>
 
 <style>
@@ -474,7 +493,7 @@ OHIP No.: <br>
 	<div class="span2">		
 	Start:
 		<div class="input-append">
-			<input type="text" name="xml_vdate" id="xml_vdate" style="width:90px" value="<%=startDate%>" pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" />
+			<input type="text" name="xml_vdate" id="xml_vdate" style="width:90px" value="<%=startDate%>" pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" required/>
 			<span class="add-on"><i class="icon-calendar"></i></span>
 		</div>
 	</div>
@@ -490,7 +509,7 @@ OHIP No.: <br>
 		</small>
 	
 		<div class="input-append">
-			<input type="text" name="xml_appointment_date" style="width:90px" id="xml_appointment_date" value="<%=endDate%>" pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" />
+			<input type="text" name="xml_appointment_date" style="width:90px" id="xml_appointment_date" value="<%=endDate%>" pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" required/>
 			<span class="add-on"><i class="icon-calendar"></i></span>
 		</div>
 	</div>
@@ -649,7 +668,7 @@ if(statusType.equals("_")) { %>
              <th>Dx</th>
              <th>Exp.</th>
              <th>Code Error</th>
-             <th>Status</th>
+             <th>Status<br><button class="btn hidden-print" type="button" onClick="filterChecked()">Show/Hide Checked</button></th>
              <th>Filename</th>
           </tr>
 	<% //
@@ -687,7 +706,7 @@ if(statusType.equals("_")) { %>
 		} 
 	    color = nC ? "class='success'" : "";
 	%>
-    		<tr <%=color %>>
+    		<tr <%=color %> name="BillingErrorRow" id="BillingErrorRow_<%=bObj.getId() %>">
     			<td><small><%=bObj.getHin() %> <%=bObj.getVer() %></small></td>
     			<td><font size="-1"><%=bObj.getDob() %></font></td>
     			<td align="right"><a href=# onclick="popupPage(800,700,'billingONCorrection.jsp?billing_no=<%=bObj.getBilling_no()%>','BillCorrection<%=bObj.getBilling_no()%>');return false;"><%=bObj.getBilling_no() %></a></td>
@@ -937,11 +956,7 @@ if(statusType.equals("_")) { %>
 	var endDate = $("#xml_appointment_date").datepicker({format : "yyyy-mm-dd"});
 	
 	var paymentStartDate = $("#paymentStartDate").datepicker({format : "yyyy-mm-dd"});
-	var paymentEndDate = $("#paymentEndDate").datepicker({format : "yyyy-mm-dd"});
-	
-    $( document ).ready(function() {
-    	parent.parent.resizeIframe($('html').height());
-    });
+	var paymentEndDate = $("#paymentEndDate").datepicker({format : "yyyy-mm-dd"});	    
 </script>
     </body>
     <%! String getStdCurr(String s) {

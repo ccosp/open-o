@@ -685,8 +685,12 @@ public class BillingONCHeader1Dao extends AbstractDao<BillingONCHeader1>{
 		app.and("ch1.payProgram in (:payPrograms)", "payPrograms", payPrograms);
 		app.and("ch1.status = :status", "status", statusType);
 		app.and("ch1.providerNo = :providerNo", "providerNo", providerNo);
-		app.and("ch1.billingDate >= :startDate", "startDate", (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
-		app.and("ch1.billingDate <= :endDate", "endDate", (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+		if (startDate != null) {
+            app.and("ch1.billingDate >= :startDate", "startDate", (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
+        }
+        if (endDate != null ){
+            app.and("ch1.billingDate <= :endDate", "endDate", (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        }		
 		
 		if(paymentStartDate != null) {
 			app.and("bp.paymentdate >= :paymentStartDate", "paymentStartDate", paymentStartDate);
