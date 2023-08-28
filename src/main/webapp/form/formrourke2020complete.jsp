@@ -394,6 +394,27 @@ function resetDate(textbox) {
 
 var ageUnits = new Array("days", "weeks", "months", "years");
 var curUnit = 0;
+
+function calcDefaultCurUnit() {
+	// In Days if Baby is under 30 days old
+	// In Months if Baby is under 24 months old
+	// In Years if Toddler is above 24 months old
+	const birthDateStr = $("c_birthDate").value;
+
+	if( birthDateStr != "" ) {
+		const birthDateArr = birthDateStr.split("/");
+		const birthDate = new Date(birthDateArr[2],birthDateArr[1]-1,birthDateArr[0],0,0,0,0);
+		const age = calcAgeInMths(birthDate);
+		if (age < 1) {
+			curUnit = 0;
+		} else if(age >= 1 && age < 24) {
+			curUnit = 2;
+		} else {
+			curUnit = 3;
+		}
+	}
+}
+
 function calcAge() {
 	var ageElements = new Array("currentAge","currentAge2","currentAge3","currentAge4");
 	var age;
@@ -679,8 +700,9 @@ function init() {
 	//level of evidence
 	setDefaultValues();
 	
-	//set age    	
-	calcAge();		
+	//set age
+	calcDefaultCurUnit();
+	calcAge();
 	
 	//adjust height of divs/tables so they align properly	
 	adjustSizes();	
