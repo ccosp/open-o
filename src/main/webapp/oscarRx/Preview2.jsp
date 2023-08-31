@@ -412,7 +412,7 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
                                             <table width=100% cellspacing=0 cellpadding=0>
                                                     <tr>
                                                             <td align=left valign=top><br>
-                                                                <%= patient.getFirstName() %> <%= patient.getSurname() %> <%if(showPatientDOB){%>&nbsp;&nbsp; DOB:<%= StringEscapeUtils.escapeHtml(patientDOBStr) %> <%}%><br>
+                                                                <%= patient.getFirstName() %> <%= patient.getSurname() %> <%if(showPatientDOB){%><br>DOB:<%= StringEscapeUtils.escapeHtml(patientDOBStr) %> <%}%><br>
                                                             <%= patientAddress %><br>
                                                             <%= patientCityPostal %><br>
                                                             <%= patientPhone %><br>
