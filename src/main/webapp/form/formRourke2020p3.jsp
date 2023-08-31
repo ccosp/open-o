@@ -1076,9 +1076,6 @@
 			<td colspan="9" valign="top">
 				<table id="immt31" style="font-size: 9pt;" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
-						<td colspan="9" style="text-align: center"><b><bean:message key="oscarEncounter.formRourke2006_1.msgImmunizationColTitle"/></b></td>
-					</tr>
-					<tr>
 						<td style="padding-right: 5pt" valign="top"><img height="15" width="20" src="graphics/Checkmark_L.gif"></td>
 						<td class="edcol" valign="top">X</td>
 						<td class="edcol" valign="top" colspan="3"><bean:message key="oscarEncounter.formRourke2009.formNotDiscussed"/></td>

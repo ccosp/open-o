@@ -1099,11 +1099,6 @@
 			<td colspan="3">
 			<table id="immt11" cellpadding="0" cellspacing="0" width="100%">
 				<tr>
-					<td style="text-align: center" colspan="4">
-						<b><bean:message key="oscarEncounter.formRourke2006_1.msgImmunizationColTitle"/></b>
-					</td>
-				</tr>
-				<tr>
 					<td style="padding-right: 5pt" valign="top"><img height="15" width="20" src="graphics/Checkmark_L.gif"></td>
 					<td class="edcol" valign="top">X</td>
 					<td class="edcol" valign="top" colspan="2"><bean:message key="oscarEncounter.formRourke2009.formNotDiscussed"/></td>
@@ -1143,9 +1138,6 @@
 			<td colspan="3">			
 			<table id="immt12" cellpadding="0" cellspacing="0" width="100%">
 				<tr>
-					<td style="text-align: center"><b><bean:message key="oscarEncounter.formRourke2006_1.msgImmunizationColTitle" /></b></td>
-				</tr>
-				<tr>
 					<td style="vertical-align:bottom;">
 						<textarea id="p1_immunization2w" name="p1_immunization2w" rows="5" cols="25" class="wide"><%= props.getProperty("p1_immunization2w", "") %></textarea>
 					</td>
@@ -1154,11 +1146,6 @@
 			</td>
 			<td colspan="3">
 			<table id="immt13" cellpadding="0" cellspacing="0" width="100%">
-				<tr>
-					<td style="text-align: center" colspan="4">
-						<b><bean:message key="oscarEncounter.formRourke2006_1.msgImmunizationColTitle" /></b>
-					</td>
-				</tr>				
 				<tr>
 					<td style="padding-right: 5pt" valign="top"><img height="15" width="20" src="graphics/Checkmark_L.gif"></td>
 					<td class="edcol" valign="top">X</td>

@@ -1277,15 +1277,10 @@ description layer</div>
 				<img height="15" width="20" src="graphics/Checkmark_Lwhite.gif">
 				<bean:message key="oscarEncounter.formRourke2009.msgProblemsLegend" />
 			</td>
-			<td colspan="4" style="text-align: center" colspan="3" valign="top"><b><bean:message key="oscarEncounter.formRourke2006_1.msgImmunizationColTitle" /></b></td>
-			<td colspan="4" style="text-align: center" colspan="3" valign="top"><b><bean:message key="oscarEncounter.formRourke2006_1.msgImmunizationColTitle" /></b></td>
-			<td colspan="4">			
+			<td colspan="4"></td>
+			<td colspan="4"></td>
+			<td colspan="4">
 			<table id="immt23" cellpadding="0" cellspacing="0" width="100%">
-				<tr>
-					<td style="text-align: center" colspan="4">
-						<b><bean:message key="oscarEncounter.formRourke2006_1.msgImmunizationColTitle" /></b>
-					</td>
-				</tr>
 				<tr>
 					<td style="padding-right: 5pt" valign="top"><img height="15" width="20" src="graphics/Checkmark_L.gif"></td>
 					<td class="edcol" valign="top">X</td>
