@@ -390,7 +390,12 @@ function resetDate(textbox) {
     }
 }
 
-
+function resetDateUsingID(id) {
+    const inputField = document.getElementById(id);
+    if( inputField.value.length > 0 ) {
+        inputField.value = "";
+	}
+}
 
 var ageUnits = new Array("days", "weeks", "months", "years");
 var curUnit = 0;

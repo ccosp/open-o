@@ -136,16 +136,19 @@
 		<tr align="center">	
 			<td class="column"><a><bean:message key="oscarEncounter.formRourke1.msgDate"/></a></td>		
 			<td colspan="3">
+				<img src="../images/cal.gif" id="p4_date18m_cal" style="vertical-align: middle;">
 				<input readonly type="text" id="p4_date18m" name="p4_date18m" ondblclick="resetDate(this)" size="10" value="<%=UtilMisc.htmlEscape(props.getProperty("p4_date18m", ""))%>"/>
-				<img src="../images/cal.gif" id="p4_date18m_cal">
+				<img src="../images/close.png" id="p4_date18m_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p4_date18m')">
 			</td>
 			<td colspan="4">
+				<img src="../images/cal.gif" id="p4_date24m_cal" style="vertical-align: middle;">
 				<input readonly type="text" id="p4_date24m" name="p4_date24m" ondblclick="resetDate(this)" size="10" value="<%=UtilMisc.htmlEscape(props.getProperty("p4_date24m", ""))%>"/>
-				<img src="../images/cal.gif" id="p4_date24m_cal">
+					<img src="../images/close.png" id="p4_date24m_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p4_date24m')">
 			</td>
 			<td colspan="3">
+				<img src="../images/cal.gif" id="p4_date48m_cal" style="vertical-align: middle;">
 				<input readonly type="text" id="p4_date48m" name="p4_date48m" ondblclick="resetDate(this)" size="10" value="<%=UtilMisc.htmlEscape(props.getProperty("p4_date48m", ""))%>"/>
-				<img src="../images/cal.gif" id="p4_date48m_cal">
+				<img src="../images/close.png" id="p4_date48m_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p4_date48m')">
 			</td>
 			
 		</tr>
