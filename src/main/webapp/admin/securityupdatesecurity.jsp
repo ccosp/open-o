@@ -88,6 +88,11 @@
 			setfocus('user_name');
 			return false;
 		}
+		if (document.updatearecord.user_name.value.length > 10) {
+			alert('<bean:message key="admin.securityrecord.formUserName" />: <bean:message key="admin.securityrecord.msgAtMost" /> 10 <bean:message key="admin.securityrecord.msgSymbols"/>');
+			setfocus('user_name');
+			return false;
+		}
 		if (document.updatearecord.password.value=="") {
 			alert('<bean:message key="admin.securityrecord.formPassword" /> <bean:message key="admin.securityrecord.msgIsRequired"/>');
 			setfocus('password');
@@ -160,7 +165,7 @@
 	<tr>
 		<td width="50%" align="right"><bean:message
 			key="admin.securityrecord.formUserName" />:</td>
-		<td><input type="text" name="user_name" maxlength="30"
+		<td><input type="text" name="user_name" maxlength="10"
 			value="<%= security.getUserName() %>"></td>
 	</tr>
 	<tr>
