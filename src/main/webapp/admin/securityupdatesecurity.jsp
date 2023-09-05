@@ -89,7 +89,7 @@
 			return false;
 		}
 		if (document.updatearecord.user_name.value.length > 10) {
-			alert('<bean:message key="admin.securityrecord.formUserName" />: <bean:message key="admin.securityrecord.msgAtMost" /> 10 <bean:message key="admin.securityrecord.msgSymbols"/>');
+			alert('<bean:message key="admin.securityrecord.formUserName" />: <bean:message key="admin.securityrecord.msgAtMost" /> 10 <bean:message key="admin.securityrecord.msgAlphaNumeric"/>');
 			setfocus('user_name');
 			return false;
 		}
