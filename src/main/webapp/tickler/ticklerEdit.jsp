@@ -267,7 +267,7 @@
                                 %>
                 
                 <tr>
-                    <td colspan="2" class="<%=cellColour%>" style="font-weight: bold"><%=Encode.forHtmlContent(t.getMessage()).replace("\r\n", "\n").replace("\n", "<br>")%></td>
+                    <td colspan="2" class="<%=cellColour%>" style="font-weight: bold; white-space:pre-wrap;"><%=Encode.forHtmlContent(t.getMessage())%></td>
                     <td class="<%=cellColour%>" style="font-weight: bold"><%=t.getProvider().getLastName()%>,<%=t.getProvider().getFirstName()%></td>
                     <td class="<%=cellColour%>" style="font-weight: bold"><%=t.getUpdateDate()%></td>
                 </tr>
@@ -282,7 +282,7 @@
                                                                 }
                                     %>
                <tr>
-                    <td colspan="2" class="<%=cellColour%>"><%=Encode.forHtmlContent(tc.getMessage()).replace("\r\n", "\n").replace("\n", "<br>")%></td>
+                    <td colspan="2" class="<%=cellColour%>" style="white-space:pre-wrap;"><%=Encode.forHtmlContent(tc.getMessage())%></td>
                     <td class="<%=cellColour%>"><%=tc.getProvider().getLastName()%>,<%=tc.getProvider().getFirstName()%></td>
                     <td class="<%=cellColour%>"><%=tc.getUpdateDateTime(vLocale)%></td>
                 </tr>
