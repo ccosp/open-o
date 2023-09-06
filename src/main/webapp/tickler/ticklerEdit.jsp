@@ -125,6 +125,33 @@
             }
             td.lilac {font-weight: normal; font-size: 8pt ; font-family: verdana,arial,helvetica; color: #000000; background-color: #EEEEFF;}
             td.white {font-weight: normal; font-size: 8pt ; font-family: verdana,arial,helvetica; color: #000000; background-color: #FFFFFF;}
+
+            .grid {
+				display: grid;
+				grid-template-columns: repeat(10, 1fr);
+				grid-gap: 2px;
+				width: 270px;
+			}
+
+			.grid a {
+				background-color: #E6E6FA;
+				text-align: center;
+				width: auto;
+				height: auto;
+                padding: 2px;
+				margin: 1px;
+				display: flex;
+				justify-content: center;
+				text-decoration: none;
+				color: black;
+				font-size: 11px !important;
+				border-radius: 20%;
+			}
+
+			.grid a:hover {
+				background-color: #EE82EE;
+				color: white;
+			}
         </style>
         <title><bean:message key="tickler.ticklerEdit.title"/></title>
         <script language="javascript">
@@ -148,6 +175,44 @@
             function openBrWindow(theURL,winName,features) { 
                 window.open(theURL,winName,features);
             }
+
+            // Add 15 links for days, 15 links for weeks, 15 links for months and 5 links for years
+			function addQuickPick() {
+                const quickPickDiv = document.getElementById('quickPickDateOptions');
+				for (let i = 1; i <= 35; i++) {
+					const linkButton = document.createElement('a');
+					linkButton.href = '#';
+					if (i <= 10) {
+						linkButton.innerText = i + "d";
+						linkButton.onclick = function() { addTime(i, "days"); }
+					} else if (i > 10 && i <= 20) {
+						linkButton.innerText = i - 10 + "w";
+						linkButton.onclick = function() { addTime((i - 10) * 7, "days"); }
+					} else if (i > 20 && i <= 30) {
+						linkButton.innerText = i - 20 + "m";
+						linkButton.onclick = function() { addTime(i - 20, "months"); }
+					} else if (i > 30 && i <= 35) {
+						linkButton.innerText = i - 30 + "y";
+						linkButton.onclick = function() { addTime((i - 30) * 12, "months"); }
+					}
+                    
+					quickPickDiv.appendChild(linkButton);
+				}
+			}
+
+			function addTime(num, type) {
+				let currentDate = new Date();
+				if (type === "months") {
+					currentDate.setMonth(currentDate.getMonth() + num);
+				} else {
+					currentDate.setDate(currentDate.getDate() + num);
+				}
+				const year = currentDate.getFullYear();
+				const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+				const day = String(currentDate.getDate()).padStart(2, '0');
+				const newDate = year + "-" + month + "-" + day;
+				document.serviceform.xml_appointment_date.value = newDate;
+			}
             
             function DateAdd(startDate, numDays, numMonths, numYears){
                 var returnDate = new Date(startDate.getTime());
@@ -174,14 +239,6 @@
   	  return dat;
   }
 
-    function addMonths(months) {
-  	  var d = new Date();
-  	  d = d.addMonths(months);
-  	  var mth = ((d.getMonth()+1)<10)? ("0"+(d.getMonth()+1)) : (d.getMonth()+1);
-  	  var day =  d.getDate() > 9 ? d.getDate() : ("0" + d.getDate());
-  	  var newD = d.getFullYear() + "-" + mth + "-" + day;
-      document.getElementById("xml_appointment_date").value = newD;
-    }
  
 	function validate(form){
 		validate(form, false);
@@ -220,7 +277,7 @@
 
     </head>
     
-    <body>
+    <body onLoad="addQuickPick()">
         <html:form action="/tickler/EditTickler">
             <input type="hidden" name="method" value="editTickler"/>
             <input type="hidden" name="ticklerNo" value="<%=ticklerNo%>"/>
@@ -384,16 +441,10 @@ String strDate = dateformat.format(t.getServiceDate());
                 </tr>
                 <tr>
                     <td colspan="2"></td>
-                    <td>+&nbsp;<a href="#" onClick="addMonths(2)">2-<bean:message key="global.months"/></a>&nbsp
-                    <a href="#" onClick="addMonths(3)">3-<bean:message key="global.months"/></a>&nbsp
-                    <a href="#" onClick="addMonths(4)">4-<bean:message key="global.months"/></a>&nbsp
-                    <a href="#" onClick="addMonths(6)">6-<bean:message key="global.months"/></a>&nbsp
-                    <a href="#" onClick="addMonths(8)">8-<bean:message key="global.months"/></a>&nbsp
-                    <a href="#" onClick="addMonths(12)"><bean:message key="tickler.ticklerEdit.add1year"/></a>&nbsp;
-                    <a href="#" onClick="addMonths(24)">2-<bean:message key="global.years"/></a>&nbsp
-                    <a href="#" onClick="addMonths(36)">3-<bean:message key="global.years"/></a>&nbsp
-                    <a href="#" onClick="addMonths(60)">5-<bean:message key="global.years"/></a>&nbsp
-                    <a href="#" onClick="addMonths(120)">10-<bean:message key="global.years"/></a>&nbsp
+                    <td>
+                        <div id="quickPickDateOptions" class="grid" >
+                            <!-- Quick pick will be added here using JavaScript -->
+                        </div>
                     </td>
                 </tr>                 
                 <tr>
