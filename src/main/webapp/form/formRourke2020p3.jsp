@@ -231,7 +231,10 @@
 			<td colspan="3"><textarea id="p3_pConcern15m" name="p3_pConcern15m" class="wide limit-rows" cols="10" rows="5" maxlength="400"><%= props.getProperty("p3_pConcern15m", "") %></textarea></td>
 		</tr>
 		<tr id="nutritionp3" align="center">
-			<td class="column"><a><bean:message key="oscarEncounter.formRourke1.msgNutrition"/>*:</a></td>
+			<td class="column"><a><bean:message key="oscarEncounter.formRourke1.msgNutrition"/>*</a><br/>
+				<img height="15" width="20" src="graphics/Checkmark_Lwhite.gif">
+				<bean:message key="oscarEncounter.formRourke2020.msgNutritionLegend" />
+			</td>
 			<td colspan="3">
 				<table id="ntp31" cellpadding="0" cellspacing="0" width="100%">				
 					<tr>

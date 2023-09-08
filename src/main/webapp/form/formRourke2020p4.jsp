@@ -252,7 +252,10 @@
 			
 		</tr>
 		<tr align="center" id="nutritionp4">
-					<td class="column"><a><bean:message key="oscarEncounter.formRourke1.msgNutrition"/>*</a></td>		
+			<td class="column"><a><bean:message key="oscarEncounter.formRourke1.msgNutrition"/>*</a><br/>
+				<img height="15" width="20" src="graphics/Checkmark_Lwhite.gif">
+				<bean:message key="oscarEncounter.formRourke2020.msgNutritionLegend" />
+			</td>
 			<td colspan="3">			
 				<table id="ntp41" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
