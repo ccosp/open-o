@@ -176,27 +176,19 @@
                 window.open(theURL,winName,features);
             }
 
-            // Add 15 links for days, 15 links for weeks, 15 links for months and 5 links for years
+            // Add options 1 to 10 for days, weeks, months, and years
 			function addQuickPick() {
                 const quickPickDiv = document.getElementById('quickPickDateOptions');
-				for (let i = 1; i <= 35; i++) {
+				for (let i = 0; i < 40; i++) {
 					const linkButton = document.createElement('a');
-					linkButton.href = '#';
-					if (i <= 10) {
-						linkButton.innerText = i + "d";
-						linkButton.onclick = function() { addTime(i, "days"); }
-					} else if (i > 10 && i <= 20) {
-						linkButton.innerText = i - 10 + "w";
-						linkButton.onclick = function() { addTime((i - 10) * 7, "days"); }
-					} else if (i > 20 && i <= 30) {
-						linkButton.innerText = i - 20 + "m";
-						linkButton.onclick = function() { addTime(i - 20, "months"); }
-					} else if (i > 30 && i <= 35) {
-						linkButton.innerText = i - 30 + "y";
-						linkButton.onclick = function() { addTime((i - 30) * 12, "months"); }
-					}
-                    
-					quickPickDiv.appendChild(linkButton);
+					linkButton.href = '#';                    					
+					switch (Math.floor(i/10)){
+                        case 0: linkButton.innerText = (i%10)+1 + "d";linkButton.onclick = function() { addTime((i%10)+1, "days"); }; break;//1 through 10 days
+						case 1: linkButton.innerText = (i%10)+1 + "w";linkButton.onclick = function() { addTime(((i%10)+1) * 7, "days"); }; break;//1 through 10 weeks
+						case 2: linkButton.innerText = (i%10)+1 + "m";linkButton.onclick = function() { addTime((i%10)+1, "months"); }; break;//1 through 10 months
+						case 3: linkButton.innerText = (i%10)+1 + "y";linkButton.onclick = function() { addTime(((i%10)+1) * 12, "months"); }; break;//1 through 10 years
+                    }
+                    quickPickDiv.appendChild(linkButton);
 				}
 			}
 
