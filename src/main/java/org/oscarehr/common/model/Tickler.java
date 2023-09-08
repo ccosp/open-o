@@ -118,7 +118,7 @@ public class Tickler extends AbstractModel<Integer> {
 	
 	@OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="tickler_no", referencedColumnName="tickler_no")
-	@OrderBy("updateDate DESC")
+	@OrderBy("updateDate ASC")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private Set<TicklerComment> comments = new HashSet<TicklerComment>();
 	

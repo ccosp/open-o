@@ -15,9 +15,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,13 +33,17 @@ import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.Clinic;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 
+import org.oscarehr.hospitalReportManager.HRMPDFCreator;
+import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.managers.FaxManager;
+import org.oscarehr.managers.FormsManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -46,8 +52,10 @@ import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
+import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -66,7 +74,11 @@ public class EctConsultationFormFaxAction extends Action {
 	private static FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
 	private static FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 	private static ClinicDAO clinicDAO = SpringUtils.getBean(ClinicDAO.class);
-    
+
+	private ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
+
+	private FormsManager formsManager = SpringUtils.getBean(FormsManager.class);
+
 	public EctConsultationFormFaxAction() {
 	}
 	    
@@ -131,9 +143,12 @@ public class EctConsultationFormFaxAction extends Action {
 		} else {
 			labs = consultLabs.populateLabResultsDataConsultResponse(loggedInInfo, demoNo, reqId, CommonLabResultData.ATTACHED);
 		}
-		
+
+		List<EctFormData.PatientForm> forms = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(reqId), Integer.parseInt(demoNo));
+
 		String error = "";
 		Exception exception = null;
+
 		try {
 
 			if (consultResponsePage==null) { //fax for consultation request
@@ -182,20 +197,66 @@ public class EctConsultationFormFaxAction extends Action {
 
 			// Iterating over requested labs.
 			for (int i = 0; labs != null && i < labs.size(); i++) {
-				// Storing the lab in PDF format inside a byte stream.
-				bos = new ByteOutputStream();
-				request.setAttribute("segmentID", labs.get(i).segmentID);
-				LabPDFCreator lpdfc = new LabPDFCreator(request, bos);
-				lpdfc.printPdf();
+				File tempLabPDF = File.createTempFile("lab" + labs.get(i).segmentID, "pdf");
 
-				// Transferring PDF to an input stream to be concatenated with
-				// the rest of the documents.
+				// Storing the lab in PDF format inside a byte stream.
+				try (
+					FileOutputStream fileOutputStream = new FileOutputStream(tempLabPDF);
+					ByteOutputStream byteOutputStream = new ByteOutputStream();
+				) {
+					request.setAttribute("segmentID", labs.get(i).segmentID);
+					LabPDFCreator labPDFCreator = new LabPDFCreator(request, fileOutputStream);
+					labPDFCreator.printPdf();
+					labPDFCreator.addEmbeddedDocuments(tempLabPDF, byteOutputStream);
+
+					// Transferring PDF to an input stream to be concatenated with
+					// the rest of the documents.
+					buffer = byteOutputStream.getBytes();
+					bis = new ByteInputStream(buffer, byteOutputStream.getCount());
+					streams.add(bis);
+					pdfDocumentList.add(bis);
+				}
+				tempLabPDF.delete();
+			}
+
+			// convert forms to PDF
+			for(EctFormData.PatientForm  formItem : forms) {
+				FormTransportContainer formTransportContainer = new FormTransportContainer(
+						response, request, mapping.findForward("attachform").getPath()
+						+ "?method=fetch&formname="
+						+ formItem.getFormName()
+						+ "&demographic_no="
+						+ formItem.getDemoNo()
+						+ "&formId="
+						+ formItem.getFormId());
+				formTransportContainer.setDemographicNo( demoNo );
+				formTransportContainer.setProviderNo( provider_no );
+				formTransportContainer.setSubject( formItem.getFormName() + " Form ID " + formItem.getFormId() );
+				formTransportContainer.setFormName( formItem.getFormName() );
+				formTransportContainer.setRealPath( getServlet().getServletContext().getRealPath( File.separator ) );
+				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.FORM, formTransportContainer);
+				pdfDocumentList.add(Files.newInputStream(attachedForm));
+			}
+
+			// attached eForms
+			List<EFormData> eForms = consultationManager.getAttachedEForms(reqId);
+
+			for(EFormData eFormItem : eForms) {
+				Path attachedForm = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.EFORM, eFormItem.getId(), eFormItem.getDemographicId());
+				pdfDocumentList.add(Files.newInputStream(attachedForm));
+			}
+
+			// attached HRMs
+			ArrayList<HashMap<String,? extends Object>> attachedHRMDocuments = consultationManager.getAttachedHRMDocuments(loggedInInfo, demoNo, reqId);
+			for (HashMap<String,? extends Object> attachedHRMDocument : attachedHRMDocuments) {
+				bos = new ByteOutputStream();
+				HRMPDFCreator hrmPdf = new HRMPDFCreator(bos, (Integer)attachedHRMDocument.get("id"), loggedInInfo);
+				hrmPdf.printPdf();
 				buffer = bos.getBytes();
 				bis = new ByteInputStream(buffer, bos.getCount());
 				bos.close();
 				streams.add(bis);
 				pdfDocumentList.add(bis);
-
 			}
 			
 			if (pdfDocumentList.size() > 0) {
@@ -304,8 +365,8 @@ public class EctConsultationFormFaxAction extends Action {
 		} catch (IOException ioe) {
 			error = "IOException";
 			exception = ioe;
-		} catch (com.lowagie.text.DocumentException e) {
-			logger.error("error", e);
+		} catch (ServletException e) {
+			throw new RuntimeException(e);
 		} finally {
 			// Cleaning up InputStreams created for concatenation.
 			for (InputStream is : streams) {

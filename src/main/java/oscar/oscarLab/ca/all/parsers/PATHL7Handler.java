@@ -71,7 +71,7 @@ public class PATHL7Handler implements MessageHandler {
 
     private static List<String> labDocuments = Arrays.asList("BCCACSP", "BCCASMP", "BLOODBANKT",
             "CELLPATH", "CELLPATHR", "DIAG IMAGE", "MICRO3T",
-            "MICROGCMT", "MICROGRT", "MICROBCT", "TRANSCRIP", "NOTIF", "CYTO","TRANSPDF");
+            "MICROGCMT", "MICROGRT", "MICROBCT", "TRANSCRIP", "NOTIF", "CYTO");
 
     public static final String VIHARTF = "CELLPATHR";
 

@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
+ * Copyright (c) 2015-2019. The Pharmacists Clinic, Faculty of Pharmaceutical Sciences, University of British Columbia. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
+ * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,27 +16,27 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * This software was written for the
- * Department of Family Medicine
- * McMaster University
- * Hamilton
- * Ontario, Canada
+ * The Pharmacists Clinic
+ * Faculty of Pharmaceutical Sciences
+ * University of British Columbia
+ * Vancouver, British Columbia, Canada
  */
-
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.util.LoggedInInfo;
 
-public class ConsultationAttachEForms extends ConsultationAttach {
+public class ConsultationAttachForms extends ConsultationAttach {
 
-    private static final String DOCTYPE = ConsultDocs.DOCTYPE_EFORM;
+    private static final String DOCTYPE = ConsultDocs.DOCTYPE_FORM;
 
-    public ConsultationAttachEForms(String provNo, String demo, String req, String[] d) {
+    public ConsultationAttachForms(String provNo, String demo, String req, String[] d) {
         super(provNo, demo, req, d);
     }
 
     public void attach(LoggedInInfo loggedInInfo) {
         super.attach(loggedInInfo, DOCTYPE);
     }
+
 }
