@@ -96,9 +96,13 @@ if(!authed) {
 		}
 
 		.preview-filler {
-			border: 2px solid lightgray;
+			border: 2px solid black;
 			border-radius: 7px;
 			padding: 10px;
+		}
+		
+		.preview-pane {
+			background-color: lightgray;			
 		}
 
 		.flex {
@@ -198,7 +202,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allDocuments.size() > 20 ? 'flex' : ''}">
 								<input id="selectAllDocuments" type="checkbox" onclick="toggleSelectAll(this, 'document_');" value="document_check" title="Select/un-select all documents."/>
 								<label for="selectAllDocuments">Select all</label>
-								<button class="show-all-button ${allDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show All Documents" onclick="showAll(this, 'doc')">Show All Documents</button>
+								<button class="show-all-button ${allDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allDocuments.size() - 20} More Documents" onclick="showAll(this, 'doc')">Show ${allDocuments.size() - 20} More Documents</button>
 							</li>
 							<c:forEach items="${ allDocuments }" var="document" varStatus="loop">
 								<li class="doc ${loop.index > 19 ? 'hide' : ''}">
@@ -222,7 +226,7 @@ if(!authed) {
 								<li class="selectAllHeading ${allLabs.size() > 20 ? 'flex' : ''}">
 									<input id="selectAllLabs" type="checkbox" onclick="toggleSelectAll(this, 'lab_');" value="lab_check" title="Select/un-select all documents."/>
 									<label for="selectAllLabs">Select all</label>
-									<button class="show-all-button ${allLabs.size() > 20 ? '' : 'hide'}" type="button" title="Show All Labs" onclick="showAll(this, 'lab')">Show All Labs</button>
+									<button class="show-all-button ${allLabs.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allLabs.size() - 20} More Labs" onclick="showAll(this, 'lab')">Show ${allLabs.size() - 20} More Labs</button>
 								</li>
 								<c:forEach items="${ allLabs }" var="lab" varStatus="loop">
 									<li class="lab ${loop.index > 19 ? 'hide' : ''}">
@@ -246,7 +250,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allForms.size() > 20 ? 'flex' : ''}">
 								<input id="selectAllForms" type="checkbox" onclick="toggleSelectAll(this, 'form_');" value="form_check" title="Select/un-select all forms."/>
 								<label for="selectAllForms">Select all</label>
-								<button class="show-all-button ${allForms.size() > 20 ? '' : 'hide'}" type="button" title="Show All Forms" onclick="showAll(this, 'form')">Show All Forms</button>
+								<button class="show-all-button ${allForms.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allForms.size() - 20} More Forms" onclick="showAll(this, 'form')">Show ${allForms.size() - 20} More Forms</button>
 							</li>
 							<c:forEach items="${ allForms }" var="form" varStatus="loop">
 								<li class="form ${loop.index > 19 ? 'hide' : ''}">
@@ -269,7 +273,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allEForms.size() > 20 ? 'flex' : ''}">
 								<input id="selectAllEForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
 								<label for="selectAllEForms">Select all</label>
-								<button class="show-all-button ${allEForms.size() > 20 ? '' : 'hide'}" type="button" title="Show All eForms" onclick="showAll(this, 'eForm')">Show All eForms</button>
+								<button class="show-all-button ${allEForms.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allEForms.size() - 20} More eForms" onclick="showAll(this, 'eForm')">Show ${allEForms.size() - 20} More eForms</button>
 							</li>
 							<c:forEach items="${ allEForms }" var="eForm" varStatus="loop">
 								<li class="eForm ${loop.index > 19 ? 'hide' : ''}">
@@ -292,7 +296,7 @@ if(!authed) {
 							<li class="selectAllHeading ${allHRMDocuments.size() > 20 ? 'flex' : ''}">
 								<input id="selectAllHRMS" type="checkbox" onclick="toggleSelectAll(this, 'hrm_');" value="hrm_check" title="Select/un-select all HRM documents."/>
 								<label for="selectAllHRMS">Select all</label>
-								<button class="show-all-button ${allHRMDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show All HRM" onclick="showAll(this, 'hrm')">Show All HRM</button>
+								<button class="show-all-button ${allHRMDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allHRMDocuments.size() - 20} More HRM" onclick="showAll(this, 'hrm')">Show ${allHRMDocuments.size() - 20} More HRM</button>
 							</li>
 							<c:forEach items="${ allHRMDocuments }" var="hrm" varStatus="loop">
 								<li class="hrm ${loop.index > 19 ? 'hide' : ''}">
@@ -309,7 +313,7 @@ if(!authed) {
 			</table>
 		</div>
 
-		<div id="pdfPreview">
+		<div id="pdfPreview" class="preview-pane">
 			<object id="pdfObject" class="hide" type="application/pdf" data="">
 			</object>
 			<div id="preview-filler" class="preview-filler">
