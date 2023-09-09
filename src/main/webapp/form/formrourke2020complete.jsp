@@ -346,16 +346,17 @@ function isNumber(ss) {
 }
 
 function wtEnglish2Metric(obj) {
-//if(isNumber(document.forms[0].c_ppWt) ) {
-//	weight = document.forms[0].c_ppWt.value;
-if(isNumber(obj) ) {
-	weight = obj.value;
-	weightM = Math.round(weight * 10 * 0.4536) / 10 ;
-	if(confirm("Are you sure you want to change " + weight + " pounds to " + weightM +"kg?") ) {
-		//document.forms[0].c_ppWt.value = weightM;
-		obj.value = weightM;
-	}
-}
+    if (obj.value < 1) {
+        alert("You must enter the weight in pounds format for conversion to kilograms.");
+    } else {
+        if(isNumber(obj) ) {
+            weight = obj.value;
+            weightM = Math.round(weight * 10 * 0.4536) / 10 ;
+            if(confirm("Are you sure you want to change " + weight + " pounds to " + weightM +"kg?") ) {
+                obj.value = weightM;
+            }
+        }
+    }
 }
 
 function htEnglish2Metric(obj) {
@@ -375,7 +376,7 @@ height = obj.value;
             obj.value = height;
         }
     } else {
-        alert("You must enter height in feet'inches format for conversion")
+        alert("You must enter height in feet'inches format for conversion.\nPlease enter your height in feet'inches format (e.g., 5'8\")");
     }
 }
 
