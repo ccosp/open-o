@@ -143,10 +143,16 @@
 	</style>
 
 	<script type="text/javascript">
-		let pdfCache = [];
+		if (typeof pdfCache == 'undefined') {
+			var pdfCache = []; //because this is a global variable, only redeclare it if it doesn't exist. This is relevant when opening the attachment window multiple times in sequence
+		}
+
+		if (typeof dateLabels == 'undefined'){
+			var dateLabels; //because this is a global variable, only redeclare it if it doesn't exist. This is relevant when opening the attachment window multiple times in sequence
+		}
 
 		// Change the date format of all labels with class "lab-date" to "YYYY-MM-DD"
-		const dateLabels = document.querySelectorAll(".lab-date");
+		dateLabels = document.querySelectorAll(".lab-date");
         dateLabels.forEach(label => {
             const originalText = label.textContent;
             const dateMatch = originalText.match(/[A-Z][a-z]{2}\s[A-Z][a-z]{2}\s\d{2}\s\d{2}:\d{2}:\d{2}\sUTC\s\d{4}/)[0];
@@ -273,7 +279,7 @@
 									<c:set var="labId" value=",${lab.segmentID}Lab" />
 									<li class="lab ${loop.index > 9 ? 'hide' : ''}">
 										<c:if test="${fn:contains(latestLabVersionIds, labId)}">
-											<input class="lab_check" type="checkbox" disabled style="opacity:0"/> <!--included so that the description of a group of labs is spaced nicely but we want it to be invisible-->
+											<input type="checkbox" disabled style="opacity:0"/> <!--included so that the description of a group of labs is spaced nicely but we want it to be invisible-->
 											<label title="${ lab.description }" ><c:out value="${ lab.description }" /></label><br/>
 										</c:if>
 										<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
