@@ -197,19 +197,26 @@ public class EctConsultationFormFaxAction extends Action {
 
 			// Iterating over requested labs.
 			for (int i = 0; labs != null && i < labs.size(); i++) {
-				// Storing the lab in PDF format inside a byte stream.
-				bos = new ByteOutputStream();
-				request.setAttribute("segmentID", labs.get(i).segmentID);
-				LabPDFCreator lpdfc = new LabPDFCreator(request, bos);
-				lpdfc.printPdf();
+				File tempLabPDF = File.createTempFile("lab" + labs.get(i).segmentID, "pdf");
 
-				// Transferring PDF to an input stream to be concatenated with
-				// the rest of the documents.
-				buffer = bos.getBytes();
-				bis = new ByteInputStream(buffer, bos.getCount());
-				bos.close();
-				streams.add(bis);
-				pdfDocumentList.add(bis);
+				// Storing the lab in PDF format inside a byte stream.
+				try (
+					FileOutputStream fileOutputStream = new FileOutputStream(tempLabPDF);
+					ByteOutputStream byteOutputStream = new ByteOutputStream();
+				) {
+					request.setAttribute("segmentID", labs.get(i).segmentID);
+					LabPDFCreator labPDFCreator = new LabPDFCreator(request, fileOutputStream);
+					labPDFCreator.printPdf();
+					labPDFCreator.addEmbeddedDocuments(tempLabPDF, byteOutputStream);
+
+					// Transferring PDF to an input stream to be concatenated with
+					// the rest of the documents.
+					buffer = byteOutputStream.getBytes();
+					bis = new ByteInputStream(buffer, byteOutputStream.getCount());
+					streams.add(bis);
+					pdfDocumentList.add(bis);
+				}
+				tempLabPDF.delete();
 			}
 
 			// convert forms to PDF
