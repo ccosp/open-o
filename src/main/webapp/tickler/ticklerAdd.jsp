@@ -222,6 +222,22 @@
 				document.ADDAPPT.keyword.select();
 				addQuickPick();
 			}
+			
+			function initResize(){
+				window.addEventListener("resize", resizeTextMessage);
+				resizeTextMessage();
+			}
+
+			/****
+			*This function resizes the messageBox so that the overall browser window is filled.
+			****/
+			function resizeTextMessage() {				
+				const messageBox = document.getElementById("ticklerMessage");
+				//this formula checks for empty space at the bottom, less the 20 px that corresponds to the margin-bottom
+				const newHeight = messageBox.offsetHeight + window.innerHeight - document.body.clientHeight-20; 
+				//only resize if the new height will be greater than 50 pixels, the original default height.
+				if (newHeight > 50) messageBox.style.height = newHeight +"px";
+			}
 
 			function validate(form) {
 				validate(form, false);
@@ -338,7 +354,7 @@
 		</style>
 	</head>
 
-	<body onLoad="setfocus()">
+	<body onLoad="setfocus();initResize()">
 	<table>
 		<tr style="background-color: black">
 			<td class="table-condensed"
@@ -593,7 +609,7 @@
 				</tr>
 				<tr>
 					<td class="tickler-label"><bean:message key="tickler.ticklerAdd.formReminder"/>:</td>
-					<td><textarea name="ticklerMessage" class="form-control"></textarea></td>
+					<td><textarea name="ticklerMessage" id="ticklerMessage" class="form-control"></textarea></td>
 				</tr>
 				<INPUT TYPE="hidden" name="user_no" VALUE="<%=user_no%>">
 				<input type="hidden" name="writeToEncounter" value="<%=writeToEncounter%>"/>
