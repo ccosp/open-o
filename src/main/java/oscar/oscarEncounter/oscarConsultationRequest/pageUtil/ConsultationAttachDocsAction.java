@@ -26,6 +26,7 @@
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -193,12 +194,20 @@ public class ConsultationAttachDocsAction extends DispatchAction {
 
         String segmentID = request.getParameter("segmentID");
         request.setAttribute("segmentID", segmentID);
-        try (ByteOutputStream byteOutputStream = new ByteOutputStream()) {
-            LabPDFCreator labPDFCreator = new LabPDFCreator(request, byteOutputStream);
-            labPDFCreator.printPdf();
-            generateResponse(response, getBase64(byteOutputStream.getBytes()));
+        try {
+            File tempLabPDF = File.createTempFile("lab" + segmentID, "pdf");
+            try (
+                FileOutputStream fileOutputStream = new FileOutputStream(tempLabPDF);
+                ByteOutputStream byteOutputStream = new ByteOutputStream();
+            ) {
+                LabPDFCreator labPDFCreator = new LabPDFCreator(request, fileOutputStream);
+                labPDFCreator.printPdf();
+                labPDFCreator.addEmbeddedDocuments(tempLabPDF, byteOutputStream);
+                generateResponse(response, getBase64(byteOutputStream.getBytes()));
+            }
+            tempLabPDF.delete();
         } catch (IOException e) {
-            logger.error("An error occurred while closing the output stream: " + e.getMessage(), e);
+            logger.error("An error occurred: " + e.getMessage(), e);
         }
     }
 
