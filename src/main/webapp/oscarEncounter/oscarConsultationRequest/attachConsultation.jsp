@@ -67,7 +67,7 @@
 					String discipline = labResultData.getDiscipline().trim();
 					String labTitle = !label.equals("") ? label.substring(0, Math.min(label.length(), 45)) : discipline.substring(0, Math.min(discipline.length(), 45));
 					labResultData.setDescription(labTitle);
-					labResultData.setLabel("...Version" + (i+1));
+					labResultData.setLabel("...Version " + (i+1));
 					break;
 				}
 			}
@@ -273,6 +273,7 @@
 									<c:set var="labId" value=",${lab.segmentID}Lab" />
 									<li class="lab ${loop.index > 9 ? 'hide' : ''}">
 										<c:if test="${fn:contains(latestLabVersionIds, labId)}">
+											<input class="lab_check" type="checkbox" disabled style="opacity:0"/> <!--included so that the description of a group of labs is spaced nicely but we want it to be invisible-->
 											<label title="${ lab.description }" ><c:out value="${ lab.description }" /></label><br/>
 										</c:if>
 										<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
