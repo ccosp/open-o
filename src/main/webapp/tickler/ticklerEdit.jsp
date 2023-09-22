@@ -428,8 +428,7 @@
 
                 </tr>
                 <tr>
-                    <td colspan="2" style="border: none;"></td>
-                    <td>
+                    <td colspan="2" style="border: none;">
                         <!-- Today button placed before the grid -->
                         <div id="todayButton" class="today-button" onclick="addTime(0, 'days')">Today</div>
                         <div id="quickPickDateOptions" class="grid" >
