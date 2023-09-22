@@ -65,7 +65,7 @@
 					labResultData = labResultData1;
 					String label = labResultData.getLabel().trim();
 					String discipline = labResultData.getDiscipline().trim();
-					String labTitle = !label.equals("") ? label.substring(0, Math.min(label.length(), 45)) : discipline.substring(0, Math.min(discipline.length(), 45));
+					String labTitle = !label.equals("") ? label.substring(0, Math.min(label.length(), 40)) : discipline.substring(0, Math.min(discipline.length(), 40));
 					labResultData.setDescription(labTitle);
 					labResultData.setLabel("...Version " + (i+1));
 					break;
