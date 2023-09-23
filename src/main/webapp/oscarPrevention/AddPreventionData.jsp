@@ -221,7 +221,11 @@ if(!authed) {
          providerFoundInActiveList = true;
       }
   }
-  if (!providerFoundInActiveList){
+
+  //the below block is skipped if provider == -1 because we do NOT need to add this provider because -1 is used to mean "other", that is, a person outside the scope of this OSCAR
+  //the issue that happens if -1 is added is that there usually is a system provider with -1 as the provider_no, resulting in this system account appearing to be the provider for a particular prevention
+  //TODO: writer recommends that eventually -1 is not set as the provider_no
+  if (!providerFoundInActiveList && !"-1".equals(provider)){ 
       for (int i=0;i < allProviders.size() && !providerFoundInActiveList; i++){
          Map<String,String> h = allProviders.get(i);
          if (h.get("providerNo").equals(provider)){
