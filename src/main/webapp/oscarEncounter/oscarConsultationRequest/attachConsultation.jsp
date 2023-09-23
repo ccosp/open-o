@@ -63,9 +63,9 @@
 			for (LabResultData labResultData1 : allLabs) {
 				if (matchingLabIds[i].equals(labResultData1.getSegmentID())) {
 					labResultData = labResultData1;
-					String label = labResultData.getLabel().trim();
-					String discipline = labResultData.getDiscipline().trim();
-					String labTitle = !label.equals("") ? label.substring(0, Math.min(label.length(), 40)) : discipline.substring(0, Math.min(discipline.length(), 40));
+					String label = labResultData.getLabel() != null ? labResultData.getLabel() : "";
+					String discipline = labResultData.getDiscipline() != null ? labResultData.getDiscipline() : "";
+					String labTitle = !"".equals(label) ? label.substring(0, Math.min(label.length(), 40)) : discipline.substring(0, Math.min(discipline.length(), 40));
 					labResultData.setDescription(labTitle);
 					labResultData.setLabel("...Version " + (i+1));
 					break;
