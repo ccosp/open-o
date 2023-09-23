@@ -327,41 +327,29 @@ function popPage(pageUrl, pageName) {
 }
 
 
-function isNumber(ss) {
-	var s = ss.value;
-    var i;
-    for (i = 0; i < s.length; i++){
-        // Check that current character is number.
-        var c = s.charAt(i)
-		if (c == '.') {
-			continue;
-		} else if (((c < "0") || (c > "9"))) {
-                        alert('Invalid '+s+' in field ' + ss.name);
-                        ss.focus();
-                        return false;
-		}
-    }
-    // All characters are numbers.
-    return true;
-}
-
 function wtEnglish2Metric(obj) {
-    if (obj.value < 1) {
-        alert("You must enter the weight in pounds format for conversion to kilograms.");
-    } else {
-        if(isNumber(obj) ) {
-            weight = obj.value;
-            weightM = Math.round(weight * 10 * 0.4536) / 10 ;
-            if(confirm("Are you sure you want to change " + weight + " pounds to " + weightM +"kg?") ) {
-                obj.value = weightM;
-            }
-        }
+	const decimalNumberRegexPattern = /^\d+(\.\d)?$/; //using regex to test for a decimal number is better than something like !isNaN(parseFloat(inputString)) because parseFloat will accept scientific notation (E.g. 1e10 would be considered a valid number)
+    if (obj.value == "") {				
+        alert("You have attempted to convert the value in this field from pounds to kilograms.\r\n\r\nThere is no value though. Please enter a value in pounds (e.g. 7.9) and try again.");
+    } else if(!decimalNumberRegexPattern.test(obj.value)) {		
+        alert("You have attempted to convert the value in this field from pounds to kilograms.\r\n\r\nThe value does not appear to be numeric though. Please enter a value in pounds (e.g. 7.9) and try again.");
+    } else {        
+		let weight = obj.value;
+		let weightM = Math.round(weight * 10 * 0.4536) / 10 ;
+		if(confirm("You have triggered an tool that converts values from pounds to kilograms automatically.\r\n\r\nAre you sure you want to replace " + weight + " with " + weightM +"?") ) {
+			obj.value = weightM;
+		}        
     }
 }
 
-function htEnglish2Metric(obj) {
-height = obj.value;
-    if(height.length > 1 && height.indexOf("'") > 0 ) {
+function htEnglish2Metric(obj) {	
+	const imperialRegexPattern = /^\d+'(\d+")?$/;
+	if (obj.value == ""){		
+		alert("You have attempted to convert the value in this field from imperial to metric.\r\n\r\nThere is no value though. Please enter a value in feet (e.g. 5'8\") and try again.");
+	} else if(!imperialRegexPattern.test(obj.value)) {		
+		alert("You have attempted to convert the value in this field from imperial to metric.\r\n\r\nThe value is not in exactly this format though #'#\" (e.g. 5'8\"). Please try again.");
+	} else {
+		let height = obj.value;	
         feet = height.substring(0, height.indexOf("'"));
         inch = height.substring(height.indexOf("'"));
         if(inch.length == 1) {
@@ -369,15 +357,12 @@ height = obj.value;
         } else {
             inch = inch.charAt(inch.length-1)=='"' ? inch.substring(0, inch.length-1) : inch;
             inch = inch.substring(1);
+        }        
+        let heightM = Math.round((feet * 30.48 + inch * 2.54) * 10) / 10 ;
+        if(confirm("You have triggered an tool that converts values from imperial to metric automatically.\r\n\r\nAre you sure you want to replace " + height + " with " + heightM +"?") ) {
+            obj.value = heightM;
         }
-        
-        height = Math.round((feet * 30.48 + inch * 2.54) * 10) / 10 ;
-        if(confirm("Are you sure you want to change " + feet + " feet " + inch + " inch(es) to " + height +"cm?") ) {
-            obj.value = height;
-        }
-    } else {
-        alert("You must enter height in feet'inches format for conversion.\nPlease enter your height in feet'inches format (e.g., 5'8\")");
-    }
+    } 
 }
 
 //Remove date from textbox

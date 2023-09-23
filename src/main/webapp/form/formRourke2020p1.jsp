@@ -246,17 +246,17 @@
 			<td colspan="3">
 				<img src="../images/cal.gif" id="p1_date1w_cal" style="vertical-align: middle;">
 				<input readonly type="text" id="p1_date1w" name="p1_date1w" size="10" ondblclick="resetDate(this)" value="<%=UtilMisc.htmlEscape(props.getProperty("p1_date1w", ""))%>" />
-				<img src="../images/close.png" id="p1_date1w_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p1_date1w')">
+				<img src="../images/clear.png" id="p1_date1w_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p1_date1w')">
 			</td>
 			<td colspan="3">
 				<img src="../images/cal.gif" id="p1_date2w_cal" style="vertical-align: middle;">
 				<input readonly type="text" id="p1_date2w" name="p1_date2w" size="10" ondblclick="resetDate(this)" value="<%=UtilMisc.htmlEscape(props.getProperty("p1_date2w", ""))%>" />
-				<img src="../images/close.png" id="1_date2w_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p1_date2w')">
+				<img src="../images/clear.png" id="1_date2w_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p1_date2w')">
 			</td>
 			<td colspan="3">
 				<img src="../images/cal.gif" id="p1_date1m_cal" style="vertical-align: middle;">
 				<input readonly type="text" id="p1_date1m" name="p1_date1m" size="10" ondblclick="resetDate(this)" value="<%=UtilMisc.htmlEscape(props.getProperty("p1_date1m", ""))%>" />
-				<img src="../images/close.png" id="p1_date1m_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p1_date1m')">
+				<img src="../images/clear.png" id="p1_date1m_delete" style="vertical-align: middle; cursor: pointer;" onClick="resetDateUsingID('p1_date1m')">
 			</td>
 		</tr>
 		<tr align="center" id="growthAp1">
