@@ -282,12 +282,14 @@
 											<input type="checkbox" disabled style="opacity:0"/> <!--included so that the description of a group of labs is spaced nicely but we want it to be invisible-->
 											<label title="${ lab.description }" ><c:out value="${ lab.description }" /></label><br/>
 										</c:if>
-										<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
 										<c:choose>
 											<c:when test="${fn:startsWith(labName, '...Version')}">
-												<em><label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObj})</label></label></em>
+												<c:set var="versionNumber" value="${fn:replace(labName, '...Version ', '')}" />
+												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="v${ versionNumber } ${ lab.description }" />
+												<em><label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ lab.description }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObj})</label></label></em>
 											</c:when>
 											<c:otherwise>
+												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
 												<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">${lab.dateObj}</label></label>
 											</c:otherwise>
 										</c:choose>

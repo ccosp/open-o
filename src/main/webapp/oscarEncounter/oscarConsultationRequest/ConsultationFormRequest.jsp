@@ -45,6 +45,7 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
 <!-- end -->
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
@@ -84,6 +85,7 @@ if(!authed) {
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
 <%@ page import="oscar.eform.EFormUtil" %>
+<%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
@@ -198,8 +200,28 @@ if(!authed) {
 		List<EFormData> attachedEForms = consultationManager.getAttachedEForms(requestId);
 		ArrayList<HashMap<String,? extends Object>> attachedHRMDocuments = consultationManager.getAttachedHRMDocuments(loggedInInfo, demo, requestId);
 
+		Collections.sort(attachedLabs);
+		List<LabResultData> attachedLabsSortedByVersions = new ArrayList<>();
+		for (LabResultData attachedLab1 : attachedLabs) {
+			if (attachedLabsSortedByVersions.contains(attachedLab1)) { continue; }
+			String[] matchingLabIds = Hl7textResultsData.getMatchingLabs(attachedLab1.getSegmentID()).split(",");
+			if (matchingLabIds.length == 1) {
+				attachedLabsSortedByVersions.add(attachedLab1);
+				continue;
+			}
+			for (int i = matchingLabIds.length - 1; i >= 0; i--) {
+				for (LabResultData attachedLab2 : attachedLabs) {
+					if (!attachedLab2.getSegmentID().equals(matchingLabIds[i])) { continue; }
+					String labTitle = "v" + (i+1);
+					attachedLab2.setDescription(labTitle);
+					attachedLabsSortedByVersions.add(attachedLab2);
+					break;
+				}
+			}
+		}
+
         pageContext.setAttribute("attachedDocuments", attachedDocuments);
-        pageContext.setAttribute("attachedLabs", attachedLabs);
+        pageContext.setAttribute("attachedLabs", attachedLabsSortedByVersions);
 		pageContext.setAttribute("attachedForms", attachedForms);
 		pageContext.setAttribute("attachedEForms", attachedEForms);
 		pageContext.setAttribute("attachedHRMDocuments", attachedHRMDocuments);
@@ -1616,8 +1638,8 @@ function updateFaxButton() {
 								<c:forEach items="${ attachedLabs }" var="attachedLab">
 									<tr id="entry_labNo${ attachedLab.segmentID }">
 										<td> 
-											<c:out value="${ attachedLab.discipline }" />
-											<c:out value="${ attachedLab.dateTime }" />
+											<c:set var="labName" value="${ fn:trim(attachedLab.label) != '' ? attachedLab.label : attachedLab.discipline}" />
+											<c:out value="${attachedLab.description} ${ labName }" />
 											<input name="labNo" value="${ attachedLab.segmentID }" id="delegate_labNo${ attachedLab.segmentID }" class="delegateAttachment" type="hidden">
 										</td>
 									</tr>
