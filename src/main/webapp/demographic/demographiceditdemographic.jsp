@@ -246,7 +246,9 @@ if(!authed) {
 
 
 <%@page import="org.oscarehr.util.SpringUtils"%>
-<%@page import="org.apache.commons.lang.StringUtils"%><html:html locale="true">
+<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@ page import="org.owasp.encoder.Encode" %>
+<html:html locale="true">
 
 <head>
 <title><bean:message
@@ -2248,7 +2250,7 @@ if ( Dead.equals(PatStat) ) {%>
 						
 						if (hasDemoExt || hasHasPrimary || hasEmpStatus) {
 						%>	<div class="demographicSection" id="special">
-								<h3>&nbsp;Special</h3>
+								<h3>&nbspSpecial</h3>
 						<%	for(int k=0; k<propDemoExt.length; k++) {
 						%>		<%=propDemoExt[k]+": <b>" + StringUtils.trimToEmpty(demoExt.get(propDemoExt[k].replace(' ', '_'))) +"</b>"%>
 								&nbsp;<%=((k+1)%4==0&&(k+1)<propDemoExt.length)?"<br>":""%>
@@ -3580,7 +3582,9 @@ if (hasDemoExt) {
 							</tr>
 							<% 	}
 }
-if(oscarProps.getProperty("demographicExtJScript") != null) { out.println(oscarProps.getProperty("demographicExtJScript")); }
+if(oscarProps.getProperty("demographicExtJScript") != null) {
+	out.println(Encode.forJavaScript(oscarProps.getProperty("demographicExtJScript")));
+}
 %>
 
 
