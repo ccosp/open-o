@@ -278,17 +278,20 @@
 									<c:set var="labName" value="${fn:trim(lab.label) != '' ? fn:substring(lab.label, 0, 30) : fn:substring(lab.discipline, 0, 30)}" />
 									<c:set var="labId" value=",${lab.segmentID}Lab" />
 									<li class="lab ${loop.index > 9 ? 'hide' : ''}">
+										<c:set var="description" value="${ lab.description }" />
+										<c:if test="${empty description}"><c:set var="description" value="UNLABELLED" /></c:if>
 										<c:if test="${fn:contains(latestLabVersionIds, labId)}">
 											<input type="checkbox" disabled style="opacity:0"/> <!--included so that the description of a group of labs is spaced nicely but we want it to be invisible-->
-											<label title="${ lab.description }" ><c:out value="${ lab.description }" /></label><br/>
+											<label title="${ description }" ><c:out value="${ description }" /></label><br/>
 										</c:if>
 										<c:choose>
 											<c:when test="${fn:startsWith(labName, '...Version')}">
 												<c:set var="versionNumber" value="${fn:replace(labName, '...Version ', '')}" />
-												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="v${ versionNumber } ${ lab.description }" />
-												<em><label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ lab.description }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObj})</label></label></em>
+												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="v${ versionNumber } ${ description }" />
+												<em><label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ description }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObj})</label></label></em>
 											</c:when>
 											<c:otherwise>
+												<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
 												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
 												<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">${lab.dateObj}</label></label>
 											</c:otherwise>

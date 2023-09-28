@@ -1639,6 +1639,7 @@ function updateFaxButton() {
 									<tr id="entry_labNo${ attachedLab.segmentID }">
 										<td> 
 											<c:set var="labName" value="${ fn:trim(attachedLab.label) != '' ? attachedLab.label : attachedLab.discipline}" />
+											<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
 											<c:out value="${attachedLab.description} ${ labName }" />
 											<input name="labNo" value="${ attachedLab.segmentID }" id="delegate_labNo${ attachedLab.segmentID }" class="delegateAttachment" type="hidden">
 										</td>
