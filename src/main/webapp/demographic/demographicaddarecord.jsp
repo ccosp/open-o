@@ -99,7 +99,7 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <link rel="stylesheet" href="../web.css" />
 <script LANGUAGE="JavaScript">
-    <!--
+
     function start(){
       this.focus();
       this.resizeTo(1000,700);
@@ -342,7 +342,7 @@
        if(oscarVariables.getProperty("demographicExt") != null) {
 	       String [] propDemoExt = oscarVariables.getProperty("demographicExt","").split("\\|");
 	       for(int k=0; k<propDemoExt.length; k++) {
-	    	   demographicExtDao.addKey(proNo,demographic.getDemographicNo(),propDemoExt[k],request.getParameter(propDemoExt[k].replace(' ','_')),"");
+	    	   demographicExtDao.addKey(proNo,demographic.getDemographicNo(),propDemoExt[k].replace(' ','_'), request.getParameter(propDemoExt[k].replace(' ','_')),"");
 	       }
        }
        // customized key

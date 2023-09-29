@@ -120,13 +120,11 @@
   String billingCentre = (props.getProperty("billcenter","")).trim().toUpperCase();
   String defaultCity = prov.equals("ON")&&billingCentre.equals("N") ? "Toronto":"";
 
-  WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-  CountryCodeDao ccDAO =  (CountryCodeDao) ctx.getBean("countryCodeDao");
-
+  CountryCodeDao ccDAO =  SpringUtils.getBean(CountryCodeDao.class);
   List<CountryCode> countryList = ccDAO.getAllCountryCodes();
 
   // Used to retrieve properties from user (i.e. HC_Type & default_sex)
-  UserPropertyDAO userPropertyDAO = (UserPropertyDAO) ctx.getBean("UserPropertyDAO");
+  UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
 
   String HCType = "";
   // Determine if curUser has selected a default HC Type
@@ -216,16 +214,6 @@
 function upCaseCtrl(ctrl) {
 	ctrl.value = ctrl.value.toUpperCase();
 }
-//function showDate(){
-//  var now=new Date();
-//  var year=now.getYear();
-//  var month=now.getMonth()+1;
-//  var date=now.getDate();
-//  //var DateVal=""+year+"-"+month+"-"+date;
-//  document.adddemographic.date_joined_year.value=year;
-//  document.adddemographic.date_joined_month.value=month;
-//  document.adddemographic.date_joined_date.value=date;
-//}
 
 function checkTypeIn() {
   var dob = document.titlesearch.keyword; typeInOK = false;
@@ -605,7 +593,7 @@ function consentClearBtn(radioBtnName)
 
 <%@ include file="zdemographicfulltitlesearch.jsp"%>
 <table width="100%" bgcolor="#CCCCFF">
-<tr><td class="RowTop">
+<tr><td class="RowTop" colspan="4">
     <b><bean:message key="demographic.record"/></b>
     <% if (OscarProperties.getInstance().getBooleanProperty("indivica_hc_read_enabled", "true")) { %>
 		<span style="position: relative; float: right; font-style: italic; background: black; color: white; padding: 4px; font-size: 12px; border-radius: 3px;">
@@ -613,7 +601,7 @@ function consentClearBtn(radioBtnName)
 		</span>
 	<% } %>
 </td></tr>
-<tr><td>
+<tr><td colspan="4">
 <form method="post" id="adddemographic" name="adddemographic" action="demographicaddarecord.jsp" onsubmit="return aSubmit()">
 <input type="hidden" name="fromAppt" value="<%=request.getParameter("fromAppt")%>">
 <input type="hidden" name="originalPage" value="<%=request.getParameter("originalPage")%>">
@@ -665,7 +653,7 @@ function consentClearBtn(radioBtnName)
    String chartNoVal = "";
 
    if (searchMode != null) {
-      if (searchMode.equals("search_name")) {
+      if ("search_name".equals(searchMode)) {
         int commaIdx = keyWord.indexOf(",");
         if (commaIdx == -1) 
 	   lastNameVal = keyWord.trim();
@@ -675,7 +663,7 @@ function consentClearBtn(radioBtnName)
            lastNameVal = keyWord.substring(0,commaIdx).trim();
   	   firstNameVal = keyWord.substring(commaIdx+1).trim();
         }
-   } else if (searchMode.equals("search_chart_no")) {
+   } else if ("search_chart_no".equals(searchMode)) {
 	chartNoVal = keyWord;
    }
   }
@@ -1256,7 +1244,7 @@ function consentClearBtn(radioBtnName)
 					<%=Misc.getShortStr( (prop.getProperty("last_name")+","+prop.getProperty("first_name")),"",nStrShowLen)%></option>
 					<% } %>
 				</select> <script language="Javascript">
-<!--
+
 function changeRefDoc() {
 //alert(document.forms[1].r_doctor.value);
 var refName = document.forms[1].r_doctor.options[document.forms[1].r_doctor.selectedIndex].value;
@@ -1287,7 +1275,7 @@ document.forms[1].r_doctor_ohip.value = refNo;
 				<td align="right" id="rosterStatusLbl" nowrap><b><bean:message
 					key="demographic.demographicaddrecordhtm.formPCNRosterStatus" />: </b></td>
 				<td id="rosterStatus" align="left"><!--input type="text" name="roster_status" onBlur="upCaseCtrl(this)"-->
-				<select id="roster_status"  name="roster_status" style="width: 160">
+				<select id="roster_status"  name="roster_status" style="width: 160px">
 					<option value=""></option>
 					<option value="RO"><bean:message key="demographic.demographicaddrecordhtm.RO-rostered" /></option>
 					<option value="NR"><bean:message key="demographic.demographicaddrecordhtm.NR-notrostered" /></option>
@@ -1330,6 +1318,24 @@ document.forms[1].r_doctor_ohip.value = refNo;
 				<td id="chartNo" align="left"><input type="text" id="chart_no" name="chart_no" value="<%=StringEscapeUtils.escapeHtml(chartNoVal)%>">
 				</td>
 			</tr>
+
+	<tr valign="top">
+		<td id="joinDateLbl" align="right"><b><bean:message
+				key="demographic.demographicaddrecordhtm.formDateJoined" /></b><b>:
+		</b></td>
+		<td id="joinDateCell" align="left"><input type="text" name="date_joined_year"
+		                                          size="4" maxlength="4" value="<%=curYear%>"> <input
+				type="text" name="date_joined_month" size="2" maxlength="2"
+				value="<%=curMonth%>"> <input type="text"
+		                                      name="date_joined_date" size="2" maxlength="2" value="<%=curDay%>">
+		</td>
+		<td id="endDateLbl" align="right"><b><bean:message
+				key="demographic.demographicaddrecordhtm.formEndDate" /></b><b>: </b></td>
+		<td id="endDateCell" align="left"><input type="text" name="end_date_year"
+		                                         size="4" maxlength="4"> <input type="text"
+		                                                                        name="end_date_month" size="2" maxlength="2"> <input
+				type="text" name="end_date_date" size="2" maxlength="2"></td>
+	</tr>
 			
 			<tr valign="top">
                             <td id="phuLbl" align="right"><b><bean:message
@@ -1366,16 +1372,87 @@ document.forms[1].r_doctor_ohip.value = refNo;
 				<td align="right">&nbsp;
 				</td>
 			</tr>
-			
+
+
+
+	<% //"Has Primary Care Physician" & "Employment Status" fields
+		final String hasPrimary = "Has Primary Care Physician";
+		final String empStatus = "Employment Status";
+		boolean hasHasPrimary = oscarProps.isPropertyActive("showPrimaryCarePhysicianCheck");
+		boolean hasEmpStatus = oscarProps.isPropertyActive("showEmploymentStatus");
+		String hasPrimaryCarePhysician = "N/A";
+		String employmentStatus = "N/A";
+
+		if (hasHasPrimary || hasEmpStatus) {
+	%>							<tr valign="top">
+	<%		if (hasHasPrimary) {
+	%>								<td style="text-align: right;"><b><%=hasPrimary.replace(" ", "&nbsp;")%>:</b></td>
+	<td>
+		<select name="<%=hasPrimary.replace(" ", "")%>">
+			<option value="N/A" <%="N/A".equals(hasPrimaryCarePhysician)?"selected":""%>>N/A</option>
+			<option value="Yes" <%="Yes".equals(hasPrimaryCarePhysician)?"selected":""%>>Yes</option>
+			<option value="No" <%="No".equals(hasPrimaryCarePhysician)?"selected":""%>>No</option>
+		</select>
+	</td>
+	<%		}
+		if (hasEmpStatus) {
+	%>								<td style="text-align: right;"><b><%=empStatus.replace(" ", "&nbsp;")%>:</b></td>
+	<td>
+		<select name="<%=empStatus.replace(" ", "")%>">
+			<option value="N/A" <%="N/A".equals(employmentStatus)?"selected":""%>>N/A</option>
+			<option value="FULL TIME" <%="FULL TIME".equals(employmentStatus)?"selected":""%>>FULL TIME</option>
+			<option value="ODSP" <%="ODSP".equals(employmentStatus)?"selected":""%>>ODSP</option>
+			<option value="OW" <%="OW".equals(employmentStatus)?"selected":""%>>OW</option>
+			<option value="PART TIME" <%="PART TIME".equals(employmentStatus)?"selected":""%>>PART TIME</option>
+			<option value="UNEMPLOYED" <%="UNEMPLOYED".equals(employmentStatus)?"selected":""%>>UNEMPLOYED</option>
+		</select>
+	</td>
+</tr>
+	<%		}
+	}
+
+//customized key
+		if(oscarVariables.getProperty("demographicExt") != null) {
+			boolean bExtForm = oscarVariables.getProperty("demographicExtForm") != null ? true : false;
+			String [] propDemoExtForm = bExtForm ? (oscarVariables.getProperty("demographicExtForm","").split("\\|") ) : null;
+			String [] propDemoExt = oscarVariables.getProperty("demographicExt","").split("\\|");
+			for(int k=0; k<propDemoExt.length; k=k+2) {
+	%>
+	<tr valign="top">
+		<td style="text-align: right;"><b><%=propDemoExt[k] %></b><b>: </b></td>
+		<td style="text-align: left;">
+			<% if(bExtForm) {
+				out.println(propDemoExtForm[k] );
+			} else { %>
+			<input type="text" name="<%=propDemoExt[k].replace(' ', '_') %>" value="">
+			<% }  %>
+		</td>
+		<td style="text-align: right;"><%=(k+1)<propDemoExt.length?("<b>"+propDemoExt[k+1]+": </b>") : "&nbsp;" %>
+		</td>
+		<td style="text-align: left;">
+			<% if(bExtForm && (k+1)<propDemoExt.length) {
+				out.println(propDemoExtForm[k+1] );
+			} else { %> <%=(k+1)<propDemoExt.length?"<input type=\"text\" name=\""+propDemoExt[k+1].replace(' ', '_')+"\"  value=''>" : "&nbsp;" %>
+			<% }  %>
+		</td>
+	</tr>
+	<% 	}
+	}
+		if(oscarVariables.getProperty("demographicExtJScript") != null) { out.println(oscarVariables.getProperty("demographicExtJScript")); }
+	%>
+
 
 			<%if (oscarProps.getProperty("EXTRA_DEMO_FIELDS") !=null){
       String fieldJSP = oscarProps.getProperty("EXTRA_DEMO_FIELDS");
       fieldJSP+= ".jsp";
     %>
+	<tr>
+		<td colspan="4">
 			<jsp:include page="<%=fieldJSP%>" />
 
 			<%}%>
-
+		</td>
+	</tr>
 
 			<%
 
@@ -1511,24 +1588,6 @@ document.forms[1].r_doctor_ohip.value = refNo;
 </oscar:oscarPropertiesCheck>
 
 			<tr valign="top">
-				<td id="joinDateLbl" align="right"><b><bean:message
-					key="demographic.demographicaddrecordhtm.formDateJoined" /></b><b>:
-				</b></td>
-				<td id="joinDateCell" align="left"><input type="text" name="date_joined_year"
-					size="4" maxlength="4" value="<%=curYear%>"> <input
-					type="text" name="date_joined_month" size="2" maxlength="2"
-					value="<%=curMonth%>"> <input type="text"
-					name="date_joined_date" size="2" maxlength="2" value="<%=curDay%>">
-				</td>
-				<td id="endDateLbl" align="right"><b><bean:message
-					key="demographic.demographicaddrecordhtm.formEndDate" /></b><b>: </b></td>
-				<td id="endDateCell" align="left"><input type="text" name="end_date_year"
-					size="4" maxlength="4"> <input type="text"
-					name="end_date_month" size="2" maxlength="2"> <input
-					type="text" name="end_date_date" size="2" maxlength="2"></td>
-			</tr>
-
-			<tr valign="top">
 			    <td colspan="4">
 			        <table border="1" width="100%">
 			            <tr bgcolor="#CCCCFF">
@@ -1572,70 +1631,6 @@ document.forms[1].r_doctor_ohip.value = refNo;
 			</tr>
 
 
-<% //"Has Primary Care Physician" & "Employment Status" fields
-	final String hasPrimary = "Has Primary Care Physician";
-	final String empStatus = "Employment Status";
-	boolean hasHasPrimary = oscarProps.isPropertyActive("showPrimaryCarePhysicianCheck");
-	boolean hasEmpStatus = oscarProps.isPropertyActive("showEmploymentStatus");
-	String hasPrimaryCarePhysician = "N/A";
-	String employmentStatus = "N/A";
-	
-	if (hasHasPrimary || hasEmpStatus) {
-%>							<tr valign="top" bgcolor="#CCCCFF">
-<%		if (hasHasPrimary) {
-%>								<td><b><%=hasPrimary.replace(" ", "&nbsp;")%>:</b></td>
-								<td>
-									<select name="<%=hasPrimary.replace(" ", "")%>">
-										<option value="N/A" <%="N/A".equals(hasPrimaryCarePhysician)?"selected":""%>>N/A</option>
-										<option value="Yes" <%="Yes".equals(hasPrimaryCarePhysician)?"selected":""%>>Yes</option>
-										<option value="No" <%="No".equals(hasPrimaryCarePhysician)?"selected":""%>>No</option>
-									</select> 
-								</td>
-<%		}
-		if (hasEmpStatus) {
-%>								<td><b><%=empStatus.replace(" ", "&nbsp;")%>:</b></td>
-								<td>
-									<select name="<%=empStatus.replace(" ", "")%>">
-										<option value="N/A" <%="N/A".equals(employmentStatus)?"selected":""%>>N/A</option>
-										<option value="FULL TIME" <%="FULL TIME".equals(employmentStatus)?"selected":""%>>FULL TIME</option>
-										<option value="ODSP" <%="ODSP".equals(employmentStatus)?"selected":""%>>ODSP</option>
-										<option value="OW" <%="OW".equals(employmentStatus)?"selected":""%>>OW</option>
-										<option value="PART TIME" <%="PART TIME".equals(employmentStatus)?"selected":""%>>PART TIME</option>
-										<option value="UNEMPLOYED" <%="UNEMPLOYED".equals(employmentStatus)?"selected":""%>>UNEMPLOYED</option>
-									</select> 
-								</td>
-							</tr>
-<%		}
-	}
-
-//customized key
-  if(oscarVariables.getProperty("demographicExt") != null) {
-    boolean bExtForm = oscarVariables.getProperty("demographicExtForm") != null ? true : false;
-    String [] propDemoExtForm = bExtForm ? (oscarVariables.getProperty("demographicExtForm","").split("\\|") ) : null;
-	String [] propDemoExt = oscarVariables.getProperty("demographicExt","").split("\\|");
-	for(int k=0; k<propDemoExt.length; k=k+2) {
-%>
-			<tr valign="top" bgcolor="#CCCCFF">
-				<td align="right"><b><%=propDemoExt[k] %></b><b>: </b></td>
-				<td align="left">
-				<% if(bExtForm) {
-			out.println(propDemoExtForm[k] );
-		 } else { %> <input type="text"
-					name="<%=propDemoExt[k].replace(' ', '_') %>" value=""> <% }  %>
-				</td>
-				<td align="right"><%=(k+1)<propDemoExt.length?("<b>"+propDemoExt[k+1]+": </b>") : "&nbsp;" %>
-				</td>
-				<td align="left">
-				<% if(bExtForm && (k+1)<propDemoExt.length) {
-			out.println(propDemoExtForm[k+1] );
-		 } else { %> <%=(k+1)<propDemoExt.length?"<input type=\"text\" name=\""+propDemoExt[k+1].replace(' ', '_')+"\"  value=''>" : "&nbsp;" %>
-				<% }  %>
-				</td>
-			</tr>
-			<% 	}
-}
-if(oscarVariables.getProperty("demographicExtJScript") != null) { out.println(oscarVariables.getProperty("demographicExtJScript")); }
-%>
 			<tr>
 				<td colspan="4">
 				<table width="100%" bgcolor="#EEEEFF">
@@ -1689,17 +1684,12 @@ if(oscarVariables.getProperty("demographicExtJScript") != null) { out.println(os
 					onclick="self.close();">
 				</caisi:isModuleLoad>				
 				</div>
-				&nbsp; 				
-				<caisi:isModuleLoad moduleName="caisi" reverse="true">
-				<input type="button" name="closeButton"
-					value="<bean:message key="demographic.demographicaddrecordhtm.btnCancel"/>"
-					onclick="self.close();">
-				</caisi:isModuleLoad>
-				<caisi:isModuleLoad moduleName="caisi">
-				<input type="button" name="closeButton"
-					value="<bean:message key="demographic.demographicaddrecordhtm.btnReturnToSchedule"/>"
-					onclick="window.location.href='../provider/providercontrol.jsp';">
-				</caisi:isModuleLoad>
+				&nbsp;
+<%--				<caisi:isModuleLoad moduleName="caisi">--%>
+<%--				<input type="button" name="closeButton"--%>
+<%--					value="<bean:message key="demographic.demographicaddrecordhtm.btnReturnToSchedule"/>"--%>
+<%--					onclick="window.location.href='../provider/providercontrol.jsp';">--%>
+<%--				</caisi:isModuleLoad>--%>
 				</td>
 			</tr>
 		</table>
@@ -1710,9 +1700,6 @@ if(oscarVariables.getProperty("demographicExtJScript") != null) { out.println(os
 		</td>
 	</tr>
 </table>
-*
-<font face="Courier New, Courier, mono" size="-1"><bean:message
-	key="demographic.demographicaddrecordhtm.formDateFormat" /> </font>
 
 <script type="text/javascript">
 Calendar.setup({ inputField : "waiting_list_referral_date", ifFormat : "%Y-%m-%d", showsTime :false, button : "referral_date_cal", singleClick : true, step : 1 });
