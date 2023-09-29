@@ -609,6 +609,7 @@
 			<form-property name="faxFilePath" type="java.lang.String" />
 			<form-property name="recipient" type="java.lang.String" />
 			<form-property name="recipientFaxNumber" type="java.lang.String" />
+			<form-property name="letterheadFax" type="java.lang.String" />
 			<form-property name="comments" type="java.lang.String" />
 			<form-property name="demographicNo" type="java.lang.Integer" />
 			<form-property name="coverpage" type="java.lang.String" />
