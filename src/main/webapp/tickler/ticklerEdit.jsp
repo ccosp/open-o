@@ -30,7 +30,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DateFormat" %>
 <%@page import="java.text.SimpleDateFormat" %>
-
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@page import="org.oscarehr.common.dao.TicklerTextSuggestDao"%>
 <%@page import="org.oscarehr.util.LocaleUtils"%>
 <%@page import="org.oscarehr.common.dao.TicklerTextSuggestDao"%>
@@ -123,24 +123,29 @@
 				width: 270px;
 			}
 
-			.grid a {
+			.grid a, .today-button {
 				background-color: #E6E6FA;
 				text-align: center;
 				width: auto;
 				height: auto;
-                padding: 2px;
+				padding: 2px;
 				margin: 1px;
 				display: flex;
 				justify-content: center;
 				text-decoration: none;
 				color: black;
 				font-size: 11px !important;
-				border-radius: 20%;
+				border-radius: 3px;
 			}
 
-			.grid a:hover {
+			.grid a:hover, .today-button:hover {
 				background-color: #EE82EE;
 				color: white;
+			}
+
+			.today-button {
+				width: 125px;
+				cursor: pointer;
 			}
         </style>
         <title><bean:message key="tickler.ticklerEdit.title"/></title>
@@ -302,7 +307,7 @@
                                 %>
                 
                 <tr>
-                    <td colspan="2" class="<%=cellColour%>" style="font-weight: bold"><%=t.getMessage()%></td>
+                    <td colspan="2" class="<%=cellColour%>" style="font-weight: bold; white-space:pre-wrap;"><%=Encode.forHtmlContent(t.getMessage())%></td>
                     <td class="<%=cellColour%>" style="font-weight: bold"><%=t.getProvider().getLastName()%>,<%=t.getProvider().getFirstName()%></td>
                     <td class="<%=cellColour%>" style="font-weight: bold"><%=t.getUpdateDate()%></td>
                 </tr>
@@ -317,7 +322,7 @@
                                                                 }
                                     %>
                <tr>
-                    <td colspan="2" class="<%=cellColour%>"><%=tc.getMessage()%></td>
+                    <td colspan="2" class="<%=cellColour%>" style="white-space:pre-wrap;"><%=Encode.forHtmlContent(tc.getMessage())%></td>
                     <td class="<%=cellColour%>"><%=tc.getProvider().getLastName()%>,<%=tc.getProvider().getFirstName()%></td>
                     <td class="<%=cellColour%>"><%=tc.getUpdateDateTime(vLocale)%></td>
                 </tr>
@@ -424,6 +429,8 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="border: none;">
+                        <!-- Today button placed before the grid -->
+                        <div id="todayButton" class="today-button" onclick="addTime(0, 'days')">Today</div>
                         <div id="quickPickDateOptions" class="grid" >
                             <!-- Quick pick will be added here using JavaScript -->
                         </div>

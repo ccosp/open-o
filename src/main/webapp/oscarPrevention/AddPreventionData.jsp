@@ -925,8 +925,8 @@ function changeSite(el) {
                    <fieldset>
                       <legend>Prevention : <%=prevention%></legend>
                          <div>
-                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%>>Completed</input><br/>
-                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%>>Completed externally</input><br/>
+                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%> onClick="$('#providerDrop').val('<%=LoggedInInfo.getLoggedInInfoFromSession(request).getLoggedInProviderNo() %>');hideExtraName(document.getElementById('providerDrop'))">Completed</input><br/>
+                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%> onClick="$('#providerDrop').val('-1');hideExtraName(document.getElementById('providerDrop'))">Completed externally</input><br/>
                             <input name="given" type="radio" value="refused"    <%=checked(completed,"1")%>>Refused</input><br/>
                             <input name="given" type="radio" value="ineligible" <%=checked(completed,"2")%>>Ineligible</input>
                          </div>
@@ -1023,21 +1023,21 @@ function changeSite(el) {
                    <fieldset>
                       <legend>Prevention : <%=prevention%></legend>
                          <div>
-                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%>>Completed</input><br/>
-                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%>>Completed externally</input><br/>
+                            <input name="given" type="radio" value="given"      <%=checked(completed,"0")%> onClick="$('#providerDrop').val('<%=LoggedInInfo.getLoggedInInfoFromSession(request).getLoggedInProviderNo() %>');hideExtraName(document.getElementById('providerDrop'))">Completed</input><br/>
+                            <input name="given" type="radio" value="given_ext"  <%=checked(completed,"3")%> onClick="$('#providerDrop').val('-1');hideExtraName(document.getElementById('providerDrop'))">Completed externally</input><br/>
                             <input name="given" type="radio" value="refused"    <%=checked(completed,"1")%>>Refused</input><br/>
                             <input name="given" type="radio" value="ineligible" <%=checked(completed,"2")%>>Ineligible</input>
                          </div>
                          <div>&nbsp;</div>
                          <div style="margin-left:30px;">
                             <label for="prevDate" class="fields" >Date:</label>    <input type="text" name="prevDate" id="prevDate" value="<%=prevDate%>" size="9" > <a id="date"><img title="Calendar" src="../images/cal.gif" alt="Calendar" border="0" /></a> <br>
-                            <label for="provider" class="fields">Provider:</label> <input type="text" name="providerName" id="providerName"/>
+                            <label for="provider" class="fields">Provider:</label> <input type="text" name="providerName" id="providerName" value="<%=providerName%>"/>
                                   <select onchange="javascript:hideExtraName(this);" id="providerDrop" name="provider">
                                       <%for (int i=0; i < providers.size(); i++) {
                                            Map<String,String> h = providers.get(i);%>
                                         <option value="<%= h.get("providerNo")%>" <%= ( h.get("providerNo").equals(provider) ? " selected" : "" ) %>><%= h.get("lastName") %> <%= h.get("firstName") %></option>
                                       <%}%>
-                                      <option value="-1" >Other</option>
+                                      <option value="-1" <%= ( "-1".equals(provider) ? " selected" : "" ) %> >Other</option>
                                   </select>
                                   <br/>
                                   <label for="creator" class="fields" >Creator:</label> <input type="text" name="creator" value="<%=creatorName%>" readonly/> <br/>
