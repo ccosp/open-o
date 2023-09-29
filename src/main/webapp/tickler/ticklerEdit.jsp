@@ -30,7 +30,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DateFormat" %>
 <%@page import="java.text.SimpleDateFormat" %>
-
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@page import="org.oscarehr.common.dao.TicklerTextSuggestDao"%>
 <%@page import="org.oscarehr.util.LocaleUtils"%>
 <%@page import="org.oscarehr.common.dao.TicklerTextSuggestDao"%>
@@ -307,7 +307,7 @@
                                 %>
                 
                 <tr>
-                    <td colspan="2" class="<%=cellColour%>" style="font-weight: bold"><%=t.getMessage()%></td>
+                    <td colspan="2" class="<%=cellColour%>" style="font-weight: bold; white-space:pre-wrap;"><%=Encode.forHtmlContent(t.getMessage())%></td>
                     <td class="<%=cellColour%>" style="font-weight: bold"><%=t.getProvider().getLastName()%>,<%=t.getProvider().getFirstName()%></td>
                     <td class="<%=cellColour%>" style="font-weight: bold"><%=t.getUpdateDate()%></td>
                 </tr>
@@ -322,7 +322,7 @@
                                                                 }
                                     %>
                <tr>
-                    <td colspan="2" class="<%=cellColour%>"><%=tc.getMessage()%></td>
+                    <td colspan="2" class="<%=cellColour%>" style="white-space:pre-wrap;"><%=Encode.forHtmlContent(tc.getMessage())%></td>
                     <td class="<%=cellColour%>"><%=tc.getProvider().getLastName()%>,<%=tc.getProvider().getFirstName()%></td>
                     <td class="<%=cellColour%>"><%=tc.getUpdateDateTime(vLocale)%></td>
                 </tr>
