@@ -123,24 +123,29 @@
 				width: 270px;
 			}
 
-			.grid a {
+			.grid a, .today-button {
 				background-color: #E6E6FA;
 				text-align: center;
 				width: auto;
 				height: auto;
-                padding: 2px;
+				padding: 2px;
 				margin: 1px;
 				display: flex;
 				justify-content: center;
 				text-decoration: none;
 				color: black;
 				font-size: 11px !important;
-				border-radius: 20%;
+				border-radius: 3px;
 			}
 
-			.grid a:hover {
+			.grid a:hover, .today-button:hover {
 				background-color: #EE82EE;
 				color: white;
+			}
+
+			.today-button {
+				width: 125px;
+				cursor: pointer;
 			}
         </style>
         <title><bean:message key="tickler.ticklerEdit.title"/></title>
@@ -424,6 +429,8 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="border: none;">
+                        <!-- Today button placed before the grid -->
+                        <div id="todayButton" class="today-button" onclick="addTime(0, 'days')">Today</div>
                         <div id="quickPickDateOptions" class="grid" >
                             <!-- Quick pick will be added here using JavaScript -->
                         </div>
