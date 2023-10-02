@@ -50,6 +50,8 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils,oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*,oscar.oscarLab.ca.all.util.*"%>
 <%@page import="org.springframework.web.context.WebApplicationContext,org.oscarehr.common.dao.*,org.oscarehr.common.model.*, org.oscarehr.PMmodule.dao.ProviderDao"%>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
 <%
             WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
             ProviderInboxRoutingDao providerInboxRoutingDao = (ProviderInboxRoutingDao) ctx.getBean("providerInboxRoutingDAO");
@@ -305,7 +307,7 @@
                                                 showPageImg=function(docid,pn){
                                                     if(docid&&pn){
                                                         var e=$('docImg_'+docid);
-                                                        var url='<%=request.getContextPath()%>'+'/dms/ManageDocument.do?method=viewDocPage&doc_no='
+                                                        var url='<%=request.getContextPath()%>'+'/documentManager/ManageDocument.do?method=viewDocPage&doc_no='
                                                             +docid+'&curPage='+pn;
                                                         e.setAttribute('src',url);
                                                     }
@@ -609,7 +611,7 @@ function sendMRP(ele){
                         		return false;
                         	}
                         	//save doc info
-                                                    var url="../dms/ManageDocument.do",data=$(eleId).serialize(true);
+                                                    var url="../documentManager/ManageDocument.do",data=$(eleId).serialize(true);
                                                     new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
                                                                 var ar=eleId.split("_");
                                                                 var num=ar[1];

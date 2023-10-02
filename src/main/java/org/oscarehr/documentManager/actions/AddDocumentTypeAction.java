@@ -7,7 +7,7 @@
  * and "gnu.org/licenses/gpl-2.0.html".
  */
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import java.util.HashMap;
 
@@ -19,13 +19,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
+import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.dms.EDocUtil;
-import oscar.dms.data.AddDocumentTypeForm;
+import org.oscarehr.documentManager.data.AddDocumentTypeForm;
 
 public class AddDocumentTypeAction extends DispatchAction {
 	

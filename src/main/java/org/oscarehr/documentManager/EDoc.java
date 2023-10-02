@@ -22,7 +22,7 @@
  * Ontario, Canada
  */
 
-package oscar.dms;
+package org.oscarehr.documentManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;

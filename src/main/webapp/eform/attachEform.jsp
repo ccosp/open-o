@@ -64,6 +64,8 @@ String userlastname = (String) session.getAttribute("userlastname");
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
 <%@ page import="oscar.eform.EFormUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
 
 <%
 
@@ -71,7 +73,7 @@ String userlastname = (String) session.getAttribute("userlastname");
 
 LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 
-// "Module" and "function" is the same thing (old dms module)
+// "Module" and "function" is the same thing (old documentManager module)
 String module = "demographic";
 String demoNo = request.getParameter("demo");
 String requestId = request.getParameter("requestId");
@@ -227,7 +229,7 @@ function save() {
 function previewPDF(docId, url) {	
 	$("#previewPane").attr("src", 
 			"<%= request.getContextPath() %>/oscarEncounter/oscarConsultationRequest/displayImage.jsp?url=" 
-					       + encodeURIComponent("<%= request.getContextPath() %>" + "/dms/ManageDocument.do?method=view&doc_no=" + docId) 
+					       + encodeURIComponent("<%= request.getContextPath() %>" + "/documentManager/ManageDocument.do?method=view&doc_no=" + docId)
 					       + "&link=" + encodeURIComponent(url));
 }
 

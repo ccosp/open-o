@@ -23,7 +23,7 @@
  */
 
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import java.util.Date;
 import java.util.Hashtable;
@@ -41,6 +41,8 @@ import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -49,9 +51,7 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
-import oscar.dms.data.AddEditDocumentForm;
+import org.oscarehr.documentManager.data.AddEditDocumentForm;
 import oscar.util.UtilDateUtilities;
 
 public class AddEditHtmlAction extends Action {
@@ -68,7 +68,7 @@ public class AddEditHtmlAction extends Action {
         AddEditDocumentForm fm = (AddEditDocumentForm) form;
         Hashtable errors = new Hashtable();
         String fileName = "";
-        if (!EDocUtil.getDoctypes(fm.getFunction()).contains(fm.getDocType())){ 
+        if (!EDocUtil.getDoctypes(fm.getFunction()).contains(fm.getDocType())){
         	EDocUtil.addDocTypeSQL(fm.getDocType(),fm.getFunction());
         } 
         if ((fm.getDocDesc().length() == 0) || (fm.getDocDesc().equals("Enter Title"))) {

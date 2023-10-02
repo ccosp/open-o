@@ -51,6 +51,7 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ page import="oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*"%>
 <%@page import="org.oscarehr.util.SessionConstants"%>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request" />
 <html:html locale="true">
 <head>

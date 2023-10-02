@@ -57,6 +57,7 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@page import="org.oscarehr.util.SessionConstants"%>
 <%@page import="oscar.oscarProvider.data.*"%>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%
             List providers = ProviderData.getProviderList();
             String provider = "";
@@ -75,7 +76,7 @@
             }
 //preliminary JSP codec
 
-// "Module" and "function" is the same thing (old dms module)
+// "Module" and "function" is the same thing (old documentManager module)
             String module = "demographic";
             String moduleid = "-1";
 //if (request.getParameter("function") != null) {
@@ -155,7 +156,7 @@
 
             window.onload = function() {
                 var settings = {
-                    upload_url: "../dms/addEditDocument.do;jsessionid=<%=request.getRequestedSessionId()%>", 	// Relative to the SWF file
+                    upload_url: "../documentManager/addEditDocument.do;jsessionid=<%=request.getRequestedSessionId()%>", 	// Relative to the SWF file
                     file_post_name : "filedata",
                     post_params: {"method" : "multifast"},
                     use_query_string : true,

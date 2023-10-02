@@ -7,7 +7,7 @@
  * and "gnu.org/licenses/gpl-2.0.html".
  */
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +16,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.dms.EDocUtil;
-import oscar.dms.data.ChangeDocStatusForm;
+import org.oscarehr.documentManager.data.ChangeDocStatusForm;
 
 public class ChangeDocStatusAction extends DispatchAction {
 

@@ -270,7 +270,7 @@
         };
 
      function changeProviderAndQueue(){
-            upload_url="../dms/addEditDocument.do?method=html5MultiUpload&queue="+$('queue').value+"&provider="+$('provider').value;
+            upload_url="../documentManager/addEditDocument.do?method=html5MultiUpload&queue="+$('queue').value+"&provider="+$('provider').value;
 
      }
      function addProviderToPost(ele){

@@ -59,8 +59,9 @@
 <%@page import="org.oscarehr.common.model.Demographic"%>
 <%@page import="org.oscarehr.common.model.ProviderLabRoutingModel" %>
     
-<%@page import="oscar.dms.IncomingDocUtil" %>
-    
+<%@page import="org.oscarehr.documentManager.IncomingDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+
 <jsp:useBean id="LastPatientsBean" class="java.util.ArrayList" scope="session" />
     
     
@@ -446,7 +447,7 @@
                     alert("<bean:message key="dms.incomingDocs.selectDocumentFirst" />");
                 } 
                 else {
-                    var url='<c:out value="${ctx}"/>/dms/ManageDocument.do?method=displayIncomingDocs'
+                    var url='<c:out value="${ctx}"/>/documentManager/ManageDocument.do?method=displayIncomingDocs'
                         +'&pdfDir='+encodeURIComponent(pdfDir)+'&queueId='+queueId+'&pdfName='+encodeURIComponent(pdfName);
                     popupPage(700,960,url);
                 }
@@ -517,12 +518,12 @@
                     document.getElementById('pgnum').innerHTML = pn+ ' of <span class="<%= numOfPage > 1 ? "multiPage" : "singlePage" %>">'+totalPage+'</span>';
                     
                     if(document.PdfInfoForm.imageType.value=="Pdf") {
-                        url='<%=request.getContextPath()%>'+'/dms/ManageDocument.do?method=viewIncomingDocPageAsPdf'
+                        url='<%=request.getContextPath()%>'+'/documentManager/ManageDocument.do?method=viewIncomingDocPageAsPdf'
                             +'&curPage='+pn+'&pdfDir='+encodeURIComponent(pdfDir)+'&queueId='+queueId+'&pdfName='+encodeURIComponent(pdfName)+"#view=fitV";
                     }
                     else
                     {
-                        url='<%=request.getContextPath()%>'+'/dms/ManageDocument.do?method=viewIncomingDocPageAsImage'
+                        url='<%=request.getContextPath()%>'+'/documentManager/ManageDocument.do?method=viewIncomingDocPageAsImage'
                             +'&curPage='+pn+'&pdfDir='+encodeURIComponent(pdfDir)+'&queueId='+queueId+'&pdfName='+encodeURIComponent(pdfName);
                     }
                     document.getElementById('docdisp').innerHTML = '<iframe	src="' +url +'"  width="'+(width)+'" height="'+(height)+'" ></iframe>';

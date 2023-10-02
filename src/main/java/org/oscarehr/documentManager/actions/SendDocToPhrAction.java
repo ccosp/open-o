@@ -23,7 +23,7 @@
  */
 
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import java.util.GregorianCalendar;
 
@@ -39,6 +39,8 @@ import org.oscarehr.common.dao.RemoteDataLogDao;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.RemoteDataLog;
 import org.oscarehr.common.service.myoscar.MyOscarMedicalDataManagerUtils;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.myoscar.client.ws_manager.AccountManager;
 import org.oscarehr.myoscar.commons.MedicalDataType;
 import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
@@ -49,8 +51,6 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.XmlUtils;
 import org.w3c.dom.Document;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
 import oscar.oscarDemographic.data.DemographicData;
 import oscar.oscarProvider.data.ProviderData;
 

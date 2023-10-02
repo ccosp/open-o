@@ -50,8 +50,8 @@
 			<!--    <form-property name="codesearch" type="java.lang.String" />  -->
 		</form-bean>
 
-		<form-bean name="addDocumentType" type="oscar.dms.data.AddDocumentTypeForm" />
-		<form-bean name="changeDocStatus" type="oscar.dms.data.ChangeDocStatusForm" />
+		<form-bean name="addDocumentType" type="org.oscarehr.documentManager.data.AddDocumentTypeForm" />
+		<form-bean name="changeDocStatus" type="org.oscarehr.documentManager.data.ChangeDocStatusForm" />
 		<!-- login form bean -->
 		<form-bean name="loginForm" type="oscar.login.LoginForm" />
 		<form-bean name="msgSendMessageForm" type="oscar.oscarMessenger.pageUtil.MsgSendMessageForm" />
@@ -217,10 +217,10 @@
 		<form-bean name="receivePaymentActionForm" type="oscar.oscarBilling.ca.bc.pageUtil.ReceivePaymentActionForm" />
 		<form-bean name="billingPreferencesActionForm" type="oscar.oscarBilling.ca.bc.pageUtil.BillingPreferencesActionForm" />
 		<form-bean name="supServiceCodeAssocActionForm" type="oscar.oscarBilling.ca.bc.pageUtil.SupServiceCodeAssocActionForm" />
-		<form-bean name="eDocsAddEditDocument" type="oscar.dms.data.AddEditDocumentForm" />
-		<form-bean name="documentUploadForm" type="oscar.dms.data.DocumentUploadForm" />
-		<form-bean name="addLinkDoc" type="oscar.dms.data.AddEditDocumentForm" />
-		<form-bean name="addEditHtmlDoc" type="oscar.dms.data.AddEditDocumentForm" />
+		<form-bean name="eDocsAddEditDocument" type="org.oscarehr.documentManager.data.AddEditDocumentForm" />
+		<form-bean name="documentUploadForm" type="org.oscarehr.documentManager.data.DocumentUploadForm" />
+		<form-bean name="addLinkDoc" type="org.oscarehr.documentManager.data.AddEditDocumentForm" />
+		<form-bean name="addEditHtmlDoc" type="org.oscarehr.documentManager.data.AddEditDocumentForm" />
 		<form-bean name="ManagePatientLettersForm" type="oscar.oscarReport.pageUtil.ManagePatientLettersForm" />
 		<form-bean name="CihiExportForm" type="org.apache.struts.validator.DynaValidatorForm">
 			<form-property name="patientSet" type="java.lang.String" />
@@ -758,15 +758,15 @@
     	</action>
 
 	<action input="/dms/addNewDocumentCategories.jsp" name="addDocumentType"
-			path="/dms/addDocumentType" type="oscar.dms.actions.AddDocumentTypeAction"
+			path="/dms/addDocumentType" type="org.oscarehr.documentManager.actions.AddDocumentTypeAction"
 			parameter="method" scope="request" validate="false">
 			<forward name="failed" path="/dms/addNewDocumentCategories.jsp"></forward>
 			<forward name="success" path="/dms/closeWindow.html"></forward>
 		</action>
 		<action input="/dms/changeStatus.jsp" name="changeDocStatus"
-			path="/dms/changeDocStatus" type="oscar.dms.actions.ChangeDocStatusAction"
+			path="/dms/changeDocStatus" type="org.oscarehr.documentManager.actions.ChangeDocStatusAction"
 			parameter="method" scope="request" validate="false">
-			<!--<forward name="failed" path="/dms/addNewDocumentCategories.jsp"></forward> -->
+			<!--<forward name="failed" path="/documentManager/addNewDocumentCategories.jsp"></forward> -->
 			<forward name="success" path="/dms/closeWindow.html"></forward>
 		</action>
 
@@ -2129,21 +2129,21 @@
 		<action input="/billing/CA/BC/billingSVCTrayAssoc.jsp" name="supServiceCodeAssocActionForm" path="/billing/CA/BC/supServiceCodeAssocAction" scope="request" type="oscar.oscarBilling.ca.bc.pageUtil.SupServiceCodeAssocAction" validate="false">
 			<forward name="success" path="/billing/CA/BC/billingSVCTrayAssoc.jsp"></forward>
 		</action>
-		<action input="/dms/documentReport.jsp" name="eDocsAddEditDocument" path="/dms/addEditDocument" type="oscar.dms.actions.AddEditDocumentAction" parameter="method" scope="request" validate="false">
+		<action input="/dms/documentReport.jsp" name="eDocsAddEditDocument" path="/dms/addEditDocument" type="org.oscarehr.documentManager.actions.AddEditDocumentAction" parameter="method" scope="request" validate="false">
 			<forward name="successAdd" path="/dms/documentReport.jsp"></forward>
 			<forward name="failAdd" path="/dms/documentReport.jsp"></forward>
 			<forward name="failEdit" path="/dms/editDocument.jsp"></forward>
 			<forward name="successEdit" path="/dms/closeWindow.html"></forward>
 			<forward name="fastUploadSuccess" path="/dms/uploadMultiDocument.jsp"></forward>
 		</action>
-		<action input="/dms/documentReport.jsp" name="FrmForm" path="/dms/combinePDFs" type="oscar.dms.actions.CombinePDFAction" scope="request" validate="false">
+		<action input="/dms/documentReport.jsp" name="FrmForm" path="/dms/combinePDFs" type="org.oscarehr.documentManager.actions.CombinePDFAction" scope="request" validate="false">
 			<forward name="success" path="/dms/documentReport.jsp"></forward>
 		</action>
-		<action input="/dms/documentReport.jsp" name="addLinkDoc" path="/dms/addLink" type="oscar.dms.actions.AddEditHtmlAction" scope="request" validate="false">
+		<action input="/dms/documentReport.jsp" name="addLinkDoc" path="/dms/addLink" type="org.oscarehr.documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
 			<forward name="success" path="/dms/documentReport.jsp"></forward>
 			<forward name="failed" path="/dms/documentReport.jsp"></forward>
 		</action>
-		<action input="/dms/addedithtmldocument.jsp" name="addEditHtmlDoc" path="/dms/addEditHtml" type="oscar.dms.actions.AddEditHtmlAction" scope="request" validate="false">
+		<action input="/dms/addedithtmldocument.jsp" name="addEditHtmlDoc" path="/dms/addEditHtml" type="org.oscarehr.documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
 			<forward name="success" path="/dms/closeWindow.html" />
 			<forward name="failed" path="/dms/addedithtmldocument.jsp" />
 		</action>
@@ -2639,7 +2639,7 @@
 			<forward name="success" path="/oscarEncounter/oscarMeasurements/TemplateFlowSheet.jsp" />
 		</action>
 
-		<action path="/dms/ManageDocument" name="FrmForm" type="org.oscarehr.document.web.ManageDocumentAction" parameter="method" scope="request">
+		<action path="/dms/ManageDocument" name="FrmForm" type="org.oscarehr.documentManager.actions.ManageDocumentAction" parameter="method" scope="request">
 			<forward name="success" path="/dms/undocument.jsp" />
 			<forward name="displaySingleDoc" path="/dms/MultiPageDocDisplay.jsp" />
                         <forward name="nextIncomingDoc" path="/dms/incomingDocs.jsp" />
@@ -2651,11 +2651,11 @@
                 <action path="/PrinterList" name="FrmForm" type="org.oscarehr.printer.PrinterListAction" parameter="method" scope="request">
 		</action>
                 
-		<action path="/dms/SplitDocument" name="FrmForm" type="org.oscarehr.document.web.SplitDocumentAction" parameter="method" scope="request">
+		<action path="/dms/SplitDocument" name="FrmForm" type="org.oscarehr.documentManager.actions.SplitDocumentAction" parameter="method" scope="request">
         	<forward name="success" path="/oscarMDS/Splitclose.jsp" />
         </action>
 
-		<action input="/dms/documentUploader.jsp" name="documentUploadForm" path="/dms/documentUpload" type="oscar.dms.actions.DocumentUploadAction"  parameter="method" scope="request" validate="false">
+		<action input="/dms/documentUploader.jsp" name="documentUploadForm" path="/dms/documentUpload" type="org.oscarehr.documentManager.actions.DocumentUploadAction" parameter="method" scope="request" validate="false">
         </action>
 
 		<action path="/PhrRetrieve" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">

@@ -8,9 +8,7 @@
  */
 package oscar.eform.actions;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +35,8 @@ import com.sun.xml.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 
 import oscar.OscarProperties;
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ImagePDFCreator;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;

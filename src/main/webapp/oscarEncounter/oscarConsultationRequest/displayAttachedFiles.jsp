@@ -52,6 +52,8 @@ if(!authed) {
 <%@ page import="org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
 <%@ page import="oscar.eform.EFormUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -65,7 +67,7 @@ if(!authed) {
 	<%
             ArrayList privatedocs = new ArrayList();
             privatedocs = EDocUtil.listDocs(loggedInInfo, demo, requestId, EDocUtil.ATTACHED);
-            EDoc curDoc;                                        
+            EDoc curDoc;
             for(int idx = 0; idx < privatedocs.size(); ++idx)
             {                    
                 curDoc = (EDoc)privatedocs.get(idx);                                            

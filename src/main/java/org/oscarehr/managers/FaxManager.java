@@ -55,7 +55,7 @@ import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
 import oscar.OscarProperties;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 import oscar.util.ConcatPDF;

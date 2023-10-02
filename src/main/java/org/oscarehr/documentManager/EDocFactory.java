@@ -28,7 +28,7 @@
  * and open the template in the editor.
  */
 
-package oscar.dms;
+package org.oscarehr.documentManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

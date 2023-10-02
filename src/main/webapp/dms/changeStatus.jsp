@@ -24,7 +24,7 @@
 	}
 %>
 
-<%@ page import="java.util.*, oscar.dms.EDocUtil, oscar.dms.data.ChangeDocStatusForm"%>
+<%@ page import="java.util.*, org.oscarehr.documentManager.EDocUtil, org.oscarehr.documentManager.data.ChangeDocStatusForm"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <% 
 ArrayList<String> doctypesD = EDocUtil.getDoctypes("demographic");

@@ -23,7 +23,7 @@
  */
 
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -63,13 +63,13 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.ProviderInboxItem;
 import org.oscarehr.common.model.Queue;
 import org.oscarehr.common.model.QueueDocumentLink;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
 import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.HRMResultsData;

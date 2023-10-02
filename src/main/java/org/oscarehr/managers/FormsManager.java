@@ -42,8 +42,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import oscar.dms.ConvertToEdoc;
-import oscar.dms.EDoc;
+import org.oscarehr.documentManager.ConvertToEdoc;
+import org.oscarehr.documentManager.EDoc;
 import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 import oscar.oscarEncounter.data.EctFormData;

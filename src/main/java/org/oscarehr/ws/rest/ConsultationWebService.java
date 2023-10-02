@@ -85,8 +85,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import net.sf.json.JSONObject;
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.eform.EFormUtil;
 import oscar.oscarDemographic.data.RxInformation;
 import oscar.oscarLab.ca.on.CommonLabResultData;

@@ -23,7 +23,7 @@
  */
 
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -37,13 +37,13 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.OscarProperties;
-import oscar.dms.EDocUtil;
 import oscar.util.ConcatPDF;
 import oscar.util.UtilDateUtilities;
 

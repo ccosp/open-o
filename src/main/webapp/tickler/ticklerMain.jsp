@@ -894,7 +894,7 @@
 						<%
 						} else if (LabResultData.isDocument(type)) {
 						%>
-						<a title="View attachment" href="javascript:reportWindow('../dms/ManageDocument.do?method=display&doc_no=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
+						<a title="View attachment" href="javascript:reportWindow('../documentManager/ManageDocument.do?method=display&doc_no=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isHRM(type)) {
 						%>

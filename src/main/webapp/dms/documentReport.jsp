@@ -59,10 +59,11 @@
 
 <%@ page import="java.util.*, oscar.dms.*" %>
 <%@ page import="org.oscarehr.common.dao.CtlDocClassDao" %>
-
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-
-<c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
+<%@page import="org.oscarehr.util.SessionConstants"%>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" scope="request" />
 
 
 <%
@@ -98,7 +99,7 @@
 	}
 //preliminary JSP code
 
-// "Module" and "function" is the same thing (old dms module)
+// "Module" and "function" is the same thing (old documentManager module)
 	String module = "";
 	String moduleid = "";
 	if (request.getParameter("function") != null) {

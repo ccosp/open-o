@@ -54,7 +54,10 @@
 <%@ page import="oscar.util.ConversionUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao"%>
 <%@page import="oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*"%>
-<%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.SpringUtils"%><%
+<%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.SpringUtils"%>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="org.oscarehr.documentManager.IncomingDocUtil" %><%
 
             ProviderInboxRoutingDao providerInboxRoutingDao = SpringUtils.getBean(ProviderInboxRoutingDao.class);
             UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
@@ -180,7 +183,7 @@
    	   }
 
         function handleDocSave(docid,action){
-			var url=contextpath + "/dms/inboxManage.do";
+			var url=contextpath + "/documentManager/inboxManage.do";
 			var data='method=isDocumentLinkedToDemographic&docId='+docid;
 			new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
                             var json=transport.responseText.evalJSON();
@@ -206,9 +209,9 @@
         function rotate90(id) {
         	jQuery("#rotate90btn_" + id).attr('disabled', 'disabled');
 
-        	new Ajax.Request(contextpath + "/dms/SplitDocument.do", {method: 'post', parameters: "method=rotate90&document=" + id, onSuccess: function(data) {
+        	new Ajax.Request(contextpath + "/documentManager/SplitDocument.do", {method: 'post', parameters: "method=rotate90&document=" + id, onSuccess: function(data) {
         		jQuery("#rotate90btn_" + id).removeAttr('disabled');
-        		jQuery("#docImg_" + id).attr('src', contextpath + "/dms/ManageDocument.do?method=showPage&doc_no=" + id + "&page=1&rand=" + (new Date().getTime()));
+        		jQuery("#docImg_" + id).attr('src', contextpath + "/documentManager/ManageDocument.do?method=showPage&doc_no=" + id + "&page=1&rand=" + (new Date().getTime()));
 
         	}});
         }

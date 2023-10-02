@@ -21,7 +21,7 @@
  * Hamilton
  * Ontario, Canada
  */
-package oscar.dms;
+package org.oscarehr.documentManager;
 
 
 import com.lowagie.text.BadElementException;

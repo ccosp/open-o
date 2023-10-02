@@ -37,9 +37,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.WKHtmlToPdfUtils;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
-import oscar.dms.actions.AddEditDocumentAction;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
+import org.oscarehr.documentManager.actions.AddEditDocumentAction;
 
 public final class EfmpatientformlistSendPhrAction {
 

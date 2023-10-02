@@ -7,7 +7,7 @@
  * and "gnu.org/licenses/gpl-2.0.html".
  */
 
-package oscar.dms.data;
+package org.oscarehr.documentManager.data;
 
 import org.apache.struts.action.ActionForm;
 

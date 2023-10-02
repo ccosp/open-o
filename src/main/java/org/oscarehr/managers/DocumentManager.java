@@ -48,9 +48,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import oscar.OscarProperties;
-import oscar.dms.EDoc;
+import org.oscarehr.documentManager.EDoc;
 
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.log.LogAction;
 
 @Service

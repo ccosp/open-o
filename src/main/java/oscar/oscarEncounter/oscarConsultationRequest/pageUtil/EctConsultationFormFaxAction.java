@@ -50,8 +50,8 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.OscarProperties;
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
@@ -60,7 +60,6 @@ import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.ConcatPDF;
-import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.DocumentException;
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.messaging.saaj.util.ByteOutputStream;

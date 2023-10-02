@@ -21,16 +21,15 @@
  * Hamilton
  * Ontario, Canada
  */
-package org.oscarehr.document.dao;
+package org.oscarehr.common.dao;
 
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.DocumentDao;
 import org.oscarehr.common.merge.MergedDemographicTemplate;
 import org.oscarehr.common.model.Document;
 
-import oscar.dms.EDocUtil.EDocSort;
+import org.oscarehr.documentManager.EDocUtil.EDocSort;
 import oscar.util.ConversionUtils;
 
 public class DocumentMergeDemographicDAO extends DocumentDao {

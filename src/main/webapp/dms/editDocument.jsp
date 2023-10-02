@@ -54,6 +54,9 @@ String userlastname = (String) session.getAttribute("userlastname");
 	import="java.util.*, oscar.util.*,oscar.dms.*, oscar.dms.data.*, oscar.oscarProvider.data.ProviderData, org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.CtlDocClassDao"%>
 <%@ page import="org.oscarehr.common.model.DocumentExtraReviewer"%>
 <%@ page import="org.oscarehr.common.dao.DocumentExtraReviewerDao"%>
+<%@ page import="org.oscarehr.documentManager.data.AddEditDocumentForm" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%
 	DocumentExtraReviewerDao documentExtraReviewerDao = SpringUtils.getBean(DocumentExtraReviewerDao.class);

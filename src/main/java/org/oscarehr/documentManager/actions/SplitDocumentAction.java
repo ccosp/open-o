@@ -6,7 +6,7 @@
  * License details are available via "indivica.ca/gplv2"
  * and "gnu.org/licenses/gpl-2.0.html".
  */
-package org.oscarehr.document.web;
+package org.oscarehr.documentManager.actions;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,8 +50,8 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.oscarLab.ca.all.upload.ProviderLabRouting;
 
 

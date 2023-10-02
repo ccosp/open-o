@@ -38,7 +38,7 @@
 <jsp:useBean id="oscarVariables" class="java.util.Properties" scope="page" />
 
 <%@page import="java.net.URLDecoder, java.net.URLEncoder,java.util.Date, java.util.List"%>
-<%@page import="oscar.dms.EDocUtil,oscar.dms.EDoc"%>
+<%@page import="org.oscarehr.documentManager.EDocUtil,org.oscarehr.documentManager.EDoc"%>
 <%@page import="oscar.util.UtilDateUtilities"%>
 <%@page import="java.util.Hashtable"%>
 <%@page import="org.oscarehr.common.dao.CtlDocClassDao,org.oscarehr.common.dao.QueueDao" %>
@@ -263,11 +263,11 @@ Remote documents not supported
                 if(curdocid!="0") {
                                     
                    
-                    var url2='<%=request.getContextPath()%>'+'/dms/ManageDocument.do?method=display&doc_no='
+                    var url2='<%=request.getContextPath()%>'+'/documentManager/ManageDocument.do?method=display&doc_no='
                         +curdocid;
                     document.getElementById('docdisp').innerHTML = '<iframe	src="' +url2 +'"  width="' +width +'" height="' +height +'"></iframe>';
                             
-                    var url4='<%=request.getContextPath()%>'+'/dms/ManageDocument.do?method=viewDocumentInfo&doc_no='+curdocid;
+                    var url4='<%=request.getContextPath()%>'+'/documentManager/ManageDocument.do?method=viewDocumentInfo&doc_no='+curdocid;
                     document.getElementById('docextrainfo').innerHTML = '<object data="' +url4 +'"  height=250px width="100%" type="text/html" ></object>';                    
                       
                     
@@ -290,7 +290,7 @@ Remote documents not supported
                 {
                     width=getWidth()-650;
                 }
-                var url2='<%=request.getContextPath()%>'+'/dms/combinePDFs.do?ContentDisposition=inline'+doclist;
+                var url2='<%=request.getContextPath()%>'+'/documentManager/combinePDFs.do?ContentDisposition=inline'+doclist;
                 document.getElementById('docdisp').innerHTML = '<object	data="' +url2 +'" type="application/pdf" width="' + width +'" height="' +height +'"></object>';                    
                 document.getElementById('docextrainfo').innerHTML='';
                                                   

@@ -21,7 +21,7 @@
  * University of British Columbia
  * Vancouver, British Columbia, Canada
  */
-package oscar.dms;
+package org.oscarehr.documentManager;
 
 import java.io.*;
 import java.nio.file.Files;

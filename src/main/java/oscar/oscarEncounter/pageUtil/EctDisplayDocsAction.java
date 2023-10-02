@@ -43,9 +43,9 @@ import org.oscarehr.common.dao.DocumentDao.DocumentType;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
-import oscar.dms.EDocUtil.EDocSort;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
+import org.oscarehr.documentManager.EDocUtil.EDocSort;
 import oscar.util.DateUtils;
 import oscar.util.StringUtils;
 

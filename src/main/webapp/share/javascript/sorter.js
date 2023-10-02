@@ -248,7 +248,7 @@ $(document).ready(function() {
 		$.getJSON(ctx + '/dms/SplitDocument.do?method=split&document=' + docnum + '&' + serialized + '&queueID=' + queueId,			
 				function(data) {
 					$("#tool_savecontinue span").html("Save &amp; Continue");
-					popup(screen.height,screen.width, ctx + "/dms/showDocument.jsp?segmentID="+data["newDocNum"] + '&demoName=' + encodeURIComponent(demoName) + "&inWindow=true", "assignDoc");			
+					popup(screen.height,screen.width, ctx + "/documentManager/showDocument.jsp?segmentID="+data["newDocNum"] + '&demoName=' + encodeURIComponent(demoName) + "&inWindow=true", "assignDoc");
 				return false;
 			}
 		);

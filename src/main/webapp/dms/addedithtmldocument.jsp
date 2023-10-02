@@ -49,7 +49,10 @@ String userlastname = (String) session.getAttribute("userlastname");
 <%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 
 <%@ page
-	import="java.util.*, oscar.*, oscar.util.*, oscar.dms.*, oscar.dms.data.*, oscar.oscarProvider.data.ProviderData, org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.CtlDocClassDao"%><%
+	import="java.util.*, oscar.*, oscar.util.*, oscar.dms.*, oscar.dms.data.*, oscar.oscarProvider.data.ProviderData, org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.CtlDocClassDao"%>
+<%@ page import="org.oscarehr.documentManager.data.AddEditDocumentForm" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %><%
 String mode = "";
 if (request.getAttribute("mode") != null) {
     mode = (String) request.getAttribute("mode");

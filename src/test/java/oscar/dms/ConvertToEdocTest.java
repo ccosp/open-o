@@ -28,7 +28,7 @@ package oscar.dms;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.oscarehr.common.model.EFormData;
-
+import org.oscarehr.documentManager.ConvertToEdoc;
 
 
 public class ConvertToEdocTest {
@@ -53,7 +53,7 @@ public class ConvertToEdocTest {
 	// @Test
 	public final void testFromEformData() {
 		System.out.println("THREAD SAFE 0 =================");
-		ConvertToEdoc.from( eformData ); 
+		ConvertToEdoc.from( eformData );
 	}
 	
 	// @Test

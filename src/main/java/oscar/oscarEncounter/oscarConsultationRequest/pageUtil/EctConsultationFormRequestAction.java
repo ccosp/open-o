@@ -85,8 +85,8 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WebUtils;
 
 import oscar.OscarProperties;
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;

@@ -7,7 +7,7 @@
  * and "gnu.org/licenses/gpl-2.0.html".
  */
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,6 +36,9 @@ import org.oscarehr.common.dao.ProviderInboxRoutingDao;
 import org.oscarehr.common.dao.QueueDocumentLinkDao;
 import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.UserProperty;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
+import org.oscarehr.documentManager.IncomingDocUtil;
 import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -44,10 +47,7 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
-import oscar.dms.IncomingDocUtil;
-import oscar.dms.data.DocumentUploadForm;
+import org.oscarehr.documentManager.data.DocumentUploadForm;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 

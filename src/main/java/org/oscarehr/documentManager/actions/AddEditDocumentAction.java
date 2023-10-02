@@ -23,7 +23,7 @@
  */
 
 
-package oscar.dms.actions;
+package org.oscarehr.documentManager.actions;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,6 +60,8 @@ import org.oscarehr.common.model.DocumentExtraReviewer;
 import org.oscarehr.common.model.DocumentStorage;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.SecRole;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -70,9 +72,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import oscar.MyDateFormat;
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
-import oscar.dms.data.AddEditDocumentForm;
+import org.oscarehr.documentManager.data.AddEditDocumentForm;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 import oscar.oscarEncounter.data.EctProgram;
@@ -112,7 +112,7 @@ public class AddEditDocumentAction extends DispatchAction {
 		fileName = newDoc.getFileName();
 		// save local file;
 		if (docFile.getFileSize() == 0) {
-			//errors.put("uploaderror", "dms.error.uploadError");
+			//errors.put("uploaderror", "documentManager.error.uploadError");
 			response.setHeader("oscar_error",props.getString("dms.addDocument.errorZeroSize") );
 			response.sendError(500,props.getString("dms.addDocument.errorZeroSize") );
 			return null;

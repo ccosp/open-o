@@ -23,7 +23,7 @@
  */
 
 
-package org.oscarehr.document.web;
+package org.oscarehr.documentManager.actions;
 
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -96,9 +96,9 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
-import oscar.dms.IncomingDocUtil;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
+import org.oscarehr.documentManager.IncomingDocUtil;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 import oscar.oscarDemographic.data.DemographicData;

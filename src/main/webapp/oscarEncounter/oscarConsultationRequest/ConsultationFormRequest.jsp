@@ -86,6 +86,8 @@ if(!authed) {
 <%@ page import="org.oscarehr.common.model.EFormData" %>
 <%@ page import="oscar.eform.EFormUtil" %>
 <%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
