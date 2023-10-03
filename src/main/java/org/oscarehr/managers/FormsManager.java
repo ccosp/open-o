@@ -27,6 +27,7 @@ package org.oscarehr.managers;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.oscarehr.common.dao.EFormDao;
@@ -147,32 +148,37 @@ public class FormsManager {
 		return (results);
 	}
 	
-	public List<PatientForm> getEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId) {
-  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", SecurityInfoManager.READ, null)) {
+	public List<PatientForm> getEncounterFormsbyDemographicNumber(LoggedInInfo loggedInInfo, Integer demographicId, boolean getAllVersions, boolean getOnlyPDFReadyForms) {
+  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_form)");
 		}
-  		
-  		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
-  		
-  		List<EncounterForm> encounterFormList = getAllEncounterForms();
-  		for(EncounterForm encounterForm : encounterFormList) {
-  			String table = encounterForm.getFormTable();
-  			PatientForm[] patientFormArray = EctFormData.getPatientForms(demographicId+"", table);
-  			if(patientFormArray.length > 0) {
-	  			PatientForm patientForm = patientFormArray[0];
-	  			patientForm.setTable(table);
-	  			patientForm.setFormName(encounterForm.getFormName());
-	  			patientFormList.add(patientForm);
-  			}
-  		}
 
-    	if (patientFormList != null && patientFormList.size() > 0) {
-			LogAction.addLogSynchronous(loggedInInfo, "FormsManager.getEncounterFormsbyDemographicNumber", "demo" + demographicId);
-		}
-    	
-    	return patientFormList;
+		return processEncounterForms(loggedInInfo, demographicId, getAllVersions, getOnlyPDFReadyForms);
 	}
-		
+
+	private List<PatientForm> processEncounterForms(LoggedInInfo loggedInInfo, Integer demographicId, boolean getAllVersions, boolean getOnlyPDFReadyForms) {
+		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
+		List<EncounterForm> encounterFormList = getAllEncounterForms();
+		String[] pdfReadyFormNames = {"Annual"};
+
+		for (EncounterForm encounterForm : encounterFormList) {
+			String formName = encounterForm.getFormName();
+			if (getOnlyPDFReadyForms && !Arrays.asList(pdfReadyFormNames).contains(formName)) { continue; }
+
+			String table = encounterForm.getFormTable();
+			PatientForm[] patientFormArray = EctFormData.getPatientForms(demographicId + "", table);
+			int maxFormsToProcess = getAllVersions ? patientFormArray.length : Math.min(1, patientFormArray.length);
+			for (int i = 0; i < maxFormsToProcess; i++) {
+				PatientForm patientForm = patientFormArray[i];
+				patientForm.setTable(table);
+				patientForm.setFormName(formName);
+				patientFormList.add(patientForm);
+			}
+		}
+
+		return patientFormList;
+	}
+
 	/**
 	 * Saves a form as PDF EDoc. 
 	 * Returns the id of the converted document. 

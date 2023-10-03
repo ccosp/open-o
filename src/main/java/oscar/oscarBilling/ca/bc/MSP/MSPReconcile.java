@@ -961,7 +961,7 @@ public class MSPReconcile {
 
 	/**
 	 * Updates the paymentMethod of the specified bill with the supplied paymentMethod code
-	 * @param billingNo String - The uid of the bill to be updated
+
 	 * @param paymentMethod String - The paymentMethod code
 	 */
 	private void updatePaymentMethodHlp(String billingMasterNo, String paymentMethod) {
@@ -1458,7 +1458,7 @@ public class MSPReconcile {
 	 * @param providerNo
 	 * @param startDate
 	 * @param endDate
-	 * @param excludePrivate
+
 	 * @return BillSearch
 	 */
 	public MSPReconcile.BillSearch getPrivatePayments(String account, String payeeNo, String providerNo, String startDate, String endDate) {
@@ -1583,7 +1583,7 @@ public class MSPReconcile {
 	/**
 	 * Returns a string description of a billing payment method
 	 * @todo This should actually be a cached lookup map to improve performance
-	 * @param string String
+
 	 * @return String
 	 */
 	private String getPaymentMethodDesc(String id) {
@@ -1607,7 +1607,7 @@ public class MSPReconcile {
 	 * @param excludeMSP boolean
 	 * @param excludePrivate boolean
 	 * @param exludeICBC boolean
-	 * @param status String
+
 	 * @return String
 	 */
 	private String createCriteriaString(String account, String payeeNo, String providerNo, String startDate, String endDate, boolean excludeWCB, boolean excludeMSP, boolean excludePrivate, boolean exludeICBC, String repType, String dateFieldOption) {
@@ -1634,10 +1634,10 @@ public class MSPReconcile {
 		}
 
 		if (payeeNo != null && !payeeNo.trim().equalsIgnoreCase("all")) {
-			criteriaQry += " and bm.payee_no = '" + payeeNo + "'";
+			criteriaQry += " and bm.payee_no LIKE '" + payeeNo + "'";
 		}
 		if (account != null && !account.trim().equalsIgnoreCase("all")) {
-			criteriaQry += " and b.provider_no = '" + account + "'";
+			criteriaQry += " and b.provider_no LIKE '" + account + "'";
 		}
 		if (startDate != null && !startDate.trim().equalsIgnoreCase("")) {
 			criteriaQry += " and ( to_days(" + dateField + ") >= to_days('" + startDate + "')) ";
@@ -1749,7 +1749,7 @@ public class MSPReconcile {
 	public ResultSet getMSPRemittanceQuery(String payeeNo, String s21Id) {
 		MiscUtils.getLogger().debug(new java.util.Date() + ":MSPReconcile.getMSPRemittanceQuery(payeeNo, s21Id)");
 		String qry = "SELECT billing_code,provider.first_name,provider.last_name,t_practitionerno,t_s00type,billingmaster.service_date as 't_servicedate',t_payment," + "t_datacenter,billing.demographic_name,billing.demographic_no,teleplanS00.t_paidamt,t_exp1,t_exp2,t_exp3,t_exp4,t_exp5,t_exp6,t_dataseq " + " from teleplanS00,billing,billingmaster,provider " + " where teleplanS00.t_officeno = billingmaster.billingmaster_no " + " and teleplanS00.s21_id = " + s21Id
-		        + " and billingmaster.billing_no = billing.billing_no " + " and provider.ohip_no= teleplanS00.t_practitionerno " + " and teleplanS00.t_practitionerno != '' and teleplanS00.t_payeeno = " + payeeNo + " order by provider.first_name,t_servicedate,billing.demographic_name";
+		        + " and billingmaster.billing_no = billing.billing_no " + " and provider.ohip_no= teleplanS00.t_practitionerno " + " and teleplanS00.t_practitionerno NOT LIKE '' and teleplanS00.t_payeeno LIKE '" + payeeNo + "' order by provider.first_name,t_servicedate,billing.demographic_name";
 
 		ResultSet rs = null;
 		try {
@@ -1957,11 +1957,13 @@ public class MSPReconcile {
 		BillingHistoryDAO dao = new BillingHistoryDAO();
 		//get all bills with explanation of type 'BG'
 		TeleplanS00Dao sDao = SpringUtils.getBean(TeleplanS00Dao.class);
+		BillingmasterDAO bDao = SpringUtils.getBean(BillingmasterDAO.class);
 		//for each bill, get amount owing
 		for (TeleplanS00 s : sDao.findBgs()) {
 			int billingmaster_no = UtilMisc.safeParseInt(s.getOfficeNo());
+			Billingmaster billingMaster = bDao.getBillingmaster(billingmaster_no);
 			//if billingmaster_no = 0 indicates corrupt record id
-			if (billingmaster_no != 0) {
+			if (shouldMakeInternalAdjustment(billingmaster_no, billingMaster)) {
 				String strBmNo = String.valueOf(billingmaster_no);
 				double parseAmt = UtilMisc.safeParseDouble(s.getBillAmount()) * .01;//ensure correct decimal position
 				double amountOwing = this.getAmountOwing(strBmNo, String.valueOf(parseAmt), "");
@@ -1973,5 +1975,12 @@ public class MSPReconcile {
 				}
 			}
 		}
+	}
+
+	private boolean shouldMakeInternalAdjustment(int billingMasterNumber,
+			Billingmaster billingMaster) {
+		return billingMasterNumber != 0
+				&& billingMaster != null
+				&& "E".equals(billingMaster.getBillingstatus());
 	}
 }

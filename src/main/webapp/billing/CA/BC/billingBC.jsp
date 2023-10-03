@@ -49,13 +49,11 @@ if(!authed) {
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
-<%@ page import="org.springframework.web.context.WebApplicationContext"%>
-<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="oscar.oscarDemographic.data.*"%>
-<%@page import="java.text.*, java.util.*, oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.entities.*"%>
+<%@page import="java.util.*, oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.entities.*"%>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
 <%@ page import="oscar.oscarResearch.oscarDxResearch.util.dxResearchCodingSystem"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 
 <%!
   public void fillDxcodeList(BillingFormData.BillingService[] servicelist, Map dxcodeList) {
@@ -182,7 +180,7 @@ if(!authed) {
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/Oscar.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/javascript/boxover.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/dxJSONCodeSearch.js"></script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery.validate-1.19.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery.validate-1.19.5.min.js"></script>
 
 <style type="text/css">
 	table {
@@ -226,36 +224,18 @@ if(!authed) {
 	}
 	
 	.wrapper {
-		margin: 40px 10px 10px 10px;
+		margin: 0 10px 10px 10px;
 	}
 	
 	div#page-header {
-		position: fixed;
+		position: sticky;
 		width: 100%;
 		top: 0;
 		left: 0;
+		right: 0;
 		z-index: 100000;
 	}
-	
-	div#page-header::after {
-    	clear: both;
-	}
-	
-	div#page-header::before, div#page-header::after {
-	    display: table;
-	    content: " ";
-	}
-	
-	div#page-header table {
-		margin:0px !important;
-	}
-	
-	#oscarBillingHeader {
-		width: 100%;
-		border-collapse: collapse;
-		background-color: #F3F3F3;
-	}
-	
+
 	table#oscarBillingHeader tr td {
 		padding: 1px 5px;
 		background-color: #F3F3F3;
@@ -267,7 +247,8 @@ if(!authed) {
 		background-color: black;	
 		border-bottom: black 1px solid;
 		line-height: 1;
-		border-top: black 1px solid;	
+		border-top: black 1px solid;
+        vertical-align: top;
 	}
 	
 	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
@@ -376,12 +357,6 @@ if(!authed) {
 	}
 	.has-error {
 		background-color: #f2dede;
-	}
-
-	@media only screen and (max-width: 820px) {
-		.wrapper {
-			margin: 80px 10px 10px 10px;
-		}
 	}
 	
 </style>
@@ -833,11 +808,12 @@ jQuery(document).ready(function(jQuery){
             format: 'HH:mm'
         });
     });
-    
+
 	/* New billing form selection method*/
     jQuery("#selectBillingForm").on('change',function() {
-    	var url = ctx + '/billing.do?demographic_no=' + <%=bean.getPatientNo()%> + '&appointment_no=' + <%=bean.getApptNo()%> + '&billRegion=BC&billForm=' + this.value;
-      	jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
+    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&billRegion=BC&billForm=' + this.value ;
+      	console.log(url);
+		jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
       		// re-bind all the javascript
     		getDxInformation();
     		bindDxJSONEvents();
@@ -885,22 +861,22 @@ jQuery(document).ready(function(jQuery){
 	 */
 	 jQuery("#bcBillingForm").validate({
  
-		 rules: {			 
+		 rules: {
+			 /*
+			  * Service date absolutely required
+			  */
+			 xml_appointment_date: {
+				 required: function(element) {
+					 return element.value.length === 0;
+				 }
+			 },
 			 /*
 			  * Is provider selected
 			  */
 			 xml_provider: {
-				 required: true
-			 },
-			 /*
-			  * Referral provider codes must be numeric
-			  */
-			 xml_refer1: {
-				 alphanumeric: true
-			 },
-
-			 xml_refer2: {
-                 alphanumeric: true
+				 required: function(element){
+					 return element.value.length === 0;
+				 }
 			 },
 			 
 			 /*
@@ -998,6 +974,9 @@ jQuery(document).ready(function(jQuery){
 		  * Error messages to return on each validation
 		  */
 		 messages: {
+			 xml_appointment_date: {
+				 required: "Service date is required"
+			 },
 		 	 xml_diagnostic_detail1: {
 		 		 required: "At least 1 diagnostic code is required",
 		 		 remote: "Invalid diagnostic code 1"
@@ -1013,8 +992,6 @@ jQuery(document).ready(function(jQuery){
 			 xml_other3_unit: "Service code units must be numeric",
 			 xml_provider: "Select a billing physician",
 			 xml_other1: "At least 1 service code is required",
-			 xml_refer1: "1: Invalid Referral Doctor code",
-			 xml_refer2: "2: Invalid Referral Doctor code",
 			 WCBid: "A WCB Form must be selected."
 		 },
 		 
@@ -1172,6 +1149,9 @@ if(wcbneeds != null){%>
     {
         sxml_provider = bean.getApptProviderNo();
     }
+	if("none".equals(sxml_provider)) {
+		sxml_provider = bean.getBillingProvider();
+	}
     thisForm.setXml_provider(sxml_provider);
     
     if (sxml_location.compareTo("") == 0) {
@@ -1183,17 +1163,20 @@ if(wcbneeds != null){%>
          thisForm.setXml_encounter("8");
       }
     }
-    String apDate = thisForm.getXml_appointment_date();
-    if (apDate != null && apDate.trim().length() == 0) {
-      thisForm.setXml_appointment_date(bean.getApptDate());
-    }
-    if (bean != null && bean.getBillType() != null) {
+
+	String serviceDate = bean.getServiceDate();
+	if(serviceDate == null || serviceDate.isEmpty()) {
+		serviceDate = bean.getApptDate();
+	}
+	thisForm.setXml_appointment_date(serviceDate);
+
+    if (bean.getBillType() != null) {
       thisForm.setXml_billtype(bean.getBillType());
     }
     else if (request.getParameter("billType") != null) {
       thisForm.setXml_billtype(request.getParameter("billType"));
     }
-    if (demo != null && demo.getVer() != null && demo.getVer().equals("66")) {
+    if (demo.getVer() != null && demo.getVer().equals("66")) {
       thisForm.setDependent("66");
     }
     thisForm.setCorrespondenceCode(bean.getCorrespondenceCode());
@@ -1226,7 +1209,7 @@ if(wcbneeds != null){%>
 
 	          	<div class="form-group" > 
 			      
-			        <label><bean:message key="billing.billingform"/></label>
+			        <label for="selectBillingForm" ><bean:message key="billing.billingform"/></label>
 			        
           		    <select class="form-control" id="selectBillingForm">
           		      <% for (int i = 0; i < billformlist.length; i++) { %>
@@ -1246,13 +1229,14 @@ if(wcbneeds != null){%>
              <td>
               <div class="form-group" > 
 
-		        <label><bean:message key="billing.provider.billProvider"/></label>
-                <html:select styleClass="form-control" property="xml_provider" value="<%=sxml_provider%>">
+		        <label for="xml_provider" ><bean:message key="billing.provider.billProvider"/></label>
+                <html:select styleId="xml_provider" styleClass="form-control" property="xml_provider" value="<%=sxml_provider%>">
                   <html:option value="">
                     Select Provider
                   </html:option>
                 <%for (int j = 0; j < billphysician.length; j++) {                %>
-                  <html:option value="<%=billphysician[j].getProviderNo()%>"><%=billphysician[j].getProviderName()%>                  </html:option>
+                  <html:option value="<%=billphysician[j].getProviderNo()%>"><%=billphysician[j].getProviderName()%>
+                  </html:option>
                 <%}                %>
                 </html:select>
                 
@@ -1263,8 +1247,8 @@ if(wcbneeds != null){%>
             <td>
                          <div class="form-group" > 
 		     
-           		 <label><bean:message key="billing.billingtype"/></label>
-                <html:select styleClass="form-control" property="xml_billtype" onchange="CheckType();gotoPrivate();">
+           		 <label for="xml_billtype" ><bean:message key="billing.billingtype"/></label>
+                <html:select styleClass="form-control" styleId="xml_billtype" property="xml_billtype" onchange="CheckType();gotoPrivate();">
                   <html:option value="MSP">Bill MSP</html:option>
                   <html:option value="WCB">Bill WCB</html:option>
                   <html:option value="ICBC">Bill ICBC</html:option>
@@ -1278,8 +1262,8 @@ if(wcbneeds != null){%>
             <td>
                <div class="form-group" > 
 		      
-                <label>Clarification Code</label>
-                <html:select styleClass="form-control" property="xml_location">
+                <label for="xml_location">Clarification Code</label>
+                <html:select styleClass="form-control" styleId="xml_location" property="xml_location">
                 <%
                   for (int i = 0; i < billlocation.length; i++) {
                     String locationDescription = billlocation[i].getBillingLocation() + "|" + billlocation[i].getDescription();
@@ -1294,8 +1278,8 @@ if(wcbneeds != null){%>
             <td>
              <div class="form-group" > 
 		      		      
-		      <label>Service Location</label>
-                <html:select styleClass="form-control" property="xml_visittype">
+		      <label for="xml_visittype">Service Location</label>
+                <html:select styleClass="form-control" styleId="xml_visittype" property="xml_visittype">
                 <%
                   for (int i = 0; i < billvisit.length; i++) {
                     String visitTypeDescription = billvisit[i].getVisitType() + "|" + billvisit[i].getDescription();
@@ -1319,7 +1303,7 @@ if(wcbneeds != null){%>
 			  <div class="form-group" > 
 		     
 	              <a href="javascript:void(0)" id="hlSDate">
-	                  <label><bean:message key="billing.servicedate"/></label>
+	                  <label for="xml_appointment_date"><bean:message key="billing.servicedate"/></label>
 	              </a>
 	              <html:text style="min-width:100px;" styleClass="form-control" property="xml_appointment_date" size="10" readonly="true" styleId="xml_appointment_date"/>
               </div>
@@ -1329,7 +1313,7 @@ if(wcbneeds != null){%>
 			<div class="form-group" > 
 		     
               <a href="javascript:void(0)" id="serviceToDate">
-                  <label>To Date</label>
+                  <label for="service_to_date">To Date</label>
               </a>
              
               <html:text styleClass="form-control" property="service_to_date" size="2" maxlength="2" styleId="service_to_date"/>
@@ -1339,8 +1323,8 @@ if(wcbneeds != null){%>
             <td>              
             <div class="form-group" > 
 		      
-           <label>After Hours</label>
-              <html:select styleClass="form-control" property="afterHours">
+           <label for="afterHours">After Hours</label>
+              <html:select styleClass="form-control" property="afterHours" styleId="afterHours">
                 <html:option value="0">No</html:option>
                 <html:option value="E">Evening</html:option>
                 <html:option value="N">Night</html:option>
@@ -1352,8 +1336,8 @@ if(wcbneeds != null){%>
             <td title="(HHMM 24hr):">
             <div class="form-group">
 		         
-                <label>Time Call</label>
-              <html:text styleClass="form-control" property="timeCall" />
+                <label for="timeCall">Time Call</label>
+              <html:text styleClass="form-control" property="timeCall" styleId="timeCall" />
               
               </div>
             </td>
@@ -1361,8 +1345,8 @@ if(wcbneeds != null){%>
 			<td>
 		
 		            <div class="form-group">
-		             <label>Start</label>
-		                <div class='input-group date datetimepicker'> 
+		             <label for="serviceStartTime">Start</label>
+		                <div class='input-group date datetimepicker'>
 		 
 		                    <input type='text' id="serviceStartTime" class="form-control" />
 		                  	<input type=hidden id="xml_starttime_hr" name="xml_starttime_hr" />
@@ -1375,7 +1359,7 @@ if(wcbneeds != null){%>
 			<td>			
 
 		            <div class="form-group">
-		            <label>End</label>
+		            <label for="serviceEndTime" >End</label>
 		                <div class='input-group date datetimepicker'>
 		                    <input type='text' id="serviceEndTime" class="form-control" />
 		                    <input type=hidden id="xml_endtime_hr" name="xml_endtime_hr" />
@@ -1391,8 +1375,8 @@ if(wcbneeds != null){%>
             <td>
                <div class="form-group" > 
 		                 
-                <label>Dependent</label>
-              <html:select styleClass="form-control"  property="dependent">
+                <label for="dependent">Dependent</label>
+              <html:select styleClass="form-control"  property="dependent" styleId="dependent">
                 <html:option value="00">No</html:option>
                 <html:option value="66">Yes</html:option>
               </html:select>
@@ -1402,8 +1386,8 @@ if(wcbneeds != null){%>
             <td title="Submission Code">              
              <div class="form-group" > 
 		     
-            	<label>Sub Code</label>
-              <html:select styleClass="form-control" property="submissionCode">
+            	<label for="submissionCode">Sub Code</label>
+              <html:select styleClass="form-control" property="submissionCode" styleId="submissionCode">
                 <html:option value="0">O - Normal</html:option>
                 <html:option value="D">D - Duplicate</html:option>
                 <html:option value="E">E - Debit</html:option>
@@ -1420,7 +1404,7 @@ if(wcbneeds != null){%>
             <td>
             <div class="form-group" > 
 		    
-                <label>Payment Method</label>
+                <label for="xml_encounter">Payment Method</label>
             <%
               ArrayList types = billform.getPaymentTypes();
               if ("Pri".equalsIgnoreCase(thisForm.getXml_billtype())) {
@@ -1455,8 +1439,8 @@ if(wcbneeds != null){%>
             <td>
 	            
 	            <div class="form-group">
-			       <label>BCP Facility</label> 
-	              	<html:text styleClass="form-control"  property="facilityNum" size="5" maxlength="5"/>
+			       <label for="facilityNum">BCP Facility</label>
+	              	<html:text styleClass="form-control"  property="facilityNum" styleId="facilityNum" size="5" maxlength="5"/>
 	             	
 	            </div> 
 	        </td>
@@ -1465,8 +1449,8 @@ if(wcbneeds != null){%>
 	       <td style="display: none;">
 	            
 	            <div class="form-group">
-			        <label>Sub Facility</label>
-	              		<html:text styleClass="form-control"  property="facilitySubNum" size="5" maxlength="5"/> 
+			        <label for="facilitySubNum">Sub Facility</label>
+	              		<html:text styleClass="form-control"  property="facilitySubNum" styleId="facilitySubNum" size="5" maxlength="5"/>
 	             	
 	            </div> 
 	        </td>
@@ -1508,12 +1492,12 @@ if(wcbneeds != null){%>
               <td>
     
 		      <div class='form-group'>
-                 <label>ICBC Claim No</label>
-					<html:text styleClass="form-control" property="icbc_claim_no" maxlength="8"/>
+                 <label for="icbc_claim_no">ICBC Claim No</label>
+					<html:text styleClass="form-control" property="icbc_claim_no" styleId="icbc_claim_no" maxlength="8"/>
 				</div>
 				<div class='form-group'> 
-					<label>MVA?</label>
-	                <html:select styleClass="form-control" property="mva_claim_code">
+					<label for="mva_claim_code">MVA?</label>
+	                <html:select styleClass="form-control" property="mva_claim_code" styleId="mva_claim_code">
 	                  <html:option value="N">No</html:option>
 	                  <html:option value="Y">Yes</html:option>
 	                </html:select>
@@ -1949,7 +1933,7 @@ if(wcbneeds != null){%>
                 <tr>
                   <td style="padding-top:5px !important;">
                       <label for="shortClaimNote"></label><label>Short Claim Note</label></label>
-                    <html:text styleClass="form-control" property="shortClaimNote" />
+                    <html:text styleId="shortClaimNote" styleClass="form-control" property="shortClaimNote" />
                   </td>
                   
                 </tr>

@@ -30,23 +30,20 @@
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscar"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="oscar.oscarProvider.data.ProSignatureData, oscar.oscarProvider.data.ProviderData"%>
-<%@ page import="oscar.log.*,oscar.oscarRx.data.*"%>
+<%@ page import="oscar.oscarRx.data.*"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
-<%@ page import="org.apache.logging.log4j.Logger" %>
 
 <%@ page import="oscar.*,java.lang.*,java.util.Date,java.text.SimpleDateFormat,oscar.oscarRx.util.RxUtil,org.springframework.web.context.WebApplicationContext,
          org.springframework.web.context.support.WebApplicationContextUtils,
          org.oscarehr.common.dao.UserPropertyDAO,org.oscarehr.common.model.UserProperty"%>
-<%@ page import="org.oscarehr.util.SpringUtils"%>
 
 <!-- Classes needed for signature injection -->
-<%@page import="org.oscarehr.util.SessionConstants"%>
-<%@page import="org.oscarehr.common.dao.*"%>
 <%@page import="org.oscarehr.common.model.*"%>
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@page import="org.oscarehr.util.DigitalSignatureUtils"%>
 <%@page import="org.oscarehr.ui.servlet.ImageRenderingServlet"%>
 <!-- end -->
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 	String providerNo=loggedInInfo.getLoggedInProviderNo();
@@ -71,18 +68,26 @@
 	}
 %>
 
-
+<!DOCTYPE html>
 <html:html locale="true">
 <head>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<script type="text/javascript" src="../share/javascript/prototype.js"></script>
-<script type="text/javascript" src="../share/javascript/Oscar.js"/></script>
+<%--<script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>--%>
+<%--<script type="text/javascript" src="../share/javascript/prototype.js"></script>--%>
+<%--<script type="text/javascript" src="../share/javascript/Oscar.js"></script>--%>
 <title><bean:message key="RxPreview.title"/></title>
-<style type="text/css" media="print">
+<style media="print">
  .noprint {
 	 display: none;
  }
  </style>
+	<style media="all">
+		* {
+			font:13px/1.231 arial,helvetica,clean,sans-serif;
+		}
+        #fax-success {
+            color:green;
+        }
+	</style>
 <html:base />
 
 <logic:notPresent name="RxSessionBean" scope="session">
@@ -96,18 +101,18 @@
 	</logic:equal>
 </logic:present>
 
-<link rel="stylesheet" type="text/css" href="styles.css">
-<script type="text/javascript" language="Javascript">
-	
+<%--<link rel="stylesheet" type="text/css" href="styles.css">--%>
+<%--<script type="text/javascript" language="Javascript">--%>
+<%--	--%>
 
-    function onPrint2(method) {
+<%--    function onPrint2(method) {--%>
 
-            document.getElementById("preview2Form").action = "../form/createcustomedpdf?__title=Rx&__method=" + method;
-            document.getElementById("preview2Form").target="_blank";
-            document.getElementById("preview2Form").submit();
-       return true;
-    }
-</script>
+<%--            document.getElementById("preview2Form").action = "../form/createcustomedpdf?__title=Rx&__method=" + method;--%>
+<%--            document.getElementById("preview2Form").target="_blank";--%>
+<%--            document.getElementById("preview2Form").submit();--%>
+<%--       return true;--%>
+<%--    }--%>
+<%--</script>--%>
 
 </head>
 <body topmargin="0" leftmargin="0" vlink="#0000FF">
@@ -205,12 +210,10 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
 <html:form action="/form/formname" styleId="preview2Form">
 
 	<input type="hidden" name="demographic_no" value="<%=bean.getDemographicNo()%>"/>
-    <p id="pharmInfo" style="float:right;">
-    </p>
     <table>
         <tr>
             <td>
-                            <table id="pwTable" width="400px" height="500px" cellspacing=0 cellpadding=10 border=2>
+	            <table id="pwTable" width="400px" height="500px" cellspacing=0 cellpadding=10 border=2>
                                     <tr>
                                             <td valign=top height="100px"><input type="image"
                                                     src="img/rx.gif" border="0" alt="[Submit]"
@@ -410,7 +413,7 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
                                             <table width=100% cellspacing=0 cellpadding=0>
                                                     <tr>
                                                             <td align=left valign=top><br>
-                                                                <%= patient.getFirstName() %> <%= patient.getSurname() %> <%if(showPatientDOB){%>&nbsp;&nbsp; DOB:<%= StringEscapeUtils.escapeHtml(patientDOBStr) %> <%}%><br>
+                                                                <%= Encode.forHtmlContent(patient.getFirstName()) %> <%= Encode.forHtmlContent(patient.getSurname()) %> <%if(showPatientDOB){%><br>DOB:<%= Encode.forHtmlContent(StringEscapeUtils.escapeHtml(patientDOBStr)) %> <%}%><br>
                                                             <%= patientAddress %><br>
                                                             <%= patientCityPostal %><br>
                                                             <%= patientPhone %><br>
@@ -472,7 +475,7 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
                                                     <tr valign=bottom>
                                                             <td height=25px width=25%><bean:message key="RxPreview.msgSignature"/>:</td>
                                                             <td height=25px width=75%
-                                                                    style="border-width: 0; border-bottom-width: 1; border-style: solid;">
+                                                                    style="border-width: 0; border-bottom-width: 1px; border-style: solid;">
                                                                     <%
 																	String signatureRequestId = null;	
 																	String imageUrl=null;
@@ -534,6 +537,7 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
 		                                                                    style="float: right;"><bean:message key="RxPreview.msgTimesPrinted"/>:&nbsp;<%=String.valueOf(rx.getNumPrints())%></span>
 		                                                            <input type="hidden" name="origPrintDate" value="<%=rx.getPrintDate()%>"/>
 		                                                            <input type="hidden" name="numPrints" value="<%=String.valueOf(rx.getNumPrints())%>"/>
+			                                                        <input type="hidden" name="rxReprint" value="true"/>
 		                                                        </td>
 		                                                    </tr>
 	                                                    <%
@@ -567,6 +571,10 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
                                     </tr>
                             </table>
 			</td>
+	        <td style="vertical-align: top;padding: 5px;">
+		        <div id="pharmInfo" >
+		        </div>
+	        </td>
 		</tr>
 	</table>
 </html:form>

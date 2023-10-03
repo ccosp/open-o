@@ -341,26 +341,27 @@ function rotate90(id) {
 
 function removeFirstPage(id) {
 	jQuery("#removeFirstPagebtn_" + id).attr('disabled', 'disabled');
-        var displayDocumentAs=$('displayDocumentAs_'+id).value;
+	if(confirm("!! This is a destructive action that CANNOT be reversed !! \n Click OK to delete the first page of this document, or Cancel to abort.")) {
+		var displayDocumentAs = $('displayDocumentAs_' + id).value;
+		new Ajax.Request(contextpath + "/dms/SplitDocument.do", {
+			method: 'post', parameters: "method=removeFirstPage&document=" + id,
+			onSuccess: function (data) {
+				jQuery("#removeFirstPagebtn_" + id).removeAttr('disabled');
+				if (displayDocumentAs == "PDF") {
+					showPDF(id, contextpath);
+				} else {
+					jQuery("#docImg_" + id).attr('src', contextpath + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
+				}
+				var numPages = parseInt(jQuery("#numPages_" + id).text()) - 1;
+				jQuery("#numPages_" + id).text("" + numPages);
 
-	new Ajax.Request(contextpath + "/dms/SplitDocument.do", {method: 'post', parameters: "method=removeFirstPage&document=" + id, onSuccess: function(data) {
-		jQuery("#removeFirstPagebtn_" + id).removeAttr('disabled');
-                if(displayDocumentAs=="PDF") {
-                    showPDF(id,contextpath);
-                } else {
-                    jQuery("#docImg_" + id).attr('src', contextpath + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
-                }
-		var numPages = parseInt(jQuery("#numPages_" + id).text())-1;
-		jQuery("#numPages_" + id).text("" + numPages);
-
-
-
-		if (numPages <= 1) {
-			jQuery("#numPages_" + id).removeClass("multiPage");
-			jQuery("#removeFirstPagebtn_" + id).remove();
-		}
-
-	}});
+				if (numPages <= 1) {
+					jQuery("#numPages_" + id).removeClass("multiPage");
+					jQuery("#removeFirstPagebtn_" + id).remove();
+				}
+			}
+		});
+	}
 }
 
 function split(id) {
@@ -1466,11 +1467,11 @@ function focusFirstDocLab(){
 function updateGlobalDataAndSideNav(doclabid,patientId){
 	doclabid=doclabid.replace(/\s/g,'');
 	
-	if(doclabid.length>0){
+	if(doclabid.length>0 && typeof patientDocs !== 'undefined'){
 		//delete doclabid from not assigned list
 		var na=patientDocs['-1'];
 		var index=na.indexOf(doclabid);
-		if(index!=-1){
+		if(index !== -1){
 			na.splice(index,1);
 			addIdToPatient(doclabid,patientId);//add to patient
 		}
@@ -1759,32 +1760,33 @@ function updateStatus(formid){//acknowledge
 		if(jQuery('#saved'+doclabid).length) {
 			saved = jQuery('#saved'+doclabid).val();
 		}
+		console.log("Update status for demoid: " + demoId + " doclabid: " + doclabid);
+		console.log("Previously saved: " + saved);
 
-		if(demoId=='-1'|| saved=='false'){
+		if(demoId === '-1'|| ! saved){
 			alert('Document is not assigned and saved to a patient,please file it');
 		}else{
 			var url=contextpath+"/oscarMDS/UpdateStatus.do";
 			var data=$(formid).serialize(true);
-			new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
+			console.log("Updating status. URL: " + url);
+			console.log(data);
 
-					updateDocStatusInQueue(doclabid);
-
-					if (typeof _in_window !== 'undefined' && _in_window) {
-						if (typeof self.opener.removeReport !== 'undefined') {
-							self.opener.removeReport(doclabid);
-						}
-						window.close();
-					} else {
-						//Hide document
-						Effect.BlindUp('labdoc_' + doclabid);
-						updateGlobalDataAndSideNav(num, null);
+			jQuery.post(url,data).success(function() {
+				updateDocStatusInQueue(doclabid);
+				if (typeof _in_window !== 'undefined' && _in_window) {
+					if (typeof self.opener.removeReport !== 'undefined') {
+						self.opener.removeReport(doclabid);
 					}
-			}});
+					window.close();
+				} else {
+					//Hide document
+					jQuery('#labdoc_' + doclabid).slideUp();
+					updateGlobalDataAndSideNav(doclabid, null);
+				}
+			})
 		}
 	}
 }
-
-
 
 function fileDoc(docId){
 	if(docId){

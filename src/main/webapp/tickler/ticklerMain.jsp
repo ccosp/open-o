@@ -195,6 +195,10 @@
                 color: grey;
                 background-color: white !important;
             }
+
+            table#tablefoot {
+	            margin-bottom:50px;
+            }
 		</style>
 		<script type="application/javascript">
 
@@ -223,20 +227,20 @@
 				ticklerResultsTable = jQuery("#ticklerResults").dataTable({
 					"searching": false,
 					"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
-					"iDisplayLength": 25,
+					"iDisplayLength": 50,
 					columns: [
-						{orderable: false},
-						{orderable: false},
-						{},
-						{},
-						{},
-						{orderable: false},
-						{},
-						{},
-						{},
-						{},
-						{orderable: false},
-						{orderable: false}
+						{orderable: false}, //checkbox column, so shouldn't be orderable
+						{orderable: false}, //edit icon column, so shouldn't be orderable
+						{orderable: false}, //demographic name column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{orderable: false}, //creator column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{}, //service date column
+						{orderable: false}, //update date column
+						{}, //priority column
+						{orderable: false}, //assigned to column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{orderable: false}, //status column. should not be made orderable until row group is refactored, otherwise tickler comments are not grouped properly
+						{orderable: false}, //comment column.
+						{orderable: false}, //note icon column, so shouldn't be orderable
+						{orderable: false} //hidden group id column, so shouldn't be orderable
 					],
 					columnDefs: [
 						{visible: false, targets: groupColumn}
@@ -246,7 +250,11 @@
 						let rows = api.rows({page: 'current'}).nodes();
 						let last = null;
 
-						api.column(groupColumn, {page: 'current'})
+						api.column(groupColumn, {page: 'current'}) //TODO: this code reorders the rows on the current page, the global order based on the current sort.  
+															 	   //      this means if a global sort is done that results in the tickler comments to NOT be on the current page
+																   //      they will not be visible.  A workaround has been implemented by adding the service date and priority
+																   //      into the tickler comment rows as well.  The datatables row group plugin might be a better approach,
+																   //      but will require refactoring of this code
 							.data()
 							.each(function (group, i) {
 								if (last !== group) {
@@ -553,14 +561,8 @@
 
 	<body>
 	<div class="container">
-		<table>
-			<tr class="noprint">
-				<td>
-					<h2><bean:message key="tickler.ticklerMain.msgTickler"/> Manager
-					</h2>
-				</td>
-			</tr>
-		</table>
+
+		<h2><bean:message key="tickler.ticklerMain.msgTickler"/> Manager</h2>
 
 		<form name="serviceform" method="get" action="ticklerMain.jsp" class="form-inline">
 			<input type="hidden" name="Submit" value="">
@@ -685,7 +687,7 @@
 						}
 					%>
 				</div>
-				<div class="pull-right" style="text-align: right; vertical-align: bottom; padding:20px 15px 15px 15px;">
+				<div class="pull-right form-group" style="text-align: right; vertical-align: bottom; padding:20px 15px 15px 15px;">
 					<label for="formSubmitBtn"></label>
 					<input type="button" class="btn btn-primary mbttn noprint" id="formSubmitBtn"
 					       value="<bean:message key="tickler.ticklerMain.btnCreateReport"/>"
@@ -699,7 +701,7 @@
 
 			</c:if>
 			<div class="pull-left" style="margin-bottom:10px;">
-					<label for="ticklerview"></label>
+					<label for="ticklerview">Filter</label>
 				<select id="ticklerview" class="form-control" name="ticklerview">
 					<option value="A" <%=ticklerview.equals("A") ? "selected" : ""%>><bean:message
 							key="tickler.ticklerMain.formActive"/></option>
@@ -714,7 +716,7 @@
 		<form name="ticklerform" method="post" action="dbTicklerMain.jsp">
 			<% Locale locale = request.getLocale();%>
 			<input type="hidden" name="parentAjaxId" value="<c:out value='${param.parentAjaxId}' />"/>
-			<table id="ticklerResults" class="table table-striped table-compact">
+			<table id="ticklerResults" class="table table-striped table-compact" style="width:100%">
 				<thead>
 				<tr>
 					<th>&nbsp</th>
@@ -828,7 +830,7 @@
 					                                   class="noprint"></td>
 					<td class="<%=cellColour%>">
 						<a href="javascript:void(0)" title="<bean:message key="tickler.ticklerMain.editTickler"/>"
-						   onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=tickler.getId()%>')">
+						   onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=tickler.getId()%>', 'edit_tickler', 'width=800, height=650')">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</a>
 					</td>
@@ -848,7 +850,7 @@
 					</td>
 					<td class="<%=cellColour%>"><%=tickler.getStatusDesc(locale)%>
 					</td>
-					<td class="<%=cellColour%>"><%=Encode.forHtmlContent(tickler.getMessage())%>
+					<td class="<%=cellColour%>"><span style="white-space:pre-wrap"><%=Encode.forHtmlContent(tickler.getMessage())%></span>
 
 						<%
 							List<TicklerLink> linkList = ticklerLinkDao.getLinkByTickler(tickler.getId().intValue());
@@ -876,7 +878,7 @@
 						<%
 						} else if (LabResultData.isHRM(type)) {
 						%>
-						<a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>')">ATT</a>
+						<a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>&segmentID=<%=tl.getTableId()%>')">ATT</a>
 						<%
 						} else {
 						%>
@@ -906,11 +908,12 @@
 				<tr class="followup-comment-<%=tickler.getId()%> comment-row no-sort">
 					<td></td>
 					<td></td>
-					<td></td>
-					<td class="no sort"><%=Encode.forHtmlContent(tc.getProvider().getLastName())%>
-						,<%=Encode.forHtmlContent(tc.getProvider().getFirstName())%>
+					<td><%=Encode.forHtmlContent(demo.getLastName())%>,<%=Encode.forHtmlContent(demo.getFirstName())%> 
 					</td>
-					<td></td>
+					<td class="no sort"><%=Encode.forHtmlContent(tc.getProvider().getFormattedName())%>
+					</td>
+					<td><%=tickler.getServiceDate()%>
+					</td>
 
 					<td class="no-sort">
 						<% if (tc.isUpdateDateToday()) { %>
@@ -920,10 +923,11 @@
 						<% } %>
 					</td>
 
+					<td><%=tickler.getPriority()%>
+					</td>
 					<td></td>
 					<td></td>
-					<td></td>
-					<td class="no sort"><%=Encode.forHtmlContent(tc.getMessage())%>
+					<td class="no sort" style="white-space:pre-wrap"><%=Encode.forHtmlContent(tc.getMessage())%>
 					</td>
 					<td></td>
 					<td><%=tickler.getId()%>
@@ -978,33 +982,41 @@
 			<%=OscarProperties.getConfidentialityStatement()%>
 		</p>
 
-		<div id="note-form" title="Edit Tickler Note">
+		<div id="note-form" title="Edit Tickler Note" style="display:none;">
 			<form>
+				<input type="hidden" name="tickler_note_demographicNo" id="tickler_note_demographicNo" value=""/>
+				<input type="hidden" name="tickler_note_ticklerNo" id="tickler_note_ticklerNo" value=""/>
+				<input type="hidden" name="tickler_note_noteId" id="tickler_note_noteId" value=""/>
 
-				<table>
-					<tbody>
-					<textarea id="tickler_note" name="tickler_note" style="width:100%;"
+				<table style="width:100%;">
+					<tr>
+						<td>
+						<label for="tickler_note">Tickler Note</label>
+					<textarea class="form-control" id="tickler_note" rows="5" name="tickler_note" style="width:100%;"
 					          oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
 					          onfocus='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
-					<input type="hidden" name="tickler_note_demographicNo" id="tickler_note_demographicNo" value=""/>
-					<input type="hidden" name="tickler_note_ticklerNo" id="tickler_note_ticklerNo" value=""/>
-					<input type="hidden" name="tickler_note_noteId" id="tickler_note_noteId" value=""/>
-					</tbody>
-				</table>
-				<table>
+						</td>
+					</tr>
 					<tr>
 						<td nowrap="nowrap">
-							Date: <span id="tickler_note_obsDate"></span> rev <a id="tickler_note_revision_url"
-							                                                     href="javascript:void(0)"
-							                                                     onClick=""><span
-								id="tickler_note_revision"></span></a><br/>
-							Editor: <span id="tickler_note_editor"></span>
+							<label for="tickler_note_obsDate" >Date:</label>
+							<span id="tickler_note_obsDate"></span>
+
+							<label for="tickler_note_revision_url">Rev:</label>
+							<a id="tickler_note_revision_url" href="javascript:void(0)" onClick="">
+							<span id="tickler_note_revision"></span>
+							</a>
+
+							<label for="tickler_note_editor">Editor:</label>
+							<span id="tickler_note_editor"></span>
 						</td>
 					</tr>
 
 				</table>
+				<div class="pull-right">
 				<button class="btn btn-primary" onclick="saveNoteDialog()">Save</button>
 				<button class="btn btn-danger" onclick="closeNoteDialog()">Exit</button>
+				</div>
 
 			</form>
 		</div>

@@ -128,14 +128,13 @@ public class ManageDocumentAction extends DispatchAction {
 		String documentDescription = request.getParameter("documentDescription");// :test2<
 		String documentId = request.getParameter("documentId");// :29<
 		String docType = request.getParameter("docType");// :consult<
+		String demog = request.getParameter("demog");
 
 		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_edoc", "w", null)) {
         	throw new SecurityException("missing required security object (_edoc)");
         }
 		
-		LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.ADD, LogConst.CON_DOCUMENT, documentId, request.getRemoteAddr());
-
-		String demog = request.getParameter("demog");
+		LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.ADD, LogConst.CON_DOCUMENT, documentId, request.getRemoteAddr(), demog);
 
 		String[] flagproviders = request.getParameterValues("flagproviders");
 		// String demoLink=request.getParameter("demoLink");

@@ -425,7 +425,10 @@ public class CommonLabResultData {
 				providerLabRoutingModel.setStatus(""+status);
 				//we don't want to clobber existing comments when filing labs
 				String currentComment = providerLabRoutingModel.getComment();
-				providerLabRoutingModel.setComment(currentComment != null ? currentComment : ""  + " " + comment);
+				// use the new incoming comment on these conditions.
+				if(currentComment != null && ! currentComment.trim().equalsIgnoreCase(comment.trim())) {
+					providerLabRoutingModel.setComment(comment.trim());
+				}
 				providerLabRoutingModel.setTimestamp(new Date());
 				providerLabRoutingDao.merge(providerLabRoutingModel);
 			}
@@ -491,7 +494,7 @@ public class CommonLabResultData {
 	public static String searchPatient(String labNo, String labType) {
 		PatientLabRoutingDao dao = SpringUtils.getBean(PatientLabRoutingDao.class);
 		List<PatientLabRouting> routings = dao.findByLabNoAndLabType(ConversionUtils.fromIntString(labNo), labType);
-		if (routings.isEmpty()) {
+		if (routings == null || routings.isEmpty()) {
 			return "0";
 		}
 		
