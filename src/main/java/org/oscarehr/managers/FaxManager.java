@@ -97,11 +97,12 @@ public class FaxManager {
 	}
 
 	/**
-	 * Render a fax document from the given parameters.
-	 * Return a path to the fax document so it can be reviewed by the sender.
+	 * @Deprecated
+	 * Move these rendering methods into a more generic class like the DocumentManager
 	 *
 	 * @return
 	 */
+	@Deprecated
 	public Path renderFaxDocument(LoggedInInfo loggedInInfo, TransactionType transactionType, int transactionId, int demographicNo, FormTransportContainer formTransportContainer) {
 
 		Path renderedDocument;
