@@ -163,10 +163,10 @@ public class EctConsultationFormFaxAction extends Action {
 				streams.add(bis);
 				pdfDocumentList.add(bis);
 			}
-			else { //fax for consultation response
-				String consultRespoonsePDF = ConsultResponsePDFCreator.create(consultResponsePage);
-				pdfDocumentList.add(consultRespoonsePDF);
-			}
+//			else { //fax for consultation response
+//				String consultRespoonsePDF = ConsultResponsePDFCreator.create(consultResponsePage);
+//				pdfDocumentList.add(consultRespoonsePDF);
+//			}
 
 			// attached eForms
 			List<EFormData> eForms = consultationManager.getAttachedEForms(reqId);

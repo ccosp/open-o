@@ -35,7 +35,6 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.WKHtmlToPdfUtils;
 
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
@@ -131,7 +130,7 @@ public final class EfmpatientformlistSendPhrAction {
 
 			// convert to PDF
 			String viewUri = localUri + eFormId;
-			WKHtmlToPdfUtils.convertToPdf(viewUri, tempFile);
+
 			logger.debug("Writing pdf to : " + tempFile.getCanonicalPath());
 
 			// upload pdf to oscar docs

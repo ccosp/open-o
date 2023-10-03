@@ -41,11 +41,9 @@ if(!authed) {
 
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@page
-	import="java.util.ArrayList, oscar.dms.*, oscar.oscarLab.ca.on.*, oscar.util.StringUtils"%>
-<%@page import="org.oscarehr.util.SessionConstants"%>
+	import="java.util.ArrayList, oscar.oscarLab.ca.on.*, oscar.util.StringUtils"%>
 <%@page	import="java.util.List"%>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="oscar.util.DateUtils" %>
 <%@ page import="org.oscarehr.hospitalReportManager.dao.HRMDocumentDao" %>
 <%@ page import="org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao" %>
 <%@ page import="org.oscarehr.hospitalReportManager.model.HRMDocument" %>
