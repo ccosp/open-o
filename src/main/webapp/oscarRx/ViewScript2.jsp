@@ -24,7 +24,6 @@
 
 --%>
 <%@ page import="oscar.oscarProvider.data.*, oscar.oscarRx.data.*,oscar.OscarProperties, oscar.oscarClinic.ClinicData, java.util.*"%>
-<%@ page import="org.oscarehr.common.model.PharmacyInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -40,13 +39,13 @@
 
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.oscarehr.common.model.Site"%>
 <%@page import="org.oscarehr.util.SpringUtils"%>
-<%@page import="org.oscarehr.common.model.Appointment"%>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao"%>
-<%@ page import="org.oscarehr.common.dao.FaxConfigDao, org.oscarehr.common.model.FaxConfig" %>
+<%@ page import="org.oscarehr.managers.FaxManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
+<%@ page import="org.oscarehr.common.model.*" %>
 <%@ page import="oscar.oscarProvider.data.ProviderData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
@@ -88,8 +87,17 @@
 	</logic:equal>
 </logic:present>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
+	<%!
+		ProviderManager providerManager = SpringUtils.getBean(ProviderManager.class);
+	%>
 <%
 oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean)pageContext.findAttribute("bean");
+	Provider provider = providerManager.getProvider(bean.getProviderNo());
+	String providerFax = provider.getWorkPhone();
+	if(providerFax == null) {
+		providerFax = "";
+	}
+	providerFax = providerFax.replaceAll("[^0-9]", "");
 
 Vector vecPageSizes=new Vector();
 vecPageSizes.add("A4 page");
@@ -127,14 +135,14 @@ if(bMultisites) {
 		if (result!=null) location = result.getLocation();
 	}
 
-    oscar.oscarRx.data.RxProviderData.Provider provider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
+    oscar.oscarRx.data.RxProviderData.Provider rxprovider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
     ProSignatureData sig = new ProSignatureData();
     boolean hasSig = sig.hasSignature(bean.getProviderNo());
     String doctorName = "";
     if (hasSig){
        doctorName = sig.getSignature(bean.getProviderNo());
     }else{
-       doctorName = (provider.getFirstName() + ' ' + provider.getSurname());
+       doctorName = (rxprovider.getFirstName() + ' ' + rxprovider.getSurname());
     }
     doctorName = doctorName.replaceAll("\\d{6}","");
     doctorName = doctorName.replaceAll("\\-","");
@@ -159,14 +167,14 @@ if(bMultisites) {
 
 
 } else if(props.getProperty("clinicSatelliteName") != null) {
-    oscar.oscarRx.data.RxProviderData.Provider provider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
+    oscar.oscarRx.data.RxProviderData.Provider rxprovider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
     ProSignatureData sig = new ProSignatureData();
     boolean hasSig = sig.hasSignature(bean.getProviderNo());
     String doctorName = "";
     if (hasSig){
        doctorName = sig.getSignature(bean.getProviderNo());
     }else{
-       doctorName = (provider.getFirstName() + ' ' + provider.getSurname());
+       doctorName = (rxprovider.getFirstName() + ' ' + rxprovider.getSurname());
     }
 
     ClinicData clinic = new ClinicData();
@@ -313,6 +321,10 @@ function printIframe(){
 		}
 		else
 		{
+			if ('function' === typeof window.onbeforeunload) {
+				window.onbeforeunload = null;
+			}
+
 			preview.focus();
 			preview.print();
 
@@ -778,12 +790,25 @@ function toggleView(form) {
 							onClick="printPaste2Parent(true, false, true);" /></span></td>
 					</tr>
 					<% if (OscarProperties.getInstance().isRxFaxEnabled()) {
-					    	FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-					    	List<FaxConfig> faxConfigs = faxConfigDao.findAll(null, null);
-					    
+							FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+							List<FaxConfig> faxConfigs = faxManager.getFaxGatewayAccounts(loggedInInfo);																							    
 					    %>
 					<tr>
-						<td style="padding-bottom: 0"><span><input type=button value="Fax"
+						<td style="padding-bottom: 0">							
+							<span>From Fax Number:</span>
+							<select id="faxNumber" name="faxNumber">
+							<%
+								for( FaxConfig faxConfig : faxConfigs ) {
+							%>
+									<option value="<%=faxConfig.getFaxNumber()%>" selected="<%=providerFax.equals(faxConfig.getFaxNumber())%>"><%=faxConfig.getAccountName()%></option>
+							<%	    
+								}                                 	
+							%>
+							</select>							
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 0; padding-bottom: 0"><span><input type=button value="Fax"
 										 class="ControlPushButton" id="faxButton" style="width: 210px"
 										 onClick="sendFax();" disabled/></span>
 						</td>
@@ -792,19 +817,10 @@ function toggleView(form) {
                             <td style="padding-top: 0"><span><input type=button value="Fax &amp; Add to encounter note"
                                     class="ControlPushButton" id="faxPasteButton" style="width: 210px"
                                     onClick="printPaste2Parent(false, true, true);sendFax();" disabled/></span>
-                                 <span>
-                                 	<select id="faxNumber" name="faxNumber">
-                                 	<%
-                                 		for( FaxConfig faxConfig : faxConfigs ) {
-                                 	%>
-                                 			<option value="<%=faxConfig.getFaxNumber()%>"><%=faxConfig.getFaxUser()%></option>
-                                 	<%	    
-                                 		}                                 	
-                                 	%>
-                                 	</select>
-                                 </span>
+                                 
                            </td>
                     </tr>
+					
                     <% } %>
 					<tr>
 						<!--td width=10px></td-->
