@@ -330,13 +330,6 @@
 			<form-property name="demoNo" type="java.lang.String" />
 			<form-property name="providerNo" type="java.lang.String" />
 		</form-bean>
-		<form-bean name="attachEform" type="org.apache.struts.action.DynaActionForm">
-			<form-property name="documents" type="java.lang.String[]" />
-			<form-property name="attachedDocs" type="java.lang.String[]" />
-			<form-property name="requestId" type="java.lang.String" />
-			<form-property name="demoNo" type="java.lang.String" />
-			<form-property name="providerNo" type="java.lang.String" />
-		</form-bean>
 		<form-bean name="clientSearchForm" type="org.apache.struts.validator.LazyValidatorForm" />
 
 		<form-bean name="StreetHealthIntakeReportForm" type="org.apache.struts.validator.LazyValidatorForm" />
@@ -616,6 +609,7 @@
 			<form-property name="faxFilePath" type="java.lang.String" />
 			<form-property name="recipient" type="java.lang.String" />
 			<form-property name="recipientFaxNumber" type="java.lang.String" />
+			<form-property name="letterheadFax" type="java.lang.String" />
 			<form-property name="comments" type="java.lang.String" />
 			<form-property name="demographicNo" type="java.lang.Integer" />
 			<form-property name="coverpage" type="java.lang.String" />
@@ -1072,6 +1066,11 @@
 		<action input="/oscarRx/ViewScript2.jsp" path="/oscarRx/GetRxPageSizeInfo" parameter="method" scope="request" type="oscar.oscarRx.pageUtil.RxRxPageSizeInfoAction">
 			<forward name="success" path="/oscarRx/ViewScript2.jsp"></forward>
 		</action>
+
+		<action path="/oscarRx/WriteToEncounter" scope="request" type="oscar.oscarRx.pageUtil.RxWriteToEncounterAction">
+			<forward name="success" path="/oscarRx/ViewScript2.jsp" />
+		</action>
+
 		<action path="/oscarMDS/SendMRP" scope="request" type="oscar.oscarMDS.pageUtil.SendMostResponProvAction">
 			<forward name="failure" path="/errorpage.jsp" />
 		</action>
@@ -1312,6 +1311,9 @@
 			type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ConfirmConsultationRequest.jsp" />
 			<forward name="failESend" path="/oscarEncounter/ViewRequest.do" />
+			<forward name="print" path="/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint.jsp" />
+			<forward name="printalt" path="/oscarEncounter/oscarConsultationRequest/ConsultationFormPrint2.jsp" />
+			<forward name="printpdf" path="/oscarEncounter/oscarConsultationRequest/printPdf.do" />
 			<forward name="printIndivica" path="/oscarEncounter/oscarConsultationRequest/printPdf2.do" />
 			<forward name="fax" path="/fax/CoverPage.jsp" />
 		</action>
@@ -1320,11 +1322,16 @@
 		</action>
 		<action input="/oscarEncounter/oscarconsultationRequest/ConsultationFormRequest.jsp" path="/oscarEncounter/oscarConsultationRequest/printPdf2" scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestPrintAction2">
 			<forward name="error" path="/oscarEncounter/ViewRequest.do?error=error" />
+			<!-- locate and forward to the given form name -->
+			<forward name="attachform" path="/form/forwardshortcutname.jsp" />
 		</action>
 		<action input="/oscarEncounter/oscarconsultationRequest/ConsultationFormRequest.jsp" path="/oscarEncounter/oscarConsultationRequest/ConsultationFormFax" name="EctConsultationFaxForm" 
 			scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormFaxAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ConfirmConsultationRequest.jsp" />
 			<forward name="error" path="/oscarEncounter/ViewRequest.do?error=error" />
+			<!-- locate and forward to the given form name -->
+			<forward name="attachform" path="/form/forwardshortcutname.jsp" />
+			<forward name="cancel" path="/oscarEncounter/ViewRequest.do" />
 		</action>
 		<action input="/oscarEncounter/oscarConsultationRequest/attachmentReport.jsp" name="FrmForm" path="/oscarEncounter/oscarConsultation/printAttached" scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPrintDocsAction">
 			<forward name="noprint" path="/oscarEncounter/oscarConsultationRequest/nothingtoPrint.jsp" />

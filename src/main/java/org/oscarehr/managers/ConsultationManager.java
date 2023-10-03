@@ -31,6 +31,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
@@ -70,6 +71,7 @@ import org.oscarehr.common.model.CtlDocument;
 import org.oscarehr.common.model.CtlDocumentPK;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Document;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Property;
@@ -77,6 +79,7 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter.SORTDIR;
 import org.oscarehr.consultations.ConsultationResponseSearchFilter;
+import org.oscarehr.hospitalReportManager.HRMUtil;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.ws.rest.conversion.OtnEconsultConverter;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
@@ -90,7 +93,9 @@ import ca.uhn.hl7v2.model.v26.message.ORU_R01;
 import ca.uhn.hl7v2.model.v26.message.REF_I12;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.eform.EFormUtil;
 import oscar.log.LogAction;
+import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -116,6 +121,12 @@ public class ConsultationManager {
 	Hl7TextInfoDao hl7TextInfoDao;
 	@Autowired
 	ClinicDAO clinicDao;
+	@Autowired
+	private ConsultDocsDao consultDocsDao;
+
+	@Autowired
+	private FormsManager formsManager;
+
 	@Autowired
 	DemographicManager demographicManager;
 	@Autowired
@@ -528,7 +539,54 @@ public class ConsultationManager {
 		
 		return results;
 	}
-	
+
+	public List<ConsultDocs> getAttachedDocumentsByType(LoggedInInfo loggedInInfo, Integer consultRequestId, String docType) {
+		return consultDocsDao.findByRequestIdDocType(consultRequestId, docType);
+	}
+
+	public List<EctFormData.PatientForm> getAttachedForms(LoggedInInfo loggedInInfo, int consultRequestId, int demographicNo) {
+		List<ConsultDocs> attachedForms = getAttachedDocumentsByType(loggedInInfo, consultRequestId, ConsultDocs.DOCTYPE_FORM);
+		List<EctFormData.PatientForm> filteredForms = new ArrayList<>(attachedForms.size());
+		/*
+		 * Sure wish we didn't have to do this.  It's the only option without having to refactor a
+		 * whole string of dated code.
+		 */
+		List<EctFormData.PatientForm> allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, demographicNo, true, true);
+		for (ConsultDocs attached : attachedForms) {
+			for (EctFormData.PatientForm form : allForms) {
+				if ((form.getFormId()).equals((attached.getDocumentNo() + ""))) {
+					filteredForms.add(form);
+					break;
+				}
+			}
+		}
+
+		return filteredForms;
+	}
+
+	public List<EFormData> getAttachedEForms(String requestId) {
+		return EFormUtil.listPatientEformsCurrentAttachedToConsult(requestId);
+	}
+
+	public ArrayList<HashMap<String, ? extends Object>> getAttachedHRMDocuments(LoggedInInfo loggedInInfo, String demographicNo, String requestId) {
+		List<ConsultDocs> attachedHRMDocuments = getAttachedDocumentsByType(loggedInInfo, Integer.parseInt(requestId), ConsultDocs.DOCTYPE_HRM);
+		//TODO: refactor HRMUtil so that it's possible to call a function, pass in a particular HRM ID, and return the same information for that HRM that listHRMDocuments does		
+		//		once this is done, would be possible to simply iterate over attachedHRMDocuments 
+		//		In the absence of the above refactoring, the following gets the full listHRMDocuments and then filters for only the items that are actually attached to the consult
+		ArrayList<HashMap<String, ? extends Object>> allHRMDocuments = HRMUtil.listHRMDocuments(loggedInInfo, "report_date", false, demographicNo,false);		
+		ArrayList<HashMap<String, ? extends Object>> filteredHRMDocuments = new ArrayList<>(attachedHRMDocuments.size());
+		for (ConsultDocs attachedHRMDocument : attachedHRMDocuments) {
+			for (HashMap<String, ? extends Object> hrmDocument: allHRMDocuments) {
+				if (((Integer)hrmDocument.get("id")) == attachedHRMDocument.getDocumentNo()) {
+					filteredHRMDocuments.add(hrmDocument);
+				}
+			}
+		}
+		//return the subset of listHRMDocuments that is attached
+		return filteredHRMDocuments;
+	}
+
+
 	public void archiveConsultationRequest(Integer requestId) {
 		ConsultationRequest c =  consultationRequestDao.find(requestId);
 		if(c != null) {

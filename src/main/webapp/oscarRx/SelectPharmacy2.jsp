@@ -51,7 +51,6 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>
 
-
 <title><bean:message key="SelectPharmacy.title" /></title>
 <html:base />
 
