@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -66,6 +67,7 @@ import org.oscarehr.common.model.ConsultationRequestExt;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DemographicContact;
 import org.oscarehr.common.model.DigitalSignature;
+import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
@@ -85,6 +87,7 @@ import org.oscarehr.util.WebUtils;
 import oscar.OscarProperties;
 import oscar.dms.EDoc;
 import oscar.dms.EDocUtil;
+import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -115,6 +118,9 @@ public class EctConsultationFormRequestAction extends Action {
 		String appointmentPm = frm.getAppointmentPm();
         String[] attachedDocuments = frm.getDocNo();
         String[] attachedLabs = frm.getLabNo();
+		String[] attachedForms = frm.getFormNo();
+		String[] attachedEForms = frm.geteFormNo();
+		String[] attachedHRMDocuments = frm.getHrmNo();
         List<String> documents = new ArrayList<String>();
 
 		if (appointmentPm.equals("PM") && Integer.parseInt(appointmentHour) < 12 ) {
@@ -269,6 +275,14 @@ public class EctConsultationFormRequestAction extends Action {
             				  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
             				  	consultationAttachLabs.attach(loggedInInfo);
 
+								ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
+								consultationAttachForms.attach(loggedInInfo);
+
+								ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
+								consultationAttachEForms.attach(loggedInInfo);
+
+								ConsultationAttachHRMs consultationAttachHRMs = new ConsultationAttachHRMs(providerNo,demographicNo,requestId,attachedHRMDocuments);
+								consultationAttachHRMs.attach(loggedInInfo);
 			}
 	        catch (ParseException e) {
 	                MiscUtils.getLogger().error("Invalid Date", e);
@@ -387,7 +401,12 @@ public class EctConsultationFormRequestAction extends Action {
                 consultationAttachDocs.attach(loggedInInfo); 
 			  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
 			  	consultationAttachLabs.attach(loggedInInfo);
-
+				ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
+				consultationAttachForms.attach(loggedInInfo);
+				ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
+				consultationAttachEForms.attach(loggedInInfo);
+				ConsultationAttachHRMs consultationAttachHRMs = new ConsultationAttachHRMs(providerNo,demographicNo,requestId,attachedHRMDocuments);
+				consultationAttachHRMs.attach(loggedInInfo);
 			}
 
 			catch (ParseException e) {
@@ -430,8 +449,14 @@ public class EctConsultationFormRequestAction extends Action {
 			List<EDoc> attachedDocumentList = EDocUtil.listDocs(loggedInInfo, demographicNo, requestId, EDocUtil.ATTACHED);
 	        CommonLabResultData commonLabResultData = new CommonLabResultData();
 			List<LabResultData> attachedLabList = commonLabResultData.populateLabResultsData(loggedInInfo, demographicNo, requestId, CommonLabResultData.ATTACHED);
-			
-	        if(attachedDocumentList != null) {      	
+
+			List<EctFormData.PatientForm> attachedFormsList = consultationManager.getAttachedForms(loggedInInfo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+
+			List<EFormData> attachedEFormsList = consultationManager.getAttachedEForms(requestId);
+
+			ArrayList<HashMap<String, ? extends Object>> attachedHRMDocumentsList = consultationManager.getAttachedHRMDocuments(loggedInInfo, demographicNo, requestId);
+
+	        if(attachedDocumentList != null) {
 	        	for(EDoc documentItem : attachedDocumentList) {
 	        		String description = documentItem.getDescription();
 	        		if( description == null || description == "") {
@@ -446,7 +471,25 @@ public class EctConsultationFormRequestAction extends Action {
 	           		documents.add(labResultData.getDisciplineDisplayString());
 	        	}
 	        }
-	        
+
+			if(attachedFormsList != null && ! attachedFormsList.isEmpty()) {
+				for(EctFormData.PatientForm attachedForm : attachedFormsList) {
+					documents.add(attachedForm.formName);
+				}
+			}
+
+			if(attachedEFormsList != null && ! attachedEFormsList.isEmpty()) {
+				for(EFormData attachedEForm : attachedEFormsList) {
+					documents.add(attachedEForm.getFormName());
+				}
+			}
+
+			if (attachedHRMDocumentsList != null && !attachedHRMDocumentsList.isEmpty()) {
+				for (HashMap<String, ? extends Object> attachedHRMDocument : attachedHRMDocumentsList) {
+					documents.add(attachedHRMDocument.get("name")+"");
+				}
+			}
+
 			List<FaxConfig>	accounts = faxManager.getFaxGatewayAccounts(loggedInInfo);
 			
 	        request.setAttribute("letterheadFax", frm.getLetterheadFax());

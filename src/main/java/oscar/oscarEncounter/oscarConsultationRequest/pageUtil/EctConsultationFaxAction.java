@@ -100,7 +100,7 @@ public class EctConsultationFaxAction extends Action {
       String sendingProvider    = curUser_no;
       String locationId         = getLocationId();
       String identifier         = props.getProperty("faxIdentifier", "zwf4t%8*9@s");
-      String recipentsFaxNumber = frm.getRecipientsFaxNumber();
+      String recipentFaxNumber = frm.getRecipientFaxNumber();
       String comments           = frm.getComments();
       String sendersFax         = frm.getSendersFax();
       String sendersPhone       = frm.getSendersPhone();
@@ -168,7 +168,7 @@ public class EctConsultationFaxAction extends Action {
          OFSm.setIdentifier(identifier);
          OFSm.setFaxType(OFSm.consultation);
          //OFSm.setRecipientFaxNumber("9055750779");
-         OFSm.setRecipientFaxNumber(recipentsFaxNumber);
+         OFSm.setRecipientFaxNumber(recipentFaxNumber);
 
          OFSm.setCoverSheet(true);
          OFSm.setComments(comments);
