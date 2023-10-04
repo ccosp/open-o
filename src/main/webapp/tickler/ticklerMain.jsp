@@ -850,7 +850,7 @@
 					</td>
 					<td class="<%=cellColour%>"><%=tickler.getStatusDesc(locale)%>
 					</td>
-					<td class="<%=cellColour%>"><%=Encode.forHtmlContent(tickler.getMessage())%>
+					<td class="<%=cellColour%>"><span style="white-space:pre-wrap"><%=Encode.forHtmlContent(tickler.getMessage())%></span>
 
 						<%
 							List<TicklerLink> linkList = ticklerLinkDao.getLinkByTickler(tickler.getId().intValue());
@@ -927,7 +927,7 @@
 					</td>
 					<td></td>
 					<td></td>
-					<td class="no sort"><%=Encode.forHtmlContent(tc.getMessage())%>
+					<td class="no sort" style="white-space:pre-wrap"><%=Encode.forHtmlContent(tc.getMessage())%>
 					</td>
 					<td></td>
 					<td><%=tickler.getId()%>
