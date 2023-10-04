@@ -384,9 +384,28 @@ public class CaseManagementManager {
 		return caseManagementNoteDAO.getNotesByDemographicDateRange(demographic_no, startDate, endDate);
 	}
 
-	/* Return only those notes with archived set to zero */
+	/**
+	 * @deprecated
+	 * Use the authenticated method: getActiveNotes(LoggedInInfo loggedInInfo, String demographic_no, String[] issues)
+	 * Return only those notes with archived set to zero
+	 */
+	@Deprecated
 	public List<CaseManagementNote> getActiveNotes(String demographic_no, String[] issues) {
 		List<CaseManagementNote> notes = caseManagementNoteDAO.getActiveNotesByDemographic(demographic_no, issues);
+		return notes;
+	}
+
+	/* Return only those notes with archived set to zero */
+	public List<CaseManagementNote> getActiveNotes(LoggedInInfo loggedInInfo, String demographic_no, String[] issues) {
+
+  		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_demographic", SecurityInfoManager.READ, demographic_no)) {
+			throw new RuntimeException("Missing privileges to access this demographic (_demographic)");
+		}
+
+		List<CaseManagementNote> notes = caseManagementNoteDAO.getActiveNotesByDemographic(demographic_no, issues);
+		
+		LogAction.addLog(loggedInInfo, "CaseManagementManager.getActiveNotes", "Issues", Arrays.toString(issues), demographic_no, CaseManagementNote.class.toString());
+		
 		return notes;
 	}
 
