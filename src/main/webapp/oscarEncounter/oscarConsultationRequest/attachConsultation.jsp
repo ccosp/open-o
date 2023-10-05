@@ -101,6 +101,10 @@
 			min-width: 320px;
 		}
 
+		#attachDocumentsPanel {
+			width: 100%;
+		}
+
 		.preview-button {
 			padding: 2px 4px;
 			color: black;
