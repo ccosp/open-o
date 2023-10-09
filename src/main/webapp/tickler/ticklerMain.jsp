@@ -76,7 +76,7 @@
 
 <%
 	String labReqVer = oscar.OscarProperties.getInstance().getProperty("onare_labreqver", "07");
-	if (labReqVer.equals("")) {
+	if (labReqVer.isEmpty()) {
 		labReqVer = "07";
 	}
 
@@ -177,6 +177,24 @@
 		      type="text/css"/>
 
 		<style>
+
+            table tr.comment-row td:nth-of-type(3) {
+                color:transparent;
+            }
+
+            table tr:not(tr.comment-row, table#tablefoot *) td:last-of-type {
+                border-right: lightgrey inset thin !important;
+            }
+
+            table tr:not(tr.comment-row, table#tablefoot *) td:first-of-type {
+                border-left: lightgrey inset thin !important;
+            }
+
+            table tr:not(tr.comment-row, table#tablefoot *) td {
+                border-top: lightgrey outset thin !important;
+                border-bottom: lightgrey outset thin !important;
+            }
+
             tr.error td {
                 color: red !important;
             }
@@ -194,6 +212,10 @@
             tr.comment-row td {
                 color: grey;
                 background-color: white !important;
+            }
+
+            table#tablefoot {
+	            margin-bottom:50px;
             }
 		</style>
 		<script type="application/javascript">
@@ -400,7 +422,7 @@
 				var len = ml.elements.length;
 				for (var i = 0; i < len; i++) {
 					var e = ml.elements[i];
-					if (e.name == "checkbox") {
+					if (e.name === "checkbox") {
 						Check(e);
 					}
 				}
@@ -412,7 +434,7 @@
 				var len = ml.elements.length;
 				for (var i = 0; i < len; i++) {
 					var e = ml.elements[i];
-					if (e.name == "checkbox") {
+					if (e.name === "checkbox") {
 						Clear(e);
 					}
 				}
@@ -427,9 +449,9 @@
 					r = e.parentElement.parentElement;
 				}
 				if (r) {
-					if (r.className == "msgnew") {
+					if (r.className === "msgnew") {
 						r.className = "msgnews";
-					} else if (r.className == "msgold") {
+					} else if (r.className === "msgold") {
 						r.className = "msgolds";
 					}
 				}
@@ -443,9 +465,9 @@
 					r = e.parentElement.parentElement;
 				}
 				if (r) {
-					if (r.className == "msgnews") {
+					if (r.className === "msgnews") {
 						r.className = "msgnew";
-					} else if (r.className == "msgolds") {
+					} else if (r.className === "msgolds") {
 						r.className = "msgold";
 					}
 				}
@@ -557,14 +579,8 @@
 
 	<body>
 	<div class="container">
-		<table>
-			<tr class="noprint">
-				<td>
-					<h2><bean:message key="tickler.ticklerMain.msgTickler"/> Manager
-					</h2>
-				</td>
-			</tr>
-		</table>
+
+		<h2><bean:message key="tickler.ticklerMain.msgTickler"/> Manager</h2>
 
 		<form name="serviceform" method="get" action="ticklerMain.jsp" class="form-inline">
 			<input type="hidden" name="Submit" value="">
@@ -689,7 +705,7 @@
 						}
 					%>
 				</div>
-				<div class="pull-right" style="text-align: right; vertical-align: bottom; padding:20px 15px 15px 15px;">
+				<div class="pull-right form-group" style="text-align: right; vertical-align: bottom; padding:20px 15px 15px 15px;">
 					<label for="formSubmitBtn"></label>
 					<input type="button" class="btn btn-primary mbttn noprint" id="formSubmitBtn"
 					       value="<bean:message key="tickler.ticklerMain.btnCreateReport"/>"
@@ -703,7 +719,7 @@
 
 			</c:if>
 			<div class="pull-left" style="margin-bottom:10px;">
-					<label for="ticklerview"></label>
+					<label for="ticklerview">Filter</label>
 				<select id="ticklerview" class="form-control" name="ticklerview">
 					<option value="A" <%=ticklerview.equals("A") ? "selected" : ""%>><bean:message
 							key="tickler.ticklerMain.formActive"/></option>
@@ -802,7 +818,6 @@
 						ticklers = ticklerManager.getTicklers(loggedInInfo, filter);
 					}
 
-					String rowColour = "white";
 					String numDaysUntilWarn = OscarProperties.getInstance().getProperty("tickler_warn_period");
 					if(numDaysUntilWarn == null || numDaysUntilWarn.isEmpty()) {
 						numDaysUntilWarn = "0";
@@ -824,7 +839,7 @@
 							warning = true;
 						}
 
-						String cellColour = rowColour + warnColour;
+						String cellColour = warnColour;
 				%>
 
 				<tr <%=warning ? "class='error'" : ""%> >
@@ -832,7 +847,7 @@
 					                                   class="noprint"></td>
 					<td class="<%=cellColour%>">
 						<a href="javascript:void(0)" title="<bean:message key="tickler.ticklerMain.editTickler"/>"
-						   onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=tickler.getId()%>')">
+						   onClick="window.open('../tickler/ticklerEdit.jsp?tickler_no=<%=tickler.getId()%>', 'edit_tickler', 'width=800, height=650')">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</a>
 					</td>
@@ -852,7 +867,7 @@
 					</td>
 					<td class="<%=cellColour%>"><%=tickler.getStatusDesc(locale)%>
 					</td>
-					<td class="<%=cellColour%>"><%=Encode.forHtmlContent(tickler.getMessage())%>
+					<td class="<%=cellColour%>"><span style="white-space:pre-wrap"><%=Encode.forHtmlContent(tickler.getMessage())%></span>
 
 						<%
 							List<TicklerLink> linkList = ticklerLinkDao.getLinkByTickler(tickler.getId().intValue());
@@ -864,27 +879,27 @@
 						<%
 							if (LabResultData.isMDS(type)) {
 						%>
-						<a href="javascript:reportWindow('SegmentDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('SegmentDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isCML(type)) {
 						%>
-						<a href="javascript:reportWindow('../lab/CA/ON/CMLDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../lab/CA/ON/CMLDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isHL7TEXT(type)) {
 						%>
-						<a href="javascript:reportWindow('../lab/CA/ALL/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../lab/CA/ALL/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isDocument(type)) {
 						%>
-						<a href="javascript:reportWindow('../dms/ManageDocument.do?method=display&doc_no=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../dms/ManageDocument.do?method=display&doc_no=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isHRM(type)) {
 						%>
-						<a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>&segmentID=<%=tl.getTableId()%>')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>&segmentID=<%=tl.getTableId()%>')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else {
 						%>
-						<a href="javascript:reportWindow('../lab/CA/BC/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../lab/CA/BC/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 							}
 						%>
@@ -929,7 +944,7 @@
 					</td>
 					<td></td>
 					<td></td>
-					<td class="no sort"><%=Encode.forHtmlContent(tc.getMessage())%>
+					<td class="no sort" style="white-space:pre-wrap"><%=Encode.forHtmlContent(tc.getMessage())%>
 					</td>
 					<td></td>
 					<td><%=tickler.getId()%>
@@ -984,33 +999,41 @@
 			<%=OscarProperties.getConfidentialityStatement()%>
 		</p>
 
-		<div id="note-form" title="Edit Tickler Note">
+		<div id="note-form" title="Edit Tickler Note" style="display:none;">
 			<form>
+				<input type="hidden" name="tickler_note_demographicNo" id="tickler_note_demographicNo" value=""/>
+				<input type="hidden" name="tickler_note_ticklerNo" id="tickler_note_ticklerNo" value=""/>
+				<input type="hidden" name="tickler_note_noteId" id="tickler_note_noteId" value=""/>
 
-				<table>
-					<tbody>
-					<textarea id="tickler_note" name="tickler_note" style="width:100%;"
+				<table style="width:100%;">
+					<tr>
+						<td>
+						<label for="tickler_note">Tickler Note</label>
+					<textarea class="form-control" id="tickler_note" rows="5" name="tickler_note" style="width:100%;"
 					          oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
 					          onfocus='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
-					<input type="hidden" name="tickler_note_demographicNo" id="tickler_note_demographicNo" value=""/>
-					<input type="hidden" name="tickler_note_ticklerNo" id="tickler_note_ticklerNo" value=""/>
-					<input type="hidden" name="tickler_note_noteId" id="tickler_note_noteId" value=""/>
-					</tbody>
-				</table>
-				<table>
+						</td>
+					</tr>
 					<tr>
 						<td nowrap="nowrap">
-							Date: <span id="tickler_note_obsDate"></span> rev <a id="tickler_note_revision_url"
-							                                                     href="javascript:void(0)"
-							                                                     onClick=""><span
-								id="tickler_note_revision"></span></a><br/>
-							Editor: <span id="tickler_note_editor"></span>
+							<label for="tickler_note_obsDate" >Date:</label>
+							<span id="tickler_note_obsDate"></span>
+
+							<label for="tickler_note_revision_url">Rev:</label>
+							<a id="tickler_note_revision_url" href="javascript:void(0)" onClick="">
+							<span id="tickler_note_revision"></span>
+							</a>
+
+							<label for="tickler_note_editor">Editor:</label>
+							<span id="tickler_note_editor"></span>
 						</td>
 					</tr>
 
 				</table>
+				<div class="pull-right">
 				<button class="btn btn-primary" onclick="saveNoteDialog()">Save</button>
 				<button class="btn btn-danger" onclick="closeNoteDialog()">Exit</button>
+				</div>
 
 			</form>
 		</div>
