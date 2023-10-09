@@ -670,16 +670,29 @@ public class BillingONCHeader1Dao extends AbstractDao<BillingONCHeader1>{
         return rs;
     }
 
-	public List<Object[]> findByMagic2(List<String> payPrograms, String statusType, String providerNo, Date startDate, Date endDate, Integer demoNo, List<String> serviceCodes, String dx, String visitType, String visitLocation, Date paymentStartDate, Date paymentEndDate ) {
+	public List<Object[]> findByMagic2(List<String> payPrograms, String statusType, String providerNo, Date startDate, Date endDate, Integer demoNo, List<String> serviceCodes, String dx, String visitType, String visitLocation, Date paymentStartDate, Date paymentEndDate, String claimNo ) {
 		String base = "FROM BillingONCHeader1 ch1, BillingONItem bi";
 		if(paymentStartDate != null || paymentEndDate != null) {
 			base += ", BillingONPayment bp ";
 		}
+        if (claimNo != null){
+            base += ", RaDetail rd ";
+        }
 		ParamAppender app = new ParamAppender(base);
-		app.and("ch1.id = bi.ch1Id");
+		app.and("ch1.id = bi.ch1Id");        
 		if(paymentStartDate != null || paymentEndDate != null) {
 			app.and("ch1.id = bp.billingNo");
 		}
+        if (claimNo != null){
+            app.and("ch1.id = rd.billingNo");
+            app.and("bi.serviceCode = rd.serviceCode");            
+            if ("%".equals(claimNo)){
+                //in this scenario, there is no need to filter on claimNo because % means match all claim numbers
+            } else {
+                app.and("rd.claimNo = :claimNo", "claimNo", claimNo);        
+            }
+        }
+
 		app.and("bi.status != 'D'");
 		
 		app.and("ch1.payProgram in (:payPrograms)", "payPrograms", payPrograms);
