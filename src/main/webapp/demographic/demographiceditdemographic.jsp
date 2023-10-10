@@ -815,8 +815,15 @@ function consentClearBtn(radioBtnName)
 	    }
 	}
 }
-</script>
 
+</script>
+	<script type="application/javascript">
+<%
+		if(oscarProps.getProperty("demographicExtJScript") != null) {
+			out.println(oscarProps.getProperty("demographicExtJScript"));
+		}
+	%>
+							</script>
 </head>
 <body onLoad="setfocus(); checkONReferralNo(); formatPhoneNum(); checkRosterStatus2();"
 	topmargin="0" leftmargin="0" rightmargin="0" id="demographiceditdemographic">
@@ -3602,13 +3609,6 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 
 </oscar:oscarPropertiesCheck>
 <%-- END TOGGLE OFF PROGRAM ADMISSIONS --%>							
-
-<%
-if(oscarProps.getProperty("demographicExtJScript") != null) {
-	out.println(Encode.forJavaScript(oscarProps.getProperty("demographicExtJScript")));
-}
-%>
-
 
 <tr valign="top">
 <td colspan="4">
