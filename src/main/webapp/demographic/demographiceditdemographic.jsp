@@ -1789,14 +1789,16 @@ if ( Dead.equals(PatStat) ) {%>
 								if (oscarProps.isPropertyActive("showPrimaryCarePhysicianCheck")) {
 									hasHasPrimary = true;
 									String key = hasPrimary.replace(" ", "");
-									if (demoExt.get(key)!=null && !demoExt.get(key).trim().isEmpty())
+									if (demoExt.get(key)!=null && !demoExt.get(key).trim().isEmpty()) {
 										hasPrimaryCarePhysician = demoExt.get(key);
+									}
 								}
 								if (oscarProps.isPropertyActive("showEmploymentStatus")) {
 									hasEmpStatus = true;
 									String key = empStatus.replace(" ", "");
-									if (demoExt.get(key)!=null && !demoExt.get(key).trim().isEmpty())
+									if (demoExt.get(key)!=null && !demoExt.get(key).trim().isEmpty()) {
 										employmentStatus = demoExt.get(key);
+									}
 								}
 
 								if (hasDemoExt || hasHasPrimary || hasEmpStatus) {
@@ -1831,9 +1833,9 @@ if ( Dead.equals(PatStat) ) {%>
 									%>
 								</ul>
 							</div>
-						</div>
 							<%} %>
 
+						</div> <!-- end of left section -->
 
 						<div class="rightSection">
 						<div class="demographicSection" id="contactInformation">
