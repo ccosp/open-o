@@ -537,6 +537,7 @@ font-size: 10pt;
 
 .consultDemographicData input, .consultDemographicData select, .consultDemographicData textarea {
     width: 100% !important;
+	box-sizing: border-box;
 }
 
 input#referalDate, input#appointmentDate, input#followUpDate {
@@ -557,6 +558,7 @@ input#referalDate, input#appointmentDate, input#followUpDate {
 
 textarea {
     width: 100%;
+	box-sizing: border-box;
 }
 
 .controlPanel {
