@@ -1277,6 +1277,7 @@ function showSignatureImage()
 {
 	if (document.getElementById('signatureImg') != null && document.getElementById('signatureImg').value.length > 0) {
 		document.getElementById('signatureImgTag').src = "<%=storedImgUrl %>" + document.getElementById('signatureImg').value;
+		document.getElementById('newSignature').value = "false";
 
 		<% if (OscarProperties.getInstance().getBooleanProperty("topaz_enabled", "true")) { 
 		  //this is empty
@@ -2352,7 +2353,7 @@ function updateFaxButton() {
 				<tr>
 					<td colspan=2>
 
-						<input type="hidden" name="newSignature" id="newSignature" value="false" />
+						<input type="hidden" name="newSignature" id="newSignature" value="true" />
 						<input type="hidden" name="signatureImg" id="signatureImg" value="<%=(consultUtil.signatureImg != null ? consultUtil.signatureImg : "") %>" />
 						<input type="hidden" name="newSignatureImg" id="newSignatureImg" value="<%=signatureRequestId %>" />
 
