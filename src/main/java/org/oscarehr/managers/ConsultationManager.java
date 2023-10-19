@@ -23,7 +23,9 @@
  */
 package org.oscarehr.managers;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -38,8 +40,11 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.DocumentException;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.ClinicDAO;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.ConsultRequestDao;
@@ -79,8 +84,10 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter.SORTDIR;
 import org.oscarehr.consultations.ConsultationResponseSearchFilter;
+import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.hospitalReportManager.HRMUtil;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.rest.conversion.OtnEconsultConverter;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
 import org.oscarehr.ws.rest.to.model.ConsultationResponseSearchResult;
@@ -96,9 +103,11 @@ import org.oscarehr.documentManager.EDocUtil;
 import oscar.eform.EFormUtil;
 import oscar.log.LogAction;
 import oscar.oscarEncounter.data.EctFormData;
+import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPDFCreator;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
+import oscar.util.ConcatPDF;
 
 @Service
 public class ConsultationManager {
@@ -126,6 +135,8 @@ public class ConsultationManager {
 
 	@Autowired
 	private FormsManager formsManager;
+	@Autowired
+	private NioFileManager nioFileManager;
 
 	@Autowired
 	DemographicManager demographicManager;
@@ -140,6 +151,7 @@ public class ConsultationManager {
 	@Autowired
 	DocumentManager documentManager;
 
+	private final Logger logger = MiscUtils.getLogger();
 
 	public final String CON_REQUEST_ENABLED = "consultRequestEnabled";
 	public final String CON_RESPONSE_ENABLED = "consultResponseEnabled";
@@ -542,6 +554,19 @@ public class ConsultationManager {
 
 	public List<ConsultDocs> getAttachedDocumentsByType(LoggedInInfo loggedInInfo, Integer consultRequestId, String docType) {
 		return consultDocsDao.findByRequestIdDocType(consultRequestId, docType);
+	}
+
+	public Path renderConsultationForm(HttpServletRequest request) {
+		Path path = null;
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();) {
+			ConsultationPDFCreator consultationPDFCreator = new ConsultationPDFCreator(request, outputStream);
+			consultationPDFCreator.printPdf(loggedInInfo);
+			path = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), outputStream);
+		} catch (IOException | DocumentException e) {
+			logger.error("A problem creating PDF for consultation form", e);
+		}
+		return path;
 	}
 
 	public List<EctFormData.PatientForm> getAttachedForms(LoggedInInfo loggedInInfo, int consultRequestId, int demographicNo) {

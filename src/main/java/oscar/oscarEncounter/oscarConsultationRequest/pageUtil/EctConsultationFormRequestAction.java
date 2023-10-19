@@ -26,6 +26,8 @@
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -72,6 +74,8 @@ import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.enumerator.DocumentType;
+import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.managers.ConsultationManager;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
@@ -102,6 +106,7 @@ public class EctConsultationFormRequestAction extends Action {
 	private static final Logger logger=MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	private ConsultationManager consultationManager = SpringUtils.getBean(ConsultationManager.class);
+	private final DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
 	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 
 	@Override
@@ -268,21 +273,12 @@ public class EctConsultationFormRequestAction extends Action {
                                 	}
                                 }
 
-                                // now that we have consultation id we can save any attached docs as well  
-                                
-                                ConsultationAttachDocs consultationAttachDocs = new ConsultationAttachDocs(providerNo,demographicNo,requestId,attachedDocuments);
-                                consultationAttachDocs.attach(loggedInInfo);
-            				  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
-            				  	consultationAttachLabs.attach(loggedInInfo);
-
-								ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
-								consultationAttachForms.attach(loggedInInfo);
-
-								ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
-								consultationAttachEForms.attach(loggedInInfo);
-
-								ConsultationAttachHRMs consultationAttachHRMs = new ConsultationAttachHRMs(providerNo,demographicNo,requestId,attachedHRMDocuments);
-								consultationAttachHRMs.attach(loggedInInfo);
+                                // now that we have consultation id we can save any attached docs as well
+								documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.DOC, attachedDocuments, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+								documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.LAB, attachedLabs, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+								documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.FORM, attachedForms, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+								documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.EFORM, attachedEForms, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+								documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.HRM, attachedHRMDocuments, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
 			}
 	        catch (ParseException e) {
 	                MiscUtils.getLogger().error("Invalid Date", e);
@@ -397,16 +393,12 @@ public class EctConsultationFormRequestAction extends Action {
                 
                 // save any additional attachments added on the update
 
-                ConsultationAttachDocs consultationAttachDocs = new ConsultationAttachDocs(providerNo,demographicNo,requestId,attachedDocuments);
-                consultationAttachDocs.attach(loggedInInfo); 
-			  	ConsultationAttachLabs consultationAttachLabs = new ConsultationAttachLabs(providerNo,demographicNo,requestId,attachedLabs);
-			  	consultationAttachLabs.attach(loggedInInfo);
-				ConsultationAttachForms consultationAttachForms = new ConsultationAttachForms(providerNo,demographicNo,requestId,attachedForms);
-				consultationAttachForms.attach(loggedInInfo);
-				ConsultationAttachEForms consultationAttachEForms = new ConsultationAttachEForms(providerNo,demographicNo,requestId,attachedEForms);
-				consultationAttachEForms.attach(loggedInInfo);
-				ConsultationAttachHRMs consultationAttachHRMs = new ConsultationAttachHRMs(providerNo,demographicNo,requestId,attachedHRMDocuments);
-				consultationAttachHRMs.attach(loggedInInfo);
+
+				documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.DOC, attachedDocuments, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+				documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.LAB, attachedLabs, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+				documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.FORM, attachedForms, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+				documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.EFORM, attachedEForms, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
+				documentAttachmentManager.attachToConsult(loggedInInfo, DocumentType.HRM, attachedHRMDocuments, providerNo, Integer.parseInt(requestId), Integer.parseInt(demographicNo));
 			}
 
 			catch (ParseException e) {
@@ -428,7 +420,9 @@ public class EctConsultationFormRequestAction extends Action {
 		if (submission.endsWith("And Print Preview")) {
 
 			request.setAttribute("reqId", requestId);
-			return mapping.findForward("printIndivica");
+			request.setAttribute("demographicId", demographicNo);
+			Path pdfPath = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
+			return generatePDFResponse(response, pdfPath);
 			
 		} else if (submission.endsWith("And Fax")) {
 			
@@ -599,5 +593,19 @@ public class EctConsultationFormRequestAction extends Action {
             }	    	
 	    }
     }
+
+	private ActionForward generatePDFResponse(HttpServletResponse response, Path pdfPath) {
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "inline; filename=" + pdfPath.getFileName());
+		try {
+			byte[] bytes = Files.readAllBytes(pdfPath);
+			response.setContentLength(bytes.length);
+			response.getOutputStream().write(bytes);
+			response.getOutputStream().flush();
+		} catch (IOException e) {
+			MiscUtils.getLogger().error("An error occurred while writing PDF response to the output stream: " + e.getMessage(), e);
+		}
+		return null;
+	}
 
 }

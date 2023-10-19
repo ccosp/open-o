@@ -23,12 +23,17 @@
  */
 package org.oscarehr.managers;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
 import org.oscarehr.common.dao.PatientLabRoutingDao;
@@ -57,6 +62,9 @@ public class LabManager {
 
 	@Autowired
 	Hl7TextMessageDao hl7TextMessageDao;
+
+	@Autowired
+	private NioFileManager nioFileManager;
 	
 	@Autowired
 	private PatientLabRoutingDao patientLabRoutingDao;
@@ -100,24 +108,25 @@ public class LabManager {
 
 		return result;
 	}
-	
-	public Path getHl7MessageAsPDF(LoggedInInfo loggedInInfo, int labId) {
+
+	public Path renderLab(LoggedInInfo loggedInInfo, Integer segmentId) {
 		checkPrivilege(loggedInInfo, "r");
-		
-		LogAction.addLogSynchronous(loggedInInfo, "LabManager.getHl7MessageAsPDF", "labId="+labId);
-		
+		LogAction.addLogSynchronous(loggedInInfo, "LabManager.getHl7MessageAsPDF", "labId="+segmentId);
+
 		Path path = null;
-		
 		try {
-			byte[] pdfBytes = LabPDFCreator.getPdfBytes(labId+"", null);
-			String fileName = System.currentTimeMillis() + "_" + labId + "_LabReport";		
-			Path directory = Files.createTempDirectory(TEMP_PDF_DIRECTORY + System.currentTimeMillis());			
-			Path file = Files.createTempFile(directory, fileName, DEFAULT_FILE_SUFFIX);				
-			path = Files.write(file, pdfBytes);
-		} catch (IOException e) {
-			MiscUtils.getLogger().error("A problem creating PDF for lab id " + labId, e);
-		} catch (DocumentException e) {
-			MiscUtils.getLogger().error("A problem creating PDF for lab id " + labId, e);
+			String fileName = System.currentTimeMillis() + "_" + segmentId + "_LabReport";
+			File tempPDF = File.createTempFile(fileName, "pdf");
+			try (FileOutputStream fileOutputStream = new FileOutputStream(tempPDF);
+				 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();) {
+				LabPDFCreator labPDFCreator = new LabPDFCreator(fileOutputStream, String.valueOf(segmentId), null);
+				labPDFCreator.printPdf();
+				labPDFCreator.addEmbeddedDocuments(tempPDF, byteOutputStream);
+				path = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), byteOutputStream);
+			}
+			tempPDF.delete();
+		} catch (IOException | DocumentException e) {
+			MiscUtils.getLogger().error("A problem creating PDF for lab id " + segmentId, e);
 		}
 
 		return path;
