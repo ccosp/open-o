@@ -361,7 +361,7 @@ public class FaxManager {
 
 	}
 
-	private String copyFileToOscarDocuments(String tempFilePath) {
+	public String copyFileToOscarDocuments(String tempFilePath) {
 		String destinationDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 		if (!destinationDir.endsWith(File.separator)) {
 			destinationDir += File.separator;
