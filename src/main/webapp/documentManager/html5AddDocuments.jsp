@@ -339,7 +339,7 @@
                 </select>
             </div>
         <div class="form">
-            <form id="noswfupload_form" method="post" action="../dms/addEditDocument.do?method=html5MultiUpload&queue=<%=queueId%>&provider=<%=provider%>" enctype="multipart/form-data">
+            <form id="noswfupload_form" method="post" action="../documentManager/addEditDocument.do?method=html5MultiUpload&queue=<%=queueId%>&provider=<%=provider%>" enctype="multipart/form-data">
                 <div>
                     <input type="file" name="filedata" />
                     <input id="noswfuploadSubmit" class="submit" type="submit" value="Upload File" />

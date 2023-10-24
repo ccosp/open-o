@@ -72,7 +72,7 @@ while (iter.hasNext()){%>
                     </table>
                 </td>
             </tr>
-<html:form action="/dms/addDocumentType" method="POST"
+<html:form action="/documentManager/addDocumentType" method="POST"
 	enctype="multipart/form-data" styleClass="forms"
 	onsubmit="return submitUpload(this)">
 <table>

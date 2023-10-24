@@ -123,7 +123,7 @@ if(providerDocs!=null && !providerDocs.isEmpty() && providerDocs.containsKey(cur
                                         List<EDoc> docList=(List<EDoc>)providerDocs.get(currentProvider);
                                         for(EDoc curdoc:docList){
                                             String curDocId=curdoc.getDocId();
-                                            String docUrl=request.getContextPath()+"/dms/ManageDocument.do?method=display&doc_no="+curDocId;
+                                            String docUrl=request.getContextPath()+"/documentManager/ManageDocument.do?method=display&doc_no="+curDocId;
                                             String url = "ManageDocument.do?method=view&doc_no=" + curDocId;
                                             String contentType = "";
                                             int slash = 0;

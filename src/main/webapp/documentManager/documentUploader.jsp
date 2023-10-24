@@ -88,13 +88,13 @@ String resourcePath = context + "/share/documentUploader/";
 		jQuery("#destination").val(select.options[select.selectedIndex].value);
                 setDropList();
                 var destination=select.options[select.selectedIndex].value;
-                jQuery.ajax({url:'<%=context%>/dms/documentUpload.do?method=setUploadDestination&destination='+destination,async:false, success:function(data) {}});
+                jQuery.ajax({url:'<%=context%>/documentManager/documentUpload.do?method=setUploadDestination&destination='+destination,async:false, success:function(data) {}});
 	}
 
         function setDestFolder(select){
                 var destFolder=select.options[select.selectedIndex].value;
 		jQuery("#destFolder").val(destFolder);
-                jQuery.ajax({url:'<%=context%>/dms/documentUpload.do?method=setUploadIncomingDocumentFolder&destFolder='+destFolder,async:false, success:function(data) {}});
+                jQuery.ajax({url:'<%=context%>/documentManager/documentUpload.do?method=setUploadIncomingDocumentFolder&destFolder='+destFolder,async:false, success:function(data) {}});
 	}
 
         function setDropList()
@@ -119,7 +119,7 @@ String resourcePath = context + "/share/documentUploader/";
 </head>
 <body onload="setDropList();">
 <div id="fileupload">
-    <form action="<%=context%>/dms/documentUpload.do?method=executeUpload" method="POST" enctype="multipart/form-data">
+    <form action="<%=context%>/documentManager/documentUpload.do?method=executeUpload" method="POST" enctype="multipart/form-data">
         <div class="fileupload-buttonbar">
             <label class="fileinput-button">
                 <span id="add">Add files...</span>

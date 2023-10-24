@@ -60,7 +60,7 @@ public class EctDisplayPhotosAction extends EctDisplayAction {
 	boolean inboxflag=oscar.util.plugin.IsPropertiesOn.propertiesOn("inboxmnger");
     //set lefthand module heading and link
     String winName = "docs" + bean.demographicNo;
-    String url = "popupPage(500,1115,'" + winName + "', '" + request.getContextPath() + "/dms/documentReport.jsp?" +
+    String url = "popupPage(500,1115,'" + winName + "', '" + request.getContextPath() + "/documentManager/documentReport.jsp?" +
             "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "&view=photo')";
 
     Dao.setLeftHeading("Photos");
@@ -74,7 +74,7 @@ public class EctDisplayPhotosAction extends EctDisplayAction {
 
     //set the right hand heading link to call addDocument in index jsp
     winName = "addPhoto" + bean.demographicNo;
-    url = "popupPage(500,1115,'" + winName + "','" + request.getContextPath() + "/dms/documentReport.jsp?" +
+    url = "popupPage(500,1115,'" + winName + "','" + request.getContextPath() + "/documentManager/documentReport.jsp?" +
             "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "&mode=add" +
             "&parentAjaxId=" + cmd + "&defaultDocType=photo&appointmentNo="+appointmentNo+"');return false;";
 
@@ -130,7 +130,7 @@ public class EctDisplayPhotosAction extends EctDisplayAction {
         String user = (String) request.getSession().getAttribute("user");
         item.setDate(date);
         hash = Math.abs(winName.hashCode());
-        url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() + "/dms/ManageDocument.do?method=display&doc_no="+dispDocNo+"&providerNo="+user+ "');";
+        url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() + "/documentManager/ManageDocument.do?method=display&doc_no="+dispDocNo+"&providerNo="+user+ "');";
         if (inboxflag){
         	String path=oscar.util.plugin.IsPropertiesOn.getProperty("DOCUMENT_DIR");
         	url="popupPage(700,800,'" + hash + "', '" + request.getContextPath() +

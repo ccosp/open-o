@@ -132,8 +132,8 @@ function submitUpload(object) {
         </td></tr>
     </table>
 
-           <input type="button" class="btn" value="Add New" onclick='popupPage(550,800,&quot;<html:rewrite page="/dms/addNewDocumentCategories.jsp"/>&quot;);return false;' />
-           <input type="button" class="btn" value="Update Status"  onclick='popupPage(550,800,&quot;<html:rewrite page="/dms/changeStatus.jsp"/>&quot;);return false;' />
+           <input type="button" class="btn" value="Add New" onclick='popupPage(550,800,&quot;<html:rewrite page="/documentManager/addNewDocumentCategories.jsp"/>&quot;);return false;' />
+           <input type="button" class="btn" value="Update Status"  onclick='popupPage(550,800,&quot;<html:rewrite page="/documentManager/changeStatus.jsp"/>&quot;);return false;' />
 
 
 </div> <!-- well -->

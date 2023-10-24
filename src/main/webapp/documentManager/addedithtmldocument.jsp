@@ -267,7 +267,7 @@ function newDocType(){
 <%-- Lists linkhtmlerrors --%> <% for (Enumeration errorkeys = linkhtmlerrors.keys(); errorkeys.hasMoreElements();) {%>
 <font class="warning">Error: <bean:message
 	key="<%=(String) linkhtmlerrors.get(errorkeys.nextElement())%>" /></font><br />
-<% } %> <html:form action="/dms/addEditHtml" method="POST"
+<% } %> <html:form action="/documentManager/addEditHtml" method="POST"
 	enctype="multipart/form-data" styleClass="form"
 	onsubmit="return submitUpload(this);">
 	<input type="hidden" name="<csrf:tokenname/>" value="<csrf:tokenvalue/>"/>

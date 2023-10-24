@@ -332,7 +332,7 @@
 		</jsp:include>
 
 
-		<html:form action="/dms/combinePDFs">
+		<html:form action="/documentManager/combinePDFs">
 			<input type="hidden" name="curUser" value="<%=curUser%>">
 			<input type="hidden" name="demoId" value="<%=moduleid%>">
 			<div class="documentLists"><%-- STUFF TO DISPLAY --%> <%
@@ -418,7 +418,7 @@
 								<%if (DocumentBrowserLink) {%>
                                     <div class="form-group">
                                         <a class="btn btn-link form-control"
-                                           href="${ pageContext.request.contextPath }/dms/documentBrowser.jsp?function=<%=module%>&functionid=<%=moduleid%>&categorykey=<%=Encode.forUri(currentkey)%>">
+                                           href="${ pageContext.request.contextPath }/documentManager/documentBrowser.jsp?function=<%=module%>&functionid=<%=moduleid%>&categorykey=<%=Encode.forUri(currentkey)%>">
                                             <bean:message key="dms.documentReport.msgBrowser"/>
                                         </a>
                                     </div>

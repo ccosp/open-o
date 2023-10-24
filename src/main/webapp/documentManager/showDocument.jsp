@@ -141,8 +141,8 @@
             else
                 numOfPageStr=(new Integer(numOfPage)).toString();
             String cp=request.getContextPath() ;
-            String url = cp+"/dms/ManageDocument.do?method=viewDocPage&doc_no=" + docId+"&curPage=1";
-            String url2 = cp+"/dms/ManageDocument.do?method=display&doc_no=" + docId;
+            String url = cp+"/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + docId+"&curPage=1";
+            String url2 = cp+"/documentManager/ManageDocument.do?method=display&doc_no=" + docId;
             String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());	
 %>
 

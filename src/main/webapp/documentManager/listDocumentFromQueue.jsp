@@ -126,7 +126,7 @@ if(queueDocs!=null && !queueDocs.isEmpty() && queueDocs.containsKey(currentQueue
                                         List<EDoc> docList=(List<EDoc>)queueDocs.get(currentQueue);
                                         for(EDoc curdoc:docList){
                                             String currentDocId=curdoc.getDocId();
-                                            String docUrl=request.getContextPath()+"/dms/ManageDocument.do?method=display&doc_no="+currentDocId;
+                                            String docUrl=request.getContextPath()+"/documentManager/ManageDocument.do?method=display&doc_no="+currentDocId;
                                             String url = "ManageDocument.do?method=view&doc_no=" + currentDocId;
                                             String contentType = "";
                                             int slash = 0;

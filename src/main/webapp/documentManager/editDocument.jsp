@@ -231,7 +231,7 @@ for (String reportClass : reportClasses) {
 <%-- Lists docerrors --%> <% for (Enumeration errorkeys = docerrors.keys(); errorkeys.hasMoreElements();) {%>
 <font class="warning">Error: <bean:message
 	key="<%=(String) docerrors.get(errorkeys.nextElement())%>" /></font><br />
-<% } %> <html:form action="/dms/addEditDocument" method="POST"
+<% } %> <html:form action="/documentManager/addEditDocument" method="POST"
 	enctype="multipart/form-data" onsubmit="return submitUpload(this);">
 	<input type="hidden" name="<csrf:tokenname />" value="<csrf:tokenvalue />"/>
 	<input type="hidden" name="function"

@@ -178,7 +178,7 @@ function checkAll(formId){
 	style="margin: 0px;">
 	<tr>
 		<td class="MainTableRightColumn" colspan="2" valign="top">
-                    <html:form action="/dms/combinePDFs">			
+                    <html:form action="/documentManager/combinePDFs">			
 			<div class="documentLists"><%-- STUFF TO DISPLAY --%>
                              <%
                 for (int i=0; i<categories.size();i++) {                   

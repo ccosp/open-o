@@ -373,7 +373,7 @@ String endDate = (String) request.getAttribute("endDate");
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/yui/js/connection-min.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/yui/js/animation-min.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/share/yui/js/datasource-min.js"></script>
-	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/dms/showDocument.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/documentManager/showDocument.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/hospitalReportManager/hrmActions.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/documentDescriptionTypeahead.js"></script>        
@@ -673,7 +673,7 @@ String endDate = (String) request.getAttribute("endDate");
 		function updateCategoryList() {
 			jQuery.ajax({
 				type: "GET",
-				url: ctx + "/dms/inboxManage.do",
+				url: ctx + "/documentManager/inboxManage.do",
 				data: window.location.search.substr(1) + "&ajax=true",
 				success: function (data) {
 					if (jQuery("#categoryHash").length == 0 || jQuery(data)[2].value != jQuery("#categoryHash").val()) {

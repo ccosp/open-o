@@ -79,7 +79,7 @@ while (iter.hasNext()){%>
                 </td>
             </tr>
  
-<html:form action="/dms/changeDocStatus" method="POST"
+<html:form action="/documentManager/changeDocStatus" method="POST"
 	enctype="multipart/form-data" styleClass="forms"
 	onsubmit="return submitUpload(this)" >
 	

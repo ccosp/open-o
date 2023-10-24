@@ -450,7 +450,7 @@
 		<td class="MainTableRightColumn" colspan="2" valign="top">
 
 
-		<form id="form1" action="../dms/addEditDocument.do" method="post"
+		<form id="form1" action="../documentManager/addEditDocument.do" method="post"
 			enctype="multipart/form-data"><label for="provider"
 			class="fields">Send to Provider:</label> <select
 			onchange="javascript:addProviderToPost(this);" id="providerDrop"

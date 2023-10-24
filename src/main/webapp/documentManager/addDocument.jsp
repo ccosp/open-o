@@ -252,7 +252,7 @@
 	</div>
 
 	<div id="addDocDiv" class="addDocDiv well form-inline" style="display: none; padding:5px;">
-		<html:form action="/dms/addEditDocument" method="POST" enctype="multipart/form-data" styleClass="forms" onsubmit="return submitUpload(this)" >
+		<html:form action="/documentManager/addEditDocument" method="POST" enctype="multipart/form-data" styleClass="forms" onsubmit="return submitUpload(this)" >
 
 			<c:forEach var="error" items="${ docerrors }">
 				<div class="alert alert-danger">
@@ -353,7 +353,7 @@
 
 	<div id="addLinkDiv" class="addDocDiv form-inline well" style="display: none;">
 
-		<html:form action="/dms/addLink" method="POST" styleClass="forms" onsubmit="return submitUploadLink(this)">
+		<html:form action="/documentManager/addLink" method="POST" styleClass="forms" onsubmit="return submitUploadLink(this)">
 		<%-- Lists Errors --%>
 			<c:forEach var="error" items="${ linkhtmlerrors }" >
 				<div class="alert alert-danger">

@@ -82,7 +82,7 @@
 						for (int i = 1; i <= thisDocument.getNumberofpages(); i++) {
 					%>
 							<li>
-								<img class="page" src='<%=request.getContextPath() + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + documentId + "&curPage=" + i%>' />
+								<img class="page" src='<%=request.getContextPath() + "/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + documentId + "&curPage=" + i%>' />
 							</li>
 					<%
 						}

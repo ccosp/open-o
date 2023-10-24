@@ -106,8 +106,8 @@
                 numOfPageStr="unknown";
             else
                 numOfPageStr=(new Integer(numOfPage)).toString();
-            String url = request.getContextPath()+"/dms/ManageDocument.do?method=viewDocPage&doc_no=" + docId+"&curPage=1";
-            String url2 = request.getContextPath()+"/dms/ManageDocument.do?method=display&doc_no=" + docId;
+            String url = request.getContextPath()+"/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + docId+"&curPage=1";
+            String url2 = request.getContextPath()+"/documentManager/ManageDocument.do?method=display&doc_no=" + docId;
 %>
 
 <html>

@@ -2238,7 +2238,7 @@ function addDocToPatient(doclabid,patientId){//if doc is previously not assigned
                                                     $("lastP_"+docid).setStyle({display:'inline'});
                                                 }
 </script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/dms/showDocument.js"></script>        
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/documentManager/showDocument.js"></script>        
         
         
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/share/yui/css/fonts-min.css"/>
