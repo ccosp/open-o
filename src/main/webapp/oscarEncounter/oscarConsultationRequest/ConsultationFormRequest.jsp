@@ -1614,7 +1614,7 @@ function updateFaxButton() {
 							else
 							{ %>
 								<a href="javascript:void(0);" id="attachDocumentPanelBtn" title="Add Attachment"
-									data-poload="${ ctx }/attachDocs.do?method=fetchAll&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
+									data-poload="${ ctx }/previewDocs.do?method=fetchConsultDocuments&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
 									Manage Attachments
 								</a>
 

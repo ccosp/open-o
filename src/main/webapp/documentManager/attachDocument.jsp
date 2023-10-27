@@ -36,7 +36,7 @@
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_con" rights="w" reverse="<%=true%>">
 	<%authed=false; %>
-	<%response.sendRedirect("../../securityError.jsp?type=_con");%>
+	<%response.sendRedirect("../securityError.jsp?type=_con");%>
 </security:oscarSec>
 <%
 	if(!authed) {
@@ -206,6 +206,11 @@
 		}
 
 		function showPDF(base64Data) {
+			if (base64Data == "") {
+				showError();
+				return;
+			}
+			
 			const previewFiller = document.getElementById('preview-filler');
 			previewFiller.classList.add('hide');
 			const pdfObject = document.getElementById('pdfObject');
@@ -214,6 +219,10 @@
 			newPdfObject.type = "application/pdf";
 			newPdfObject.id = "pdfObject"; 
 			pdfObject.parentNode.replaceChild(newPdfObject, pdfObject);
+		}
+
+		function showError() {
+			alert("Failed to generate PDF");
 		}
 
 		function getPdf(attachmentName, attachmentId, parameters) {
@@ -227,7 +236,7 @@
 
 			jQuery.ajax({
 				type: 'GET',
-				url: "${ pageContext.request.contextPath }/attachDocs.do?" + parameters,
+				url: "${ pageContext.request.contextPath }/previewDocs.do?" + parameters,
 				dataType: "json",
 				success: function (data) {
 					addPdfAttachment(attachmentName, attachmentId, data.base64Data);
@@ -235,7 +244,7 @@
 					HideSpin();
 				},
 				error: function (xhr, status, error) {
-					console.error("Failed to generate PDF:", xhr.status, xhr.statusText);
+					alert("Failed to generate PDF:", xhr.status, xhr.statusText);
 					HideSpin();
 				}
 			});
@@ -253,7 +262,7 @@
 
 </head>
 <body>
-<jsp:include page="../../images/spinner.jsp" flush="true"/>
+<jsp:include page="../images/spinner.jsp" flush="true"/>
 <form id="attachDocumentsForm">
 	<div class="container">
 		<div class="attachmentList">
@@ -276,7 +285,7 @@
 										<label for="eFormNo${eForm.id}">
 											<c:out value="${eForm.subject.length() > 0 ? eForm.subject : eForm.formName} ${ eForm.getFormDate() }" />
 										</label>
-										<button class="preview-button" type="button" title="Preview" onclick="getPdf('EFORM', '${eForm.id}', 'method=getEFormPDF&eFormId=${eForm.id}&demographicNo=${eForm.demographicId}')">Preview</button>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('EFORM', '${eForm.id}', 'method=renderEFormPDF&eFormId=${eForm.id}')">Preview</button>
 									</li>
 								</c:forEach>
 							</ul>
@@ -300,7 +309,7 @@
 									<li class="doc ${loop.index > 19 ? 'hide' : ''}">
 										<input class="document_check" type="checkbox" name="docNo" id="docNo${document.docId}" value="${document.docId}" title="${ document.description }" />
 										<label for="docNo${document.docId}"><c:out value="${ document.description } ${ document.observationDate }" /></label>
-										<button class="preview-button" type="button" title="Preview" onclick="getPdf('DOC', '${document.docId}', 'method=getDocumentPDF&fileName=${document.fileName}&description=${document.description}&isImage=${document.isImage()}&isPDF=${document.isPDF()}')">Preview</button>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('DOC', '${document.docId}', 'method=renderEDocPDF&eDocId=${document.docId}')">Preview</button>
 									</li>
 								</c:forEach>
 							</ul>
@@ -342,7 +351,7 @@
 												<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">${lab.dateObj}</label></label>
 											</c:otherwise>
 										</c:choose>
-										<button class="preview-button" type="button" title="Preview" onclick="getPdf('LAB', '${lab.segmentID}', 'method=getLabPDF&segmentID=${lab.segmentID}')">Preview</button>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('LAB', '${lab.segmentID}', 'method=renderLabPDF&segmentId=${lab.segmentID}')">Preview</button>
 									</li>
 								</c:forEach>
 							</ul>
@@ -368,7 +377,7 @@
 										<label for="hrmNo${hrm['id']}">
 											<c:out value="${ hrm['name'] } ${ hrm['report_date'] }" />
 										</label>
-										<button class="preview-button" type="button" title="Preview" onclick="getPdf('HRM', '${hrm.id}', 'method=getHRMPDF&hrmId=${hrm.id}')">Preview</button>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('HRM', '${hrm.id}', 'method=renderHrmPDF&hrmId=${hrm.id}')">Preview</button>
 									</li>
 								</c:forEach>
 							</ul>
@@ -394,7 +403,7 @@
 										<label for="formNo${form.formId}">
 											<c:out value="${ form.formName } ${ form.getEdited() }" />
 										</label>
-										<button class="preview-button" type="button" title="Preview" onclick="getPdf('FORM', '${form.formId}', 'method=getFormPDF&formId=${form.formId}&formName=${form.formName}&demographicNo=${form.getDemoNo()}')">Preview</button>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('FORM', '${form.formId}', 'method=renderFormPDF&formId=${form.formId}&formName=${form.formName}&demographicNo=${form.getDemoNo()}')">Preview</button>
 									</li>
 								</c:forEach>
 							</ul>

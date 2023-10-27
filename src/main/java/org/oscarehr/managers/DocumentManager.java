@@ -469,6 +469,8 @@ public class DocumentManager {
 			}
 		} else if (eDoc.isPDF()) {
 			eDocPDFPath = Paths.get(eDocPath);
+		} else {
+			logger.error("Can not create pdf for " + eDoc.getContentType() + " type document. " + "Document ID: " + eDoc.getDocId());
 		}
 		return eDocPDFPath;
 	}

@@ -50,30 +50,40 @@ public class DocumentAttachmentManager {
 	@Autowired
 	private SecurityInfoManager securityInfoManager;
 
-	public List<Integer> getConsultAttachments(LoggedInInfo loggedInInfo, Integer requestId, DocumentType documentType, Integer demographicNo) {
+	public List<String> getConsultAttachments(LoggedInInfo loggedInInfo, Integer requestId, DocumentType documentType, Integer demographicNo) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_con", SecurityInfoManager.READ, demographicNo)) {
 			throw new RuntimeException("missing required security object (_con)");
 		}
 
-		List<Integer> consultAttachments = new ArrayList<>();
+		List<String> consultAttachments = new ArrayList<>();
 		List<ConsultDocs> consultDocs = consultDocsDao.findByRequestIdDocType(requestId, documentType.getType());
 		for (ConsultDocs consultDocs1 : consultDocs) {
-			consultAttachments.add(consultDocs1.getDocumentNo());
+			consultAttachments.add(String.valueOf(consultDocs1.getDocumentNo()));
 		}
 		return consultAttachments;
 	}
 
-	public List<Integer> getEFormAttachments(LoggedInInfo loggedInInfo, Integer fdid, DocumentType documentType, Integer demographicNo) {
+	public List<String> getEFormAttachments(LoggedInInfo loggedInInfo, Integer fdid, DocumentType documentType, Integer demographicNo) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.READ, demographicNo)) {
 			throw new RuntimeException("missing required security object (_eform)");
 		}
 
-		List<Integer> eFormAttachments = new ArrayList<>();
+		List<String> eFormAttachments = new ArrayList<>();
 		List<EFormDocs> eFormDocs = eFormDocsDao.findByFdidIdDocType(fdid, documentType.getType());
 		for (EFormDocs eFormDocs1 : eFormDocs) {
-			eFormAttachments.add(eFormDocs1.getDocumentNo());
+			eFormAttachments.add(String.valueOf(eFormDocs1.getDocumentNo()));
 		}
 		return eFormAttachments;
+	}
+
+	public List<LabResultData> getAllLabsSortedByVersions(LoggedInInfo loggedInInfo, String demographicNo) {
+		/*
+		 * Once refactoring is done, we will move the lab version sorting code from attachDocument.jsp to here.
+		 */
+		CommonLabResultData commonLabResultData = new CommonLabResultData();
+		List<LabResultData> allLabs = commonLabResultData.populateLabResultsData(loggedInInfo, "", demographicNo, "", "", "", "U");
+		Collections.sort(allLabs);
+		return allLabs;
 	}
 
 	public void attachToConsult(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer requestId, Integer demographicNo) {
@@ -143,7 +153,8 @@ public class DocumentAttachmentManager {
 	}
 
 	public String convertPDFToBase64(Path renderedDocument) {
-		String base64 = null;
+		String base64 = "";
+		if(renderedDocument == null) { return base64; }
 		try {
 			byte[] bytes = Files.readAllBytes(renderedDocument);
 			base64 = Base64.getEncoder().encodeToString(bytes);
@@ -181,6 +192,10 @@ public class DocumentAttachmentManager {
 	private void attachEFormPDFs(LoggedInInfo loggedInInfo, List<EFormData> attachedEForms, ArrayList<Object> pdfDocumentList) {
 		for (EFormData eForm : attachedEForms) {
 			Path path = renderDocument(loggedInInfo, DocumentType.EFORM, eForm.getId());
+			if (path == null) { 
+				logger.error("An error occurred while creating the pdf of the EFORM ID: " + eForm.getId());
+				continue; 
+			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
@@ -188,6 +203,10 @@ public class DocumentAttachmentManager {
 	private void attachEDocPDFs(LoggedInInfo loggedInInfo, List<EDoc> attachedEDocs, ArrayList<Object> pdfDocumentList) {
 		for (EDoc eDoc : attachedEDocs) {
 			Path path = documentManager.renderDocument(loggedInInfo, eDoc);
+			if (path == null) { 
+				logger.error("An error occurred while creating the pdf of the EDOC ID: " + eDoc.getDocId());
+				continue; 
+			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
@@ -195,6 +214,10 @@ public class DocumentAttachmentManager {
 	private void attachLabPDFs(LoggedInInfo loggedInInfo, List<LabResultData> attachedLabs, ArrayList<Object> pdfDocumentList) {
 		for (LabResultData lab : attachedLabs) {
 			Path path = renderDocument(loggedInInfo, DocumentType.LAB, Integer.parseInt(lab.getSegmentID()));
+			if (path == null) { 
+				logger.error("An error occurred while creating the pdf of the LAB ID: " + lab.getSegmentID());
+				continue; 
+			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
@@ -202,6 +225,10 @@ public class DocumentAttachmentManager {
 	private void attachHRMPDFs(LoggedInInfo loggedInInfo, ArrayList<HashMap<String, ? extends Object>> attachedHRMs, ArrayList<Object> pdfDocumentList) {
 		for (HashMap<String, ?> hrm : attachedHRMs) {
 			Path path = renderDocument(loggedInInfo, DocumentType.HRM, (Integer) hrm.get("id"));
+			if (path == null) { 
+				logger.error("An error occurred while creating the pdf of the HRM ID: " + hrm.get("id"));
+				continue; 
+			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
@@ -209,6 +236,10 @@ public class DocumentAttachmentManager {
 	private void attachFormPDFs(HttpServletRequest request, HttpServletResponse response, List<EctFormData.PatientForm> attachedForms, ArrayList<Object> pdfDocumentList) {
 		for (EctFormData.PatientForm form : attachedForms) {
 			Path path = formsManager.renderForm(request, response, form);
+			if (path == null) { 
+				logger.error("An error occurred while creating the pdf of the FORM ID: " + form.getFormId() + " FORM NAME: " + form.getFormName());
+				continue; 
+			}
 			pdfDocumentList.add(path.toString());
 		}
 	}

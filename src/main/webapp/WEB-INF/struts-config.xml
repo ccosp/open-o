@@ -1289,6 +1289,10 @@
 		<action input=" " name="EctIncomingConsultationForm" path="/oscarEncounter/IncomingConsultation" scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctIncomingConsultationAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp" />
 		</action>
+		
+		<action path="/previewDocs" validate="false" parameter="method" type="org.oscarehr.documentManager.actions.DocumentPreviewAction" scope="request">
+			<forward name="fetchDocuments" path="/documentManager/attachDocument.jsp" />
+		</action>
 
 		<action input="/oscarConsultationRequest/ConsultationFormRequest.jsp" path="/attachDocs" validate="false" parameter="method"
 			type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocsAction" scope="request">
