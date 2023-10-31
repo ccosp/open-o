@@ -1128,11 +1128,12 @@ function popupOscarCal(vheight,vwidth,varpage) { //open a new popup window
 <script type="text/javascript">
 
 function checkForm(submissionVal,formName){
-	
+	ShowSpin(true);
 	var success = true;
 
    if (typeof checkFormHCT === "function") { 
    		if( ! checkFormHCT() ) {
+			HideSpin();
    			return false;
    		}
    }
@@ -1144,6 +1145,7 @@ function checkForm(submissionVal,formName){
   if ( serviceOptionsElement && serviceOptionsElement.selectedIndex == 0 ){
      alert(msg);
      document.EctConsultationFormRequestForm.service.focus();
+	 HideSpin();
      return false;
   }
   var faxNumber = document.EctConsultationFormRequestForm.fax.value;
@@ -1154,11 +1156,13 @@ function checkForm(submissionVal,formName){
   
   if(apptDate.length > 0 && !hasApptTime) {
 	  alert('Please enter appointment time. You cannot choose appointment date only.');
+	  HideSpin();
 	  return false;
   }
   
   if('Submit And Fax' === submissionVal && !faxNumber) {
 	  alert('Please enter a valid 10 digit consultant fax number');
+	  HideSpin();
 	  return false;
   }
   
@@ -1442,6 +1446,7 @@ function updateFaxButton() {
 
 <body topmargin="0" leftmargin="0" vlink="#0000FF" 
 	onload="window.focus();disableDateFields();disableEditing();showSignatureImage();">
+<jsp:include page="../../images/spinner.jsp" flush="true"/>
 <html:errors />
 <html:form styleId="consultationRequestForm" action="/oscarEncounter/RequestConsultation" onsubmit="alert('HTHT'); return false;" >
 	<%

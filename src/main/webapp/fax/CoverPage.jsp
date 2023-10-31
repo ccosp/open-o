@@ -171,7 +171,7 @@
 
 </head>
 <body>
-
+<jsp:include page="../images/spinner.jsp" flush="true"/>
 <div id="bodyrow" class="container-fluid">
 
 	<div id="bodycolumn" class="col-sm-12">
@@ -201,7 +201,7 @@
 				<c:set var="formAction" value="${ctx}/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.do" />
 			</c:if>
 			
-			<form id="coverPageForm" class="form-inline" action='${ formAction }' method="post" novalidate>
+			<form id="coverPageForm" class="form-inline" action='${ formAction }' onsubmit="return ShowSpin(true)" method="post" novalidate>
 			
 				<input type="hidden" name="requestId" value="${ reqId }" />
 				<input type="hidden" name="reqId" value="${ reqId }" />
