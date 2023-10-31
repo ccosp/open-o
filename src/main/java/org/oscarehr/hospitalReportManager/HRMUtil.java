@@ -25,6 +25,7 @@ import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.oscarLab.ca.on.HRMResultsData;
@@ -299,7 +300,7 @@ public class HRMUtil {
 		return displayHRMName;
 	}
 
-	public static Path renderHRM(LoggedInInfo loggedInInfo, Integer hrmId) {
+	public static Path renderHRM(LoggedInInfo loggedInInfo, Integer hrmId) throws PDFGenerationException {
 		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_hrm", "r", null)) {
 			throw new SecurityException("missing required security object (_hrm)");
 		}
@@ -310,7 +311,7 @@ public class HRMUtil {
 			hrmpdfCreator.printPdf();
 			path = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), outputStream);
 		} catch (IOException e) {
-			logger.error("An error occurred while creating the pdf of the hrm: " + e.getMessage(), e);
+			throw new PDFGenerationException("An error occurred while creating the pdf of the hrm. " + "HRM Document Id: " + hrmId, e);
 		}
 		return path;
 	}

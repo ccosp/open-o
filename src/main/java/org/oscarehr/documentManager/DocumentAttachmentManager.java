@@ -1,6 +1,5 @@
 package org.oscarehr.documentManager;
 
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.EFormDocsDao;
 import org.oscarehr.common.model.ConsultDocs;
@@ -10,7 +9,7 @@ import org.oscarehr.hospitalReportManager.HRMUtil;
 import org.oscarehr.managers.*;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oscar.oscarEncounter.data.EctFormData;
@@ -28,8 +27,6 @@ import java.util.*;
 
 @Service
 public class DocumentAttachmentManager {
-	private final Logger logger = MiscUtils.getLogger();
-
 	@Autowired
 	private ConsultDocsDao consultDocsDao;
 	@Autowired
@@ -112,7 +109,7 @@ public class DocumentAttachmentManager {
 	 * @param documentType The type of the document to be rendered.
 	 * @return The Path to the rendered document.
 	 */
-	public Path renderDocument(HttpServletRequest request, HttpServletResponse response, DocumentType documentType) {
+	public Path renderDocument(HttpServletRequest request, HttpServletResponse response, DocumentType documentType) throws PDFGenerationException {
 		return renderDocument(null, request, response, documentType, 0);
 	}
 
@@ -124,11 +121,11 @@ public class DocumentAttachmentManager {
 	 * @param documentId    The documentId integer.
 	 * @return The Path to the rendered document.
 	 */
-	public Path renderDocument(LoggedInInfo loggedInInfo, DocumentType documentType, Integer documentId) {
+	public Path renderDocument(LoggedInInfo loggedInInfo, DocumentType documentType, Integer documentId) throws PDFGenerationException {
 		return renderDocument(loggedInInfo, null, null, documentType, documentId);
 	}
 
-	public Path renderConsultationFormWithAttachments(HttpServletRequest request, HttpServletResponse response) {
+	public Path renderConsultationFormWithAttachments(HttpServletRequest request, HttpServletResponse response) throws PDFGenerationException {
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 		String requestId = (String) request.getAttribute("reqId");
 		String demographicId = (String) request.getAttribute("demographicId");
@@ -152,20 +149,20 @@ public class DocumentAttachmentManager {
 		return concatPDF(pdfDocumentList);
 	}
 
-	public String convertPDFToBase64(Path renderedDocument) {
+	public String convertPDFToBase64(Path renderedDocument) throws PDFGenerationException {
 		String base64 = "";
 		if(renderedDocument == null) { return base64; }
 		try {
 			byte[] bytes = Files.readAllBytes(renderedDocument);
 			base64 = Base64.getEncoder().encodeToString(bytes);
 		} catch (IOException e) {
-			logger.error("An error occurred while processing the PDF file: " + e.getMessage(), e);
+			throw new PDFGenerationException("An error occurred while processing the PDF file", e);
 		}
 		return base64 != null ? base64 : "";
 	}
 
-	private Path renderDocument(LoggedInInfo loggedInInfo, HttpServletRequest request, HttpServletResponse response, DocumentType documentType, Integer documentId) {
-		Path path;
+	private Path renderDocument(LoggedInInfo loggedInInfo, HttpServletRequest request, HttpServletResponse response, DocumentType documentType, Integer documentId) throws PDFGenerationException {
+		Path path = null;
 		switch (documentType) {
 			case DOC:
 				path = documentManager.renderDocument(loggedInInfo, String.valueOf(documentId));
@@ -182,75 +179,52 @@ public class DocumentAttachmentManager {
 			case FORM:
 				path = formsManager.renderForm(request, response, null);
 				break;
-			default:
-				path = null;
-				break;
 		}
 		return path;
 	}
 
-	private void attachEFormPDFs(LoggedInInfo loggedInInfo, List<EFormData> attachedEForms, ArrayList<Object> pdfDocumentList) {
+	private void attachEFormPDFs(LoggedInInfo loggedInInfo, List<EFormData> attachedEForms, ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
 		for (EFormData eForm : attachedEForms) {
 			Path path = renderDocument(loggedInInfo, DocumentType.EFORM, eForm.getId());
-			if (path == null) { 
-				logger.error("An error occurred while creating the pdf of the EFORM ID: " + eForm.getId());
-				continue; 
-			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
 
-	private void attachEDocPDFs(LoggedInInfo loggedInInfo, List<EDoc> attachedEDocs, ArrayList<Object> pdfDocumentList) {
+	private void attachEDocPDFs(LoggedInInfo loggedInInfo, List<EDoc> attachedEDocs, ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
 		for (EDoc eDoc : attachedEDocs) {
 			Path path = documentManager.renderDocument(loggedInInfo, eDoc);
-			if (path == null) { 
-				logger.error("An error occurred while creating the pdf of the EDOC ID: " + eDoc.getDocId());
-				continue; 
-			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
 
-	private void attachLabPDFs(LoggedInInfo loggedInInfo, List<LabResultData> attachedLabs, ArrayList<Object> pdfDocumentList) {
+	private void attachLabPDFs(LoggedInInfo loggedInInfo, List<LabResultData> attachedLabs, ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
 		for (LabResultData lab : attachedLabs) {
 			Path path = renderDocument(loggedInInfo, DocumentType.LAB, Integer.parseInt(lab.getSegmentID()));
-			if (path == null) { 
-				logger.error("An error occurred while creating the pdf of the LAB ID: " + lab.getSegmentID());
-				continue; 
-			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
 
-	private void attachHRMPDFs(LoggedInInfo loggedInInfo, ArrayList<HashMap<String, ? extends Object>> attachedHRMs, ArrayList<Object> pdfDocumentList) {
+	private void attachHRMPDFs(LoggedInInfo loggedInInfo, ArrayList<HashMap<String, ? extends Object>> attachedHRMs, ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
 		for (HashMap<String, ?> hrm : attachedHRMs) {
 			Path path = renderDocument(loggedInInfo, DocumentType.HRM, (Integer) hrm.get("id"));
-			if (path == null) { 
-				logger.error("An error occurred while creating the pdf of the HRM ID: " + hrm.get("id"));
-				continue; 
-			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
 
-	private void attachFormPDFs(HttpServletRequest request, HttpServletResponse response, List<EctFormData.PatientForm> attachedForms, ArrayList<Object> pdfDocumentList) {
+	private void attachFormPDFs(HttpServletRequest request, HttpServletResponse response, List<EctFormData.PatientForm> attachedForms, ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
 		for (EctFormData.PatientForm form : attachedForms) {
 			Path path = formsManager.renderForm(request, response, form);
-			if (path == null) { 
-				logger.error("An error occurred while creating the pdf of the FORM ID: " + form.getFormId() + " FORM NAME: " + form.getFormName());
-				continue; 
-			}
 			pdfDocumentList.add(path.toString());
 		}
 	}
 
-	private Path concatPDF(ArrayList<Object> pdfDocumentList) {
+	private Path concatPDF(ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
 		Path path = null;
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 			ConcatPDF.concat(pdfDocumentList, outputStream);
 			path = nioFileManager.saveTempFile("combinedPDF" + new Date().getTime(), outputStream);
 		} catch (IOException e) {
-			logger.error("An error occurred while concatenating PDF.", e);
+			throw new PDFGenerationException("An error occurred while concatenating PDF.", e);
 		}
 		return path;
 	}

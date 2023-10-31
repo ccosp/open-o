@@ -88,6 +88,7 @@ if(!authed) {
 <%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="oscar.util.StringUtils" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
@@ -126,8 +127,8 @@ if(!authed) {
 		}
 	}
 	String demo_mrp = null;
-	String demo = request.getParameter("de");
-		String requestId = request.getParameter("requestId");
+	String demo = StringUtils.isNullOrEmpty(request.getParameter("de")) ? ((String) request.getAttribute("demographicId")) : request.getParameter("de");
+	String requestId = StringUtils.isNullOrEmpty(request.getParameter("requestId")) ? ((String) request.getAttribute("reqId")) : request.getParameter("requestId");
 		// segmentId is != null when viewing a remote consultation request from an hl7 source
 		String segmentId = request.getParameter("segmentId");
 		String team = request.getParameter("teamVar");
@@ -173,9 +174,13 @@ if(!authed) {
 		}
 
 		if (request.getParameter("error") != null) {
+			String errorMessage = (String) request.getAttribute("errorMessage");
+			if (StringUtils.isNullOrEmpty(errorMessage)) {
+				errorMessage = "The form could not be printed due to an error. Please refer to the server logs for more details.";
+			}
 			%>
-			<SCRIPT LANGUAGE="JavaScript">
-			        alert("The form could not be printed due to an error. Please refer to the server logs for more details.");
+				<SCRIPT LANGUAGE="JavaScript">
+			        alert('<%= errorMessage %>');
 			    </SCRIPT>
 			<%
 		}
@@ -466,7 +471,7 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <script>
 	var ctx = '<%=request.getContextPath()%>';
-	var requestId = '<%=request.getParameter("requestId")%>';
+	var requestId = '<%=requestId%>';
 	var demographicNo = '<%=demo%>';
 	var demoNo = '<%=demo%>';
 	var appointmentNo = '<%=appNo%>';

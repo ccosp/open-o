@@ -85,6 +85,7 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.DigitalSignatureUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WebUtils;
 
@@ -418,10 +419,17 @@ public class EctConsultationFormRequestAction extends Action {
 		request.setAttribute("teamVar", sendTo);
 
 		if (submission.endsWith("And Print Preview")) {
-
 			request.setAttribute("reqId", requestId);
 			request.setAttribute("demographicId", demographicNo);
-			Path pdfPath = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
+			Path pdfPath = null;
+			try {
+				pdfPath = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
+			} catch (PDFGenerationException e) {
+				logger.error(e.getMessage(), e);
+				String errorMessage = "Failed to create a print preview:  " + e.getMessage();
+				request.setAttribute("errorMessage", errorMessage);
+				return mapping.findForward("error");
+			}
 			return generatePDFResponse(response, pdfPath);
 			
 		} else if (submission.endsWith("And Fax")) {

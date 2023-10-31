@@ -206,7 +206,7 @@
 		}
 
 		function showPDF(base64Data) {
-			if (base64Data == "") {
+			if (!base64Data) {
 				showError();
 				return;
 			}
@@ -219,10 +219,16 @@
 			newPdfObject.type = "application/pdf";
 			newPdfObject.id = "pdfObject"; 
 			pdfObject.parentNode.replaceChild(newPdfObject, pdfObject);
+			HideSpin();
 		}
 
-		function showError() {
-			alert("Failed to generate PDF");
+		function showError(errorMessage) {
+			if (errorMessage) {
+				alert(errorMessage);
+			} else {
+				alert("Failed to render PDF :( Please check logs for more details.");
+			}
+			HideSpin();
 		}
 
 		function getPdf(attachmentName, attachmentId, parameters) {
@@ -230,7 +236,6 @@
 			const base64Data = getPdfAttachment(attachmentName, attachmentId);
 			if (base64Data !== null) {
 				showPDF(base64Data);
-				HideSpin();
 				return;
 			}
 
@@ -239,13 +244,15 @@
 				url: "${ pageContext.request.contextPath }/previewDocs.do?" + parameters,
 				dataType: "json",
 				success: function (data) {
-					addPdfAttachment(attachmentName, attachmentId, data.base64Data);
-					showPDF(data.base64Data);
-					HideSpin();
+					if (data.base64Data) {
+						addPdfAttachment(attachmentName, attachmentId, data.base64Data);
+						showPDF(data.base64Data);
+					} else {
+						showError(data.errorMessage);
+					}
 				},
 				error: function (xhr, status, error) {
-					alert("Failed to generate PDF:", xhr.status, xhr.statusText);
-					HideSpin();
+					showError("");
 				}
 			});
 		}

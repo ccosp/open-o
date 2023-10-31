@@ -84,10 +84,10 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter.SORTDIR;
 import org.oscarehr.consultations.ConsultationResponseSearchFilter;
-import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.hospitalReportManager.HRMUtil;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.ws.rest.conversion.OtnEconsultConverter;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
 import org.oscarehr.ws.rest.to.model.ConsultationResponseSearchResult;
@@ -107,7 +107,6 @@ import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPDFCre
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
-import oscar.util.ConcatPDF;
 
 @Service
 public class ConsultationManager {
@@ -556,7 +555,7 @@ public class ConsultationManager {
 		return consultDocsDao.findByRequestIdDocType(consultRequestId, docType);
 	}
 
-	public Path renderConsultationForm(HttpServletRequest request) {
+	public Path renderConsultationForm(HttpServletRequest request) throws PDFGenerationException {
 		Path path = null;
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();) {
@@ -564,7 +563,7 @@ public class ConsultationManager {
 			consultationPDFCreator.printPdf(loggedInInfo);
 			path = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), outputStream);
 		} catch (IOException | DocumentException e) {
-			logger.error("A problem creating PDF for consultation form", e);
+			throw new PDFGenerationException("An error occurred while creating the pdf of the consultation request", e);
 		}
 		return path;
 	}

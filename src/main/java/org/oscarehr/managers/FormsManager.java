@@ -44,6 +44,7 @@ import org.oscarehr.common.model.EFormData;
 import org.oscarehr.common.model.EncounterForm;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -229,17 +230,23 @@ public class FormsManager {
 	 * @param form The PatientForm to process (can be null).
 	 * @param request The HttpServletRequest containing the parameters.
 	 */
-	public Path renderForm(HttpServletRequest request, HttpServletResponse response, EctFormData.PatientForm form) {
+	public Path renderForm(HttpServletRequest request, HttpServletResponse response, EctFormData.PatientForm form) throws PDFGenerationException {
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_form)");
 		}
 
 		FormTransportContainer formTransportContainer = getFormTransportContainer(request, response, form);
-		return ConvertToEdoc.saveAsTempPDF(formTransportContainer);
+		Path path = null;
+		try {
+			path = ConvertToEdoc.saveAsTempPDF(formTransportContainer);
+		} catch (Exception e) {
+			throw new PDFGenerationException("An error occurred while creating the pdf of the form. " + "Form name: " + formTransportContainer.getFormName(), e);
+		}
+		return path;
 	}
 
-	private FormTransportContainer getFormTransportContainer(HttpServletRequest request, HttpServletResponse response, EctFormData.PatientForm form) {
+	private FormTransportContainer getFormTransportContainer(HttpServletRequest request, HttpServletResponse response, EctFormData.PatientForm form) throws PDFGenerationException {
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 		String formId = request.getParameter("formId") != null ? request.getParameter("formId") : form.getFormId();
 		String formName = request.getParameter("formName") != null ? request.getParameter("formName") : form.getFormName();
@@ -254,7 +261,7 @@ public class FormsManager {
 			formTransportContainer.setFormName(formName);
 			formTransportContainer.setRealPath(request.getServletContext().getRealPath(File.separator));
 		} catch (ServletException | IOException e) {
-			logger.error("An error occurred while processing the form: " + e.getMessage(), e);
+			throw new PDFGenerationException("An error occurred while processing the form. " + "Form name: " + formName, e);
 		}
 		return formTransportContainer;
 	}

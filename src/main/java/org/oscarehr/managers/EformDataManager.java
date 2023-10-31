@@ -31,6 +31,7 @@ import java.util.Map;
 import org.oscarehr.common.dao.EFormDataDao;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.oscarehr.documentManager.ConvertToEdoc;
@@ -110,14 +111,19 @@ public class EformDataManager {
 	 *  
 	 * Path to a temp file is returned. Remember to change the .tmp filetype and to delete the tmp file when finished. 
 	 */
-	public Path createEformPDF( LoggedInInfo loggedInInfo, int fdid ) {
+	public Path createEformPDF( LoggedInInfo loggedInInfo, int fdid ) throws PDFGenerationException {
 		
 		if ( ! securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.UPDATE, null)) {
 			throw new RuntimeException("missing required security object (_eform)");
 		}
 
-		EFormData eformData = eFormDataDao.find( fdid );			
-		Path path = ConvertToEdoc.saveAsTempPDF(eformData);
+		EFormData eformData = eFormDataDao.find( fdid );
+		Path path = null;			
+		try {
+			path = ConvertToEdoc.saveAsTempPDF(eformData);
+		} catch (Exception e) {
+			throw new PDFGenerationException("An error occurred while creating the pdf of the eForm. " + "EForm Name: " + eformData.getFormName(), e);
+		}
 		
 		if( Files.isReadable(path) ) {
 			LogAction.addLogSynchronous(loggedInInfo, "EformDataManager.saveEformDataAsPDF", "Document saved at " + path.toString() );

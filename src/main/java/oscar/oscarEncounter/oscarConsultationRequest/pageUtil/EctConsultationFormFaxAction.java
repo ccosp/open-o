@@ -40,6 +40,7 @@ import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
 import org.oscarehr.documentManager.DocumentAttachmentManager;
@@ -107,14 +108,17 @@ public class EctConsultationFormFaxAction extends Action {
 
 		request.setAttribute("reqId", reqId);
 		request.setAttribute("demographicId", demoNo);
-		Path faxPdf = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
-		if (faxPdf == null) {
-			request.setAttribute("printError", new Boolean(true));
+		Path faxPdf = null;
+		try {
+			faxPdf = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
+		} catch (PDFGenerationException e) {
+			logger.error(e.getMessage(), e);
+			String errorMessage = "Failed to send the fax:  " + e.getMessage();
+			request.setAttribute("errorMessage", errorMessage);
 			return mapping.findForward("error");
 		}
 		String faxPdfPath = faxManager.copyFileToOscarDocuments(faxPdf.toString());
 		faxPdf = Paths.get(faxPdfPath);
-		System.out.println(faxPdf.toString());
 		Path pdfToFax;
 		List<FaxConfig> faxConfigs = faxConfigDao.findAll(null, null);
 		boolean validFaxNumber;

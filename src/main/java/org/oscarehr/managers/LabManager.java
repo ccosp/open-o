@@ -27,13 +27,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.sun.xml.messaging.saaj.util.ByteOutputStream;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.Hl7TextMessageDao;
 import org.oscarehr.common.dao.PatientLabRoutingDao;
@@ -41,7 +39,7 @@ import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.Hl7TextMessage;
 import org.oscarehr.common.model.PatientLabRouting;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -109,7 +107,7 @@ public class LabManager {
 		return result;
 	}
 
-	public Path renderLab(LoggedInInfo loggedInInfo, Integer segmentId) {
+	public Path renderLab(LoggedInInfo loggedInInfo, Integer segmentId) throws PDFGenerationException {
 		checkPrivilege(loggedInInfo, "r");
 		LogAction.addLogSynchronous(loggedInInfo, "LabManager.getHl7MessageAsPDF", "labId="+segmentId);
 
@@ -126,7 +124,7 @@ public class LabManager {
 			}
 			tempPDF.delete();
 		} catch (IOException | DocumentException e) {
-			MiscUtils.getLogger().error("A problem creating PDF for lab id " + segmentId, e);
+			throw new PDFGenerationException("An error occurred while creating the pdf of the lab. " + "Lab Id: " + segmentId, e);
 		}
 
 		return path;

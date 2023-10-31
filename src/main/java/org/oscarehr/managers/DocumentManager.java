@@ -27,7 +27,6 @@ package org.oscarehr.managers;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +44,7 @@ import org.oscarehr.common.model.*;
 
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,8 +54,6 @@ import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
 import oscar.log.LogAction;
 import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ImagePDFCreator;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class DocumentManager {
@@ -439,7 +437,7 @@ public class DocumentManager {
 		return providerList;
 	}
 
-	public Path renderDocument(LoggedInInfo loggedInInfo, EDoc eDoc) {
+	public Path renderDocument(LoggedInInfo loggedInInfo, EDoc eDoc) throws PDFGenerationException {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("Access Denied");
 		}
@@ -447,7 +445,7 @@ public class DocumentManager {
 		return renderDocument(eDoc);
 	}
 
-	public Path renderDocument(LoggedInInfo loggedInInfo, String documentId) {
+	public Path renderDocument(LoggedInInfo loggedInInfo, String documentId) throws PDFGenerationException {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.documents", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("Access Denied");
 		}
@@ -456,7 +454,7 @@ public class DocumentManager {
 		return renderDocument(eDoc);
 	}
 
-	private Path renderDocument(EDoc eDoc) {
+	private Path renderDocument(EDoc eDoc) throws PDFGenerationException {
 		Path eDocPDFPath = null;
 		String eDocPath = getFullPathToDocument(eDoc.getFileName());
 		if (eDoc.isImage()) {
@@ -465,12 +463,16 @@ public class DocumentManager {
 				imagePDFCreator.printPdf();
 				eDocPDFPath = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), outputStream);
 			} catch (DocumentException | IOException e) {
-				logger.error("An error occurred while creating the pdf of the image: " + e.getMessage(), e);
+				throw new PDFGenerationException("An error occurred while creating the pdf of the image. " + "Document Name: " + eDoc.getDescription(), e);
 			}
 		} else if (eDoc.isPDF()) {
-			eDocPDFPath = Paths.get(eDocPath);
+			try {
+				eDocPDFPath = Paths.get(eDocPath);
+			} catch (Exception e) {
+				throw new PDFGenerationException("An error occurred while fetching the pdf type document. " + "Document Name: " + eDoc.getDescription(), e);
+			}
 		} else {
-			logger.error("Can not create pdf for " + eDoc.getContentType() + " type document. " + "Document ID: " + eDoc.getDocId());
+			throw new PDFGenerationException("Can not create pdf for " + eDoc.getContentType() + " type document. " + "Document Name: " + eDoc.getDescription());
 		}
 		return eDocPDFPath;
 	}
