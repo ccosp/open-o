@@ -25,8 +25,6 @@
 
 package oscar.eform.actions;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -45,10 +43,11 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 
 import org.oscarehr.common.model.Demographic;
+import org.oscarehr.common.model.enumerator.DocumentType;
+import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.managers.DemographicManager;
 
 import org.oscarehr.managers.EformDataManager;
-import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.match.IMatchManager;
@@ -56,12 +55,9 @@ import org.oscarehr.match.MatchManager;
 import org.oscarehr.match.MatchManagerException;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.eform.EFormAttachDocs;
-import oscar.eform.EFormAttachEForms;
-import oscar.eform.EFormAttachHRMReports;
-import oscar.eform.EFormAttachLabs;
 import oscar.eform.EFormLoader;
 import oscar.eform.EFormUtil;
 import oscar.eform.data.DatabaseAP;
@@ -75,6 +71,7 @@ public class AddEFormAction extends Action {
 	private static final Logger logger=MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	private EformDataManager eformDataManager = SpringUtils.getBean( EformDataManager.class );
+	private DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -227,51 +224,37 @@ public class AddEFormAction extends Action {
 			
 			String fdid = eformDataManager.saveEformData( loggedInInfo, curForm ) + "";
 
-			if( saveAsEdoc ) {
-				eformDataManager.saveEformDataAsEDoc( loggedInInfo, fdid ); 
-			}
-
 			EFormUtil.addEFormValues(paramNames, paramValues, new Integer(fdid), new Integer(fid), new Integer(demographic_no)); //adds parsed values
 
-			if(!StringUtils.isNullOrEmpty(request.getParameter("selectDocs"))) {
-				String docs = request.getParameter("selectDocs");
-				String[] parsedDocs = docs.split("\\|");
-				List<String> dList = new ArrayList<String>();
-				List<String> lList = new ArrayList<String>();
-				List<String> hList = new ArrayList<String>();
-				List<String> eList = new ArrayList<String>();
-				for(String d:parsedDocs) {
-					logger.info("need to save " + d + " to fdid " + fdid);
-					if(d.startsWith("D")) {
-						dList.add(d.substring(1));
-					}
-					if(d.startsWith("L")) {
-						lList.add(d.substring(1));
-					}
-					if(d.startsWith("H")) {
-						hList.add(d.substring(1));
-					}
-					if(d.startsWith("E")) {
-						eList.add(d.substring(1));
-					}
-				}
-				
-				EFormAttachDocs Doc = new EFormAttachDocs(providerNo,demographic_no,fdid,dList.toArray(new String[dList.size()]));
-		        Doc.attach(loggedInInfo);
-		        
-		        EFormAttachLabs Lab = new EFormAttachLabs(providerNo,demographic_no,fdid,lList.toArray(new String[lList.size()]));
-		        Lab.attach(loggedInInfo);
-		        
-				EFormAttachHRMReports hrmReports = new EFormAttachHRMReports(providerNo, demographic_no, fdid, hList.toArray(new String[hList.size()]));
-				hrmReports.attach();
+			String[] attachedDocuments = (request.getParameterValues("docNo") != null ? request.getParameterValues("docNo") : new String[0]);
+			String[] attachedLabs = (request.getParameterValues("labNo") != null ? request.getParameterValues("labNo") : new String[0]);
+			String[] attachedForms = (request.getParameterValues("formNo") != null ? request.getParameterValues("formNo") : new String[0]);
+			String[] attachedEForms = (request.getParameterValues("eFormNo") != null ? request.getParameterValues("eFormNo") : new String[0]);
+			String[] attachedHRMDocuments = (request.getParameterValues("hrmNo") != null ? request.getParameterValues("hrmNo") : new String[0]);
 
-				EFormAttachEForms eForms = new EFormAttachEForms(providerNo, demographic_no, fdid, eList.toArray(new String[eList.size()]));
-	            eForms.attach(loggedInInfo);
-	            
-			}
+			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.DOC, attachedDocuments, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.LAB, attachedLabs, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.FORM, attachedForms, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.EFORM, attachedEForms, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.HRM, attachedHRMDocuments, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+
 			//post fdid to {eform_link} attribute
 			if (eform_link!=null) {
 				se.setAttribute(eform_link, fdid);
+			}
+
+			request.setAttribute("fdid", fdid);
+			request.setAttribute("demographicId", demographic_no);
+
+			if(saveAsEdoc) {
+				try {
+					documentAttachmentManager.saveEFormAsEDoc(request, response);
+				} catch (PDFGenerationException e) {
+					logger.error(e.getMessage(), e);
+					String errorMessage = "Failed to save as eDoc:  " + e.getMessage();
+					request.setAttribute("errorMessage", errorMessage);
+					return mapping.findForward("error");
+				}				
 			}
 			
 			if (fax) {
@@ -292,7 +275,6 @@ public class AddEFormAction extends Action {
 			}
 			
 			else if (print) {
-				request.setAttribute("fdid", fdid);
 				return(mapping.findForward("print"));
 			}
 
@@ -301,14 +283,24 @@ public class AddEFormAction extends Action {
 				 * For now, this download code is added here and will be moved to the appropriate place after refactoring is done.
 				 */
 				ActionForward printForward = mapping.findForward("download");
-				String path = printForward.getPath() + "?fdid=" + fdid + "&parentAjaxId=eforms";
+				String path = printForward.getPath() + "?fdid=" + fdid + "&demographic_no=" + demographic_no + "&parentAjaxId=eforms";
 				printForward = new ActionForward(path);
 
 				String fileName = generateFileName(loggedInInfo, Integer.parseInt(demographic_no));
-				String pdfBase64 = getEFormPDF(loggedInInfo, Integer.parseInt(demographic_no), Integer.parseInt(fdid));
+				String pdfBase64 = "";
+				try {
+					Path eFormPdfPath = documentAttachmentManager.renderEFormWithAttachments(request, response);
+					pdfBase64 = documentAttachmentManager.convertPDFToBase64(eFormPdfPath);
+				} catch (PDFGenerationException e) {
+					logger.error(e.getMessage(), e);
+					String errorMessage = "Failed to download eForm:  " + e.getMessage();
+					request.setAttribute("errorMessage", errorMessage);
+					return mapping.findForward("error");
+				}
 
 				request.setAttribute("eFormPDF", pdfBase64);
 				request.setAttribute("eFormPDFName", fileName);
+				request.setAttribute("isDownload", "true");
 
 				return printForward;
 			}
@@ -327,6 +319,9 @@ public class AddEFormAction extends Action {
 		}
 		else {
 			logger.debug("Warning! Form HTML exactly the same, new form data not saved.");
+			request.setAttribute("fdid", prev_fdid);
+			request.setAttribute("demographicId", demographic_no);
+
 			if (fax) {
 				/*
 				 * This form id is sent to the fax action to render it as a faxable PDF.
@@ -349,7 +344,6 @@ public class AddEFormAction extends Action {
 			}
 			
 			else if (print) {
-				request.setAttribute("fdid", prev_fdid);
 				return(mapping.findForward("print"));
 			}
 
@@ -362,7 +356,16 @@ public class AddEFormAction extends Action {
 				printForward = new ActionForward(path);
 
 				String fileName = generateFileName(loggedInInfo, Integer.parseInt(demographic_no));
-				String pdfBase64 = getEFormPDF(loggedInInfo, Integer.parseInt(demographic_no), Integer.parseInt(prev_fdid));
+				String pdfBase64 = "";
+				try {
+					Path eFormPdfPath = documentAttachmentManager.renderEFormWithAttachments(request, response);
+					pdfBase64 = documentAttachmentManager.convertPDFToBase64(eFormPdfPath);
+				} catch (PDFGenerationException e) {
+					logger.error(e.getMessage(), e);
+					String errorMessage = "Failed to download eForm:  " + e.getMessage();
+					request.setAttribute("errorMessage", errorMessage);
+					return mapping.findForward("error");
+				}
 
 				request.setAttribute("eFormPDF", pdfBase64);
 				request.setAttribute("eFormPDFName", fileName);
@@ -370,8 +373,15 @@ public class AddEFormAction extends Action {
 				return printForward;
 			}
 			
-			if( saveAsEdoc ) {
-				eformDataManager.saveEformDataAsEDoc( loggedInInfo, prev_fdid ); 
+			if(saveAsEdoc) {
+				try {
+					documentAttachmentManager.saveEFormAsEDoc(request, response);
+				} catch (PDFGenerationException e) {
+					logger.error(e.getMessage(), e);
+					String errorMessage = "Failed to save as eDoc:  " + e.getMessage();
+					request.setAttribute("errorMessage", errorMessage);
+					return mapping.findForward("error");
+				}				
 			}
 		}
 		
@@ -388,20 +398,6 @@ public class AddEFormAction extends Action {
 		
 
 		return(mapping.findForward("close"));
-	}
-
-	private String getEFormPDF(LoggedInInfo loggedInInfo, int demographicNo, int fdid) {
-		FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
-		Path eFormPDFPath = faxManager.renderFaxDocument(loggedInInfo, FaxManager.TransactionType.EFORM, fdid, demographicNo);
-		String pdfBase64 = null;
-		try {
-			byte[] pdfBytes = Files.readAllBytes(eFormPDFPath);
-			pdfBase64 = Base64.getEncoder().encodeToString(pdfBytes);
-		} catch (IOException e) {
-			logger.error("Error reading the file", e);
-		}
-
-		return pdfBase64;
 	}
 	
 	private String generateFileName(LoggedInInfo loggedInInfo, int demographicNo) {

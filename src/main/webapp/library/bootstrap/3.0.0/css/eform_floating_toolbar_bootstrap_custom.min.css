@@ -52,7 +52,7 @@ div#eform_floating_toolbar * {
 	display: block;
 }
 
-#eform_floating_toolbar svg:not (:root ){
+#eform_floating_toolbar svg:not(:root ){
 	overflow: hidden
 }
 
@@ -1724,7 +1724,7 @@ div#eform_floating_toolbar * {
 	display: table-cell
 }
 
-#eform_floating_toolbar .input-group-btn:not (:first-child ):not(:last-child), 
+#eform_floating_toolbar .input-group-btn:not(:first-child ):not(:last-child), 
 #eform_floating_toolbar .input-group .form-control:not(:first-child):not(:last-child){
 	border-radius: 0
 }
@@ -2114,7 +2114,7 @@ div#eform_floating_toolbar * {
 	position: fixed
 }
 
-@
+
 #eform_floating_toolbar -ms-viewport {
 	width: device-width
 }
@@ -2586,7 +2586,41 @@ div#eform_floating_toolbar * {
 	height:65px;
 }
 
+#remoteTotalAttachments {
+	background-color: #b1b1b1;
+	color: #fff;
+	border-radius: 5px;
+	display: inline-block;
+	padding: 1px 4px;
+	font-size: 11px;
+}
 
+/* This custom CSS changes are for the 'attachDocument.jsp' jQuery dialog, ensuring it works without any issues in all eForms when it opens using floating toolbar. */
+.ui-dialog {
+	font-size: small !important;
+}
+
+.ui-autocomplete{
+	font-size: small !important;
+}
+
+.save-and-close-button {
+	width: auto !important;
+}
+
+.attachmentContainer {
+	max-height: 85vh !important; 
+}
+
+#attachDocumentsPanel h2 {
+	margin: 0;
+	padding: 0;
+}
+
+#attachDocumentsForm li {
+	padding-bottom: 2px;
+}
+/* */
 
 
 

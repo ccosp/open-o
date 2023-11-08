@@ -46,6 +46,10 @@
 		  				<span class="btn-label"><i class="glyphicon glyphicon-save"></i></span>
 		  				Save
 		  			</button>
+					<button type="button" class="btn btn-default" value="Attach" name="AttachButton" title="Add Attachment" id="remoteAttachButton" data-poload="">
+		  				<span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
+		  				Attach <div id="remoteTotalAttachments">0</div>
+		  			</button>
 			   		<button type="button" class="btn btn-default" id="remotePrintButton" name="PrintButton" value="Print" title="Save and then print" onclick="remotePrint()">
 			   			<span class="btn-label"><i class="glyphicon glyphicon-print"></i></span>
 			   			Print
@@ -93,4 +97,5 @@
 			</button>
 		</div>
 	</div>
+	<div id="attachDocumentDisplay" style="display:none;"></div>
 </div>

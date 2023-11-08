@@ -23,21 +23,28 @@
     Ontario, Canada
 
 --%>
-<%@ page import="java.sql.*, oscar.eform.data.*"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
+<%@ page import="java.sql.*, oscar.eform.data.*"%>
+<%@ page import="org.oscarehr.util.LoggedInInfo"%>
+<%@ page import="oscar.oscarEncounter.data.EctFormData"%>
+<%@ page import="org.oscarehr.common.model.enumerator.DocumentType"%>
+<%@ page import="org.oscarehr.documentManager.DocumentAttachmentManager"%>
+<%@ page import="org.oscarehr.util.SpringUtils"%>
+<%@ page import="oscar.util.StringUtils" %>
+<%@ page import="java.util.List"%>
 
 <%--
 	Addition of a floating global toolbar specifically for activation of the 
 	Fax and eDocument functions.
 --%>
-	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
     <jsp:include page="../images/spinner.jsp" flush="true"/>
 
 <%
 	String id = request.getParameter("fid");
 	String messageOnFailure = "No eform or appointment is available";
   if (id == null) {  // form exists in patient
-      id = request.getParameter("fdid");
+      id = StringUtils.isNullOrEmpty(request.getParameter("fdid")) ? ((String) request.getAttribute("fdid")) : request.getParameter("fdid");
       String appointmentNo = request.getParameter("appointment");
       String eformLink = request.getParameter("eform_link");
 
@@ -63,15 +70,77 @@
   }
 %>
 
-<script type="text/javascript">
-    const eFormPDFName = '<%=request.getAttribute("eFormPDFName")%>';
-    const eFormPDF = '<%=request.getAttribute("eFormPDF")%>';
-    downloadEForm(eFormPDFName, eFormPDF);
-</script>
-
 <c:if test="${ sessionScope.useIframeResizing }" >
 	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/library/pym.js"></script>
 	<script type="text/javascript">
 	    var pymChild = new pym.Child({ polling: 500 });
 	</script>
 </c:if>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Show EForm</title>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-3.6.4.min.js" ></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js" ></script>
+	<link href="<%=request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.css" rel="stylesheet" media="screen" />
+	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
+    <script type="text/javascript">
+        const eFormPDFName = '<%=request.getAttribute("eFormPDFName")%>';
+        const eFormPDF = '<%=request.getAttribute("eFormPDF")%>';
+        const isDownloadEForm = '<%=request.getAttribute("isDownload")%>';
+        if (eFormPDF !== 'null' && eFormPDFName !== 'null' && isDownloadEForm === 'true') {
+            downloadEForm(eFormPDFName, eFormPDF);
+        }
+    </script>
+</head>
+<body>
+    <%
+        String fdid = StringUtils.isNullOrEmpty(request.getParameter("fdid")) ? ((String) request.getAttribute("fdid")) : request.getParameter("fdid");
+        String demographicNo = StringUtils.isNullOrEmpty(request.getParameter("demographic_no")) ? ((String) request.getAttribute("demographicId")) : request.getParameter("demographic_no");;
+        DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        List<String> attachedDocumentIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.DOC, Integer.parseInt(demographicNo));
+        List<String> attachedEFormIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.EFORM, Integer.parseInt(demographicNo));
+		List<String> attachedHRMDocumentIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.HRM, Integer.parseInt(demographicNo));
+		List<String> attachedLabIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.LAB, Integer.parseInt(demographicNo));
+		List<EctFormData.PatientForm> attachedForms = documentAttachmentManager.getFormsAttachedToEForms(loggedInInfo, Integer.parseInt(fdid), DocumentType.FORM, Integer.parseInt(demographicNo));
+        if (request.getParameter("error") != null) {
+			String errorMessage = (String) request.getAttribute("errorMessage");
+			if (StringUtils.isNullOrEmpty(errorMessage)) {
+				errorMessage = "Failed to process eForm. Please refer to the server logs for more details.";
+			}
+			%>
+				<SCRIPT LANGUAGE="JavaScript">
+			        alert('<%= errorMessage %>');
+			    </SCRIPT>
+			<%
+		}
+    %>
+	<input type="hidden" id="context" value="${ pageContext.request.contextPath }">
+	<input type="hidden" id="demographicNo" value="<%=demographicNo%>">
+	<input type="hidden" id="fdid" value="<%=fdid%>">
+    <c:set var="attachedDocumentIds" value="<%=attachedDocumentIds%>" />
+    <c:set var="attachedEFormIds" value="<%=attachedEFormIds%>" />
+    <c:set var="attachedHRMDocumentIds" value="<%=attachedHRMDocumentIds%>" />
+    <c:set var="attachedLabIds" value="<%=attachedLabIds%>" />
+    <c:set var="attachedForms" value="<%=attachedForms%>" />
+    <c:forEach items="${attachedDocumentIds}" var="attachmentId" varStatus="status">
+        <input type="hidden" id="delegate_docNo${attachmentId}" name="docNo" value="${attachmentId}" class="delegateAttachment" />
+    </c:forEach>
+    <c:forEach items="${attachedEFormIds}" var="attachmentId" varStatus="status">
+        <input type="hidden" id="delegate_eFormNo${attachmentId}" name="eFormNo" value="${attachmentId}" class="delegateAttachment" />
+    </c:forEach>
+    <c:forEach items="${attachedHRMDocumentIds}" var="attachmentId" varStatus="status">
+        <input type="hidden" id="delegate_hrmNo${attachmentId}" name="hrmNo" value="${attachmentId}" class="delegateAttachment" />
+    </c:forEach>
+    <c:forEach items="${attachedLabIds}" var="attachmentId" varStatus="status">
+        <input type="hidden" id="delegate_labNo${attachmentId}" name="labNo" value="${attachmentId}" class="delegateAttachment" />
+    </c:forEach>
+    <c:forEach items="${attachedForms}" var="attachment" varStatus="status">
+        <!-- this input field will be useful when latest form is not attached -->
+        <input type="hidden" id="entry_formNo${ attachment.formId }" class="delegateOldFormAttachment" data-formName="${ attachment.formName }" data-formDate="${ attachment.getEdited() }" />
+        <input type="hidden" id="delegate_formNo${attachment.formId}" name="formNo" value="${attachment.formId}" class="delegateAttachment" />
+    </c:forEach>
+</body>
+</html>

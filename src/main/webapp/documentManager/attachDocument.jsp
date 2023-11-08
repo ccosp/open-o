@@ -89,7 +89,7 @@
 	<title><bean:message key="oscarEncounter.oscarConsultationRequest.AttachDocPopup.title" /></title>
 
 	<style>
-		.container {
+		.attachmentContainer {
 			display: flex;
 			width: 95vw;
 			min-height: 580px;
@@ -103,6 +103,7 @@
 
 		#attachDocumentsPanel {
 			width: 100%;
+			font-size: x-small;
 		}
 
 		.preview-button {
@@ -113,9 +114,10 @@
 			cursor: pointer;
 		}
 
-		.selectAllHeading {
+		#attachDocumentsForm li.selectAllHeading {
 			justify-content: space-between;
 			align-items: center;
+			border-bottom: black thin inset
 		}
 
 		.show-all-button {
@@ -259,7 +261,7 @@
 
 		function showAll(showButton, attachmentType) {
 			let hiddenAttachments = document.getElementsByClassName(attachmentType);
-			hiddenAttachments.forEach(function(attachment) {
+			Array.from(hiddenAttachments).forEach(function(attachment) {
 				attachment.classList.remove('hide');
 			});
 			showButton.classList.add('hide');
@@ -271,7 +273,7 @@
 <body>
 <jsp:include page="../images/spinner.jsp" flush="true"/>
 <form id="attachDocumentsForm">
-	<div class="container">
+	<div class="attachmentContainer">
 		<div class="attachmentList">
 			<table id="attachDocumentsPanel" >
 				<c:if test="${not empty allEForms }" >

@@ -22,6 +22,8 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
+import oscar.util.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,7 +31,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class DocumentPreviewAction extends DispatchAction {
 	private static final Logger logger = MiscUtils.getLogger();
@@ -108,8 +109,8 @@ public class DocumentPreviewAction extends DispatchAction {
 	public ActionForward fetchConsultDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 		
-		String demographicNo = Objects.equals(request.getParameter("demographicNo"), new String("null")) ? "0" : request.getParameter("demographicNo");
-		String requestId = Objects.equals(request.getParameter("requestId"), new String("null")) ? "0" : request.getParameter("requestId");
+		String demographicNo = StringUtils.isNullOrEmpty(request.getParameter("demographicNo")) ? "0" : request.getParameter("demographicNo");
+		String requestId = StringUtils.isNullOrEmpty(request.getParameter("requestId")) ? "0" : request.getParameter("requestId");
 
 		allDocuments = EDocUtil.listDocs(loggedInInfo, "demographic", demographicNo, null, EDocUtil.PRIVATE, EDocUtil.EDocSort.OBSERVATIONDATE);
 		allEForms = EFormUtil.listPatientEformsCurrent(new Integer(demographicNo), true);
@@ -122,6 +123,21 @@ public class DocumentPreviewAction extends DispatchAction {
 		attachedHRMDocumentIds = documentAttachmentManager.getConsultAttachments(loggedInInfo, Integer.parseInt(requestId), DocumentType.HRM, Integer.parseInt(demographicNo));
 		attachedLabIds = documentAttachmentManager.getConsultAttachments(loggedInInfo, Integer.parseInt(requestId), DocumentType.LAB, Integer.parseInt(demographicNo));
 		attachedFormIds = documentAttachmentManager.getConsultAttachments(loggedInInfo, Integer.parseInt(requestId), DocumentType.FORM, Integer.parseInt(demographicNo));
+
+		return forwardDocuments(mapping, request);
+	}
+
+	public ActionForward fetchEFormDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+		
+		String demographicNo = StringUtils.isNullOrEmpty(request.getParameter("demographicNo")) ? "0" : request.getParameter("demographicNo");
+		String fdid = StringUtils.isNullOrEmpty(request.getParameter("fdid")) ? "0" : request.getParameter("fdid");
+
+		allDocuments = EDocUtil.listDocs(loggedInInfo, "demographic", demographicNo, null, EDocUtil.PRIVATE, EDocUtil.EDocSort.OBSERVATIONDATE);
+		allEForms = documentAttachmentManager.getAllEFormsExpectFdid(loggedInInfo, Integer.parseInt(demographicNo), Integer.parseInt(fdid));
+		allHRMDocuments = HRMUtil.listHRMDocuments(loggedInInfo, "report_date", false, demographicNo,false);
+		allLabs = documentAttachmentManager.getAllLabsSortedByVersions(loggedInInfo, demographicNo);
+		allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, Integer.parseInt(demographicNo), false, true);
 
 		return forwardDocuments(mapping, request);
 	}

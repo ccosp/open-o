@@ -1739,6 +1739,7 @@
 			<forward name="error" path="/errorpage.jsp" />
 			<forward name="CONSULTATION" path="/oscarEncounter/ViewRequest.do" />
 			<forward name="EFORM" path="/eform/efmshowform_data.jsp" />
+			<forward name="eFormError" path="/eform/efmshowform_data.jsp?error=error" />
 		</action>		
 		<action input="/provider/providerColourPicker.jsp" name="setProviderColour" path="/setProviderColour" scope="request" type="oscar.oscarProvider.pageUtil.ProEditColourAction">
 			<forward name="success" path="/provider/providerColourPicker.jsp" />
@@ -2018,6 +2019,7 @@
 			<forward name="close" path="/eform/efmclosewindow.jsp" />
 			<forward name="fax" path="/fax/faxAction.do" />
 			<forward name="download" path="/eform/efmshowform_data.jsp"/>
+			<forward name="error" path="/eform/efmshowform_data.jsp?error=error"/>
 		</action>
 
 		<action input="/eform/efmformadd_data.jsp" path="/eform/efmPrintPDF" scope="request" type="oscar.eform.actions.PrintPDFAction">

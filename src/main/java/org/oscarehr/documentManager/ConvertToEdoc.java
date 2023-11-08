@@ -52,6 +52,7 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -125,6 +126,27 @@ public class ConvertToEdoc {
 		}		
 		
 		return edoc;	
+	}
+
+	public synchronized static EDoc from(EFormData eForm, Path eFormPDFPath) throws PDFGenerationException {
+		String demographicNo = eForm.getDemographicId() + "";
+		String filename = buildFilename( eForm.getFormName(), demographicNo );
+		String eDocDescription = "".equals(eForm.getSubject().trim()) ? eForm.getFormName() : eForm.getSubject();
+		EDoc edoc = null;
+
+		if(Files.isReadable(eFormPDFPath)) {
+			edoc = buildEDoc( eFormPDFPath.getFileName().toString(),
+					eDocDescription, 
+					null,
+					eForm.getProviderNo(), 
+					demographicNo, 
+					DocumentType.eForm,
+					eFormPDFPath.getParent().toString());
+		} else {
+			throw new PDFGenerationException("Could not read temporary PDF file " + filename);
+		}		
+		
+		return edoc;
 	}
 
 	/**

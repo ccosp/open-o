@@ -12,6 +12,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -73,6 +75,28 @@ public class DocumentAttachmentManager {
 		return eFormAttachments;
 	}
 
+	public List<EctFormData.PatientForm> getFormsAttachedToEForms(LoggedInInfo loggedInInfo, Integer fdid, DocumentType documentType, Integer demographicNo) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.READ, demographicNo)) {
+			throw new RuntimeException("missing required security object (_eform)");
+		}
+
+		List<EctFormData.PatientForm> attachedForms = new ArrayList<>();
+		List<String> attachedFormIds = getEFormAttachments(loggedInInfo, fdid, documentType, demographicNo);
+		List<EctFormData.PatientForm> allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, demographicNo, true, true);
+		for (String formId : attachedFormIds) {
+			for (EctFormData.PatientForm form : allForms) {
+				if (!form.getFormId().equals(formId)) { continue; }
+				attachedForms.add(form);
+			}
+		}
+
+		return attachedForms;
+	}
+
+	/**
+	 * This method is responsible for lab version sorting and is intended for use in the attachment window (attachDocument.jsp).
+	 * In other parts of the application, developers should utilize CommonLabResultData.populateLabResultsData() to access all available lab data.
+	 */
 	public List<LabResultData> getAllLabsSortedByVersions(LoggedInInfo loggedInInfo, String demographicNo) {
 		/*
 		 * Once refactoring is done, we will move the lab version sorting code from attachDocument.jsp to here.
@@ -81,6 +105,28 @@ public class DocumentAttachmentManager {
 		List<LabResultData> allLabs = commonLabResultData.populateLabResultsData(loggedInInfo, "", demographicNo, "", "", "", "U");
 		Collections.sort(allLabs);
 		return allLabs;
+	}
+
+	/**
+	 * This method is intended for use in the attachment window (attachDocument.jsp) and is designed to retrieve a list of eForms expect one.
+	 * In other parts of the application, developers are encouraged to use EFormUtil.listPatientEformsCurrent() to access all available eForms.
+	 * The reason for this distinction is to prevent doctores from attaching an eForm to itself.
+	 */
+	public List<EFormData> getAllEFormsExpectFdid(LoggedInInfo loggedInInfo, Integer demographicNo, Integer fdid) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.READ, demographicNo)) {
+			throw new RuntimeException("missing required security object (_eform)");
+		}
+
+		List<EFormData> allEForms = EFormUtil.listPatientEformsCurrent(demographicNo, true);
+		Iterator<EFormData> iterator = allEForms.iterator();
+		while (iterator.hasNext()) {
+			EFormData eForm = iterator.next();
+			if (fdid.equals(eForm.getId())) {
+				iterator.remove();
+			}
+		}
+
+		return allEForms;
 	}
 
 	public void attachToConsult(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer requestId, Integer demographicNo) {
@@ -147,6 +193,38 @@ public class DocumentAttachmentManager {
 		attachFormPDFs(request, response, attachedForms, pdfDocumentList);
 
 		return concatPDF(pdfDocumentList);
+	}
+
+	public Path renderEFormWithAttachments(HttpServletRequest request, HttpServletResponse response) throws PDFGenerationException {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+		String fdid = (String) request.getAttribute("fdid");
+		String demographicId = (String) request.getAttribute("demographicId");
+		Path eFormPath = eformDataManager.createEformPDF(loggedInInfo, Integer.parseInt(fdid));
+
+		List<EFormData> attachedEForms = EFormUtil.listPatientEformsCurrentAttachedToEForm(fdid);
+		List<EDoc> attachedEDocs = EDocUtil.listDocsAttachedToEForm(loggedInInfo, demographicId, fdid, EDocUtil.ATTACHED);
+		CommonLabResultData labResultData = new CommonLabResultData();
+		List<LabResultData> attachedLabs = labResultData.populateLabResultsDataEForm(loggedInInfo, demographicId, fdid, CommonLabResultData.ATTACHED);
+		ArrayList<HashMap<String, ? extends Object>> attachedHRMs = eformDataManager.getHRMDocumentsAttachedToEForm(loggedInInfo, fdid, demographicId);
+		List<EctFormData.PatientForm> attachedForms = eformDataManager.getFormsAttachedToEForm(loggedInInfo, fdid, demographicId);
+
+		ArrayList<Object> pdfDocumentList = new ArrayList<>();
+		pdfDocumentList.add(eFormPath.toString());
+		attachEFormPDFs(loggedInInfo, attachedEForms, pdfDocumentList);
+		attachEDocPDFs(loggedInInfo, attachedEDocs, pdfDocumentList);
+		attachLabPDFs(loggedInInfo, attachedLabs, pdfDocumentList);
+		attachHRMPDFs(loggedInInfo, attachedHRMs, pdfDocumentList);
+		attachFormPDFs(request, response, attachedForms, pdfDocumentList);
+
+		return concatPDF(pdfDocumentList);
+	}
+
+	public Integer saveEFormAsEDoc(HttpServletRequest request, HttpServletResponse response) throws PDFGenerationException {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+		String fdid = (String) request.getAttribute("fdid");
+		String demographicId = (String) request.getAttribute("demographicId");
+		Path eFormPath = renderEFormWithAttachments(request, response);
+		return eformDataManager.saveEFormWithAttachmentsAsEDoc(loggedInInfo, fdid, demographicId, eFormPath);
 	}
 
 	public String convertPDFToBase64(Path renderedDocument) throws PDFGenerationException {

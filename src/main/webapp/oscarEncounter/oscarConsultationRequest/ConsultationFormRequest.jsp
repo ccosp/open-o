@@ -2610,7 +2610,12 @@ Calendar.setup( { inputField : "appointmentDate", ifFormat : "%Y/%m/%d", showsTi
 	Calendar.setup( { inputField : "referalDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "referalDate", singleClick : true, step : 1 } );
 <%}%>
 jQuery(document).ready(function(){
-	function addFormIfNotFound(form, delegate) {
+	
+	/**
+	 * This function adds the old form to the attachment window only if that form is displayed in the consultForm/eForm attachments. 
+	 * The attachment window only displays the latest (updated) forms.
+	 */
+	function addFormIfNotFound(form, demographicNo, delegate) {
 		const checkboxName = form.getAttribute('name');
 		const formValue = form.getAttribute('value');
 		const formId = "formNo" + formValue;
@@ -2631,9 +2636,18 @@ jQuery(document).ready(function(){
 			text: "(Not Latest Version) " + formName + " " + formDate
 		});
 
+		const previewButton = jQuery('<button>', {
+			class: 'preview-button',
+			type: 'button',
+			text: 'Preview',
+			title: 'Preview'
+		}).click(function() {
+			getPdf('FORM', formValue, 'method=renderFormPDF&formId=' + formValue + '&formName=' + formName + '&demographicNo=' + demographicNo);
+		});
+
 		const newLiFormElement = jQuery('<li>', {
 			class: 'form',
-		}).append(checkbox).append(label);
+		}).append(checkbox).append(label).append(previewButton);
 		jQuery('#formList').find('.selectAllHeading').after(newLiFormElement);
 		
 		return jQuery('#attachDocumentsForm').find(delegate);
@@ -2654,7 +2668,7 @@ jQuery(document).ready(function(){
 				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
 					let delegate = "#" + this.id.split("_")[1];
 					let element = jQuery('#attachDocumentsForm').find(delegate);
-					if (element.length === 0) { element = addFormIfNotFound(data, delegate); }
+					if (element.length === 0) { element = addFormIfNotFound(data, '<%=demo%>', delegate); }
 					let elementClassType = element.attr("class").split("_")[0];
 					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
 				});

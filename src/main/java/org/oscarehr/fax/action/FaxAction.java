@@ -38,6 +38,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
+
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -47,16 +49,20 @@ import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.FaxJob.STATUS;
+import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
 
 public class FaxAction extends DispatchAction {
 
+	private static final Logger logger=MiscUtils.getLogger();
 	private final FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+	private final DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
 	
 	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		return null;
@@ -208,7 +214,19 @@ public class FaxAction extends DispatchAction {
 		 */
 		if(! accounts.isEmpty())
 		{
-			pdfPath = faxManager.renderFaxDocument(loggedInInfo, transactionType, transactionId, demographicNo);
+			if (transactionType.equals(TransactionType.EFORM)) {
+				request.setAttribute("fdid", String.valueOf(transactionId));
+				request.setAttribute("demographicId", String.valueOf(demographicNo));
+
+				try {
+					pdfPath = documentAttachmentManager.renderEFormWithAttachments(request, response);
+				} catch (PDFGenerationException e) {
+					logger.error(e.getMessage(), e);
+					String errorMessage = "Failed to create eForm PDF:  " + e.getMessage();
+					request.setAttribute("errorMessage", errorMessage);
+					return mapping.findForward("eFormError");
+				}
+			}
 		} else {
 			request.setAttribute("message", "No active fax accounts found.");
 		}

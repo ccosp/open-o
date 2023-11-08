@@ -7,6 +7,9 @@
 			hideElements();
 			addNavElement();
 			moveSubjectReverse();
+
+			// Add eForm attachments 
+			addEFormAttachments();
 			
 //			top.window.resizeTo("1100","850");
 			
@@ -44,7 +47,7 @@
 	function remoteSave() {
 		
 		moveSubject();
-		
+		ShowSpin(true);
 		if (typeof saveRTL === "function")
 		{
 			window["saveRTL"]();
@@ -95,9 +98,126 @@
 		{
 			console.log(error);
 		}
-
+		HideSpin();
 		return false;
 
+	}
+
+	/**
+	 * Triggers the eForm attach function
+	 */
+	jQuery(document).on( 'click', '*[data-poload]', function() {
+		const demographicNo = document.getElementById("demographicNo").value;
+		const fdid = document.getElementById("fdid").value;
+		const context = document.getElementById("context").value;
+		let trigger = jQuery(this);
+		trigger.data('poload', context + '/previewDocs.do?method=fetchEFormDocuments&demographicNo=' + demographicNo + '&fdid=' + fdid);
+		trigger.off('click');
+		let title = trigger.attr("title");
+		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
+			if (status === "success") {
+				jQuery('#attachDocumentList').find(".delegateAttachment").each(function(index,data) {
+					let delegate = "#" + this.id.split("_")[1];
+					let element = jQuery('#attachDocumentsForm').find(delegate);
+					if (element.length === 0) { element = addFormIfNotFound(data, demographicNo, delegate); }
+					element.attr("checked", true);
+				});
+			}
+		}).dialog({
+			title: title,
+			modal:true,
+			closeText: "Save and Close",
+			height: 'auto',
+			width: 'auto',
+			resizable: true,
+			open: function(event, ui) {
+				jQuery(this).parent().css({
+					top: 0,
+					left: 0
+				});
+
+				let closeBtn = jQuery(this).parent().find(".ui-dialog-titlebar-close");
+				closeBtn.removeClass("ui-button-icon-only");
+				closeBtn.addClass("save-and-close-button");
+				closeBtn.html("Save and Close");
+			},
+
+ 			beforeClose: function(event, ui) {
+ 				// before the dialog is closed:
+
+				// check if list exists, if yes then empty it otherwise create new
+				if (jQuery('#attachDocumentList').length === 0) { 
+					const attachDocumentList = jQuery('<div>', { 'id': 'attachDocumentList' });
+					jQuery('form:first').append(attachDocumentList); 
+				}
+				jQuery('#attachDocumentList').empty();
+
+ 			    // pass the checked documents to the eForm document list(attachDocumentList)
+ 				jQuery('#attachDocumentsForm').find(".document_check:checked:not(input[disabled='disabled']), .lab_check:checked:not(input[disabled='disabled']), .form_check:checked:not(input[disabled='disabled']), .eForm_check:checked:not(input[disabled='disabled']), .hrm_check:checked:not(input[disabled='disabled'])"
+				).each(function(index,data){
+ 					let element = jQuery(this);
+ 					let input = jQuery("<input />", {type: 'hidden', name: element.attr('name'), value: element.val(), id: "delegate_" + element.attr('id'), class: 'delegateAttachment'});
+					jQuery('#attachDocumentList').append(input);
+				});
+
+				// show total attachments
+				jQuery('#remoteTotalAttachments').empty().append(jQuery('.delegateAttachment').length); 
+			}
+		});
+	});
+
+	/**
+	 * This function adds the old form to the attachment window only if that form is displayed in the consultForm/eForm attachments. 
+	 * The attachment window only displays the latest (updated) forms.
+	 */
+	function addFormIfNotFound(form, demographicNo, delegate) {
+		const checkboxName = form.getAttribute('name');
+		const formValue = form.getAttribute('value');
+		const formId = "formNo" + formValue;
+		const formName = document.getElementById("entry_" + formId).getAttribute('data-formName');
+		const formDate = document.getElementById("entry_" + formId).getAttribute('data-formDate');
+
+		const checkbox = jQuery('<input>', {
+			class: 'form_check',
+			type: 'checkbox',
+			name: checkboxName,
+			id: formId,
+			value: formValue,
+			title: formName
+		});
+
+		const label = jQuery('<label>', {
+			for: formId,
+			text: "(Not Latest Version) " + formName + " " + formDate
+		});
+
+		const previewButton = jQuery('<button>', {
+			class: 'preview-button',
+			type: 'button',
+			text: 'Preview',
+			title: 'Preview'
+		}).click(function() {
+			getPdf('FORM', formValue, 'method=renderFormPDF&formId=' + formValue + '&formName=' + formName + '&demographicNo=' + demographicNo);
+		});
+
+		const newLiFormElement = jQuery('<li>', {
+			class: 'form',
+		}).append(checkbox).append(label).append(previewButton);
+		jQuery('#formList').find('.selectAllHeading').after(newLiFormElement);
+		
+		return jQuery('#attachDocumentsForm').find(delegate);
+	}
+
+	function addEFormAttachments() {
+		const eFormAttachments = jQuery('.delegateAttachment');
+		const attachDocumentList = jQuery('<div>', { 'id': 'attachDocumentList' });
+		jQuery('form:first').append(attachDocumentList);
+		eFormAttachments.appendTo(attachDocumentList);
+
+		// Old form versions 
+		const oldVersionForms = jQuery('.delegateOldFormAttachment');
+		const eForm = jQuery('#FormName');
+		oldVersionForms.appendTo(eForm);
 	}
 
 	/**
@@ -117,15 +237,13 @@
 	}
 
 	function downloadEForm() {
-		if (eFormPDF !== 'null' && eFormPDFName !== 'null') {
-			const pdfData = new Uint8Array(atob(eFormPDF).split('').map(char => char.charCodeAt(0)));
-			const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
-			const downloadLink = document.createElement('a');
-			downloadLink.href = URL.createObjectURL(pdfBlob);
-			downloadLink.download = eFormPDFName;
-			downloadLink.click();
-			URL.revokeObjectURL(downloadLink.href);
-		}
+		const pdfData = new Uint8Array(atob(eFormPDF).split('').map(char => char.charCodeAt(0)));
+		const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
+		const downloadLink = document.createElement('a');
+		downloadLink.href = URL.createObjectURL(pdfBlob);
+		downloadLink.download = eFormPDFName;
+		downloadLink.click();
+		URL.revokeObjectURL(downloadLink.href);
 	}
 	
 	/**
@@ -408,6 +526,9 @@
 					toolbarWrapper.setAttribute("class","hidden-print DoNotPrint no-print");
 					toolbarWrapper.innerHTML = this.responseText;
 					elmnt.append(toolbarWrapper);
+
+					// After adding floating toolbar update number of attachments
+					jQuery('#remoteTotalAttachments').empty().append(jQuery('.delegateAttachment').length);
 				}
 
 				if (this.status == 404)
