@@ -8194,7 +8194,8 @@ CREATE TABLE IF NOT EXISTS measurementsExt(
 	measurement_id int(10) NOT NULL,
 	keyval varchar(20) NOT NULL,
 	val text NOT NULL,
-	INDEX(measurement_id)
+	INDEX(measurement_id),
+  INDEX measurements_ext_keyval_val (keyval, val(100))
 );
 
 CREATE TABLE IF NOT EXISTS measurementMap(
