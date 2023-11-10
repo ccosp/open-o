@@ -101,6 +101,10 @@
 			min-width: 320px;
 		}
 
+		#attachDocumentsPanel {
+			width: 100%;
+		}
+
 		.preview-button {
 			padding: 2px 4px;
 			color: black;
@@ -254,28 +258,55 @@
 	<div class="container">
 		<div class="attachmentList">
 			<table id="attachDocumentsPanel" >
-				<tr>
-					<td><h2>Documents</h2></td>
-				</tr>
-				<tr>
-					<td>
-						<ul id="documentList" style="list-style-type: none;padding:0px;">
-							<li class="selectAllHeading ${allDocuments.size() > 20 ? 'flex' : ''}">
-								<input id="selectAllDocuments" type="checkbox" onclick="toggleSelectAll(this, 'document_');" value="document_check" title="Select/un-select all documents."/>
-								<label for="selectAllDocuments">Select all</label>
-								<button class="show-all-button ${allDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allDocuments.size() - 20} More Documents" onclick="showAll(this, 'doc')">Show ${allDocuments.size() - 20} More Documents</button>
-							</li>
-							<c:forEach items="${ allDocuments }" var="document" varStatus="loop">
-								<li class="doc ${loop.index > 19 ? 'hide' : ''}">
-									<input class="document_check" type="checkbox" name="docNo" id="docNo${document.docId}" value="${document.docId}" title="${ document.description }" />
-									<label for="docNo${document.docId}"><c:out value="${ document.description } ${ document.observationDate }" /></label>
-									<button class="preview-button" type="button" title="Preview" onclick="getPdf('DOC', '${document.docId}', 'method=getDocumentPDF&fileName=${document.fileName}&description=${document.description}&isImage=${document.isImage()}&isPDF=${document.isPDF()}')">Preview</button>
+				<c:if test="${not empty allEForms }" >
+					<tr>
+						<td><h2>eForms</h2></td>
+					</tr>
+					<tr>
+						<td>
+							<ul id="eFormList" style="list-style-type: none;padding:0px;">
+								<li class="selectAllHeading ${allEForms.size() > 5 ? 'flex' : ''}">
+									<input id="selectAllEForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
+									<label for="selectAllEForms">Select all</label>
+									<button class="show-all-button ${allEForms.size() > 5 ? '' : 'hide'}" type="button" title="Show ${allEForms.size() - 5} More eForms" onclick="showAll(this, 'eForm')">Show ${allEForms.size() - 5} More eForms</button>
 								</li>
-							</c:forEach>
-						</ul>
+								<c:forEach items="${ allEForms }" var="eForm" varStatus="loop">
+									<li class="eForm ${loop.index > 4 ? 'hide' : ''}">
+										<input class="eForm_check" type="checkbox" name="eFormNo" id="eFormNo${ eForm.id }" value="${eForm.id}" title="${eForm.formName}" />
+										<label for="eFormNo${eForm.id}">
+											<c:out value="${eForm.subject.length() > 0 ? eForm.subject : eForm.formName} ${ eForm.getFormDate() }" />
+										</label>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('EFORM', '${eForm.id}', 'method=getEFormPDF&eFormId=${eForm.id}&demographicNo=${eForm.demographicId}')">Preview</button>
+									</li>
+								</c:forEach>
+							</ul>
+						</td>
+					</tr>
+				</c:if>
 
-					</td>
-				</tr>
+				<c:if test="${not empty allDocuments }" >
+					<tr>
+						<td><h2>Documents</h2></td>
+					</tr>
+					<tr>
+						<td>
+							<ul id="documentList" style="list-style-type: none;padding:0px;">
+								<li class="selectAllHeading ${allDocuments.size() > 20 ? 'flex' : ''}">
+									<input id="selectAllDocuments" type="checkbox" onclick="toggleSelectAll(this, 'document_');" value="document_check" title="Select/un-select all documents."/>
+									<label for="selectAllDocuments">Select all</label>
+									<button class="show-all-button ${allDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allDocuments.size() - 20} More Documents" onclick="showAll(this, 'doc')">Show ${allDocuments.size() - 20} More Documents</button>
+								</li>
+								<c:forEach items="${ allDocuments }" var="document" varStatus="loop">
+									<li class="doc ${loop.index > 19 ? 'hide' : ''}">
+										<input class="document_check" type="checkbox" name="docNo" id="docNo${document.docId}" value="${document.docId}" title="${ document.description }" />
+										<label for="docNo${document.docId}"><c:out value="${ document.description } ${ document.observationDate }" /></label>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('DOC', '${document.docId}', 'method=getDocumentPDF&fileName=${document.fileName}&description=${document.description}&isImage=${document.isImage()}&isPDF=${document.isPDF()}')">Preview</button>
+									</li>
+								</c:forEach>
+							</ul>
+						</td>
+					</tr>
+				</c:if>
 
 				<c:if test="${not empty allLabsSortedByVersions }" >
 					<tr>
@@ -319,75 +350,57 @@
 					</tr>
 				</c:if>
 
-				<tr>
-					<td><h2>Forms (current only)</h2></td>
-				</tr>
-				<tr>
-					<td>
-						<ul id="formList" style="list-style-type: none;padding:0px;">
-							<li class="selectAllHeading ${allForms.size() > 20 ? 'flex' : ''}">
-								<input id="selectAllForms" type="checkbox" onclick="toggleSelectAll(this, 'form_');" value="form_check" title="Select/un-select all forms."/>
-								<label for="selectAllForms">Select all</label>
-								<button class="show-all-button ${allForms.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allForms.size() - 20} More Forms" onclick="showAll(this, 'form')">Show ${allForms.size() - 20} More Forms</button>
-							</li>
-							<c:forEach items="${ allForms }" var="form" varStatus="loop">
-								<li class="form ${loop.index > 19 ? 'hide' : ''}">
-									<input class="form_check" type="checkbox" name="formNo" id="formNo${ form.formId }" value="${form.formId}" title="${form.formName}" />
-									<label for="formNo${form.formId}">
-										<c:out value="${ form.formName } ${ form.getEdited() }" />
-									</label>
-									<button class="preview-button" type="button" title="Preview" onclick="getPdf('FORM', '${form.formId}', 'method=getFormPDF&formId=${form.formId}&formName=${form.formName}&demographicNo=${form.getDemoNo()}')">Preview</button>
+				<c:if test="${not empty allHRMDocuments }" >
+					<tr>
+						<td><h2>HRM</h2></td>
+					</tr>
+					<tr>
+						<td>
+							<ul id="hrmList" style="list-style-type: none;padding:0px;">
+								<li class="selectAllHeading ${allHRMDocuments.size() > 20 ? 'flex' : ''}">
+									<input id="selectAllHRMS" type="checkbox" onclick="toggleSelectAll(this, 'hrm_');" value="hrm_check" title="Select/un-select all HRM documents."/>
+									<label for="selectAllHRMS">Select all</label>
+									<button class="show-all-button ${allHRMDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allHRMDocuments.size() - 20} More HRM" onclick="showAll(this, 'hrm')">Show ${allHRMDocuments.size() - 20} More HRM</button>
 								</li>
-							</c:forEach>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td><h2>eForms</h2></td>
-				</tr>
-				<tr>
-					<td>
-						<ul id="eFormList" style="list-style-type: none;padding:0px;">
-							<li class="selectAllHeading ${allEForms.size() > 20 ? 'flex' : ''}">
-								<input id="selectAllEForms" type="checkbox" onclick="toggleSelectAll(this, 'eForm_');" value="eForm_check" title="Select/un-select all eForms."/>
-								<label for="selectAllEForms">Select all</label>
-								<button class="show-all-button ${allEForms.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allEForms.size() - 20} More eForms" onclick="showAll(this, 'eForm')">Show ${allEForms.size() - 20} More eForms</button>
-							</li>
-							<c:forEach items="${ allEForms }" var="eForm" varStatus="loop">
-								<li class="eForm ${loop.index > 19 ? 'hide' : ''}">
-									<input class="eForm_check" type="checkbox" name="eFormNo" id="eFormNo${ eForm.id }" value="${eForm.id}" title="${eForm.formName}" />
-									<label for="eFormNo${eForm.id}">
-										<c:out value="${eForm.subject.length() > 0 ? eForm.subject : eForm.formName} ${ eForm.getFormDate() }" />
-									</label>
-									<button class="preview-button" type="button" title="Preview" onclick="getPdf('EFORM', '${eForm.id}', 'method=getEFormPDF&eFormId=${eForm.id}&demographicNo=${eForm.demographicId}')">Preview</button>
+								<c:forEach items="${ allHRMDocuments }" var="hrm" varStatus="loop">
+									<li class="hrm ${loop.index > 19 ? 'hide' : ''}">
+										<input class="hrm_check" type="checkbox" name="hrmNo" id="hrmNo${ hrm['id'] }" value="${hrm['id']}" title="${hrm['name']}" />
+										<label for="hrmNo${hrm['id']}">
+											<c:out value="${ hrm['name'] } ${ hrm['report_date'] }" />
+										</label>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('HRM', '${hrm.id}', 'method=getHRMPDF&hrmId=${hrm.id}')">Preview</button>
+									</li>
+								</c:forEach>
+							</ul>
+						</td>
+					</tr>
+				</c:if>
+
+				<c:if test="${not empty allForms }" >
+					<tr>
+						<td><h2>Forms (current only)</h2></td>
+					</tr>
+					<tr>
+						<td>
+							<ul id="formList" style="list-style-type: none;padding:0px;">
+								<li class="selectAllHeading ${allForms.size() > 20 ? 'flex' : ''}">
+									<input id="selectAllForms" type="checkbox" onclick="toggleSelectAll(this, 'form_');" value="form_check" title="Select/un-select all forms."/>
+									<label for="selectAllForms">Select all</label>
+									<button class="show-all-button ${allForms.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allForms.size() - 20} More Forms" onclick="showAll(this, 'form')">Show ${allForms.size() - 20} More Forms</button>
 								</li>
-							</c:forEach>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td><h2>HRM</h2></td>
-				</tr>
-				<tr>
-					<td>
-						<ul id="hrmList" style="list-style-type: none;padding:0px;">
-							<li class="selectAllHeading ${allHRMDocuments.size() > 20 ? 'flex' : ''}">
-								<input id="selectAllHRMS" type="checkbox" onclick="toggleSelectAll(this, 'hrm_');" value="hrm_check" title="Select/un-select all HRM documents."/>
-								<label for="selectAllHRMS">Select all</label>
-								<button class="show-all-button ${allHRMDocuments.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allHRMDocuments.size() - 20} More HRM" onclick="showAll(this, 'hrm')">Show ${allHRMDocuments.size() - 20} More HRM</button>
-							</li>
-							<c:forEach items="${ allHRMDocuments }" var="hrm" varStatus="loop">
-								<li class="hrm ${loop.index > 19 ? 'hide' : ''}">
-									<input class="hrm_check" type="checkbox" name="hrmNo" id="hrmNo${ hrm['id'] }" value="${hrm['id']}" title="${hrm['name']}" />
-									<label for="hrmNo${hrm['id']}">
-										<c:out value="${ hrm['name'] } ${ hrm['report_date'] }" />
-									</label>
-									<button class="preview-button" type="button" title="Preview" onclick="getPdf('HRM', '${hrm.id}', 'method=getHRMPDF&hrmId=${hrm.id}')">Preview</button>
-								</li>
-							</c:forEach>
-						</ul>
-					</td>
-				</tr>
+								<c:forEach items="${ allForms }" var="form" varStatus="loop">
+									<li class="form ${loop.index > 19 ? 'hide' : ''}">
+										<input class="form_check" type="checkbox" name="formNo" id="formNo${ form.formId }" value="${form.formId}" title="${form.formName}" />
+										<label for="formNo${form.formId}">
+											<c:out value="${ form.formName } ${ form.getEdited() }" />
+										</label>
+										<button class="preview-button" type="button" title="Preview" onclick="getPdf('FORM', '${form.formId}', 'method=getFormPDF&formId=${form.formId}&formName=${form.formName}&demographicNo=${form.getDemoNo()}')">Preview</button>
+									</li>
+								</c:forEach>
+							</ul>
+						</td>
+					</tr>
+				</c:if>
 			</table>
 		</div>
 

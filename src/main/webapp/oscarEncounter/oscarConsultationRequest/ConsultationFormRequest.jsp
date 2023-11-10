@@ -1618,36 +1618,65 @@ function updateFaxButton() {
 							<% } %>
 
 							</td>
-						</tr>	
-							<tr><td><table id="attachedDocumentsTable">
-									<tr>
-										<td><h3>Documents</h3></td>
-									</tr>
-								<c:forEach items="${ attachedDocuments }" var="attachedDocument">
-									<tr id="entry_docNo${ attachedDocument.docId }">
-										<td> 
-											<c:out value="${ attachedDocument.description }" />
-											<input name="docNo" value="${ attachedDocument.docId }" id="delegate_docNo${ attachedDocument.docId }" class="delegateAttachment" type="hidden">
-										</td>
-									</tr>
-								</c:forEach>
-							</table></td></tr>
+						</tr>
 
-							<tr><td><table id="attachedLabsTable">
-								<tr>
-									<td><h3>Labs</h3></td>
+						<tr><td><table id="attachedEFormsTable">
+							<tr>
+								<td><h3>eForms</h3></td>
+							</tr>
+							<c:forEach items="${ attachedEForms }" var="attachedEForm">
+								<tr id="entry_eFormNo${ attachedEForm.id }">
+									<td>
+										<c:out value="${ attachedEForm.formName }" />
+										<input name="eFormNo" value="${ attachedEForm.id }" id="delegate_eFormNo${ attachedEForm.id }" class="delegateAttachment" type="hidden">
+									</td>
 								</tr>
-								<c:forEach items="${ attachedLabs }" var="attachedLab">
-									<tr id="entry_labNo${ attachedLab.segmentID }">
-										<td> 
-											<c:set var="labName" value="${ fn:trim(attachedLab.label) != '' ? attachedLab.label : attachedLab.discipline}" />
-											<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
-											<c:out value="${attachedLab.description} ${ labName }" />
-											<input name="labNo" value="${ attachedLab.segmentID }" id="delegate_labNo${ attachedLab.segmentID }" class="delegateAttachment" type="hidden">
-										</td>
-									</tr>
-								</c:forEach>
-							</table></td></tr>
+							</c:forEach>
+						</table></td></tr>	
+
+						<tr><td><table id="attachedDocumentsTable">
+							<tr>
+								<td><h3>Documents</h3></td>
+							</tr>
+							<c:forEach items="${ attachedDocuments }" var="attachedDocument">
+								<tr id="entry_docNo${ attachedDocument.docId }">
+									<td> 
+										<c:out value="${ attachedDocument.description }" />
+										<input name="docNo" value="${ attachedDocument.docId }" id="delegate_docNo${ attachedDocument.docId }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
+
+						<tr><td><table id="attachedLabsTable">
+							<tr>
+								<td><h3>Labs</h3></td>
+							</tr>
+							<c:forEach items="${ attachedLabs }" var="attachedLab">
+								<tr id="entry_labNo${ attachedLab.segmentID }">
+									<td> 
+										<c:set var="labName" value="${ fn:trim(attachedLab.label) != '' ? attachedLab.label : attachedLab.discipline}" />
+										<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
+										<c:out value="${attachedLab.description} ${ labName }" />
+										<input name="labNo" value="${ attachedLab.segmentID }" id="delegate_labNo${ attachedLab.segmentID }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
+
+						<tr><td><table id="attachedHRMDocumentsTable">
+							<tr>
+								<td><h3>HRM</h3></td>
+							</tr>
+							<c:forEach items="${ attachedHRMDocuments }" var="attachedHrm">
+								<tr id="entry_hrmNo${ attachedHrm['id'] }">
+									<td>
+										<c:out value="${ attachedHrm['name'] }" />
+										<input name="hrmNo" value="${ attachedHrm['id'] }" id="delegate_hrmNo${ attachedHrm['id'] }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
 
 						<tr><td><table id="attachedFormsTable">
 							<tr>
@@ -1657,36 +1686,7 @@ function updateFaxButton() {
 								<tr id="entry_formNo${ attachedForm.formId }" data-formName="${ attachedForm.formName }" data-formDate="${ attachedForm.getEdited() }">
 									<td>
 										<c:out value="${ attachedForm.formName }" />
-
 										<input name="formNo" value="${ attachedForm.formId }" id="delegate_formNo${ attachedForm.formId }" class="delegateAttachment" type="hidden">
-									</td>
-								</tr>
-							</c:forEach>
-						</table></td></tr>
-						<tr><td><table id="attachedEFormsTable">
-							<tr>
-								<td><h3>eForms</h3></td>
-							</tr>
-							<c:forEach items="${ attachedEForms }" var="attachedEForm">
-								<tr id="entry_eFormNo${ attachedEForm.id }">
-									<td>
-										<c:out value="${ attachedEForm.formName }" />
-
-										<input name="eFormNo" value="${ attachedEForm.id }" id="delegate_eFormNo${ attachedEForm.id }" class="delegateAttachment" type="hidden">
-									</td>
-								</tr>
-							</c:forEach>
-						</table></td></tr>
-						<tr><td><table id="attachedHRMDocumentsTable">
-							<tr>
-								<td><h3>HRM</h3></td>
-							</tr>
-							<c:forEach items="${ attachedHRMDocuments }" var="attachedHrm">
-								<tr id="entry_hrmNo${ attachedHrm['id'] }">
-									<td>
-										<c:out value="${ attachedHrm['name'] }" />
-
-										<input name="hrmNo" value="${ attachedHrm['id'] }" id="delegate_hrmNo${ attachedHrm['id'] }" class="delegateAttachment" type="hidden">
 									</td>
 								</tr>
 							</c:forEach>
