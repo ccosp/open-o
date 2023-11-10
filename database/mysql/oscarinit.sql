@@ -7388,7 +7388,8 @@ CREATE TABLE IF NOT EXISTS radetail (
   error_code char(2) NOT NULL default '',
   billtype char(3) NOT NULL default '',
   claim_no varchar(12) not null default '',
-  PRIMARY KEY  (radetail_no)
+  PRIMARY KEY  (radetail_no),
+  KEY `service_date_index`(`service_date`)
 ) ;
 
 --
