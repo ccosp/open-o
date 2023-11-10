@@ -23,6 +23,12 @@
     Ontario, Canada
 
 --%>
+<%@ page import="oscar.oscarLab.ca.on.LabResultData" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="org.oscarehr.util.MiscUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -33,9 +39,44 @@
 	<%response.sendRedirect("../../securityError.jsp?type=_con");%>
 </security:oscarSec>
 <%
-if(!authed) {
-	return;
-}
+	if(!authed) {
+		return;
+	}
+
+	List<LabResultData> allLabs  = (List<LabResultData>) request.getAttribute("allLabs");
+	String latestLabVersionIds = "";
+	String allLabVersionIds = "";
+	List<LabResultData> allLabsSortedByVersions = new ArrayList<>();
+	for (LabResultData lab : allLabs) {
+		if (allLabVersionIds.contains("," + lab.getSegmentID() + "Lab")) { continue; }
+
+		String[] matchingLabIds = Hl7textResultsData.getMatchingLabs(lab.getSegmentID()).split(",");
+		if (matchingLabIds.length == 1) {
+			allLabsSortedByVersions.add(lab);
+			continue;
+		} else {
+			latestLabVersionIds += "," + matchingLabIds[matchingLabIds.length - 1] + "Lab";
+		}
+
+		for (int i = matchingLabIds.length - 1; i >= 0; i--) {
+			LabResultData labResultData = null;
+			for (LabResultData labResultData1 : allLabs) {
+				if (matchingLabIds[i].equals(labResultData1.getSegmentID())) {
+					labResultData = labResultData1;
+					String label = labResultData.getLabel() != null ? labResultData.getLabel() : "";
+					String discipline = labResultData.getDiscipline() != null ? labResultData.getDiscipline() : "";
+					String labTitle = !"".equals(label) ? label.substring(0, Math.min(label.length(), 40)) : discipline.substring(0, Math.min(discipline.length(), 40));
+					labResultData.setDescription(labTitle);
+					labResultData.setLabel("...Version " + (i+1));
+					break;
+				}
+			}
+			allLabsSortedByVersions.add(labResultData);
+			allLabVersionIds += "," + matchingLabIds[i] + "Lab";
+		}
+	}
+	request.setAttribute("allLabsSortedByVersions", allLabsSortedByVersions);
+	request.setAttribute("latestLabVersionIds", latestLabVersionIds);
 %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -115,7 +156,27 @@ if(!authed) {
 	</style>
 
 	<script type="text/javascript">
-		let pdfCache = [];
+		if (typeof pdfCache == 'undefined') {
+			var pdfCache = []; //because this is a global variable, only redeclare it if it doesn't exist. This is relevant when opening the attachment window multiple times in sequence
+		}
+
+		if (typeof dateLabels == 'undefined'){
+			var dateLabels; //because this is a global variable, only redeclare it if it doesn't exist. This is relevant when opening the attachment window multiple times in sequence
+		}
+
+		// Change the date format of all labels with class "lab-date" to "YYYY-MM-DD"
+		dateLabels = document.querySelectorAll(".lab-date");
+        dateLabels.forEach(label => {
+            const originalText = label.textContent;
+            const dateMatch = originalText.match(/[A-Z][a-z]{2}\s[A-Z][a-z]{2}\s\d{2}\s\d{2}:\d{2}:\d{2}\sUTC\s\d{4}/)[0];
+            const dateObject = new Date(dateMatch);
+            const formattedDate = dateObject.toISOString().split('T')[0];
+            if (label.textContent.includes("(") && label.textContent.includes(")")) {
+                label.textContent = '(' + formattedDate + ')';
+            } else {
+                label.textContent = formattedDate;
+            }
+        });
 
 		function toggleSelectAll(element, startClassName) {
 			jQuery("[class^='"+ startClassName +"']:not(input[disabled='disabled'])").prop('checked', jQuery(element).prop("checked"));
@@ -216,23 +277,40 @@ if(!authed) {
 					</td>
 				</tr>
 
-				<c:if test="${not empty allLabs }" >
+				<c:if test="${not empty allLabsSortedByVersions }" >
 					<tr>
 						<td><h2>Labs</h2></td>
 					</tr>
 					<tr>
 						<td>
 							<ul id="labList" style="list-style-type: none;padding:0px;">
-								<li class="selectAllHeading ${allLabs.size() > 20 ? 'flex' : ''}">
+								<li class="selectAllHeading ${allLabsSortedByVersions.size() > 20 ? 'flex' : ''}">
 									<input id="selectAllLabs" type="checkbox" onclick="toggleSelectAll(this, 'lab_');" value="lab_check" title="Select/un-select all documents."/>
 									<label for="selectAllLabs">Select all</label>
-									<button class="show-all-button ${allLabs.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allLabs.size() - 20} More Labs" onclick="showAll(this, 'lab')">Show ${allLabs.size() - 20} More Labs</button>
+									<button class="show-all-button ${allLabsSortedByVersions.size() > 20 ? '' : 'hide'}" type="button" title="Show ${allLabsSortedByVersions.size() - 20} More Labs" onclick="showAll(this, 'lab')">Show ${allLabsSortedByVersions.size() - 20} More Labs</button>
 								</li>
-								<c:forEach items="${ allLabs }" var="lab" varStatus="loop">
+								<c:forEach items="${ allLabsSortedByVersions }" var="lab" varStatus="loop">
+									<c:set var="labName" value="${fn:trim(lab.label) != '' ? fn:substring(lab.label, 0, 30) : fn:substring(lab.discipline, 0, 30)}" />
+									<c:set var="labId" value=",${lab.segmentID}Lab" />
 									<li class="lab ${loop.index > 19 ? 'hide' : ''}">
-										<c:set var="labName" value="${fn:trim(lab.label) != '' ? fn:substring(lab.label, 0, 30) : fn:substring(lab.discipline, 0, 30)}" />
-										<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
-										<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } ${ lab.dateObj }" /></label>
+										<c:set var="description" value="${ lab.description }" />
+										<c:if test="${empty description}"><c:set var="description" value="UNLABELLED" /></c:if>
+										<c:if test="${fn:contains(latestLabVersionIds, labId)}">
+											<input type="checkbox" disabled style="opacity:0"/> <!--included so that the description of a group of labs is spaced nicely but we want it to be invisible-->
+											<label title="${ description }" ><c:out value="${ description }" /></label><br/>
+										</c:if>
+										<c:choose>
+											<c:when test="${fn:startsWith(labName, '...Version')}">
+												<c:set var="versionNumber" value="${fn:replace(labName, '...Version ', '')}" />
+												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="v${ versionNumber } ${ description }" />
+												<em><label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ description }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObj})</label></label></em>
+											</c:when>
+											<c:otherwise>
+												<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
+												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
+												<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">${lab.dateObj}</label></label>
+											</c:otherwise>
+										</c:choose>
 										<button class="preview-button" type="button" title="Preview" onclick="getPdf('LAB', '${lab.segmentID}', 'method=getLabPDF&segmentID=${lab.segmentID}')">Preview</button>
 									</li>
 								</c:forEach>
