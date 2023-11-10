@@ -1299,6 +1299,7 @@ function showSignatureImage()
 {
 	if (document.getElementById('signatureImg') != null && document.getElementById('signatureImg').value.length > 0) {
 		document.getElementById('signatureImgTag').src = "<%=storedImgUrl %>" + document.getElementById('signatureImg').value;
+		document.getElementById('newSignature').value = "false";
 
 		<% if (OscarProperties.getInstance().getBooleanProperty("topaz_enabled", "true")) { 
 		  //this is empty
