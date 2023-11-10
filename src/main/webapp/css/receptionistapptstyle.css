@@ -217,6 +217,10 @@ div.appt-container div.navigation-tag {
 	min-width:5%;
 }
 
+table#scheduleTable {
+	margin-top: 49px;
+}
+
 .scheduleTimeNot00 a, .scheduleTime00 a {
     width: 5%;
     min-width:5%;
