@@ -762,12 +762,19 @@
             }
         }
 
-    String curProvierString = request.getParameter("curProvider") != null ? "&curProvider=" + request.getParameter("curProvider") : "";
+    //refactoring some code by creating the variable viewString, which can be used later, instead of complex inline ternary functions
+    String curProviderString = request.getParameter("curProvider") != null ? "&curProvider=" + request.getParameter("curProvider") : "";
     String curProviderNameString = request.getParameter("curProviderName") != null ? "&curProviderName="+ URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") : "";
-    String viewString = view==0 ? "&view=0" : "&view=1" + curProvierString + curProviderNameString;
-    // If the 'displaymode' is set to 'day' and 'viewall' is not equal to 1, then 'view' will be set to 1 to display all links.
-    if ("day".equals(request.getParameter("displaymode")) && !"1".equals(request.getParameter("viewall"))) {
+    String viewString = view==0 ? "&view=0" : "&view=1" + curProviderString + curProviderNameString;
+
+    //the view parameter controls how much information is displayed for each appointment such as the name and the E | M | R links
+    //this next section of code overrides it, setting view=1 (so more data) in certain situation where there's likely room to show the data, but it's not being displayed
+    //this approach has been taken because author was not able to make heads or tail of all the code in this file, and did not feel confident in editing when view=1 would be set as a parameter        
+    //Edge case: If the 'displaymode' is set to 'day' and 'viewall' is not equal to 1, then 'view' will be set to 1 to display all links.  This is believe to be a situation where there's only a single clinician displayed, so there should be enough space to display all of the data
+    if ("day".equals(request.getParameter("displaymode")) && !"1".equals(request.getParameter("viewall"))) { 
         view = 1;
+        
+        //when view=1, curProvider_no and curProviderName need to be set as well
         if (curProvider_no[0] == null || curProviderName[0] == null) {
             curProvider_no = new String[]{loggedInInfo1.getLoggedInProviderNo()};
             curProviderName = new String[]{(userlastname + ", " + userfirstname)};
