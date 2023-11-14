@@ -116,6 +116,10 @@
 		let title = trigger.attr("title");
 		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
 			if (status === "success") {
+				// Disable the floating toolbar when the attachment window opens
+				const eformFloatingToolbar = document.getElementById("eform_floating_toolbar");
+				eformFloatingToolbar.classList.add("disabled-toolbar");
+
 				jQuery('#attachDocumentList').find(".delegateAttachment").each(function(index,data) {
 					let delegate = "#" + this.id.split("_")[1];
 					let element = jQuery('#attachDocumentsForm').find(delegate);
@@ -162,6 +166,10 @@
 
 				// show total attachments
 				jQuery('#remoteTotalAttachments').empty().append(jQuery('.delegateAttachment').length); 
+
+				// Enable the floating toolbar when the attachment window closes
+				const eformFloatingToolbar = document.getElementById("eform_floating_toolbar");
+				eformFloatingToolbar.classList.remove("disabled-toolbar");
 			}
 		});
 	});

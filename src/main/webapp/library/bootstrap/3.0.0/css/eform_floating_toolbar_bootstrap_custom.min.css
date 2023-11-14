@@ -2608,8 +2608,22 @@ div#eform_floating_toolbar * {
 	width: auto !important;
 }
 
-.attachmentContainer {
-	max-height: 85vh !important; 
+@media (min-height: 100px) and (max-height: 1200px) {
+	.attachmentList {
+		height: 85vh !important;
+	}
+}
+
+@media (min-height: 1200px) {
+	.attachmentList {
+		height: 90vh !important;
+	}
+}
+
+@media (min-height: 1600px) {
+	.attachmentList {
+		height: 93vh !important;
+	}
 }
 
 #attachDocumentsPanel h2 {
@@ -2622,11 +2636,8 @@ div#eform_floating_toolbar * {
 }
 /* */
 
-
-
-
-
-
-
-
-
+/* To disable floating toolbar */
+.disabled-toolbar {
+	pointer-events: none; 
+	cursor: not-allowed; 
+}

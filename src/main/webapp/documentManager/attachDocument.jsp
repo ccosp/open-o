@@ -92,13 +92,25 @@
 		.attachmentContainer {
 			display: flex;
 			width: 95vw;
-			min-height: 580px;
-			max-height: 93vh; 
+		}
+
+		@media (min-width: 2400px) {
+			.attachmentContainer {
+				width: 97vw;
+			}
 		}
 
 		.attachmentList {
 			overflow: auto;
 			min-width: 320px;
+			min-height: 580px;
+			height: 94vh;
+		}
+
+		@media (min-height: 1600px) {
+			.attachmentList {
+				height: 97vh;
+			}
 		}
 
 		#attachDocumentsPanel {
