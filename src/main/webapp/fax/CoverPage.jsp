@@ -59,15 +59,22 @@
 	<script type="text/javascript" src="${ctx}/library/jquery/jquery-ui.min.js" ></script>	
 	<script type="text/javascript" src="${ctx}/library/bootstrap/3.0.0/js/bootstrap.min.js" ></script> 
 
-	<%-- 
-		Action to remove additional recipients from the form.
-	--%>
 	<script type="text/javascript">
 	
 		top.window.resizeTo("800","850");
 	
+		// Action to remove additional recipients from the form.
 		function removeRecipient(element) {
 			$(element).parent().parent().parent().remove();
+		}
+
+		// Show loading screen after submiting and validating the form.
+		function submitForm() {
+			const coverPageForm = document.getElementById('coverPageForm');
+			if (coverPageForm.checkValidity()) {
+				return ShowSpin(true);
+			}
+			return false;
 		}
 	</script>
 	
@@ -201,7 +208,7 @@
 				<c:set var="formAction" value="${ctx}/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.do" />
 			</c:if>
 			
-			<form id="coverPageForm" class="form-inline" action='${ formAction }' onsubmit="return ShowSpin(true)" method="post" novalidate>
+			<form id="coverPageForm" class="form-inline" action='${ formAction }' onsubmit="return submitForm()" method="post" novalidate>
 			
 				<input type="hidden" name="requestId" value="${ reqId }" />
 				<input type="hidden" name="reqId" value="${ reqId }" />
