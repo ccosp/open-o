@@ -42,41 +42,6 @@
 	if(!authed) {
 		return;
 	}
-
-	List<LabResultData> allLabs  = (List<LabResultData>) request.getAttribute("allLabs");
-	String latestLabVersionIds = "";
-	String allLabVersionIds = "";
-	List<LabResultData> allLabsSortedByVersions = new ArrayList<>();
-	for (LabResultData lab : allLabs) {
-		if (allLabVersionIds.contains("," + lab.getSegmentID() + "Lab")) { continue; }
-
-		String[] matchingLabIds = Hl7textResultsData.getMatchingLabs(lab.getSegmentID()).split(",");
-		if (matchingLabIds.length == 1) {
-			allLabsSortedByVersions.add(lab);
-			continue;
-		} else {
-			latestLabVersionIds += "," + matchingLabIds[matchingLabIds.length - 1] + "Lab";
-		}
-
-		for (int i = matchingLabIds.length - 1; i >= 0; i--) {
-			LabResultData labResultData = null;
-			for (LabResultData labResultData1 : allLabs) {
-				if (matchingLabIds[i].equals(labResultData1.getSegmentID())) {
-					labResultData = labResultData1;
-					String label = labResultData.getLabel() != null ? labResultData.getLabel() : "";
-					String discipline = labResultData.getDiscipline() != null ? labResultData.getDiscipline() : "";
-					String labTitle = !"".equals(label) ? label.substring(0, Math.min(label.length(), 40)) : discipline.substring(0, Math.min(discipline.length(), 40));
-					labResultData.setDescription(labTitle);
-					labResultData.setLabel("...Version " + (i+1));
-					break;
-				}
-			}
-			allLabsSortedByVersions.add(labResultData);
-			allLabVersionIds += "," + matchingLabIds[i] + "Lab";
-		}
-	}
-	request.setAttribute("allLabsSortedByVersions", allLabsSortedByVersions);
-	request.setAttribute("latestLabVersionIds", latestLabVersionIds);
 %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>

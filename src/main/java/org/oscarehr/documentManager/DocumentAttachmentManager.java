@@ -1,5 +1,6 @@
 package org.oscarehr.documentManager;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.EFormDocsDao;
 import org.oscarehr.common.model.ConsultDocs;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
+import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.ConcatPDF;
@@ -97,14 +99,42 @@ public class DocumentAttachmentManager {
 	 * This method is responsible for lab version sorting and is intended for use in the attachment window (attachDocument.jsp).
 	 * In other parts of the application, developers should utilize CommonLabResultData.populateLabResultsData() to access all available lab data.
 	 */
-	public List<LabResultData> getAllLabsSortedByVersions(LoggedInInfo loggedInInfo, String demographicNo) {
-		/*
-		 * Once refactoring is done, we will move the lab version sorting code from attachDocument.jsp to here.
-		 */
+	public Pair<List<LabResultData>, String> getAllLabsSortedByVersions(LoggedInInfo loggedInInfo, String demographicNo) {
 		CommonLabResultData commonLabResultData = new CommonLabResultData();
 		List<LabResultData> allLabs = commonLabResultData.populateLabResultsData(loggedInInfo, "", demographicNo, "", "", "", "U");
 		Collections.sort(allLabs);
-		return allLabs;
+		String latestLabVersionIds = "";
+		String allLabVersionIds = "";
+		List<LabResultData> allLabsSortedByVersions = new ArrayList<>();
+		for (LabResultData lab : allLabs) {
+			if (allLabVersionIds.contains("," + lab.getSegmentID() + "Lab")) { continue; }
+
+			String[] matchingLabIds = Hl7textResultsData.getMatchingLabs(lab.getSegmentID()).split(",");
+			if (matchingLabIds.length == 1) {
+				allLabsSortedByVersions.add(lab);
+				continue;
+			} else {
+				latestLabVersionIds += "," + matchingLabIds[matchingLabIds.length - 1] + "Lab";
+			}
+
+			for (int i = matchingLabIds.length - 1; i >= 0; i--) {
+				LabResultData labResultData = null;
+				for (LabResultData labResultData1 : allLabs) {
+					if (matchingLabIds[i].equals(labResultData1.getSegmentID())) {
+						labResultData = labResultData1;
+						String label = labResultData.getLabel() != null ? labResultData.getLabel() : "";
+						String discipline = labResultData.getDiscipline() != null ? labResultData.getDiscipline() : "";
+						String labTitle = !"".equals(label) ? label.substring(0, Math.min(label.length(), 40)) : discipline.substring(0, Math.min(discipline.length(), 40));
+						labResultData.setDescription(labTitle);
+						labResultData.setLabel("...Version " + (i+1));
+						break;
+					}
+				}
+				allLabsSortedByVersions.add(labResultData);
+				allLabVersionIds += "," + matchingLabIds[i] + "Lab";
+			}
+		}
+		return Pair.of(allLabsSortedByVersions, latestLabVersionIds);
 	}
 
 	/**

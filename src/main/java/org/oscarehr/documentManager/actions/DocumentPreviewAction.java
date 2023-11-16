@@ -5,6 +5,7 @@ import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarLab.ca.on.LabResultData;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,7 +41,7 @@ public class DocumentPreviewAction extends DispatchAction {
 	private List<EDoc> allDocuments = new ArrayList<>();
 	private List<EFormData> allEForms = new ArrayList<>();
 	private ArrayList<HashMap<String,? extends Object>> allHRMDocuments = new ArrayList<>();
-	private List<LabResultData> allLabs = new ArrayList<>();
+	private Pair<List<LabResultData>, String> labResultPair;
 	private List<EctFormData.PatientForm> allForms = new ArrayList<>();
 	private List<String> attachedDocumentIds = new ArrayList<>();
 	private List<String> attachedEFormIds = new ArrayList<>();
@@ -115,7 +116,7 @@ public class DocumentPreviewAction extends DispatchAction {
 		allDocuments = EDocUtil.listDocs(loggedInInfo, "demographic", demographicNo, null, EDocUtil.PRIVATE, EDocUtil.EDocSort.OBSERVATIONDATE);
 		allEForms = EFormUtil.listPatientEformsCurrent(new Integer(demographicNo), true);
 		allHRMDocuments = HRMUtil.listHRMDocuments(loggedInInfo, "report_date", false, demographicNo,false);
-		allLabs = documentAttachmentManager.getAllLabsSortedByVersions(loggedInInfo, demographicNo);
+		labResultPair = documentAttachmentManager.getAllLabsSortedByVersions(loggedInInfo, demographicNo);
 		allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, Integer.parseInt(demographicNo), false, true);
 
 		attachedDocumentIds = documentAttachmentManager.getConsultAttachments(loggedInInfo, Integer.parseInt(requestId), DocumentType.DOC, Integer.parseInt(demographicNo));
@@ -136,7 +137,7 @@ public class DocumentPreviewAction extends DispatchAction {
 		allDocuments = EDocUtil.listDocs(loggedInInfo, "demographic", demographicNo, null, EDocUtil.PRIVATE, EDocUtil.EDocSort.OBSERVATIONDATE);
 		allEForms = documentAttachmentManager.getAllEFormsExpectFdid(loggedInInfo, Integer.parseInt(demographicNo), Integer.parseInt(fdid));
 		allHRMDocuments = HRMUtil.listHRMDocuments(loggedInInfo, "report_date", false, demographicNo,false);
-		allLabs = documentAttachmentManager.getAllLabsSortedByVersions(loggedInInfo, demographicNo);
+		labResultPair = documentAttachmentManager.getAllLabsSortedByVersions(loggedInInfo, demographicNo);
 		allForms = formsManager.getEncounterFormsbyDemographicNumber(loggedInInfo, Integer.parseInt(demographicNo), false, true);
 
 		return forwardDocuments(mapping, request);
@@ -173,7 +174,8 @@ public class DocumentPreviewAction extends DispatchAction {
 		request.setAttribute("attachedHRMDocumentIds", attachedHRMDocumentIds);
 
 		request.setAttribute("allDocuments", allDocuments);
-		request.setAttribute("allLabs", allLabs);
+		request.setAttribute("allLabsSortedByVersions", labResultPair.getLeft());
+		request.setAttribute("latestLabVersionIds", labResultPair.getRight());
 		request.setAttribute("allForms", allForms);
 		request.setAttribute("allEForms", allEForms);
 		request.setAttribute("allHRMDocuments", allHRMDocuments);
