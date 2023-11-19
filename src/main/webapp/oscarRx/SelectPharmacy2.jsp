@@ -48,8 +48,13 @@
 <html:html locale="true">
 <head>
 
+
 <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/effects.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/share/lightwindow/javascript/lightwindow.js"></script>
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>//share/lightwindow/css/lightwindow.css">
 
 <title><bean:message key="SelectPharmacy.title" /></title>
 <html:base />
