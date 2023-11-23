@@ -1212,6 +1212,8 @@ body {
   }
 
   .wcblayerTitle {
+    width: 40%;
+    padding-left: 20px;
     font-weight: bold;
     background-color: #f2f2f2;
   }
