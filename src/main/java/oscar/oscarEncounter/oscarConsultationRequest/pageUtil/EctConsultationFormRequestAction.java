@@ -26,13 +26,13 @@
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -421,16 +421,23 @@ public class EctConsultationFormRequestAction extends Action {
 		if (submission.endsWith("And Print Preview")) {
 			request.setAttribute("reqId", requestId);
 			request.setAttribute("demographicId", demographicNo);
-			Path pdfPath = null;
+
+			String fileName = generateFileName(loggedInInfo, Integer.parseInt(demographicNo));
+			String base64PDF = "";
 			try {
-				pdfPath = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
+				Path pdfPath = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
+				base64PDF = documentAttachmentManager.convertPDFToBase64(pdfPath);
 			} catch (PDFGenerationException e) {
 				logger.error(e.getMessage(), e);
 				String errorMessage = "Failed to create a print preview:  " + e.getMessage();
 				request.setAttribute("errorMessage", errorMessage);
 				return mapping.findForward("error");
 			}
-			return generatePDFResponse(response, pdfPath);
+			
+			request.setAttribute("consultPDFName", fileName);
+			request.setAttribute("consultPDF", base64PDF);
+			request.setAttribute("isPreviewReady", "true");
+			return mapping.findForward("success");
 			
 		} else if (submission.endsWith("And Fax")) {
 			
@@ -602,18 +609,15 @@ public class EctConsultationFormRequestAction extends Action {
 	    }
     }
 
-	private ActionForward generatePDFResponse(HttpServletResponse response, Path pdfPath) {
-		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "inline; filename=" + pdfPath.getFileName());
-		try {
-			byte[] bytes = Files.readAllBytes(pdfPath);
-			response.setContentLength(bytes.length);
-			response.getOutputStream().write(bytes);
-			response.getOutputStream().flush();
-		} catch (IOException e) {
-			MiscUtils.getLogger().error("An error occurred while writing PDF response to the output stream: " + e.getMessage(), e);
-		}
-		return null;
+	private String generateFileName(LoggedInInfo loggedInInfo, int demographicNo) {
+		DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
+		String demographicLastName = demographicManager.getDemographicFormattedName(loggedInInfo, demographicNo).split(", ")[0];
+
+		Date currentDate = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd");
+		String formattedDate = dateFormat.format(currentDate);
+
+		return formattedDate + "_" + demographicLastName + ".pdf";
 	}
 
 }
