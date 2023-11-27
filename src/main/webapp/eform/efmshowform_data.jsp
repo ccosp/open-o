@@ -92,6 +92,10 @@
         if (eFormPDF !== 'null' && eFormPDFName !== 'null' && isDownloadEForm === 'true') {
             downloadEForm(eFormPDFName, eFormPDF);
         }
+
+        window.onload = function() {
+            window.resizeTo(1100, 1100);
+        }
     </script>
 </head>
 <body>

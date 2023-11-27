@@ -46,13 +46,9 @@
 		  				<span class="btn-label"><i class="glyphicon glyphicon-save"></i></span>
 		  				Save
 		  			</button>
-					<button type="button" class="btn btn-default" value="Attach" name="AttachButton" title="Add Attachment" id="remoteAttachButton" data-poload="">
-		  				<span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
-		  				Attach <div id="remoteTotalAttachments">0</div>
-		  			</button>
 			   		<button type="button" class="btn btn-default" id="remotePrintButton" name="PrintButton" value="Print" title="Save and then print" onclick="remotePrint()">
 			   			<span class="btn-label"><i class="glyphicon glyphicon-print"></i></span>
-			   			Print
+			   			Print (eForm Only)
 			   		</button>
 					<button type="button" class="btn btn-default" id="remoteDownloadButton" name="DownloadButton" value="Download" title="Save and Download" onclick="remoteDownload()">
 			   			<span class="btn-label"><i class="glyphicon glyphicon-download"></i></span>
@@ -71,6 +67,10 @@
 			   			<span class="btn-label"><i class="glyphicon glyphicon-import"></i></span>
 			   			Add to Documents
 			   		</button>
+					<button type="button" class="btn btn-default" value="Attach" name="AttachButton" title="Add Attachment" id="remoteAttachButton" data-poload="">
+		  				<span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
+		  				Attach <div id="remoteTotalAttachments">0</div>
+		  			</button>
 			   		<button type="button" class="btn btn-danger " id="remoteCloseEformWindow" name="closeEformWindow" value="Close" title="Close this eForm" onclick="remoteClose()">
 			   			<span class="btn-label"><i class="glyphicon glyphicon-remove-circle"></i></span>
 			   			Close

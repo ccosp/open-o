@@ -116,6 +116,11 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js" ></script>
 	<link href="<%=request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.css" rel="stylesheet" media="screen" />
 	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            window.resizeTo(1100, 1100);
+        }
+    </script>
 </head>
 <body>
 	<input type="hidden" id="context" value="${ pageContext.request.contextPath }">
