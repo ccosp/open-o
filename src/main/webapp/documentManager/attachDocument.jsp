@@ -143,24 +143,6 @@
 			var pdfCache = []; //because this is a global variable, only redeclare it if it doesn't exist. This is relevant when opening the attachment window multiple times in sequence
 		}
 
-		if (typeof dateLabels == 'undefined'){
-			var dateLabels; //because this is a global variable, only redeclare it if it doesn't exist. This is relevant when opening the attachment window multiple times in sequence
-		}
-
-		// Change the date format of all labels with class "lab-date" to "YYYY-MM-DD"
-		dateLabels = document.querySelectorAll(".lab-date");
-        dateLabels.forEach(label => {
-            const originalText = label.textContent;
-            const dateMatch = originalText.match(/[A-Z][a-z]{2}\s[A-Z][a-z]{2}\s\d{2}\s\d{2}:\d{2}:\d{2}\sUTC\s\d{4}/)[0];
-            const dateObject = new Date(dateMatch);
-            const formattedDate = dateObject.toISOString().split('T')[0];
-            if (label.textContent.includes("(") && label.textContent.includes(")")) {
-                label.textContent = '(' + formattedDate + ')';
-            } else {
-                label.textContent = formattedDate;
-            }
-        });
-
 		function toggleSelectAll(element, startClassName) {
 			jQuery("[class^='"+ startClassName +"']:not(input[disabled='disabled'])").prop('checked', jQuery(element).prop("checked"));
 		}
@@ -329,12 +311,12 @@
 											<c:when test="${fn:startsWith(labName, '...Version')}">
 												<c:set var="versionNumber" value="${fn:replace(labName, '...Version ', '')}" />
 												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="v${ versionNumber } ${ description }" />
-												<em><label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ description }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObj})</label></label></em>
+												<em><label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ description }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObjFormated})</label></label></em>
 											</c:when>
 											<c:otherwise>
 												<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
 												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
-												<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">${lab.dateObj}</label></label>
+												<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">${lab.dateObjFormated}</label></label>
 											</c:otherwise>
 										</c:choose>
 										<button class="preview-button" type="button" title="Preview" onclick="getPdf('LAB', '${lab.segmentID}', 'method=renderLabPDF&segmentId=${lab.segmentID}')">Preview</button>
