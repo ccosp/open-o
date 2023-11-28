@@ -58,6 +58,9 @@
 </c:if>
 
 <%
+  /**
+   * TODO: Move all JSP scriptlet code from efmshowform_data.jsp and efmformadd_data.jsp to the ShowEFormAction.java (create if necessary) action file.
+   */
   String provider_no = (String) session.getValue("user");
   String demographic_no = request.getParameter("demographic_no");
   String appointment_no = request.getParameter("appointment");
@@ -117,9 +120,8 @@
 	<link href="<%=request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.css" rel="stylesheet" media="screen" />
 	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
     <script type="text/javascript">
-        window.onload = function() {
-            window.resizeTo(1100, 1100);
-        }
+        // NOTE: Do not add onload methods here; instead, find alternative approaches to achieve the same result, as it may disrupt eForms' onload functionalities.
+        window.resizeTo(1100, 1100);
     </script>
 </head>
 <body>

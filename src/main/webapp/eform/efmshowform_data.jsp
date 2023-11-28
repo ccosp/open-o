@@ -41,6 +41,9 @@
     <jsp:include page="../images/spinner.jsp" flush="true"/>
 
 <%
+    /**
+     * TODO: Move all JSP scriptlet code from efmshowform_data.jsp and efmformadd_data.jsp to the ShowEFormAction.java (create if necessary) action file.
+     */
 	String id = request.getParameter("fid");
 	String messageOnFailure = "No eform or appointment is available";
   if (id == null) {  // form exists in patient
@@ -93,9 +96,8 @@
             downloadEForm(eFormPDFName, eFormPDF);
         }
 
-        window.onload = function() {
-            window.resizeTo(1100, 1100);
-        }
+        // NOTE: Do not add onload methods here; instead, find alternative approaches to achieve the same result, as it may disrupt eForms' onload functionalities.
+        window.resizeTo(1100, 1100);
     </script>
 </head>
 <body>
