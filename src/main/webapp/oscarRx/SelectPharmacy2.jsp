@@ -107,14 +107,14 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 						preferredPharmacyInfo = data[idx];
 						json = JSON.stringify(preferredPharmacyInfo);
 
-                            var pharm = "<div prefOrder='"+idx+"' pharmId='"+preferredPharmacyInfo.id+"'><table><tr><td class='prefAction prefUp'> Up </td>";
+                            var pharm = "<div prefOrder='"+idx+"' pharmId='"+preferredPharmacyInfo.id+"'><table><tr><td class='prefAction prefUp'> Move Up </td>";
                             pharm += "<td rowspan='3' style='padding-left: 5px'>" + preferredPharmacyInfo.name + "<br /> ";
                             pharm += preferredPharmacyInfo.address + ", " + preferredPharmacyInfo.city + " " +preferredPharmacyInfo.province + "<br /> ";
                             pharm += preferredPharmacyInfo.postalCode + "<br />";
                             pharm += "Main Phone: " + preferredPharmacyInfo.phone1 + "<br />";
                             pharm += "Fax: " + preferredPharmacyInfo.fax + "<br />";
                             pharm += "<a href='#'  onclick='viewPharmacy(" + preferredPharmacyInfo.id  + ");'>View More</a>" + "</td>";
-                            pharm += "</tr><tr><td class='prefAction prefUnlink'> Unlink </td></tr><tr><td class='prefAction prefDown'>Down</td></tr></table></div>";
+                            pharm += "</tr><tr><td class='prefAction prefUnlink'> Remove from List </td></tr><tr><td class='prefAction prefDown'> Move Down </td></tr></table></div>";
 
 						$("#preferredList").append(pharm);
 					}
@@ -396,17 +396,18 @@ function returnToRx(){
 
 			</tr>			
 			<tr>
-				<th width="33%" class="DivContentSectionHead">
-					Preferred Pharmacies
+				<th width="33%" class="DivContentSectionHeadTitle">
+					Patient's Preferred Pharmacies <br> (In Descending Order of Preference)
 				</th>
 				<th class="DivContentSectionHead">
+					Clinic's Database of Pharmacies (<a href="javascript:void(0)" onclick="addPharmacy();">Add Missing Pharmacy to Clinic Database</a>) <br><br>
 					Search Pharmacy&nbsp;&nbsp;<input type="text" id="pharmacySearch"/>&nbsp;&nbsp;
 					City&nbsp;&nbsp;<input type="text" id="pharmacyCitySearch" style="width: 75px"/> &nbsp;&nbsp;
 					Postal Code&nbsp;&nbsp;<input type="text" id="pharmacyPostalCodeSearch" style="width: 75px"/> &nbsp;&nbsp;
 					Phone&nbsp;&nbsp;<input type="text" id="pharmacyPhoneSearch" style="width: 75px"/> &nbsp;&nbsp;
 					Fax&nbsp;&nbsp;<input type="text" id="pharmacyFaxSearch" style="width: 75px"/> &nbsp;&nbsp;
 					Address&nbsp;&nbsp;<input type="text" id="pharmacyAddressSearch" style="width: 75px"/> &nbsp;&nbsp;
-					<a href="javascript:void(0)" onclick="addPharmacy();"><bean:message key="SelectPharmacy.addLink" /></a>
+					<br><br> Instructions: Add patient's preferred pharmacies by clicking on specific pharmacy.
 				</th>
 			</tr>
 			<tr>
