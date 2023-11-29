@@ -33,6 +33,7 @@
 <%@ page import="org.oscarehr.util.SpringUtils"%>
 <%@ page import="oscar.util.StringUtils" %>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 
 <%--
 	Addition of a floating global toolbar specifically for activation of the 
@@ -61,6 +62,7 @@
 
       String parentAjaxId = request.getParameter("parentAjaxId");
       if( parentAjaxId != null ) eForm.setAction(parentAjaxId);
+      request.setAttribute("demographicId", eForm.getDemographicNo());
       out.print(eForm.getFormHtml());
   } else {  //if form is viewed from admin screen
       EForm eForm = new EForm(id, "-1"); //form cannot be submitted, demographic_no "-1" indicate this specialty
@@ -102,15 +104,25 @@
 </head>
 <body>
     <%
-        String fdid = StringUtils.isNullOrEmpty(request.getParameter("fdid")) ? ((String) request.getAttribute("fdid")) : request.getParameter("fdid");
-        String demographicNo = StringUtils.isNullOrEmpty(request.getParameter("demographic_no")) ? ((String) request.getAttribute("demographicId")) : request.getParameter("demographic_no");;
+        /**
+        * TODO: Move all JSP scriptlet code from efmshowform_data.jsp and efmformadd_data.jsp to the ShowEFormAction.java (create if necessary) action file.
+        */
         DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        List<String> attachedDocumentIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.DOC, Integer.parseInt(demographicNo));
-        List<String> attachedEFormIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.EFORM, Integer.parseInt(demographicNo));
-		List<String> attachedHRMDocumentIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.HRM, Integer.parseInt(demographicNo));
-		List<String> attachedLabIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.LAB, Integer.parseInt(demographicNo));
-		List<EctFormData.PatientForm> attachedForms = documentAttachmentManager.getFormsAttachedToEForms(loggedInInfo, Integer.parseInt(fdid), DocumentType.FORM, Integer.parseInt(demographicNo));
+        String fdid = StringUtils.isNullOrEmpty(request.getParameter("fdid")) ? ((String) request.getAttribute("fdid")) : request.getParameter("fdid");
+        String demographicNo = StringUtils.isNullOrEmpty(request.getParameter("demographic_no")) ? ((String) request.getAttribute("demographicId")) : request.getParameter("demographic_no");
+        List<String> attachedDocumentIds = new ArrayList<>();
+        List<String> attachedEFormIds = new ArrayList<>();
+        List<String> attachedHRMDocumentIds = new ArrayList<>();
+        List<String> attachedLabIds = new ArrayList<>();
+        List<EctFormData.PatientForm> attachedForms = new ArrayList<>();
+        if (fdid != null && demographicNo != null) {
+            attachedDocumentIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.DOC, Integer.parseInt(demographicNo));
+            attachedEFormIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.EFORM, Integer.parseInt(demographicNo));
+            attachedHRMDocumentIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.HRM, Integer.parseInt(demographicNo));
+            attachedLabIds = documentAttachmentManager.getEFormAttachments(loggedInInfo, Integer.parseInt(fdid), DocumentType.LAB, Integer.parseInt(demographicNo));
+            attachedForms = documentAttachmentManager.getFormsAttachedToEForms(loggedInInfo, Integer.parseInt(fdid), DocumentType.FORM, Integer.parseInt(demographicNo));
+        }
         if (request.getParameter("error") != null) {
 			String errorMessage = (String) request.getAttribute("errorMessage");
 			if (StringUtils.isNullOrEmpty(errorMessage)) {
