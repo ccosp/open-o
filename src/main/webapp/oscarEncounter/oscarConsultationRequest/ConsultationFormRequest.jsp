@@ -1165,6 +1165,12 @@ function checkForm(submissionVal,formName){
 	  HideSpin();
 	  return false;
   }
+
+  // If the user clicks the 'Print Preview' button, ensure that their unsaved changes are preserved, allowing them to stay on the same page. Achieve this by making an AJAX call.
+  if ('And Print Preview' === submissionVal) {
+      getConsultFormPrintPreview(document.forms[formName]);
+	  return false;
+  }
   
   $("saved").value = "true";
   document.forms[formName].submission.value=submissionVal;
@@ -1439,6 +1445,39 @@ function updateFaxButton() {
 	var disabled = !hasFaxNumber();
 	document.getElementById("fax_button").disabled = disabled;
 	document.getElementById("fax_button2").disabled = disabled;
+}
+
+// If the user clicks the 'Print Preview' button, ensure that their unsaved changes are preserved, allowing them to stay on the same page. Achieve this by making an AJAX call.
+function getConsultFormPrintPreview(form) {
+	form.submission.value="And Print Preview";
+	jQuery.ajax({
+		type: "POST",
+		url: "${ pageContext.request.contextPath }/oscarEncounter/RequestConsultation.do",
+		data: form.serialize(),
+		dataType: "json",
+		success: function(data) {
+			HideSpin();
+			if(data.errorMessage) { 
+				alert(data.errorMessage);
+				return; 
+			}
+			showPreview(data.consultPDF, data.consultPDFName);
+		},
+		error: function(xhr, status, error) {
+			HideSpin();
+			alert("Preview request failed: " + status + ", " + error);
+		}
+	});
+}
+
+function showPreview(base64PDF, pdfName) {
+	const pdfData = new Uint8Array(atob(base64PDF).split('').map(char => char.charCodeAt(0)));
+	const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
+	const downloadLink = document.createElement('a');
+	downloadLink.href = URL.createObjectURL(pdfBlob);
+	downloadLink.download = pdfName;
+	downloadLink.click();
+	URL.revokeObjectURL(downloadLink.href);
 }
 </script>
 

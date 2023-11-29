@@ -410,7 +410,9 @@ public class EctConsultationFormRequestAction extends Action {
 
 		}
 		else if( submission.equalsIgnoreCase("And Print Preview")) {
-			requestId = frm.getRequestId();
+			renderConsultationFormWithAttachments(request, response, frm.getRequestId(), demographicNo);
+			generatePDFResponse(request, response);
+			return null;
 		}
 				
 
@@ -419,26 +421,9 @@ public class EctConsultationFormRequestAction extends Action {
 		request.setAttribute("teamVar", sendTo);
 
 		if (submission.endsWith("And Print Preview")) {
-			request.setAttribute("reqId", requestId);
-			request.setAttribute("demographicId", demographicNo);
-
-			String fileName = generateFileName(loggedInInfo, Integer.parseInt(demographicNo));
-			String base64PDF = "";
-			try {
-				Path pdfPath = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
-				base64PDF = documentAttachmentManager.convertPDFToBase64(pdfPath);
-			} catch (PDFGenerationException e) {
-				logger.error(e.getMessage(), e);
-				String errorMessage = "Failed to create a print preview:  " + e.getMessage();
-				request.setAttribute("errorMessage", errorMessage);
-				return mapping.findForward("error");
-			}
-			
-			request.setAttribute("consultPDFName", fileName);
-			request.setAttribute("consultPDF", base64PDF);
-			request.setAttribute("isPreviewReady", "true");
-			return mapping.findForward("success");
-			
+			boolean SUCCESS = renderConsultationFormWithAttachments(request, response, requestId, demographicNo);
+			if (SUCCESS) { return mapping.findForward("success"); }
+			return mapping.findForward("error");
 		} else if (submission.endsWith("And Fax")) {
 			
 			String[] faxRecipients = request.getParameterValues("faxRecipients");
@@ -608,6 +593,42 @@ public class EctConsultationFormRequestAction extends Action {
             }	    	
 	    }
     }
+
+	private boolean renderConsultationFormWithAttachments(HttpServletRequest request, HttpServletResponse response, String requestId, String demographicNo) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+
+		request.setAttribute("reqId", requestId);
+		request.setAttribute("demographicId", demographicNo);
+		String fileName = generateFileName(loggedInInfo, Integer.parseInt(demographicNo));
+		String base64PDF = "";
+		try {
+			Path pdfPath = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
+			base64PDF = documentAttachmentManager.convertPDFToBase64(pdfPath);
+		} catch(PDFGenerationException e) {
+			logger.error(e.getMessage(), e);
+			String errorMessage = "Failed to create a print preview:  " + e.getMessage();
+			request.setAttribute("errorMessage", errorMessage);
+			return false;
+		}
+
+		request.setAttribute("consultPDFName", fileName);
+		request.setAttribute("consultPDF", base64PDF);
+		request.setAttribute("isPreviewReady", "true");
+		return true;
+	}
+
+	private void generatePDFResponse(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject json = new JSONObject();
+		json.put("consultPDF", (String) request.getAttribute("consultPDF"));
+		json.put("consultPDFName", (String) request.getAttribute("consultPDFName"));
+		json.put("errorMessage", (String) request.getAttribute("errorMessage"));
+		response.setContentType("text/javascript");
+		try {
+			response.getWriter().write(json.toString());
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
 
 	private String generateFileName(LoggedInInfo loggedInInfo, int demographicNo) {
 		DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
