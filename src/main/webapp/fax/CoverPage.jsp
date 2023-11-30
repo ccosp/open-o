@@ -69,7 +69,10 @@
 		}
 
 		// Show loading screen after submiting and validating the form.
-		function submitForm() {
+		function submitForm(event) {
+			const submit = event.submitter;
+			if (submit.id === 'btnCancel') { return true; }
+			
 			const coverPageForm = document.getElementById('coverPageForm');
 			if (coverPageForm.checkValidity()) {
 				return ShowSpin(true);
@@ -208,7 +211,7 @@
 				<c:set var="formAction" value="${ctx}/oscarEncounter/oscarConsultationRequest/ConsultationFormFax.do" />
 			</c:if>
 			
-			<form id="coverPageForm" class="form-inline" action='${ formAction }' onsubmit="return submitForm()" method="post" novalidate>
+			<form id="coverPageForm" class="form-inline" action='${ formAction }' onsubmit="return submitForm(event)" method="post" novalidate>
 			
 				<input type="hidden" name="requestId" value="${ reqId }" />
 				<input type="hidden" name="reqId" value="${ reqId }" />
@@ -383,11 +386,11 @@
 					<div class="row">
 					<div class="col-sm-12">
 						<input type="hidden" id="submitMethod" name="method" value="queue" />
-						<button type="submit" class="btn btn-primary btn-md pull-right" value="Send">
+						<button type="submit" id="btnSend" class="btn btn-primary btn-md pull-right" value="Send">
 							<span class="btn-label"><i class="glyphicon glyphicon-send"></i></span>
 							Send
 						</button>					
-						<button formnovalidate="formnovalidate" type="submit" class="btn btn-danger btn-md pull-right" value="Cancel" 
+						<button formnovalidate="formnovalidate" id="btnCancel" type="submit" class="btn btn-danger btn-md pull-right" value="Cancel" 
 							onclick="document.getElementById('submitMethod').value = 'cancel'" >
 							<span class="btn-label"><i class="glyphicon glyphicon-remove-circle"></i></span>
 							Cancel
