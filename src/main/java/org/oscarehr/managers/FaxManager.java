@@ -261,7 +261,7 @@ public class FaxManager {
 					/*
 					 * set the final document retrieval path.
 					 */
-					faxJobObject.setFile_name(faxDocument.toString());
+					faxJobObject.setFile_name(faxDocument.getFileName().toString());
 				}
 			}
 		}
@@ -362,11 +362,7 @@ public class FaxManager {
 	}
 
 	public String copyFileToOscarDocuments(String tempFilePath) {
-		String destinationDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		if (!destinationDir.endsWith(File.separator)) {
-			destinationDir += File.separator;
-		}
-
+		String destinationDir = getDocumentDirectory();
 		File tempFile = new File(tempFilePath);
 		Path destinationFilePath = Paths.get(destinationDir, tempFile.getName());
 		try {
@@ -375,6 +371,14 @@ public class FaxManager {
 			logger.error("An error occurred while moving the PDF file", e);
 		}
 		return destinationFilePath.toString();
+	}
+
+	private String getDocumentDirectory() {
+		String destinationDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		if (!destinationDir.endsWith(File.separator)) {
+			destinationDir += File.separator;
+		}
+		return destinationDir;
 	}
 
 	/**
@@ -518,6 +522,7 @@ public class FaxManager {
 	}
 
 	private Path addCoverPage(byte[] coverPage, Path currentDocument) throws IOException {
+		currentDocument = Paths.get(getDocumentDirectory(), currentDocument.getFileName().toString());
 		Path newCurrentDocument = Paths.get(currentDocument.getParent().toString(), "Cover_" + UUID.randomUUID() + "_" + currentDocument.getFileName());
 		Files.createFile(newCurrentDocument);
 		try (ByteArrayInputStream currentDocumentStream = new ByteArrayInputStream(Files.readAllBytes(currentDocument));
