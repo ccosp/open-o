@@ -401,12 +401,12 @@ function returnToRx(){
 				</th>
 				<th class="DivContentSectionHead">
 					Clinic's Database of Pharmacies (<a href="javascript:void(0)" onclick="addPharmacy();">Add Missing Pharmacy to Clinic Database</a>) <br><br>
-					Pharmacy name&nbsp;&nbsp;<input type="text" id="pharmacySearch"/>&nbsp;&nbsp;
-					Address&nbsp;&nbsp;<input type="text" id="pharmacyAddressSearch" style="width: 75px"/> &nbsp;&nbsp;
-					City&nbsp;&nbsp;<input type="text" id="pharmacyCitySearch" style="width: 75px"/> &nbsp;&nbsp;<br>
-					Postal Code&nbsp;&nbsp;<input type="text" id="pharmacyPostalCodeSearch" style="width: 75px"/> &nbsp;&nbsp;
-					Phone&nbsp;&nbsp;<input type="text" id="pharmacyPhoneSearch" style="width: 75px"/> &nbsp;&nbsp;
-					Fax&nbsp;&nbsp;<input type="text" id="pharmacyFaxSearch" style="width: 75px"/> &nbsp;&nbsp;
+					<span style="white-space: nowrap;">Pharmacy name&nbsp;&nbsp;<input type="text" id="pharmacySearch"/>&nbsp;&nbsp;</span>
+					<span style="white-space: nowrap;">Address&nbsp;&nbsp;<input type="text" id="pharmacyAddressSearch" style="width: 75px"/> &nbsp;&nbsp;</span>
+					<span style="white-space: nowrap;">City&nbsp;&nbsp;<input type="text" id="pharmacyCitySearch" style="width: 75px"/> &nbsp;&nbsp;</span>
+					<span style="white-space: nowrap;">Postal Code&nbsp;&nbsp;<input type="text" id="pharmacyPostalCodeSearch" style="width: 75px"/> &nbsp;&nbsp;</span>
+					<span style="white-space: nowrap;">Phone&nbsp;&nbsp;<input type="text" id="pharmacyPhoneSearch" style="width: 75px"/> &nbsp;&nbsp;</span>
+					<span style="white-space: nowrap;">Fax&nbsp;&nbsp;<input type="text" id="pharmacyFaxSearch" style="width: 75px"/> &nbsp;&nbsp;</span>
 					<br><br> Instructions: Add a patient's preferred pharmacies by clicking on specific pharmacies
 				</th>
 			</tr>
