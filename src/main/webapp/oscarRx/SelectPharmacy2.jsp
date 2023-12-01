@@ -401,19 +401,19 @@ function returnToRx(){
 				</th>
 				<th class="DivContentSectionHead">
 					Clinic's Database of Pharmacies (<a href="javascript:void(0)" onclick="addPharmacy();">Add Missing Pharmacy to Clinic Database</a>) <br><br>
-					Search Pharmacy&nbsp;&nbsp;<input type="text" id="pharmacySearch"/>&nbsp;&nbsp;
-					City&nbsp;&nbsp;<input type="text" id="pharmacyCitySearch" style="width: 75px"/> &nbsp;&nbsp;
+					Pharmacy name&nbsp;&nbsp;<input type="text" id="pharmacySearch"/>&nbsp;&nbsp;
+					Address&nbsp;&nbsp;<input type="text" id="pharmacyAddressSearch" style="width: 75px"/> &nbsp;&nbsp;
+					City&nbsp;&nbsp;<input type="text" id="pharmacyCitySearch" style="width: 75px"/> &nbsp;&nbsp;<br>
 					Postal Code&nbsp;&nbsp;<input type="text" id="pharmacyPostalCodeSearch" style="width: 75px"/> &nbsp;&nbsp;
 					Phone&nbsp;&nbsp;<input type="text" id="pharmacyPhoneSearch" style="width: 75px"/> &nbsp;&nbsp;
 					Fax&nbsp;&nbsp;<input type="text" id="pharmacyFaxSearch" style="width: 75px"/> &nbsp;&nbsp;
-					Address&nbsp;&nbsp;<input type="text" id="pharmacyAddressSearch" style="width: 75px"/> &nbsp;&nbsp;
-					<br><br> Instructions: Add patient's preferred pharmacies by clicking on specific pharmacy.
+					<br><br> Instructions: Add a patient's preferred pharmacies by clicking on specific pharmacies
 				</th>
 			</tr>
 			<tr>
 				<td id="preferredList">
-					<div>
-							No pharmacies selected
+					<div style="text-align: center">
+							<b>No pharmacies selected</b>
 					</div>
 				</td>
 				<td>
