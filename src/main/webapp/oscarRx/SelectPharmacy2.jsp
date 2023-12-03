@@ -48,7 +48,7 @@
 <html:html locale="true">
 <head>
 
-
+<jsp:include page="../images/spinner.jsp" flush="true"/>
 <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/share/javascript/prototype.js"></script>
@@ -417,6 +417,7 @@ function returnToRx(){
 					</div>
 				</td>
 				<td>
+					<Script>ShowSpin(true)</Script>
 					<% RxPharmacyData pharmacy = new RxPharmacyData();
                          List< org.oscarehr.common.model.PharmacyInfo> pharList = pharmacy.getAllPharmacies();
                        %>
@@ -454,6 +455,7 @@ function returnToRx(){
 						<% } %>
 					</table>
 					</div>
+					<Script>HideSpin(true)</Script>
 				</td>
 			</tr>
 			<!----End new rows here-->
