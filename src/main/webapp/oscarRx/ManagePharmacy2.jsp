@@ -185,13 +185,6 @@
 		<table cellpadding="0" cellspacing="2"
 			style="border-collapse: collapse" bordercolor="#111111" width="100%"
 			height="100%">
-			<tr>
-				<td width="0%" valign="top">
-				<div class="DivCCBreadCrumbs"><a href="SearchDrug3.jsp"> <bean:message
-					key="SearchDrug.title" /></a> > <bean:message key="SelectPharmacy.title" /> > <bean:message
-					key="ManagePharmacy.title" /> </div>
-				</td>
-			</tr>
 			<!----Start new rows here-->
 			<tr>
 				<td>
