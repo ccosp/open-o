@@ -330,7 +330,7 @@ public class DocumentAttachmentManager {
 		Path path = null;
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 			ConcatPDF.concat(pdfDocumentList, outputStream);
-			path = nioFileManager.saveTempFile("combinedPDF" + new Date().getTime(), outputStream);
+			path = nioFileManager.saveTempFile("combinedPDF_" + new Date().getTime(), outputStream);
 		} catch (IOException e) {
 			throw new PDFGenerationException("An error occurred while concatenating PDF.", e);
 		}
