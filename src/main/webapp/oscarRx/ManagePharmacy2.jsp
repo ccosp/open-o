@@ -188,7 +188,7 @@
 			<!----Start new rows here-->
 			<tr>
 				<td>
-				<div class="DivContentSectionHead">
+				<div class="DivContentSectionHead" style="height:8px">
 				<% if (request.getParameter("ID") ==  null){ %> <bean:message
 					key="ManagePharmacy.subTitle.add" /> <%}else{%> <bean:message
 					key="ManagePharmacy.subTitle.update" /> <%}%>

@@ -1216,6 +1216,11 @@ body {
     padding-left: 20px;
     font-weight: bold;
     background-color: #f2f2f2;
+    text-align: center;
+  }
+
+  .wcblayerContent {
+    padding-left: 20px;
   }
 
 </style>
@@ -1230,45 +1235,45 @@ body {
 
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgName"/></td>
-            <td id="pharmacyName"></td>
+            <td class="wcblayerContent" id="pharmacyName"></td>
         </tr>
 
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgAddress"/></td>
-            <td id="pharmacyAddress"></td>
+            <td class="wcblayerContent" id="pharmacyAddress"></td>
         </tr>
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgCity"/></td>
-            <td id="pharmacyCity"></td>
+            <td class="wcblayerContent" id="pharmacyCity"></td>
         </tr>
 
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgProvince"/></td>
-            <td id="pharmacyProvince"></td>
+            <td class="wcblayerContent" id="pharmacyProvince"></td>
         </tr>
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPostalCode"/></td>
-            <td id="pharmacyPostalCode"></td>
+            <td class="wcblayerContent" id="pharmacyPostalCode"></td>
         </tr>
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPhone1"/></td>
-            <td class="WhiteBG" id="pharmacyPhone1"></td>
+            <td class="wcblayerContent"  id="pharmacyPhone1"></td>
         </tr>
-        <tr class="LightBG">
+        <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPhone2"/></td>
-            <td id="pharmacyPhone2"></td>
+            <td class="wcblayerContent" id="pharmacyPhone2"></td>
         </tr>
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgFax"/></td>
-            <td id="pharmacyFax"></td>
+            <td class="wcblayerContent" id="pharmacyFax"></td>
         </tr>
-        <tr class="LightBG">
+        <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgEmail"/></td>
-            <td id="pharmacyEmail"></td>
+            <td class="wcblayerContent"  id="pharmacyEmail"></td>
         </tr>
         <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgNotes"/></td>
-            <td id="pharmacyNotes"></td>
+            <td class="wcblayerContent"  id="pharmacyNotes"></td>
         </tr>
     </table>
 
