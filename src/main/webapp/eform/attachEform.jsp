@@ -51,7 +51,7 @@ String userlastname = (String) session.getAttribute("userlastname");
 <jsp:useBean id="oscarVariables" class="java.util.Properties"
 	scope="page" />
 <%@ page
-	import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,oscar.MyDateFormat, oscar.dms.*, oscar.dms.data.*, oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocs"%>
+	import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,oscar.MyDateFormat, oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocs"%>
 <%@ page import="oscar.oscarLab.ca.on.*"%>
 <%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
@@ -67,6 +67,7 @@ String userlastname = (String) session.getAttribute("userlastname");
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
 
+<!-- Deprecated: Please use attachDocument.jsp. -->
 <%
 
 //preliminary JSP code
@@ -327,9 +328,8 @@ function toggleSelectAll() {
 	                String dStatus = "";
 	                if ((curDoc.getStatus() + "").compareTo("A") == 0) dStatus="active";
 	                else if ((curDoc.getStatus() + "").compareTo("H") == 0) dStatus="html";
-	                url = request.getContextPath() + "/oscarEncounter/oscarConsultationRequest/" 
-	                    + "documentGetFile.jsp?document=" + StringEscapeUtils.escapeJavaScript(curDoc.getFileName()) 
-	                    + "&type=" + dStatus + "&doc_no=" + curDoc.getDocId();
+	                url = request.getContextPath() + "/documentManager/" 
+	                    + "showDocument.jsp?inWindow=true&segmentID=" + curDoc.getDocId() + "&providerNo=" + providerNo;
 	                String onClick = "";
 	                
 	                if (curDoc.isPDF()) {                        

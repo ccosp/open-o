@@ -42,7 +42,7 @@ if(!authed) {
 
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@page
-	import="java.util.ArrayList, oscar.dms.*, oscar.oscarLab.ca.on.*, oscar.util.StringUtils"%>
+	import="java.util.ArrayList, oscar.oscarLab.ca.on.*, oscar.util.StringUtils"%>
 <%@page import="org.oscarehr.util.SessionConstants"%>
 <%@page	import="java.util.List"%>
 <%@ page import="org.oscarehr.util.SpringUtils" %>

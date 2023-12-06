@@ -42,7 +42,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="org.oscarehr.phr.util.MyOscarUtils,org.oscarehr.myoscar.utils.MyOscarLoggedInInfo,org.oscarehr.util.WebUtils"%>
 <%@page import="org.apache.commons.lang.StringEscapeUtils"%>
-<%@ page import="oscar.dms.*,java.util.*" %>
+<%@ page import="java.util.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>

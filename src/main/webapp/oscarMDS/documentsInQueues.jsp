@@ -41,7 +41,7 @@ if(!authed) {
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="java.util.*, oscar.util.*, oscar.OscarProperties, oscar.dms.*, oscar.dms.data.*"%>
+<%@ page import="java.util.*, oscar.util.*, oscar.OscarProperties"%>
 <!DOCTYPE HTML >
 
 <html>

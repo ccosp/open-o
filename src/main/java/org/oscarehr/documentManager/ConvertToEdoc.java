@@ -711,7 +711,7 @@ public class ConvertToEdoc {
 			tidy.setQuiet( Boolean.TRUE );
 		}
 
-		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/dms/ConvertToEdoc.properties" )) {
+		try (InputStream is = ConvertToEdoc.class.getClassLoader().getResourceAsStream( "/oscar/documentManager/ConvertToEdoc.properties" )) {
 			if( is != null ) {
 				Properties properties = new Properties();
 				properties.load( is );

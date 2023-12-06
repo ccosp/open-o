@@ -44,7 +44,7 @@
 <%@page import="org.oscarehr.common.dao.UserPropertyDAO"%>
 <%@page import="oscar.util.UtilDateUtilities"%>
 <%@page import="java.io.File"%>
-<%@ page import="oscar.dms.*,java.util.*" %>
+<%@ page import="java.util.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>

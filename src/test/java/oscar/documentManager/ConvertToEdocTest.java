@@ -22,7 +22,7 @@
  * Ontario, Canada
  */
 
-package oscar.dms;
+package oscar.documentManager;
 
 // import static org.junit.Assert.*;
 import org.junit.AfterClass;
