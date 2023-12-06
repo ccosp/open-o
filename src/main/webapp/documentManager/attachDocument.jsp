@@ -311,12 +311,20 @@
 											<c:when test="${fn:startsWith(labName, '...Version')}">
 												<c:set var="versionNumber" value="${fn:replace(labName, '...Version ', '')}" />
 												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="v${ versionNumber } ${ description }" />
-												<em><label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ description }" ><c:out value="${ labName } " /><label class="lab-date">(${lab.dateObjFormated})</label></label></em>
+												<em>
+													<label for="labNo${lab.segmentID}" title="v${ versionNumber } ${ description }" >
+														<c:out value="${ labName }" />&nbsp;
+													</label>
+													<label for="labNo${lab.segmentID}" class="lab-date">(${lab.dateObjFormated})</label>
+												</em>
 											</c:when>
 											<c:otherwise>
 												<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
 												<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
-												<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName } " /><label class="lab-date">${lab.dateObjFormated}</label></label>
+												<label for="labNo${lab.segmentID}" title="${ labName }" >
+													<c:out value="${ labName }" />&nbsp;
+												</label>
+												<label for="labNo${lab.segmentID}" class="lab-date">${lab.dateObjFormated}</label>
 											</c:otherwise>
 										</c:choose>
 										<button class="preview-button" type="button" title="Preview" onclick="getPdf('LAB', '${lab.segmentID}', 'method=renderLabPDF&segmentId=${lab.segmentID}')">Preview</button>
