@@ -421,7 +421,7 @@ function returnToRx(){
 					<% RxPharmacyData pharmacy = new RxPharmacyData();
                          List< org.oscarehr.common.model.PharmacyInfo> pharList = pharmacy.getAllPharmacies();
                        %>
-					<div style="width:100%; height:360px; overflow:auto;">
+					<div style="width:100%; height:100%; overflow:auto;">
 					<table id="pharmacyList" style="width:100%;">
 						<tr>
 							<th><bean:message key="SelectPharmacy.table.pharmacyName" /></th>
