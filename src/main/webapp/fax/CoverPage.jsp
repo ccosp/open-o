@@ -406,8 +406,9 @@
 				</div>
 			  	<div class="panel-body">
 			  		<div class="container">
-						<img src="${ ctx }/fax/faxAction.do?method=getPreview&faxFilePath=${ faxFilePath }" 
-							onerror="document.getElementById('preview-panel').style.display='block'; this.style.display='none'; "/>
+						<object id="previewPDF" data="${ctx}/fax/faxAction.do?method=getPreview&faxFilePath=${faxFilePath}" 
+								type="application/pdf" width="100%" height="800">
+						</object>
 					</div>
 				</div>
 			</div>

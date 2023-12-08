@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,6 +143,7 @@ public class FaxAction extends DispatchAction {
 		LoggedInInfo loggedInInfo 	= LoggedInInfo.getLoggedInInfoFromSession(request);
 		String faxFilePath 			= request.getParameter("faxFilePath");
 		String pageNumber			= request.getParameter("pageNumber");
+		String showAs = request.getParameter("showAs");
 		Path outfile 				= null;
 		int page 					= 1;
 		String jobId 				= request.getParameter("jobId");
@@ -159,9 +161,20 @@ public class FaxAction extends DispatchAction {
 			page = Integer.parseInt(pageNumber);
 		}
 		
+		/*
+		* Displaying the entire PDF using the default browser's view before faxing an EForm (in CoverPage.jsp), 
+		* and when viewing it in the fax records (Manage Faxes), it is shown as images.
+		*/
 		if(faxFilePath != null && ! faxFilePath.isEmpty())
 		{
-			outfile = faxManager.getFaxPreviewImage(loggedInInfo, faxFilePath, page);
+			if (showAs != null && showAs.equals("image")) {
+				outfile = faxManager.getFaxPreviewImage(loggedInInfo, faxFilePath, page);
+				response.setContentType("image/pnsg");
+				response.setHeader("Content-Disposition", "attachment;filename=" + outfile.getFileName().toString());
+			} else {
+				outfile = Paths.get(faxFilePath);
+				response.setContentType("application/pdf");
+			}
 		}
 
 		if(outfile != null)
@@ -169,9 +182,6 @@ public class FaxAction extends DispatchAction {
 			try(InputStream inputStream = Files.newInputStream(outfile);
 					BufferedInputStream bfis = new BufferedInputStream(inputStream);
 					ServletOutputStream outs = response.getOutputStream()){
-				
-				response.setContentType("image/png");
-				response.setHeader("Content-Disposition", "attachment;filename=" + outfile.getFileName().toString());
 				
 				int data;
 				while ((data = bfis.read()) != -1) {
