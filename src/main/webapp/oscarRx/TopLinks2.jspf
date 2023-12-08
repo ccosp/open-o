@@ -59,7 +59,7 @@ function newWindow(url) {
 	        					mapper.writeValue(jsonObject, pharmacyInfo);
 
 					%>
-								<option value='<%=jsonObject.toString().replaceAll("'", "")%>'><%=pharmacyInfo.getName() + " " + pharmacyInfo.getCity()%></option>
+								<option value='<%=jsonObject.toString().replaceAll("'", "")%>'><%=pharmacyInfo.getName() + " " + pharmacyInfo.getCity() + " (Fax: " + pharmacyInfo.getFax() + ")"%></option>
 					<%
 	        				}
 	       		 		}
