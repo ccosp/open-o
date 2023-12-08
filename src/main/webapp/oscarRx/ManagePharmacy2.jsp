@@ -77,10 +77,13 @@
 	});
 <% } %>
   function savePharmacy() {
-    const saveWarningStr = "WARNING - you are about to edit a pharmacy's entry in the clinic's database. Any changes will automatically apply to all patients who already have this pharmacy as a preferred pharmacy.\n\nOnly proceed if you are absolutely sure. Type \"yes\" in the box below to proceed.";
-	const userInput = prompt(saveWarningStr);
-	if (userInput == null || userInput.toLowerCase() != "yes") {
-		return false;
+	var typeName = (new URLSearchParams(window.location.search)).get('type')
+	if (typeName != null && typeName.toLowerCase() == "edit") {
+		const saveWarningStr = "WARNING - you are about to edit a pharmacy's entry in the clinic's database. Any changes will automatically apply to all patients who already have this pharmacy as a preferred pharmacy.\n\nOnly proceed if you are absolutely sure. Type \"yes\" in the box below to proceed.";
+		const userInput = prompt(saveWarningStr);
+		if (userInput == null || userInput.toLowerCase() != "yes") {
+			return false;
+		}
 	}
 	  if( !isFaxNumberCorrect() ) {   return false;  }
 
