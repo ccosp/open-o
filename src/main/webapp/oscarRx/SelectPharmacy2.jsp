@@ -119,8 +119,9 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 						$("#preferredList").append(pharm);
 					}
 
-					$(".prefUnlink").click(function(){
+					$(".prefUnlink").click(function(){						  
 						  var data = "pharmacyId=" + $(this).closest("div").attr("pharmId") + "&demographicNo=" + demo;
+						  ShowSpin(true);
 						  $.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=unlink",
 							  data, function( data ) {
 								if( data.id ) {
@@ -138,6 +139,7 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 							var $prev = $(this).closest("div").prev();
 
 							var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) - 1);
+							ShowSpin(true);
 							$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
 							  data, function( data2 ) {
 									if( data2.id ) {
@@ -159,6 +161,7 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 							var $next = $(this).closest("div").next();
 
 							var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) + 1);
+							ShowSpin(true);
 							$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
 							  data, function( data2 ) {
 									if( data2.id ) {
