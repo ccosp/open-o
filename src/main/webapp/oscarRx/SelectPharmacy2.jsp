@@ -309,18 +309,21 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
       });
   
 	$(".deletePharm").click(function(){
-		if( confirm("You are about to remove this pharmacy for all users. Are you sure you want to continue?")) {
-			var data = "pharmacyId=" + $(this).closest("tr").attr("pharmId");
-			$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=delete",
-					data, function( data ) {
-				if( data.success ) {
-					window.location.reload(false);
-				}
-				else {
-					alert("There was an error deleting the Pharmacy");
-				}
-			},"json");
+		const saveWarningStr = "WARNING - you are about to edit a pharmacy's entry in the clinic's database. Any changes will automatically apply to all patients who already have this pharmacy as a preferred pharmacy.\n\nOnly proceed if you are absolutely sure. Type \"yes\" in the box below to proceed.";
+		const userInput = prompt(saveWarningStr);
+		if (userInput == null || userInput.toLowerCase() != "yes") {
+			return false;
 		}
+		var data = "pharmacyId=" + $(this).closest("tr").attr("pharmId");
+		$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=delete",
+				data, function( data ) {
+			if( data.success ) {
+				window.location.reload(false);
+			}
+			else {
+				alert("There was an error deleting the Pharmacy");
+			}
+		},"json");
 	});
 
 
