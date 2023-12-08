@@ -309,8 +309,8 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
       });
   
 	$(".deletePharm").click(function(){
-		const saveWarningStr = "WARNING - you are about to edit a pharmacy's entry in the clinic's database. Any changes will automatically apply to all patients who already have this pharmacy as a preferred pharmacy.\n\nOnly proceed if you are absolutely sure. Type \"yes\" in the box below to proceed.";
-		const userInput = prompt(saveWarningStr);
+		const deletingWarningStr = "WARNING - proceeding will delete this pharmacy from the clinic's database from all users. Only proceed if you are absolutely sure.\n\nType \"yes\" in the box below to proceed.";
+		const userInput = prompt(deletingWarningStr);
 		if (userInput == null || userInput.toLowerCase() != "yes") {
 			return false;
 		}
