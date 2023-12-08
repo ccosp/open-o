@@ -116,7 +116,7 @@ public class PharmacyInfoDao extends AbstractDao<PharmacyInfo>{
     @SuppressWarnings("unchecked")
     public List<PharmacyInfo> getAllPharmacies(){
         List<PharmacyInfo>  pharmacyList =  new ArrayList<PharmacyInfo>();
-        String sql = "select x from PharmacyInfo x where x.status = :status order by name";
+        String sql = "select x from PharmacyInfo x where x.status = :status order by recordID desc";
         
         Query query = entityManager.createQuery(sql);
         query.setParameter("status", PharmacyInfo.ACTIVE);
