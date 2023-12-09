@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <%--
+
     Copyright (c) 2006-. OSCARservice, OpenSoft System. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
     This program is free software; you can redistribute it and/or
@@ -17,9 +17,8 @@
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 --%>
+<!DOCTYPE html>
 <%@page import="java.math.*" %>
-<%@page import="java.net.*" %>
-<%@page import="java.sql.*" %>
 <%@page import="java.text.DecimalFormat" %>
 <%@page import="java.text.NumberFormat" %>
 <%@page import="java.util.*" %>
@@ -30,7 +29,6 @@
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.owasp.encoder.Encode"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="oscar.*" %>
 <%@page import="oscar.OscarProperties" %>
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
@@ -708,10 +706,10 @@
                     <table class="table" id="bListTable" class="display nowrap">
                         <thead>
                             <tr>
-                                <th><a href="javascript:void();" onClick="updateSort('ServiceDate');return false;">SERVICE DATE</a></th>
-                                <th> <a href="javascript:void();" onClick="updateSort('DemographicNo');return false;">PATIENT</a></th>
+                                <th><a href="javascript:void(0);" onClick="updateSort('ServiceDate');return false;">SERVICE DATE</a></th>
+                                <th> <a href="javascript:void(0);" onClick="updateSort('DemographicNo');return false;">PATIENT</a></th>
                                 <th class="<%=hideName?"hidden-print":""%>">PATIENT NAME</th>
-                                <th> <a href="javascript:void();" onClick="updateSort('VisitLocation');return false;">LOCATION</a></th>
+                                <th> <a href="javascript:void(0);" onClick="updateSort('VisitLocation');return false;">LOCATION</a></th>
                                 <th title="Status">STAT</th>
                                 <th>SETTLED</th>
                                 <th title="Code Billed">CODE</th>
