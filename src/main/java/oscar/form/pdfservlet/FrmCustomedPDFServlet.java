@@ -56,6 +56,8 @@ import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.FaxJob.Direction;
 import org.oscarehr.common.model.PharmacyInfo;
+import org.oscarehr.managers.FaxManager;
+import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.util.LocaleUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -74,11 +76,13 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 	private static Logger logger = MiscUtils.getLogger();
 	private final FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
 
-	private final FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);;
+	private final FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
+	private static FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 
 	@Override
     public void service(HttpServletRequest req, HttpServletResponse res) throws javax.servlet.ServletException, java.io.IOException {
 
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(req);
 		boolean isFax = "oscarRxFax".equals(req.getParameter("__method"));
 		try (ByteArrayOutputStream baosPDF = generatePDFDocumentBytes(req, this.getServletContext());
 		     PrintWriter writer = res.getWriter() ) {
@@ -153,6 +157,7 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 							faxJob.setDirection(Direction.OUT);
 
 							faxJobDao.persist(faxJob);
+							faxManager.logFaxJob(loggedInInfo, faxJob, TransactionType.RX, -1);
 							validFaxNumber = true;
 							break;
 						}

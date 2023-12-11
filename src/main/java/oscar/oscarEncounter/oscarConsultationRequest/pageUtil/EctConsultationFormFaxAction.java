@@ -26,11 +26,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
 import org.oscarehr.common.model.Clinic;
-import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.core.FaxAccount;
@@ -38,6 +36,7 @@ import org.oscarehr.fax.core.FaxRecipient;
 
 import org.oscarehr.managers.FaxManager;
 import org.oscarehr.managers.SecurityInfoManager;
+import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
@@ -53,7 +52,6 @@ public class EctConsultationFormFaxAction extends Action {
 
 	private static final Logger logger = MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
-    private static FaxClientLogDao faxClientLogDao = SpringUtils.getBean(FaxClientLogDao.class);
 	private static FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);				
 	private static FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
 	private static FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
@@ -194,12 +192,13 @@ public class EctConsultationFormFaxAction extends Action {
 				faxJobDao.persist(faxJob);
 				
 				// start up a log track each time the CLIENT was run.
-				FaxClientLog faxClientLog = new FaxClientLog();
-				faxClientLog.setFaxId(faxJob.getId()); // IMPORTANT! this is the id of the FaxJobID from the Faxes table. A 1:1 cardinality.
-				faxClientLog.setProviderNo(faxJob.getOscarUser()); // the provider that sent this fax
-				faxClientLog.setStartTime(new Date(System.currentTimeMillis())); // the exact time the fax was sent
-				faxClientLog.setRequestId(Integer.parseInt(reqId));
-				faxClientLogDao.persist(faxClientLog);
+				faxManager.logFaxJob(loggedInInfo, faxJob, TransactionType.CONSULTATION, Integer.parseInt(reqId));
+				// FaxClientLog faxClientLog = new FaxClientLog();
+				// faxClientLog.setFaxId(faxJob.getId()); // IMPORTANT! this is the id of the FaxJobID from the Faxes table. A 1:1 cardinality.
+				// faxClientLog.setProviderNo(faxJob.getOscarUser()); // the provider that sent this fax
+				// faxClientLog.setStartTime(new Date(System.currentTimeMillis())); // the exact time the fax was sent
+				// faxClientLog.setRequestId(Integer.parseInt(reqId));
+				// faxClientLogDao.persist(faxClientLog);
 
 				count++;
 			}

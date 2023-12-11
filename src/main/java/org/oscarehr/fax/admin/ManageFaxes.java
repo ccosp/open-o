@@ -25,6 +25,7 @@ package org.oscarehr.fax.admin;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -49,8 +50,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
 import org.oscarehr.common.dao.FaxJobDao;
+import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.action.FaxAction;
@@ -257,10 +260,16 @@ public class ManageFaxes extends FaxAction {
 		}
 		
 		FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
+		FaxClientLogDao faxClientLogDao = SpringUtils.getBean(FaxClientLogDao.class);
 		
 		List<FaxJob> faxJobList = faxJobDao.getFaxStatusByDateDemographicProviderStatusTeam(demographic_no, provider_no, statusStr, teamStr, dateBegin, dateEnd);
 		
+		List<Integer> faxIds = new ArrayList<>();
+		for (FaxJob faxJob : faxJobList) { faxIds.add(faxJob.getId()); }
+		List<FaxClientLog> faxClientLogs = faxClientLogDao.findClientLogbyFaxIds(faxIds);
+
 		request.setAttribute("faxes", faxJobList);
+		request.setAttribute("faxClientLogs", faxClientLogs);
 		
 		return mapping.findForward("faxstatus");
 	}
