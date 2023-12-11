@@ -138,20 +138,24 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 							var $curr = $(this).closest("div");
 							var $prev = $(this).closest("div").prev();
 
-							var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) - 1);
-							ShowSpin(true);
-							$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
-							  data, function( data2 ) {
-									if( data2.id ) {
-										data = "pharmId=" + $prev.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($prev.attr("prefOrder")) + 1);
-										$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
-										  data, function( data3 ) {
-												if( data3.id ) {
-													window.location.reload(false);
-												}
-										}, "json");
-									}
-							}, "json");
+							if ($curr.prev().length == 0){
+								alert("This pharmacy is already this patient's most preferred pharmacy.");								
+							} else {							
+								var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) - 1);
+								ShowSpin(true);
+								$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+								data, function( data2 ) {
+										if( data2.id ) {
+											data = "pharmId=" + $prev.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($prev.attr("prefOrder")) + 1);
+											$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+											data, function( data3 ) {
+													if( data3.id ) {
+														window.location.reload(false);
+													}
+											}, "json");
+										}
+								}, "json");
+							}
 						}
 					  });
 
@@ -159,21 +163,25 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 						if($(this).closest("div").next() != null){
 							var $curr = $(this).closest("div");
 							var $next = $(this).closest("div").next();
-
-							var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) + 1);
-							ShowSpin(true);
-							$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
-							  data, function( data2 ) {
-									if( data2.id ) {
-										data = "pharmId=" + $next.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($next.attr("prefOrder")) - 1);
-										$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
-										  data, function( data3 ) {
-												if( data3.id ) {
-													window.location.reload(false);
-												}
-										}, "json");
-									}
-							}, "json");
+								
+							if ($curr.next().length == 0){
+								alert("This pharmacy is already this patient's least preferred pharmacy.");															
+							} else {								
+								var data = "pharmId=" + $curr.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($curr.attr("prefOrder")) + 1);
+								ShowSpin(true);
+								$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+								data, function( data2 ) {
+										if( data2.id ) {
+											data = "pharmId=" + $next.attr("pharmId") + "&demographicNo=" + demo + "&preferredOrder=" + (parseInt($next.attr("prefOrder")) - 1);
+											$.post("<%=request.getContextPath()%>/oscarRx/managePharmacy.do?method=setPreferred",
+											data, function( data3 ) {
+													if( data3.id ) {
+														window.location.reload(false);
+													}
+											}, "json");
+										}
+								}, "json");							
+							}
 						}
 					  });
 				}
@@ -309,7 +317,7 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
       });
   
 	$(".deletePharm").click(function(){
-		const deletingWarningStr = "WARNING - proceeding will delete this pharmacy from the clinic's database from all users. Only proceed if you are absolutely sure.\n\nType \"yes\" in the box below to proceed.";
+		const deletingWarningStr = "WARNING - proceeding will delete this pharmacy from the clinic's database for all users. Only proceed if you are absolutely sure.\n\nType \"yes\" in the box below to proceed.";
 		const userInput = prompt(deletingWarningStr);
 		if (userInput == null || userInput.toLowerCase() != "yes") {
 			return false;
