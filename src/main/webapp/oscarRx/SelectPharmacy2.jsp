@@ -103,8 +103,8 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 					$("#preferredList").html("");
 					var json;
 					var preferredPharmacyInfo;
-					for( var idx = 0; idx < data.length; ++idx  ) {
-						preferredPharmacyInfo = data[idx];
+					for( var idx = 1; idx <= data.length; ++idx  ) {  //delibertely using idx = 1 to start to match the preferredOrder in db which is 1 counting instead of 0 counting
+						preferredPharmacyInfo = data[idx-1];
 						json = JSON.stringify(preferredPharmacyInfo);
 
                             var pharm = "<div prefOrder='"+idx+"' pharmId='"+preferredPharmacyInfo.id+"'><table><tr><td class='prefAction prefUp'> Move Up </td>";
@@ -304,7 +304,7 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 			  }
 		  });
 
-		  var data = "pharmId=" + pharmId + "&demographicNo=" + demo + "&preferredOrder=" + $("#preferredList div").length;
+		  var data = "pharmId=" + pharmId + "&demographicNo=" + demo + "&preferredOrder=" + ($("#preferredList div").length + 1);
 		  ShowSpin(true);
 		  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=setPreferred"%>", data, function( data ) {
 			if( data.id ) {
