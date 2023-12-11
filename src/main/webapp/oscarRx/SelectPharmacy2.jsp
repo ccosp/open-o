@@ -320,6 +320,7 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 		const deletingWarningStr = "WARNING - proceeding will delete this pharmacy from the clinic's database for all users. Only proceed if you are absolutely sure.\n\nType \"yes\" in the box below to proceed.";
 		const userInput = prompt(deletingWarningStr);
 		if (userInput == null || userInput.toLowerCase() != "yes") {
+			alert("This pharmacy has not been deleted because you did not type \"yes\" in the previous box.");
 			return false;
 		}
 		var data = "pharmacyId=" + $(this).closest("tr").attr("pharmId");
