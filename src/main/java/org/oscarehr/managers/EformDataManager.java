@@ -147,7 +147,7 @@ public class EformDataManager {
 		try {
 			path = ConvertToEdoc.saveAsTempPDF(eformData);
 		} catch (Exception e) {
-			throw new PDFGenerationException("An error occurred while creating the pdf of the eForm. " + "EForm Name: " + eformData.getFormName(), e);
+			throw new PDFGenerationException("Error Details: EForm [" + eformData.getFormName() + "] could not be converted into a PDF", e);
 		}
 		
 		if( Files.isReadable(path) ) {

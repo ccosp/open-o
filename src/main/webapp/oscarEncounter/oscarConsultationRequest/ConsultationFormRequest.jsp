@@ -1458,7 +1458,7 @@ function getConsultFormPrintPreview(form) {
 		success: function(data) {
 			HideSpin();
 			if(data.errorMessage) { 
-				alert(data.errorMessage);
+				alert(data.errorMessage.replace(/\\n/g, '\n'));
 				return; 
 			}
 			showPreview(data.consultPDF, data.consultPDFName);

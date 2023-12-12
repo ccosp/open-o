@@ -47,6 +47,7 @@ import com.lowagie.text.DocumentException;
 
 import oscar.log.LogAction;
 import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import oscar.util.StringUtils;
 
 
 @Service
@@ -124,7 +125,7 @@ public class LabManager {
 			}
 			tempPDF.delete();
 		} catch (IOException | DocumentException e) {
-			throw new PDFGenerationException("An error occurred while creating the pdf of the lab. " + "Lab Id: " + segmentId, e);
+			throw new PDFGenerationException("Error Details: Lab [" + getDisplayLabName(segmentId) + "] could not be converted into a PDF", e);
 		}
 
 		return path;
@@ -134,5 +135,10 @@ public class LabManager {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_lab", privilege, null)) {
 			throw new RuntimeException("missing required security object (_lab)");
 		}
+	}
+
+	private String getDisplayLabName(Integer segmentId) {
+		Hl7TextInfo hl7TextInfo = hl7textInfoDao.findLabId(segmentId);
+		return StringUtils.isNullOrEmpty(hl7TextInfo.getDiscipline()) ? "UNLABELLED" : hl7TextInfo.getDiscipline();
 	}
 }

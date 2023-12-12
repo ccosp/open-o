@@ -232,7 +232,7 @@ public class FaxAction extends DispatchAction {
 					pdfPath = documentAttachmentManager.renderEFormWithAttachments(request, response);
 				} catch (PDFGenerationException e) {
 					logger.error(e.getMessage(), e);
-					String errorMessage = "Failed to create eForm PDF:  " + e.getMessage();
+					String errorMessage = "This eForm (and attachments, if applicable) cannot be faxed. \\n\\n" + e.getMessage();
 					request.setAttribute("errorMessage", errorMessage);
 					return mapping.findForward("eFormError");
 				}

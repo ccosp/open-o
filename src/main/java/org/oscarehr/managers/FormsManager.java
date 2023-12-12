@@ -241,7 +241,7 @@ public class FormsManager {
 		try {
 			path = ConvertToEdoc.saveAsTempPDF(formTransportContainer);
 		} catch (Exception e) {
-			throw new PDFGenerationException("An error occurred while creating the pdf of the form. " + "Form name: " + formTransportContainer.getFormName(), e);
+			throw new PDFGenerationException("Error Details: Form [" + formTransportContainer.getFormName() + "] could not be converted into a PDF", e);
 		}
 		return path;
 	}

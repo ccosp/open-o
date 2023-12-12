@@ -606,7 +606,7 @@ public class EctConsultationFormRequestAction extends Action {
 			base64PDF = documentAttachmentManager.convertPDFToBase64(pdfPath);
 		} catch(PDFGenerationException e) {
 			logger.error(e.getMessage(), e);
-			String errorMessage = "Failed to create a print preview:  " + e.getMessage();
+			String errorMessage = "A print preview of this consultation could not be generated. \\n\\n" + e.getMessage();
 			request.setAttribute("errorMessage", errorMessage);
 			return false;
 		}

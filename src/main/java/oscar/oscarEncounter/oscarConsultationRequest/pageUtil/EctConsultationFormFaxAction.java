@@ -111,7 +111,7 @@ public class EctConsultationFormFaxAction extends Action {
 			faxPdf = documentAttachmentManager.renderConsultationFormWithAttachments(request, response);
 		} catch (PDFGenerationException e) {
 			logger.error(e.getMessage(), e);
-			String errorMessage = "Failed to send the fax:  " + e.getMessage();
+			String errorMessage = "This fax could not be sent. \\n\\n" + e.getMessage();
 			request.setAttribute("errorMessage", errorMessage);
 			return mapping.findForward("error");
 		}

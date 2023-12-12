@@ -463,16 +463,16 @@ public class DocumentManager {
 				imagePDFCreator.printPdf();
 				eDocPDFPath = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), outputStream);
 			} catch (DocumentException | IOException e) {
-				throw new PDFGenerationException("An error occurred while creating the pdf of the image. " + "Document Name: " + eDoc.getDescription(), e);
+				throw new PDFGenerationException("Error Details: Document [" + eDoc.getDescription() + "] could not be converted into a PDF", e);
 			}
 		} else if (eDoc.isPDF()) {
 			try {
 				eDocPDFPath = Paths.get(eDocPath);
-			} catch (Exception e) {
-				throw new PDFGenerationException("An error occurred while fetching the pdf type document. " + "Document Name: " + eDoc.getDescription(), e);
+			} catch (InvalidPathException e) {
+				throw new PDFGenerationException("Error Details: Document [" + eDoc.getDescription() + "] could not be converted into a PDF", e);
 			}
 		} else {
-			throw new PDFGenerationException("Can not create pdf for " + eDoc.getContentType() + " type document. " + "Document Name: " + eDoc.getDescription());
+			throw new PDFGenerationException("Error Details: Document [" + eDoc.getDescription() + "] could not be converted into a PDF");
 		}
 		return eDocPDFPath;
 	}

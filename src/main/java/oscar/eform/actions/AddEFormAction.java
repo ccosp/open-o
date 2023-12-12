@@ -251,7 +251,7 @@ public class AddEFormAction extends Action {
 					documentAttachmentManager.saveEFormAsEDoc(request, response);
 				} catch (PDFGenerationException e) {
 					logger.error(e.getMessage(), e);
-					String errorMessage = "Failed to save as eDoc:  " + e.getMessage();
+					String errorMessage = "This eForm (and attachments, if applicable) could not be added to this patient’s documents. \\n\\n" + e.getMessage();
 					request.setAttribute("errorMessage", errorMessage);
 					return mapping.findForward("error");
 				}				
@@ -293,7 +293,7 @@ public class AddEFormAction extends Action {
 					pdfBase64 = documentAttachmentManager.convertPDFToBase64(eFormPdfPath);
 				} catch (PDFGenerationException e) {
 					logger.error(e.getMessage(), e);
-					String errorMessage = "Failed to download eForm:  " + e.getMessage();
+					String errorMessage = "This eForm (and attachments, if applicable) could not be downloaded. \\n\\n" + e.getMessage();
 					request.setAttribute("errorMessage", errorMessage);
 					return mapping.findForward("error");
 				}
@@ -362,7 +362,7 @@ public class AddEFormAction extends Action {
 					pdfBase64 = documentAttachmentManager.convertPDFToBase64(eFormPdfPath);
 				} catch (PDFGenerationException e) {
 					logger.error(e.getMessage(), e);
-					String errorMessage = "Failed to download eForm:  " + e.getMessage();
+					String errorMessage = "This eForm (and attachments, if applicable) could not be downloaded. \\n\\n" + e.getMessage();
 					request.setAttribute("errorMessage", errorMessage);
 					return mapping.findForward("error");
 				}
@@ -378,7 +378,7 @@ public class AddEFormAction extends Action {
 					documentAttachmentManager.saveEFormAsEDoc(request, response);
 				} catch (PDFGenerationException e) {
 					logger.error(e.getMessage(), e);
-					String errorMessage = "Failed to save as eDoc:  " + e.getMessage();
+					String errorMessage = "This eForm (and attachments, if applicable) could not be added to this patient’s documents. \\n\\n" + e.getMessage();
 					request.setAttribute("errorMessage", errorMessage);
 					return mapping.findForward("error");
 				}				

@@ -311,8 +311,13 @@ public class HRMUtil {
 			hrmpdfCreator.printPdf();
 			path = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), outputStream);
 		} catch (IOException e) {
-			throw new PDFGenerationException("An error occurred while creating the pdf of the hrm. " + "HRM Document Id: " + hrmId, e);
+			throw new PDFGenerationException("Error Details: HRM [" + getHRMDocumentDisplayName(hrmId) + "] could not be converted into a PDF", e);
 		}
 		return path;
+	}
+
+	private static String getHRMDocumentDisplayName(Integer hrmId) {
+		HRMDocument hrmDocument = hrmDocumentDao.find(hrmId);
+		return getHRMDocumentDisplayName(hrmDocument.getDescription(), "", hrmDocument.getReportType(), hrmDocument.getReportStatus());
 	}
 }
