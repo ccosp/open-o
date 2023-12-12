@@ -138,9 +138,9 @@ public class DocumentAttachmentManager {
 	}
 
 	/**
-	 * This method is intended for use in the attachment window (attachDocument.jsp) and is designed to retrieve a list of eForms expect one.
+	 * This method is intended for use in the attachment window (attachDocument.jsp) and is designed to retrieve a list of eForms except one.
 	 * In other parts of the application, developers are encouraged to use EFormUtil.listPatientEformsCurrent() to access all available eForms.
-	 * The reason for this distinction is to prevent doctores from attaching an eForm to itself.
+	 * The reason for this function is to ensure a user cannot attach an eForm to itself.
 	 */
 	public List<EFormData> getAllEFormsExpectFdid(LoggedInInfo loggedInInfo, Integer demographicNo, Integer fdid) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.READ, demographicNo)) {
