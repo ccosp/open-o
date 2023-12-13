@@ -51,7 +51,7 @@ public class FaxClientLogDao extends AbstractDao<FaxClientLog>{
 
 	@SuppressWarnings("unchecked")
 	public List<FaxClientLog> findClientLogbyFaxIds(List<Integer> faxIds) {
-		if (faxIds == null) { faxIds = Collections.emptyList(); }
+		if (faxIds == null || faxIds.size() == 0) { return Collections.emptyList(); }
 
 		Query query = entityManager.createNativeQuery("SELECT * FROM FaxClientLog WHERE faxId IN (:faxIds)", FaxClientLog.class);
 		query.setParameter("faxIds", faxIds);
