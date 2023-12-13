@@ -237,7 +237,7 @@
 			<table id="attachDocumentsPanel" >
 				<c:if test="${not empty allEForms }" >
 					<tr>
-						<td><h2>eForms</h2></td>
+						<td><h2>eForms (excluding attachments)</h2></td>
 					</tr>
 					<tr>
 						<td>
