@@ -670,6 +670,10 @@ public class BillingONCHeader1Dao extends AbstractDao<BillingONCHeader1>{
         return rs;
     }
 
+    public List<Object[]> findByMagic2(List<String> payPrograms, String statusType, String providerNo, Date startDate, Date endDate, Integer demoNo, List<String> serviceCodes, String dx, String visitType, String visitLocation, Date paymentStartDate, Date paymentEndDate) {
+        return findByMagic2(payPrograms, statusType, providerNo, startDate, endDate, demoNo, serviceCodes, dx, visitType, visitLocation, paymentStartDate, paymentEndDate, null );
+    }
+
 	public List<Object[]> findByMagic2(List<String> payPrograms, String statusType, String providerNo, Date startDate, Date endDate, Integer demoNo, List<String> serviceCodes, String dx, String visitType, String visitLocation, Date paymentStartDate, Date paymentEndDate, String claimNo ) {
 		String base = "FROM BillingONCHeader1 ch1, BillingONItem bi";
 		if(paymentStartDate != null || paymentEndDate != null) {
