@@ -182,9 +182,8 @@
 <table border="0" cellpadding="0" cellspacing="0"
 	style="border-collapse: collapse" bordercolor="#111111" width="100%"
 	id="AutoNumber1" height="100%">
-	<%@ include file="TopLinks.jsp"%><!-- Row One included here-->
 	<tr>
-		<td width="100%" style="border-left: 2px solid #A9A9A9;" height="100%"
+		<td width="100%" height="100%"
 			valign="top" colspan="2">
 		<table cellpadding="0" cellspacing="2"
 			style="border-collapse: collapse" bordercolor="#111111" width="100%"
@@ -192,7 +191,7 @@
 			<!----Start new rows here-->
 			<tr>
 				<td>
-				<div class="DivContentSectionHead" style="height:8px">
+				<div class="DivContentSectionHead" style="height:8px; text-indent: 10px">
 				<% if (request.getParameter("ID") ==  null){ %> <bean:message
 					key="ManagePharmacy.subTitle.add" /> <%}else{%> <bean:message
 					key="ManagePharmacy.subTitle.update" /> <%}%>
