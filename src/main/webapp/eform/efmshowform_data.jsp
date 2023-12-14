@@ -63,6 +63,7 @@
       String parentAjaxId = request.getParameter("parentAjaxId");
       if( parentAjaxId != null ) eForm.setAction(parentAjaxId);
       request.setAttribute("demographicId", eForm.getDemographicNo());
+      request.setAttribute("fid", eForm.getFid());
       out.print(eForm.getFormHtml());
   } else {  //if form is viewed from admin screen
       EForm eForm = new EForm(id, "-1"); //form cannot be submitted, demographic_no "-1" indicate this specialty
@@ -138,6 +139,7 @@
 	<input type="hidden" id="context" value="${ pageContext.request.contextPath }">
 	<input type="hidden" id="demographicNo" value="<%=demographicNo%>">
 	<input type="hidden" id="fdid" value="<%=fdid%>">
+    <input type="hidden" id="fid" value="${fid}">
     <c:set var="attachedDocumentIds" value="<%=attachedDocumentIds%>" />
     <c:set var="attachedEFormIds" value="<%=attachedEFormIds%>" />
     <c:set var="attachedHRMDocumentIds" value="<%=attachedHRMDocumentIds%>" />
