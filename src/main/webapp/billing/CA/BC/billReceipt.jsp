@@ -54,6 +54,7 @@ if(!authed) {
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
 <%@ page import="org.oscarehr.common.model.SystemPreferences" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%
             double totalPayments = 0;
@@ -124,7 +125,6 @@ if(!authed) {
             -->
         </style>
         <script language="JavaScript">
-            <!--
 
             function editInvoice(billNo){
                 popupPage(700,750,'adjustBill.jsp?billingmaster_no='+billNo);
@@ -152,7 +152,7 @@ if(!authed) {
                             clearTimeout(timeoutId);
                             window.print();
                         }
-                    }, 50),
+                    }, 500),
                     timeoutId = setTimeout(function () { //Give a maximum of 10 seconds waiting for it to load
                         clearInterval(intervalId);
                         clearTimeout(timeoutId);
@@ -224,6 +224,9 @@ if(!authed) {
                 font-weight: bold;
             }
             .style2 {font-size: 12px}
+            .tbBody{
+                width:750px;
+            }
             -->
         </style>
     </head>
@@ -262,20 +265,20 @@ if(!authed) {
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2" class="title4">
-                                                            <div align="left" class="style1"><%=clinic.getClinicName()%>                            </div>
+                                                            <div align="left" class="style1"><%=Encode.forHtmlContent(clinic.getClinicName())%>                            </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="2" class="address"><%=clinic.getClinicAddress()%>, <%=clinic.getClinicCity()%>, <%=clinic.getClinicProvince()%> <%=clinic.getClinicPostal()%>                          </td>
+                                                        <td colspan="2" class="address"><%=Encode.forHtmlContent(clinic.getClinicAddress())%>, <%=Encode.forHtmlContent(clinic.getClinicCity())%>, <%=Encode.forHtmlContent(clinic.getClinicProvince())%> <%=Encode.forHtmlContent(clinic.getClinicPostal())%>                          </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="address" >                            Telephone:
-                                                        <%=vecPhones.size() >= 1 ? vecPhones.elementAt(0) : clinic.getClinicPhone()%>                          </td>
+                                                        <%=vecPhones.size() >= 1 ? vecPhones.elementAt(0) : Encode.forHtmlContent(clinic.getClinicPhone())%>                          </td>
                                                         <td class="address" id="clinicPhone">&nbsp;</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="address" >                            Fax:
-                                                        <%=vecFaxes.size() >= 1 ? vecFaxes.elementAt(0) : clinic.getClinicFax()%>                          </td>
+                                                        <%=vecFaxes.size() >= 1 ? vecFaxes.elementAt(0) : Encode.forHtmlContent(clinic.getClinicFax())%>                          </td>
                                                         <td class="address" id="clinicFax">&nbsp;</td>
                                                     </tr>
                                                 </table>
@@ -418,7 +421,7 @@ if(!authed) {
                                                     <tr align="center">
                                                         <td class="rcvPayment"><a href="#" onClick="popupPage(300,450,'viewReceivePaymentAction.do?lineNo=<%=bi.getLineNo()%>&amp;billNo=<%=bean.getBillingNo()%> ')">Receive Payment</a></td>
                                                         <td><%=bi.getLineNo()%></td>
-                                                        <td><%=bi.getDescription()%></td>
+                                                        <td><%=Encode.forHtmlContent(bi.getDescription())%></td>
                                                         <td><%=bi.getServiceCode()%></td>
                                                         <td><%=bi.getUnit()%></td>
                                                         <td align="right"><%=bean.getDx1()%>&nbsp;<%=bean.getDx2()%>&nbsp;<%=bean.getDx3()%></td>
