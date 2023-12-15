@@ -762,15 +762,19 @@
             }
         }
 
-    //refactoring some code by creating the variable viewString, which can be used later, instead of complex inline ternary functions
+    //the view parameter controls how much information is displayed for each appointment such as the name and the E | M | R links. It is normally set in the URL parameter
+    //an edge case has been identified where there's likely room to show more data, but because view is set to 0, it's not.
+    //author did not feel confident that he could update all references correctly, without introducing regression.
+    //instead, this next section of code explicitly sets view=1 (so more data) in the identified edge case
+    
+    //later in the code there is a complex inline ternary function that uses view as a parameter.  
+    //the following code "caches" the result of this function (as viewString) before setting view=1
     String curProviderString = request.getParameter("curProvider") != null ? "&curProvider=" + request.getParameter("curProvider") : "";
     String curProviderNameString = request.getParameter("curProviderName") != null ? "&curProviderName="+ URLEncoder.encode(request.getParameter("curProviderName"),"UTF-8") : "";
     String viewString = view==0 ? "&view=0" : "&view=1" + curProviderString + curProviderNameString;
 
-    //the view parameter controls how much information is displayed for each appointment such as the name and the E | M | R links
-    //this next section of code overrides it, setting view=1 (so more data) in certain situation where there's likely room to show the data, but it's not being displayed
-    //this approach has been taken because author was not able to make heads or tail of all the code in this file, and did not feel confident in editing when view=1 would be set as a parameter        
-    //Edge case: If the 'displaymode' is set to 'day' and 'viewall' is not equal to 1, then 'view' will be set to 1 to display all links.  This is believe to be a situation where there's only a single clinician displayed, so there should be enough space to display all of the data
+    //Edge case: If the 'displaymode' is set to 'day' and 'viewall' is not equal to 1, then 'view' will be set to 1 to display all links.  
+    //This is believe to be a situation where there's only a single clinician displayed, so there should be enough space to display all of the data
     if ("day".equals(request.getParameter("displaymode")) && !"1".equals(request.getParameter("viewall"))) { 
         view = 1;
         
