@@ -128,5 +128,6 @@
 	<input type="hidden" id="context" value="${ pageContext.request.contextPath }">
 	<input type="hidden" id="demographicNo" value="<%=request.getParameter("demographic_no")%>">
 	<input type="hidden" id="fdid" value="<%=request.getParameter("fdid")%>">
+    <input type="hidden" id="fid" value="<%=request.getParameter("fid")%>">
 </body>
 </html>
