@@ -106,7 +106,7 @@
 		formdata.setDocType(defaultType);
 		formdata.setDocDesc(defaultType.equals("") ? defaultDesc : defaultType);
 		formdata.setDocCreator(user_no);
-		formdata.setObservationDate(UtilDateUtilities.DateToString(new Date(), "yyyy/MM/dd"));
+		formdata.setObservationDate(UtilDateUtilities.DateToString(new Date(), "yyyy-MM-dd"));
 		formdata.setHtml(defaultHtml);
 		formdata.setAppointmentNo(appointment);
 	}
@@ -132,7 +132,7 @@
 		}
 	}
 %>
-
+<script src="${ pageContext.request.contextPath }/share/javascript/Oscar.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 	// request attribute "linkhtmlerrors" & "docerrors" is used to check if a document was just submitted
@@ -183,7 +183,7 @@
 	function submitUpload(object) {
 		object.Submit.disabled = true;
 		if (!validDate("observationDate")) {
-			alert("Invalid Date: must be in format: yyyy/mm/dd");
+			alert("Invalid Date: must be in format: yyyy-mm-dd");
 			object.Submit.disabled = false;
 			return false;
 		}
@@ -296,7 +296,7 @@
 		<label for="observationDate" title="Observation Date">Observation Date</label>
 			<input class="span2 form-control" type="date" name="observationDate" id="observationDate"
 			       value="<%=formdata.getObservationDate()%>"
-			       onclick="checkDefaultDate(this, '<%=UtilDateUtilities.DateToString(new Date(), "yyyy/MM/dd")%>')">
+			       onclick="checkDefaultDate(this, '<%=UtilDateUtilities.DateToString(new Date(), "yyyy-MM-dd")%>')">
 	</div>
 
 	<div class="form-group">
