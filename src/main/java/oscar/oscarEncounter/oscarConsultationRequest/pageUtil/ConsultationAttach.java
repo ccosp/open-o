@@ -38,10 +38,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created in attempt to normalize the repetitive use of ConsultationAttachDocs, ...Labs, ...Forms
- * without introducing too many bugs.
- * There is really no need for the subclasses.
+ * Deprecated
+ *
+ * To be removed in favor of a generic class that manages and saves all types of
+ * attachments such as attachments to eForms, Forms or Documents.
  */
+@Deprecated
 public class ConsultationAttach {
 
     private ConsultDocsDao consultDocsDao = SpringUtils.getBean(ConsultDocsDao.class);

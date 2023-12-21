@@ -51,7 +51,7 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 
 
-<%@page import="java.util.ArrayList, java.util.List, java.util.*, oscar.dms.*, oscar.OscarProperties, oscar.oscarLab.ca.on.*"%>
+<%@page import="java.util.ArrayList, java.util.List, java.util.*, oscar.OscarProperties, oscar.oscarLab.ca.on.*"%>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager,org.oscarehr.casemgmt.model.CaseManagementNote,org.oscarehr.casemgmt.model.Issue,org.oscarehr.common.model.UserProperty,org.oscarehr.common.dao.UserPropertyDAO,org.springframework.web.context.support.*,org.springframework.web.context.*"%>
 
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
@@ -86,6 +86,9 @@ if(!authed) {
 <%@ page import="org.oscarehr.common.model.EFormData" %>
 <%@ page import="oscar.eform.EFormUtil" %>
 <%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="oscar.util.StringUtils" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
@@ -124,8 +127,8 @@ if(!authed) {
 		}
 	}
 	String demo_mrp = null;
-	String demo = request.getParameter("de");
-		String requestId = request.getParameter("requestId");
+	String demo = StringUtils.isNullOrEmpty(request.getParameter("de")) ? ((String) request.getAttribute("demographicId")) : request.getParameter("de");
+	String requestId = StringUtils.isNullOrEmpty(request.getParameter("requestId")) ? ((String) request.getAttribute("reqId")) : request.getParameter("requestId");
 		// segmentId is != null when viewing a remote consultation request from an hl7 source
 		String segmentId = request.getParameter("segmentId");
 		String team = request.getParameter("teamVar");
@@ -171,9 +174,13 @@ if(!authed) {
 		}
 
 		if (request.getParameter("error") != null) {
+			String errorMessage = (String) request.getAttribute("errorMessage");
+			if (StringUtils.isNullOrEmpty(errorMessage)) {
+				errorMessage = "The form could not be printed due to an error. Please refer to the server logs for more details.";
+			}
 			%>
-			<SCRIPT LANGUAGE="JavaScript">
-			        alert("The form could not be printed due to an error. Please refer to the server logs for more details.");
+				<SCRIPT LANGUAGE="JavaScript">
+			        alert('<%= errorMessage %>');
 			    </SCRIPT>
 			<%
 		}
@@ -464,7 +471,7 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <script>
 	var ctx = '<%=request.getContextPath()%>';
-	var requestId = '<%=request.getParameter("requestId")%>';
+	var requestId = '<%=requestId%>';
 	var demographicNo = '<%=demo%>';
 	var demoNo = '<%=demo%>';
 	var appointmentNo = '<%=appNo%>';
@@ -1121,11 +1128,12 @@ function popupOscarCal(vheight,vwidth,varpage) { //open a new popup window
 <script type="text/javascript">
 
 function checkForm(submissionVal,formName){
-	
+	ShowSpin(true);
 	var success = true;
 
    if (typeof checkFormHCT === "function") { 
    		if( ! checkFormHCT() ) {
+			HideSpin();
    			return false;
    		}
    }
@@ -1137,6 +1145,7 @@ function checkForm(submissionVal,formName){
   if ( serviceOptionsElement && serviceOptionsElement.selectedIndex == 0 ){
      alert(msg);
      document.EctConsultationFormRequestForm.service.focus();
+	 HideSpin();
      return false;
   }
   var faxNumber = document.EctConsultationFormRequestForm.fax.value;
@@ -1147,11 +1156,19 @@ function checkForm(submissionVal,formName){
   
   if(apptDate.length > 0 && !hasApptTime) {
 	  alert('Please enter appointment time. You cannot choose appointment date only.');
+	  HideSpin();
 	  return false;
   }
   
   if('Submit And Fax' === submissionVal && !faxNumber) {
 	  alert('Please enter a valid 10 digit consultant fax number');
+	  HideSpin();
+	  return false;
+  }
+
+  // If the user clicks the 'Print Preview' button, ensure that their unsaved changes are preserved, allowing them to stay on the same page. Achieve this by making an AJAX call.
+  if ('And Print Preview' === submissionVal) {
+      getConsultFormPrintPreview(document.forms[formName]);
 	  return false;
   }
   
@@ -1429,12 +1446,46 @@ function updateFaxButton() {
 	document.getElementById("fax_button").disabled = disabled;
 	document.getElementById("fax_button2").disabled = disabled;
 }
+
+// If the user clicks the 'Print Preview' button, ensure that their unsaved changes are preserved, allowing them to stay on the same page. Achieve this by making an AJAX call.
+function getConsultFormPrintPreview(form) {
+	form.submission.value="And Print Preview";
+	jQuery.ajax({
+		type: "POST",
+		url: "${ pageContext.request.contextPath }/oscarEncounter/RequestConsultation.do",
+		data: form.serialize(),
+		dataType: "json",
+		success: function(data) {
+			HideSpin();
+			if(data.errorMessage) { 
+				alert(data.errorMessage.replace(/\\n/g, '\n'));
+				return; 
+			}
+			showPreview(data.consultPDF, data.consultPDFName);
+		},
+		error: function(xhr, status, error) {
+			HideSpin();
+			alert("Preview request failed: " + status + ", " + error);
+		}
+	});
+}
+
+function showPreview(base64PDF, pdfName) {
+	const pdfData = new Uint8Array(atob(base64PDF).split('').map(char => char.charCodeAt(0)));
+	const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
+	const downloadLink = document.createElement('a');
+	downloadLink.href = URL.createObjectURL(pdfBlob);
+	downloadLink.download = pdfName;
+	downloadLink.click();
+	URL.revokeObjectURL(downloadLink.href);
+}
 </script>
 
 <%=WebUtils.popErrorMessagesAsAlert(session)%>
 
 <body topmargin="0" leftmargin="0" vlink="#0000FF" 
 	onload="window.focus();disableDateFields();disableEditing();showSignatureImage();">
+<jsp:include page="../../images/spinner.jsp" flush="true"/>
 <html:errors />
 <html:form styleId="consultationRequestForm" action="/oscarEncounter/RequestConsultation" onsubmit="alert('HTHT'); return false;" >
 	<%
@@ -1612,7 +1663,7 @@ function updateFaxButton() {
 							else
 							{ %>
 								<a href="javascript:void(0);" id="attachDocumentPanelBtn" title="Add Attachment"
-									data-poload="${ ctx }/attachDocs.do?method=fetchAll&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
+									data-poload="${ ctx }/previewDocs.do?method=fetchConsultDocuments&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
 									Manage Attachments
 								</a>
 
@@ -2598,7 +2649,12 @@ Calendar.setup( { inputField : "appointmentDate", ifFormat : "%Y/%m/%d", showsTi
 	Calendar.setup( { inputField : "referalDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "referalDate", singleClick : true, step : 1 } );
 <%}%>
 jQuery(document).ready(function(){
-	function addFormIfNotFound(form, delegate) {
+	
+	/**
+	 * This function adds the old form to the attachment window only if that form is displayed in the consultForm/eForm attachments. 
+	 * The attachment window only displays the latest (updated) forms.
+	 */
+	function addFormIfNotFound(form, demographicNo, delegate) {
 		const checkboxName = form.getAttribute('name');
 		const formValue = form.getAttribute('value');
 		const formId = "formNo" + formValue;
@@ -2619,9 +2675,18 @@ jQuery(document).ready(function(){
 			text: "(Not Latest Version) " + formName + " " + formDate
 		});
 
+		const previewButton = jQuery('<button>', {
+			class: 'preview-button',
+			type: 'button',
+			text: 'Preview',
+			title: 'Preview'
+		}).click(function() {
+			getPdf('FORM', formValue, 'method=renderFormPDF&formId=' + formValue + '&formName=' + formName + '&demographicNo=' + demographicNo);
+		});
+
 		const newLiFormElement = jQuery('<li>', {
 			class: 'form',
-		}).append(checkbox).append(label);
+		}).append(checkbox).append(label).append(previewButton);
 		jQuery('#formList').find('.selectAllHeading').after(newLiFormElement);
 		
 		return jQuery('#attachDocumentsForm').find(delegate);
@@ -2642,7 +2707,7 @@ jQuery(document).ready(function(){
 				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
 					let delegate = "#" + this.id.split("_")[1];
 					let element = jQuery('#attachDocumentsForm').find(delegate);
-					if (element.length === 0) { element = addFormIfNotFound(data, delegate); }
+					if (element.length === 0) { element = addFormIfNotFound(data, '<%=demo%>', delegate); }
 					let elementClassType = element.attr("class").split("_")[0];
 					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
 				});

@@ -87,6 +87,7 @@ function ShowSpin(locked)
     {
         screen.addEventListener("click", HideSpin);
     }
+    return true;
 }
 
 function HideSpin()
