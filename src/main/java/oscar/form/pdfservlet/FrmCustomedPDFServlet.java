@@ -708,11 +708,7 @@ public class FrmCustomedPDFServlet extends HttpServlet {
 				rxEntry.setSpacingAfter(40f);
 			}
 
-			document.add(rxEntry);
-
-			if (rxStr.hasNext()) {
-				document.add(new Chunk(new LineSeparator()));
-			}
+			document.add(rxEntry);			
 		}
 
 		// render additional notes
