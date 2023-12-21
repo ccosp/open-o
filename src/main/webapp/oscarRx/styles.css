@@ -91,6 +91,7 @@ TABLE {
 
 .prefAction{
 	text-align: center;
+	width: 92px;
 	background-color: #fbf0b7;
 }
 
@@ -391,6 +392,21 @@ TABLE {
 	margin-bottom: 7px;
 }
 
+.DivContentSectionHeadTitle {
+	margin-left: -3px;
+	text-indent: 3px;
+	background: #FDFEC7;
+	color: #000000;
+	margin-top: 14px;
+	margin-bottom: 10px;
+	border: 1px solid #eda
+	font-weight: bold;
+	height: 17px;
+	padding-right:10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
 .DivContentSectionHead {
 	margin-left: -3px;
 	text-indent: 3px;
@@ -401,6 +417,8 @@ TABLE {
 	font-weight: bold;
 	height: 17px;
 	padding-right:10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .DivContentGeneric {

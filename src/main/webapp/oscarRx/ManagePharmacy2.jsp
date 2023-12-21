@@ -77,8 +77,15 @@
 	});
 <% } %>
   function savePharmacy() {
-
-	  if( !confirm("You are about to edit/add this pharmacy for all users. Are you sure?")) {  return false;  }
+	var typeName = (new URLSearchParams(window.location.search)).get('type')
+	if (typeName != null && typeName.toLowerCase() == "edit") {
+		const saveWarningStr = "WARNING - you are about to edit a pharmacy's entry in the clinic's database. Any changes will automatically apply to all patients who already have this pharmacy as a preferred pharmacy.\n\nOnly proceed if you are absolutely sure. Type \"yes\" in the box below to proceed.";
+		const userInput = prompt(saveWarningStr);
+		if (userInput == null || userInput.toLowerCase() != "yes") {
+			alert("This pharmacy's entry has not been edited because you did not type \"yes\" in the previous box.");
+			return false;
+		}
+	}
 	  if( !isFaxNumberCorrect() ) {   return false;  }
 
 	  if( $("#pharmacyId").val() != null && $("#pharmacyId").val() != "" ) {
@@ -87,7 +94,7 @@
 		  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=save"%>",
 			  data, function( data ) {
 		      	if( data.id ) {
-					parent.window.refresh();
+					parent.location.reload();
 		      	}
 		      	else {
 		      	    alert("There was a problem saving your record");
@@ -112,7 +119,7 @@
 	  $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=add"%>",
 			  data, function( data ) {
 				if( data.success ) {
-					parent.window.refresh();
+					parent.location.reload();
 				}
 				else {
 					alert("There was an error saving your Pharmacy");
@@ -175,24 +182,16 @@
 <table border="0" cellpadding="0" cellspacing="0"
 	style="border-collapse: collapse" bordercolor="#111111" width="100%"
 	id="AutoNumber1" height="100%">
-	<%@ include file="TopLinks.jsp"%><!-- Row One included here-->
 	<tr>
-		<td width="100%" style="border-left: 2px solid #A9A9A9;" height="100%"
+		<td width="100%" height="100%"
 			valign="top" colspan="2">
 		<table cellpadding="0" cellspacing="2"
 			style="border-collapse: collapse" bordercolor="#111111" width="100%"
 			height="100%">
-			<tr>
-				<td width="0%" valign="top">
-				<div class="DivCCBreadCrumbs"><a href="SearchDrug3.jsp"> <bean:message
-					key="SearchDrug.title" /></a> > <bean:message key="SelectPharmacy.title" /> > <bean:message
-					key="ManagePharmacy.title" /> </div>
-				</td>
-			</tr>
 			<!----Start new rows here-->
 			<tr>
 				<td>
-				<div class="DivContentSectionHead">
+				<div class="DivContentSectionHead" style="height:8px; text-indent: 10px">
 				<% if (request.getParameter("ID") ==  null){ %> <bean:message
 					key="ManagePharmacy.subTitle.add" /> <%}else{%> <bean:message
 					key="ManagePharmacy.subTitle.update" /> <%}%>
