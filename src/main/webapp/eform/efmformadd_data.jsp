@@ -32,8 +32,6 @@
 	Fax and eDocument functions.
 --%>
 
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
-
 <jsp:include page="../images/spinner.jsp" flush="true"/>
 
 <c:if test="${ not empty reqestScope.page_errors }">
@@ -60,6 +58,9 @@
 </c:if>
 
 <%
+  /**
+   * TODO: Move all JSP scriptlet code from efmshowform_data.jsp and efmformadd_data.jsp to the ShowEFormAction.java (create if necessary) action file.
+   */
   String provider_no = (String) session.getValue("user");
   String demographic_no = request.getParameter("demographic_no");
   String appointment_no = request.getParameter("appointment");
@@ -109,3 +110,24 @@
 	    var pymChild = new pym.Child({ polling: 500 });
 	</script>
 </c:if>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add EForm</title>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-3.6.4.min.js" ></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js" ></script>
+	<link href="<%=request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.css" rel="stylesheet" media="screen" />
+	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
+    <script type="text/javascript">
+        // NOTE: Do not add onload methods here; instead, find alternative approaches to achieve the same result, as it may disrupt eForms' onload functionalities.
+        window.resizeTo(1100, 1100);
+    </script>
+</head>
+<body>
+	<input type="hidden" id="context" value="${ pageContext.request.contextPath }">
+	<input type="hidden" id="demographicNo" value="<%=request.getParameter("demographic_no")%>">
+	<input type="hidden" id="fdid" value="<%=request.getParameter("fdid")%>">
+    <input type="hidden" id="fid" value="<%=request.getParameter("fid")%>">
+</body>
+</html>

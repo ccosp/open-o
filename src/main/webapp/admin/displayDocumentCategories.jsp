@@ -10,7 +10,7 @@
 --%>
 <!DOCTYPE html>
 <%@ page
-	import="java.util.*, oscar.dms.EDocUtil"%>
+	import="java.util.*, org.oscarehr.documentManager.EDocUtil"%>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -132,8 +132,8 @@ function submitUpload(object) {
         </td></tr>
     </table>
 
-           <input type="button" class="btn" value="Add New" onclick='popupPage(550,800,&quot;<html:rewrite page="/dms/addNewDocumentCategories.jsp"/>&quot;);return false;' />
-           <input type="button" class="btn" value="Update Status"  onclick='popupPage(550,800,&quot;<html:rewrite page="/dms/changeStatus.jsp"/>&quot;);return false;' />
+           <input type="button" class="btn" value="Add New" onclick='popupPage(550,800,&quot;<html:rewrite page="/documentManager/addNewDocumentCategories.jsp"/>&quot;);return false;' />
+           <input type="button" class="btn" value="Update Status"  onclick='popupPage(550,800,&quot;<html:rewrite page="/documentManager/changeStatus.jsp"/>&quot;);return false;' />
 
 
 </div> <!-- well -->

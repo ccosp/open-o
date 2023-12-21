@@ -38,7 +38,7 @@ import org.oscarehr.hospitalReportManager.model.HRMDocument;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import oscar.dms.ConvertToEdoc;
+import org.oscarehr.documentManager.ConvertToEdoc;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
