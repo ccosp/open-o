@@ -1740,6 +1740,13 @@
 			<forward name="CONSULTATION" path="/oscarEncounter/ViewRequest.do" />
 			<forward name="EFORM" path="/eform/efmshowform_data.jsp" />
 			<forward name="eFormError" path="/eform/efmshowform_data.jsp?error=error" />
+		</action>
+		<action input="/" path="/email/emailComposeAction" scope="request" parameter="method" validate="false" type="org.oscarehr.email.action.EmailComposeAction">
+			<forward name="compose" path="/email/emailCompose.jsp" />
+			<forward name="eFormError" path="/eform/efmshowform_data.jsp?error=error" />
+		</action>
+		<action input="/" path="/email/emailSendAction" scope="request" parameter="method" validate="false" type="org.oscarehr.email.action.EmailSendAction">
+			<forward name="success" path="/email/emailCompose.jsp" />
 		</action>		
 		<action input="/provider/providerColourPicker.jsp" name="setProviderColour" path="/setProviderColour" scope="request" type="oscar.oscarProvider.pageUtil.ProEditColourAction">
 			<forward name="success" path="/provider/providerColourPicker.jsp" />
@@ -2024,6 +2031,7 @@
 			<forward name="fax" path="/fax/faxAction.do" />
 			<forward name="download" path="/eform/efmshowform_data.jsp"/>
 			<forward name="error" path="/eform/efmshowform_data.jsp?error=error"/>
+			<forward name="emailCompose" path="/email/emailComposeAction.do" />
 		</action>
 
 		<action input="/eform/efmformadd_data.jsp" path="/eform/efmPrintPDF" scope="request" type="oscar.eform.actions.PrintPDFAction">

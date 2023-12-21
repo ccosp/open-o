@@ -28,10 +28,14 @@ package oscar.eform.actions;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.*;
 import org.oscarehr.common.model.Demographic;
+import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.common.model.EmailConfig.EmailProvider;
+import org.oscarehr.common.model.EmailConfig.EmailType;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.managers.EformDataManager;
+import org.oscarehr.managers.EmailManager;
 import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.match.IMatchManager;
@@ -62,6 +66,7 @@ public class AddEFormAction extends Action {
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 	private EformDataManager eformDataManager = SpringUtils.getBean( EformDataManager.class );
 	private DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
+	private EmailManager emailManager = SpringUtils.getBean(EmailManager.class);
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -80,6 +85,70 @@ public class AddEFormAction extends Action {
 		boolean print = "true".equals(request.getParameter("print"));
 		boolean saveAsEdoc = "true".equals( request.getParameter("saveAsEdoc") );
 		boolean isDownloadEForm = "true".equals(request.getParameter("saveAndDownloadEForm"));
+		boolean isEmailEForm = "true".equals(request.getParameter("emailEForm"));
+
+		String[] attachedDocuments = (request.getParameterValues("docNo") != null ? request.getParameterValues("docNo") : new String[0]);
+		String[] attachedLabs = (request.getParameterValues("labNo") != null ? request.getParameterValues("labNo") : new String[0]);
+		String[] attachedForms = (request.getParameterValues("formNo") != null ? request.getParameterValues("formNo") : new String[0]);
+		String[] attachedEForms = (request.getParameterValues("eFormNo") != null ? request.getParameterValues("eFormNo") : new String[0]);
+		String[] attachedHRMDocuments = (request.getParameterValues("hrmNo") != null ? request.getParameterValues("hrmNo") : new String[0]);
+
+		///////////////////////////////
+
+		// EmailConfig emailConfig1 = new EmailConfig(EmailType.SMTP, EmailProvider.OUTLOOK, "deval1234567@outlook.com");
+		// EmailConfig emailConfig2 = new EmailConfig(EmailType.SMTP, EmailProvider.GMAIL, "deval7648@gmail.com");
+		// String toEmail = "deval.italiya@magentahealth.ca";
+		// String sub = StringUtils.isNullOrEmpty(request.getParameter("emailsubject")) ? "Test subject" : request.getParameter("emailsubject");
+		// String body = StringUtils.isNullOrEmpty(request.getParameter("pbody")) ? "Hello Deval" : request.getParameter("pbody");
+		// String sbody = StringUtils.isNullOrEmpty(request.getParameter("sbody")) ? "Hello Deval" : request.getParameter("sbody");
+		// String password = StringUtils.isNullOrEmpty(request.getParameter("password")) ? "12345" : request.getParameter("password");
+		// List<Path> attachments = new ArrayList<>();
+		// long startTime = System.currentTimeMillis();
+		// long endTime = System.currentTimeMillis();
+		// try {
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
+		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
+		// } catch (PDFGenerationException e) {
+		// 	System.out.println(e.getMessage());
+		// }
+		
+		// startTime = System.currentTimeMillis();
+		// emailManager.sendEmail(emailConfig1, toEmail, sub, body, attachments);
+		// endTime = System.currentTimeMillis();
+		// System.out.println("SENT Execution time: " + (endTime - startTime) + " milliseconds");
+
+		// startTime = System.currentTimeMillis();
+		// emailManager.sendEncryptedEmail(emailConfig2, toEmail, sub, body, sbody, attachments, password);
+		// endTime = System.currentTimeMillis();
+		// System.out.println("SENT Execution time: " + (endTime - startTime) + " milliseconds");
+
+		///////////////////////////////
 
 		@SuppressWarnings("unchecked")
 		Enumeration<String> paramNamesE = request.getParameterNames();
@@ -242,17 +311,7 @@ public class AddEFormAction extends Action {
 
 			EFormUtil.addEFormValues(paramNames, paramValues, new Integer(fdid), new Integer(fid), new Integer(demographic_no)); //adds parsed values
 
-			String[] attachedDocuments = (request.getParameterValues("docNo") != null ? request.getParameterValues("docNo") : new String[0]);
-			String[] attachedLabs = (request.getParameterValues("labNo") != null ? request.getParameterValues("labNo") : new String[0]);
-			String[] attachedForms = (request.getParameterValues("formNo") != null ? request.getParameterValues("formNo") : new String[0]);
-			String[] attachedEForms = (request.getParameterValues("eFormNo") != null ? request.getParameterValues("eFormNo") : new String[0]);
-			String[] attachedHRMDocuments = (request.getParameterValues("hrmNo") != null ? request.getParameterValues("hrmNo") : new String[0]);
-
-			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.DOC, attachedDocuments, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
-			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.LAB, attachedLabs, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
-			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.FORM, attachedForms, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
-			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.EFORM, attachedEForms, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
-			documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.HRM, attachedHRMDocuments, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+			attachToEForm(loggedInInfo, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms, fdid, demographic_no, providerNo);
 
 			//post fdid to {eform_link} attribute
 			if (eform_link!=null) {
@@ -321,6 +380,13 @@ public class AddEFormAction extends Action {
 				return printForward;
 			}
 
+			else if (isEmailEForm) {
+				ActionForward emailForward = new ActionForward(mapping.findForward("emailCompose"));
+				String path = emailForward.getPath() + "?method=prepareComposeEFormMailer";
+				addEmailAttachments(request, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms, fdid, demographic_no); 
+				return new ActionForward(path);
+			}
+
 			else {
 				//write template message to echart
 				String program_no = new EctProgram(se).getProgram(providerNo);
@@ -337,6 +403,8 @@ public class AddEFormAction extends Action {
 			logger.debug("Warning! Form HTML exactly the same, new form data not saved.");
 			request.setAttribute("fdid", prev_fdid);
 			request.setAttribute("demographicId", demographic_no);
+
+			attachToEForm(loggedInInfo, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms, prev_fdid, demographic_no, providerNo);
 
 			if (fax) {
 				/*
@@ -389,6 +457,13 @@ public class AddEFormAction extends Action {
 
 				return printForward;
 			}
+
+			else if (isEmailEForm) {
+				ActionForward emailForward = new ActionForward(mapping.findForward("emailCompose"));
+				String path = emailForward.getPath() + "?method=prepareComposeEFormMailer";
+				addEmailAttachments(request, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms, prev_fdid, demographic_no); 
+				return new ActionForward(path);
+			}
 			
 			if(saveAsEdoc) {
 				try {
@@ -426,6 +501,24 @@ public class AddEFormAction extends Action {
 		String formattedDate = dateFormat.format(currentDate);
 
 		return formattedDate + "_" + demographicLastName + ".pdf";
+	}
+
+	private void addEmailAttachments(HttpServletRequest request, String[] attachedEForms, String[] attachedDocuments, String[] attachedLabs, String[] attachedHRMDocuments, String[] attachedForms, String fdid, String demographic_no) {
+		request.setAttribute("fdid", fdid);
+		request.setAttribute("demographicId", demographic_no);
+		request.setAttribute("attachedEForms", attachedEForms);
+		request.setAttribute("attachedDocuments", attachedDocuments);
+		request.setAttribute("attachedLabs", attachedLabs);
+		request.setAttribute("attachedHRMDocuments", attachedHRMDocuments);
+		request.setAttribute("attachedForms", attachedForms);
+	}
+
+	private void attachToEForm(LoggedInInfo loggedInInfo, String[] attachedEForms, String[] attachedDocuments, String[] attachedLabs, String[] attachedHRMDocuments, String[] attachedForms, String fdid, String demographic_no, String providerNo) {
+		documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.DOC, attachedDocuments, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+		documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.LAB, attachedLabs, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+		documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.FORM, attachedForms, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+		documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.EFORM, attachedEForms, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
+		documentAttachmentManager.attachToEForm(loggedInInfo, DocumentType.HRM, attachedHRMDocuments, providerNo, Integer.valueOf(fdid), Integer.valueOf(demographic_no));
 	}
 
 }

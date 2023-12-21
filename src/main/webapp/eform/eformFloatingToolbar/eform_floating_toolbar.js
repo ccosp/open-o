@@ -314,6 +314,21 @@ document.addEventListener("DOMContentLoaded", function(){
 
 		remoteSave();
 	}
+
+	/**
+	 * Adds a hidden input field into the eForm form with instructions to 
+	 * open the Oscar Email dialog.
+	 */
+	function remoteEmail() {	
+		const newElement = document.createElement("input");
+		newElement.setAttribute("id", "emailAction");
+		newElement.setAttribute("name", "emailEForm");
+		newElement.setAttribute("value", "true");
+		newElement.setAttribute("type", "hidden");
+		document.forms[0].appendChild(newElement);
+		remoteSave();
+	
+	}
 	
 	/**
 	 * Triggers the eForm print function

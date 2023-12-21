@@ -220,6 +220,19 @@ public final class ConvertToEdoc {
 		String filename = buildFilename( formTransportContainer.getFormName(), formTransportContainer.getDemographicNo() );
 		return execute( htmlString, filename );
 	}
+
+	/**
+	 * 
+	 * Save the document as a temporary PDF. Does not save or return an eDoc entity. 
+	 * This is a temporary file location. Ensure that the file is deleted after it's used. 
+	 * 
+	 * @param htmlString The HTML content to be converted to a PDF.
+	 * @return temporary path to the produced PDF.. 
+	 */
+	public synchronized static Path saveAsTempPDF(String htmlString) {
+		String filename = buildFilename("emailbody_", "");
+		return execute(htmlString, filename);
+	}
 	
 	/**
 	 * Execute building and saving PDF to temp directory.

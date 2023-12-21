@@ -169,11 +169,11 @@ public class FormsManager {
 	private List<PatientForm> processEncounterForms(LoggedInInfo loggedInInfo, Integer demographicId, boolean getAllVersions, boolean getOnlyPDFReadyForms) {
 		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
 		List<EncounterForm> encounterFormList = getAllEncounterForms();
-		String[] pdfReadyFormNames = {"Annual"};
+		List<String> pdfReadyFormList = getPDFReadyFormNames();
 
 		for (EncounterForm encounterForm : encounterFormList) {
 			String formName = encounterForm.getFormName();
-			if (getOnlyPDFReadyForms && !Arrays.asList(pdfReadyFormNames).contains(formName)) { continue; }
+			if (getOnlyPDFReadyForms && !pdfReadyFormList.contains(formName)) { continue; }
 
 			String table = encounterForm.getFormTable();
 			PatientForm[] patientFormArray = EctFormData.getPatientForms(demographicId + "", table);
@@ -187,6 +187,12 @@ public class FormsManager {
 		}
 
 		return patientFormList;
+	}
+
+	private List<String> getPDFReadyFormNames() {
+		List<String> pdfReadyFormList = new ArrayList<>();
+		pdfReadyFormList.add("Annual");
+		return pdfReadyFormList;
 	}
 
 	/**
@@ -211,6 +217,26 @@ public class FormsManager {
 		}
 		
 		return documentId;
+	}
+
+	public Path renderForm(HttpServletRequest request, HttpServletResponse response, String formId) throws PDFGenerationException {
+		EctFormData.PatientForm patientForm = null;
+		List<EncounterForm> encounterFormList = getAllEncounterForms();
+		List<String> pdfReadyFormList = getPDFReadyFormNames();
+
+		for (EncounterForm encounterForm : encounterFormList) {
+			String formName = encounterForm.getFormName();
+			String table = encounterForm.getFormTable();
+			if (!pdfReadyFormList.contains(formName)) { continue; }
+			patientForm = EctFormData.getPatientFormByFormId(formId, formName, table);
+			if (patientForm == null) { continue; }
+		}
+
+		if (patientForm == null) {
+			throw new PDFGenerationException("Error Details: Form with id: " + formId + " is not a PDF-ready form");
+		} 
+
+		return renderForm(request, response, patientForm);
 	}
 
 	public Path renderForm(LoggedInInfo loggedInInfo, FormTransportContainer formTransportContainer) {
