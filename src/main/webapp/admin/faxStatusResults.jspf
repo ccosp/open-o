@@ -1,4 +1,4 @@
-<%@ page import="org.oscarehr.common.model.FaxJob, org.oscarehr.common.dao.ProviderDataDao, org.oscarehr.common.model.ProviderData, org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic" %>
+<%@ page import="org.oscarehr.common.model.FaxJob, org.oscarehr.common.model.FaxClientLog, org.oscarehr.common.dao.ProviderDataDao, org.oscarehr.common.model.ProviderData, org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.lang.time.DateFormatUtils"%>
@@ -35,12 +35,17 @@ if(!authed) {
 	ProviderDataDao providerDataDao = SpringUtils.getBean(ProviderDataDao.class);
 	DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 	List<FaxJob> faxJobs = (List<FaxJob>)request.getAttribute("faxes");
+	List<FaxClientLog> faxClientLogs = (List<FaxClientLog>) request.getAttribute("faxClientLogs");
 	String type;
 	int count = 0;
 	for( FaxJob faxJob : faxJobs ) {
 	    
 	    type = "";
 	    
+		/*
+		* Instead of relying on the unreliable method of identifying fax transaction types from generated PDF names, 
+		* it is recommended to save fax logs in the FaxClientLog table with appropriate transaction types.
+		*/
 	    if( faxJob.getFile_name().indexOf("Consult") > -1 ) {
 			type = "CONSULT";
 	    }
@@ -52,6 +57,30 @@ if(!authed) {
 	    } else {
 	        type = "EFORM";
 	    }
+
+		/*
+		* Utilizing logs (FaxClientLog) to display transaction types when presenting fax records 
+		* and retaining the old code for identifying fax types due to the presence of old records
+		* that have not been added to the fax log table.
+		*/
+		outerLoop:
+		for (FaxClientLog faxClientLog : faxClientLogs) {
+			if (faxJob.getId() == faxClientLog.getFaxId() && faxClientLog.getTransactionType() != null) {
+				switch(faxClientLog.getTransactionType()) {
+					case "EFORM":
+						type = "EFORM";
+						break outerLoop;
+					case "RX":
+						type = "PRESCRIPTION";
+						break outerLoop;
+					case "CONSULTATION":
+						type = "CONSULT";
+						break outerLoop;
+					default:
+						break outerLoop;
+				}
+			}
+		}
     
 	    String providerName = "N/A";
 	    String demographicName = "N/A";

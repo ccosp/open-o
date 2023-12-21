@@ -55,7 +55,7 @@ import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
 import oscar.OscarProperties;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 import oscar.util.ConcatPDF;
@@ -97,11 +97,12 @@ public class FaxManager {
 	}
 
 	/**
-	 * Render a fax document from the given parameters.
-	 * Return a path to the fax document so it can be reviewed by the sender.
+	 * @Deprecated
+	 * Move these rendering methods into a more generic class like the DocumentManager
 	 *
 	 * @return
 	 */
+	@Deprecated
 	public Path renderFaxDocument(LoggedInInfo loggedInInfo, TransactionType transactionType, int transactionId, int demographicNo, FormTransportContainer formTransportContainer) {
 
 		Path renderedDocument;
@@ -260,7 +261,7 @@ public class FaxManager {
 					/*
 					 * set the final document retrieval path.
 					 */
-					faxJobObject.setFile_name(faxDocument.toString());
+					faxJobObject.setFile_name(faxDocument.getFileName().toString());
 				}
 			}
 		}
@@ -360,12 +361,8 @@ public class FaxManager {
 
 	}
 
-	private String copyFileToOscarDocuments(String tempFilePath) {
-		String destinationDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		if (!destinationDir.endsWith(File.separator)) {
-			destinationDir += File.separator;
-		}
-
+	public String copyFileToOscarDocuments(String tempFilePath) {
+		String destinationDir = getDocumentDirectory();
 		File tempFile = new File(tempFilePath);
 		Path destinationFilePath = Paths.get(destinationDir, tempFile.getName());
 		try {
@@ -374,6 +371,14 @@ public class FaxManager {
 			logger.error("An error occurred while moving the PDF file", e);
 		}
 		return destinationFilePath.toString();
+	}
+
+	private String getDocumentDirectory() {
+		String destinationDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+		if (!destinationDir.endsWith(File.separator)) {
+			destinationDir += File.separator;
+		}
+		return destinationDir;
 	}
 
 	/**
@@ -517,6 +522,7 @@ public class FaxManager {
 	}
 
 	private Path addCoverPage(byte[] coverPage, Path currentDocument) throws IOException {
+		currentDocument = Paths.get(getDocumentDirectory(), currentDocument.getFileName().toString());
 		Path newCurrentDocument = Paths.get(currentDocument.getParent().toString(), "Cover_" + UUID.randomUUID() + "_" + currentDocument.getFileName());
 		Files.createFile(newCurrentDocument);
 		try (ByteArrayInputStream currentDocumentStream = new ByteArrayInputStream(Files.readAllBytes(currentDocument));

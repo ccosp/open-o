@@ -236,7 +236,7 @@ String curUser_no = (String) session.getAttribute("user");
 									<input type="hidden" name="status" value="<%=status%>"/>
 								</form> 
                                 <div id="document_<%=segmentID%>">                                 	                                		                            
-                        			<jsp:include page="../dms/showDocument.jsp" flush="true">
+                        			<jsp:include page="../documentManager/showDocument.jsp" flush="true">
                         				<jsp:param name="segmentID" value="<%=segmentID%>"/>
                         				<jsp:param name="demoName" value="<%=demoName%>"/>
                         				<jsp:param name="providerNo" value="<%=providerNo%>"/>
@@ -333,7 +333,7 @@ String curUser_no = (String) session.getAttribute("user");
                                     else if (result.isDocument()){ 
                                 	String patientName = result.getPatientName();
                                     	StringBuilder url = new StringBuilder(request.getContextPath());                                    	
-                                    	url.append("/dms/showDocument.jsp?inWindow=true&segmentID=");
+                                    	url.append("/documentManager/showDocument.jsp?inWindow=true&segmentID=");
                                     	url.append(segmentID);
                                     	url.append("&providerNo=");
                                     	url.append(providerNo);
