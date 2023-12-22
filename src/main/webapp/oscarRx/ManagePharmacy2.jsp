@@ -43,7 +43,7 @@
 
 	String type = request.getParameter("type");
 %>
-
+<!DOCTYPE HTML>
 <html:html locale="true">
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/library/jquery/jquery-3.6.4.min.js"></script>
@@ -144,7 +144,7 @@
 
 	  if(!isCorrect) {
 
-	  	alert("Fax numbers are accepted in the following formats" +
+	  	alert("Fax number REQUIRED, in the following formats:" +
 			"\n###-###-#### " +
 			"\n1-###-###-###" +
 			"\n9-###-###-####" +
@@ -203,7 +203,6 @@
 					<table>
 						<tr>
 							<td>
-							<% %>
 							<input type="hidden" id="pharmacyId" name="pharmacyId"/>
 							<input type="hidden" id="demographicNo" name="demographicNo" value="<%=bean.getDemographicNo()%>"/>
 							<bean:message key="ManagePharmacy.txtfld.label.pharmacyName" /> :</td>
@@ -267,7 +266,8 @@
 							</td>
 						</tr>
 					</table>
-				<form></td>
+				</form>
+				</td>
 			</tr>
 			<!----End new rows here-->
 			<tr height="100%">
