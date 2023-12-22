@@ -24,6 +24,7 @@
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.util.LoggedInInfo;
+@Deprecated
 public class ConsultationAttachHRMs extends ConsultationAttach {
     private static final String DOCTYPE = ConsultDocs.DOCTYPE_HRM;
     public ConsultationAttachHRMs(String provNo, String demo, String req, String[] d) {

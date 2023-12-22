@@ -44,6 +44,7 @@
 <%@page import="org.oscarehr.util.SpringUtils"%>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.managers.TicklerManager" %>
+<%@page import="org.oscarehr.managers.DemographicManager" %>
 <%@page import="oscar.OscarProperties"%>
 
 
@@ -51,6 +52,7 @@
 
 <%
 	TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
+    DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
    	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 %>
 
@@ -84,10 +86,10 @@
     
     
     Tickler t = null;
-    Demographic d = null;
+    Demographic d = null;    
     if (ticklerNo != null) {
-        t = ticklerManager.getTickler(loggedInInfo, ticklerNo);
-        d = t.getDemographic();
+        t = ticklerManager.getTickler(loggedInInfo, ticklerNo);                
+        d = demographicManager.getDemographicWithExt(loggedInInfo,t.getDemographicNo());
     }
     else {
         response.sendRedirect("../errorpage.jsp");
@@ -291,14 +293,14 @@
                     <td><a href="javascript:void(0)" onClick="popupPage(600,800,'<%=request.getContextPath() %>/demographic/demographiccontrol.jsp?demographic_no=<%=d.getDemographicNo()%>&displaymode=edit&dboperation=search_detail')">
                         <%=Encode.forHtmlContent(d.getLastName())%>,<%=Encode.forHtmlContent(d.getFirstName())%>
                     </a></td>
-                    <th style="background-color: #EEEEFF"><bean:message key="tickler.ticklerEdit.primaryPhone"/></th>                           
-                    <td><%=Encode.forHtmlContent(d.getPhone())%></td>
+                    <th style="background-color: #EEEEFF"><bean:message key="tickler.ticklerEdit.phoneNumbers"/></th>                           
+                    <td>(H) <%=Encode.forHtmlContent(d.getPhone())%><br>(W) <%=Encode.forHtmlContent(d.getPhone2())%><br>(C) <%=Encode.forHtmlContent(d.getCellPhone())%></td>
                 </tr>
                 <tr>
                     <th style="background-color: #EEEEFF"><bean:message key="tickler.ticklerEdit.chartNo"/></th>                           
                     <td><%=d.getChartNo()%></td>
-                    <th style="background-color: #EEEEFF"><bean:message key="tickler.ticklerEdit.secondaryPhone"/></th>
-                    <td><%=Encode.forHtmlContent(d.getPhone2())%></td>
+                    <th style="background-color: #EEEEFF"><bean:message key="tickler.ticklerEdit.phoneComments"/></th>
+                    <td><%=Encode.forHtmlContent(d.getPhoneComment())%></td>
                 </tr>
                 <tr>
                     <th style="background-color: #EEEEFF"><bean:message key="tickler.ticklerEdit.age"/></th>                           

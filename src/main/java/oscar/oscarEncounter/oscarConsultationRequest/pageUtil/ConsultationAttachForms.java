@@ -26,7 +26,7 @@ package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.util.LoggedInInfo;
-
+@Deprecated
 public class ConsultationAttachForms extends ConsultationAttach {
 
     private static final String DOCTYPE = ConsultDocs.DOCTYPE_FORM;
