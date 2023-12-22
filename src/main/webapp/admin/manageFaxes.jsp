@@ -114,7 +114,7 @@
 
         getPageCount(id, function(pageCount) {
 
-            var url = "<%=request.getContextPath()%>/admin/ManageFaxes.do?method=viewFax&jobId="+id;
+            var url = "<%=request.getContextPath()%>/admin/ManageFaxes.do?method=viewFax&showAs=image&jobId="+id;
             var imageContainer = $("<ul />")
                     .css("list-style-type", "none")
                     .css("padding","0px")

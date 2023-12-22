@@ -117,7 +117,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import oscar.OscarProperties;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDocUtil;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
 //import oscar.oscarEncounter.pageUtil.EctSessionBean;

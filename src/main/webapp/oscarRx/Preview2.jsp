@@ -447,8 +447,8 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
                                                                             fullOutLine="<span style=\"color:red;font-size:16;font-weight:bold\">An error occurred, please write a new prescription.</span><br />"+fullOutLine;
                                                                     }
                                             %>
-                                            <%=fullOutLine%>
-                                                            <hr>
+                                            <div style="margin-bottom: 20px;"><%=fullOutLine%></div>
+                                                            <%-- <hr> --%>
                                                             <%
                                             strRx += rx.getFullOutLine() + ";;";
                                             strRxNoNewLines.append(rx.getFullOutLine().replaceAll(";"," ")+ "\n");
