@@ -61,8 +61,8 @@ import org.oscarehr.util.SpringUtils;
 import com.itextpdf.text.pdf.codec.Base64;
 
 import oscar.OscarProperties;
-import oscar.dms.EDoc;
-import oscar.dms.EDocUtil;
+import org.oscarehr.documentManager.EDoc;
+import org.oscarehr.documentManager.EDocUtil;
 
 public class FaxImporter {
 	
