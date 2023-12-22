@@ -992,11 +992,11 @@ function onSelectSpecialist(SelectedSpec)	{
             	jQuery.getJSON("getProfessionalSpecialist.json", {id: aSpeci.specNbr},
                     function(xml)
                     {
-                		var hasUrl=xml.eDataUrl!=null&&xml.eDataUrl!="";
-                		enableDisableRemoteReferralButton(form, !hasUrl);
-
-                                var annotation = document.getElementById("annotation");
-                                annotation.value = xml.annotation;
+                        var hasUrl=xml.eDataUrl!=null&&xml.eDataUrl!="";
+                        enableDisableRemoteReferralButton(form, !hasUrl);
+                        var annotation = document.getElementById("annotation");
+                        annotation.value = xml.annotation;
+                        updateEFormLink(xml.eformId)
                 	}
             	);
 
@@ -1006,6 +1006,14 @@ function onSelectSpecialist(SelectedSpec)	{
 	 
 	}
 
+function updateEFormLink(eformID) {
+    if (eformID > 0) {
+        document.getElementById("eFromLink").style.display = "inline";
+        document.getElementById("eFromLink").href = '<%=request.getContextPath()%>/eform/efmformadd_data.jsp?fid='+eformID+'&demographic_no=<%=demo%>&appointment=null';
+    } else {
+        document.getElementById("eFromLink").style.display = "none";
+    }
+}
 //-----------------------------------------------------------------
 
 /////////////////////////////////////////////////////////////////////
@@ -1898,7 +1906,8 @@ function showPreview(base64PDF, pdfName) {
                                                 
                         <tr>
                             <td class="tite4">
-                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" />
+                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" /> </br>
+                                <a id="eFromLink" target="_blank" style="display: none">eForm Link</a>
                             </td>
                             <td  class="tite3">
                                 <textarea id="annotation" style="color: blue;" rows="4" readonly></textarea>
