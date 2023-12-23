@@ -795,6 +795,7 @@ function Service(  ){
 // construct model selection on page
 function fillSpecialistSelect( aSelectedService ){
 
+	document.getElementById("eFormButton").style.display = "none"; //added here to immediately hide button if the service is changed
 
 	var selectedIdx = aSelectedService.selectedIndex;
 	var makeNbr = (aSelectedService.options[ selectedIdx ]).value;
@@ -1008,10 +1009,11 @@ function onSelectSpecialist(SelectedSpec)	{
 
 function updateEFormLink(eformID) {
     if (eformID > 0) {
-        document.getElementById("eFromLink").style.display = "inline";
-        document.getElementById("eFromLink").href = '<%=request.getContextPath()%>/eform/efmformadd_data.jsp?fid='+eformID+'&demographic_no=<%=demo%>&appointment=null';
+		let eFormURL = '<%=request.getContextPath()%>/eform/efmformadd_data.jsp?fid='+eformID+'&demographic_no=<%=demo%>&appointment=null';
+        document.getElementById("eFormButton").style.display = "inline";		
+        document.getElementById("eFormButton").onclick = function(){popup(eFormURL);};  //opening as a popup deliberately because the consult is already a popup so best to just have another popup
     } else {
-        document.getElementById("eFromLink").style.display = "none";
+        document.getElementById("eFormButton").style.display = "none";
     }
 }
 //-----------------------------------------------------------------
@@ -1906,8 +1908,8 @@ function showPreview(base64PDF, pdfName) {
                                                 
                         <tr>
                             <td class="tite4">
-                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" /> </br>
-                                <a id="eFromLink" target="_blank" style="display: none">eForm Link</a>
+                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" /> </br><br>
+                                <button type="button" id="eFormButton" style="display: none"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.eFormReferralInstructions" /></button>
                             </td>
                             <td  class="tite3">
                                 <textarea id="annotation" style="color: blue;" rows="4" readonly></textarea>
