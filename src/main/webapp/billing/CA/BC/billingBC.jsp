@@ -1089,7 +1089,7 @@ jQuery(document).ready(function(jQuery){
 	                </label>
 
 					<security:oscarSec roleName="<%=roleName$%>" objectName="_eChart" rights="x" >
-		                <button type="button" class="btn btn-link" title="View this patient's Electronic Chart" onclick="popup(710, 1024,'${pageContext.servletContext.contextPath}/casemgmt/forward.jsp?action=view&demographicNo=<%=demo.getDemographicNo()%>&providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&providerName=<%=loggedInInfo.getLoggedInProvider().getFullName()%>&appointmentNo=&reason=null&appointmentDate=&start_time=&apptProvider=null&providerview=null&msgType=null&OscarMsgTypeLink=null&noteId=null','encounter',12556);return false;">
+		                <button type="button" class="btn btn-link" title="View this patient's Electronic Chart" onclick="popup(710, 1024,'${pageContext.servletContext.contextPath}/oscarEncounter/IncomingEncounter.do?providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&appointmentNo=&demographicNo=<%=demo.getDemographicNo()%>&curProviderNo=<%=loggedInInfo.getLoggedInProviderNo()%>&reason=&encType=face+to+face+encounter+with+client&userName=&curDate=<%= new Date().toString() %>&appointmentDate=&startTime=&status=&apptProvider_no=&providerview=<%=loggedInInfo.getLoggedInProviderNo()%>','encounter', 12556);return false;">
 							<bean:message key="billing.patient.encounter" />
 						</button>	
 					</security:oscarSec>
