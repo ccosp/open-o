@@ -58,7 +58,6 @@ import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.action.FaxAction;
 import org.oscarehr.managers.FaxManager;
-import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -69,7 +68,6 @@ public class ManageFaxes extends FaxAction {
 	private Logger log = MiscUtils.getLogger();
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
-	private NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
 	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 
 	@SuppressWarnings("unused")

@@ -299,13 +299,10 @@ public class FaxManager {
 
 		//Checking if a file is saved in a temporary directory, then copying it to a permanent directory (/var/lib/OscarDocument/...).
 		if (faxFilePath.contains("/temp/")) {
-			faxFilePath = copyFileToOscarDocuments(faxFilePath);
+			faxFilePath = nioFileManager.copyFileToOscarDocuments(faxFilePath);
 		}
 		recipientFaxNumber = recipientFaxNumber.replaceAll("\\D", "");
-		//TODO not sure how to make this happen yet.
 
-//		String isOverrideFaxNumber	= faxActionForm.getString("isOverrideFaxNumber");
-//		String overrideFaxNumber	= faxActionForm.getString("overrideFaxNumber");
 		FaxJob faxJob = new FaxJob();
 		Path faxDocument = Paths.get(faxFilePath);
 
@@ -361,35 +358,11 @@ public class FaxManager {
 
 	}
 
-	public String copyFileToOscarDocuments(String tempFilePath) {
-		String destinationDir = getDocumentDirectory();
-		File tempFile = new File(tempFilePath);
-		Path destinationFilePath = Paths.get(destinationDir, tempFile.getName());
-		try {
-			Files.copy(tempFile.toPath(), destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			logger.error("An error occurred while moving the PDF file", e);
-		}
-		return destinationFilePath.toString();
-	}
-
-	private String getDocumentDirectory() {
-		String destinationDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-		if (!destinationDir.endsWith(File.separator)) {
-			destinationDir += File.separator;
-		}
-		return destinationDir;
-	}
-
 	/**
 	 * Add recipients from an indexed array of JSON formatted strings
 	 * name:<recipient>
 	 * fax:<recipient fax number>
 	 *
-	 * @param loggedInInfo
-	 * @param faxJob
-	 * @param faxRecipients
-	 * @return
 	 */
 	public List<FaxJob> addRecipients(LoggedInInfo loggedInInfo, FaxJob faxJob, String[] faxRecipients) {
 
@@ -522,7 +495,7 @@ public class FaxManager {
 	}
 
 	private Path addCoverPage(byte[] coverPage, Path currentDocument) throws IOException {
-		currentDocument = Paths.get(getDocumentDirectory(), currentDocument.getFileName().toString());
+		currentDocument = nioFileManager.getOscarDocument(currentDocument);
 		Path newCurrentDocument = Paths.get(currentDocument.getParent().toString(), "Cover_" + UUID.randomUUID() + "_" + currentDocument.getFileName());
 		Files.createFile(newCurrentDocument);
 		try (ByteArrayInputStream currentDocumentStream = new ByteArrayInputStream(Files.readAllBytes(currentDocument));

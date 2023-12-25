@@ -35,6 +35,7 @@ import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 
 import org.oscarehr.managers.FaxManager;
+import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.managers.FaxManager.TransactionType;
 import org.oscarehr.util.LoggedInInfo;
@@ -58,6 +59,7 @@ public class EctConsultationFormFaxAction extends Action {
 	private static ClinicDAO clinicDAO = SpringUtils.getBean(ClinicDAO.class);
 
 	private DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
+	private final NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
 
 	public EctConsultationFormFaxAction() {
 	}
@@ -115,7 +117,7 @@ public class EctConsultationFormFaxAction extends Action {
 			request.setAttribute("errorMessage", errorMessage);
 			return mapping.findForward("error");
 		}
-		String faxPdfPath = faxManager.copyFileToOscarDocuments(faxPdf.toString());
+		String faxPdfPath = nioFileManager.copyFileToOscarDocuments(faxPdf.toString());
 		faxPdf = Paths.get(faxPdfPath);
 		Path pdfToFax;
 		List<FaxConfig> faxConfigs = faxConfigDao.findAll(null, null);
