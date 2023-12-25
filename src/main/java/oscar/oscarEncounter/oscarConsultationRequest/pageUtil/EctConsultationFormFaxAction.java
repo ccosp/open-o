@@ -52,13 +52,14 @@ import com.itextpdf.text.DocumentException;
 public class EctConsultationFormFaxAction extends Action {
 
 	private static final Logger logger = MiscUtils.getLogger();
-	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
-	private static FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);				
-	private static FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-	private static FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
-	private static ClinicDAO clinicDAO = SpringUtils.getBean(ClinicDAO.class);
+	private final SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+	private final FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
+	private final FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
+	private final FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+	private final ClinicDAO clinicDAO = SpringUtils.getBean(ClinicDAO.class);
 
-	private DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
+	private final DocumentAttachmentManager documentAttachmentManager = SpringUtils.getBean(DocumentAttachmentManager.class);
+
 	private final NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
 
 	public EctConsultationFormFaxAction() {

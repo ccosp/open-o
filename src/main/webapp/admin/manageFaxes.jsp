@@ -177,12 +177,12 @@
 						$('#'+status).text("SENT");
 					}
 					else {
-						alert("An error occured trying to resend your fax.  Please contact your system administrator"); 
+						alert("An error occurred trying to resend your fax.  Please contact your system administrator");
 					}
 				}});
 		}
 		else {
-			alert("Fax numbers must be input as 11231234567");
+			alert("Fax numbers must not contain punctuation");
 	
 		}
 		

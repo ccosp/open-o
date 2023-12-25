@@ -2,6 +2,7 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.lang.time.DateFormatUtils"%>
+<%@ page import="org.oscarehr.managers.FaxManager" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
@@ -17,7 +18,7 @@ if(!authed) {
 	return;
 }
 %>
-<table class="table-condensed table-bordered small span8" style="margin:0px;margin-bottom:50px;" id="content">
+<table class="table-condensed table-bordered small span8" style="margin:0;margin-bottom:50px;" id="content">
 	<thead>
 		<tr>
 			<th class="small">Type</th>
@@ -112,13 +113,14 @@ if(!authed) {
 			if( ! FaxJob.STATUS.RECEIVED.equals(faxJob.getStatus()) ) {			    
 			    
 			    if( FaxJob.STATUS.ERROR.equals(faxJob.getStatus()) || FaxJob.STATUS.COMPLETE.equals(faxJob.getStatus())) {
+					if(FaxManager.isEnabled()) {
 %>			    
-				<a href="javascript:void(0)" onclick="resend(<%=faxJob.getId()%>,'<%=faxJob.getDestination()%>','status<%=count%>')">Resend</a>&nbsp;
+						<a href="javascript:void(0)" onclick="resend(<%=faxJob.getId()%>,'<%=faxJob.getDestination()%>','status<%=count%>')">Resend</a>&nbsp;
 <%
+					}
 					if( faxJob.getStatus().equals(FaxJob.STATUS.ERROR) ) {
 %>
-					<a href="javascript:void(0)" onclick="complete(<%=faxJob.getId()%>,'status<%=count%>')">Mark&nbsp;Complete</a>
-
+						<a href="javascript:void(0)" onclick="complete(<%=faxJob.getId()%>,'status<%=count%>')">Mark&nbsp;Complete</a>
 <%					    
 					}
 				}

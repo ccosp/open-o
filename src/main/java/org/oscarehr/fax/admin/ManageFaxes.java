@@ -65,10 +65,10 @@ import org.oscarehr.util.SpringUtils;
 
 public class ManageFaxes extends FaxAction {
 	
-	private Logger log = MiscUtils.getLogger();
-	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+	private final Logger log = MiscUtils.getLogger();
+	private final SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
-	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+	private final FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 
 	@SuppressWarnings("unused")
 	public ActionForward CancelFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -125,15 +125,9 @@ public class ManageFaxes extends FaxAction {
 		                }
 		                
 					}
-					catch( ClientProtocolException e ) {
-						
+					catch( IOException e ) {
 						log.error("PROBLEM COMM WITH WEB SERVICE");
-									
-					}catch (IOException e) {
-			        
-						log.error("PROBLEM COMM WITH WEB SERVICE");
-					
-		            }
+					}
 				}
 			}
 		}					
@@ -152,35 +146,27 @@ public class ManageFaxes extends FaxAction {
 	
 	@SuppressWarnings("unused")
 	public ActionForward ResendFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		
+
+		JSONObject jsonObject = JSONObject.fromObject("{success:false}");
 		String JobId = request.getParameter("jobId");
 		String faxNumber = request.getParameter("faxNumber");
-		JSONObject jsonObject;
-		
-		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_admin", "w", null)) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_admin", "w", null)) {
         	throw new SecurityException("missing required security object (_admin)");
         }
-			
-		FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);		
-		FaxJob faxJob = faxJobDao.find(Integer.parseInt(JobId));
-		
-		faxJob.setDestination(faxNumber);
-		faxJob.setStatus(FaxJob.STATUS.SENT);
-		faxJob.setStamp(new Date());
-		faxJob.setJobId(null);
-		
-		faxJobDao.merge(faxJob);
-			
-		try {	
-			jsonObject = JSONObject.fromObject("{success:true}");
-			jsonObject.write(response.getWriter());
-		} catch ( IOException e ) {	
-			 MiscUtils.getLogger().error("JSON WRITER ERROR", e);
-		} catch (Exception e) {
-			jsonObject = JSONObject.fromObject("{success:false}");
-			log.error("ERROR RESEND FAX " + JobId);	
-        }
-		
+
+		boolean success = false;
+
+		/*
+		 *  Dont even try to resend a fax if the service is not enabled.
+		 */
+		if(FaxManager.isEnabled()){
+			success = faxManager.resendFax(loggedInInfo, JobId, faxNumber);
+		}
+
+		jsonResponse(response, JSONObject.fromObject("{success:" + success + "}"));
+
 		return null;
 	}
 	
