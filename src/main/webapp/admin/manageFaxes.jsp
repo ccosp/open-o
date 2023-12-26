@@ -355,7 +355,21 @@
 					<!-- container -->
 					</div>
 			</div>
-		</div>	
+		</div>
+		<div>
+			<p>Fax status definitions:</p>
+			<dl class="dl-horizontal">
+				<dt>RECEIVED</dt> <dd>is the status of a fax that was successfully RECEIVED from the fax gateway service. Click on View in the Action column for a preview of the fax.</dd>
+				<dt>CANCELLED</dt> <dd>fax that was cancelled by the EMR user while the fax had a SENT or WAITING status - or - the fax was cancelled by the user from the fax gateway web interface</dd>
+				<dt>UNKNOWN</dt> <dd>on an extremely rare occasion when the status of a fax job is unidentifiable</dd>
+				<dt>WAITING</dt> <dd>fax that is waiting to be sent to the fax gateway.</dd>
+				<dt>SENT</dt> <dd>fax that has been successfully sent to the fax gateway.</dd>
+				<dt>COMPLETE</dt> <dd>fax that was successfully sent to, and fully processed by, the fax gateway service. Click on View in the Action column for a preview of the fax. The ability to Resend the fax is available during this status. </dd>
+				<dt>ERROR</dt> <dd>fax failure. Fax job failed sending to the fax gateway - OR - the fax gateway failed to send the fax after n attempts. Hover the mouse pointer over the ERROR status to display the reason for the error. Click on Resend in the Action column to send the fax again. Re-send will not work for errors such as  	&quot;destination not a fax&quot;, &quot;no answer&quot;,  	&quot;invalid fax number&quot; etc... Re-sending the fax will allow input of a different phone number if needed.</dd>
+				<dt>RE-SENT</dt> <dd>a previously failed or completed fax job that was re-sent to the fax gateway</dd>
+				<dt>RESOLVED</dt> <dd>a fax ERROR that was dismissed by selecting &quot;Mark Complete&quot; in the Action column.  &quot;Mark Complete&quot; is useful to hide ERRORs that have been resolved by other means.</dd>
+			</dl>
+		</div>
 
 </div>	<!-- body column -->
 </div> <!-- body row -->
