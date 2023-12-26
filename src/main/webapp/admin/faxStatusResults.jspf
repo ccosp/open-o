@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.lang.time.DateFormatUtils"%>
 <%@ page import="org.oscarehr.managers.FaxManager" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
@@ -101,11 +102,11 @@ if(!authed) {
 %>
 		<tr>
 			<td id="faxType_<%=faxJob.getId()%>" class="small"><%=type%></td>
-			<td class="small"><%=providerName%>(<%=faxJob.getUser()%>)</td>
-			<td id="patientName_<%=faxJob.getId()%>" class="small"><%=demographicName%></td>
+			<td class="small"><%=Encode.forHtmlContent(providerName)%>(<%=faxJob.getUser()%>)</td>
+			<td id="patientName_<%=faxJob.getId()%>" class="small"><%=Encode.forHtmlContent(demographicName)%></td>
 			<td class="small"><c:out value="<%=faxJob.getRecipient()%>" /></td>
 			<td id="status<%=count%>" class="small" ><c:out value="<%=faxJob.getStatus()%>" /></td>
-			<td class="small" title="<%=faxJob.getStatusString()%>" style="max-width: 150px; width: 100px; text-overflow: ellipsis; overflow: hidden;">
+			<td class="small" title="<%=Encode.forHtmlAttribute(faxJob.getStatusString())%>" style="max-width: 150px; width: 100px; text-overflow: ellipsis; overflow: hidden;">
 			<c:out value="<%=faxJob.getStatusString()%>" /></td>
 			<td class="small"><%=DateFormatUtils.format(faxJob.getStamp(), "yyyy-MM-dd HH:mm:ss")%></td>
 			<td class="small"><a href="javascript:void(0);" onclick="view(<%=faxJob.getId()%>)">View</a>
