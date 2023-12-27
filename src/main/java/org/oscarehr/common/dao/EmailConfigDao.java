@@ -26,6 +26,12 @@ public class EmailConfigDao extends AbstractDao<EmailConfig> {
 		return getSingleResultOrNull(query);
 	}
 
+    public EmailConfig findActiveEmailConfig(String senderEmail) {
+		Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.active = 1");
+		query.setParameter("senderEmail", senderEmail);		
+		return getSingleResultOrNull(query);
+	}
+
     @SuppressWarnings("unchecked")
     public List<EmailConfig> fillAllActiveEmailConfigs() {
         Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.active = 1");

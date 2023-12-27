@@ -144,7 +144,7 @@
 		
 			<c:set var="emailSendAction" value="${ctx}/email/emailSendAction.do?method=sendEmail" />
 			
-			<form id="coverPageForm" class="form-inline" action='${ emailSendAction }' method="post" novalidate>							
+			<form id="emailComposeForm" class="form-inline" action='${ emailSendAction }' method="post" novalidate>							
 				<div class="panel panel-default">
 				  	<div class="panel-heading">
 						<h3 class="panel-title">From</h3>
@@ -154,10 +154,10 @@
 							<div class="row">	
 							<div class="col-sm-12">				
 							  <label for="senderEmail">Sender Email</label>
-							  <select class="form-control" name="senderEmailAddress"  id="senderEmail">
+							  <select class="form-control" name="senderEmailAddress"  id="senderEmailAddress">
 									<c:forEach items="${ senderAccounts }" var="senderAccount">
 							    		<option value="${ senderAccount.senderEmail }" ${ senderAccount.senderEmail eq letterheadEmail or senderAccount.senderEmail eq param.letterheadEmail ? 'selected' : '' }>
-							    			<c:out value="${ senderAccount.senderName }"/> <c:out value="(${ senderAccount.senderEmail })"/>
+							    			<c:out value="${ senderAccount.senderFirstName }"/> <c:out value="${ senderAccount.senderLastname }"/> <c:out value="(${ senderAccount.senderEmail })"/>
 							    		</option>
 									</c:forEach>
 							  </select>
@@ -183,7 +183,40 @@
 									<label for="receiverEmail">Email</label>
 									<input class="form-control" type="text" name="receiverEmailAddress" value="${ receiverEmail }"
 										id="receiverEmail" placeholder="example@example.com"  disabled/>
+									<c:if test="${not empty receiverEmail}">
+										<input type="hidden" name="receiverEmailAddress" value="${receiverEmail}" />
+									</c:if>
 								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+				  	<div class="panel-heading">
+						<h3 class="panel-title">Subject</h3>
+					</div>
+					<div class="panel-body">
+						<div class="container">
+							<div class="row">	
+							<div class="col-sm-12">				
+							  <input class="form-control" type="text" name="subjectEmail" value="" id="subjectEmail" placeholder="" />
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+				  	<div class="panel-heading">
+						<h3 class="panel-title">Body</h3>
+					</div>
+					<div class="panel-body">
+						<div class="container">
+							<div class="row">	
+							<div class="col-sm-12">				
+							  <textarea class="form-control" name="bodyEmail" id="bodyEmail" rows="10"></textarea>
+							</div>
 							</div>
 						</div>
 					</div>
@@ -197,7 +230,7 @@
                         <div class="container">
                             <div class="row">
                                 <ol class="list-group col-sm-12">
-                                    <c:forEach items="${ emailAttachments }" var="emailAttachment">
+                                    <c:forEach items="${ emailAttachmentList }" var="emailAttachment">
                                         <li class="list-group-item"><c:out value="${ emailAttachment.fileName }" /></li>
                                     </c:forEach>
                                 </ol>
@@ -215,7 +248,7 @@
 							Send
 						</button>					
 						<button formnovalidate="formnovalidate" id="btnCancel" type="submit" class="btn btn-danger btn-md pull-right" value="Cancel" 
-							onclick="document.getElementById('submitMethod').value = 'cancel'" >
+							onclick="window.close();" >
 							<span class="btn-label"><i class="glyphicon glyphicon-remove-circle"></i></span>
 							Cancel
 						</button>
@@ -227,23 +260,18 @@
 	
 	<%-- the confirmation tags. --%>
 	<c:if test="${ not empty emailSuccessful }">
-		<div class="alert alert-success" role="alert">
-			Successfully emailed
-		</div>
-		<%-- <c:forEach items="${ faxJobList }" var="faxJob">
-			<c:choose>
-				<c:when test="${ faxJob.status eq 'ERROR' }">
-					<div class="alert alert-success" role="alert">
-						Failed to add fax to outgoing queue: <c:out value="${ faxJob.recipient } at ${ faxJob.destination } ${ faxJob.status }: ${ faxJob.statusString }" />
-					</div>								
-				</c:when>
-				<c:otherwise>
-					<div class="alert alert-success" role="alert">
-						Successfully added fax to outgoing queue: <c:out value="${ faxJob.recipient } at ${ faxJob.destination }" />
-					</div>	
-				</c:otherwise>				
-			</c:choose>
-		</c:forEach> --%>
+		<c:choose>
+			<c:when test="${ emailLog.status eq 'FAILED' }">
+				<div class="alert alert-danger" role="alert">
+					Failed to email: <c:out value="${ emailLog.fromEmail } at ${ emailLog.toEmail }" />
+				</div>								
+			</c:when>
+			<c:otherwise>
+				<div class="alert alert-success" role="alert">
+					Successfully emailed: <c:out value="${ emailLog.fromEmail } at ${ emailLog.toEmail }" />
+				</div>	
+			</c:otherwise>				
+		</c:choose>
 		<input type="button" class="btn btn-danger btn-md pull-right" value="Close" onclick="window.close();" />
 	</c:if>
 </div>
@@ -299,38 +327,26 @@ $(document).ready(function() {
 	/*
 	 * Validate the form before submission 
 	 */
- 	$('#coverPageForm').validate({		
+ 	$('#emailComposeForm').validate({		
 		rules: {
-			recipientFaxNumber: {
-				required: true,
-				minlength: 7
-			},	
-			recipient: {
+			subjectEmail: {
 				required: true
 			},
-			additionalRecipient_fax: {
-				required: {
-					depends: function(element){
-						return $("#additionalRecipient_name").val().length > 0;
-					}
-				},
-				minlength: 7
+			bodyEmail: {
+				required: true
 			}
 		},		
 		messages: {
-			additionalRecipient_fax: {
-				required: "Recipient fax number required"
-			},
-			recipientFaxNumber: {
-				required: "Recipient fax number required",
-				minlength: "Recipient fax is invalid"
-			},
-			recipient: "Recipient name required"
+			subjectEmail: "Subject is required",
+			bodyEmail: "Body is required"
 		},
 		errorClass: 'invalid',
-		validClass: 'valid'
-		
-	})
+		validClass: 'valid',
+		submitHandler: function (form) {
+			ShowSpin(true);
+			form.submit();
+		}
+	});
 	 
 })
 

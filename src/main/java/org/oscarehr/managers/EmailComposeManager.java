@@ -3,6 +3,7 @@ package org.oscarehr.managers;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
+import org.oscarehr.common.dao.EmailLogDao;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.common.model.EmailLog;
+import org.oscarehr.common.model.EmailLog.EmailStatus;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -20,13 +24,14 @@ import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class EmailComposeManager {
     private final Logger logger = MiscUtils.getLogger();
 
     @Autowired
     private EmailConfigDao emailConfigDao;
+    @Autowired
+    private EmailLogDao emailLogDao;
 
     @Autowired
     private DocumentAttachmentManager documentAttachmentManager;
@@ -92,6 +97,29 @@ public class EmailComposeManager {
         }
 
         return emailAttachments;
+    }
+
+    public EmailLog prepareEmailForOutbox(String formEmail, String toEmail, String subject, String body, List<EmailAttachment> emailAttachments) {
+        EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(formEmail);
+        EmailLog emailLog = new EmailLog(emailConfig, formEmail, toEmail, subject, body, EmailStatus.OUTBOX);
+        List<EmailAttachment> emailAttachmentList = new ArrayList<>();
+        for (EmailAttachment emailAttachment : emailAttachments) {
+            emailAttachmentList.add(new EmailAttachment(emailLog, emailAttachment.getFileName(), emailAttachment.getFilePath(), emailAttachment.getDocumentType(), emailAttachment.getDocumentId()));
+        }
+        emailLog.setEmailAttachments(emailAttachmentList);
+        emailLogDao.saveEmailLog(emailLog);
+        return emailLog;
+    }
+
+    public EmailLog updateEmailStatus(EmailLog emailLog, boolean isEmailSent) {
+        if (isEmailSent) {
+            emailLog.setStatus(EmailStatus.SUCCESS);
+        } else {
+            emailLog.setStatus(EmailStatus.FAILED);
+        }
+        emailLog.setTimestamp(new Date());
+        emailLogDao.saveEmailLog(emailLog);
+        return emailLog;
     }
 
     public List<EmailConfig> getAllSenderAccounts() {

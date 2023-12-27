@@ -10,7 +10,9 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     public enum EmailStatus {
         SUCCESS,
-        FAILED
+        FAILED,
+        DRAFT,
+        OUTBOX
     }
 
     @Id
@@ -35,7 +37,7 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "timestamp")
-    private Date timestamp;
+    private Date timestamp = new Date();
 
     @Column(name = "encrypted_message", columnDefinition = "TEXT")
     private String encryptedMessage;
@@ -54,6 +56,19 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     private List<EmailAttachment> emailAttachments;
 
     public EmailLog() {}
+
+    public EmailLog(EmailConfig emailConfig, String fromEmail, String toEmail, String subject, String body, EmailStatus status) {
+        this.emailConfig = emailConfig;
+        this.fromEmail = fromEmail;
+        this.toEmail = toEmail;
+        this.subject = subject;
+        this.body = body;
+        this.status = status;
+        this.timestamp = new Date();
+        this.encryptedMessage = "";
+        this.password = "";
+        this.isEncrypted = false;
+    }
 
     public Integer getId() {
         return id;

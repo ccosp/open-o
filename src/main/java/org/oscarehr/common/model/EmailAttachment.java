@@ -38,6 +38,14 @@ public class EmailAttachment extends AbstractModel<Integer> {
         this.documentId = documentId;
     }
 
+    public EmailAttachment(EmailLog emailLog, String fileName, String filePath, DocumentType documentType, Integer documentId) {
+        this.emailLog = emailLog;
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.documentType = documentType;
+        this.documentId = documentId;
+    }
+
     public Integer getId() {
         return id;
     }

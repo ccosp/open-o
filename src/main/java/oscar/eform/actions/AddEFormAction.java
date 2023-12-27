@@ -93,63 +93,6 @@ public class AddEFormAction extends Action {
 		String[] attachedEForms = (request.getParameterValues("eFormNo") != null ? request.getParameterValues("eFormNo") : new String[0]);
 		String[] attachedHRMDocuments = (request.getParameterValues("hrmNo") != null ? request.getParameterValues("hrmNo") : new String[0]);
 
-		///////////////////////////////
-
-		// EmailConfig emailConfig1 = new EmailConfig(EmailType.SMTP, EmailProvider.OUTLOOK, "deval1234567@outlook.com");
-		// EmailConfig emailConfig2 = new EmailConfig(EmailType.SMTP, EmailProvider.GMAIL, "deval7648@gmail.com");
-		// String toEmail = "deval.italiya@magentahealth.ca";
-		// String sub = StringUtils.isNullOrEmpty(request.getParameter("emailsubject")) ? "Test subject" : request.getParameter("emailsubject");
-		// String body = StringUtils.isNullOrEmpty(request.getParameter("pbody")) ? "Hello Deval" : request.getParameter("pbody");
-		// String sbody = StringUtils.isNullOrEmpty(request.getParameter("sbody")) ? "Hello Deval" : request.getParameter("sbody");
-		// String password = StringUtils.isNullOrEmpty(request.getParameter("password")) ? "12345" : request.getParameter("password");
-		// List<Path> attachments = new ArrayList<>();
-		// long startTime = System.currentTimeMillis();
-		// long endTime = System.currentTimeMillis();
-		// try {
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, 361));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, 57));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, 39));
-		// 	attachments.add(documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, 16));
-		// } catch (PDFGenerationException e) {
-		// 	System.out.println(e.getMessage());
-		// }
-		
-		// startTime = System.currentTimeMillis();
-		// emailManager.sendEmail(emailConfig1, toEmail, sub, body, attachments);
-		// endTime = System.currentTimeMillis();
-		// System.out.println("SENT Execution time: " + (endTime - startTime) + " milliseconds");
-
-		// startTime = System.currentTimeMillis();
-		// emailManager.sendEncryptedEmail(emailConfig2, toEmail, sub, body, sbody, attachments, password);
-		// endTime = System.currentTimeMillis();
-		// System.out.println("SENT Execution time: " + (endTime - startTime) + " milliseconds");
-
-		///////////////////////////////
-
 		@SuppressWarnings("unchecked")
 		Enumeration<String> paramNamesE = request.getParameterNames();
 		//for each name="fieldname" value="myval"

@@ -2,6 +2,7 @@ package org.oscarehr.managers;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +15,9 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
+import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.common.model.EmailLog;
 import org.oscarehr.documentManager.ConvertToEdoc;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.util.MiscUtils;
@@ -39,6 +42,14 @@ public class EmailManager {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    public Boolean sendEmail(EmailLog emailLog) {
+        List<Path> attachments = new ArrayList<>();
+        for (EmailAttachment emailAttachment : emailLog.getEmailAttachments()) {
+            attachments.add(Paths.get(emailAttachment.getFilePath()));
+        }
+        return sendEmail(emailLog.getEmailConfig(), emailLog.getToEmail(), emailLog.getSubject(), emailLog.getBody(), attachments);
+    }
+
     public Boolean sendEmail(EmailConfig config, String toEmail, String subject, String body, List<Path> attachments) {
         javaMailSender = createMailSender(config);
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -62,9 +73,8 @@ public class EmailManager {
         return sendEmail(config, toEmail, subject, secondaryBody, Arrays.asList(encryptedBodyWithAttachmentsPath)); 
     }
 
-    private JavaMailSender createMailSender(EmailConfig config) {
-        EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(config);
-        switch (config.getEmailProvider()) {
+    private JavaMailSender createMailSender(EmailConfig emailConfig) {
+        switch (emailConfig.getEmailProvider()) {
             case GMAIL:
                 javaMailSender = createTLSMailSender(emailConfig);
                 break;                

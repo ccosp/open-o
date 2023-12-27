@@ -51,12 +51,12 @@ public class EmailComposeAction extends DispatchAction {
 
         String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, Integer.parseInt(demographicId));
         String receiverEmail = demographicManager.getDemographicEmail(loggedInInfo, Integer.parseInt(demographicId));
-        if (StringUtils.isNullOrEmpty(receiverEmail)) { return emailComposeError(request, mapping, "Unable to proceed. Please include the demographic's email address in the records.", "eFormError"); }
+        if (StringUtils.isNullOrEmpty(receiverEmail)) { return emailComposeError(request, mapping, "Unable to proceed: Please include the demographic's email address in the records.", "eFormError"); }
         
         List<EmailConfig> senderAccounts = emailComposeManager.getAllSenderAccounts();
-        if (senderAccounts.size() == 0) { return emailComposeError(request, mapping, "Unable to proceed. Please setup the sender's account first.", "eFormError"); }
+        if (senderAccounts.size() == 0) { return emailComposeError(request, mapping, "Unable to proceed: Please setup the sender's account first.", "eFormError"); }
 
-        request.setAttribute("emailAttachments", emailAttachmentList);
+        request.getSession().setAttribute("emailAttachmentList", emailAttachmentList);
         request.setAttribute("receiverName", receiverName);
         request.setAttribute("receiverEmail", receiverEmail);
         request.setAttribute("senderAccounts", senderAccounts);

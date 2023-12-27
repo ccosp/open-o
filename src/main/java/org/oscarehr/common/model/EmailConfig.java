@@ -33,8 +33,11 @@ public class EmailConfig extends AbstractModel<Integer> {
     @Column(name = "active")
     private Boolean active;
 
-    @Column(name = "sender_name")
-    private String senderName;
+    @Column(name = "sender_first_name")
+    private String senderFirstName;
+
+    @Column(name = "sender_last_name")
+    private String senderLastname;
 
     @Column(name = "sender_email")
     private String senderEmail;
@@ -86,12 +89,20 @@ public class EmailConfig extends AbstractModel<Integer> {
         this.active = active;
     }
 
-    public String getSenderName() {
-        return senderName;
+    public String getSenderFirstName() {
+        return senderFirstName;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setSenderFirstName(String senderFirstName) {
+        this.senderFirstName = senderFirstName;
+    }
+
+    public String getSenderLastname() {
+        return senderLastname;
+    }
+
+    public void setSenderLastname(String senderLastname) {
+        this.senderLastname = senderLastname;
     }
 
     public String getSenderEmail() {
