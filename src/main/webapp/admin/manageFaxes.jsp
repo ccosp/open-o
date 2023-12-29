@@ -166,17 +166,24 @@
 			var url = $("#reportForm").attr("action");
 			var data = "method=ResendFax&jobId="+id+"&faxNumber="+answer;
 
+			// disable the action buttons
+			$(".btn-link").prop("disabled", true);
+
 			$.ajax({
 				url: url,
 				method: 'POST',
 				data: data,
 				dataType: "json",
 				success: function(data){
-					
+					$(".btn-link").prop("disabled", false);
 					if( data.success ) {
-						$('#'+status).text("SENT");
+						$("#resend_"+id).prop("disabled", true).css("color", "green").css("font-weight", "bold").text("re-sent");
+						$("#cancel_"+id).remove();
+						$("#complete_"+id).remove();
+						$('#'+status).text("RESENT");
 					}
 					else {
+						$("#resend_"+id).prop("disabled", true).css("color", "red").css("font-weight", "bold").text("error");
 						alert("An error occurred trying to resend your fax.  Please contact your system administrator");
 					}
 				}});

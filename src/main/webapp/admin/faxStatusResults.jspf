@@ -19,7 +19,7 @@ if(!authed) {
 	return;
 }
 %>
-<table class="table-condensed table-bordered small span8" style="margin:0;margin-bottom:50px;" id="content">
+<table class="table table-striped table-hover table-condensed" id="content">
 	<thead>
 		<tr>
 			<th class="small">Type</th>
@@ -109,29 +109,33 @@ if(!authed) {
 			<td class="small" title="<%=Encode.forHtmlAttribute(faxJob.getStatusString())%>" style="max-width: 150px; width: 100px; text-overflow: ellipsis; overflow: hidden;">
 			<c:out value="<%=faxJob.getStatusString()%>" /></td>
 			<td class="small"><%=DateFormatUtils.format(faxJob.getStamp(), "yyyy-MM-dd HH:mm:ss")%></td>
-			<td class="small"><a href="javascript:void(0);" onclick="view(<%=faxJob.getId()%>)">View</a>
+			<td class="small">
+<div class="btn-group">
+				<button class="btn btn-link btn-view" title="Open a preview image of this fax" onclick="view(<%=faxJob.getId()%>)">view</button>
 <%
 			if( ! FaxJob.STATUS.RECEIVED.equals(faxJob.getStatus()) ) {			    
 			    
 			    if( FaxJob.STATUS.ERROR.equals(faxJob.getStatus()) || FaxJob.STATUS.COMPLETE.equals(faxJob.getStatus())) {
 					if(FaxManager.isEnabled()) {
 %>			    
-						<a href="javascript:void(0)" onclick="resend(<%=faxJob.getId()%>,'<%=faxJob.getDestination()%>','status<%=count%>')">Resend</a>&nbsp;
+						<button class="btn btn-link btn-resend" title="Re-send this fax to the fax gateway service for delivery" id="resend_<%=faxJob.getId()%>" onclick="resend(<%=faxJob.getId()%>,'<%=faxJob.getDestination()%>','status<%=count%>')">resend</button>
 <%
 					}
 					if( faxJob.getStatus().equals(FaxJob.STATUS.ERROR) ) {
 %>
-						<a href="javascript:void(0)" onclick="complete(<%=faxJob.getId()%>,'status<%=count%>')">Mark&nbsp;Complete</a>
+						<button class="btn btn-link btn-complete" title="Clear the error status of this fax" id="complete_<%=faxJob.getId()%>" onclick="complete(<%=faxJob.getId()%>,'status<%=count%>')">resolve</button>
 <%					    
 					}
 				}
 				else if( FaxJob.STATUS.SENT.equals(faxJob.getStatus())  || FaxJob.STATUS.WAITING.equals(faxJob.getStatus())) {
 %>
-				<a href="javascript:void(0)" onclick="cancel(<%=faxJob.getId()%>,'status<%=count%>')">Cancel</a>&nbsp;
+				<button class="btn btn-link btn-cancel" title="Cancel this fax before it is sent to the destination by the fax gateway service" id="cancel_<%=faxJob.getId()%>" onclick="cancel(<%=faxJob.getId()%>,'status<%=count%>')">cancel</button>
 <%
 				}
 			}
 %>
+</div>
+			</td>
 		</tr>
 		
 <%
