@@ -1,6 +1,9 @@
 package org.oscarehr.common.model;
 
 import javax.persistence.*;
+
+import java.nio.charset.StandardCharsets;
+import org.apache.commons.codec.binary.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -28,19 +31,24 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     @Column(name = "subject")
     private String subject;
 
-    @Column(name = "body", columnDefinition = "TEXT")
-    private String body;
+    @Lob
+    @Column(name = "body", columnDefinition = "BLOB")
+    private byte[] body;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private EmailStatus status;
 
+    @Column(name = "error_message")
+    private String errorMessage;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "timestamp")
     private Date timestamp = new Date();
 
-    @Column(name = "encrypted_message", columnDefinition = "TEXT")
-    private String encryptedMessage;
+    @Lob
+    @Column(name = "encrypted_message", columnDefinition = "BLOB")
+    private byte[] encryptedMessage;
 
     @Column(name = "password")
     private String password;
@@ -62,10 +70,10 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         this.fromEmail = fromEmail;
         this.toEmail = toEmail;
         this.subject = subject;
-        this.body = body;
+        this.body = Base64.encodeBase64(body.getBytes(StandardCharsets.UTF_8));
         this.status = status;
         this.timestamp = new Date();
-        this.encryptedMessage = "";
+        this.encryptedMessage = new byte[0];
         this.password = "";
         this.isEncrypted = false;
     }
@@ -111,11 +119,11 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     }
 
     public String getBody() {
-        return body;
+        return new String(Base64.decodeBase64(body), StandardCharsets.UTF_8);
     }
 
     public void setBody(String body) {
-        this.body = body;
+        this.body = Base64.encodeBase64(body.getBytes(StandardCharsets.UTF_8));
     }
 
     public EmailStatus getStatus() {
@@ -124,6 +132,14 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     public void setStatus(EmailStatus status) {
         this.status = status;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public Date getTimestamp() {
@@ -135,11 +151,11 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     }
 
     public String getEncryptedMessage() {
-        return encryptedMessage;
+        return new String(Base64.decodeBase64(encryptedMessage), StandardCharsets.UTF_8);
     }
 
     public void setEncryptedMessage(String encryptedMessage) {
-        this.encryptedMessage = encryptedMessage;
+        this.encryptedMessage = Base64.encodeBase64(encryptedMessage.getBytes(StandardCharsets.UTF_8));
     }
 
     public String getPassword() {

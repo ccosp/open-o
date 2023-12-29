@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", function(){
 		addNavElement();
 		moveSubjectReverse();
 
-		// Add eForm attachments
-		addEFormAttachments();
-
-		// Resize the window based on the toolbar width
-		window.resizeTo(1100,1100);
+			// Add eForm attachments 
+			addEFormAttachments();
+			
+			// Resize the window based on the toolbar width
+			window.resizeTo(1150,1100);
 
 		// If download EForm
 		const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";

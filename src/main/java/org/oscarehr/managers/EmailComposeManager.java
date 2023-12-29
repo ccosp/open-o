@@ -1,9 +1,9 @@
 package org.oscarehr.managers;
 
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
-import org.oscarehr.common.dao.EmailLogDao;
+import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
-import org.oscarehr.common.model.EmailLog;
-import org.oscarehr.common.model.EmailLog.EmailStatus;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -30,13 +28,13 @@ public class EmailComposeManager {
 
     @Autowired
     private EmailConfigDao emailConfigDao;
-    @Autowired
-    private EmailLogDao emailLogDao;
 
     @Autowired
     private DocumentAttachmentManager documentAttachmentManager;
     @Autowired
     private FormsManager formsManager;
+    @Autowired
+    private PatientConsentManager patientConsentManager;
     
     public List<EmailAttachment> prepareEFormAttachments(LoggedInInfo loggedInInfo, String fdid, String[] attachedEForms) throws PDFGenerationException {
         List<String> attachedEFormIds = convertToList(attachedEForms);
@@ -99,27 +97,18 @@ public class EmailComposeManager {
         return emailAttachments;
     }
 
-    public EmailLog prepareEmailForOutbox(String formEmail, String toEmail, String subject, String body, List<EmailAttachment> emailAttachments) {
-        EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(formEmail);
-        EmailLog emailLog = new EmailLog(emailConfig, formEmail, toEmail, subject, body, EmailStatus.OUTBOX);
-        List<EmailAttachment> emailAttachmentList = new ArrayList<>();
+    public void sanitizeAttachments(List<EmailAttachment> emailAttachments) {
+        DecimalFormat formatter = new DecimalFormat("000");
+        int attachmentNumber = 1;
         for (EmailAttachment emailAttachment : emailAttachments) {
-            emailAttachmentList.add(new EmailAttachment(emailLog, emailAttachment.getFileName(), emailAttachment.getFilePath(), emailAttachment.getDocumentType(), emailAttachment.getDocumentId()));
+            String attachmentName = "attachment_" + formatter.format(attachmentNumber++) + ".pdf";
+            emailAttachment.setFileName(attachmentName);
         }
-        emailLog.setEmailAttachments(emailAttachmentList);
-        emailLogDao.saveEmailLog(emailLog);
-        return emailLog;
     }
 
-    public EmailLog updateEmailStatus(EmailLog emailLog, boolean isEmailSent) {
-        if (isEmailSent) {
-            emailLog.setStatus(EmailStatus.SUCCESS);
-        } else {
-            emailLog.setStatus(EmailStatus.FAILED);
-        }
-        emailLog.setTimestamp(new Date());
-        emailLogDao.saveEmailLog(emailLog);
-        return emailLog;
+    public Boolean hasEmailConsent(Integer demographicId) {
+        ConsentType consentType = patientConsentManager.getConsentType("electronic_communication_consent");
+        return patientConsentManager.hasPatientConsented(demographicId, consentType);
     }
 
     public List<EmailConfig> getAllSenderAccounts() {

@@ -2,168 +2,94 @@ package org.oscarehr.managers;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-import java.util.Properties;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.net.ssl.SSLContext;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
+import org.oscarehr.common.dao.EmailLogDao;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
 import org.oscarehr.common.model.EmailLog;
+import org.oscarehr.common.model.EmailLog.EmailStatus;
 import org.oscarehr.documentManager.ConvertToEdoc;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
+import org.oscarehr.email.core.Email;
+import org.oscarehr.email.core.EmailSender;
+import org.oscarehr.util.EmailSendingException;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFEncryptionUtil;
 import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class EmailManager {
     private final Logger logger = MiscUtils.getLogger();
-    @Autowired
-    private DocumentAttachmentManager documentAttachmentManager;
+
     @Autowired
     private EmailConfigDao emailConfigDao;
     @Autowired
-    private JavaMailSender javaMailSender;
+    private EmailLogDao emailLogDao;
 
-    public Boolean sendEmail(EmailLog emailLog) {
-        List<Path> attachments = new ArrayList<>();
-        for (EmailAttachment emailAttachment : emailLog.getEmailAttachments()) {
-            attachments.add(Paths.get(emailAttachment.getFilePath()));
-        }
-        return sendEmail(emailLog.getEmailConfig(), emailLog.getToEmail(), emailLog.getSubject(), emailLog.getBody(), attachments);
-    }
+    @Autowired
+    private DocumentAttachmentManager documentAttachmentManager;
 
-    public Boolean sendEmail(EmailConfig config, String toEmail, String subject, String body, List<Path> attachments) {
-        javaMailSender = createMailSender(config);
-        MimeMessage message = javaMailSender.createMimeMessage();
+    public EmailLog sendEmail(Email email) throws EmailSendingException {
+        EmailLog emailLog = prepareEmailForOutbox(email);
+        EmailSender emailSender = new EmailSender(emailLog);
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom(config.getSenderEmail());
-            helper.setTo(toEmail);
-            helper.setSubject(subject);
-            helper.setText(body, true);
-            addAttachments(helper, attachments);
-            javaMailSender.send(message);
-        } catch (MessagingException e) {
-            logger.error("Failed to send email to: " + toEmail, e);
-            return false;
+            emailSender.send();
+            updateEmailStatus(emailLog, EmailStatus.SUCCESS, "");
+        } catch (EmailSendingException e) {
+            updateEmailStatus(emailLog, EmailStatus.FAILED, e.getMessage());
+            throw new EmailSendingException("Failed to send email", e);
         }
-        return true;
+        return emailLog;
     }
 
-    public Boolean sendEncryptedEmail(EmailConfig config, String toEmail, String subject, String primaryBody, String secondaryBody, List<Path> attachments, String password) {
-        Path encryptedBodyWithAttachmentsPath = createEncryptedBodyWithAttachments(primaryBody, attachments, password);
-        return sendEmail(config, toEmail, subject, secondaryBody, Arrays.asList(encryptedBodyWithAttachmentsPath)); 
+    public EmailLog prepareEmailForOutbox(Email email) {
+        EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(email.getSender());
+        EmailLog emailLog = new EmailLog(emailConfig, email.getSender(), email.getRecipient(), email.getSubject(), email.getMessage(), EmailStatus.OUTBOX);
+        setEmailAttachments(emailLog, email.getAttachments());
+        emailLogDao.saveEmailLog(emailLog);
+        return emailLog;
     }
 
-    private JavaMailSender createMailSender(EmailConfig emailConfig) {
-        switch (emailConfig.getEmailProvider()) {
-            case GMAIL:
-                javaMailSender = createTLSMailSender(emailConfig);
-                break;                
-            case OUTLOOK:
-                javaMailSender = createTLSMailSender(emailConfig);
-                break;
-            case SENDGRID:
-                break;
-            default:
-                break;
-        }
-        return javaMailSender; 
+    public EmailLog updateEmailStatus(EmailLog emailLog, EmailStatus emailStatus, String errorMessage) {
+        emailLog.setStatus(emailStatus);
+        emailLog.setErrorMessage(errorMessage);
+        emailLog.setTimestamp(new Date());
+        emailLogDao.saveEmailLog(emailLog);
+        return emailLog;
     }
 
-    private JavaMailSender createTLSMailSender(EmailConfig emailConfig) {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            JsonNode jsonNode = objectMapper.readTree(emailConfig.getConfigDetailsJson());
-            String host = jsonNode.get("host").asText();
-            String port = jsonNode.get("port").asText();
-            String username = jsonNode.get("username").asText();
-            String password = jsonNode.get("password").asText();
-
-            mailSender.setHost(host);
-            mailSender.setPort(Integer.parseInt(port));
-            mailSender.setUsername(username);
-            mailSender.setPassword(password);
-
-            Properties properties = new Properties();
-            properties.put("mail.transport.protocol", "smtp");
-            properties.put("mail.smtp.auth", "true");
-            properties.put("mail.smtp.starttls.enable", "true");
-            properties.put("mail.smtp.starttls.required", "true");
-            properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
-            properties.put("mail.debug", "false");
-
-            mailSender.setJavaMailProperties(properties);
-        } catch (IOException e) {
-            logger.error("Failed to create mail sender", e);
+    private void setEmailAttachments(EmailLog emailLog, List<EmailAttachment> emailAttachments) {
+        List<EmailAttachment> emailAttachmentList = new ArrayList<>();
+        for (EmailAttachment emailAttachment : emailAttachments) {
+            emailAttachmentList.add(new EmailAttachment(emailLog, emailAttachment.getFileName(), emailAttachment.getFilePath(), emailAttachment.getDocumentType(), emailAttachment.getDocumentId()));
         }
-        return mailSender;
-    }
-
-    private void addAttachments(MimeMessageHelper helper, List<Path> attachments) throws MessagingException {
-        if (attachments == null) { return; }
-
-        for (Path attachment : attachments) {
-            helper.addAttachment(attachment.getFileName().toString(), attachment.toFile());
-        }
+        emailLog.setEmailAttachments(emailAttachmentList);  
     }
 
     private Path createEncryptedBodyWithAttachments(String body, List<Path> attachments, String password) {
-        Path combinedPDFPath = concatBodyWithAttachments(body, attachments);
+        Path encryptedPDF = null;
         try {
-            return PDFEncryptionUtil.encryptPDF(combinedPDFPath, password);
-        } catch (IOException e) {
-            logger.error("Failed to encrypt email", e);
-            return null;
+            Path combinedPDFPath = concatBodyWithAttachments(body, attachments);
+            encryptedPDF = PDFEncryptionUtil.encryptPDF(combinedPDFPath, password);
+        } catch (IOException | PDFGenerationException e) {
+            logger.error("Failed to create encrypted email attachments", e);
         }
+        return encryptedPDF;
     }
 
-    private Path concatBodyWithAttachments(String body, List<Path> attachments) {
+    private Path concatBodyWithAttachments(String body, List<Path> attachments) throws PDFGenerationException {
         if (attachments == null) { attachments = new ArrayList<>(); }
         
         Path htmlBodyPDF = ConvertToEdoc.saveAsTempPDF(body);
         if (htmlBodyPDF != null) { attachments.add(0, htmlBodyPDF); }
 
-        return concatPDF(attachments);
-    }
-
-    private Path concatPDF(List<Path> attachments) {
-        ArrayList<Object> pdfDocumentList = new ArrayList<>();
-        for (Path attachment : attachments) { pdfDocumentList.add(attachment.toString()); }
-        
-        try {
-            return documentAttachmentManager.concatPDF(pdfDocumentList);
-        } catch (PDFGenerationException e) {
-            logger.error("Failed to concat pdf", e);
-            return null;
-        }
-    }
-
-    private void checkProtocolSupport() {
-        logger.info("JavaMail version: " + javax.mail.Session.class.getPackage().getImplementationVersion());
-        try {
-            logger.info(String.join(" ", SSLContext.getDefault().getSupportedSSLParameters().getProtocols()));
-        } catch (NoSuchAlgorithmException e) {
-            logger.info("NoSuchAlgorithmException", e);
-        }
+        return documentAttachmentManager.concatPDF(attachments);
     }
 }

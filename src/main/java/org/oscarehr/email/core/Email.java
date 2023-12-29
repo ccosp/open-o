@@ -1,34 +1,27 @@
 package org.oscarehr.email.core;
 
-import java.nio.file.Path;
 import java.util.List;
 
-import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.common.model.EmailAttachment;
 
 public class Email {
-    private EmailConfig senderConfig;
+    private String sender;
     private String recipient;
     private String subject;
-    private String content;
-    private List<Path> attachments;
+    private String message;
+    private String encryptedMessage;
+    private Boolean isEncrypted;
+    private String password;
+    private List<EmailAttachment> attachments;
 
-    public Email() {
+    public Email() { }
+
+    public String getSender() {
+        return sender;
     }
 
-    public Email(EmailConfig senderConfig, String recipient, String subject, String content, List<Path> attachments) {
-        this.senderConfig = senderConfig;
-        this.recipient = recipient;
-        this.subject = subject;
-        this.content = content;
-        this.attachments = attachments;
-    }
-
-    public EmailConfig getSenderConfig() {
-        return senderConfig;
-    }
-
-    public void setSenderConfig(EmailConfig senderConfig) {
-        this.senderConfig = senderConfig;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public String getRecipient() {
@@ -47,19 +40,43 @@ public class Email {
         this.subject = subject;
     }
 
-    public String getContent() {
-        return content;
+    public String getMessage() {
+        return message;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public List<Path> getAttachments() {
+    public String getEncryptedMessage() {
+        return encryptedMessage;
+    }
+
+    public void setEncryptedMessage(String encryptedMessage) {
+        this.encryptedMessage = encryptedMessage;
+    }
+
+    public Boolean getIsEncrypted() {
+        return isEncrypted;
+    }
+
+    public void setIsEncrypted(Boolean isEncrypted) {
+        this.isEncrypted = isEncrypted;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<EmailAttachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<Path> attachments) {
+    public void setAttachments(List<EmailAttachment> attachments) {
         this.attachments = attachments;
     }
 }
