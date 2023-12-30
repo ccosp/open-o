@@ -42,7 +42,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -81,18 +80,15 @@ public class ManageFaxes extends FaxAction {
 		
 		FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
 		FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-		
 		FaxJob faxJob = faxJobDao.find(Integer.parseInt(jobId));
-		
 		FaxConfig faxConfig = faxConfigDao.getConfigByNumber(faxJob.getFax_line());
-		
-		DefaultHttpClient client = new DefaultHttpClient();
-		
 		String result = "{success:false}";				
 		
 		log.info("TRYING TO CANCEL FAXJOB " + faxJob.getJobId());
-		
-		if( faxConfig.isActive() ) {
+
+		if( faxConfig == null ) {
+			log.error("Could not find faxConfig while processing fax id: " + faxJob.getId() + " Has the fax number changed?");
+		} else if( faxConfig.isActive() ) {
 			
 			if( faxJob.getStatus().equals(FaxJob.STATUS.SENT)) {
 				faxJob.setStatus(FaxJob.STATUS.CANCELLED);
@@ -104,15 +100,14 @@ public class ManageFaxes extends FaxAction {
 			if( faxJob.getJobId() != null ) {	
 				
 				if( faxJob.getStatus().equals(FaxJob.STATUS.WAITING)) {
-			
-					client.getCredentialsProvider().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(faxConfig.getSiteUser(), faxConfig.getPasswd()));
-					
-					HttpPut mPut = new HttpPut(faxConfig.getUrl() + "/fax/" + faxJob.getJobId());
-					mPut.setHeader("accept", "application/json");
-					mPut.setHeader("user", faxConfig.getFaxUser());
-					mPut.setHeader("passwd", faxConfig.getFaxPasswd());					
-					
-					try {
+					try(DefaultHttpClient client = new DefaultHttpClient()){
+						client.getCredentialsProvider().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(faxConfig.getSiteUser(), faxConfig.getPasswd()));
+
+						HttpPut mPut = new HttpPut(faxConfig.getUrl() + "/fax/" + faxJob.getJobId());
+						mPut.setHeader("accept", "application/json");
+						mPut.setHeader("user", faxConfig.getFaxUser());
+						mPut.setHeader("passwd", faxConfig.getFaxPasswd());
+
 						HttpResponse httpResponse = client.execute(mPut);	                
 		                
 		                if( httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK ) {
@@ -130,16 +125,10 @@ public class ManageFaxes extends FaxAction {
 					}
 				}
 			}
-		}					
-			
-        try {
-        	JSONObject json = JSONObject.fromObject(result);        	
-	        json.write(response.getWriter());
-        
-        }catch (IOException e) {
-			log.error(e.getMessage(), e);
-        }
-		
+		}
+
+		jsonResponse(response, JSONObject.fromObject(result));
+
 		return null;
 		
 	}

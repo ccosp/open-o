@@ -205,6 +205,9 @@
 			return false;
 		}
 
+		// disable the action buttons
+		$(".btn-link").prop("disabled", true);
+
 		var url = $("#reportForm").attr("action");
 		var data = "method=CancelFax&jobId="+jobId;
 
@@ -214,11 +217,13 @@
 			data: data,
 			dataType: "json",
 			success: function(data){
-				
+				$(".btn-link").prop("disabled", false);
 				if( data.success ) {
+					$("#cancel_"+jobId).remove();
 					$('#'+status).text("CANCELLED");
 				}
 				else {
+					$("#cancel_"+jobId).prop("disabled", true).css("color", "red").css("font-weight", "bold").text("error");
  					alert("OSCAR WAS UNABLE TO CANCEL THE FAX"); 
 				}
 			}});
@@ -228,11 +233,14 @@
 	
 	function complete(id, status ) {
 		
-		var answer = confirm("Are you sure you want to mark this fax as completed?");
+		var answer = confirm("Are you sure you want to resolve this fax status?");
 		
 		if( answer == null ) {			
 			return false;
 		}
+
+		// disable the action buttons
+		$(".btn-link").prop("disabled", true);
 		
 		var url = $("#reportForm").attr("action");
 		var data = "method=SetCompleted&jobId="+id;
@@ -242,9 +250,9 @@
 			method: 'POST',
 			data: data,			
 			success: function(data){
-				
-				$('#'+status).text("RESOLVED");
-				
+				$(".btn-link").prop("disabled", false);
+				$("#complete_"+id).remove();
+				$('#' + status).text("RESOLVED");
 			}});
 	}
 
