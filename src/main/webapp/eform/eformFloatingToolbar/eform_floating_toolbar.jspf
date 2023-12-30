@@ -29,11 +29,10 @@
 	Imported solely into the eformsowform_data.jsp and eformadd_data.jsp pages. 
 --%>
 
-<%@ page import="java.sql.*, org.oscarehr.managers.FaxManager, org.oscarehr.util.LoggedInInfo"%>
+<%@ page import=" org.oscarehr.managers.FaxManager"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%
-  LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-  pageContext.setAttribute("faxActive", FaxManager.isEnabled(loggedInInfo));
+  pageContext.setAttribute("faxActive", FaxManager.isEnabled());
 %>
 
 <div id="eform_floating_toolbar" class="no-print DoNotPrint hidden-print"> 
