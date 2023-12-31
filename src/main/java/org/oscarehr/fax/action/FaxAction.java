@@ -57,9 +57,10 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
+import oscar.form.JSONAction;
 
 
-public class FaxAction extends DispatchAction {
+public class FaxAction extends JSONAction {
 
 	private static final Logger logger=MiscUtils.getLogger();
 	private final FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
@@ -279,12 +280,7 @@ public class FaxAction extends DispatchAction {
 		jsonObject.put("jobId", jobId);
 		jsonObject.put("pageCount", pageCount);
 
-		try (PrintWriter out = response.getWriter()) {
-			response.setContentType("application/json");
-			jsonObject.write(out);
-		} catch (IOException e) {
-			MiscUtils.getLogger().error("JSON writer error for fax job: " + jobId, e);
-		}
+		jsonResponse(response, jsonObject);
 	}
 
 }
