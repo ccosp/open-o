@@ -201,7 +201,7 @@
 		
 		var answer = confirm("Are you sure you want to remove this fax from the queue?");
 		
-		if( answer == null ) {
+		if( answer == null || !answer) {
 			return false;
 		}
 
