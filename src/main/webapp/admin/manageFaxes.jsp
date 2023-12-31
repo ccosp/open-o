@@ -235,7 +235,7 @@
 		
 		var answer = confirm("Are you sure you want to resolve this fax status?");
 		
-		if( answer == null ) {			
+		if( answer == null || !answer) {
 			return false;
 		}
 
