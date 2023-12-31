@@ -42,7 +42,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -58,7 +57,6 @@ import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.action.FaxAction;
 import org.oscarehr.managers.FaxManager;
-import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -66,11 +64,10 @@ import org.oscarehr.util.SpringUtils;
 
 public class ManageFaxes extends FaxAction {
 	
-	private Logger log = MiscUtils.getLogger();
-	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+	private final Logger log = MiscUtils.getLogger();
+	private final SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
-	private NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
-	private FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+	private final FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
 
 	@SuppressWarnings("unused")
 	public ActionForward CancelFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -83,18 +80,15 @@ public class ManageFaxes extends FaxAction {
 		
 		FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
 		FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-		
 		FaxJob faxJob = faxJobDao.find(Integer.parseInt(jobId));
-		
 		FaxConfig faxConfig = faxConfigDao.getConfigByNumber(faxJob.getFax_line());
-		
-		DefaultHttpClient client = new DefaultHttpClient();
-		
 		String result = "{success:false}";				
 		
 		log.info("TRYING TO CANCEL FAXJOB " + faxJob.getJobId());
-		
-		if( faxConfig.isActive() ) {
+
+		if( faxConfig == null ) {
+			log.error("Could not find faxConfig while processing fax id: " + faxJob.getId() + " Has the fax number changed?");
+		} else if( faxConfig.isActive() ) {
 			
 			if( faxJob.getStatus().equals(FaxJob.STATUS.SENT)) {
 				faxJob.setStatus(FaxJob.STATUS.CANCELLED);
@@ -106,15 +100,14 @@ public class ManageFaxes extends FaxAction {
 			if( faxJob.getJobId() != null ) {	
 				
 				if( faxJob.getStatus().equals(FaxJob.STATUS.WAITING)) {
-			
-					client.getCredentialsProvider().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(faxConfig.getSiteUser(), faxConfig.getPasswd()));
-					
-					HttpPut mPut = new HttpPut(faxConfig.getUrl() + "/fax/" + faxJob.getJobId());
-					mPut.setHeader("accept", "application/json");
-					mPut.setHeader("user", faxConfig.getFaxUser());
-					mPut.setHeader("passwd", faxConfig.getFaxPasswd());					
-					
-					try {
+					try(DefaultHttpClient client = new DefaultHttpClient()){
+						client.getCredentialsProvider().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(faxConfig.getSiteUser(), faxConfig.getPasswd()));
+
+						HttpPut mPut = new HttpPut(faxConfig.getUrl() + "/fax/" + faxJob.getJobId());
+						mPut.setHeader("accept", "application/json");
+						mPut.setHeader("user", faxConfig.getFaxUser());
+						mPut.setHeader("passwd", faxConfig.getFaxPasswd());
+
 						HttpResponse httpResponse = client.execute(mPut);	                
 		                
 		                if( httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK ) {
@@ -127,62 +120,42 @@ public class ManageFaxes extends FaxAction {
 		                }
 		                
 					}
-					catch( ClientProtocolException e ) {
-						
+					catch( IOException e ) {
 						log.error("PROBLEM COMM WITH WEB SERVICE");
-									
-					}catch (IOException e) {
-			        
-						log.error("PROBLEM COMM WITH WEB SERVICE");
-					
-		            }
+					}
 				}
 			}
-		}					
-			
-        try {
-        	JSONObject json = JSONObject.fromObject(result);        	
-	        json.write(response.getWriter());
-        
-        }catch (IOException e) {
-			log.error(e.getMessage(), e);
-        }
-		
+		}
+
+		jsonResponse(response, JSONObject.fromObject(result));
+
 		return null;
 		
 	}
 	
 	@SuppressWarnings("unused")
 	public ActionForward ResendFax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		
+
+		JSONObject jsonObject = JSONObject.fromObject("{success:false}");
 		String JobId = request.getParameter("jobId");
 		String faxNumber = request.getParameter("faxNumber");
-		JSONObject jsonObject;
-		
-		if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_admin", "w", null)) {
+		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_admin", "w", null)) {
         	throw new SecurityException("missing required security object (_admin)");
         }
-			
-		FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);		
-		FaxJob faxJob = faxJobDao.find(Integer.parseInt(JobId));
-		
-		faxJob.setDestination(faxNumber);
-		faxJob.setStatus(FaxJob.STATUS.SENT);
-		faxJob.setStamp(new Date());
-		faxJob.setJobId(null);
-		
-		faxJobDao.merge(faxJob);
-			
-		try {	
-			jsonObject = JSONObject.fromObject("{success:true}");
-			jsonObject.write(response.getWriter());
-		} catch ( IOException e ) {	
-			 MiscUtils.getLogger().error("JSON WRITER ERROR", e);
-		} catch (Exception e) {
-			jsonObject = JSONObject.fromObject("{success:false}");
-			log.error("ERROR RESEND FAX " + JobId);	
-        }
-		
+
+		boolean success = false;
+
+		/*
+		 *  Dont even try to resend a fax if the service is not enabled.
+		 */
+		if(FaxManager.isEnabled()){
+			success = faxManager.resendFax(loggedInInfo, JobId, faxNumber);
+		}
+
+		jsonResponse(response, JSONObject.fromObject("{success:" + success + "}"));
+
 		return null;
 	}
 	
