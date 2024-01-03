@@ -275,10 +275,12 @@
 </head>
 <body>
 
+<jsp:include page="../images/spinner.jsp" flush="true"/>
+
 <div id="bodyrow" class="container-fluid">
 	<div id="bodycolumn">
 
-		<form id="reportForm" action="<%=request.getContextPath()%>/admin/ManageFaxes.do">
+		<form id="reportForm" action="<%=request.getContextPath()%>/admin/ManageFaxes.do" onsubmit = "ShowSpin(true);">
 
 		<input type="hidden" name="method" value="fetchFaxStatus" />
 	
