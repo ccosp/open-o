@@ -38,6 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.upload.FormFile;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
 import org.codehaus.jettison.json.JSONObject;
@@ -114,6 +116,7 @@ import org.oscarehr.hospitalReportManager.model.HRMDocumentComment;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentSubClass;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToProvider;
+import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -238,6 +241,8 @@ public class ImportDemographicDataAction4 extends Action {
     IssueDAO issueDao = SpringUtils.getBean(IssueDAO.class);
     DemographicContactDao contactDao = (DemographicContactDao) SpringUtils.getBean("demographicContactDao");
 
+    private final NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
+
     private LabUploadWs labUpload = new LabUploadWs();
 
     @Override
@@ -247,17 +252,56 @@ public class ImportDemographicDataAction4 extends Action {
 			throw new SecurityException("missing required security object (_demographic)");
 		}
 
+        //TODO More thought needs to be put into the user interface. Extra attention on multithreading is required.
+        // Importing single patient files does work ok
+        // -but-
+        // Batch imports easily exceed 30GB in size. Importing an entire patient panel can
+        // take up to 24 hours to complete.  And it's most likely that the user will not
+        // receive a status of completion of a batch import before the OSCAR session
+        // expires and/or after the user navigates away from the upload page. Cancellation of the HTTP thread
+        // (session) also causes loss of the import stream. Very frustrating.
+        // To help overcome interuptions, uploaded files must be saved as *temporary* files before processing.
+        // Do not save to OSCAR's document volumes - there is no need to use extra disk space
+        // to store redundant data.
+
+        // initialize
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-    	
+        ImportDemographicDataForm frm = (ImportDemographicDataForm) form;
         admProviderNo = (String) request.getSession().getAttribute("user");
         programId = new EctProgram(request.getSession()).getProgram(admProviderNo);
-        String tmpDir = oscarProperties.getProperty("TMP_DIR");
-        tmpDir = Util.fixDirName(tmpDir);
-        if (!Util.checkDir(tmpDir)) {
-            logger.debug("Error! Cannot write to TMP_DIR - Check oscar.properties or dir permissions.");
+        matchProviderNames = frm.getMatchProviderNames();
+        ArrayList<String> warnings = new ArrayList<>();
+        ArrayList<String[]> logs = new ArrayList<>();
+        validXmlFileList = new ArrayList<>();
+        String[] logResult;
+
+        /*
+         * get filename, filetype, and input stream of the import; then
+         * save the upload stream to a temp directory.  This should allow the HTTP
+         * thread to close gracefully while the import is being processed.
+         */
+        FormFile imp = frm.getImportFile();
+        String filename = imp.getFileName();
+        String filetype = imp.getContentType();
+        Path directory;
+        try(InputStream inputStream = imp.getInputStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream())
+        {
+            int length;
+            byte[] bytes = new byte[1024];
+
+            // copy data from input stream to output stream
+            while ((length = inputStream.read(bytes)) != -1) {
+                byteArrayOutputStream.write(bytes, 0, length);
+            }
+
+            directory = nioFileManager.createTempFile(filename, byteArrayOutputStream);
         }
 
-        ImportDemographicDataForm frm = (ImportDemographicDataForm) form;
+        /*
+         * Perform a poorly understood "student" process.  Is this code block
+         * still needed??  Happy to delete if it's no longer applied.
+         */
         logger.debug("import to course id "  + frm.getCourseId() + " using timeshift value " + frm.getTimeshiftInDays());
         List<Provider> students = new ArrayList<Provider>();
         int courseId = 0;
@@ -275,17 +319,69 @@ public class ImportDemographicDataAction4 extends Action {
             }
         }
         logger.debug("apply this patient to " + students.size() + " students");
-        matchProviderNames = frm.getMatchProviderNames();
-//        FormFile imp = frm.getImportFile();
-//        String ifile = tmpDir + imp.getFileName();
-//        String ifile = tmpDir + "ChangTestExport.zip";
-        ArrayList<String> warnings = new ArrayList<>();
-        ArrayList<String[]> logs = new ArrayList<>();
-        validXmlFileList = new ArrayList<>();
-        Path directory = Paths.get("/Users/denniswarren/Documents/Colcamex/Clients/data_transfers/Maywood_Medaccess/ChangFinalExport_uxUD8FjFbHuaQPeS6ytZVGWs/ChangFinalExport");
-        String[] logResult;
 
-        try(DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directory)) {
+        /*
+         * Determine what kind of file was uploaded and process accordingly
+         * Single XML File: process accordingly.
+         * ZIP File: unzip into temp directory and delete source
+         * Link to Directory: recurse tree and process XML
+         *
+         * TODO: At the moment it is expected that an XML file is an import of a single patient file.
+         *  Whereas a ZIP file will contain a directory of several directories each representing
+         *  a patient file and each containing a single XML File and additional PDF's
+         *  Expectations of how uploaded export files are batched and formatted should be studied and standardized.
+         *
+         */
+
+        // if the saved temporary file is an XML import of a single patient file, then go straight to processing
+        if(filetype.contains("xml") && Files.exists(directory) && Files.isRegularFile(directory)) {
+            processXmlFile(loggedInInfo, directory, warnings, logs, request, frm.getTimeshiftInDays(), students, courseId);
+        }
+
+        //TODO if the saved temporary file is a zip file then go on to unzip and process the directory tree.
+        // more checks and standards needed.
+        else if(filetype.contains("zip") && Files.exists(directory)) {
+            // unzip into parent directory
+            Path rootDirectory = unzipFile(directory);
+            // process starting at parent directory.
+            processXmlFilesInDirectory(loggedInInfo, rootDirectory, warnings, logs, request, frm.getTimeshiftInDays(), students, courseId);
+        }
+
+        // if the saved temporary file is a directory tree; then search for and process the xml file in each directory
+        else if(Files.exists(directory)) {
+            processXmlFilesInDirectory(loggedInInfo, directory, warnings, logs, request, frm.getTimeshiftInDays(), students, courseId);
+        }
+
+        //TODO is it possible that the uploaded file is an batch file of XML files? If so, then a process is needed to
+        // parse the xml batch file into individual XML patient files.
+
+
+        // use the completed valid xml list to run through the contact imports.
+        for(Path validXmlFile : validXmlFileList) {
+            logResult = importContacts(loggedInInfo, validXmlFile.toString(), warnings, request, frm.getTimeshiftInDays(), students, courseId);
+            logs.add(logResult);
+        }
+
+        /*
+         * a new import log gets generated into the root of the temporary directory.
+         * It gets offered as a download to the end user.
+         * TODO this log should be stored so that it can be retrieved later by the end user.
+         */
+        File importLog = makeImportLog(logs, directory.getParent().toString());
+	
+        //channel warnings and importlog to browser
+        request.setAttribute("warnings", warnings);
+        request.setAttribute("importlog", importLog.getPath());
+        resetProviderBean(request);
+        return mapping.findForward("success");
+    }
+
+    /**
+     * Search for all XML / CDS / CMS patient files in a given directory and process.
+     */
+    private void processXmlFilesInDirectory(LoggedInInfo loggedInInfo, Path fileDirectory, ArrayList<String> warnings, ArrayList<String[]> logs,
+                                            HttpServletRequest request, int timeshiftInDays, List<Provider> students, int courseId) throws IOException {
+        try(DirectoryStream<Path> directoryStream = Files.newDirectoryStream(fileDirectory)) {
             for (Path stream : directoryStream) {
 
                 if (Files.isDirectory(stream)) {
@@ -297,9 +393,7 @@ public class ImportDemographicDataAction4 extends Action {
                      */
                     Path xmlFile = Paths.get(currentDirectory, stream.toFile().getName() + ".xml");
                     if (Files.exists(xmlFile)) {
-                        logResult = importXML(loggedInInfo, xmlFile.toString(), warnings, request, frm.getTimeshiftInDays(), students, courseId, true);
-                        validXmlFileList.add(xmlFile);
-                        logs.add(logResult);
+                        processXmlFile(loggedInInfo, xmlFile, warnings, logs, request, timeshiftInDays, students, courseId);
                     }
 
                     /*
@@ -309,9 +403,7 @@ public class ImportDemographicDataAction4 extends Action {
                         List<Path> possibleXmlFileList = searchFileByExtension(stream, warnings);
                         for (Path possibleXmlFile : possibleXmlFileList) {
                             if (Files.exists(xmlFile)) {
-                                logResult = importXML(loggedInInfo, possibleXmlFile.toString(), warnings, request, frm.getTimeshiftInDays(), students, courseId, true);
-                                validXmlFileList.add(xmlFile);
-                                logs.add(logResult);
+                                processXmlFile(loggedInInfo, possibleXmlFile, warnings, logs, request, timeshiftInDays, students, courseId);
                             }
                         }
                     }
@@ -319,148 +411,62 @@ public class ImportDemographicDataAction4 extends Action {
                     warnings.add("Directory not found " + stream);
                 }
             }
+        } catch (Exception e) {
+	        throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Zip format only.
+     * Extracts entire contents to current directory
+     * TODO disk capacity should be evaluated first.
+     */
+    private Path unzipFile(Path zipFilePath) throws IOException {
+        Path directoryPath = zipFilePath.getParent();
+        byte[] buffer = new byte[1024];
+        try(ZipInputStream zis = new ZipInputStream(Files.newInputStream(Paths.get(zipFilePath.toString())))) {
+            ZipEntry zipEntry = zis.getNextEntry();
+            while (zipEntry != null) {
+                File newFile = Paths.get(directoryPath.toString(), zipEntry.getName()).toFile();
+                if (zipEntry.isDirectory()) {
+                    if (!newFile.isDirectory() && !newFile.mkdirs()) {
+                        throw new IOException("Failed to create directory " + newFile);
+                    }
+                } else {
+                    // fix for Windows-created archives
+                    File parent = newFile.getParentFile();
+                    if (!parent.isDirectory() && !parent.mkdirs()) {
+                        throw new IOException("Failed to create directory " + parent);
+                    }
+
+                    // write file content
+                    try(FileOutputStream fos = new FileOutputStream(newFile)) {
+                        int len;
+                        while ((len = zis.read(buffer)) > 0) {
+                            fos.write(buffer, 0, len);
+                        }
+                    } catch (Exception e) {
+                        throw new IOException("Failed to create directory " + e);
+                    }
+                }
+                zipEntry = zis.getNextEntry();
+            }
         }
 
-        // use the valid xml list to run through the contact imports.
-        for(Path validXmlFile : validXmlFileList) {
-            logResult = importContacts(loggedInInfo, validXmlFile.toString(), warnings, request, frm.getTimeshiftInDays(), students, courseId);
-            logs.add(logResult);
+        // delete the zip file
+        if(Files.exists(directoryPath)) {
+            Files.deleteIfExists(zipFilePath);
         }
+        return directoryPath;
+    }
 
-        File importLog = makeImportLog(logs, tmpDir);
-
-//	try(InputStream is = Files.newInputStream(Paths.get(ifile));
-//        OutputStream os = new FileOutputStream(ifile)) {
-//            byte[] buf = new byte[1024];
-//            int len;
-//            while ((len=is.read(buf)) > 0) {
-//                os.write(buf,0,len);
-//            }
-//            is.close();
-//            os.close();
-//
-//            if (matchFileExt(ifile, "zip")) {
-//            	saveParts(tmpDir,ifile);
-//                ZipInputStream in = new ZipInputStream(new FileInputStream(ifile));
-//                boolean noXML = true;
-//                ZipEntry entry = in.getNextEntry();
-//                String entryDir = "";
-//
-//                while (entry!=null) {
-//                    String entryName = entry.getName();
-//                    if (entry.isDirectory()) entryDir = entryName;
-//                    if (entryName.startsWith(entryDir)) entryName = entryName.substring(entryDir.length());
-//
-//                    String ofile = tmpDir + entryName;
-//                    if (matchFileExt(ofile, "xml")) {
-//                    	new File(ofile).getParentFile().mkdirs();
-//
-//                        noXML = false;
-//                        OutputStream out = null;
-//                        try {
-//	                        out = new FileOutputStream(ofile);
-//	                        while ((len=in.read(buf)) > 0) out.write(buf,0,len);
-//	                        out.close();
-//	                    } finally {
-//	                    	IOUtils.closeQuietly(out);
-//	                    }
-//                        logs.add(importXML(LoggedInInfo.getLoggedInInfoFromSession(request) , ofile, warnings, request,frm.getTimeshiftInDays(),students,courseId,true));
-//                        importNo++;
-//                        demographicNo=null;
-//                    }
-//                    entry = in.getNextEntry();
-//                }
-//                if (noXML) {
-//                    Util.cleanFile(ifile);
-//                        throw new Exception ("Error! No .xml file in zip");
-//                } else {
-//                    importLog = makeImportLog(logs, tmpDir);
-//                }
-//                in.close();
-////                Util.cleanFile(ifile);
-//
-//            } else if (matchFileExt(ifile, "xml")) {
-//                logs.add(importXML(LoggedInInfo.getLoggedInInfoFromSession(request), ifile, warnings, request,frm.getTimeshiftInDays(),students,courseId,false));
-//                demographicNo=null;
-//                importLog = makeImportLog(logs, tmpDir);
-//            } else {
-//                Util.cleanFile(ifile);
-//                throw new Exception ("Error! Import file must be .xml or .zip");
-//            }
-//	} catch (Exception e) {
-//            warnings.add("Error processing file: " + imp.getFileName());
-//            logger.error("Error processing file: " + imp.getFileName(), e);
-//	}
-//
-//
-//
-//	//CONTACTS MUST BE PROCESSED AFTER
-//	try {
-//		byte[] buf = new byte[1024];
-//        int len;
-//
-//        if (matchFileExt(ifile, "zip")) {
-//        	saveParts(tmpDir,ifile);
-//            ZipInputStream in = new ZipInputStream(new FileInputStream(ifile));
-//            boolean noXML = true;
-//            ZipEntry entry = in.getNextEntry();
-//            String entryDir = "";
-//
-//            while (entry!=null) {
-//                String entryName = entry.getName();
-//                if (entry.isDirectory()) entryDir = entryName;
-//                if (entryName.startsWith(entryDir)) entryName = entryName.substring(entryDir.length());
-//
-//                String ofile = tmpDir + entryName;
-//                if (matchFileExt(ofile, "xml")) {
-//                	new File(ofile).getParentFile().mkdirs();
-//
-//                    noXML = false;
-//                    OutputStream out = null;
-//                    try {
-//                        out = new FileOutputStream(ofile);
-//                        while ((len=in.read(buf)) > 0) out.write(buf,0,len);
-//                        out.close();
-//                    } finally {
-//                    	IOUtils.closeQuietly(out);
-//                    }
-//                    //process for contacts only
-//                  //  logger.info("processing for contacts - " + ofile);
-//                    logs.add(importContacts(LoggedInInfo.getLoggedInInfoFromSession(request) , ofile, warnings, request,frm.getTimeshiftInDays(),students,courseId));
-//
-//                    demographicNo=null;
-//                }
-//                entry = in.getNextEntry();
-//            }
-//            if (noXML) {
-//                Util.cleanFile(ifile);
-//                    throw new Exception ("Error! No .xml file in zip");
-//            } else {
-//               // importLog = makeImportLog(logs, tmpDir);
-//            }
-//            in.close();
-//            Util.cleanFile(ifile);
-//
-//        } else if (matchFileExt(ifile, "xml")) {
-//        	logger.info("processing for contacts - " + ifile);
-//        	logs.add(importContacts(LoggedInInfo.getLoggedInInfoFromSession(request), ifile, warnings, request,frm.getTimeshiftInDays(),students,courseId));
-//            demographicNo=null;
-//           // importLog = makeImportLog(logs, tmpDir);
-//        } else {
-//            Util.cleanFile(ifile);
-//            throw new Exception ("Error! Import file must be .xml or .zip");
-//        }
-//} catch (Exception e) {
-//        warnings.add("Error processing file: " + imp.getFileName());
-//        logger.error("Error", e);
-//}
-	
-	
-        //channel warnings and importlog to browser
-        request.setAttribute("warnings", warnings);
-        request.setAttribute("importlog", importLog.getPath());
-        resetProviderBean(request);
-        return mapping.findForward("success");
+    /**
+     * Process a single patient XML / CDS / CMS file import and add to OSCAR's database.
+     */
+    private void processXmlFile(LoggedInInfo loggedInInfo, Path xmlFile, ArrayList<String> warnings, ArrayList<String[]> logs, HttpServletRequest request, int timeshiftInDays, List<Provider> students, int courseId) throws Exception {
+        String[] logResult = importXML(loggedInInfo, xmlFile.toString(), warnings, request, timeshiftInDays, students, courseId, true);
+        validXmlFileList.add(xmlFile);
+        logs.add(logResult);
     }
 
     private List<Path> searchFileByExtension(Path path, ArrayList<String> warnings) {
@@ -478,45 +484,45 @@ public class ImportDemographicDataAction4 extends Action {
         return filteredFileList;
     }
 
-    private void saveParts(String tmpDir,String ifile) throws Exception {
-    	int len = 0;
-    	byte[] buf = new byte[1024];
-    	
-        ZipInputStream in = new ZipInputStream(new FileInputStream(ifile));
-        ZipEntry entry = in.getNextEntry();
-        String entryDir = "";
-
-        while (entry!=null) {
-            String entryName = entry.getName();
-            if (entry.isDirectory()) 
-            	entryDir = entryName;
-            if (entryName.startsWith(entryDir)) 
-            	entryName = entryName.substring(entryDir.length());
-
-            if(entryName.isEmpty()) {
-            	entry = in.getNextEntry();
-            	continue;
-            }
-            	
-            
-            String ofile = tmpDir + entryDir +  entryName;
-            
-            if (!matchFileExt(ofile, "xml")) {
-                OutputStream out = null;    
-                try {
-                	String path = ofile.substring(0,ofile.lastIndexOf(File.separator));
-                	new File(path).mkdirs();
-                    out = new FileOutputStream(ofile);
-                    while ((len=in.read(buf)) > 0) out.write(buf,0,len);
-                    out.close();
-                } finally {
-                	IOUtils.closeQuietly(out);
-                }
-            }
-            entry = in.getNextEntry();
-        }
-        in.close();
-    }
+//    private void saveParts(String tmpDir,String ifile) throws Exception {
+//    	int len = 0;
+//    	byte[] buf = new byte[1024];
+//
+//        ZipInputStream in = new ZipInputStream(new FileInputStream(ifile));
+//        ZipEntry entry = in.getNextEntry();
+//        String entryDir = "";
+//
+//        while (entry!=null) {
+//            String entryName = entry.getName();
+//            if (entry.isDirectory())
+//            	entryDir = entryName;
+//            if (entryName.startsWith(entryDir))
+//            	entryName = entryName.substring(entryDir.length());
+//
+//            if(entryName.isEmpty()) {
+//            	entry = in.getNextEntry();
+//            	continue;
+//            }
+//
+//
+//            String ofile = tmpDir + entryDir +  entryName;
+//
+//            if (!matchFileExt(ofile, "xml")) {
+//                OutputStream out = null;
+//                try {
+//                	String path = ofile.substring(0,ofile.lastIndexOf(File.separator));
+//                	new File(path).mkdirs();
+//                    out = new FileOutputStream(ofile);
+//                    while ((len=in.read(buf)) > 0) out.write(buf,0,len);
+//                    out.close();
+//                } finally {
+//                	IOUtils.closeQuietly(out);
+//                }
+//            }
+//            entry = in.getNextEntry();
+//        }
+//        in.close();
+//    }
     
     private void resetProviderBean(HttpServletRequest request) {
     	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
