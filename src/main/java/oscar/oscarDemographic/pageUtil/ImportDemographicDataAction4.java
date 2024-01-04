@@ -464,7 +464,7 @@ public class ImportDemographicDataAction4 extends Action {
      * Process a single patient XML / CDS / CMS file import and add to OSCAR's database.
      */
     private void processXmlFile(LoggedInInfo loggedInInfo, Path xmlFile, ArrayList<String> warnings, ArrayList<String[]> logs, HttpServletRequest request, int timeshiftInDays, List<Provider> students, int courseId) throws Exception {
-        String[] logResult = importXML(loggedInInfo, xmlFile.toString(), warnings, request, timeshiftInDays, students, courseId, true);
+        String[] logResult = importXML(loggedInInfo, xmlFile.toString(), warnings, request, timeshiftInDays, students, courseId, false);
         validXmlFileList.add(xmlFile);
         logs.add(logResult);
     }
@@ -2594,8 +2594,8 @@ public class ImportDemographicDataAction4 extends Action {
                 List<Reports> HRMreports = new ArrayList<Reports>();
                 for (int i=0; i<repR.length; i++) {
                 	Reports reportItem = repR[i];
-                	
-                    if (repR[i].getHRMResultStatus()!=null || repR[i].getOBRContentArray().length>0) { //HRM reports
+                    
+                    if (repR[i].getHRMResultStatus()!=null /*|| repR[i].getOBRContentArray().length>0*/) { //HRM reports   //commenting out the OBR content array check because PDFs might have OBR content as well.
                     	String HRMfile = "HRM_"+UtilDateUtilities.getToday("yyyy-MM-dd.HH.mm.ss") + "_" + repR[i].getSendingFacilityId() + "_" + repR[i].getSendingFacilityReport() + ".xml";
                         
                         HRMDocument hrmDoc = new HRMDocument();
