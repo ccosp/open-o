@@ -795,6 +795,7 @@ function Service(  ){
 // construct model selection on page
 function fillSpecialistSelect( aSelectedService ){
 
+	document.getElementById("eFormButton").style.display = "none"; //added here to immediately hide button if the service is changed
 
 	var selectedIdx = aSelectedService.selectedIndex;
 	var makeNbr = (aSelectedService.options[ selectedIdx ]).value;
@@ -992,11 +993,11 @@ function onSelectSpecialist(SelectedSpec)	{
             	jQuery.getJSON("getProfessionalSpecialist.json", {id: aSpeci.specNbr},
                     function(xml)
                     {
-                		var hasUrl=xml.eDataUrl!=null&&xml.eDataUrl!="";
-                		enableDisableRemoteReferralButton(form, !hasUrl);
-
-                                var annotation = document.getElementById("annotation");
-                                annotation.value = xml.annotation;
+                        var hasUrl=xml.eDataUrl!=null&&xml.eDataUrl!="";
+                        enableDisableRemoteReferralButton(form, !hasUrl);
+                        var annotation = document.getElementById("annotation");
+                        annotation.value = xml.annotation;
+                        updateEFormLink(xml.eformId)
                 	}
             	);
 
@@ -1006,6 +1007,15 @@ function onSelectSpecialist(SelectedSpec)	{
 	 
 	}
 
+function updateEFormLink(eformID) {
+    if (eformID > 0) {
+		let eFormURL = '<%=request.getContextPath()%>/eform/efmformadd_data.jsp?fid='+eformID+'&demographic_no=<%=demo%>&appointment=null';
+        document.getElementById("eFormButton").style.display = "inline";		
+        document.getElementById("eFormButton").onclick = function(){popup(eFormURL);};  //opening as a popup deliberately because the consult is already a popup so best to just have another popup
+    } else {
+        document.getElementById("eFormButton").style.display = "none";
+    }
+}
 //-----------------------------------------------------------------
 
 /////////////////////////////////////////////////////////////////////
@@ -1898,7 +1908,8 @@ function showPreview(base64PDF, pdfName) {
                                                 
                         <tr>
                             <td class="tite4">
-                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" />
+                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" /> </br><br>
+                                <button type="button" id="eFormButton" style="display: none"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.eFormReferralInstructions" /></button>
                             </td>
                             <td  class="tite3">
                                 <textarea id="annotation" style="color: blue;" rows="4" readonly></textarea>
