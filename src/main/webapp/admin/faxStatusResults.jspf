@@ -152,3 +152,4 @@ if(!authed) {
 	</tbody>
 
 </table>
+<script>HideSpin(true);</script>
