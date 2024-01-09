@@ -10,10 +10,10 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.net.ssl.SSLContext;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
-import org.oscarehr.common.model.EmailLog;
 import org.oscarehr.util.EmailSendingException;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
@@ -31,26 +31,26 @@ public class EmailSender {
     private final Logger logger = MiscUtils.getLogger();
     private JavaMailSender javaMailSender = SpringUtils.getBean(JavaMailSender.class);
     private EmailConfig emailConfig;
-    private String recipient;
+    private String[] recipients = new String[0];
     private String subject;
-    private String content;
+    private String body;
     private List<EmailAttachment> attachments;
 
     public EmailSender() { }
 
-    public EmailSender(EmailLog emailLog) {
-        this.emailConfig = emailLog.getEmailConfig();
-        this.recipient = emailLog.getToEmail();
-        this.subject = emailLog.getSubject();
-        this.content = emailLog.getBody();
-        this.attachments = emailLog.getEmailAttachments();
+    public EmailSender(EmailConfig emailConfig, Email email) {
+        this.emailConfig = emailConfig;
+        this.recipients = email.getRecipients();
+        this.subject = email.getSubject();
+        this.body = StringEscapeUtils.unescapeHtml(email.getBody());
+        this.attachments = email.getAttachments();
     }
 
-    public EmailSender(EmailConfig emailConfig, String recipient, String subject, String content, List<EmailAttachment> attachments) {
+    public EmailSender(EmailConfig emailConfig, String[] recipients, String subject, String body, List<EmailAttachment> attachments) {
         this.emailConfig = emailConfig;
-        this.recipient = recipient;
+        this.recipients = recipients;
         this.subject = subject;
-        this.content = content;
+        this.body = StringEscapeUtils.unescapeHtml(body);
         this.attachments = attachments;
     }
     
@@ -60,21 +60,13 @@ public class EmailSender {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(emailConfig.getSenderEmail());
-            helper.setTo(recipient);
+            helper.setTo(recipients);
             helper.setSubject(subject);
-            helper.setText(content, true);
+            helper.setText(body, true);
             addAttachments(helper, attachments);
             javaMailSender.send(message);
-        } catch (MessagingException e) {
-            throw new EmailSendingException("Failed to send email to: " + emailConfig.getSenderEmail(), e);
-        } catch (MailAuthenticationException e) {
-            throw new EmailSendingException("Authentication failed while sending email to: " + emailConfig.getSenderEmail(), e);
-        } catch (MailSendException e) {
-            throw new EmailSendingException("Failed to send email to: " + emailConfig.getSenderEmail(), e);
-        } catch (MailParseException e) {
-            throw new EmailSendingException("Error parsing the email content for: " + emailConfig.getSenderEmail(), e);
         } catch (Exception e) {
-            throw new EmailSendingException("Unexpected error while sending email to: " + emailConfig.getSenderEmail(), e);
+            throw new EmailSendingException(getNestedExceptionMessages(e), e);
         }
     }
 
@@ -130,6 +122,15 @@ public class EmailSender {
         for (EmailAttachment attachment : attachments) {
             helper.addAttachment(attachment.getFileName(), new File(attachment.getFilePath()));
         }
+    }
+
+    private String getNestedExceptionMessages(Throwable throwable) {
+        StringBuilder messages = new StringBuilder();
+        while (throwable != null) {
+            messages.append(throwable.getMessage()).append(" | ");
+            throwable = throwable.getCause();
+        }
+        return messages.toString();
     }
 
     // For debugging

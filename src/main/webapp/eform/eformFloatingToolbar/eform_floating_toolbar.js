@@ -320,6 +320,14 @@ document.addEventListener("DOMContentLoaded", function(){
 	 * open the Oscar Email dialog.
 	 */
 	function remoteEmail() {	
+		const hasEmailConsent = document.getElementById("hasEmailConsent").value == "true" ? true : false ;
+		if (hasEmailConsent) {
+			alert("Email communication requires patient consent.\nYou currently have the patient's consent.\nPress 'OK' to proceed.");
+		} else {
+			const userResponse = prompt("Patient consent is not given for email. \nEnter 'Yes' if you still want to proceed.", "No");
+			if (userResponse === null || userResponse.toLowerCase() !== 'yes') { return; }
+		}
+
 		const newElement = document.createElement("input");
 		newElement.setAttribute("id", "emailAction");
 		newElement.setAttribute("name", "emailEForm");

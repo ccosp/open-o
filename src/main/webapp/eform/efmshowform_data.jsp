@@ -30,6 +30,7 @@
 <%@ page import="oscar.oscarEncounter.data.EctFormData"%>
 <%@ page import="org.oscarehr.common.model.enumerator.DocumentType"%>
 <%@ page import="org.oscarehr.documentManager.DocumentAttachmentManager"%>
+<%@ page import="org.oscarehr.managers.EmailComposeManager"%>
 <%@ page import="org.oscarehr.util.SpringUtils"%>
 <%@ page import="oscar.util.StringUtils" %>
 <%@ page import="java.util.List"%>
@@ -114,6 +115,11 @@
     // Add EForm attachments
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     addHiddenEFormAttachments(loggedInInfo, eForm, fdid);
+
+    // Add email consent property
+    EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
+    Boolean hasEmailConsent = emailComposeManager.hasEmailConsent(Integer.parseInt(eForm.getDemographicNo()));
+    eForm.addHiddenInputElement("hasEmailConsent", hasEmailConsent);
 
     out.print(eForm.getFormHtml());
 %>

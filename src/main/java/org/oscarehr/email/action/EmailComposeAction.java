@@ -13,14 +13,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.common.model.EmailLog.TransactionType;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.managers.EmailComposeManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
-
-import oscar.util.StringUtils;
 
 public class EmailComposeAction extends DispatchAction {
     private static final Logger logger = MiscUtils.getLogger();
@@ -29,21 +28,29 @@ public class EmailComposeAction extends DispatchAction {
 
     public ActionForward prepareComposeEFormMailer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        String fdid = (String) request.getAttribute("fdid");
+        Boolean attachEFormItSelf = (Boolean) request.getAttribute("attachEFormItSelf");
+        String fdid = attachEFormItSelf ? (String) request.getAttribute("fdid") : "";
         String demographicId = (String) request.getAttribute("demographicId");
+        String emailPDFPassword = (String) request.getAttribute("emailPDFPassword");
+        String emailPDFPasswordClue = (String) request.getAttribute("emailPDFPasswordClue");
         String[] attachedDocuments = (String[]) request.getAttribute("attachedDocuments");
 		String[] attachedLabs = (String[]) request.getAttribute("attachedLabs");
 		String[] attachedForms = (String[]) request.getAttribute("attachedForms");
 		String[] attachedEForms = (String[]) request.getAttribute("attachedEForms");
 		String[] attachedHRMDocuments = (String[]) request.getAttribute("attachedHRMDocuments");
 
-        String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, Integer.parseInt(demographicId));
-        String receiverEmail = demographicManager.getDemographicEmail(loggedInInfo, Integer.parseInt(demographicId));
         Boolean hasEmailConsent = emailComposeManager.hasEmailConsent(Integer.parseInt(demographicId)); 
-        if (StringUtils.isNullOrEmpty(receiverEmail) || !hasEmailConsent) { return emailComposeError(request, mapping, "Unable to proceed: Patient's email address is not provided or consent is not given", "eFormError"); }
+        
+        String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, Integer.parseInt(demographicId));
+        List<String> receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, Integer.parseInt(demographicId));
+        if (receiverEmailList.size() == 0) { return emailComposeError(request, mapping, "Unable to proceed: Patient's email address(es) are not provided or are invalid.", "eFormError"); }
         
         List<EmailConfig> senderAccounts = emailComposeManager.getAllSenderAccounts();
         if (senderAccounts.size() == 0) { return emailComposeError(request, mapping, "Unable to proceed: Please setup the sender's account first.", "eFormError"); }
+
+        if (emailPDFPassword == null) {
+            emailPDFPassword = emailComposeManager.createEmailPDFPassword(loggedInInfo, Integer.parseInt(demographicId));
+        }
 
         List<EmailAttachment> emailAttachmentList = new ArrayList<>();
         try {
@@ -58,9 +65,13 @@ public class EmailComposeAction extends DispatchAction {
         }
         emailComposeManager.sanitizeAttachments(emailAttachmentList);
 
+        request.setAttribute("transactionType", TransactionType.EFORM);
+        request.setAttribute("hasEmailConsent", hasEmailConsent);
         request.setAttribute("receiverName", receiverName);
-        request.setAttribute("receiverEmail", receiverEmail);
+        request.setAttribute("receiverEmailList", receiverEmailList);
         request.setAttribute("senderAccounts", senderAccounts);
+        request.setAttribute("emailPDFPassword", emailPDFPassword);
+        request.setAttribute("emailPDFPasswordClue", emailPDFPasswordClue);
         request.getSession().setAttribute("emailAttachmentList", emailAttachmentList);
 
         return mapping.findForward("compose");

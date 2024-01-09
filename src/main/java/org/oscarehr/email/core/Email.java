@@ -1,17 +1,30 @@
 package org.oscarehr.email.core;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.oscarehr.common.model.EmailAttachment;
+import org.oscarehr.common.model.EmailLog.ChartDisplayOption;
+import org.oscarehr.common.model.EmailLog.DocumentGenerationOption;
+import org.oscarehr.common.model.EmailLog.TransactionType;
+
+import oscar.util.StringUtils;
 
 public class Email {
     private String sender;
-    private String recipient;
+    private String[] recipients;
+    private Boolean isConsented;
     private String subject;
-    private String message;
+    private String body;
     private String encryptedMessage;
-    private Boolean isEncrypted;
     private String password;
+    private String passwordClue;
+    private Boolean isEncrypted;
+    private Boolean isAttachmentEncrypted;
+    private ChartDisplayOption chartDisplayOption;
+    private DocumentGenerationOption documentGenerationOption;
+    private TransactionType transactionType;
+    private Integer demographicNo;
     private List<EmailAttachment> attachments;
 
     public Email() { }
@@ -21,15 +34,28 @@ public class Email {
     }
 
     public void setSender(String sender) {
-        this.sender = sender;
+        this.sender = sender != null ? sender : "";
     }
 
-    public String getRecipient() {
-        return recipient;
+    public String[] getRecipients() {
+        return recipients;
     }
 
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
+    public void setRecipients(String[] recipients) {
+        this.recipients = recipients != null ? recipients : new String[0];
+    }
+
+    public Boolean getIsConsented() {
+        return isConsented;
+    }
+
+    public void setIsConsented(Boolean isConsented) {
+        this.isConsented = isConsented;
+    }
+
+    public void setIsConsented(String isConsented) {
+        if (isConsented == null) { isConsented = "false"; }
+        this.isConsented = "true".equals(isConsented);
     }
 
     public String getSubject() {
@@ -37,15 +63,15 @@ public class Email {
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+        this.subject = subject != null ? subject : "";
     }
 
-    public String getMessage() {
-        return message;
+    public String getBody() {
+        return body;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setBody(String body) {
+        this.body = body != null ? body : "";
     }
 
     public String getEncryptedMessage() {
@@ -53,7 +79,23 @@ public class Email {
     }
 
     public void setEncryptedMessage(String encryptedMessage) {
-        this.encryptedMessage = encryptedMessage;
+        this.encryptedMessage = encryptedMessage != null ? encryptedMessage : "";
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password != null ? password : "";
+    }
+
+    public String getPasswordClue() {
+        return passwordClue;
+    }
+
+    public void setPasswordClue(String passwordClue) {
+        this.passwordClue = passwordClue != null ? passwordClue : "";
     }
 
     public Boolean getIsEncrypted() {
@@ -64,12 +106,86 @@ public class Email {
         this.isEncrypted = isEncrypted;
     }
 
-    public String getPassword() {
-        return password;
+    public void setIsEncrypted(String isEncrypted) {
+        if (isEncrypted == null) { isEncrypted = "false"; }
+        this.isEncrypted = "true".equals(isEncrypted);
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Boolean getIsAttachmentEncrypted() {
+        return isAttachmentEncrypted;
+    }
+
+    public void setIsAttachmentEncrypted(Boolean isAttachmentEncrypted) {
+        this.isAttachmentEncrypted = isAttachmentEncrypted;
+    }
+
+    public void setIsAttachmentEncrypted(String isAttachmentEncrypted) {
+        if (isAttachmentEncrypted == null) { isAttachmentEncrypted = "false"; }
+        this.isAttachmentEncrypted = "true".equals(isAttachmentEncrypted);
+    }
+
+    public ChartDisplayOption getChartDisplayOption() {
+        return chartDisplayOption;
+    }
+
+    public void setChartDisplayOption(ChartDisplayOption chartDisplayOption) {
+        this.chartDisplayOption = chartDisplayOption;
+    }
+
+    public void setChartDisplayOption(String chartDisplayOption) {
+        if (chartDisplayOption == null) { chartDisplayOption = "addFullNote"; }
+        this.chartDisplayOption = "doNotAddAsNote".equalsIgnoreCase(chartDisplayOption) ? ChartDisplayOption.WITHOUT_NOTE : ChartDisplayOption.WITH_FULL_NOTE;
+    }
+
+    public DocumentGenerationOption getDocumentGenerationOption() {
+        return documentGenerationOption;
+    }
+
+    public void setDocumentGenerationOption(DocumentGenerationOption documentGenerationOption) {
+        this.documentGenerationOption = documentGenerationOption;
+    }
+
+    public void setDocumentGenerationOption(String documentGenerationOption) {
+        if (documentGenerationOption == null) { documentGenerationOption = "doNotAddAsPDF"; }
+        this.documentGenerationOption = "addFullPDF".equalsIgnoreCase(documentGenerationOption) ? DocumentGenerationOption.WITH_FULL_PDF : DocumentGenerationOption.WITHOUT_PDF;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        if (transactionType == null) { transactionType = "DIRECT"; }
+        switch (transactionType.toUpperCase()) {
+            case "EFORM":
+                this.transactionType = TransactionType.EFORM;
+                break;
+            case "CONSULTATION":
+                this.transactionType = TransactionType.CONSULTATION;
+                break;
+            case "TICKLER":
+                this.transactionType = TransactionType.TICKLER;
+                break;
+            default:
+                this.transactionType = TransactionType.DIRECT;
+                break;
+        }
+    }
+
+    public Integer getDemographicNo() {
+        return demographicNo;
+    }
+
+    public void setDemographicNo(Integer demographicNo) {
+        this.demographicNo = demographicNo;
+    }
+
+    public void setDemographicNo(String demographicNo) {
+        this.demographicNo = (StringUtils.isNullOrEmpty(demographicNo)) ? -1 : Integer.parseInt(demographicNo);
     }
 
     public List<EmailAttachment> getAttachments() {
@@ -77,7 +193,7 @@ public class Email {
     }
 
     public void setAttachments(List<EmailAttachment> attachments) {
-        this.attachments = attachments;
+        this.attachments = attachments != null ? attachments : Collections.emptyList();
     }
 }
 

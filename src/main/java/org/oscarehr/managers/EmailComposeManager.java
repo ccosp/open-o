@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
 import org.oscarehr.common.model.ConsentType;
+import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
 import org.oscarehr.common.model.enumerator.DocumentType;
@@ -22,6 +25,8 @@ import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import oscar.util.StringUtils;
+
 @Service
 public class EmailComposeManager {
     private final Logger logger = MiscUtils.getLogger();
@@ -29,6 +34,8 @@ public class EmailComposeManager {
     @Autowired
     private EmailConfigDao emailConfigDao;
 
+    @Autowired
+    private DemographicManager demographicManager;
     @Autowired
     private DocumentAttachmentManager documentAttachmentManager;
     @Autowired
@@ -38,7 +45,7 @@ public class EmailComposeManager {
     
     public List<EmailAttachment> prepareEFormAttachments(LoggedInInfo loggedInInfo, String fdid, String[] attachedEForms) throws PDFGenerationException {
         List<String> attachedEFormIds = convertToList(attachedEForms);
-        if (fdid != null) { attachedEFormIds.add(0, fdid); }
+        if (!StringUtils.isNullOrEmpty(fdid)) { attachedEFormIds.add(0, fdid); }
 
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         for (String eFormId : attachedEFormIds) {
@@ -113,6 +120,36 @@ public class EmailComposeManager {
 
     public List<EmailConfig> getAllSenderAccounts() {
         return emailConfigDao.fillAllActiveEmailConfigs();
+    }
+
+    public List<String> getRecipients(LoggedInInfo loggedInInfo, Integer demographicId) {
+        String recipientsString = demographicManager.getDemographicEmail(loggedInInfo, demographicId);
+        List<String> recipientList = new ArrayList<>();
+        if (StringUtils.isNullOrEmpty(recipientsString)) { return recipientList; }
+
+        String[] recipients = recipientsString.split("[,;\\s]+");
+        for (String recipient : recipients) {
+            if (isValidEmail(recipient)) {
+                recipientList.add(recipient.trim());
+            }
+        }
+
+        return recipientList;
+    }
+
+    public String createEmailPDFPassword(LoggedInInfo loggedInInfo, Integer demographicId) {
+        Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicId);
+        return demographic.getYearOfBirth() + demographic.getMonthOfBirth() + demographic.getDateOfBirth() + demographic.getHin();
+    }
+
+    private boolean isValidEmail(String email) {
+        try {
+            InternetAddress internetAddress = new InternetAddress(email.trim());
+            internetAddress.validate();
+            return true;
+        } catch (AddressException e) {
+            return false;
+        }
     }
 
     private List<String> convertToList(String[] stringArray) {

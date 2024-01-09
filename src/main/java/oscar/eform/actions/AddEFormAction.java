@@ -326,7 +326,7 @@ public class AddEFormAction extends Action {
 			else if (isEmailEForm) {
 				ActionForward emailForward = new ActionForward(mapping.findForward("emailCompose"));
 				String path = emailForward.getPath() + "?method=prepareComposeEFormMailer";
-				addEmailAttachments(request, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms, fdid, demographic_no); 
+				addEmailAttachments(request, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms); 
 				return new ActionForward(path);
 			}
 
@@ -404,7 +404,7 @@ public class AddEFormAction extends Action {
 			else if (isEmailEForm) {
 				ActionForward emailForward = new ActionForward(mapping.findForward("emailCompose"));
 				String path = emailForward.getPath() + "?method=prepareComposeEFormMailer";
-				addEmailAttachments(request, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms, prev_fdid, demographic_no); 
+				addEmailAttachments(request, attachedEForms, attachedDocuments, attachedLabs, attachedHRMDocuments, attachedForms); 
 				return new ActionForward(path);
 			}
 			
@@ -446,9 +446,15 @@ public class AddEFormAction extends Action {
 		return formattedDate + "_" + demographicLastName + ".pdf";
 	}
 
-	private void addEmailAttachments(HttpServletRequest request, String[] attachedEForms, String[] attachedDocuments, String[] attachedLabs, String[] attachedHRMDocuments, String[] attachedForms, String fdid, String demographic_no) {
-		request.setAttribute("fdid", fdid);
-		request.setAttribute("demographicId", demographic_no);
+	private void addEmailAttachments(HttpServletRequest request, String[] attachedEForms, String[] attachedDocuments, String[] attachedLabs, String[] attachedHRMDocuments, String[] attachedForms) {
+		Boolean attachEFormItSelf = request.getParameter("attachEFormItSelf") == null || "true".equals(request.getParameter("attachEFormItSelf")) ? true : false;
+		Boolean openEFormAfterEmail = request.getParameter("openEFormAfterEmail") == null || "false".equals(request.getParameter("openEFormAfterEmail")) ? false : true;
+		Boolean isEmailAttachmentEncrypted = request.getParameter("isEmailAttachmentEncrypted") == null || "false".equals(request.getParameter("isEmailAttachmentEncrypted")) ? false : true;
+		Boolean isEmailAutoSend = request.getParameter("isEmailAutoSend") == null || "false".equals(request.getParameter("isEmailAutoSend")) ? false : true;
+		request.setAttribute("isEmailAttachmentEncrypted", isEmailAttachmentEncrypted);
+		request.setAttribute("isEmailAutoSend", isEmailAutoSend);
+		request.setAttribute("openEFormAfterEmail", openEFormAfterEmail);
+		request.setAttribute("attachEFormItSelf", attachEFormItSelf);
 		request.setAttribute("attachedEForms", attachedEForms);
 		request.setAttribute("attachedDocuments", attachedDocuments);
 		request.setAttribute("attachedLabs", attachedLabs);

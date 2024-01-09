@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.codec.binary.Base64;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,23 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         OUTBOX
     }
 
+    public enum ChartDisplayOption {
+        WITHOUT_NOTE,
+        WITH_FULL_NOTE
+    }
+
+    public enum DocumentGenerationOption {
+        WITHOUT_PDF,
+        WITH_FULL_PDF
+    }
+
+    public enum TransactionType {
+        EFORM,
+        CONSULTATION,
+        TICKLER,
+        DIRECT
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,6 +45,9 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     @Column(name = "to_email")
     private String toEmail;
+
+    @Column(name = "is_consented")
+    private Boolean isConsented;
 
     @Column(name = "subject")
     private String subject;
@@ -53,8 +74,29 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     @Column(name = "password")
     private String password;
 
+    @Column(name = "password_clue")
+    private String passwordClue;
+
     @Column(name = "is_encrypted")
     private Boolean isEncrypted;
+
+    @Column(name = "is_attachment_encrypted")
+    private Boolean isAttachmentEncrypted;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "chart_display_option")
+    private ChartDisplayOption chartDisplayOption;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "document_generation_option")
+    private DocumentGenerationOption documentGenerationOption;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type")
+    private TransactionType transactionType;
+
+    @Column(name = "demographic_no")
+    private Integer demographicNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "config_id")
@@ -65,17 +107,14 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     public EmailLog() {}
 
-    public EmailLog(EmailConfig emailConfig, String fromEmail, String toEmail, String subject, String body, EmailStatus status) {
+    public EmailLog(EmailConfig emailConfig, String fromEmail, String[] toEmail, String subject, String body, EmailStatus status) {
         this.emailConfig = emailConfig;
         this.fromEmail = fromEmail;
-        this.toEmail = toEmail;
+        this.toEmail = toEmail != null ? String.join(";", toEmail) : "";
         this.subject = subject;
         this.body = Base64.encodeBase64(body.getBytes(StandardCharsets.UTF_8));
         this.status = status;
         this.timestamp = new Date();
-        this.encryptedMessage = new byte[0];
-        this.password = "";
-        this.isEncrypted = false;
     }
 
     public Integer getId() {
@@ -102,12 +141,20 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         this.fromEmail = fromEmail;
     }
 
-    public String getToEmail() {
-        return toEmail;
+    public String[] getToEmail() {
+        return toEmail.split(";");
     }
 
-    public void setToEmail(String toEmail) {
-        this.toEmail = toEmail;
+    public void setToEmail(String[] toEmail) {
+        this.toEmail = toEmail != null ? String.join(";", toEmail) : "";
+    }
+
+    public Boolean getIsConsented() {
+        return isConsented;
+    }
+
+    public void setIsConsented(Boolean isConsented) {
+        this.isConsented = isConsented;
     }
 
     public String getSubject() {
@@ -166,12 +213,60 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         this.password = password;
     }
 
+    public String getPasswordClue() {
+        return passwordClue;
+    }
+
+    public void setPasswordClue(String passwordClue) {
+        this.passwordClue = passwordClue;
+    }
+
     public Boolean getIsEncrypted() {
         return isEncrypted;
     }
 
     public void setIsEncrypted(Boolean isEncrypted) {
         this.isEncrypted = isEncrypted;
+    }
+
+    public Boolean getIsAttachmentEncrypted() {
+        return isAttachmentEncrypted;
+    }
+
+    public void setIsAttachmentEncrypted(Boolean isAttachmentEncrypted) {
+        this.isAttachmentEncrypted = isAttachmentEncrypted;
+    }
+
+    public ChartDisplayOption getChartDisplayOption() {
+        return chartDisplayOption;
+    }
+
+    public void setChartDisplayOption(ChartDisplayOption chartDisplayOption) {
+        this.chartDisplayOption = chartDisplayOption;
+    }
+
+    public DocumentGenerationOption getDocumentGenerationOption() {
+        return documentGenerationOption;
+    }
+
+    public void setDocumentGenerationOption(DocumentGenerationOption documentGenerationOption) {
+        this.documentGenerationOption = documentGenerationOption;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public Integer getDemographicNo() {
+        return demographicNo;
+    }
+
+    public void setDemographicNo(Integer demographicNo) {
+        this.demographicNo = demographicNo;
     }
 
     public List<EmailAttachment> getEmailAttachments() {

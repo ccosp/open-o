@@ -19,12 +19,12 @@ public class EmailLogDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void saveEmailLog(EmailLog emailLog) {
-        if (emailLog.getId() == null) {
-            entityManager.persist(emailLog);
-        } else {
-            entityManager.merge(emailLog);
-        }
+    public void persist(EmailLog emailLog) {
+        entityManager.persist(emailLog);
+    }
+
+    public void merge(EmailLog emailLog) {
+        entityManager.merge(emailLog);
     }
 
     public EmailLog getEmailLogById(Integer id) {
