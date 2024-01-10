@@ -201,7 +201,7 @@
 		
 		var answer = confirm("Are you sure you want to remove this fax from the queue?");
 		
-		if( answer == null ) {
+		if( answer == null || !answer) {
 			return false;
 		}
 
@@ -235,7 +235,7 @@
 		
 		var answer = confirm("Are you sure you want to resolve this fax status?");
 		
-		if( answer == null ) {			
+		if( answer == null || !answer) {
 			return false;
 		}
 
@@ -275,10 +275,12 @@
 </head>
 <body>
 
+<jsp:include page="../images/spinner.jsp" flush="true"/>
+
 <div id="bodyrow" class="container-fluid">
 	<div id="bodycolumn">
 
-		<form id="reportForm" action="<%=request.getContextPath()%>/admin/ManageFaxes.do">
+		<form id="reportForm" action="<%=request.getContextPath()%>/admin/ManageFaxes.do" onsubmit = "ShowSpin(true);">
 
 		<input type="hidden" name="method" value="fetchFaxStatus" />
 	
