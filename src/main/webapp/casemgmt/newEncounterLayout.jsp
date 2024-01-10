@@ -27,7 +27,7 @@
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi"%>
 
 <%@ include file="/casemgmt/taglibs.jsp" %>
-<%@page errorPage="/casemgmt/error.jsp" %>
+
 <%@page import="java.util.Enumeration, org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.casemgmt.web.formbeans.*, org.oscarehr.casemgmt.model.CaseManagementNote"%>
 <%@page import="org.oscarehr.common.dao.UserPropertyDAO, oscar.OscarProperties" %>
@@ -39,8 +39,6 @@
 <%@page import="org.oscarehr.common.model.ProviderData"%>
 <%@page import="java.util.List"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
 
 <%
     String roleName = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -59,13 +57,14 @@
     String encTimeMandatoryValue = OscarProperties.getInstance().getProperty("ENCOUNTER_TIME_MANDATORY","false");
 
 %>
-
 <html:html locale="true">
 <head>
+	<title>
+		Encounter
+	</title>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	scope="request" />
-<link rel="stylesheet" href="<c:out value="${ctx}"/>/css/casemgmt.css" type="text/css">
-<link rel="stylesheet" href="<c:out value="${ctx}"/>/oscarEncounter/encounterStyles.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/css/print.css" media="print">
+<link rel="stylesheet" href="<c:out value="${ctx}"/>/css/encounterStyles.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/css/print.css" media="print">
 
 <!-- 
 <script src="<c:out value="${ctx}/js/jquery.js"/>"></script>
@@ -788,8 +787,8 @@ window.onbeforeunload = onClosing;
 
 </script>
 </head>
-<body id="body" style="margin: 0px;">
-
+<body id="body">
+<div id="newEncounterLayoutWrapper">
 	<%--
 	<caisi:isModuleLoad moduleName="eaaps.enabled">
 		<div id="eaaps" style="display: none;">
@@ -804,7 +803,7 @@ window.onbeforeunload = onClosing;
 	</caisi:isModuleLoad>
 	--%>
 	 
-	<div id="header">
+	<div id="header" class="row">
 		<tiles:insert attribute="header" />
 	</div>
 
@@ -1139,6 +1138,7 @@ if (OscarProperties.getInstance().getBooleanProperty("note_program_ui_enabled", 
 %>
 		</form>
 	</div>
+</div>
 <%
     String apptNo = request.getParameter("appointmentNo");
     if( OscarProperties.getInstance().getProperty("resident_review", "false").equalsIgnoreCase("true") && 
@@ -1209,5 +1209,6 @@ if (OscarProperties.getInstance().getBooleanProperty("note_program_ui_enabled", 
                     
                 </div>
  <%}%>
+
 </body>
 </html:html>
