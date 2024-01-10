@@ -558,7 +558,7 @@ function newStatus1() {
 </script>
 <script language="JavaScript">
 function showEdit(){
-    document.getElementById('editDemographic').style.display = 'block';
+    document.getElementById('editDemographic').style.display = 'table';
     document.getElementById('viewDemographics2').style.display = 'none';
     document.getElementById('updateButton').style.display = 'block';
     document.getElementById('swipeButton').style.display = 'block';
@@ -598,17 +598,19 @@ function showHideMobileSections(sections) {
 }
 
 function showHideItem(id){
-    if(document.getElementById(id).style.display == 'inline' || document.getElementById(id).style.display == 'block')
+    if(document.getElementById(id).style.display === 'inline' || document.getElementById(id).style.display === 'block' || document.getElementById(id).style.display === 'table' ){
         document.getElementById(id).style.display = 'none';
-    else
-        document.getElementById(id).style.display = 'block';
+    } else {
+	    document.getElementById(id).style.display = 'table';
+    }
 }
 
-function showHideBtn(id){
-    if(document.getElementById(id).style.display == 'none')
-        document.getElementById(id).style.display = 'inline';
-    else
-        document.getElementById(id).style.display = 'none';
+function showHideBtn(id) {
+	if (document.getElementById(id).style.display === 'none') {
+		document.getElementById(id).style.display = 'inline';
+	} else {
+		document.getElementById(id).style.display = 'none';
+	}
 }
 
 
@@ -1277,7 +1279,7 @@ if (iviewTag!=null && !"".equalsIgnoreCase(iviewTag.trim())){
                     </div>
 		<table border=0 width="100%">
 			<tr id="searchTable">
-				<td><%-- log:info category="Demographic">Demographic [<%=demographic_no%>] is viewed by User [<%=userfirstname%> <%=userlastname %>]  </log:info --%>
+				<td>
 				<jsp:include page="zdemographicfulltitlesearch.jsp"/>
 				</td>
 			</tr>
@@ -1289,7 +1291,7 @@ if (iviewTag!=null && !"".equalsIgnoreCase(iviewTag.trim())){
 					<input type="hidden" name="demographic_no" value="<%=demographic.getDemographicNo()%>">
 				<table width="100%" class="demographicDetail">
 					<tr>
-						<td class="RowTop">
+						<td>
 						<%
 						oscar.oscarDemographic.data.DemographicMerged dmDAO = new oscar.oscarDemographic.data.DemographicMerged();
                             String dboperation = "search_detail";
@@ -1305,12 +1307,11 @@ if (iviewTag!=null && !"".equalsIgnoreCase(iviewTag.trim())){
                                         %><%=", "+demographic_no %>
 						<%
                                     }else{
-                                        %>, <a
-							href="demographiccontrol.jsp?demographic_no=<%= records.get(i) %>&displaymode=edit&dboperation=<%= dboperation %>"><%=records.get(i)%></a>
+                                        %>, <a href="demographiccontrol.jsp?demographic_no=<%= records.get(i) %>&displaymode=edit&dboperation=<%= dboperation %>"><%=records.get(i)%></a>
 						<%
                                     }
                                 }
-                            %> ) </span></b>
+                            %> )
                             
                             <security:oscarSec roleName="<%=roleName$%>" objectName="_demographic" rights="w">
                             <%
@@ -1432,25 +1433,41 @@ if(oscarProps.getProperty("new_label_print") != null && oscarProps.getProperty("
 							}
 						%>
 						<ul>
+
+							<li><span class="label"><bean:message key="demographic.demographiceditdemographic.msgDemoTitle"/>:</span>
+								<span class="info"><%=StringUtils.trimToEmpty(demographic.getTitle())%></span>
+							</li>
+
                                                     <li><span class="label"><bean:message
                                                             key="demographic.demographiceditdemographic.formLastName" />:</span>
-                                                        <span class="info"><%=demographic.getLastName()%></span>
+                                                        <span class="info"><%=Encode.forHtmlContent(demographic.getLastName())%></span>
                                                     </li>
                                                     <li><span class="label">
-							<bean:message
-                                                                key="demographic.demographiceditdemographic.formFirstName" />:</span>
-                                                        <span class="info"><%=demographic.getFirstName()%></span>
+							<bean:message key="demographic.demographiceditdemographic.formFirstName" />:</span>
+                                                        <span class="info"><%=Encode.forHtmlContent(demographic.getFirstName())%></span>
 							</li>
 							   <li><span class="label"><bean:message
                                                             key="demographic.demographiceditdemographic.formMiddleNames" />:</span>
-                                                        <span class="info"><%=demographic.getMiddleNames()%></span>
+                                                        <span class="info"> <c:out value="<%=Encode.forHtmlContent(demographic.getMiddleNames())%>" /></span>
                                                     </li>
-                                                    <li><span class="label"><bean:message key="demographic.demographiceditdemographic.msgDemoTitle"/>:</span>
-                                                        <span class="info"><%=StringUtils.trimToEmpty(demographic.getTitle())%></span>
+													<li>
+														<span class="label" style="color:red;"><bean:message
+																key="demographic.demographicaddrecordhtm.formNameUsed" />:
+														</span>
+														<span class="info" style="color:red;">
+															<c:out value="<%=Encode.forHtml(demographic.getAlias())%>" />
+														</span>
+													</li>
+
+							<li><span class="label"><bean:message key="demographic.demographicaddrecordhtm.formPronouns" />:</span>
+								<span class="info"><%=Encode.forHtmlContent(StringUtils.trimToEmpty(demographic.getPronoun()))%></span>
 							</li>
                                                     <li><span class="label"><bean:message key="demographic.demographiceditdemographic.formSex" />:</span>
-                                                        <span class="info"><%=demographic.getSex()%></span>
+                                                        <span class="info"><%=Gender.valueOf(demographic.getSex()).getText()%></span>
                                                     </li>
+													<li><span class="label"><bean:message key="demographic.demographicaddrecordhtm.formGender" />:</span>
+														<span class="info"><%=Encode.forHtmlContent(StringUtils.trimToEmpty(demographic.getGender()))%></span>
+													</li>
                                                     <li><span class="label"><bean:message key="demographic.demographiceditdemographic.msgDemoAge"/>:</span>
                                                         <span class="info"><%=age%>&nbsp;(<bean:message
                                                             key="demographic.demographiceditdemographic.formDOB" />: <%=birthYear%>-<%=birthMonth%>-<%=birthDate%>)
@@ -2355,8 +2372,7 @@ if ( Dead.equals(PatStat) ) {%>
 						</div>
 						<!--newEnd-->
 
-						<table width="100%" bgcolor="#EEEEFF" border=0
-							id="editDemographic" style="display: none;">
+						<table width="100%" bgcolor="#EEEEFF" border=0 id="editDemographic" style="display: none;">
 							<tr>
 								<td align="right"
 									title='<%=demographic.getDemographicNo()%>'>
@@ -2420,6 +2436,20 @@ if ( Dead.equals(PatStat) ) {%>
 								    
 								</select>
 							    </td>
+							</tr>
+							<tr>
+								<td align="right"><b><bean:message
+										key="demographic.demographicaddrecordhtm.formNameUsed" />:
+								</b></td>
+								<td align="left"><input type="text" name="nameUsed" <%=getDisabled("nameUsed")%>
+								                        size="30" value="<c:out value="<%=Encode.forHtmlAttribute(demographic.getAlias())%>" />"
+								                        onBlur="upCaseCtrl(this)"></td>
+								<td style="text-align: right;">
+									<strong><bean:message key="demographic.demographicaddrecordhtm.formPronouns" /></strong>
+								</td>
+								<td style="text-align: left;">
+									<input type="text" id="patientPronouns" name="pronouns" value="<%=Encode.forHtmlAttribute(StringUtils.trimToEmpty(demographic.getPronoun()))%>" />
+								</td>
 							</tr>
 							<tr>
 							  <td align="right"><b><bean:message key="demographic.demographiceditdemographic.msgDemoLanguage"/>: </b> </td>
@@ -2777,8 +2807,15 @@ if ( Dead.equals(PatStat) ) {%>
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formEmail" />: </b></td>
 								<td align="left"><input type="text" name="email" size="30" <%=getDisabled("email")%>
-									value="<%=demographic.getEmail()!=null? demographic.getEmail() : ""%>">
+									value="<%=demographic.getEmail() !=null ? Encode.forHtmlContent(demographic.getEmail()) : ""%>">
 								</td>
+								<td style="text-align: right;">
+									<strong><bean:message key="demographic.demographicaddrecordhtm.formGender" /></strong>
+								</td>
+								<td style="text-align: left;">
+									<input type="text" id="patientGender" name="gender" value="<%=Encode.forHtmlAttribute(StringUtils.trimToEmpty(demographic.getGender()))%>"/>
+								</td>
+
 <%--								<td align="right"><b><bean:message--%>
 <%--									key="demographic.demographiceditdemographic.formPHRUserName" />: </b></td>--%>
 <%--								<td align="left">--%>
@@ -2822,17 +2859,17 @@ if ( Dead.equals(PatStat) ) {%>
 <%--								<%}%>--%>
 <%--								</td>--%>
 							</tr>
-							<tr valign="top">
-								<td align="right"><b><bean:message key="demographic.demographiceditdemographic.consentToUseEmailForCare" /></b></td>
-								<td align="left" nowrap>
-									 <label for="consentToUseEmailForCareY"><bean:message key="WriteScript.msgYes"/></label> 
-            								<input type="radio" value="yes" id="consentToUseEmailForCareY" name="consentToUseEmailForCare" <% if (demographic.getConsentToUseEmailForCare() != null && demographic.getConsentToUseEmailForCare()){ out.write("checked"); }%> />
-          							 <label for="consentToUseEmailForCareN"><bean:message key="WriteScript.msgNo"/></label>
-            								<input type="radio" value="no" id="consentToUseEmailForCareN" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() != null && !demographic.getConsentToUseEmailForCare()){ out.write("checked");}%> />
-									 <label for="consentToUseEmailForCareE"><bean:message key="WriteScript.msgUnset"/></label>
-            								<input type="radio" value="unset" id="consentToUseEmailForCareE" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() == null){ out.write("checked"); } %> />
-								</td>
-							</tr>
+<%--							<tr valign="top">--%>
+<%--								<td align="right"><b><bean:message key="demographic.demographiceditdemographic.consentToUseEmailForCare" /></b></td>--%>
+<%--								<td align="left" nowrap>--%>
+<%--									 <label for="consentToUseEmailForCareY"><bean:message key="WriteScript.msgYes"/></label> --%>
+<%--            								<input type="radio" value="yes" id="consentToUseEmailForCareY" name="consentToUseEmailForCare" <% if (demographic.getConsentToUseEmailForCare() != null && demographic.getConsentToUseEmailForCare()){ out.write("checked"); }%> />--%>
+<%--          							 <label for="consentToUseEmailForCareN"><bean:message key="WriteScript.msgNo"/></label>--%>
+<%--            								<input type="radio" value="no" id="consentToUseEmailForCareN" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() != null && !demographic.getConsentToUseEmailForCare()){ out.write("checked");}%> />--%>
+<%--									 <label for="consentToUseEmailForCareE"><bean:message key="WriteScript.msgUnset"/></label>--%>
+<%--            								<input type="radio" value="unset" id="consentToUseEmailForCareE" name="consentToUseEmailForCare"  <% if (demographic.getConsentToUseEmailForCare() == null){ out.write("checked"); } %> />--%>
+<%--								</td>--%>
+<%--							</tr>--%>
 							<tr valign="top">
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formDOB" /></b><bean:message
@@ -2874,6 +2911,7 @@ if ( Dead.equals(PatStat) ) {%>
 			                        </select>
 			                    </td>
 							</tr>
+
 							<tr valign="top">
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formHin" />: </b></td>

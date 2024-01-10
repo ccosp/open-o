@@ -43,11 +43,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.oscarehr.PMmodule.utility.DateTimeFormatUtils;
 import org.oscarehr.PMmodule.utility.Utility;
-import org.oscarehr.common.model.enumerator.Gender;
-import org.oscarehr.common.model.enumerator.Pronoun;
 import org.oscarehr.util.MiscUtils;
 import org.owasp.encoder.Encode;
-
 
 /**
  * This is the object class that relates to the demographic table. Any customizations belong here.
@@ -89,10 +86,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	private Date dateJoined;
 	private String familyDoctor;
 	private String familyPhysician;
+
 	private String city;
 	private String firstName;
-	private String prefName = "";
-	private String middleName;
 	private String postal;
 	private Date hcRenewDate;
 	private String phone2;
@@ -145,11 +141,13 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	private String residentialCity;
 	private String residentialProvince;
 	private String residentialPostal;
-	private Gender gender;
-	private Pronoun pronoun;
+	private String gender;
+	private String pronoun;
 	private Integer genderId;
 	private Integer pronounId;
 	private String patientType;
+
+	private String prefName;
 
 	public enum PatientStatus {
 		AC, IN, DE, IC, ID, MO, FI
@@ -955,6 +953,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	}
 
 	public String getAlias() {
+		if(alias == null) {
+			return "";
+		}
 		return alias;
 	}
 
@@ -1024,19 +1025,25 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		this.phoneComment = phoneComment;
 	}
 
-	public Gender getGender() {
+	public String getGender() {
+		if(gender == null) {
+			return "";
+		}
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public Pronoun getPronoun() {
+	public String getPronoun() {
+		if(pronoun == null) {
+			return "";
+		}
 		return pronoun;
 	}
 
-	public void setPronoun(Pronoun pronoun) {
+	public void setPronoun(String pronoun) {
 		this.pronoun = pronoun;
 	}
 
@@ -1197,7 +1204,13 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	}
 
 	public String getFormattedName() {
-		return getLastName() + ", " + getFirstName();
+		StringBuilder stringBuilder = new StringBuilder(getLastName() + ", " + getFirstName());
+		if(getAlias() != null && ! getAlias().isEmpty()) {
+			stringBuilder.append(" (");
+			stringBuilder.append(getAlias());
+			stringBuilder.append(")");
+		}
+		return stringBuilder.toString();
 	}
 
 	public String getLinks() {
@@ -1387,14 +1400,6 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		return label;
 	}
 
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
@@ -1488,30 +1493,74 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
 	public String getStandardIdentificationHTML() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<b>" + getLastName().toUpperCase() + "</b>");
-		sb.append(",");
-		sb.append(getFirstName());
-		if (getTitle() != null && getTitle().length() > 0) {
-			sb.append("(" + getTitle() + ")");
+
+		sb.append("<div id='patient-label'>");
+		sb.append("<span>");
+		sb.append("<a href='../demographic/demographiccontrol.jsp?demographic_no=");
+		sb.append(Encode.forHtml(getDemographicNo() + ""));
+		sb.append("&displaymode=edit&dboperation=search_detail' target='_blank'>");
+		if(getTitle() != null && getTitle().length()>0) {
+			sb.append(getTitle() + " ");
 		}
-		sb.append("<br/>");
-		sb.append("Born ");
-		sb.append("<b>" + getFormattedDob() + "</b>");
-		if (getHin() != null && getHin().length() > 0) {
-			sb.append("<br/>");
-			sb.append("HC ");
-			sb.append("<b>");
-			sb.append(getHin() + " " + getVer());
-			sb.append("(" + getHcType() + ")");
-			sb.append("</b>");
+		sb.append(Encode.forHtmlContent(getFormattedName()));
+		sb.append("</a>");
+		sb.append("</span>");
+
+		//--> pronouns
+		if(getPronoun() != null && ! getPronoun().isEmpty()) {
+			sb.append("<span>");
+			sb.append("<span class='label'>");
+			sb.append("pronouns");
+			sb.append("</span>");
+			sb.append(Encode.forHtml(getPronoun()));
+			sb.append("</span>");
 		}
-		if (getChartNo() != null && getChartNo().length() > 0) {
-			sb.append("<br/>");
-			sb.append("Chart No ");
-			sb.append("<b>");
-			sb.append(getChartNo());
-			sb.append("</b>");
+
+		//--> sex
+		sb.append("<span>");
+		sb.append("<span class='label'>");
+		sb.append("sex");
+		sb.append("</span>");
+		sb.append(getSex());
+        sb.append("</span>");
+
+		//--> Birthdate
+		sb.append("<span>");
+		sb.append("<span class='label'>");
+		sb.append("dob");
+		sb.append("</span>");
+		sb.append(getBirthDayAsString());
+		sb.append("</span>");
+
+		//--> age
+		sb.append("<span>");
+		sb.append("<span class='label'>");
+		sb.append("age");
+		sb.append("</span>");
+		sb.append(getAgeInYears());
+		sb.append("</span>");
+
+		//--> Insurance number
+		if(getHin() != null && getHin().length()>0) {
+			sb.append("<span>");
+			sb.append("<span class='label'>");
+			sb.append("hin");
+			sb.append("</span>");
+			sb.append(getHin());
+			sb.append(getHcType());
+			sb.append("</span>");
 		}
+
+		//--> phone
+		sb.append("<span>");
+		sb.append("<span class='label'>");
+		sb.append("phone");
+		sb.append("</span>");
+		sb.append(Encode.forHtmlContent(getPhone()));
+		sb.append("</span>");
+
+		sb.append("</div>");
+
 		return sb.toString();
 	}
 
@@ -1519,7 +1568,6 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	public Integer getId() {
 		return this.getDemographicNo();
 	}
-
 
 	public String getRosterStatusDisplay() {
 		String rs = StringUtils.trimToNull(this.getRosterStatus());
@@ -1608,5 +1656,4 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		}
 		return sb.toString();
 	}
-
 }
