@@ -48,15 +48,13 @@ input {
 } 
 
 BODY {
-
 	font-family: Arial, Verdana, Tahoma, Helvetica, sans-serif;
-	padding:0px !important;
-	margin:0px !important;
+	padding:0 !important;
+	margin:0 !important;
 }
 
 div#newEncounterLayoutWrapper {
 	margin:auto 15px !important;
-	position:absolute !important;
 	margin-top:3px !important;
 	margin-bottom: 3px !important;
 }
@@ -161,9 +159,7 @@ div#rightNavBar, div#leftNavBar {
 div#content {
 	margin: 0 !important;
 	padding: 0 !important;
-	margin-bottom: 5px !important;
 	border-top: white 2px solid !important;
-	border-bottom: grey 3px solid !important;
 	width: 60% !important;
 	order: 2;
 	display: flex;
@@ -839,16 +835,6 @@ div.newNote pre {
 	margin: 0px 3px 0px 3px;
 	width: 100%;
 	clear: left;
-}
-
-.txtArea {
-	font-family: arial, sans-serif;
-	font-size: 1.0em;
-	width: 99%;
-	rows: 10;
-	overflow: hidden;
-	border: none;
-	margin: 0px 3px;
 }
 
 div#autosaveTime {
