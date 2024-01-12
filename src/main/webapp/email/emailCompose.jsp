@@ -247,8 +247,8 @@
 					<div class="card-body">
 						<div class="container">
 							<div class="row">	
-							<div class="col-sm-12">				
-							  <textarea class="form-control" name="subjectEmail" id="subjectEmail" row="1" placeholder="Subject"><c:out value="${ param.subjectEmail }" /></textarea>
+							<div class="col-sm-12">	
+								<input class="form-control" type="text" name="subjectEmail" id="subjectEmail" placeholder="Subject" value='${ param.subjectEmail }' autocomplete="off" />			
 							  <div class="error-message" id="subjectError"></div>
 							</div>
 							</div>
