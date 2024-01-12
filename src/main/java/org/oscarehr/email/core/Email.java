@@ -13,7 +13,6 @@ import oscar.util.StringUtils;
 public class Email {
     private String sender;
     private String[] recipients;
-    private Boolean isConsented;
     private String subject;
     private String body;
     private String encryptedMessage;
@@ -43,19 +42,6 @@ public class Email {
 
     public void setRecipients(String[] recipients) {
         this.recipients = recipients != null ? recipients : new String[0];
-    }
-
-    public Boolean getIsConsented() {
-        return isConsented;
-    }
-
-    public void setIsConsented(Boolean isConsented) {
-        this.isConsented = isConsented;
-    }
-
-    public void setIsConsented(String isConsented) {
-        if (isConsented == null) { isConsented = "false"; }
-        this.isConsented = "true".equals(isConsented);
     }
 
     public String getSubject() {

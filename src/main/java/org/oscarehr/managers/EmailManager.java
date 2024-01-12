@@ -60,7 +60,6 @@ public class EmailManager {
         EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(email.getSender());
         EmailLog emailLog = new EmailLog(emailConfig, email.getSender(), email.getRecipients(), email.getSubject(), email.getBody(), EmailStatus.OUTBOX);
         setEmailAttachments(emailLog, email.getAttachments());
-        emailLog.setIsConsented(email.getIsConsented());
         emailLog.setEncryptedMessage(email.getEncryptedMessage());
         emailLog.setPassword(email.getPassword());
         emailLog.setPasswordClue(email.getPasswordClue());

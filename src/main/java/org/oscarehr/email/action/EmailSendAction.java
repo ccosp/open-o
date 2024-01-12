@@ -40,7 +40,6 @@ public class EmailSendAction extends DispatchAction {
     private Email prepareEmailFields(HttpServletRequest request) {
         String fromEmail = request.getParameter("senderEmailAddress");
         String[] receiverEmails = request.getParameterValues("receiverEmailAddress");
-        String isConsented = request.getParameter("hasEmailConsent");
         String subject = request.getParameter("subjectEmail");
         String body = request.getParameter("bodyEmail");
         String encryptedMessage = request.getParameter("encryptedMessage");
@@ -57,7 +56,6 @@ public class EmailSendAction extends DispatchAction {
         Email email = new Email();
         email.setSender(fromEmail);
         email.setRecipients(receiverEmails);
-        email.setIsConsented(isConsented);
         email.setSubject(subject);
         email.setBody(StringEscapeUtils.escapeHtml(body));
         email.setEncryptedMessage(StringEscapeUtils.escapeHtml(encryptedMessage));

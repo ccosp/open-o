@@ -46,9 +46,6 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     @Column(name = "to_email")
     private String toEmail;
 
-    @Column(name = "is_consented")
-    private Boolean isConsented;
-
     @Column(name = "subject")
     private String subject;
 
@@ -147,14 +144,6 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     public void setToEmail(String[] toEmail) {
         this.toEmail = toEmail != null ? String.join(";", toEmail) : "";
-    }
-
-    public Boolean getIsConsented() {
-        return isConsented;
-    }
-
-    public void setIsConsented(Boolean isConsented) {
-        this.isConsented = isConsented;
     }
 
     public String getSubject() {
