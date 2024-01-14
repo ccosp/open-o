@@ -3943,7 +3943,25 @@ function assignNoteAjax(method, chain,programId,demographicNo) {
 }
 
 
-	
+	function doStudentParticipationCheck( demographicNo ) {
+		var checked = jQuery("#studentParticipationConsentCheck").is(':checked');
+		if(checked) {
+			var forSure = window.confirm("Confirm that student participation consent has been granted.");
+			if(forSure) {
+				        jQuery.getJSON(ctx+"/DemographicExtService.do?method=saveNewValue&demographicNo="+demographicNo + "&key=informedConsent&value=yes",
+			                function(data,textStatus){
+			                  if(data != undefined && parseInt(data.value) > 0) {
+			                  	jQuery("#informedConsentDiv").remove();
+			                  }
+      				  });
+
+			} else {
+				jQuery("#studentParticipationConsentCheck").attr("checked",false);
+			}
+		}
+	}
+
+
 	function doInformedConsent(demographicNo) {
 		var checked = jQuery("#informedConsentCheck").attr("checked");
 		if(checked) {
