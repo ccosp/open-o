@@ -404,7 +404,7 @@ function checkSex() {
 	
 	if(sex.length == 0)
 	{
-		alert ("You must select a Gender.");
+		alert ("You must select a Sex.");
 		return(false);
 	}
 
@@ -740,9 +740,7 @@ function updateResidentialProvinces(province) {
 		</span>
 	<% } %>
 </td></tr>
-
-<tr><td colspan="4">
-
+<tr><td>
 <form method="post" id="adddemographic" name="adddemographic" action="demographicaddarecord.jsp" onsubmit="return aSubmit()">
 <input type="hidden" name="fromAppt" value="<%=request.getParameter("fromAppt")%>">
 <input type="hidden" name="originalPage" value="<%=request.getParameter("originalPage")%>">
@@ -827,8 +825,12 @@ function updateResidentialProvinces(province) {
         <input type="text" name="middleNames" id="middleNames" onBlur="upCaseCtrl(this)" size=50 value="">
 
       </td>
-      <td align="right"></td>
-      <td id="filler" align="left"></td>
+	    <td align="right"><b><bean:message
+			    key="demographic.demographicaddrecordhtm.formNameUsed" />:
+	    </b></td>
+	    <td align="left">
+		    <input type="text" name="nameUsed" size="30" value="" onBlur="upCaseCtrl(this)" />
+	    </td>
     </tr>
     <tr>
 	<td id="languageLbl" align="right"><b><bean:message key="demographic.demographicaddrecordhtm.msgDemoLanguage"/><font color="red">:</font></b></td>
@@ -1246,11 +1248,21 @@ function updateResidentialProvinces(province) {
 							<option value="30">30
 							<option value="31">31
 						</select></td>
-						<td><b></b></td>
-						<td>&nbsp;</td>
 					</tr>
 				</table>
 				</td>
+				<td colspan="2">
+					<!-- pronoun, sex, gender -->
+				<table>
+					<tr>
+						<td style="text-align: right;">
+							<strong><bean:message key="demographic.demographicaddrecordhtm.formPronouns" /></strong>
+						</td>
+						<td style="text-align: left;">
+							<input type="text" id="patientPronouns" name="pronouns" />
+						</td>
+					</tr>
+					<tr>
 				<td align="right" id="genderLbl"><b><bean:message
 					key="demographic.demographicaddrecordhtm.formSex" /><font
 					color="red">:</font></b></td>
@@ -1266,21 +1278,27 @@ function updateResidentialProvinces(province) {
                                    }
                                 %>
                                 <td id="gender" align="left">
-                                
-                                
-                                
+
                                 <select  name="sex" id="sex">
 			                        <option value=""></option>
 			                		<% for(org.oscarehr.common.Gender gn : org.oscarehr.common.Gender.values()){ %>
-			                        <option value=<%=gn.name()%> <%=((sex.toUpperCase().equals(gn.name())) ? "selected" : "") %>><%=gn.getText()%></option>
+			                        <option value="<%=gn.name()%>" <%=((sex.toUpperCase().equals(gn.name())) ? "selected=\"selected\"" : "") %>><%=gn.getText()%></option>
 			                        <% } %>
 			                        </select>
-			                        
-			                       
-                                </select>
-                                
-                                
+
                                 </td>
+					</tr>
+
+					<tr>
+						<td style="text-align: right;">
+							<strong><bean:message key="demographic.demographicaddrecordhtm.formGender" /></strong>
+						</td>
+						<td style="text-align: left;">
+							<input type="text" id="patientGender" name="gender" />
+						</td>
+					</tr>
+				</table>
+				</td>
 			</tr>
 			<tr valign="top">
 				<td align="right" id="hinLbl"><b><bean:message

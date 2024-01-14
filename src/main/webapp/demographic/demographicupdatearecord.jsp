@@ -39,7 +39,7 @@
 %>
 
 <%@page import="org.oscarehr.provider.model.PreventionManager"%>
-<%@ page import="java.sql.*, java.util.*, oscar.MyDateFormat, oscar.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, org.oscarehr.common.OtherIdManager" errorPage="errorpage.jsp"%>
+<%@ page import="java.sql.*, java.util.*, oscar.MyDateFormat, oscar.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, org.oscarehr.common.OtherIdManager"%>
 
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="org.oscarehr.util.MiscUtils"%>
@@ -48,7 +48,6 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.dao.DemographicArchiveDao" %>
-<%@page import="org.oscarehr.common.model.DemographicArchive" %>
 <%@page import="org.oscarehr.common.model.DemographicCust" %>
 <%@page import="org.oscarehr.common.dao.DemographicCustDao" %>
 <%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
@@ -63,14 +62,12 @@
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@page import="org.oscarehr.provider.model.PreventionManager" %>
 
-<%@ page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
 <%@ page import="org.oscarehr.PMmodule.model.Program" %>
 <%@page import="org.oscarehr.PMmodule.web.GenericIntakeEditAction" %>
 <%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
 <%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.model.Consent" %>
 <%@page import="org.oscarehr.common.model.ConsentType" %>
 <%@page import="oscar.OscarProperties" %>
 
@@ -122,6 +119,7 @@
 	demographic.setLastName(request.getParameter("last_name").trim());
 	demographic.setFirstName(request.getParameter("first_name").trim());
 	demographic.setMiddleNames(request.getParameter("middleNames").trim());
+	demographic.setAlias(request.getParameter("nameUsed"));
 	demographic.setAddress(request.getParameter("address"));
 	demographic.setCity(request.getParameter("city"));
 	demographic.setProvince(request.getParameter("province"));
@@ -164,7 +162,9 @@
 	demographic.setRosterTerminationReason(request.getParameter("roster_termination_reason"));
 	demographic.setLastUpdateUser((String)session.getAttribute("user"));
 	demographic.setLastUpdateDate(new java.util.Date());
-	
+	demographic.setGender(request.getParameter("gender"));
+	demographic.setPronoun(request.getParameter("pronouns"));
+
 	String yearTmp=StringUtils.trimToNull(request.getParameter("date_joined_year"));
 	String monthTmp=StringUtils.trimToNull(request.getParameter("date_joined_month"));
 	String dayTmp=StringUtils.trimToNull(request.getParameter("date_joined_date"));
@@ -442,9 +442,9 @@
     }
     
     
-    //add to waiting list if the waiting_list parameter in the property file is set to true and a waiting list is found
+    //add to waiting list if the waiting_list parameter in the property file is set to true
     oscar.oscarWaitingList.WaitingList wL = oscar.oscarWaitingList.WaitingList.getInstance();
-	if(oscarVariables.getProperty("DEMOGRAPHIC_WAITING_LIST").equals("true") && wL.getFound()){
+    if( wL.getFound() && oscar.OscarProperties.getInstance().getBooleanProperty("DEMOGRAPHIC_WAITING_LIST", "true") ){
  	  WLWaitingListUtil.updateWaitingListRecord(
  	  request.getParameter("list_id"), request.getParameter("waiting_list_note"),
  	  request.getParameter("demographic_no"), request.getParameter("waiting_list_referral_date"));
@@ -461,7 +461,7 @@
 		<input type="hidden" name="dboperation" value="search_detail" /> 
 
 <%
-	if(!request.getParameter("list_id").equalsIgnoreCase("0")){
+	if(! "0".equalsIgnoreCase( request.getParameter("list_id") ) ){
 		String wlDemoId = request.getParameter("demographic_no");
 		String wlId = request.getParameter("list_id");
 	
