@@ -118,28 +118,44 @@ public class EmailComposeManager {
         }
     }
 
-    public String getEmailConsent(LoggedInInfo loggedInInfo, Integer demographicId) {
+    public String getEmailConsentStatus(LoggedInInfo loggedInInfo, Integer demographicId) {
         String UNKNOWN = "Unknown", OPTIN = "Explicit Opt-In", OPTOUT = "Explicit Opt-Out";
-
         UserProperty userProperty = userPropertyDAO.getProp(UserProperty.EMAIL_COMMUNICATION);
         if (userProperty == null || StringUtils.isNullOrEmpty(userProperty.getValue())) { return UNKNOWN; }
 
-        String[] emailConsentProperties = userProperty.getValue().split("[,;\\s()]+");
-        for (String property : emailConsentProperties)  {
-            ConsentType consentType = patientConsentManager.getConsentType(property);
-            if (consentType == null || !consentType.isActive()) { return UNKNOWN; }
-            
-            Consent consent = patientConsentManager.getConsentByDemographicAndConsentType(loggedInInfo, demographicId, consentType);
-            if (consent == null) { return UNKNOWN; }
-
-            return consent.getPatientConsented() ? OPTIN : OPTOUT;
-        }
+        String property = userProperty.getValue().split("[,;\\s()]+")[0];
+        ConsentType consentType = patientConsentManager.getConsentType(property);
+        if (consentType == null || !consentType.isActive()) { return UNKNOWN; }
         
-        return UNKNOWN;
+        Consent consent = patientConsentManager.getConsentByDemographicAndConsentType(loggedInInfo, demographicId, consentType);
+        if (consent == null) { return UNKNOWN; }
+
+        return consent.getPatientConsented() ? OPTIN : OPTOUT;
+    }
+
+    public Boolean isEmailConsentConfigured() {
+        UserProperty userProperty = userPropertyDAO.getProp(UserProperty.EMAIL_COMMUNICATION);
+        if (userProperty == null || StringUtils.isNullOrEmpty(userProperty.getValue())) { return Boolean.FALSE; }
+
+        String property = userProperty.getValue().split("[,;\\s()]+")[0];
+        ConsentType consentType = patientConsentManager.getConsentType(property);
+        if (consentType == null || !consentType.isActive()) { return Boolean.FALSE; }
+
+        return Boolean.TRUE;
     }
 
     public List<EmailConfig> getAllSenderAccounts() {
         return emailConfigDao.fillAllActiveEmailConfigs();
+    }
+
+    public Boolean hasActiveSenderAccount() {
+        if (getAllSenderAccounts().isEmpty()) { return false; }
+        return true;
+    }
+
+    public Boolean isEmailEnabled() {
+        if (isEmailConsentConfigured() && !getAllSenderAccounts().isEmpty()) { return Boolean.TRUE; }
+        return Boolean.FALSE;
     }
 
     public List<String> getRecipients(LoggedInInfo loggedInInfo, Integer demographicId) {

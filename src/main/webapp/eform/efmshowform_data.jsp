@@ -118,7 +118,7 @@
 
     // Add email consent property
     EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
-    String emailConsentStatus = emailComposeManager.getEmailConsent(loggedInInfo, Integer.parseInt(eForm.getDemographicNo()));
+    String emailConsentStatus = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(eForm.getDemographicNo()));
     eForm.addHiddenInputElement("emailConsentStatus", emailConsentStatus);
 
     out.print(eForm.getFormHtml());
