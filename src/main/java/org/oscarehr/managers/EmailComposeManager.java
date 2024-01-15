@@ -13,10 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
+import org.oscarehr.common.dao.UserPropertyDAO;
+import org.oscarehr.common.model.Consent;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -33,6 +36,8 @@ public class EmailComposeManager {
 
     @Autowired
     private EmailConfigDao emailConfigDao;
+    @Autowired
+    private UserPropertyDAO userPropertyDAO;
 
     @Autowired
     private DemographicManager demographicManager;
@@ -113,9 +118,24 @@ public class EmailComposeManager {
         }
     }
 
-    public Boolean hasEmailConsent(Integer demographicId) {
-        ConsentType consentType = patientConsentManager.getConsentType("electronic_communication_consent");
-        return patientConsentManager.hasPatientConsented(demographicId, consentType);
+    public String getEmailConsent(LoggedInInfo loggedInInfo, Integer demographicId) {
+        String UNKNOWN = "Unknown", OPTIN = "Explicit Opt-In", OPTOUT = "Explicit Opt-Out";
+
+        UserProperty userProperty = userPropertyDAO.getProp(UserProperty.EMAIL_COMMUNICATION);
+        if (userProperty == null || StringUtils.isNullOrEmpty(userProperty.getValue())) { return UNKNOWN; }
+
+        String[] emailConsentProperties = userProperty.getValue().split("[,;\\s()]+");
+        for (String property : emailConsentProperties)  {
+            ConsentType consentType = patientConsentManager.getConsentType(property);
+            if (consentType == null || !consentType.isActive()) { return UNKNOWN; }
+            
+            Consent consent = patientConsentManager.getConsentByDemographicAndConsentType(loggedInInfo, demographicId, consentType);
+            if (consent == null) { return UNKNOWN; }
+
+            return consent.getPatientConsented() ? OPTIN : OPTOUT;
+        }
+        
+        return UNKNOWN;
     }
 
     public List<EmailConfig> getAllSenderAccounts() {

@@ -27,6 +27,7 @@
 <%@ page import="oscar.eform.data.*"%>
 <%@ page import="org.oscarehr.managers.EmailComposeManager"%>
 <%@ page import="org.oscarehr.util.SpringUtils"%>
+<%@ page import="org.oscarehr.util.LoggedInInfo"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -113,8 +114,8 @@
 
     // Add email consent property
     EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
-    Boolean hasEmailConsent = emailComposeManager.hasEmailConsent(Integer.parseInt(demographic_no));
-    thisEForm.addHiddenInputElement("hasEmailConsent", hasEmailConsent);
+    String emailConsentStatus = emailComposeManager.getEmailConsent(loggedInInfo, Integer.parseInt(demographic_no));
+    thisEForm.addHiddenInputElement("emailConsentStatus", emailConsentStatus);
 
     out.print(thisEForm.getFormHtml());
 %>

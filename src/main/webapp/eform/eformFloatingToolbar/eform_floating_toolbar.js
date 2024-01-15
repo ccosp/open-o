@@ -320,11 +320,11 @@ document.addEventListener("DOMContentLoaded", function(){
 	 * open the Oscar Email dialog.
 	 */
 	function remoteEmail() {	
-		const hasEmailConsent = document.getElementById("hasEmailConsent").value == "true" ? true : false ;
-		if (hasEmailConsent) {
+		const emailConsentStatus = document.getElementById("emailConsentStatus").value;
+		if (emailConsentStatus === "Explicit Opt-In") {
 			alert("Email communication requires patient consent.\nYou currently have the patient's consent.\nPress 'OK' to proceed.");
 		} else {
-			const userResponse = prompt("Patient consent is not given for email. \nEnter 'Yes' if you still want to proceed.", "No");
+			const userResponse = prompt("Patient's consent for email communication: " + emailConsentStatus + "\nEnter 'Yes' if you still want to proceed.", "No");
 			if (userResponse === null || userResponse.toLowerCase() !== 'yes') { return; }
 		}
 

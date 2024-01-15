@@ -235,8 +235,8 @@
 						</div>
 					</div>
 					<div class="card-footer">
-						<span class="icon-warning-sign"></span> Patient's consent for email communication: <b><c:out value="${ hasEmailConsent ? 'YES' : 'NO' }" /></b>
-						<input type="hidden" name="hasEmailConsent" value="${hasEmailConsent}" />
+						<span class="icon-warning-sign"></span> Patient's consent for email communication: <b><c:out value="${ emailConsentStatus }" /></b>
+						<input type="hidden" name="emailConsentStatus" value="${emailConsentStatus}" />
 					</div>
 				</div>
 

@@ -118,9 +118,8 @@
 
     // Add email consent property
     EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
-    Boolean hasEmailConsent = emailComposeManager.hasEmailConsent(Integer.parseInt(eForm.getDemographicNo()));
-    eForm.addHiddenInputElement("hasEmailConsent", hasEmailConsent);
+    String emailConsentStatus = emailComposeManager.getEmailConsent(loggedInInfo, Integer.parseInt(eForm.getDemographicNo()));
+    eForm.addHiddenInputElement("emailConsentStatus", emailConsentStatus);
 
     out.print(eForm.getFormHtml());
-%>
-<script type="text/javascript" src="${oscar_javascript_path}/moment.js" ></script>
+%><script type="text/javascript" src="${oscar_javascript_path}/moment.js" ></script>
