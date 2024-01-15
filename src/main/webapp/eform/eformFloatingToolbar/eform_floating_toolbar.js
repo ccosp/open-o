@@ -321,9 +321,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	 */
 	function remoteEmail() {	
 		const emailConsentStatus = document.getElementById("emailConsentStatus").value;
-		if (emailConsentStatus === "Explicit Opt-In") {
-			alert("Email communication requires patient consent.\nYou currently have the patient's consent.\nPress 'OK' to proceed.");
-		} else {
+		if (emailConsentStatus !== "Explicit Opt-In") {
 			const userResponse = prompt("Patient's consent for email communication: " + emailConsentStatus + "\nEnter 'Yes' if you still want to proceed.", "No");
 			if (userResponse === null || userResponse.toLowerCase() !== 'yes') { return; }
 		}
