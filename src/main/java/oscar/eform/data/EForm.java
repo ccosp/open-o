@@ -25,6 +25,8 @@
 
 package oscar.eform.data;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,12 +49,22 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import org.owasp.encoder.Encode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import oscar.eform.EFormLoader;
 import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler;
 import oscar.oscarEncounter.oscarMeasurements.util.WriteNewMeasurements;
 import oscar.util.StringBuilderUtils;
 import oscar.util.UtilDateUtilities;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class EForm extends EFormBase {
 	private static EFormDataDao eFormDataDao = (EFormDataDao) SpringUtils.getBean("EFormDataDao");
@@ -903,20 +915,65 @@ public class EForm extends EFormBase {
 			}
 
 			String signatureCode = "<script type='text/javascript' src='${oscar_javascript_path}../jquery/jquery-1.4.2.js'></script>" +
-			"<script type='text/javascript' src='${oscar_javascript_path}signature.js'></script>" +
-			"<script type='text/javascript'>\n" +
-			"var _signatureRequestId = '" + signatureRequestId + "';\n" + 
-			"var _imageUrl = '" + imageUrl + "';\n" +
-			"var _storedImgUrl = '" + storedImgUrl + "';\n" +
-			"var _contextPath = '" + contextPath + "';\n" + 
-			"var _digitalSignatureRequestIdKey = '" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "';\n" +
-			"var _browserType = '" + browserType + "';\n" +
-			"var _demographicNo = '" + demographicNo + "';\n" +
-			"</script>";
+					"<script type='text/javascript' src='${oscar_javascript_path}signature.js'></script>" +
+					"<script type='text/javascript'>\n" +
+					"var _signatureRequestId = '" + signatureRequestId + "';\n" +
+					"var _imageUrl = '" + imageUrl + "';\n" +
+					"var _storedImgUrl = '" + storedImgUrl + "';\n" +
+					"var _contextPath = '" + contextPath + "';\n" +
+					"var _digitalSignatureRequestIdKey = '" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "';\n" +
+					"var _browserType = '" + browserType + "';\n" +
+					"var _demographicNo = '" + demographicNo + "';\n" +
+					"</script>";
 
 
 			html.replace(signatureLoc, signatureLoc + signatureMarker.length(), signatureCode);
 			this.formHtml = html.toString();
 		}
 	}
+
+	/* For overriding or adding Javascript to every eform
+	 * Add path to Javascript resource in OSCAR source code.
+	 */
+	public void addJavascript(String javascriptPath) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<script ");
+		stringBuilder.append("type='text/javascript' ");
+		stringBuilder.append("src='").append(javascriptPath);
+		stringBuilder.append("' ></script>");
+		addHeadElement(stringBuilder.toString());
+	}
+
+	/* For overriding or adding CSS to every eform
+	 * Add path to CSS resource in OSCAR source code.
+	 */
+	public void addCSS(String cssPath, String mediaType) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<link ");
+		stringBuilder.append("href='").append(cssPath);
+		stringBuilder.append(" media='").append(mediaType).append("'/>");
+		addHeadElement(stringBuilder.toString());
+	}
+
+	/*
+	 * Adds use of custom font library such as
+	 */
+	public void addFontLibrary(String fontPath) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<style>");
+		stringBuilder.append("@font-face { font-family: dejavu; src: url('").append(fontPath).append("'); }</style>");
+		addHeadElement(stringBuilder.toString());
+	}
+
+	private void addHeadElement(String element) {
+		if(! this.formHtml.contains("<head>") && ! this.formHtml.contains("</head>")) {
+			this.formHtml.replace("<html>", "<html><head></head>");
+		}
+		this.formHtml = this.formHtml.replace("</head>", element + "\n</head>");
+	}
+
+	private void addBodyElement() {
+
+	}
+
 }
