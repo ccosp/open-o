@@ -176,6 +176,7 @@
 				<input type="hidden" name="demographicId" value="${demographicId}" />
 				<input type="hidden" name="fdid" value="${fdid}" />
 				<input type="hidden" name="openEFormAfterEmail" value="${openEFormAfterEmail}" />
+				<input type="hidden" name="deleteEFormAfterEmail" value="${deleteEFormAfterEmail}" />
 				<input type="hidden" name="transactionType" value="${transactionType}" />	
 
 				<div class="card">

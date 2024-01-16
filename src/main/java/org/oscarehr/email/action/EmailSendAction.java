@@ -15,21 +15,26 @@ import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailLog;
 import org.oscarehr.common.model.EmailLog.EmailStatus;
 import org.oscarehr.email.core.Email;
+import org.oscarehr.managers.EformDataManager;
 import org.oscarehr.managers.EmailManager;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 public class EmailSendAction extends DispatchAction {
     private static final Logger logger = MiscUtils.getLogger();
     private EmailManager emailManager = SpringUtils.getBean(EmailManager.class);
+    private EformDataManager eformDataManager = SpringUtils.getBean(EformDataManager.class);
 
     public ActionForward sendEFormEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
         Email email = prepareEmailFields(request);
         EmailLog emailLog = emailManager.sendEmail(email);
         if (!emailLog.getStatus().equals(EmailStatus.SUCCESS)) { 
             request.setAttribute("isEmailSuccessful", false); 
         } else {
             request.setAttribute("isEmailSuccessful", true);
+            if (request.getParameter("deleteEFormAfterEmail") != null && "true".equalsIgnoreCase(request.getParameter("deleteEFormAfterEmail"))) { eformDataManager.removeEFormData(loggedInInfo, request.getParameter("fdid")); }
         }
         request.setAttribute("isOpenEForm", request.getParameter("openEFormAfterEmail"));
         request.setAttribute("fdid", request.getParameter("fdid"));

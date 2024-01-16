@@ -451,6 +451,8 @@ public class AddEFormAction extends Action {
 		Boolean openEFormAfterEmail = request.getParameter("openEFormAfterEmail") == null || "false".equals(request.getParameter("openEFormAfterEmail")) ? false : true;
 		Boolean isEmailAttachmentEncrypted = request.getParameter("isEmailAttachmentEncrypted") == null || "false".equals(request.getParameter("isEmailAttachmentEncrypted")) ? false : true;
 		Boolean isEmailAutoSend = request.getParameter("isEmailAutoSend") == null || "false".equals(request.getParameter("isEmailAutoSend")) ? false : true;
+		Boolean deleteEFormAfterEmail = request.getParameter("deleteEFormAfterEmail") == null || "false".equals(request.getParameter("deleteEFormAfterEmail")) ? false : true;
+		request.setAttribute("deleteEFormAfterEmail", deleteEFormAfterEmail);
 		request.setAttribute("isEmailAttachmentEncrypted", isEmailAttachmentEncrypted);
 		request.setAttribute("isEmailAutoSend", isEmailAutoSend);
 		request.setAttribute("openEFormAfterEmail", openEFormAfterEmail);
