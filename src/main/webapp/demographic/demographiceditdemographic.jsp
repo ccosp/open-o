@@ -183,7 +183,9 @@ if(!authed) {
 	String usSigned = StringUtils.defaultString(apptMainBean.getString(demoExt.get("usSigned")));
     String privacyConsent = StringUtils.defaultString(apptMainBean.getString(demoExt.get("privacyConsent")), "");
 	String informedConsent = StringUtils.defaultString(apptMainBean.getString(demoExt.get("informedConsent")), "");
-	
+
+	pageContext.setAttribute("demoExtended", demoExt);
+
 	boolean showConsentsThisTime = false;
 	
     GregorianCalendar now = new GregorianCalendar();
@@ -1498,14 +1500,25 @@ if(oscarProps.getProperty("new_label_print") != null && oscarProps.getProperty("
                                                    <span class="info"><%=sin%></span>
 							</li>
 						<% } %>
-						
-						<% String aboriginal = StringUtils.trimToEmpty(demoExt.get("aboriginal"));
-						   if (aboriginal!=null && aboriginal.length()>0) { %>
-                                               <li><span class="label"><bean:message key="demographic.demographiceditdemographic.aboriginal"/>:</span>
-                                                   <span class="info"><%=aboriginal%></span>
+
+							<oscar:oscarPropertiesCheck value="true" defaultVal="false" property="FIRST_NATIONS_MODULE">
+								<li><span class="label">
+	                           	First Nation:</span>
+									<span class="info">
+	                            	<c:out value='${ pageScope.demoExtended["aboriginal"] }' />
+	                            </span>
+								</li>
+								<li>
+								<span class="label">Status Number:</span>
+								<span class="info"><c:out value='${ pageScope.demoExtended["statusNum"] }' /></span>
 							</li>
-						<% }
-						  if (oscarProps.getProperty("EXTRA_DEMO_FIELDS") !=null){
+								<li>
+								<span class="label">First Nation Community:</span>
+								<span class="info"><c:out value='${ pageScope.demoExtended["fNationCom"] }' /></span>
+							</li>
+							</oscar:oscarPropertiesCheck>
+
+							<% if (oscarProps.getProperty("EXTRA_DEMO_FIELDS") !=null){
                                               String fieldJSP = oscarProps.getProperty("EXTRA_DEMO_FIELDS");
                                               fieldJSP+= "View.jsp";
                                             %>
@@ -1984,6 +1997,15 @@ if ( Dead.equals(PatStat) ) {%>
                                                         <span class="info"><%=MyDateFormat.getMyStandardDate(demographic.getHcRenewDate())%></span>
                                                     </li>
 						</ul>
+						<%-- TOGGLE FIRST NATIONS MODULE --%>
+						<oscar:oscarPropertiesCheck value="true" defaultVal="false" property="FIRST_NATIONS_MODULE">
+
+											<jsp:include page="./displayFirstNationsModule.jsp" flush="false">
+												<jsp:param name="demo" value="<%= demographic_no %>" />
+											</jsp:include>
+
+						</oscar:oscarPropertiesCheck>
+						<%-- END TOGGLE FIRST NATIONS MODULE --%>
 						</div>
 
 <%-- TOGGLE WORKFLOW_ENHANCE - SHOWS PATIENTS INTERNAL PROVIDERS AND RELATED SCHEDULE AVAIL --%>
@@ -2472,6 +2494,7 @@ if ( Dead.equals(PatStat) ) {%>
 <%} %>
 									</select>
 							    </td>
+
 							</tr>
 							
 							<tr valign="top">
@@ -2786,22 +2809,27 @@ if ( Dead.equals(PatStat) ) {%>
 								        <%if(newsletter.equals("Electronic")){%> selected <%}%>><bean:message
 								        key="demographic.demographicaddrecordhtm.formNewsLetter.optElectronic" /></option>
 								</select></td>
-								<td align="right"><b><bean:message
-									key="demographic.demographiceditdemographic.aboriginal" />: </b></td>
-								<td align="left">
-								
-								<select name="aboriginal" <%=getDisabled("aboriginal")%>>
-									<option value="" <%if(aboriginal.equals("")){%>
-										selected <%}%>>Unknown</option>
-									<option value="No" <%if(aboriginal.equals("No")){%> selected
-										<%}%>>No</option>
-									<option value="Yes" <%if(aboriginal.equals("Yes")){%>
-										selected <%}%>>Yes</option>
-						
-								</select>
-								<input type="hidden" name="aboriginalOrig"
-									value="<%=StringUtils.trimToEmpty(demoExt.get("aboriginal"))%>" />
-								</td>
+
+								<oscar:oscarPropertiesCheck value="true" defaultVal="false" property="FIRST_NATIONS_MODULE">
+									<td align="right"><b>First Nation: </b></td>
+									<td align="left">
+
+										<select name="aboriginal" <%=getDisabled("aboriginal")%>>
+											<option value="" ${ pageScope.demoExtended["aboriginal"] eq '' ? 'selected' : '' } >
+												Unknown
+											</option>
+											<option value="No" ${ pageScope.demoExtended["aboriginal"] eq 'No' ? 'selected' : '' } >
+												No
+											</option>
+											<option value="Yes" ${ pageScope.demoExtended["aboriginal"] eq 'Yes' ? 'selected' : '' } >
+												Yes
+											</option>
+
+										</select>
+										<input type="hidden" name="aboriginalOrig"
+										       value="${ pageScope.demoExtended["aboriginal"] }" />
+									</td>
+								</oscar:oscarPropertiesCheck>
 							</tr>
 							<tr valign="top">
 								<td align="right"><b><bean:message
@@ -3100,7 +3128,17 @@ if ( Dead.equals(PatStat) ) {%>
 									value="<%=StringUtils.trimToEmpty(demoExt.get("cytolNum"))%>" />
 								</td>
 							</tr>
-
+								<%-- TOGGLE FIRST NATIONS MODULE --%>
+							<oscar:oscarPropertiesCheck value="true" defaultVal="false" property="FIRST_NATIONS_MODULE">
+							<tr>
+								<td colspan="8">
+										<jsp:include page="manageFirstNationsModule.jsp" flush="false">
+											<jsp:param name="demo" value="<%= demographic_no %>" />
+										</jsp:include>
+								</td>
+							</tr>
+							</oscar:oscarPropertiesCheck>
+								<%-- END TOGGLE FIRST NATIONS MODULE --%>
 <%-- TOGGLE OFF PATIENT CLINIC STATUS --%>
 <oscar:oscarPropertiesCheck property="DEMOGRAPHIC_PATIENT_CLINIC_STATUS" value="true">
 

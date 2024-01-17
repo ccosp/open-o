@@ -39,17 +39,13 @@
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="org.jpedal.fonts.tt.FirstPoint"%>
 <%@page import="org.apache.commons.lang.StringEscapeUtils"%>
-<%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="org.oscarehr.util.MiscUtils"%>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedProvider"%>
 <%@page import="org.oscarehr.caisi_integrator.ws.FacilityIdStringCompositePk"%>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager"%>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils"%>
-<%@page import="org.apache.commons.lang.StringUtils"%>
-<%@page import="oscar.util.DateUtils"%>
 <%@page import="org.oscarehr.common.dao.OscarLogDao"%>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicTransfer"%>
 <%@page import="org.oscarehr.caisi_integrator.ws.MatchingDemographicTransferScore"%>
@@ -57,7 +53,6 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
@@ -78,12 +73,14 @@
 %>
 
 
-<%@ page import="java.util.*, java.sql.*, java.net.URLEncoder, oscar.*, oscar.util.*" errorPage="errorpage.jsp" %>
+<%@ page import="java.util.*, java.sql.*, java.net.URLEncoder, oscar.*, oscar.util.*" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic"%>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="oscar.oscarDemographic.data.DemographicMerged" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="org.oscarehr.common.dao.DemographicExtDao" %>
+<%@ page import="org.oscarehr.common.model.DemographicExt" %>
 <jsp:useBean id="providerBean" class="java.util.Properties"	scope="session" />
 
 <%
@@ -564,6 +561,9 @@ List<Demographic> doSearch(DemographicDao demographicDao,String searchMode, Stri
 		else if(searchMode.equals("search_demographic_no")) {
 			demoList = demographicDao.findDemographicByDemographicNo(keyword, limit, offset,providerNo,outOfDomain);
 		}
+		else if(searchMode.equals("search_band_number")) {
+			demoList = demographicDao.findDemographicByDemographicNo(getDemographicNumberWithBandNumber(keyword), limit, offset,providerNo,outOfDomain);
+		}
 	}
 	else if( "active".equals(ptstatus) ) {
 	    if(searchMode.equals("search_name")) {
@@ -586,6 +586,9 @@ List<Demographic> doSearch(DemographicDao demographicDao,String searchMode, Stri
 		}
 		else if(searchMode.equals("search_demographic_no")) {
 			demoList = demographicDao.findDemographicByDemographicNoAndNotStatus(keyword, stati, limit, offset,providerNo,outOfDomain);
+		}
+		else if(searchMode.equals("search_band_number")) {
+			demoList = demographicDao.findDemographicByDemographicNoAndNotStatus(getDemographicNumberWithBandNumber(keyword), stati, limit, offset,providerNo,outOfDomain);
 		}
 	}
 	else if( "inactive".equals(ptstatus) ) {
@@ -610,9 +613,27 @@ List<Demographic> doSearch(DemographicDao demographicDao,String searchMode, Stri
 		else if(searchMode.equals("search_demographic_no")) {
 			demoList = demographicDao.findDemographicByDemographicNoAndStatus(keyword, stati, limit, offset,providerNo,outOfDomain);
 		}
+		else if(searchMode.equals("search_band_number")) {
+			demoList = demographicDao.findDemographicByDemographicNoAndStatus(getDemographicNumberWithBandNumber(keyword), stati, limit, offset,providerNo,outOfDomain);
+		}
 	}
 
-	
-	return demoList;
+	return new ArrayList<Demographic>(new HashSet<Demographic>(demoList));
 }
+
+String getDemographicNumberWithBandNumber(String bandNumber) {
+	//Gets the demographicExtDao
+	DemographicExtDao demographicExtDao = SpringUtils.getBean(DemographicExtDao.class);
+	//Gets the demographicExts that match the given key and value
+	List<DemographicExt> demographicExts = demographicExtDao.getDemographicExtByKeyAndValue("statusNum", bandNumber);
+	//Creates a demographicNumber string with the value of '-1'
+	String demographicNumber = "-1";
+	//If the list is not null and is not empty, gets the demographic number from the first record and converts it to a string
+	if (demographicExts != null && !demographicExts.isEmpty()) {
+		demographicNumber = demographicExts.get(0).getDemographicNo().toString();
+	}
+	//Returns the demographicNumber
+	return demographicNumber;
+}
+
 %>

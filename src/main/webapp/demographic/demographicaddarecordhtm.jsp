@@ -1167,8 +1167,7 @@ function updateResidentialProvinces(province) {
 					<option value="Electronic"><bean:message
 						key="demographic.demographicaddrecordhtm.formNewsLetter.optElectronic" /></option>
 				</select></td>
-				<td align="right"><b><bean:message
-					key="demographic.demographiceditdemographic.aboriginal" />: </b></td>
+				<td align="right"><b><bean:message key="demographic.demographiceditdemographic.aboriginal" />: </b></td>
 				<td align="left">
 				<select name="aboriginal">
 					<option value="">Unknown</option>
@@ -1449,6 +1448,13 @@ function updateResidentialProvinces(province) {
     
     
     <tr valign="top">
+		    <%-- TOGGLE FIRST NATIONS MODULE --%>
+	    <oscar:oscarPropertiesCheck value="true" defaultVal="false" property="FIRST_NATIONS_MODULE">
+		    <jsp:include page="manageFirstNationsModule.jsp" flush="true">
+			    <jsp:param name="demo" value="0" />
+		    </jsp:include>
+	    </oscar:oscarPropertiesCheck>
+		    <%-- END TOGGLE FIRST NATIONS MODULE --%>
 	<td  id="sinNoLbl" align="right"><b><bean:message key="demographic.demographicaddrecordhtm.msgSIN"/>:</b> </td>
 	<td id="sinNoCell" align="left"  >
 	    <input type="text" name="sin">

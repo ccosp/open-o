@@ -39,6 +39,14 @@
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 
 <script language="JavaScript">
+function checkdbstatus() {
+	if( document.titlesearch.search_mode.value === 'search_band_number' ) {
+		document.titlesearch.dboperation.value = 'search_status_id';
+	} else {
+		 document.titlesearch.dboperation.value = 'search_titlename';
+	}
+}
+
 function searchInactive() {
     document.titlesearch.ptstatus.value="inactive";
     if (checkTypeIn()) document.titlesearch.submit();
@@ -94,6 +102,11 @@ function searchOutOfDomain() {
             <option value="search_demographic_no" <%=searchMode.equals("search_demographic_no")?"selected":""%>>
                 <bean:message key="demographic.zdemographicfulltitlesearch.formDemographicNo" />
             </option>
+			 <oscar:oscarPropertiesCheck value="true" defaultVal="false" property="FIRST_NATIONS_MODULE">
+		            <option value="search_band_number" <%=searchMode.equals("search_band_number")?"selected":""%> >
+		                <bean:message key="demographic.zdemographicfulltitlesearch.formBandNumber" />
+		            </option>
+			 </oscar:oscarPropertiesCheck>
          </select>
     </li>
     <li>
