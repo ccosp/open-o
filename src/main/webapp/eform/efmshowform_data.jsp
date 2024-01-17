@@ -39,7 +39,6 @@
 	Addition of a floating global toolbar specifically for activation of the 
 	Fax and eDocument functions.
 --%>
-<%--    <jsp:include page="../images/spinner.jsp" flush="true"/>--%>
 
 <%
     /**

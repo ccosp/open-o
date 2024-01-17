@@ -2641,3 +2641,46 @@ div#eform_floating_toolbar * {
 	pointer-events: none; 
 	cursor: not-allowed; 
 }
+
+/* Loading screen */
+.oscar-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 9999;
+    display:none;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+#img-oscar-spinner {
+    width: 100px;
+    height: 77px;
+}
+
+.oscar-spinner-screen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.active-oscar-spinner {
+    display: block;
+}

@@ -79,6 +79,7 @@
 			<div class="pull-left">
 				<span id="required-warning" style="color:red;display:none;margin:5px;">Subject required</span>
 			</div>
+
 		</form>
 		
   		<div class="pull-right">
@@ -97,4 +98,9 @@
 		</div>
 	</div>
 	<div id="attachDocumentDisplay" style="display:none;"></div>
+	<div id="oscar-spinner-screen" class="oscar-spinner-screen">
+		<div id="oscar-spinner" class="oscar-spinner">
+			<img id="img-oscar-spinner" src="<%=request.getContextPath()%>/images/spinner.jpg" alt="Loading"/>
+		</div>
+	</div>
 </div>

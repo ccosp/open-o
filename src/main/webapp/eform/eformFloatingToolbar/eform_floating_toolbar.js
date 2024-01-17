@@ -600,4 +600,42 @@
 		headelement[0].appendChild(style);
 
 	}
+
+	/*
+	 * Show or hide the loading spinner
+	 * if locked is true: can't click away
+	 * if locked is false: can click away from it
+	 */
+	function ShowSpin(locked)
+	{
+		let screen = document.getElementById("oscar-spinner-screen");
+		let spinner = document.getElementById("oscar-spinner");
+		
+		screen.classList.add("active-oscar-spinner");
+		spinner.classList.add("active-oscar-spinner");
+
+		if (locked)
+		{
+			screen.removeEventListener("click", HideSpin);
+		}
+		else
+		{
+			screen.addEventListener("click", HideSpin);
+		}
+		return true;
+	}
+
+	function HideSpin()
+	{
+		let screen = document.getElementById("oscar-spinner-screen");
+		let spinner = document.getElementById("oscar-spinner");
+		
+		screen.classList.remove("active-oscar-spinner");
+		spinner.style.opacity = "0";
+		
+		setTimeout(function() {
+			spinner.classList.remove("active-oscar-spinner");
+			spinner.style.opacity = "1";
+		}, 300);
+	}
 	
