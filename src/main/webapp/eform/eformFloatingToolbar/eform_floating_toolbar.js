@@ -11,7 +11,8 @@
 			// Add eForm attachments 
 			addEFormAttachments();
 			
-//			top.window.resizeTo("1100","850");
+			// Resize the window based on the toolbar width
+			window.resizeTo("1100","1100");
 			
 				/*
 				 * A little trick to bypass the override of the onload

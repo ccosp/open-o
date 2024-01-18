@@ -950,8 +950,9 @@ public class EForm extends EFormBase {
 	public void addCSS(String cssPath, String mediaType) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<link ");
-		stringBuilder.append("href='").append(cssPath);
-		stringBuilder.append(" media='").append(mediaType).append("'/>");
+		stringBuilder.append("href='").append(cssPath).append("' ");
+		stringBuilder.append("rel='stylesheet' type='text/css' ");
+		stringBuilder.append("media='").append(mediaType).append("'/>");
 		addHeadElement(stringBuilder.toString());
 	}
 
@@ -972,8 +973,27 @@ public class EForm extends EFormBase {
 		this.formHtml = this.formHtml.replace("</head>", element + "\n</head>");
 	}
 
-	private void addBodyElement() {
+	public void addHiddenInputElement(String id, String value) {
+		addHiddenInputElement(id, null, null, value, null);
+	}
 
+	public void addHiddenInputElement(String id, String name, String className, String value, String additionalProperties) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<input type='hidden' ");
+		if (id != null) { stringBuilder.append("id='").append(id).append("' "); }
+		if (name != null) { stringBuilder.append("name='").append(name).append("' "); }
+		if (className != null) { stringBuilder.append("class='").append(className).append("' "); }
+		if (value != null) { stringBuilder.append("value='").append(value).append("' "); }
+		if (additionalProperties != null) { stringBuilder.append(additionalProperties); }
+		stringBuilder.append(">");
+		addBodyElement(stringBuilder.toString());
+	}
+
+	private void addBodyElement(String element) {
+		if(! this.formHtml.contains("<body>") && ! this.formHtml.contains("</body>")) {
+			this.formHtml.replace("</html>", "<body></body></html>");
+		}
+		this.formHtml = this.formHtml.replace("</body>", element + "\n</body>");
 	}
 
 }
