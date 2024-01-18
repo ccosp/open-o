@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,6 +58,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import oscar.eform.EFormLoader;
 import oscar.eform.EFormUtil;
+import oscar.oscarEncounter.data.EctFormData;
 import oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler;
 import oscar.oscarEncounter.oscarMeasurements.util.WriteNewMeasurements;
 import oscar.util.StringBuilderUtils;
@@ -971,6 +973,29 @@ public class EForm extends EFormBase {
 			this.formHtml.replace("<html>", "<html><head></head>");
 		}
 		this.formHtml = this.formHtml.replace("</head>", element + "\n</head>");
+	}
+
+	public void addHiddenAttachments(List<String> attachedDocumentIds, List<String> attachedEFormIds, List<String> attachedHRMDocumentIds, List<String> attachedLabIds, List<EctFormData.PatientForm> attachedForms) {
+		for (String docId : attachedDocumentIds) {
+			addHiddenInputElement("delegate_docNo" + docId, "docNo", "delegateAttachment", docId, null);
+		}
+
+		for (String eformId : attachedEFormIds) {
+			addHiddenInputElement("delegate_eFormNo" + eformId, "eFormNo", "delegateAttachment", eformId, null);
+		}
+
+		for (String hrmId : attachedHRMDocumentIds) {
+			addHiddenInputElement("delegate_hrmNo" + hrmId, "hrmNo", "delegateAttachment", hrmId, null);
+		}
+
+		for (String labId : attachedLabIds) {
+			addHiddenInputElement("delegate_labNo" + labId, "labNo", "delegateAttachment", labId, null);
+		}
+
+		for (EctFormData.PatientForm form : attachedForms) {
+			addHiddenInputElement("entry_formNo" + form.getFormId(), null, "delegateOldFormAttachment", null, "data-formName='" + form.getFormName() + "' data-formDate='" + form.getEdited() + "'");
+			addHiddenInputElement("delegate_formNo" + form.getFormId(), "formNo", "delegateAttachment", form.getFormId(), null);
+		}
 	}
 
 	public void addHiddenInputElement(String id, String value) {
