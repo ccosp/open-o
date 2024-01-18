@@ -283,7 +283,7 @@ public class AddEFormAction extends Action {
 				 * For now, this download code is added here and will be moved to the appropriate place after refactoring is done.
 				 */
 				ActionForward printForward = mapping.findForward("download");
-				String path = printForward.getPath() + "?fdid=" + fdid + "&demographic_no=" + demographic_no + "&parentAjaxId=eforms";
+				String path = printForward.getPath() + "?fdid=" + fdid + "&parentAjaxId=eforms";
 				printForward = new ActionForward(path);
 
 				String fileName = generateFileName(loggedInInfo, Integer.parseInt(demographic_no));
@@ -369,6 +369,7 @@ public class AddEFormAction extends Action {
 
 				request.setAttribute("eFormPDF", pdfBase64);
 				request.setAttribute("eFormPDFName", fileName);
+				request.setAttribute("isDownload", "true");
 
 				return printForward;
 			}

@@ -13,6 +13,15 @@
 			
 			// Resize the window based on the toolbar width
 			window.resizeTo("1100","1100");
+
+			// If download EForm
+			const isDownload = document.getElementById("isDownloadEForm").value;
+			if (isDownload && isDownload === "true") { downloadEForm(); }
+
+			// Handle EForm errors
+			const error = document.getElementById("error").value;
+			const errorMessage = document.getElementById("errorMessage").value;
+			if (error) { showError(errorMessage); }
 			
 				/*
 				 * A little trick to bypass the override of the onload
@@ -246,6 +255,9 @@
 	}
 
 	function downloadEForm() {
+		const eFormPDF = document.getElementById("eFormPDF").value;
+		const eFormPDFName = document.getElementById("eFormPDFName").value;
+		if (!eFormPDF && !eFormPDFName) { return; }
 		const pdfData = new Uint8Array(atob(eFormPDF).split('').map(char => char.charCodeAt(0)));
 		const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
 		const downloadLink = document.createElement('a');
@@ -253,6 +265,8 @@
 		downloadLink.download = eFormPDFName;
 		downloadLink.click();
 		URL.revokeObjectURL(downloadLink.href);
+		document.getElementById("eFormPDF").value = "";
+		document.getElementById("eFormPDFName").value = "";
 	}
 	
 	/**
@@ -600,6 +614,11 @@
 		style.setAttribute("href", "../library/bootstrap/3.0.0/css/eform_floating_toolbar_bootstrap_custom.min.css");
 		headelement[0].appendChild(style);
 
+	}
+
+	function showError(message) {
+		if (!message) { message = "Failed to process eForm. Please refer to the server logs for more details." }
+		alert(message.replace(/\\n/g, "\n"));
 	}
 
 	/*
