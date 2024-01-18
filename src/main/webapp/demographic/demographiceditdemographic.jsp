@@ -851,6 +851,19 @@ function consentClearBtn(radioBtnName)
 	}
 }
 
+function updateEnrolledTo() {
+	var rosterSelect = document.getElementById("roster_status");
+	if (rosterSelect.getValue() == "RO") {
+		if (document.getElementById("enrolledTo").value != document.getElementById("mrp").value && confirm("Enrolment status changed to 'rostered'. Would you like to set the 'Enrolled To' to the MRP?")) { 
+			document.getElementById("enrolledTo").value = document.getElementById("mrp").value;
+		}
+	} else {
+		if (document.getElementById("enrolledTo").value != "" && confirm("Enrolment status changed to '" + rosterSelect.getValue() + "''. Would you like to clear the 'Enrolled To' field?")) { 
+			document.getElementById("enrolledTo").value = "";
+		}
+	}
+}
+
 </script>
 	<script type="application/javascript">
 <%
@@ -3110,7 +3123,7 @@ if ( Dead.equals(PatStat) ) {%>
 								<bean:message
 									key="demographic.demographiceditdemographic.formMRP" />
 								<% } %>: </b></td>
-								<td align="left"><select name="provider_no" <%=getDisabled("provider_no")%>
+								<td align="left"><select id="mrp" name="provider_no" <%=getDisabled("provider_no")%>
 									style="width: 200px">
 									<option value=""></option>
 									<%
@@ -3244,7 +3257,7 @@ document.updatedelete.r_doctor_ohip.value = refNo;
                                   }
                                   %>
                                 <input type="hidden" name="initial_rosterstatus" value="<%=rosterStatus%>"/>
-								<select id="roster_status" name="roster_status" style="width: 120px;" <%=getDisabled("roster_status")%> onchange="checkRosterStatus2()">
+								<select id="roster_status" name="roster_status" style="width: 120px;" <%=getDisabled("roster_status")%> onchange="checkRosterStatus2(); updateEnrolledTo();">
 									<option value=""></option>
 									<option value="RO"
 										<%="RO".equals(rosterStatus)?" selected":""%>>
@@ -3323,7 +3336,7 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 								</b></td>
 								<td align="left">
 									<!-- select box here -->
-									<select name="roster_enrolled_to" <%=getDisabled("roster_enrolled_to")%>
+									<select id="enrolledTo" name="roster_enrolled_to" <%=getDisabled("roster_enrolled_to")%>
 									style="width: 200px">
 									<option value=""></option>
 									<%
