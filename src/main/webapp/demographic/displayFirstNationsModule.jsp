@@ -42,6 +42,7 @@
 <%@page import="java.util.*"%>
 <%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
 String demographic_no = request.getParameter("demo");
@@ -63,30 +64,33 @@ ethnicityMap.put("13", "Other");
 
 pageContext.setAttribute( "demoExt", demoExt );
 pageContext.setAttribute( "ethnicityMap", ethnicityMap);
+
 %>
 <ul>
 <li><strong>First Nation Identity (INAC)</strong></li>
 <li> 
 	<span class="label">Status Number:</span>
-	<span class="info">${ demoExt["statusNum"] }</span>
+	<span class="info"><c:out value='${ demoExt["statusNum"] }' /></span>
 </li>
 <li>
 	<span class="label">First Nation Community: </span>
-	<span class="info">${ demoExt["fNationCom"] }</span>
+	<span class="info">
+		<c:out value='${param.fncommunity}' />
+	</span>
 </li>
 
 <li>
 	<span class="label">Family Number: </span> 
-	<span class="info">${ demoExt["fNationFamilyNumber"] }</span>
+	<span class="info"><c:out value='${ demoExt["fNationFamilyNumber"] }' /></span>
 </li>
 
 <li>
 	<span class="label">Family Position: </span> 
-	<span class="info">${ demoExt["fNationFamilyPosition"] }</span>
+	<span class="info"><c:out value='${ demoExt["fNationFamilyPosition"] }' /></span>
 </li>
 <li>
 	<span class="label">First Nation Status: </span>
-	<span class="info">${ ethnicityMap[demoExt["ethnicity"]] }</span>
+	<span class="info"><c:out value='${ ethnicityMap[demoExt["ethnicity"]] }' /></span>
 </li>
 
 </ul>

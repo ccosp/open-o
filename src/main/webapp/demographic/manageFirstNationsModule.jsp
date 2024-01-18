@@ -25,6 +25,7 @@
 --%>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed=true;
@@ -42,6 +43,9 @@
 <%@page import="java.util.*"%>
 <%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="org.oscarehr.managers.LookupListManager" %>
+<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="org.oscarehr.common.model.LookupList" %>
 
 <%
 String demographic_no = request.getParameter("demo");
@@ -52,6 +56,9 @@ if(demographic_no != null){
 	demoExt = demographicExtDao.getAllValuesForDemo(Integer.valueOf(demographic_no));
 }
 pageContext.setAttribute( "demoExt", demoExt );
+	LookupListManager lookupListManager = SpringUtils.getBean(LookupListManager.class);
+	LookupList firstNationCommunities = lookupListManager.findLookupListByName(LoggedInInfo.getLoggedInInfoFromSession(request), "firstNationCommunity");
+	pageContext.setAttribute( "firstNationCommunities", firstNationCommunities );
 %>
 
 	<%--
@@ -60,6 +67,7 @@ pageContext.setAttribute( "demoExt", demoExt );
 		10 digits. 
 	 --%>
 <script type="text/javascript" >
+	//<!--
 jQuery(document).ready(function(){
 
 	// all that is needed is a full band number OR a Band Name/number, Family Number
@@ -106,7 +114,12 @@ jQuery(document).ready(function(){
 		}
 	});
 
-});	 
+	jQuery("#fNationCom").on("change", function() {
+		jQuery("#labelfNationCom").val(jQuery("#fNationCom option:selected").text().trim());
+	})
+
+});
+	//-->
 </script>
 
 <%--<tr><td colspan="2">First Nations (INAC)</td></tr>--%>
@@ -127,8 +140,15 @@ jQuery(document).ready(function(){
         	<strong>First Nation Community:</strong>
         </td>
         <td align="left">
-            <input type="text" id="fNationCom" name="fNationCom" value="${ demoExt["fNationCom"] }">
-	    	<input type="hidden" name="fNationComOrig" value="${ demoExt["fNationCom"] }">
+	        <select id="fNationCom" name="fNationCom">
+	        <c:forEach items="${firstNationCommunities.items}" var="firstNationCommunity">
+				<option value="${firstNationCommunity.value}" ${firstNationCommunity.value eq demoExt["fNationCom"] ? 'selected' : '' }>
+					<c:out value="${firstNationCommunity.label}" />
+				</option>
+	        </c:forEach>
+	        </select>
+	        <input type="hidden" name="labelfNationCom" id="labelfNationCom" value="" >
+<%--	        <input type="hidden" name="fNationComOrig" value="${ demoExt["fNationCom"] }">--%>
 		</td>
 <% } %>
 </tr>
@@ -138,14 +158,14 @@ jQuery(document).ready(function(){
         </td>
         <td align="left">
             <input type="text" id="fNationFamilyNumber" name="fNationFamilyNumber" value="${ demoExt["fNationFamilyNumber"] }">
-	    	<input type="hidden" name="fNationFamilyNumberOrig" value="${ demoExt["fNationFamilyNumber"] }">
+<%--	    	<input type="hidden" name="fNationFamilyNumberOrig" value="${ demoExt["fNationFamilyNumber"] }">--%>
      </td>
       <td align="right" class="label disableStyle">
         	<strong>Family Position:</strong>       
         </td>
         <td align="left">
             <input type="text" id="fNationFamilyPosition" name="fNationFamilyPosition" value="${ demoExt["fNationFamilyPosition"] }">
-	    	<input type="hidden" name="fNationFamilyPositionOrig" value="${ demoExt["fNationFamilyPosition"] }">
+<%--	    	<input type="hidden" name="fNationFamilyPositionOrig" value="${ demoExt["fNationFamilyPosition"] }">--%>
      </td>
 </tr>
 
@@ -167,5 +187,7 @@ jQuery(document).ready(function(){
 	</select> 
 		<input type="hidden" name="ethnicityOrig" value="${ demoExt["ethnicity"] }" />
 	</td>
+	<td><!-- padding --></td>
+	<td><!-- padding --></td>
 </tr>
 
