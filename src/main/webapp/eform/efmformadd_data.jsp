@@ -56,49 +56,54 @@
 </c:if>
 
 <%
-  /**
-   * TODO: Move all JSP scriptlet code from efmshowform_data.jsp and efmformadd_data.jsp to the ShowEFormAction.java (create if necessary) action file.
-   */
-  String provider_no = (String) session.getValue("user");
-  String demographic_no = request.getParameter("demographic_no");
-  String appointment_no = request.getParameter("appointment");
-  String fid = request.getParameter("fid");
-  String eform_link = request.getParameter("eform_link");
-  String source = request.getParameter("source");
-  
+    /**
+    * TODO: Move all JSP scriptlet code from efmshowform_data.jsp and efmformadd_data.jsp to the ShowEFormAction.java (create if necessary) action file.
+    */
+    String provider_no = (String) session.getValue("user");
+    String demographic_no = request.getParameter("demographic_no");
+    String appointment_no = request.getParameter("appointment");
+    String fid = request.getParameter("fid");
+    String eform_link = request.getParameter("eform_link");
+    String source = request.getParameter("source");
 
-  EForm thisEForm = null;
-  if (fid == null || demographic_no == null) 
-  {
-      //if the info is in the request attribute
-      thisEForm = (EForm) request.getAttribute("curform");
-  } 
-  else 
-  {
-      //if the info is in the request parameter
-      thisEForm = new EForm(fid, demographic_no);
-      thisEForm.setProviderNo(provider_no);  //needs provider for the action
-  }
 
-  if (appointment_no!=null) 
-  {
-	  thisEForm.setAppointmentNo(appointment_no);
-  }
-  
-  if (eform_link!=null) 
-  {
-	  thisEForm.setEformLink(eform_link);
-  }
-  
-  thisEForm.setContextPath(request.getContextPath());
-  thisEForm.setupInputFields();
-  thisEForm.setImagePath();
-  thisEForm.setDatabaseAPs();
-  thisEForm.setOscarOPEN(request.getRequestURI());
-  thisEForm.setAction();
-  thisEForm.setSource(source);
+    EForm thisEForm = null;
+    if (fid == null || demographic_no == null) {
+        //if the info is in the request attribute
+        thisEForm = (EForm) request.getAttribute("curform");
+    } else {
+        //if the info is in the request parameter
+        thisEForm = new EForm(fid, demographic_no);
+        thisEForm.setProviderNo(provider_no);  //needs provider for the action
+    }
 
-  out.print(thisEForm.getFormHtml());
+    if (appointment_no!=null) {
+        thisEForm.setAppointmentNo(appointment_no);
+    }
+
+    if (eform_link!=null) {
+        thisEForm.setEformLink(eform_link);
+    }
+
+    thisEForm.setContextPath(request.getContextPath());
+    thisEForm.setupInputFields();
+    thisEForm.setImagePath();
+    thisEForm.setDatabaseAPs();
+    thisEForm.setOscarOPEN(request.getRequestURI());
+    thisEForm.setAction();
+    thisEForm.setSource(source);
+
+    // Modifying EForm by directly incorporating libraries and adding hidden fields.
+    thisEForm.addJavascript(request.getContextPath()+"/library/jquery/jquery-3.6.4.min.js");
+    thisEForm.addJavascript(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.js");
+    thisEForm.addJavascript(request.getContextPath()+"/eform/eformFloatingToolbar/eform_floating_toolbar.js");
+    thisEForm.addCSS(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.css", "all");
+    thisEForm.addHiddenInputElement("context", request.getContextPath());
+    thisEForm.addHiddenInputElement("demographicNo", demographic_no);
+    thisEForm.addHiddenInputElement("fid", fid);
+    thisEForm.addHiddenInputElement("fdid", request.getParameter("fdid"));
+
+    out.print(thisEForm.getFormHtml());
 %>
 
 
@@ -108,24 +113,3 @@
 	    var pymChild = new pym.Child({ polling: 500 });
 	</script>
 </c:if>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Add EForm</title>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-3.6.4.min.js" ></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/library/jquery/jquery-ui-1.12.1.min.js" ></script>
-	<link href="<%=request.getContextPath() %>/library/jquery/jquery-ui-1.12.1.min.css" rel="stylesheet" media="screen" />
-	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/eform/eformFloatingToolbar/eform_floating_toolbar.js" ></script>
-    <script type="text/javascript">
-        // NOTE: Do not add onload methods here; instead, find alternative approaches to achieve the same result, as it may disrupt eForms' onload functionalities.
-        window.resizeTo(1100, 1100);
-    </script>
-</head>
-<body>
-	<input type="hidden" id="context" value="${ pageContext.request.contextPath }">
-	<input type="hidden" id="demographicNo" value="<%=request.getParameter("demographic_no")%>">
-	<input type="hidden" id="fdid" value="<%=request.getParameter("fdid")%>">
-    <input type="hidden" id="fid" value="<%=request.getParameter("fid")%>">
-</body>
-</html>
