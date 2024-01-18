@@ -355,24 +355,6 @@
 									</div>
 								</div>
 							</div>
-							<hr/>
-							<div class="row">	
-								<div class="col-sm-12"> 
-									<label>Document options</label>
-									<div class="form-check">
-										<div class="form-check-label">
-											<input class="form-check-input" type="radio" name="emailPDFOption" value="doNotAddAsPDF" checked>
-											Do not add as PDF to patient's chart
-										</div>
-									</div>
-									<div class="form-check">
-										<div class="form-check-label">
-											<input class="form-check-input" type="radio" name="emailPDFOption" value="addFullPDF">
-											Add full email (excluding attachments) as PDF to patient's chart
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

@@ -53,7 +53,6 @@ public class EmailSendAction extends DispatchAction {
         String isEncrypted = request.getParameter("isEmailEncrypted");
         String isAttachmentEncrypted = request.getParameter("isEmailAttachmentEncrypted");
         String chartDisplayOption = request.getParameter("patientChartOption");
-        String documentGenerationOption = request.getParameter("emailPDFOption");
         String transactionType = request.getParameter("transactionType");
         String demographicNo = request.getParameter("demographicId");
         List<EmailAttachment> emailAttachmentList = (List<EmailAttachment>) request.getSession().getAttribute("emailAttachmentList");
@@ -69,7 +68,6 @@ public class EmailSendAction extends DispatchAction {
         email.setIsEncrypted(isEncrypted);
         email.setIsAttachmentEncrypted(isAttachmentEncrypted);
         email.setChartDisplayOption(chartDisplayOption);
-        email.setDocumentGenerationOption(documentGenerationOption);
         email.setTransactionType(transactionType);
         email.setDemographicNo(demographicNo);
         email.setAttachments(emailAttachmentList);

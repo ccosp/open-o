@@ -66,7 +66,6 @@ public class EmailManager {
         emailLog.setIsEncrypted(email.getIsEncrypted());
         emailLog.setIsAttachmentEncrypted(email.getIsAttachmentEncrypted());
         emailLog.setChartDisplayOption(email.getChartDisplayOption());
-        emailLog.setDocumentGenerationOption(email.getDocumentGenerationOption());
         emailLog.setTransactionType(email.getTransactionType());
         emailLog.setDemographicNo(email.getDemographicNo());
         emailLogDao.persist(emailLog);

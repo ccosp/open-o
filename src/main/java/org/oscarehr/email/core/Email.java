@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailLog.ChartDisplayOption;
-import org.oscarehr.common.model.EmailLog.DocumentGenerationOption;
 import org.oscarehr.common.model.EmailLog.TransactionType;
 
 import oscar.util.StringUtils;
@@ -21,7 +20,6 @@ public class Email {
     private Boolean isEncrypted;
     private Boolean isAttachmentEncrypted;
     private ChartDisplayOption chartDisplayOption;
-    private DocumentGenerationOption documentGenerationOption;
     private TransactionType transactionType;
     private Integer demographicNo;
     private List<EmailAttachment> attachments;
@@ -121,19 +119,6 @@ public class Email {
     public void setChartDisplayOption(String chartDisplayOption) {
         if (chartDisplayOption == null) { chartDisplayOption = "addFullNote"; }
         this.chartDisplayOption = "doNotAddAsNote".equalsIgnoreCase(chartDisplayOption) ? ChartDisplayOption.WITHOUT_NOTE : ChartDisplayOption.WITH_FULL_NOTE;
-    }
-
-    public DocumentGenerationOption getDocumentGenerationOption() {
-        return documentGenerationOption;
-    }
-
-    public void setDocumentGenerationOption(DocumentGenerationOption documentGenerationOption) {
-        this.documentGenerationOption = documentGenerationOption;
-    }
-
-    public void setDocumentGenerationOption(String documentGenerationOption) {
-        if (documentGenerationOption == null) { documentGenerationOption = "doNotAddAsPDF"; }
-        this.documentGenerationOption = "addFullPDF".equalsIgnoreCase(documentGenerationOption) ? DocumentGenerationOption.WITH_FULL_PDF : DocumentGenerationOption.WITHOUT_PDF;
     }
 
     public TransactionType getTransactionType() {

@@ -24,11 +24,6 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         WITH_FULL_NOTE
     }
 
-    public enum DocumentGenerationOption {
-        WITHOUT_PDF,
-        WITH_FULL_PDF
-    }
-
     public enum TransactionType {
         EFORM,
         CONSULTATION,
@@ -83,10 +78,6 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     @Enumerated(EnumType.STRING)
     @Column(name = "chart_display_option")
     private ChartDisplayOption chartDisplayOption;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "document_generation_option")
-    private DocumentGenerationOption documentGenerationOption;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type")
@@ -232,14 +223,6 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     public void setChartDisplayOption(ChartDisplayOption chartDisplayOption) {
         this.chartDisplayOption = chartDisplayOption;
-    }
-
-    public DocumentGenerationOption getDocumentGenerationOption() {
-        return documentGenerationOption;
-    }
-
-    public void setDocumentGenerationOption(DocumentGenerationOption documentGenerationOption) {
-        this.documentGenerationOption = documentGenerationOption;
     }
 
     public TransactionType getTransactionType() {
