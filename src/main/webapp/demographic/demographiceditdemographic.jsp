@@ -876,6 +876,21 @@ function consentClearBtn(radioBtnName)
 		}
 	%>
 							</script>
+
+	<style>
+		/* for the search buttons at the top of the page
+			this should be removed if the page is updated to bootstrap
+		*/
+		.searchBox .select-group, .searchBox div.input-group-btn {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+		}
+		.searchBox {
+			margin:0 !important;
+		}
+
+	</style>
 </head>
 <body onLoad="setfocus(); checkONReferralNo(); formatPhoneNum(); checkRosterStatus2();"
 	topmargin="0" leftmargin="0" rightmargin="0" id="demographiceditdemographic">
@@ -2372,7 +2387,7 @@ if ( Dead.equals(PatStat) ) {%>
 <%-- TOGGLED OFF PROGRAM ADMISSIONS --%>
 <oscar:oscarPropertiesCheck property="DEMOGRAPHIC_PROGRAM_ADMISSIONS" value="true">						
 						<div class="demographicSection" id="programs">
-						<h3>&nbsp;Programs</h3>
+						<h3>Programs</h3>
 						<ul>
                          <li><span class="label">Bed:</span><span class="info"><%=bedAdmission != null?bedAdmission.getProgramName():"N/A" %></span></li>
                          <%
@@ -4154,9 +4169,8 @@ document.updatedelete.r_doctor_ohip.value = refNo;
 							if (ConformanceTestHelper.enableConformanceOnlyTestFeatures)
 							{
 								String styleBut = "";
-								if(ConformanceTestHelper.hasDifferentRemoteDemographics(loggedInInfo, Integer.parseInt(demographic$))){
-                                                                       styleBut = " style=\"background-color:yellow\" ";
-                                                                }%>
+								if(ConformanceTestHelper.hasDifferentRemoteDemographics(loggedInInfo,Integer.parseInt(demographic$))){
+									styleBut="style=\"background-color:yellow\"";}%>
 									<input type="button" value="Compare with Integrator" <%=styleBut%>  onclick="popup(425, 600, 'DiffRemoteDemographics.jsp?demographicId=<%=demographic$%>', 'RemoteDemoWindow')" />
 									<input type="button" value="Update latest integrated demographics information" onclick="document.location='<%=request.getContextPath()%>/demographic/copyLinkedDemographicInfoAction.jsp?demographicId=<%=demographic$%>&<%=request.getQueryString()%>'" />
 									<input type="button" value="Send note to integrated provider" onclick="document.location='<%=request.getContextPath()%>/demographic/followUpSelection.jsp?demographicId=<%=demographic$%>'" />
