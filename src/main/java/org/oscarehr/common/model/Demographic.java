@@ -1431,62 +1431,82 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	public static final Comparator<Demographic> FormattedNameComparator = new Comparator<Demographic>() {
 		@Override
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getFormattedName().compareToIgnoreCase(dm2.getFormattedName());
+			return Comparator.comparing(Demographic::getFormattedName, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> LastNameComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getLastName().compareTo(dm2.getLastName());
+			return Comparator.comparing(Demographic::getLastName, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> FirstNameComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getFirstName().compareTo(dm2.getFirstName());
+			return Comparator.comparing(Demographic::getFirstName, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
+		}
+	};
+	public static final Comparator<Demographic> LastAndFirstNameComparator = new Comparator<Demographic>() {
+		public int compare(Demographic dm1, Demographic dm2)
+		{
+			return Comparator.comparing(Demographic::getLastName, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.thenComparing(Demographic::getFirstName, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> DemographicNoComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getDemographicNo().compareTo(dm2.getDemographicNo());
+			return Comparator.comparing(Demographic::getDemographicNo, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> SexComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getSex().compareTo(dm2.getSex());
+			return Comparator.comparing(Demographic::getSex, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> AgeComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getAge().compareTo(dm2.getAge());
+			return Comparator.comparing(Demographic::getAge, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> DateOfBirthComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getBirthDayAsString().compareTo(dm2.getBirthDayAsString());
+			return Comparator.comparing(Demographic::getBirthDayAsString, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> RosterStatusComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getRosterStatus().compareTo(dm2.getRosterStatus());
+			return Comparator.comparing(Demographic::getRosterStatus, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> ChartNoComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getChartNo().compareTo(dm2.getChartNo());
+			return Comparator.comparing(Demographic::getChartNo, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> ProviderNoComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getProviderNo().compareTo(dm2.getProviderNo());
+			return Comparator.comparing(Demographic::getProviderNo, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> PatientStatusComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getPatientStatus().compareTo(dm2.getPatientStatus());
+			return Comparator.comparing(Demographic::getPatientStatus, Comparator.nullsFirst(Comparator.naturalOrder()))
+					.compare(dm1, dm2);
 		}
 	};
 	public static final Comparator<Demographic> PhoneComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
-			return dm1.getPhone().compareTo(dm2.getPhone());
+			return Comparator.comparing(Demographic::getPhone, Comparator.nullsFirst(Comparator.naturalOrder()))
+			.compare(dm1, dm2);
 		}
 	};
 
