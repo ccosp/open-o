@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "email_log")
+@Table(name = "emailLog")
 public class EmailLog extends AbstractModel<Integer> implements Comparable<EmailLog> {
 
     public enum EmailStatus {
@@ -35,59 +35,46 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "from_email")
     private String fromEmail;
 
-    @Column(name = "to_email")
     private String toEmail;
 
-    @Column(name = "subject")
     private String subject;
 
     @Lob
-    @Column(name = "body", columnDefinition = "BLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] body;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
     private EmailStatus status;
 
-    @Column(name = "error_message")
     private String errorMessage;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "timestamp")
     private Date timestamp = new Date();
 
     @Lob
-    @Column(name = "encrypted_message", columnDefinition = "BLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] encryptedMessage;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "password_clue")
     private String passwordClue;
 
-    @Column(name = "is_encrypted")
     private Boolean isEncrypted;
 
-    @Column(name = "is_attachment_encrypted")
     private Boolean isAttachmentEncrypted;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "chart_display_option")
     private ChartDisplayOption chartDisplayOption;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "transaction_type")
     private TransactionType transactionType;
 
-    @Column(name = "demographic_no")
     private Integer demographicNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "config_id")
+    @JoinColumn(name = "configId")
     private EmailConfig emailConfig;
 
     @OneToMany(mappedBy = "emailLog", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

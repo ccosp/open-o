@@ -5,28 +5,24 @@ import javax.persistence.*;
 import org.oscarehr.common.model.enumerator.DocumentType;
 
 @Entity
-@Table(name = "email_attachment")
+@Table(name = "emailAttachment")
 public class EmailAttachment extends AbstractModel<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "file_name")
     private String fileName;
 
-    @Column(name = "file_path")
     private String filePath;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "document_type")
     private DocumentType documentType;
 
-    @Column(name = "document_id")
     private Integer documentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "log_id")
+    @JoinColumn(name = "logId")
     private EmailLog emailLog;
 
     public EmailAttachment() {}

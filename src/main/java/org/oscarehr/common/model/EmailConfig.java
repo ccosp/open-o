@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "email_config")
+@Table(name = "emailConfig")
 public class EmailConfig extends AbstractModel<Integer> {
 
     public enum EmailType {
@@ -22,27 +22,21 @@ public class EmailConfig extends AbstractModel<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "email_type")
     @Enumerated(EnumType.STRING)
     private EmailType emailType;
 
-    @Column(name = "email_provider")
     @Enumerated(EnumType.STRING)
     private EmailProvider emailProvider;
 
-    @Column(name = "active")
     private Boolean active;
 
-    @Column(name = "sender_first_name")
     private String senderFirstName;
 
-    @Column(name = "sender_last_name")
     private String senderLastname;
 
-    @Column(name = "sender_email")
     private String senderEmail;
 
-    @Column(name = "config_details", columnDefinition = "TEXT")
+    @Column(name = "configDetails", columnDefinition = "TEXT")
     private String configDetailsJson;
 
     @OneToMany(mappedBy = "emailConfig", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
