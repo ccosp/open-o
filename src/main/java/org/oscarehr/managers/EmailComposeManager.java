@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.validator.EmailValidator;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
 import org.oscarehr.common.dao.UserPropertyDAO;
@@ -158,19 +157,22 @@ public class EmailComposeManager {
         return Boolean.FALSE;
     }
 
-    public List<String> getRecipients(LoggedInInfo loggedInInfo, Integer demographicId) {
+    public List<?>[] getRecipients(LoggedInInfo loggedInInfo, Integer demographicId) {
         String recipientsString = demographicManager.getDemographicEmail(loggedInInfo, demographicId);
-        List<String> recipientList = new ArrayList<>();
-        if (StringUtils.isNullOrEmpty(recipientsString)) { return recipientList; }
+        List<String> validRecipients = new ArrayList<>();
+        List<String> invalidRecipients = new ArrayList<>();
+        if (StringUtils.isNullOrEmpty(recipientsString)) { return new List<?>[] {validRecipients, invalidRecipients}; }
 
-        String[] recipients = recipientsString.split("[,;\\s]+");
+        String[] recipients = recipientsString.split("[,;\\s()]+");
         for (String recipient : recipients) {
             if (isValidEmail(recipient)) {
-                recipientList.add(recipient.trim());
+                validRecipients.add(recipient);
+            } else {
+                invalidRecipients.add(recipient);
             }
         }
 
-        return recipientList;
+        return new List<?>[] {validRecipients, invalidRecipients};
     }
 
     public String createEmailPDFPassword(LoggedInInfo loggedInInfo, Integer demographicId) {
@@ -179,13 +181,8 @@ public class EmailComposeManager {
     }
 
     private boolean isValidEmail(String email) {
-        try {
-            InternetAddress internetAddress = new InternetAddress(email.trim());
-            internetAddress.validate();
-            return true;
-        } catch (AddressException e) {
-            return false;
-        }
+        EmailValidator emailValidator = EmailValidator.getInstance();
+        return emailValidator.isValid(email);
     }
 
     private List<String> convertToList(String[] stringArray) {

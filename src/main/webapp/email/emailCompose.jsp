@@ -143,6 +143,11 @@
 		font-size: 12px;
 		margin-top: 5px;
 	}
+
+	.custom-toast {
+		position: fixed;
+		z-index: 9999;
+	}
 </style>
 
 </head>
@@ -232,6 +237,24 @@
 									</div>
 								</div>
 								</c:forEach>
+								<c:if test="${not empty invalidReceiverEmailList}">
+								<div class="custom-toast toast-container p-3 bottom-0 end-0">
+									<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" id="invalidErrorToast">
+										<div class="toast-header">
+											<strong class="me-auto">Invalid recipient email address(es)</strong>
+											<button type="button" class="btn-close" data-bs-dismiss="toast" onclick="closeToast()" aria-label="Close"></button>
+										</div>
+										<div class="toast-body">
+											<c:forEach items="${ invalidReceiverEmailList }" var="invalidEmail">
+											<p> - ${invalidEmail} </p>
+											</c:forEach>
+											<div class="mt-2 pt-2 border-top">
+												You can directly correct it from here: <a href="#" id="patientPageLink" class="alert-link">${ receiverName }</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -538,6 +561,16 @@ function autoSendEmail() {
 		emailComposeForm.submit(); 
 	}
 }
+
+function closeToast() {
+	const toast = new bootstrap.Toast(document.getElementById("invalidErrorToast"));
+	toast.hide();
+}
+
+document.getElementById("patientPageLink").addEventListener("click", function(event) {
+	event.preventDefault();
+	window.open("${ctx}/demographic/demographiccontrol.jsp?demographic_no=${demographicId}&displaymode=edit&dboperation=search_detail", "_blank", "width=1027,height=700")
+});
 
 </script>
 </body>

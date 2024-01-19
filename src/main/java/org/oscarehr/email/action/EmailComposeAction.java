@@ -42,8 +42,7 @@ public class EmailComposeAction extends DispatchAction {
         String emailConsentStatus = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographicId)); 
         
         String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, Integer.parseInt(demographicId));
-        List<String> receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, Integer.parseInt(demographicId));
-        if (receiverEmailList.size() == 0) { return emailComposeError(request, mapping, "Unable to proceed: Patient's email address(es) are not provided or are invalid.", "eFormError"); }
+        List<?>[] receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, Integer.parseInt(demographicId));
         
         List<EmailConfig> senderAccounts = emailComposeManager.getAllSenderAccounts();
         if (senderAccounts.size() == 0) { return emailComposeError(request, mapping, "Unable to proceed: Please setup the sender's account first.", "eFormError"); }
@@ -68,7 +67,8 @@ public class EmailComposeAction extends DispatchAction {
         request.setAttribute("transactionType", TransactionType.EFORM);
         request.setAttribute("emailConsentStatus", emailConsentStatus);
         request.setAttribute("receiverName", receiverName);
-        request.setAttribute("receiverEmailList", receiverEmailList);
+        request.setAttribute("receiverEmailList", receiverEmailList[0]);
+        request.setAttribute("invalidReceiverEmailList", receiverEmailList[1]);
         request.setAttribute("senderAccounts", senderAccounts);
         request.setAttribute("emailPDFPassword", emailPDFPassword);
         request.setAttribute("emailPDFPasswordClue", emailPDFPasswordClue);
