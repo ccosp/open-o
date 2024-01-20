@@ -12,44 +12,18 @@
 			addEFormAttachments();
 			
 			// Resize the window based on the toolbar width
-			window.resizeTo("1100","1100");
+			window.resizeTo(1100,1100);
 
 			// If download EForm
-			const isDownload = document.getElementById("isDownloadEForm").value;
+			const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";
 			if (isDownload && isDownload === "true") { downloadEForm(); }
 
 			// Handle EForm errors
-			const error = document.getElementById("error").value;
-			const errorMessage = document.getElementById("errorMessage").value;
-			if (error) { showError(errorMessage); }
-			
-				/*
-				 * A little trick to bypass the override of the onload
-				 * event in the Rich Text Letter writer. 
-				 */
-		//		var loadmethod = document.getElementsByTagName("body")[0].getAttribute("onload"); 
-		//		
-		//		if(! loadmethod)
-		//		{
-		//			onload = document.getElementsByTagName("form")[0].getAttribute("onload"); 
-		//		}
-		//
-		//		if(loadmethod)
-		//		{
-		//			loadmethod = loadmethod.replace("(", '').replace(")", "").replace(";", "");
-		//			return window[loadmethod]();
-		//		}
-		//		
-		//		return;
-		//	}
-			
-		window.onerror = function(error, url, line) {
-//			alert(error);
-//		    controller.sendLog({acc:'error', data:'ERR:'+error+' URL:'+url+' L:'+line});
-		};	
-	});	
-	
+			const error = document.getElementById("error") ? document.getElementById("error").value : "false";
+			const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
+			if (error === "true") { showError(errorMessage); }
 
+	});
 	
 	/**
 	 * Triggers the eForm save/submit function
