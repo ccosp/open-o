@@ -110,10 +110,3 @@
 
     out.print(eForm.getFormHtml());
 %>
-
-<c:if test="${ sessionScope.useIframeResizing }" >
-	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/library/pym.js"></script>
-	<script type="text/javascript">
-	    var pymChild = new pym.Child({ polling: 500 });
-	</script>
-</c:if>
