@@ -25,13 +25,10 @@
 
 package oscar.eform.data;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,13 +46,6 @@ import org.oscarehr.util.DigitalSignatureUtils;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import org.owasp.encoder.Encode;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import oscar.eform.EFormLoader;
 import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
@@ -63,10 +53,6 @@ import oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandle
 import oscar.oscarEncounter.oscarMeasurements.util.WriteNewMeasurements;
 import oscar.util.StringBuilderUtils;
 import oscar.util.UtilDateUtilities;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class EForm extends EFormBase {
 	private static EFormDataDao eFormDataDao = (EFormDataDao) SpringUtils.getBean("EFormDataDao");
@@ -345,7 +331,7 @@ public class EForm extends EFormBase {
 					"<input type='hidden' id='_oscarproviderno' name='_oscarproviderno' value='" + this.providerNo + "' />" +
 					"<input type='hidden' id='_oscarfid' name='_oscarfid' value='" + this.fid + "' />");
 
-			this.formHtml = html.insert(scriptEndLoc, "<script type='text/javascript' src='../share/javascript/jquery/jquery-1.4.2.js'></script>" +
+			this.formHtml = html.insert(scriptEndLoc, "<script type='text/javascript' src='../library/jquery/jquery-3.6.4.min.js'></script>" +
 			"<script type='text/javascript' src='../js/eform_highlight.js'></script>").toString();
 		}
 	}
@@ -396,9 +382,8 @@ public class EForm extends EFormBase {
 
 	public void setContextPath(String contextPath) {
 		if (StringUtils.isBlank(contextPath)) return;
-
-		String oscarJS = contextPath + "/share/javascript/";
-		this.formHtml = this.formHtml.replace(jsMarker, oscarJS);
+		Path oscarJs = Paths.get(contextPath, "library");
+		this.formHtml = this.formHtml.replace(jsMarker, oscarJs + "/");
 	}
 	
 	public void setFdid(String fdid) {
@@ -916,7 +901,7 @@ public class EForm extends EFormBase {
 				}
 			}
 
-			String signatureCode = "<script type='text/javascript' src='${oscar_javascript_path}../jquery/jquery-1.4.2.js'></script>" +
+			String signatureCode = "<script type='text/javascript' src='../library/jquery/jquery-3.6.4.min.js'></script>" +
 					"<script type='text/javascript' src='${oscar_javascript_path}signature.js'></script>" +
 					"<script type='text/javascript'>\n" +
 					"var _signatureRequestId = '" + signatureRequestId + "';\n" +
