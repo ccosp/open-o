@@ -970,7 +970,7 @@ public class EForm extends EFormBase {
 
 	private void addHeadElement(String element) {
 		if(! this.formHtml.contains("<head>") && ! this.formHtml.contains("</head>")) {
-			this.formHtml.replace("<html>", "<html><head></head>");
+			this.formHtml = this.formHtml.replace("<html>", "<html><head></head>");
 		}
 		this.formHtml = this.formHtml.replace("</head>", element + "\n</head>");
 	}
@@ -1016,7 +1016,7 @@ public class EForm extends EFormBase {
 
 	private void addBodyElement(String element) {
 		if(! this.formHtml.contains("<body>") && ! this.formHtml.contains("</body>")) {
-			this.formHtml.replace("</html>", "<body></body></html>");
+			this.formHtml = this.formHtml.replace("</html>", "<body></body></html>");
 		}
 		this.formHtml = this.formHtml.replace("</body>", element + "\n</body>");
 	}
