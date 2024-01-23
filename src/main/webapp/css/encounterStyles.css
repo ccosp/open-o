@@ -255,14 +255,9 @@ div.topBox h3 {
 }
 
 div.topBox ul {
-	list-style: circle inside;
 	padding-left: 0;
 	margin-top: 0;
 	margin-bottom: 0;
-}
-
-div.topBox li { 
-
 }
 
 /*div#divR1I1,div#divR1I2,div#divR2I1,div#divR2I2 {*/
@@ -960,6 +955,7 @@ p.passwdErr {
 
 /* IMPORTED FROM INLINE */
 li.cpp {
+	text-indent: 5px;
 	color: #000000;
 	font-family: arial, sans-serif;
 	text-overflow: ellipsis;

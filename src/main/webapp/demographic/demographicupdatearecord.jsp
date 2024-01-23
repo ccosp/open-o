@@ -292,8 +292,15 @@
 	extensions.add(new DemographicExt(request.getParameter("cytolNum_id"), proNo, demographicNo, "cytolNum",  request.getParameter("cytolNum")));
 	extensions.add(new DemographicExt(request.getParameter("ethnicity_id"), proNo, demographicNo, "ethnicity",  request.getParameter("ethnicity")));
 	extensions.add(new DemographicExt(request.getParameter("area_id"), proNo, demographicNo, "area", request.getParameter("area")));
-	extensions.add(new DemographicExt(request.getParameter("statusNum_id"), proNo, demographicNo, "statusNum",  request.getParameter("statusNum")));
-	extensions.add(new DemographicExt(request.getParameter("fNationCom_id"), proNo, demographicNo, "fNationCom", request.getParameter("fNationCom")));
+	if("true".equals(OscarProperties.getInstance().getProperty("FIRST_NATIONS_MODULE", "false"))) {
+		extensions.add(new DemographicExt(request.getParameter("statusNum_id"), proNo, demographicNo, "statusNum",  request.getParameter("statusNum")));
+		extensions.add(new DemographicExt(request.getParameter("fNationCom_id"), proNo, demographicNo, "fNationCom", request.getParameter("fNationCom")));
+		extensions.add(new DemographicExt(request.getParameter("labelfNationCom_id"), proNo, demographicNo, "labelfNationCom", request.getParameter("labelfNationCom")));
+		if("false".equals(OscarProperties.getInstance().getProperty("showBandNumberOnly","true"))) {
+			extensions.add(new DemographicExt( request.getParameter("fNationFamilyPosition_id"), proNo, demographicNo,"fNationFamilyPosition", request.getParameter("fNationFamilyPosition") ));
+			extensions.add(new DemographicExt(request.getParameter("fNationFamilyNumber_id"), proNo, demographicNo,"fNationFamilyNumber", request.getParameter("fNationFamilyNumber")));
+		}
+	}
 	extensions.add(new DemographicExt(request.getParameter("given_consent_id"), proNo, demographicNo, "given_consent", request.getParameter("given_consent")));
 	extensions.add(new DemographicExt(request.getParameter("rxInteractionWarningLevel_id"), proNo, demographicNo, "rxInteractionWarningLevel", request.getParameter("rxInteractionWarningLevel")));
 	extensions.add(new DemographicExt(request.getParameter("primaryEMR_id"), proNo, demographicNo, "primaryEMR", request.getParameter("primaryEMR")));
