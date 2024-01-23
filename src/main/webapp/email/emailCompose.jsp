@@ -130,7 +130,7 @@
 		color: red;
 	}
 
-	.accordion-button i {
+	.accordion-button * {
 		margin-right: 5px; 
 	}
 
@@ -394,7 +394,8 @@
 										<div class="accordion-item emailAttachmentItem">
 											<div class="accordion-header" id="emailAttachmentHeader${loop.index + 1}">
 												<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#emailAttachmentBody${loop.index + 1}" aria-expanded="false" aria-controls="emailAttachmentBody${loop.index + 1}">
-													<i class="icon-file"></i> <c:out value="${emailAttachment.fileName}" />
+													<i class="icon-file attachmentIcon"></i> <div class="attachmentName"><c:out value="${emailAttachment.fileName}" /></div>
+													<div class="text-muted attachmentSize"><c:out value="${emailAttachment.fileSize}" /></div>
 												</button>
 											</div>
 											<div id="emailAttachmentBody${loop.index + 1}" class="accordion-collapse collapse" aria-labelledby="emailAttachmentHeader${loop.index + 1}" data-bs-parent="#emailAttachmentList">
@@ -453,8 +454,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 	// Open EForm again on sent
 	openEFormAfterSend();
+
 	// Auto-send email
 	autoSendEmail();
+
+	// Convert attachment size into kb/mb
+	convertAttachmentSize();
+
 });
 
 function validateEmailForm() {
@@ -560,6 +566,33 @@ function autoSendEmail() {
 		ShowSpin(true); 
 		emailComposeForm.submit(); 
 	}
+}
+
+// Convert attachment size into kb/mb
+function convertAttachmentSize() {
+	let sizeElements = document.getElementsByClassName("attachmentSize");
+
+    for (let i = 0; i < sizeElements.length; i++) {
+        let attachmentSize;
+
+        let sizeInBytes = parseFloat(sizeElements[i].innerHTML);
+
+        if (isNaN(sizeInBytes) || sizeInBytes <= 0) {
+            attachmentSize = '0bytes';
+        } else {
+            const units = ['bytes', 'KB', 'MB'];
+            let j = 0;
+
+            while (sizeInBytes >= 1024 && j < units.length - 1) {
+                sizeInBytes /= 1024;
+                j++;
+            }
+
+            attachmentSize = sizeInBytes.toFixed(1) + units[j];
+        }
+
+        sizeElements[i].innerHTML = attachmentSize;
+    }
 }
 
 function closeToast() {

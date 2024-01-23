@@ -21,6 +21,9 @@ public class EmailAttachment extends AbstractModel<Integer> {
 
     private Integer documentId;
 
+    @Transient
+    private Long fileSize;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "logId")
     private EmailLog emailLog;
@@ -32,6 +35,14 @@ public class EmailAttachment extends AbstractModel<Integer> {
         this.filePath = filePath;
         this.documentType = documentType;
         this.documentId = documentId;
+    }
+
+    public EmailAttachment(String fileName, String filePath, DocumentType documentType, Integer documentId, Long fileSize) {
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.documentType = documentType;
+        this.documentId = documentId;
+        this.fileSize = fileSize;
     }
 
     public EmailAttachment(EmailLog emailLog, String fileName, String filePath, DocumentType documentType, Integer documentId) {
@@ -88,5 +99,13 @@ public class EmailAttachment extends AbstractModel<Integer> {
 
     public void setDocumentId(Integer documentId) {
         this.documentId = documentId;
+    }
+
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
     }
 }

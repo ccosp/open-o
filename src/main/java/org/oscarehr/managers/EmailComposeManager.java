@@ -1,5 +1,7 @@
 package org.oscarehr.managers;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class EmailComposeManager {
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         for (String eFormId : attachedEFormIds) {
             Path eFormPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, Integer.parseInt(eFormId));
-            if (eFormPDFPath != null) { emailAttachments.add(new EmailAttachment(eFormPDFPath.getFileName().toString(), eFormPDFPath.toString(), DocumentType.EFORM, Integer.parseInt(eFormId))); }
+            if (eFormPDFPath != null) { emailAttachments.add(new EmailAttachment(eFormPDFPath.getFileName().toString(), eFormPDFPath.toString(), DocumentType.EFORM, Integer.parseInt(eFormId), getFileSize(eFormPDFPath))); }
         }
 
         return emailAttachments;
@@ -66,7 +68,7 @@ public class EmailComposeManager {
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         for (String eDocId : attachedEDocIds) {
             Path eDocPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, Integer.parseInt(eDocId));
-            if (eDocPDFPath != null) { emailAttachments.add(new EmailAttachment(eDocPDFPath.getFileName().toString(), eDocPDFPath.toString(), DocumentType.DOC, Integer.parseInt(eDocId))); }
+            if (eDocPDFPath != null) { emailAttachments.add(new EmailAttachment(eDocPDFPath.getFileName().toString(), eDocPDFPath.toString(), DocumentType.DOC, Integer.parseInt(eDocId), getFileSize(eDocPDFPath))); }
         }
 
         return emailAttachments;
@@ -78,7 +80,7 @@ public class EmailComposeManager {
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         for (String labId : attachedLabIds) {
             Path labPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, Integer.parseInt(labId));
-            if (labPDFPath != null) { emailAttachments.add(new EmailAttachment(labPDFPath.getFileName().toString(), labPDFPath.toString(), DocumentType.LAB, Integer.parseInt(labId))); }
+            if (labPDFPath != null) { emailAttachments.add(new EmailAttachment(labPDFPath.getFileName().toString(), labPDFPath.toString(), DocumentType.LAB, Integer.parseInt(labId), getFileSize(labPDFPath))); }
         }
 
         return emailAttachments;
@@ -90,7 +92,7 @@ public class EmailComposeManager {
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         for (String hrmId : attachedHRMIds) {
             Path hrmPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, Integer.parseInt(hrmId));
-            if (hrmPDFPath != null) { emailAttachments.add(new EmailAttachment(hrmPDFPath.getFileName().toString(), hrmPDFPath.toString(), DocumentType.HRM, Integer.parseInt(hrmId))); }
+            if (hrmPDFPath != null) { emailAttachments.add(new EmailAttachment(hrmPDFPath.getFileName().toString(), hrmPDFPath.toString(), DocumentType.HRM, Integer.parseInt(hrmId), getFileSize(hrmPDFPath))); }
         }
 
         return emailAttachments;
@@ -102,7 +104,7 @@ public class EmailComposeManager {
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         for (String formId : attachedFormIds) {
             Path formPDFPath = formsManager.renderForm(request, response, formId);
-            if (formPDFPath != null) { emailAttachments.add(new EmailAttachment(formPDFPath.getFileName().toString(), formPDFPath.toString(), DocumentType.FORM, Integer.parseInt(formId))); }
+            if (formPDFPath != null) { emailAttachments.add(new EmailAttachment(formPDFPath.getFileName().toString(), formPDFPath.toString(), DocumentType.FORM, Integer.parseInt(formId), getFileSize(formPDFPath))); }
         }
 
         return emailAttachments;
@@ -189,6 +191,16 @@ public class EmailComposeManager {
         List<String> stringList = new ArrayList<>();
         if (stringArray != null) { Collections.addAll(stringList, stringArray); }
         return stringList;
+    }
+
+    private Long getFileSize(Path filePath) {
+        Long fileSize = 0l;
+        try {
+            fileSize = Files.size(filePath);
+        } catch (IOException e) {
+            logger.error("Error accessing file: " + e.getMessage(), e);
+        }
+        return fileSize;
     }
 
 }
