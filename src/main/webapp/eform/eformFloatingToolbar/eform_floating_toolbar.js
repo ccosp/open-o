@@ -742,6 +742,29 @@ document.addEventListener("DOMContentLoaded", function(){
 	}
 
 	/*
+	* Adjust the toolbar based on the window width by adding buttons in a new row for a responsive toolbar
+	*/
+	function moveToolbarButtons() {
+		let windowWidth = jQuery(window).width();
+		let inputGroup = jQuery("#input-group-btn-1");
+		const lastThreeButtons = inputGroup.find("button:gt(-5)");
+		const isWrappingApplied  = inputGroup.find(".row button");
+
+		let newRow = jQuery("<div class='row input-group-btn'></div>");
+			
+		if (windowWidth >= 1100 && isWrappingApplied.length !== 0) {
+			lastThreeButtons.unwrap();
+		} else if (windowWidth < 1100 && isWrappingApplied.length === 0) {
+			lastThreeButtons.wrapAll(newRow);
+		}
+	}
+
+	// Execute the function on window resize
+	jQuery(window).resize(function() {
+		moveToolbarButtons();
+	});
+
+	/*
 	 * Show or hide the loading spinner
 	 * if locked is true: can't click away
 	 * if locked is false: can click away from it
