@@ -39,7 +39,7 @@ public class EmailComposeAction extends DispatchAction {
 		String[] attachedEForms = (String[]) request.getAttribute("attachedEForms");
 		String[] attachedHRMDocuments = (String[]) request.getAttribute("attachedHRMDocuments");
 
-        String emailConsentStatus = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographicId)); 
+        String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographicId)); 
         
         String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, Integer.parseInt(demographicId));
         List<?>[] receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, Integer.parseInt(demographicId));
@@ -65,7 +65,7 @@ public class EmailComposeAction extends DispatchAction {
         emailComposeManager.sanitizeAttachments(emailAttachmentList);
 
         request.setAttribute("transactionType", TransactionType.EFORM);
-        request.setAttribute("emailConsentStatus", emailConsentStatus);
+        request.setAttribute("emailConsentStatus", emailConsent[1]);
         request.setAttribute("receiverName", receiverName);
         request.setAttribute("receiverEmailList", receiverEmailList[0]);
         request.setAttribute("invalidReceiverEmailList", receiverEmailList[1]);

@@ -548,7 +548,7 @@ function removeReceiverEmail(button) {
 	if (receiverEmailsContainer.children.length > 1) {
 		receiverEmailsContainer.removeChild(formGroup);
 	} else {
-		alert("Need one email");
+		alert("This recipient cannot be removed because a minimum of one recipient is required");
 	}
 }
 

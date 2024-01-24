@@ -112,10 +112,11 @@
     thisEForm.addHiddenInputElement("fdid", request.getParameter("fdid"));
     thisEForm.addHiddenInputElement("newForm", "true");
 
-    // Add email consent property
+    // Add email consent properties
     EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
-    String emailConsentStatus = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographic_no));
-    thisEForm.addHiddenInputElement("emailConsentStatus", emailConsentStatus);
+    String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographic_no));
+    thisEForm.addHiddenInputElement("emailConsentName", emailConsent[0]);
+    thisEForm.addHiddenInputElement("emailConsentStatus", emailConsent[1]);
 
     out.print(thisEForm.getFormHtml());
 %>

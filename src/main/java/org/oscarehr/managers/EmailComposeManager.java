@@ -119,19 +119,19 @@ public class EmailComposeManager {
         }
     }
 
-    public String getEmailConsentStatus(LoggedInInfo loggedInInfo, Integer demographicId) {
+    public String[] getEmailConsentStatus(LoggedInInfo loggedInInfo, Integer demographicId) {
         String UNKNOWN = "Unknown", OPTIN = "Explicit Opt-In", OPTOUT = "Explicit Opt-Out";
         UserProperty userProperty = userPropertyDAO.getProp(UserProperty.EMAIL_COMMUNICATION);
-        if (userProperty == null || StringUtils.isNullOrEmpty(userProperty.getValue())) { return UNKNOWN; }
+        if (userProperty == null || StringUtils.isNullOrEmpty(userProperty.getValue())) { return new String[]{"", UNKNOWN}; }
 
         String property = userProperty.getValue().split("[,;\\s()]+")[0];
         ConsentType consentType = patientConsentManager.getConsentType(property);
-        if (consentType == null || !consentType.isActive()) { return UNKNOWN; }
+        if (consentType == null || !consentType.isActive()) { return new String[]{"", UNKNOWN}; }
         
         Consent consent = patientConsentManager.getConsentByDemographicAndConsentType(loggedInInfo, demographicId, consentType);
-        if (consent == null) { return UNKNOWN; }
+        if (consent == null) { return new String[]{consentType.getName(), UNKNOWN}; }
 
-        return consent.getPatientConsented() ? OPTIN : OPTOUT;
+        return consent.getPatientConsented() ? new String[] {consentType.getName(), OPTIN} : new String[] {consentType.getName(), OPTOUT};
     }
 
     public Boolean isEmailConsentConfigured() {

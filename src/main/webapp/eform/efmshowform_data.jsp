@@ -116,10 +116,11 @@
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     addHiddenEFormAttachments(loggedInInfo, eForm, fdid);
 
-    // Add email consent property
+    // Add email consent properties
     EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
-    String emailConsentStatus = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(eForm.getDemographicNo()));
-    eForm.addHiddenInputElement("emailConsentStatus", emailConsentStatus);
+    String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(eForm.getDemographicNo()));
+    eForm.addHiddenInputElement("emailConsentName", emailConsent[0]);
+    eForm.addHiddenInputElement("emailConsentStatus", emailConsent[1]);
 
     out.print(eForm.getFormHtml());
 %><script type="text/javascript" src="${oscar_javascript_path}/moment.js" ></script>
