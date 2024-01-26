@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailLog;
@@ -40,6 +41,20 @@ public class EmailSendAction extends DispatchAction {
         request.setAttribute("fdid", request.getParameter("fdid"));
         request.setAttribute("emailLog", emailLog);
         return mapping.findForward("success");
+    }
+
+    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        Email email = prepareEmailFields(request);
+        ActionRedirect emailRedirect = new ActionRedirect(mapping.findForward(email.getTransactionType().name()));
+        switch (email.getTransactionType()) {
+            case EFORM:
+                emailRedirect.addParameter("fdid", request.getParameter("fdid"));
+                emailRedirect.addParameter("parentAjaxId", "eforms");
+                break;
+            default:
+                break;
+        }
+        return emailRedirect;
     }
 
     private Email prepareEmailFields(HttpServletRequest request) {

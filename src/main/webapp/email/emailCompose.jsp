@@ -175,7 +175,9 @@
 		
 		<div id="page-body">
 		
-			<c:set var="emailSendAction" value="${ctx}/email/emailSendAction.do?method=sendEFormEmail" />
+			<c:if test="${transactionType eq 'EFORM'}">
+				<c:set var="emailSendAction" value="${ctx}/email/emailSendAction.do?method=sendEFormEmail" />
+			</c:if>
 			
 			<form id="emailComposeForm" class="form-inline" action='${ emailSendAction }' method="post" onsubmit="return validateEmailForm()" novalidate>	
 				<input type="hidden" name="demographicId" value="${demographicId}" />
@@ -415,13 +417,12 @@
 				<div class="container mt-4" id="form-control-buttons">
 					<div class="row">
 					<div class="col-sm-12">
-						<input type="hidden" id="submitMethod" name="method" value="queue" />
 						<button type="submit" id="btnSend" class="btn btn-primary btn-md pull-right" value="Send">
 							<span class="btn-label"><i class="icon-location-arrow"></i></span>
 							Send
 						</button>					
-						<button formnovalidate="formnovalidate" id="btnCancel" type="submit" class="btn btn-danger btn-md pull-right" value="Cancel" 
-							onclick="window.close();" >
+						<button formnovalidate="formnovalidate" id="btnCancel" class="btn btn-danger btn-md pull-right" value="Cancel" 
+							onclick="cancelEmail()" >
 							<span class="btn-label"><i class="icon-remove"></i></span>
 							Cancel
 						</button>
@@ -604,6 +605,12 @@ document.getElementById("patientPageLink").addEventListener("click", function(ev
 	event.preventDefault();
 	window.open("${ctx}/demographic/demographiccontrol.jsp?demographic_no=${demographicId}&displaymode=edit&dboperation=search_detail", "_blank", "width=1027,height=700")
 });
+
+function cancelEmail() {
+	const emailComposeForm = document.getElementById("emailComposeForm");
+	emailComposeForm.action = "${ctx}/email/emailSendAction.do?method=cancel";
+	emailComposeForm.submit();
+}
 
 </script>
 </body>

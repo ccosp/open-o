@@ -1747,6 +1747,7 @@
 		</action>
 		<action input="/" path="/email/emailSendAction" scope="request" parameter="method" validate="false" type="org.oscarehr.email.action.EmailSendAction">
 			<forward name="success" path="/email/emailCompose.jsp" />
+			<forward name="EFORM" path="/eform/efmshowform_data.jsp" />
 		</action>		
 		<action input="/provider/providerColourPicker.jsp" name="setProviderColour" path="/setProviderColour" scope="request" type="oscar.oscarProvider.pageUtil.ProEditColourAction">
 			<forward name="success" path="/provider/providerColourPicker.jsp" />
