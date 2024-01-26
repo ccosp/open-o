@@ -10,5 +10,14 @@ alter table demographic
 alter table demographic
     add gender varchar(25) null;
 
-alter table demographic
-    add middleNames varchar(25) null;
+alter table demographicArchive
+    add genderId int null;
+
+alter table demographicArchive
+    add pronoun varchar(25) null;
+
+alter table demographicArchive
+    add pronounId int null;
+
+alter table demographicArchive
+    add gender varchar(25) null;
