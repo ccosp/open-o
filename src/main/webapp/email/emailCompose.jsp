@@ -437,12 +437,14 @@
 		<c:choose>
 			<c:when test="${ emailLog.status eq 'SUCCESS' }">
 				<div class="alert alert-success" role="alert">
-					Successfully emailed from <c:out value="${emailLog.fromEmail}" /> to: <c:out value="${fn:join(emailLog.toEmail, ', ')}" />
+					<p>Successfully emailed from <c:out value="${emailLog.fromEmail}" /> to: <c:out value="${fn:join(emailLog.toEmail, ', ')}" /></p>
 				</div>								
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-danger" role="alert">
-					Failed to email from: <c:out value="${ emailLog.fromEmail }" /> to: <c:out value="${fn:join(emailLog.toEmail, ', ')}" /> <br/>
+					<p> Your email to <b><c:out value="${fn:join(emailLog.toEmail, ', ')}" /></b> was NOT sent.  Please review the error message and try again.<br><br>
+					<b>Error Message:</b> <br>
+					<c:out value="${emailLog.errorMessage}" /></p>
 				</div>
 			</c:otherwise>				
 		</c:choose>

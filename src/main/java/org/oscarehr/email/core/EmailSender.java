@@ -17,9 +17,6 @@ import org.oscarehr.common.model.EmailConfig;
 import org.oscarehr.util.EmailSendingException;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import org.springframework.mail.MailAuthenticationException;
-import org.springframework.mail.MailParseException;
-import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -66,7 +63,7 @@ public class EmailSender {
             addAttachments(helper, attachments);
             javaMailSender.send(message);
         } catch (Exception e) {
-            throw new EmailSendingException(getNestedExceptionMessages(e), e);
+            throw new EmailSendingException(e.getMessage(), e);
         }
     }
 
@@ -122,15 +119,6 @@ public class EmailSender {
         for (EmailAttachment attachment : attachments) {
             helper.addAttachment(attachment.getFileName(), new File(attachment.getFilePath()));
         }
-    }
-
-    private String getNestedExceptionMessages(Throwable throwable) {
-        StringBuilder messages = new StringBuilder();
-        while (throwable != null) {
-            messages.append(throwable.getMessage()).append(" | ");
-            throwable = throwable.getCause();
-        }
-        return messages.toString();
     }
 
     // For debugging
