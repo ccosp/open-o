@@ -468,7 +468,7 @@ public class DocumentManager {
 		} else if (eDoc.isPDF()) {
 			try {
 				eDocPDFPath = Paths.get(eDocPath);
-			} catch (InvalidPathException e) {
+			} catch (InvalidPathException | NullPointerException e) {
 				throw new PDFGenerationException("Error Details: Document [" + eDoc.getDescription() + "] could not be converted into a PDF", e);
 			}
 		} else {
