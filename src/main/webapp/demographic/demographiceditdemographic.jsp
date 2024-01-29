@@ -2530,7 +2530,7 @@ if ( Dead.equals(PatStat) ) {%>
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formAddr" />: </b></td>
 								<td align="left"><input type="text" name="address" <%=getDisabled("address")%>
-									size="30" value="<%=StringUtils.trimToEmpty(demographic.getAddress())%>">
+									size="30" value="<%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demographic.getAddress()))%>">
 								</td>
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formCity" />: </b></td>
