@@ -319,9 +319,16 @@ document.addEventListener("DOMContentLoaded", function(){
 	 * Adds a hidden input field into the eForm form with instructions to 
 	 * open the Oscar Email dialog.
 	 */
-	function remoteEmail() {	
+	function remoteEmail() {
+		const hasValidRecipient = document.getElementById("hasValidRecipient").value;	
 		const emailConsentStatus = document.getElementById("emailConsentStatus").value;
 		const emailConsentName = document.getElementById("emailConsentName").value;
+
+		if (hasValidRecipient === "false") {
+			alert("Sorry - this patient does not have a valid email address in their demographic. \nPlease update their demographic and try again." );
+			return;
+		}
+
 		if (emailConsentStatus !== "Explicit Opt-In") {
 			const userResponse = prompt("This patient has not explicitly opted-in: [" + emailConsentName + "]\nType 'Yes' to acknowledge you understand the risks before proceeding.", "No");
 			if (userResponse === null || userResponse.toLowerCase() !== 'yes') { return; }

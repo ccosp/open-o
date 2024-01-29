@@ -45,7 +45,6 @@ public class EmailComposeAction extends DispatchAction {
         List<?>[] receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, Integer.parseInt(demographicId));
         
         List<EmailConfig> senderAccounts = emailComposeManager.getAllSenderAccounts();
-        if (senderAccounts.size() == 0) { return emailComposeError(request, mapping, "Unable to proceed: Please setup the sender's account first.", "eFormError"); }
 
         if (emailPDFPassword == null) {
             emailPDFPassword = emailComposeManager.createEmailPDFPassword(loggedInInfo, Integer.parseInt(demographicId));

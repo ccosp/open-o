@@ -50,6 +50,16 @@
         List<EctFormData.PatientForm> attachedForms = documentAttachmentManager.getFormsAttachedToEForms(loggedInInfo, fdid, DocumentType.FORM, demographicNo);
         eForm.addHiddenAttachments(attachedDocumentIds, attachedEFormIds, attachedHRMDocumentIds, attachedLabIds, attachedForms);
     }
+
+    public void addHiddenEmailProperties(LoggedInInfo loggedInInfo, EForm eForm, String demographicNo) {
+        EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
+        Boolean hasValidRecipient = emailComposeManager.hasValidRecipient(loggedInInfo, Integer.parseInt(demographicNo));
+        String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographicNo));
+
+        eForm.addHiddenInputElement("hasValidRecipient", Boolean.toString(hasValidRecipient));
+        eForm.addHiddenInputElement("emailConsentName", emailConsent[0]);
+        eForm.addHiddenInputElement("emailConsentStatus", emailConsent[1]);
+    }
 %>
 
 
@@ -117,10 +127,7 @@
     addHiddenEFormAttachments(loggedInInfo, eForm, fdid);
 
     // Add email consent properties
-    EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
-    String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(eForm.getDemographicNo()));
-    eForm.addHiddenInputElement("emailConsentName", emailConsent[0]);
-    eForm.addHiddenInputElement("emailConsentStatus", emailConsent[1]);
+    addHiddenEmailProperties(loggedInInfo, eForm, eForm.getDemographicNo());
 
     out.print(eForm.getFormHtml());
 %><script type="text/javascript" src="${oscar_javascript_path}/moment.js" ></script>

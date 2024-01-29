@@ -58,6 +58,18 @@
 	</div>
 </c:if>
 
+<%!
+    public void addHiddenEmailProperties(LoggedInInfo loggedInInfo, EForm thisEForm, String demographicNo) {
+        EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
+        Boolean hasValidRecipient = emailComposeManager.hasValidRecipient(loggedInInfo, Integer.parseInt(demographicNo));
+        String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographicNo));
+
+        thisEForm.addHiddenInputElement("hasValidRecipient", Boolean.toString(hasValidRecipient));
+        thisEForm.addHiddenInputElement("emailConsentName", emailConsent[0]);
+        thisEForm.addHiddenInputElement("emailConsentStatus", emailConsent[1]);
+    }
+%>
+
 <%
     /**
     * TODO: Move all JSP scriptlet code from efmshowform_data.jsp and efmformadd_data.jsp to the ShowEFormAction.java (create if necessary) action file.
@@ -114,10 +126,7 @@
 
     // Add email consent properties
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-    EmailComposeManager emailComposeManager = SpringUtils.getBean(EmailComposeManager.class);
-    String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, Integer.parseInt(demographic_no));
-    thisEForm.addHiddenInputElement("emailConsentName", emailConsent[0]);
-    thisEForm.addHiddenInputElement("emailConsentStatus", emailConsent[1]);
+    addHiddenEmailProperties(loggedInInfo, thisEForm, demographic_no);
 
     out.print(thisEForm.getFormHtml());
 %>

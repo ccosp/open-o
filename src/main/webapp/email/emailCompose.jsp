@@ -184,7 +184,10 @@
 				<input type="hidden" name="fdid" value="${fdid}" />
 				<input type="hidden" name="openEFormAfterEmail" value="${openEFormAfterEmail}" />
 				<input type="hidden" name="deleteEFormAfterEmail" value="${deleteEFormAfterEmail}" />
-				<input type="hidden" name="transactionType" value="${transactionType}" />	
+				<input type="hidden" name="transactionType" value="${transactionType}" />
+				<input type="hidden" name="totalSenderEmails" id="totalSenderEmails" value="${fn:length(senderAccounts)}" />
+				<input type="hidden" name="totalRecipintEmails" id="totalRecipintEmails" value="${fn:length(receiverEmailList)}" />
+				<input type="hidden" name="totalInvalidRecipintEmails" id="totalInvalidRecipintEmails" value="${fn:length(invalidReceiverEmailList)}" />	
 
 				<div class="card">
 				  	<div class="card-header">
@@ -239,30 +242,57 @@
 									</div>
 								</div>
 								</c:forEach>
-								<c:if test="${not empty invalidReceiverEmailList}">
-								<div class="custom-toast toast-container p-3 bottom-0 end-0">
-									<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" id="invalidErrorToast">
-										<div class="toast-header">
-											<strong class="me-auto">Invalid recipient email address(es)</strong>
-											<button type="button" class="btn-close" data-bs-dismiss="toast" onclick="closeToast()" aria-label="Close"></button>
-										</div>
-										<div class="toast-body">
-											<c:forEach items="${ invalidReceiverEmailList }" var="invalidEmail">
-											<p> - ${invalidEmail} </p>
-											</c:forEach>
-											<div class="mt-2 pt-2 border-top">
-												You can directly correct it from here: <a href="#" id="patientPageLink" class="alert-link">${ receiverName }</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								</c:if>
 							</div>
 						</div>
 					</div>
 					<div class="card-footer">
 						<span class="icon-warning-sign"></span> Patient's consent for email communication: <b><c:out value="${ emailConsentStatus }" /></b>
 						<input type="hidden" name="emailConsentStatus" value="${emailConsentStatus}" />
+					</div>
+				</div>
+
+				<div class="modal fade" id="errorMessageModal" tabindex="-1" role="dialog" aria-labelledby="errorMessageModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="errorMessageModalLabel"><c:out value="${ empty receiverEmailList or empty senderAccounts ? 'Warning' : 'Additional Email Address Data' }" /></h5>
+								<button type="button" name="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<c:if test="${empty senderAccounts}">
+									<p>Sorry - no outgoing email account has been configured. Please contact your system administrator for more information.</p>
+									<c:if test="${empty receiverEmailList or not empty invalidReceiverEmailList}"><hr></c:if>
+								</c:if>
+								<c:choose>
+									<c:when test="${empty receiverEmailList && empty invalidReceiverEmailList}">
+										<p>Sorry - this patient does not have a valid email address in their demographic.
+										Please update their demographic(<a href="#" onclick="openDemographicPage(event)" class="alert-link">${ receiverName }</a>) and try again.</p>
+									</c:when>
+									<c:when test="${empty receiverEmailList && not empty invalidReceiverEmailList}">
+										<p>Sorry - this patient does not have a valid email address in their demographic.
+										These additional snippets were found in the email address field of <a href="#" onclick="openDemographicPage(event)" class="alert-link">${ receiverName }</a></p>
+										<ul>
+										<c:forEach items="${ invalidReceiverEmailList }" var="invalidEmail">
+											<li>${invalidEmail}</li>
+										</c:forEach>
+										</ul>
+									</c:when>
+									<c:when test="${not empty invalidReceiverEmailList}">
+										<p><strong>Warning:</strong> these additional snippets were found in the email address field of <a href="#" onclick="openDemographicPage(event)" class="alert-link">${ receiverName }</a></p>
+										<ul>
+										<c:forEach items="${ invalidReceiverEmailList }" var="invalidEmail">
+											<li>${invalidEmail}</li>
+										</c:forEach>
+										</ul>
+									</c:when>
+								</c:choose>
+							</div>
+							<c:if test="${empty receiverEmailList or not empty invalidReceiverEmailList}">
+							<div class="modal-footer justify-content-start">
+								<p> You may wish to correct the patient's email address before proceeding</p>
+							</div>
+							</c:if>
+						</div>
 					</div>
 				</div>
 
@@ -421,7 +451,7 @@
 							<span class="btn-label"><i class="icon-location-arrow"></i></span>
 							Send
 						</button>					
-						<button formnovalidate="formnovalidate" id="btnCancel" class="btn btn-danger btn-md pull-right" value="Cancel" 
+						<button formnovalidate="formnovalidate" id="btnCancel" class="btn btn-danger btn-md pull-right" value="Cancel" name="close"
 							onclick="cancelEmail()" >
 							<span class="btn-label"><i class="icon-remove"></i></span>
 							Cancel
@@ -464,6 +494,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	// Convert attachment size into kb/mb
 	convertAttachmentSize();
 
+	// Display an error if there are 0 senders, 0 recipients, or if the recipients' addresses are invalid.
+	displayErrorOnInvalidEmail(); 
 });
 
 function validateEmailForm() {
@@ -481,6 +513,10 @@ function validateForm() {
 	const emailPDFPassword = document.getElementById('emailPDFPassword');
 	const emailPDFPasswordClue = document.getElementById('emailPDFPasswordClue');
 	const hasAttachments = document.querySelectorAll('.emailAttachmentItem').length > 0;
+	const hasSender = document.getElementById('totalSenderEmails') && document.getElementById('totalSenderEmails').value > 0;
+	const hasRecipint = document.getElementById('totalRecipintEmails') && document.getElementById('totalRecipintEmails').value > 0;
+
+	if (!hasSender || !hasRecipint) { return false; }
 
 	const errors = {};
 
@@ -598,15 +634,32 @@ function convertAttachmentSize() {
     }
 }
 
-function closeToast() {
-	const toast = new bootstrap.Toast(document.getElementById("invalidErrorToast"));
-	toast.hide();
+// Display an error if there are 0 senders, 0 recipients, or if the recipients' addresses are invalid.
+function displayErrorOnInvalidEmail() {
+	const hasSender = document.getElementById('totalSenderEmails') && document.getElementById('totalSenderEmails').value > 0;
+	const hasValidRecipient = document.getElementById('totalRecipintEmails') && document.getElementById('totalRecipintEmails').value > 0;
+	const hasInvalidRecipint = document.getElementById('totalInvalidRecipintEmails') && document.getElementById('totalInvalidRecipintEmails').value > 0;
+
+	if (!hasSender || !hasValidRecipient || hasInvalidRecipint) {
+		const errorMessageModal = new bootstrap.Modal(document.getElementById('errorMessageModal'));
+		errorMessageModal.show();
+	}
+
+	if (!hasSender || !hasValidRecipient) { disableForm(); }
 }
 
-document.getElementById("patientPageLink").addEventListener("click", function(event) {
+function disableForm() {
+	const emailComposeFormFields = document.getElementById("emailComposeForm").getElementsByTagName('*');
+	for(let i = 0; i < emailComposeFormFields.length; i++) {
+		if (emailComposeFormFields[i].name === "close") { continue; }
+		emailComposeFormFields[i].disabled = true;
+	}
+}
+
+function openDemographicPage(event) {
 	event.preventDefault();
-	window.open("${ctx}/demographic/demographiccontrol.jsp?demographic_no=${demographicId}&displaymode=edit&dboperation=search_detail", "_blank", "width=1027,height=700")
-});
+	window.open("${ctx}/demographic/demographiccontrol.jsp?demographic_no=${demographicId}&displaymode=edit&dboperation=search_detail", "_blank", "width=1027,height=700");
+}
 
 function cancelEmail() {
 	const emailComposeForm = document.getElementById("emailComposeForm");

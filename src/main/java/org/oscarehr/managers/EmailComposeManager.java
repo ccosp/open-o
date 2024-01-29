@@ -154,6 +154,12 @@ public class EmailComposeManager {
         return true;
     }
 
+    public Boolean hasValidRecipient(LoggedInInfo loggedInInfo, Integer demographicId) {
+        List<String> validRecipients = (List<String>) getRecipients(loggedInInfo, demographicId)[0];
+        if (validRecipients.isEmpty()) { return false; }
+        return true;
+    }
+
     public Boolean isEmailEnabled() {
         if (isEmailConsentConfigured() && !getAllSenderAccounts().isEmpty()) { return Boolean.TRUE; }
         return Boolean.FALSE;
