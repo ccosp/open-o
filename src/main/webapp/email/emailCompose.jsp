@@ -178,6 +178,11 @@
 			<c:if test="${transactionType eq 'EFORM'}">
 				<c:set var="emailSendAction" value="${ctx}/email/emailSendAction.do?method=sendEFormEmail" />
 			</c:if>
+
+			<input type="hidden" name="isEmailSuccessful" id="isEmailSuccessful" value="${isEmailSuccessful}" />
+			<input type="hidden" name="totalSenderEmails" id="totalSenderEmails" value="${fn:length(senderAccounts)}" />
+			<input type="hidden" name="totalRecipintEmails" id="totalRecipintEmails" value="${fn:length(receiverEmailList)}" />
+			<input type="hidden" name="totalInvalidRecipintEmails" id="totalInvalidRecipintEmails" value="${fn:length(invalidReceiverEmailList)}" />
 			
 			<form id="emailComposeForm" class="form-inline" action='${ emailSendAction }' method="post" onsubmit="return validateEmailForm()" novalidate>	
 				<input type="hidden" name="demographicId" value="${demographicId}" />
@@ -185,9 +190,6 @@
 				<input type="hidden" name="openEFormAfterEmail" value="${openEFormAfterEmail}" />
 				<input type="hidden" name="deleteEFormAfterEmail" value="${deleteEFormAfterEmail}" />
 				<input type="hidden" name="transactionType" value="${transactionType}" />
-				<input type="hidden" name="totalSenderEmails" id="totalSenderEmails" value="${fn:length(senderAccounts)}" />
-				<input type="hidden" name="totalRecipintEmails" id="totalRecipintEmails" value="${fn:length(receiverEmailList)}" />
-				<input type="hidden" name="totalInvalidRecipintEmails" id="totalInvalidRecipintEmails" value="${fn:length(invalidReceiverEmailList)}" />	
 
 				<div class="card">
 				  	<div class="card-header">
@@ -246,7 +248,7 @@
 						</div>
 					</div>
 					<div class="card-footer">
-						<span class="icon-warning-sign"></span> Patient's consent for email communication: <b><c:out value="${ emailConsentStatus }" /></b>
+						<span class="icon-warning-sign"></span> <c:out value="${ emailConsentName }" />: <b><c:out value="${ emailConsentStatus }" /></b>
 						<input type="hidden" name="emailConsentStatus" value="${emailConsentStatus}" />
 					</div>
 				</div>
@@ -467,7 +469,7 @@
 		<c:choose>
 			<c:when test="${ emailLog.status eq 'SUCCESS' }">
 				<div class="alert alert-success" role="alert">
-					<p>Successfully emailed from <c:out value="${emailLog.fromEmail}" /> to: <c:out value="${fn:join(emailLog.toEmail, ', ')}" /></p>
+					<p>Your email to <b><c:out value="${fn:join(emailLog.toEmail, ', ')}" /></b> was successfully sent.</p>
 				</div>								
 			</c:when>
 			<c:otherwise>
@@ -485,8 +487,12 @@
 
 <script type="text/javascript" >
 document.addEventListener("DOMContentLoaded", function () {
-	// Open EForm again on sent
-	openEFormAfterSend();
+	// After sending email
+	if (document.getElementById('isEmailSuccessful').value === 'true' || document.getElementById('isEmailSuccessful').value === 'false') {
+		// Open EForm again on sent
+		openEFormAfterSend();
+		return;
+	}
 
 	// Auto-send email
 	autoSendEmail();

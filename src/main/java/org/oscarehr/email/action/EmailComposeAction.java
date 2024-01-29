@@ -64,6 +64,7 @@ public class EmailComposeAction extends DispatchAction {
         emailComposeManager.sanitizeAttachments(emailAttachmentList);
 
         request.setAttribute("transactionType", TransactionType.EFORM);
+        request.setAttribute("emailConsentName", emailConsent[0]);
         request.setAttribute("emailConsentStatus", emailConsent[1]);
         request.setAttribute("receiverName", receiverName);
         request.setAttribute("receiverEmailList", receiverEmailList[0]);
