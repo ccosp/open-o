@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		const emailConsentName = document.getElementById("emailConsentName").value;
 
 		if (hasValidRecipient === "false") {
-			alert("Sorry - this patient does not have a valid email address in their demographic. \nPlease update their demographic and try again." );
+			alert("Sorry - this patient does not have a valid email address in their demographic. Please update their demographic and try again." );
 			return;
 		}
 

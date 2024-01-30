@@ -268,7 +268,7 @@
 								<c:choose>
 									<c:when test="${empty receiverEmailList && empty invalidReceiverEmailList}">
 										<p>Sorry - this patient does not have a valid email address in their demographic.
-										Please update their demographic(<a href="#" onclick="openDemographicPage(event)" class="alert-link">${ receiverName }</a>) and try again.</p>
+										Please update their demographic (<a href="#" onclick="openDemographicPage(event)" class="alert-link">${ receiverName }</a>) and try again.</p>
 									</c:when>
 									<c:when test="${empty receiverEmailList && not empty invalidReceiverEmailList}">
 										<p>Sorry - this patient does not have a valid email address in their demographic.
@@ -289,7 +289,7 @@
 									</c:when>
 								</c:choose>
 							</div>
-							<c:if test="${empty receiverEmailList or not empty invalidReceiverEmailList}">
+							<c:if test="${not empty invalidReceiverEmailList}">
 							<div class="modal-footer justify-content-start">
 								<p> You may wish to correct the patient's email address before proceeding</p>
 							</div>
