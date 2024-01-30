@@ -536,7 +536,6 @@ CREATE TABLE IF NOT EXISTS demographic (
   title varchar(10),
   last_name varchar(30) NOT NULL default '',
   first_name varchar(30) NOT NULL default '',
-  middleNames varchar(100) NOT NULL,
   address varchar(60),
   city varchar(50),
   province varchar(20),
