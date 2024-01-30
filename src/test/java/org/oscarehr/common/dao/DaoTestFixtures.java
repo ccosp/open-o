@@ -58,8 +58,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.ConfigUtils;
@@ -71,9 +71,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public abstract class DaoTestFixtures
 {
-	private static Logger logger=MiscUtils.getLogger();
+	private static final Logger logger = MiscUtils.getLogger();
 	
-	private static LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoAsCurrentClassAndMethod();
+	private static final LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoAsCurrentClassAndMethod();
 	
 	public static LoggedInInfo getLoggedInInfo()
 	{
@@ -88,7 +88,7 @@ public abstract class DaoTestFixtures
 	@BeforeClass
 	public static void classSetUp() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
 	{		
-		Logger.getRootLogger().setLevel(Level.INFO);
+		logger.atLevel(Level.INFO);
 		
 		long start = System.currentTimeMillis();
 		if(!SchemaUtils.inited) {
@@ -101,7 +101,7 @@ public abstract class DaoTestFixtures
 		}
 
 		start = System.currentTimeMillis();
-		if(SpringUtils.beanFactory==null) {
+		if(SpringUtils.getBeanFactory() == null) {
 			oscar.OscarProperties p = oscar.OscarProperties.getInstance();
 			p.setProperty("db_name", ConfigUtils.getProperty("db_schema") + ConfigUtils.getProperty("db_schema_properties"));
 			p.setProperty("db_username", ConfigUtils.getProperty("db_user"));
@@ -111,7 +111,7 @@ public abstract class DaoTestFixtures
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
 			context.setConfigLocations(new String[]{"/applicationContext.xml","/applicationContextBORN.xml"});
 			context.refresh();
-			SpringUtils.beanFactory = context;
+			SpringUtils.setBeanFactory(context);
 		}
 		end = System.currentTimeMillis();
 		secsTaken = (end-start)/1000;
