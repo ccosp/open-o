@@ -54,6 +54,7 @@ if(!authed) {
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="oscar.oscarBilling.ca.on.administration.GstControlAction" %>
 <%@ page import="oscar.oscarBilling.ca.bc.administration.GstReport" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session" />
 
 
@@ -99,7 +100,7 @@ if(!authed) {
 
   ////
   BillingFormData billform = new BillingFormData();
-  BillingFormData.BillingVisit[] billvisit = billform.getVisitType(billRegion);
+  List<BillingFormData.BillingVisit> billvisit = billform.getVisitType(billRegion);
   request.setAttribute("billvisit",billvisit);
   int bFlag = 0;
   String billingmasterNo = request.getParameter("billingmaster_no");
@@ -410,7 +411,7 @@ function calculateGst(){
     }%>
   <table width="100%" border="0" bgcolor="#FFFFFF">
     <tr>
-      <td  align="left"  class="bCellData"><font color="#000000">
+      <td  align="left"  class="bCellData">
          Office Claim No
       </td>
       <td   class="bCellData">
@@ -623,11 +624,10 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
         <input type="hidden" name="xml_visittype" value="<%=visittype%>">
               <select name="serviceLocation" style="font-size:80%;">
               <%
-              for (int i = 0; i < billvisit.length; i++) {
-                oscar.oscarBilling.ca.bc.data.BillingFormData.BillingVisit visit = billvisit[i];
-                String selected = serviceLocation.equals(visit.getVisitType())?"selected":"";
+              for (BillingFormData.BillingVisit billingVisit : billvisit) {
+                String selected = serviceLocation.equals(billingVisit.getVisitType())?"selected":"";
               %>
-              <option value="<%=visit.getVisitType()%>" <%=selected%>><%=visit.getDescription()%> </option>
+              <option value="<%=Encode.forHtmlAttribute(billingVisit.getVisitType())%>" <%=selected%>><%=Encode.forHtmlContent(billingVisit.getDisplayName())%> </option>
               <%
               }
               %>
