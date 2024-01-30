@@ -232,6 +232,8 @@ String curProvider_no = (String)session.getAttribute("user");
 		                        <li><a href='javascript:void(0);' class="xlink" rel='${ctx}/billing/CA/ON/billingONPayment.jsp'><bean:message key="admin.admin.paymentReceived"/></a></li>
 		                        <li><a href='javascript:void(0);' class="xlink" rel='${ctx}/billing/CA/ON/managePaymentType.do'><bean:message key="admin.admin.managePaymentType"/></a></li>
 		                </oscar:oscarPropertiesCheck>
+
+                    <li><a href='javascript:void(0);' class="xlink" rel='${ctx}/admin/billingSettings.jsp'>Settings</a></li>
 				</ul>
 				</div>
 				</div>
@@ -906,9 +908,6 @@ String curProvider_no = (String)session.getAttribute("user");
 				   <li><a href='javascript:void(0);'
 						class="xlink" rel="${ctx}/admin/productDispensing/products.jsp"><bean:message
 						key="admin.admin.btnInventory" /></a></li>
-				   <% if (OscarProperties.getInstance().getProperty("NEW_CONTACTS_UI","false").equals("true")) { %>
-		            	<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/demographic/migrate_demographic_contacts.jsp"><bean:message key="admin.admin.migrate_contacts"/></a></li>
-		            <% } %>
 						<li><a href='javascript:void(0);'
 						class="xlink" rel="${ctx}/admin/fixRolesOnNotes.jsp"><bean:message
 						key="admin.admin.btnFixNotes" /></a></li>

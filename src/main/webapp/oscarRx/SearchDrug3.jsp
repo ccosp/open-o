@@ -295,7 +295,7 @@ if (rx_enhance!=null && rx_enhance.equals("true")) {
                 var url="<c:out value="${ctx}"/>" + "/oscarRx/deleteRx.do?parameterValue=clearReRxDrugList";
                        var data = "rand="+rand;
                        new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
-                    	   updateCurrentInteractions();
+                    	   // updateCurrentInteractions();
                         }});
             }
             function onPrint(cfgPage) {
@@ -1191,69 +1191,90 @@ body {
 <%
                         if (pharmacyList != null) {
 %>
-<div id="Layer1" style="position: absolute; left: 1px; top: 1px; width: 350px; height: 311px; visibility: hidden; z-index: 1; background-color: white;"><!--  This should be changed to automagically fill if this changes often -->
+<style>
+  #Layer1 {
+    position: absolute;
+    left: 130px;
+    top: 50px;
+    width: 350px;
+    height: auto;
+    visibility: hidden;
+    z-index: 1;
+    background-color: white;
+    border: 2px solid grey;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 
-    <table border="0" cellspacing="1" cellpadding="1" align="center" class="hiddenLayer">
-        <tr class="LightBG">
-            <td class="wcblayerTitle">&nbsp;</td>
-            <td class="wcblayerTitle">&nbsp;</td>
-            <td class="wcblayerTitle" align="right"><a href="javascript: function myFunction() {return false; }" onclick="hidepic('Layer1');" style="text-decoration: none;">X</a></td>
+  .hiddenLayer {
+    width: 100%;
+    padding: 2 10px 10px 10px;
+    box-sizing: border-box;
+  }
+
+  .wcblayerTitle {
+    width: 40%;
+    padding-left: 20px;
+    font-weight: bold;
+    background-color: #f2f2f2;
+    text-align: center;
+  }
+
+  .wcblayerContent {
+    padding-left: 20px;
+  }
+
+</style>
+
+<div id="Layer1"><!--  This should be changed to automagically fill if this changes often -->
+
+    <table class="hiddenLayer">
+        <tr>
+            <td>&nbsp;</td>
+            <td align="right"><a href="javascript: function myFunction() {return false; }" onclick="hidepic('Layer1');" style="text-decoration: none;"><img src='<c:out value="${ctx}/images/close.png"/>' border="0"></a></td>
         </tr>
 
-        <tr class="LightBG">
+        <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgName"/></td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyName"></td>
+            <td class="wcblayerContent" id="pharmacyName"></td>
         </tr>
 
-        <tr class="LightBG">
+        <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgAddress"/></td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyAddress"></td>
+            <td class="wcblayerContent" id="pharmacyAddress"></td>
         </tr>
-        <tr class="LightBG">
+        <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgCity"/></td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyCity"></td>
+            <td class="wcblayerContent" id="pharmacyCity"></td>
         </tr>
 
-        <tr class="LightBG">
+        <tr>
             <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgProvince"/></td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyProvince"></td>
+            <td class="wcblayerContent" id="pharmacyProvince"></td>
         </tr>
-        <tr class="LightBG">
-            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPostalCode"/> :</td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyPostalCode"></td>
+        <tr>
+            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPostalCode"/></td>
+            <td class="wcblayerContent" id="pharmacyPostalCode"></td>
         </tr>
-        <tr class="LightBG">
-            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPhone1"/> :</td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyPhone1"></td>
+        <tr>
+            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPhone1"/></td>
+            <td class="wcblayerContent"  id="pharmacyPhone1"></td>
         </tr>
-        <tr class="LightBG">
-            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPhone2"/> :</td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyPhone2"></td>
+        <tr>
+            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgPhone2"/></td>
+            <td class="wcblayerContent" id="pharmacyPhone2"></td>
         </tr>
-        <tr class="LightBG">
-            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgFax"/> :</td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyFax"></td>
+        <tr>
+            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgFax"/></td>
+            <td class="wcblayerContent" id="pharmacyFax"></td>
         </tr>
-        <tr class="LightBG">
-            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgEmail"/> :</td>
-            <td class="wcblayerItem">&nbsp;</td>
-            <td id="pharmacyEmail"></td>
+        <tr>
+            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgEmail"/></td>
+            <td class="wcblayerContent"  id="pharmacyEmail"></td>
         </tr>
-        <tr class="LightBG">
-            <td colspan="3" class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgNotes"/> :</td>
+        <tr>
+            <td class="wcblayerTitle"><bean:message key="SearchDrug.pharmacy.msgNotes"/></td>
+            <td class="wcblayerContent"  id="pharmacyNotes"></td>
         </tr>
-        <tr class="LightBG">
-            <td id="pharmacyNotes" colspan="3"></td>
-        </tr>
-
     </table>
 
 </div>
@@ -1454,7 +1475,7 @@ function changeLt(drugId){
                var url="<c:out value="${ctx}"/>" + "/oscarRx/deleteRx.do?parameterValue=clearStash";
                var data = "rand=" + Math.floor(Math.random()*10001);
                new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
             }});
                $('rxText').innerHTML="";//make pending prescriptions disappear.
                $("searchString").focus();
@@ -1464,7 +1485,7 @@ function changeLt(drugId){
         var data="rand="+ Math.floor(Math.random()*10001);
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,asynchronous:true,evalScripts:true,
             insertion: Insertion.Bottom,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
         }});
 
     }
@@ -1492,7 +1513,7 @@ function changeLt(drugId){
         var data="randomId="+randomId;
         var url="<c:out value="${ctx}"/>" + "/oscarRx/rxStashDelete.do?parameterValue=deletePrescribe";
         new Ajax.Request(url, {method: 'get',parameters:data,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
                 if($('deleteOnCloseRxBox').value=='true'){
                     deleteRxOnCloseRxBox(randomId);
                 }
@@ -1517,7 +1538,7 @@ function changeLt(drugId){
                              $(del).style.textDecoration='line-through';
                              $(discont).style.textDecoration='line-through';
                              $(prescrip).style.textDecoration='line-through';
-			     updateCurrentInteractions();
+			     // updateCurrentInteractions();
                     }
                 }});
 
@@ -1576,7 +1597,7 @@ var skipParseInstr = false;
                   $(del).style.textDecoration='line-through';
                   $(discont).style.textDecoration='line-through';
                   $(prescrip).style.textDecoration='line-through';
-		  updateCurrentInteractions();
+		  // updateCurrentInteractions();
             }});
         }
         return false;
@@ -1673,11 +1694,14 @@ var skipParseInstr = false;
                   $('del_'+json.id).style.textDecoration='line-through';
                   $('discont_'+json.id).innerHTML = json.reason;
                   $('prescrip_'+json.id).style.textDecoration='line-through';
-                  updateCurrentInteractions();
+                  // updateCurrentInteractions();
             }});
 
     }
 
+	/*
+	 * deprecated: causes speed and accuracy issues.
+	 */
     function updateCurrentInteractions(){
         new Ajax.Request("GetmyDrugrefInfo.do?method=findInteractingDrugList&rand="+ Math.floor(Math.random()*10001), {method:'get',onSuccess:function(transport){
                             new Ajax.Request("UpdateInteractingDrugs.jsp?rand="+ Math.floor(Math.random()*10001), {method:'get',onSuccess:function(transport){
@@ -1697,7 +1721,7 @@ var skipParseInstr = false;
         var data="demoNo="+demoNo+"&showall=<%=showall%>&rand=" +  Math.floor(Math.random()*10001);
         var url= "<c:out value="${ctx}"/>" + "/oscarRx/rePrescribe2.do?method=repcbAllLongTerm";
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,asynchronous:true,insertion: Insertion.Bottom,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
             }});
         return false;
     }
@@ -1865,7 +1889,7 @@ YAHOO.example.FnMultipleFields = function(){
                     var params = "demographicNo=<%=demoNo%>&drugId="+arr.id+"&text="+name+"&randomId="+ran_number;  //hack to get around ie caching the page
                    new Ajax.Updater('rxText',url, {method:'get',parameters:params,evalScripts:true,
                         insertion: Insertion.Bottom,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
                         }});
 
                     $('searchString').value = "";
@@ -2026,7 +2050,7 @@ function setSearchedDrug(drugId,name){
     name=encodeURIComponent(name);
     var params = "demographicNo=<%=demoNo%>&drugId="+drugId+"&text="+name+"&randomId="+ran_number;
     new Ajax.Updater('rxText',url, {method:'get',parameters:params,asynchronous:true,evalScripts:true,insertion: Insertion.Bottom,onSuccess:function(transport){
-                            updateCurrentInteractions();
+                            // updateCurrentInteractions();
             }});
     $('searchString').value = "";
 }
@@ -2066,7 +2090,7 @@ function represcribe(element, toArchive){
         var url= "<c:out value="${ctx}"/>" + "/oscarRx/rePrescribe2.do?method=represcribeMultiple&rand="+Math.floor(Math.random()*10001);
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,asynchronous:false,evalScripts:true,
             insertion: Insertion.Bottom,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
             }});
     }else if(drugId!=null){
         var dataUpdateId="reRxDrugId="+toArchive+"&action=addToReRxDrugIdList&rand="+Math.floor(Math.random()*10001);
@@ -2077,7 +2101,7 @@ function represcribe(element, toArchive){
         var url= "<c:out value="${ctx}"/>" + "/oscarRx/rePrescribe2.do?method=represcribe2&rand="+Math.floor(Math.random()*10001);
         new Ajax.Updater('rxText',url, {method:'get',parameters:data,evalScripts:true,
             insertion: Insertion.Bottom,onSuccess:function(transport){
-                updateCurrentInteractions();
+                // updateCurrentInteractions();
             }});
 
    }
@@ -2182,21 +2206,28 @@ function updateQty(element){
                     $(durationStr).innerHTML=json.duration;
                 }
                 $(durationUnitStr).innerHTML=json.durationUnit;
-                $(quantityStr).innerHTML=json.calQuantity;
                 if(json.unitName!=null && json.unitName!="null" && json.unitName!="NULL" && json.unitName!="Null"){
                     $(unitNameStr).innerHTML=json.unitName;
                 }else{
                     $(unitNameStr).innerHTML='';
                 }
+                if (json.calQuantity != 0) {
+                    //this is oftentimes zero when re-prescribing a drug where the unitName != null.  
+                    //Until a more reliable calculated quantity is being returned, don't update if the calculated quantity is 0
+                    //silently changing to 0 can be problematic in situations where the quantity has already been set
+                    //to an appropriate value.                 
+                    $(quantityStr).innerHTML=json.calQuantity; 
+                    if($(unitNameStr).innerHTML!='')
+                        $(quantity).value=$(quantityStr).innerHTML+" "+$(unitNameStr).innerHTML;
+                    else
+                        $(quantity).value=$(quantityStr).innerHTML;
+                    
+                }                
                 if(json.prn){
                     $(prnStr).innerHTML="prn";$(prnVal).value=true;
                 } else{
                     $(prnStr).innerHTML="";$(prnVal).value=false;
                 }
-            if($(unitNameStr).innerHTML!='')
-                $(quantity).value=$(quantityStr).innerHTML+" "+$(unitNameStr).innerHTML;
-            else
-                $(quantity).value=$(quantityStr).innerHTML;
             }});
         return true;
     }

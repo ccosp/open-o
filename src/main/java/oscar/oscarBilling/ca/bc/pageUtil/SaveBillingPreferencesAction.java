@@ -50,9 +50,9 @@ public class SaveBillingPreferencesAction
         BillingPreferencesActionForm) actionForm;
     BillingPreferencesDAO dao = SpringUtils.getBean(BillingPreferencesDAO.class);
     BillingPreference pref = new BillingPreference();
-    pref.setProviderNo(Integer.parseInt(frm.getProviderNo()));
+    pref.setProviderNo(frm.getProviderNo());
     pref.setReferral(Integer.parseInt(frm.getReferral()));
-    pref.setDefaultPayeeNo(Integer.parseInt(frm.getPayeeProviderNo()));
+    pref.setDefaultPayeeNo(frm.getPayeeProviderNo());
     dao.saveUserPreferences(pref);
     servletRequest.setAttribute("providerNo",frm.getProviderNo());
     return actionMapping.findForward("success");

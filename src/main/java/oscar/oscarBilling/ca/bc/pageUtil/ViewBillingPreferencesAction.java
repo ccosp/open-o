@@ -24,6 +24,8 @@
 
 package oscar.oscarBilling.ca.bc.pageUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +35,14 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.oscarehr.PMmodule.dao.ProviderDao;
+import org.oscarehr.common.dao.PropertyDao;
+import org.oscarehr.common.model.Property;
+import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.oscarBilling.ca.bc.MSP.MSPReconcile;
+import oscar.oscarBilling.ca.bc.data.BillingFormData;
 import oscar.oscarBilling.ca.bc.data.BillingPreference;
 import oscar.oscarBilling.ca.bc.data.BillingPreferencesDAO;
 
@@ -52,16 +59,50 @@ public class ViewBillingPreferencesAction
     BillingPreferencesActionForm frm = (
         BillingPreferencesActionForm) actionForm;
     BillingPreferencesDAO dao = SpringUtils.getBean(BillingPreferencesDAO.class);
+    PropertyDao propertyDao = SpringUtils.getBean(PropertyDao.class);
+    ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
+
+    List<Property> propList = propertyDao.findByNameAndProvider("invoice_payee_info", frm.getProviderNo());
+    Property invoicePayeeInfo = propList.isEmpty() ? null : propList.get(0);
+
+    if(invoicePayeeInfo == null || invoicePayeeInfo.getValue() == null) {
+      Provider provider = providerDao.getProvider(frm.getProviderNo());
+      frm.setInvoicePayeeInfo("Dr. " + provider.getFirstName() + " " + provider.getLastName());
+    } else {
+      frm.setInvoicePayeeInfo(invoicePayeeInfo.getValue());
+    }
+    //Default to true when nothing is set
+    frm.setInvoicePayeeDisplayClinicInfo(propertyDao.findByNameAndProvider("invoice_payee_display_clinic", frm.getProviderNo()).isEmpty() || propertyDao.isActiveBooleanProperty("invoice_payee_display_clinic", frm.getProviderNo()));
+
     BillingPreference pref = dao.getUserBillingPreference(frm.getProviderNo());
     //If the user doesn't have a BillingPreference record create one
     if (pref == null) {
       pref = new BillingPreference();
-      pref.setProviderNo(Integer.parseInt(frm.getProviderNo()));
+      pref.setProviderNo(frm.getProviderNo());
       dao.saveUserPreferences(pref);
     }
+    BillingFormData billform = new BillingFormData();
+    ArrayList billingFormList = new ArrayList<>();
+    oscar.oscarBilling.ca.bc.data.BillingFormData.BillingForm defaultBillingForm = billform.new BillingForm("Clinic Default", "CLINICDEFAULT");
+    billingFormList.add(defaultBillingForm);
+    billingFormList.addAll(Arrays.asList(billform.getFormList()));
+    servletRequest.setAttribute("billingFormList", billingFormList);
+
+    List<Property> defaultBillingFormPropertyList = propertyDao.findByNameAndProvider("default_billing_form", frm.getProviderNo());
+    frm.setDefaultBillingForm(defaultBillingFormPropertyList.isEmpty() ? null : defaultBillingFormPropertyList.get(0).getValue());
+
+    List<Property> defaultBillingProviderPropertyList = propertyDao.findByNameAndProvider("default_billing_provider", frm.getProviderNo());
+    frm.setDefaultBillingProvider(defaultBillingProviderPropertyList.isEmpty() ? null : defaultBillingProviderPropertyList.get(0).getValue());
+
+    List<Property> gstNoProps = propertyDao.findByNameAndProvider("gst_number", frm.getProviderNo());
+
     frm.setReferral(String.valueOf(pref.getReferral()));
     frm.setPayeeProviderNo(String.valueOf(pref.getDefaultPayeeNo()));
+    frm.setGstNo(gstNoProps.isEmpty() ? null : gstNoProps.get(0).getValue());
+
     servletRequest.setAttribute("providerList",this.getPayeeProviderList());
+
+    servletRequest.setAttribute("billingProviderList",providerDao.getProvidersWithNonEmptyOhip());
     return actionMapping.findForward("success");
   }
 

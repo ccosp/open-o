@@ -102,9 +102,8 @@ public class LookupListManager {
 	
 	public LookupListItem findLookupListItemByLookupListIdAndValue(LoggedInInfo loggedInInfo, int lookupListId, String value)  {
 		
-		LookupListItem item = lookupListItemDao.findByLookupListIdAndValue(lookupListId, value);
-		
-		return item;
+		return lookupListItemDao.findByLookupListIdAndValue(lookupListId, value);
+
 	}
 	
 

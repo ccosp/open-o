@@ -94,14 +94,16 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
     private String pagerNumber;
     private String salutation;
 
-	private boolean hideFromView=false;
+    private boolean hideFromView=false;
+	private String province;
+
     private boolean deleted=false;
     
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated=new Date();
 
 	private Integer eformId;
-
+	
 	@PreUpdate
 	protected void jpaUpdateLastUpdateTime() {
 		lastUpdated = new Date();
@@ -149,21 +151,21 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 	public String getStreetAddress() {
 		return StringUtils.trimToEmpty(streetAddress);
     }
-	
+
 	public void setStreetAddressFromForm(String streetAddress) {
 		this.streetAddress = StringUtils.trimToNull(streetAddress);
 	}
 
 	public void setStreetAddress(String streetAddress) {
     	this.streetAddress = StringUtils.trimToNull(streetAddress);
-    	
+
     	if( this.streetAddress != null && this.streetAddress.contains(",") ) {
     		this.addressArray = this.streetAddress.split(",");
- 
+
 			while( this.addressArray.length < 5) {
 				this.addressArray[this.addressArray.length + 1] = ",";
 			}
-    		
+
     	} else if( this.streetAddress == null ) {
     		this.addressArray = new String[5];
     		this.addressArray[0] = ","; // address line
@@ -255,13 +257,9 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
     	this.eDataServiceName = StringUtils.trimToNull(eDataServiceName);
     }
 
-	public boolean isDeleted() {
-		return deleted;
-	}
+	public boolean isDeleted() {return deleted;}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
+	public void setDeleted(boolean deleted) {this.deleted = deleted;}
 
     /**
      * @return the annotation
@@ -304,7 +302,13 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 	}
 
 	public String getFormattedName() {
-    	return getLastName() + "," + getFirstName();
+		return getFormattedName(false);
+	}
+
+	public String getFormattedName(Boolean inSearch) {
+    	return this.lastName + ", " + this.firstName
+				+ (inSearch ? ((StringUtils.isNotBlank(this.professionalLetters) ? " " + this.professionalLetters : "") +
+				(StringUtils.isNotBlank(this.annotation) ? " ("+this.annotation+")" : "")) : "");
     }
 
 	/**
@@ -410,6 +414,46 @@ public class ProfessionalSpecialist extends AbstractModel<Integer> implements Se
 
 	public void setEformId(Integer eformId) {
 		this.eformId = eformId;
+	}
+
+    /**
+     * Creates a contact string for billing invoices for this provider
+     * @return A new string describing the provider's contact details
+     */
+	public String createContactString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getLastName()).append(", ").append(getFirstName());
+		if (getStreetAddress() != null) {
+			sb.append("\n").append(getStreetAddress());
+		}
+		if (getPhoneNumber() != null) {
+			sb.append("\nTel: ").append(getPhoneNumber());
+		}
+		if (getFaxNumber() != null) {
+			sb.append("\nFax: ").append(getFaxNumber());
+		}
+		if (getEmailAddress() != null) {
+			sb.append("\n").append(getEmailAddress());
+		}
+		if (getWebSite() != null) {
+			sb.append("\n").append(getWebSite());
+		}
+		return sb.toString();
+	}
+
+	public enum DemographicRelationship {
+		REFERRAL_DOCTOR("familyDoctorId"),
+		FAMILY_DOCTOR("familyPhysicianId");
+
+		DemographicRelationship(String demographicExtKeyVal) {
+			this.demographicExtKeyVal = demographicExtKeyVal;
+		}
+
+		private String demographicExtKeyVal;
+
+		public String getDemographicExtKeyVal() {
+			return demographicExtKeyVal;
+		}
 	}
 
 	@Override

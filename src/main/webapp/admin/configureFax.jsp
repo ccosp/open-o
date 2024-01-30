@@ -39,14 +39,15 @@ if(!authed) {
 }
 %>
 
-<%@page import="org.oscarehr.common.dao.FaxConfigDao"%>
 <%@page import="org.oscarehr.common.model.FaxConfig"%>
 <%@page import="org.oscarehr.common.dao.QueueDao"%>
-<%@page import="org.oscarehr.common.model.Queue" %>
 <%@page import="org.oscarehr.util.SpringUtils"%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
+<%@ page import="org.oscarehr.managers.FaxManager" %>
+<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 
 <!DOCTYPE html>
 <html>
@@ -247,9 +248,10 @@ if(!authed) {
 	});
 
 	<%
+	LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+	FaxManager faxManager = SpringUtils.getBean(FaxManager.class);
+	List<FaxConfig> faxConfigList = faxManager.getFaxConfigurationAccounts(loggedInInfo);
 
-	FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
-	List<FaxConfig>faxConfigList = faxConfigDao.findAll(null, null);
 	Integer count = 0;
 
 	QueueDao queueDao = SpringUtils.getBean(QueueDao.class);
@@ -279,6 +281,12 @@ if(!authed) {
 		$(div).find("#of").attr("id","of" + userCount);
 		$(div).find("#activeState").val("");
 		$(div).find("#activeState").attr("id","activeState"+userCount);
+		$(div).find("#download_on").attr("id","download_on" + userCount);
+		$(div).find("#download_of").attr("id","download_of" + userCount);
+		$(div).find("#download_on").attr("name","download" + userCount);
+		$(div).find("#download_of").attr("name","download" + userCount);
+		$(div).find("#downloadState").val("");
+		$(div).find("#downloadState").attr("id","downloadState" + userCount);
 		$(div).find("#id").val("-1");
 		$(div).find("#id").attr("id","id"+userCount);
 		
@@ -317,7 +325,7 @@ if(!authed) {
 	}
 	
 	function verify() {
-		var names = ["faxUrl","siteUser","sitePasswd","faxUser","faxPassword","faxNumber","activeState","inboxQueue"];
+		var names = ["faxUrl","siteUser","sitePasswd","faxUser","faxPassword","faxNumber","activeState","inboxQueue", "downloadState"];
 		var valid = true;
 		var incomplete = new Object();
 		
@@ -345,7 +353,12 @@ if(!authed) {
 	}
 	
 	function setState(elem) {
-		var id = "#activeState" + elem.id.substring(2);
+		var id;
+		if (elem.id.startsWith("download")) {
+			id = "#downloadState" + elem.id.substring(11);
+		} else { 
+			id = "#activeState" + elem.id.substring(2);
+		} 
 		$(id).val($(elem).val());
 	}
 	
@@ -435,7 +448,7 @@ if(!authed) {
 					<div class="span6">
 					<label for="senderEmail<%=count == 0 ? "" : count%>">Email</label>
 
-					<input class="span6" type="email" id="senderEmail<%=count == 0 ? "" : count%>" name="senderEmail" placeholder="Account email" value="<%=faxConfigList.get(count).getSenderEmail()%>" />
+					<input class="span6" type="email" id="senderEmail<%=count == 0 ? "" : count%>" name="senderEmail" placeholder="Account email" value="<%=Encode.forHtmlAttribute(faxConfigList.get(count).getSenderEmail())%>" />
 				</div>
 				</div>
 				<div class="row">
@@ -462,18 +475,35 @@ if(!authed) {
 						
 					</div>
 					<div class="span6">
-						<label>Enable/Disable Gateway</label>
-						
-							<label class="radio inline control-label">
-							<input type="radio" id="on<%=count == 0 ? "" : count %>" name="active<%=count == 0 ? "" : count%>" value="true" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive() ? "checked" : ""%>  />
-							On</label>
-							<label class="radio inline control-label">
-							<input type="radio" id="of<%=count == 0 ? "" : count %>" name="active<%=count == 0 ? "" : count%>" value="false" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive()  ? "" : "checked"%> />
-							Off</label>
-							
-							<input type="hidden" id="activeState<%=count == 0 ? "" : count%>" name="activeState" value="<%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive()%>" />			
+						<label for="accountName<%= count == 0 ? "" : count %>" >Account Name</label>
+						<input type="text" name="accountName" id='accountName<%= count == 0 ? "" : count %>' value='<%= Encode.forHtmlAttribute(faxConfigList.get(count).getAccountName()) %>' />
 					</div>
 				</div>
+					<div class="row">
+						<div class="span6">
+							<label>Enable/Disable Gateway</label>
+
+							<label class="radio inline control-label">
+								<input type="radio" id="on<%=count == 0 ? "" : count %>" name="active<%=count == 0 ? "" : count%>" value="true" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive() ? "checked" : ""%>  />
+								On</label>
+							<label class="radio inline control-label">
+								<input type="radio" id="of<%=count == 0 ? "" : count %>" name="active<%=count == 0 ? "" : count%>" value="false" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive()  ? "" : "checked"%> />
+								Off</label>
+
+							<input type="hidden" id="activeState<%=count == 0 ? "" : count%>" name="activeState" value="<%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isActive()%>" />
+						</div>
+						<div class="span6">
+							<label>Enable/Disable Receiving Faxes (If Gateway Enabled)</label>
+
+							<label class="radio inline control-label">
+								<input type="radio" id="download_on<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="true" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload() ? "checked" : ""%>  />
+								On</label>
+							<label class="radio inline control-label">
+								<input type="radio" id="download_of<%=count == 0 ? "" : count %>" name="download<%=count == 0 ? "" : count%>" value="false" <%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload()  ? "" : "checked"%> />
+								Off</label>
+							<input type="hidden" id="downloadState<%=count == 0 ? "" : count%>" name="downloadState" value="<%=faxConfigList.isEmpty() ? "" : faxConfigList.get(count).isDownload()%>" />
+						</div>
+					</div>
 
 						<% if( count <= faxConfigList.size() ) { %>
 						<div class="row">

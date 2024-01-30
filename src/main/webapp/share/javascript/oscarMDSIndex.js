@@ -27,7 +27,7 @@ var oldestLab = null;
 
 function  updateDocStatusInQueue(docid){//change status of queue document link row to I=inactive
     console.log('in updateDocStatusInQueue, docid '+docid);
-	var url=ctx + "/dms/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
+	var url=ctx + "/documentManager/inboxManage.do",data="docid="+docid+"&method=updateDocStatusInQueue";
 	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
 		console.log(transport)
 	}});
@@ -297,7 +297,7 @@ function forwardDocument(docId) {
 			query = jQuery(frm).serialize();
 			jQuery.ajax({
 				type: "POST",
-				url: contextpath + "/dms/showDocument.jsp",
+				url: contextpath + "/documentManager/showDocument.jsp",
 				data: query,
 				success: function(data) {
 					jQuery("#document_"+docId).html(data);
@@ -315,12 +315,12 @@ function rotate180(id) {
 	jQuery("#rotate180btn_" + id).attr('disabled', 'disabled');
         var displayDocumentAs=$('displayDocumentAs_'+id).value;
 
-	new Ajax.Request(contextpath + "/dms/SplitDocument.do", {method: 'post', parameters: "method=rotate180&document=" + id, onSuccess: function(data) {
+	new Ajax.Request(contextpath + "/documentManager/SplitDocument.do", {method: 'post', parameters: "method=rotate180&document=" + id, onSuccess: function(data) {
 		jQuery("#rotate180btn_" + id).removeAttr('disabled');
                 if(displayDocumentAs=="PDF") {
                     showPDF(id,contextpath);
                 } else {
-                    jQuery("#docImg_" + id).attr('src', contextpath + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
+                    jQuery("#docImg_" + id).attr('src', contextpath + "/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
                 }
 	}});
 }
@@ -329,38 +329,39 @@ function rotate90(id) {
 	jQuery("#rotate90btn_" + id).attr('disabled', 'disabled');
         var displayDocumentAs=$('displayDocumentAs_'+id).value;
 
-	new Ajax.Request(contextpath + "/dms/SplitDocument.do", {method: 'post', parameters: "method=rotate90&document=" + id, onSuccess: function(data) {
+	new Ajax.Request(contextpath + "/documentManager/SplitDocument.do", {method: 'post', parameters: "method=rotate90&document=" + id, onSuccess: function(data) {
 		jQuery("#rotate90btn_" + id).removeAttr('disabled');
                 if(displayDocumentAs=="PDF") {
                     showPDF(id,contextpath);
                 } else {
-                    jQuery("#docImg_" + id).attr('src', contextpath + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
+                    jQuery("#docImg_" + id).attr('src', contextpath + "/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
                 }
 	}});
 }
 
 function removeFirstPage(id) {
 	jQuery("#removeFirstPagebtn_" + id).attr('disabled', 'disabled');
-        var displayDocumentAs=$('displayDocumentAs_'+id).value;
+	if(confirm("!! This is a destructive action that CANNOT be reversed !! \n Click OK to delete the first page of this document, or Cancel to abort.")) {
+		var displayDocumentAs = $('displayDocumentAs_' + id).value;
+		new Ajax.Request(contextpath + "/documentManager/SplitDocument.do", {
+			method: 'post', parameters: "method=removeFirstPage&document=" + id,
+			onSuccess: function (data) {
+				jQuery("#removeFirstPagebtn_" + id).removeAttr('disabled');
+				if (displayDocumentAs == "PDF") {
+					showPDF(id, contextpath);
+				} else {
+					jQuery("#docImg_" + id).attr('src', contextpath + "/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
+				}
+				var numPages = parseInt(jQuery("#numPages_" + id).text()) - 1;
+				jQuery("#numPages_" + id).text("" + numPages);
 
-	new Ajax.Request(contextpath + "/dms/SplitDocument.do", {method: 'post', parameters: "method=removeFirstPage&document=" + id, onSuccess: function(data) {
-		jQuery("#removeFirstPagebtn_" + id).removeAttr('disabled');
-                if(displayDocumentAs=="PDF") {
-                    showPDF(id,contextpath);
-                } else {
-                    jQuery("#docImg_" + id).attr('src', contextpath + "/dms/ManageDocument.do?method=viewDocPage&doc_no=" + id + "&curPage=1&rand=" + (new Date().getTime()));
-                }
-		var numPages = parseInt(jQuery("#numPages_" + id).text())-1;
-		jQuery("#numPages_" + id).text("" + numPages);
-
-
-
-		if (numPages <= 1) {
-			jQuery("#numPages_" + id).removeClass("multiPage");
-			jQuery("#removeFirstPagebtn_" + id).remove();
-		}
-
-	}});
+				if (numPages <= 1) {
+					jQuery("#numPages_" + id).removeClass("multiPage");
+					jQuery("#removeFirstPagebtn_" + id).remove();
+				}
+			}
+		});
+	}
 }
 
 function split(id) {
@@ -547,7 +548,7 @@ function showDocLab(childId,docNo,providerNo,searchProviderNo,status,demoName,sh
 	//alert(div);
 	var url='';
 	if(type=='DOC')
-		url="../dms/showDocument.jsp";
+		url="../documentManager/showDocument.jsp";
 	else if(type=='MDS')
 		url="";
 	else if(type=='HL7')
@@ -1134,7 +1135,7 @@ function getPatientNameFromPatientId(patientId){
 	if(pn&&pn!=null){
 		return pn;
 	}else{
-		var url=contextpath+"/dms/ManageDocument.do";
+		var url=contextpath+"/documentManager/ManageDocument.do";
 		var data='method=getDemoNameAjax&demo_no='+patientId;
 		new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
 			var json=transport.responseText.evalJSON();
@@ -1466,11 +1467,11 @@ function focusFirstDocLab(){
 function updateGlobalDataAndSideNav(doclabid,patientId){
 	doclabid=doclabid.replace(/\s/g,'');
 	
-	if(doclabid.length>0){
+	if(doclabid.length>0 && typeof patientDocs !== 'undefined'){
 		//delete doclabid from not assigned list
 		var na=patientDocs['-1'];
 		var index=na.indexOf(doclabid);
-		if(index!=-1){
+		if(index !== -1){
 			na.splice(index,1);
 			addIdToPatient(doclabid,patientId);//add to patient
 		}
@@ -1533,7 +1534,7 @@ function  updatePatientDocLabNav(num,patientId){
 	}
 }
 function createPatientDocLabEle(patientId,doclabid){
-	var url = ctx + "/dms/ManageDocument.do";
+	var url = ctx + "/documentManager/ManageDocument.do";
 	var data='method=getDemoNameAjax&demo_no='+patientId;
 	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
 		var json=transport.responseText.evalJSON();
@@ -1612,7 +1613,7 @@ function  popupStart(vheight,vwidth,varpage,windowname) {
 }
 
 function updateDocumentAndNext(eleId){//save doc info
-	const url = "../dms/ManageDocument.do"
+	const url = "../documentManager/ManageDocument.do"
 	const data = $(eleId).serialize(true);
 
 	new Ajax.Request(url,
@@ -1665,7 +1666,7 @@ function updateDocument(eleId){
 		return false;
 	}
 	//save doc info
-	var url="../dms/ManageDocument.do",data=$(eleId).serialize(true);
+	var url="../documentManager/ManageDocument.do",data=$(eleId).serialize(true);
 	new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
 		var json=transport.responseText.evalJSON();
 		var patientId;
@@ -1759,32 +1760,33 @@ function updateStatus(formid){//acknowledge
 		if(jQuery('#saved'+doclabid).length) {
 			saved = jQuery('#saved'+doclabid).val();
 		}
+		console.log("Update status for demoid: " + demoId + " doclabid: " + doclabid);
+		console.log("Previously saved: " + saved);
 
-		if(demoId=='-1'|| saved=='false'){
+		if(demoId === '-1'|| ! saved){
 			alert('Document is not assigned and saved to a patient,please file it');
 		}else{
 			var url=contextpath+"/oscarMDS/UpdateStatus.do";
 			var data=$(formid).serialize(true);
-			new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
+			console.log("Updating status. URL: " + url);
+			console.log(data);
 
-					updateDocStatusInQueue(doclabid);
-
-					if (typeof _in_window !== 'undefined' && _in_window) {
-						if (typeof self.opener.removeReport !== 'undefined') {
-							self.opener.removeReport(doclabid);
-						}
-						window.close();
-					} else {
-						//Hide document
-						Effect.BlindUp('labdoc_' + doclabid);
-						updateGlobalDataAndSideNav(num, null);
+			jQuery.post(url,data).success(function() {
+				updateDocStatusInQueue(doclabid);
+				if (typeof _in_window !== 'undefined' && _in_window) {
+					if (typeof self.opener.removeReport !== 'undefined') {
+						self.opener.removeReport(doclabid);
 					}
-			}});
+					window.close();
+				} else {
+					//Hide document
+					jQuery('#labdoc_' + doclabid).slideUp();
+					updateGlobalDataAndSideNav(doclabid, null);
+				}
+			})
 		}
 	}
 }
-
-
 
 function fileDoc(docId){
 	if(docId){
@@ -1822,7 +1824,7 @@ function fileDoc(docId){
 
 function refileDoc(id) {
     var queueId=document.getElementById('queueList_'+id).options[document.getElementById('queueList_'+id).selectedIndex].value;
-    var url=contextpath +"/dms/ManageDocument.do";
+    var url=contextpath +"/documentManager/ManageDocument.do";
     var data='method=refileDocumentAjax&documentId='+id+"&queueId="+queueId;
     new Ajax.Request(url,{method:'post',parameters:data,onSuccess:function(transport){
         fileDoc(id);
@@ -1851,7 +1853,7 @@ function addDocToList(provNo, provName, docId) {
 }
 
 function removeLink(docType, docId, providerNo, e) {
-	var url = "../dms/ManageDocument.do";
+	var url = "../documentManager/ManageDocument.do";
 	var data = 'method=removeLinkFromDocument&docType=' + docType + '&docId=' + docId + '&providerNo=' + providerNo;
 	new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
 		updateDocLabData(docId);
@@ -1987,7 +1989,7 @@ function showPDF(docid,cp) {
         width=getWidth()-650;
     }
 
-    var url=cp+'/dms/ManageDocument.do?method=display&doc_no='+docid+'&rand='+Math.random()+'#view=fitV&page=1';
+    var url=cp+'/documentManager/ManageDocument.do?method=display&doc_no='+docid+'&rand='+Math.random()+'#view=fitV&page=1';
 
     document.getElementById('docDispPDF_'+docid).innerHTML='<object width="'+(width)+'" height="'+(height)+'" type="application/pdf" data="'+url+'" id="docPDF_'+docid+'"></object>';
 }
@@ -2001,7 +2003,7 @@ function showPageImg(docid,pn,cp){
     {
         if(docid&&pn&&cp){
             var e=$('docImg_'+docid);
-            var url=cp+'/dms/ManageDocument.do?method=viewDocPage&doc_no='+docid+'&curPage='+pn;
+            var url=cp+'/documentManager/ManageDocument.do?method=viewDocPage&doc_no='+docid+'&curPage='+pn;
             e.setAttribute('src',url);
         }
     }
@@ -2099,7 +2101,7 @@ function showNext(docid){
 }
 
 function handleDocSave(docid,action){
-	var url=contextpath + "/dms/inboxManage.do";
+	var url=contextpath + "/documentManager/inboxManage.do";
 	var data='method=isDocumentLinkedToDemographic&docId='+docid;
 	new Ajax.Request(url, {method: 'post',parameters:data,onSuccess:function(transport){
                     var json=transport.responseText.evalJSON();
