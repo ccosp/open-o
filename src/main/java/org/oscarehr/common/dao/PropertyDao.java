@@ -119,11 +119,8 @@ public class PropertyDao extends AbstractDao<Property> {
 	}
 
 	public Boolean isActiveBooleanProperty(String name) {
-		return isActiveBooleanProperty(name, false);
-	}
-	public Boolean isActiveBooleanProperty(String name, Boolean defaultValue) {
 		List<Property> properties = findByName(name);
-		return properties.isEmpty() ? defaultValue : "true".equals(properties.get(0).getValue());
+		return !properties.isEmpty() && "true".equals(properties.get(0).getValue());
 	}
 
 	public Boolean isActiveBooleanProperty(String name, String providerNo) {

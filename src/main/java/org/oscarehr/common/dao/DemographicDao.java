@@ -65,6 +65,7 @@ import org.oscarehr.common.Gender;
 import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.Admission;
 import org.oscarehr.common.model.Demographic;
+import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.event.DemographicCreateEvent;
 import org.oscarehr.event.DemographicUpdateEvent;
 import org.oscarehr.integration.hl7.generators.HL7A04Generator;
@@ -89,22 +90,20 @@ import oscar.util.SqlUtils;
 public class DemographicDao extends HibernateDaoSupport implements ApplicationEventPublisherAware {
 
 	private static final int MAX_SELECT_SIZE = 500;
-	
+
 	static Logger log = MiscUtils.getLogger();
 
 	private ApplicationEventPublisher publisher;
-    
+
 
 	/**
 	 * Finds merged demographic IDs for the specified demographic.
-	 * 
-	 * @param demographicNo
-	 * 		Demographic ID to find merged records for
-	 * @return
-	 * 		Returns the list of merged (child ids) or empty list if the record is not merged to any other record   
+	 *
+	 * @param demographicNo Demographic ID to find merged records for
+	 * @return Returns the list of merged (child ids) or empty list if the record is not merged to any other record
 	 */
 	@SuppressWarnings("unchecked")
-	@NativeSql({ "demographic_merged" })
+	@NativeSql({"demographic_merged"})
 	public List<Integer> getMergedDemographics(Integer demographicNo) {
 		// Please don't tell me anything about session handling - this hibernate stuff must be refactored into JPA, then we will talk, ok?
 		Session session = getSession();
@@ -136,20 +135,20 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		logger.error("No one should be calling this method, this is a good way to run out of memory and crash a server... this is too large of a result set, it should be pagenated.", new IllegalArgumentException("The entire demographic table is too big to allow a full select."));
 		return this.getHibernateTemplate().find("from Demographic d order by d.LastName");
 	}
-	
+
 	public Long getActiveDemographicCount() {
 		List<?> res = this.getHibernateTemplate().find("SELECT COUNT(*) FROM Demographic d WHERE d.PatientStatus = 'AC'");
-		for(Object r : res) {
+		for (Object r : res) {
 			return (Long) r;
 		}
 		return 0L;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-    public List<Demographic> getActiveDemographics(final int offset, final int limit) {
+	public List<Demographic> getActiveDemographics(final int offset, final int limit) {
 		return getHibernateTemplate().executeFind(new HibernateCallback<List<Demographic>>() {
 			@Override
-            public List<Demographic> doInHibernate(Session session) throws HibernateException, SQLException {
+			public List<Demographic> doInHibernate(Session session) throws HibernateException, SQLException {
 				Query query = session.createQuery("FROM Demographic d WHERE d.PatientStatus = 'AC'");
 				if (offset > 0) {
 					query.setFirstResult(offset);
@@ -162,12 +161,12 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 					throw new MaxSelectLimitExceededException(MAX_SELECT_SIZE, aLimit);
 				}
 				query.setMaxResults(aLimit);
-				
-	            return query.list();
-            }
+
+				return query.list();
+			}
 		});
 	}
-	
+
 
 	public Demographic getDemographicById(Integer demographic_id) {
 		String q = "FROM Demographic d WHERE d.DemographicNo = ?";
@@ -186,7 +185,7 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		if (onlyActive) {
 			q = "From Demographic d where d.ProviderNo = ? and d.PatientStatus = 'AC' ";
 		}
-		List<Demographic> rs = getHibernateTemplate().find(q, new Object[] { providerNo });
+		List<Demographic> rs = getHibernateTemplate().find(q, new Object[]{providerNo});
 		return rs;
 	}
 	
@@ -396,18 +395,31 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	private static final String PROGRAM_DOMAIN_RESTRICTION = "select distinct a.clientId from ProgramProvider pp,Admission a WHERE pp.ProgramId=a.programId AND pp.ProviderNo=:providerNo";
 
 	public List<Demographic> searchDemographicByName(String searchStr, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByNameAndStatus(searchStr,null,limit,offset,providerNo,outOfDomain,false);
+		return searchDemographicByNameAndStatus(searchStr,null,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
 	public List<Demographic> searchDemographicByNameAndNotStatus(String searchStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByNameAndStatus(searchStr,statuses,limit,offset,providerNo,outOfDomain,true);
+		return searchDemographicByNameAndStatus(searchStr,statuses,limit,offset,null,providerNo,outOfDomain,true);
 	}
 	public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByNameAndStatus(searchStr,statuses,limit,offset,providerNo,outOfDomain,false);
+		return searchDemographicByNameAndStatus(searchStr,statuses,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
+	public List<Demographic> searchDemographicByName(String searchStr, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByNameAndStatus(searchStr,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+	public List<Demographic> searchDemographicByNameAndNotStatus(String searchStr, List<String> statuses, int limit, int offset, String orderBy,  String providerNo, boolean outOfDomain) {
+		return searchDemographicByNameAndStatus(searchStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
+	}
+	public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit, int offset, String orderBy,  String providerNo, boolean outOfDomain) {
+		return searchDemographicByNameAndStatus(searchStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+    public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	    return searchDemographicByNameAndStatus(searchStr, statuses, limit, offset, orderBy, providerNo, outOfDomain, ignoreStatuses, true);
+    }
+
 	@SuppressWarnings("unchecked")
-	public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain,boolean ignoreStatuses, boolean ignoreMerged) {
 		List<Demographic> list = new ArrayList<Demographic>();
 		String queryString = "From Demographic d where d.LastName like :lastName ";
 
@@ -424,7 +436,10 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		if(providerNo != null && !outOfDomain) {
 			queryString += " AND d.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
 		}
-		
+		if (orderBy != null) {
+			queryString += " ORDER BY "+getOrderField(orderBy);
+		}
+
 		Session session = this.getSession();
 		try {
 			Query q = session.createQuery(queryString);
@@ -480,19 +495,62 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	}
 
 	public List<Demographic> searchDemographicByDOB(String dobStr, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByDOBAndStatus(dobStr,null,limit,offset,providerNo,outOfDomain,false);
+		return searchDemographicByDOBAndStatus(dobStr,null,limit,offset,null,providerNo,outOfDomain,false);
+	}
+
+    public List<Demographic> searchDemographicByDOBWithMerged(String dobStr, int limit, int offset, String providerNo, boolean outOfDomain) {
+        return searchDemographicByDOBAndStatus(dobStr, null, limit, offset, null, providerNo, outOfDomain, false, false);
+    }
+
+	public List<Demographic> getByHinAndGenderAndDobAndLastName(String hin, String gender, String dob,  String lastName) {
+
+		List<Demographic> list = new ArrayList<Demographic>();
+		String queryString = "FROM Demographic d WHERE d.Hin like :hin AND d.Sex = :gender AND d.YearOfBirth like :yearOfBirth AND d.MonthOfBirth like :monthOfBirth AND d.DateOfBirth like :dateOfBirth AND d.LastName = :lastName and d.PatientStatus != 'MERGED'";
+		String[] params = dob.split("-");
+		Session session = this.getSession();
+
+		try {
+			Query q = session.createQuery(queryString);
+			q.setParameter("hin", hin.trim());
+			q.setParameter("gender", gender.trim());
+			q.setParameter("dateOfBirth", params[2].trim() + "%");
+			q.setParameter("monthOfBirth", params[1].trim() + "%");
+			q.setParameter("yearOfBirth", params[0].trim() + "%");
+			q.setParameter("lastName", lastName.toUpperCase());
+			list = q.list();
+		} finally {
+			this.releaseSession(session);
+		}
+
+		return list;
 	}
 
 	public List<Demographic> searchDemographicByDOBAndNotStatus(String dobStr, List<String> statuses, int limit, int offset,String providerNo, boolean outOfDomain) {
-		return searchDemographicByDOBAndStatus(dobStr,statuses,limit,offset,providerNo,outOfDomain,true);
+		return searchDemographicByDOBAndStatus(dobStr,statuses,limit,offset,null,providerNo,outOfDomain,true);
 	}
 	
 	public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit, int offset,String providerNo, boolean outOfDomain) {
-		return searchDemographicByDOBAndStatus(dobStr,statuses,limit,offset,providerNo,outOfDomain,false);
+		return searchDemographicByDOBAndStatus(dobStr,statuses,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
+	public List<Demographic> searchDemographicByDOB(String dobStr, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByDOBAndStatus(dobStr,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> searchDemographicByDOBAndNotStatus(String dobStr, List<String> statuses, int limit, int offset, String orderBy,String providerNo, boolean outOfDomain) {
+		return searchDemographicByDOBAndStatus(dobStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
+	}
+
+	public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit, int offset, String orderBy,String providerNo, boolean outOfDomain) {
+		return searchDemographicByDOBAndStatus(dobStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+    public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+        return searchDemographicByDOBAndStatus(dobStr, statuses, limit, offset, orderBy, providerNo, outOfDomain, ignoreStatuses, false);
+    }
+
 	@SuppressWarnings("unchecked")
-	public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses, boolean ignoreMerged) {
 		List<Demographic> list = new ArrayList<Demographic>();
 		String queryString = "From Demographic d where d.YearOfBirth like :yearOfBirth AND d.MonthOfBirth like :monthOfBirth AND d.DateOfBirth like :dateOfBirth ";
 
@@ -513,7 +571,10 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 			queryString += " AND d.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
 		}
 		
-		
+		if (orderBy!=null){
+			queryString += " ORDER BY "+getOrderField(orderBy);
+		}
+
 		Session session = this.getSession();
 		try {
 			Query q = session.createQuery(queryString);
@@ -566,21 +627,51 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	}
 
 	public List<Demographic> searchDemographicByPhone(String phoneStr, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByPhoneAndStatus(phoneStr,null,limit,offset,providerNo,outOfDomain,false);
+		List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr,null,limit,offset,null,providerNo,outOfDomain,false);
+		demographics.addAll(searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty.demo_cell, phoneStr,limit,offset,null,providerNo,outOfDomain));
+		return demographics;
 	}
 
 	public List<Demographic> searchDemographicByPhoneAndNotStatus(String phoneStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByPhoneAndStatus(phoneStr,statuses,limit,offset,providerNo,outOfDomain,true);
+		List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr,statuses,limit,offset,null,providerNo,outOfDomain,true);
+		demographics.addAll(searchDemographicByExtKeyAndValueLikeAndNotStatus(DemographicExt.DemographicProperty.demo_cell, phoneStr,statuses,limit,offset,null,providerNo,outOfDomain));
+		return demographics;
+
 	}
 	
 	public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByPhoneAndStatus(phoneStr,statuses,limit,offset,providerNo,outOfDomain,false);
+		List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr,statuses,limit,offset,null,providerNo,outOfDomain,false);
+		demographics.addAll(searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty.demo_cell, phoneStr,statuses,limit,offset,null,providerNo,outOfDomain));
+		return demographics;
 	}
 
+	public List<Demographic> searchDemographicByPhone(String phoneStr, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+		demographics.addAll(searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty.demo_cell, phoneStr,limit,offset,orderBy,providerNo,outOfDomain));
+		return demographics;
+	}
+
+	public List<Demographic> searchDemographicByPhoneAndNotStatus(String phoneStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
+		demographics.addAll(searchDemographicByExtKeyAndValueLikeAndNotStatus(DemographicExt.DemographicProperty.demo_cell, phoneStr,statuses,limit,offset,orderBy,providerNo,outOfDomain));
+		return demographics;
+	}
+
+	public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+		demographics.addAll(searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty.demo_cell, phoneStr,statuses,limit,offset,orderBy,providerNo,outOfDomain));
+		return demographics;
+	}
+
+    public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+      return searchDemographicByPhoneAndStatus(phoneStr, statuses, limit, offset, orderBy,
+          providerNo, outOfDomain, ignoreStatuses, true);
+    }
+
 	@SuppressWarnings("unchecked")
-	public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses, boolean ignoreMerged) {
 		List<Demographic> list = new ArrayList<Demographic>();
-		String queryString = "From Demographic d where d.Phone like :phone ";
+		String queryString = "From Demographic d where (d.Phone like :phone OR d.Phone2 LIKE :phone)";
 
 		if(statuses != null) {
 			queryString += " and d.PatientStatus " + ((ignoreStatuses)?"not":"") + "  in (:statuses)";
@@ -590,14 +681,17 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		if(providerNo != null && !outOfDomain) {
 			queryString += " AND d.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
 		}
-		
+		if (orderBy!=null){
+			queryString += " ORDER BY "+getOrderField(orderBy);
+		}
+
 		Session session = this.getSession();
 		try {
 			Query q = session.createQuery(queryString);
 			q.setFirstResult(offset);
 			q.setMaxResults(limit);
 
-			q.setParameter("phone", phoneStr.trim() + "%");
+			q.setParameter("phone", "%" + phoneStr.trim() + "%");
 			
 			if(statuses != null) {
 				q.setParameterList("statuses", statuses);
@@ -625,7 +719,25 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 			q.setFirstResult(offset);
 			q.setMaxResults(limit);
 
-			q.setParameter("phone", phoneStr.trim() + "%");
+			q.setParameter("phone", "%" + phoneStr.trim() + "%");
+
+			list = q.list();
+		} finally {
+			this.releaseSession(session);
+		}
+		return list;
+	}
+
+	public List<Demographic> searchDemographicByHIN(String hinStr) {
+		List<Demographic> list = new ArrayList<Demographic>();
+
+		String queryString = "From Demographic d where d.Hin like :hin and d.PatientStatus != 'MERGED' ";
+
+		Session session = this.getSession();
+		try {
+			Query q = session.createQuery(queryString);
+
+			q.setParameter("hin", hinStr.trim());
 
 			list = q.list();
 		} finally {
@@ -635,19 +747,35 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	}
 
 	public List<Demographic> searchDemographicByHIN(String hinStr, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByHINAndStatus(hinStr,null,limit,offset,providerNo,outOfDomain,false);
+		return searchDemographicByHINAndStatus(hinStr,null,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
 	public List<Demographic> searchDemographicByHINAndNotStatus(String hinStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain ) {
-		return searchDemographicByHINAndStatus(hinStr,statuses,limit,offset,providerNo,outOfDomain,true);	
+		return searchDemographicByHINAndStatus(hinStr,statuses,limit,offset,null,providerNo,outOfDomain,true);
 	}
 	
 	public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain ) {
-		return searchDemographicByHINAndStatus(hinStr,statuses,limit,offset,providerNo,outOfDomain,false);	
+		return searchDemographicByHINAndStatus(hinStr,statuses,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
+	public List<Demographic> searchDemographicByHIN(String hinStr, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByHINAndStatus(hinStr,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> searchDemographicByHINAndNotStatus(String hinStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain ) {
+		return searchDemographicByHINAndStatus(hinStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
+	}
+
+	public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain ) {
+		return searchDemographicByHINAndStatus(hinStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+    public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	    return searchDemographicByHINAndStatus(hinStr, statuses, limit, offset, orderBy, providerNo, outOfDomain, ignoreStatuses, true);
+    }
+
 	@SuppressWarnings("unchecked")
-	public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses, boolean ignoreMerged) {
 		List<Demographic> list = new ArrayList<Demographic>();
 
 		String queryString = "From Demographic d where d.Hin like :hin ";
@@ -659,7 +787,11 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		if(providerNo != null && !outOfDomain) {
 			queryString += " AND d.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
 		}
-		
+
+		if (orderBy!=null){
+			queryString += " ORDER BY "+getOrderField(orderBy);
+		}
+
 		Session session = this.getSession();
 		try {
 			Query q = session.createQuery(queryString);
@@ -683,24 +815,89 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		return list;
 	}
 
-	/**
-	 * All search parameters can be null to ignore that parameter (limit parameters can not be null).
-	 * The result is an AND of all non-null attributes. i.e. if gender and first name are provided then only results where both match are returned.
-	 * You must provide at least 1 non-null parameter.
-	 * 
-	 * @param hin it will do a substring match 
-	 * @param firstName it will do a substring match 
-	 * @param lastName it will do a substring match 
-	 * @param gender it will do an exact match 
-	 * @param dateOfBirth it will do an exact match 
-	 * @param city it will do an substring match 
-	 * @param province it will do an exact match 
-	 * @param phone it will do an substring match 
-	 * @param email it will do an substring match 
-	 * @param alias it will do an substring match 
-	 */
-	public List<Demographic> findByAttributes(String hin, String firstName, String lastName, Gender gender, Calendar dateOfBirth, String city, String province, String phone, String email, String alias, int startIndex, int itemsToReturn) {
+  /**
+   * All search parameters can be null to ignore that parameter (limit parameters can not be null).
+   * The result is an AND of all non-null attributes. i.e. if gender and first name are provided
+   * then only results where both match are returned. You must provide at least 1 non-null
+   * parameter.
+   *
+   * @param hin it will do a substring match
+   * @param firstName it will do a substring match
+   * @param lastName it will do a substring match
+   * @param gender it will do an exact match
+   * @param dateOfBirth it will do an exact match
+   * @param city it will do an substring match
+   * @param province it will do an exact match
+   * @param phone it will do an substring match
+   * @param email it will do an substring match
+   * @param alias it will do an substring match
+   * @param startIndex index of the first result
+   * @param itemsToReturn number of items to return
+   */
+  public List<Demographic> findByAttributes(
+      String hin,
+      String firstName,
+      String lastName,
+      Gender gender,
+      Calendar dateOfBirth,
+      String city,
+      String province,
+      String phone,
+      String email,
+      String alias,
+      int startIndex,
+      int itemsToReturn) {
+    return findByAttributes(
+        hin,
+        firstName,
+        lastName,
+        gender,
+        dateOfBirth,
+        city,
+        province,
+        phone,
+        email,
+        alias,
+        startIndex,
+        itemsToReturn,
+        false
+    );
+  }
 
+  /**
+   * All search parameters can be null to ignore that parameter (limit parameters can not be null).
+   * The result is an AND of all non-null attributes. i.e. if gender and first name are provided
+   * then only results where both match are returned. You must provide at least 1 non-null
+   * parameter.
+   *
+   * @param hin it will do a substring match
+   * @param firstName it will do a substring match
+   * @param lastName it will do a substring match
+   * @param gender it will do an exact match
+   * @param dateOfBirth it will do an exact match
+   * @param city it will do an substring match
+   * @param province it will do an exact match
+   * @param phone it will do an substring match
+   * @param email it will do an substring match
+   * @param alias it will do an substring match
+   * @param startIndex index of the first result
+   * @param itemsToReturn number of items to return
+   * @param orderByName order by last name and first name
+   */
+	public List<Demographic> findByAttributes(
+			String hin,
+			String firstName,
+			String lastName,
+			Gender gender,
+			Calendar dateOfBirth,
+			String city,
+			String province,
+			String phone,
+			String email,
+			String alias,
+			int startIndex,
+			int itemsToReturn,
+			boolean orderByName) {
 		// here we build the sql where clause, to simplify the logic we just append all parameters, then after we'll strip out the first " and" as the logic is easier then checking if we have to add "and" for every parameter.
 		String sqlCommand=null;
 		StringBuilder sqlParameters = new StringBuilder();
@@ -725,7 +922,11 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		// at least 1 parameter must exist
 		// we remove the first " and" because the first clause is after the "where" in the sql statement.
 		if (sqlParameters.length() == 0) throw (new IllegalArgumentException("at least one parameter must be present"));
-		else sqlCommand = "from Demographic d where" + sqlParameters.substring(" and".length(), sqlParameters.length());
+		else {
+			sqlCommand = "from Demographic d where"
+					+ sqlParameters.substring(" and".length(), sqlParameters.length())
+					+ (orderByName ? " order by d.LastName, d.FirstName" : "");
+		}
 
 		Session session = this.getSession();
 		try {
@@ -781,19 +982,36 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	}
 
 	public List<Demographic> searchDemographicByAddress(String addressStr, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByAddressAndStatus(addressStr,null,limit,offset,providerNo,outOfDomain,false);
+		return searchDemographicByAddressAndStatus(addressStr,null,limit,offset,null,providerNo,outOfDomain,false);
 	}
 	
 	public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByAddressAndStatus(addressStr,statuses,limit,offset,providerNo,outOfDomain,false);
+		return searchDemographicByAddressAndStatus(addressStr,statuses,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
 	public List<Demographic> searchDemographicByAddressAndNotStatus(String addressStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return searchDemographicByAddressAndStatus(addressStr,statuses,limit,offset,providerNo,outOfDomain,true);
+		return searchDemographicByAddressAndStatus(addressStr,statuses,limit,offset,null,providerNo,outOfDomain,true);
 	}
 
+	public List<Demographic> searchDemographicByAddress(String addressStr, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByAddressAndStatus(addressStr,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByAddressAndStatus(addressStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> searchDemographicByAddressAndNotStatus(String addressStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByAddressAndStatus(addressStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
+	}
+
+    public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+      return searchDemographicByAddressAndStatus(addressStr, statuses, limit, offset, orderBy,
+          providerNo, outOfDomain, ignoreStatuses, true);
+    }
+
 	@SuppressWarnings("unchecked")
-	public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses, boolean ignoreMerged) {
 		List<Demographic> list = new ArrayList<Demographic>();
 
 		String queryString = "From Demographic d where d.Address like :address ";
@@ -806,7 +1024,10 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		if(providerNo != null && !outOfDomain) {
 			queryString += " AND d.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
 		}
-		
+
+		if (orderBy!=null){
+			queryString += " ORDER BY "+getOrderField(orderBy);
+		}
 		
 		Session session = this.getSession();
 		try {
@@ -814,7 +1035,7 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 			q.setFirstResult(offset);
 			q.setMaxResults(limit);
 
-			q.setParameter("address", addressStr.trim() + "%");
+			q.setParameter("address", "%" + addressStr.trim() + "%");
 			
 			if(statuses != null) {
 				q.setParameterList("statuses", statuses);
@@ -824,6 +1045,84 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 				q.setParameter("providerNo", providerNo);
 			}
 			list = q.list();
+		} finally {
+			this.releaseSession(session);
+		}
+		return list;
+	}
+
+	public List<Demographic> searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty key, String value, int limit, int offset, String providerNo, boolean outOfDomain) {
+		return searchDemographicByExtKeyAndValueLikeAndStatus(key,value,null,limit,offset,null,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> searchDemographicByExtKeyAndValueLikeAndNotStatus(DemographicExt.DemographicProperty key, String value, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
+		return searchDemographicByExtKeyAndValueLikeAndStatus(key,value,statuses,limit,offset,null,providerNo,outOfDomain,true);
+	}
+
+	public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key, String value, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
+		return searchDemographicByExtKeyAndValueLikeAndStatus(key,value,statuses,limit,offset,null,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty key, String value, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByExtKeyAndValueLikeAndStatus(key,value,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+    public List<Demographic> searchDemographicByExtKeyAndValueLikeWithMerged(DemographicExt.DemographicProperty key, String value, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+        return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, null, limit, offset, orderBy, providerNo, outOfDomain, false, false);
+    }
+
+	public List<Demographic> searchDemographicByExtKeyAndValueLikeAndNotStatus(DemographicExt.DemographicProperty key, String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByExtKeyAndValueLikeAndStatus(key,value,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
+	}
+
+	public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key, String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return searchDemographicByExtKeyAndValueLikeAndStatus(key,value,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+    public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key, String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain,boolean ignoreStatuses) {
+	    return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, statuses, limit, offset, orderBy, providerNo, outOfDomain, ignoreStatuses, true);
+    }
+
+	public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key, String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses, boolean ignoreMerged) {
+		List<Demographic> list = new ArrayList<Demographic>();
+		String queryString = "SELECT {de.*} FROM demographic de "
+				+ "INNER JOIN demographicExt dext ON (dext.demographic_no=de.demographic_no) "
+				+ "WHERE dext.key_val=:key "
+				+ "AND dext.value LIKE :value";
+
+		if(statuses != null) {
+			queryString += " AND de.patient_status " + ((ignoreStatuses)?"NOT":"") + "  IN (:statuses)";
+		}
+
+		if (ignoreMerged) {
+		    queryString += " AND de.patient_status != 'MERGED'";
+		}
+
+		if(providerNo != null && !outOfDomain) {
+			queryString += " AND de.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
+		}
+
+		if (orderBy!=null){
+			queryString += " ORDER BY "+ getOrderField(orderBy, true);
+		}
+
+		Session session = this.getSession();
+		try {
+			SQLQuery query = session.createSQLQuery(queryString);
+			query.setFirstResult(offset);
+			query.setMaxResults(limit);
+			query.setParameter("key", key.name());
+			query.setParameter("value", "%" + value + "%");
+
+			if(statuses != null) {
+				query.setParameterList("statuses", statuses);
+			}
+			if(providerNo != null && !outOfDomain) {
+				query.setParameter("providerNo", providerNo);
+			}
+
+			query.addEntity("de", Demographic.class); //tried to define
+			list = query.list();
 		} finally {
 			this.releaseSession(session);
 		}
@@ -852,31 +1151,46 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	}
 
 	public List<Demographic> findDemographicByChartNo(String chartNoStr, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return findDemographicByChartNoAndStatus(chartNoStr,null,limit,offset,providerNo,outOfDomain,false);
+		return findDemographicByChartNoAndStatus(chartNoStr,null,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
 	public List<Demographic> findDemographicByChartNoAndStatus(String chartNoStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return findDemographicByChartNoAndStatus(chartNoStr,statuses,limit,offset,providerNo,outOfDomain,false);
+		return findDemographicByChartNoAndStatus(chartNoStr,statuses,limit,offset,null,providerNo,outOfDomain,false);
 	}
 	
 	public List<Demographic> findDemographicByChartNoAndNotStatus(String chartNoStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return findDemographicByChartNoAndStatus(chartNoStr,statuses,limit,offset,providerNo,outOfDomain,true);
+		return findDemographicByChartNoAndStatus(chartNoStr,statuses,limit,offset,null,providerNo,outOfDomain,true);
+	}
+
+	public List<Demographic> findDemographicByChartNo(String chartNoStr, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return findDemographicByChartNoAndStatus(chartNoStr,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> findDemographicByChartNoAndStatus(String chartNoStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return findDemographicByChartNoAndStatus(chartNoStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> findDemographicByChartNoAndNotStatus(String chartNoStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return findDemographicByChartNoAndStatus(chartNoStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Demographic> findDemographicByChartNoAndStatus(String chartNoStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+	public List<Demographic> findDemographicByChartNoAndStatus(String chartNoStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
 
 		String queryString = "From Demographic d where d.ChartNo like :chartNo ";
 
 		if(statuses != null) {
 			queryString += " and d.PatientStatus " + ((ignoreStatuses)?"not":"") + "  in (:statuses)";
 		}
-		 
 		
 		if(providerNo != null && !outOfDomain) {
 			queryString += " AND d.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
 		}
-		
+
+		if (orderBy!=null){
+			queryString += " ORDER BY "+getOrderField(orderBy);
+		}
+
 		Session session = getSession();
 		List<Demographic> list = null;
 		
@@ -902,23 +1216,42 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	}
 	
 	public List<Demographic> findDemographicByDemographicNo(String demographicNoStr, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return findDemographicByDemographicNoAndStatus(demographicNoStr,null,limit,offset,providerNo,outOfDomain,false);
+		return findDemographicByDemographicNoAndStatus(demographicNoStr,null,limit,offset,null,providerNo,outOfDomain,false);
 	}
 
 	public List<Demographic> findDemographicByDemographicNoAndStatus(String demographicNoStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return findDemographicByDemographicNoAndStatus(demographicNoStr,statuses,limit,offset,providerNo,outOfDomain,false);
+		return findDemographicByDemographicNoAndStatus(demographicNoStr,statuses,limit,offset,null,providerNo,outOfDomain,false);
 	}
 	
 	public List<Demographic> findDemographicByDemographicNoAndNotStatus(String demographicNoStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
-		return findDemographicByDemographicNoAndStatus(demographicNoStr,statuses,limit,offset,providerNo,outOfDomain,true);
+		return findDemographicByDemographicNoAndStatus(demographicNoStr,statuses,limit,offset,null,providerNo,outOfDomain,true);
+	}
+
+	public List<Demographic> findDemographicByDemographicNo(String demographicNoStr, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return findDemographicByDemographicNoAndStatus(demographicNoStr,null,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> findDemographicByDemographicNoAndStatus(String demographicNoStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return findDemographicByDemographicNoAndStatus(demographicNoStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,false);
+	}
+
+	public List<Demographic> findDemographicByDemographicNoAndNotStatus(String demographicNoStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+		return findDemographicByDemographicNoAndStatus(demographicNoStr,statuses,limit,offset,orderBy,providerNo,outOfDomain,true);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Demographic> findDemographicByDemographicNoAndStatus(String demographicNoStr, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
-
-		String queryString = "From Demographic d where d.DemographicNo = :demographicNo ";
-
-		if(statuses != null) {
+	public List<Demographic> findDemographicByDemographicNoAndStatus(String demographicNoStr, List<String> statuses, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+		String queryString = "From Demographic d where 1 = 1 ";
+		Integer val = null;
+		try {
+			val = Integer.valueOf(demographicNoStr.trim());
+		} catch(NumberFormatException e) {
+			//ignore
+		}
+		if ( val != null) {
+			queryString += " and d.DemographicNo = :demographicNo ";
+		}
+		if (statuses != null) {
 			queryString += " and d.PatientStatus " + ((ignoreStatuses)?"not":"") + "  in (:statuses)";
 		}
 		 
@@ -926,7 +1259,10 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		if(providerNo != null && !outOfDomain) {
 			queryString += " AND d.id IN ("+ PROGRAM_DOMAIN_RESTRICTION+") ";
 		}
-		
+
+		if (orderBy!=null){
+			queryString += " ORDER BY "+getOrderField(orderBy);
+		}
 		
 		Session session = getSession();
 		List<Demographic> list = null;
@@ -935,20 +1271,10 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 			Query q = this.getSession().createQuery(queryString);
 			q.setFirstResult(offset);
 			q.setMaxResults(limit);
-	
-			Integer val = null;
-			try {
-				val = Integer.valueOf(demographicNoStr.trim());
-			}catch(NumberFormatException e) {
-				//ignore
+
+			if (val != null) {
+				q.setParameter("demographicNo", val);
 			}
-			
-			if(val == null) {
-				return new ArrayList<Demographic>();
-				
-			}
-			q.setParameter("demographicNo", val);
-			
 			if(statuses != null) {
 				q.setParameterList("statuses", statuses);
 			}
@@ -972,20 +1298,70 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		if (demographic.getDemographicNo() != null) {
 			objExists = clientExistsThenEvict(demographic.getDemographicNo());
 		}
-		
+
 		this.getHibernateTemplate().saveOrUpdate(demographic);
 
 		if (OscarProperties.getInstance().isHL7A04GenerationEnabled() && !objExists) {
 			(new HL7A04Generator()).generateHL7A04(demographic);
 		}
-		
+
 		//the new way
 		if(objExists == false) {
 			publisher.publishEvent(new DemographicCreateEvent(demographic,demographic.getDemographicNo()));
 		} else {
-			publisher.publishEvent(new DemographicUpdateEvent(demographic,demographic.getDemographicNo()));	
+			publisher.publishEvent(new DemographicUpdateEvent(demographic,demographic.getDemographicNo()));
 		}
-		
+
+	}
+
+	public String getOrderField(String orderBy, boolean nativeQuery){
+		if (!nativeQuery){
+			orderBy = getOrderField(orderBy);
+		}
+		else {
+			if (orderBy.equals("dob")) {
+				orderBy = "de.year_of_birth, de.month_of_birth, de.date_of_birth ";
+			}
+			else {
+				orderBy = "de."+orderBy;
+			}
+		}
+
+		return orderBy;
+	}
+
+	public String getOrderField(String orderBy){
+
+		String orderByField = "d.LastName,d.FirstName";
+
+		if(orderBy.equals("last_name") || orderBy.equals("last_name, first_name")) {
+			orderByField = "d.LastName, d.FirstName";
+		}
+		else if(orderBy.equals("demographic_no")) {
+			orderByField = "d.DemographicNo";
+		}
+		else if(orderBy.equals("chart_no")) {
+			orderByField = "d.ChartNo";
+		}
+		else if(orderBy.equals("sex")) {
+			orderByField = "d.Sex";
+		}
+		else if(orderBy.equals("dob")) {
+			orderByField = "d.DateOfBirth";
+		}
+		else if(orderBy.equals("provider_no")) {
+			orderByField = "d.ProviderNo";
+		}
+		else if(orderBy.equals("roster_status")) {
+			orderByField = "d.RosterStatus";
+		}
+		else if(orderBy.equals("patient_status")) {
+			orderByField = "d.PatientStatus";
+		}
+		else if(orderBy.equals("phone")) {
+			orderByField = "d.Phone";
+		}
+		return orderByField;
 	}
 
 	public static List<Integer> getDemographicIdsAlteredSinceTime(Date value) {
@@ -1930,7 +2306,18 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 
 		query.setMaxResults(itemsToReturn);
 	}
-	
+
+	public List<Demographic> getDemographicByRosterStatus(String rosterStatus, String patientStatus) {
+		if (patientStatus == null || patientStatus == "" ) {
+			patientStatus = "AC";
+		}
+		String queryStr = " FROM Demographic d where d.RosterStatus=? and d.PatientStatus = ?";
+		@SuppressWarnings("unchecked")
+		List<Demographic> rs = getHibernateTemplate().find(queryStr,new Object[]{rosterStatus, patientStatus});
+
+		return rs;
+	}
+
 	public Integer searchPatientCount(LoggedInInfo loggedInInfo, DemographicSearchRequest searchRequest) {
 		Map<String,Object> params = new HashMap<String,Object>();
 		
@@ -2159,9 +2546,6 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 	 * This method war written for BORN Kid eConnect job to figure out which eforms don't have an eform_value present
 	 * 
 	 * This method will be refined a bit during QA
-	 * @param fid
-	 * @param varName
-	 * @return
 	 */
 	public List<Integer> getBORNKidsMissingExtKey(String keyName) {
 		Calendar cal = Calendar.getInstance();
@@ -2193,22 +2577,91 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 		return rs;
 	}
 
-	public List<Demographic> searchDemographicByHIN(String hinStr) {
-		List<Demographic> list = new ArrayList<Demographic>();
-
-		String queryString = "From Demographic d where d.Hin like :hin ";
-
-		Session session = this.getSession();
-		try {
-			Query q = session.createQuery(queryString);
-
-			q.setParameter("hin", hinStr.trim());
-
-			list = q.list();
-		} finally {
-			this.releaseSession(session);
-		}
-		return list;
+	public List<Demographic> findByLastNameAndDob(String lastName, Calendar dateOfBirth) {
+		return findByAttributes(null, null, lastName, null, dateOfBirth, null, null, null, null, null, 0, 99);
 	}
-	
+
+  public List<Demographic> findByFirstAndLastName(String name, String start, String end) {
+    String[] nameArray = name.split(",");
+    String firstName = name + "%";
+    String lastName = name + "%";
+    int startIndex = Integer.parseInt(start);
+
+    if (nameArray.length > 1) {
+      firstName = nameArray[1].trim() + "%";
+      lastName = nameArray[0].trim() + "%";
+    }
+
+    return findByAttributes(
+        null,
+        firstName,
+        lastName,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        startIndex,
+        Integer.parseInt(end) - startIndex
+    );
+  }
+
+  public List<Demographic> findByDob(Calendar dateOfBirth, String start, int numToReturn) {
+    int startIndex = Integer.parseInt(start);
+		return findByAttributes(
+				null,
+				null,
+				null,
+				null,
+				dateOfBirth,
+				null,
+				null,
+				null,
+				null,
+				null,
+				startIndex,
+				numToReturn,
+				true
+		);
+  }
+
+  public List<Demographic> findByPhone(String phone, String start, int numToReturn) {
+    int startIndex = Integer.parseInt(start);
+		return findByAttributes(
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				phone,
+				null,
+				null,
+				startIndex,
+				numToReturn,
+				true
+		);
+  }
+
+  public List<Demographic> findByHin(String hin, String start, int numToReturn) {
+    int startIndex = Integer.parseInt(start);
+		return findByAttributes(
+				hin,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				startIndex,
+				numToReturn,
+				true
+		);
+  }
 }

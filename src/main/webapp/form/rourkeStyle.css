@@ -27,8 +27,7 @@
 
 BODY {
 	font-size: 10pt;
-	background-color: #DAEBFC;
-	font-family: "Times New Roman", Times, serif;
+	/*background-color: #DAEBFC;*/
 	/*   #c1ddf9; */
 }
 
@@ -39,7 +38,7 @@ html,TABLE {
 /**************************************/
 A:link {
 	color: #486EBD;
-	
+
 }
 
 .Header {
@@ -61,30 +60,24 @@ A:link {
 	text-align: center;
 }
 
-.column A {
-	font-weight: bold;
+.column a {
+	color:white;
 }
 
 .column TABLE {
-	background-color: #486EBD;
+	/*background-color: #486EBD;*/
 	color: #FFFFFF;
 	vertical-align: top;
 	font-weight: bold;
 }
 
 .row {
-	background-color: #486EBD;
-	color: #FFFFFF;
+	color: black;
 	width: 22.5%;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-.row A {
-	font-weight: bold;
-	font-family: "Times New Roman", Times, serif;
-	font-size: 10pt;
-}
 
 .titleBar {
 	background-color: #486ebd;
@@ -101,7 +94,6 @@ A:link {
 
 .data {
 	font-size: 10pt;
-	font-family: "Times New Roman", Times, serif;
 }
 
 tr {
@@ -109,7 +101,7 @@ tr {
 }
 
 textarea {
-	font-size: 8pt;
+	font-size: 10pt;
 }
 
 input,select,textarea {

@@ -363,6 +363,18 @@ function billTypeOnly(showEle){
    document.serviceform.showICBC.checked = false;
    document.serviceform.elements[showEle].checked = true;
 }
+
+function toggle(source) {
+    let checkBoxes = document.getElementsByName("billCheck");
+    for (let i = 0; i < checkBoxes.length; i++) {
+        checkBoxes[i].checked = source.checked;
+    }
+}
+
+function setOperation(value) {
+    let submitOperation = document.getElementById("submitOperation");
+    submitOperation.value = value;
+}
 </script>
 
 <script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
@@ -513,7 +525,7 @@ billTypes = "%";
       <input type="radio" name="billTypes" value="<%=MSPReconcile.BILLPATIENT%>"  <%=billTypes.equals(MSPReconcile.BILLPATIENT)?"checked":""%>/>
       Bill Patient
       <input type="radio" name="billTypes" value="<%=MSPReconcile.PAIDPRIVATE%>" title="Paid Private"  <%=billTypes.equals(MSPReconcile.PAIDPRIVATE)?"checked":""%>/>
-      PPrivate
+      Private
       <input type="radio" name="billTypes" value="<%=MSPReconcile.COLLECTION%>"  title="Transfered to Collection"<%=billTypes.equals(MSPReconcile.COLLECTION)?"checked":""%>/>
       Collection
       <input type="radio" name="billTypes" value="%"                              <%=billTypes.equals("%")?"checked":""%>/>
@@ -534,12 +546,15 @@ billTypes = "%";
 
 </form>
 </div><!-- row well-->
-
+<form name="ReProcessBillingForm" method="get" action="reprocessBill.do">
+<input type="hidden" id="hiddenFilterType" name="hiddenFilterType" value="<%=request.getParameter("billTypes")%>">
 <div class="row">
 <input class="btn pull-right hidden-print" type='button' name='print' value='Print' onClick='window.print()'>
+Select All <input type="checkbox" id="checkAll" name="checkAll" onclick="toggle(this)">
 <table class="table table-striped  table-condensed sortable" id="resultsTable">
 <thead>
 	<tr>
+    <th align="center" title="SELECTION"></th>
 	<th align="center" title="INVOICE #" >INVOICE # </th>
 	<th align="center" title="LINE #" >SEQ # </th>
     <th align="center" title="APP. DATE">APP. DATE</th>
@@ -609,6 +624,9 @@ billTypes = "%";
 
   <tr>
       <td align="center">
+          <input type="checkbox" id="billCheck_<%=b.getBilling_no()%>" name="billCheck" value="<%=b.getBilling_no() + "_" + b.getBillMasterNo()%>">
+      </td>
+      <td align="center">
         <%if("Pri".equals(b.billingtype)){%>
 	 	<a href="javascript:popupPage(800,800, '../../../billing/CA/BC/billingView.do?billing_no=<%=b.billing_no%>&receipt=yes')"><%=b.billing_no%>       </a>
 		<%}
@@ -645,7 +663,7 @@ billTypes = "%";
 
     <td>
       <% if (adminAccess){ %>  
-          <a href="javascript: popupPage(700,1000,'adjustBill.jsp?billing_no=<%=b.billMasterNo%>&invoiceNo=<%=b.billing_no%>')" >Edit </a>
+          <a href="javascript: popupPage(700,1000,'adjustBill.jsp?billingmaster_no=<%=b.billMasterNo%>&invoiceNo=<%=b.billing_no%>')" >Edit </a>
       <% } %>
       
       
@@ -686,7 +704,11 @@ billTypes = "%";
   </tr>
   </tfoot>
 </table>
+<input type="hidden" id="submitOperation" name="submitOperation" value="">
+<button id="resubmitButton" type="submit" class="btn btn-primary" onclick="setOperation('Reprocess and Resubmit Bill')">Reprocess And Resubmit</button>
+<button id="settleButton" type="submit" class="btn btn-primary" onclick="setOperation('Settle Bill')">Settle</button>
 </div><!--row-->
+</form>
 
 <script language='javascript'>
 	var startDate = $("#xml_vdate").datepicker({
@@ -716,7 +738,7 @@ String getReasonEx(String reason){
 String isRejected(String billingNo,Properties p,boolean wcb){
     String s = "&nbsp;";
     if (p.containsKey(billingNo)){
-        s = "<a href=\"javascript: popupPage(700,1000,'adjustBill.jsp?billing_no="+billingNo+"')\" > "+p.getProperty(billingNo)+"</a>";
+        s = "<a href=\"javascript: popupPage(700,1000,'adjustBill.jsp?billingmaster_no="+billingNo+"')\" > "+p.getProperty(billingNo)+"</a>";
     }
     return s;
 }

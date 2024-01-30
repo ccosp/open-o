@@ -30,9 +30,13 @@ import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.fax.util.PdfCoverPageCreator;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.oscarehr.documentManager.ConvertToEdoc;
+import oscar.form.util.FormTransportContainer;
 import oscar.log.LogAction;
 
 @Service
@@ -63,10 +67,30 @@ public class FaxDocumentManager {
 		}
 		
 		LogAction.addLogSynchronous(loggedInInfo, "FaxDocumentManager.getEformFaxDocument", "eformID: " + eformId);
+
+		/*
+		 * For future code refactoring, the 'getEformFaxDocument' method is unnecessary. 
+		 * Instead, developers should directly use 'EformDataManager.createEformPDF()'. 
+		 */
+		Path path = null;
+		try {
+			eformDataManager.createEformPDF(loggedInInfo, eformId);
+		} catch (PDFGenerationException e) {
+			MiscUtils.getLogger().error("An error occurred while creating the pdf of the eForm.", e);
+		}
 		
-		return eformDataManager.createEformPDF(loggedInInfo, eformId);
+		return path;
 	}
-	
+
+	public Path getFormFaxDocument(LoggedInInfo loggedInInfo, FormTransportContainer formTransportContainer) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_fax", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_fax)");
+		}
+		LogAction.addLogSynchronous(loggedInInfo, "FaxDocumentManager.getFormFaxDocument", "eformID: " + formTransportContainer.getFormName());
+		return ConvertToEdoc.saveAsTempPDF(formTransportContainer);
+
+	}
+
 	/**
 	 * Create a new cover page with the clinic heading with the 
 	 * given cover page text.
