@@ -214,7 +214,11 @@
 		}
 
 		function showError(errorMessage) {
-			alert("A preview of this document could not be generated.");
+			if (errorMessage) {
+				alert("A preview of this document could not be generated.\n\n" + errorMessage);
+			} else {
+				alert("A preview of this document could not be generated.");
+			}
 			HideSpin();
 		}
 
