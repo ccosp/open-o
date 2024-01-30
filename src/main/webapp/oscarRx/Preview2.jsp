@@ -529,7 +529,7 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
                                                                     }
                                             %>
                                             <div style="margin-bottom: 20px;"><%=fullOutLine%></div>
-                                                            <%-- <hr> --%>
+
                                                             <%
                                             strRx += rx.getFullOutLine() + ";;";
                                             strRxNoNewLines.append(rx.getFullOutLine().replaceAll(";"," ")+ "\n");
@@ -568,7 +568,7 @@ if(prop!=null && prop.getValue().equalsIgnoreCase("yes")){
 																	startimageUrl=request.getContextPath()+"/images/1x1.gif";		
 																	statusUrl = request.getContextPath()+"/PMmodule/ClientManager/check_signature_status.jsp?" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY+"="+signatureRequestId;
 																	%>
-																	<input type="hidden" name="<% =DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>" value="<%=signatureRequestId%>" />
+																	<input type="hidden" name="<%= DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY %>" value="<%=signatureRequestId%>" />
 
 																	<img id="signature" style="width:300px; height:60px" src="<%=startimageUrl%>" alt="digital_signature" />
 				 													<input type="hidden" name="imgFile" id="imgFile" value="" />
