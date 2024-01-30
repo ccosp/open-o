@@ -56,7 +56,7 @@ public class EmailSender {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom(emailConfig.getSenderEmail());
+            helper.setFrom(emailConfig.getSenderEmail(), emailConfig.getSenderFullName());
             helper.setTo(recipients);
             helper.setSubject(subject);
             helper.setText(body, true);

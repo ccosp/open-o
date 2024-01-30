@@ -99,6 +99,10 @@ public class EmailConfig extends AbstractModel<Integer> {
         this.senderLastname = senderLastname;
     }
 
+    public String getSenderFullName() {
+        return senderFirstName + " " + senderLastname;
+    }
+
     public String getSenderEmail() {
         return senderEmail;
     }
