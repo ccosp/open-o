@@ -716,6 +716,14 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 *        Returns the preferred name.
 	 */
 	public String getPrefName() {
+		if(getAlias() != null && ! getAlias().isEmpty()) {
+			return getAlias();
+		}
+
+		if(prefName == null) {
+			return getAlias();
+		}
+
 		return prefName;
 	}
 

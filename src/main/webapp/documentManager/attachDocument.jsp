@@ -193,6 +193,7 @@
 		}
 
 		function getPdf(attachmentName, attachmentId, parameters) {
+			// Please include "<%=request.getContextPath()%>/images/spinner.jsp" into the parent page to control the visibility of the spinner (show/hide).
 			ShowSpin(true);
 			const base64Data = getPdfAttachment(attachmentName, attachmentId);
 			if (base64Data !== null) {
@@ -230,7 +231,6 @@
 
 </head>
 <body>
-<jsp:include page="../images/spinner.jsp" flush="true"/>
 <form id="attachDocumentsForm">
 	<div class="attachmentContainer">
 		<div class="attachmentList">
