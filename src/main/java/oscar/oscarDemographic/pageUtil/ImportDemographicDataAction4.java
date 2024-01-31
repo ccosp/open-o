@@ -4633,14 +4633,23 @@ public class ImportDemographicDataAction4 extends Action {
 		
 		if("Oral".equals(route)) {
 			ret = "PO";
-		}
-		else if("Intramuscular".equals(route)) {
+		} else if("PO".equals(route)) {
+			ret = "PO";
+		} else if("Intramuscular".equals(route)) {
+			ret = "IM";
+		} else if("IM".equals(route)) {
 			ret = "IM";
 		} else if("Intradermal".equals(route)) {
 			ret = "ID";
+		} else if("ID".equals(route)) {
+			ret = "ID";
 		} else if("Intranasal".equals(route)) {
 			ret = "IN";
+		} else if("IN".equals(route)) {
+			ret = "IN";
 		} else if("Subcutaneous".equals(route)) {
+			ret = "SC";
+		} else if("SC".equals(route)) {
 			ret = "SC";
 		}
 		
