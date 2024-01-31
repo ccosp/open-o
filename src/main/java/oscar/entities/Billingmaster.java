@@ -191,10 +191,6 @@ public class Billingmaster {
     public Integer wcbId;
     @Column(name = "paymentMethod")
     private int paymentMethod;
-    @Column(name = "gst")
-    private BigDecimal gst = new BigDecimal("0.00");
-    @Column(name = "gst_no")
-    private String gstNo;
 
     /**
      * Class constructor with no arguments.
@@ -1368,23 +1364,4 @@ public class Billingmaster {
 		this.wcbId = wcbId;
 	}
 
-    public BigDecimal getGst() {
-        return gst;
-    }
-
-    public double getGstAmountAsDouble(){
-        return getGst().doubleValue();
-    }
-
-    public void setGst(BigDecimal gst) {
-        this.gst = gst != null ? gst : new BigDecimal("0.00");
-    }
-
-    public String getGstNo() {
-        return gstNo;
-    }
-
-    public void setGstNo(String gstNo) {
-        this.gstNo = gstNo;
-    }
 }

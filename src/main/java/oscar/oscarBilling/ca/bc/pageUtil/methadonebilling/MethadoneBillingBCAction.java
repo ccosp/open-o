@@ -97,7 +97,7 @@ public class MethadoneBillingBCAction extends Action{
 	    } else {  // if not adding or removing data then create a fresh form.
 	    	// add some needed form elements to the bean
 	    	BillingFormData billingFormData = new BillingFormData();
-	    	BillingVisit[] billingVisit = billingFormData.getVisitType(MethadoneBillingBCHandler.BILLING_PROV);
+	    	List<BillingVisit> billingVisit = billingFormData.getVisitType(MethadoneBillingBCHandler.BILLING_PROV);
 
 	    	List<Provider> activeProviders = methadoneBillingHandler.getProviderDao().getActiveProviders();
 	    	methadoneBillingBCFormBean.setProviderList(activeProviders);

@@ -54,6 +54,7 @@ if(!authed) {
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="oscar.oscarBilling.ca.on.administration.GstControlAction" %>
 <%@ page import="oscar.oscarBilling.ca.bc.administration.GstReport" %>
+<%@ page import="org.owasp.encoder.Encode" %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session" />
 
 
@@ -99,7 +100,7 @@ if(!authed) {
 
   ////
   BillingFormData billform = new BillingFormData();
-  BillingFormData.BillingVisit[] billvisit = billform.getVisitType(billRegion);
+  List<BillingFormData.BillingVisit> billvisit = billform.getVisitType(billRegion);
   request.setAttribute("billvisit",billvisit);
   int bFlag = 0;
   String billingmasterNo = request.getParameter("billingmaster_no");
@@ -119,7 +120,7 @@ if(!authed) {
   int curMonth = (now.get(Calendar.MONTH)+1);
   int curDay = now.get(Calendar.DAY_OF_MONTH);
 
-  String codes[] = {"W","O","P","N","X","T","D"};
+  String codes[] = {"W","O","P","N","X","T","D","I"};
   request.setAttribute("codes",codes);
   String serviceLocation = allFields.getProperty("serviceLocation");
 
@@ -142,6 +143,7 @@ if(!authed) {
 <html>
 <head>
    <title>oscarBillingBC Correction</title>
+<script src="<%=request.getContextPath()%>/csrfguard" type="text/javascript"></script>
    <link rel="stylesheet" type="text/css" media="all" href="../../../share/calendar/calendar.css" title="win2k-cold-1" />
    <script type="text/javascript" src="../../../share/calendar/calendar.js"></script>
    <script type="text/javascript" src="../../../share/calendar/lang/<bean:message key="global.javascript.calendar"/>"></script>
@@ -410,7 +412,7 @@ function calculateGst(){
     }%>
   <table width="100%" border="0" bgcolor="#FFFFFF">
     <tr>
-      <td  align="left"  class="bCellData"><font color="#000000">
+      <td  align="left"  class="bCellData">
          Office Claim No
       </td>
       <td   class="bCellData">
@@ -464,6 +466,9 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
     visittype = bill.getVisitType();
 
  BillType = allFields.getProperty("billingstatus");
+ if (BillType.equalsIgnoreCase("O") && bill.getBillingtype().equalsIgnoreCase("ICBC")) {
+     BillType = "I";
+ }
  Demographic d = demographicDao.getDemographic(DemoNo);
  if(d != null){
      DemoName = d.getFormattedName();
@@ -486,7 +491,7 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
  }
 
 %>
-  <br><html:form styleId="reprocessBilling" action="/billing/CA/BC/reprocessBill" onsubmit="return checkSubmitType()">
+ <html:form styleId="reprocessBilling" action="/billing/CA/BC/reprocessBill" onsubmit="return checkSubmitType()">
 <input type="hidden" name="update_date" value="<%=UpdateDate%>"/>
 <input type="hidden" name="demoNo" value="<%=DemoNo%>"/>
 <input type="hidden" name="billNumber" value="<%=allFields.getProperty("billingNo")%>"/>
@@ -504,9 +509,9 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
     <td width="54%"  class="bCellData">
         Patient Name:
         <a href=# onClick="popupPage2('../../../demographic/demographiccontrol.jsp?demographic_no=<%=DemoNo%>&displaymode=edit&dboperation=search_detail');return false;" title="<bean:message key="provider.appointmentProviderAdminDay.msgMasterFile"/>">
-        <%=DemoName%>
+        <%=Encode.forHtmlContent(DemoName)%>
         </a>
-        <input type="hidden" name="demo_name" value="<%=DemoName%>">
+        <input type="hidden" name="demo_name" value="<%=Encode.forHtmlAttribute(DemoName)%>">
     </td>
     <td width="46%"  class="bCellData">Health# :
       <% if (HCTYPE != null && HCTYPE.equals("BC")){ %>
@@ -532,11 +537,11 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
   <tr>
     <td  class="bCellData">
        Address: <%=DemoAddress%>
-       <input type="hidden" name="demo_address" value="<%=DemoAddress%>">
+       <input type="hidden" name="demo_address" value="<%=Encode.forHtmlAttribute(DemoAddress)%>">
     </td>
     <td  class="bCellData">
        City: <%=DemoCity%>
-       <input type="hidden" name="demo_city" value="<%=DemoCity%>">
+       <input type="hidden" name="demo_city" value="<%=Encode.forHtmlAttribute(DemoCity)%>">
     </td>
   </tr>
   <tr bgcolor="#EEEEFF">
@@ -611,7 +616,7 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
                     proOHIP = p.getProviderNo();
 
             %>
-            <option value="<%=proOHIP%>" <%=Provider.equals(proOHIP)?"selected":""%>> <%=proOHIP%> | <%=proLast%>, <%=proFirst%></option>
+            <option value="<%=proOHIP%>" <%=Provider.equals(proOHIP)?"selected":""%>> <%=proOHIP%> | <%=Encode.forHtmlContent(proLast+", "+proFirst)%></option>
             <% } }%>
             <input type="hidden" name="xml_provider_no" value="<%=Provider%>">
     </td>
@@ -621,13 +626,12 @@ document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
     <td width="54%"  class="bCellData">
         Visit Type:
         <input type="hidden" name="xml_visittype" value="<%=visittype%>">
-              <select name="serviceLocation" style="font-size:80%;">
+              <select name="serviceLocation" style="font-size:80%;max-width:300px;">
               <%
-              for (int i = 0; i < billvisit.length; i++) {
-                oscar.oscarBilling.ca.bc.data.BillingFormData.BillingVisit visit = billvisit[i];
-                String selected = serviceLocation.equals(visit.getVisitType())?"selected":"";
+              for (BillingFormData.BillingVisit billingVisit : billvisit) {
+                String selected = serviceLocation.equals(billingVisit.getVisitType())?"selected":"";
               %>
-              <option value="<%=visit.getVisitType()%>" <%=selected%>><%=visit.getDescription()%> </option>
+              <option value="<%=Encode.forHtmlAttribute(billingVisit.getVisitType())%>" <%=selected%>><%=Encode.forHtmlContent(billingVisit.getDisplayName())%> </option>
               <%
               }
               %>
@@ -757,8 +761,6 @@ if(billService != null){
     </tr>
  </table>
  <table width="100%" border=1>
-  <%
-   %>
 
     <tr>
         <td colspan=2 width="75%">

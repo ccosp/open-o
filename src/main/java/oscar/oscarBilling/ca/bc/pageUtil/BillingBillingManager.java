@@ -108,10 +108,10 @@ public class BillingBillingManager {
 				billingUnit = m.getBillingUnit();
 			}
 			BillingItem billingItem = new BillingItem(billingCode, billingUnit);
-			double gst = m.getGstAmountAsDouble();
+			double gst = 0.0;
 			billingItem.fill(this.billTtype, gst/(m.getBillAmountAsDouble() - gst) * 100);
 			billingItem.lineTotal = m.getBillAmountAsDouble();
-			billingItem.gstFlag = m.getGstAmountAsDouble() > 0;
+			billingItem.gstFlag = false;
 			if (billingItem.units != 0) {
 				billingItem.price = ((billingItem.lineTotal - gst) / billingItem.units);
 			} else
