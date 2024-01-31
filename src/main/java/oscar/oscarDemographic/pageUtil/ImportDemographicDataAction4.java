@@ -2101,7 +2101,7 @@ public class ImportDemographicDataAction4 extends Action {
                     */
                     dump = Util.addLine(dump, alg_extra);
                     dump = Util.addLine(dump, getResidual(aaReactArray[i].getResidualInfo()));
-                    dump = Util.addLine(dump, "Reaction Type=" + aaReactArray[i].getReactionType().toString());
+                    if (aaReactArray[i].getReactionType() != null) dump = Util.addLine(dump, "Reaction Type=" + aaReactArray[i].getReactionType().toString()); //conditional added because some imports are missing this information and results in NPE                    
                 
                     cmNote = prepareCMNote("2",null);
                     cmNote.setNote(dump);
