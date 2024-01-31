@@ -142,12 +142,12 @@ public final class BillingViewAction
             bean.setDefaultPayeeInfo("");
         } else if("CUSTOM".equals(pref.getDefaultPayeeNo())){
             PropertyDao propertyDao = SpringUtils.getBean(PropertyDao.class);
-            List<Property> propList = propertyDao.findByNameAndProvider("invoice_payee_info", bean.getBillingProvider());
+            List<Property> propList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.invoice_payee_info, bean.getBillingProvider());
             bean.setDefaultPayeeInfo(!propList.isEmpty() ? propList.get(0).getValue() : "");
         } else {
             ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
             Provider p = providerDao.getProvider(pref.getDefaultPayeeNo());
-            bean.setDefaultPayeeInfo( p != null ? ("Dr. " + p.getFirstName() + " " + p.getLastName()) : "");
+            bean.setDefaultPayeeInfo( p != null ? p.getFormattedName() : "");
         }
         actionForward = mapping.findForward("private");
       }

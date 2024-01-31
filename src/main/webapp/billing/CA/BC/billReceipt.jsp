@@ -55,6 +55,7 @@ if(!authed) {
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
 <%@ page import="org.oscarehr.common.model.SystemPreferences" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="org.oscarehr.common.model.Property" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%
             double totalPayments = 0;
@@ -97,7 +98,14 @@ if(!authed) {
             <bean:message key="billing.bc.title"/>
         </title>
         <link rel="stylesheet" type="text/css" href="billReceiptPrint.css" id="printStyle" media="print"/>
-        <style type="text/css">
+        <style>
+            * {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 12px;
+            }
+            table {
+                border-collapse: collapse;
+            }
             .detailHeader {
                 font-weight: bold;
                 text-decoration: underline;
@@ -105,9 +113,7 @@ if(!authed) {
             }
             .payTo{border:solid black 1px;
             }
-            .secHead {
-                font-family: Verdana, Arial, Helvetica, sans-serif;
-                font-size: 12px;
+            .secHead{
                 font-weight: bold;
                 color: #000000;
                 background-color: #FFFFFF;
@@ -118,11 +124,8 @@ if(!authed) {
             }
             .payeeInfo{
                 white-space: pre-line;
-                line-height: 13pt;
+
             }
-            <!--
-            A, BODY, INPUT, OPTION ,SELECT , TABLE, TEXTAREA, TD, TR {font-family:tahoma,sans-serif; font-size:12px;}
-            -->
         </style>
         <script language="JavaScript">
 
@@ -290,7 +293,7 @@ if(!authed) {
                                             <td valign="top">
                                                 <table width="100%" border="0" cellspacing="2" cellpadding="2">
                                                     <tr>
-                                                        <td colspan="6" class="secHead">Billing To [<a href=# onclick="scriptAttach('billto'); return false;">Search</a>] </td>
+                                                        <td colspan="6" class="secHead">Billing To <span class="billingTo">[<a href=# onclick="scriptAttach('billto'); return false;">Search</a>]</span> </td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6">
@@ -339,28 +342,28 @@ if(!authed) {
                                             <td width="50%" valign="top">
                                                 <table width="100%" border="0" cellspacing="2" cellpadding="2">
                                                     <tr>
-                                                        <td colspan="2" valign="top" class="secHead">                            Patient (
-                                                            <c:out value="${ billingViewBean.patientPHN }" />
+                                                        <td colspan="2" valign="top" class="secHead">
+                                                            Patient (<c:out value="${ billingViewBean.patientPHN }" />)
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td height="64" colspan="2" valign="top">
-                                                            <p>
                                                                 <strong>Name:</strong>
-                                                                <c:out value="${ billingViewBean.patientLastName }" />
-                                                                <c:out value="${ billingViewBean.patientFirstName }" />                              ,
-                                                                                             &nbsp;
+                                                                <c:out value="${ billingViewBean.patientLastName }" />,
+                                                                <c:out value="${ billingViewBean.patientFirstName }" />
                                                                 <br>
                                                                 <strong>Address:</strong>
-                                                                <br>
-                                                                <c:out value="<%=demo.getAddress()%>" />                             <br>
-                                                                <c:out value="<%=demo.getCity()%>" />                              ,
-                                                                <%=demo.getProvince()%>                              <br>
-                                                                <%=demo.getPostal()%>                              <br>
+
+                                                                <div style="padding-left: 5px;">
+                                                                    <c:out value="<%=demo.getAddress()%>" /><br>
+                                                                    <c:out value="<%=demo.getCity()%>" />,
+                                                                    <%=demo.getProvince()%><br>
+                                                                    <%=Encode.forHtmlContent(demo.getPostal())%>
+                                                                </div>
                                                                 <strong>Gender:</strong>
                                                                 <%=demo.getSex()%>                              <br>
                                                                 <strong>Birth Date :</strong>
-                                                            <%=DemographicData.getDob(demo,"-")%>                            </p>
+                                                            <%=DemographicData.getDob(demo,"-")%>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -378,10 +381,10 @@ if(!authed) {
                                                         <td>Date</td>
                                                         <td>Practitioner</td>
                                                         <td>Payee</td>
-                                                        <td>Ref. Doctor 1:</td>
-                                                        <td>Ref. Type 1:</td>
-                                                        <td>Ref. Doctor 2:</td>
-                                                        <td>Ref. Type 2:</td>
+                                                        <td>Ref. Doctor 1</td>
+                                                        <td>Ref. Type 1</td>
+                                                        <td>Ref. Doctor 2</td>
+                                                        <td>Ref. Type 2</td>
                                                     </tr>
                                                     <tr align="center">
                                                         <td><c:out value="${ billingViewBean.serviceDate }" />                        </td>
@@ -401,32 +404,34 @@ if(!authed) {
                                             <td valign="top">
                                                 <table width="100%" border="0" cellspacing="1" cellpadding="1">
                                                     <tr class="detailHeader">
-                                                        <td class="rcvPayment">&nbsp;</td>
+                                                        <td></td>
                                                         <td>Line#</td>
                                                         <td>
-                                                        <bean:message key="billing.service.desc"/>                          </td>
+                                                        <bean:message key="billing.service.desc"/>
+                                                        </td>
                                                         <td>Service Code</td>
                                                         <td>QTY</td>
                                                         <td>DX Codes</td>
                                                         <td>Unit Fee</td>
-                                                        <td>Total GST</td>
                                                         <td>Amount</td>
                                                     </tr>
                                                     <%
                                                         for (BillingBillingManager.BillingItem bi : billItem) {
-                                                            double gstTotal = bi.getGstTotal();
                                                             double unitTotal = bi.getPrice();
                                                             double lnTotal = bi.getLineTotal();
                                                     %>
                                                     <tr align="center">
-                                                        <td class="rcvPayment"><a href="#" onClick="popupPage(300,450,'viewReceivePaymentAction.do?lineNo=<%=bi.getLineNo()%>&amp;billNo=<%=bean.getBillingNo()%> ')">Receive Payment</a></td>
+                                                        <td>
+                                                            <span class="rcvPayment">
+                                                            <a href="#" onClick="popupPage(300,450,'viewReceivePaymentAction.do?lineNo=<%=bi.getLineNo()%>&amp;billNo=<%=bean.getBillingNo()%> ')">Receive Payment</a>
+                                                            </span>
+                                                        </td>
                                                         <td><%=bi.getLineNo()%></td>
                                                         <td><%=Encode.forHtmlContent(bi.getDescription())%></td>
                                                         <td><%=bi.getServiceCode()%></td>
                                                         <td><%=bi.getUnit()%></td>
                                                         <td align="right"><%=bean.getDx1()%>&nbsp;<%=bean.getDx2()%>&nbsp;<%=bean.getDx3()%></td>
                                                         <td align="right"><%=java.text.NumberFormat.getCurrencyInstance().format(unitTotal).replace('$', ' ')%></td>
-                                                        <td align="right"><%=java.text.NumberFormat.getCurrencyInstance().format(gstTotal).replace('$', ' ')%></td>
                                                         <td align="right"><%=java.text.NumberFormat.getCurrencyInstance().format(lnTotal).replace('$', ' ')%></td>
                                                     </tr>
                                                     <%
@@ -449,7 +454,7 @@ if(!authed) {
                  }
                                                     %>
                                                     <tr align="center">
-                                                        <td colspan="3">&nbsp;</td>
+                                                        <td colspan="4">&nbsp;</td>
                                                         <td><%=label%>(<%=item.getPaymentTypeDesc()%>)</td>
                                                         <td colspan="2"><%=item.getArchiveDate()%></td>
 
@@ -460,36 +465,40 @@ if(!authed) {
     }%>
                                                     <%}%>
                                                     <tr>
-                                                        <td colspan="7">&nbsp;</td>
+                                                        <td colspan="8">&nbsp;</td>
                                                     </tr>
 
                                                     <tr>
-                                                        <td colspan="7" class="secHead">
+                                                        <td colspan="8" class="secHead">
                                                             <table align="right" width="50%" cellpadding="1" cellspacing="1">
-                                                            </table>                          </td>
+                                                            </table>
+                                                        </td>
                                                     </tr>
                                                     <tr valign="top">
-                                                        <td colspan="5" rowspan="6"><table class="payTo" width="100%" border="0">
+                                                        <td colspan="6" rowspan="6">
+                                                            <table class="payTo" width="100%" border="0">
                                                                 <tr>
-                                                                    <td align="right" colspan="2"></td>
+                                                                    <td align="right"></td>
                                                                 </tr>
                                                                 <tr class="secHead">
                                                                     <td height="14" colspan="2">Please Make Cheque Payable To: </td>
                                                                 </tr>
-                                                                <% if(!StringUtils.isNullOrEmpty(bean.getDefaultPayeeInfo())) { %>
-                                                                <tr>
-                                                                    <td class="title4 payeeInfo">
-                                                                        <c:out value="${ billingViewBean.defaultPayeeInfo }" />
-                                                                    </td>
-                                                                </tr>
-                                                                <% }
+                                                                <c:if test="${ not empty billingViewBean.defaultPayeeInfo }" >
+                                                                    <tr>
+                                                                        <td class="title4 payeeInfo">
+                                                                            <c:out value="${ billingViewBean.defaultPayeeInfo }" />
+                                                                        </td>
+                                                                    </tr>
+                                                                </c:if>
+                                                                <%
                                                                 //Default to true when not found
-                                                                if(propertyDao.findByNameAndProvider("invoice_payee_display_clinic", bean.getBillingProvider()).isEmpty() || propertyDao.isActiveBooleanProperty("invoice_payee_display_clinic", bean.getBillingProvider())) {
+                                                                if(propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.invoice_payee_display_clinic, bean.getBillingProvider()).isEmpty() ||
+                                                                        propertyDao.isActiveBooleanProperty(Property.PROPERTY_KEY.invoice_payee_display_clinic, bean.getBillingProvider())) {
 
                                                                 %>
 
                                                                 <tr>
-                                                                    <%  SystemPreferences invoiceClinicInfo = systemPreferencesDao.findPreferenceByName("invoice_custom_clinic_info");
+                                                                    <%  SystemPreferences invoiceClinicInfo = systemPreferencesDao.findPreferenceByName(SystemPreferences.GENERAL_SETTINGS_KEYS.invoice_custom_clinic_info);
                                                                         if(invoiceClinicInfo == null || StringUtils.isNullOrEmpty(invoiceClinicInfo.getValue())) { %>
                                                                     <td class="title4">
                                                                         <c:out value="<%=clinic.getClinicName()%>" />
@@ -510,13 +519,10 @@ if(!authed) {
                                                                 <% } %>
                                                                 </tr>
                                                             <% } %>
-                                                            </table></td>
+                                                            </table>
+                                                        </td>
                                                         <td align="right">Subtotal:</td>
                                                         <td align="right"><%=java.text.NumberFormat.getCurrencyInstance().format(bean.calculateSubtotal()).replace('$', ' ')%></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="right">GST Total:</td>
-                                                        <td align="right"><%=java.text.NumberFormat.getCurrencyInstance().format(bean.calculateGstTotal()).replace('$', ' ')%></td>
                                                     </tr>
                                                     <tr>
                                                         <td align="right">Total:</td>
@@ -534,7 +540,8 @@ if(!authed) {
                                                         <td>
                                                             <div align="right" class="style2">
                                                                 <strong>Balance</strong>
-                                                                :</div>                          </td>
+                                                                :</div>
+                                                        </td>
                                                                 <%double gtotal = bean.calculateTotal() - totalPayments - totalRefunds;%>
                                                         <td align="right">
                                                             <strong><%=java.text.NumberFormat.getCurrencyInstance().format(gtotal).replace('$', ' ')%>                            </strong>                          </td>
@@ -550,7 +557,7 @@ if(!authed) {
                                                     </tr>
                                                     <tr>
                                                         <td rowspan="2">
-                                                            <html:textarea cols="60" styleClass="notes" rows="5" property="messageNotes"></html:textarea>
+                                                            <html:textarea cols="60" style="width:100%;" styleClass="notes" rows="5" property="messageNotes">&nbsp;</html:textarea>
                                                         </td>
                                                     </tr>
 
@@ -560,7 +567,7 @@ if(!authed) {
                                                     <tr>
                                                         <td align="right">    <table width="100%" border="0">
                                                                 <tr>
-                                                                    <td align="right" colspan="2">                          </td>
+                                                                    <td align="right" colspan="2"></td>
                                                                 </tr>
 
                                                                 <tr>
@@ -570,7 +577,6 @@ if(!authed) {
                                                                         <html:button styleClass="header" value="Print" property="Submit" onclick="javascript:printInvoiceWithoutNotes()"/>
                                                                         <html:button styleClass="header" value="Print With Notes" property="Submit" onclick="javascript:printInvoiceWithNotes()"/>
                                                                         <html:button styleClass="header" value="Cancel" property="Submit2" onclick="javascript:window.close()"/>
-                                                                        &nbsp;
                                                                     </td>
                                                                 </tr>
                                                             </table>                         </td>

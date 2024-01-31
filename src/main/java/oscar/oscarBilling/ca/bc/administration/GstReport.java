@@ -36,8 +36,6 @@ public class GstReport {
                 props = new Properties();
 
                 props.setProperty("billNo", String.valueOf(b.getId()));
-                props.setProperty("gst", bm.getGst().toString());
-                props.setProperty("gstNo", bm.getGstNo() != null? bm.getGstNo() : "");
                 props.setProperty("date", ConversionUtils.toDateString(b.getBillingDate()));
                 props.setProperty("demographic_no", "" + bm.getDemographicNo());
 

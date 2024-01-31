@@ -24,9 +24,7 @@
 
 package oscar.oscarBilling.ca.bc.pageUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,8 +37,10 @@ import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.PropertyDao;
 import org.oscarehr.common.model.Property;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
+import oscar.OscarProperties;
 import oscar.oscarBilling.ca.bc.MSP.MSPReconcile;
 import oscar.oscarBilling.ca.bc.data.BillingFormData;
 import oscar.oscarBilling.ca.bc.data.BillingPreference;
@@ -52,27 +52,30 @@ import oscar.oscarBilling.ca.bc.data.BillingPreferencesDAO;
  */
 public class ViewBillingPreferencesAction
     extends Action {
+
+  private final BillingPreferencesDAO dao = SpringUtils.getBean(BillingPreferencesDAO.class);
+  private final PropertyDao propertyDao = SpringUtils.getBean(PropertyDao.class);
+  private final ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
+
   public ActionForward execute(ActionMapping actionMapping,
                                ActionForm actionForm,
                                HttpServletRequest servletRequest,
                                HttpServletResponse servletResponse) {
     BillingPreferencesActionForm frm = (
         BillingPreferencesActionForm) actionForm;
-    BillingPreferencesDAO dao = SpringUtils.getBean(BillingPreferencesDAO.class);
-    PropertyDao propertyDao = SpringUtils.getBean(PropertyDao.class);
-    ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 
-    List<Property> propList = propertyDao.findByNameAndProvider("invoice_payee_info", frm.getProviderNo());
+    LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(servletRequest);
+    List<Property> propList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.invoice_payee_info, frm.getProviderNo());
     Property invoicePayeeInfo = propList.isEmpty() ? null : propList.get(0);
 
     if(invoicePayeeInfo == null || invoicePayeeInfo.getValue() == null) {
       Provider provider = providerDao.getProvider(frm.getProviderNo());
-      frm.setInvoicePayeeInfo("Dr. " + provider.getFirstName() + " " + provider.getLastName());
+      frm.setInvoicePayeeInfo( provider.getFirstName() + " " + provider.getLastName());
     } else {
       frm.setInvoicePayeeInfo(invoicePayeeInfo.getValue());
     }
     //Default to true when nothing is set
-    frm.setInvoicePayeeDisplayClinicInfo(propertyDao.findByNameAndProvider("invoice_payee_display_clinic", frm.getProviderNo()).isEmpty() || propertyDao.isActiveBooleanProperty("invoice_payee_display_clinic", frm.getProviderNo()));
+    frm.setInvoicePayeeDisplayClinicInfo(propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.invoice_payee_display_clinic, frm.getProviderNo()).isEmpty() || propertyDao.isActiveBooleanProperty(Property.PROPERTY_KEY.invoice_payee_display_clinic, frm.getProviderNo()));
 
     BillingPreference pref = dao.getUserBillingPreference(frm.getProviderNo());
     //If the user doesn't have a BillingPreference record create one
@@ -88,30 +91,61 @@ public class ViewBillingPreferencesAction
     billingFormList.addAll(Arrays.asList(billform.getFormList()));
     servletRequest.setAttribute("billingFormList", billingFormList);
 
-    List<Property> defaultBillingFormPropertyList = propertyDao.findByNameAndProvider("default_billing_form", frm.getProviderNo());
+    List<Property> defaultBillingFormPropertyList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.default_billing_form, frm.getProviderNo());
     frm.setDefaultBillingForm(defaultBillingFormPropertyList.isEmpty() ? null : defaultBillingFormPropertyList.get(0).getValue());
 
-    List<Property> defaultBillingProviderPropertyList = propertyDao.findByNameAndProvider("default_billing_provider", frm.getProviderNo());
+    List<Property> defaultBillingProviderPropertyList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.default_billing_provider, frm.getProviderNo());
     frm.setDefaultBillingProvider(defaultBillingProviderPropertyList.isEmpty() ? null : defaultBillingProviderPropertyList.get(0).getValue());
-
-    List<Property> gstNoProps = propertyDao.findByNameAndProvider("gst_number", frm.getProviderNo());
 
     frm.setReferral(String.valueOf(pref.getReferral()));
     frm.setPayeeProviderNo(String.valueOf(pref.getDefaultPayeeNo()));
-    frm.setGstNo(gstNoProps.isEmpty() ? null : gstNoProps.get(0).getValue());
 
-    servletRequest.setAttribute("providerList",this.getPayeeProviderList());
+    List<Provider> providerList = providerDao.getBillableProvidersInBC(loggedInInfo);
+    // add a selection to trigger a "custom" option
+    Provider customProvider = new Provider("CUSTOM", "", null, null, null, "Custom");
+    Provider blankProvider = new Provider("NONE", "", null, null, null, "");
+    if(providerList == null) {
+      providerList = Arrays.asList(customProvider, blankProvider);
+    } else {
+      providerList.add(customProvider);
+      providerList.add(blankProvider);
+    }
+    servletRequest.setAttribute("providerList",providerList);
 
-    servletRequest.setAttribute("billingProviderList",providerDao.getProvidersWithNonEmptyOhip());
+    providerList = providerDao.getProvidersWithNonEmptyOhip(loggedInInfo);
+    // add the clinic default selection to the select list
+    Provider defaultProvider = new Provider("clinicdefault", "", null, null, null, "Clinic Default");
+    if(providerList == null) {
+      providerList = Collections.singletonList(defaultProvider);
+    } else {
+      providerList.add(defaultProvider);
+    }
+    servletRequest.setAttribute("billingProviderList",providerList);
+
+    // Check for a per-provider property and if none set it to CLINICDEFAULT
+    List<Property> defaultServiceLocationPropertyList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.bc_default_service_location, frm.getProviderNo());
+    if (!defaultServiceLocationPropertyList.isEmpty()) {
+        frm.setDefaultServiceLocation(defaultServiceLocationPropertyList.get(0).getValue());
+    } else {
+        frm.setDefaultServiceLocation("CLINICDEFAULT");
+    }
+
+    // Prepare a formatted list of service locations
+    String billRegion = OscarProperties.getInstance().getProperty("billregion", "");
+    BillingFormData billingFormData = new BillingFormData();
+    ArrayList<BillingFormData.BillingVisit> billingVisits = new ArrayList<>();
+    billingVisits.add(new BillingFormData.BillingVisit("CLINICDEFAULT", "Clinic Default"));
+    billingVisits.addAll(billingFormData.getVisitType(billRegion));
+    servletRequest.setAttribute("serviceLocationList",billingVisits);
+
+    // Prepare a list of default yes/no/clinic values for use on the preferences page (eg. display dx2/3)
+    Map<String, String> defaultYesNoList = new HashMap<>();
+    defaultYesNoList.put("CLINICDEFAULT", "Clinic Default");
+    defaultYesNoList.put("true", "Yes");
+    defaultYesNoList.put("false", "No");
+    servletRequest.setAttribute("defaultYesNoList", defaultYesNoList);
+
     return actionMapping.findForward("success");
   }
 
-  /**
-   * Returns a List of Provider instances
-   * @return List
-   */
-  public List getPayeeProviderList() {
-    MSPReconcile rec = new MSPReconcile();
-    return rec.getAllProviders();
-  }
 }
