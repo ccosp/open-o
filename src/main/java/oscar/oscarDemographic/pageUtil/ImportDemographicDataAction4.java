@@ -4095,6 +4095,16 @@ public class ImportDemographicDataAction4 extends Action {
 
         try
         {
+            SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
+            return(sdf.parse(s));
+        }
+        catch (Exception e)
+        {
+        	// okay we couldn't parse it, we'll try another format
+        }
+
+        try
+        {
             SimpleDateFormat sdf=new SimpleDateFormat(DateFormatUtils.ISO_DATETIME_FORMAT.getPattern());
             return(sdf.parse(s));
         }
@@ -4285,12 +4295,48 @@ public class ImportDemographicDataAction4 extends Action {
 					
 					Calendar cal = Calendar.getInstance();
 					if(result.getCollectionDateTime().isSetFullDate()) {
-						cal = result.getCollectionDateTime().getFullDate();
+						cal = result.getCollectionDateTime().getFullDate();                                                
+
+                        /* 
+                         *  The following if statement is designed to handle lab results where the collection date is 0001-01-01 and the date of colletion is actually in the result.value
+                         * 
+                         *  <LaboratoryName>MDS</LaboratoryName>
+                         *  <TestNameReportedByLab>FLAP 1 COLLECTION DATE</TestNameReportedByLab>
+                         *  <LabTestCode>FCD1</LabTestCode>
+                         *  <Result>
+                         *      <Value>23-OCT-2018</Value>
+                         *  </Result>
+                         *  <CollectionDateTime>
+                         *      <cdsd:FullDate>0001-01-01</cdsd:FullDate>
+                         *  </CollectionDateTime>
+                         */
+                        if (cal.get(Calendar.YEAR) == 1 && result.getTestNameReportedByLab().indexOf("COLLECTION DATE") != -1){                            
+                            Date date = toDateFromString(result.getResult().getValue());
+                            if (date != null) cal.setTime(date);
+                        }
 						obr.getObservationDateTime().getTimeOfAnEvent().setDatePrecision(cal.get(Calendar.YEAR),
 								cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
 						
 					} else {
 						cal = result.getCollectionDateTime().getFullDateTime();
+
+                        /* 
+                         *  The following if statement is designed to handle lab results where the collection date is 0001-01-01 and the date of colletion is actually in the result.value
+                         * 
+                         *  <LaboratoryName>MDS</LaboratoryName>
+                         *  <TestNameReportedByLab>FLAP 1 COLLECTION DATE</TestNameReportedByLab>
+                         *  <LabTestCode>FCD1</LabTestCode>
+                         *  <Result>
+                         *      <Value>23-OCT-2018</Value>
+                         *  </Result>
+                         *  <CollectionDateTime>
+                         *      <cdsd:FullDate>0001-01-01</cdsd:FullDate>
+                         *  </CollectionDateTime>
+                         */
+                        if (cal.get(Calendar.YEAR) == 1 && result.getTestNameReportedByLab().indexOf("COLLECTION DATE") != -1){                            
+                            Date date = toDateFromString(result.getResult().getValue());
+                            if (date != null) cal.setTime(date);
+                        }
 						obr.getObservationDateTime().getTimeOfAnEvent().setDateSecondPrecision(cal.get(Calendar.YEAR),
 								cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
 						
