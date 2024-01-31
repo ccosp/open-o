@@ -2734,6 +2734,15 @@ public class ImportDemographicDataAction4 extends Action {
                                     if (binaryFormat) err_data.add("Error! No File Extension for Report ("+(i+1)+")");
                                 }
                                 String docDesc = repR[i].getSubClass();
+
+                                if (StringUtils.empty(docDesc)){ //improving the naming of documents where the document name is in the notes tag of the import                        
+                                    String documentNotes = repR[i].getNotes();
+
+                                    //setting docDesc assuming the format is usually in the form "Document Health Card created at Mon Mar 05 12:50:17 EST 2018 by Verona V." and naming docDesc = "Health Card" would be desirable in this situation
+                                    if (documentNotes != null && documentNotes.indexOf("created") > 1) docDesc = documentNotes.split("created")[0]; 
+                                    if (docDesc != null && docDesc.indexOf("Document") == 0 && docDesc.split("Document").length >= 2) docDesc = docDesc.split("Document")[1];
+                                }                                
+
                                 if (StringUtils.empty(docDesc)) docDesc = "ImportReport"+(i+1);
                                 
                                 if(b != null) {
