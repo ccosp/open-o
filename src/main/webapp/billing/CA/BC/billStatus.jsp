@@ -100,18 +100,20 @@ boolean adminAccess = false;
 </security:oscarSec>
 
 
-<%@page import="org.oscarehr.util.MiscUtils"%><html>
+<%@page import="org.oscarehr.util.MiscUtils"%>
+<!DOCTYPE HTML>
+<html>
 <head>
 <html:base/>
 <title><bean:message key="admin.admin.editInvoices"/></title>
-<link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/csrfguard" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/library/jquery/jquery-3.6.4.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.9.1.min.js"></script>
-<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/bootstrap-datepicker.js"></script>
-
+    <link href="${pageContext.request.contextPath}/library/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <link href="<%=request.getContextPath() %>/css/datepicker.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/font-awesome.min.css" >
 
 <script>
 addEvent(window, "load", sortables_init);
@@ -139,12 +141,12 @@ function ts_makeSortable(table) {
     if (!firstRow) return;
 
     // We have a first row: assume it's the header, and make its contents clickable links
-    for (var i=0;i<firstRow.cells.length;i++) {
-        var cell = firstRow.cells[i];
-        var txt = ts_getInnerText(cell);
+    for (var i=1;i<firstRow.cells.length;i++) {
+        let cell = firstRow.cells[i];
+        let txt = ts_getInnerText(cell);
         cell.innerHTML = '<a href="#" class="sortheader" '+
         'onclick="ts_resortTable(this, '+i+');return false;">' +
-        txt+'<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a>';
+        txt+'<span class="sortarrow"></span></a>';
     }
 }
 
@@ -199,11 +201,11 @@ function ts_resortTable(lnk,clid) {
     newRows.sort(sortfn);
 
     if (span.getAttribute("sortdir") == 'down') {
-        ARROW = '&nbsp;&nbsp;&uarr;';
+        ARROW = '&uarr;';
         newRows.reverse();
         span.setAttribute('sortdir','up');
     } else {
-        ARROW = '&nbsp;&nbsp;&darr;';
+        ARROW = '&darr;';
         span.setAttribute('sortdir','down');
     }
 
@@ -218,7 +220,7 @@ function ts_resortTable(lnk,clid) {
     for (var ci=0;ci<allspans.length;ci++) {
         if (allspans[ci].className == 'sortarrow') {
             if (getParent(allspans[ci],"table") == getParent(lnk,"table")) { // in the same table as us?
-                allspans[ci].innerHTML = '&nbsp;&nbsp;&nbsp;';
+                allspans[ci].innerHTML = '';
             }
         }
     }
@@ -304,8 +306,8 @@ function addEvent(elm, evType, fn, useCapture)
 }
 
 </script>
-<script language="JavaScript">
-<!--
+<script type="text/javascript">
+
 function popupPage(vheight,vwidth,varpage) { //open a new popup window
   var page = "" + varpage;
   windowprops = "height="+vheight+",width="+vwidth+",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes";
@@ -377,13 +379,7 @@ function setOperation(value) {
 }
 </script>
 
-<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
-
 <style>
-	input[type="text"] {
-		height: 30px;
-		width: 100px;
-	}
 
 @media print {
 
@@ -402,43 +398,59 @@ function setOperation(value) {
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
 <h3><bean:message key="admin.admin.editInvoices"/></h3>
-
+    <table class="table-condensed"><tr><td>
 <div class="row well hidden-print">
 
-<div align="right"><a href="javascript: function myFunction() {return false; }" onClick="popupPage(700,720,'../../../oscarReport/manageProvider.jsp?action=billingreport')">Manage Provider List</a></div>
+<div style="text-align: right;"><a href="javascript: function myFunction() {return false; }" onClick="popupPage(700,720,'../../../oscarReport/manageProvider.jsp?action=billingreport')">
+    Manage Provider List</a></div>
 
-<div align="right"><%=DateUtils.sumDate("yyyy-M-d","0")%></div>
+<div style="text-align: right;"><%=DateUtils.sumDate("yyyy-M-d","0")%></div>
 
 
 <%
 if("true".equals(readonly)){
 %>
-<div>
+<div class="row">
+    <div class="col-lg-12">
  <i>Results for Demographic</i>
       :
 <%=request.getParameter("lastName")%>      ,
 <%=request.getParameter("firstName")%>      (
 <%=request.getParameter("demographicNo")%>      )
-</div><%}%>
+    </div>
+</div>
+    <%}%>
 
 
-<form name="serviceform" method="get" action="billStatus.jsp" class="form-inline">
+<form name="serviceform" method="get" action="billStatus.jsp" class="form-inline" >
 	<input type="hidden" name="filterPatient" value="<%=readonly%>"/>
 	<input type="hidden" name="lastName" value="<%=request.getParameter("lastName")%>"/>
 	<input type="hidden" name="firstName" value="<%=request.getParameter("firstName")%>"/>
- 	<!--<input type="hidden" name="demographicNo" value="<%=demographicNo%>"/>-->
-
-
-    <input type="checkbox" name="showMSP" value="show"  <%=showMSP?"checked":""%>/><a onclick="billTypeOnly('showMSP')">MSP</a>
-    <input type="checkbox" name="showWCB" value="show"  <%=showWCB?"checked":""%>/><a onclick="billTypeOnly('showWCB')">WCB</a>
-    <input type="checkbox" name="showPRIV" value="show" <%=showPRIV?"checked":""%>/><a onClick="billTypeOnly('showPRIV')">Private</a>
-    <input type="checkbox" name="showICBC" value="show" <%=showICBC?"checked":""%>/><a onClick="billTypeOnly('showICBC')">ICBC</a><br><br>
-
-<div class="span3">
-    Select provider<br>
-    <select name="providerview">
+<div class="row">
+    <div class="col-lg-12">
+<div class="form-group">
+    <label class="checkbox-inline">
+        <input type="checkbox" id="showMSP" name="showMSP" value="show"  <%=showMSP?"checked":""%>/>
+        <a onclick="billTypeOnly('showMSP')">MSP</a></label>
+    <label class="checkbox-inline">
+        <input type="checkbox" name="showWCB" value="show"  <%=showWCB?"checked":""%>/><a onclick="billTypeOnly('showWCB')">WCB</a>
+    </label>
+    <label class="checkbox-inline">
+        <input type="checkbox" name="showPRIV" value="show" <%=showPRIV?"checked":""%>/><a onClick="billTypeOnly('showPRIV')">Private</a>
+    </label>
+    <label class="checkbox-inline">
+        <input type="checkbox" name="showICBC" value="show" <%=showICBC?"checked":""%>/><a onClick="billTypeOnly('showICBC')">ICBC</a>
+    </label>
+</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+<div class="form-group">
+    <label for="providerview">Select provider</label>
+    <select name="providerview" id="providerview" class="form-control">
       <option value="ALL">All Providers</option>
       <%  String proFirst="";
                     String proLast="";
@@ -457,37 +469,44 @@ if("true".equals(readonly)){
       <%  } %>
     </select>
 </div>
-
+    </div>
     <input type="hidden" name="verCode" value="V03"/>
-    
-<div class="span2">		
-	Service Start Date:<br>
-	<div class="input-append">
-		<input type="text" name="xml_vdate" id="xml_vdate" value="<%=xml_vdate%>" pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" />
-		<span class="add-on"><i class="icon-calendar"></i></span>
+    <div class="col-sm-3">
+<div class="form-group">
+    <label for="xml_vdate">Service Start Date:</label>
+	<div class="input-group">
+		<input type="text" name="xml_vdate" class="form-control" id="xml_vdate" value="<%=xml_vdate%>" placeholder="yyyy-mm-dd"
+               pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" />
+		<span class="input-group-addon"><i class="icon-calendar"></i></span>
 	</div>
 </div><!--span2-->
-	
-<div class="span3">		
-	Service End Date: 	<a href="javascript: function myFunction() {return false; }" onClick="fillEndDate('<%=DateUtils.sumDate("yyyy-M-d","-30")%>')" >30</a>&nbsp; <a href="javascript: function myFunction() {return false; }" onClick="fillEndDate('<%=DateUtils.sumDate("yyyy-M-d","-60")%>')" >60</a>&nbsp; <a href="javascript: function myFunction() {return false; }" onClick="fillEndDate('<%=DateUtils.sumDate("yyyy-M-d","-90")%>')" >90</a>&nbsp;
-<br>
-	<div class="input-append">
-		<input type="text" name="xml_appointment_date" id="xml_appointment_date" value="<%=xml_appointment_date%>" pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" />
-		<span class="add-on"><i class="icon-calendar"></i></span>
+    </div>
+    <div class="col-sm-3">
+<div class="form-group">
+    <label style="white-space: nowrap;" for="xml_appointment_date">Service End Date: <a href="javascript: function myFunction() {return false; }" onClick="fillEndDate('<%=DateUtils.sumDate("yyyy-M-d","-30")%>')" >30</a> <a href="javascript: function myFunction() {return false; }" onClick="fillEndDate('<%=DateUtils.sumDate("yyyy-M-d","-60")%>')" >60</a> <a href="javascript: function myFunction() {return false; }" onClick="fillEndDate('<%=DateUtils.sumDate("yyyy-M-d","-90")%>')" >90</a></label>
+	<div class="input-group">
+		<input type="text" class="form-control" name="xml_appointment_date" placeholder="yyyy-mm-dd"
+               id="xml_appointment_date" value="<%=xml_appointment_date%>"
+               pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" autocomplete="off" />
+		<span class="input-group-addon"><i class="icon-calendar"></i></span>
 	</div>
 </div><!--span3-->
-
-<div class="span2">
-    Demographic:<br>
+    </div>
+    <div class="col-sm-3">
+<div class="form-group">
+    <label for="demographicNo">Demographic:</label>
 	<%
 		String readonlyStr = "true".equals(readonly)?"readonly":"";
 	%>
-    <input type="text" name="demographicNo" size="5" value="<%=xml_demoNo%>" <%=readonlyStr%>"/>
-</div><!-- span3-->	
+    <input type="text" class="form-control" id="demographicNo" name="demographicNo" size="6" value="<%=xml_demoNo%>" <%=readonlyStr%> />
+</div>
+    </div>
 
+</div>
+    <div class="row">
+        <div class="col-lg-12">
+<div class="form-group">
 
-<div class="span10">
-<br>
 <% String billTypes = request.getParameter("billTypes");
 if (billTypes == null){
     billTypes = MSPReconcile.REJECTED;
@@ -497,85 +516,125 @@ billTypes = "%";
 }
 
 %>
-	  <input type="radio" name="billTypes" value="<%=MSPReconcile.REJECTED%>"     <%=billTypes.equals(MSPReconcile.REJECTED)?"checked":""%>/>
-      Rejected
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.NOTSUBMITTED%>" <%=billTypes.equals(MSPReconcile.NOTSUBMITTED)?"checked":""%>/>
-      Not Submitted
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.SUBMITTED%>"    <%=billTypes.equals(MSPReconcile.SUBMITTED)?"checked":""%>/>
-      Submitted
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.SETTLED%>"      <%=billTypes.equals(MSPReconcile.SETTLED)?"checked":""%>/>
-      Settled
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.DELETED%>"      <%=billTypes.equals(MSPReconcile.DELETED)?"checked":""%>/>
-      Deleted
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.HELD%>"         <%=billTypes.equals(MSPReconcile.HELD)?"checked":""%>/>
-      Held
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.DATACENTERCHANGED%>" title="Data Center Changed" <%=billTypes.equals(MSPReconcile.DATACENTERCHANGED)?"checked":""%>/>
-      DCC
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.PAIDWITHEXP%>" title="Paid with Explanation"     <%=billTypes.equals(MSPReconcile.PAIDWITHEXP)?"checked":""%>/>
-      PwE
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.BADDEBT%>"      <%=billTypes.equals(MSPReconcile.BADDEBT)?"checked":""%>/>
-      Bad Debt
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.REFUSED%>"      <%=billTypes.equals(MSPReconcile.REFUSED)?"checked":""%>/>
-      Refused
-      <!--<input type="radio" name="billTypes" value="<%=MSPReconcile.WCB%>"          <%=billTypes.equals(MSPReconcile.WCB)?"checked":""%>/> WCB-->
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.CAPITATED%>"   title="Capitated"   <%=billTypes.equals(MSPReconcile.CAPITATED)?"checked":""%>/>
-      Cap
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.DONOTBILL%>"   title="Do Not Bill"    <%=billTypes.equals(MSPReconcile.DONOTBILL)?"checked":""%>/>
-      DNBill
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.BILLPATIENT%>"  <%=billTypes.equals(MSPReconcile.BILLPATIENT)?"checked":""%>/>
-      Bill Patient
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.PAIDPRIVATE%>" title="Paid Private"  <%=billTypes.equals(MSPReconcile.PAIDPRIVATE)?"checked":""%>/>
-      Private
-      <input type="radio" name="billTypes" value="<%=MSPReconcile.COLLECTION%>"  title="Transfered to Collection"<%=billTypes.equals(MSPReconcile.COLLECTION)?"checked":""%>/>
-      Collection
-      <input type="radio" name="billTypes" value="%"                              <%=billTypes.equals("%")?"checked":""%>/>
-      All
-
-	  <input type="radio" name="billTypes" value="?"                              <%=billTypes.equals("?")?"checked":""%>/>
-      Fixable Receivables
-
-	  <input type="radio" name="billTypes" value="$"                              <%=billTypes.equals("$")?"checked":""%>/>
-	  Paid Bills
-</div><!-- span10 -->
-
-<div class="span10">
-<br>
-<input type="hidden" name="submitted" value="yes"/>
-<input class="btn btn-primary" type="submit" name="Submit" value="Create Report">
-</div><!-- span10 -->
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.REJECTED%>"     <%=billTypes.equals(MSPReconcile.REJECTED)?"checked":""%>/>
+    Rejected
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.NOTSUBMITTED%>" <%=billTypes.equals(MSPReconcile.NOTSUBMITTED)?"checked":""%>/>
+    Not Submitted
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.SUBMITTED%>"    <%=billTypes.equals(MSPReconcile.SUBMITTED)?"checked":""%>/>
+    Submitted
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.SETTLED%>"      <%=billTypes.equals(MSPReconcile.SETTLED)?"checked":""%>/>
+    Settled
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.DELETED%>"      <%=billTypes.equals(MSPReconcile.DELETED)?"checked":""%>/>
+    Deleted
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.HELD%>"         <%=billTypes.equals(MSPReconcile.HELD)?"checked":""%>/>
+    Held
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.DATACENTERCHANGED%>" title="Data Center Changed" <%=billTypes.equals(MSPReconcile.DATACENTERCHANGED)?"checked":""%>/>
+    DCC
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.PAIDWITHEXP%>" title="Paid with Explanation"     <%=billTypes.equals(MSPReconcile.PAIDWITHEXP)?"checked":""%>/>
+    PwE
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.BADDEBT%>"      <%=billTypes.equals(MSPReconcile.BADDEBT)?"checked":""%>/>
+    Bad Debt
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.REFUSED%>"      <%=billTypes.equals(MSPReconcile.REFUSED)?"checked":""%>/>
+    Refused
+    </label>
+    <label class="radio-inline">
+    <!--<input type="radio" name="billTypes" value="<%=MSPReconcile.WCB%>"          <%=billTypes.equals(MSPReconcile.WCB)?"checked":""%>/> WCB-->
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.CAPITATED%>"   title="Capitated"   <%=billTypes.equals(MSPReconcile.CAPITATED)?"checked":""%>/>
+    Cap
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.DONOTBILL%>"   title="Do Not Bill"    <%=billTypes.equals(MSPReconcile.DONOTBILL)?"checked":""%>/>
+    DNBill
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.BILLPATIENT%>"  <%=billTypes.equals(MSPReconcile.BILLPATIENT)?"checked":""%>/>
+    Bill Patient
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.PAIDPRIVATE%>" title="Paid Private"  <%=billTypes.equals(MSPReconcile.PAIDPRIVATE)?"checked":""%>/>
+    Private
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="<%=MSPReconcile.COLLECTION%>"  title="Transfered to Collection"<%=billTypes.equals(MSPReconcile.COLLECTION)?"checked":""%>/>
+    Collection
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="%"                              <%=billTypes.equals("%")?"checked":""%>/>
+    All
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="?"                              <%=billTypes.equals("?")?"checked":""%>/>
+    Fixable Receivables
+    </label>
+    <label class="radio-inline">
+    <input type="radio" name="billTypes" value="$"                              <%=billTypes.equals("$")?"checked":""%>/>
+    Paid Bills
+    </label>
+</div>
+        </div>
+    </div>
+<div class="form-group pull-right">
+    <input type="hidden" name="submitted" value="yes"/>
+    <input class="btn btn-primary" type="submit" name="Submit" value="Create Report">
+</div>
 
 </form>
+
 </div><!-- row well-->
-<form name="ReProcessBillingForm" method="get" action="reprocessBill.do">
-<input type="hidden" id="hiddenFilterType" name="hiddenFilterType" value="<%=request.getParameter("billTypes")%>">
-<div class="row">
-<input class="btn pull-right hidden-print" type='button' name='print' value='Print' onClick='window.print()'>
-Select All <input type="checkbox" id="checkAll" name="checkAll" onclick="toggle(this)">
-<table class="table table-striped  table-condensed sortable" id="resultsTable">
+
+    </td></tr>
+        <tr><td>
+
+                <form name="ReProcessBillingForm" method="get" action="reprocessBill.do">
+
+                    <input type="hidden" id="hiddenFilterType" name="hiddenFilterType" value="<%=request.getParameter("billTypes")%>">
+
+
+<table class="table table-striped table-condensed sortable" id="resultsTable">
 <thead>
-	<tr>
-    <th align="center" title="SELECTION"></th>
-	<th align="center" title="INVOICE #" >INVOICE # </th>
-	<th align="center" title="LINE #" >SEQ # </th>
-    <th align="center" title="APP. DATE">APP. DATE</th>
-	<th align="center" title="TYPE" >TYPE </th>
+
+    <th title="SELECTION"><label class="checkbox-inline">
+        <input type="checkbox" id="checkAll" name="checkAll" onclick="toggle(this)">Select All</label></th>
+	<th title="INVOICE #" >INVOICE # </th>
+	<th title="LINE #" >SEQ # </th>
+    <th title="APP. DATE">APP. DATE</th>
+	<th title="TYPE" >TYPE </th>
 	<%
 		if(!"true".equals(readonly)){
 	%>
-    <th align="center" title="PATIENT" >PATIENT</th>
+    <th title="PATIENT" >PATIENT</th>
 	<%}%>
-	 <th align="center" title="PRACT" >PRACT.</th>
-	<th align="center" title="Status">STAT</th>
+	 <th title="PRACT" >PRACT.</th>
+	<th title="Status">STAT</th>
 
 
-    <th align="center" title="Fee Code">FEE CODE</th>
-    <th align="center" title="QTY">QTY</th>
-    <th align="center" title="Amount Billed">AMT</th>
-    <th align="center" title="Amount Paid"  >PAID</th>
-    <th align="center">OWED</th>
-    <th align="center">DX CODE </th>
-    <th align="center">MSGS</th>
-  </tr>
+    <th title="Fee Code">FEE CODE</th>
+    <th title="QTY">QTY</th>
+    <th title="Amount Billed">AMT</th>
+    <th title="Amount Paid"  >PAID</th>
+    <th>OWED</th>
+    <th>DX CODE </th>
+    <th>MSGS</th>
+
 </thead>
    <tbody>
   <%
@@ -623,10 +682,12 @@ Select All <input type="checkbox" id="checkAll" name="checkAll" onclick="toggle(
    %>
 
   <tr>
-      <td align="center">
+      <td>
+          <label>
           <input type="checkbox" id="billCheck_<%=b.getBilling_no()%>" name="billCheck" value="<%=b.getBilling_no() + "_" + b.getBillMasterNo()%>">
+          </label>
       </td>
-      <td align="center">
+      <td>
         <%if("Pri".equals(b.billingtype)){%>
 	 	<a href="javascript:popupPage(800,800, '../../../billing/CA/BC/billingView.do?billing_no=<%=b.billing_no%>&receipt=yes')"><%=b.billing_no%>       </a>
 		<%}
@@ -636,30 +697,30 @@ Select All <input type="checkbox" id="checkAll" name="checkAll" onclick="toggle(
 		<%}%>		    </td>
 
 
-	<td align="center"><a href="javascript: function myFunction() {return false; }" onClick="popupPage2(500,1020,'genTAS00ByOfficeNo.jsp?officeNo=<%=b.billMasterNo%>','RecValues');"> <%=b.seqNum%> </a></td>
-	<td align="center"><%=b.apptDate%></td>
-	<td align="center"><%=b.billingtype%></td>
+	<td><a href="javascript: function myFunction() {return false; }" onClick="popupPage2(500,1020,'genTAS00ByOfficeNo.jsp?officeNo=<%=b.billMasterNo%>','RecValues');"> <%=b.seqNum%> </a></td>
+	<td><%=b.apptDate%></td>
+	<td><%=b.billingtype%></td>
 	<%
 		if(!"true".equals(readonly)){
 	%>
-   <td align="center"><a href="javascript: setDemographic('<%=b.demoNo%>');"><%=b.demoName%></a></td>
+   <td><a href="javascript: setDemographic('<%=b.demoNo%>');"><%=b.demoName%></a></td>
 	<%}%>
-	<td align="center"><%=b.providerLastName%>,<%=b.providerFirstName%></td>
-	 <td align="center" title="<%=msp.getStatusDesc(b.reason)%>" ><%=msp.getStatusDesc(b.reason)==null?"&nbsp":msp.getStatusDesc(b.reason)%></td>
+	<td><%=b.providerLastName%>,<%=b.providerFirstName%></td>
+	 <td title="<%=msp.getStatusDesc(b.reason)%>" ><%=msp.getStatusDesc(b.reason)==null?"&nbsp":msp.getStatusDesc(b.reason)%></td>
 
 
-    <td align="center"><%=b.code%></td>
-    <td align="center" <%=isBadVal(incorrectVal)%> ><%=b.quantity%></td>
-    <td align="center" <%=isBadVal(incorrectVal)%> ><%=nf.format(Double.parseDouble(b.amount))%> </td>
-    <td align="center"><%=nf.format(pAmount)%> </td>
+    <td><%=b.code%></td>
+    <td <%=isBadVal(incorrectVal)%> ><%=b.quantity%></td>
+    <td <%=isBadVal(incorrectVal)%> ><%=nf.format(Double.parseDouble(b.amount))%> </td>
+    <td><%=nf.format(pAmount)%> </td>
     <%
     double dblAmtOwed = msp.getAmountOwing(b.billMasterNo,b.amount,b.billingtype);
     BigDecimal amtOwed = new BigDecimal(dblAmtOwed).setScale(2, BigDecimal.ROUND_HALF_UP);
     owedTotal = owedTotal.add(amtOwed);
 
     %>
-    <td align="center"><%=nf.format(amtOwed)%> </td>
-    <td align="center"><%=s(b.dx1)%></td>
+    <td><%=nf.format(amtOwed)%> </td>
+    <td><%=s(b.dx1)%></td>
 
     <td>
       <% if (adminAccess){ %>  
@@ -678,37 +739,43 @@ Select All <input type="checkbox" id="checkAll" name="checkAll" onclick="toggle(
     if (rowCount == 0) {
     %>
   <tr>
-    <td colspan="14" align="center"> No bills </td>
+    <td colspan="14"> No bills </td>
   </tr>
   <% }%>
     </tbody>
   <tfoot>
   <tr class="sortbottom">
     <logic:notEqual parameter="filterPatient" value="true">
-      <td align="center">&nbsp;</td>
+      <td></td>
     </logic:notEqual>
-    <td align="center">&nbsp;</td>
-    <td align="center">&nbsp;</td>
-    <td align="center">&nbsp;</td>
-    <td align="center">&nbsp;</td>
-    <td align="center">Count:</td>
-    <td align="center"><%=bSearch.list.size()%></td>
-    <td align="center">&nbsp;</td>
-    <td align="center">Total:</td>
-    <td align="center"><%=nf.format(total.doubleValue())%></td>
-    <td align="center"><%=nf.format(paidTotal.doubleValue())%></td>
-    <td align="center"><%=nf.format(owedTotal.doubleValue())%></td>
-    <td align="center">&nbsp;</td>
-    <td align="center">&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Count:</td>
+    <td><%=bSearch.list.size()%></td>
+    <td></td>
+    <td>Total:</td>
+    <td><%=nf.format(total.doubleValue())%></td>
+    <td><%=nf.format(paidTotal.doubleValue())%></td>
+    <td><%=nf.format(owedTotal.doubleValue())%></td>
+    <td></td>
+    <td></td>
 
   </tr>
   </tfoot>
 </table>
+
+
 <input type="hidden" id="submitOperation" name="submitOperation" value="">
+        <div class="row">
 <button id="resubmitButton" type="submit" class="btn btn-primary" onclick="setOperation('Reprocess and Resubmit Bill')">Reprocess And Resubmit</button>
 <button id="settleButton" type="submit" class="btn btn-primary" onclick="setOperation('Settle Bill')">Settle</button>
-</div><!--row-->
-</form>
+            <input class="btn hidden-print" type='button' name='print' value='Print' onClick='window.print()'>
+        </div>
+                </form>
+        </td></tr></table>
+
 
 <script language='javascript'>
 	var startDate = $("#xml_vdate").datepicker({
@@ -736,7 +803,7 @@ String getReasonEx(String reason){
 }
 
 String isRejected(String billingNo,Properties p,boolean wcb){
-    String s = "&nbsp;";
+    String s = "";
     if (p.containsKey(billingNo)){
         s = "<a href=\"javascript: popupPage(700,1000,'adjustBill.jsp?billingmaster_no="+billingNo+"')\" > "+p.getProperty(billingNo)+"</a>";
     }
@@ -753,7 +820,7 @@ String isRejected(String billingNo,Properties p,boolean wcb){
 
     String s(String str){
         if (str == null || str.length() == 0 ){
-            str = "&nbsp;";
+            str = "";
         }
         return str;
     }
