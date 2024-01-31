@@ -1272,10 +1272,12 @@ public class ImportDemographicDataAction4 extends Action {
 
             //to dumpsite: Extra demographic data
             if (StringUtils.filled(extra)) {
-	            extra = Util.addLine("imported.cms4.2011.06", extra);
-	            CaseManagementNote dmNote = prepareCMNote("2",null);
-	            dmNote.setNote(extra);
-	            saveLinkNote(dmNote, CaseManagementNoteLink.DEMOGRAPHIC, Long.valueOf(demographicNo));
+	            extra = Util.addLine("imported.cms4.2011.06", extra);                
+                if (!"imported.cms4.2011.06".equals(extra)){
+                    CaseManagementNote dmNote = prepareCMNote("2",null);
+                    dmNote.setNote(extra);
+                    saveLinkNote(dmNote, CaseManagementNoteLink.DEMOGRAPHIC, Long.valueOf(demographicNo));
+                }	            
             }
 
             if (!workExt.equals("")) demographicExtDao.addKey(primaryPhysician, Integer.parseInt(demographicNo), "wPhoneExt", workExt);
@@ -1569,9 +1571,11 @@ public class ImportDemographicDataAction4 extends Action {
                 //String diagCode = getCode(fHist[i].getDiagnosisProcedureCode(),"Diagnosis/Procedure");
                 //dump = Util.addLine(dump, diagCode);
                 dump = Util.addLine(dump, getResidual(fHist[i].getResidualInfo()));
-                cmNote = prepareCMNote("2",null);
-                cmNote.setNote(dump);
-                saveLinkNote(hostNoteId, cmNote);
+                if (!"imported.cms4.2011.06".equals(dump)){
+                    cmNote = prepareCMNote("2",null);
+                    cmNote.setNote(dump);
+                    saveLinkNote(hostNoteId, cmNote);
+                }                
 
                 //extra fields
                 CaseManagementNoteExt cme = new CaseManagementNoteExt();
@@ -1655,9 +1659,12 @@ public class ImportDemographicDataAction4 extends Action {
                 String diagCode = isICD9(pHealth[i].getDiagnosisProcedureCode()) || isICD9CM(pHealth[i].getDiagnosisProcedureCode()) || isICD10(pHealth[i].getDiagnosisProcedureCode()) ? null : getCode(pHealth[i].getDiagnosisProcedureCode(),"Diagnosis/Procedure");
                 dump = Util.addLine(dump, diagCode);
                 dump = Util.addLine(dump, getResidual(pHealth[i].getResidualInfo()));
-                cmNote = prepareCMNote("2",null);
-                cmNote.setNote(dump);
-                saveLinkNote(hostNoteId, cmNote);
+
+                if (!"imported.cms4.2011.06".equals(dump)){
+                    cmNote = prepareCMNote("2",null);
+                    cmNote.setNote(dump);
+                    saveLinkNote(hostNoteId, cmNote);
+                }                
 
                 //extra fields
                 CaseManagementNoteExt cme = new CaseManagementNoteExt();
@@ -1744,9 +1751,11 @@ public class ImportDemographicDataAction4 extends Action {
                     String diagCode = isICD9(probList[i].getDiagnosisCode()) || isICD9CM(probList[i].getDiagnosisCode()) || isICD10(probList[i].getDiagnosisCode())? null : getCode(probList[i].getDiagnosisCode(),"Diagnosis");
                     dump = Util.addLine(dump, diagCode);
                     dump = Util.addLine(dump, getResidual(probList[i].getResidualInfo()));
-                    cmNote = prepareCMNote("2",null);
-                    cmNote.setNote(dump);
-                    saveLinkNote(hostNoteId, cmNote);
+                    if (!"imported.cms4.2011.06".equals(dump)){
+                        cmNote = prepareCMNote("2",null);
+                        cmNote.setNote(dump);
+                        saveLinkNote(hostNoteId, cmNote);
+                    }                    
 
                     //extra fields
                     CaseManagementNoteExt cme = new CaseManagementNoteExt();
@@ -1814,9 +1823,11 @@ public class ImportDemographicDataAction4 extends Action {
                     dump = Util.addLine(dump, summary);
                     */
                     dump = Util.addLine(dump, getResidual(rFactors[i].getResidualInfo()));
-                    cmNote = prepareCMNote("2",null);
-                    cmNote.setNote(dump);
-                    saveLinkNote(hostNoteId, cmNote);
+                    if (!"imported.cms4.2011.06".equals(dump)){
+                        cmNote = prepareCMNote("2",null);
+                        cmNote.setNote(dump);
+                        saveLinkNote(hostNoteId, cmNote);
+                    }
 
                     //extra fields
                     CaseManagementNoteExt cme = new CaseManagementNoteExt();
@@ -1887,9 +1898,11 @@ public class ImportDemographicDataAction4 extends Action {
                     dump = Util.addLine(dump, summary);
                     */
                     dump = Util.addLine(dump, getResidual(alerts[i].getResidualInfo()));
-                    cmNote = prepareCMNote("2",null);
-                    cmNote.setNote(dump);
-                    saveLinkNote(hostNoteId, cmNote);
+                    if (!"imported.cms4.2011.06".equals(dump)){
+                        cmNote = prepareCMNote("2",null);
+                        cmNote.setNote(dump);
+                        saveLinkNote(hostNoteId, cmNote);
+                    }                    
 
                     //extra fields
                     CaseManagementNoteExt cme = new CaseManagementNoteExt();
@@ -2104,9 +2117,11 @@ public class ImportDemographicDataAction4 extends Action {
                     dump = Util.addLine(dump, getResidual(aaReactArray[i].getResidualInfo()));
                     if (aaReactArray[i].getReactionType() != null) dump = Util.addLine(dump, "Reaction Type=" + aaReactArray[i].getReactionType().toString()); //conditional added because some imports are missing this information and results in NPE                    
                 
-                    cmNote = prepareCMNote("2",null);
-                    cmNote.setNote(dump);
-                    saveLinkNote(cmNote, CaseManagementNoteLink.ALLERGIES, Long.valueOf(allergyId));
+                    if (!"imported.cms4.2011.06".equals(dump)){
+                        cmNote = prepareCMNote("2",null);
+                        cmNote.setNote(dump);
+                        saveLinkNote(cmNote, CaseManagementNoteLink.ALLERGIES, Long.valueOf(allergyId));
+                    }                    
                 }
 
 
@@ -2369,9 +2384,11 @@ public class ImportDemographicDataAction4 extends Action {
                     dump = Util.addLine(dump, getResidual(medArray[i].getResidualInfo()));
                     dump = Util.addLine(dump, "Prescription Id: ", medArray[i].getPrescriptionIdentifier());
                     
-                    cmNote = prepareCMNote("2",null);
-                    cmNote.setNote(dump);
-                    saveLinkNote(cmNote, CaseManagementNoteLink.DRUGS, (long)drug.getId());
+                    if (!"imported.cms4.2011.06".equals(dump)){
+                        cmNote = prepareCMNote("2",null);
+                        cmNote.setNote(dump);
+                        saveLinkNote(cmNote, CaseManagementNoteLink.DRUGS, (long)drug.getId());
+                    }                    
                 }
 
 
@@ -2822,9 +2839,11 @@ public class ImportDemographicDataAction4 extends Action {
 
                                 
                                 String notes = Util.addLine("Report Notes:", repR[i].getNotes());
-                                CaseManagementNote rpNote1 = prepareCMNote("2",null);
-                	            rpNote1.setNote(notes);
-                	            saveLinkNote(rpNote1, CaseManagementNoteLink.DOCUMENT, Long.valueOf(docNum));
+                                if (!"Report Notes:".equals(notes)){
+                                    CaseManagementNote rpNote1 = prepareCMNote("2",null);
+                                    rpNote1.setNote(notes);
+                                    saveLinkNote(rpNote1, CaseManagementNoteLink.DOCUMENT, Long.valueOf(docNum));
+                                }                                
                 	 
                 	            if(repR[i].getReportReviewedArray() != null && repR[i].getReportReviewedArray().length>1) {
                 	            	DocumentExtraReviewerDao derDao = SpringUtils.getBean(DocumentExtraReviewerDao.class); 
