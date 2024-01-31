@@ -1505,7 +1505,8 @@ public class ImportDemographicDataAction4 extends Action {
                 String socialHist = "Imported Personal History";
                 StringBuilder stringBuilder = new StringBuilder();
                 for(cdsDt.ResidualInformation.DataElement dataElement : residualInformation.getDataElementArray()) {
-                    stringBuilder.append(dataElement.getName()).append(": ").append(dataElement.getContent()).append("\n");
+                    if (!"Personal History".equals(dataElement.getName())) stringBuilder.append(dataElement.getName()).append(": ");  //not prepending the phrase "Personal History" unnecessarily
+                    stringBuilder.append(dataElement.getContent()).append("\n");
                 }
                 if(stringBuilder.capacity() > 0) {
                     socialHist = stringBuilder.toString();
