@@ -2740,8 +2740,8 @@ public class ImportDemographicDataAction4 extends Action {
                                     String documentNotes = repR[i].getNotes();
 
                                     //setting docDesc assuming the format is usually in the form "Document Health Card created at Mon Mar 05 12:50:17 EST 2018 by Verona V." and naming docDesc = "Health Card" would be desirable in this situation
-                                    if (documentNotes != null && documentNotes.indexOf("created") > 1) docDesc = documentNotes.split("created")[0]; 
-                                    if (docDesc != null && docDesc.indexOf("Document") == 0 && docDesc.split("Document").length >= 2) docDesc = docDesc.split("Document")[1];
+                                    if (documentNotes != null && documentNotes.indexOf("created") > 1) docDesc = documentNotes.split("created")[0].trim(); 
+                                    if (docDesc != null && docDesc.indexOf("Document") == 0 && docDesc.split("Document").length >= 2) docDesc = docDesc.split("Document")[1].trim();
                                 }                                
 
                                 if (StringUtils.empty(docDesc)) docDesc = "ImportReport"+(i+1);
@@ -2801,6 +2801,9 @@ public class ImportDemographicDataAction4 extends Action {
                                 }
 
                                 observationDate = dateFPtoString(repR[i].getEventDateTime(), timeShiftInDays);
+                                if (observationDate == null) observationDate = dateFPtoString(repR[i].getReceivedDateTime(), timeShiftInDays);
+                                if ("".equals(observationDate)) observationDate = dateFPtoString(repR[i].getReceivedDateTime(), timeShiftInDays);
+
                                 updateDateTime = dateFPtoString(repR[i].getReceivedDateTime(), timeShiftInDays);
                                 contentDateTime= dateFPtoString(repR[i].getEventDateTime(), timeShiftInDays);
                                 
