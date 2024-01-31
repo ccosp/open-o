@@ -2598,6 +2598,7 @@ public class ImportDemographicDataAction4 extends Action {
                     
                     if (repR[i].getHRMResultStatus()!=null /*|| repR[i].getOBRContentArray().length>0*/) { //HRM reports   //commenting out the OBR content array check because PDFs might have OBR content as well.
                     	String HRMfile = "HRM_"+UtilDateUtilities.getToday("yyyy-MM-dd.HH.mm.ss") + "_" + repR[i].getSendingFacilityId() + "_" + repR[i].getSendingFacilityReport() + ".xml";
+                        HRMfile = HRMfile.replace("/",""); //stripping out / because sometimes the impored data (E.g. getSendingFacilityReport) has / within them and that messes up the file path
                         
                         HRMDocument hrmDoc = new HRMDocument();
                         HRMDocumentComment hrmDocComment = new HRMDocumentComment();
@@ -2688,7 +2689,6 @@ public class ImportDemographicDataAction4 extends Action {
                         CreateHRMFile.create(demo, HRMreports, HRMfile);
 
                         HRMReport report = HRMReportParser.parseReport(loggedInInfo, hrmDoc.getReportFile());
-                        
                         String reportFileData = report.getFileData();
 
                 		String noMessageIdFileData = reportFileData.replaceAll("<MessageUniqueID>.*?</MessageUniqueID>", "<MessageUniqueID></MessageUniqueID>");
