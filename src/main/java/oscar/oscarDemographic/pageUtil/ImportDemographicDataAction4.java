@@ -1921,126 +1921,6 @@ public class ImportDemographicDataAction4 extends Action {
                     }
                 }
 
-                //CLINICAL NOTES
-                ClinicalNotes[] cNotes = patientRec.getClinicalNotesArray();
-                Date observeDate = new Date(), createDate = new Date();
-                for (int i=0; i<cNotes.length; i++) {
-                    //encounter note
-                    String encounter = cNotes[i].getMyClinicalNotesContent();
-                    if (StringUtils.empty(encounter)) {
-                    	err_data.add("Empty clinical note ("+(i+1)+")");
-                    	//continue;
-                    	encounter = org.apache.commons.lang.StringUtils.trimToEmpty(encounter);
-                    }
-                    
-
-                    //create date
-                    /*
-                    if (cNotes[i].getEnteredDateTime()!=null) {
-                    	createDate = dateTimeFPtoDate(cNotes[i].getEnteredDateTime(),timeShiftInDays);
-                    	observeDate = createDate;
-                    }
-                    */
-
-                    //observation date
-                    if (cNotes[i].getEventDateTime()!=null) {
-                    	observeDate = dateTimeFPtoDate(cNotes[i].getEventDateTime(),timeShiftInDays);
-                    	//if (cNotes[i].getEnteredDateTime()==null) createDate = observeDate;
-
-                    }
-                    //NOTE: sets the createdate and observationdate to current datetime if they are not set in XML. 
-                    CaseManagementNote cmNote = prepareCMNote("1",null);
-                    cmNote.setCreate_date(createDate);
-                    cmNote.setObservation_date(observeDate);
-                    cmNote.setNote(encounter);
-
-                    String uuid = null;
-                    ClinicalNotes.ParticipatingProviders[] participatingProviders = cNotes[i].getParticipatingProvidersArray();
-                    ClinicalNotes.NoteReviewer[] noteReviewers = cNotes[i].getNoteReviewerArray();
-
-                    int p_total = participatingProviders.length + noteReviewers.length;
-                    for (int p=0; p<p_total; p++) {
-                        if (p>0) {
-                            cmNote = prepareCMNote("1",uuid);
-                            cmNote.setObservation_date(observeDate);
-                            cmNote.setCreate_date(createDate);
-                            cmNote.setNote(encounter);
-                        }
-
-                        //participating providers
-                        if (p<participatingProviders.length) {
-                            if (participatingProviders[p].getDateTimeNoteCreated()==null) cmNote.setUpdate_date(new Date());
-                            else cmNote.setUpdate_date(dateTimeFPtoDate(participatingProviders[p].getDateTimeNoteCreated(), timeShiftInDays));
-
-                            if (participatingProviders[p].getName()!=null) {
-                                HashMap<String,String> authorName = getPersonName(participatingProviders[p].getName());
-                                String authorOHIP = participatingProviders[p].getOHIPPhysicianId();
-                                String authorProvider = writeProviderData(authorName.get("firstname"), authorName.get("lastname"), authorOHIP);
-                                if (StringUtils.empty(authorProvider)) {
-                                    authorProvider = defaultProviderNo();
-                                    err_note.add("Clinical notes have no author; assigned to \"doctor oscardoc\" ("+(i+1)+")");
-                                }
-                                cmNote.setProviderNo(authorProvider);
-                                cmNote.setSigning_provider_no(authorProvider);
-                            }
-                        } else {
-
-                        	//note reviewers
-                        	int r = p-participatingProviders.length;
-                            if (noteReviewers[r].getName()!=null) {
-                                if (noteReviewers[r].getDateTimeNoteReviewed()==null) cmNote.setUpdate_date(new Date());
-                                else cmNote.setUpdate_date(dateTimeFPtoDate(noteReviewers[r].getDateTimeNoteReviewed(), timeShiftInDays));
-
-                                HashMap<String,String> authorName = getPersonName(noteReviewers[r].getName());
-                                String reviewerOHIP = noteReviewers[r].getOHIPPhysicianId();
-                                String reviewer = writeProviderData(authorName.get("firstname"), authorName.get("lastname"), reviewerOHIP);
-
-                                cmNote.setProviderNo(reviewer);
-                                cmNote.setSigning_provider_no(reviewer);
-                                Util.writeVerified(cmNote);
-                            }
-                        }
-                        
-                        if( cmNote.getProviderNo() == null ) {
-                        	cmNote.setProviderNo(defaultProviderNo());
-                        }
-                        
-                        if( cmNote.getSigning_provider_no() == null ) {
-                        	cmNote.setSigning_provider_no(defaultProviderNo());
-                        }
-                        
-                        caseManagementManager.saveNoteSimple(cmNote);
-
-                        //prepare for extra notes
-                        if (p==0) {
-                            addOneEntry(CLINICALNOTE);
-                            uuid = cmNote.getUuid();
-
-                            //create "header", cms4 only
-                        	CaseManagementNote headNote = prepareCMNote("2",null);
-                    		headNote.setCreate_date(createDate);
-                    		headNote.setUpdate_date(createDate);
-                    		headNote.setObservation_date(observeDate);
-                    		headNote.setNote("imported.cms4.2011.06"+uuid);
-                    		caseManagementManager.saveNoteSimple(headNote);
-                        }
-                    }
-                    if (p_total==0) {
-                        err_note.add("Clinical notes have no author; assigned to \"doctor oscardoc\" ("+(i+1)+")");
-                    	caseManagementManager.saveNoteSimple(cmNote);
-                    }
-
-                    //to dumpsite
-                    String noteType = cNotes[i].getNoteType();
-                    if (StringUtils.filled(noteType)) {
-                    	noteType = Util.addLine("imported.cms4.2011.06", "Note Type: ", noteType);
-                    }
-
-                    CaseManagementNote dumpNote = prepareCMNote("2",null);
-                    dumpNote.setNote(noteType);
-                    saveLinkNote(cmNote.getId(), dumpNote);
-                }
-
                 //ALLERGIES & ADVERSE REACTIONS
                 AllergiesAndAdverseReactions[] aaReactArray = patientRec.getAllergiesAndAdverseReactionsArray();
                 for (int i=0; i<aaReactArray.length; i++) {
@@ -3064,6 +2944,125 @@ public class ImportDemographicDataAction4 extends Action {
     	            saveLinkNote(dmNote, CaseManagementNoteLink.DEMOGRAPHIC, Long.valueOf(demographicNo));
                 }
 
+                //CLINICAL NOTES
+                ClinicalNotes[] cNotes = patientRec.getClinicalNotesArray();
+                Date observeDate = new Date(), createDate = new Date();
+                for (int i=0; i<cNotes.length; i++) {
+                    //encounter note
+                    String encounter = cNotes[i].getMyClinicalNotesContent();
+                    if (StringUtils.empty(encounter)) {
+                    	err_data.add("Empty clinical note ("+(i+1)+")");
+                    	//continue;
+                    	encounter = org.apache.commons.lang.StringUtils.trimToEmpty(encounter);
+                    }
+                    
+
+                    //create date
+                    /*
+                    if (cNotes[i].getEnteredDateTime()!=null) {
+                    	createDate = dateTimeFPtoDate(cNotes[i].getEnteredDateTime(),timeShiftInDays);
+                    	observeDate = createDate;
+                    }
+                    */
+
+                    //observation date
+                    if (cNotes[i].getEventDateTime()!=null) {
+                    	observeDate = dateTimeFPtoDate(cNotes[i].getEventDateTime(),timeShiftInDays);
+                    	//if (cNotes[i].getEnteredDateTime()==null) createDate = observeDate;
+
+                    }
+                    //NOTE: sets the createdate and observationdate to current datetime if they are not set in XML. 
+                    CaseManagementNote cmNote = prepareCMNote("1",null);
+                    cmNote.setCreate_date(createDate);
+                    cmNote.setObservation_date(observeDate);
+                    cmNote.setNote(encounter);
+
+                    String uuid = null;
+                    ClinicalNotes.ParticipatingProviders[] participatingProviders = cNotes[i].getParticipatingProvidersArray();
+                    ClinicalNotes.NoteReviewer[] noteReviewers = cNotes[i].getNoteReviewerArray();
+
+                    int p_total = participatingProviders.length + noteReviewers.length;
+                    for (int p=0; p<p_total; p++) {
+                        if (p>0) {
+                            cmNote = prepareCMNote("1",uuid);
+                            cmNote.setObservation_date(observeDate);
+                            cmNote.setCreate_date(createDate);
+                            cmNote.setNote(encounter);
+                        }
+
+                        //participating providers
+                        if (p<participatingProviders.length) {
+                            if (participatingProviders[p].getDateTimeNoteCreated()==null) cmNote.setUpdate_date(new Date());
+                            else cmNote.setUpdate_date(dateTimeFPtoDate(participatingProviders[p].getDateTimeNoteCreated(), timeShiftInDays));
+
+                            if (participatingProviders[p].getName()!=null) {
+                                HashMap<String,String> authorName = getPersonName(participatingProviders[p].getName());
+                                String authorOHIP = participatingProviders[p].getOHIPPhysicianId();
+                                String authorProvider = writeProviderData(authorName.get("firstname"), authorName.get("lastname"), authorOHIP);
+                                if (StringUtils.empty(authorProvider)) {
+                                    authorProvider = defaultProviderNo();
+                                    err_note.add("Clinical notes have no author; assigned to \"doctor oscardoc\" ("+(i+1)+")");
+                                }
+                                cmNote.setProviderNo(authorProvider);
+                                cmNote.setSigning_provider_no(authorProvider);
+                            }
+                        } else {
+
+                        	//note reviewers
+                        	int r = p-participatingProviders.length;
+                            if (noteReviewers[r].getName()!=null) {
+                                if (noteReviewers[r].getDateTimeNoteReviewed()==null) cmNote.setUpdate_date(new Date());
+                                else cmNote.setUpdate_date(dateTimeFPtoDate(noteReviewers[r].getDateTimeNoteReviewed(), timeShiftInDays));
+
+                                HashMap<String,String> authorName = getPersonName(noteReviewers[r].getName());
+                                String reviewerOHIP = noteReviewers[r].getOHIPPhysicianId();
+                                String reviewer = writeProviderData(authorName.get("firstname"), authorName.get("lastname"), reviewerOHIP);
+
+                                cmNote.setProviderNo(reviewer);
+                                cmNote.setSigning_provider_no(reviewer);
+                                Util.writeVerified(cmNote);
+                            }
+                        }
+                        
+                        if( cmNote.getProviderNo() == null ) {
+                        	cmNote.setProviderNo(defaultProviderNo());
+                        }
+                        
+                        if( cmNote.getSigning_provider_no() == null ) {
+                        	cmNote.setSigning_provider_no(defaultProviderNo());
+                        }
+                        
+                        caseManagementManager.saveNoteSimple(cmNote);
+
+                        //prepare for extra notes
+                        if (p==0) {
+                            addOneEntry(CLINICALNOTE);
+                            uuid = cmNote.getUuid();
+
+                            //create "header", cms4 only
+                        	CaseManagementNote headNote = prepareCMNote("2",null);
+                    		headNote.setCreate_date(createDate);
+                    		headNote.setUpdate_date(createDate);
+                    		headNote.setObservation_date(observeDate);
+                    		headNote.setNote("imported.cms4.2011.06"+uuid);
+                    		caseManagementManager.saveNoteSimple(headNote);
+                        }
+                    }
+                    if (p_total==0) {
+                        err_note.add("Clinical notes have no author; assigned to \"doctor oscardoc\" ("+(i+1)+")");
+                    	caseManagementManager.saveNoteSimple(cmNote);
+                    }
+
+                    //to dumpsite
+                    String noteType = cNotes[i].getNoteType();
+                    if (StringUtils.filled(noteType)) {
+                    	noteType = Util.addLine("imported.cms4.2011.06", "Note Type: ", noteType);
+                    }
+
+                    CaseManagementNote dumpNote = prepareCMNote("2",null);
+                    dumpNote.setNote(noteType);
+                    saveLinkNote(cmNote.getId(), dumpNote);
+                }
                 
             }
             if(demoRes != null) {
