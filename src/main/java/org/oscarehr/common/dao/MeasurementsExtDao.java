@@ -23,6 +23,7 @@
  */
 package org.oscarehr.common.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -46,6 +47,17 @@ public class MeasurementsExtDao extends AbstractDao<MeasurementsExt>{
 		List<MeasurementsExt> rs = q.getResultList();
 
 		return rs;
+	}
+
+	public HashMap<String, MeasurementsExt> getMeasurementsExtMapByMeasurementId(Integer measurementId) {
+		HashMap<String, MeasurementsExt> measurementsExtHashMap = new HashMap<String, MeasurementsExt>();
+		List<MeasurementsExt> rs = getMeasurementsExtByMeasurementId(measurementId);
+		
+		for (MeasurementsExt measurementsExt : rs) {
+			measurementsExtHashMap.put(measurementsExt.getKeyVal(), measurementsExt);
+		}
+
+		return measurementsExtHashMap;
 	}
 
 	public List<MeasurementsExt> getMeasurementsExtListByMeasurementIdList(List<Integer> measurementIdList) {
@@ -93,6 +105,25 @@ public class MeasurementsExtDao extends AbstractDao<MeasurementsExt>{
 		List<MeasurementsExt> rs = q.getResultList();
 		
 		return rs;
+	}
+
+	public Integer getMeasurementIdByLabNoAndTestName(String labNo, String testName) {
+		String queryStr = "SELECT m.measurementId FROM MeasurementsExt m " + 
+			"WHERE (SELECT MAX(m1.val) FROM MeasurementsExt m1 WHERE m1.measurementId = m.measurementId AND m1.keyVal = 'lab_no') = ?1 " +
+			"AND (SELECT MAX(m2.val) FROM MeasurementsExt m2 WHERE m2.measurementId = m.measurementId AND m2.keyVal = 'name') = ?2 " + 
+			"GROUP BY m.measurementId";
+
+		Query q = entityManager.createQuery(queryStr);
+		q.setParameter(1, labNo);
+		q.setParameter(2, testName);
+
+		@SuppressWarnings("unchecked")
+		List<Integer> rs = q.getResultList();
+
+		if (!rs.isEmpty()) { 
+			return rs.get(0);
+		}
+		return null;
 	}
 
 	/**

@@ -86,9 +86,11 @@ import org.oscarehr.common.dao.DrugReasonDao;
 import org.oscarehr.common.dao.MeasurementsExtDao;
 import org.oscarehr.common.dao.OscarAppointmentDao;
 import org.oscarehr.common.dao.PartialDateDao;
+import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.dao.PharmacyInfoDao;
 import org.oscarehr.common.dao.ProviderDataDao;
 import org.oscarehr.common.dao.ProviderLabRoutingDao;
+import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Admission;
 import org.oscarehr.common.model.Allergy;
 import org.oscarehr.common.model.Appointment;
@@ -103,8 +105,10 @@ import org.oscarehr.common.model.Drug;
 import org.oscarehr.common.model.DrugReason;
 import org.oscarehr.common.model.MeasurementsExt;
 import org.oscarehr.common.model.PartialDate;
+import org.oscarehr.common.model.PatientLabRouting;
 import org.oscarehr.common.model.PharmacyInfo;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.ProviderLabRoutingModel;
 import org.oscarehr.hospitalReportManager.HRMReport;
 import org.oscarehr.hospitalReportManager.HRMReportParser;
 import org.oscarehr.hospitalReportManager.dao.HRMDocumentCommentDao;
@@ -150,6 +154,7 @@ import cds.DemographicsDocument.Demographics.PreferredPharmacy;
 import cds.FamilyHistoryDocument.FamilyHistory;
 import cds.ImmunizationsDocument.Immunizations;
 import cds.LaboratoryResultsDocument.LaboratoryResults;
+import cds.LaboratoryResultsDocument.LaboratoryResults.ResultReviewer;
 import cds.MedicationsAndTreatmentsDocument.MedicationsAndTreatments;
 import cds.NewCategoryDocument.NewCategory;
 import cds.OmdCdsDocument;
@@ -164,6 +169,7 @@ import cds.ReportsDocument.Reports.SourceAuthorPhysician;
 import cds.RiskFactorsDocument.RiskFactors;
 import cdsDt.AddressType;
 import cdsDt.AdverseReactionType;
+import cdsDt.DateTimeFullOrPartial;
 import cdsDt.DiabetesComplicationScreening.ExamCode;
 import cdsDt.DiabetesMotivationalCounselling.CounsellingPerformed;
 import cdsDt.PersonNamePartQualifierCode;
@@ -180,6 +186,13 @@ import oscar.oscarDemographic.data.DemographicData;
 import oscar.oscarEncounter.data.EctProgram;
 import oscar.oscarEncounter.oscarMeasurements.data.ImportExportMeasurements;
 import oscar.oscarLab.FileUploadCheck;
+import oscar.oscarLab.LabRequestReportLink;
+import oscar.oscarLab.ca.all.Hl7textResultsData;
+import oscar.oscarLab.ca.all.upload.HandlerClassFactory;
+import oscar.oscarLab.ca.all.upload.handlers.CMLHandler;
+import oscar.oscarLab.ca.all.upload.handlers.GDMLHandler;
+import oscar.oscarLab.ca.all.upload.handlers.MDSHandler;
+import oscar.oscarLab.ca.all.upload.handlers.MessageHandler;
 import oscar.oscarLab.ca.all.util.Utilities;
 import oscar.oscarPrevention.PreventionData;
 import oscar.oscarProvider.data.ProviderData;
@@ -219,12 +232,14 @@ public class ImportDemographicDataAction4 extends Action {
 
     boolean matchProviderNames = true;
     String admProviderNo = null;
+    Demographic demographic = null;
     String demographicNo = null;
     String patientName = null;
     String programId = null;
     HashMap<String, Integer> entries = new HashMap<String, Integer>();
     Integer importNo = 0;
     OscarProperties oscarProperties = OscarProperties.getInstance();
+    List<String> importErrors = new ArrayList<String>();
 
     ProgramManager programManager = (ProgramManager) SpringUtils.getBean("programManager");
     AdmissionManager admissionManager = (AdmissionManager) SpringUtils.getBean("admissionManager");
@@ -237,6 +252,7 @@ public class ImportDemographicDataAction4 extends Action {
     PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean("partialDateDao");
     DemographicExtDao demographicExtDao = (DemographicExtDao) SpringUtils.getBean("demographicExtDao");
     OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean("oscarAppointmentDao");
+    PatientLabRoutingDao patientLabRoutingDao  = SpringUtils.getBean(PatientLabRoutingDao.class); 
     ProviderLabRoutingDao providerLabRoutingDao = SpringUtils.getBean(ProviderLabRoutingDao.class);
     MeasurementsExtDao measurementsExtDao = SpringUtils.getBean(MeasurementsExtDao.class);
     IssueDAO issueDao = SpringUtils.getBean(IssueDAO.class);
@@ -814,6 +830,7 @@ public class ImportDemographicDataAction4 extends Action {
         ArrayList<String> err_summ = new ArrayList<String>(); //errors: summary
         ArrayList<String> err_othe = new ArrayList<String>(); //errors: other categories
         ArrayList<String> err_note = new ArrayList<String>(); //non-errors: notes
+        importErrors = new ArrayList<String>();
 
         String docDir = oscarProperties.getProperty("DOCUMENT_DIR");
         docDir = Util.fixDirName(docDir);
@@ -1171,8 +1188,6 @@ public class ImportDemographicDataAction4 extends Action {
         DemographicAddResult demoRes = null;
 
         //Check if Contact-only demographic exists
-        org.oscarehr.common.model.Demographic demographic = null;
-
         if(courseId == 0) {
             // make the cell phone a home phone if home phone is not defined.
             String phone = homePhone;
@@ -3086,6 +3101,8 @@ public class ImportDemographicDataAction4 extends Action {
             	Util.cleanFile(xmlFile);
             }
 
+            err_summ.addAll(importErrors);
+
             return packMsgs(err_demo, err_data, err_summ, err_othe, err_note, warnings);
 	}
 
@@ -3679,6 +3696,15 @@ public class ImportDemographicDataAction4 extends Action {
 
 		return ret;
 	}
+    
+    void addMeasurementsExt(Long measurementId, String key, String val, List<AbstractModel<?>> exts) {
+        if (measurementId != null && StringUtils.filled(key) && StringUtils.filled(val)) {
+            MeasurementsExt mx = new MeasurementsExt(measurementId.intValue());
+            mx.setKeyVal(key);
+            mx.setVal(StringUtils.noNull(val));
+            exts.add(mx);
+        }
+    }
 
 	ProviderData getProviderByNames(String firstName, String lastName, boolean matchAll) {
 		ProviderData pd = new ProviderData();
@@ -4245,317 +4271,202 @@ public class ImportDemographicDataAction4 extends Action {
     
 */
 
-    /**
-     * TODO: Seriously messed up
-     */
-//	private Long findMeasurementId(Integer labNo, String testName) {
-//		List<MeasurementsExt> results = measurementsExtDao.findByKeyValue("lab_no", labNo.toString());
-//		if(!results.isEmpty()) {
-//			return new Long(results.get(0).getMeasurementId());
-//		}
-//		return null;
-//	}
-	private void importLabs(LoggedInInfo loggedInInfo, LaboratoryResults[] labResultArr) {
+	private Long findMeasurementId(Integer labNo, String testName) {
+		Integer measId = measurementsExtDao.getMeasurementIdByLabNoAndTestName(labNo.toString(), testName);
+        if (measId != null) {
+		    return new Long(measId);
+        } else {
+            return null;
+        }
+	}
+
+    private void importLabs(LoggedInInfo loggedInInfo, LaboratoryResults[] labResultArr) {
 		List<String> accessionsDone = new ArrayList<String>();
 		
 		for(LaboratoryResults labResult: labResultArr) {
-			if(labResult.getAccessionNumber() == null || labResult.getAccessionNumber().isEmpty()) {
-				//lets generate one!
-				UUID uuid = UUID.randomUUID();
-				labResult.setAccessionNumber("OSCAR-" + uuid.toString().substring(0, 10));
-			}
-			
-			else if(accessionsDone.contains(labResult.getAccessionNumber())) {
+			if(StringUtils.filled(labResult.getAccessionNumber()) && accessionsDone.contains(labResult.getAccessionNumber())) {
 				continue;
 			}
 			
 			try {
 				//find others with same accession number
-				LaboratoryResults[] reportResults = filterByAccession(labResultArr,labResult.getAccessionNumber());
-				accessionsDone.add(labResult.getAccessionNumber());
-
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddkkmmssSS");
+				LaboratoryResults[] reportResults = null;
+				if (StringUtils.filled(labResult.getAccessionNumber())) {
+                    reportResults = filterByAccession(labResultArr,labResult.getAccessionNumber());
+                    accessionsDone.add(labResult.getAccessionNumber());
+                } else {
+				    reportResults = new LaboratoryResults[] {labResult};
+                }
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddkkmmssSS");
 		        String filename = "Lab." + sdf.format(new Date()) + ".import.hl7";
-
-                String facilityName = labResult.getLaboratoryName();
-                if(facilityName == null || facilityName.isEmpty()) {
-                    facilityName = "OTHER";
-                }
-
-                //TODO change the case values as they are determined
-                switch (facilityName.toUpperCase()) {
-                    case "PATHL7":
-                    case "LIFELABS" :
-                    case "EXCELLERIS" :
-                        facilityName = "PATHL7";
-                        break;
-                    case "GDML" :
-                        facilityName = "GDML";
-                        break;
-                    case "IHA" :
-                        facilityName = "IHA";
-                        break;
-                    case "CDL" :
-                        facilityName = "CDL";
-                        break;
-                    case "CLS" :
-                        facilityName = "CLS";
-                        break;
-                    case "MDS" :
-                        facilityName = "MDS";
-                        break;
-                    case "CML" :
-                        facilityName = "CML";
-                        break;
-                    default : facilityName = "OTHER";
-                }
-
-		        ORU_R01 observationMsg = new ORU_R01();
+                HL7CreateFile hl7CreateFile = new HL7CreateFile(demographic);
+                String observationMsg = hl7CreateFile.generateHL7(Arrays.asList(reportResults));
 				
-				fillMsh(observationMsg.getMSH(), new Date(),"ORU", "R01", filename.substring(0,filename.length()-4), "2.3", facilityName);
-				fillPid(observationMsg.getRESPONSE().getPATIENT().getPID(),demographicNo, labResult.getAccessionNumber());
-				
-				for(int x=0;x<reportResults.length;x++) {
-					LaboratoryResults result = reportResults[x];
-					
-					ORU_R01_ORDER_OBSERVATION grp = observationMsg.getRESPONSE().insertORDER_OBSERVATION(x);
-
-					//OBR
-					OBR obr = grp.getOBR();
-					obr.getUniversalServiceIdentifier().getIdentifier().setValue(result.getLabTestCode());
-					obr.getUniversalServiceIdentifier().getText().setValue(result.getTestNameReportedByLab());
-					obr.getUniversalServiceIdentifier().getNameOfCodingSystem().setValue("0000");
-					obr.getUniversalServiceIdentifier().getAlternateIdentifier().setValue(result.getTestNameReportedByLab());
-					obr.getPriority().setValue("R"); //hard coded..not in OMD spec
-					
-					Calendar cal = Calendar.getInstance();
-					if(result.getCollectionDateTime().isSetFullDate()) {
-						cal = result.getCollectionDateTime().getFullDate();                                                
-
-                        /* 
-                         *  The following if statement is designed to handle lab results where the collection date is 0001-01-01 and the date of colletion is actually in the result.value
-                         * 
-                         *  <LaboratoryName>MDS</LaboratoryName>
-                         *  <TestNameReportedByLab>FLAP 1 COLLECTION DATE</TestNameReportedByLab>
-                         *  <LabTestCode>FCD1</LabTestCode>
-                         *  <Result>
-                         *      <Value>23-OCT-2018</Value>
-                         *  </Result>
-                         *  <CollectionDateTime>
-                         *      <cdsd:FullDate>0001-01-01</cdsd:FullDate>
-                         *  </CollectionDateTime>
-                         */
-                        if (cal.get(Calendar.YEAR) == 1 && result.getTestNameReportedByLab().indexOf("COLLECTION DATE") != -1){                            
-                            Date date = toDateFromString(result.getResult().getValue());
-                            if (date != null) cal.setTime(date);
+		        InputStream formFileIs=null;
+		        InputStream localFileIs=null;
+		        
+		        Integer labNo = null;
+		        try{
+		            String type = hl7CreateFile.LAB_TYPE;
+		            
+		            InputStream stream = new ByteArrayInputStream(observationMsg.replace("\r", "\r\n").getBytes(StandardCharsets.UTF_8));
+		            String filePath = Utilities.saveFile(stream, filename);
+		            File file = new File(filePath);
+		            
+		            localFileIs = new FileInputStream(filePath);
+		            
+		            int checkFileUploadedSuccessfully = FileUploadCheck.addFile(file.getName(),localFileIs,admProviderNo);            
+		            
+		            if (checkFileUploadedSuccessfully != FileUploadCheck.UNSUCCESSFUL_SAVE) {
+                        logger.debug("filePath" + filePath);
+                        logger.debug("Type :" + type);
+                        MessageHandler msgHandler = HandlerClassFactory.getHandler(type);
+                        if (msgHandler != null) {
+                            logger.debug("MESSAGE HANDLER " + msgHandler.getClass().getName());
                         }
-						obr.getObservationDateTime().getTimeOfAnEvent().setDatePrecision(cal.get(Calendar.YEAR),
-								cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
-						
-					} else {
-						cal = result.getCollectionDateTime().getFullDateTime();
 
-                        /* 
-                         *  The following if statement is designed to handle lab results where the collection date is 0001-01-01 and the date of colletion is actually in the result.value
-                         * 
-                         *  <LaboratoryName>MDS</LaboratoryName>
-                         *  <TestNameReportedByLab>FLAP 1 COLLECTION DATE</TestNameReportedByLab>
-                         *  <LabTestCode>FCD1</LabTestCode>
-                         *  <Result>
-                         *      <Value>23-OCT-2018</Value>
-                         *  </Result>
-                         *  <CollectionDateTime>
-                         *      <cdsd:FullDate>0001-01-01</cdsd:FullDate>
-                         *  </CollectionDateTime>
-                         */
-                        if (cal.get(Calendar.YEAR) == 1 && result.getTestNameReportedByLab().indexOf("COLLECTION DATE") != -1){                            
-                            Date date = toDateFromString(result.getResult().getValue());
-                            if (date != null) cal.setTime(date);
+                        if (msgHandler instanceof CMLHandler && ((CMLHandler) msgHandler).parse(loggedInInfo, getClass().getSimpleName(), filePath, checkFileUploadedSuccessfully, "") != null) {
+                            labNo = ((CMLHandler) msgHandler).getLastLabNo();
+                            logger.info("successfully added lab");
+                            addOneEntry(LABS);
+                        } else if (msgHandler instanceof GDMLHandler && ((GDMLHandler) msgHandler).parse(loggedInInfo, getClass().getSimpleName(), filePath, checkFileUploadedSuccessfully, "") != null) {
+                            labNo = ((GDMLHandler) msgHandler).getLastLabNo();
+                            logger.info("successfully added lab");
+                            addOneEntry(LABS);
+                        } else if (msgHandler instanceof MDSHandler && ((MDSHandler) msgHandler).parse(loggedInInfo, getClass().getSimpleName(), filePath, checkFileUploadedSuccessfully, "") != null) {
+                            labNo = ((MDSHandler) msgHandler).getLastLabNo();
+                            logger.info("successfully added lab");
+                            addOneEntry(LABS);
+                        } else {
+                            importErrors.add("Unregcognized lab facility: " + type);
                         }
-						obr.getObservationDateTime().getTimeOfAnEvent().setDateSecondPrecision(cal.get(Calendar.YEAR),
-								cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
-						
-					}
-					
-				
-					if(result.getLabRequisitionDateTime() != null) {
-						if(result.getLabRequisitionDateTime().isSetFullDate()) {
-							cal = result.getLabRequisitionDateTime().getFullDate();
-							obr.getRequestedDateTime().getTimeOfAnEvent().setDatePrecision(cal.get(Calendar.YEAR),
-									cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
-						} else {
-							cal = result.getLabRequisitionDateTime().getFullDateTime();
-							obr.getRequestedDateTime().getTimeOfAnEvent().setDateSecondPrecision(cal.get(Calendar.YEAR),
-									cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
-						}
-						
-						
-					}
-
-					//OBX
-					OBX obx = grp.getOBSERVATION().getOBX();
-					obx.getSetIDOBX().setValue(String.valueOf(x));
-					
-					obx.getObx2_ValueType().setValue("ST");
-					obx.getObx3_ObservationIdentifier().getIdentifier().setValue(result.getLabTestCode());
-					obx.getObx3_ObservationIdentifier().getText().setValue(result.getTestNameReportedByLab());
-					obx.getObx4_ObservationSubID().setValue("1");
-
-					if(result.getResult() != null && result.getResult().getValue() != null) {
-						ST st = new ST(observationMsg);
-						st.setValue(result.getResult().getValue());
-						Varies val = obx.insertObservationValue(0);
-						val.setData(st);
-					}
-					
-					
-					if(result != null && result.getResult() != null && result.getResult().getUnitOfMeasure() != null) {
-					//	obx.getObx6_Units().getCe2_Text().setValue(result.getResult().getUnitOfMeasure());
-						obx.getObx6_Units().getCe1_Identifier().setValue(result.getResult().getUnitOfMeasure());
-					}
-					
-					if(result.getReferenceRange() != null) {
-						String refRange = "";
-						if(result.getReferenceRange().isSetReferenceRangeText()) {
-							refRange = result.getReferenceRange().getReferenceRangeText();
-						}
-						
-						if(result.getReferenceRange().isSetLowLimit()) {
-							refRange = result.getReferenceRange().getLowLimit();
-						}
-
-						if(result.getReferenceRange().isSetHighLimit()) {
-							refRange += ("-" + result.getReferenceRange().getHighLimit());
-						}
-
-						obx.getObx7_ReferencesRange().setValue(refRange);
-					}
-					
-					if(result.getResultNormalAbnormalFlag() != null) {
-						ID abnormalFlags = obx.insertAbnormalFlags(0);
-						if(result.getResultNormalAbnormalFlag().isSetResultNormalAbnormalFlagAsPlainText()) {
-							abnormalFlags.setValue(result.getResultNormalAbnormalFlag().getResultNormalAbnormalFlagAsPlainText());
-						} else {
-							abnormalFlags.setValue(result.getResultNormalAbnormalFlag().getResultNormalAbnormalFlagAsEnum().toString());
-						}
-					
-					}
-					
-					if(result.getBlockedTestResult() != null && result.getBlockedTestResult() == YIndicator.Y) {
-						obx.getUserDefinedAccessChecks().setValue("BLOCKED");
-					}
-					
-					
-					if(!StringUtils.isNullOrEmpty(result.getTestResultStatus())) {
-						obx.getNatureOfAbnormalTest().setValue(result.getTestResultStatus());
-					}
-					
-					if(!StringUtils.isNullOrEmpty(result.getLaboratoryName())) {
-						obr.insertObr39_CollectorSComment(0).getCe1_Identifier().setValue(result.getLaboratoryName());
-					}
-					
-					if(!StringUtils.isNullOrEmpty(result.getNotesFromLab())) {
-						NTE nte = grp.getOBSERVATION().insertNTE(0);
-						nte.getNte1_SetIDNotesAndComments().setValue(obx.getSetIDOBX().getValue());
-						Terser.set(nte, 3, 0, 1, 1, result.getNotesFromLab());
-					}
-					
-				}
-//
-//                logger.info("Lab upload: " + result);
-//		        InputStream formFileIs=null;
-//		        InputStream localFileIs=null;
-//		        Integer labNo = null;
-
-                // save labs now and then process them later.
-                Path filepath;
-		        try(InputStream stream = new ByteArrayInputStream(observationMsg.encode().replace("\r", "\r\n").getBytes(StandardCharsets.UTF_8))) {
-                    String savedFilePath = Utilities.saveFile(stream, filename);
-                    filepath = Paths.get(savedFilePath);
-		        }
-
-                try(InputStream localFileIs = Files.newInputStream(filepath)) {
-                    int checkFileUploadedSuccessfully = FileUploadCheck.addFile(filepath.getFileName().toString(),localFileIs,admProviderNo);
-
-                    if (checkFileUploadedSuccessfully != FileUploadCheck.UNSUCCESSFUL_SAVE){
-                        logger.debug("FilePath: "+ filepath);
-                        logger.debug("Type :"+facilityName);
-//                        MessageHandler msgHandler = HandlerClassFactory.getHandler(facilityName);
-//                        if(msgHandler != null){
-//                            logger.debug("MESSAGE HANDLER " + msgHandler.getClass().getName());
-//                        }
-//                        if((msgHandler.parse(loggedInInfo, getClass().getSimpleName(), filepath.toString(), checkFileUploadedSuccessfully, "")) != null) {
-////                            labNo = msgHandler.getLastLabNo();
-//                            logger.debug("successfully added lab");
-//                        }
-                    }else{
-                        logger.info("uploaded previously");
                     }
-                }
+		        } catch(Exception e){
+		            logger.error("Error: ",e);
+                    importErrors.add("Error adding lab");
+		        }
+		        finally {
+		        	IOUtils.closeQuietly(formFileIs);
+		        	IOUtils.closeQuietly(localFileIs);
+		        }
 		        
 		        
-//		        if(labNo != null) {
-//		        	DateTimeFullOrPartial dt = labResult.getLabRequisitionDateTime();
-//		        	if(dt == null) {
-//		        		dt = labResult.getCollectionDateTime();
-//		        	}
-//
-//		        	LabRequestReportLink.save(null,null,dateFPtoString(dt,0),"labPatientPhysicianInfo",labNo.longValue());
-//
-//
-//			        for(ResultReviewer resultReviewer : labResult.getResultReviewerArray()) {
-//			        	String reviewDate = dateFPtoString(resultReviewer.getDateTimeResultReviewed(),0);
-//			        	String reviewer = writeProviderData(resultReviewer.getName().getFirstName(),resultReviewer.getName().getLastName(),resultReviewer.getOHIPPhysicianId());
-//
-//			        	String status = StringUtils.filled(reviewer) ? "A" : "N";
-//	                    reviewer = status.equals("A") ? reviewer : "0";
-//
-//	                    LabResultImport.updateProviderLabRouting(reviewer, labNo.toString() , status, "", reviewDate,"HL7");
-//
-//
-//			        }
-//
-//			        for(LaboratoryResults result : reportResults) {
-//
-//	                	Long measId = findMeasurementId(labNo,result.getTestName());
-//
-//	                	if(StringUtils.filled(result.getNotesFromLab())) {
-//	                		saveMeasurementsExt(measId, "comments", result.getNotesFromLab());
-//	                	}
-//
-//
-//	                	String annotation = labResult.getPhysiciansNotes();
-//		                if (StringUtils.filled(annotation)) {
-//		                    saveMeasurementsExt(measId, "other_id", "0-0");
-//		                    CaseManagementNote cmNote = prepareCMNote("2",null);
-//		                    cmNote.setNote(annotation);
-//		                    saveLinkNote(cmNote, CaseManagementNoteLink.LABTEST, labNo.longValue(), "0-0");
-//		                }
-//
-//						String olis_status = result.getTestResultStatus();
-//						if (StringUtils.filled(olis_status))  {
-//							if(measId != null) {
-//								saveMeasurementsExt(measId, "olis_status", olis_status);
-//							}
-//						}
-//
-//	                }
-//
-//
-//
-//			        String dump = Util.addLine("imported.cms4.2011.06",  "Physician Notes: ", org.apache.commons.lang.StringUtils.trimToEmpty(labResult.getPhysiciansNotes()));
-//			        dump = Util.addLine(dump,  "Test Results Info: ", org.apache.commons.lang.StringUtils.trimToEmpty(labResult.getTestResultsInformationReportedByTheLab()));
-//			        dump = Util.addLine(dump,  "Test Code: ", org.apache.commons.lang.StringUtils.trimToEmpty(labResult.getLabTestCode()));
-//			        dump = Util.addLine(dump,  "Test Name: ", org.apache.commons.lang.StringUtils.trimToEmpty(labResult.getTestName()));
-//			     //   dump = Util.addLine(dump,  "Lab Requisition DateTime: ", org.apache.commons.lang.StringUtils.trimToEmpty((dateFPtoString(labResult.getLabRequisitionDateTime(),0))));
-//
-//			        CaseManagementNote cmNote = prepareCMNote("2",null);
-//                    cmNote.setNote(dump);
-//                    saveLinkNote(cmNote, CaseManagementNoteLink.LABTEST, labNo.longValue(), "0-0");
-//		        }
+		        if(labNo != null) {
+                    Hl7textResultsData.populateMeasurementsTable(labNo.toString(), demographicNo);
+
+                    patientLabRoutingDao.persist(new PatientLabRouting(labNo, "HL7", Integer.parseInt(demographicNo)));
+		            
+		        	DateTimeFullOrPartial dt = labResult.getLabRequisitionDateTime();
+		        	if(dt == null) {
+		        		dt = labResult.getCollectionDateTime();
+		        	}
+		        	
+		        	LabRequestReportLink.save(null,null,dateFPtoString(dt,0),"labPatientPhysicianInfo",labNo.longValue());
+
+                    List<AbstractModel<?>> providerLabRoutingQueue = new ArrayList<>();
+                    
+                    if (StringUtils.filled(demographic.getProviderNo())) {
+                        providerLabRoutingQueue.add(new ProviderLabRoutingModel(demographic.getProviderNo(), labNo , "N", "", new Date(), "HL7"));
+                    }
+                    
+			        for(ResultReviewer resultReviewer : labResult.getResultReviewerArray()) {
+			        	Date reviewDate = dateTimeFPtoDate(resultReviewer.getDateTimeResultReviewed(),0);
+                        
+			        	String reviewer = writeProviderData(resultReviewer.getName().getFirstName(),resultReviewer.getName().getLastName(),resultReviewer.getOHIPPhysicianId(), null);
+			        	
+                        String reviewerComment = "";
+			        	if (StringUtils.filled(labResult.getPhysiciansNotes())) {
+			        	    reviewerComment = labResult.getPhysiciansNotes();
+                        }
+                        
+			        	String status = StringUtils.filled(reviewer) ? "A" : "N";
+	                    reviewer = status.equals("A") ? reviewer : "0";
+	                 
+                        providerLabRoutingQueue.add(new ProviderLabRoutingModel(reviewer, labNo , status, reviewerComment, reviewDate, "HL7"));
+			        }
+
+                    providerLabRoutingDao.batchPersist(providerLabRoutingQueue);
+
+                    List<AbstractModel<?>> measurementsExtsToSave = new ArrayList<AbstractModel<?>>();
+			        for(int x=0;x<reportResults.length;x++) {
+	                	LaboratoryResults result = reportResults[x];
+	                	Long measId = findMeasurementId(labNo, result.getTestNameReportedByLab());
+                        HashMap<String, MeasurementsExt> measurementsExtMap = new HashMap<String, MeasurementsExt>();
+                        
+                        if (measId != null) {
+                           measurementsExtMap = measurementsExtDao.getMeasurementsExtMapByMeasurementId(measId.intValue());
+
+                            if(StringUtils.filled(result.getNotesFromLab()) && measurementsExtMap.get("comments") == null) {
+                                addMeasurementsExt(measId, "comments", result.getNotesFromLab(), measurementsExtsToSave);
+                            }
+
+                            String annotation = labResult.getPhysiciansNotes();
+                            if (StringUtils.filled(annotation)) {
+                                if (measurementsExtMap.get("other_id") == null) {
+                                    addMeasurementsExt(measId, "other_id", "0-0", measurementsExtsToSave);
+                                }
+                                CaseManagementNote cmNote = prepareCMNote("2",null);
+                                cmNote.setNote(annotation);
+                                saveLinkNote(cmNote, CaseManagementNoteLink.LABTEST, labNo.longValue(), "0-0");
+                            }
+
+                            String olis_status = result.getTestResultStatus();
+                            if (StringUtils.filled(olis_status)) {
+                                if(measId != null && measurementsExtMap.get("olis_status") == null) {
+                                    addMeasurementsExt(measId, "olis_status", olis_status, measurementsExtsToSave);
+                                }
+                            }
+
+                            if (result.getBlockedTestResult() != null && "Y".equals(result.getBlockedTestResult().toString()) && measurementsExtMap.get("reportBlocked") == null) {
+                                addMeasurementsExt(measId, "reportBlocked", "Y", measurementsExtsToSave);
+                            }
+
+                            if (result.isSetTestName() && measurementsExtMap.get("name_internal") == null) {
+                                addMeasurementsExt(measId, "name_internal", result.getTestName(), measurementsExtsToSave);
+                            }
+
+                            if(result.isSetReferenceRange()) {
+                                if (StringUtils.filled(result.getReferenceRange().getReferenceRangeText()) && measurementsExtMap.get("range") == null) {
+                                    addMeasurementsExt(measId, "range", result.getReferenceRange().getReferenceRangeText(), measurementsExtsToSave);
+                                }
+
+                                if (StringUtils.filled(result.getReferenceRange().getLowLimit()) && StringUtils.filled(result.getReferenceRange().getHighLimit())
+                                        && measurementsExtMap.get("range") == null && measurementsExtMap.get("minimum") == null && measurementsExtMap.get("maximum") == null) {
+                                    addMeasurementsExt(measId, "range", result.getReferenceRange().getLowLimit() + "-" + result.getReferenceRange().getHighLimit(), measurementsExtsToSave);
+                                    addMeasurementsExt(measId, "minimum", result.getReferenceRange().getLowLimit(), measurementsExtsToSave);
+                                    addMeasurementsExt(measId, "maximum", result.getReferenceRange().getHighLimit(), measurementsExtsToSave);
+                                } else {
+                                    if (StringUtils.filled(result.getReferenceRange().getLowLimit()) && measurementsExtMap.get("minimum") == null) {
+                                        addMeasurementsExt(measId, "minimum", result.getReferenceRange().getLowLimit(), measurementsExtsToSave);
+                                    }
+
+                                    if (StringUtils.filled(result.getReferenceRange().getHighLimit()) && measurementsExtMap.get("maximum") == null) {
+                                        addMeasurementsExt(measId, "maximum", result.getReferenceRange().getHighLimit(), measurementsExtsToSave);
+                                    }
+
+                                    if (StringUtils.filled(result.getReferenceRange().getLowLimit()) && StringUtils.filled(result.getReferenceRange().getHighLimit()) && measurementsExtMap.get("range") == null) {
+                                        addMeasurementsExt(measId, "range", result.getReferenceRange().getLowLimit() + "-" + result.getReferenceRange().getHighLimit(), measurementsExtsToSave);
+                                    }
+                                }
+                            }
+                        }
+	                }
+			        
+			        measurementsExtDao.batchPersist(measurementsExtsToSave, 50);
+	                
+	                String labInfo = getLabDline(labResult, 0);
+	                if (StringUtils.filled(labInfo)) {
+	                    String dump = Util.addLine("imported.cms5.2017.06", labInfo);
+	                    CaseManagementNote cmNote = prepareCMNote("2",null);
+	                    cmNote.setNote(dump);
+	                    saveLinkNote(cmNote, CaseManagementNoteLink.LABTEST, labNo.longValue(), "0-0");
+	                }
+		        }
                   
-			}catch(Exception e) {
+			} catch(Exception e) {
 				logger.error("error", e);
+                importErrors.add("Error processing lab data");
 			}
 		}
 	}
