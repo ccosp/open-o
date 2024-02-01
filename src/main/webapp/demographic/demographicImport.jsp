@@ -91,7 +91,7 @@ $(document).ready(function(){
 </head>
 
 <body vlink="#0000FF">
-
+<jsp:include page="../images/spinner.jsp" flush="true"/>
 <%
 oscar.OscarProperties op = oscar.OscarProperties.getInstance();
 String learningEnabled = op.getProperty("OSCAR_LEARNING");
@@ -107,7 +107,7 @@ if (!Util.checkDir(op.getProperty("TMP_DIR"))) { %>
 	<h3><bean:message key="admin.admin.DemoImport"/></h3>
 		
 		<html:form action="/form/importUpload.do" method="POST"
-			enctype="multipart/form-data" onsubmit="displayAndDisable()">
+			enctype="multipart/form-data" onsubmit="ShowSpin(true)">
                         <p><html:file property="importFile" value=""/>
                         <span id="uploadWarn" title="<bean:message key="global.uploadWarningBody"/>" style="vertical-align:middle;font-family:arial;font-size:20px;font-weight:bold;color:#ABABAB;cursor:pointer"><img border="0" src="../images/icon_alertsml.gif"/></span></span>
         
