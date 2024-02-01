@@ -57,6 +57,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.model.Program;
@@ -373,8 +374,21 @@ public class ImportDemographicDataAction4 extends Action {
         request.setAttribute("warnings", warnings);
         request.setAttribute("importlog", importLog.getPath());
         resetProviderBean(request);
+        generateResponse(response, warnings, importLog.getPath());
         return mapping.findForward("success");
     }
+
+    private void generateResponse(HttpServletResponse response, ArrayList<String> warnings, String importLog) {
+		JSONObject json = new JSONObject();
+		response.setContentType("text/javascript");
+		try {
+            json.put("warnings", warnings);
+            json.put("importLog", importLog);
+			response.getWriter().write(json.toString());
+		} catch (IOException | JSONException e) {
+			logger.error("An error occurred while writing JSON response to the output stream", e);
+		}
+	}
 
     /**
      * Search for all XML / CDS / CMS patient files in a given directory and process.
