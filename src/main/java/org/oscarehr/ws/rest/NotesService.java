@@ -46,6 +46,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.PMmodule.service.AdmissionManager;
 import org.oscarehr.PMmodule.service.ProgramManager;
@@ -1703,6 +1704,115 @@ public class NotesService extends AbstractServiceImpl {
 		 
 		
 		return new GenericRESTResponse();
+	}
+
+	@POST
+	@Path("/externalSaveNote")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public GenericRESTResponse externalSaveNote(JSONObject json){
+		
+		if(!securityInfoManager.hasPrivilege(getLoggedInInfo(), "_eChart", "w", null)) {
+			throw new RuntimeException("Access Denied");
+		}
+
+		logger.info("The config "+json.toString());
+		
+		if (!json.containsKey("note") || !json.containsKey("demographicNo")) { new GenericRESTResponse(false, "Missing required fields: 'note' and/or 'demographicNo'"); }
+		String strNote = json.getString("note");
+		Integer demographicNo = json.getInt("demographicNo");
+		Integer noteId = json.containsKey("noteId") ? json.getInt("noteId") : 0;
+
+		// Extract plain text
+		strNote = Jsoup.parse(strNote).text();
+		if (strNote == null || strNote.isEmpty()) { new GenericRESTResponse(false, "No text content found in the note"); } 
+		
+		logger.info("want to save note id " + noteId + " with value " + strNote);		
+		
+		Date creationDate = new Date();
+		LoggedInInfo loggedInInfo=this.getLoggedInInfo();
+		Provider loggedInProvider = loggedInInfo.getLoggedInProvider();
+		
+		
+		String revision = "1";
+		String history = strNote;
+		String uuid = null;
+		
+		if(noteId != null  && noteId.intValue()>0) {
+			CaseManagementNote existingNote = caseManagementMgr.getNote(String.valueOf(noteId));
+			
+			revision = String.valueOf(Integer.valueOf(existingNote.getRevision()).intValue() + 1);
+			history = strNote + "\n" + existingNote.getHistory();
+			uuid = existingNote.getUuid();
+		}
+		
+		CaseManagementNote cmn = new CaseManagementNote();
+		cmn.setAppointmentNo(0);
+		cmn.setArchived(false);
+		cmn.setCreate_date(creationDate);
+		cmn.setDemographic_no(String.valueOf(demographicNo));
+		cmn.setEncounter_type("");
+		cmn.setNote(strNote);
+		cmn.setObservation_date(creationDate);
+		
+		cmn.setProviderNo(loggedInProvider.getProviderNo());
+		cmn.setRevision(revision);
+		cmn.setSigned(true);
+		cmn.setSigning_provider_no(loggedInProvider.getProviderNo());
+		cmn.setUpdate_date(creationDate);
+		cmn.setHistory(history);
+		//just doing this because the other code does it.
+		cmn.setReporter_program_team("null");
+		cmn.setUuid(uuid);
+		
+		
+		ProgramProvider pp = programManager2.getCurrentProgramInDomain(getLoggedInInfo(),getLoggedInInfo().getLoggedInProviderNo());
+		if(pp != null) {
+			cmn.setProgram_no(String.valueOf(pp.getProgramId()));
+		} else {
+			List<ProgramProvider> ppList = programManager2.getProgramDomain(getLoggedInInfo(),getLoggedInInfo().getLoggedInProviderNo());
+			if(ppList != null && ppList.size()>0) {
+				cmn.setProgram_no(String.valueOf(ppList.get(0).getProgramId()));
+			}
+			
+		}
+
+		//weird place for it , but for now.
+		CaseManagementEntryAction.determineNoteRole(cmn,loggedInProvider.getProviderNo(),String.valueOf(demographicNo));
+		
+		caseManagementMgr.saveNoteSimple(cmn);
+
+		logger.info("note id is " + cmn.getId());
+				
+		Issue issue = this.issueDao.findIssueByTypeAndCode("system", "ExternalNote");
+		if(issue == null) {
+			logger.warn("missing ExternalNote issue, please run all database updates");
+			return null;
+		}
+		
+		CaseManagementIssue cmi = caseManagementMgr.getIssueById(demographicNo.toString(), issue.getId().toString());
+		
+		if(cmi == null) {
+		//save issue..this will make it a "cpp looking" issue in the eChart
+			cmi = new CaseManagementIssue();
+			cmi.setAcute(false);
+			cmi.setCertain(false);
+			cmi.setDemographic_no(demographicNo);
+			cmi.setIssue_id(issue.getId());
+			cmi.setMajor(false);
+			cmi.setProgram_id(Integer.parseInt(cmn.getProgram_no()));
+			cmi.setResolved(false);
+			cmi.setType(issue.getRole());
+			cmi.setUpdate_date(creationDate);
+			
+			caseManagementMgr.saveCaseIssue(cmi);
+			
+		}
+
+		cmn.getIssues().add(cmi);
+		caseManagementMgr.updateNote(cmn);
+		
+		return new GenericRESTResponse(true, "Note saved successfully");
 	}
 
 	
