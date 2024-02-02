@@ -108,22 +108,46 @@ public class MeasurementsExtDao extends AbstractDao<MeasurementsExt>{
 	}
 
 	public Integer getMeasurementIdByLabNoAndTestName(String labNo, String testName) {
-		String queryStr = "SELECT m.measurementId FROM MeasurementsExt m " + 
-			"WHERE (SELECT MAX(m1.val) FROM MeasurementsExt m1 WHERE m1.measurementId = m.measurementId AND m1.keyVal = 'lab_no') = ?1 " +
-			"AND (SELECT MAX(m2.val) FROM MeasurementsExt m2 WHERE m2.measurementId = m.measurementId AND m2.keyVal = 'name') = ?2 " + 
-			"GROUP BY m.measurementId";
+		//TODO: consider replacing this with a simpler query.   This approach was taken because a self join such as the following was resulting in hibernate errors and in the interests in time
+		//a procedural approach was taken
+		/*
+		 * SELECT DISTINCT a.measurementId
+		 * FROM MeasurementsExt a
+		 * JOIN MeasurementsExt b ON a.measurementId = b.measurementId 
+		 * WHERE a.keyval = 'lab_no' and a.val = ?1
+		 * AND b.keyval = 'name' and b.val = ?2;
+		 */
 
+		String queryStr = "SELECT distinct m.measurementId FROM MeasurementsExt m " + "WHERE m.keyVal = 'lab_no' and m.val = ?1";
+					
 		Query q = entityManager.createQuery(queryStr);
 		q.setParameter(1, labNo);
-		q.setParameter(2, testName);
 
 		@SuppressWarnings("unchecked")
 		List<Integer> rs = q.getResultList();
-
+		
 		if (!rs.isEmpty()) { 
-			return rs.get(0);
+			String mIds = "";	
+			for (int i = 0;i < rs.size(); i++){
+				mIds += rs.get(i);
+				if (i <= rs.size()-2){
+					mIds += ",";
+				}
+			}
+			queryStr = "SELECT distinct m.measurementId FROM MeasurementsExt m " + "WHERE m.measurementId in (" + mIds + ") and m.keyVal = 'name' and m.val = ?1";
+
+			q = entityManager.createQuery(queryStr);
+			q.setParameter(1, testName);
+
+			@SuppressWarnings("unchecked")
+			List<Integer> rs2 = q.getResultList();
+
+			if (!rs2.isEmpty()) { 
+				return rs2.get(0);
+			}
+			return null;
 		}
-		return null;
+		return null;		
 	}
 
 	/**
