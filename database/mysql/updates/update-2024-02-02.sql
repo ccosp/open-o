@@ -1,0 +1,1 @@
+UPDATE professionalSpecialists SET deleted = 0 WHERE deleted IS NULL;
