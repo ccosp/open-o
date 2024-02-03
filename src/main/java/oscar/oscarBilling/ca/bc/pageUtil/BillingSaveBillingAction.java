@@ -379,7 +379,7 @@ public class BillingSaveBillingAction extends Action {
         bill.setFacilitySubNo(bean.getFacilitySubNum());
         bill.setPaymentMethod(Integer.parseInt(bean.getPaymentType()));
 
-        if (!bean.getPatientHCType().trim().equals(bean.getBillRegion().trim())) {
+        if (bean.getPatientHCType() != null && ! bean.getPatientHCType().isEmpty() && ! bean.getBillRegion().trim().equals(bean.getPatientHCType().trim())) {
 
             bill.setOinInsurerCode(bean.getPatientHCType());
             bill.setOinRegistrationNo(bean.getPatientPHN());
