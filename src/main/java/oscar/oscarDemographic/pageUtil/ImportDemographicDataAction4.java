@@ -269,17 +269,14 @@ public class ImportDemographicDataAction4 extends Action {
 			throw new SecurityException("missing required security object (_demographic)");
 		}
 
-        //TODO More thought needs to be put into the user interface. Extra attention on multithreading is required.
-        // Importing single patient files does work ok
-        // -but-
-        // Batch imports easily exceed 30GB in size. Importing an entire patient panel can
-        // take up to 24 hours to complete.  And it's most likely that the user will not
-        // receive a status of completion of a batch import before the OSCAR session
-        // expires and/or after the user navigates away from the upload page. Cancellation of the HTTP thread
-        // (session) also causes loss of the import stream. Very frustrating.
-        // To help overcome interuptions, uploaded files must be saved as *temporary* files before processing.
-        // Do not save to OSCAR's document volumes - there is no need to use extra disk space
-        // to store redundant data.
+        //TODO: More thought needs to be put into the user interface. Extra attention on multithreading is advised
+        //Status Quo of as 2024.02.03
+            // Importing single XML patient files (with embedded HL7 and PDFs) does work ok (most recently done with an Avaros export 2024.02.03)
+            // Importing multiple XML patient files also works ok (most recently done with ~500 Avaros exports 2024.02.03 amounting to 18GB in approximately 5 hours)
+            // The batch uploading is currently done via a javascript loop which uploads and processes each file, one at a time.  The browser window cannot be closed or navigated away during uploading. 
+            // The status of each file is individually reported back to the front end.        
+            // HOWEVER, if OSCAR session expires or after the user navigates away from the upload page, the whole process is lost.            
+            // To help overcome interuptions, consider reworking process to upload files quickly to temporary folder before batch back end procesing and reporting of status
 
         // initialize
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
