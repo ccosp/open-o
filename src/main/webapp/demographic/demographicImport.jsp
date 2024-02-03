@@ -83,8 +83,12 @@ $(document).ready(function () {
 		}
 
 		$('#result').empty();
-		uploadFiles(files, this);
-		$('#importFile').val('');
+		uploadFiles(files, this).then(() => {            
+            $('#importFile').val('');
+        }).catch(error => {            
+            console.error("Error in file upload:", error);
+        });
+
 	});
 });
 
