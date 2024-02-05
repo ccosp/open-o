@@ -47,6 +47,8 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Safelist;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.PMmodule.service.AdmissionManager;
 import org.oscarehr.PMmodule.service.ProgramManager;
@@ -1710,7 +1712,7 @@ public class NotesService extends AbstractServiceImpl {
 	@Path("/externalSaveNote")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public GenericRESTResponse externalSaveNote(JSONObject json){
+	public GenericRESTResponse externalSaveNote(JSONObject json) {
 		
 		if(!securityInfoManager.hasPrivilege(getLoggedInInfo(), "_eChart", "w", null)) {
 			throw new RuntimeException("Access Denied");
@@ -1718,14 +1720,14 @@ public class NotesService extends AbstractServiceImpl {
 
 		logger.info("The config "+json.toString());
 		
-		if (!json.containsKey("note") || !json.containsKey("demographicNo")) { new GenericRESTResponse(false, "Missing required fields: 'note' and/or 'demographicNo'"); }
+		if (!json.containsKey("note") || !json.containsKey("demographicNo")) { return new GenericRESTResponse(false, "Missing required fields: 'note' and/or 'demographicNo'"); }
 		String strNote = json.getString("note");
 		Integer demographicNo = json.getInt("demographicNo");
 		Integer noteId = json.containsKey("noteId") ? json.getInt("noteId") : 0;
 
 		// Extract plain text
-		strNote = Jsoup.parse(strNote).text();
-		if (strNote == null || strNote.isEmpty()) { new GenericRESTResponse(false, "No text content found in the note"); } 
+		strNote = extractHtmlWithLineBreaks(strNote);
+		if (strNote == null || strNote.isEmpty()) { return new GenericRESTResponse(false, "No text content found in the note"); } 
 		
 		logger.info("want to save note id " + noteId + " with value " + strNote);		
 		
@@ -1813,6 +1815,17 @@ public class NotesService extends AbstractServiceImpl {
 		caseManagementMgr.updateNote(cmn);
 		
 		return new GenericRESTResponse(true, "Note saved successfully");
+	}
+
+	private String extractHtmlWithLineBreaks(String strNote) {
+		Document jsoupDoc = Jsoup.parse(strNote);
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+		outputSettings.prettyPrint(false);
+		jsoupDoc.outputSettings(outputSettings);
+		jsoupDoc.select("br").before("\\n");
+		jsoupDoc.select("p").before("\\n");
+		String str = jsoupDoc.html().replaceAll("\\\\n", "\n");
+		return Jsoup.clean(str, "", Safelist.none(), outputSettings);
 	}
 
 	
