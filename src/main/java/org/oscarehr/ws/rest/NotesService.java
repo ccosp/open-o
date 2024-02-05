@@ -80,6 +80,7 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.ws.rest.conversion.CaseManagementIssueConverter;
 import org.oscarehr.ws.rest.conversion.IssueConverter;
 import org.oscarehr.ws.rest.to.AbstractSearchResponse;
+import org.oscarehr.ws.rest.to.ExternalNoteResponse;
 import org.oscarehr.ws.rest.to.GenericRESTResponse;
 import org.oscarehr.ws.rest.to.TicklerNoteResponse;
 import org.oscarehr.ws.rest.to.model.CaseManagementIssueTo1;
@@ -1712,7 +1713,7 @@ public class NotesService extends AbstractServiceImpl {
 	@Path("/externalSaveNote")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public GenericRESTResponse externalSaveNote(JSONObject json) {
+	public ExternalNoteResponse externalSaveNote(JSONObject json) {
 		
 		if(!securityInfoManager.hasPrivilege(getLoggedInInfo(), "_eChart", "w", null)) {
 			throw new RuntimeException("Access Denied");
@@ -1720,14 +1721,14 @@ public class NotesService extends AbstractServiceImpl {
 
 		logger.info("The config "+json.toString());
 		
-		if (!json.containsKey("note") || !json.containsKey("demographicNo")) { return new GenericRESTResponse(false, "Missing required fields: 'note' and/or 'demographicNo'"); }
+		if (!json.containsKey("note") || !json.containsKey("demographicNo")) { return new ExternalNoteResponse(false, "Missing required fields: 'note' and/or 'demographicNo'", null); }
 		String strNote = json.getString("note");
 		Integer demographicNo = json.getInt("demographicNo");
 		Integer noteId = json.containsKey("noteId") ? json.getInt("noteId") : 0;
 
 		// Extract plain text
 		strNote = extractHtmlWithLineBreaks(strNote);
-		if (strNote == null || strNote.isEmpty()) { return new GenericRESTResponse(false, "No text content found in the note"); } 
+		if (strNote == null || strNote.isEmpty()) { return new ExternalNoteResponse(false, "No text content found in the note", null); } 
 		
 		logger.info("want to save note id " + noteId + " with value " + strNote);		
 		
@@ -1788,8 +1789,8 @@ public class NotesService extends AbstractServiceImpl {
 				
 		Issue issue = this.issueDao.findIssueByTypeAndCode("system", "ExternalNote");
 		if(issue == null) {
-			logger.warn("missing ExternalNote issue, please run all database updates");
-			return null;
+			logger.error("Missing ExternalNote issue, please run all database updates");
+			return new ExternalNoteResponse(false, "Missing ExternalNote issue", null);
 		}
 		
 		CaseManagementIssue cmi = caseManagementMgr.getIssueById(demographicNo.toString(), issue.getId().toString());
@@ -1814,7 +1815,7 @@ public class NotesService extends AbstractServiceImpl {
 		cmn.getIssues().add(cmi);
 		caseManagementMgr.updateNote(cmn);
 		
-		return new GenericRESTResponse(true, "Note saved successfully");
+		return new ExternalNoteResponse(true, "Note saved successfully", cmn.getId());
 	}
 
 	private String extractHtmlWithLineBreaks(String strNote) {
