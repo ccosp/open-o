@@ -80,7 +80,6 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.ws.rest.conversion.CaseManagementIssueConverter;
 import org.oscarehr.ws.rest.conversion.IssueConverter;
 import org.oscarehr.ws.rest.to.AbstractSearchResponse;
-import org.oscarehr.ws.rest.to.ExternalNoteResponse;
 import org.oscarehr.ws.rest.to.GenericRESTResponse;
 import org.oscarehr.ws.rest.to.TicklerNoteResponse;
 import org.oscarehr.ws.rest.to.model.CaseManagementIssueTo1;
@@ -346,6 +345,7 @@ public class NotesService extends AbstractServiceImpl {
 		String noteTxt = note.getNote();
 		noteTxt = org.apache.commons.lang.StringUtils.trimToNull(noteTxt);
 		if (noteTxt == null || noteTxt.equals("")) return null;
+		noteTxt = extractHtmlWithLineBreaks(noteTxt);
 
 		caseMangementNote.setNote(noteTxt);
 		
@@ -432,7 +432,7 @@ public class NotesService extends AbstractServiceImpl {
 			} 
 		}
 		
-		note.setIssues(new HashSet<CaseManagementIssue>(issuelist));
+		// note.setIssues(new HashSet<CaseManagementIssue>(issuelist));
 		caseMangementNote.setIssues(new HashSet<CaseManagementIssue>(issuelist));
 
 		
@@ -441,10 +441,10 @@ public class NotesService extends AbstractServiceImpl {
 		
 	
 		// remove signature and the related issues from note 
-		String noteString = note.getNote();
+		// String noteString = note.getNote();
 		// noteString = removeSignature(noteString);
 		// noteString = removeCurrentIssue(noteString);
-		caseMangementNote.setNote(noteString);
+		// caseMangementNote.setNote(noteTxt);
 		
 		/* Not sure how to handle this
 		// add issues into notes 
@@ -537,7 +537,7 @@ public class NotesService extends AbstractServiceImpl {
 		String lastSavedNoteString = null;
 		String user = loggedInInfo.getLoggedInProvider().getProviderNo();
 		String remoteAddr = 	""; // Not sure how to get this	
-		caseMangementNote = caseManagementMgr.saveCaseManagementNote(loggedInInfo, caseMangementNote,issuelist, cpp, ongoing,verify, loggedInInfo.getLocale(),now,annotationNote,userName,user,remoteAddr, lastSavedNoteString) ;
+		caseMangementNote = caseManagementMgr.saveCaseManagementNote(loggedInInfo, caseMangementNote,issuelist, cpp, ongoing,verify, getLocale(),now,annotationNote,userName,user,remoteAddr, lastSavedNoteString) ;
 			
 		caseManagementMgr.getEditors(caseMangementNote);
 		
@@ -547,7 +547,8 @@ public class NotesService extends AbstractServiceImpl {
 		note.setUuid(caseMangementNote.getUuid());
 		note.setUpdateDate(caseMangementNote.getUpdate_date());
 		note.setObservationDate(caseMangementNote.getObservation_date());
-		logger.error("note should return like this " + note.getNote() );
+		note.setNote(caseMangementNote.getNote());
+		logger.info("note should return like this " + note.getNote() );
 		return note;
 		
 		
@@ -1707,115 +1708,6 @@ public class NotesService extends AbstractServiceImpl {
 		 
 		
 		return new GenericRESTResponse();
-	}
-
-	@POST
-	@Path("/externalSaveNote")
-	@Produces("application/json")
-	@Consumes("application/json")
-	public ExternalNoteResponse externalSaveNote(JSONObject json) {
-		
-		if(!securityInfoManager.hasPrivilege(getLoggedInInfo(), "_eChart", "w", null)) {
-			throw new RuntimeException("Access Denied");
-		}
-
-		logger.info("The config "+json.toString());
-		
-		if (!json.containsKey("note") || !json.containsKey("demographicNo")) { return new ExternalNoteResponse(false, "Missing required fields: 'note' and/or 'demographicNo'", null); }
-		String strNote = json.getString("note");
-		Integer demographicNo = json.getInt("demographicNo");
-		Integer noteId = json.containsKey("noteId") ? json.getInt("noteId") : 0;
-
-		// Extract plain text
-		strNote = extractHtmlWithLineBreaks(strNote);
-		if (strNote == null || strNote.isEmpty()) { return new ExternalNoteResponse(false, "No text content found in the note", null); } 
-		
-		logger.info("want to save note id " + noteId + " with value " + strNote);		
-		
-		Date creationDate = new Date();
-		LoggedInInfo loggedInInfo=this.getLoggedInInfo();
-		Provider loggedInProvider = loggedInInfo.getLoggedInProvider();
-		
-		
-		String revision = "1";
-		String history = strNote;
-		String uuid = null;
-		
-		if(noteId != null  && noteId.intValue()>0) {
-			CaseManagementNote existingNote = caseManagementMgr.getNote(String.valueOf(noteId));
-			
-			revision = String.valueOf(Integer.valueOf(existingNote.getRevision()).intValue() + 1);
-			history = strNote + "\n" + existingNote.getHistory();
-			uuid = existingNote.getUuid();
-		}
-		
-		CaseManagementNote cmn = new CaseManagementNote();
-		cmn.setAppointmentNo(0);
-		cmn.setArchived(false);
-		cmn.setCreate_date(creationDate);
-		cmn.setDemographic_no(String.valueOf(demographicNo));
-		cmn.setEncounter_type("");
-		cmn.setNote(strNote);
-		cmn.setObservation_date(creationDate);
-		
-		cmn.setProviderNo(loggedInProvider.getProviderNo());
-		cmn.setRevision(revision);
-		cmn.setSigned(true);
-		cmn.setSigning_provider_no(loggedInProvider.getProviderNo());
-		cmn.setUpdate_date(creationDate);
-		cmn.setHistory(history);
-		//just doing this because the other code does it.
-		cmn.setReporter_program_team("null");
-		cmn.setUuid(uuid);
-		
-		
-		ProgramProvider pp = programManager2.getCurrentProgramInDomain(getLoggedInInfo(),getLoggedInInfo().getLoggedInProviderNo());
-		if(pp != null) {
-			cmn.setProgram_no(String.valueOf(pp.getProgramId()));
-		} else {
-			List<ProgramProvider> ppList = programManager2.getProgramDomain(getLoggedInInfo(),getLoggedInInfo().getLoggedInProviderNo());
-			if(ppList != null && ppList.size()>0) {
-				cmn.setProgram_no(String.valueOf(ppList.get(0).getProgramId()));
-			}
-			
-		}
-
-		//weird place for it , but for now.
-		CaseManagementEntryAction.determineNoteRole(cmn,loggedInProvider.getProviderNo(),String.valueOf(demographicNo));
-		
-		caseManagementMgr.saveNoteSimple(cmn);
-
-		logger.info("note id is " + cmn.getId());
-				
-		Issue issue = this.issueDao.findIssueByTypeAndCode("system", "ExternalNote");
-		if(issue == null) {
-			logger.error("Missing ExternalNote issue, please run all database updates");
-			return new ExternalNoteResponse(false, "Missing ExternalNote issue", null);
-		}
-		
-		CaseManagementIssue cmi = caseManagementMgr.getIssueById(demographicNo.toString(), issue.getId().toString());
-		
-		if(cmi == null) {
-		//save issue..this will make it a "cpp looking" issue in the eChart
-			cmi = new CaseManagementIssue();
-			cmi.setAcute(false);
-			cmi.setCertain(false);
-			cmi.setDemographic_no(demographicNo);
-			cmi.setIssue_id(issue.getId());
-			cmi.setMajor(false);
-			cmi.setProgram_id(Integer.parseInt(cmn.getProgram_no()));
-			cmi.setResolved(false);
-			cmi.setType(issue.getRole());
-			cmi.setUpdate_date(creationDate);
-			
-			caseManagementMgr.saveCaseIssue(cmi);
-			
-		}
-
-		cmn.getIssues().add(cmi);
-		caseManagementMgr.updateNote(cmn);
-		
-		return new ExternalNoteResponse(true, "Note saved successfully", cmn.getId());
 	}
 
 	private String extractHtmlWithLineBreaks(String strNote) {
