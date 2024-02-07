@@ -1540,6 +1540,7 @@ insert into `secObjectName` (`objectName`,`description`,`orgapplicable`) values(
 INSERT INTO `secObjectName` (`objectName`, `description`, `orgapplicable`) VALUES ('_team_schedule_only', 'Restrict schedule to only login provider and his team', '0');
 INSERT INTO `secObjectName` (`objectName`, `description`, `orgapplicable`) VALUES ('_team_billing_only', 'Restrict billing access to only login provider and his team', '0');
 INSERT INTO `secObjectName` (`objectName`, `description`, `orgapplicable`) VALUES ('_admin.fax', 'Configure & Manage Faxes', '0');
+INSERT INTO `secObjectName` (`objectName`, `description`, `orgapplicable`) VALUES ('_admin.email', 'Configure & Manage Emails', '0');
 
 insert into `secObjectName` (`objectName`) values ('_newCasemgmt.preventions');
 insert into `secObjectName` (`objectName`) values ('_newCasemgmt.viewTickler');
@@ -1747,6 +1748,7 @@ insert into `secObjPrivilege` values('admin','_admin.securityLogReport','x',0,'9
 insert into `secObjPrivilege` values('admin','_admin.systemMessage','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_admin.unlockAccount','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_admin.fax','x',0,'999998');
+insert into `secObjPrivilege` values('admin','_admin.email','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_admin.userCreatedForms','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_admin.measurements','x',0,'999998');
 insert into `secObjPrivilege` values('admin','_appointment','x',0,'999998');
