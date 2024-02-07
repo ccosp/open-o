@@ -48,8 +48,14 @@ public class EmailComposeManager {
     private FormsManager formsManager;
     @Autowired
     private PatientConsentManager patientConsentManager;
+    @Autowired
+	private SecurityInfoManager securityInfoManager;
     
     public List<EmailAttachment> prepareEFormAttachments(LoggedInInfo loggedInInfo, String fdid, String[] attachedEForms) throws PDFGenerationException {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_eform)");
+		}
+
         List<String> attachedEFormIds = convertToList(attachedEForms);
         if (!StringUtils.isNullOrEmpty(fdid)) { attachedEFormIds.add(0, fdid); }
 
@@ -63,6 +69,10 @@ public class EmailComposeManager {
     }
 
     public List<EmailAttachment> prepareEDocAttachments(LoggedInInfo loggedInInfo, String[] attachedDocuments) throws PDFGenerationException {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_edoc", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_edoc)");
+		}
+
         List<String> attachedEDocIds = convertToList(attachedDocuments);
 
         List<EmailAttachment> emailAttachments = new ArrayList<>();
@@ -75,6 +85,10 @@ public class EmailComposeManager {
     }
 
     public List<EmailAttachment> prepareLabAttachments(LoggedInInfo loggedInInfo, String[] attachedLabs) throws PDFGenerationException {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_lab", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_lab)");
+		}
+
         List<String> attachedLabIds = convertToList(attachedLabs);
 
         List<EmailAttachment> emailAttachments = new ArrayList<>();
@@ -87,6 +101,10 @@ public class EmailComposeManager {
     }
 
     public List<EmailAttachment> prepareHRMAttachments(LoggedInInfo loggedInInfo, String[] attachedHRMDocuments) throws PDFGenerationException {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_hrm", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_hrm)");
+		}
+
         List<String> attachedHRMIds = convertToList(attachedHRMDocuments);
 
         List<EmailAttachment> emailAttachments = new ArrayList<>();
@@ -99,6 +117,11 @@ public class EmailComposeManager {
     }
 
     public List<EmailAttachment> prepareFormAttachments(HttpServletRequest request, HttpServletResponse response, String[] attachedForms) throws PDFGenerationException {
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_form)");
+		}
+
         List<String> attachedFormIds = convertToList(attachedForms);
 
         List<EmailAttachment> emailAttachments = new ArrayList<>();
@@ -120,6 +143,10 @@ public class EmailComposeManager {
     }
 
     public String[] getEmailConsentStatus(LoggedInInfo loggedInInfo, Integer demographicId) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
         String UNKNOWN = "Unknown", OPTIN = "Explicit Opt-In", OPTOUT = "Explicit Opt-Out";
         UserProperty userProperty = userPropertyDAO.getProp(UserProperty.EMAIL_COMMUNICATION);
         if (userProperty == null || StringUtils.isNullOrEmpty(userProperty.getValue())) { return new String[]{"", UNKNOWN}; }

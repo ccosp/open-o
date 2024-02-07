@@ -21,6 +21,7 @@ import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.email.core.Email;
 import org.oscarehr.email.core.EmailSender;
 import org.oscarehr.util.EmailSendingException;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFEncryptionUtil;
 import org.oscarehr.util.PDFGenerationException;
@@ -40,23 +41,33 @@ public class EmailManager {
 
     @Autowired
     private DocumentAttachmentManager documentAttachmentManager;
+    @Autowired
+	private SecurityInfoManager securityInfoManager;
 
-    public EmailLog sendEmail(Email email) {
+    public EmailLog sendEmail(LoggedInInfo loggedInInfo, Email email) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
         sanitizeEmailFields(email);
-        EmailLog emailLog = prepareEmailForOutbox(email);
+        EmailLog emailLog = prepareEmailForOutbox(loggedInInfo, email);
         try {
             if (email.getIsEncrypted()) { encryptEmail(email); }
-            EmailSender emailSender = new EmailSender(emailLog.getEmailConfig(), email);
+            EmailSender emailSender = new EmailSender(loggedInInfo, emailLog.getEmailConfig(), email);
             emailSender.send();
-            updateEmailStatus(emailLog, EmailStatus.SUCCESS, "");
+            updateEmailStatus(loggedInInfo, emailLog, EmailStatus.SUCCESS, "");
         } catch (EmailSendingException e) {
-            updateEmailStatus(emailLog, EmailStatus.FAILED, e.getMessage());
+            updateEmailStatus(loggedInInfo, emailLog, EmailStatus.FAILED, e.getMessage());
             logger.error("Failed to send email", e);
         }
         return emailLog;
     }
 
-    public EmailLog prepareEmailForOutbox(Email email) {
+    public EmailLog prepareEmailForOutbox(LoggedInInfo loggedInInfo, Email email) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
         EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(email.getSender());
         EmailLog emailLog = new EmailLog(emailConfig, email.getSender(), email.getRecipients(), email.getSubject(), email.getBody(), EmailStatus.OUTBOX);
         setEmailAttachments(emailLog, email.getAttachments());
@@ -72,7 +83,11 @@ public class EmailManager {
         return emailLog;
     }
 
-    public EmailLog updateEmailStatus(EmailLog emailLog, EmailStatus emailStatus, String errorMessage) {
+    public EmailLog updateEmailStatus(LoggedInInfo loggedInInfo, EmailLog emailLog, EmailStatus emailStatus, String errorMessage) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+        
         emailLog.setStatus(emailStatus);
         emailLog.setErrorMessage(errorMessage);
         emailLog.setTimestamp(new Date());

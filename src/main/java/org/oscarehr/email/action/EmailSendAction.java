@@ -30,7 +30,7 @@ public class EmailSendAction extends DispatchAction {
     public ActionForward sendEFormEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
         Email email = prepareEmailFields(request);
-        EmailLog emailLog = emailManager.sendEmail(email);
+        EmailLog emailLog = emailManager.sendEmail(loggedInInfo, email);
         if (!emailLog.getStatus().equals(EmailStatus.SUCCESS)) { 
             request.setAttribute("isEmailSuccessful", false); 
         } else {

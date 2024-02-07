@@ -14,7 +14,9 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.EmailSendingException;
+import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,7 +28,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class EmailSender {
     private final Logger logger = MiscUtils.getLogger();
+    private LoggedInInfo loggedInInfo;
+
     private JavaMailSender javaMailSender = SpringUtils.getBean(JavaMailSender.class);
+    private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
+
     private EmailConfig emailConfig;
     private String[] recipients = new String[0];
     private String subject;
@@ -35,7 +41,8 @@ public class EmailSender {
 
     public EmailSender() { }
 
-    public EmailSender(EmailConfig emailConfig, Email email) {
+    public EmailSender(LoggedInInfo loggedInInfo, EmailConfig emailConfig, Email email) {
+        this.loggedInInfo = loggedInInfo;
         this.emailConfig = emailConfig;
         this.recipients = email.getRecipients();
         this.subject = email.getSubject();
@@ -43,7 +50,8 @@ public class EmailSender {
         this.attachments = email.getAttachments();
     }
 
-    public EmailSender(EmailConfig emailConfig, String[] recipients, String subject, String body, List<EmailAttachment> attachments) {
+    public EmailSender(LoggedInInfo loggedInInfo, EmailConfig emailConfig, String[] recipients, String subject, String body, List<EmailAttachment> attachments) {
+        this.loggedInInfo = loggedInInfo;
         this.emailConfig = emailConfig;
         this.recipients = recipients;
         this.subject = subject;
@@ -52,6 +60,10 @@ public class EmailSender {
     }
     
     public void send() throws EmailSendingException {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
         javaMailSender = createMailSender(emailConfig);
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
