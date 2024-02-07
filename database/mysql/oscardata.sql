@@ -1508,6 +1508,7 @@ insert into `secPrivilege` values(5, 'o', 'No rights.');
 insert into `secPrivilege` values(6, 'u', 'Update');
 
 INSERT INTO `secObjectName`(`objectName`, `description`, `orgapplicable`) VALUES ('_fax', 'Send and Receive Faxes', 0);
+INSERT INTO `secObjectName`(`objectName`, `description`, `orgapplicable`) VALUES ('_email', 'Send and Receive Emails', 0);
 insert into `secObjectName` (`objectName`,`description`,`orgapplicable`) values('_appointment', 'Appointment',0);
 insert into `secObjectName`  (`objectName`,`description`,`orgapplicable`) values('_admin','Administration',0);
 insert into `secObjectName`  (`objectName`,`description`,`orgapplicable`) values('_eChart', 'Encounter', 0);
@@ -1818,6 +1819,10 @@ insert into secObjectName values('_queue.1','default',0);
 INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_fax', 'x', 0, '999999');
 INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('admin', '_fax', 'x', 0, '999998');
 INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('doctor', '_fax', 'x', 0, '999998');
+
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('-1', '_email', 'x', 0, '999999');
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('admin', '_email', 'x', 0, '999998');
+INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `priority`, `provider_no`) VALUES ('doctor', '_email', 'x', 0, '999998');
 
 -- for role locum
 insert into `secObjPrivilege` values('locum', '_appointment', 'x', 0, '999998');
