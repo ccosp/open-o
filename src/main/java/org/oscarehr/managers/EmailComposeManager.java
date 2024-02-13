@@ -14,12 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.validator.EmailValidator;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.EmailConfigDao;
+import org.oscarehr.common.dao.EmailLogDao;
 import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.Consent;
 import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
+import org.oscarehr.common.model.EmailLog;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
@@ -38,6 +40,8 @@ public class EmailComposeManager {
     @Autowired
     private EmailConfigDao emailConfigDao;
     @Autowired
+    private EmailLogDao emailLogDao;
+    @Autowired
     private UserPropertyDAO userPropertyDAO;
 
     @Autowired
@@ -50,6 +54,54 @@ public class EmailComposeManager {
     private PatientConsentManager patientConsentManager;
     @Autowired
 	private SecurityInfoManager securityInfoManager;
+
+    public EmailLog prepareEmailForResend(LoggedInInfo loggedInInfo, Integer emailLogId) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
+        EmailLog emailLog = emailLogDao.getEmailLogById(emailLogId);
+        return emailLog;
+    }
+
+    public List<EmailAttachment> refreshEmailAttachments(HttpServletRequest request, HttpServletResponse response, EmailLog emailLog) throws PDFGenerationException {
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
+        List<EmailAttachment> emailAttachmentList = emailLog.getEmailAttachments();
+        for (EmailAttachment emailAttachment : emailAttachmentList) {
+            switch (emailAttachment.getDocumentType()) {
+                case EFORM:
+                    Path eFormPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, emailAttachment.getDocumentId());
+                    emailAttachment.setFilePath(eFormPDFPath.toString());
+                    emailAttachment.setFileSize(getFileSize(eFormPDFPath));
+                    break;
+                case DOC:
+                    Path eDocPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, emailAttachment.getDocumentId());
+                    emailAttachment.setFilePath(eDocPDFPath.toString());
+                    emailAttachment.setFileSize(getFileSize(eDocPDFPath));
+                    break;
+                case LAB:
+                    Path labPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, emailAttachment.getDocumentId());
+                    emailAttachment.setFilePath(labPDFPath.toString());
+                    emailAttachment.setFileSize(getFileSize(labPDFPath));
+                    break;
+                case HRM:
+                    Path hrmPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, emailAttachment.getDocumentId());
+                    emailAttachment.setFilePath(hrmPDFPath.toString());
+                    emailAttachment.setFileSize(getFileSize(hrmPDFPath));
+                    break;
+                case FORM:
+                    Path formPDFPath = formsManager.renderForm(request, response, emailAttachment.getDocumentId().toString());
+                    emailAttachment.setFilePath(formPDFPath.toString());
+                    emailAttachment.setFileSize(getFileSize(formPDFPath));
+                    break;
+            }
+        }
+        return emailAttachmentList;
+    }
     
     public List<EmailAttachment> prepareEFormAttachments(LoggedInInfo loggedInInfo, String fdid, String[] attachedEForms) throws PDFGenerationException {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.READ, null)) {

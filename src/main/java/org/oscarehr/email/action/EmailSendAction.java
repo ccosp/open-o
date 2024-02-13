@@ -29,8 +29,8 @@ public class EmailSendAction extends DispatchAction {
 
     public ActionForward sendEFormEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        Email email = prepareEmailFields(request);
-        EmailLog emailLog = emailManager.sendEmail(loggedInInfo, email);
+        sendEmail(request);
+        EmailLog emailLog = (EmailLog) request.getAttribute("emailLog");
         if (!emailLog.getStatus().equals(EmailStatus.SUCCESS)) { 
             request.setAttribute("isEmailSuccessful", false); 
         } else {
@@ -39,7 +39,17 @@ public class EmailSendAction extends DispatchAction {
         }
         request.setAttribute("isOpenEForm", request.getParameter("openEFormAfterEmail"));
         request.setAttribute("fdid", request.getParameter("fdid"));
-        request.setAttribute("emailLog", emailLog);
+        return mapping.findForward("success");
+    }
+
+    public ActionForward sendDirectEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        sendEmail(request);
+        EmailLog emailLog = (EmailLog) request.getAttribute("emailLog");
+        if (!emailLog.getStatus().equals(EmailStatus.SUCCESS)) { 
+            request.setAttribute("isEmailSuccessful", false); 
+        } else {
+            request.setAttribute("isEmailSuccessful", true);
+        }
         return mapping.findForward("success");
     }
 
@@ -55,6 +65,13 @@ public class EmailSendAction extends DispatchAction {
                 break;
         }
         return emailRedirect;
+    }
+
+    private void sendEmail(HttpServletRequest request) {
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        Email email = prepareEmailFields(request);
+        EmailLog emailLog = emailManager.sendEmail(loggedInInfo, email);
+        request.setAttribute("emailLog", emailLog);
     }
 
     private Email prepareEmailFields(HttpServletRequest request) {

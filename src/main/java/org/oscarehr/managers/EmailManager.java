@@ -3,7 +3,14 @@ package org.oscarehr.managers;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +27,7 @@ import org.oscarehr.documentManager.ConvertToEdoc;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.email.core.Email;
 import org.oscarehr.email.core.EmailSender;
+import org.oscarehr.email.core.EmailStatusResult;
 import org.oscarehr.util.EmailSendingException;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -69,7 +77,7 @@ public class EmailManager {
 		}
 
         EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(email.getSender());
-        EmailLog emailLog = new EmailLog(emailConfig, email.getSender(), email.getRecipients(), email.getSubject(), email.getBody(), EmailStatus.OUTBOX);
+        EmailLog emailLog = new EmailLog(emailConfig, email.getSender(), email.getRecipients(), email.getSubject(), email.getBody(), EmailStatus.FAILED);
         setEmailAttachments(emailLog, email.getAttachments());
         emailLog.setEncryptedMessage(email.getEncryptedMessage());
         emailLog.setPassword(email.getPassword());
@@ -78,9 +86,19 @@ public class EmailManager {
         emailLog.setIsAttachmentEncrypted(email.getIsAttachmentEncrypted());
         emailLog.setChartDisplayOption(email.getChartDisplayOption());
         emailLog.setTransactionType(email.getTransactionType());
+        emailLog.setErrorMessage("Email delivery unsuccessful; status will display as 'Failed' until the email is sent successfully.");
         emailLog.setDemographicNo(email.getDemographicNo());
         emailLogDao.persist(emailLog);
         return emailLog;
+    }
+
+    public EmailLog updateEmailStatus(LoggedInInfo loggedInInfo, Integer emailLogId, EmailStatus emailStatus, String errorMessage) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+        
+        EmailLog emailLog = emailLogDao.getEmailLogById(emailLogId);
+        return updateEmailStatus(loggedInInfo, emailLog, emailStatus, errorMessage);
     }
 
     public EmailLog updateEmailStatus(LoggedInInfo loggedInInfo, EmailLog emailLog, EmailStatus emailStatus, String errorMessage) {
@@ -89,10 +107,22 @@ public class EmailManager {
 		}
         
         emailLog.setStatus(emailStatus);
-        emailLog.setErrorMessage(errorMessage);
-        emailLog.setTimestamp(new Date());
+        if(errorMessage != null) { emailLog.setErrorMessage(errorMessage); }
+        if (!emailStatus.equals(EmailStatus.RESOLVED)) { emailLog.setTimestamp(new Date()); }
         emailLogDao.merge(emailLog);
         return emailLog;
+    }
+
+    public List<EmailStatusResult> getEmailStatusByDateDemographicSenderStatus(LoggedInInfo loggedInInfo, String dateBeginStr, String dateEndStr, String demographic_no, String senderEmailAddress, String emailStatus) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
+        Date dateBegin = parseDate(dateBeginStr, "yyyy-MM-dd", "00:00:00");
+        Date dateEnd = parseDate(dateEndStr, "yyyy-MM-dd", "23:59:59");
+        if (dateBegin == null || dateEnd == null) { return Collections.emptyList(); }
+        
+        return emailLogDao.getEmailStatusByDateDemographicSenderStatus(dateBegin, dateEnd, demographic_no, senderEmailAddress, emailStatus);
     }
 
     private void setEmailAttachments(EmailLog emailLog, List<EmailAttachment> emailAttachments) {
@@ -117,6 +147,7 @@ public class EmailManager {
         } else if (email.getAttachments().isEmpty()) {
             email.setIsAttachmentEncrypted(false);
         } else if (!email.getIsEncrypted()) {
+            email.setEncryptedMessage("");
             email.setIsAttachmentEncrypted(false);
             email.setPassword("");
             email.setPasswordClue("");
@@ -172,5 +203,20 @@ public class EmailManager {
         String passwordClue = StringEscapeUtils.escapeHtml("<br><br><i>" + email.getPasswordClue() + "</i>");
         String bodyWithClue = email.getBody() + passwordClue;
         email.setBody(bodyWithClue);
+    }
+
+    private Date parseDate(String date, String format, String time) {
+        if (date == null) { return null; }
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            LocalDate localDate = LocalDate.parse(date, formatter);
+            if (time == null || time.isEmpty()) { return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()); }
+            LocalTime localTime = LocalTime.parse(time);
+            LocalDateTime localDateTime = localDate.atTime(localTime);
+            return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        } catch (DateTimeParseException e) {
+            logger.error("UNPARSEABLE DATE " + date);
+            return null;
+        }
     }
 }

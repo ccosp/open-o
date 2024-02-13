@@ -48,6 +48,7 @@ public class EmailComposeAction extends DispatchAction {
 
         if (emailPDFPassword == null) {
             emailPDFPassword = emailComposeManager.createEmailPDFPassword(loggedInInfo, Integer.parseInt(demographicId));
+            emailPDFPasswordClue = "To protect your privacy, the PDF attachments in this email have been encrypted with a 18 digit password - your date of birth in the format YYYYMMDD followed by the 10 digits of your health insurance number.";
         }
 
         List<EmailAttachment> emailAttachmentList = new ArrayList<>();

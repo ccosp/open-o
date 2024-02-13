@@ -32,7 +32,7 @@ public class EmailConfig extends AbstractModel<Integer> {
 
     private String senderFirstName;
 
-    private String senderLastname;
+    private String senderLastName;
 
     private String senderEmail;
 
@@ -91,16 +91,16 @@ public class EmailConfig extends AbstractModel<Integer> {
         this.senderFirstName = senderFirstName;
     }
 
-    public String getSenderLastname() {
-        return senderLastname;
+    public String getSenderLastName() {
+        return senderLastName;
     }
 
-    public void setSenderLastname(String senderLastname) {
-        this.senderLastname = senderLastname;
+    public void setSenderLastName(String senderLastName) {
+        this.senderLastName = senderLastName;
     }
 
     public String getSenderFullName() {
-        return senderFirstName + " " + senderLastname;
+        return senderFirstName + " " + senderLastName;
     }
 
     public String getSenderEmail() {

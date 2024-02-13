@@ -175,9 +175,14 @@
 		
 		<div id="page-body">
 		
-			<c:if test="${transactionType eq 'EFORM'}">
-				<c:set var="emailSendAction" value="${ctx}/email/emailSendAction.do?method=sendEFormEmail" />
-			</c:if>
+			<c:choose>
+				<c:when test="${transactionType eq 'EFORM'}">
+					<c:set var="emailSendAction" value="${ctx}/email/emailSendAction.do?method=sendEFormEmail" />
+				</c:when>
+				<c:when test="${transactionType eq 'DIRECT'}">
+					<c:set var="emailSendAction" value="${ctx}/email/emailSendAction.do?method=sendDirectEmail" />
+				</c:when>
+			</c:choose>
 
 			<input type="hidden" name="isEmailSuccessful" id="isEmailSuccessful" value="${isEmailSuccessful}" />
 			<input type="hidden" name="totalSenderEmails" id="totalSenderEmails" value="${fn:length(senderAccounts)}" />
@@ -189,7 +194,7 @@
 				<input type="hidden" name="fdid" value="${fdid}" />
 				<input type="hidden" name="openEFormAfterEmail" value="${openEFormAfterEmail}" />
 				<input type="hidden" name="deleteEFormAfterEmail" value="${deleteEFormAfterEmail}" />
-				<input type="hidden" name="transactionType" value="${transactionType}" />
+				<input type="hidden" name="transactionType" id="transactionType" value="${transactionType}" />
 
 				<div class="card">
 				  	<div class="card-header">
@@ -203,7 +208,7 @@
 								<select class="form-select" name="senderEmailAddress"  id="senderEmailAddress">
 									<c:forEach items="${ senderAccounts }" var="senderAccount">
 										<option value="${ senderAccount.senderEmail }" ${ senderAccount.senderEmail eq senderEmail or senderAccount.senderEmail eq param.senderEmail ? 'selected' : '' }>
-											<c:out value="${ senderAccount.senderFirstName }"/> <c:out value="${ senderAccount.senderLastname }"/> <c:out value="(${ senderAccount.senderEmail })"/>
+											<c:out value="${ senderAccount.senderFirstName }"/> <c:out value="${ senderAccount.senderLastName }"/> <c:out value="(${ senderAccount.senderEmail })"/>
 										</option>
 									</c:forEach>
 								</select>
@@ -306,7 +311,7 @@
 						<div class="container">
 							<div class="row">	
 							<div class="col-sm-12">	
-								<input class="form-control" type="text" name="subjectEmail" id="subjectEmail" placeholder="Subject" value='${ param.subjectEmail }' autocomplete="off" />			
+								<input class="form-control" type="text" name="subjectEmail" id="subjectEmail" placeholder="Subject" value='${ empty param.subjectEmail ? subjectEmail : param.subjectEmail }' autocomplete="off" />			
 							  <div class="error-message" id="subjectError"></div>
 							</div>
 							</div>
@@ -322,7 +327,7 @@
 						<div class="container">
 							<div class="row">	
 							<div class="col-sm-12">				
-							  <textarea class="form-control" name="bodyEmail" id="bodyEmail" rows="7" placeholder="@message..."><c:out value="${ param.bodyEmail }" /></textarea>
+							  <textarea class="form-control" name="bodyEmail" id="bodyEmail" rows="7" placeholder="@message..."><c:out value="${ empty param.bodyEmail ? bodyEmail : param.bodyEmail }" /></textarea>
 							  <div class="error-message" id="bodyError"></div>
 							</div>
 							</div>
@@ -348,7 +353,7 @@
 							<div class="row">	
 								<div class="col-sm-12 form-group"> 
 									<label>Encrypted message <span id="encryptedMessageInfo" class="icon-info-sign" data-toggle="tooltip" data-placement="auto right" title="Message will be added into the encrypted pdf"></span></label>
-									<textarea class="form-control" name="encryptedMessage" id="encryptedMessage" rows="5" placeholder="..."><c:out value="${ param.encryptedMessageEmail }" /></textarea>
+									<textarea class="form-control" name="encryptedMessage" id="encryptedMessage" rows="5" placeholder="..."><c:out value="${ empty param.encryptedMessageEmail ? encryptedMessageEmail : param.encryptedMessageEmail }" /></textarea>
 									<div class="error-message" id="encryptedMessageError"></div>
 								</div>
 							</div>
@@ -357,7 +362,7 @@
 									<label>Password</label>
 								</div>
 								<div class="col-sm-10"> 
-									<input class="form-control" type="text" name="emailPDFPassword" id="emailPDFPassword" placeholder="YYYYMMDDHIN" value='${not empty param.passwordEmail ? param.passwordEmail : emailPDFPassword}' autocomplete="off" /> 
+									<input class="form-control" type="text" name="emailPDFPassword" id="emailPDFPassword" placeholder="YYYYMMDDHIN" value='${ not empty param.passwordEmail ? param.passwordEmail : emailPDFPassword }' autocomplete="off" /> 
 									<div class="error-message" id="emailPDFPasswordError"></div>
 								</div>
 							</div>
@@ -366,8 +371,7 @@
 									<label>Clue <span id="clueInfo" class="icon-info-sign" data-toggle="tooltip" data-placement="auto right" title="Clue will be added into the email body (visible)"></span></label>
 								</div>
 								<div class="col-sm-10">
-									<c:set var="passwordClue" value="${not empty param.passwordClueEmail ? param.passwordClueEmail : 'To protect your privacy, the PDF attachments in this email have been encrypted with a 18 digit password - your date of birth in the format YYYYMMDD followed by the 10 digits of your health insurance number.'}" />
-									<textarea class="form-control" name="emailPDFPasswordClue" id="emailPDFPasswordClue" rows="2" placeholder="..."><c:out value="${ passwordClue }" /></textarea>
+									<textarea class="form-control" name="emailPDFPasswordClue" id="emailPDFPasswordClue" rows="2" placeholder="..."><c:out value="${ not empty param.passwordClueEmail ? param.passwordClueEmail : emailPDFPasswordClue }" /></textarea>
 									<div class="error-message" id="emailPDFPasswordClueError"></div>
 								</div>	
 							</div>
@@ -377,11 +381,11 @@
 								</div>
 								<div class="col-sm-10">
 									<div class="form-check form-switch">
-										<input class="form-check-input" type="checkbox" id="encryptAttachmentSwitch" onClick="toggleEncryptAttachmentStatus(this)" ${ emailAttachmentList.size() gt 0 or isEmailAttachmentEncrypted ? 'checked' : 'disabled' }>
+										<input class="form-check-input" type="checkbox" id="encryptAttachmentSwitch" onClick="toggleEncryptAttachmentStatus(this)" ${ isEmailAttachmentEncrypted ? 'checked' : '' }>
 									</div>
 								</div>	
 							</div>
-							<input type="hidden" name="isEmailAttachmentEncrypted" id="isEmailAttachmentEncrypted" value="${ emailAttachmentList.size() gt 0 or isEmailAttachmentEncrypted ? 'true' : 'false' }"/>
+							<input type="hidden" name="isEmailAttachmentEncrypted" id="isEmailAttachmentEncrypted" value="${ isEmailAttachmentEncrypted ? 'true' : 'false' }"/>
 							<input type="hidden" name="isEmailEncrypted" id="isEmailEncrypted" value="true"/>
 						</div>
 					</div>
@@ -668,6 +672,8 @@ function openDemographicPage(event) {
 }
 
 function cancelEmail() {
+	const transactionType = document.getElementById("transactionType").value;
+	if (transactionType === 'DIRECT') { window.close(); }
 	const emailComposeForm = document.getElementById("emailComposeForm");
 	emailComposeForm.action = "${ctx}/email/emailSendAction.do?method=cancel";
 	emailComposeForm.submit();

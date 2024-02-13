@@ -58,4 +58,15 @@ public abstract class JSONAction extends DispatchAction {
             logger.error("Error while creating JSON response", e);
         }
     }
+
+    protected void jsonResponse(HttpServletResponse response, String name, String value) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(name, value);
+        jsonResponse(response, jsonObject);
+    }
+
+    protected void errorResponse(HttpServletResponse response, String name, String value) {
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        jsonResponse(response, name, value);
+    }
 }

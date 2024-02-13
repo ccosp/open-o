@@ -1741,6 +1741,11 @@
 			<forward name="EFORM" path="/eform/efmshowform_data.jsp" />
 			<forward name="eFormError" path="/eform/efmshowform_data.jsp?error=true" />
 		</action>
+		<action input="/admin/manageEmails.jsp" path="/admin/ManageEmails" scope="request" parameter="method" validate="false" type="org.oscarehr.email.admin.ManageEmails">
+			<forward name="show" path="/admin/manageEmails.jsp" />
+			<forward name="emailstatus" path="/admin/emailStatusResults.jspf" />
+			<forward name="compose" path="/email/emailCompose.jsp" />			
+		</action>
 		<action input="/" path="/email/emailComposeAction" scope="request" parameter="method" validate="false" type="org.oscarehr.email.action.EmailComposeAction">
 			<forward name="compose" path="/email/emailCompose.jsp" />
 			<forward name="eFormError" path="/eform/efmshowform_data.jsp?error=true" />

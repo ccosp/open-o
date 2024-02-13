@@ -15,7 +15,7 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     public enum EmailStatus {
         SUCCESS,
         FAILED,
-        DRAFT,
+        RESOLVED,
         OUTBOX
     }
 
@@ -77,7 +77,7 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     @JoinColumn(name = "configId")
     private EmailConfig emailConfig;
 
-    @OneToMany(mappedBy = "emailLog", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "emailLog", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<EmailAttachment> emailAttachments;
 
     public EmailLog() {}
