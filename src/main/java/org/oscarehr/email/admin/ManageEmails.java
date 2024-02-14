@@ -87,6 +87,7 @@ public class ManageEmails extends JSONAction {
 		
 		String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, emailLog.getDemographicNo());
 		String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, emailLog.getDemographicNo());
+		List<?>[] receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, emailLog.getDemographicNo());
 		List<EmailConfig> senderAccounts = emailComposeManager.getAllSenderAccounts();
 
 		request.setAttribute("demographicId", emailLog.getDemographicNo());
@@ -94,7 +95,8 @@ public class ManageEmails extends JSONAction {
         request.setAttribute("emailConsentName", emailConsent[0]);
         request.setAttribute("emailConsentStatus", emailConsent[1]);
 		request.setAttribute("receiverName", receiverName);
-        request.setAttribute("receiverEmailList", emailLog.getToEmail());
+        request.setAttribute("receiverEmailList", receiverEmailList[0]);
+        request.setAttribute("invalidReceiverEmailList", receiverEmailList[1]);
 		request.setAttribute("senderAccounts", senderAccounts);
 		request.setAttribute("senderEmail", emailLog.getFromEmail());
 		request.setAttribute("subjectEmail", emailLog.getSubject());
