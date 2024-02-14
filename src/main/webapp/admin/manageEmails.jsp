@@ -192,7 +192,7 @@
 	});
 
     function resolve(emailLogId) {
-		const answer = confirm("Are you sure you want to resolve this email status?");
+		const answer = confirm("Are you sure you want to mark this failed email as resolved?");
 		if(!answer) { return false; }
 
 		ShowSpin(true);
