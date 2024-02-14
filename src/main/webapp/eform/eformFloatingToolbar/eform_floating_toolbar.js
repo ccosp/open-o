@@ -11,35 +11,19 @@
 			// Add eForm attachments 
 			addEFormAttachments();
 			
-//			top.window.resizeTo("1100","850");
-			
-				/*
-				 * A little trick to bypass the override of the onload
-				 * event in the Rich Text Letter writer. 
-				 */
-		//		var loadmethod = document.getElementsByTagName("body")[0].getAttribute("onload"); 
-		//		
-		//		if(! loadmethod)
-		//		{
-		//			onload = document.getElementsByTagName("form")[0].getAttribute("onload"); 
-		//		}
-		//
-		//		if(loadmethod)
-		//		{
-		//			loadmethod = loadmethod.replace("(", '').replace(")", "").replace(";", "");
-		//			return window[loadmethod]();
-		//		}
-		//		
-		//		return;
-		//	}
-			
-		window.onerror = function(error, url, line) {
-//			alert(error);
-//		    controller.sendLog({acc:'error', data:'ERR:'+error+' URL:'+url+' L:'+line});
-		};	
-	});	
-	
+			// Resize the window based on the toolbar width
+			window.resizeTo(1100,1100);
 
+			// If download EForm
+			const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";
+			if (isDownload && isDownload === "true") { downloadEForm(); }
+
+			// Handle EForm errors
+			const error = document.getElementById("error") ? document.getElementById("error").value : "false";
+			const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
+			if (error === "true") { showError(errorMessage); }
+
+	});
 	
 	/**
 	 * Triggers the eForm save/submit function
@@ -245,6 +229,9 @@
 	}
 
 	function downloadEForm() {
+		const eFormPDF = document.getElementById("eFormPDF").value;
+		const eFormPDFName = document.getElementById("eFormPDFName").value;
+		if (!eFormPDF && !eFormPDFName) { return; }
 		const pdfData = new Uint8Array(atob(eFormPDF).split('').map(char => char.charCodeAt(0)));
 		const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
 		const downloadLink = document.createElement('a');
@@ -252,6 +239,8 @@
 		downloadLink.download = eFormPDFName;
 		downloadLink.click();
 		URL.revokeObjectURL(downloadLink.href);
+		document.getElementById("eFormPDF").value = "";
+		document.getElementById("eFormPDFName").value = "";
 	}
 	
 	/**
@@ -599,5 +588,48 @@
 		style.setAttribute("href", "../library/bootstrap/3.0.0/css/eform_floating_toolbar_bootstrap_custom.min.css");
 		headelement[0].appendChild(style);
 
+	}
+
+	function showError(message) {
+		if (!message) { message = "Failed to process eForm. Please refer to the server logs for more details." }
+		alert(message.replace(/\\n/g, "\n"));
+	}
+
+	/*
+	 * Show or hide the loading spinner
+	 * if locked is true: can't click away
+	 * if locked is false: can click away from it
+	 */
+	function ShowSpin(locked)
+	{
+		let screen = document.getElementById("oscar-spinner-screen");
+		let spinner = document.getElementById("oscar-spinner");
+		
+		screen.classList.add("active-oscar-spinner");
+		spinner.classList.add("active-oscar-spinner");
+
+		if (locked)
+		{
+			screen.removeEventListener("click", HideSpin);
+		}
+		else
+		{
+			screen.addEventListener("click", HideSpin);
+		}
+		return true;
+	}
+
+	function HideSpin()
+	{
+		let screen = document.getElementById("oscar-spinner-screen");
+		let spinner = document.getElementById("oscar-spinner");
+		
+		screen.classList.remove("active-oscar-spinner");
+		spinner.style.opacity = "0";
+		
+		setTimeout(function() {
+			spinner.classList.remove("active-oscar-spinner");
+			spinner.style.opacity = "1";
+		}, 300);
 	}
 	

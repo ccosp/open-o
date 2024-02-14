@@ -352,6 +352,9 @@
        demographicExtDao.addKey(proNo, demographic.getDemographicNo(), "HasPrimaryCarePhysician", request.getParameter("HasPrimaryCarePhysician"), "");
        demographicExtDao.addKey(proNo, demographic.getDemographicNo(), "EmploymentStatus", request.getParameter("EmploymentStatus"), "");
        demographicExtDao.addKey(proNo, demographic.getDemographicNo(), "PHU", request.getParameter("PHU"), "");
+	demographicExtDao.addKey(proNo, demographic.getDemographicNo(), "fNationFamilyNumber",    request.getParameter("fNationFamilyNumber"),    "");
+	demographicExtDao.addKey(proNo, demographic.getDemographicNo(), "fNationFamilyPosition",    request.getParameter("fNationFamilyPosition"),    "");
+	demographicExtDao.addKey(proNo, demographic.getDemographicNo(), "labelfNationCom",    request.getParameter("labelfNationCom"),    "");
        //for the IBD clinic
 		OtherIdManager.saveIdDemographic(dem, "meditech_id", request.getParameter("meditech_id"));
 

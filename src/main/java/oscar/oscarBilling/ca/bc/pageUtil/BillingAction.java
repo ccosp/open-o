@@ -46,6 +46,7 @@ import org.oscarehr.billing.Clinicaid.util.ClinicaidCommunication;
 
 //import oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic;
 import oscar.oscarBilling.ca.bc.decisionSupport.BillingGuidelines;
+import oscar.util.plugin.OscarProperties;
 //import oscar.util.SqlUtils;
 
 public final class BillingAction extends Action {
@@ -60,9 +61,9 @@ public final class BillingAction extends Action {
     // Setup variables
     ActionMessages errors = new ActionMessages();
     oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean bean = null;
-    String encounter = request.getAttribute("encounter") != null ?
-        (String) request.getAttribute("encounter") : "";
-    String region = request.getParameter("billRegion");
+//    String encounter = request.getAttribute("encounter") != null ?
+//        (String) request.getAttribute("encounter") : "";
+    String region = request.getParameter("billRegion") != null ? request.getParameter("billRegion") : OscarProperties.getProperties().getProperty("billregion");
 
     if ("ON".equals(region)) {
       String newURL = mapping.findForward("ON").getPath();
@@ -74,7 +75,7 @@ public final class BillingAction extends Action {
     }
 	else if ("CLINICAID".equals(region)) {
 
-	  ClinicaidCommunication clinicaid_communicator 
+	  ClinicaidCommunication clinicaid_communicator
 		  = new ClinicaidCommunication();
 
 	  String action = "";
@@ -139,19 +140,19 @@ public final class BillingAction extends Action {
         }catch(Exception e){
             MiscUtils.getLogger().error("Error", e);
         }
-      }else if ("true".equals(encounter)) {
-        bean = (oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.
-            getSession().getAttribute("billingSessionBean");
-        frm.setXml_provider(request.getParameter("user_no"));
-        region = bean.getBillRegion();
       }
-      /**
-       * @todo Test this, it looks unnecessary
-       */
-      else {
-        bean = (oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.
-            getSession().getAttribute("billingSessionBean");
-      }
+//      else if ("true".equals(encounter)) {
+//        bean = (oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.getSession().getAttribute("billingSessionBean");
+//        frm.setXml_provider(request.getParameter("user_no"));
+//        region = bean.getBillRegion();
+//      }
+//      /**
+//       * @todo Test this, it looks unnecessary
+//       */
+//      else {
+//        bean = (oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.
+//            getSession().getAttribute("billingSessionBean");
+//      }
     }
     this.saveErrors(request, errors);
     return (mapping.findForward(region));

@@ -318,6 +318,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 * Return the value associated with the column: phone
 	 */
 	public String getPhone() {
+		if(phone == null) {
+			return "";
+		}
 		return phone;
 	}
 
@@ -334,6 +337,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 * Return the value associated with the column: patient_status
 	 */
 	public String getPatientStatus() {
+		if(patientStatus == null) {
+			return "";
+		}
 		return patientStatus;
 	}
 
@@ -358,6 +364,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 * Return the value associated with the column: roster_status
 	 */
 	public String getRosterStatus() {
+		if(rosterStatus == null) {
+			return "";
+		}
 		return rosterStatus;
 	}
 
@@ -707,6 +716,14 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 *        Returns the preferred name.
 	 */
 	public String getPrefName() {
+		if(getAlias() != null && ! getAlias().isEmpty()) {
+			return getAlias();
+		}
+
+		if(prefName == null) {
+			return getAlias();
+		}
+
 		return prefName;
 	}
 
@@ -755,6 +772,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 * Return the value associated with the column: phone2
 	 */
 	public String getPhone2() {
+		if(phone2 == null){
+			return "";
+		}
 		return phone2;
 	}
 
@@ -841,6 +861,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	 * Return the value associated with the column: chart_no
 	 */
 	public String getChartNo() {
+		if(chartNo == null) {
+			return "";
+		}
 		return chartNo;
 	}
 
@@ -1441,6 +1464,17 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	};
 	public static final Comparator<Demographic> FirstNameComparator = new Comparator<Demographic>() {
 		public int compare(Demographic dm1, Demographic dm2) {
+			return dm1.getFirstName().compareTo(dm2.getFirstName());
+		}
+	};
+	public static final Comparator<Demographic> LastAndFirstNameComparator = new Comparator<Demographic>() {
+		public int compare(Demographic dm1, Demographic dm2)
+		{
+			int res = dm1.getLastName().compareToIgnoreCase(dm2.getLastName());
+			if (res != 0)
+			{
+				return res;
+			}
 			return dm1.getFirstName().compareTo(dm2.getFirstName());
 		}
 	};

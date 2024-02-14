@@ -54,103 +54,258 @@ if(!authed) {
 <%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
 <%@ page import="oscar.oscarResearch.oscarDxResearch.util.dxResearchCodingSystem"%>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="org.oscarehr.common.dao.PropertyDao" %>
+<%@ page import="org.oscarehr.common.model.Property" %>
+<%@ page import="org.oscarehr.managers.DemographicManager,oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic" %>
+<%@ page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
 
 <%!
-  public void fillDxcodeList(BillingFormData.BillingService[] servicelist, Map dxcodeList) {
-    for (int i = 0; i < servicelist.length; i++) {
-      BillingAssociationPersistence per = new BillingAssociationPersistence();
-      ServiceCodeAssociation assoc = per.getServiceCodeAssocByCode(servicelist[i].getServiceCode());
-      List dxcodes = assoc.getDxCodes();
-      if (!dxcodes.isEmpty()) {
-        dxcodeList.put(servicelist[i].getServiceCode(), (String) dxcodes.get(0));
-      }
-    }
-  }
-  public String createAssociationJS(Map assocCodeMap,String assocArrayName) {
 
-    Set e = assocCodeMap.keySet();
-    StringBuffer out = new StringBuffer();
-    out.append("var " + assocArrayName + "  = new Array();");
-    out.append("\n");
-    int index = 0;
-    for (Iterator iter = e.iterator(); iter.hasNext(); ) {
-      String key = (String) iter.next();
-      String value = (String) assocCodeMap.get(key);
-      String rowName = assocArrayName + "row";
-      out.append("var " + rowName + index + " = new Array(2);\n");
-      out.append(rowName + index + "[0]='" + key + "'; ");
-      out.append(rowName + index + "[1]='" + value + "';\n");
-      out.append(assocArrayName + "[" + index + "]=" + rowName  + index + ";\n");
-      index++;
-    }
-    return out.toString();
-  }
+	/**
+	 Generates a string list of option tags in numeric order
+	 **/
+	String generateNumericOptionList(int range,String selected) {
+		selected = selected == null?"":selected;
+		StringBuffer buff = new StringBuffer();
+		buff.append("<option value=''></option>");
+		for (int i = 0; i < range; i++) {
+			String prefix = i < 10 ? "0" : "";
+			String val = prefix + String.valueOf(i);
+			String sel = "";
+			if(val.equals(selected)){
+				sel = "selected";
+			}
+			buff.append("<option value='" + val + "' " + sel + ">" + val + "</option>");
+		}
+		return buff.toString();
+	}
+
+	public void fillDxcodeList(BillingFormData.BillingService[] servicelist, Map<String, String> dxcodeList) {
+		for (int i = 0; i < servicelist.length; i++) {
+		  BillingAssociationPersistence per = new BillingAssociationPersistence();
+		  ServiceCodeAssociation assoc = per.getServiceCodeAssocByCode(servicelist[i].getServiceCode());
+		  List dxcodes = assoc.getDxCodes();
+		  if (!dxcodes.isEmpty()) {
+		    dxcodeList.put(servicelist[i].getServiceCode(), (String) dxcodes.get(0));
+		  }
+		}
+	}
+	public String createAssociationJS(Map<String, String> assocCodeMap,String assocArrayName) {
+
+		Set e = assocCodeMap.keySet();
+		StringBuffer out = new StringBuffer();
+		out.append("var " + assocArrayName + "  = new Array();");
+		out.append("\n");
+		int index = 0;
+		for (Iterator iter = e.iterator(); iter.hasNext(); ) {
+		  String key = (String) iter.next();
+		  String value = (String) assocCodeMap.get(key);
+		  String rowName = assocArrayName + "row";
+		  out.append("var " + rowName + index + " = new Array(2);\n");
+		  out.append(rowName + index + "[0]='" + key + "'; ");
+		  out.append(rowName + index + "[1]='" + value + "';\n");
+		  out.append(assocArrayName + "[" + index + "]=" + rowName  + index + ";\n");
+		  index++;
+		}
+		return out.toString();
+	}
+
+	PropertyDao propertyDao = SpringUtils.getBean(PropertyDao.class);
+    DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
+	BillingFormData billform = new BillingFormData();
+	ServiceCodeValidationLogic lgc = new ServiceCodeValidationLogic();
+	BillingreferralDao billingReferralDao = SpringUtils.getBean(BillingreferralDao.class);
+	SupServiceCodeAssocDAO supDao = SpringUtils.getBean(SupServiceCodeAssocDAO.class);
+	dxResearchCodingSystem codingSys = new dxResearchCodingSystem();
+	BillingPreferencesDAO billingPreferencesDAO = SpringUtils.getBean(BillingPreferencesDAO.class);
 %>
 <%
+	// current data is held in the session.
+	BillingSessionBean bean = (BillingSessionBean) pageContext.findAttribute("billingSessionBean");
 	LoggedInInfo loggedInInfo =	LoggedInInfo.getLoggedInInfoFromSession(request);
-  int year = 0; //Integer.parseInt(request.getParameter("year"));
-  int month = 0; //Integer.parseInt(request.getParameter("month"));
-  //int day = now.get(Calendar.DATE);
-  int delta = 0; //request.getParameter("delta")==null?0:Integer.parseInt(request.getParameter("delta")); //add or minus month
-  GregorianCalendar now = new GregorianCalendar();
-  year = now.get(Calendar.YEAR);
-  month = now.get(Calendar.MONTH) + 1;
-  String sxml_location = "", sxml_provider = "", sxml_visittype = "";
-  String color = "", colorflag = "";
-  BillingSessionBean bean = (BillingSessionBean) pageContext.findAttribute("billingSessionBean");
-  oscar.oscarDemographic.data.DemographicData demoData = new oscar.oscarDemographic.data.DemographicData();
-  org.oscarehr.common.model.Demographic demo = demoData.getDemographic(loggedInInfo, bean.getPatientNo());
-  bean.setPatientName(demo.getFullName());
-  oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic lgc = new oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic();
-  BillingFormData billform = new BillingFormData();
-  BillingFormData.BillingService[] billlist1 = lgc.filterServiceCodeList(billform.getServiceList("Group1", bean.getBillForm(), bean.getBillRegion(),new Date()), demo);
-  BillingFormData.BillingService[] billlist2 = lgc.filterServiceCodeList(billform.getServiceList("Group2", bean.getBillForm(), bean.getBillRegion(),new Date()), demo);
-  BillingFormData.BillingService[] billlist3 = lgc.filterServiceCodeList(billform.getServiceList("Group3", bean.getBillForm(), bean.getBillRegion(),new Date()), demo);
-  String group1Header = billform.getServiceGroupName("Group1", bean.getBillForm());
-  String group2Header = billform.getServiceGroupName("Group2", bean.getBillForm());
-  String group3Header = billform.getServiceGroupName("Group3", bean.getBillForm());
-  BillingFormData.BillingPhysician[] billphysician = billform.getProviderList();
-  BillingFormData.BillingVisit[] billvisit = billform.getVisitType(bean.getBillRegion());
-  BillingFormData.Location[] billlocation = billform.getLocationList(bean.getBillRegion());
-  BillingFormData.Diagnostic[] diaglist = billform.getDiagnosticList(bean.getBillForm(), bean.getBillRegion());
-  BillingFormData.BillingForm[] billformlist = billform.getFormList();
-  SupServiceCodeAssocDAO supDao = SpringUtils.getBean(SupServiceCodeAssocDAO.class);
-  HashMap assocCodeMap = new HashMap();
-  fillDxcodeList(billlist1, assocCodeMap);
-  fillDxcodeList(billlist2, assocCodeMap);
-  fillDxcodeList(billlist3, assocCodeMap);
-  String frmType = request.getParameter("billType");
-  if (frmType != null && frmType.equals("Pri")) {
-    billform.setPrivateFees(billlist1);
-    billform.setPrivateFees(billlist2);
-    billform.setPrivateFees(billlist3);
-  }
-  String loadFromSession = request.getParameter("loadFromSession");
-  if (request.getAttribute("loadFromSession") != null) {
-    loadFromSession = "y";
-  }
-  if (loadFromSession == null) {
-    request.getSession().removeAttribute("BillingCreateBillingForm");
-  }
+	Demographic demo = demographicManager.getDemographic(loggedInInfo, bean.getPatientNo());
 
-  BillingreferralDao billingReferralDao = (BillingreferralDao)SpringUtils.getBean("BillingreferralDAO");
-  
-  String newWCBClaim = (String)request.getAttribute("newWCBClaim");
-  
-  String mRecRefDoctor = "";
-  String mRecRefDoctorNum = "";
+	// billing type setting MSP, Private, ICBC, WCB, etc..
+	String frmType = request.getParameter("billType");
 
-  if(! "".equals(demo.getFamilyDoctorNumber())){
-   mRecRefDoctor = demo.getFamilyDoctorName();
-   mRecRefDoctorNum = demo.getFamilyDoctorNumber();
-  }else{
-   mRecRefDoctor = "none";
-  }
+	// not sure why
+	String loadFromSession = request.getParameter("loadFromSession");
 
-  ArrayList<String> recentList = billform.getRecentReferralDoctorsList(demo.getDemographicNo());
-  
-  dxResearchCodingSystem codingSys = new dxResearchCodingSystem();
-  pageContext.setAttribute("dxCodeSystemList", codingSys);
+	// load new WCB type
+	String newWCBClaim = (String)request.getAttribute("newWCBClaim");
+
+	/* billing from appointment will fetch the defaults for the provider whom the appointment was with
+	 * "sign save and bill" will fetch the defaults for the logged in provider who wrote and signed the encounter note
+	 * Basically if "xml_provider" is null then the logged in provider is used
+	 */
+	String targetProvider = loggedInInfo.getLoggedInProviderNo();
+	String alternateProvider = request.getParameter("xml_provider");
+	if(alternateProvider != null && ! alternateProvider.isEmpty()) {
+		targetProvider = alternateProvider;
+	}
+
+	/*
+	 * find and default providers set for the current target provider in the
+	 * billing preference settings.
+	 * Target provider now becomes the provider set in the invoice settings.
+	 */
+	List<Property> defaultBillingProviderPropertyList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.default_billing_provider, targetProvider);
+	if(defaultBillingProviderPropertyList != null && ! defaultBillingProviderPropertyList.isEmpty()) {
+		Property defaultBillingProvider = defaultBillingProviderPropertyList.get(0);
+		if (defaultBillingProvider != null && ! "clinicdefault".equalsIgnoreCase(defaultBillingProvider.getValue())) {
+			targetProvider = defaultBillingProvider.getValue();
+		}
+	}
+
+	// set the target provider into the session data. Overrides all presets
+	bean.setBillingProvider(targetProvider);
+
+	/* Billing settings:
+	 * 1. load the selected users preferences (targetProvider)
+	 * 2. if no selected user load the logged-in users preferences
+	 * 3. load system default preferences if no selected user and logged in user has no preferences (system default)
+	 */
+
+
+	/* sort out which Billing form to use based on global and provider settings.
+	 * 1. Default value set in the properties file
+	 */
+	String defaultBillingForm = OscarProperties.getInstance().getProperty("default_view");
+	if(defaultBillingForm != null) {
+		defaultBillingForm = defaultBillingForm.trim();
+	}
+
+	// 2. Default value set in Billing Settings
+	List<Property> defaultBillingFormPropertyList = propertyDao.findGlobalByName("default_billing_form");
+	if(defaultBillingFormPropertyList != null && ! defaultBillingFormPropertyList.isEmpty()) {
+		Property defaultBillingFormProperty = defaultBillingFormPropertyList.get(0);
+		String billingForm = null;
+		if(defaultBillingFormProperty != null) {
+			billingForm = defaultBillingFormProperty.getValue();
+		}
+		if(billingForm != null && !  billingForm.isEmpty()
+				&& ! "clinicdefault".equalsIgnoreCase( billingForm)) {
+			defaultBillingForm = billingForm;
+		}
+	}
+
+	// 3. individual provider billing preferences.
+	List<Property> userSetDefaultBillingFormPropertyList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.default_billing_form, targetProvider);
+	if(userSetDefaultBillingFormPropertyList != null && ! userSetDefaultBillingFormPropertyList.isEmpty()) {
+		Property userSetDefaultBillingFormProperty = userSetDefaultBillingFormPropertyList.get(0);
+		String userSetBillingForm = null;
+		if (userSetDefaultBillingFormProperty != null) {
+			userSetBillingForm = userSetDefaultBillingFormProperty.getValue();
+		}
+		if( userSetBillingForm != null && !  userSetBillingForm.isEmpty()
+				&& ! "clinicdefault".equalsIgnoreCase(userSetBillingForm.trim())) {
+			// override the billingform preset/default in session with the providers preference.
+			defaultBillingForm = userSetBillingForm;
+		}
+	}
+	if(billform.serviceExists(defaultBillingForm)) {
+		bean.setBillForm(defaultBillingForm);
+	}
+
+	// global default billing visit location 1. oscar properties
+	String defaultServiceLocation = OscarProperties.getInstance().getProperty("visittype");
+
+	// 2. global billing settings
+	List<Property> userSetDefaultServiceLocationList = propertyDao.findGlobalByName("bc_default_service_location");
+	if(userSetDefaultServiceLocationList != null && ! userSetDefaultServiceLocationList.isEmpty()) {
+		Property uerSetDefaultServiceLocationProperty = userSetDefaultServiceLocationList.get(0);
+		String userSetDefaultServiceLocation = null;
+		if(uerSetDefaultServiceLocationProperty != null) {
+			userSetDefaultServiceLocation = uerSetDefaultServiceLocationProperty.getValue();
+		}
+		if(userSetDefaultServiceLocation != null) {
+			defaultServiceLocation = userSetDefaultServiceLocation;
+		}
+	}
+
+	// 3. override visit location "visittype" code preference by provider
+	List<Property> defaultServiceLocationList = propertyDao.findByNameAndProvider(Property.PROPERTY_KEY.bc_default_service_location, targetProvider);
+	if(defaultServiceLocationList != null && ! defaultServiceLocationList.isEmpty()) {
+		Property defaultServiceLocationProperty = defaultServiceLocationList.get(0);
+		String providerSetDefaultLocation = null;
+		if(defaultServiceLocationProperty != null) {
+			providerSetDefaultLocation = defaultServiceLocationProperty.getValue();
+		}
+		if(providerSetDefaultLocation != null && ! providerSetDefaultLocation.isEmpty()
+				&& ! "clinicdefault".equalsIgnoreCase(providerSetDefaultLocation)) {
+			// override default from Oscar properties or billing properties with the provider preference
+			defaultServiceLocation = providerSetDefaultLocation;
+		}
+	}
+
+	bean.setVisitType(defaultServiceLocation);
+
+	/*
+	 * Get the users preference for "Refer to" or "Refer by"
+	 */
+	BillingPreference billingPreference = billingPreferencesDAO.getUserBillingPreference(targetProvider);
+	String userReferralPref = "";
+	if (billingPreference != null) {
+		if (billingPreference.getReferral() == 1) {
+			userReferralPref = "T";
+		}
+		else if (billingPreference.getReferral() == 2) {
+			userReferralPref = "B";
+		}
+	}
+
+	// set up the selected billing form
+	BillingFormData.BillingService[] billlist1 = lgc.filterServiceCodeList(billform.getServiceList("Group1", bean.getBillForm(), bean.getBillRegion(),new Date()), demo);
+	BillingFormData.BillingService[] billlist2 = lgc.filterServiceCodeList(billform.getServiceList("Group2", bean.getBillForm(), bean.getBillRegion(),new Date()), demo);
+	BillingFormData.BillingService[] billlist3 = lgc.filterServiceCodeList(billform.getServiceList("Group3", bean.getBillForm(), bean.getBillRegion(),new Date()), demo);
+
+	HashMap<String, String> assocCodeMap = new HashMap<>();
+	fillDxcodeList(billlist1, assocCodeMap);
+	fillDxcodeList(billlist2, assocCodeMap);
+	fillDxcodeList(billlist3, assocCodeMap);
+
+	String group1Header = billform.getServiceGroupName("Group1", bean.getBillForm());
+	String group2Header = billform.getServiceGroupName("Group2", bean.getBillForm());
+	String group3Header = billform.getServiceGroupName("Group3", bean.getBillForm());
+
+	if (frmType != null && frmType.equals("Pri")) {
+		billform.setPrivateFees(billlist1);
+		billform.setPrivateFees(billlist2);
+		billform.setPrivateFees(billlist3);
+	}
+
+	// set up the form data elements
+	BillingFormData.BillingPhysician[] billphysician = billform.getProviderList();
+	List<BillingFormData.BillingVisit> billvisit = billform.getVisitType(bean.getBillRegion());
+	BillingFormData.Location[] billlocation = billform.getLocationList(bean.getBillRegion());
+	BillingFormData.Diagnostic[] diaglist = billform.getDiagnosticList(bean.getBillForm(), bean.getBillRegion());
+	BillingFormData.BillingForm[] billformlist = billform.getFormList();
+	ArrayList<String> recentReferralDoctorList = billform.getRecentReferralDoctorsList(demo.getDemographicNo());
+
+
+	if (request.getAttribute("loadFromSession") != null) {
+		loadFromSession = "y";
+	}
+	if (loadFromSession == null) {
+		request.getSession().removeAttribute("BillingCreateBillingForm");
+	}
+
+	// set up the referr-ing doctor
+	String mRecRefDoctor = "";
+	String mRecRefDoctorNum = "";
+
+	if(! "".equals(demo.getFamilyDoctorNumber())){
+		mRecRefDoctor = demo.getFamilyDoctorName();
+		mRecRefDoctorNum = demo.getFamilyDoctorNumber();
+	}else{
+		mRecRefDoctor = "none";
+	}
+
+
+	// set up useful pagecontext attributes.
+    pageContext.setAttribute("dxCodeSystemList", codingSys);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -168,7 +323,7 @@ if(!authed) {
 
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/moment.js"></script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"></script> 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/bootstrap-datetimepicker.min.js" ></script>
@@ -187,11 +342,11 @@ if(!authed) {
 	  margin-bottom: 5px !important;
 	}
 	div#wcbForms p {
-		padding:0px;
-		margin:0px;
+		padding:0;
+		margin:0;
 	}
 	div#wcbForms table {
-		margin:0px 0 5px 0;
+		margin:0 0 5px 0;
 	}
 	div#wcbForms table th {
 		font-weight: normal;
@@ -285,12 +440,12 @@ if(!authed) {
 		width: 100%;
 		border-top: red thin solid;
 		border-bottom: red thin solid;
-		margin: 0px;
+		margin: 0;
 		margin-top: 5px;
-		padding: 0px;
+		padding: 0;
 	}
 	h3 ul {
-		margin:0px;
+		margin:0;
 	}
 	
 	table#billingFormTable table.tool-table tr td table {
@@ -750,33 +905,6 @@ function setCodeToChecked(svcCode){
     
 }
 
-/*
- * Sets the currently selected provider as the default on 
- * this client computer.
- */
-function setDefaultProvider() {
-	var selectedProvider = jQuery('select[name=xml_provider] option:selected');
-	var providerId = selectedProvider.val();
-	var providerName = selectedProvider.text();		
-	localStorage.setItem( 'default_billing_provider', providerId );		
-	alert(providerName + " is now set as the default billing physician on this computer.");
-
-}
-
-/*
- * Loads the default provider - only if - the provider is not 
- * already set from the billing or encounter interface.
- */
-function loadDefaultProvder() {
-	var currentProvider = document.BillingCreateBillingForm.xml_provider.value;
-
-	if(! currentProvider)
-	{
-		var providerId = localStorage.getItem('default_billing_provider');
-		jQuery("select[name=xml_provider]").val(providerId);
-	}
-}
-
 function setReferralDoctor() {
 	jQuery(".referral-doctor").on('click', function() {
 
@@ -798,7 +926,7 @@ function setReferralDoctor() {
 
 jQuery(document).ready(function(jQuery){
 	setReferralDoctor();
-	loadDefaultProvder();
+
 	
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
 	
@@ -1035,26 +1163,7 @@ jQuery(document).ready(function(jQuery){
 }); //<!-- End Document Ready //-->
 </script>
 </head>
-<%!
-  /**
-   Generates a string list of option tags in numeric order
-   **/
-  String generateNumericOptionList(int range,String selected) {
-    selected = selected == null?"":selected;
-    StringBuffer buff = new StringBuffer();
-    buff.append("<option value=''></option>");
-    for (int i = 0; i < range; i++) {
-      String prefix = i < 10 ? "0" : "";
-      String val = prefix + String.valueOf(i);
-      String sel = "";
-      if(val.equals(selected)){
-        sel = "selected";
-      }
-      buff.append("<option value='" + val + "' " + sel + ">" + val + "</option>");
-    }
-    return buff.toString();
-  }
-%>
+
 <body style="background-color:#FFFFFF;" onLoad="CheckType();correspondenceNote();">
 	<div id="page-header" >	
 		<table id="oscarBillingHeader" class="table-borderless">
@@ -1063,12 +1172,12 @@ jQuery(document).ready(function(jQuery){
 
 				<td id="oscarBillingHeaderCenterColumn">				
 					<span class="badge badge-primary"><bean:message key="billing.patient"/></span>
-	                <label class="label-text" ><%=demo.getLastName()%>, <%=demo.getFirstName()%></label>
+	                <label class="label-text" ><%=Encode.forHtmlContent(demo.getLastName())%>, <%=Encode.forHtmlContent(demo.getFirstName())%></label>
 	            	
 	            	<span class="badge badge-primary"><bean:message key="billing.patient.age"/></span>  
 	            	<label class="label-text"><%=demo.getAge()%></label>
 
-<%-- 	Keep until confirmed not needed.			
+<%-- 	Keep until confirmed not needed.
 
 					<span class="badge badge-primary"><bean:message key="billing.patient.status"/></span> 
 					<strong class="label-text"><%=demo.getPatientStatus()%></label>
@@ -1098,17 +1207,17 @@ jQuery(document).ready(function(jQuery){
 						<bean:message key="demographic.demographiceditdemographic.msgInvoiceList"/>
 					</button>
 					
-					<button type="button" class="btn btn-link" title="Set a default Billing Physician to use when a physician is not pre-selected" onclick="setDefaultProvider()">
-						<bean:message key="billing.provider.defaultProvider"/>
-					</button>				
+<%--					<button type="button" class="btn btn-link" title="Set a default Billing Physician to use when a physician is not pre-selected" onclick="setDefaultProvider()">--%>
+<%--						<bean:message key="billing.provider.defaultProvider"/>--%>
+<%--					</button>				--%>
 				</td>
-				<td id="oscarBillingHeaderRightColumn" align=right>
-					<span class="HelpAboutLogout"> 
-						<a style="font-size: 10px; font-style: normal;" href="${ ctx }oscarEncounter/About.jsp" target="_new">About</a>
-						<a style="font-size: 10px; font-style: normal;" target="_blank"
-									href="http://www.oscarmanual.org/search?SearchableText=&Title=Chart+Interface&portal_type%3Alist=Document">Help</a>		
-					</span>
-				</td>
+<%--				<td id="oscarBillingHeaderRightColumn" align=right>--%>
+<%--					<span class="HelpAboutLogout"> --%>
+<%--						<a style="font-size: 10px; font-style: normal;" href="${ ctx }oscarEncounter/About.jsp" target="_new">About</a>--%>
+<%--						<a style="font-size: 10px; font-style: normal;" target="_blank"--%>
+<%--									href="http://www.oscarmanual.org/search?SearchableText=&Title=Chart+Interface&portal_type%3Alist=Document">Help</a>		--%>
+<%--					</span>--%>
+<%--				</td>--%>
 			</tr>
 		</table>
 	</div>
@@ -1137,70 +1246,69 @@ if(wcbneeds != null){%>
 <html:form styleId="bcBillingForm" styleClass="form-inline" action="/billing/CA/BC/CreateBilling" onsubmit="toggleWCB();">
 	<input autocomplete="false" name="hidden" type="text" style="display:none;">
   	<input type="hidden" name="fromBilling" value=""/>
+	<%
+		// set up this form
+		BillingCreateBillingForm thisForm = (BillingCreateBillingForm) request.getSession().getAttribute("BillingCreateBillingForm");
 
-<%
-  BillingCreateBillingForm thisForm = (BillingCreateBillingForm) request.getSession().getAttribute("BillingCreateBillingForm");
-  if (thisForm != null) {
-    sxml_provider = ((String) thisForm.getXml_provider());
-    sxml_location = ((String) thisForm.getXml_location());
-    sxml_visittype = ((String) thisForm.getXml_visittype());
-    
-    if(sxml_provider == null || "".equals(sxml_provider) || "none".equals(sxml_provider))
-    {
-        sxml_provider = bean.getApptProviderNo();
-    }
-	if("none".equals(sxml_provider)) {
-		sxml_provider = bean.getBillingProvider();
-	}
-    thisForm.setXml_provider(sxml_provider);
-    
-    if (sxml_location.compareTo("") == 0) {
-      sxml_location = OscarProperties.getInstance().getProperty("visitlocation");
-      sxml_visittype = OscarProperties.getInstance().getProperty("visittype");
-      thisForm.setXml_location(sxml_location);
-      thisForm.setXml_visittype(sxml_visittype);
-      if ( OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING") != null && OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING").equalsIgnoreCase("YES")){
-         thisForm.setXml_encounter("8");
-      }
-    }
+		if (thisForm != null) {
 
-	String serviceDate = bean.getServiceDate();
-	if(serviceDate == null || serviceDate.isEmpty()) {
-		serviceDate = bean.getApptDate();
-	}
-	thisForm.setXml_appointment_date(serviceDate);
+			thisForm.setXml_provider(bean.getBillingProvider());
+			thisForm.setXml_location(OscarProperties.getInstance().getProperty("visitlocation"));
+			thisForm.setXml_visittype(bean.getVisitType());
 
-    if (bean.getBillType() != null) {
-      thisForm.setXml_billtype(bean.getBillType());
-    }
-    else if (request.getParameter("billType") != null) {
-      thisForm.setXml_billtype(request.getParameter("billType"));
-    }
-    if (demo.getVer() != null && demo.getVer().equals("66")) {
-      thisForm.setDependent("66");
-    }
-    thisForm.setCorrespondenceCode(bean.getCorrespondenceCode());
-    oscar.oscarBilling.ca.bc.data.BillingPreferencesDAO dao = SpringUtils.getBean(oscar.oscarBilling.ca.bc.data.BillingPreferencesDAO.class);
-    oscar.oscarBilling.ca.bc.data.BillingPreference pref = null;
-    //checking for a bug where the passed in provider number is actually "none" rather than numeral 0
-    if (oscar.util.StringUtils.isNumeric(thisForm.getXml_provider())) {
-      pref = dao.getUserBillingPreference((String) thisForm.getXml_provider());
-    }
-    String userReferralPref = "";
-    if (pref != null) {
-      if (pref.getReferral() == 1) {
-        userReferralPref = "T";
-      }
-      else if (pref.getReferral() == 2) {
-        userReferralPref = "B";
-      }
-      thisForm.setRefertype1(userReferralPref);
-      thisForm.setRefertype2(userReferralPref);
-    }
-  }
-%>
+			if ( OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING") != null && OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING").equalsIgnoreCase("YES")){
+				thisForm.setXml_encounter("8");
+			}
 
-  <table >
+			String serviceDate = bean.getServiceDate();
+			if(serviceDate == null || serviceDate.isEmpty()) {
+				serviceDate = bean.getApptDate();
+			}
+			thisForm.setXml_appointment_date(serviceDate);
+
+			if (bean.getBillType() != null) {
+				thisForm.setXml_billtype(bean.getBillType());
+			}
+			else if (request.getParameter("billType") != null) {
+				thisForm.setXml_billtype(request.getParameter("billType"));
+			}
+
+			if (demo.getVer() != null && demo.getVer().equals("66")) {
+				thisForm.setDependent("66");
+			}
+
+			thisForm.setCorrespondenceCode(bean.getCorrespondenceCode());
+
+			thisForm.setRefertype1(userReferralPref);
+			thisForm.setRefertype2(userReferralPref);
+
+			/*
+			 * whether to auto populate referring doctor information into
+			 * every billing.
+			 */
+			boolean autoPopulateRefer = false;
+			if (StringUtils.isBlank(thisForm.getXml_refer1())) {
+				// Check to see if the global property for auto_populate_refer is enabled, and if so set that here
+				List<Property> globalAutoPopulateProperty = propertyDao.findGlobalByName("auto_populate_refer");
+				if (!globalAutoPopulateProperty.isEmpty()) {
+					for (Property p : globalAutoPopulateProperty) {
+						if (p.getValue().equalsIgnoreCase("true")) {
+							autoPopulateRefer = true;
+							break;
+						}
+					}
+				}
+				// If the global setting is not enabled, check the per-provider preference
+				if (!autoPopulateRefer) {
+					autoPopulateRefer = propertyDao.isActiveBooleanProperty(Property.PROPERTY_KEY.auto_populate_refer, targetProvider);
+				}
+				if (autoPopulateRefer) {
+					thisForm.setXml_refer1(mRecRefDoctorNum);
+				}
+			}
+		}
+	%>
+  <table>
     <tr>
       <td>
         <table class="tool-bar" id="billingPatientInfo">
@@ -1216,8 +1324,8 @@ if(wcbneeds != null){%>
           		       <option <% if( bean.getBillForm().equalsIgnoreCase( billformlist[i].getFormCode() ) ) {%> 
           		       				selected 
           		       			<% } %> 
-          		      		value="<%=billformlist[i].getFormCode()%>" >
-          		      		<%= billformlist[i].getDescription() %>
+          		      		value="<%=Encode.forHtmlAttribute(billformlist[i].getFormCode())%>" >
+          		      		<%= Encode.forHtmlContent(billformlist[i].getDescription()) %>
           		      	</option>          		      
           		      <%} %>
           		    </select>
@@ -1230,12 +1338,13 @@ if(wcbneeds != null){%>
               <div class="form-group" > 
 
 		        <label for="xml_provider" ><bean:message key="billing.provider.billProvider"/></label>
-                <html:select styleId="xml_provider" styleClass="form-control" property="xml_provider" value="<%=sxml_provider%>">
+                <html:select styleId="xml_provider" styleClass="form-control" property="xml_provider" >
+
                   <html:option value="">
                     Select Provider
                   </html:option>
-                <%for (int j = 0; j < billphysician.length; j++) {                %>
-                  <html:option value="<%=billphysician[j].getProviderNo()%>"><%=billphysician[j].getProviderName()%>
+                <% for (int j = 0; j < billphysician.length; j++) {                %>
+                  <html:option value="<%=billphysician[j].getProviderNo()%>"><%=Encode.forHtmlContent(billphysician[j].getProviderName())%>
                   </html:option>
                 <%}                %>
                 </html:select>
@@ -1268,7 +1377,7 @@ if(wcbneeds != null){%>
                   for (int i = 0; i < billlocation.length; i++) {
                     String locationDescription = billlocation[i].getBillingLocation() + "|" + billlocation[i].getDescription();
                 %>
-                  <html:option value="<%=locationDescription%>"><%=billlocation[i].getDescription()%>                  </html:option>
+                  <html:option value="<%=Encode.forHtmlAttribute(locationDescription)%>"><%=Encode.forHtmlContent(billlocation[i].getDescription())%></html:option>
                 <%}                %>
                 </html:select> 
                 </div>
@@ -1281,11 +1390,12 @@ if(wcbneeds != null){%>
 		      <label for="xml_visittype">Service Location</label>
                 <html:select styleClass="form-control" styleId="xml_visittype" property="xml_visittype">
                 <%
-                  for (int i = 0; i < billvisit.length; i++) {
-                    String visitTypeDescription = billvisit[i].getVisitType() + "|" + billvisit[i].getDescription();
+                  for (BillingFormData.BillingVisit billingVisit : billvisit) {
                 %>
-                  <html:option value="<%=visitTypeDescription%>"><%=visitTypeDescription%>                  </html:option>
-                <%}                %>
+                    <html:option value="<%=Encode.forHtmlAttribute(billingVisit.getDisplayName())%>">
+	                    <%=Encode.forHtmlContent(billingVisit.getDisplayName())%>
+                    </html:option>
+                <%}%>
                 </html:select>
                 
                 </div>
@@ -1406,10 +1516,10 @@ if(wcbneeds != null){%>
 		    
                 <label for="xml_encounter">Payment Method</label>
             <%
-              ArrayList types = billform.getPaymentTypes();
+              ArrayList<PaymentType> types = billform.getPaymentTypes();
               if ("Pri".equalsIgnoreCase(thisForm.getXml_billtype())) {
                 for (int i = 0; i < types.size(); i++) {
-                  PaymentType item = (PaymentType) types.get(i);
+                  PaymentType item = types.get(i);
                   if (item.getId().equals("6") || item.getId().equals("8")) {
                     types.remove(i);
                     break;
@@ -1418,7 +1528,7 @@ if(wcbneeds != null){%>
               }
               else {
                 for (int i = 0; i < types.size(); i++) {
-                  PaymentType item = (PaymentType) types.get(i);
+                  PaymentType item = types.get(i);
                   if (!item.getId().equals("6") && !item.getId().equals("8")) {
                     types.remove(i);
                     i = i - 1;
@@ -1630,8 +1740,8 @@ if(wcbneeds != null){%>
                   String bgColor="#fff";
                   String rProvider = "";
 
-				  if(recentList.size()>0){
-		                  for (String r : recentList){ 
+				  if(recentReferralDoctorList.size()>0){
+		                  for (String r : recentReferralDoctorList){
 		                  rProvider = billingReferralDao.getReferralDocName(r);
 		                  %>
 		                	  <tr bgcolor="<%=bgColor%>">
@@ -1996,9 +2106,9 @@ if(wcbneeds != null){%>
 <oscar:oscarPropertiesCheck property="BILLING_DX_REFERENCE" value="yes">
 	<script type="text/javascript">
 		function getDxInformation(origRequest){
-		      var url = "DxReference.jsp";
-		      var ran_number=Math.round(Math.random()*1000000);
-		      var params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
+		      let url = "DxReference.jsp";
+		      let ran_number=Math.round(Math.random()*1000000);
+		      let params = "demographicNo=<%=bean.getPatientNo()%>&rand="+ran_number;  //hack to get around ie caching the page
 		      new Ajax.Updater('DX_REFERENCE',url, {method:'get',parameters:params,asynchronous:true}); 
 		}
 		getDxInformation();
