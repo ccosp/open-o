@@ -1977,11 +1977,11 @@ if ( Dead.equals(PatStat) ) {%>
 
                                                     <li><span class="label"><bean:message
                                                             key="demographic.demographiceditdemographic.formResidentialAddr" />:</span>
-                                                        <span class="info"><%=StringUtils.trimToEmpty(demographic.getResidentialAddress())%></span>
+                                                        <span class="info"><%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demographic.getResidentialAddress()))%></span>
 							</li>
                                                     <li><span class="label"><bean:message
                                                             key="demographic.demographiceditdemographic.formResidentialCity" />:</span>
-                                                        <span class="info"><%=StringUtils.trimToEmpty(demographic.getResidentialCity())%></span>
+                                                        <span class="info"><%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demographic.getResidentialCity()))%></span>
                                                     </li>
                                                     <li><span class="label">
 														<bean:message key="demographic.demographiceditdemographic.formResidentialProvince" />:</span>
