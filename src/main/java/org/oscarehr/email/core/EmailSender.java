@@ -39,7 +39,7 @@ public class EmailSender {
     private String body;
     private List<EmailAttachment> attachments;
 
-    public EmailSender() { }
+    private EmailSender() { }
 
     public EmailSender(LoggedInInfo loggedInInfo, EmailConfig emailConfig, Email email) {
         this.loggedInInfo = loggedInInfo;
