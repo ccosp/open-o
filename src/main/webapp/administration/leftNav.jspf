@@ -783,9 +783,9 @@ String curProvider_no = (String)session.getAttribute("user");
 	<div id="collapseSeventeen" class="accordion-body collapse">
 		<div class="accordion-inner">
 			<ul>
-				<%-- <security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
+				<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
 					<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/configureEmail.jsp">Configure Email</a></li>
-				</security:oscarSec> --%>
+				</security:oscarSec>
 				<li><a href='javascript:void(0);' class="xlink" rel="${ctx}/admin/ManageEmails.do?method=showEmailManager">Manage Emails</a></li>
 			</ul>
 		</div>
