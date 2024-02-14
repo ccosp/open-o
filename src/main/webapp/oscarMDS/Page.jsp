@@ -99,7 +99,7 @@ String curUser_no = (String) session.getAttribute("user");
 					<div id="listViewDocs" style="height:550px; overflow:scroll;" onscroll="handleScroll(this)">
 					    <%
                             SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
-                            SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName("inboxDateSearchType");
+                            SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName(SystemPreferences.LAB_DISPLAY_PREFERENCE_KEYS.inboxDateSearchType);
                             String dateType = "serviceObservation";
 
                             if (systemPreferences != null && systemPreferences.getValue() != null)

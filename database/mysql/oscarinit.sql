@@ -536,7 +536,6 @@ CREATE TABLE IF NOT EXISTS demographic (
   title varchar(10),
   last_name varchar(30) NOT NULL default '',
   first_name varchar(30) NOT NULL default '',
-  middleNames varchar(100) NOT NULL,
   address varchar(60),
   city varchar(50),
   province varchar(20),
@@ -590,6 +589,7 @@ CREATE TABLE IF NOT EXISTS demographic (
   pronoun varchar(25) null,
   pronounId int null,
   gender varchar(25) null,
+  pref_name varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY  (demographic_no),
   KEY hin (hin),
   KEY name (last_name,first_name),
@@ -7180,7 +7180,9 @@ CREATE TABLE IF NOT EXISTS ProviderPreference
     eRxPassword varchar(64),
     eRxFacility varchar(32),
     eRxTrainingMode tinyint(1) not null,
-    encryptedMyOscarPassword varbinary(255)
+    encryptedMyOscarPassword varbinary(255),
+    defaultBillingLocation varchar(4) DEFAULT 'no',
+    defaultSliCode varchar(4) default 'no'
 );
 
 --
@@ -7262,6 +7264,7 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
   `eformId` int(10) DEFAULT NULL,
   `hideFromView` tinyint(1) NOT NULL,
   `deleted` tinyint(1) DEFAULT NULL,
+    `province` varchar(55),
   PRIMARY KEY (`specId`)
 );
 
@@ -9039,7 +9042,12 @@ CREATE TABLE IF NOT EXISTS demographicArchive (
   `residentialAddress` varchar(60) DEFAULT NULL,
   `residentialCity` varchar(50) DEFAULT NULL,
   `residentialProvince` varchar(20) DEFAULT NULL,
-  `residentialPostal` varchar(9) DEFAULT NULL
+  `residentialPostal` varchar(9) DEFAULT NULL,
+  `pref_name` varchar(30) NOT NULL DEFAULT '',
+  genderId int(11) null,
+  pronoun varchar(25) null,
+  pronounId int null,
+  gender varchar(25) null  
 );
 
 CREATE TABLE IF NOT EXISTS providerArchive (

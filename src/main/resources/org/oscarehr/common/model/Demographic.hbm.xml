@@ -88,6 +88,7 @@
 		<property column="country_of_origin" name="countryOfOrigin" type="string" />
 		<property column="gender" name="gender" type="string" />
 		<property column="pronoun" name="pronoun" type="string" />
+		<property column="pref_name" name="prefName" type="string" />
 
 	</class>
 </hibernate-mapping>

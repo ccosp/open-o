@@ -1,4 +1,4 @@
-INSERT INTO `oscar_ephi_upgrade`.`LookupList`( `name`, `listTitle`, `description`, `categoryId`, `active`, `createdBy`, `dateCreated`) VALUES ('firstNationCommunity', 'First Nation Community', 'Full list of First Nation Communities accross Canada', NULL, 1, 'oscar', '2024-01-16 20:16:34');
+INSERT INTO `LookupList`( `name`, `listTitle`, `description`, `categoryId`, `active`, `createdBy`, `dateCreated`) VALUES ('firstNationCommunity', 'First Nation Community', 'Full list of First Nation Communities accross Canada', NULL, 1, 'oscar', '2024-01-16 20:16:34');
 
 SET @LOOKUPID := '';
 SELECT id INTO @LOOKUPID FROM LookupList WHERE `name` = 'firstNationCommunity';

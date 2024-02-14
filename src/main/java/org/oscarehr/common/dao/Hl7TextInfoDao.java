@@ -307,7 +307,7 @@ public class Hl7TextInfoDao extends AbstractDao<Hl7TextInfo> {
 		SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
 		String dateSearchType = "serviceObservation";
 
-		SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName("inboxDateSearchType");
+		SystemPreferences systemPreferences = systemPreferencesDao.findPreferenceByName(SystemPreferences.LAB_DISPLAY_PREFERENCE_KEYS.inboxDateSearchType);
 		if (systemPreferences != null)
 		{
 			if (systemPreferences.getValue() != null && !systemPreferences.getValue().isEmpty())
