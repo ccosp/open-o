@@ -1952,7 +1952,7 @@ if ( Dead.equals(PatStat) ) {%>
                                                         <span class="info"><%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demoExt.get("phoneComment")))%></span></li>
                                                     <li><span class="label"><bean:message
                                                             key="demographic.demographiceditdemographic.formAddr" />(<span class="popup"  onmouseover="nhpup.popup(addressHistory);" title="Address History">History</span>):</span>
-                                                        <span class="info"><%=StringUtils.trimToEmpty(demographic.getAddress())%></span>
+                                                        <span class="info"><%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demographic.getAddress()))%></span>
 							</li>
                                                     <li><span class="label"><bean:message
                                                             key="demographic.demographiceditdemographic.formCity" />:</span>
@@ -2655,7 +2655,7 @@ if ( Dead.equals(PatStat) ) {%>
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formResidentialAddr" />: </b></td>
 								<td align="left"><input type="text" name="residentialAddress" <%=getDisabled("residentialAddress")%>
-									size="30" value="<%=StringUtils.trimToEmpty(demographic.getResidentialAddress())%>">
+									size="30" value="<%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demographic.getResidentialAddress()))%>">
 								</td>
 								<td align="right"><b><bean:message
 									key="demographic.demographiceditdemographic.formResidentialCity" />: </b></td>
@@ -2811,8 +2811,8 @@ if ( Dead.equals(PatStat) ) {%>
 										key="demographic.demographicaddrecordhtm.formPhoneComment" />: </b></td>
 								<td align="left" colspan="3">
 								<input type="hidden" name="phoneCommentOrig"
-									value="<%=StringUtils.trimToEmpty(demoExt.get("phoneComment"))%>" />
-										<textarea rows="2" cols="30" name="phoneComment"><%=StringUtils.trimToEmpty(demoExt.get("phoneComment"))%></textarea>
+									value="<%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demoExt.get("phoneComment")))%>" />
+										<textarea rows="2" cols="30" name="phoneComment"><%=StringEscapeUtils.escapeHtml(StringUtils.trimToEmpty(demoExt.get("phoneComment")))%></textarea>
 								</td>
 							</tr>							
 							<tr valign="top">
