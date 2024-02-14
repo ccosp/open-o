@@ -22,7 +22,7 @@
                 <td>
                 <c:choose>
                     <c:when test="${emailStatusResult.isEncrypted}">
-                        <i class="icon-lock"></i> Encrypted &#x2022; <c:out value="${ emailStatusResult.password }"/>
+                        <i class="icon-lock"></i> Encrypted with password <b><c:out value="${ emailStatusResult.password }"/></b>
                     </c:when>
                     <c:otherwise>
                         <i class="icon-unlock"></i> Unencrypted
