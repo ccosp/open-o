@@ -45,7 +45,7 @@
                     <c:if test="${emailStatusResult.status eq 'FAILED'}">
                         <button type="button" class="btn btn-outline-secondary" class="btnResolve" id="btnResolve${emailStatusResult.logId}" onclick="resolve('${emailStatusResult.logId}')"><i class="icon-ok-sign"></i> Resolve</button>
                     </c:if>
-                    <button type="button" class="btn btn-success" class="btnResend" id="btnResend${emailStatusResult.logId}" onclick="resend('${emailStatusResult.logId}')"><i class="icon-envelope-alt"></i> Open</button>
+                    <button type="button" class="btn btn-success" class="btnResend" id="btnResend${emailStatusResult.logId}" onclick="resend('${emailStatusResult.logId}')"><i class="icon-envelope-alt"></i> Copy and Open as New Email to Patient</button>
                 </td>
             </tr>
         </table>
