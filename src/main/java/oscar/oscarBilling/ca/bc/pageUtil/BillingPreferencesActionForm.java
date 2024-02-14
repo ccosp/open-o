@@ -51,6 +51,9 @@ public class BillingPreferencesActionForm
   //Default billing provider preference
   private String defaultBillingProvider;
 
+  //Default Teleplan service location (visittype)
+  private String defaultServiceLocation;
+
   public String getProviderNo() {
 
     return providerNo;
@@ -145,6 +148,14 @@ public class BillingPreferencesActionForm
 
   public void setDefaultBillingProvider(String defaultBillingProvider) {
     this.defaultBillingProvider = defaultBillingProvider;
+  }
+
+  public String getDefaultServiceLocation() {
+    return defaultServiceLocation;
+  }
+
+  public void setDefaultServiceLocation(String defaultServiceLocation) {
+    this.defaultServiceLocation = defaultServiceLocation;
   }
 
   public boolean isAutoPopulateRefer() {
