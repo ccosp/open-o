@@ -79,15 +79,16 @@ public class EmailSender {
         }
     }
 
+    /**
+     * This framework currently supports SMTP-based email services.
+     * However, the design of this framework is intended to allow for future expansion to facilitate API-based email services (such as SendGrid, ProtonMail, etc.).
+     */
     private JavaMailSender createMailSender(EmailConfig emailConfig) {
-        switch (emailConfig.getEmailProvider()) {
-            case GMAIL:
-                javaMailSender = createTLSMailSender(emailConfig);
-                break;                
-            case OUTLOOK:
+        switch (emailConfig.getEmailType()) {
+            case SMTP:
                 javaMailSender = createTLSMailSender(emailConfig);
                 break;
-            case SENDGRID:
+            case API:
                 break;
             default:
                 break;
