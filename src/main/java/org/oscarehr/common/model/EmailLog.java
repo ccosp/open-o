@@ -15,8 +15,7 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     public enum EmailStatus {
         SUCCESS,
         FAILED,
-        RESOLVED,
-        OUTBOX
+        RESOLVED
     }
 
     public enum ChartDisplayOption {
