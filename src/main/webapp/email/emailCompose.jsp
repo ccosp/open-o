@@ -511,6 +511,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	showEncryptionOptions();
 });
 
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && event.target.tagName.toLowerCase() !== "textarea") {
+        event.preventDefault();
+    }
+});
+
 function validateEmailForm() {
 	if (!validateForm()) { return false; } 
 	ShowSpin(true);
