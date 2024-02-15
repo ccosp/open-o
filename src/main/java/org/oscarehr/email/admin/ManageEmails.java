@@ -104,6 +104,7 @@ public class ManageEmails extends JSONAction {
 		request.setAttribute("encryptedMessageEmail", emailLog.getEncryptedMessage());
         request.setAttribute("emailPDFPassword", emailLog.getPassword());
         request.setAttribute("emailPDFPasswordClue", emailLog.getPasswordClue());
+		request.setAttribute("isEmailEncrypted", emailLog.getIsEncrypted());
 		request.setAttribute("isEmailAttachmentEncrypted", emailLog.getIsAttachmentEncrypted());
         request.getSession().setAttribute("emailAttachmentList", emailAttachmentList);
 

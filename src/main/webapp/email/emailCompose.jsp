@@ -343,7 +343,7 @@
 						<h5 class="card-title">
 							<span class="icon-lock"></span> Encryption <span id="encryptionOptionsInfo" class="icon-info-sign" data-toggle="tooltip" data-placement="auto right" title="Emails will be sent encrypted by default. Encryption settings can be modified by disabling this feature."></span>
 							<div class="form-check form-switch encryptionLock">
-								<input class="form-check-input" type="checkbox" id="encryptionSwitch" checked onClick="showEncryptionOptions(this)">
+								<input class="form-check-input" type="checkbox" id="encryptionSwitch" onClick="showEncryptionOptions()" ${ isEmailEncrypted ? 'checked' : '' }>
 								<label class="form-check-label" for="encryptionSwitch" id="isEncryption">ON</label>
 							</div>
 						</h5>
@@ -386,7 +386,7 @@
 								</div>	
 							</div>
 							<input type="hidden" name="isEmailAttachmentEncrypted" id="isEmailAttachmentEncrypted" value="${ isEmailAttachmentEncrypted ? 'true' : 'false' }"/>
-							<input type="hidden" name="isEmailEncrypted" id="isEmailEncrypted" value="true"/>
+							<input type="hidden" name="isEmailEncrypted" id="isEmailEncrypted" value="${ isEmailEncrypted ? 'true' : 'false' }"/>
 						</div>
 					</div>
 				</div>
@@ -505,7 +505,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	convertAttachmentSize();
 
 	// Display an error if there are 0 senders, 0 recipients, or if the recipients' addresses are invalid.
-	displayErrorOnInvalidEmail(); 
+	displayErrorOnInvalidEmail();
+	
+	// Show encryption options
+	showEncryptionOptions();
 });
 
 function validateEmailForm() {
@@ -580,7 +583,8 @@ function clearError(errorElementId) {
 	errorElement.innerHTML = '';
 }
 
-function showEncryptionOptions(checkbox) {
+function showEncryptionOptions() {
+	const checkbox = document.getElementById("encryptionSwitch");
 	document.getElementById("encryptionOptions").classList.toggle('hide', !checkbox.checked);
 	document.getElementById("isEmailEncrypted").value = checkbox.checked ? "true" : "false";
 	document.getElementById("isEncryption").innerHTML = checkbox.checked ? "ON" : "OFF";
