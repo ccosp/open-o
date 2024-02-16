@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -93,8 +92,8 @@ public class EmailSendAction extends DispatchAction {
         email.setSender(fromEmail);
         email.setRecipients(receiverEmails);
         email.setSubject(subject);
-        email.setBody(StringEscapeUtils.escapeHtml(body));
-        email.setEncryptedMessage(StringEscapeUtils.escapeHtml(encryptedMessage));
+        email.setBody(body);
+        email.setEncryptedMessage(encryptedMessage);
         email.setPassword(password);
         email.setPasswordClue(passwordClue);
         email.setIsEncrypted(isEncrypted);

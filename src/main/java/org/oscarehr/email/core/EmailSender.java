@@ -10,7 +10,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.net.ssl.SSLContext;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
@@ -46,7 +45,7 @@ public class EmailSender {
         this.emailConfig = emailConfig;
         this.recipients = email.getRecipients();
         this.subject = email.getSubject();
-        this.body = StringEscapeUtils.unescapeHtml(email.getBody());
+        this.body = email.getBody();
         this.attachments = email.getAttachments();
     }
 
@@ -55,7 +54,7 @@ public class EmailSender {
         this.emailConfig = emailConfig;
         this.recipients = recipients;
         this.subject = subject;
-        this.body = StringEscapeUtils.unescapeHtml(body);
+        this.body = body;
         this.attachments = attachments;
     }
     
