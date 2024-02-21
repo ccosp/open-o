@@ -13117,3 +13117,16 @@ CREATE TABLE IF NOT EXISTS `formRourke2020` (
 
 INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2017', '../form/formrourke2017complete.jsp?demographic_no=', 'formRourke2017', 38);
 INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2020', '../form/formrourke2020complete.jsp?demographic_no=', 'formRourke2020', 0);
+
+--
+-- Table structure for table `billing_preferences`
+--
+-- Stores data about a users billing preferences
+-- Shares a one to one relation with the provider table
+CREATE TABLE IF NOT EXISTS billing_preferences (
+  id int(10) unsigned NOT NULL auto_increment,
+  referral int(10) unsigned NOT NULL default '0',
+  providerNo int(10) unsigned NOT NULL default '0',
+  defaultPayeeNo varchar(11) NOT NULL default '0',
+  PRIMARY KEY  (id)
+) ;
