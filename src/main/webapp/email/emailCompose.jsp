@@ -405,14 +405,18 @@
 									<label>Chart options</label>
 									<div class="form-check">
 										<div class="form-check-label">
-											<input class="form-check-input" type="radio" name="patientChartOption" value="doNotAddAsNote">
-											Do not add to patient chart
+											<input class="form-check-input" type="radio" name="patientChartOption" id="doNotAddAsNoteOption" value="doNotAddAsNote">
+											<label class="form-check-label" for="doNotAddAsNoteOption">
+												Do not add to patient chart
+											</label>
 										</div>
 									</div>
 									<div class="form-check">
 										<div class="form-check-label">
-											<input class="form-check-input" type="radio" name="patientChartOption" value="addFullNote" checked>
-											Chart as new note in patient's chart
+											<input class="form-check-input" type="radio" name="patientChartOption" id="addFullNoteOption" value="addFullNote" checked>
+											<label class="form-check-label" for="addFullNoteOption">
+												Chart as new note in patient's chart
+											</label>
 										</div>
 									</div>
 								</div>
