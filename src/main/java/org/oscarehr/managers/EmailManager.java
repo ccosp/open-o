@@ -16,18 +16,24 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
+import org.oscarehr.casemgmt.model.CaseManagementNote;
+import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
+import org.oscarehr.casemgmt.service.CaseManagementManager;
 import org.oscarehr.common.dao.EmailConfigDao;
 import org.oscarehr.common.dao.EmailLogDao;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
 import org.oscarehr.common.model.EmailLog;
+import org.oscarehr.common.model.EmailLog.ChartDisplayOption;
 import org.oscarehr.common.model.EmailLog.EmailStatus;
+import org.oscarehr.common.model.SecRole;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.documentManager.ConvertToEdoc;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.email.core.Email;
 import org.oscarehr.email.core.EmailSender;
 import org.oscarehr.email.core.EmailStatusResult;
+import org.oscarehr.email.util.EmailNoteUtil;
 import org.oscarehr.util.EmailSendingException;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -36,6 +42,7 @@ import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import oscar.oscarEncounter.data.EctProgram;
 import oscar.util.StringUtils;
 
 @Service
@@ -47,6 +54,8 @@ public class EmailManager {
     @Autowired
     private EmailLogDao emailLogDao;
 
+    @Autowired
+    private CaseManagementManager caseManagementManager;
     @Autowired
     private DocumentAttachmentManager documentAttachmentManager;
     @Autowired
@@ -64,6 +73,7 @@ public class EmailManager {
             EmailSender emailSender = new EmailSender(loggedInInfo, emailLog.getEmailConfig(), email);
             emailSender.send();
             updateEmailStatus(loggedInInfo, emailLog, EmailStatus.SUCCESS, "");
+            if (emailLog.getChartDisplayOption().equals(ChartDisplayOption.WITH_FULL_NOTE)) { addEmailNote(loggedInInfo, emailLog); }
         } catch (EmailSendingException e) {
             updateEmailStatus(loggedInInfo, emailLog, EmailStatus.FAILED, e.getMessage());
             logger.error("Failed to send email", e);
@@ -123,6 +133,47 @@ public class EmailManager {
         if (dateBegin == null || dateEnd == null) { return Collections.emptyList(); }
         
         return emailLogDao.getEmailStatusByDateDemographicSenderStatus(dateBegin, dateEnd, demographic_no, senderEmailAddress, emailStatus);
+    }
+
+    public EmailLog getEmailLogByCaseManagementNoteId(LoggedInInfo loggedInInfo, Long noteId) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
+        CaseManagementNoteLink caseManagementNoteLink = caseManagementManager.getLatestLinkByNote(noteId);
+        if (caseManagementNoteLink == null || !caseManagementNoteLink.getTableName().equals(CaseManagementNoteLink.EMAIL)) { return null; }
+        Long emailLogId = caseManagementNoteLink.getTableId();
+        return emailLogDao.getEmailLogById(emailLogId.intValue());
+    }
+
+    public void addEmailNote(LoggedInInfo loggedInInfo, EmailLog emailLog) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_email)");
+		}
+
+        EmailNoteUtil emailNoteUtil = new EmailNoteUtil(loggedInInfo, emailLog);
+        String emailNote = emailNoteUtil.createNote();
+
+        SecRole doctorRole = caseManagementManager.getSecRoleByRoleName("doctor");
+        String programId = new EctProgram(loggedInInfo.getSession()).getProgram(loggedInInfo.getLoggedInProviderNo());
+        Date creationDate = new Date();
+
+        CaseManagementNote caseManagementNote = new CaseManagementNote();
+		caseManagementNote.setUpdate_date(creationDate);
+		caseManagementNote.setObservation_date(creationDate);
+		caseManagementNote.setDemographic_no(String.valueOf(emailLog.getDemographicNo()));
+		caseManagementNote.setProviderNo(loggedInInfo.getLoggedInProviderNo());
+		caseManagementNote.setNote(emailNote);
+		caseManagementNote.setSigned(true);
+		caseManagementNote.setSigning_provider_no(loggedInInfo.getLoggedInProviderNo());
+		caseManagementNote.setProgram_no(programId);		
+		caseManagementNote.setReporter_caisi_role(doctorRole.getId().toString());
+		caseManagementNote.setReporter_program_team("0");
+		caseManagementNote.setHistory(emailNote);
+		Long noteId = caseManagementManager.saveNoteSimpleReturnID(caseManagementNote);
+				 
+		CaseManagementNoteLink caseManagementNoteLink = new CaseManagementNoteLink(CaseManagementNoteLink.EMAIL, Long.valueOf(emailLog.getId()), noteId);
+        caseManagementManager.saveNoteLink(caseManagementNoteLink);
     }
 
     private void setEmailAttachments(EmailLog emailLog, List<EmailAttachment> emailAttachments) {

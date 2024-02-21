@@ -131,6 +131,14 @@ public class EformDataManager {
 		eDoc.setFilePath(null);
 		return documentManager.saveDocument(loggedInInfo, eDoc);
 	}
+
+	public EFormData findByFdid(LoggedInInfo loggedInInfo, Integer fdid) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_eform)");
+		}
+
+		return eFormDataDao.find(fdid);
+	}
 	
 	/**
 	 * Saves an form as PDF in a temp directory.

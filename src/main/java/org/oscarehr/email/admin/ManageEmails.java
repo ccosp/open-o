@@ -106,6 +106,7 @@ public class ManageEmails extends JSONAction {
         request.setAttribute("emailPDFPasswordClue", emailLog.getPasswordClue());
 		request.setAttribute("isEmailEncrypted", emailLog.getIsEncrypted());
 		request.setAttribute("isEmailAttachmentEncrypted", emailLog.getIsAttachmentEncrypted());
+		request.setAttribute("emailPatientChartOption", emailLog.getChartDisplayOption().getValue());
         request.getSession().setAttribute("emailAttachmentList", emailAttachmentList);
 
 		return mapping.findForward("compose");

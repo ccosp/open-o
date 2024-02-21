@@ -19,8 +19,16 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     }
 
     public enum ChartDisplayOption {
-        WITHOUT_NOTE,
-        WITH_FULL_NOTE
+        WITHOUT_NOTE("doNotAddAsNote"),
+        WITH_FULL_NOTE("addFullNote");
+
+        private final String value;
+
+        ChartDisplayOption(String value) {
+            this.value = value;
+        }
+
+        public String getValue() { return value; }
     }
 
     public enum TransactionType {

@@ -185,6 +185,7 @@
 			</c:choose>
 
 			<input type="hidden" name="isEmailSuccessful" id="isEmailSuccessful" value="${isEmailSuccessful}" />
+			<input type="hidden" name="emailPatientChartOption" id="emailPatientChartOption" value="${ empty param.emailPatientChartOption ? emailPatientChartOption : param.emailPatientChartOption }" />
 			<input type="hidden" name="totalSenderEmails" id="totalSenderEmails" value="${fn:length(senderAccounts)}" />
 			<input type="hidden" name="totalRecipintEmails" id="totalRecipintEmails" value="${fn:length(receiverEmailList)}" />
 			<input type="hidden" name="totalInvalidRecipintEmails" id="totalInvalidRecipintEmails" value="${fn:length(invalidReceiverEmailList)}" />
@@ -509,6 +510,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	// Show encryption options
 	showEncryptionOptions();
+
+	// Select chart option from user's preference
+	selectPatientChartOption();
 });
 
 document.addEventListener("keydown", function(event) {
@@ -666,6 +670,15 @@ function displayErrorOnInvalidEmail() {
 	}
 
 	if (!hasSender || !hasValidRecipient) { disableForm(); }
+}
+
+// Select chart option from user's preference
+function selectPatientChartOption() {
+	const emailPatientChartOptionValue = document.getElementById('emailPatientChartOption').value;
+	const radioButton = document.querySelector('input[name="patientChartOption"][value="' + emailPatientChartOptionValue + '"]');
+
+	// Check the radio button if it exists
+	radioButton && (radioButton.checked = true);
 }
 
 function disableForm() {

@@ -1679,6 +1679,27 @@ function toggleCollapseViewForAll() {
 	});
 }
 
+function viewEmailByLogId(width, height, url) {
+    ShowSpin(true);
+    jQuery.ajax({
+        url: url,
+        method: 'POST',
+        success: function(data) {
+            HideSpin();
+            const emailComposeWindow = window.open("", "_blank", "width=" + width + ",height=" + height);
+            emailComposeWindow.document.write(data);
+            emailComposeWindow.document.close();
+        },
+        error: function(xhr, status, error) {
+            HideSpin();
+            if (xhr.responseJSON) { 
+                alert(xhr.responseJSON.errorMessage); 
+            } else {
+                alert("500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.");
+            }
+        }});
+}
+
 //this func fires only if maximize button is clicked
 function fullView(e) {
     var id = Event.element(e).id;
@@ -1694,11 +1715,10 @@ function fullViewById(id) {
 	
     
     var txt = "n" + nId;
-    var img = "quitImg" + nId;
+    var img = "fullImg" + nId;
     var fullId = "full" + nId;
     var params = "method=viewNote&raw=false&noteId=" + nId;
     var noteTxtId = "txt" + nId; 
-    var btnHtml = "<img title='Minimize Display' id='bottomQuitImg" + nId + "' alt='Minimize Display' onclick='minView(event)' style='float:right; margin-right:5px; margin-bottom:3px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
     Element.stopObserving(txt, 'click', fullView);
 	
 	
@@ -1711,24 +1731,38 @@ function fullViewById(id) {
                         evalScripts: true,
                         onSuccess: function(response) {
                         	$(noteTxtId).update(response.responseText);
-                            if( largeNote(response.responseText) ) {
-                                new Insertion.After(noteTxtId,btnHtml);
-                            }
                             $(fullId).value = "true";
                          
                         }
                     }
                );
 
-    var imgTag = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+    var imgTag1 = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minNonEditableNoteView(" + nId + ")' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
+    const imgTag2 = "<img title='Minimize Display' id='quitImg" + nId + "' alt='Minimize Display' onclick='minNonEditableNoteView(" + nId + ")' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
 
 
-    Element.remove(img);
+    document.getElementById(img)?.remove();
 
 
     $(txt).style.height = 'auto';
-    new Insertion.Top(txt, imgTag);
-    //Element.stopObserving(txt, 'click', fullView);
+    const observationDivId = "#observation" + nId;
+    if (jQuery(observationDivId).length > 0) {
+        jQuery(observationDivId).append(imgTag2);
+        jQuery(observationDivId).css('font-size', '10px');
+    } else {
+        new Insertion.Top(txt, imgTag1);
+    }
+    Element.stopObserving(noteTxtId, 'click', fullView);
+}
+
+function minNonEditableNoteView(id) {
+    const noteId = "n" + id;
+    const noteTxtId = "txt" + id;
+    const quitImgId = "quitImg" + id;
+    const line = $(noteTxtId).innerHTML.substr(0,50).replace(/<br>/g," ");
+    $(noteTxtId).update(line);
+    document.getElementById(quitImgId)?.remove();
+    Element.observe(noteTxtId, 'click', fullView);
 }
 
 function resetEdit(e) {
