@@ -270,8 +270,8 @@ if(!authed) {
 <script language="javascript" src="<%=request.getContextPath() %>/hcHandler/hcHandler.js"></script>
 <script language="javascript" src="<%=request.getContextPath() %>/hcHandler/hcHandlerUpdateDemographic.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/hcHandler/hcHandler.css" type="text/css" />
-<link rel="stylesheet" href="<%=request.getContextPath() %>/demographic/demographiceditdemographic.css" type="text/css" />
 <% } %>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/demographic/demographiceditdemographic.css" type="text/css" />
 
 <!-- main calendar program -->
 <script type="text/javascript" src="../share/calendar/calendar.js"></script>
