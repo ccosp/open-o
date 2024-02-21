@@ -251,8 +251,9 @@ public class EmailManager {
     }
 
     private void addPasswordClue(Email email) {
-        String passwordClue = StringEscapeUtils.escapeHtml("<br><br><i>" + email.getPasswordClue() + "</i>");
-        String bodyWithClue = email.getBody() + passwordClue;
+        StringBuilder passwordClue = new StringBuilder(); 
+        passwordClue.append("<br><br><i>").append(email.getPasswordClue()).append("</i>");
+        String bodyWithClue = email.getBody() + passwordClue.toString();
         email.setBody(bodyWithClue);
     }
 
