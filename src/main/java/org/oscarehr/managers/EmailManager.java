@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
@@ -221,7 +222,8 @@ public class EmailManager {
 
     private EmailAttachment createMessageAttachment(String message) {
         if (StringUtils.isNullOrEmpty(message)) { return null; }
-        Path encryptedMessagePDF = ConvertToEdoc.saveAsTempPDF(StringEscapeUtils.unescapeHtml(message));
+        String messageHTML = Jsoup.parse(message.replace("\n", "<br>")).html();
+        Path encryptedMessagePDF = ConvertToEdoc.saveAsTempPDF(messageHTML);
         EmailAttachment emailAttachment = new EmailAttachment("message.pdf", encryptedMessagePDF.toString(), DocumentType.DOC, -1);
         return emailAttachment;
     }
