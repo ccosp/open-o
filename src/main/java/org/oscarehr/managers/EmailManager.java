@@ -97,7 +97,7 @@ public class EmailManager {
         emailLog.setIsAttachmentEncrypted(email.getIsAttachmentEncrypted());
         emailLog.setChartDisplayOption(email.getChartDisplayOption());
         emailLog.setTransactionType(email.getTransactionType());
-        emailLog.setErrorMessage("Email delivery unsuccessful; status will display as 'Failed' until the email is sent successfully.");
+        emailLog.setErrorMessage("Email was not sent successfully for unknown reasons.");
         emailLog.setDemographicNo(email.getDemographicNo());
         emailLogDao.persist(emailLog);
         return emailLog;
