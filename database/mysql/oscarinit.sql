@@ -10977,19 +10977,19 @@ CREATE TABLE IF NOT EXISTS `faxes` (
 
 CREATE TABLE IF NOT EXISTS `fax_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(255),
-  `siteUser` varchar(255),
-  `passwd` varchar(255),
-  `gatewayName` varchar(255),
-  `faxUser` varchar(255),
-  `faxPasswd` varchar(255),
-  `queue` varchar(255),
-  `active` tinyint(1),
-  `faxNumber` varchar(10),
-  `faxReply` varchar(10),
-  `senderEmail` varchar(255),
-  `accountName` varchar(55),
-  `download` tinyint(1),
+  `url` varchar(255) DEFAULT '',
+  `siteUser` varchar(255) DEFAULT '',
+  `passwd` varchar(255) DEFAULT '',
+  `gatewayName` varchar(255) DEFAULT '',
+  `faxUser` varchar(255) DEFAULT '',
+  `faxPasswd` varchar(255) DEFAULT '',
+  `queue` varchar(255) DEFAULT 0,
+  `active` tinyint(1) DEFAULT false,
+  `faxNumber` varchar(10) DEFAULT '',
+  `faxReply` varchar(10) DEFAULT '',
+  `senderEmail` varchar(255) DEFAULT '',
+  `accountName` varchar(55) DEFAULT '',
+  `download` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`)
 );
 
