@@ -14,9 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
-import org.jsoup.Jsoup;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
@@ -40,6 +38,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFEncryptionUtil;
 import org.oscarehr.util.PDFGenerationException;
+import org.owasp.encoder.Encode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +69,7 @@ public class EmailManager {
         sanitizeEmailFields(email);
         EmailLog emailLog = prepareEmailForOutbox(loggedInInfo, email);
         try {
+            encodeEmailBody(email);
             if (email.getIsEncrypted()) { encryptEmail(email); }
             EmailSender emailSender = new EmailSender(loggedInInfo, emailLog.getEmailConfig(), email);
             emailSender.send();
@@ -206,6 +206,11 @@ public class EmailManager {
         }
     }
 
+    private void encodeEmailBody(Email email) {
+        String body = "<div style=\"white-space: pre-wrap;\">" + Encode.forHtmlContent(email.getBody()) + "</div>";
+        email.setBody(body);
+    }
+
     private void encryptEmail(Email email) throws EmailSendingException {
         // Encrypt message and attachment
         List<EmailAttachment> encryptableAttachments = new ArrayList<>();
@@ -222,8 +227,8 @@ public class EmailManager {
 
     private EmailAttachment createMessageAttachment(String message) {
         if (StringUtils.isNullOrEmpty(message)) { return null; }
-        String messageHTML = Jsoup.parse(message.replace("\n", "<br>")).html();
-        Path encryptedMessagePDF = ConvertToEdoc.saveAsTempPDF(messageHTML);
+        String htmlSafeMessage = Encode.forHtmlContent(message).replace("\n", "<br>");
+        Path encryptedMessagePDF = ConvertToEdoc.saveAsTempPDF(htmlSafeMessage);
         EmailAttachment emailAttachment = new EmailAttachment("message.pdf", encryptedMessagePDF.toString(), DocumentType.DOC, -1);
         return emailAttachment;
     }
@@ -254,7 +259,7 @@ public class EmailManager {
 
     private void addPasswordClue(Email email) {
         StringBuilder passwordClue = new StringBuilder(); 
-        passwordClue.append("<br><br><i>").append(email.getPasswordClue()).append("</i>");
+        passwordClue.append("<br><br><i><div style=\"white-space: pre-wrap;\">").append(Encode.forHtmlContent(email.getPasswordClue())).append("</div></i>");
         String bodyWithClue = email.getBody() + passwordClue.toString();
         email.setBody(bodyWithClue);
     }

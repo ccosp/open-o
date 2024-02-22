@@ -1730,7 +1730,8 @@ function fullViewById(id) {
                         postBody: params,
                         evalScripts: true,
                         onSuccess: function(response) {
-                        	$(noteTxtId).update(response.responseText);
+                        	$(noteTxtId).update(response.responseText.trim());
+                            jQuery("#" + noteTxtId).css("white-space", "pre-wrap");
                             $(fullId).value = "true";
                          
                         }
@@ -1761,6 +1762,7 @@ function minNonEditableNoteView(id) {
     const quitImgId = "quitImg" + id;
     const line = $(noteTxtId).innerHTML.substr(0,50).replace(/<br>/g," ");
     $(noteTxtId).update(line);
+    jQuery("#" + noteTxtId).css("white-space", "");
     document.getElementById(quitImgId)?.remove();
     Element.observe(noteTxtId, 'click', fullView);
 }
