@@ -550,16 +550,10 @@ function validateForm() {
 	validateField(subjectEmail, 'Subject is required', errors, 'subjectError');
 	validateField(bodyEmail, 'Body is required', errors, 'bodyError');
 	if (isEncrypted) {
-		if (!hasEncryptedMessage && hasAttachments && isAttachmentEncrypted) {
+		if (hasEncryptedMessage) {
 			validateField(emailPDFPassword, 'Password is required', errors, 'emailPDFPasswordError');
 			validateField(emailPDFPasswordClue, 'Clue is required', errors, 'emailPDFPasswordClueError');
-		} else if (hasEncryptedMessage && !hasAttachments && !isAttachmentEncrypted) {
-			validateField(emailPDFPassword, 'Password is required', errors, 'emailPDFPasswordError');
-			validateField(emailPDFPasswordClue, 'Clue is required', errors, 'emailPDFPasswordClueError');
-		} else if (hasEncryptedMessage && hasAttachments && !isAttachmentEncrypted) {
-			validateField(emailPDFPassword, 'Password is required', errors, 'emailPDFPasswordError');
-			validateField(emailPDFPasswordClue, 'Clue is required', errors, 'emailPDFPasswordClueError');
-		} else if (hasEncryptedMessage && hasAttachments && isAttachmentEncrypted) {
+		} else if (hasAttachments && isAttachmentEncrypted) {
 			validateField(emailPDFPassword, 'Password is required', errors, 'emailPDFPasswordError');
 			validateField(emailPDFPasswordClue, 'Clue is required', errors, 'emailPDFPasswordClueError');
 		} else {
