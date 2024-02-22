@@ -129,7 +129,7 @@ if(!authed) {
 	// billing type setting MSP, Private, ICBC, WCB, etc..
 	String frmType = request.getParameter("billType");
 
-	// not sure why
+	// not sure why this is needed. It's too costly to rewrite.
 	String loadFromSession = request.getParameter("loadFromSession");
 
 	// load new WCB type
@@ -137,7 +137,7 @@ if(!authed) {
 
 	/* billing from appointment will fetch the defaults for the provider whom the appointment was with
 	 * "sign save and bill" will fetch the defaults for the logged in provider who wrote and signed the encounter note
-	 * Basically if "xml_provider" is null then the logged in provider is used
+	 * If "xml_provider" is null then the logged in provider is used
 	 */
 	String targetProvider = loggedInInfo.getLoggedInProviderNo();
 	String alternateProvider = request.getParameter("xml_provider");
@@ -617,7 +617,7 @@ function ShowElementById(ele){
 	document.getElementById(ele).style.display='';
 }
 function CheckType(){
-	if (document.BillingCreateBillingForm.xml_billtype.value == "ICBC"){
+	if (document.BillingCreateBillingForm.xml_billtype.value === "ICBC"){
 		ShowElementById('ICBC');
 		document.BillingCreateBillingForm.mva_claim_code.options[1].selected = true;
 	}else{
@@ -674,14 +674,14 @@ function replaceWCB(id){
 }
 
 function gotoPrivate(){
-   if (document.BillingCreateBillingForm.xml_billtype.value == "Pri"){
+   if (document.BillingCreateBillingForm.xml_billtype.value === "Pri"){
  	  var url = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=Pri&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=Pri";
 	  url += "&providerview=" + jQuery("select[name='xml_provider']").val();
 	  url += "&apptProvider_no=" + jQuery("select[name='xml_provider']").val();
 
  	  window.location.href = url;
    }
-   if (document.BillingCreateBillingForm.xml_billtype.value == "MSP"){
+   if (document.BillingCreateBillingForm.xml_billtype.value === "MSP"){
 	  var url = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=<%=OscarProperties.getInstance().getProperty("default_view")%>&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=MSP";
 	  url += "&providerview=" + jQuery("select[name='xml_provider']").val();
 	  url += "&apptProvider_no=" + jQuery("select[name='xml_provider']").val(); 
@@ -892,43 +892,46 @@ function setCodeToChecked(svcCode){
             myform.xml_other1.value = svcCode;
             return;
             //myform.xml_diagnostic_detail1.value = "";
-        }else if (myform.xml_other2.value == "") {
+        }else if (myform.xml_other2.value === "") {
             myform.xml_other2.value = svcCode;
             //myform.xml_diagnostic_detail2.value = "";
-        }else if (myform.xml_other3.value == "") {
+        }else if (myform.xml_other3.value === "") {
             myform.xml_other3.value  = svcCode;
             //myform.xml_diagnostic_detail3.value = "";
         }
     }
-    
-    
-    
-}
-
-function setReferralDoctor() {
-	jQuery(".referral-doctor").on('click', function() {
-
-		 mRecordRefDocNum = jQuery(this).attr('data-num');  
-		 mRecordRefDoc= jQuery(this).attr('data-doc');  
-		 
-		 one = jQuery('[name="xml_refer1"]');
-		 two = jQuery('[name="xml_refer2"]');
-		 
-		 if(one.val().length>0){
-		  two.val(mRecordRefDocNum);
-		  two.attr("title", mRecordRefDoc );
-		 }else{
-		  one.val(mRecordRefDocNum);
-		  one.attr("title", mRecordRefDoc );
-		 }
-	});
 }
 
 jQuery(document).ready(function(jQuery){
-	setReferralDoctor();
 
-	
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
+
+	jQuery(document).on('click', ".referral-doctor", function() {
+
+		mRecordRefDocNum = jQuery(this).attr('data-num');
+		mRecordRefDoc= jQuery(this).attr('data-doc');
+
+		one = jQuery('[name="xml_refer1"]');
+		two = jQuery('[name="xml_refer2"]');
+
+		if(one.val().length>0){
+			two.val(mRecordRefDocNum);
+			two.attr("title", mRecordRefDoc );
+		}else{
+			one.val(mRecordRefDocNum);
+			one.attr("title", mRecordRefDoc );
+		}
+	});
+
+	jQuery(document).on('change', '#xml_provider', function() {
+		let url = '${pageContext.servletContext.contextPath}/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&demographic_name=' + '<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>' + '&billRegion=BC&xml_provider=' + this.value;
+		console.log(url);
+		jQuery("#billingPatientInfoWrapper").load(url + " #billingPatientInfo", function(){
+			// re-bind all the javascript
+			getDxInformation();
+			bindDxJSONEvents();
+		})
+	});
 	
 	/* for setting times */
     jQuery(function () {
@@ -938,18 +941,17 @@ jQuery(document).ready(function(jQuery){
     });
 
 	/* New billing form selection method*/
-    jQuery("#selectBillingForm").on('change',function() {
-    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&billRegion=BC&billForm=' + this.value ;
+    jQuery(document).on('change', "#selectBillingForm", function() {
+    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&demographic_name=' + '<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>' + '&billRegion=BC&billForm=' + this.value ;
       	console.log(url);
 		jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
       		// re-bind all the javascript
     		getDxInformation();
     		bindDxJSONEvents();
-    		setReferralDoctor();
       	});
     });
 
-	jQuery("#serviceStartTime").on('blur', function() {
+	jQuery(document).on('blur', "#serviceStartTime", function() {
 	    var time = this.value;
 	    if(time) {
 	        var hour = time.split(":")[0];
@@ -964,7 +966,7 @@ jQuery(document).ready(function(jQuery){
 	 })
 	 
 	 
-	 jQuery("#serviceEndTime").on('blur', function() {
+	 jQuery(document).on('blur', "#serviceEndTime", function() {
 	    var time = this.value;
 	    
 	    if(time) {    	
@@ -1154,13 +1156,13 @@ jQuery(document).ready(function(jQuery){
 	 *  clears out the dx code list everytime 
 	 *  the code system is changed.
 	 */
-	 jQuery("#codingSystem").change(function(){
+	 jQuery(document).on('change', "#codingSystem", function(){
 		 jQuery("#jsonDxSearchInput-1").val(""); 
 		 jQuery("#jsonDxSearchInput-2").val(""); 
 		 jQuery("#jsonDxSearchInput-3").val(""); 
 	 })
 	 
-}); //<!-- End Document Ready //-->
+}) //<!-- End Document Ready //-->
 </script>
 </head>
 
@@ -1311,6 +1313,7 @@ if(wcbneeds != null){%>
   <table>
     <tr>
       <td>
+	      <div id="billingPatientInfoWrapper">
         <table class="tool-bar" id="billingPatientInfo">
           <tr>
           	<td>
@@ -1403,6 +1406,7 @@ if(wcbneeds != null){%>
             </td>
           </tr>
         </table>
+	      </div>
 </td>
 </tr>
 <tr>

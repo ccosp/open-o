@@ -39,7 +39,7 @@
 	}
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -111,7 +111,7 @@
 <script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
-<title><bean:message key="demographic.demographicsearch2apptresults.title" />(demographicsearch2apptresults)</title>
+<title><bean:message key="demographic.demographicsearch2apptresults.title" /></title>
 
 <% 
 	if (isMobileOptimized) { 
@@ -178,7 +178,6 @@ function searchAll() {
 <body bgcolor="white" onLoad="setfocus()" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0">
 <div id="demographicSearch" class="searchBox">
 	<form method="post" name="titlesearch" action="../demographic/demographiccontrol.jsp" onSubmit="return checkTypeIn()">
-	<%--@ include file="zdemographictitlesearch.htm"--%>
     <div class="header deep">
         <div class="title"></div>  
     </div>
