@@ -204,11 +204,25 @@ if(!authed) {
 			defaultBillingForm = userSetBillingForm;
 		}
 	}
+
+	// 4. loggedin user is overriding billing form preference during billing process.
+	/* horrible hack. Do not repeat.
+	 * If the targetProvider is set to "none" then this indicates that the
+	 * Billing sheet selection has been overiden from the billing form.
+	 * The strange part is that the billing form selection has already been
+	 * set into the "bean" object before reaching this point.
+	 * Normally not a big deal - but - in this case the billing sheet is loaded
+	 * into the billing interface dynamically.
+	 */
+	if("none".equals(targetProvider)) {
+		defaultBillingForm = bean.getBillForm();
+	}
+
 	if(billform.serviceExists(defaultBillingForm)) {
 		bean.setBillForm(defaultBillingForm);
 	}
 
-	// global default billing visit location 1. oscar properties
+	// 1. global default billing visit location: oscar properties
 	String defaultServiceLocation = OscarProperties.getInstance().getProperty("visittype");
 
 	// 2. global billing settings
@@ -928,6 +942,7 @@ jQuery(document).ready(function(jQuery){
 		console.log(url);
 		jQuery("#billingPatientInfoWrapper").load(url + " #billingPatientInfo", function(){
 			// re-bind all the javascript
+			jQuery("#selectBillingForm").trigger('change');
 			getDxInformation();
 			bindDxJSONEvents();
 		})
@@ -942,7 +957,7 @@ jQuery(document).ready(function(jQuery){
 
 	/* New billing form selection method*/
     jQuery(document).on('change', "#selectBillingForm", function() {
-    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&demographic_name=' + '<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>' + '&billRegion=BC&billForm=' + this.value ;
+    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&demographic_name=' + '<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>' + '&xml_provider=none&billRegion=BC&billForm=' + this.value ;
       	console.log(url);
 		jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
       		// re-bind all the javascript
