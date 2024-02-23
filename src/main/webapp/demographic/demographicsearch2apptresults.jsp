@@ -175,16 +175,12 @@ function searchAll() {
 
 </script>
 </head>
-<body bgcolor="white" onLoad="setfocus()" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0">
-<div id="demographicSearch" class="searchBox">
+<body onLoad="setfocus()">
+<div id="demographicSearch" class="searchBox" style="margin-bottom:10px;">
 	<form method="post" name="titlesearch" action="../demographic/demographiccontrol.jsp" onSubmit="return checkTypeIn()">
-    <div class="header deep">
-        <div class="title"></div>  
-    </div>
-    <ul>
+
+    <ul style="display: flex;">
         <li>
-            <div class="label">
-            </div>
             <select class="wideInput" name="search_mode">
                 <option value="search_name" <%=request.getParameter("search_mode").equals("search_name")?"selected":""%>>
 					<bean:message key="demographic.demographicsearch2apptresults.optName" />
@@ -282,12 +278,9 @@ function searchAll() {
 
 
 
-<div id="searchResults">
-    <div class="header deep">
-        <div class="title"><bean:message key="demographic.demographicsearch2apptresults.patientsRecord" />
-        </div>
-    </div>
-<table width="95%" border="0">
+<div id="searchResults" style="margin-bottom:10px;">
+
+<table>
 	<tr>
             <td align="left">
                     <%if(request.getParameter("keyword")!=null && request.getParameter("keyword").length()==0) { %>
@@ -625,7 +618,7 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
 	}
 %> 
 <script language="JavaScript">
-	<!--
+
 	function last() {
 	  document.nextform.action="../demographic/demographiccontrol.jsp?keyword=<%=request.getParameter("keyword")%>&search_mode=<%=request.getParameter("search_mode")%>&displaymode=<%=request.getParameter("displaymode")%>&dboperation=<%=request.getParameter("dboperation")%>&orderby=<%=request.getParameter("orderby")%>&limit1=<%=nLastPage%>&limit2=<%=strLimit2%>" ;
 	  //document.nextform.submit();  
@@ -637,7 +630,7 @@ function addNameCaisi(demographic_no,lastname,firstname,chartno,messageID) {
 	//-->
 	</script>
 	<a href="#" onclick="showHideItem('demographicSearch');" id="searchPopUpButton" class="rightButton top">Search</a>
-	<div class="bottomBar">
+	<div class="bottomBar" style="margin-bottom:10px; margin-top:10px;">
 	<form method="post" name="nextform" action="../demographic/demographiccontrol.jsp">
 <%
 	if(nLastPage>=0) {
