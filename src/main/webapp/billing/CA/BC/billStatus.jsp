@@ -116,11 +116,6 @@ boolean adminAccess = false;
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/font-awesome.min.css" >
 
 <script>
-    checkChecked();
-
-    $(document).on("click", "input[name^='billCheck']", function (){checkChecked()});
-    $(document).on("change", "#checkAll", function (){checkChecked()});
-
     function checkChecked()
     {
         if ($('input[name^="billCheck"]:checked').length > 0) {
@@ -131,6 +126,12 @@ boolean adminAccess = false;
             $('#settleButton').attr("disabled", true);
         }
     }
+
+    $( document ).ready(function() {
+        $(document).on("click", "input[name^='billCheck']", function (){checkChecked()});
+        $(document).on("change", "#checkAll", function (){checkChecked()});
+        checkChecked();
+    })
 
     function popupPage(vheight,vwidth,varpage) { //open a new popup window
       var page = "" + varpage;
