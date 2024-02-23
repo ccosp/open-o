@@ -351,10 +351,29 @@ if(!authed) {
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/js/dxJSONCodeSearch.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery.validate-1.19.5.min.js"></script>
 
-<style type="text/css">
-	table {
-	  margin-bottom: 5px !important;
-	}
+<style>
+
+    div.tool-table {
+        display: block;
+        width: 100%;
+        padding: 6px 12px;
+        vertical-align: middle;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	    margin-right: 3px;
+    }
+    table {
+	    margin-bottom: 5px !important;
+    }
+    div.tool-table:last-of-type {
+	    margin-right:0;
+    }
+
 	div#wcbForms p {
 		padding:0;
 		margin:0;
@@ -1642,7 +1661,374 @@ if(wcbneeds != null){%>
 </td>
 </tr>
 <tr>
-<td>
+<td style="display:flex;">
+
+	<div class="tool-table">
+	<table class="table table-condensed table-borderless"><tr><td>
+				<table class="table table-condensed table-borderless">
+					<tr>
+						<td>
+							<label>
+								<bean:message key="billing.referral.doctor"/>
+							</label>
+						</td>
+						<td>
+							<label>
+								<bean:message key="billing.referral.type"/>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="input-group">
+								<html:text styleClass="form-control" property="xml_refer1" onkeypress="return grabEnter(event,'ReferralScriptAttach1()')"/>
+								<span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer1')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
+							</div>
+						</td>
+						<td>
+							<html:select styleClass="form-control" property="refertype1">
+								<html:option value="">Select Type</html:option>
+								<html:option value="T">Refer To</html:option>
+								<html:option value="B">Refer By</html:option>
+							</html:select>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div class="input-group">
+								<html:text styleClass="form-control" property="xml_refer2" onkeypress="return grabEnter(event,'ReferralScriptAttach2()')"/>
+								<span class="input-group-btn">
+			                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer2')">
+		                            	<span class="glyphicon glyphicon-search"></span>
+		                          	</button>
+	                          	</span>
+							</div>
+						</td>
+						<td>
+							<html:select styleClass="form-control" property="refertype2">
+								<html:option value="">Select Type</html:option>
+								<html:option value="T">Refer To</html:option>
+								<html:option value="B">Refer By</html:option>
+							</html:select>
+						</td>
+					</tr>
+
+				</table>
+</td>
+
+</tr>
+	  <tr>
+		  <td>
+
+			  <table class="table table-condensed table-borderless">
+				  <tr><td>
+
+					  <table class="table table-condensed table-borderless" style="background-color:#fff;">
+						  <tr><td colspan="2">Recent Referral Doctors</td></tr>
+						  <%
+							  String bgColor="#fff";
+							  String rProvider = "";
+
+							  if(recentReferralDoctorList.size()>0){
+								  for (String r : recentReferralDoctorList){
+									  rProvider = billingReferralDao.getReferralDocName(r);
+						  %>
+						  <tr bgcolor="<%=bgColor%>">
+							  <td width="20%">
+								  <a href="javascript:void(0)" class="referral-doctor" data-num="<%=r%>" data-doc="<%=rProvider%>"><%=r%></a>
+							  </td>
+							  <td><%=rProvider%></td>
+						  </tr>
+						  <%
+								  if(bgColor=="#fff"){bgColor="#ccc";}else{bgColor="#fff";}
+
+							  }
+						  }else{
+						  %>
+						  <tr><td width="20%"></td><td>none</td></tr>
+						  <%
+							  }
+						  %>
+					  </table>
+
+				  </td>
+					  <td width="50%" valign="top">
+
+						  <table class="table table-condensed table-borderless" style="background-color:#fff;">
+							  <tr><td style="border-top:none;" colspan="2">Referral Doctor on Master Record</td></tr>
+							  <tr>
+								  <td width="20%">
+									  <a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a>
+								  </td>
+								  <td><%=mRecRefDoctor%></td>
+							  </tr>
+						  </table>
+
+					  </td></tr>
+			  </table>
+
+		  </td>
+	  </tr>
+  </table>
+
+
+
+
+</div>
+		<div class="tool-table">
+
+							<table class="table table-condensed table-borderless">
+								<tr>
+									<td width="70%">
+										<label><bean:message key="billing.service.otherservice"/></label>
+									</td>
+									<td width="30%">
+										<label><bean:message key="billing.service.unit"/></label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="input-group">
+ 							<span class="input-group-addon">
+								1
+							</span>
+											<html:text styleClass="form-control" property="xml_other1" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+											<span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other1')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
+										</div>
+									</td>
+									<td>
+										<div class="input-group">
+											<html:text styleClass="form-control" property="xml_other1_unit" size="6" maxlength="6" styleId="xml_other1_unit"/>
+											<span class="input-group-btn">
+                            	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other1_unit').value = '0.5'">.5</button>
+                            </span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="input-group">
+ 							<span class="input-group-addon">
+								2
+							</span>
+											<html:text styleClass="form-control" property="xml_other2" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+											<span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other2')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
+										</div>
+									</td>
+									<td>
+										<div class="input-group">
+											<html:text styleClass="form-control" property="xml_other2_unit" size="6" maxlength="6" styleId="xml_other2_unit"/>
+											<span class="input-group-btn">
+                             	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other2_unit').value = '0.5'" >.5</button>
+                             </span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="input-group">
+ 							<span class="input-group-addon">
+								3
+							</span>
+											<html:text styleClass="form-control" property="xml_other3" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
+											<span class="input-group-btn">
+		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other3')">
+	                            	<span class="glyphicon glyphicon-search"></span>
+	                          	</button>
+                          	</span>
+										</div>
+									</td>
+									<td>
+										<div class="input-group">
+											<html:text styleClass="form-control" property="xml_other3_unit" styleId="xml_other3_unit"/>
+											<span class="input-group-btn">
+                            	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other3_unit').value = '0.5'" >.5</button>
+                            </span>
+										</div>
+									</td>
+								</tr>
+								<!-- <tr>
+								<td></td>
+								  <td>
+									<button class="btn btn-info pull-right btn-xs" onclick="javascript:OtherScriptAttach()">
+										Code Search
+									</button>
+								  </td>
+								</tr> -->
+							</table>
+
+
+	<!-- ONSCREEN DX CODE DISPLAY -->
+		</div>
+	<div class="tool-table">
+				<table class="table table-condensed table-borderless">
+					<tr><td style="width:60%">
+						<div class="input-group">
+
+								<%--
+									If the list of coding systems includes ICD10, then offer a list of options
+									including the specific MSP Dx table.
+									If the user wants a coding system but does not want the MSP table then
+									the DISABLE_MSP_DX_SYSTEM switch can be set in OSCAR properties. When this is
+									disabled the user will be presented with the other selected tables.
+								 --%>
+							<c:set scope="page" var="icd10" value="false" />
+							<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">
+								<c:if test="${ codeSystem eq 'icd10' }">
+									<c:set scope="page" var="isIcd10" value="true" />
+								</c:if>
+							</logic:iterate>
+							<c:choose>
+								<c:when test="${ isIcd10 }">
+										<span class="input-group-addon">
+											<bean:message key="billing.diagnostic.code"/>
+										</span>
+									<select style="min-width: 70px;" class="form-control" name="dxCodeSystem" id="codingSystem" >
+										<oscar:oscarPropertiesCheck value="false" property="DISABLE_MSP_DX_SYSTEM">
+											<option value="msp" selected>MSP Dx</option>
+										</oscar:oscarPropertiesCheck>
+										<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">
+											<option value="<bean:write name="codeSystem"/>"><bean:write name="codeSystem" /></option>
+										</logic:iterate>
+									</select>
+								</c:when>
+								<c:otherwise>
+									<input type="hidden" id="codingSystem" value="msp" />
+									<bean:message key="billing.diagnostic.code"/>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</td>
+
+					</tr>
+					<tr><td>
+						<div class="input-group">
+								<span class="input-group-addon">
+									1
+								</span>
+							<html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-1" property="xml_diagnostic_detail1" />
+							<span class="input-group-btn">
+		                     		<button type="button" title="Search diagnostic code" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-1">
+	                            		<span class="glyphicon glyphicon-search"></span>
+		                          	</button>
+	                          	</span>
+						</div>
+					</td>
+
+					</tr>
+					<tr><td>
+						<div class="input-group">
+  								<span class="input-group-addon">
+									2
+								</span>
+							<html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-2" property="xml_diagnostic_detail2" />
+							<span class="input-group-btn">
+		                     		<button type="button"  title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-2">
+	                            		<span class="glyphicon glyphicon-search"></span>
+	                          		</button>
+	                          	</span>
+						</div>
+					</td></tr>
+					<tr><td>
+						<div class="input-group">
+  								<span class="input-group-addon">
+									3
+								</span>
+							<html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-3" property="xml_diagnostic_detail3" />
+							<span class="input-group-btn">
+		                     		<button type="button" title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-3">
+	                            		<span class="glyphicon glyphicon-search"></span>
+	                          		</button>
+	                          	</span>
+						</div>
+					</td></tr>
+					<tr>
+
+						<td>
+							Recently used
+
+							<div id="DX_REFERENCE"></div>
+						</td>
+					</tr>
+
+				</table>
+
+	<!-- ONSCREEN DX CODE DISPLAY END-->
+	</div>
+	<div class="tool-table">
+
+	<table class="table table-condensed table-borderless">
+		<tr>
+			<td style="padding-top:5px !important;">
+				<label for="shortClaimNote"></label><label>Short Claim Note</label></label>
+				<html:text styleId="shortClaimNote" styleClass="form-control" property="shortClaimNote" />
+			</td>
+
+		</tr>
+
+		<tr>
+			<td align="left" colspan="2" >
+				<html:select styleClass="form-control" property="correspondenceCode" onchange="correspondenceNote();">
+					<html:option value="0">No Correspondence</html:option>
+					<html:option value="N">Electronic Correspondence</html:option>
+					<html:option value="C">Paper Correspondence</html:option>
+					<html:option value="B">Both</html:option>
+				</html:select>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-bottom:5px !important;" colspan="2" valign="top">
+				<div id="CORRESPONDENCENOTE" style="display:none;">
+					<html:textarea styleClass="form-control notes-box" property="notes" onkeyup="checkTextLimit(this.form.notes,400);"></html:textarea>
+					<small>400 characters max.</small>
+				</div>
+				<div>
+					<div>
+						<label>Billing Notes</label>
+						<small>(Internal use. Not sent to MSP)</small>
+					</div>
+					<html:textarea styleClass="form-control notes-box" property="messageNotes"></html:textarea>
+				</div>
+			</td>
+		</tr>
+
+	</table>
+	</div>
+
+</td>
+</tr>
+	  <tr><td>
+		  <div id="bcBillingError"></div>
+		  <div class="row-fluid pull-right ">
+			  <div id="ignoreWarningsButton">
+				  <label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">
+					  <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/>
+					  Ignore Warnings
+				  </label>
+			  </div>
+			  <div id="buttonRow" class="button-bar">
+				  <input class="btn btn-md btn-primary" type="submit" name="Submit" value="Continue">
+				  <input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();">
+			  </div>
+		  </div>
+	  </td></tr>
+	  <tr>
+		  <td>
+
+
 <div id="billingFormTableWrapper">
         <table id="billingFormTable">
           <tr>
@@ -1687,119 +2073,8 @@ if(wcbneeds != null){%>
                 </tr>
               <%}              %>
               </table>
-              <table style="background-color:#CC0000;" class="tool-table">
-                <tr>
-                  <td>
-                    <table>
-                      <tr>
-                        <td>
-                          <label>
-                              <bean:message key="billing.referral.doctor"/>
-                          </label>
-                        </td>
-                        <td>
-                          <label>
-                              <bean:message key="billing.referral.type"/>
-                          </label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                        <div class="input-group">
-                            <html:text styleClass="form-control" property="xml_refer1" onkeypress="return grabEnter(event,'ReferralScriptAttach1()')"/>
-	                     	<span class="input-group-btn">
-		                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer1')">
-	                            	<span class="glyphicon glyphicon-search"></span>
-	                          	</button>
-                          	</span>
-	                    </div>
-                        </td>
-                        <td>
-                            <html:select styleClass="form-control" property="refertype1">
-                              <html:option value="">Select Type</html:option>
-                              <html:option value="T">Refer To</html:option>
-                              <html:option value="B">Refer By</html:option>
-                            </html:select>
-                        </td>
-                      </tr>
-         
-                      <tr>
-                        <td>
-                         	<div class="input-group">
-	                            <html:text styleClass="form-control" property="xml_refer2" onkeypress="return grabEnter(event,'ReferralScriptAttach2()')"/>
-	                            <span class="input-group-btn">
-			                     	<button type="button" class="btn btn-primary" onclick="ReferralScriptAttach('xml_refer2')">
-		                            	<span class="glyphicon glyphicon-search"></span>
-		                          	</button>
-	                          	</span>
-                          	</div>
-                        </td>
-                        <td>
-                            <html:select styleClass="form-control" property="refertype2">
-                              <html:option value="">Select Type</html:option>
-                              <html:option value="T">Refer To</html:option>
-                              <html:option value="B">Refer By</html:option>
-                            </html:select>
-                        </td>
-                      </tr>
+<!-- former tool table -->
 
-                    </table>
-                  </td>
-  
-                </tr>
-                <tr>
-                <td valign="top" >
-
-                <table style="background-color:#fff;" align="left">
-                <tr><td width="50%" valign="top">
-                
-                <table class="table table-condensed table-borderless" style="background-color:#fff;">
-                <tr><td colspan="2">Recent Referral Doctors</td></tr>
-                  <%
-                  String bgColor="#fff";
-                  String rProvider = "";
-
-				  if(recentReferralDoctorList.size()>0){
-		                  for (String r : recentReferralDoctorList){
-		                  rProvider = billingReferralDao.getReferralDocName(r);
-		                  %>
-		                	  <tr bgcolor="<%=bgColor%>">
-		                	  <td width="20%">
-		                	  	<a href="javascript:void(0)" class="referral-doctor" data-num="<%=r%>" data-doc="<%=rProvider%>"><%=r%></a>
-		                	  </td>
-		                	  <td><%=rProvider%></td>
-		                	  </tr> 
-		                  <%
-		                  if(bgColor=="#fff"){bgColor="#ccc";}else{bgColor="#fff";}
-		                  
-		                  }
-				  }else{
-				  %>
-		                	  <tr><td width="20%"></td><td>none</td></tr> 
-				  <%
-				  }
-                  %>
-                 </table> 
-                 
-                 </td>
-                 <td width="50%" valign="top">
-                 
-                <table class="table table-condensed table-borderless" style="background-color:#fff;">
-                <tr><td style="border-top:none;" colspan="2">Referral Doctor on Master Record</td></tr>
-                <tr>
-                	<td width="20%">
-                		<a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a>
-                	</td>
-                	<td><%=mRecRefDoctor%></td>
-                </tr> 
-                </table>
-                
-                </td></tr>
-                 </table>
-                 
-                </td>
-                </tr>
-              </table>
               
             </td>
             <td valign="top" style="width:32%; padding-right:5px;">
@@ -1837,99 +2112,7 @@ if(wcbneeds != null){%>
                 </tr>
               <%}              %>
               </table>
-              <table style="background-color:#999900;" class="tool-table table table-condensed table-borderless">
-                <tr>
-                  <td valign="top">
-                    <table>
-                      <tr>
-                        <td width="70%">
-                          <label><bean:message key="billing.service.otherservice"/></label>
-                        </td>
-                        <td width="30%">
-                          <label><bean:message key="billing.service.unit"/></label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                        <div class="input-group">
- 							<span class="input-group-addon">
-								1
-							</span>
-                            <html:text styleClass="form-control" property="xml_other1" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
-                           	<span class="input-group-btn">
-		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other1')">
-	                            	<span class="glyphicon glyphicon-search"></span>
-	                          	</button>
-                          	</span>
-                        </div>
-                        </td>
-                        <td>
-                        <div class="input-group">
-                            <html:text styleClass="form-control" property="xml_other1_unit" size="6" maxlength="6" styleId="xml_other1_unit"/>
-                             <span class="input-group-btn">
-                            	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other1_unit').value = '0.5'">.5</button>
-                            </span>
-                        </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                        <div class="input-group">
- 							<span class="input-group-addon">
-								2
-							</span>
-                            <html:text styleClass="form-control" property="xml_other2" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
-                            <span class="input-group-btn">
-		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other2')">
-	                            	<span class="glyphicon glyphicon-search"></span>
-	                          	</button>
-                          	</span>
-             			</div>
-                        </td>
-                        <td>
-                        <div class="input-group">
-                            <html:text styleClass="form-control" property="xml_other2_unit" size="6" maxlength="6" styleId="xml_other2_unit"/>
-                            <span class="input-group-btn"> 
-                             	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other2_unit').value = '0.5'" >.5</button>
-                             </span>
-                         </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-						<div class="input-group">
- 							<span class="input-group-addon">
-								3
-							</span>
-                            <html:text styleClass="form-control" property="xml_other3" onblur="checkSelectedCodes()" onkeypress="return grabEnter(event,'OtherScriptAttach()')"/>
-                            <span class="input-group-btn">
-		                     	<button type="button" class="btn btn-primary" title="Search code" onclick="OtherScriptAttach('xml_other3')">
-	                            	<span class="glyphicon glyphicon-search"></span>
-	                          	</button>
-                          	</span>
-                        </div> 
-                        </td>
-                        <td>
-                        <div class="input-group">
-                            <html:text styleClass="form-control" property="xml_other3_unit" styleId="xml_other3_unit"/>
-                            <span class="input-group-btn"> 
-                            	<button type="button" class="btn btn-primary" value=".5" onClick="$('xml_other3_unit').value = '0.5'" >.5</button>
-                            </span>
-                        </div>
-                        </td>
-                      </tr>
-                      <!-- <tr>
-                      <td></td>
-                        <td>
-                          <button class="btn btn-info pull-right btn-xs" onclick="javascript:OtherScriptAttach()">
-                          	Code Search	
-                          </button>
-                        </td>
-                      </tr> -->
-                    </table>
-                  </td>
-                </tr>
-              </table>
+             <!-- former tool table -->
             </td>
             <td valign="top" style="width:32%;" >
               <table class="table table-condensed table-bordered serviceCodesTable">
@@ -1962,139 +2145,9 @@ if(wcbneeds != null){%>
                 </tr>
               <%}              %>
               </table>
-              <!-- ONSCREEN DX CODE DISPLAY -->
-              <table style="background-color:#CCCCFF;" class="tool-table table table-condensed table-borderless">
-                <tr>
-                  <td valign="top" width="80%">
-                         <table class="table table-condensed table-borderless">
-                         <tr><td style="width:60%">
-                            <div class="input-group">
- 
-								<%--
-									If the list of coding systems includes ICD10, then offer a list of options 
-									including the specific MSP Dx table. 
-									If the user wants a coding system but does not want the MSP table then 
-									the DISABLE_MSP_DX_SYSTEM switch can be set in OSCAR properties. When this is 
-									disabled the user will be presented with the other selected tables. 
-								 --%>
-								<c:set scope="page" var="icd10" value="false" />
-								<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">									
-									<c:if test="${ codeSystem eq 'icd10' }">									
-										<c:set scope="page" var="isIcd10" value="true" />
-									</c:if>								
-								</logic:iterate>
-								<c:choose>
-									<c:when test="${ isIcd10 }">
-										<span class="input-group-addon">
-											<bean:message key="billing.diagnostic.code"/>
-										</span>
-										<select style="min-width: 70px;" class="form-control" name="dxCodeSystem" id="codingSystem" >							
-											<oscar:oscarPropertiesCheck value="false" property="DISABLE_MSP_DX_SYSTEM">
-												<option value="msp" selected>MSP Dx</option>
-								 			</oscar:oscarPropertiesCheck>
-								 			<logic:iterate id="codeSystem" name="dxCodeSystemList" property="codingSystems">
-												<option value="<bean:write name="codeSystem"/>"><bean:write name="codeSystem" /></option>
-											</logic:iterate>									
-										</select>
-									</c:when>
-									<c:otherwise>
-										<input type="hidden" id="codingSystem" value="msp" />
-										<bean:message key="billing.diagnostic.code"/>
-									</c:otherwise>
-								</c:choose>
-							</div>	
-						</td>
-						<td style="width:40%">
-							Recently used
-						</td>
-						</tr>
-						<tr><td>
-							<div class="input-group">
-								<span class="input-group-addon">
-									1
-								</span> 
-                            	<html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-1" property="xml_diagnostic_detail1" />
-                            	<span class="input-group-btn">
-		                     		<button type="button" title="Search diagnostic code" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-1">
-	                            		<span class="glyphicon glyphicon-search"></span>
-		                          	</button>
-	                          	</span>
-							</div>
-						</td>
-						<td rowspan="3" style="width:50%" valign="top" >
-							<div id="DX_REFERENCE"></div>
-						</td>
-						</tr>
-						<tr><td>
-  							<div class="input-group">
-  								<span class="input-group-addon">
-									2
-								</span>
-                            	<html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-2" property="xml_diagnostic_detail2" /> 
-								<span class="input-group-btn">
-		                     		<button type="button"  title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-2">
-	                            		<span class="glyphicon glyphicon-search"></span>
-	                          		</button>
-	                          	</span>
-							</div>
-						</td></tr>
-						<tr><td>	
-  							<div class="input-group">
-  								<span class="input-group-addon">
-									3
-								</span>
-	                            <html:text styleClass="form-control jsonDxSearchInput" styleId="jsonDxSearchInput-3" property="xml_diagnostic_detail3" />
-	                            <span class="input-group-btn">
-		                     		<button type="button" title="Search Dx Description" class="btn btn-primary jsonDxSearchButton" value="jsonDxSearchInput-3">
-	                            		<span class="glyphicon glyphicon-search"></span>
-	                          		</button>
-	                          	</span>
-							</div>
-						</td></tr>
-	
-						</table>
-                  </td>
-                </tr>
-              </table>
-              <!-- ONSCREEN DX CODE DISPLAY END-->
+
               
-              <table class="tool-table table table-condensed table-borderless">
-                <tr>
-                  <td style="padding-top:5px !important;">
-                      <label for="shortClaimNote"></label><label>Short Claim Note</label></label>
-                    <html:text styleId="shortClaimNote" styleClass="form-control" property="shortClaimNote" />
-                  </td>
-                  
-                </tr>
-                
-                <tr>
-                  <td align="left" colspan="2" >
-                    <html:select styleClass="form-control" property="correspondenceCode" onchange="correspondenceNote();">
-                      <html:option value="0">No Correspondence</html:option>
-                      <html:option value="N">Electronic Correspondence</html:option>
-                      <html:option value="C">Paper Correspondence</html:option>
-                      <html:option value="B">Both</html:option>
-                    </html:select>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding-bottom:5px !important;" colspan="2" valign="top">
-                    <div id="CORRESPONDENCENOTE" style="display:none;">
-                      <html:textarea styleClass="form-control notes-box" property="notes" onkeyup="checkTextLimit(this.form.notes,400);"></html:textarea>
-                      <small>400 characters max.</small>
-                    </div>
-                    <div>
-                      <div>
-                      <label>Billing Notes</label> 
-                      <small>(Internal use. Not sent to MSP)</small>
-                      </div>
-                      <html:textarea styleClass="form-control notes-box" property="messageNotes"></html:textarea>
-                    </div>
-                  </td>
-                </tr>
-                
-              </table>
-              <div id="bcBillingError"></div>
+
             </td>
           </tr>
         </table>
@@ -2103,18 +2156,6 @@ if(wcbneeds != null){%>
     </tr>
   </table>
 
-  	<div class="row-fluid pull-right ">
-  		<div id="ignoreWarningsButton">
-				<label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">     
-				   <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/> 
-				    Ignore Warnings
-				</label>
-        </div>
-		<div id="buttonRow" class="button-bar">
-            <input class="btn btn-md btn-primary" type="submit" name="Submit" value="Continue">
-              <input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();"> 
-		</div>
-	</div>
     <div class="container-fluid">
     	<div id="wcbForms"></div>
     </div>
