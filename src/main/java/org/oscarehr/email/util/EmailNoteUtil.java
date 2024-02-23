@@ -56,7 +56,7 @@ public class EmailNoteUtil {
     }
 
     private void addHeader(EmailLog emailLog, StringBuilder noteBuilder) {
-        noteBuilder.append("Email: ").append(emailLog.getSubject()).append("\n\n");
+        noteBuilder.append("Email Subject: ").append(emailLog.getSubject()).append("\n\n");
     }
 
     private void addBody(EmailLog emailLog, StringBuilder noteBuilder) {
@@ -66,13 +66,13 @@ public class EmailNoteUtil {
     private void addEncryptionInformation(EmailLog emailLog, StringBuilder noteBuilder) {
         if (!emailLog.getIsEncrypted()) { return; }
 
-        noteBuilder.append("Encryption Information: \"").append(emailLog.getPasswordClue().trim()).append("\"\n\n");
+        noteBuilder.append(emailLog.getPasswordClue().trim()).append("\n\n");
     }
 
     private void addAttachments(EmailLog emailLog, StringBuilder noteBuilder) {
         List<EmailAttachment> emailAttachmentList = emailLog.getEmailAttachments();
         if (emailAttachmentList == null || emailAttachmentList.isEmpty()) { return; }
-        noteBuilder.append("***This message included the following attachments***").append("\n\n");
+        noteBuilder.append("***Attached Files***").append("\n\n");
 
         List<EFormData> eFormDataList = new ArrayList<>();
         List<EDoc> eDocList = new ArrayList<>();
@@ -177,18 +177,18 @@ public class EmailNoteUtil {
             return; 
         }
 
-        noteBuilder.append("***This message also included the PDF attachment with the password ");
+        noteBuilder.append("***Attached Message (message.pdf with password ");
         noteBuilder.append(emailLog.getPassword());
-        noteBuilder.append(" and labeled message.pdf with the following content***").append("\n\n");
+        noteBuilder.append(")***").append("\n\n");
         noteBuilder.append(emailLog.getEncryptedMessage().trim()).append("\n\n");
     }
 
     private void addTechnicalInformation(EmailLog emailLog, StringBuilder noteBuilder) {
-        noteBuilder.append("***Technical Information***").append("\n\n");
-        noteBuilder.append("Email Log ID: ").append(emailLog.getId()).append("\n");
-        noteBuilder.append("To: ").append(getRecipientEmail()).append("\n");
+        noteBuilder.append("***Technical Information***").append("\n\n");        
         noteBuilder.append("From: ").append(emailLog.getFromEmail()).append("\n");
-        noteBuilder.append("Sent: ").append(getEmailTime()).append(" on ").append(getEmailDate());
+        noteBuilder.append("To: ").append(getRecipientEmail()).append("\n");        
+        noteBuilder.append("Sent: ").append(getEmailTime()).append(" on ").append(getEmailDate()).append("\n");
+        noteBuilder.append("Unique Email Log ID: ").append(emailLog.getId());
     }
 
     private String getRecipientEmail() {
