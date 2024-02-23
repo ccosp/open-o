@@ -91,12 +91,12 @@ import oscar.util.UtilDateUtilities;
 // all SQL statements here
 public final class EDocUtil {
 
-	private static ConsultDocsDao consultDocsDao = (ConsultDocsDao) SpringUtils.getBean("consultDocsDao");
+	private static ConsultDocsDao consultDocsDao = (ConsultDocsDao) SpringUtils.getBean(ConsultDocsDao.class);
 	private static DocumentDao documentDao = (DocumentDao) SpringUtils.getBean(DocumentDao.class);
 	private static IndivoDocsDao indivoDocsDao = (IndivoDocsDao) SpringUtils.getBean(IndivoDocsDao.class);
 	private static Logger logger = MiscUtils.getLogger();
 	private static ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
-	private static final PartialDateDao partialDateDao = (PartialDateDao)SpringUtils.getBean("partialDateDao");
+	private static final PartialDateDao partialDateDao = (PartialDateDao)SpringUtils.getBean(PartialDateDao.class);
 	private static EFormDocsDao eformDocsDao = SpringUtils.getBean(EFormDocsDao.class);
 	
 	public static final String PUBLIC = "public";
@@ -145,12 +145,12 @@ public final class EDocUtil {
 	private static ProgramManager programManager = (ProgramManager) SpringUtils.getBean("programManager");
 	private static CaseManagementNoteLinkDAO caseManagementNoteLinkDao = (CaseManagementNoteLinkDAO) SpringUtils.getBean("CaseManagementNoteLinkDAO");
         private static CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils.getBean("CaseManagementNoteDAO");
-        private static TicklerLinkDao ticklerLinkDao = (TicklerLinkDao) SpringUtils.getBean("ticklerLinkDao");
+        private static TicklerLinkDao ticklerLinkDao = (TicklerLinkDao) SpringUtils.getBean(TicklerLinkDao.class);
         private static TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
 	private static ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
-	private static CtlDocTypeDao ctldoctypedao = (CtlDocTypeDao) SpringUtils.getBean("ctlDocTypeDao");
+	private static CtlDocTypeDao ctldoctypedao = (CtlDocTypeDao) SpringUtils.getBean(CtlDocTypeDao.class);
 	private static DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
-	private static CtlDocumentDao ctlDocumentDao = (CtlDocumentDao) SpringUtils.getBean("ctlDocumentDao");
+	private static CtlDocumentDao ctlDocumentDao = (CtlDocumentDao) SpringUtils.getBean(CtlDocumentDao.class);
 	
 	public static String getProviderName(String providerNo) {
 		if (providerNo == null || providerNo.length() == 0) {

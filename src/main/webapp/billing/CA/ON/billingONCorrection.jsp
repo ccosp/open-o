@@ -527,7 +527,7 @@ function validateAmountNumberic(idx) {
                 HCTYPE = bCh1.getProvince();
                 HCSex = bCh1.getSex();
                 r_doctor_ohip = bCh1.getRefNum();
-                ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+                ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 				List<ProfessionalSpecialist> professionalSpecialists = professionalSpecialistDao.findByReferralNo(r_doctor_ohip);
 				if (professionalSpecialists != null)
 					r_doctor = professionalSpecialists.get(0).getLastName()+", "+professionalSpecialists.get(0).getFirstName();

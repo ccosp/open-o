@@ -73,7 +73,7 @@ public final class RxWriteScriptAction extends DispatchAction {
 	private static final Logger logger = MiscUtils.getLogger();
 	private static UserPropertyDAO userPropertyDAO;
 	private static final String DEFAULT_QUANTITY = "30";
-	private static final PartialDateDao partialDateDao = (PartialDateDao)SpringUtils.getBean("partialDateDao");
+	private static final PartialDateDao partialDateDao = (PartialDateDao)SpringUtils.getBean(PartialDateDao.class);
 
 	DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class) ;
     

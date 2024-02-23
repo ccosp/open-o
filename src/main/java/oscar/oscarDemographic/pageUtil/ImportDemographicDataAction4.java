@@ -249,7 +249,7 @@ public class ImportDemographicDataAction4 extends Action {
     DrugReasonDao drugReasonDao = (DrugReasonDao) SpringUtils.getBean("drugReasonDao");
     DemographicArchiveDao demoArchiveDao = (DemographicArchiveDao) SpringUtils.getBean("demographicArchiveDao");
     ProviderDataDao providerDataDao = (ProviderDataDao) SpringUtils.getBean("providerDataDao");
-    PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean("partialDateDao");
+    PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean(PartialDateDao.class);
     DemographicExtDao demographicExtDao = (DemographicExtDao) SpringUtils.getBean("demographicExtDao");
     OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean("oscarAppointmentDao");
     PatientLabRoutingDao patientLabRoutingDao  = SpringUtils.getBean(PatientLabRoutingDao.class); 

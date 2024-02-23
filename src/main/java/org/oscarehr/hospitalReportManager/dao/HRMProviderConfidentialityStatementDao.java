@@ -11,12 +11,12 @@ package org.oscarehr.hospitalReportManager.dao;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.hospitalReportManager.model.HRMProviderConfidentialityStatement;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HRMProviderConfidentialityStatementDao extends AbstractDao<HRMProviderConfidentialityStatement> {
+public class HRMProviderConfidentialityStatementDao extends AbstractDaoImpl<HRMProviderConfidentialityStatement> {
 
 	public HRMProviderConfidentialityStatementDao() {
 		super (HRMProviderConfidentialityStatement.class);

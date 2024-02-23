@@ -38,7 +38,7 @@ import oscar.util.UtilDateUtilities;
 
 public class FrmConsultantRecord extends FrmRecord {
 
-	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	private ClinicDAO clinicDao = (ClinicDAO)SpringUtils.getBean("clinicDAO");
 
 

@@ -136,7 +136,7 @@ public class EyeformAction extends DispatchAction {
 	EyeFormDao eyeFormDao = SpringUtils.getBean(EyeFormDao.class);
 	
 	MeasurementDao measurementDao = SpringUtils.getBean(MeasurementDao.class);
-	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	BillingreferralDao billingreferralDao = (BillingreferralDao) SpringUtils.getBean("billingreferralDao");
 	ClinicDAO clinicDao = (ClinicDAO)SpringUtils.getBean("clinicDAO");
 	SiteDao siteDao = (SiteDao)SpringUtils.getBean("siteDao");
@@ -159,7 +159,7 @@ public class EyeformAction extends DispatchAction {
 			   }
 		   }
 		   request.setAttribute("requestCc", cc);
-		   ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao)SpringUtils.getBean("professionalSpecialistDao");
+		   ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao)SpringUtils.getBean(ProfessionalSpecialistDao.class);
 		   List<ProfessionalSpecialist> psList = professionalSpecialistDao.findAll();
 		   request.setAttribute("professionalSpecialists",psList);
 	       return mapping.findForward("conreqcc");

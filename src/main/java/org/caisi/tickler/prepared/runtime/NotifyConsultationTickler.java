@@ -51,7 +51,7 @@ import org.oscarehr.util.SpringUtils;
 public class NotifyConsultationTickler extends AbstractPreparedTickler implements PreparedTickler {
 
 	private ConsultationRequestDao consultationRequestDao = (ConsultationRequestDao) SpringUtils.getBean("consultationRequestDao");
-	private ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	private ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	private TicklerManager ticklerMgr;
 	private ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
 

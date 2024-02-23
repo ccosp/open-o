@@ -38,7 +38,7 @@ public final class KeyManagerUIBean {
 	
 	private static final PublicKeyDao publicKeyDao=(PublicKeyDao) SpringUtils.getBean("publicKeyDao");
 	private static final OscarKeyDao oscarKeyDao=(OscarKeyDao) SpringUtils.getBean("oscarKeyDao");
-	private static final ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	private static final ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	
 	public static List<PublicKey> getPublicKeys()
 	{

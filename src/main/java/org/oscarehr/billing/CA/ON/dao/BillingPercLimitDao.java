@@ -31,12 +31,12 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.billing.CA.ON.model.BillingPercLimit;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingPercLimitDao extends AbstractDao<BillingPercLimit>{
+public class BillingPercLimitDao extends AbstractDaoImpl<BillingPercLimit>{
 
 	public BillingPercLimitDao() {
 		super(BillingPercLimit.class);

@@ -60,7 +60,7 @@
 <%
 OscarProperties props = OscarProperties.getInstance();
 
-	PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean("partialDateDao");
+	PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean(PartialDateDao.class);
 %>
 
 <logic:notPresent name="RxSessionBean" scope="session">
