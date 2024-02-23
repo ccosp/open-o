@@ -219,7 +219,7 @@ boolean adminAccess = false;
 <body>
 <div class="container">
 <h3><bean:message key="admin.admin.editInvoices"/></h3>
-    <table class="table-condensed"><tr><td>
+
 <div class="row well hidden-print">
 
 <div style="text-align: right;"><a href="javascript: function myFunction() {return false; }" onClick="popupPage(700,720,'../../../oscarReport/manageProvider.jsp?action=billingreport')">
@@ -420,8 +420,6 @@ billTypes = "%";
 
 </div><!-- row well-->
 
-    </td></tr>
-        <tr><td>
 
                 <form name="ReProcessBillingForm" method="get" action="reprocessBill.do">
 
@@ -558,19 +556,20 @@ billTypes = "%";
     if (rowCount == 0) {
     %>
   <tr>
-    <td colspan="14"> No bills </td>
+    <td style="background-color:white;"> No bills </td>
   </tr>
   <% }%>
     </tbody>
   <tfoot>
   <tr class="sortbottom">
-<%--    <logic:notEqual parameter="filterPatient" value="true">--%>
       <td></td>
-<%--    </logic:notEqual>--%>
     <td></td>
     <td></td>
     <td></td>
     <td></td>
+      <logic:notEqual parameter="filterPatient" value="true">
+          <td></td>
+      </logic:notEqual>
     <td>Count:</td>
     <td><%=bSearch.list.size()%></td>
     <td></td>
@@ -593,8 +592,6 @@ billTypes = "%";
             <input class="btn hidden-print" type='button' name='print' value='Print' onClick='window.print()'>
         </div>
                 </form>
-        </td></tr></table>
-
 
 <script type="text/javascript">
 
