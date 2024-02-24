@@ -158,8 +158,15 @@ if(!authed) {
 		}
 	}
 
-	// set the target provider into the session data. Overrides all presets
-	bean.setBillingProvider(targetProvider);
+	/* the value set preset in the session overrides the parameter value
+	 * The target provider becomes "none". The remaining values are overridden by the
+	 * session bean.
+	 */
+	if(bean.getBillingProvider() == null) {
+		bean.setBillingProvider(targetProvider);
+	} else {
+		targetProvider = "none";
+	}
 
 	/* Billing settings:
 	 * 1. load the selected users preferences (targetProvider)
@@ -205,7 +212,7 @@ if(!authed) {
 		}
 	}
 
-	// 4. loggedin user is overriding billing form preference during billing process.
+	// 4. logged in user is overriding billing form preference during billing process.
 	/* horrible hack. Do not repeat.
 	 * If the targetProvider is set to "none" then this indicates that the
 	 * Billing sheet selection has been overiden from the billing form.
@@ -253,7 +260,12 @@ if(!authed) {
 		}
 	}
 
-	bean.setVisitType(defaultServiceLocation);
+	/*
+	 * only override if the session value is not already set.
+	 */
+	if(bean.getVisitType() == null) {
+		bean.setVisitType(defaultServiceLocation);
+	}
 
 	/*
 	 * Get the users preference for "Refer to" or "Refer by"
