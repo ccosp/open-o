@@ -62,25 +62,6 @@ if(!authed) {
 
 <%!
 
-	/**
-	 Generates a string list of option tags in numeric order
-	 **/
-	String generateNumericOptionList(int range,String selected) {
-		selected = selected == null?"":selected;
-		StringBuffer buff = new StringBuffer();
-		buff.append("<option value=''></option>");
-		for (int i = 0; i < range; i++) {
-			String prefix = i < 10 ? "0" : "";
-			String val = prefix + String.valueOf(i);
-			String sel = "";
-			if(val.equals(selected)){
-				sel = "selected";
-			}
-			buff.append("<option value='" + val + "' " + sel + ">" + val + "</option>");
-		}
-		return buff.toString();
-	}
-
 	public void fillDxcodeList(BillingFormData.BillingService[] servicelist, Map<String, String> dxcodeList) {
 		for (int i = 0; i < servicelist.length; i++) {
 		  BillingAssociationPersistence per = new BillingAssociationPersistence();
@@ -720,39 +701,35 @@ function replaceWCB(id){
 
 function gotoPrivate(){
    if (document.BillingCreateBillingForm.xml_billtype.value === "Pri"){
- 	  var url = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=Pri&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=Pri";
-	  url += "&providerview=" + jQuery("select[name='xml_provider']").val();
-	  url += "&apptProvider_no=" + jQuery("select[name='xml_provider']").val();
-
- 	  window.location.href = url;
+	   // change the billing sheet to private billing
+	   jQuery("#selectBillingForm").val("PRI").trigger('change');
    }
-   if (document.BillingCreateBillingForm.xml_billtype.value === "MSP"){
-	  var url = "<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/" %>billing.do?billRegion=<%=bean.getBillRegion()%>&billForm=<%=OscarProperties.getInstance().getProperty("default_view")%>&hotclick=&appointment_no=<%=bean.getApptNo()%>&demographic_name=<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>&demographic_no=<%=bean.getPatientNo()%>&user_no=<%=bean.getCreator()%>&appointment_date=<%=bean.getApptDate()%>&status=<%=bean.getApptStatus()%>&start_time=<%=bean.getApptStart()%>&bNewForm=1&billType=MSP";
-	  url += "&providerview=" + jQuery("select[name='xml_provider']").val();
-	  url += "&apptProvider_no=" + jQuery("select[name='xml_provider']").val(); 
-      window.location.href = url;
-   	}
+
+   // otherwise go back to the default billing form
+   else {
+	   jQuery("#selectBillingForm").val('${ billingSessionBean.billForm }').trigger('change');
+   }
 }
 
 function correspondenceNote(){
-	if (document.BillingCreateBillingForm.correspondenceCode.value == "0" ){
+	if (document.BillingCreateBillingForm.correspondenceCode.value === "0" ){
 		HideElementById('CORRESPONDENCENOTE');
-	}else if (document.BillingCreateBillingForm.correspondenceCode.value == "C" ){
+	}else if (document.BillingCreateBillingForm.correspondenceCode.value === "C" ){
 		HideElementById('CORRESPONDENCENOTE');
-	}else if (document.BillingCreateBillingForm.correspondenceCode.value == "N" ){
+	}else if (document.BillingCreateBillingForm.correspondenceCode.value === "N" ){
 	  ShowElementById('CORRESPONDENCENOTE');
-	}else {(document.BillingCreateBillingForm.correspondenceCode.value == "B" )
+	}else {(document.BillingCreateBillingForm.correspondenceCode.value === "B" )
      ShowElementById('CORRESPONDENCENOTE');
 	}
 }
 
 function quickPickDiagnostic(diagnos){
 
-	if (document.BillingCreateBillingForm.xml_diagnostic_detail1.value == ""){
+	if (document.BillingCreateBillingForm.xml_diagnostic_detail1.value === ""){
 		document.BillingCreateBillingForm.xml_diagnostic_detail1.value = diagnos;
-        }else if ( document.BillingCreateBillingForm.xml_diagnostic_detail2.value == ""){
+        }else if ( document.BillingCreateBillingForm.xml_diagnostic_detail2.value === ""){
 		document.BillingCreateBillingForm.xml_diagnostic_detail2.value= diagnos;
-	}else if ( document.BillingCreateBillingForm.xml_diagnostic_detail3.value == "" ){
+	}else if ( document.BillingCreateBillingForm.xml_diagnostic_detail3.value === "" ){
 		document.BillingCreateBillingForm.xml_diagnostic_detail3.value = diagnos;
 	}else{
 		alert("All of the Diagnostic Coding Boxes are full");
@@ -764,9 +741,9 @@ function isNumeric(strString){
         var strChar;
         var retval = true;
 
-        for (i = 0; i < strString.length && retval == true; i++){
+        for (i = 0; i < strString.length && retval === true; i++){
            strChar = strString.charAt(i);
-           if (validNums.indexOf(strChar) == -1){
+           if (validNums.indexOf(strChar) === -1){
               retval = false;
            }
         }
@@ -798,7 +775,7 @@ function rs(n,u,w,h,x) {
     if (remote.opener == null)
       remote.opener = self;
   }
-  if (x == 1) { return remote; }
+  if (x === 1) { return remote; }
 }
 
 
@@ -851,7 +828,7 @@ function grabEnter(event,callb){
 }
 
 function reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+  if (init===true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
     document.pgW=innerWidth; document.pgH=innerHeight; onresize=reloadPage; }}
   else if (innerWidth!=document.pgW || innerHeight!=document.pgH) location.reload();
 }
@@ -988,10 +965,13 @@ jQuery(document).ready(function(jQuery){
 
 	/* New billing form selection method*/
     jQuery(document).on('change', "#selectBillingForm", function() {
-    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&demographic_name=' + '<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>' + '&xml_provider=none&billRegion=BC&billForm=' + this.value ;
-      	console.log(url);
+		let selectedValue = this.value;
+    	let url = ctx + '/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&demographic_name=' + '<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>' + '&xml_provider=none&billRegion=BC&billForm=' + selectedValue ;
 		jQuery("#billingFormTableWrapper").load(url + " #billingFormTable", function(){
-      		// re-bind all the javascript
+      		// if the selected billing type is private, then change the billing type to private
+			if(selectedValue === 'PRI') {
+				jQuery("#xml_billtype").val('Pri');
+			}
     		getDxInformation();
     		bindDxJSONEvents();
       	});
