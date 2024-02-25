@@ -66,7 +66,7 @@ public class EmailNoteUtil {
     private void addEncryptionInformation(EmailLog emailLog, StringBuilder noteBuilder) {
         if (!emailLog.getIsEncrypted()) { return; }
 
-        noteBuilder.append(emailLog.getPasswordClue().trim()).append("\n\n");
+        noteBuilder.append("\n*****\n").append(emailLog.getPasswordClue().trim()).append("\n*****\n\n");
     }
 
     private void addAttachments(EmailLog emailLog, StringBuilder noteBuilder) {

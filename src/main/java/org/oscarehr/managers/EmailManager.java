@@ -69,7 +69,6 @@ public class EmailManager {
         sanitizeEmailFields(email);
         EmailLog emailLog = prepareEmailForOutbox(loggedInInfo, email);
         try {
-            encodeEmailBody(email);
             if (email.getIsEncrypted()) { encryptEmail(email); }
             EmailSender emailSender = new EmailSender(loggedInInfo, emailLog.getEmailConfig(), email);
             emailSender.send();
@@ -206,11 +205,6 @@ public class EmailManager {
         }
     }
 
-    private void encodeEmailBody(Email email) {
-        String body = "<div style=\"white-space: pre-wrap;\">" + Encode.forHtmlContent(email.getBody()) + "</div>";
-        email.setBody(body);
-    }
-
     private void encryptEmail(Email email) throws EmailSendingException {
         // Encrypt message and attachment
         List<EmailAttachment> encryptableAttachments = new ArrayList<>();
@@ -221,8 +215,10 @@ public class EmailManager {
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         emailAttachments.addAll(encryptableAttachments);
         if (!email.getIsAttachmentEncrypted() && !email.getAttachments().isEmpty()) { emailAttachments.addAll(email.getAttachments()); }
-        addPasswordClue(email);
         email.setAttachments(emailAttachments);
+
+        //append password clue
+        email.setBody(email.getBody() + "\n\n*****\n" + email.getPasswordClue().trim() + "\n*****\n");
     }
 
     private EmailAttachment createMessageAttachment(String message) {
@@ -255,13 +251,6 @@ public class EmailManager {
         }
 
         return documentAttachmentManager.concatPDF(attachmentPathList);
-    }
-
-    private void addPasswordClue(Email email) {
-        StringBuilder passwordClue = new StringBuilder(); 
-        passwordClue.append("<br><br><i><div style=\"white-space: pre-wrap;\">").append(Encode.forHtmlContent(email.getPasswordClue())).append("</div></i>");
-        String bodyWithClue = email.getBody() + passwordClue.toString();
-        email.setBody(bodyWithClue);
     }
 
     private Date parseDate(String date, String format, String time) {

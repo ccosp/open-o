@@ -70,7 +70,7 @@ public class EmailSender {
             helper.setFrom(emailConfig.getSenderEmail(), emailConfig.getSenderFullName());
             helper.setTo(recipients);
             helper.setSubject(subject);
-            helper.setText(body, true);
+            helper.setText(body, false);
             addAttachments(helper, attachments);
             javaMailSender.send(message);
         } catch (Exception e) {
