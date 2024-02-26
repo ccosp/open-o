@@ -45,12 +45,13 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
 <!-- end -->
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 
 
-<%@page import="java.util.ArrayList, java.util.List, java.util.*, oscar.dms.*, oscar.OscarProperties, oscar.oscarLab.ca.on.*"%>
+<%@page import="java.util.ArrayList, java.util.List, java.util.*, oscar.OscarProperties, oscar.oscarLab.ca.on.*"%>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager,org.oscarehr.casemgmt.model.CaseManagementNote,org.oscarehr.casemgmt.model.Issue,org.oscarehr.common.model.UserProperty,org.oscarehr.common.dao.UserPropertyDAO,org.springframework.web.context.support.*,org.springframework.web.context.*"%>
 
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
@@ -84,6 +85,10 @@ if(!authed) {
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
 <%@ page import="oscar.eform.EFormUtil" %>
+<%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="oscar.util.StringUtils" %>
 
 <jsp:useBean id="displayServiceUtil" scope="request" class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil" />
 <!DOCTYPE html>
@@ -122,8 +127,8 @@ if(!authed) {
 		}
 	}
 	String demo_mrp = null;
-	String demo = request.getParameter("de");
-		String requestId = request.getParameter("requestId");
+	String demo = StringUtils.isNullOrEmpty(request.getParameter("de")) ? ((String) request.getAttribute("demographicId")) : request.getParameter("de");
+	String requestId = StringUtils.isNullOrEmpty(request.getParameter("requestId")) ? ((String) request.getAttribute("reqId")) : request.getParameter("requestId");
 		// segmentId is != null when viewing a remote consultation request from an hl7 source
 		String segmentId = request.getParameter("segmentId");
 		String team = request.getParameter("teamVar");
@@ -169,9 +174,13 @@ if(!authed) {
 		}
 
 		if (request.getParameter("error") != null) {
+			String errorMessage = (String) request.getAttribute("errorMessage");
+			if (StringUtils.isNullOrEmpty(errorMessage)) {
+				errorMessage = "The form could not be printed due to an error. Please refer to the server logs for more details.";
+			}
 			%>
-			<SCRIPT LANGUAGE="JavaScript">
-			        alert("The form could not be printed due to an error. Please refer to the server logs for more details.");
+				<SCRIPT LANGUAGE="JavaScript">
+			        alert('<%= errorMessage %>');
 			    </SCRIPT>
 			<%
 		}
@@ -198,8 +207,28 @@ if(!authed) {
 		List<EFormData> attachedEForms = consultationManager.getAttachedEForms(requestId);
 		ArrayList<HashMap<String,? extends Object>> attachedHRMDocuments = consultationManager.getAttachedHRMDocuments(loggedInInfo, demo, requestId);
 
+		Collections.sort(attachedLabs);
+		List<LabResultData> attachedLabsSortedByVersions = new ArrayList<>();
+		for (LabResultData attachedLab1 : attachedLabs) {
+			if (attachedLabsSortedByVersions.contains(attachedLab1)) { continue; }
+			String[] matchingLabIds = Hl7textResultsData.getMatchingLabs(attachedLab1.getSegmentID()).split(",");
+			if (matchingLabIds.length == 1) {
+				attachedLabsSortedByVersions.add(attachedLab1);
+				continue;
+			}
+			for (int i = matchingLabIds.length - 1; i >= 0; i--) {
+				for (LabResultData attachedLab2 : attachedLabs) {
+					if (!attachedLab2.getSegmentID().equals(matchingLabIds[i])) { continue; }
+					String labTitle = "v" + (i+1);
+					attachedLab2.setDescription(labTitle);
+					attachedLabsSortedByVersions.add(attachedLab2);
+					break;
+				}
+			}
+		}
+
         pageContext.setAttribute("attachedDocuments", attachedDocuments);
-        pageContext.setAttribute("attachedLabs", attachedLabs);
+        pageContext.setAttribute("attachedLabs", attachedLabsSortedByVersions);
 		pageContext.setAttribute("attachedForms", attachedForms);
 		pageContext.setAttribute("attachedEForms", attachedEForms);
 		pageContext.setAttribute("attachedHRMDocuments", attachedHRMDocuments);
@@ -442,7 +471,7 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <script>
 	var ctx = '<%=request.getContextPath()%>';
-	var requestId = '<%=request.getParameter("requestId")%>';
+	var requestId = '<%=requestId%>';
 	var demographicNo = '<%=demo%>';
 	var demoNo = '<%=demo%>';
 	var appointmentNo = '<%=appNo%>';
@@ -537,6 +566,7 @@ font-size: 10pt;
 
 .consultDemographicData input, .consultDemographicData select, .consultDemographicData textarea {
     width: 100% !important;
+	box-sizing: border-box;
 }
 
 input#referalDate, input#appointmentDate, input#followUpDate {
@@ -557,6 +587,7 @@ input#referalDate, input#appointmentDate, input#followUpDate {
 
 textarea {
     width: 100%;
+	box-sizing: border-box;
 }
 
 .controlPanel {
@@ -764,6 +795,7 @@ function Service(  ){
 // construct model selection on page
 function fillSpecialistSelect( aSelectedService ){
 
+	document.getElementById("eFormButton").style.display = "none"; //added here to immediately hide button if the service is changed
 
 	var selectedIdx = aSelectedService.selectedIndex;
 	var makeNbr = (aSelectedService.options[ selectedIdx ]).value;
@@ -961,11 +993,11 @@ function onSelectSpecialist(SelectedSpec)	{
             	jQuery.getJSON("getProfessionalSpecialist.json", {id: aSpeci.specNbr},
                     function(xml)
                     {
-                		var hasUrl=xml.eDataUrl!=null&&xml.eDataUrl!="";
-                		enableDisableRemoteReferralButton(form, !hasUrl);
-
-                                var annotation = document.getElementById("annotation");
-                                annotation.value = xml.annotation;
+                        var hasUrl=xml.eDataUrl!=null&&xml.eDataUrl!="";
+                        enableDisableRemoteReferralButton(form, !hasUrl);
+                        var annotation = document.getElementById("annotation");
+                        annotation.value = xml.annotation;
+                        updateEFormLink(xml.eformId)
                 	}
             	);
 
@@ -975,6 +1007,15 @@ function onSelectSpecialist(SelectedSpec)	{
 	 
 	}
 
+function updateEFormLink(eformID) {
+    if (eformID > 0) {
+		let eFormURL = '<%=request.getContextPath()%>/eform/efmformadd_data.jsp?fid='+eformID+'&demographic_no=<%=demo%>&appointment=null';
+        document.getElementById("eFormButton").style.display = "inline";		
+        document.getElementById("eFormButton").onclick = function(){popup(eFormURL);};  //opening as a popup deliberately because the consult is already a popup so best to just have another popup
+    } else {
+        document.getElementById("eFormButton").style.display = "none";
+    }
+}
 //-----------------------------------------------------------------
 
 /////////////////////////////////////////////////////////////////////
@@ -1097,11 +1138,12 @@ function popupOscarCal(vheight,vwidth,varpage) { //open a new popup window
 <script type="text/javascript">
 
 function checkForm(submissionVal,formName){
-	
+	ShowSpin(true);
 	var success = true;
 
    if (typeof checkFormHCT === "function") { 
    		if( ! checkFormHCT() ) {
+			HideSpin();
    			return false;
    		}
    }
@@ -1113,6 +1155,7 @@ function checkForm(submissionVal,formName){
   if ( serviceOptionsElement && serviceOptionsElement.selectedIndex == 0 ){
      alert(msg);
      document.EctConsultationFormRequestForm.service.focus();
+	 HideSpin();
      return false;
   }
   var faxNumber = document.EctConsultationFormRequestForm.fax.value;
@@ -1123,11 +1166,19 @@ function checkForm(submissionVal,formName){
   
   if(apptDate.length > 0 && !hasApptTime) {
 	  alert('Please enter appointment time. You cannot choose appointment date only.');
+	  HideSpin();
 	  return false;
   }
   
   if('Submit And Fax' === submissionVal && !faxNumber) {
 	  alert('Please enter a valid 10 digit consultant fax number');
+	  HideSpin();
+	  return false;
+  }
+
+  // If the user clicks the 'Print Preview' button, ensure that their unsaved changes are preserved, allowing them to stay on the same page. Achieve this by making an AJAX call.
+  if ('And Print Preview' === submissionVal) {
+      getConsultFormPrintPreview(document.forms[formName]);
 	  return false;
   }
   
@@ -1275,6 +1326,7 @@ function showSignatureImage()
 {
 	if (document.getElementById('signatureImg') != null && document.getElementById('signatureImg').value.length > 0) {
 		document.getElementById('signatureImgTag').src = "<%=storedImgUrl %>" + document.getElementById('signatureImg').value;
+		document.getElementById('newSignature').value = "false";
 
 		<% if (OscarProperties.getInstance().getBooleanProperty("topaz_enabled", "true")) { 
 		  //this is empty
@@ -1404,12 +1456,46 @@ function updateFaxButton() {
 	document.getElementById("fax_button").disabled = disabled;
 	document.getElementById("fax_button2").disabled = disabled;
 }
+
+// If the user clicks the 'Print Preview' button, ensure that their unsaved changes are preserved, allowing them to stay on the same page. Achieve this by making an AJAX call.
+function getConsultFormPrintPreview(form) {
+	form.submission.value="And Print Preview";
+	jQuery.ajax({
+		type: "POST",
+		url: "${ pageContext.request.contextPath }/oscarEncounter/RequestConsultation.do",
+		data: form.serialize(),
+		dataType: "json",
+		success: function(data) {
+			HideSpin();
+			if(data.errorMessage) { 
+				alert(data.errorMessage.replace(/\\n/g, '\n'));
+				return; 
+			}
+			showPreview(data.consultPDF, data.consultPDFName);
+		},
+		error: function(xhr, status, error) {
+			HideSpin();
+			alert("Preview request failed: " + status + ", " + error);
+		}
+	});
+}
+
+function showPreview(base64PDF, pdfName) {
+	const pdfData = new Uint8Array(atob(base64PDF).split('').map(char => char.charCodeAt(0)));
+	const pdfBlob = new Blob([pdfData], { type: 'application/pdf' });
+	const downloadLink = document.createElement('a');
+	downloadLink.href = URL.createObjectURL(pdfBlob);
+	downloadLink.download = pdfName;
+	downloadLink.click();
+	URL.revokeObjectURL(downloadLink.href);
+}
 </script>
 
 <%=WebUtils.popErrorMessagesAsAlert(session)%>
 
 <body topmargin="0" leftmargin="0" vlink="#0000FF" 
 	onload="window.focus();disableDateFields();disableEditing();showSignatureImage();">
+<jsp:include page="../../images/spinner.jsp" flush="true"/>
 <html:errors />
 <html:form styleId="consultationRequestForm" action="/oscarEncounter/RequestConsultation" onsubmit="alert('HTHT'); return false;" >
 	<%
@@ -1587,42 +1673,72 @@ function updateFaxButton() {
 							else
 							{ %>
 								<a href="javascript:void(0);" id="attachDocumentPanelBtn" title="Add Attachment"
-									data-poload="${ ctx }/attachDocs.do?method=fetchAll&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
+									data-poload="${ ctx }/previewDocs.do?method=fetchConsultDocuments&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
 									Manage Attachments
 								</a>
 
 							<% } %>
 
 							</td>
-						</tr>	
-							<tr><td><table id="attachedDocumentsTable">
-									<tr>
-										<td><h3>Documents</h3></td>
-									</tr>
-								<c:forEach items="${ attachedDocuments }" var="attachedDocument">
-									<tr id="entry_docNo${ attachedDocument.docId }">
-										<td> 
-											<c:out value="${ attachedDocument.description }" />
-											<input name="docNo" value="${ attachedDocument.docId }" id="delegate_docNo${ attachedDocument.docId }" class="delegateAttachment" type="hidden">
-										</td>
-									</tr>
-								</c:forEach>
-							</table></td></tr>
+						</tr>
 
-							<tr><td><table id="attachedLabsTable">
-								<tr>
-									<td><h3>Labs</h3></td>
+						<tr><td><table id="attachedEFormsTable">
+							<tr>
+								<td><h3>eForms</h3></td>
+							</tr>
+							<c:forEach items="${ attachedEForms }" var="attachedEForm">
+								<tr id="entry_eFormNo${ attachedEForm.id }">
+									<td>
+										<c:out value="${ attachedEForm.formName }" />
+										<input name="eFormNo" value="${ attachedEForm.id }" id="delegate_eFormNo${ attachedEForm.id }" class="delegateAttachment" type="hidden">
+									</td>
 								</tr>
-								<c:forEach items="${ attachedLabs }" var="attachedLab">
-									<tr id="entry_labNo${ attachedLab.segmentID }">
-										<td> 
-											<c:out value="${ attachedLab.discipline }" />
-											<c:out value="${ attachedLab.dateTime }" />
-											<input name="labNo" value="${ attachedLab.segmentID }" id="delegate_labNo${ attachedLab.segmentID }" class="delegateAttachment" type="hidden">
-										</td>
-									</tr>
-								</c:forEach>
-							</table></td></tr>
+							</c:forEach>
+						</table></td></tr>	
+
+						<tr><td><table id="attachedDocumentsTable">
+							<tr>
+								<td><h3>Documents</h3></td>
+							</tr>
+							<c:forEach items="${ attachedDocuments }" var="attachedDocument">
+								<tr id="entry_docNo${ attachedDocument.docId }">
+									<td> 
+										<c:out value="${ attachedDocument.description }" />
+										<input name="docNo" value="${ attachedDocument.docId }" id="delegate_docNo${ attachedDocument.docId }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
+
+						<tr><td><table id="attachedLabsTable">
+							<tr>
+								<td><h3>Labs</h3></td>
+							</tr>
+							<c:forEach items="${ attachedLabs }" var="attachedLab">
+								<tr id="entry_labNo${ attachedLab.segmentID }">
+									<td> 
+										<c:set var="labName" value="${ fn:trim(attachedLab.label) != '' ? attachedLab.label : attachedLab.discipline}" />
+										<c:if test="${empty labName}"><c:set var="labName" value="UNLABELLED" /></c:if>
+										<c:out value="${attachedLab.description} ${ labName }" />
+										<input name="labNo" value="${ attachedLab.segmentID }" id="delegate_labNo${ attachedLab.segmentID }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
+
+						<tr><td><table id="attachedHRMDocumentsTable">
+							<tr>
+								<td><h3>HRM</h3></td>
+							</tr>
+							<c:forEach items="${ attachedHRMDocuments }" var="attachedHrm">
+								<tr id="entry_hrmNo${ attachedHrm['id'] }">
+									<td>
+										<c:out value="${ attachedHrm['name'] }" />
+										<input name="hrmNo" value="${ attachedHrm['id'] }" id="delegate_hrmNo${ attachedHrm['id'] }" class="delegateAttachment" type="hidden">
+									</td>
+								</tr>
+							</c:forEach>
+						</table></td></tr>
 
 						<tr><td><table id="attachedFormsTable">
 							<tr>
@@ -1632,36 +1748,7 @@ function updateFaxButton() {
 								<tr id="entry_formNo${ attachedForm.formId }" data-formName="${ attachedForm.formName }" data-formDate="${ attachedForm.getEdited() }">
 									<td>
 										<c:out value="${ attachedForm.formName }" />
-
 										<input name="formNo" value="${ attachedForm.formId }" id="delegate_formNo${ attachedForm.formId }" class="delegateAttachment" type="hidden">
-									</td>
-								</tr>
-							</c:forEach>
-						</table></td></tr>
-						<tr><td><table id="attachedEFormsTable">
-							<tr>
-								<td><h3>eForms</h3></td>
-							</tr>
-							<c:forEach items="${ attachedEForms }" var="attachedEForm">
-								<tr id="entry_eFormNo${ attachedEForm.id }">
-									<td>
-										<c:out value="${ attachedEForm.formName }" />
-
-										<input name="eFormNo" value="${ attachedEForm.id }" id="delegate_eFormNo${ attachedEForm.id }" class="delegateAttachment" type="hidden">
-									</td>
-								</tr>
-							</c:forEach>
-						</table></td></tr>
-						<tr><td><table id="attachedHRMDocumentsTable">
-							<tr>
-								<td><h3>HRM</h3></td>
-							</tr>
-							<c:forEach items="${ attachedHRMDocuments }" var="attachedHrm">
-								<tr id="entry_hrmNo${ attachedHrm['id'] }">
-									<td>
-										<c:out value="${ attachedHrm['name'] }" />
-
-										<input name="hrmNo" value="${ attachedHrm['id'] }" id="delegate_hrmNo${ attachedHrm['id'] }" class="delegateAttachment" type="hidden">
 									</td>
 								</tr>
 							</c:forEach>
@@ -1821,7 +1908,8 @@ function updateFaxButton() {
                                                 
                         <tr>
                             <td class="tite4">
-                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" />
+                                <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formInstructions" /> </br><br>
+                                <button type="button" id="eFormButton" style="display: none"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.eFormReferralInstructions" /></button>
                             </td>
                             <td  class="tite3">
                                 <textarea id="annotation" style="color: blue;" rows="4" readonly></textarea>
@@ -2572,7 +2660,12 @@ Calendar.setup( { inputField : "appointmentDate", ifFormat : "%Y/%m/%d", showsTi
 	Calendar.setup( { inputField : "referalDate", ifFormat : "%Y/%m/%d", showsTime :false, trigger : "referalDate", singleClick : true, step : 1 } );
 <%}%>
 jQuery(document).ready(function(){
-	function addFormIfNotFound(form, delegate) {
+	
+	/**
+	 * This function adds the old form to the attachment window only if that form is displayed in the consultForm/eForm attachments. 
+	 * The attachment window only displays the latest (updated) forms.
+	 */
+	function addFormIfNotFound(form, demographicNo, delegate) {
 		const checkboxName = form.getAttribute('name');
 		const formValue = form.getAttribute('value');
 		const formId = "formNo" + formValue;
@@ -2593,9 +2686,18 @@ jQuery(document).ready(function(){
 			text: "(Not Latest Version) " + formName + " " + formDate
 		});
 
+		const previewButton = jQuery('<button>', {
+			class: 'preview-button',
+			type: 'button',
+			text: 'Preview',
+			title: 'Preview'
+		}).click(function() {
+			getPdf('FORM', formValue, 'method=renderFormPDF&formId=' + formValue + '&formName=' + formName + '&demographicNo=' + demographicNo);
+		});
+
 		const newLiFormElement = jQuery('<li>', {
 			class: 'form',
-		}).append(checkbox).append(label);
+		}).append(checkbox).append(label).append(previewButton);
 		jQuery('#formList').find('.selectAllHeading').after(newLiFormElement);
 		
 		return jQuery('#attachDocumentsForm').find(delegate);
@@ -2616,7 +2718,7 @@ jQuery(document).ready(function(){
 				jQuery('#consultationRequestForm').find(".delegateAttachment").each(function(index,data) {
 					let delegate = "#" + this.id.split("_")[1];
 					let element = jQuery('#attachDocumentsForm').find(delegate);
-					if (element.length === 0) { element = addFormIfNotFound(data, delegate); }
+					if (element.length === 0) { element = addFormIfNotFound(data, '<%=demo%>', delegate); }
 					let elementClassType = element.attr("class").split("_")[0];
 					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
 				});

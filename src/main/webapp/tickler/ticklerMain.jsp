@@ -76,7 +76,7 @@
 
 <%
 	String labReqVer = oscar.OscarProperties.getInstance().getProperty("onare_labreqver", "07");
-	if (labReqVer.equals("")) {
+	if (labReqVer.isEmpty()) {
 		labReqVer = "07";
 	}
 
@@ -177,6 +177,24 @@
 		      type="text/css"/>
 
 		<style>
+
+            table tr.comment-row td:nth-of-type(3) {
+                color:transparent;
+            }
+
+            table tr:not(tr.comment-row, table#tablefoot *) td:last-of-type {
+                border-right: lightgrey inset thin !important;
+            }
+
+            table tr:not(tr.comment-row, table#tablefoot *) td:first-of-type {
+                border-left: lightgrey inset thin !important;
+            }
+
+            table tr:not(tr.comment-row, table#tablefoot *) td {
+                border-top: lightgrey outset thin !important;
+                border-bottom: lightgrey outset thin !important;
+            }
+
             tr.error td {
                 color: red !important;
             }
@@ -404,7 +422,7 @@
 				var len = ml.elements.length;
 				for (var i = 0; i < len; i++) {
 					var e = ml.elements[i];
-					if (e.name == "checkbox") {
+					if (e.name === "checkbox") {
 						Check(e);
 					}
 				}
@@ -416,7 +434,7 @@
 				var len = ml.elements.length;
 				for (var i = 0; i < len; i++) {
 					var e = ml.elements[i];
-					if (e.name == "checkbox") {
+					if (e.name === "checkbox") {
 						Clear(e);
 					}
 				}
@@ -431,9 +449,9 @@
 					r = e.parentElement.parentElement;
 				}
 				if (r) {
-					if (r.className == "msgnew") {
+					if (r.className === "msgnew") {
 						r.className = "msgnews";
-					} else if (r.className == "msgold") {
+					} else if (r.className === "msgold") {
 						r.className = "msgolds";
 					}
 				}
@@ -447,9 +465,9 @@
 					r = e.parentElement.parentElement;
 				}
 				if (r) {
-					if (r.className == "msgnews") {
+					if (r.className === "msgnews") {
 						r.className = "msgnew";
-					} else if (r.className == "msgolds") {
+					} else if (r.className === "msgolds") {
 						r.className = "msgold";
 					}
 				}
@@ -562,7 +580,9 @@
 	<body>
 	<div class="container">
 
-		<h2><bean:message key="tickler.ticklerMain.msgTickler"/> Manager</h2>
+		<h2><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+			<path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.765 3.765 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1c-1.95 1.686-3.168 3.724-3.758 5.423-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88.017.04.035.082.056.122A68.362 68.362 0 0 0 .08 15.198a.528.528 0 0 0 .157.72.504.504 0 0 0 .705-.16 67.606 67.606 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.528.528 0 0 0 0-.739l-.729-.744 1.311.209a.504.504 0 0 0 .443-.15c.222-.23.444-.46.663-.684.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.524.524 0 0 0-.112-.172ZM3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196a.526.526 0 0 0-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.282 1.282 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a6.85 6.85 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524-1.581-.25Zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a7.97 7.97 0 0 1 1.564-.173Z"/>
+		</svg><bean:message key="tickler.ticklerMain.msgTickler"/> Manager</h2>
 
 		<form name="serviceform" method="get" action="ticklerMain.jsp" class="form-inline">
 			<input type="hidden" name="Submit" value="">
@@ -731,8 +751,7 @@
 						<bean:message key="tickler.ticklerMain.msgDate"/>
 					</th>
 					<th>
-						<bean:message key="tickler.ticklerMain.msgUpdateDate"/>
-<%--						<bean:message key="tickler.ticklerMain.msgCreationDate"/>--%>
+						<bean:message key="tickler.ticklerMain.msgDateofMsg"/>
 					</th>
 
 					<th>
@@ -747,7 +766,7 @@
 						<bean:message key="tickler.ticklerMain.status"/>
 					</th>
 					<th>
-						Comment
+						<bean:message key="tickler.ticklerMain.msgMessage"/>
 					</th>
 					<th></th>
 					<th></th>
@@ -759,7 +778,9 @@
 					String dateEnd = xml_appointment_date;
 
 					String vGrantdate = "1980-01-07 00:00:00.0";
-					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:ss:mm", locale);
+					DateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+					DateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd", locale);
+					DateFormat timeOnlyFormat = new SimpleDateFormat("HH:mm:ss", locale);
 
 					if (dateEnd.compareTo("") == 0) {
 						dateEnd = MyDateFormat.getMysqlStandardDate(curYear, curMonth, curDay);
@@ -800,7 +821,6 @@
 						ticklers = ticklerManager.getTicklers(loggedInInfo, filter);
 					}
 
-					String rowColour = "white";
 					String numDaysUntilWarn = OscarProperties.getInstance().getProperty("tickler_warn_period");
 					if(numDaysUntilWarn == null || numDaysUntilWarn.isEmpty()) {
 						numDaysUntilWarn = "0";
@@ -822,7 +842,7 @@
 							warning = true;
 						}
 
-						String cellColour = rowColour + warnColour;
+						String cellColour = warnColour;
 				%>
 
 				<tr <%=warning ? "class='error'" : ""%> >
@@ -840,9 +860,9 @@
 					</a></td>
 					<td class="<%=cellColour%>"><%=tickler.getProvider() == null ? "N/A" : Encode.forHtmlContent(tickler.getProvider().getFormattedName())%>
 					</td>
-					<td class="<%=cellColour%>"><%=tickler.getServiceDate()%>
+					<td class="<%=cellColour%>"><%=dateOnlyFormat.format(tickler.getServiceDate())%>
 					</td>
-					<td class="<%=cellColour%>"><%=tickler.getUpdateDate()%>
+					<td class="<%=cellColour%>"><%=datetimeFormat.format(tickler.getCreateDate())%>
 					</td>
 					<td class="<%=cellColour%>"><%=tickler.getPriority()%>
 					</td>
@@ -862,27 +882,27 @@
 						<%
 							if (LabResultData.isMDS(type)) {
 						%>
-						<a href="javascript:reportWindow('SegmentDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('SegmentDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isCML(type)) {
 						%>
-						<a href="javascript:reportWindow('../lab/CA/ON/CMLDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../lab/CA/ON/CMLDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isHL7TEXT(type)) {
 						%>
-						<a href="javascript:reportWindow('../lab/CA/ALL/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../lab/CA/ALL/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isDocument(type)) {
 						%>
-						<a href="javascript:reportWindow('../dms/ManageDocument.do?method=display&doc_no=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../documentManager/ManageDocument.do?method=display&doc_no=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else if (LabResultData.isHRM(type)) {
 						%>
-						<a href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>&segmentID=<%=tl.getTableId()%>')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../hospitalReportManager/Display.do?id=<%=tl.getTableId()%>&segmentID=<%=tl.getTableId()%>')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 						} else {
 						%>
-						<a href="javascript:reportWindow('../lab/CA/BC/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')">ATT</a>
+						<a title="View attachment" href="javascript:reportWindow('../lab/CA/BC/labDisplay.jsp?segmentID=<%=tl.getTableId()%>&providerNo=<%=user_no%>&searchProviderNo=<%=user_no%>&status=')"><i class="glyphicon glyphicon-paperclip"></i></a>
 						<%
 							}
 						%>
@@ -912,14 +932,14 @@
 					</td>
 					<td class="no sort"><%=Encode.forHtmlContent(tc.getProvider().getFormattedName())%>
 					</td>
-					<td><%=tickler.getServiceDate()%>
+					<td><%=dateOnlyFormat.format(tickler.getServiceDate())%>
 					</td>
 
 					<td class="no-sort">
 						<% if (tc.isUpdateDateToday()) { %>
-						<%=tc.getUpdateTime(locale)%>
+						<%=timeOnlyFormat.format(tc.getUpdateDate())%>
 						<% } else { %>
-						<%=tc.getUpdateDate(locale)%>
+						<%=datetimeFormat.format(tc.getUpdateDate())%>
 						<% } %>
 					</td>
 

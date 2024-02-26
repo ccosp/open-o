@@ -24,7 +24,7 @@
     
 --%>
 <style>
-.spinner {
+.oscar-spinner {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -40,12 +40,12 @@
     transition: opacity 0.3s ease;
 }
 
-#img-spinner {
+#img-oscar-spinner {
     width: 100px;
     height: 77px;
 }
 
-.screen {
+.oscar-spinner-screen {
     position: fixed;
     top: 0;
     right: 0;
@@ -62,7 +62,7 @@
     transition: opacity 0.3s ease;
 }
 
-.active-spinner {
+.active-oscar-spinner {
     display: block;
 }
 </style>
@@ -73,11 +73,11 @@
 // if locked is false: can click away from it
 function ShowSpin(locked)
 {
-    let screen = document.getElementById("screen");
-    let spinner = document.getElementById("spinner");
+    let screen = document.getElementById("oscar-spinner-screen");
+    let spinner = document.getElementById("oscar-spinner");
     
-    screen.classList.add("active-spinner");
-    spinner.classList.add("active-spinner");
+    screen.classList.add("active-oscar-spinner");
+    spinner.classList.add("active-oscar-spinner");
 
     if (locked)
     {
@@ -87,23 +87,24 @@ function ShowSpin(locked)
     {
         screen.addEventListener("click", HideSpin);
     }
+    return true;
 }
 
 function HideSpin()
 {
-    let screen = document.getElementById("screen");
-    let spinner = document.getElementById("spinner");
+    let screen = document.getElementById("oscar-spinner-screen");
+    let spinner = document.getElementById("oscar-spinner");
     
-    screen.classList.remove("active-spinner");
+    screen.classList.remove("active-oscar-spinner");
     spinner.style.opacity = "0";
     
     setTimeout(function() {
-        spinner.classList.remove("active-spinner");
+        spinner.classList.remove("active-oscar-spinner");
         spinner.style.opacity = "1";
     }, 300);
 }
 </script>
-<div id="screen" class="screen"></div>
-<div id="spinner" class="spinner">
-    <img id="img-spinner" src="<%=request.getContextPath() %>/images/spinner.jpg" alt="Loading"/>
+<div id="oscar-spinner-screen" class="oscar-spinner-screen"></div>
+<div id="oscar-spinner" class="oscar-spinner">
+    <img id="img-oscar-spinner" src="<%=request.getContextPath() %>/images/spinner.jpg" alt="Loading"/>
 </div>

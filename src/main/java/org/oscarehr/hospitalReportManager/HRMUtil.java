@@ -9,6 +9,9 @@
 
 package org.oscarehr.hospitalReportManager;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 
 import org.apache.logging.log4j.Logger;
@@ -18,8 +21,11 @@ import org.oscarehr.hospitalReportManager.model.HRMDocument;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentSubClass;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
 import org.oscarehr.hospitalReportManager.model.HRMSubClass;
+import org.oscarehr.managers.NioFileManager;
+import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
 import oscar.oscarLab.ca.on.HRMResultsData;
@@ -37,6 +43,8 @@ public class HRMUtil {
 	private static HRMSubClassDao hrmSubClassDao = (HRMSubClassDao) SpringUtils.getBean("HRMSubClassDao");
 	private static HRMDocumentSubClassDao hrmDocumentSubClassDao = (HRMDocumentSubClassDao) SpringUtils.getBean("HRMDocumentSubClassDao");
 	private static HRMCategoryDao hrmCategoryDao = SpringUtils.getBean(HRMCategoryDao.class);
+	private static final NioFileManager nioFileManager = SpringUtils.getBean(NioFileManager.class);
+	private static final SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
 
 	public HRMUtil() {
@@ -290,5 +298,26 @@ public class HRMUtil {
 			displayHRMName = "(Cancelled) " + displayHRMName;
 		}
 		return displayHRMName;
+	}
+
+	public static Path renderHRM(LoggedInInfo loggedInInfo, Integer hrmId) throws PDFGenerationException {
+		if(!securityInfoManager.hasPrivilege(loggedInInfo, "_hrm", "r", null)) {
+			throw new SecurityException("missing required security object (_hrm)");
+		}
+
+		Path path = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			HRMPDFCreator hrmpdfCreator = new HRMPDFCreator(outputStream, hrmId, loggedInInfo);
+			hrmpdfCreator.printPdf();
+			path = nioFileManager.saveTempFile("temporaryPDF" + new Date().getTime(), outputStream);
+		} catch (IOException e) {
+			throw new PDFGenerationException("Error Details: HRM [" + getHRMDocumentDisplayName(hrmId) + "] could not be converted into a PDF", e);
+		}
+		return path;
+	}
+
+	private static String getHRMDocumentDisplayName(Integer hrmId) {
+		HRMDocument hrmDocument = hrmDocumentDao.find(hrmId);
+		return getHRMDocumentDisplayName(hrmDocument.getDescription(), "", hrmDocument.getReportType(), hrmDocument.getReportStatus());
 	}
 }
