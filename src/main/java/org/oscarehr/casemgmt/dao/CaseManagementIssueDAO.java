@@ -43,22 +43,22 @@ public class CaseManagementIssueDAO extends HibernateDaoSupport {
 	
     @SuppressWarnings("unchecked")
     public List<CaseManagementIssue> getIssuesByDemographic(String demographic_no) {
-        return this.getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.demographic_no = ?", new Object[] {Integer.valueOf(demographic_no)});
+        return (List<CaseManagementIssue>) this.getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.demographic_no = ?", new Object[] {Integer.valueOf(demographic_no)});
     }
 
     @SuppressWarnings("unchecked")
     public List<CaseManagementIssue> getIssuesByDemographicOrderActive(Integer demographic_no, Boolean resolved) {
-        return getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.demographic_no = ? "+(resolved!=null?" and cmi.resolved="+resolved:"")+" order by cmi.resolved", new Object[] {demographic_no});
+        return (List<CaseManagementIssue>) getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.demographic_no = ? "+(resolved!=null?" and cmi.resolved="+resolved:"")+" order by cmi.resolved", new Object[] {demographic_no});
     }
     
     @SuppressWarnings("unchecked")
     public List<CaseManagementIssue> getIssuesByNote(Integer noteId, Boolean resolved) {
-        return getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.notes.id = ? "+(resolved!=null?" and cmi.resolved="+resolved:"")+" order by cmi.resolved", new Object[] {noteId});
+        return (List<CaseManagementIssue>) getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.notes.id = ? "+(resolved!=null?" and cmi.resolved="+resolved:"")+" order by cmi.resolved", new Object[] {noteId});
     }
     
     @SuppressWarnings("unchecked")
     public Issue getIssueByCmnId(Integer cmnIssueId) {
-        List<Issue> result = getHibernateTemplate().find("select issue from CaseManagementIssue cmi where cmi.id = ?", new Object[] {Long.valueOf(cmnIssueId)});
+        List<Issue> result = (List<Issue>) getHibernateTemplate().find("select issue from CaseManagementIssue cmi where cmi.id = ?", new Object[] {Long.valueOf(cmnIssueId)});
         if(result.size()>0)
         	return result.get(0);
         return null;
@@ -66,7 +66,7 @@ public class CaseManagementIssueDAO extends HibernateDaoSupport {
 
     public CaseManagementIssue getIssuebyId(String demo, String id) {
         @SuppressWarnings("unchecked")
-        List<CaseManagementIssue> list = this.getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.issue_id = ? and demographic_no = ?",new Object[]{Long.parseLong(id),Integer.valueOf(demo)});
+        List<CaseManagementIssue> list = (List<CaseManagementIssue>) this.getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.issue_id = ? and demographic_no = ?",new Object[]{Long.parseLong(id),Integer.valueOf(demo)});
         if( list != null && list.size() == 1 )
             return list.get(0);
         
@@ -75,7 +75,7 @@ public class CaseManagementIssueDAO extends HibernateDaoSupport {
 
     public CaseManagementIssue getIssuebyIssueCode(String demo, String issueCode) {
     	@SuppressWarnings("unchecked")
-        List<CaseManagementIssue> list = this.getHibernateTemplate().find("select cmi from CaseManagementIssue cmi, Issue issue where cmi.issue_id=issue.id and issue.code = ? and cmi.demographic_no = ?",new Object[]{issueCode,Integer.valueOf(demo)});
+        List<CaseManagementIssue> list = (List<CaseManagementIssue>) this.getHibernateTemplate().find("select cmi from CaseManagementIssue cmi, Issue issue where cmi.issue_id=issue.id and issue.code = ? and cmi.demographic_no = ?",new Object[]{issueCode,Integer.valueOf(demo)});
         
         if(list.size()>1){ 
         log.error("Expected 1 result got more : "+list.size() + "(" + demo + "," + issueCode + ")");
@@ -113,7 +113,7 @@ public class CaseManagementIssueDAO extends HibernateDaoSupport {
     
     @SuppressWarnings("unchecked")
     public List<CaseManagementIssue> getAllCertainIssues() {
-        return getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.certain = true");
+        return (List<CaseManagementIssue>) getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.certain = true");
     }
 
     //for integrator
@@ -126,19 +126,19 @@ public class CaseManagementIssueDAO extends HibernateDaoSupport {
     			sb.append(",");
     		sb.append(p.getId());
     	}
-        List<Integer> results =  this.getHibernateTemplate().find("select distinct cmi.demographic_no from CaseManagementIssue cmi where cmi.update_date > ? and program_id in ("+sb.toString()+")", new Object[] {date});
+        List<Integer> results =  (List<Integer>) this.getHibernateTemplate().find("select distinct cmi.demographic_no from CaseManagementIssue cmi where cmi.update_date > ? and program_id in ("+sb.toString()+")", new Object[] {date});
         
         return results;
     }
 
     @SuppressWarnings("unchecked")
     public List<CaseManagementIssue> getIssuesByDemographicSince(String demographic_no,Date date) {
-        return this.getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.demographic_no = ? and cmi.update_date > ?", new Object[] {Integer.valueOf(demographic_no),date});
+        return (List<CaseManagementIssue>) this.getHibernateTemplate().find("from CaseManagementIssue cmi where cmi.demographic_no = ? and cmi.update_date > ?", new Object[] {Integer.valueOf(demographic_no),date});
     }
     
     @SuppressWarnings("unchecked")
     public List<FacilityIdDemographicIssueCompositePk> getIssueIdsForIntegrator(Integer facilityId, Integer demographicNo) {
-        List<Object[]> rs =  this.getHibernateTemplate().find("select i.code,i.type from CaseManagementIssue cmi, Issue i where cmi.issue_id = i.id and cmi.demographic_no = ?", new Object[] {demographicNo});
+        List<Object[]> rs =  (List<Object[]>) this.getHibernateTemplate().find("select i.code,i.type from CaseManagementIssue cmi, Issue i where cmi.issue_id = i.id and cmi.demographic_no = ?", new Object[] {demographicNo});
         List<FacilityIdDemographicIssueCompositePk> results = new ArrayList<FacilityIdDemographicIssueCompositePk>();
         for(Object[] item:rs) {
         	FacilityIdDemographicIssueCompositePk key = new FacilityIdDemographicIssueCompositePk();
