@@ -123,7 +123,7 @@ public class ProgramAccessDAO extends HibernateDaoSupport {
     }
 
     public List<AccessType> getAccessTypes() {
-        List<AccessType> results = this.getHibernateTemplate().find("from AccessType at");
+        List<AccessType> results = (List<AccessType>) this.getHibernateTemplate().find("from AccessType at");
 
         if (log.isDebugEnabled()) {
             log.debug("getAccessTypes: # of results=" + results.size());
