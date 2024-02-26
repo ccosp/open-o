@@ -69,27 +69,27 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 	@SuppressWarnings("unchecked")
 	public List<CaseManagementNote> findAll() {
 		logger.warn("A METHOD THAT IS LIKELY TO CAUSE A CRASH HAS BEEN INVOKED. PLEASE LIMIT THE USE OF THIS METHOD, AS IT'S LIKELY TO EXHAUST MEMORY AND MAY LEAD TO A SERVER CRASH. CONSIDER PAGINATING THE INVOCATION INSTEAD");
-		return this.getHibernateTemplate().find("FROM CaseManagementNote");
+		return (List<CaseManagementNote>) this.getHibernateTemplate().find("FROM CaseManagementNote");
 	}
 	
 	@SuppressWarnings("unchecked")
     public List<Provider> getEditors(CaseManagementNote note) {
 		String uuid = note.getUuid();
 		String hql = "select distinct p from Provider p, CaseManagementNote cmn where p.ProviderNo = cmn.providerNo and cmn.uuid = ?";
-		return this.getHibernateTemplate().find(hql, uuid);
+		return (List<Provider>) this.getHibernateTemplate().find(hql, uuid);
 	}
 
 	@SuppressWarnings("unchecked")
     public List<Provider> getAllEditors(String demographicNo) {
 		String hql = "select distinct p from Provider p, CaseManagementNote cmn where p.ProviderNo = cmn.providerNo and cmn.demographic_no = ?";
-		return this.getHibernateTemplate().find(hql, demographicNo);
+		return (List<Provider>) this.getHibernateTemplate().find(hql, demographicNo);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CaseManagementNote> getHistory(CaseManagementNote note) {
 		String uuid = note.getUuid();
-		return this.getHibernateTemplate().find("from CaseManagementNote cmn where cmn.uuid = ? order by cmn.update_date asc", uuid);
-	}
+		return (List<CaseManagementNote>) this.getHibernateTemplate().find("from CaseManagementNote cmn where cmn.uuid = ? order by cmn.update_date asc", uuid);
+	}	
 
 	@SuppressWarnings("unchecked")
 	public List<CaseManagementNote> getIssueHistory(String issueIds, String demoNo) {
@@ -97,11 +97,10 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 		
 		List<CaseManagementNote> issueListReturn = new ArrayList<CaseManagementNote>();
 		
-		List<CaseManagementNote> issueList = this.getHibernateTemplate().find(hql, demoNo );
+		List<CaseManagementNote> issueList = (List<CaseManagementNote> ) this.getHibernateTemplate().find(hql, demoNo );
 		
 		hql = "select max(cmn.id) from CaseManagementNote cmn join cmn.issues i where i.issue_id in (" + issueIds + ") and cmn.demographic_no = ? group by cmn.uuid order by max(cmn.id)";
-		List<Integer> currNoteList = this.getHibernateTemplate().find(hql, demoNo );
-		
+		List<Integer> currNoteList = (List<Integer>) this.getHibernateTemplate().find(hql, demoNo );		
 		for (CaseManagementNote issueNote : issueList) {
 			if (currNoteList.contains( issueNote.getId() )) {
 				issueListReturn.add(issueNote);
@@ -121,14 +120,14 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 		if(ids.size()==0)
 			return new ArrayList<CaseManagementNote>();
 		@SuppressWarnings("unchecked")
-		List<CaseManagementNote> notes = this.getHibernateTemplate().findByNamedParam("SELECT n FROM CaseManagementNote n WHERE n.id IN (:ids)","ids",ids);
+		List<CaseManagementNote> notes = (List<CaseManagementNote>) this.getHibernateTemplate().findByNamedParam("SELECT n FROM CaseManagementNote n WHERE n.id IN (:ids)","ids",ids);
 		return notes;
 	}
 
 	public CaseManagementNote getMostRecentNote(String uuid) {
 		String hql = "select distinct cmn from CaseManagementNote cmn where cmn.uuid = ? and cmn.id = (select max(cmn.id) from cmn where cmn.uuid = ?)";
 		@SuppressWarnings("unchecked")
-		List<CaseManagementNote> tmp = this.getHibernateTemplate().find(hql, new Object[] { uuid, uuid });
+		List<CaseManagementNote> tmp = (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, new Object[] { uuid, uuid });
 		if (tmp == null) return null;
 
 		return tmp.get(0);
@@ -137,7 +136,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 	public List<CaseManagementNote> getNotesByUUID(String uuid) {
 		String hql = "select cmn from CaseManagementNote cmn where cmn.uuid = ? order by cmn.id";
 		@SuppressWarnings("unchecked")
-		List<CaseManagementNote> ret = this.getHibernateTemplate().find(hql, uuid);
+		List<CaseManagementNote> ret = (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, uuid);
 		return ret;
 	}
 
@@ -163,7 +162,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 		String hql = "select distinct cmn from CaseManagementNote cmn join cmn.issues i where i.issue_id = ? and cmn.demographic_no = ? and cmn.observation_date >= ?  and cmn.id in (select max(cmn.id) from cmn where cmn.demographic_no = ? GROUP BY uuid) ORDER BY cmn.observation_date asc";
 
 		@SuppressWarnings("unchecked")
-		List<CaseManagementNote> result = getHibernateTemplate().find(hql, new Object[] { issueId, demoNo, d, demoNo });
+		List<CaseManagementNote> result = (List<CaseManagementNote>) getHibernateTemplate().find(hql, new Object[] { issueId, demoNo, d, demoNo });
 		return result;
 	}
 
@@ -193,17 +192,17 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 				+ ") and cmn.demographic_no = ?  and cmn.id in (select max(cmn.id) from cmn where cmn.observation_date >= ? GROUP BY uuid) ORDER BY cmn.observation_date asc";
 
 		@SuppressWarnings("unchecked")
-		List<CaseManagementNote> result = getHibernateTemplate().find(hql, new Object[] { demographic_no, d });
+		List<CaseManagementNote> result = (List<CaseManagementNote>) getHibernateTemplate().find(hql, new Object[] { demographic_no, d });
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
     public List<CaseManagementNote> getNotesByDemographic(String demographic_no, String staleDate) {
 		if (OscarProperties.getInstance().getDbType().equals("oracle")) {
-			return getHibernateTemplate().findByNamedQuery("mostRecentTimeOra", new Object[] { demographic_no, staleDate });
+			return (List<CaseManagementNote>) getHibernateTemplate().findByNamedQuery("mostRecentTimeOra", new Object[] { demographic_no, staleDate });
 		}
 		else {
-			return getHibernateTemplate().findByNamedQuery("mostRecentTime", new Object[] { demographic_no, staleDate });
+			return (List<CaseManagementNote> ) getHibernateTemplate().findByNamedQuery("mostRecentTime", new Object[] { demographic_no, staleDate });
 		}
 	}
 
@@ -211,11 +210,11 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 	@SuppressWarnings("unchecked")
     public List<CaseManagementNote> getNotesByDemographic(String demographic_no) {
 		if (OscarProperties.getInstance().getDbType().equals("oracle")) {
-			return getHibernateTemplate().findByNamedQuery("mostRecentOra", new Object[] { demographic_no });
+			return (List<CaseManagementNote>) getHibernateTemplate().findByNamedQuery("mostRecentOra", new Object[] { demographic_no });
 		}
 		else {
 			String hql = "select cmn from CaseManagementNote cmn where cmn.demographic_no = ? and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn2.uuid = cmn.uuid) order by cmn.observation_date";
-			return getHibernateTemplate().find(hql, demographic_no);
+			return (List<CaseManagementNote>) getHibernateTemplate().find(hql, demographic_no);
 			//return getHibernateTemplate().findByNamedQuery("mostRecent", new Object[] { demographic_no });
 
 		}
@@ -224,7 +223,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 	public List<CaseManagementNote> getNotesByDemographicSince(String demographic_no,Date date) {
 		
 		String hql = "select cmn from CaseManagementNote cmn where cmn.demographic_no = ? and cmn.update_date > ? and cmn.locked != '1' and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn2.uuid = cmn.uuid) order by cmn.observation_date";
-		return getHibernateTemplate().find(hql, demographic_no,date);	
+		return (List<CaseManagementNote>) getHibernateTemplate().find(hql, demographic_no,date);	
 	}
 	
 	
@@ -236,25 +235,25 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 		@SuppressWarnings("unchecked")
 	    public List<Object[]> getRawNoteInfoByDemographic(String demographic_no) {
 			String hql = "select cmn.id,cmn.observation_date,cmn.providerNo,cmn.program_no,cmn.reporter_caisi_role,cmn.uuid from CaseManagementNote cmn where cmn.demographic_no = ? order by cmn.update_date DESC";
-			return getHibernateTemplate().find(hql, demographic_no);			
+			return (List<Object[]>) getHibernateTemplate().find(hql, demographic_no);			
 		}
 	    
 	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getRawNoteInfoMapByDemographic(String demographic_no) {
 		String hql = "select new map(cmn.id as id,cmn.observation_date as observation_date,cmn.providerNo as providerNo,cmn.program_no as program_no,cmn.reporter_caisi_role as reporter_caisi_role,cmn.uuid as uuid, cmn.update_date as update_date) from CaseManagementNote cmn where cmn.demographic_no = ? order by cmn.update_date DESC";
-		return getHibernateTemplate().find(hql, demographic_no);			
+		return (List<Map<String,Object>>) getHibernateTemplate().find(hql, demographic_no);			
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getUnsignedRawNoteInfoMapByDemographic(String demographic_no) {
 		String hql = "select new map(cmn.id as id,cmn.observation_date as observation_date,cmn.providerNo as providerNo,cmn.program_no as program_no,cmn.reporter_caisi_role as reporter_caisi_role,cmn.uuid as uuid, cmn.update_date as update_date) from CaseManagementNote cmn where cmn.demographic_no = ? and cmn.signed=? and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn2.uuid = cmn.uuid) order by cmn.update_date DESC";
-		return getHibernateTemplate().find(hql, new Object[]{demographic_no,false});			
+		return (List<Map<String,Object>>) getHibernateTemplate().find(hql, new Object[]{demographic_no,false});			
 	}
 
 	@SuppressWarnings("unchecked")
     public List<CaseManagementNote> getNotesByDemographic(String demographic_no, Integer maxNotes) {
 		if (OscarProperties.getInstance().getDbType().equals("oracle")) {
-			return getHibernateTemplate().findByNamedQuery("mostRecentOra", new Object[] { demographic_no });
+			return (List<CaseManagementNote>) getHibernateTemplate().findByNamedQuery("mostRecentOra", new Object[] { demographic_no });
 		}
 		else {
 			String hql = "select cmn from CaseManagementNote cmn where cmn.demographic_no = ? and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn2.uuid = cmn.uuid) order by cmn.observation_date desc";
@@ -264,7 +263,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 				Hibernatetemplate.setMaxResults(maxNotes);
 			}
 
-			List<CaseManagementNote> list = Hibernatetemplate.find(hql, demographic_no);
+			List<CaseManagementNote> list = (List<CaseManagementNote>) Hibernatetemplate.find(hql, demographic_no);
 			Hibernatetemplate.setMaxResults(0);
 			return list;
 			//return getHibernateTemplate().findByNamedQuery("mostRecent", new Object[] { demographic_no });
@@ -296,17 +295,17 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 				}
 				hql = "select cmn from CaseManagementNote cmn join cmn.issues i where i.issue_id in (" + list
 				        + ") and cmn.demographic_no = ? and cmn.archived = 0 and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn.uuid = cmn2.uuid) ORDER BY cmn.position, cmn.observation_date desc";
-				return this.getHibernateTemplate().find(hql, demographic_no);
+				return (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, demographic_no);
 
 			} else if (issues.length == 1) {
 				long id = Long.parseLong(issues[0]);
 				
 				hql = "select cmn from CaseManagementNote cmn join cmn.issues i where i.issue_id = ? and cmn.demographic_no= ? and cmn.archived=0 order by cmn.position, cmn.observation_date desc";
 					
-				List<CaseManagementNote> issueList = this.getHibernateTemplate().find(hql, new Object[] { id, demographic_no });
+				List<CaseManagementNote> issueList = (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, new Object[] { id, demographic_no });
 				
 				hql = "select  max(cmn.id) from CaseManagementNote cmn where cmn.demographic_no = ? group by cmn.uuid order by max(cmn.id)";
-				List<Integer> currNoteList = this.getHibernateTemplate().find(hql, new Object[] { demographic_no });
+				List<Integer> currNoteList = (List<Integer>) this.getHibernateTemplate().find(hql, new Object[] { demographic_no });
 				
 				for(CaseManagementNote issueNote : issueList)
 				{
@@ -342,12 +341,12 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 				}
 				hql = "select cmn from CaseManagementNote cmn join cmn.issues i where i.issue_id in (" + list
 				        + ") and cmn.demographic_no = ? and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn.uuid = cmn2.uuid) order by cmn.observation_date desc ";
-				retList = this.getHibernateTemplate().find(hql, demographic_no);
+				retList = (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, demographic_no);
 
 			} else if (issueIds.length == 1) {
 				hql = "select cmn from CaseManagementNote cmn join cmn.issues i where i.issue_id = ? and cmn.demographic_no = ? and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn.uuid = cmn2.uuid) order by cmn.observation_date desc";
 				long id = Long.parseLong(issueIds[0]);
-				retList = this.getHibernateTemplate().find(hql, new Object[] { id, demographic_no});
+				retList = (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, new Object[] { id, demographic_no});
 			}
 		}
 
@@ -372,12 +371,12 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 				}
 				hql = "select cmn from CaseManagementNote cmn join cmn.issues i where i.issue_id in (" + list
 				        + ") and cmn.demographic_no = ? and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn.uuid = cmn2.uuid)";
-				return this.getHibernateTemplate().find(hql, demographic_no);
+				return (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, demographic_no);
 
 			} else if (issueIds.length == 1) {
 				hql = "select cmn from CaseManagementNote cmn join cmn.issues i where i.issue_id = ? and cmn.demographic_no = ? and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn.uuid = cmn2.uuid)";
 				long id = Long.parseLong(issueIds[0]);
-				return this.getHibernateTemplate().find(hql, new Object[] { id, demographic_no});
+				return (List<CaseManagementNote>) this.getHibernateTemplate().find(hql, new Object[] { id, demographic_no});
 			}
 		}
 		// String hql = "select distinct cmn from CaseManagementNote cmn where cmn.demographic_no = ? and cmn.issues.issue_id in (" + list +
@@ -464,12 +463,12 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 
     @SuppressWarnings("unchecked")
 	public List<CaseManagementNote> getNotesByDemographicDateRange(String demographic_no, Date startDate, Date endDate) {
-		return getHibernateTemplate().findByNamedQuery("mostRecentDateRange", new Object[] { demographic_no, startDate, endDate });
+		return (List<CaseManagementNote>) getHibernateTemplate().findByNamedQuery("mostRecentDateRange", new Object[] { demographic_no, startDate, endDate });
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CaseManagementNote> getNotesByDemographicLimit(String demographic_no, Integer offset, Integer numToReturn) {
-		return getHibernateTemplate().findByNamedQuery("mostRecentLimit", new Object[] { demographic_no, offset, numToReturn });
+		return (List<CaseManagementNote>) getHibernateTemplate().findByNamedQuery("mostRecentLimit", new Object[] { demographic_no, offset, numToReturn });
 	}
 	
 	public void updateNote(CaseManagementNote note) {
@@ -549,7 +548,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 
 	public List<Long> getAllNoteIds() {
 		@SuppressWarnings("unchecked")
-		List<Long> results = this.getHibernateTemplate().find("select n.id from CaseManagementNote n");
+		List<Long> results = (List<Long>) this.getHibernateTemplate().find("select n.id from CaseManagementNote n");
 		return results;
 	}
 
@@ -722,7 +721,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 		String hql = "select distinct cmn from CaseManagementNote cmn where cmn.id in (select max(cmn.id) from cmn where cmn.demographic_no = ? GROUP BY uuid) and cmn.demographic_no = ? and cmn.note like ? and cmn.archived = 0";
 
 		@SuppressWarnings("unchecked")
-		List<CaseManagementNote> result = getHibernateTemplate().find(hql, new Object[] {demographic_no, demographic_no, searchString });
+		List<CaseManagementNote> result = (List<CaseManagementNote>) getHibernateTemplate().find(hql, new Object[] {demographic_no, demographic_no, searchString });
 		return result;
 	}
 
@@ -730,7 +729,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
         String queryStr = "FROM CaseManagementNote x WHERE x.program_no=? and x.observation_date>=? and x.observation_date<=?";
 
         @SuppressWarnings("unchecked")
-        List<CaseManagementNote> rs = getHibernateTemplate().find(queryStr, new Object[] {programId.toString(), minObservationDate, maxObservationDate});
+        List<CaseManagementNote> rs = (List<CaseManagementNote>) getHibernateTemplate().find(queryStr, new Object[] {programId.toString(), minObservationDate, maxObservationDate});
 
         return rs;
     }
@@ -738,7 +737,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 	public List<CaseManagementNote> getMostRecentNotesByAppointmentNo(int appointmentNo) {
 		String hql = "select distinct cmn.uuid from CaseManagementNote cmn where cmn.appointmentNo = ?";
 		@SuppressWarnings("unchecked")
-		List<String> tmp = this.getHibernateTemplate().find(hql, appointmentNo);
+		List<String> tmp = (List<String>) this.getHibernateTemplate().find(hql, appointmentNo);
 		List<CaseManagementNote> mostRecents = new ArrayList<CaseManagementNote>();
 		for(String uuid:tmp) {
 			mostRecents.add(this.getMostRecentNote(uuid));
@@ -749,7 +748,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 	public List<CaseManagementNote> getMostRecentNotes(Integer demographicNo) {
 		String hql = "select distinct cmn.uuid from CaseManagementNote cmn where cmn.demographic_no = ?";
 		@SuppressWarnings("unchecked")
-		List<String> tmp = this.getHibernateTemplate().find(hql, new Object[]{String.valueOf(demographicNo)});
+		List<String> tmp = (List<String>) this.getHibernateTemplate().find(hql, new Object[]{String.valueOf(demographicNo)});
 		List<CaseManagementNote> mostRecents = new ArrayList<CaseManagementNote>();
 		for(String uuid:tmp) {
 			mostRecents.add(this.getMostRecentNote(uuid));
@@ -760,7 +759,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
 	public Long findMaxNoteId() {
 		String sql = "select max(c.id) from CaseManagementNote c";
 		@SuppressWarnings("unchecked")
-		List<Object> r = getHibernateTemplate().find(sql);
+		List<Object> r = (List<Object>) getHibernateTemplate().find(sql);
 		if (r.isEmpty()) {
 			return 0L;
 		}
@@ -777,7 +776,7 @@ public class CaseManagementNoteDAO extends HibernateDaoSupport {
     		sb.append(p.getId());
     	}
 		String hql = "select distinct cmn.demographic_no from CaseManagementNote cmn where cmn.program_no in ("+sb.toString()+") and cmn.update_date > ? and cmn.locked != '1' and cmn.id = (select max(cmn2.id) from CaseManagementNote cmn2 where cmn2.uuid = cmn.uuid) order by cmn.observation_date";
-		List<String> results =  getHibernateTemplate().find(hql,date);
+		List<String> results = (List<String>) getHibernateTemplate().find(hql,date);
 		
 		List<Integer> results2 = new ArrayList<Integer>();
 		for(String r:results) {
