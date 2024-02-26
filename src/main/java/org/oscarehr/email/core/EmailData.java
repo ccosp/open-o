@@ -9,7 +9,7 @@ import org.oscarehr.common.model.EmailLog.TransactionType;
 
 import oscar.util.StringUtils;
 
-public class Email {
+public class EmailData {
     private String sender;
     private String[] recipients;
     private String subject;
@@ -24,7 +24,7 @@ public class Email {
     private Integer demographicNo;
     private List<EmailAttachment> attachments;
 
-    public Email() { }
+    public EmailData() { }
 
     public String getSender() {
         return sender;

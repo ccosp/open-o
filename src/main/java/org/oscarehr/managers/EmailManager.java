@@ -29,7 +29,7 @@ import org.oscarehr.common.model.SecRole;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.documentManager.ConvertToEdoc;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
-import org.oscarehr.email.core.Email;
+import org.oscarehr.email.core.EmailData;
 import org.oscarehr.email.core.EmailSender;
 import org.oscarehr.email.core.EmailStatusResult;
 import org.oscarehr.email.util.EmailNoteUtil;
@@ -61,16 +61,16 @@ public class EmailManager {
     @Autowired
 	private SecurityInfoManager securityInfoManager;
 
-    public EmailLog sendEmail(LoggedInInfo loggedInInfo, Email email) {
+    public EmailLog sendEmail(LoggedInInfo loggedInInfo, EmailData emailData) {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
 			throw new RuntimeException("missing required security object (_email)");
 		}
 
-        sanitizeEmailFields(email);
-        EmailLog emailLog = prepareEmailForOutbox(loggedInInfo, email);
+        sanitizeEmailFields(emailData);
+        EmailLog emailLog = prepareEmailForOutbox(loggedInInfo, emailData);
         try {
-            if (email.getIsEncrypted()) { encryptEmail(email); }
-            EmailSender emailSender = new EmailSender(loggedInInfo, emailLog.getEmailConfig(), email);
+            if (emailData.getIsEncrypted()) { encryptEmail(emailData); }
+            EmailSender emailSender = new EmailSender(loggedInInfo, emailLog.getEmailConfig(), emailData);
             emailSender.send();
             updateEmailStatus(loggedInInfo, emailLog, EmailStatus.SUCCESS, "");
             if (emailLog.getChartDisplayOption().equals(ChartDisplayOption.WITH_FULL_NOTE)) { addEmailNote(loggedInInfo, emailLog); }
@@ -81,23 +81,23 @@ public class EmailManager {
         return emailLog;
     }
 
-    public EmailLog prepareEmailForOutbox(LoggedInInfo loggedInInfo, Email email) {
+    public EmailLog prepareEmailForOutbox(LoggedInInfo loggedInInfo, EmailData emailData) {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
 			throw new RuntimeException("missing required security object (_email)");
 		}
 
-        EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(email.getSender());
-        EmailLog emailLog = new EmailLog(emailConfig, email.getSender(), email.getRecipients(), email.getSubject(), email.getBody(), EmailStatus.FAILED);
-        setEmailAttachments(emailLog, email.getAttachments());
-        emailLog.setEncryptedMessage(email.getEncryptedMessage());
-        emailLog.setPassword(email.getPassword());
-        emailLog.setPasswordClue(email.getPasswordClue());
-        emailLog.setIsEncrypted(email.getIsEncrypted());
-        emailLog.setIsAttachmentEncrypted(email.getIsAttachmentEncrypted());
-        emailLog.setChartDisplayOption(email.getChartDisplayOption());
-        emailLog.setTransactionType(email.getTransactionType());
+        EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(emailData.getSender());
+        EmailLog emailLog = new EmailLog(emailConfig, emailData.getSender(), emailData.getRecipients(), emailData.getSubject(), emailData.getBody(), EmailStatus.FAILED);
+        setEmailAttachments(emailLog, emailData.getAttachments());
+        emailLog.setEncryptedMessage(emailData.getEncryptedMessage());
+        emailLog.setPassword(emailData.getPassword());
+        emailLog.setPasswordClue(emailData.getPasswordClue());
+        emailLog.setIsEncrypted(emailData.getIsEncrypted());
+        emailLog.setIsAttachmentEncrypted(emailData.getIsAttachmentEncrypted());
+        emailLog.setChartDisplayOption(emailData.getChartDisplayOption());
+        emailLog.setTransactionType(emailData.getTransactionType());
         emailLog.setErrorMessage("Email was not sent successfully for unknown reasons.");
-        emailLog.setDemographicNo(email.getDemographicNo());
+        emailLog.setDemographicNo(emailData.getDemographicNo());
         emailLogDao.persist(emailLog);
         return emailLog;
     }
@@ -184,41 +184,41 @@ public class EmailManager {
         emailLog.setEmailAttachments(emailAttachmentList);  
     }
 
-    private void sanitizeEmailFields(Email email) {
-        if (StringUtils.isNullOrEmpty(email.getEncryptedMessage()) && email.getAttachments().isEmpty()) {
-            email.setIsEncrypted(false);
-            email.setIsAttachmentEncrypted(false);
-            email.setPassword("");
-            email.setPasswordClue("");
-        } else if (StringUtils.isNullOrEmpty(email.getEncryptedMessage()) && email.getAttachments().size() > 0 && !email.getIsAttachmentEncrypted()) {
-            email.setIsEncrypted(false);
-            email.setIsAttachmentEncrypted(false);
-            email.setPassword("");
-            email.setPasswordClue("");
-        } else if (email.getAttachments().isEmpty()) {
-            email.setIsAttachmentEncrypted(false);
-        } else if (!email.getIsEncrypted()) {
-            email.setEncryptedMessage("");
-            email.setIsAttachmentEncrypted(false);
-            email.setPassword("");
-            email.setPasswordClue("");
+    private void sanitizeEmailFields(EmailData emailData) {
+        if (StringUtils.isNullOrEmpty(emailData.getEncryptedMessage()) && emailData.getAttachments().isEmpty()) {
+            emailData.setIsEncrypted(false);
+            emailData.setIsAttachmentEncrypted(false);
+            emailData.setPassword("");
+            emailData.setPasswordClue("");
+        } else if (StringUtils.isNullOrEmpty(emailData.getEncryptedMessage()) && emailData.getAttachments().size() > 0 && !emailData.getIsAttachmentEncrypted()) {
+            emailData.setIsEncrypted(false);
+            emailData.setIsAttachmentEncrypted(false);
+            emailData.setPassword("");
+            emailData.setPasswordClue("");
+        } else if (emailData.getAttachments().isEmpty()) {
+            emailData.setIsAttachmentEncrypted(false);
+        } else if (!emailData.getIsEncrypted()) {
+            emailData.setEncryptedMessage("");
+            emailData.setIsAttachmentEncrypted(false);
+            emailData.setPassword("");
+            emailData.setPasswordClue("");
         }
     }
 
-    private void encryptEmail(Email email) throws EmailSendingException {
+    private void encryptEmail(EmailData emailData) throws EmailSendingException {
         // Encrypt message and attachment
         List<EmailAttachment> encryptableAttachments = new ArrayList<>();
-        if (!StringUtils.isNullOrEmpty(email.getEncryptedMessage())) { encryptableAttachments.add(createMessageAttachment(email.getEncryptedMessage())); }
-        if (email.getIsAttachmentEncrypted() && !email.getAttachments().isEmpty()) { encryptableAttachments.addAll(email.getAttachments()); }
-        encryptAttachments(encryptableAttachments, email.getPassword());
+        if (!StringUtils.isNullOrEmpty(emailData.getEncryptedMessage())) { encryptableAttachments.add(createMessageAttachment(emailData.getEncryptedMessage())); }
+        if (emailData.getIsAttachmentEncrypted() && !emailData.getAttachments().isEmpty()) { encryptableAttachments.addAll(emailData.getAttachments()); }
+        encryptAttachments(encryptableAttachments, emailData.getPassword());
 
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         emailAttachments.addAll(encryptableAttachments);
-        if (!email.getIsAttachmentEncrypted() && !email.getAttachments().isEmpty()) { emailAttachments.addAll(email.getAttachments()); }
-        email.setAttachments(emailAttachments);
+        if (!emailData.getIsAttachmentEncrypted() && !emailData.getAttachments().isEmpty()) { emailAttachments.addAll(emailData.getAttachments()); }
+        emailData.setAttachments(emailAttachments);
 
         //append password clue
-        email.setBody(email.getBody() + "\n\n*****\n" + email.getPasswordClue().trim() + "\n*****\n");
+        emailData.setBody(emailData.getBody() + "\n\n*****\n" + emailData.getPasswordClue().trim() + "\n*****\n");
     }
 
     private EmailAttachment createMessageAttachment(String message) {

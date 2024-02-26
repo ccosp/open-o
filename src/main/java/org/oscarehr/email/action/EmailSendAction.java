@@ -14,7 +14,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailLog;
 import org.oscarehr.common.model.EmailLog.EmailStatus;
-import org.oscarehr.email.core.Email;
+import org.oscarehr.email.core.EmailData;
 import org.oscarehr.managers.EformDataManager;
 import org.oscarehr.managers.EmailManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -53,9 +53,9 @@ public class EmailSendAction extends DispatchAction {
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        Email email = prepareEmailFields(request);
-        ActionRedirect emailRedirect = new ActionRedirect(mapping.findForward(email.getTransactionType().name()));
-        switch (email.getTransactionType()) {
+        EmailData emailData = prepareEmailFields(request);
+        ActionRedirect emailRedirect = new ActionRedirect(mapping.findForward(emailData.getTransactionType().name()));
+        switch (emailData.getTransactionType()) {
             case EFORM:
                 emailRedirect.addParameter("fdid", request.getParameter("fdid"));
                 emailRedirect.addParameter("parentAjaxId", "eforms");
@@ -68,12 +68,12 @@ public class EmailSendAction extends DispatchAction {
 
     private void sendEmail(HttpServletRequest request) {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        Email email = prepareEmailFields(request);
-        EmailLog emailLog = emailManager.sendEmail(loggedInInfo, email);
+        EmailData emailData = prepareEmailFields(request);
+        EmailLog emailLog = emailManager.sendEmail(loggedInInfo, emailData);
         request.setAttribute("emailLog", emailLog);
     }
 
-    private Email prepareEmailFields(HttpServletRequest request) {
+    private EmailData prepareEmailFields(HttpServletRequest request) {
         String fromEmail = request.getParameter("senderEmailAddress");
         String[] receiverEmails = request.getParameterValues("receiverEmailAddress");
         String subject = request.getParameter("subjectEmail");
@@ -88,23 +88,23 @@ public class EmailSendAction extends DispatchAction {
         String demographicNo = request.getParameter("demographicId");
         List<EmailAttachment> emailAttachmentList = (List<EmailAttachment>) request.getSession().getAttribute("emailAttachmentList");
 
-        Email email = new Email();
-        email.setSender(fromEmail);
-        email.setRecipients(receiverEmails);
-        email.setSubject(subject);
-        email.setBody(body);
-        email.setEncryptedMessage(encryptedMessage);
-        email.setPassword(password);
-        email.setPasswordClue(passwordClue);
-        email.setIsEncrypted(isEncrypted);
-        email.setIsAttachmentEncrypted(isAttachmentEncrypted);
-        email.setChartDisplayOption(chartDisplayOption);
-        email.setTransactionType(transactionType);
-        email.setDemographicNo(demographicNo);
-        email.setAttachments(emailAttachmentList);
+        EmailData emailData = new EmailData();
+        emailData.setSender(fromEmail);
+        emailData.setRecipients(receiverEmails);
+        emailData.setSubject(subject);
+        emailData.setBody(body);
+        emailData.setEncryptedMessage(encryptedMessage);
+        emailData.setPassword(password);
+        emailData.setPasswordClue(passwordClue);
+        emailData.setIsEncrypted(isEncrypted);
+        emailData.setIsAttachmentEncrypted(isAttachmentEncrypted);
+        emailData.setChartDisplayOption(chartDisplayOption);
+        emailData.setTransactionType(transactionType);
+        emailData.setDemographicNo(demographicNo);
+        emailData.setAttachments(emailAttachmentList);
 
         request.getSession().removeAttribute("emailAttachmentList");
 
-        return email;
+        return emailData;
     }
 }
