@@ -7,31 +7,27 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.logging.log4j.Logger;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.EmailSendingException;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sendgrid.Method;
-import com.sendgrid.Request;
-import com.sendgrid.Response;
-import com.sendgrid.SendGrid;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Attachments;
-import com.sendgrid.helpers.mail.objects.Content;
-import com.sendgrid.helpers.mail.objects.Email;
-import com.sendgrid.helpers.mail.objects.Personalization;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class APISendGridEmailSender {
-    private final Logger logger = MiscUtils.getLogger();
     private LoggedInInfo loggedInInfo;
-
     private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
     private EmailConfig emailConfig;
@@ -39,6 +35,7 @@ public class APISendGridEmailSender {
     private String subject;
     private String body;
     private List<EmailAttachment> attachments;
+    private String endpoint;
 
     private APISendGridEmailSender() { }
 
@@ -49,6 +46,7 @@ public class APISendGridEmailSender {
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
+        this.endpoint = "https://api.sendgrid.com/v3/mail/send";
     }
 
     public void send() throws EmailSendingException {
@@ -56,51 +54,83 @@ public class APISendGridEmailSender {
 			throw new RuntimeException("missing required security object (_email)");
 		}
 
-        Mail mail = new Mail();       
-        mail.setFrom(new Email(emailConfig.getSenderEmail(), emailConfig.getSenderFullName()));
-        addToEmail(mail, recipients);
-        mail.setSubject(subject);
-        mail.addContent(new Content("text/plain", body));
-        addAttachments(mail, attachments);
-
-        String apiKey = getAPIKey();
-        SendGrid sendGrid = new SendGrid(apiKey);
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(endpoint);
+        httpPost.setHeader("Content-Type", "application/json");
+        httpPost.setHeader("Authorization", "Bearer " + getAPIKey());
         try {
-            Request request = new Request();
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sendGrid.api(request);
-            logger.info(response.getStatusCode());
-            logger.info(response.getBody());
-            logger.info(response.getHeaders());
+            StringEntity entity = new StringEntity(createEmailJSON());
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            if (response.getStatusLine().getStatusCode() >= 400) { throw new EmailSendingException(response.getStatusLine() + "\n" + EntityUtils.toString(response.getEntity())); }
         } catch (Exception e) {
             throw new EmailSendingException(e.getMessage(), e);
         }
     }
 
-    private void addToEmail(Mail mail, String[] recipients) {
-        Personalization personalization = new Personalization();
-        for (String toEmail : recipients) { 
-            personalization.addTo(new Email(toEmail)); 
-        }
-        mail.addPersonalization(personalization);
+    private String createEmailJSON() throws EmailSendingException {
+        JSONObject emailJson = new JSONObject();
+        addTo(emailJson);
+        addFrom(emailJson);
+        addSubject(emailJson);
+        addBody(emailJson);
+        addAttachments(emailJson);
+        return emailJson.toString();
     }
 
-    private void addAttachments(Mail mail, List<EmailAttachment> attachments) throws EmailSendingException {
+    private void addTo(JSONObject emailJson) {
+        JSONArray personalizations = new JSONArray();
+        JSONObject personalization = new JSONObject();
+
+        JSONArray toList = new JSONArray();
+        for (String recipient : recipients) {
+            JSONObject to = new JSONObject();
+            to.put("email", recipient);
+            toList.add(to);
+        }
+
+        personalization.put("to", toList);
+        personalizations.add(personalization);
+
+        emailJson.put("personalizations", personalizations);
+    }
+
+    private void addFrom(JSONObject emailJson) {
+        JSONObject from = new JSONObject();
+        from.put("email", emailConfig.getSenderEmail());
+        from.put("name", emailConfig.getSenderFullName());
+        emailJson.put("from", from);
+    }
+
+    private void addSubject(JSONObject emailJson) {
+        emailJson.put("subject", subject);
+    }
+
+    private void addBody(JSONObject emailJson) {
+        JSONArray content = new JSONArray();
+        JSONObject contentObj = new JSONObject();
+        contentObj.put("type", "text/plain");
+        contentObj.put("value", body);
+        content.add(contentObj);
+        emailJson.put("content", content);
+    }
+
+    private void addAttachments(JSONObject emailJson) throws EmailSendingException {
+        JSONArray jsonAttachments = new JSONArray();
         for (EmailAttachment emailAttachment : attachments) {
             try {
+                JSONObject jsonAttachment = new JSONObject();
                 Path path = Paths.get(emailAttachment.getFilePath());
-                String attachmentContent = Base64.encodeBase64String(Files.readAllBytes(path)); 
-                Attachments sendGridAttachment = new Attachments();
-                sendGridAttachment.setContent(attachmentContent);
-                sendGridAttachment.setType("application/pdf");
-                sendGridAttachment.setFilename(emailAttachment.getFileName());
-                mail.addAttachments(sendGridAttachment);
+                jsonAttachment.put("content", Base64.encodeBase64String(Files.readAllBytes(path)));
+                jsonAttachment.put("filename", emailAttachment.getFileName());
+                jsonAttachment.put("type", "application/pdf");
+                jsonAttachment.put("disposition", "attachment");
+                jsonAttachments.add(jsonAttachment);
             } catch (Exception e) {
                 throw new EmailSendingException("Failed to attach " + emailAttachment.getFileName() + " while sending email using SendGrid.");
-            }          
+            }
         }
+        emailJson.put("attachments", jsonAttachments);
     }
 
     private String getAPIKey() throws EmailSendingException {
