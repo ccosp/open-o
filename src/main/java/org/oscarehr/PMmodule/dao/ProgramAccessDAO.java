@@ -45,7 +45,7 @@ public class ProgramAccessDAO extends HibernateDaoSupport {
     	if (results==null)
     	{
             String q = "select pp from ProgramAccess pp where pp.ProgramId=?";
-    		results=getHibernateTemplate().find(q, new Object[] {programId});
+    		results= (List<ProgramAccess>) getHibernateTemplate().find(q, new Object[] {programId});
     		if (results!=null) programAccessListByProgramIdCache.put(programId, results);
     	}
 
@@ -91,7 +91,7 @@ public class ProgramAccessDAO extends HibernateDaoSupport {
 	@SuppressWarnings("unchecked")
 	public List<ProgramAccess> getProgramAccessListByType(Long programId, String accessType) {
 		String q = "from ProgramAccess pa where pa.ProgramId = ? and pa.AccessType.Name like ?";
-		return this.getHibernateTemplate().find(q, new Object[] { programId, accessType });
+		return (List<ProgramAccess>) this.getHibernateTemplate().find(q, new Object[] { programId, accessType });
 	}
 
     public void saveProgramAccess(ProgramAccess pa) {

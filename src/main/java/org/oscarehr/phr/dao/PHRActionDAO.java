@@ -50,13 +50,13 @@ public class PHRActionDAO extends HibernateDaoSupport {
 		f[0] = providerNo;
 		f[1] = providerNo;
 		f[2] = "RELATIONSHIP";
-		List<PHRAction> list = getHibernateTemplate().find(sql, f);
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, f);
 		return list;
 	}
 
 	public List<PHRAction> getActionByPhrIndex(String phrIndex) {
 		String sql = "from PHRAction a where a.phrIndex=?";
-		List<PHRAction> list = getHibernateTemplate().find(sql, new String(phrIndex));
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, new String(phrIndex));
 		if (list == null || list.isEmpty()) {
 			return null;
 		} else return list;
@@ -72,7 +72,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 	public PHRAction getActionById(String id) {
 		String sql = "from PHRAction a where a.id = ? ";
 
-		List<PHRAction> list = getHibernateTemplate().find(sql, new Integer(id));
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, new Integer(id));
 
 		if (list == null || list.size() == 0) {
 			return null;
@@ -90,7 +90,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 		String[] f = new String[2];
 		f[0] = classification;
 		f[1] = providerNo;
-		List<PHRAction> list = getHibernateTemplate().find(sql, f);
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, f);
 
 		if (list == null) {
 			return new ArrayList<PHRAction>();
@@ -106,7 +106,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 		}
 		String[] f = new String[2];
 		f[0] = providerNo;
-		List<PHRAction> list = getHibernateTemplate().find(sql, f);
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, f);
 
 		if (list == null) {
 			return new ArrayList<PHRAction>();
@@ -120,7 +120,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 		String sql = "FROM PHRAction a WHERE a.receiverOscar = ? AND a.status = " + status;
 		String[] f = new String[1];
 		f[0] = providerNo;
-		List<PHRAction> list = getHibernateTemplate().find(sql, f);
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, f);
 
 		if (list == null) {
 			return new ArrayList<PHRAction>();
@@ -133,7 +133,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 		String[] f = new String[2];
 		f[0] = providerNo;
 		f[1] = classification;
-		List<PHRAction> list = getHibernateTemplate().find(sql, f);
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, f);
 
 		if (list == null) {
 			return new ArrayList<PHRAction>();
@@ -156,7 +156,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 		String[] f = new String[2];
 		f[0] = providerNo;
 		f[1] = classification;
-		List<PHRAction> list = getHibernateTemplate().find(sql, f);
+		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().find(sql, f);
 
 		if (list == null) {
 			return new ArrayList<PHRAction>();
@@ -187,7 +187,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 		f[0] = classification;
 		f[1] = oscarId;
 		f[2] = providerNo;
-		List<PHRAction> list = ht.find(sql, f);
+		List<PHRAction> list = (List<PHRAction>) ht.find(sql, f);
 		for (PHRAction action : list) {
 			action.setPhrIndex(newPhrIndex);
 			ht.update(action);
