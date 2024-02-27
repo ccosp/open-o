@@ -104,16 +104,18 @@ public class HibernateTestDao    {
 		});
 	}
   	
-  	public boolean hasInde2x(){
+  /* 	public boolean hasInde2x(){
   		String sql = "select count(*) FROM Secrole s WHERE s.roleName ='admin'";
-  		return  (((int)template.iterate(sql).next()) == 1);
-    }
+		  Object result = template.uniqueResult(sql);
+		  return result != null && ((Number) result).intValue() == 1;
+  		//return  (((int)template.iterate(sql).next()) == 1);
+    }*/
   	
-    public boolean hasIndex(String index) {
+   /* public boolean hasIndex(String index) {
         String sql = "select count(*) from Secrole p where p.roleName = ?";
         Long count = (Long) template.iterate(sql, index).next();
         return count == 1;
-    }
+    }*/
 
       	       
 }
