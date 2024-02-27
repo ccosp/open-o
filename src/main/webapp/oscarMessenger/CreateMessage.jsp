@@ -40,6 +40,7 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="org.oscarehr.util.MiscUtils"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 	  boolean authed=true;
@@ -499,7 +500,7 @@ if(recall){
 
 				<tr>
 					<td bgcolor="#B8B8FF"></td>
-					<td bgcolor="#B8B8FF" colspan="2"><font style="font-weight: bold"><bean:message key="oscarMessenger.CreateMessage.msgLinkThisMessage" /></font></td>
+					<td bgcolor="#B8B8FF" colspan="2"><strong><bean:message key="oscarMessenger.CreateMessage.msgLinkThisMessage" /></strong></td>
 				</tr>
                                                       
 				<tr>
@@ -513,7 +514,7 @@ if(recall){
 				</tr>
 				<tr>
 					<td bgcolor="#EEEEFF"></td>
-					<td bgcolor="#EEEEFF" colspan="2"><font style="font-weight: bold"><bean:message key="oscarMessenger.CreateMessage.msgSelectedDemographic" /></font></td>
+					<td bgcolor="#EEEEFF" colspan="2"><strong><bean:message key="oscarMessenger.CreateMessage.msgSelectedDemographic" /></strong></td>
 				</tr>
 				<tr>
 					<td bgcolor="#EEEEFF"></td>
@@ -522,15 +523,15 @@ if(recall){
 
 						<c:choose>					
 							<c:when test="${ not empty unlinkedIntegratorDemographicName }">
-								<input type="text" name="selectedDemo" value="${ unlinkedIntegratorDemographicName }" 
+								<input type="text" name="selectedDemo" value="<c:out value='${ unlinkedIntegratorDemographicName }' />"
 									size="30" style="background: #EEEEFF; border: none;" readonly />
 							</c:when>
 							<c:otherwise>
-								<input type="text" name="selectedDemo" size="30" readonly style="background: #EEEEFF; border: none" value="none" /> 
+								<input type="text" id="selectedDemo" name="selectedDemo" size="30" readonly style="background: #EEEEFF; border: none" value="none" />
 								<script type="text/javascript">
-			                          if ( "<%=demoName%>" != "null" && "<%=demoName%>" != "") {
-			                              document.forms[0].selectedDemo.value = "<%=demoName%>";
-			                              document.forms[0].demographic_no.value = "<%=demographic_no%>";
+			                          if ( '<%=Encode.forHtmlUnquotedAttribute(demoName)%>' && '<%=Encode.forHtmlUnquotedAttribute(demoName)%>' !== 'null') {
+			                              document.forms[0].selectedDemo.value = "<%=Encode.forJavaScript(demoName)%>";
+			                              document.forms[0].demographic_no.value = "<%=Encode.forJavaScript(demographic_no)%>";
 			                          }
 			                     </script>						
 							</c:otherwise>					
