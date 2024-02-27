@@ -44,6 +44,9 @@ import org.hibernate.engine.FilterDefinition;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.stat.Statistics;
+import org.hibernate.TypeHelper;
+import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.Cache;
 
 public class SpringHibernateLocalSessionFactoryBean extends org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean {
 
@@ -212,6 +215,22 @@ public class SpringHibernateLocalSessionFactoryBean extends org.springframework.
 		public StatelessSession openStatelessSession(Connection arg0) {
 	        return sessionFactory.openStatelessSession(arg0);
         }
+
+		@Override
+    	public TypeHelper getTypeHelper() {
+        	return ((SessionFactoryImplementor) this).getTypeHelper();
+   	 	}
+
+		@Override
+		public boolean containsFetchProfileDefinition(String s) {
+			return false;
+		}
+
+		@Override
+    	public Cache getCache() {
+            return null;
+    	}
+
 	}
 	
 	@Override
@@ -221,4 +240,5 @@ public class SpringHibernateLocalSessionFactoryBean extends org.springframework.
 		
 		return(new TrackingSessionFactory(sf));
 	}
+	
 }
