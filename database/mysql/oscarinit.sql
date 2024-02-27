@@ -7263,7 +7263,7 @@ CREATE TABLE IF NOT EXISTS professionalSpecialists (
   `departmentId` int(10) NOT NULL,
   `eformId` int(10) DEFAULT NULL,
   `hideFromView` tinyint(1) NOT NULL,
-  `deleted` tinyint(1) DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0,
     `province` varchar(55),
   PRIMARY KEY (`specId`)
 );
@@ -9109,10 +9109,6 @@ CREATE TABLE IF NOT EXISTS appointmentArchive (
   creatorSecurityId int,
   bookingSource varchar(32)
 );
-
-CREATE TABLE IF NOT EXISTS ProviderPreferenceAppointmentScreenForm(providerNo varchar(6) not null, appointmentScreenForm varchar(128) not null);
-CREATE TABLE IF NOT EXISTS ProviderPreferenceAppointmentScreenEForm(providerNo varchar(6) not null, appointmentScreenEForm int not null, eFormName varchar(255));
-
 
 CREATE TABLE IF NOT EXISTS `Eyeform` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -13117,3 +13113,16 @@ CREATE TABLE IF NOT EXISTS `formRourke2020` (
 
 INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2017', '../form/formrourke2017complete.jsp?demographic_no=', 'formRourke2017', 38);
 INSERT INTO `encounterForm`(`form_name`, `form_value`, `form_table`, `hidden`) VALUES ('Rourke2020', '../form/formrourke2020complete.jsp?demographic_no=', 'formRourke2020', 0);
+
+--
+-- Table structure for table `billing_preferences`
+--
+-- Stores data about a users billing preferences
+-- Shares a one to one relation with the provider table
+CREATE TABLE IF NOT EXISTS billing_preferences (
+  id int(10) unsigned NOT NULL auto_increment,
+  referral int(10) unsigned NOT NULL default '0',
+  providerNo int(10) unsigned NOT NULL default '0',
+  defaultPayeeNo varchar(11) NOT NULL default '0',
+  PRIMARY KEY  (id)
+) ;

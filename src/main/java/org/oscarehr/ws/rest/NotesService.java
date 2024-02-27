@@ -428,7 +428,7 @@ public class NotesService extends AbstractServiceImpl {
 			} 
 		}
 		
-		note.setIssues(new HashSet<CaseManagementIssue>(issuelist));
+		// note.setIssues(new HashSet<CaseManagementIssue>(issuelist));
 		caseMangementNote.setIssues(new HashSet<CaseManagementIssue>(issuelist));
 
 		
@@ -437,10 +437,10 @@ public class NotesService extends AbstractServiceImpl {
 		
 	
 		// remove signature and the related issues from note 
-		String noteString = note.getNote();
+		// String noteString = note.getNote();
 		// noteString = removeSignature(noteString);
 		// noteString = removeCurrentIssue(noteString);
-		caseMangementNote.setNote(noteString);
+		// caseMangementNote.setNote(noteTxt);
 		
 		/* Not sure how to handle this
 		// add issues into notes 
@@ -533,7 +533,7 @@ public class NotesService extends AbstractServiceImpl {
 		String lastSavedNoteString = null;
 		String user = loggedInInfo.getLoggedInProvider().getProviderNo();
 		String remoteAddr = 	""; // Not sure how to get this	
-		caseMangementNote = caseManagementMgr.saveCaseManagementNote(loggedInInfo, caseMangementNote,issuelist, cpp, ongoing,verify, loggedInInfo.getLocale(),now,annotationNote,userName,user,remoteAddr, lastSavedNoteString) ;
+		caseMangementNote = caseManagementMgr.saveCaseManagementNote(loggedInInfo, caseMangementNote,issuelist, cpp, ongoing,verify, getLocale(),now,annotationNote,userName,user,remoteAddr, lastSavedNoteString) ;
 			
 		caseManagementMgr.getEditors(caseMangementNote);
 		
@@ -543,7 +543,8 @@ public class NotesService extends AbstractServiceImpl {
 		note.setUuid(caseMangementNote.getUuid());
 		note.setUpdateDate(caseMangementNote.getUpdate_date());
 		note.setObservationDate(caseMangementNote.getObservation_date());
-		logger.error("note should return like this " + note.getNote() );
+		note.setNote(caseMangementNote.getNote());
+		logger.info("note should return like this " + note.getNote() );
 		return note;
 		
 		
