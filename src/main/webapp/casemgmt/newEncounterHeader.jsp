@@ -41,8 +41,6 @@
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 
-
-<%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -57,8 +55,9 @@
 
     String demoNo = bean.demographicNo;
 	DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
-	Demographic demographic = demographicManager.getDemographic(loggedInInfo, demoNo);
-    EctPatientData.Patient pd = new EctPatientData().getPatient(loggedInInfo, demoNo);
+	Demographic demographic = demographicManager.getDemographicWithExt(loggedInInfo, Integer.parseInt(demoNo));
+//    EctPatientData.Patient pd = new EctPatientData().getPatient(loggedInInfo, demoNo);
+
     String famDocName, famDocSurname, famDocColour, inverseUserColour, userColour;
     String user = (String) session.getAttribute("user");
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -96,12 +95,12 @@
             famDocColour = "#CCCCFF";
     }
 
-    String patientName = pd.getFirstName()+" "+pd.getSurname();
-    String patientAge = pd.getAge();
-    String patientSex = pd.getSex();
-    String pAge = Integer.toString(UtilDateUtilities.calcAge(bean.yearOfBirth,bean.monthOfBirth,bean.dateOfBirth));
+//    String patientName = pd.getFirstName()+" "+pd.getSurname();
+//    String patientAge = pd.getAge();
+//    String patientSex = pd.getSex();
+//    String pAge = Integer.toString(UtilDateUtilities.calcAge(bean.yearOfBirth,bean.monthOfBirth,bean.dateOfBirth));
 
-    java.util.Locale vLocale =(java.util.Locale)session.getAttribute(org.apache.struts.Globals.LOCALE_KEY);
+//    java.util.Locale vLocale =(java.util.Locale)session.getAttribute(org.apache.struts.Globals.LOCALE_KEY);
     %>
 
     <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
@@ -112,11 +111,11 @@
 
 <td id="encounterHeaderCenterColumn">
 
-        <%
-            String appointmentNo = request.getParameter("appointmentNo");
-            String winName = "Master" + demoNo;
-            String url = "/demographic/demographiccontrol.jsp?demographic_no=" + demoNo + "&amp;displaymode=edit&amp;dboperation=search_detail&appointment="+appointmentNo;
-        %>
+<%--        <%--%>
+<%--            String appointmentNo = request.getParameter("appointmentNo");--%>
+<%--            String winName = "Master" + demoNo;--%>
+<%--            String url = "/demographic/demographiccontrol.jsp?demographic_no=" + demoNo + "&amp;displaymode=edit&amp;dboperation=search_detail&appointment="+appointmentNo;--%>
+<%--        %>--%>
         <%= demographic.getStandardIdentificationHTML() %>
 
 		<security:oscarSec roleName="<%=roleName$%>" objectName="_newCasemgmt.doctorName" rights="r">
@@ -143,7 +142,7 @@
 		</security:oscarSec>
 
         <% if(oscar.OscarProperties.getInstance().hasProperty("ONTARIO_MD_INCOMINGREQUESTOR")){%>
-           <a href="javascript:void(0)" onClick="popupPage(600,175,'Calculators','<c:out value="${ctx}"/>/common/omdDiseaseList.jsp?sex=<%=bean.patientSex%>&age=<%=pAge%>'); return false;" ><bean:message key="oscarEncounter.Header.OntMD"/></a>
+           <a href="javascript:void(0);" onClick="popupPage(600,175,'Calculators','<c:out value="${ctx}"/>/common/omdDiseaseList.jsp?sex=<%=bean.patientSex%>&age=<%=demographic.getAge()%>'); return false;" ><bean:message key="oscarEncounter.Header.OntMD"/></a>
         <%}%>
         <%=getEChartLinks() %>
 

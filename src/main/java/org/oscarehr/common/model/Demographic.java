@@ -24,20 +24,6 @@
 
 package org.oscarehr.common.model;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -45,6 +31,14 @@ import org.oscarehr.PMmodule.utility.DateTimeFormatUtils;
 import org.oscarehr.PMmodule.utility.Utility;
 import org.oscarehr.util.MiscUtils;
 import org.owasp.encoder.Encode;
+
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This is the object class that relates to the demographic table. Any customizations belong here.
@@ -1591,6 +1585,14 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		sb.append("phone");
 		sb.append("</span>");
 		sb.append(Encode.forHtmlContent(getPhone()));
+		sb.append("</span>");
+
+		//--> cell phone
+		sb.append("<span>");
+		sb.append("<span class='label'>");
+		sb.append("cell");
+		sb.append("</span>");
+		sb.append(Encode.forHtmlContent(getCellPhone()));
 		sb.append("</span>");
 
 		sb.append("</div>");
