@@ -143,6 +143,8 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
 	private String prefName;
 
+	private Provider mrp;
+
 	public enum PatientStatus {
 		AC, IN, DE, IC, ID, MO, FI
 	}
@@ -1574,8 +1576,8 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 			sb.append("<span class='label'>");
 			sb.append("hin");
 			sb.append("</span>");
-			sb.append(getHin());
-			sb.append(getHcType());
+			sb.append(Encode.forHtml(getHin()));
+			sb.append(Encode.forHtml(getHcType()));
 			sb.append("</span>");
 		}
 
@@ -1593,6 +1595,19 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		sb.append("cell");
 		sb.append("</span>");
 		sb.append(Encode.forHtmlContent(getCellPhone()));
+		sb.append("</span>");
+
+		//--> most responsible practitioner
+		sb.append("<span>");
+		sb.append("<span class='label'>");
+		sb.append("MRP");
+		sb.append("</span>");
+		Provider mrp = getMrp();
+		if(mrp != null) {
+			sb.append(Encode.forHtmlContent(mrp.getFormattedName()));
+		} else {
+			sb.append("Unknown");
+		}
 		sb.append("</span>");
 
 		sb.append("</div>");
@@ -1691,5 +1706,13 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 			sb.append("Chart No ").append("<b>").append(getChartNo()).append("</b>");
 		}
 		return sb.toString();
+	}
+
+	public Provider getMrp() {
+		return mrp;
+	}
+
+	public void setMrp(Provider mrp) {
+		this.mrp = mrp;
 	}
 }

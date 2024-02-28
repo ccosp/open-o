@@ -111,9 +111,13 @@ public class DemographicManager {
 	@Autowired
 	ProgramManager2 programManager;
 
+	@Autowired ProviderManager2 providerManager;
+
 	public Demographic getDemographic(LoggedInInfo loggedInInfo, Integer demographicId) throws PatientDirectiveException {
 		checkPrivilege(loggedInInfo, SecurityInfoManager.READ, (demographicId!=null)?demographicId:null );
-		return demographicDao.getDemographicById(demographicId);
+		Demographic demographic = demographicDao.getDemographicById(demographicId);
+		demographic.setMrp(this.getMRP(loggedInInfo, demographic));
+		return demographic;
 	}
 		
 	public Demographic getDemographic(LoggedInInfo loggedInInfo, String demographicNo) {
@@ -1152,6 +1156,7 @@ public class DemographicManager {
 			for(DemographicContact demographicContact : demographicContacts) {
 				if( demographicContact.isMrp() ) {
 					mrp = demographicContact;
+					break;
 				}
 			}
 			
@@ -1159,7 +1164,7 @@ public class DemographicManager {
 			// not indicated. 
 			if(mrp == null) {
 				for( DemographicContact demographicContact : demographicContacts ) {
-					if( demographicContact.getType() == 0 ) {
+					if( demographicContact.getType() == DemographicContact.TYPE_PROVIDER ) {
 						mrp = demographicContact;
 					}
 				}
@@ -1283,5 +1288,28 @@ public class DemographicManager {
 			return emergencyContacts;
 		}
 
+		public Provider getMRP(LoggedInInfo loggedInInfo, Integer demographicNo) {
+			return getMRP(loggedInInfo, getDemographic(loggedInInfo, demographicNo));
+		}
+
+		public Provider getMRP(LoggedInInfo loggedInInfo, Demographic demographic) {
+			String providerNo = demographic.getProviderNo();
+			Provider mrp = null;
+			if(providerNo != null && ! providerNo.isEmpty()) {
+				mrp = providerManager.getProvider(loggedInInfo, providerNo);
+			}
+
+			if(mrp == null) {
+				DemographicContact demographicContact = getMostResponsibleProviderFromHealthCareTeam(loggedInInfo, demographic.getDemographicNo());
+				String contactId = null;
+				if(demographicContact != null && DemographicContact.TYPE_PROVIDER == demographicContact.getType() ) {
+					contactId = demographicContact.getContactId();
+				}
+				if(contactId != null && ! contactId.isEmpty()) {
+					mrp = providerManager.getProvider(loggedInInfo, contactId);
+				}
+			}
+			return mrp;
+		}
 	
 }
