@@ -1029,6 +1029,10 @@
 			<type>pom</type>
 			<exclusions>
 				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-asm</artifactId>
+				</exclusion>
+				<exclusion>
 					<groupId>org.apache.geronimo.specs</groupId>
 					<artifactId>geronimo-servlet_2.5_spec</artifactId>
 				</exclusion>
@@ -1366,10 +1370,10 @@
 		          </exclude>
 	          </excludes>
           </resource>
-		  <resource>
+		  <!-- <resource>
             <directory>${basedir}/src/test/resources</directory>
             <filtering>true</filtering>
-          </resource>
+          </resource> -->
         </resources>
 	<plugins>
 

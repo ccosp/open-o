@@ -26,7 +26,8 @@ import org.oscarehr.olis.model.OLISSystemPreferences;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import org.springframework.scheduling.timer.ScheduledTimerTask;
+import org.springframework.scheduling.concurrent.ScheduledExecutorTask;
+//import org.springframework.scheduling.timer.ScheduledTimerTask;
 
 public class OLISPreferencesAction extends DispatchAction  {
 
@@ -67,10 +68,11 @@ public class OLISPreferencesAction extends DispatchAction  {
 	     		request.setAttribute("success", true);
 	     		
 	     		if (restartTimer) {
-	     			ScheduledTimerTask task = (ScheduledTimerTask)SpringUtils.getBean("olisScheduledPullTask");		
+	     		/* 	ScheduledTimerTask task = (ScheduledTimerTask)SpringUtils.getBean("olisScheduledPullTask");		
 	     			TimerTask tt = task.getTimerTask();
 	     			Thread t = new Thread(tt);
-	     			t.start();
+	     			t.start();*/
+					 ScheduledExecutorTask task = (ScheduledExecutorTask) SpringUtils.getBean("olisScheduledPullTask");
 		     	}
 	     		
 	     	} catch (Exception e){
