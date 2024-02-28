@@ -1258,30 +1258,32 @@
                 %>
             </td>
 
-            <td class="title noprint" ALIGN="center">
+            <td class="title noprint">
 
                 <%
                     if (isWeekView) {
                         for (int provIndex = 0; provIndex < numProvider; provIndex++) {
                             if (curProvider_no[provIndex].equals(provNum)) {
                 %>
-                <bean:message key="provider.appointmentProviderAdminDay.weekView"/>: <%=curProviderName[provIndex]%>
+                <%=Encode.forHtml(curProviderName[provIndex])%>
                 <%
                         }
                     }
-                } else {
-                    if (view == 1) {
-                %>
-                <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message
-                        key="provider.appointmentProviderAdminDay.grpView"/></a>
-                <% } %>
-<%--                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>--%>
-<%--                <% out.println(userfirstname + " " + userlastname); %>--%>
-            </td>
-            <%
-            } %>
+                } %>
 
-            <td id="group" ALIGN="RIGHT" BGCOLOR="Ivory">
+<%--                    else {--%>
+<%--                    if (view == 1) {--%>
+<%--                %>--%>
+<%--                <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message--%>
+<%--                        key="provider.appointmentProviderAdminDay.grpView"/></a>--%>
+<%--                <% } %>--%>
+<%--&lt;%&ndash;                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <% out.println(userfirstname + " " + userlastname); %>&ndash;%&gt;--%>
+<%--                <%} %>--%>
+            </td>
+
+
+            <td id="group">
 
                 <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
                     <form method="post" name="findprovider"
