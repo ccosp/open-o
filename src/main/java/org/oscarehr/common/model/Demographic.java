@@ -1525,7 +1525,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<div id='patient-label'>");
-		sb.append("<span>");
+		sb.append("<span id='patient-full-name'>");
 		sb.append("<a href='../demographic/demographiccontrol.jsp?demographic_no=");
 		sb.append(Encode.forHtml(getDemographicNo() + ""));
 		sb.append("&displaymode=edit&dboperation=search_detail' target='_blank'>");

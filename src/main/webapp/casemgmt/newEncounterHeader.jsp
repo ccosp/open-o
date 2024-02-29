@@ -105,11 +105,11 @@
 
     <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
     
-<table id="encounterHeader">
-<tr>
-<td id="encounterHeaderLeftColumn"><h1>Encounter</h1></td>
+<%--<table id="encounterHeader">--%>
+<%--<tr>--%>
+<%--<td id="encounterHeaderLeftColumn"><h1>Encounter</h1></td>--%>
 
-<td id="encounterHeaderCenterColumn">
+<%--<td id="encounterHeaderCenterColumn">--%>
 
 <%--        <%--%>
 <%--            String appointmentNo = request.getParameter("appointmentNo");--%>
@@ -129,17 +129,19 @@
 
 <%--		</security:oscarSec>--%>
 
-		<span id="encounterHeaderExt"></span>
-		<security:oscarSec roleName="<%=roleName$%>" objectName="_newCasemgmt.apptHistory" rights="r">
-		<a href="javascript:popupPage(400,850,'ApptHist','<c:out value="${ctx}"/>/demographic/demographiccontrol.jsp?demographic_no=<%=demoNo%>&amp;last_name=<%=Encode.forUriComponent(demographic.getLastName())%>&amp;first_name=<%=Encode.forUriComponent(demographic.getFirstName())%>&amp;orderby=appointment_date&amp;displaymode=appt_history&amp;dboperation=appt_history&amp;limit1=0&amp;limit2=25')" title="<bean:message key="oscarEncounter.Header.nextApptMsg"/>">
-			<span class="label">
-			<bean:message key="oscarEncounter.Header.nextAppt"/>:
-			</span>
-		</a>
-			<span>
-				<oscar:nextAppt demographicNo="<%=demoNo%>"/>
-			</span>
-		</security:oscarSec>
+<%--		<span id="encounterHeaderExt"></span>--%>
+<%--		<security:oscarSec roleName="<%=roleName$%>" objectName="_newCasemgmt.apptHistory" rights="r">--%>
+<%--			<div id="appointment-history">--%>
+<%--				<span>--%>
+<%--			<span class="label">--%>
+<%--				<a href="javascript:popupPage(400,850,'ApptHist','<c:out value="${ctx}"/>/demographic/demographiccontrol.jsp?demographic_no=<%=demoNo%>&amp;last_name=<%=Encode.forUriComponent(demographic.getLastName())%>&amp;first_name=<%=Encode.forUriComponent(demographic.getFirstName())%>&amp;orderby=appointment_date&amp;displaymode=appt_history&amp;dboperation=appt_history&amp;limit1=0&amp;limit2=25')" title="<bean:message key="oscarEncounter.Header.nextApptMsg"/>">--%>
+<%--					<bean:message key="oscarEncounter.Header.nextAppt"/>:--%>
+<%--				</a>--%>
+<%--			</span>--%>
+<%--				<oscar:nextAppt demographicNo="<%=demoNo%>"/>--%>
+<%--			</span>--%>
+<%--			</div>--%>
+<%--		</security:oscarSec>--%>
 
         <% if(oscar.OscarProperties.getInstance().hasProperty("ONTARIO_MD_INCOMINGREQUESTOR")){%>
            <a href="javascript:void(0);" onClick="popupPage(600,175,'Calculators','<c:out value="${ctx}"/>/common/omdDiseaseList.jsp?sex=<%=bean.patientSex%>&age=<%=demographic.getAge()%>'); return false;" ><bean:message key="oscarEncounter.Header.OntMD"/></a>
@@ -181,15 +183,15 @@
 	    		<a href="javascript:void(0)" onClick="popupPage(233,600,'ViewICommun','<c:out value="${ctx}"/>/admin/viewIntegratedCommunity.jsp'); return false;" >I</a>
 	    	<%}%>
 	  <%}%>
-</td>
+<%--</td>--%>
 <%--<td id="encounterHeaderRightColumn" align=right>--%>
 <%--	<span class="HelpAboutLogout">--%>
 <%--	<oscar:help keywords="&Title=Chart+Interface&portal_type%3Alist=Document" key="app.top1" style="font-size:10px;font-style:normal;"/>&nbsp;|--%>
 <%--	<a style="font-size:10px;font-style:normal;" href="<%=request.getContextPath()%>/oscarEncounter/About.jsp" target="_new"><bean:message key="global.about" /></a>--%>
 <%--	</span>--%>
 <%--</td>--%>
-</tr>
-</table>
+<%--</tr>--%>
+<%--</table>--%>
 
 <%!
 
