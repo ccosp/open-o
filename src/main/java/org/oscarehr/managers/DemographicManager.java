@@ -114,9 +114,11 @@ public class DemographicManager {
 	@Autowired ProviderManager2 providerManager;
 
 	public Demographic getDemographic(LoggedInInfo loggedInInfo, Integer demographicId) throws PatientDirectiveException {
-		checkPrivilege(loggedInInfo, SecurityInfoManager.READ, (demographicId!=null)?demographicId:null );
+		checkPrivilege(loggedInInfo, SecurityInfoManager.READ, demographicId);
 		Demographic demographic = demographicDao.getDemographicById(demographicId);
-		demographic.setMrp(this.getMRP(loggedInInfo, demographic));
+		if(demographic != null) {
+			demographic.setMrp(this.getMRP(loggedInInfo, demographic));
+		}
 		return demographic;
 	}
 		
