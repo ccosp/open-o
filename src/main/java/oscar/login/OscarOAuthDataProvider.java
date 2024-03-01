@@ -49,18 +49,23 @@ import org.oscarehr.common.model.ServiceClient;
 import org.oscarehr.common.model.ServiceRequestToken;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.oscarehr.util.SpringUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OscarOAuthDataProvider implements OAuthDataProvider {
 
 	Logger logger = MiscUtils.getLogger();
 	
-	@Autowired
-	private ServiceClientDao serviceClientDao;
+	// @Autowired	
+	// private ServiceClientDao serviceClientDao ;
 	@Autowired
 	private ServiceRequestTokenDao serviceRequestTokenDao;
 	@Autowired
 	private ServiceAccessTokenDao serviceAccessTokenDao;
-	
+	@Autowired	
+	private ServiceClientDao serviceClientDao;
+	//private ServiceClientDao serviceClientDao = SpringUtils.getBean(ServiceClientDao.class);
 	
 	@Override
 	public Client getClient(String clientId) throws OAuthServiceException {

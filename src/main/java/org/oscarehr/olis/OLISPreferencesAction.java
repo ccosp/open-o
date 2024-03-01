@@ -73,6 +73,9 @@ public class OLISPreferencesAction extends DispatchAction  {
 	     			Thread t = new Thread(tt);
 	     			t.start();*/
 					 ScheduledExecutorTask task = (ScheduledExecutorTask) SpringUtils.getBean("olisScheduledPullTask");
+					 Runnable tt = task.getRunnable();
+	     			Thread t = new Thread(tt);
+	     			t.start();
 		     	}
 	     		
 	     	} catch (Exception e){
