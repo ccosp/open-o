@@ -231,28 +231,7 @@
     %>
     <c:import url="/infirm.do?action=showProgram"/>
 </caisi:isModuleLoad>
-<!-- caisi infirmary view extension add end -->
-<%
-//    //Gets the request URL
-//    StringBuffer oscarUrl = request.getRequestURL();
-//    //Sets the length of the URL, found by subtracting the length of the servlet path from the length of the full URL, that way it only gets up to the context path
-//    oscarUrl.setLength(oscarUrl.length() - request.getServletPath().length());
 
-
-%>
-<%!
-    /**
-     Checks if the schedule day is patients birthday
-     **/
-    public boolean isBirthday(String schedDate, String demBday) {
-        return schedDate.equals(demBday);
-    }
-
-    public boolean patientHasOutstandingPrivateBills(String demographicNo) {
-        oscar.oscarBilling.ca.bc.MSP.MSPReconcile msp = new oscar.oscarBilling.ca.bc.MSP.MSPReconcile();
-        return msp.patientHasOutstandingPrivateBill(demographicNo);
-    }
-%>
 <%
     ProviderPreference providerPreference = ProviderPreferencesUIBean.getProviderPreference(loggedInInfo1.getLoggedInProviderNo());
 
@@ -519,6 +498,18 @@
         <script type="text/javascript" src="schedulePage.js.jsp"></script>
 
         <script type="text/javascript">
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const birthdayCakes = document.getElementsByClassName('birthday-cake');
+                for(let item in birthdayCakes) {
+                    if(! birthdayCakes[item].dataset) {
+                        continue;
+                    }
+                    if(birthdayCakes[item].dataset.month === birthdayCakes[item].dataset.bday) {
+                        birthdayCakes[item].style.display = 'inline';
+                    }
+                }
+            })
 
             function changeGroup(s) {
                 var newGroupNo = s.options[s.selectedIndex].value;
@@ -2081,7 +2072,7 @@
                                                         <c:if test="${not isPreventionWarningDisabled}">
                                                             <%String warning = providerPreventionManager.getWarnings(loggedInInfo1, String.valueOf(demographic_no));
                                                             if( !warning.isEmpty()) { %>
-                                                                  <img src="${pageContext.servletContext.contextPath}/images/stop_sign.png" height="14" width="14" title="<%=Encode.forHtmlContent(warning)%>" />&nbsp;
+                                                                  <img src="${pageContext.servletContext.contextPath}/images/stop_sign.png" width="14" height="14" style="margin-bottom: 3px;margin-left: 3px;" title="<%=Encode.forHtmlContent(warning)%>" />&nbsp;
                                                             <% } %>
                                                         </c:if>
                                                         <%
@@ -2247,12 +2238,6 @@
                                                             %>
                                                             <%= (providerColor != null ? "<span style=\"background-color:"+providerColor+";width:5px\">&nbsp;</span>" : "") %>
                                                     </oscar:oscarPropertiesCheck>
-                                                            <%
-                                                          if("bc".equalsIgnoreCase(prov)){
-                                                          if(patientHasOutstandingPrivateBills(String.valueOf(demographic_no))){
-                                                          %>
-                                                    &#124;<b style="color:#FF0000">$</b>
-                                                            <%}}%>
 
                                                     <span class='reason reason_<%=curProvider_no[nProvider]%> hideReason'>
                                                         <strong><i>
@@ -2267,13 +2252,10 @@
                                                     <a href=${pageContext.servletContext.contextPath}'/PMmodule/ClientManager.do?id=<%=demographic_no%>'
                                                        title="Program Management">|P</a>
                                                     </caisi:isModuleLoad>
-                                                            <%
 
-                                                                  if(isBirthday(monthDay,demBday)){%>
-                                                    &#124; <img src="${pageContext.servletContext.contextPath}/images/cake.gif" height="20"
-                                                                alt="Happy Birthday"/>
-                                                            <%}%>
-
+                                                        <span class="birthday-cake" data-month="<%= monthDay %>" data-bday="<%= demBday %>" style="display:none;">
+                                                            &#124;<img src="${pageContext.servletContext.contextPath}/images/cake.gif" width="14" height="14" style="margin-bottom: 3px;margin-left: 3px;" alt="Happy Birthday"/>
+                                                        </span>
                                                         <c:forEach items="${formNamesList}" var="form">
                                                             |<a href="javascript:void(0)" onClick='popupPage2("${pageContext.servletContext.contextPath}/form/forwardshortcutname.do?formname=<c:out value="${form}" />&amp;formId=0&provNo=${appointment.providerNo}&parentAjaxId=forms&amp;demographic_no=${appointment.demographicNo}&amp;appointmentNo=${appointment.id}")'
                                                             title='<c:out value="${form}" />'>
