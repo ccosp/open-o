@@ -111,17 +111,40 @@ public class DemographicManager {
 	@Autowired
 	ProgramManager2 programManager;
 
-	@Autowired ProviderManager2 providerManager;
+	@Autowired
+	ProviderManager2 providerManager;
 
+	@Autowired
+	AppointmentManager appointmentManager;
+
+	/**
+	 *  Get the patient demographic profile.
+	 *  This particular method also sets the Demographic.MRP and Demographic.nextAppointment
+	 *  properties.
+	 * @param  loggedInInfo
+	 * @param demographicId
+	 * @return
+	 * @throws PatientDirectiveException
+	 */
 	public Demographic getDemographic(LoggedInInfo loggedInInfo, Integer demographicId) throws PatientDirectiveException {
 		checkPrivilege(loggedInInfo, SecurityInfoManager.READ, demographicId);
 		Demographic demographic = demographicDao.getDemographicById(demographicId);
 		if(demographic != null) {
-			demographic.setMrp(this.getMRP(loggedInInfo, demographic));
+			this.getMRP(loggedInInfo, demographic);
+			this.getNextAppointmentDate(loggedInInfo, demographic);
 		}
 		return demographic;
 	}
-		
+
+	/**
+	 *  Get the patient demographic profile.
+	 *  This particular method also sets the Demographic.MRP and Demographic.nextAppointment
+	 *  properties.
+	 * @param  loggedInInfo
+	 * @param demographicNo
+	 * @return
+	 * @throws PatientDirectiveException
+	 */
 	public Demographic getDemographic(LoggedInInfo loggedInInfo, String demographicNo) {
 		checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
 		Integer demographicId = null;
@@ -1291,7 +1314,7 @@ public class DemographicManager {
 		}
 
 		public Provider getMRP(LoggedInInfo loggedInInfo, Integer demographicNo) {
-			return getMRP(loggedInInfo, getDemographic(loggedInInfo, demographicNo));
+			return getDemographic(loggedInInfo, demographicNo).getMrp();
 		}
 
 		public Provider getMRP(LoggedInInfo loggedInInfo, Demographic demographic) {
@@ -1311,7 +1334,18 @@ public class DemographicManager {
 					mrp = providerManager.getProvider(loggedInInfo, contactId);
 				}
 			}
+			demographic.setMrp(mrp);
 			return mrp;
+		}
+
+		public String getNextAppointmentDate(LoggedInInfo loggedInInfo, Integer demographicNo) {
+			return appointmentManager.getNextAppointmentDate(demographicNo);
+		}
+
+		public String getNextAppointmentDate(LoggedInInfo loggedInInfo, Demographic demographic) {
+			String appointmentString = getNextAppointmentDate(loggedInInfo, demographic.getDemographicNo());
+			demographic.setNextAppointment(appointmentString);
+			return appointmentString;
 		}
 	
 }
