@@ -41,13 +41,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xml.sax.SAXException;
 import oscar.OscarProperties;
 import oscar.form.util.FormTransportContainer;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -91,6 +87,8 @@ public class ConvertToEdoc {
 	private static String realPath;
 
 	private static final NioFileManager nioFileManager = SpringUtils.getBean( NioFileManager.class );
+
+	private static Tidy tidy;
 
 	/**
 	 * Convert EForm to EDoc
@@ -346,35 +344,21 @@ public class ConvertToEdoc {
 	}
 
 	/**
-	 * Build this HTML document. 
-	 * - adds translated image paths
-	 * - inserts custom stylesheets.
+	 * Get a W3C XHTML document cleaned with JTidy from
+	 * a well formed XHTML string
 	 */
-	private static Document buildDocument( final String documentString ) {
-		Document document = getDocument( documentString );
-		if( document != null ) {
-			translateResourcePaths( document );
-			setHeadElement( document );
-			addCss( document );
+	public static Document getDocument( final String documentString ){
+		/*
+		 * clean and parse the final HTML document with JTidy tools
+		 */
+		Document document = null;
+		try(StringReader reader = new StringReader( documentString );
+		StringWriter writer = new StringWriter()) {
+			document = getTidy().parseDOM( reader, writer );
+			writer.flush();
+		} catch (Exception e) {
+			MiscUtils.getLogger().error("Failed to convert HTML document with JTidy", e);
 		}
-		return document;
-	}
-	
-	/**
-	 * Get a W3C XML document from well formed XML
-	 */
-	private static Document getDocument( final String documentString ) {
-
-		DocumentBuilder builder;
-		Document document = null;					
-
-		try(ByteArrayInputStream bais = new ByteArrayInputStream( documentString.getBytes() )) {
-			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			document = builder.parse(bais);			
-		} catch (SAXException | ParserConfigurationException | IOException e) {
-			logger.error( "", e );
-		}
-
 		return document;
 	}
 	
@@ -638,47 +622,39 @@ public class ConvertToEdoc {
 	}
 
 	/**
-	 * Clean up any artifacts or poorly formed XML
+	 * Clean up any artifacts or poorly formed XHTML
+	 * and fetch the HTML resources.
 	 */
-	private static String tidyDocument( final String documentString ) {
+	private static String tidyDocument( final String documentString) {
 
-		Tidy tidy = getTidy();
-		StringReader reader = new StringReader( documentString );
-		StringWriter writer = new StringWriter();
+		Document document = null;
 		String correctedDocument = "";
-
-		/*
-		 * clean the HTML document with JTidy tools
-		 */
-		Document document = tidy.parseDOM( reader, writer );
+		try {
+			document = getDocument(documentString);
+		} catch (Exception e) {
+			MiscUtils.getLogger().error("Failed to convert HTML document with JTidy", e);
+		}
 
 		/*
 		 * Use the w3c Document output to interpret the external image
 		 * and css links into absolute links that can be
 		 * read by the HTMLtoPDF parser.
 		 */
-		translateResourcePaths( document );
-		setHeadElement( document );
-		addCss( document );
+		if(document != null) {
+			translateResourcePaths(document);
+			setHeadElement(document);
+			addCss(document);
 
-		/*
-		 * Pretty print the final HTML output for use with the HTMLtoPDF parser.
-		 */
-		try(OutputStream os = new ByteArrayOutputStream()) {
-			tidy.pprint(document, os);
-			correctedDocument = os.toString();
-		} catch (IOException e) {
-			logger.error("JTidy pretty print document error ", e);
+			/*
+			 * Pretty print the final HTML output for use with the HTMLtoPDF parser.
+			 */
+			try (OutputStream os = new ByteArrayOutputStream()) {
+				getTidy().pprint(document, os);
+				correctedDocument = os.toString();
+			} catch (IOException e) {
+				logger.error("JTidy pretty print document error ", e);
+			}
 		}
-
-		writer.flush();
-
-		try {
-			writer.close();
-		} catch (IOException e) {
-			logger.error( "Error closing writer stream for JTidy", e );
-		}
-
 		return correctedDocument;
 	}
 	
@@ -686,8 +662,9 @@ public class ConvertToEdoc {
 	 * Instantiate the Tidy HTML validator
 	 */
 	private static Tidy getTidy() {
-		Tidy tidy = new Tidy();
-
+		if(tidy == null) {
+			tidy = new Tidy();
+		}
 		/* Properties intentionally hard-coded.
 		 * These settings cannot be overriden in the properties file.
 		 */
