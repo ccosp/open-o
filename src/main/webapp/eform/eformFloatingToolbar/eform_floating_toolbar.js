@@ -1,4 +1,4 @@
-	document.addEventListener("DOMContentLoaded", function(){   
+document.addEventListener("DOMContentLoaded", function(){
 		/**
 		 * Trigger these functions every time this page loads.
 		 */
@@ -34,15 +34,16 @@
 		ShowSpin(true);
 		if (typeof saveRTL === "function")
 		{
+			console.log("Saving RTL or RTL template");
 			window["saveRTL"]();
 			document.RichTextLetter.submit();
 			return true;
 		} 
 		
 		
-		if (document.getElementsByName("SubmitButton") && 
-				typeof document.getElementsByName("SubmitButton")[0].click() === "function") 
+		if (document.getElementsByName("SubmitButton") && document.getElementsByName("SubmitButton")[0])
 		{
+			console.log("Saving by remote click of the SubmitButton");
 			try
 			{
 				document.getElementsByName("SubmitButton")[0].click();
@@ -56,11 +57,13 @@
 		
 		if(typeof releaseDirtyFlag === "function")
 		{
+			console.log("Releasing dirty window flag by releaseDirtyFlag function")
 			window["releaseDirtyFlag"]();
 		}
 		
 		if(typeof submission === "function")
 		{
+			console.log("Executing submission method before submitting first form directly");
 			try
 			{
 				window["submission"]();
@@ -75,6 +78,7 @@
 		
 		try
 		{
+			console.log("Submitting first form in document directly");
 			document.forms[0].submit();
 			return true;
 		} 
@@ -82,6 +86,7 @@
 		{
 			console.log(error);
 		}
+
 		HideSpin();
 		return false;
 
@@ -296,30 +301,47 @@
 		
 		if( typeof formPrint === "function" ) 
 		{
+			console.log("Printing document remotely with formPrint method");
 			formPrint();
 		} 
 		else if(typeof printLetter === "function") 
 		{
+			console.log("Printing document remotely with printLeter method")
 			printLetter(); 
-		} 
+		}
+
+		else if (document.getElementsByName("PrintButton") && document.getElementsByName("PrintButton")[0])
+		{
+			try {
+				console.log(document.getElementsByName("PrintButton"));
+				console.log("Remotely clicking button with name PrintButton");
+				document.getElementsByName("PrintButton")[0].click();
+			} catch {
+				console.log("Error locating PrintButton");
+			}
+		}
+
 		else if(document.getElementById('edit')) 
 		{
+			console.log("Content has been edited and no print method was found. Executing window.print");
 			document.getElementById('edit').contentWindow.print();
 		} 
-		else if (document.getElementsByName("PrintButton") &&
-				typeof document.getElementsByName("PrintButton")[0].click() === "function")
+
+		else
 		{
-			document.getElementsByName("PrintButton")[0].click();
+			console.log("Just do window print.")
+			try{
+				window.print();
+			} catch {
+				alert("Cannot print. Try the print button on the eForm.");
+			}
 		}
-		else 
-		{
-			alert("Cannot print. Try the print button on the eForm.");
-		}
+
 		/*
 		 * Needs to be saved if this is
 		 * a new eForm or it has been altered.
 		 */
-		if(needToConfirm) {			
+		if(typeof needToConfirm !== 'undefined' && needToConfirm) {
 			remoteSave();
 		} 
 	
