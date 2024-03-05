@@ -80,6 +80,7 @@ if(!authed) {
 <%@page import="org.oscarehr.common.dao.ContactSpecialtyDao" %>
 <%@page import="org.oscarehr.common.dao.DemographicContactDao" %>
 <%@page import="org.oscarehr.common.model.ContactSpecialty" %>
+<%@ page import="org.oscarehr.common.dao.ConsultationRequestExtDao" %>
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
 <%@ page import="oscar.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
@@ -496,10 +497,22 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
    </script>
 
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/css/healthCareTeam.css" />
-<%--<oscar:customInterface section="conreq"/>--%>
+<oscar:customInterface section="conreq"/>
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/oscarEncounter/encounterStyles.css">
 
 <style type="text/css">
+
+/* Ocean refer style */
+span.oceanRefer	{
+	display: flex;
+	align-items: center;
+    padding-top:20px
+}
+	
+span.oceanRefer a {
+	margin-right: 5px;
+}
+/* End of Ocean refer style */
 
 #attachedDocumentTable {
     border: blue thin solid;
@@ -1566,11 +1579,12 @@ function showPreview(base64PDF, pdfName) {
 	<% if (!props.isConsultationFaxEnabled() || !OscarProperties.getInstance().isPropertyActive("consultation_dynamic_labelling_enabled")) { %>
 	<input type="hidden" name="providerNo" value="<%=providerNo%>">
 	<% } %>
-	<input type="hidden" name="demographicNo" value="<%=demo%>">
+	<input type="hidden" name="demographicNo" id="demographicNo" value="<%=demo%>">
 	<input type="hidden" name="requestId" value="<%=requestId%>">
 	<input type="hidden" name="ext_appNo" value="<%=request.getParameter("appNo") %>">
 	<input type="hidden" name="source" value="<%=(requestId!=null)?thisForm.getSource():request.getParameter("source") %>">
 	<input type="hidden" id="saved" value="false">
+	<input type="hidden" id="contextPath" value="${pageContext.request.contextPath}">
 
 	<table class="MainTable" id="scrollNumber1" name="encounterTable">
 		<tr class="MainTableTopRow">
@@ -1584,7 +1598,15 @@ function showPreview(base64PDF, pdfName) {
 						<h2>
 						<%=thisForm.getPatientName()%> <%=thisForm.getPatientSex()%>	<%=thisForm.getPatientAge()%>
 						</h2>
-						</td>
+					</td>
+						<% if ("ocean".equals(props.get("cme_js"))) { %>
+					<td>						
+                        <span id="ocean" style="display:none"></span>
+                        <% if (requestId == null) { %>
+						<span id="oceanReferButton" class="oceanRefer"></span>
+					</td>
+						<% }
+						}%>
 				</tr>
 			</table>
 			</td>
