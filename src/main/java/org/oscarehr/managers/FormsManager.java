@@ -166,14 +166,38 @@ public class FormsManager {
 		return processEncounterForms(loggedInInfo, demographicId, getAllVersions, getOnlyPDFReadyForms);
 	}
 
-	private List<PatientForm> processEncounterForms(LoggedInInfo loggedInInfo, Integer demographicId, boolean getAllVersions, boolean getOnlyPDFReadyForms) {
-		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
+	/**
+	 * Please refrain from using this method unless your form ID is sourced from PDF-ready forms, as the form ID alone is not guaranteed to be unique.
+	 * Fetch a specific form by providing both the form ID and name, as they collectively ensure accurate identification.
+	 */
+	public PatientForm getFormById(LoggedInInfo loggedInInfo, String formId) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_form)");
+		}
+
+		PatientForm patientForm = null;
 		List<EncounterForm> encounterFormList = getAllEncounterForms();
-		String[] pdfReadyFormNames = {"Annual"};
+		List<String> pdfReadyFormList = getPDFReadyFormNames();
 
 		for (EncounterForm encounterForm : encounterFormList) {
 			String formName = encounterForm.getFormName();
-			if (getOnlyPDFReadyForms && !Arrays.asList(pdfReadyFormNames).contains(formName)) { continue; }
+			String table = encounterForm.getFormTable();
+			if (!pdfReadyFormList.contains(formName)) { continue; }
+			patientForm = EctFormData.getPatientFormByFormId(formId, formName, table);
+			if (patientForm != null) { break; }
+		}
+
+		return patientForm;
+	}
+
+	private List<PatientForm> processEncounterForms(LoggedInInfo loggedInInfo, Integer demographicId, boolean getAllVersions, boolean getOnlyPDFReadyForms) {
+		List<PatientForm> patientFormList = new ArrayList<PatientForm>();
+		List<EncounterForm> encounterFormList = getAllEncounterForms();
+		List<String> pdfReadyFormList = getPDFReadyFormNames();
+
+		for (EncounterForm encounterForm : encounterFormList) {
+			String formName = encounterForm.getFormName();
+			if (getOnlyPDFReadyForms && !pdfReadyFormList.contains(formName)) { continue; }
 
 			String table = encounterForm.getFormTable();
 			PatientForm[] patientFormArray = EctFormData.getPatientForms(demographicId + "", table);
@@ -187,6 +211,12 @@ public class FormsManager {
 		}
 
 		return patientFormList;
+	}
+
+	private List<String> getPDFReadyFormNames() {
+		List<String> pdfReadyFormList = new ArrayList<>();
+		pdfReadyFormList.add("Annual");
+		return pdfReadyFormList;
 	}
 
 	/**
@@ -213,6 +243,30 @@ public class FormsManager {
 		return documentId;
 	}
 
+	/**
+	 * Please refrain from using this method unless your form ID is sourced from PDF-ready forms, as the form ID alone is not guaranteed to be unique.
+	 * To generate a PDF of a specific form, provide both the form ID and name, as they collectively ensure accurate identification.
+	 */
+	public Path renderForm(HttpServletRequest request, HttpServletResponse response, String formId) throws PDFGenerationException {
+		EctFormData.PatientForm patientForm = null;
+		List<EncounterForm> encounterFormList = getAllEncounterForms();
+		List<String> pdfReadyFormList = getPDFReadyFormNames();
+
+		for (EncounterForm encounterForm : encounterFormList) {
+			String formName = encounterForm.getFormName();
+			String table = encounterForm.getFormTable();
+			if (!pdfReadyFormList.contains(formName)) { continue; }
+			patientForm = EctFormData.getPatientFormByFormId(formId, formName, table);
+			if (patientForm == null) { continue; }
+		}
+
+		if (patientForm == null) {
+			throw new PDFGenerationException("Error Details: Form with id: " + formId + " is not a PDF-ready form");
+		} 
+
+		return renderForm(request, response, patientForm);
+	}
+
 	public Path renderForm(LoggedInInfo loggedInInfo, FormTransportContainer formTransportContainer) {
   		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_form)");
@@ -232,6 +286,7 @@ public class FormsManager {
 	 */
 	public Path renderForm(HttpServletRequest request, HttpServletResponse response, EctFormData.PatientForm form) throws PDFGenerationException {
 		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+		if (loggedInInfo != null && loggedInInfo.getLoggedInProvider() == null) { loggedInInfo = LoggedInInfo.getLoggedInInfoFromRequest(request); }
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_form)");
 		}

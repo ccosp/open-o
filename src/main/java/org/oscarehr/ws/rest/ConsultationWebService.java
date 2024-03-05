@@ -29,13 +29,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.StringUtils;
 import org.oscarehr.PMmodule.dao.ProviderDao;
@@ -72,6 +76,7 @@ import org.oscarehr.ws.rest.conversion.ProfessionalSpecialistConverter;
 import org.oscarehr.ws.rest.to.AbstractSearchResponse;
 import org.oscarehr.ws.rest.to.GenericRESTResponse;
 import org.oscarehr.ws.rest.to.ReferralResponse;
+import org.oscarehr.ws.rest.to.model.ConsultationAttachment;
 import org.oscarehr.ws.rest.to.model.ConsultationAttachmentTo1;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestTo1;
@@ -402,6 +407,22 @@ public class ConsultationWebService extends AbstractServiceImpl {
 				MiscUtils.getLogger().error("Exception", e);
 			}
 		}
+		return response;
+	}
+
+	@GET
+	@Path("/getEReferAttachments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEReferAttachments(@QueryParam("demographicNo") Integer demographicNo, @Context HttpServletRequest httpServletRequest, @Context HttpServletResponse httpServletResponse) {
+		Response response;
+		try {
+			List<ConsultationAttachment> attachments = consultationManager.getEReferAttachments(getLoggedInInfo(), httpServletRequest, httpServletResponse, demographicNo);
+			httpServletResponse.setContentType("application/json");
+			response = Response.ok().entity(attachments).build();
+		} catch (Exception e) {
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("An error occurred while generating the attachment data: " + e.getMessage()).build();
+		}
+		
 		return response;
 	}
 	

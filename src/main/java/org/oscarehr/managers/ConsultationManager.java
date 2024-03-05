@@ -25,6 +25,7 @@ package org.oscarehr.managers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -54,7 +55,8 @@ import org.oscarehr.common.dao.ConsultationRequestArchiveDao;
 import org.oscarehr.common.dao.ConsultationRequestExtArchiveDao;
 import org.oscarehr.common.dao.ConsultationRequestExtDao;
 import org.oscarehr.common.dao.ConsultationServiceDao;
-import org.oscarehr.common.dao.DocumentDao.DocumentType;
+import org.oscarehr.common.dao.EReferAttachmentDao;
+import org.oscarehr.common.dao.DocumentDao;
 import org.oscarehr.common.dao.DocumentDao.Module;
 import org.oscarehr.common.dao.Hl7TextInfoDao;
 import org.oscarehr.common.dao.ProfessionalSpecialistDao;
@@ -77,10 +79,13 @@ import org.oscarehr.common.model.CtlDocumentPK;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Document;
 import org.oscarehr.common.model.EFormData;
+import org.oscarehr.common.model.EReferAttachment;
+import org.oscarehr.common.model.EReferAttachmentData;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Property;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter;
 import org.oscarehr.consultations.ConsultationRequestSearchFilter.SORTDIR;
 import org.oscarehr.consultations.ConsultationResponseSearchFilter;
@@ -89,6 +94,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.ws.rest.conversion.OtnEconsultConverter;
+import org.oscarehr.ws.rest.to.model.ConsultationAttachment;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
 import org.oscarehr.ws.rest.to.model.ConsultationResponseSearchResult;
 import org.oscarehr.ws.rest.to.model.OtnEconsult;
@@ -98,6 +104,8 @@ import org.springframework.stereotype.Service;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v26.message.ORU_R01;
 import ca.uhn.hl7v2.model.v26.message.REF_I12;
+
+import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
 import oscar.eform.EFormUtil;
@@ -148,7 +156,11 @@ public class ConsultationManager {
 	@Autowired
 	ConsultationRequestArchiveDao consultationRequestArchiveDao;
 	@Autowired
+	private EReferAttachmentDao eReferAttachmentDao;
+	@Autowired
 	DocumentManager documentManager;
+	@Autowired
+	private DocumentAttachmentManager documentAttachmentManager;
 
 	private final Logger logger = MiscUtils.getLogger();
 
@@ -447,7 +459,62 @@ public class ConsultationManager {
 	
 	public List<Document> getEconsultDocuments(LoggedInInfo loggedInInfo, int demographicNo) {
 		checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
-		return documentManager.getDemographicDocumentsByDocumentType(loggedInInfo, demographicNo, DocumentType.ECONSULT);
+		return documentManager.getDemographicDocumentsByDocumentType(loggedInInfo, demographicNo, DocumentDao.DocumentType.ECONSULT);
+	}
+
+	/**
+	 * Gets attachments for use on an eReferral for the provided demographic number. It only gets the oldest prepped attachments within the past hour.
+	 * @param loggedInInfo The current user's logged in info
+	 * @param request The HttpRequest for printing any forms
+	 * @param request The HttpResponse for printing any forms
+	 * @param demographicNo The demographic number to get the attachments for 
+	 * @return List of ConsultationAttachments containing the file name and data and the attachment id and type, 
+	 * @throws PDFGenerationException Thrown if an error occurs while generating pdf
+	 */
+	public List<ConsultationAttachment> getEReferAttachments(LoggedInInfo loggedInInfo, HttpServletRequest request, HttpServletResponse response, Integer demographicNo) throws PDFGenerationException {
+		checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
+
+		List<ConsultationAttachment> consultationAttachments = new ArrayList<>();
+		EReferAttachment eReferAttachment = eReferAttachmentDao.getRecentByDemographic(demographicNo);
+		if (eReferAttachment == null) { return consultationAttachments; }
+
+		for (EReferAttachmentData eReferAttachmentData : eReferAttachment.getAttachments()) {
+			try {
+				ConsultationAttachment consultationAttachment = null;
+				switch (eReferAttachmentData.getLabType()) {
+					case ConsultDocs.DOCTYPE_EFORM:
+						Path eFormPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, eReferAttachmentData.getLabId());
+						String eFormName = String.format("EForm_%03d.pdf", eReferAttachmentData.getLabId());
+						consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.EFORM.getType(), eFormName, Files.readAllBytes(eFormPDFPath));
+						break;
+					case ConsultDocs.DOCTYPE_DOC:
+						Path eDocPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, eReferAttachmentData.getLabId());
+						String eDocName = String.format("Doc_%03d.pdf", eReferAttachmentData.getLabId());
+						consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.DOC.getType(), eDocName, Files.readAllBytes(eDocPDFPath));
+						break;
+					case ConsultDocs.DOCTYPE_LAB:
+						Path labPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, eReferAttachmentData.getLabId());
+						String labName = String.format("Lab_%03d.pdf", eReferAttachmentData.getLabId());
+						consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.LAB.getType(), labName, Files.readAllBytes(labPDFPath));
+						break;
+					case ConsultDocs.DOCTYPE_HRM:
+						Path hrmPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, eReferAttachmentData.getLabId());
+						String hrmName = String.format("HRM_%03d.pdf", eReferAttachmentData.getLabId());
+						consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.HRM.getType(), hrmName, Files.readAllBytes(hrmPDFPath));
+						break;
+					case ConsultDocs.DOCTYPE_FORM:
+						Path formPDFPath = formsManager.renderForm(request, response, String.valueOf(eReferAttachmentData.getLabId()));
+						String formName = String.format("Form_%03d.pdf", eReferAttachmentData.getLabId());
+						consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.FORM.getType(), formName, Files.readAllBytes(formPDFPath));
+						break;
+				}
+				if (consultationAttachment != null) { consultationAttachments.add(consultationAttachment); }
+			} catch (IOException e) {
+				throw new PDFGenerationException("Attachment " + eReferAttachmentData.getLabType() + " " + eReferAttachmentData.getLabId() + " encountered an error while generating the file data", e);
+			}
+		}
+
+		return consultationAttachments;
 	}
 	
 	private ConsultationRequestSearchResult convertToRequestSearchResult(Object[] items) {

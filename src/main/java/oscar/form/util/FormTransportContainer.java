@@ -85,7 +85,7 @@ public class FormTransportContainer {
 			FORM_FORWARD_PATH = formPath;
 		}
 
-		request.getRequestDispatcher( FORM_FORWARD_PATH ).forward( request, responseWrapper );
+		request.getRequestDispatcher( FORM_FORWARD_PATH ).include( request, responseWrapper );
 
 		this.HTML = responseWrapper.toString();
 		this.loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession( request );		

@@ -285,7 +285,8 @@ public class DocumentAttachmentManager {
 				path = HRMUtil.renderHRM(loggedInInfo, documentId);
 				break;
 			case FORM:
-				path = formsManager.renderForm(request, response, null);
+				EctFormData.PatientForm patientForm = null;
+				path = formsManager.renderForm(request, response, patientForm);
 				break;
 		}
 		return path;
