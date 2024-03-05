@@ -1601,7 +1601,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
 		//--> phone
 		if(getPhone() != null && ! getPhone().isEmpty()) {
-			sb.append("<div id='patient-phone'>");
+			sb.append("<div id='patient-phone' title='")
+					.append(getPhoneComment())
+					.append("' >");
 			sb.append("<div class='label'>");
 			sb.append("phone");
 			sb.append("</div>");
@@ -1611,7 +1613,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
 		//--> cell phone
 		if(getCellPhone() != null && ! getCellPhone().isEmpty()) {
-			sb.append("<div id='patient-cell-phone'>");
+			sb.append("<div id='patient-cell-phone' title='")
+					.append(getPhoneComment())
+					.append("' >");
 			sb.append("<div class='label'>");
 			sb.append("cell");
 			sb.append("</div>");
