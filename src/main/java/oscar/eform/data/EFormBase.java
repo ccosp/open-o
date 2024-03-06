@@ -40,6 +40,7 @@ public class EFormBase {
 	protected final String signatureMarker = "${oscar_signature_code}";
 	protected final String sourceMarker = "${source}";
 	protected final String fdidMarker = "${fdid}";
+
     protected String fdid;
     protected String fid;
     protected String formName;
@@ -91,7 +92,7 @@ public class EFormBase {
         StringBuilder html = new StringBuilder(formHtml);
         int pointer = StringBuilderUtils.indexOfIgnoreCase(html, imageMarker, 0);
         while (pointer >= 0) {
-            html.replace(pointer, pointer+imageMarker.length(), output);
+            html = html.replace(pointer, pointer+imageMarker.length(), output);
             pointer = StringBuilderUtils.indexOfIgnoreCase(html, imageMarker, 0);
         }
         formHtml = html.toString();
@@ -135,6 +136,7 @@ public class EFormBase {
              * is fetched as a required String object.
              */
             this.formHtml = document.outerHtml();
+            this.document = null;
         }
         return formHtml;
     }

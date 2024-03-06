@@ -27,6 +27,7 @@ import com.lowagie.text.DocumentException;
 import io.woo.htmltopdf.HtmlToPdf;
 import io.woo.htmltopdf.HtmlToPdfObject;
 import io.woo.htmltopdf.PdfPageSize;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -67,8 +68,7 @@ public final class ConvertToEdoc {
 
 	public enum DocumentType { eForm, form }
 	public enum ElementAttribute { src, href, value, name, id, title, type, rel, media }
-	private enum FileType { pdf, css, jpeg, png, gif }
-
+	private enum FileType { pdf, css, jpeg, png, gif, js }
 	public static final String CUSTOM_STYLESHEET_ID = "pdfMediaStylesheet";
 	private static final String DEFAULT_IMAGE_DIRECTORY = String.format( "%1$s", OscarProperties.getInstance().getProperty( "eform_image" ) );
 	private static final String DEFAULT_FILENAME = "temporaryPDF";
@@ -240,7 +240,7 @@ public final class ConvertToEdoc {
 	}
 
 	/**
-	 * creates a filename
+	 * create a well-formed filename
 	 */
 	private static String buildFilename( String filename, String demographicNo ) {
 		
@@ -302,7 +302,7 @@ public final class ConvertToEdoc {
 			put("load.blockLocalFileAccess", "false");
 			put("web.enableIntelligentShrinking", "true");
 	        put("web.minimumFontSize", "10");
-	        put("load.zoomFactor", "0.92");
+//	        put("load.zoomFactor", "0.92");
 	        put("web.printMediaType", "true");
 	        put("web.defaultEncoding", "utf-8");
 	        put("T", "10mm");
@@ -339,16 +339,38 @@ public final class ConvertToEdoc {
 	 * @return org.jsoup.nodes.Document JSoup DOM
 	 */
 	public static Document getDocument(final String documentString ){
+		String incomingDocumentString = "";
+
+		// null check
+		if(documentString != null) {
+			incomingDocumentString = documentString;
+		}
+
+		// DOCTYPE declarations are mandatory. HTML5 if none is declared.
+		if(! incomingDocumentString.startsWith("<!DOCTYPE") || ! incomingDocumentString.startsWith("<!doctype")) {
+			incomingDocumentString = "<!DOCTYPE html>" + incomingDocumentString;
+		}
+
 		//TODO: COMING SOON.  EForms should be selectively sanitized against potential injection attacks and etc...
 //		Safelist safelist = Safelist.relaxed();
 //		safelist.addTags().addTags() etc...
 //		String sanitized = Jsoup.clean(documentString, safeList);
 
-		Document document = Jsoup.parse(documentString);
+		Document document = Jsoup.parse(incomingDocumentString);
 
-		// remove invalid, suspicious, and CDN links
+		//TODO add any other custom Document.OutputSettings here.
+		document.outputSettings().prettyPrint(Boolean.FALSE);
+
+		/*
+		 * remove invalid, suspicious, and CDN links
+		 */
 		validateResourcePaths(document);
 
+		/*
+		 * Returns a Document object.
+		 * Document will contain a blank HTML page if the incoming HTML
+		 * string is NULL, empty, or if an error occurs.
+		 */
 		return document;
 	}
 	
@@ -373,7 +395,7 @@ public final class ConvertToEdoc {
 	}
 	
 	/**
-	 * It is critical that a head element is present for this given document. 
+	 * It is critical that a head element is present.
 	 */
 	private static void setHeadElement( Document document ) {
 		if(! document.head().isBlock()) {
@@ -414,8 +436,7 @@ public final class ConvertToEdoc {
 		Map<List<String>, Element> pathTranslationMap = new HashMap<>();
 		translateLinkPaths( document, pathTranslationMap );
 		translateImagePaths( document, pathTranslationMap );
-		translateJavascriptPaths( document, pathTranslationMap );
-		translateStylePaths( document, pathTranslationMap);
+
 		for(Map.Entry<List<String>, Element> pathSet : pathTranslationMap.entrySet()) {
 			if(! pathSet.getKey().isEmpty()) {
 				Element element = pathSet.getValue();
@@ -433,36 +454,38 @@ public final class ConvertToEdoc {
 	}
 	
 	/**
-	 * This method handles paths set into a link element
+	 * CSS (link) resource links
 	 */
 	private static void translateLinkPaths( Document document, Map<List<String>, Element> pathTranslationMap ) {
 		Elements linkNodeList = document.getElementsByTag("link");
 		translatePaths(linkNodeList, ElementAttribute.href, pathTranslationMap);
 	}
 
+	/**
+	 * Javascript resource links
+	 */
 	private static void translateJavascriptPaths( Document document, Map<List<String>, Element> pathTranslationMap ) {
 		Elements linkNodeList = document.getElementsByTag("script");
 		translatePaths(linkNodeList, ElementAttribute.src, pathTranslationMap);
 	}
 	
 	/**
-	 * This method handles paths set into an image element.
+	 * Image resource links
 	 */
 	private static void translateImagePaths( Document document, Map<List<String>, Element> pathTranslationMap ) {
 		Elements imageNodeList = document.getElementsByTag("img");
 		translatePaths( imageNodeList, ElementAttribute.src , pathTranslationMap);
 	}
 
-	private static void translateStylePaths( Document document, Map<List<String>, Element> pathTranslationMap) {
-		Elements imageNodeList = document.getElementsByTag("style");
-		translatePaths( imageNodeList, ElementAttribute.src, pathTranslationMap);
-	}
-	
 	/**
-	 * Translate any given Link or Image element resource path from 
+	 * Translate any given Link or Image element resource path from
 	 * a Struts HTTP request parameter or HTTP relative context path.
-	 * All resource links in the document must be absolute for the PDF 
+	 * All resource links in the document must be absolute for the PDF
 	 * creator to work.
+	 * TODO filter out relative URI's and external URL's without a proper place holder so they can be removed
+	 * @param nodeList jsoup Elements collection of potential resource links
+	 * @param pathAttribute jsoup ElementAttribute to be translated to an absolute link
+	 * @param pathTranslationMap Map to collect translated URI's
 	 */
 	private static void translatePaths( Elements nodeList, ElementAttribute pathAttribute, Map<List<String>, Element> pathTranslationMap) {
 		for(Element element : nodeList) {
@@ -472,7 +495,6 @@ public final class ConvertToEdoc {
 			}
 
 			String path = element.attributes().get( pathAttribute.name() );
-			String validLink;
 			String parameters = null;
 			String[] parameterList = null;		
 			List<String> potentialFilePaths = new ArrayList<>();
@@ -483,11 +505,13 @@ public final class ConvertToEdoc {
 			} else {
 				// these are most likely relative context paths
 				path = getRealPath( path );
-				potentialFilePaths.add( path );
+				if(! path.isEmpty()) {
+					potentialFilePaths.add(path);
+				}
 			}
 			
 			/* parse the parameters and test if any are links to the eForm
-			 * images library. Otherwise these resources are no good.
+			 * images library. Otherwise, these resources are no good.
 			 */
 			if( parameters != null && parameters.contains("&") ) {
 				parameterList = parameters.split("&");
@@ -506,7 +530,9 @@ public final class ConvertToEdoc {
 				potentialFilePaths.add( path );
 			}
 
-			pathTranslationMap.put(potentialFilePaths, element);
+			if(! potentialFilePaths.isEmpty()) {
+				pathTranslationMap.put(potentialFilePaths, element);
+			}
 		}
 	}
 	
@@ -516,11 +542,13 @@ public final class ConvertToEdoc {
 	private static String buildImageDirectoryPath( String filename ) {
 		return Paths.get(getImageDirectory(), filename).toString();
 	}
-	
+
 	/**
-	 * Convert a given context path into a file system absolute path.
+	 * Convert a given URI into a file system absolute path.
+	 * @param uri URI input
+	 * @return String fully resolved absolute path
 	 */
-	private static String getRealPath(String uri ) {
+	private static String getRealPath(String uri) {
 		String contextRealPath = "";
 		
 		logger.debug( "Context path set to " + contextPath );
@@ -543,7 +571,6 @@ public final class ConvertToEdoc {
 		translateLinkPaths( document, pathTranslationMap );
 		translateImagePaths( document, pathTranslationMap );
 		translateJavascriptPaths( document, pathTranslationMap );
-		translateStylePaths( document, pathTranslationMap);
 		for(Map.Entry<List<String>, Element> pathSet : pathTranslationMap.entrySet()) {
 			Element element = pathSet.getValue();
 			List<String> paths = pathSet.getKey();
@@ -580,9 +607,14 @@ public final class ConvertToEdoc {
 		
 		return finalLinks;
 	}
-	
+
 	/**
 	 * Returns the first valid file link from a list of potential valid links.
+	 * Used in conjunction with as an overload method.
+	 * See use in methods: setParameterInjectedCss() and validateLinks
+	 * @param potentialLinks Collection of links to validate. A Collection is
+	 *                       as a wrapper for a single link ie: potentialLinks.get(0)
+	 * @return String a single valid link
 	 */
 	private static String validateLink( List<String> potentialLinks ) {
 
@@ -596,23 +628,25 @@ public final class ConvertToEdoc {
 		
 		return null;
 	}
-	
+
 	/**
-	 * Returns only 1 valid file link.
+	 * Main link validation method
+	 * See overload above
+	 * @param potentialLink String link to validate
+	 * @return String valid link
 	 */
 	private static String validateLink( String potentialLink ) {
 
-		Path path = null;
 		String absolutePath = null;
-				
-		for( FileType fileType : FileType.values() ) {
-			if ((potentialLink.endsWith(fileType.name().toLowerCase()))) {
-				path = Paths.get(potentialLink);
-				break;
-			}
+		Path path = null;
+
+		potentialLink = filterFileType(potentialLink);
+
+		if(potentialLink != null) {
+			path = Paths.get(potentialLink);
 		}
 
-		if(path != null && Files.exists(path) && Files.isRegularFile(path) && Files.isReadable(path)) {
+		if(path != null && Files.exists(path)) {
 			absolutePath = path.toAbsolutePath().toString();
 			
 			logger.debug( "Validated path " + absolutePath );
@@ -622,11 +656,25 @@ public final class ConvertToEdoc {
 	}
 
 	/**
+	 * File type filtering.  Links with invalid filetypes
+	 * will be removed.
+	 * See Enum: ConvertToEdoc FileType for complete list.
+	 */
+	private static String filterFileType(String path) {
+		String pathFileType = FilenameUtils.getExtension(path);
+		for( FileType legalFileType : FileType.values() ) {
+			if (legalFileType.name().equalsIgnoreCase(pathFileType)) {
+				return path;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Clean up any artifacts or poorly formed XHTML
 	 * and fetch the HTML template resources.
 	 */
 	private static String tidyDocument( final String documentString) {
-
 		Document document = getDocument(documentString);
 
 		/*

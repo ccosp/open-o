@@ -536,9 +536,9 @@ document.addEventListener("DOMContentLoaded", function(){
 		const file = "../eform/eformFloatingToolbar/eform_floating_toolbar.jspf";
 		const xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4) {
+			if (this.readyState === 4) {
 
-				if (this.status == 200)
+				if (this.status === 200)
 				{
 					var toolbarWrapper = document.createElement("div");
 					toolbarWrapper.setAttribute("id","toolbarWrapper");
@@ -550,7 +550,7 @@ document.addEventListener("DOMContentLoaded", function(){
 					jQuery('#remoteTotalAttachments').empty().append(jQuery('.delegateAttachment').length);
 				}
 
-				if (this.status == 404)
+				if (this.status === 404)
 				{
 					elmnt.append("eForm tool bar not found.");
 				}
@@ -654,4 +654,25 @@ document.addEventListener("DOMContentLoaded", function(){
 			spinner.style.opacity = "1";
 		}, 300);
 	}
-	
+
+	/**
+	 * A counter hack for a hack.
+	 * This method moves the image SRC values into hidden place-holders in the Form element
+	 * A counter-measure to ensure images that are set by Javascript methods are captured
+	 * when the form is saved or rendered into a pdf.
+	 */
+	jQuery(window).on('load', function() {
+		const imageTags = jQuery('img');
+		if(imageTags) {
+			imageTags.each(function(){
+				const id = jQuery(this).attr('id') || "";
+				const value = jQuery(this).attr('src') || "";
+				jQuery('<input>', {
+					id: Math.random().toString(36) + '-' + id,
+					name: 'openosp-image-link',
+					value: JSON.stringify({id: id, value: value}),
+					type: 'hidden'
+				}).appendTo("form[method='POST']");
+			})
+		}
+	})

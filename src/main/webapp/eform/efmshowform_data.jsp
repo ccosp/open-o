@@ -89,10 +89,11 @@
      * Ordering is very important.
      * For Javascript: First is last.
      */
-    eForm.addJavascript(request.getContextPath()+"/eform/eformFloatingToolbar/eform_floating_toolbar.js");
-    eForm.addJavascript(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.js");
-    eForm.addJavascript(request.getContextPath()+"/library/jquery/jquery-3.6.4.min.js");
+
+    eForm.addHeadJavascript(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.js");
+    eForm.addHeadJavascript(request.getContextPath()+"/library/jquery/jquery-3.6.4.min.js");
     eForm.addCSS(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.css", "all");
+    eForm.addBodyJavascript(request.getContextPath()+"/eform/eformFloatingToolbar/eform_floating_toolbar.js");
     eForm.addFontLibrary(request.getContextPath()+"/share/javascript/eforms/dejavufonts/ttf/DejaVuSans.ttf");
     eForm.addHiddenInputElement("context", request.getContextPath());
     eForm.addHiddenInputElement("demographicNo", eForm.getDemographicNo());

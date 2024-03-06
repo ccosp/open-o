@@ -26,11 +26,13 @@
 package oscar.eform.data;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionMessages;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.oscarehr.common.OtherIdManager;
 import org.oscarehr.common.dao.EFormDataDao;
 import org.oscarehr.common.model.EFormData;
@@ -76,7 +78,6 @@ public class EForm extends EFormBase {
 	private static final String TABLE_ID = "table_id";
 	private static final String OTHER_KEY = "other_key";
 	private static final String OPENER_VALUE = "link$eform";
-
 
 	public EForm() {
 	}
@@ -920,14 +921,25 @@ public class EForm extends EFormBase {
 		}
 	}
 
-	/* For overriding or adding Javascript to every eform
+	/** For overriding or adding Javascript to every eform
 	 * Add path to Javascript resource in OSCAR source code.
 	 */
-	public void addJavascript(String javascriptPath) {
+	public void addHeadJavascript(String javascriptPath) {
 		Element script = getDocument().createElement("script");
 		script.attr("type", "text/javascript");
 		script.attr("src", javascriptPath);
 		addHeadElement(script);
+	}
+
+	/**
+	 * Adds javascript files to the end of the body tag.
+	 * Useful if there is a dependency on previous javascript in the window load
+	 */
+	public void addBodyJavascript(String javascriptPath) {
+		Element script = getDocument().createElement("script");
+		script.attr("type", "text/javascript");
+		script.attr("src", javascriptPath);
+		addBodyElement(script);
 	}
 
 	/* For overriding or adding CSS to every eform
@@ -1037,4 +1049,31 @@ public class EForm extends EFormBase {
 		bodyElement.appendChild(element);
 	}
 
+	/**
+	 * Part 3 of "counter hack for a hack" initialized in Javascript file
+	 * eform_floating_toolbar.js
+	 * This method fetches image paths stored in hidden fields and restores them
+	 * into empty image src values.
+	 * Empty image src values are the result of using Javascript in the eForm to dynamically
+	 * set paths for images.
+	 */
+	public void addImagePathPlaceholders(String[] imagePathPlaceholders) {
+		if(imagePathPlaceholders != null && imagePathPlaceholders.length > 0){
+			JSONArray placeHolders = JSONArray.fromObject(Arrays.toString(imagePathPlaceholders));
+			Elements imageElements = getDocument().getElementsByTag("img");
+			for(Object objekt : placeHolders) {
+				JSONObject placeHolder = (JSONObject) objekt;
+				String id = placeHolder.getString("id");
+				String value = placeHolder.getString("value");
+				if(!id.isEmpty() && !value.isEmpty()) {
+					for (Element imageElement : imageElements) {
+						if (id.equalsIgnoreCase(imageElement.id())) {
+							imageElement.attr("src", value);
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
 }
