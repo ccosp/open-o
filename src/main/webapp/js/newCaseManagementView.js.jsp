@@ -275,10 +275,10 @@ function grabEnter(id, event) {
     return true;
 }
 function setupNotes(){
-    if(!NiftyCheck())
-        return;
+    <%--if(!NiftyCheck())--%>
+    <%--    return;--%>
 
-    Rounded("div.noteRounded","all","transparent","#CCCCCC","big border #000000");
+    <%--Rounded("div.noteRounded","all","transparent","#CCCCCC","big border #000000");--%>
 
     //need to set focus after rounded is called
     adjustCaseNote();
@@ -287,12 +287,12 @@ function setupNotes(){
     $(caseNote).focus();
 }
 
-function setupOneNote(note) {
-	if (!NiftyCheck())
-		return;
+<%--function setupOneNote(note) {--%>
+<%--	if (!NiftyCheck())--%>
+<%--		return;--%>
 
-	Rounded("div#nc" + note, "all", "transparent", "#CCCCCC", "big border #000000");
-}
+<%--	Rounded("div#nc" + note, "all", "transparent", "#CCCCCC", "big border #000000");--%>
+<%--}--%>
 
 var minDelta =  0.93;
 var minMain;
@@ -498,14 +498,14 @@ function navBarLoader() {
                   ctx + "/oscarEncounter/displayMeasurements.do?hC=" + Colour.measurements,
                   ctx + "/oscarEncounter/displayConsultation.do?hC=" + Colour.consultation,
                   ctx + "/oscarEncounter/displayHRM.do?hC=",
-                  ctx + "/oscarEncounter/displayMyOscar.do?hC=",
-                  ctx + "/eaaps/displayEctEaaps.do?hC=",
-                  ctx + "/oscarEncounter/displayEconsultation.do?hC=",
-                  ctx + "/oscarEncounter/displayEHR.do?hC=",
-                  ctx + "/oscarEncounter/displayQuestimed.do?hC=",
+                  <%--ctx + "/oscarEncounter/displayMyOscar.do?hC=",--%>
+                  <%--ctx + "/eaaps/displayEctEaaps.do?hC=",--%>
+                  <%--ctx + "/oscarEncounter/displayEconsultation.do?hC=",--%>
+                  <%--ctx + "/oscarEncounter/displayEHR.do?hC=",--%>
+                  <%--ctx + "/oscarEncounter/displayQuestimed.do?hC=",--%>
               ];
-
-            var leftNavBarTitles = [ "preventions", "tickler", "Dx", "forms", "eforms", "docs","labs", "msgs", "measurements", "consultation", "HRM","PHR", "eams", "eConsult","ehr","Questimed"];
+	    <%--var leftNavBarTitles = [ "preventions", "tickler", "Dx", "forms", "eforms", "docs","labs", "msgs", "measurements", "consultation", "HRM","PHR", "eams", "eConsult","ehr","Questimed"];--%>
+            var leftNavBarTitles = [ "preventions", "tickler", "Dx", "forms", "eforms", "docs","labs", "msgs", "measurements", "consultation", "HRM"];
             var rightNavBar = [
                   ctx + "/oscarEncounter/displayAllergy.do?hC=" + Colour.allergy,
                   ctx + "/oscarEncounter/displayRx.do?hC=" + Colour.rx + "&numToDisplay=12",
@@ -1512,14 +1512,6 @@ function changeToView(id) {
             new Insertion.Before(sig, btmImg);
         }
 
-        //$(txt).style.fontSize = normalFont;
-
-        //if we're not restoring a new note display print img
-        //if( nId.substr(0,1) != "0" ) {
-        //    img = "<img title='Print' id='print" + nId + "' alt='Toggle Print Note' onclick='togglePrint(" + nId + ", event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
-        //     new Insertion.Top(parent, img);
-       // }
-
         var printImg = "print" + nId;
         var img = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
         var printimg = "<img title='Print' id='" + printImg + "' alt='Toggle Print Note' onclick='togglePrint(" + nId + ", event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
@@ -1534,8 +1526,7 @@ function changeToView(id) {
             func = "editNote(event);";
         }
 
-        var editAnchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px; font-size:8px;'>" + editLabel + "</a>";
-        var editAnchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px; font-size:8px;'>" + editLabel + "</a>";
+        var editAnchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px;'>" + editLabel + "</a>";
         var editId = "edit" + nId;
 
         var attribName = "anno" + (new Date().getTime());
@@ -1586,7 +1577,6 @@ function completeChangeToView(note,newId) {
     }
 
     var input = "<span id='txt" + newId + "'>" + note + "<\/span>";
-    //$(txt).style.fontSize = normalFont
 
     var imgId = "quitImg" + newId;
     var printId = "print" + newId;
@@ -1605,7 +1595,7 @@ function completeChangeToView(note,newId) {
         func = "editNote(event);";
     }
 
-    var anchor = "<a title='Edit' id='edit"+ newId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px; font-size:8px;'>" + editLabel + "</a>";
+    var anchor = "<a title='Edit' id='edit"+ newId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px;'>" + editLabel + "</a>";
 
     new Insertion.Top(parent, input);
     new Insertion.Top(parent, anchor);
@@ -1648,7 +1638,7 @@ function minView(e) {
     line = line.replace(/<br>/g," ");
     var dateValue = $(dateId) != null ? $(dateId).innerHTML : "";
     dateValue = dateValue.substring(0,dateValue.indexOf(" "));
-    line = "<div id='" + date + "' style='font-size:1.0em; width:10%;'><b>" + dateValue + "<\/b><\/div><div id='" + content + "' style='float:left; font-size:1.0em; width:70%;'>" + line + "<\/div>";
+    line = "<div id='" + date + "' style='width:10%;'><b>" + dateValue + "<\/b><\/div><div id='" + content + "' style='float:left; width:70%;'>" + line + "<\/div>";
     $("txt"+nId).hide();
     $("sig"+nId).hide();
     new Insertion.Top(txt,line);
@@ -1666,7 +1656,7 @@ function minView(e) {
     else {
         func = "editNote(event);";
     }
-    var anchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px; font-size:8px;'>Edit</a>";
+    var anchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px;'>Edit</a>";
     new Insertion.After(print, anchor);
 
 
@@ -1926,20 +1916,13 @@ function NoteisLocked(nId) {
 var sigCache = "";
 //place Note text in textarea for editing and add save, sign etc buttons for this note
 function editNote(e) {
-	var divHeight = 14;
-    var normalFont = 12;
-    var lineHeight = 1.2;
-    var noteHeight;
-    var largeFont = 16;
-    var quit = "quitImg";
     var el = Event.element(e);
     var payload;
     var regEx = /\d+/;
     var nId = regEx.exec(el.id);
     var txt = "n" + nId;
     var xpandId = "xpImg" + nId;
-    var sig = "sig" + nId;
-    
+
     var noteLockStatus = NoteisLocked(nId);
     if(noteLockStatus == "user") {
     	var viewEditedNote = confirm("You have started to edit this note in another window.\nDo you wish to continue?");
@@ -3025,7 +3008,7 @@ function newNote(e) {
         document.forms["caseManagementEntryForm"].newNoteIdx.value = newNoteIdx;
         new Insertion.Bottom("encMainDiv", div);
         $(sigId).addClassName("sig");
-        Rounded("div#"+id,"all","transparent","#CCCCCC","big border #000000");
+        <%--Rounded("div#"+id,"all","transparent","#CCCCCC","big border #000000");--%>
         $(caseNote).focus();
         adjustCaseNote();
         if( reason.length > 0 )
@@ -3220,8 +3203,6 @@ function adjustCaseNote() {
     var MAXCHARS = 78;
     var payload = $(caseNote).value;
     var numLines = 0;
-    var spacing = Prototype.Browser.IE == true ? 1.08 : Prototype.Browser.Gecko == true ? 1.11 : 1.2;
-    var fontSize = $(caseNote).getStyle('font-size');
     var lHeight = $(caseNote).getStyle('line-height');
     var lineHeight = lHeight.substr(0,lHeight.indexOf('e'));
     var arrLines = payload.split("\n");
@@ -3783,15 +3764,6 @@ function autoCompleteShowMenuCPP(element, update) {
                         var btmImg = "<img title='Minimize Display' id='bottomQuitImg" + nId + "' alt='Minimize Display' onclick='minView(event)' style='float:right; margin-right:5px; margin-bottom:3px; ' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
                         new Insertion.Before(sig, btmImg);
                     }
-
-                    //$(txt).style.fontSize = normalFont;
-
-                    //if we're not restoring a new note display print img
-                    //if( nId.substr(0,1) != "0" ) {
-                    //    img = "<img title='Print' id='print" + nId + "' alt='Toggle Print Note' onclick='togglePrint(" + nId + ", event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
-                    //     new Insertion.Top(parent, img);
-                   // }
-
                     var printImg = "print" + nId;
                     var img = "<img title='Minimize Display' id='quitImg" + nId + "' onclick='minView(event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/triangle_up.gif'>";
                     var printimg = "<img title='Print' id='" + printImg + "' alt='Toggle Print Note' onclick='togglePrint(" + nId + ", event)' style='float:right; margin-right:5px; margin-top: 2px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
@@ -3806,8 +3778,7 @@ function autoCompleteShowMenuCPP(element, update) {
                         func = "editNote(event);";
                     }
 
-                    var editAnchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px; font-size:8px;'>" + editLabel + "</a>";
-                    var editAnchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px; font-size:8px;'>" + editLabel + "</a>";
+                    var editAnchor = "<a title='Edit' id='edit"+ nId + "' href='#' onclick='" + func + " return false;' style='float: right; margin-right: 5px;'>" + editLabel + "</a>";
                     var editId = "edit" + nId;
 
                     var attribName = "anno" + (new Date().getTime());

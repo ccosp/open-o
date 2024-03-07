@@ -57,6 +57,7 @@
     String encTimeMandatoryValue = OscarProperties.getInstance().getProperty("ENCOUNTER_TIME_MANDATORY","false");
 
 %>
+<!DOCTYPE html>
 <html:html locale="true">
 <head>
 	<title>
@@ -86,8 +87,8 @@
 <script src="<c:out value="${ctx}"/>/share/javascript/menutility.js" type="text/javascript"></script>
 
 <!-- library for rounded elements -->
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/share/css/niftyCorners.css" />">
-<script type="text/javascript" src="<c:out value="${ctx}/share/javascript/nifty.js"/>"></script>
+<%--<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/share/css/niftyCorners.css" />">--%>
+<%--<script type="text/javascript" src="<c:out value="${ctx}/share/javascript/nifty.js"/>"></script>--%>
 
 <!-- calendar stylesheet -->
 <link rel="stylesheet" type="text/css" media="all" href="<c:out value="${ctx}"/>/share/calendar/calendar.css" title="win2k-cold-1">
@@ -466,12 +467,12 @@ function init() {
 
     Element.observe(window, "resize", monitorNavBars);
     
-    if(!NiftyCheck()) {
-        return;
-    }
+    // if(!NiftyCheck()) {
+    //     return;
+    // }
 
-    Rounded("div.showEdContent","all","transparent","#CCCCCC","big border #000000");
-    Rounded("div.printOps","all","transparent","#CCCCCC","big border #000000");
+    // Rounded("div.showEdContent","all","transparent","#CCCCCC","big border #000000");
+    // Rounded("div.printOps","all","transparent","#CCCCCC","big border #000000");
     Calendar.setup({ inputField : "printStartDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printStartDate_cal", singleClick : true, step : 1 });
     Calendar.setup({ inputField : "printEndDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printEndDate_cal", singleClick : true, step : 1 });
 
