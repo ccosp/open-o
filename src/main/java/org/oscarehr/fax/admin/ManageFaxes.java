@@ -57,6 +57,7 @@ import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.fax.action.FaxAction;
 import org.oscarehr.managers.FaxManager;
+import org.oscarehr.managers.FaxManagerImpl;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -150,7 +151,7 @@ public class ManageFaxes extends FaxAction {
 		/*
 		 *  Dont even try to resend a fax if the service is not enabled.
 		 */
-		if(FaxManager.isEnabled()){
+		if(FaxManagerImpl.isEnabled()){
 			success = faxManager.resendFax(loggedInInfo, JobId, faxNumber);
 		}
 

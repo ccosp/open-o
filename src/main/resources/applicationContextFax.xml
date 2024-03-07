@@ -27,7 +27,7 @@
             <list>
                 <!-- Configure the scheduled task -->
                 <bean class="org.springframework.scheduling.concurrent.ScheduledExecutorTask">
-                    <property name="delay" value="5000" />
+                    <property name="delay" value="200000" />
                     <property name="period" value="${faxPollInterval}" />
                     <property name="runnable" ref="scheduledFaxImporterTask" />
                 </bean>
