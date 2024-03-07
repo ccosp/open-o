@@ -1529,7 +1529,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 
 		sb.append("<div id='patient-label'>");
 		sb.append("<div id='patient-full-name'>");
-		sb.append("<a href='../demographic/demographiccontrol.jsp?demographic_no=");
+		sb.append("<h1><a href='../demographic/demographiccontrol.jsp?demographic_no=");
 		sb.append(Encode.forHtml(getDemographicNo() + ""));
 		sb.append("&displaymode=edit&dboperation=search_detail' target='_blank'>");
 
@@ -1538,7 +1538,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		}
 
 		sb.append(Encode.forHtmlContent(getFormattedName()));
-		sb.append("</a>");
+		sb.append("</a></h1>");
 		sb.append("</div>");
 
 		//--> pronouns

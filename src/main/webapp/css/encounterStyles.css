@@ -30,54 +30,80 @@
 		#FF8C00 = darkorange
 */
 
-span#patient-full-name a {
+* {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-size: 11px;
+}
+
+.noteRounded {
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+fieldset {
+	background-color: #ffffff;
+	border: 1px solid #cccccc !important;;
+}
+
+.topBox ul li {
+	padding:2px 5px;
+}
+
+div#patient-label {
+	display:flex;
+	align-content: stretch;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	padding: 3px 0;
+	width:100%;
+}
+
+#save button {
+	margin: 3px;
+}
+textarea.txtArea {
+	border-radius: 4px;
+}
+
+
+div#patient-full-name a {
 	text-decoration: none;
 	color:blue;
 	display:block;
-	padding:10px 0;
 }
 
-div#patient-label{
-	display:flex;
-	align-content: stretch;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: flex-start;
 
-}
-
-div#patient-label span {
-	display:block;
+div#patient-label div {
 	margin:auto 5px;
+	font-size: small;
 }
-div#patient-label span.label {
-	display:block;
+
+div#patient-label div#header-top-row {
+	width:100%;
+}
+
+div#patient-label .label {
 	margin:0;
+	font-weight: normal !important;
+	font-size: smaller;
+	text-decoration: none;
 }
 
-#header {
-	display:flex;
-	align-content: stretch;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: flex-start;
+
+div#patient-label div#patient-full-name h1 a {
+	font-size: larger;
 }
 
-div#appointment-history span {
-	display: block;
-	margin: auto 5px;
+div#patient-label div#patient-phone:hover, div#patient-label div#patient-cell-phone:hover {
+	cursor: pointer;
 }
 
-div#appointment-history span {
-	display: block;
-	margin: 0;
-
-}
-
-div#appointment-history {
-	text-align: left;
-	vertical-align: middle;
-}
 
 .pull-right {
 	float:right !important;
@@ -96,7 +122,6 @@ input {
 }
 
 BODY {
-	font-family: Arial, Verdana, Tahoma, Helvetica, sans-serif;
 	padding:0 !important;
 	margin:0 !important;
 }
@@ -125,7 +150,7 @@ h3 {
 }
 
 h3 a, .pull-right a  {
-	font-size: x-small !important;
+
 	display: inline-block !important;
 	padding-left: 5px !important;
 
@@ -273,12 +298,14 @@ div#divR1I1,div#divR1I2,div#divR2I1,div#divR2I2 {
 
 
 div.topBox {
-	border-left:grey thin solid;
-	border-right:grey thin solid;
-	border-bottom:grey thin solid;
+	/*! border-left:grey thin solid; */
+	/*! border-right:grey thin solid; */
+	/*! border-bottom:grey thin solid; */
 	margin-left:2.5px;
 	margin-right:2.5px;
 	margin-bottom:5px;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
 }
 
 div.cppNotesList {
@@ -331,20 +358,26 @@ div#encMainDivWrapper {
 	margin-top: 5px;
 	margin-left: 2.5px;
 	margin-right: 2.5px;
-	border: black thin inset !important;
+	/*! border: black thin inset !important; */
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
 }
 
 div#header {
-	padding:0px !important;
-	margin: 0px !important;
-	background-color: whitesmoke;
+	padding:0 !important;
+	margin: 0 !important;
+	background-color: white;
 	position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
 	z-index: 101;
-	border-bottom: white 5px solid;
-	border-top: white 5px solid;
+	border-bottom: 1px solid #c0c0c0;
+	display:flex;
+	align-content: stretch;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
 }
 table#encounterHeader {
 	width:100% !important;
@@ -376,7 +409,6 @@ table#encounterHeader td#encounterHeaderLeftColumn h1 {
 	padding-left:7px !important;
 	padding-top:7px !important;
 	display: block !important;
-	font-size: larger !important;
 	color: white !important;
 
 }
@@ -390,32 +422,6 @@ table#encounterHeader td#encounterHeaderRightColumn {
 	width: 10.5%;
 }
 
-/*table#encounterHeader td#encounterHeaderCenterColumn {*/
-/*	width:70%;*/
-/*}*/
-
-/*table#encounterHeader tr td#encounterHeaderCenterColumn #patient-label span {*/
-/*	display: inline-block*/
-/*}*/
-
-#patient-label span.label, #appointment-history span.label {
-	font-weight: normal !important;
-	font-size: x-small !important;
-	text-decoration: none;
-}
-
-/* table#encounterHeader span.HelpAboutLogout a {
-	font-size: x-small !important;
-	color: white !important;
-	float: right !important;
-	padding: 0 3px !important;
-} */
-
-/* table#encounterHeader span.HelpAboutLogout a[href*='About.jsp'] {
-	border-right: white thin groove !important;
-} */
-
-
 div#encounterTools {
 	display: flex;
 	flex-wrap: wrap;
@@ -423,31 +429,23 @@ div#encounterTools {
 
 div#encounterTools fieldset {
 	flex:1;
-	border: grey thin groove;
 }
 
-
-div#topContent {
-	font-size: 8pt;
-	padding: 0px !important;
-	margin: 0px !important;
-}
-
-div#encMainDiv div.note {
-	margin: 0px !important;
-	padding: 0px !important;
-	margin: 3px 5px 3px 5px !important;
-	font-size: 80% !important;
-	color: #3366CC !important;
-}
+/*div#encMainDiv div.note {*/
+/*	padding: 0 !important;*/
+/*	!*margin: 3px 5px 3px 5px !important;*!*/
+/*}*/
 
 div#encMainDiv div.note div div [id*="txt"] {
-	margin: 0px !important;
-	padding: 3px 0px 3px 5px !important;
+	margin: 0 !important;
+	padding: 3px 0 3px 0 !important;
+}
+
+.note div div[id^='wrapper'] {
+	padding: 2px 5px;
 }
 
 .doctorInfo {
-	font-size: x-small;
 	font-weight: bold;
 	background-color: #A39FC4;
 }
@@ -457,19 +455,12 @@ div#encMainDiv div.note div div [id*="txt"] {
 }
 
 .patientInfo {
-	font-size: small;
 	font-weight: bold;
 	background-color: #CBC9E0;
 }
 
-.ControlTextarea {
-	font-family: Verdana, Tahoma, Arial, sans-serif;
-	font-size: 100%;
-}
 
 .ControlSelect {
-	font-family: Verdana, Tahoma, Arial, sans-serif;
-	font-size: 80%;
 	width: 100%;
 }
 
@@ -492,7 +483,6 @@ div#encMainDiv div.note div div [id*="txt"] {
 	padding-left: 0;
 	padding-right: 0;
 	width: 100%;
-	font-size: 80%;
 }
 
 .MainTableTopRowLeftColumn {
@@ -502,7 +492,6 @@ div#encMainDiv div.note div div [id*="txt"] {
 	border-top: 2px solid #A9A9A9;
 	height: 34px;
 	max-width: 130px;
-	font-size: 110%;
 	font-weight: bold;
 	color: #FFFFFF;
 }
@@ -585,7 +574,6 @@ div.demographicSection {
 
 div.demographicSection h3 {
 	background-color: #ccccff;
-	font-size: 8pt;
 	font-weight: bold;
 	margin-top: 0px;
 	padding-top: 0px;
@@ -627,11 +615,6 @@ div.demographicDetail {
 	background-color: #eeeeff;
 }
 
-div.label {
-	clear: both;
-	float: left;
-}
-
 #viewMobileMenu,.mobileScrollBtns,.mobileTitle,.mobileTopBar {
 	display: none;
 }
@@ -660,17 +643,12 @@ div.demographicWrapper {
 	border-right: 3px solid black;
 	padding: 3px;
 	z-index: 10;
-	font-size: 9px;
 	width: 25em;
 }
 
 .menu a {
 	text-decoration: none;
 	color: white;
-}
-
-div.label {
-	display: block;
 }
 
 /*****************/
@@ -685,42 +663,36 @@ div.label {
 
 .Title {
 	font-weight: bold;
-	font-size: 110%;
 	color: white;
 	background-color: #6699cc;
 }
 
 .fieldBox {
-	font-family: tahoma, helvetica;
+
 	background-color: #ddddff;
 }
 
 .data {
 	background-color: #F7F7F7;
-	font-size: 80%;
 }
 
 .data2 {
 	background-color: #F7F7F7;
 	color: #3366CC;
-	font-size: 9px;
 }
 
 .data3 {
 	color: #15120B;
-	font-size: 11px;
 }
 
 .data4 {
 	background-color: #F7F7F7;
 	color: #3366CC;
-	font-size: 12px;
 }
 
 .data5 {
 	background-color: #FDFEC7;
 	color: #3366CC;
-	font-size: 9px;
 }
 
 div.leftBox {
@@ -743,7 +715,6 @@ div.leftBox h3 a {
 div.leftBox h3 {
 	margin:0px !important;
 	background-color: #6699cc;
-	font-size: 9px;
 	color: white;
 	font-weight: bold;
 	padding-left: 5px;
@@ -752,7 +723,6 @@ div.leftBox h3 {
 div.leftBox ul {
 	padding:0px !important;
 	margin: 0px !important;
-	font-size: 9px;
 	list-style: none;
 	list-style-type: none;
 	list-style-position: outside;
@@ -776,7 +746,6 @@ div.leftBox li {
 	border-right: 3px solid black;
 	padding: 3px;
 	z-index: 101;
-	font-size: 9px;
 }
 
 .menuItemright {
@@ -806,7 +775,6 @@ div.leftBox li {
 .links {
 	color: blue;
 	text-decoration: none;
-	font-size: 9px;
 }
 
 .linkhover {
@@ -817,19 +785,16 @@ div.leftBox li {
 .editBtn {
 	float: right;
 	margin-right: 5px;
-	font-size: 8px;
 }
 
 .caseNote_date {
 	float: left;
-	font-size: 1.0em;
 	width: 25%;
 	font-weight: bold;
 }
 
 .caseNote_content {
 	float: left;
-	font-size: 1.0em;
 	width: 60%;
 }
 
@@ -837,7 +802,6 @@ div.leftBox li {
 	background-color: #CCCCFF;
 	color: #000000;
 	width: 100%;
-	font-size: 9px;
 }
 
 .observation,.observationEdit,.showEditDate {
@@ -855,26 +819,22 @@ div.leftBox li {
 .topLinks {
 	color: black;
 	text-decoration: none;
-	font-size: 9px;
 }
 
 .topLinkhover {
 	color: blue;
 	text-decoration: underline;
-	font-size: 9px;
 }
 
 div.newNote {
 	color: #000000;
-	font-family: arial, sans-serif;
-	font-size: 0.8em;
 	margin: 5px 0px 5px 5px;
 	float: left;
 }
 
 div.newNote pre {
 	color: #000000;
-	font-family: arial, sans-serif;
+
 	margin: 0px 3px 0px 3px;
 	width: 100%;
 	clear: left;
@@ -912,7 +872,6 @@ ul#issueIdList {
 .showEdContent {
 	/*border: thin ridge black;*/
 	background-color: #CCCCFF;
-	font-size: 9px;
 	position: absolute;
 	display: none;
 	z-index: 200;
@@ -947,7 +906,6 @@ div#issueNoteAssign {
 .enTemplate_name_auto_complete {
 	width: 350px;
 	background: #fff;
-	font-size: 9px;
 	text-align: left;
 }
 
@@ -990,7 +948,6 @@ p.passwdErr {
 	border: 1px solid black;
 	border-radius: 3px 3px 3px 3px;
 	box-shadow: 2px 2px 4px;
-	font-size: 12px;
 	padding: 4px;
 	text-align: center;
 	width: 130px;
@@ -1002,44 +959,38 @@ p.passwdErr {
 }
 
 /* IMPORTED FROM INLINE */
-li.cpp {
-	text-indent: 5px;
-	color: #000000;
-	font-family: arial, sans-serif;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
+/*li.cpp {*/
+/*	text-indent: 5px;*/
+/*	color: #000000;*/
+/*	text-overflow: ellipsis;*/
+/*	overflow: hidden;*/
+/*}*/
 
 /*Note format */
 div.newNote {
 	color: #000000;
-	font-family: arial, sans-serif;
-	font-size: 0.8em;
-	margin: 5px 0px 5px 5px;
+	margin: 5px 0 5px 5px;
 	float: left;
 	width: 98%;
 }
 
 div.newNote pre {
 	color: #000000;
-	font-family: arial, sans-serif;
-	margin: 0px 3px 0px 3px;
+	margin: 0 3px 0 3px;
 	width: 100%;
 	clear: left;
 }
 
 div.note {
 	color: #000000;
-	font-family: arial, sans-serif;
-	margin: 3px 0px 3px 5px;
+	margin: 3px auto;
 	float: left;
 	width: 98%;
 }
 
 div.note pre {
 	color: #000000;
-	font-family: arial, sans-serif;
-	margin: 0px 3px 0px 3px;
+	margin: 0 3px 0 3px;
 	width: 100%;
 	clear: left;
 }
@@ -1049,19 +1000,14 @@ div.note pre {
 	background-color: #EEEEEE !important;
 	color: #111111 !important;
 	width: 100% !important;
-	font-size: x-small !important;
 	border-top:#CCCCCC thin solid !important;
 }
 
 .txtArea {
-	font-family: arial, sans-serif;
-	font-size: 1.0em;
 	width: 99%;
-	rows: 10;
 	overflow: hidden;
 	border: none;
-	font-family: arial, sans-serif;
-	margin: 0px 3px 0px 3px;
+	font-size: larger;
 }
 
 p.passwd {
@@ -1089,7 +1035,6 @@ span.measureCol3 {
 .links {
 	color: blue;
 	text-decoration: none;
-	font-size: 9px;
 }
 
 .linkhover {
@@ -1101,7 +1046,6 @@ span.measureCol3 {
 .enTemplate_name_auto_complete {
 	width: 350px;
 	background: #fff;
-	font-size: 9px;
 	text-align: left;
 }
 
@@ -1139,7 +1083,6 @@ div.autocomplete {
 	border: 1px solid #ccc;
 	margin: 0px;
 	padding: 0px;
-	font-size: 9px;
 	text-align: left;
 	max-height: 200px;
 	overflow: auto;
@@ -1165,8 +1108,6 @@ div.autocomplete ul li {
 
 .encTypeCombo {
 	margin: 0px;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 9px;
 	width: 200px;
 	text-align: left;
 	vertical-align: middle;
@@ -1181,7 +1122,6 @@ div.autocomplete ul li {
 
 .printOps {
 	background-color: #CCCCFF;
-	font-size: 9px;
 	position: absolute;
 	display: none;
 	z-index: 1;
@@ -1197,7 +1137,6 @@ div.autocomplete ul li {
 	right: 100px;
 	bottom: 200px;
 	background-color: transparent;
-	font-size: 8px;
 	text-align: center;
 }
 
@@ -1208,7 +1147,6 @@ div.autocomplete ul li {
 
 .showEdContent {
 	background-color: #CCCCFF;
-	font-size: 9px;
 	position: absolute;
 	display: none;
 	z-index: 200;
@@ -1220,7 +1158,6 @@ div.autocomplete ul li {
 /* Imported from casemgmt.css */
 
 .blueText {
-	font-size: 9pt;
 	vertical-align: top;
 }
 
@@ -1239,7 +1176,6 @@ div.autocomplete ul li {
 .subject {
 	background-color: #003399;
 	color: #FFFFFF;
-	font-size: 14pt;
 	font-weight: bold;
 	text-align: center;
 }
@@ -1318,10 +1254,8 @@ div.autocomplete ul li {
 
 div.tabs th,div.tabs td,s,#rightcol div.help,.colbar,.tasknav,body.docs div#toc,#leftcol,.legend,.bars
 {
-	font-size: xx-small;
 	voice-family: "\"}\"";
 	voice-family: inherit;
-	font-size: x-small;
 }
 
 .tabs td,.tabs th,dt,.tasknav .selfref,#login .username,.selection {
