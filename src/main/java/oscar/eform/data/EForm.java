@@ -977,6 +977,8 @@ public class EForm extends EFormBase {
 				&& ! beforeElement.nameIs("style")) {
 					beforeElement.before(element);
 					break;
+				} else {
+					headElement.prependChild(element);
 				}
 			}
 		} else {
