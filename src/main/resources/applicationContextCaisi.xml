@@ -114,7 +114,7 @@
             <list>
                 <!-- Configure the scheduled task -->
                 <bean class="org.springframework.scheduling.concurrent.ScheduledExecutorTask">
-                    <property name="delay" value="60000" />
+                    <property name="delay" value="6000000" />
                     <property name="period" value="3600000" />
                     <property name="runnable" ref="scheduledAnonymousClientDischargeTask" />
                 </bean>

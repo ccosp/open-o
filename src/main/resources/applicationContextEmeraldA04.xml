@@ -20,8 +20,8 @@
             <list>
                 <!-- Configure the scheduled task -->
                 <bean class="org.springframework.scheduling.concurrent.ScheduledExecutorTask">
-                    <property name="delay" value="1000" />
-                    <property name="period" value="60000" />
+                    <property name="delay" value="200000" />
+                    <property name="period" value="600000" />
                     <property name="runnable" ref="emeraldA04ScheduledPushTask" />
                 </bean>
             </list>
