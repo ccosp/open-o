@@ -13,6 +13,7 @@
 		load properties from additional property files; oscar.properties is
 		already loaded
 	-->
+	<bean class="org.ServletContextConfig"/>
 	<bean id="propertyConfigurer" class="org.oscarehr.common.OscarPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
