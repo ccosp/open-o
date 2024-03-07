@@ -1598,7 +1598,7 @@
 			     <version>3.2.5</version>
 		        <configuration>
 		          <skipTests>false</skipTests>
-		          <argLine>-Xms512m -Xmx512m -Xss256k -XX:MaxNewSize=64m -XX:MaxPermSize=192m</argLine>
+		          <argLine>-Xms4096m -Xmx4096m -Xss2048k -XX:MaxNewSize=256m -XX:MaxPermSize=512m</argLine>
 					<excludes>
 						<exclude>**/AR2005*.java</exclude>
 						<exclude>**/OntarioMDSpec4DataTest.java</exclude>
