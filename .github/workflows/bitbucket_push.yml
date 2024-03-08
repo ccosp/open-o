@@ -1,0 +1,21 @@
+name: Push to Bitbucket
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push to Bitbucket
+        run: |
+          eval $(ssh-agent -s)
+          ssh-add <(echo "$BITBUCKET_SSH_KEY")
+          git remote add bitbucket git@bitbucket.org:cc-open-osc/open-osps-emr-security-project.git
+          git push bitbucket
