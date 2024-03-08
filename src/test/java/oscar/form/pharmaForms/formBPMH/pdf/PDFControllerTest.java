@@ -102,7 +102,7 @@ public class PDFControllerTest {
 
 	@Test
 	public void testGetOutput() {
-		assertEquals( "/var/lib/tomcat6", pdfController.getOutputPath() );
+		assertEquals( "/var/lib/OscarDocument", pdfController.getOutputPath() );
 	}
 	
 	@Test
