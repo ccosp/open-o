@@ -57,6 +57,7 @@
     String encTimeMandatoryValue = OscarProperties.getInstance().getProperty("ENCOUNTER_TIME_MANDATORY","false");
 
 %>
+<!DOCTYPE html>
 <html:html locale="true">
 <head>
 	<title>
@@ -84,7 +85,6 @@
 <%-- for popup menu of forms --%>
 <script src="<c:out value="${ctx}"/>/share/javascript/popupmenu.js" type="text/javascript"></script>
 <script src="<c:out value="${ctx}"/>/share/javascript/menutility.js" type="text/javascript"></script>
-
 
 <!-- calendar stylesheet -->
 <link rel="stylesheet" type="text/css" media="all" href="<c:out value="${ctx}"/>/share/calendar/calendar.css" title="win2k-cold-1">
@@ -466,7 +466,6 @@ function init() {
     // if(!NiftyCheck()) {
     //     return;
     // }
-	//
     // Rounded("div.showEdContent","all","transparent","#CCCCCC","big border #000000");
     // Rounded("div.printOps","all","transparent","#CCCCCC","big border #000000");
     Calendar.setup({ inputField : "printStartDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printStartDate_cal", singleClick : true, step : 1 });
@@ -539,11 +538,12 @@ window.onbeforeunload = onClosing;
 			<input type="hidden" id="archived" name="archived" value="false">
 			<input type="hidden" id="annotation_attrib" name="annotation_attrib">
 			<h3 id="winTitle"></h3>
-			<textarea style="margin: 10px;" cols="50" rows="15" id="noteEditTxt"
-				name="value"></textarea>
+
+			<textarea  cols="50" rows="15" id="noteEditTxt"
+				name="value" class="boxsizingBorder"></textarea>
 			<br>
 
-			<table>
+			<table style="text-align: left; width:100%;">
 				<tr id="Itemproblemdescription">
 					<td><bean:message
 							key="oscarEncounter.problemdescription.title" />:</td>
@@ -634,9 +634,11 @@ window.onbeforeunload = onClosing;
 					</select></td>
 				</tr>
 			</table>
+			<div class="control-panel">
 			<input type="hidden" id="startTag" value='<bean:message key="oscarEncounter.Index.startTime"/>'>
 			<input type="hidden" id="endTag" value='<bean:message key="oscarEncounter.Index.endTime"/>'>
-			<br> <span style="float: right; margin-right: 10px;"> <input
+			<br> <span style="float: right; margin-right: 10px;">
+				<input
 				type="image"
 				src="<c:out value="${ctx}/oscarEncounter/graphics/copy.png"/>"
 				title='<bean:message key="oscarEncounter.Index.btnCopy"/>'
@@ -657,25 +659,31 @@ window.onbeforeunload = onClosing;
 				title='<bean:message key="global.btnExit"/>'
 				onclick="this.focus();$('channel').style.visibility ='visible';$('showEditNote').style.display='none';return false;">
 			</span>
+				<label for="position">
 			<bean:message key="oscarEncounter.Index.btnPosition" />
+				</label>
 			<select id="position" name="position"><option id="popt0"
 					value="0">1</option>
 			</select>
-			<div id="issueNoteInfo" style="clear: both; text-align: left;"></div>
+			</div>
+			<div id="issueNoteInfo"></div>
 			<div id="issueListCPP"
 				style="background-color: #FFFFFF; height: 200px; width: 350px; position: absolute; z-index: 1; display: none; overflow: auto;">
 				<div class="enTemplate_name_auto_complete"
 					id="issueAutocompleteListCPP"
-					style="position: relative; left: 0px; display: none;"></div>
+					style="position: relative; left: 0; display: none;"></div>
 			</div>
+			<div class="add-issues">
+			<label for="issueAutocompleteCPP">
 			<bean:message key="oscarEncounter.Index.assnIssue" />
+			</label>
 			&nbsp;<input tabindex="100" type="text" id="issueAutocompleteCPP"
 				name="issueSearch" style="z-index: 2;" size="25">&nbsp; <span
 				id="busy2" style="display: none"><img
 				style="position: absolute;"
 				src="<c:out value="${ctx}/oscarEncounter/graphics/busy.gif"/>"
 				alt="<bean:message key="oscarEncounter.Index.btnWorking"/>"></span>
-
+			</div>
 		</form>
 	</div>
 	<div id="printOps" class="printOps">
