@@ -24,18 +24,6 @@
 
 package org.oscarehr.managers;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
-import javax.servlet.ServletContext;
-
 import org.apache.logging.log4j.Logger;
 import org.jpedal.PdfDecoder;
 import org.jpedal.exception.PdfException;
@@ -46,6 +34,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oscar.OscarProperties;
 
+import javax.servlet.ServletContext;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 /**
  * the NioFileManager handles all file input and output of all OscarDocument files
  * by providing several convenience utilities.
@@ -54,7 +50,7 @@ import oscar.OscarProperties;
  * in every single page of OSCAR code.
  */
 @Service
-public final class NioFileManager {
+public final class NioFileManager implements Serializable {
 	
 	@Autowired
 	private ServletContext context;
