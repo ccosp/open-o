@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'temurin' 
           cache: maven
       - run: mvn -B package --file pom.xml -DskipTests=true
 
