@@ -21,7 +21,6 @@
  * Toronto, Ontario, Canada
  */
 
-
 package org.oscarehr.common.web;
 
 import java.util.ArrayList;
@@ -43,31 +42,34 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 import oscar.OscarProperties;
 
 public final class OscarSpringContextLoader extends ContextLoaderListener {
-	
+
 	private static final Logger log = MiscUtils.getLogger();
 	private static final String CONTEXTNAME = "classpath:applicationContext";
 	private static final String PROPERTYNAME = "ModuleNames";
 
 	@Override
-    protected WebApplicationContext createWebApplicationContext(ServletContext servletContext, ApplicationContext parent) throws BeansException {
+	protected WebApplicationContext createWebApplicationContext(ServletContext servletContext,
+			ApplicationContext parent) throws BeansException {
 		String contextClassName = servletContext.getInitParameter(CONTEXT_CLASS_PARAM);
-		log.info("Creating Spring context");
-        Class<?> contextClass;
-        if (contextClassName != null) {
+		log.error("Creating Spring context");
+		Class<?> contextClass;
+		if (contextClassName != null) {
 			try {
 				contextClass = Class.forName(contextClassName, true, Thread.currentThread().getContextClassLoader());
 			} catch (ClassNotFoundException ex) {
 				throw new ApplicationContextException("Failed to load context class [" + contextClassName + "]", ex);
 			}
-			
+
 			if (!ConfigurableWebApplicationContext.class.isAssignableFrom(contextClass)) {
-				throw new ApplicationContextException("Custom context class [" + contextClassName + "] is not of type ConfigurableWebApplicationContext");
+				throw new ApplicationContextException("Custom context class [" + contextClassName
+						+ "] is not of type ConfigurableWebApplicationContext");
 			}
 		} else {
-            contextClass = XmlWebApplicationContext.class;
-        }
+			contextClass = XmlWebApplicationContext.class;
+		}
 
-		ConfigurableWebApplicationContext wac = (ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);
+		ConfigurableWebApplicationContext wac = (ConfigurableWebApplicationContext) BeanUtils
+				.instantiateClass(contextClass);
 		wac.setParent(parent);
 		wac.setServletContext(servletContext);
 
@@ -77,7 +79,7 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
 
 		if (modules != null) {
 			modules = modules.trim();
-			
+
 			if (modules.length() > 0) {
 				moduleList = modules.split(",");
 			}
@@ -86,24 +88,32 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
 		// now we create an list of application context file names
 		ArrayList<String> configLocations = new ArrayList<String>();
 
-        // always load applicationContext.xml
-        configLocations.add(CONTEXTNAME + ".xml");
+		// always load applicationContext.xml
+		configLocations.add(CONTEXTNAME + ".xml");
 
-        for (String s : moduleList) {
-            configLocations.add(CONTEXTNAME + s + ".xml");
+		for (String s : moduleList) {
+			configLocations.add(CONTEXTNAME + s + ".xml");
 		}
 
-        for (String s : configLocations) {
-            log.info("Preparing " + s);            
-        }
+		for (String s : configLocations) {
+			log.info("Preparing " + s);
+		}
 
 		wac.setConfigLocations(configLocations.toArray(new String[0]));
 		wac.refresh();
-		
-        if (SpringUtils.getBeanFactory() == null) {
-			SpringUtils.setBeanFactory(wac);
+
+		// if (SpringUtils.getBeanFactory() == null) {
+		// SpringUtils.setBeanFactory(wac);
+		// } Aparna
+
+		if (SpringUtils.getApplicationContext() == null) {
+			try {
+				SpringUtils.setApplicationContext(wac);
+			} catch (IllegalArgumentException e) {
+				log.error("Error setting getApplicationContext", e);
+			}
 		}
-        
+
 		return wac;
 	}
 }
