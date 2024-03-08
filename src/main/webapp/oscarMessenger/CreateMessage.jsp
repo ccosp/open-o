@@ -109,15 +109,14 @@ if(recall){
 }
 
 %>
-
+<!DOCTYPE html>
 <html:html locale="true">
 <head>
 <title><bean:message key="oscarMessenger.CreateMessage.title" /></title>
 
 <link rel="stylesheet" type="text/css" href="encounterStyles.css">
-<link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"  />
 
-<style type="text/css">
+<style>
 
 	summary {
 		cursor: pointer;
@@ -274,6 +273,7 @@ if(recall){
 </script>
 </head>
 <body class="BodyStyle" vlink="#0000FF">
+<div class="container">
 <table class="MainTable" id="scrollNumber1">
 	<tr class="MainTableTopRow">
 		<td class="MainTableTopRowLeftColumn">
@@ -479,10 +479,15 @@ if(recall){
 						</div> <!-- end ChooseRecipientsBox -->
 					</td>
 					<td bgcolor="#EEEEFF" valign=top colspan="2"><!--Message and Subject Cell-->
+						<div>
+						<label for="subject">
 					<bean:message key="oscarMessenger.CreateMessage.formSubject" /> :
-					<html:text name="msgCreateMessageForm" property="subject" size="67" value="${messageSubject}"/> <br>
-					<br>
-					<html:textarea name="msgCreateMessageForm" property="message" cols="60" rows="18" value="${messageBody}"/> 
+						</label>
+					<html:text name="msgCreateMessageForm" styleId="subject" property="subject" size="67" value="${messageSubject}"/> <br>
+						</div>
+						<div >
+					<html:textarea styleClass="boxsizingBorder" name="msgCreateMessageForm" property="message" cols="60" rows="18" value="${messageBody}"/>
+						</div>
 					<%
                        String att = bean.getAttachment();
                        String pdfAtt = bean.getPDFAttachment();
@@ -571,5 +576,6 @@ if(recall){
 		<td class="MainTableBottomRowRightColumn">&nbsp;</td>
 	</tr>
 </table>
+</div>
 </body>
 </html:html>
