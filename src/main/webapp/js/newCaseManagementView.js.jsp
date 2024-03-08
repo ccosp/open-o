@@ -445,8 +445,9 @@ function notesLoader(offset, numToReturn, demoNo) {
 	$("notesLoading").style.display = "inline";
 	var params = "method=viewNotesOpt&offset=" + offset + "&numToReturn=" + numToReturn + "&demographicNo=" + demoNo;
 	var params2 = jQuery("input[name='filter_providers'],input[name='filter_roles'],input[name='issues'],input[name='note_sort']").serialize();
-	if(params2.length>0)
+	if(params2.length>0) {
 		params = params + "&" + params2;
+	}
 	new Ajax.Updater("encMainDiv",
 			ctx + "/CaseManagementView.do",
 			{
@@ -772,8 +773,8 @@ function showEdit(e,title, noteId, editors, date, revision, note, url, container
     }
     noteIssueUl += "</ul>";
 
-    var noteInfo = "<div style='float:right;'><i>Encounter Date:&nbsp;" + date + "&nbsp;rev<a href='#' onclick='return showHistory(\"" + noteId + "\",event);'>"  + revision + "</a></i></div>" +
-                    "<div><span style='float:left;'>Editors: </span>" + editorUl + noteIssueUl + "</div><br style='clear:both;'>";
+    var noteInfo = "<div style='width: 50%;text-align: right;float: right;clear: both;'><i>Encounter Date:&nbsp;" + date + "&nbsp;rev<a href='#' onclick='return showHistory(\"" + noteId + "\",event);'>"  + revision + "</a></i></div>" +
+                    "<div style='width: 50%;text-align:left;'><label>Editors: </label>" + editorUl + "</div><div style='width:100%'>" + noteIssueUl + "</div>";
 
     $("issueNoteInfo").update(noteInfo);
     $("frmIssueNotes").action = url;

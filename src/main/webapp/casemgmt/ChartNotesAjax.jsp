@@ -397,7 +397,7 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
  						<% } %>
  												
 						<img title="<bean:message key="oscarEncounter.print.title"/>" id='print<%=globalNoteId%>' alt="<bean:message key="oscarEncounter.togglePrintNote.title"/>" onclick="togglePrint(<%=globalNoteId%>, event)" style='float: right; margin-right: 5px;' src='<%=ctx %>/oscarEncounter/graphics/printer.png' />
-						<textarea tabindex="7" cols="84" rows="10" class="txtArea" wrap="soft" style="line-height: 1.1em;" name="caseNote_note" id="caseNote_note<%=savedId%>"><%=cform.getCaseNote_note()%></textarea>
+						<textarea tabindex="7" cols="84" rows="10" class="txtArea boxsizingBorder" wrap="soft" style="line-height: 1.1em;" name="caseNote_note" id="caseNote_note<%=savedId%>"><%=cform.getCaseNote_note()%></textarea>
 						
 						<div class="sig" style="display:inline;<%=bgColour%>" id="sig<%=globalNoteId%>">
 							<%@ include file="noteIssueList.jsp"%>
@@ -788,11 +788,11 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 			</div><!-- end of div n<%=globalNoteId%> -->
 		</div><!-- end of div <%=noteIdAttribute%> -->
 		
-		<% if (request.getAttribute("moreNotes") != null && ((Boolean) request.getAttribute("moreNotes"))) { %>
-		<script type="text/javascript">
-		setupOneNote('<%=offset%><%=idx+1%>');
-		</script>
-		<% } %>
+<%--		<% if (request.getAttribute("moreNotes") != null && ((Boolean) request.getAttribute("moreNotes"))) { %>--%>
+<%--		<script type="text/javascript">--%>
+<%--		setupOneNote('<%=offset%><%=idx+1%>');--%>
+<%--		</script>--%>
+<%--		<% } %>--%>
 
 <%
 		//if we are not editing note, remember note ids for setting event listeners
@@ -830,7 +830,7 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 		<input type="hidden" id="bgColour<%=savedId%>" value="color:#000000;background-color:#CCCCFF;" />
 		<input type="hidden" id="editWarn<%=savedId%>" value="false" />
 		<div id="n<%=savedId%>">
-			 <textarea tabindex="7" cols="84" rows="10" class="txtArea" wrap="hard" style="line-height: 1.1em;" name="caseNote_note" id="caseNote_note<%=savedId%>"><%=cform.getCaseNote_note() %></textarea>
+			 <textarea tabindex="7" cols="84" rows="10" class="txtArea boxsizingBorder" wrap="hard" style="line-height: 1.1em;" name="caseNote_note" id="caseNote_note<%=savedId%>"><%=cform.getCaseNote_note() %></textarea>
 			<div class="sig" id="sig<%=savedId%>">
 				<%@ include file="noteIssueList.jsp"%>
 			</div> <!-- end of div sig<%=savedId%> -->

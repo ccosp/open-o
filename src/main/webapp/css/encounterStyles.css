@@ -35,14 +35,20 @@
 	font-size: 11px;
 }
 
-.noteRounded {
-	background-color: #ffffff;
+#noteEditTxt {
+	font-size: larger;
+}
+
+.noteRounded, .showEdContent, .note {
 	border: 1px solid #cccccc;
 	border-radius: 4px;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.noteRounded {
+	background-color: #ffffff;
 }
 
 fieldset {
@@ -78,6 +84,11 @@ div#patient-full-name a {
 	display:block;
 }
 
+.boxsizingBorder {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 
 div#patient-label div {
 	margin:auto 5px;
@@ -333,6 +344,13 @@ div.topBox ul {
 	padding-left: 0;
 	margin-top: 0;
 	margin-bottom: 0;
+	list-style: none;
+}
+
+.topBox-notes {
+	max-height: 150px;
+	overflow-y: auto;
+	word-wrap: anywhere;
 }
 
 /*div#divR1I1,div#divR1I2,div#divR2I1,div#divR2I2 {*/
@@ -870,23 +888,19 @@ ul#issueIdList {
 }
 
 .showEdContent {
-	/*border: thin ridge black;*/
 	background-color: #CCCCFF;
 	position: absolute;
 	display: none;
 	z-index: 200;
 	right: 100px;
 	bottom: 200px;
-	text-align: center;
+	padding:10px;
+	box-shadow:2px 3px 5px #999;
 }
 
 #showEditButtons,#showEditLogout {
 	float: right;
 	margin-right: 10px;
-}
-
-#noteEditTxt {
-	margin: 10px;
 }
 
 div#issueNoteAssign {
@@ -983,8 +997,7 @@ div.newNote pre {
 
 div.note {
 	color: #000000;
-	margin: 3px auto;
-	float: left;
+	margin: 1px auto;
 	width: 98%;
 }
 
@@ -1144,17 +1157,6 @@ div.autocomplete ul li {
 	display: table-cell;
 	vertical-align: middle;
 }
-
-.showEdContent {
-	background-color: #CCCCFF;
-	position: absolute;
-	display: none;
-	z-index: 200;
-	right: 100px;
-	bottom: 200px;
-	text-align: center;
-}
-
 /* Imported from casemgmt.css */
 
 .blueText {
