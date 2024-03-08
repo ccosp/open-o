@@ -59,7 +59,7 @@
 <nested:size id="num" name="Notes" />
 
 <div style="width: 10%; float: right; text-align: center;">
-<h3 style="padding:0px; background-color:#<c:out value="${param.hc}"/>">
+<h3 style="padding:0; background-color:#<c:out value="${param.hc}"/>">
 <%
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 	com.quatro.service.security.SecurityManager securityManager = new com.quatro.service.security.SecurityManager();
@@ -79,10 +79,10 @@
         
         <c:choose>
             <c:when test='${param.title == "oscarEncounter.oMeds.title" || param.title == "oscarEncounter.riskFactors.title" || param.title == "oscarEncounter.famHistory.title"|| param.noheight == "true"}'>
-                <div style="clear: both; overflow: auto;">
+                <div style='clear:both;' class='topBox-notes'>
             </c:when>
             <c:otherwise>
-                <div style="clear: both; height: inherit; overflow: auto;">
+                <div style='clear:both;' class='topBox-notes'>
             </c:otherwise>
         </c:choose>
 <ul>
