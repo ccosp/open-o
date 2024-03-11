@@ -316,8 +316,6 @@ function setupNotes(){
 <%--}--%>
 
 function scrollDownInnerBar() {
-	console.log("scroll height " + $("encMainDiv").scrollHeight);
-	console.log("scroll top " + $("encMainDiv").scrollTop);
 	$("encMainDiv").scrollTop = $("encMainDiv").scrollHeight;
 }
 
@@ -408,7 +406,7 @@ var notesScrollCheckInterval = null;
 const MAXNOTES = Number.MAX_SAFE_INTEGER;
 
 function notesIncrementAndLoadMore() {
-	if (notesRetrieveOk && $("encMainDiv").scrollTop == 0) {
+	if (notesRetrieveOk && $("encMainDiv").scrollTop === 0) {
 		if($("encMainDiv").scrollHeight > $("encMainDiv").getHeight()) {
 			notesOffset += notesIncrement;
 			notesRetrieveOk = false;
@@ -424,6 +422,7 @@ function notesLoadAll() {
     notesOffset += notesIncrement;
     notesRetrieveOk = false;
     notesCurrentTop = $("encMainDiv").children[0].id;
+	console.log("loading all: " + " offset: " + notesOffset + " max notes: " + MAXNOTES);
     if (notesOffset < MAXNOTES) {
         notesLoader(notesOffset, MAXNOTES, demographicNo);
     }
@@ -442,7 +441,7 @@ function notesLoadAll() {
 
 */
 function notesLoader(offset, numToReturn, demoNo) {
-	$("notesLoading").style.display = "inline";
+	$("notesLoading").show();
 	var params = "method=viewNotesOpt&offset=" + offset + "&numToReturn=" + numToReturn + "&demographicNo=" + demoNo;
 	var params2 = jQuery("input[name='filter_providers'],input[name='filter_roles'],input[name='issues'],input[name='note_sort']").serialize();
 	if(params2.length>0) {
@@ -457,22 +456,23 @@ function notesLoader(offset, numToReturn, demoNo) {
 				insertion: Insertion.Top,
 				onSuccess: function(data) {
 					notesRetrieveOk = (data.responseText.replace(/\s+/g, '').length > 0);
-					if (!notesRetrieveOk) clearInterval(scrollCheckInterval);
+					if (! notesRetrieveOk) {
+						clearInterval(scrollCheckInterval);
+					}
 				},
 				onComplete: function() {
-					$("notesLoading").style.display = "none";
-					if (notesCurrentTop != null) $(notesCurrentTop).scrollIntoView();
-					scrollDownInnerBar();
+					$("notesLoading").hide();
+					$("encMainDiv").scrollTop =  10;
+
+					<%--if (notesCurrentTop != null) {--%>
+					<%--	$(notesCurrentTop).scrollIntoView();--%>
+					<%--}--%>
+					<%--scrollDownInnerBar();--%>
 				}
 			});
 }
 
 function navBarLoader() {
-
-
-   <%--$("leftNavBar").style.height = "660px";--%>
-   <%--$("rightNavBar").style.height = "660px";--%>
-
 
     this.maxRightNumLines = Math.floor($("rightNavBar").getHeight() / 14);
     this.maxLeftNumLines = Math.floor($("leftNavBar").getHeight() / 14);
@@ -529,7 +529,7 @@ function navBarLoader() {
           for( var idx = 0; idx < leftNavBar.length; ++idx ) {
                 var div = document.createElement("div");
                 div.className = "leftBox";
-                div.style.display = "block";
+                <%--div.style.display = "block";--%>
                 div.style.visiblity = "hidden";
                 div.id = leftNavBarTitles[idx];
                 $(navbar).appendChild(div);
@@ -543,7 +543,7 @@ function navBarLoader() {
           for( var idx = 0; idx < rightNavBar.length; ++idx ) {
                 var div = document.createElement("div");
                 div.className = "leftBox";
-                div.style.display = "block";
+                <%--div.style.display = "block";--%>
                 div.id = rightNavBarTitles[idx];
                 $(navbar).appendChild(div);
                 this.arrRightDivs.push(div);
@@ -3297,7 +3297,7 @@ function autoCompleteShowMenuCPP(element, update) {
     }
 
     function togglePrint(noteId,e) {
-	    e.preventDefault();
+		e.preventDefault();
 	    var selected = ctx + "/oscarEncounter/graphics/printerGreen.png";
 	    var unselected = ctx + "/oscarEncounter/graphics/printer.png";
 	    var imgId = "print" + noteId;
@@ -3306,8 +3306,7 @@ function autoCompleteShowMenuCPP(element, update) {
 	    var tmp = "";
 
 	    //see whether we're called in a click event or not
-	    if (e !== null) {
-	    }
+	    if (e) {
 	        Event.stop(e);
         }
         //if selected note has been inserted into print queue, remove it and update image src

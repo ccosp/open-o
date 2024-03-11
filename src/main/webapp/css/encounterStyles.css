@@ -33,6 +33,7 @@
 * {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 	font-size: 11px;
+	overscroll-behavior: none;
 }
 
 #noteEditTxt {
@@ -383,7 +384,7 @@ div#encMainDiv {
 	gap: 2.5px;
 	overflow-y: scroll;
 	height: 100%;
-	flex-basis: 50%;
+	flex-basis: 60%;
 	padding: 10px;
 }
 
@@ -397,7 +398,7 @@ div#encMainDivWrapper {
 }
 
 div#header {
-	padding:0;
+	padding: 0 10px;
 	margin: 0;
 	background-color: white;
 	position: sticky;
@@ -963,11 +964,12 @@ p.passwdErr {
 }
 
 #notesLoading {
-	position: relative !important;
-	background-color: #AAAADD;
-	border: 1px solid black;
-	border-radius: 3px 3px 3px 3px;
-	box-shadow: 2px 2px 4px;
+	position: absolute;
+	background-color: white;
+	opacity: 80%;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	box-shadow: 2px 3px 5px #999;
 	padding: 4px;
 	text-align: center;
 	width: 130px;
