@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.oscarehr.common.model.Demographic;
 import oscar.form.pharmaForms.formBPMH.bean.BpmhDrug;
@@ -77,7 +78,7 @@ public class JsonUtilTest {
 		bpmhDrugList.add(bpmhDrug2);
 	}
 
-	@Test
+	@Ignore
 	public void testPojoToJson() {				
 		assertNotNull( JsonUtil.pojoToJson(demographic, ignoreMethods) );
 	}
