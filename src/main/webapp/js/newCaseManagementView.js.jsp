@@ -294,29 +294,31 @@ function setupNotes(){
 <%--	Rounded("div#nc" + note, "all", "transparent", "#CCCCCC", "big border #000000");--%>
 <%--}--%>
 
-var minDelta =  0.93;
-var minMain;
-var minWin;
-function monitorNavBars(e) {
-    var win = pageWidth();
-    var main = Element.getWidth("body");
+<%--var minDelta =  0.93;--%>
+<%--var minMain;--%>
+<%--var minWin;--%>
+<%--function monitorNavBars(e) {--%>
+<%--    var win = pageWidth();--%>
+<%--    var main = Element.getWidth("body");--%>
 
-    if( e == null ) {
-        minMain = Math.round(main * minDelta);
-        minWin = Math.round(win * minDelta);
-    }
+<%--    if( e == null ) {--%>
+<%--        minMain = Math.round(main * minDelta);--%>
+<%--        minWin = Math.round(win * minDelta);--%>
+<%--    }--%>
 
-    if( main < minMain ) {
-        $("body").style.width = minMain + "px";
-    }
-    else if( win >= minWin &&  main == minMain ) {
-        $("body").style.width = "100%";
-    }
+<%--    if( main < minMain ) {--%>
+<%--        $("body").style.width = minMain + "px";--%>
+<%--    }--%>
+<%--    else if( win >= minWin &&  main == minMain ) {--%>
+<%--        $("body").style.width = "100%";--%>
+<%--    }--%>
 
-}
+<%--}--%>
 
 function scrollDownInnerBar() {
-	$("encMainDiv").scrollTop= $("encMainDiv").scrollHeight;
+	console.log("scroll height " + $("encMainDiv").scrollHeight);
+	console.log("scroll top " + $("encMainDiv").scrollTop);
+	$("encMainDiv").scrollTop = $("encMainDiv").scrollHeight;
 }
 
 function popperup(vheight,vwidth,varpage,pageName) { //open a new popup window
@@ -349,7 +351,7 @@ function viewFullChart(displayFullChart) {
                                 evalScripts: true,
                                 onSuccess: function(request) {
                                                 $("notCPP").update(request.responseText);
-												$("notCPP").style.height = "50%";
+												<%--$("notCPP").style.height = "auto";--%>
 												if( displayFullChart ) {
 													$("quickChart").innerHTML = quickChartMsg;
 													$("quickChart").onclick = function() {return viewFullChart(false);}
@@ -385,14 +387,12 @@ var riskFactorsLabel;
 	Loads issue notes: Social History, Medical History, Ongoing Concerns, Reminders
 */
 function showIssueNotes() {
-/*
-    var issueNoteUrls = {
-        divR1I1:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=SocHistory&title=" + socHistoryLabel + "&cmd=divR1I1",
-        divR1I2:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=MedHistory&title=" + medHistoryLabel + "&cmd=divR1I2",
-        divR2I1:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=Concerns&title=" + onGoingLabel + "&cmd=divR2I1",
-        divR2I2:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=Reminders&title=" + remindersLabel + "&cmd=divR2I2"
-    };
-*/
+	issueNoteUrls = {
+		divR1I1:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=SocHistory&title=" + socHistoryLabel + "&cmd=divR1I1",
+		divR1I2:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=MedHistory&title=" + medHistoryLabel + "&cmd=divR1I2",
+		divR2I1:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=Concerns&title=" + onGoingLabel + "&cmd=divR2I1",
+		divR2I2:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=Reminders&title=" + remindersLabel + "&cmd=divR2I2"
+	};
     var limit = 5;
 
     for( idx in issueNoteUrls ) {
@@ -408,8 +408,8 @@ var notesScrollCheckInterval = null;
 const MAXNOTES = Number.MAX_SAFE_INTEGER;
 
 function notesIncrementAndLoadMore() {
-	if (notesRetrieveOk && $("encMainDiv").scrollTop == 0) {				
-		if($("encMainDiv").scrollHeight > $("encMainDiv").getHeight()) {	
+	if (notesRetrieveOk && $("encMainDiv").scrollTop == 0) {
+		if($("encMainDiv").scrollHeight > $("encMainDiv").getHeight()) {
 			notesOffset += notesIncrement;
 			notesRetrieveOk = false;
 			notesCurrentTop = $("encMainDiv").children[0].id;
@@ -462,6 +462,7 @@ function notesLoader(offset, numToReturn, demoNo) {
 				onComplete: function() {
 					$("notesLoading").style.display = "none";
 					if (notesCurrentTop != null) $(notesCurrentTop).scrollIntoView();
+					scrollDownInnerBar();
 				}
 			});
 }
@@ -469,8 +470,8 @@ function notesLoader(offset, numToReturn, demoNo) {
 function navBarLoader() {
 
 
-   $("leftNavBar").style.height = "660px";
-   $("rightNavBar").style.height = "660px";
+   <%--$("leftNavBar").style.height = "660px";--%>
+   <%--$("rightNavBar").style.height = "660px";--%>
 
 
     this.maxRightNumLines = Math.floor($("rightNavBar").getHeight() / 14);
@@ -515,7 +516,7 @@ function navBarLoader() {
                   ctx + "/CaseManagementView.do?hc=" + Colour.familyHistory + "&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=FamHistory&title=" + famHistoryLabel + "&cmd=FamHistory"+ "&appointment_no="+appointmentNo,
                   ctx + "/oscarEncounter/displayIssues.do?hC=" + Colour.unresolvedIssues,
                   ctx + "/oscarEncounter/displayResolvedIssues.do?hC=" + Colour.resolvedIssues,
-                  ctx + "/oscarEncounter/displayDecisionSupportAlerts.do?providerNo=" + providerNo + "&demographicNo=" + demographicNo,                                       
+                  ctx + "/oscarEncounter/displayDecisionSupportAlerts.do?hC=" + Colour.contacts + "&providerNo=" + providerNo + "&demographicNo=" + demographicNo,
                   ctx + "/oscarEncounter/displayEpisodes.do?hC=" + Colour.episode,
                   ctx + "/oscarEncounter/displayPregnancies.do?hC="+ Colour.episode,
                   ctx + "/oscarEncounter/displayContacts.do?hC=" + Colour.contacts
@@ -546,9 +547,7 @@ function navBarLoader() {
                 div.id = rightNavBarTitles[idx];
                 $(navbar).appendChild(div);
                 this.arrRightDivs.push(div);
-
                 this.popColumn(rightNavBar[idx],rightNavBarTitles[idx],rightNavBarTitles[idx], navbar, this);
-
           }
 
 
@@ -1651,7 +1650,7 @@ function minView(e) {
     var print = 'print' + nId;
     var func;
     var editWarn = "editWarn" + nId;
-    if( $F(editWarn) == "true" ) {
+    if( $F(editWarn) === "true" ) {
         func = "noPrivs(event);";
     }
     else {
@@ -2018,7 +2017,7 @@ function editNote(e) {
     Element.remove(txtId);
     caseNote = "caseNote_note" + nId;
 
-    var input = "<textarea tabindex='7' cols='84' rows='10' wrap='hard' class='txtArea' style='line-height:1.1em;' name='caseNote_note' id='" + caseNote + "'>" + payload + "<\/textarea>";
+    var input = "<textarea tabindex='7' cols='84' rows='10' wrap='hard' class='txtArea boxsizingBorder' style='line-height:1.1em;' name='caseNote_note' id='" + caseNote + "'>" + payload + "<\/textarea>";
     new Insertion.Top(txt, input);
     var printimg = "<img title='Print' id='print" + nId + "' alt='Toggle Print Note' onclick='togglePrint(" + nId + ", event)' style='float:right; margin-right:5px;' src='" + ctx + "/oscarEncounter/graphics/printer.png'>";
 
@@ -2043,7 +2042,7 @@ function editNote(e) {
     Element.observe(caseNote, 'click', getActiveText);
 
     if( passwordEnabled ) {
-           input = "<p style='background-color:#CCCCFF; display:none; margin:0px;' id='notePasswd'>Password:&nbsp;<input type='password' name='caseNote.password'/><\/p>";
+           input = "<p style='background-color:#CCCCFF; display:none; margin:0;' id='notePasswd'>Password:&nbsp;<input type='password' name='caseNote.password'/><\/p>";
            new Insertion.Bottom(txt, input);
     }
 
@@ -2236,7 +2235,7 @@ function filter(reset) {
                         evalScripts: true,
                         onSuccess: function(request) {
                                                 $("notCPP").update(request.responseText);
-												$("notCPP").style.height = "50%";
+												<%--$("notCPP").style.height = "50%";--%>
                                            },
                                 onFailure: function(request) {
                                                 $(div).innerHTML = "<h3>" + div + "</h3>Error: " + request.status;
@@ -2524,7 +2523,7 @@ function saveNoteAjax(method, chain) {
                                 evalScripts: true,
                                 onSuccess: function(request) {
                                                 $("notCPP").update(request.responseText);
-												$("notCPP").style.height = "50%";
+												<%--$("notCPP").style.height = "50%";--%>
 												if( fullChart == "true" ) {
 													$("quickChart").innerHTML = quickChartMsg;
 													$("quickChart").onclick = function() {return viewFullChart(false);}
@@ -2990,15 +2989,15 @@ function newNote(e) {
     var newNoteIdx = "0" + newNoteCounter;
     var id = "nc" + newNoteIdx;
     var sigId = "sig"+ newNoteIdx;
-    var input = "<textarea tabindex='7' cols='84' rows='1' wrap='hard' class='txtArea' style='line-height:1.0em;' name='caseNote_note' id='caseNote_note" + newNoteIdx + "'>" + reason + "<\/textarea>";
+    var input = "<textarea tabindex='7' cols='84' rows='1' wrap='hard' class='txtArea boxsizingBorder' style='line-height:1.0em;' name='caseNote_note' id='caseNote_note" + newNoteIdx + "'>" + reason + "<\/textarea>";
     var passwd = "";
     if( passwordEnabled ) {
-        passwd = "<p style='background-color:#CCCCFF; display:none; margin:0px;' id='notePasswd'>Password:&nbsp;<input type='password' name='caseNote.password'/><\/p>";
+        passwd = "<p style='background-color:#CCCCFF; display:none; margin:0;' id='notePasswd'>Password:&nbsp;<input type='password' name='caseNote.password'/><\/p>";
     }
 
     // the extra BR NBSP at the ends are for IE fix for selection box is out of scrolling pane view.
     var div = "<div id='" + id + "' class='newNote'><input type='hidden' id='signed" + newNoteIdx + "' value='false'><input type='hidden' id='editWarn" + newNoteIdx + "' value='false'><div id='n" + newNoteIdx + "'><input type='hidden' id='full" + newNoteIdx + "' value='true'>" +
-              "<input type='hidden' id='bgColour" + newNoteIdx + "' value='color:#000000;background-color:#CCCCFF;'>" + input + "<div class='sig' style='display:inline;' id='" + sigId + "'><\/div>" + passwd + "<\/div><\/div><br \/>&nbsp;<br \/>&nbsp;<br \/>&nbsp;<br \/>";
+              "<input type='hidden' id='bgColour" + newNoteIdx + "' value='color:white;background-color:#CCCCFF;'>" + input + "<div class='sig' style='display:inline;' id='" + sigId + "'><\/div>" + passwd + "<\/div><\/div><br \/>&nbsp;<br \/>&nbsp;<br \/>&nbsp;<br \/>";
 
 
     if( changeToView(caseNote) ) {
@@ -3039,14 +3038,10 @@ function newNote(e) {
     else
         $(caseNote).focus();
 
-    //need delay..something else going on
-    setTimeout(scrollDownInnerBar,1500);
+    <%--//need delay..something else going on--%>
+    <%--setTimeout(scrollDownInnerBar,1500);--%>
 
     return false;
-}
-
-function scrollDownInnerBar() {
-	$("encMainDiv").scrollTop= $("encMainDiv").scrollHeight;
 }
 
 function deleteAutoSave() {
@@ -3302,17 +3297,19 @@ function autoCompleteShowMenuCPP(element, update) {
     }
 
     function togglePrint(noteId,e) {
-        var selected = ctx + "/oscarEncounter/graphics/printerGreen.png";
-        var unselected = ctx + "/oscarEncounter/graphics/printer.png";
-        var imgId = "print" + noteId;
-        var idx;
-        var idx2;
-        var tmp = "";
+	    e.preventDefault();
+	    var selected = ctx + "/oscarEncounter/graphics/printerGreen.png";
+	    var unselected = ctx + "/oscarEncounter/graphics/printer.png";
+	    var imgId = "print" + noteId;
+	    var idx;
+	    var idx2;
+	    var tmp = "";
 
-        //see whether we're called in a click event or not
-        if( e != null )
-            Event.stop(e);
-
+	    //see whether we're called in a click event or not
+	    if (e !== null) {
+	    }
+	        Event.stop(e);
+        }
         //if selected note has been inserted into print queue, remove it and update image src
         //else insert note into print queue
         idx = noteIsQeued(noteId);
@@ -3895,7 +3892,7 @@ function assignNoteAjax(method, chain,programId,demographicNo) {
                                 evalScripts: true,
                                 onSuccess: function(request) {
                                                 $("notCPP").update(request.responseText);
-												$("notCPP").style.height = "50%";
+												<%--$("notCPP").style.height = "50%";--%>
 												if( fullChart == "true" ) {
 													$("quickChart").innerHTML = quickChartMsg;
 													$("quickChart").onclick = function() {return viewFullChart(false);}
