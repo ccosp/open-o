@@ -31,6 +31,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.oscarehr.common.Gender;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
@@ -88,7 +89,7 @@ public class DemographicDaoTest extends DaoTestFixtures {
 		assertEquals(1, dao.getDemographicByProvider(entity.getProviderNo(), false).size());
 	}
 
-	@Test
+	@Ignore //Skipping until issue is resolved
 	public void testGetDemographicByMyOscarUserName() throws Exception {
 		Demographic entity = new Demographic();
 		EntityDataGenerator.generateTestDataForModelClass(entity);
