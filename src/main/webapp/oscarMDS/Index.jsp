@@ -591,8 +591,8 @@ String endDate = (String) request.getAttribute("endDate");
 		    	break;
 		    }
 	
-			if (oldestLab != null) {
-				query += "&newestDate=" + encodeURIComponent(oldestLab);
+			if (oldestLab) {
+				query += "&newestDate=" + oldestLab;
 			}
 			
 			return query;
