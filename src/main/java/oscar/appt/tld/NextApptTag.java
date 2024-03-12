@@ -55,13 +55,15 @@ public class NextApptTag extends TagSupport {
 	}
 
 	public int doStartTag() throws JspException {
-		try {
-			AppointmentManager appointmentManager = SpringUtils.getBean(AppointmentManager.class);
-			String nextAppointment = appointmentManager.getNextAppointmentDate(Integer.parseInt(demoNo));
-			JspWriter out = super.pageContext.getOut();
-			out.print(nextAppointment);
-		} catch (Exception e) {
-			MiscUtils.getLogger().error("Could not fetch next appointment for demo number " + demoNo, e);
+		if(demoNo != null && ! demoNo.isEmpty()) {
+			try {
+				AppointmentManager appointmentManager = SpringUtils.getBean(AppointmentManager.class);
+				String nextAppointment = appointmentManager.getNextAppointmentDate(Integer.parseInt(demoNo));
+				JspWriter out = super.pageContext.getOut();
+				out.print(nextAppointment);
+			} catch (Exception e) {
+				MiscUtils.getLogger().error("Could not fetch next appointment for demo number " + demoNo, e);
+			}
 		}
 		return (SKIP_BODY);
 	}

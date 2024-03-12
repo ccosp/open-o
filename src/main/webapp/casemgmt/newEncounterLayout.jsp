@@ -131,7 +131,8 @@ var Colour = {
 	unresolvedIssues: '<%=Colour.getInstance().unresolvedIssues%>',
 	resolvedIssues: '<%=Colour.getInstance().resolvedIssues%>',
 	episode: '<%=Colour.getInstance().episode%>',
-	pregancies: '<%=Colour.getInstance().episode%>'
+	pregancies: '<%=Colour.getInstance().episode%>',
+	contacts: '<%=Colour.getInstance().contacts%>'
 };
 </script>
 
@@ -159,7 +160,7 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 
 <script type="text/javascript">
 
-    jQuery(document).ready(function() {
+    jQuery(document).on("ready", function() {
            <%
   if( loggedInInfo.getLoggedInProvider().getProviderType().equals("resident"))  {
 %>    
@@ -354,35 +355,19 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 
 <!-- set size of window if customized in preferences -->
 <%
-	UserPropertyDAO uPropDao = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
-	
+	UserPropertyDAO uPropDao = SpringUtils.getBean(UserPropertyDAO.class);
 	String providerNo=loggedInInfo.getLoggedInProviderNo();
 	UserProperty widthP = uPropDao.getProp(providerNo, "encounterWindowWidth");
 	UserProperty heightP = uPropDao.getProp(providerNo, "encounterWindowHeight");
 	UserProperty maximizeP = uPropDao.getProp(providerNo, "encounterWindowMaximize");
 
-	if(maximizeP != null && maximizeP.getValue().equals("yes")) {
-		%><script> jQuery(document).ready(function(){window.resizeTo(screen.width,screen.height);});</script>
-<%
-	} else if(widthP != null && widthP.getValue().length()>0 && heightP != null && heightP.getValue().length()>0) {
+	if(maximizeP != null && maximizeP.getValue().equals("yes")) {%>
+		<script> jQuery(window).load(function(){window.resizeTo(screen.width,screen.height);});</script>
+	<% } else if(widthP != null && widthP.getValue().length()>0 && heightP != null && heightP.getValue().length()>0) {
 		String width = widthP.getValue();
-		String height = heightP.getValue();
-		%>
-<script> jQuery(document).ready(function(){
-    
-    window.resizeTo(<%=width%>,<%=height%>);
-
-        
-   }   
-);
-
-    		
-
-</script>
-<%
-	}
-%>
-<oscar:customInterface section="cme" />
+		String height = heightP.getValue();%>
+		<script> jQuery(window).load(function(){window.resizeTo(<%=width%>,<%=height%>)}) </script>;
+	<% } %>
 
 <html:base />
 <title><bean:message key="oscarEncounter.Index.title" /></title>
@@ -451,23 +436,18 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
         month[10] = "<bean:message key="share.CalendarPopUp.msgNov"/>";
         month[11] = "<bean:message key="share.CalendarPopUp.msgDec"/>";
 
-function init() {
-	//scrollDownInnerBar();
+jQuery(window).on("load", function() {
+
 	viewFullChart(false);
     showIssueNotes();
 
     var navBars = new navBarLoader();
     navBars.load();
 
-    monitorNavBars(null);
+    // monitorNavBars(null);
 
-    Element.observe(window, "resize", monitorNavBars);
-    
-    // if(!NiftyCheck()) {
-    //     return;
-    // }
-    // Rounded("div.showEdContent","all","transparent","#CCCCCC","big border #000000");
-    // Rounded("div.printOps","all","transparent","#CCCCCC","big border #000000");
+    // Element.observe(window, "resize", monitorNavBars);
+
     Calendar.setup({ inputField : "printStartDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printStartDate_cal", singleClick : true, step : 1 });
     Calendar.setup({ inputField : "printEndDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printEndDate_cal", singleClick : true, step : 1 });
 
@@ -482,12 +462,12 @@ function init() {
     <nested:notEmpty name="DateError">
         alert("<nested:write name="DateError"/>");
     </nested:notEmpty>
-}
+
+})
 
 function doscroll(){
-	x=document.body.scrollHeight;
-	x=x+99999
-	window.scrollTo(0,x);
+	let bodyScroll = document.body.scrollHeight + 99999;
+	window.scrollTo(0,bodyScroll);
 }
 	
 window.onbeforeunload = onClosing;
@@ -496,26 +476,13 @@ window.onbeforeunload = onClosing;
 </script>
 </head>
 <body id="body">
-<div id="newEncounterLayoutWrapper">
-	<%--
-	<caisi:isModuleLoad moduleName="eaaps.enabled">
-		<div id="eaaps" style="display: none;">
-			  <div id="basic-template">
-		      <a class="ui-notify-cross ui-notify-close" href="#">x</a>
-		      <h1>TITLE</h1>
-		      <p>text</p>
-	   </div>
+<div id="header" >
+	<tiles:insert attribute="header" />
+</div>
 
-			<!-- jsp : include page="/eaaps/status.jsp">< / jsp : include -->
-		</div>
-	</caisi:isModuleLoad>
-	--%>
-	 
-	<div id="header" class="row">
-		<tiles:insert attribute="header" />
-	</div>
+<%--<div id="newEncounterLayoutWrapper">--%>
 
-	<div id="navigation-layout" class="row">
+	<div id="navigation-layout" >
 		<div id="rightNavBar">
 			<tiles:insert attribute="rightNavigation" />
 		</div>
@@ -837,7 +804,7 @@ if (OscarProperties.getInstance().getBooleanProperty("note_program_ui_enabled", 
 %>
 		</form>
 	</div>
-</div>
+<%--</div>--%>
 <div id="encounterModal" ></div>
 <%
     String apptNo = request.getParameter("appointmentNo");
