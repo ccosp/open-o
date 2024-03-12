@@ -36,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -65,6 +66,7 @@ import org.oscarehr.common.hl7.v2.oscar_to_oscar.OruR01;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.OruR01.ObservationData;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.RefI12;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.SendingUtils;
+import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Clinic;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.ConsultResponseDoc;
@@ -274,10 +276,30 @@ public class ConsultationManager {
 			
 			request.setProfessionalSpecialist(specialist);
 			consultationRequestDao.merge(request);
+
+			// Batch saves the provided extras if any exist
+			List<ConsultationRequestExt> extras = request.getExtras();
+			if (!extras.isEmpty()) {
+				List<AbstractModel<?>> toSave = new ArrayList<>();
+				Date dateCreated = new Date();
+				for (ConsultationRequestExt extra : extras) {
+					extra.setRequestId(request.getId());
+					extra.setDateCreated(dateCreated);
+					toSave.add(extra);
+				}
+				consultationRequestExtDao.batchPersist(toSave);
+			}
 		} else {
 			checkPrivilege(loggedInInfo, SecurityInfoManager.UPDATE);
 			
 			consultationRequestDao.merge(request);
+
+			if (!request.getExtras().isEmpty()) {
+				saveOrUpdateExts(request.getId(), request.getExtras());
+				// Sets the request's extras to all current extras with the updated information
+				List<ConsultationRequestExt> extras = consultationRequestExtDao.getConsultationRequestExts(request.getId());
+				request.setExtras(extras);
+			}
 		}
 		LogAction.addLogSynchronous(loggedInInfo,"ConsultationManager.saveConsultationRequest", "id="+request.getId());
 	}
@@ -741,5 +763,61 @@ public class ConsultationManager {
 				consultationRequestExtArchiveDao.persist(aext);
 			}
 		}
+	}
+
+	/**
+	 * Saves or updates consultation request extras depending on if the key already exists in the table
+	 * @param requestId The id of the consultation request the extras are linked to
+	 * @param extras A list of extras to save or update
+	 */
+	public void saveOrUpdateExts(int requestId, List<ConsultationRequestExt> extras) {
+		List<ConsultationRequestExt> existingExtras = consultationRequestExtDao.getConsultationRequestExts(requestId);
+		Map<String, ConsultationRequestExt> extraMap = getExtsAsMap(existingExtras);
+		List<AbstractModel<?>> newExtras = new ArrayList<>();
+		
+		for (ConsultationRequestExt extra : extras) {
+			extra.setRequestId(requestId);
+			
+			// If the map contains the key then the extra already exists and will be updated, else saves a new one
+			if (extraMap.containsKey(extra.getKey())) {
+				ConsultationRequestExt savedExtra = extraMap.get(extra.getKey());
+				
+				extra.setId(savedExtra.getId());
+				extra.setDateCreated(savedExtra.getDateCreated());
+				
+				// If the value isn't the same, update it
+				if (!savedExtra.getValue().equals(extra.getValue())) {
+					consultationRequestExtDao.merge(extra);
+				}
+			} else {
+				extra.setDateCreated(new Date());
+				newExtras.add(extra);
+			}
+		}
+		
+		// If there are new extras, batch persists them
+		if (!newExtras.isEmpty()) {
+			consultationRequestExtDao.batchPersist(newExtras);
+		}
+	}
+
+	public Map<String, ConsultationRequestExt> getExtsAsMap(List<ConsultationRequestExt> extras) {
+		Map<String, ConsultationRequestExt> extraMap = new HashMap<>();
+		
+		for (ConsultationRequestExt extra : extras) {
+			extraMap.put(extra.getKey(), extra);
+		}
+
+		return extraMap;
+	}
+
+	public Map<String, String> getExtValuesAsMap(List<ConsultationRequestExt> extras) {
+		Map<String, String> extraMap = new HashMap<>();
+
+		for (ConsultationRequestExt extra : extras) {
+			extraMap.put(extra.getKey(), extra.getValue());
+		}
+
+		return extraMap;
 	}
 }

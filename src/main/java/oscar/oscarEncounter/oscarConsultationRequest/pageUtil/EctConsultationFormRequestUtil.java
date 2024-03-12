@@ -119,6 +119,8 @@ public class EctConsultationFormRequestUtil {
 	
 	private String appointmentInstructions;
 	private String appointmentInstructionsLabel;
+
+	public boolean isEReferral = false;
 	
 	private final ConsultationServiceDao consultationServiceDao = (ConsultationServiceDao) SpringUtils.getBean("consultationServiceDao");
 	private final DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
@@ -363,6 +365,8 @@ public class EctConsultationFormRequestUtil {
                 	appointmentPm = "";
 				}
             }
+
+			isEReferral = daoExt.getConsultationRequestExtsByKey(ConversionUtils.fromIntString(id),"ereferral_ref") != null;
         }
 		
 		getFaxLogs(id);

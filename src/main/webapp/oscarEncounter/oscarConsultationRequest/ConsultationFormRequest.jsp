@@ -733,12 +733,13 @@ function disableEditing()
 		form.status[3].disabled = disableFields;
 
 		form.referalDate.disabled = disableFields;
-		form.service.disabled = disableFields;
+		disableIfExists(form.specialist, disableFields);
+		disableIfExists(form.service, disableFields);
 		form.urgency.disabled = disableFields;
 		form.phone.disabled = disableFields;
 		form.fax.disabled = disableFields;
 		form.address.disabled = disableFields;
-		form.patientWillBook.disabled = disableFields;
+		disableIfExists(form.patientWillBook, disableFields);
 		form.sendTo.disabled = disableFields;
 
 		form.appointmentNotes.disabled = disableFields;
@@ -747,7 +748,10 @@ function disableEditing()
 		form.concurrentProblems.disabled = disableFields;
 		form.currentMedications.disabled = disableFields;
 		form.allergies.disabled = disableFields;
-                form.annotation.disabled = disableFields;
+        form.annotation.disabled = disableFields;
+		form.appointmentDate.disabled = disableFields;
+        form.followUpDate.disabled = disableFields;
+		disableIfExists(form.letterheadFax, disableFields);
 
 		disableIfExists(form.update, disableFields);
 		disableIfExists(form.updateAndPrint, disableFields);
@@ -758,12 +762,23 @@ function disableEditing()
 		disableIfExists(form.submitAndPrint, disableFields);
 		disableIfExists(form.submitAndSendElectronically, disableFields);
 		disableIfExists(form.submitAndFax, disableFields);
+
+		hideElement('referalDate_cal');
+		hideElement('appointmentDate_cal');
+		hideElement("followUpDate_cal");
 	}
 }
 
 function disableIfExists(item, disabled)
 {
 	if (item!=null) item.disabled=disabled;
+}
+
+function hideElement(elementId) {
+	let element = document.getElementById(elementId)
+	if (element != null) {
+		element.style.display = 'none';
+	}
 }
 
 //------------------------------------------------------------------------------------------
@@ -1239,22 +1254,22 @@ var fx;
 
 <% 
 if (consultUtil.letterheadAddress != null) { 
-	%>addr = '<%=consultUtil.letterheadAddress%>';<%
+	%>addr = '<%=Encode.forHtmlContent(consultUtil.letterheadAddress).replace('\n', ' ')%>';<%
 } else {
-	%> addr = '<%=clinic.getClinicAddress() %>  <%=clinic.getClinicCity() %>  <%=clinic.getClinicProvince() %>  <%=clinic.getClinicPostal() %>';<%
+	%> addr = "<%=Encode.forHtmlContent(clinic.getClinicAddress()) %>  <%=Encode.forHtmlContent(clinic.getClinicCity()) %>  <%=Encode.forHtmlContent(clinic.getClinicProvince()) %>  <%=Encode.forHtmlContent(clinic.getClinicPostal()) %>";<%
 }
 
 if(consultUtil.letterheadPhone != null) {
-	%>ph = '<%=consultUtil.letterheadAddress%>';<%
+	%>ph = '<%=Encode.forHtmlContent(consultUtil.letterheadAddress).replace('\n', ' ')%>';<%
 } else {
-	%>ph = '<%=clinic.getClinicPhone()%>';<%
+	%>ph = '<%=Encode.forHtmlContent(clinic.getClinicPhone())%>';<%
 }
 
 
 if(consultUtil.letterheadFax != null) {
-	%>fx = '<%=consultUtil.letterheadFax%>';<%
+	%>fx = '<%=Encode.forHtmlContent(consultUtil.letterheadFax)%>';<%
 } else {
-	%>fx = '<%=clinic.getClinicFax()%>';<%
+	%>fx = '<%=Encode.forHtmlContent(clinic.getClinicFax())%>';<%
 }
 %>
 providerData['<%=StringEscapeUtils.escapeHtml(clinic.getClinicName())%>'].address = addr;
@@ -1689,7 +1704,11 @@ function showPreview(base64PDF, pdfName) {
 							if (thisForm.iseReferral())
 							{
 								%>
-									<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.attachDoc" />
+									<%-- <bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.attachDoc" /> --%>
+									<a href="javascript:void(0);" id="attachDocumentPanelBtn" title="Add Attachment"
+										data-poload="${ ctx }/previewDocs.do?method=fetchConsultDocuments&amp;demographicNo=<%=demo%>&amp;requestId=<%=requestId%>">
+										Show Attachments
+									</a>
 								<%
 							}
 							else
@@ -1784,8 +1803,18 @@ function showPreview(base64PDF, pdfName) {
 			<table cellpadding="0" cellspacing="2"
 				style="border-collapse: collapse" bordercolor="#111111" width="100%"
 				height="100%" border=1>
-
+				<% if (requestId != null && "ocean".equals(props.get("cme_js"))) {
+					ConsultationRequestExtDao consultationRequestExtDao = SpringUtils.getBean(ConsultationRequestExtDao.class);
+					Integer consultId = Integer.parseInt(requestId);
+					String eReferralRef = consultationRequestExtDao.getConsultationRequestExtsByKey(consultId, "ereferral_ref");
+					if(eReferralRef != null) {
+				%>
+				<input id="ereferral_ref" type="hidden" value="<%= Encode.forHtmlAttribute(eReferralRef) %>"/>
+				<span id="editOnOcean" class="oceanRefer"></span>
+				<%	}
+				   } %>
 				<!----Start new rows here-->
+				<% if (thisForm.geteReferralId() == null) { %>
 				<tr>
 					<td class="tite4 controlPanel" colspan=2>
 	
@@ -1822,7 +1851,8 @@ function showPreview(base64PDF, pdfName) {
 						</logic:equal>
 					<% } %>
 					</td>
-                    </tr>
+                </tr>
+				<% } %>
                     <tr class="consultDemographicData" >
 					<td>
 
@@ -1883,8 +1913,11 @@ function showPreview(base64PDF, pdfName) {
 								<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formService" />
 								</td>
 								<td  class="tite3">
-									<html:select styleId="service" property="service" onchange="fillSpecialistSelect(this);">
-								</html:select>							
+								<% if (thisForm.iseReferral() && !thisForm.geteReferralService().isEmpty()) { %>
+									<%= thisForm.geteReferralService() %>
+								<% } else { %>
+									<html:select styleId="service" property="service" onchange="fillSpecialistSelect(this);"></html:select>
+								<% } %>							
 								</td>
 							</tr>
 						</oscar:oscarPropertiesCheck>
@@ -2348,6 +2381,7 @@ function showPreview(base64PDF, pdfName) {
 								<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formClinInf" />						
 							</td>
 							<td id="clinicalInfoButtonBar" class="tite4 buttonBar" >
+								<% if (thisForm.geteReferralId() == null) { %>
 								<input id="SocHistory_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportSocHistory"/>" />
 								<input id="FamHistory_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportFamHistory"/>"  />
 								<input id="MedHistory_clinicalInformation" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportMedHistory"/>"  />
@@ -2357,6 +2391,7 @@ function showPreview(base64PDF, pdfName) {
 								<input id="RiskFactors_clinicalInformation" type="button" class="btn clinicalData" value="Risk Factors" />
 								<input id="fetchMedications_clinicalInformation" type="button" class="btn medicationData" value="Active Medications" />
 								<input id="fetchLongTermMedications_clinicalInformation" type="button" class="btn medicationData" value="Long Term Medications" />
+								<% } %>
 							</td>
 						</tr>
 					</table>
@@ -2384,6 +2419,7 @@ function showPreview(base64PDF, pdfName) {
  %>
 							</td>
 							<td id="concurrentProblemsButtonBar" class="tite4 buttonBar">
+								<% if (thisForm.geteReferralId() == null) { %>
 								<input id="SocHistory_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportSocHistory"/>" />
 								<input id="FamHistory_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportFamHistory"/>"  />
 								<input id="MedHistory_concurrentProblems" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportMedHistory"/>"  />
@@ -2393,7 +2429,7 @@ function showPreview(base64PDF, pdfName) {
 								<input id="RiskFactors_concurrentProblems" type="button" class="btn clinicalData" value="Risk Factors" />
 								<input id="fetchMedications_concurrentProblems" type="button" class="btn medicationData" value="Active Medications" />
 								<input id="fetchLongTermMedications_concurrentProblems" type="button" class="btn medicationData" value="Long Term Medications" />
-								
+								<% } %>
 							</td>
 						</tr>
 					</table>
@@ -2418,9 +2454,11 @@ function showPreview(base64PDF, pdfName) {
 								<% }  %>
 							</td>
 							<td id="medsButtonBar" class="tite4 buttonBar">
+								<% if (thisForm.geteReferralId() == null) { %>
 								<input id="OMeds_currentMedications" type="button" class="btn clinicalData" value="<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.btnImportOtherMeds"/>"  />								
 								<input id="fetchMedications_currentMedications" type="button" class="btn medicationData" value="Active Medications" />
 								<input id="fetchLongTermMedications_currentMedications" type="button" class="btn medicationData" value="Long Term Medications" />
+								<% } %>
 							</td>
 						</tr>
 					</table>
@@ -2439,7 +2477,9 @@ function showPreview(base64PDF, pdfName) {
 							<bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.formAllergies" />
 							</td>
 							<td class="tite4 buttonBar">
+								<% if (thisForm.geteReferralId() == null) { %>
 								<input id="fetchAllergies_allergies" type="button" class="btn medicationData" value="Allergies" />
+								<% } %>
 							</td>
 						</tr>						
 						</table>
@@ -2479,6 +2519,7 @@ function showPreview(base64PDF, pdfName) {
 				<tr><td colspan=2 class="spacer"></td></tr>
 				<% }%>
 
+				<% if (thisForm.geteReferralId() == null) { %>
 				<tr>
 
 				<td colspan=2 class="tite4 controlPanel">
@@ -2532,6 +2573,7 @@ function showPreview(base64PDF, pdfName) {
 						
 					</td>
 				</tr>
+				<% } %>
 				
 			<script type="text/javascript">
 			//<!--
@@ -2744,6 +2786,11 @@ jQuery(document).ready(function(){
 					let elementClassType = element.attr("class").split("_")[0];
 					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
 				});
+
+				// Disable all checkboxes in the attachment window if a consultation request is created using OceanMD.
+				if (typeof disableFields !== 'undefined' && disableFields === true) {
+					jQuery('#attachDocumentsForm input[type="checkbox"]').prop('disabled', true);
+				}
 			}
 		}).dialog({
 			title: title,
