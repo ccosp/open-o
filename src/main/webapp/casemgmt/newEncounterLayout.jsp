@@ -358,35 +358,20 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 </script>
 
 <!-- set size of window if customized in preferences -->
-<%--<%--%>
-<%--	UserPropertyDAO uPropDao = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");--%>
-<%--	--%>
-<%--	String providerNo=loggedInInfo.getLoggedInProviderNo();--%>
-<%--	UserProperty widthP = uPropDao.getProp(providerNo, "encounterWindowWidth");--%>
-<%--	UserProperty heightP = uPropDao.getProp(providerNo, "encounterWindowHeight");--%>
-<%--	UserProperty maximizeP = uPropDao.getProp(providerNo, "encounterWindowMaximize");--%>
+<%
+	UserPropertyDAO uPropDao = SpringUtils.getBean(UserPropertyDAO.class);
+	String providerNo=loggedInInfo.getLoggedInProviderNo();
+	UserProperty widthP = uPropDao.getProp(providerNo, "encounterWindowWidth");
+	UserProperty heightP = uPropDao.getProp(providerNo, "encounterWindowHeight");
+	UserProperty maximizeP = uPropDao.getProp(providerNo, "encounterWindowMaximize");
 
-<%--	if(maximizeP != null && maximizeP.getValue().equals("yes")) {--%>
-<%--		%><script> jQuery(document).ready(function(){window.resizeTo(screen.width,screen.height);});</script>--%>
-<%--<%--%>
-<%--	} else if(widthP != null && widthP.getValue().length()>0 && heightP != null && heightP.getValue().length()>0) {--%>
-<%--		String width = widthP.getValue();--%>
-<%--		String height = heightP.getValue();--%>
-<%--		%>--%>
-<%--<script> jQuery(document).ready(function(){--%>
-<%--    --%>
-<%--    window.resizeTo(<%=width%>,<%=height%>);--%>
-
-<%--        --%>
-<%--   }   --%>
-<%--);--%>
-
-<%--    		--%>
-
-<%--</script>--%>
-<%--<%--%>
-<%--	}--%>
-<%--%>--%>
+	if(maximizeP != null && maximizeP.getValue().equals("yes")) {%>
+		<script> jQuery(window).load(function(){window.resizeTo(screen.width,screen.height);});</script>
+	<% } else if(widthP != null && widthP.getValue().length()>0 && heightP != null && heightP.getValue().length()>0) {
+		String width = widthP.getValue();
+		String height = heightP.getValue();%>
+		<script> jQuery(window).load(function(){window.resizeTo(<%=width%>,<%=height%>)}) </script>;
+	<% } %>
 
 <html:base />
 <title><bean:message key="oscarEncounter.Index.title" /></title>

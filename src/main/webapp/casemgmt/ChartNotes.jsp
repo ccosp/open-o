@@ -181,7 +181,7 @@ try
 
     jQuery(document).ready(function(){
     	notesLoader(0, notesIncrement, demographicNo);
-    	notesScrollCheckInterval = setInterval('notesIncrementAndLoadMore()', 2000);
+    	notesScrollCheckInterval = setInterval('notesIncrementAndLoadMore()', 1000);
     });
 
     <% if( request.getAttribute("NoteLockError") != null ) { %>
@@ -569,11 +569,11 @@ try
 		</tr>
 	</table>
 	</div>
-<%--	<div id="encMainDivWrapper">--%>
+	<div id="encMainDivWrapper">
 	<div id="encMainDiv" >
 
 	</div>
-<%--	</div>--%>
+	</div>
 	<div id='save'>
 		<span style="float: right; margin-right: 5px;">
 			<button type="button" onclick="pasteTimer()" id="aTimer" title="<bean:message key="oscarEncounter.Index.pasteTimer"/>">00:00</button>

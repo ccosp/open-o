@@ -275,24 +275,12 @@ function grabEnter(id, event) {
     return true;
 }
 function setupNotes(){
-    <%--if(!NiftyCheck())--%>
-    <%--    return;--%>
-
-    <%--Rounded("div.noteRounded","all","transparent","#CCCCCC","big border #000000");--%>
-
     //need to set focus after rounded is called
     adjustCaseNote();
     setCaretPosition($(caseNote), $(caseNote).value.length);
 
     $(caseNote).focus();
 }
-
-<%--function setupOneNote(note) {--%>
-<%--	if (!NiftyCheck())--%>
-<%--		return;--%>
-
-<%--	Rounded("div#nc" + note, "all", "transparent", "#CCCCCC", "big border #000000");--%>
-<%--}--%>
 
 <%--var minDelta =  0.93;--%>
 <%--var minMain;--%>
@@ -316,7 +304,7 @@ function setupNotes(){
 <%--}--%>
 
 function scrollDownInnerBar() {
-	$("encMainDiv").scrollTop = $("encMainDiv").scrollHeight;
+	$("encMainDivWrapper").scrollTop = $("encMainDivWrapper").scrollHeight;
 }
 
 function popperup(vheight,vwidth,varpage,pageName) { //open a new popup window
@@ -406,8 +394,8 @@ var notesScrollCheckInterval = null;
 const MAXNOTES = Number.MAX_SAFE_INTEGER;
 
 function notesIncrementAndLoadMore() {
-	if (notesRetrieveOk && $("encMainDiv").scrollTop === 0) {
-		if($("encMainDiv").scrollHeight > $("encMainDiv").getHeight()) {
+	if (notesRetrieveOk && $("encMainDivWrapper").scrollTop === 0) {
+		if($("encMainDivWrapper").scrollHeight > $("encMainDivWrapper").getHeight()) {
 			notesOffset += notesIncrement;
 			notesRetrieveOk = false;
 			notesCurrentTop = $("encMainDiv").children[0].id;
@@ -442,6 +430,7 @@ function notesLoadAll() {
 */
 function notesLoader(offset, numToReturn, demoNo) {
 	$("notesLoading").show();
+	console.log("loading: " + " offset: " + offset + " max notes: " + numToReturn + " demo: " + demoNo);
 	var params = "method=viewNotesOpt&offset=" + offset + "&numToReturn=" + numToReturn + "&demographicNo=" + demoNo;
 	var params2 = jQuery("input[name='filter_providers'],input[name='filter_roles'],input[name='issues'],input[name='note_sort']").serialize();
 	if(params2.length>0) {
@@ -455,6 +444,7 @@ function notesLoader(offset, numToReturn, demoNo) {
 				evalScripts: true,
 				insertion: Insertion.Top,
 				onSuccess: function(data) {
+					console.log(data);
 					notesRetrieveOk = (data.responseText.replace(/\s+/g, '').length > 0);
 					if (! notesRetrieveOk) {
 						clearInterval(scrollCheckInterval);
@@ -462,7 +452,7 @@ function notesLoader(offset, numToReturn, demoNo) {
 				},
 				onComplete: function() {
 					$("notesLoading").hide();
-					$("encMainDiv").scrollTop =  10;
+					$("encMainDivWrapper").scrollTop =  10;
 
 					<%--if (notesCurrentTop != null) {--%>
 					<%--	$(notesCurrentTop).scrollIntoView();--%>
@@ -529,7 +519,6 @@ function navBarLoader() {
           for( var idx = 0; idx < leftNavBar.length; ++idx ) {
                 var div = document.createElement("div");
                 div.className = "leftBox";
-                <%--div.style.display = "block";--%>
                 div.style.visiblity = "hidden";
                 div.id = leftNavBarTitles[idx];
                 $(navbar).appendChild(div);
@@ -549,39 +538,6 @@ function navBarLoader() {
                 this.arrRightDivs.push(div);
                 this.popColumn(rightNavBar[idx],rightNavBarTitles[idx],rightNavBarTitles[idx], navbar, this);
           }
-
-
-
-          /*var URLs = new Array();
-          URLs.push(leftNavBar);
-          URLs.push(rightNavBar);
-
-        for( var j = 0; j < URLs.length; ++j ) {
-
-            var navbar;
-            if( j == 0 )
-                navbar = "leftNavBar";
-            else if( j == 1)
-                navbar = "rightNavBar";
-
-            for( idx in URLs[j] ) {
-                var div = document.createElement("div");
-                div.className = "leftBox";
-                div.style.display = "block";
-                div.style.visiblity = "hidden";
-                div.id = idx;
-                $(navbar).appendChild(div);
-
-                if( navbar == "leftNavBar" )
-                    this.arrLeftDivs.push(div);
-                if( navbar == "rightNavBar" )
-                    this.arrRightDivs.push(div);
-
-                this.popColumn(URLs[j][idx],idx,idx, navbar, this);
-            }
-
-        }*/
-
 
     };
 
@@ -707,7 +663,7 @@ function showIntegratedNote(title, note, location, providerName, obsDate){
 	$("integratedNoteTxt").focus();
 }
 
-//display in place editor
+// display in place editor
 function showEdit(e,title, noteId, editors, date, revision, note, url, containerDiv, reloadUrl, noteIssues, noteExts, demoNo) {
     //Event.extend(e);
     //e.stop();
@@ -1388,8 +1344,8 @@ function changeToView(id) {
 
     var sig = 'sig' + nId;
 
-    //check if case note has been changed
-    //if so, warn user that changes will be lost if not saved
+    // check if case note has been changed
+    // if so, warn user that changes will be lost if not saved
 
     if( origCaseNote != $F(id)  || origObservationDate != $("observationDate").value) {
         if( !confirm(unsavedNoteWarning))
@@ -1416,30 +1372,8 @@ function changeToView(id) {
         }
    }
 
-	//remove lock from note
+	// remove lock from note
 	removeLock(id);
-
-
-    //cancel updating of issues
-    //IE destroys innerHTML of sig div when calling ajax update
-    //so we have to restore it here if the ajax call is aborted
-    //this is buggy don't use
-    /*if( ajaxRequest != undefined  && callInProgress(ajaxRequest.transport) ) {
-        ajaxRequest.transport.abort();
-        var siblings = $(id).siblings();
-        var pos;
-
-        for( var idx = 0; idx < siblings.length; ++idx ) {
-            if( (pos = siblings[idx].id.indexOf("sig")) != -1 ) {
-                nId = siblings[idx].id.substr(pos+3);
-                sumaryId += nId;
-                if( $(sumaryId) == null ) {
-                    siblings[idx].innerHTML = sigCache;
-                }
-                break;
-            }
-        }
-    } */
 
     //clear auto save
     clearTimeout(autoSaveTimer);
@@ -1675,7 +1609,7 @@ function shrink(id, toScale) {
     $(id).style.height = toScale + "px";
 }
 
-//this func fires only if maximize button is clicked after fullView
+// this func fires only if maximize button is clicked after fullView
 function xpandView(e) {
     var id = Event.element(e).id;
     xpandViewById(id);
@@ -1825,7 +1759,7 @@ function resetEdit(e) {
 
 }
 
-//send password to server for auth to display locked Note
+// send password to server for auth to display locked Note
 var sessionExpiredError;
 var unlockNoteError;
 function unlock_ajax(id) {
@@ -1914,7 +1848,7 @@ function NoteisLocked(nId) {
 }
 
 var sigCache = "";
-//place Note text in textarea for editing and add save, sign etc buttons for this note
+// place Note text in textarea for editing and add save, sign etc buttons for this note
 function editNote(e) {
     var el = Event.element(e);
     var payload;
@@ -1961,7 +1895,7 @@ function editNote(e) {
         Event.stop(e);
     }
 
-    //if we have an edit textarea already open, close it
+    // if we have an edit textarea already open, close it
     if($(caseNote) !=null && $(caseNote).parentNode.id != $(txt).id) {
         if( !changeToView(caseNote) ) {
             $(caseNote).focus();
@@ -1986,8 +1920,7 @@ function editNote(e) {
     var date = "d" + nId;
     var content = "c" + nId;
 
-    //remove edit anchor
-    //remove edit anchor
+    // remove edit anchor
     if ($(editAnchor) != null)
     	Element.remove(editAnchor);
 
@@ -2166,9 +2099,8 @@ function showHideIssues(e, issueType) {
 }
 			
 function scrollEncDown() {
-	//$("encMainDiv").scrollTop= $("encMainDiv").scrollHeight;
 	$("noteIssues").scrollIntoView(false);
-	var x=document.body.scrollHeight;
+	var x = document.body.scrollHeight;
 	x=x+99999
 	window.scrollTo(0,x);
 }
@@ -2247,37 +2179,7 @@ function filter(reset) {
 
 }
 
-/*function filter(reset) {
-    document.forms["caseManagementEntryForm"].method.value = "edit";
-    document.forms["caseManagementEntryForm"].note_edit.value = "new";
-    document.forms["caseManagementEntryForm"].noteId.value = "0";
-    document.forms["caseManagementEntryForm"].ajax.value = false;
-    document.forms["caseManagementEntryForm"].chain.value = "null";
-
-    document.forms["caseManagementViewForm"].method.value = "view";
-    document.forms["caseManagementViewForm"].resetFilter.value = reset;
-
-    var caseMgtEntryfrm = document.forms["caseManagementEntryForm"];
-    var caseMgtViewfrm = document.forms["caseManagementViewForm"];
-    var url = ctx + "/CaseManagementEntry.do";
-    var objAjax = new Ajax.Request (
-                    url,
-                    {
-                        method: 'post',
-                        postBody: Form.serialize(caseMgtEntryfrm),
-                        onSuccess: function(request) {
-                            caseMgtViewfrm.submit();
-                        },
-                        onFailure: function(request) {
-                            alert(request.status + " " + filterError);
-                        }
-                     }
-                   );
-
-    return false;
-}*/
-
-//find index of month
+// find index of month
 function getMonthIdx(mnth) {
     var idx;
     var tmp;
@@ -2293,8 +2195,8 @@ function getMonthIdx(mnth) {
     return -1;
 }
 
-//make sure observation date is in the past
-var strToday;  //initialized in newCaseManagementView.jsp
+// make sure observation date is in the past
+var strToday;  // initialized in newCaseManagementView.jsp
 function validDate() {
     var strDate = $("observationDate").value;
     var day = strDate.substring(0,strDate.indexOf("-"));
@@ -2452,12 +2354,7 @@ function saveNoteAjax(method, chain) {
             alert(assignIssueError);
             return false;
         }
-/* the observationDate could be the default one as today.
-        if( requireObsDate && $("observationDate").value.length == 0 ) {
-            alert(assignObservationDateError);
-            return false;
-        }
-*/
+
         if($("encTypeSelect0") != null && $("encTypeSelect0").options[$("encTypeSelect0").selectedIndex].value.length == 0 ) {
         	alert(assignEncTypeError);
         	return false;
