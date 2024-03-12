@@ -378,6 +378,13 @@ div.topBox ul {
 	border-bottom: 1px solid #cccccc;
 }
 
+#rightNavBar .topBox-notes {
+	height: 100%;
+	max-height:100px;
+	overflow-y: auto;
+	word-wrap: anywhere;
+}
+
 div#encMainDiv {
 	display: flex;
 	flex-direction: column;
@@ -749,15 +756,15 @@ div.leftBox h3 {
 }
 
 div.leftBox ul {
-	padding:0px !important;
-	margin: 0px !important;
+	padding:0 !important;
+	margin: 0 !important;
 	list-style: none;
 	list-style-type: none;
 	list-style-position: outside;
 }
 
 div.leftBox li {
-	white-space: nowrap;
+	word-wrap: anywhere;
 	padding: 1px 5px !important;
 }
 
