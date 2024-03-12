@@ -23,7 +23,7 @@
 
 
 /************init global data methods*****************/
-var oldestLab = null;
+let oldestLab;
 
 function  updateDocStatusInQueue(docid){//change status of queue document link row to I=inactive
     console.log('in updateDocStatusInQueue, docid '+docid);
