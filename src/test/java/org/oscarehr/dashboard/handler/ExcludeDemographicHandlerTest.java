@@ -87,13 +87,15 @@ public class ExcludeDemographicHandlerTest {
     	assertEquals(0, excludeDemographicHandler.getDemoExts(indicatorName).size());
     }
 
-	@Ignore //Skipping until issue is resolved
+	@Test
     public void setDemoId() {
     	indicatorName = "myIndicatorName_setDemoId";
     	assertEquals(10, demoNos.size());
     	excludeDemographicHandler.excludeDemoId(demoNos.get(5), indicatorName);
     	assertEquals(1, excludeDemographicHandler.getDemoIds(indicatorName).size());
     	assertTrue(excludeDemographicHandler.getDemoIds(indicatorName).get(0).equals(demoNos.get(5)));
+		//Have to remove previous demographicExt before moving to new tests due to uk_demo_ext.
+		excludeDemographicHandler.unExcludeDemoIds(demoNos, indicatorName);
     }
     
     @Test
@@ -105,25 +107,21 @@ public class ExcludeDemographicHandlerTest {
      	for (Integer el: demoNos) {
     		assertTrue(demoIds.contains(el));
     	}
-    	//assertTrue(demoIds.containsAll(list));
+		//Have to remove previous demographicExt before moving to new tests due to uk_demo_ext.
+		excludeDemographicHandler.unExcludeDemoIds(demoNos, indicatorName);
     }
 
-	@Ignore
+	@Test
     public void unsetDemoIDList() {
     	indicatorName = "myIndicatorName_unsetDemoIDList";
     	excludeDemographicHandler.excludeDemoIds(demoNos, indicatorName);
     	List<Integer> demoIds = excludeDemographicHandler.getDemoIds(indicatorName);
     	assertEquals(demoNos.size(), demoIds.size());
-    	// check whether we can add the same entries yet again
-    	excludeDemographicHandler.excludeDemoIds(demoNos, indicatorName);
-    	demoIds = excludeDemographicHandler.getDemoIds(indicatorName);
-    	assertEquals(2*demoNos.size(), demoIds.size());
-    	// also checks whether duplicated entries are removed
     	excludeDemographicHandler.unExcludeDemoIds(demoNos, indicatorName);
     	assertEquals(0, excludeDemographicHandler.getDemoIds(indicatorName).size());
     }
 
-	@Ignore //Skipping until issue is resolved
+	@Test
     public void setDemoIdJson() {
     	indicatorName = "myIndicatorName_setDemoIdJson";
     	String jsonStr = getJsonDemoNoStr(demoNos);
@@ -132,9 +130,11 @@ public class ExcludeDemographicHandlerTest {
     	for (int demoNo: demoNos) {
     		assertTrue(demoIds.contains(demoNo));
     	}
+		//Have to remove previous demographicExt before moving to new tests due to uk_demo_ext.
+		excludeDemographicHandler.unExcludeDemoIds(jsonStr, indicatorName);
     }
 
-	@Ignore //Skipping until issue is resolved
+	@Test
     public void unsetDemoIdJson() {
     	indicatorName = "myIndicatorName_unsetDemoIdJson";
     	String jsonStr = getJsonDemoNoStr(demoNos);
