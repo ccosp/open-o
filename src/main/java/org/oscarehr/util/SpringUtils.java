@@ -22,11 +22,13 @@
  */
 package org.oscarehr.util;
 
-
+import org.apache.logging.log4j.Logger;
 import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.ConfigurableWebApplicationContext;
 
 /**
  * This class holds utilities used to work with spring.
@@ -37,9 +39,9 @@ public class SpringUtils {
     /**
      * This variable is populated by one of the context listeners.
      */
-    private static BeanFactory beanFactory;
+ /*    private static BeanFactory beanFactory;
 
-    public static Object getBean(String beanName)
+    public static Object getBean1(String beanName)
     {
         return(beanFactory.getBean(beanName));
     }
@@ -52,7 +54,7 @@ public class SpringUtils {
 
 	public static BeanFactory getBeanFactory() {
 		return SpringUtils.beanFactory;
-	}
+	}*/
 	/**
 	 * Attempts to find a Spring bean based of the specified class. This method first attempts to load a bean
 	 * following the default Spring auto-naming conventions (de-capitalizing class simple name). In case the bean with 
@@ -68,8 +70,8 @@ public class SpringUtils {
 	 * 		Returns the bean instance
 	 * @throws NoSuchBeanDefinitionException if there is no bean definition with the specified name
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T getBean(Class<?> clazz) {
+/*	@SuppressWarnings("unchecked")
+	public static <T> T getBean1(Class<?> clazz) {
 		// legacy code - I wonder if it's necessary since we are looking up a bean based directly on the class name anyways
 		// but to keep legacy logic working properly attempt to locate component based on the Spring conventions 
 		String className = WordUtils.uncapitalize(clazz.getSimpleName());
@@ -82,6 +84,46 @@ public class SpringUtils {
 			if (beanNames.length > 0)
 				return (T) listableBeanFactory.getBean(beanNames[0]);
 		}
+		throw new NoSuchBeanDefinitionException(clazz);
+	}*/
+
+	private static ApplicationContext applicationContext;
+	private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+
+	public static ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	public static void setApplicationContext(ApplicationContext context) {
+		if (context instanceof ConfigurableWebApplicationContext) {
+			applicationContext = (ConfigurableWebApplicationContext) context;
+		} else {
+			throw new IllegalArgumentException(
+					"ApplicationContext must be an instance of ConfigurableWebApplicationContext");
+		}
+	}
+
+	public static Object getBean(String beanName) {		
+		
+		return applicationContext.getBean(beanName);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T getBean(Class<?> clazz) {
+		String className = WordUtils.uncapitalize(clazz.getSimpleName());
+		
+		if (applicationContext.containsBean(className)) {
+			return (T) applicationContext.getBean(className);
+		}
+
+		if (applicationContext instanceof ListableBeanFactory) {
+			ListableBeanFactory listableBeanFactory = (ListableBeanFactory) applicationContext;
+			String[] beanNames = listableBeanFactory.getBeanNamesForType(clazz);
+			if (beanNames.length > 0) {
+				return (T)listableBeanFactory.getBean(beanNames[0], clazz);
+			}
+		}
+
 		throw new NoSuchBeanDefinitionException(clazz);
 	}
 }

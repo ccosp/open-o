@@ -296,6 +296,11 @@
 			<version>8.0.25</version>
 		</dependency>
 		<dependency>
+    <groupId>org.javassist</groupId>
+    <artifactId>javassist</artifactId>
+    <version>3.18.2-GA</version>
+  </dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>3.6.10.Final</version>
@@ -303,6 +308,10 @@
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1122,6 +1131,10 @@
 					<groupId>log4j</groupId>
 					<artifactId>log4j</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1170,6 +1183,12 @@
 			<groupId>org.marc.shic</groupId>
 			<artifactId>shic-cda</artifactId>
 			<version>1.0.8</version>
+			<exclusions>
+			<exclusion>
+					<groupId>org.javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
                 
         <!-- Apache Tika - MimeType handling for downloaded files (ie. XDS) -->

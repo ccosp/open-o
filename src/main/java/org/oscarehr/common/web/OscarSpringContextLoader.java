@@ -100,9 +100,9 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
 		wac.setConfigLocations(configLocations.toArray(new String[0]));
 		wac.refresh();
 		
-        if (SpringUtils.getBeanFactory() == null) {
-			SpringUtils.setBeanFactory(wac);
-		}
+	// if (SpringUtils.getBeanFactory() == null) {
+	// 	SpringUtils.setBeanFactory(wac);
+	// }
         
 		return wac;
 	}

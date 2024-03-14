@@ -56,7 +56,7 @@
 		</property>
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
 
@@ -71,7 +71,7 @@
 
 	<!-- TransactionManager -->
 	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager" autowire="byName">
-		<!-- <property name="entityManagerFactory" ref="entityManagerFactory" /> -->
+		<property name="entityManagerFactory" ref="entityManagerFactory" /> 
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="txManager" />
