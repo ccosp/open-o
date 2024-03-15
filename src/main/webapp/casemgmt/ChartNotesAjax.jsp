@@ -600,7 +600,8 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 						} else if (note.isEncounterForm()) {
 							NoteDisplayNonNote formEntry = (NoteDisplayNonNote) note;
 							SimpleDateFormat simpleDateFormat = new SimpleDateFormat(anotherDateFormat);
-							String createdDate = simpleDateFormat.format(formEntry.getCreated());
+							String createdDate = "";
+							if (formEntry.getCreated() != null) { createdDate = simpleDateFormat.format(formEntry.getCreated()); }
 							String winName = formEntry.getNote().trim() + demographicNo + createdDate;
 							int hash = Math.abs(winName.hashCode());
 							String url = "popupPage(700,800,'"
