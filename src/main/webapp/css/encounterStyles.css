@@ -83,6 +83,16 @@
 	width:100%;
 }
 
+#header-top-row {
+	display: flex;
+}
+#header-top-row #branding-logo {
+	margin: 5px 5px auto 5px;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
 .leftBox ul li {
 	display: block;
 }
@@ -335,6 +345,7 @@ form[name='caseManagementEntryForm'] {
 	display: flex;
 	flex-direction: column;
 	margin: 0;
+	gap: 2.5px;
 }
 
 div.topBox {

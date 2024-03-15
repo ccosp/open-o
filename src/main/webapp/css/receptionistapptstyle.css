@@ -281,7 +281,19 @@ a.black:Hover {
 a {
 	text-decoration: none;
 	font-weight: bold;
-	color: black;
+	color:#00283c;
+}
+
+a:visited {
+	text-decoration: none;
+	font-weight: bold;
+	color:#00283c;
+}
+
+a:active {
+	text-decoration: none;
+	font-weight: bold;
+	color:#00283c;
 }
 
 a:Hover {
@@ -352,8 +364,9 @@ p {
 }
 
 .dateAppointment {
-        font-weight:bold;
-        font-size: 14px;
+	font-weight:bold;
+	font-size: inherit;
+	color: #00283c;
 }
 
 .datephour {
