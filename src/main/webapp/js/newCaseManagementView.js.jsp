@@ -444,7 +444,6 @@ function notesLoader(offset, numToReturn, demoNo) {
 				evalScripts: true,
 				insertion: Insertion.Top,
 				onSuccess: function(data) {
-					console.log(data);
 					notesRetrieveOk = (data.responseText.replace(/\s+/g, '').length > 0);
 					if (! notesRetrieveOk) {
 						clearInterval(scrollCheckInterval);
