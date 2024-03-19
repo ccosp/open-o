@@ -52,7 +52,29 @@
 	<bean id="CaseManagementNoteExtDAO" class="org.oscarehr.casemgmt.dao.CaseManagementNoteExtDAO" autowire="byName" />
 	<bean id="CaseManagementNoteLinkDAO" class="org.oscarehr.casemgmt.dao.CaseManagementNoteLinkDAO" autowire="byName" />
 	<bean id="CaseManagementCPPDAO" class="org.oscarehr.casemgmt.dao.CaseManagementCPPDAO" autowire="byName" />
-	
+
+	<!-- <bean id="user" class="com.dineshonjava.struts2.action.UserAction"/> -->
+    <!-- <bean id="userBean" class="org.oscarehr.common.dao.UserDao"/>	 -->  
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <!-- Configure session factory properties -->
+    <property name="dataSource" ref="dataSource"/>
+    <property name="hibernateProperties">
+        <props>
+           <prop key="hibernate.show_sql">true</prop>
+    	   <prop key="hibernate.hbm2ddl.auto">update</prop>
+        </props>
+    </property>
+	</bean>
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="userDao" class="org.oscarehr.common.dao.UserDao" autowire="byName"/>
+		<!-- <property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean> -->
+
 	
 	
 	<bean id="AppointmentArchiveDao" class="org.oscarehr.common.dao.AppointmentArchiveDao" autowire="byName" />
@@ -233,6 +255,7 @@
 	<bean id="rolesManager" class="com.quatro.service.security.RolesManager" autowire="byName">
 		<property name="secroleDao" ref="secroleDao" />
 		<property name="secobjprivilegeDao" ref="secobjprivilegeDao" />
+		<property name="userDao" ref="userDao" />
 	</bean>
 
 	<bean id="drilldownQueryHandler" class="org.oscarehr.dashboard.handler.DrilldownQueryHandler" autowire="byName" />
