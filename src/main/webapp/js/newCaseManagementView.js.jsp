@@ -391,7 +391,7 @@ var notesIncrement = 20;
 var notesRetrieveOk = false;
 var notesCurrentTop = null;
 var notesScrollCheckInterval = null;
-const MAXNOTES = Number.MAX_SAFE_INTEGER;
+const MAXNOTES = 1000000;
 
 function notesIncrementAndLoadMore() {
 	if (notesRetrieveOk && $("encMainDivWrapper").scrollTop === 0) {
