@@ -30,10 +30,13 @@
 		#FF8C00 = darkorange
 */
 
-* {
+
+:root * {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-	font-size: 11px;
+	font-size: 12px;
 	overscroll-behavior: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 #noteEditTxt {
@@ -101,15 +104,16 @@
 }
 
 .noteRounded, .showEdContent, .note {
-	border: 1px solid #cccccc;
+	/*! border: 1px solid white; */
 	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	/*! -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); */
+	/*! box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); */
+	/*! -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; */
+	/*! transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; */
 }
 .noteRounded {
 	background-color: #ffffff;
+	box-shadow: 0 2px 4px 0 rgba(38,40,42,0.3);
 }
 
 fieldset {
@@ -186,7 +190,7 @@ div#patient-label div#patient-phone:hover, div#patient-label div#patient-cell-ph
 .pull-right a {
 	color: white;
 	text-decoration: none;
-	font-weight:bold;
+	font-weight:normal;
 }
 
 input {
@@ -241,16 +245,6 @@ h3 {
 	width: 100%;
 }
 
-.Head INPUT {
-	width: 100px;
-}
-
-.RowTop {
-
-	font-weight: bold;
-	background-color: #CCCCFF;
-}
-
 .ControlPushButton {
 
 	font-family: inherit;
@@ -268,11 +262,10 @@ h3 {
 
 #leftColLoader, #rightColLoader,
 #rightColLoader h3, #leftColLoader h3, #leftColLoader h3 a {
-	margin:0px !important;
-	padding:0px !important;
+	margin:0 !important;
+	padding:0 !important;
 	background-color:white !important;
 	color: black !important;
-	font-weight: unset !important;
 	z-index: 10000 !important;
 }
 
@@ -297,7 +290,7 @@ div#leftNavBar {
 div#notCPP {
 	display: flex;
 	flex-direction: column;
-	gap: 2.5px;
+	gap: 3px;
 	height: 70%;
 }
 
@@ -310,12 +303,13 @@ div#notCPP {
 	flex-basis: 60%;
 	align-content: end;
 	width: 100%;
+	gap: 3px;
 }
 
 div#cppBoxes {
 	display: flex;
 	flex-direction: column;
-	gap: 2.5px;
+	gap: 3px;
 	height: auto;
 	margin: 0;
 }
@@ -338,6 +332,9 @@ div#divR1I1,div#divR1I2,div#divR2I1,div#divR2I2 {
 #topContent {
 	height: auto;
 	margin: 0;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	background-color: whitesmoke;
 }
 
 form[name='caseManagementEntryForm'] {
@@ -345,7 +342,7 @@ form[name='caseManagementEntryForm'] {
 	display: flex;
 	flex-direction: column;
 	margin: 0;
-	gap: 2.5px;
+	gap: 3px;
 }
 
 div.topBox {
@@ -370,7 +367,7 @@ div.topBox h3 {
 	background-color: #6699cc;
 
 	color: white;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 div.topBox ul {
@@ -399,7 +396,7 @@ div.topBox ul {
 div#encMainDiv {
 	display: flex;
 	flex-direction: column;
-	gap: 2.5px;
+	gap: 4px;
 }
 
 div#encMainDivWrapper {
@@ -407,6 +404,10 @@ div#encMainDivWrapper {
 	overflow-y: scroll;
 	border: thin solid #cccccc;
 	margin: 0;
+	/*! background-color: -webkit-font-smoothing: antialiased; */
+	/*! -moz-osx-font-smoothing: grayscale; */
+	/*! -webkit-overflow-scrolling: touch; */
+	background-color: whitesmoke;
 }
 
 div#header {
@@ -541,7 +542,7 @@ div#encounterTools fieldset:nth-of-type(3) {
 	border-top: 2px solid #A9A9A9;
 	height: 34px;
 	max-width: 130px;
-	font-weight: bold;
+	font-weight: normal;
 	color: #FFFFFF;
 }
 
@@ -579,13 +580,6 @@ div#encounterTools fieldset:nth-of-type(3) {
 	margin-left: 4px;
 }
 
-.TopStatusBar {
-	font-weight: bold;
-	background-color: #6699cc;
-	color: black;
-	height: 23px;
-	width: 100%;
-}
 
 /* For the Pharmacists Drug Therapy Problems */
 
@@ -599,7 +593,7 @@ div#encounterTools fieldset:nth-of-type(3) {
 }
 
 div.info,span.info {
-	font-weight: bold;
+	font-weight: normal;
 }
 
 div.statusName,div.statusInfo,div.statusAppointment {
@@ -623,11 +617,11 @@ div.demographicSection {
 
 div.demographicSection h3 {
 	background-color: #ccccff;
-	font-weight: bold;
-	margin-top: 0px;
-	padding-top: 0px;
-	margin-bottom: 0px;
-	padding-bottom: 0px;
+	font-weight: normal;
+	margin-top: 0;
+	padding-top: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 div.demographicSection ul {
@@ -703,7 +697,7 @@ div.demographicWrapper {
 /*****************/
 
 .TopStatusBarShort {
-	font-weight: bold;
+	font-weight: normal;
 	background-color: #6699cc;
 	color: black;
 	height: 23px;
@@ -763,7 +757,7 @@ div.leftBox h3 a {
 div.leftBox h3 {
 	background-color: #6699cc;
 	color: white;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 div.leftBox ul {
@@ -1022,15 +1016,16 @@ div.note pre {
 
 
 .sig {
-	background-color: #EEEEEE !important;
+	background-color:  cornsilk !important;
 	color: #111111 !important;
 	width: 100% !important;
 	border-top:#CCCCCC thin solid !important;
+	border-radius: 0 0 4px 4px;
 }
 
 .txtArea {
 	border: none;
-	font-size: larger;
+	font-size: inherit;
 	width: 100%;
 }
 
@@ -1196,7 +1191,7 @@ div.autocomplete ul li {
 .searchTitle {
 	background-color: #6699CC;
 	color: #000000;
-	font-weight: bold;
+	font-weight: normal;
 	text-align: left;
 	height: 20px
 }
@@ -1211,7 +1206,7 @@ div.autocomplete ul li {
 
 .fieldTitle {
 	background-color: #EEEEFF;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 .fieldValue {
