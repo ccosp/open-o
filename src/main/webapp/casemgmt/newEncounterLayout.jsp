@@ -123,6 +123,7 @@ var Colour = {
 	messages: '<%=Colour.getInstance().messages%>',
 	measurements: '<%=Colour.getInstance().measurements%>',
 	consultation: '<%=Colour.getInstance().consultation%>',
+	hrmDocuments: '<%=Colour.getInstance().hrmDocuments%>',
 	allergy: '<%=Colour.getInstance().allergy%>',
 	rx: '<%=Colour.getInstance().rx%>',
 	omed: '<%=Colour.getInstance().omed%>',

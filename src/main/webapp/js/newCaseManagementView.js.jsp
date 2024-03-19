@@ -391,7 +391,7 @@ var notesIncrement = 20;
 var notesRetrieveOk = false;
 var notesCurrentTop = null;
 var notesScrollCheckInterval = null;
-const MAXNOTES = Number.MAX_SAFE_INTEGER;
+const MAXNOTES = 1000000;
 
 function notesIncrementAndLoadMore() {
 	if (notesRetrieveOk && $("encMainDivWrapper").scrollTop === 0) {
@@ -489,7 +489,7 @@ function navBarLoader() {
                   ctx + "/oscarEncounter/displayMessages.do?hC=" + Colour.messages,
                   ctx + "/oscarEncounter/displayMeasurements.do?hC=" + Colour.measurements,
                   ctx + "/oscarEncounter/displayConsultation.do?hC=" + Colour.consultation,
-                  ctx + "/oscarEncounter/displayHRM.do?hC=",
+                  ctx + "/oscarEncounter/displayHRM.do?hC=" + Colour.hrmDocuments,
                   <%--ctx + "/oscarEncounter/displayMyOscar.do?hC=",--%>
                   <%--ctx + "/eaaps/displayEctEaaps.do?hC=",--%>
                   <%--ctx + "/oscarEncounter/displayEconsultation.do?hC=",--%>
