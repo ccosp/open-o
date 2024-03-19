@@ -63,6 +63,8 @@ public final class NioFileManager implements Serializable {
 	public static final String DOCUMENT_DIRECTORY = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 	private static final String TEMP_PDF_DIRECTORY = "tempPDF";
 	private static final String DEFAULT_FILE_SUFFIX = "pdf";
+
+	private static final String DEFAULT_GENERIC_TEMP = "tempDirectory";
 	private static final String BASE_DOCUMENT_DIR = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR");
 	
 	public Path hasCacheVersion2(LoggedInInfo loggedInInfo, String filename, Integer pageNum) {
@@ -192,8 +194,14 @@ public final class NioFileManager implements Serializable {
 		return Files.write(file, os.toByteArray());
 	}
 	
-	public final Path saveTempFile(final String fileName, ByteArrayOutputStream os) throws IOException {
+	public Path saveTempFile(final String fileName, ByteArrayOutputStream os) throws IOException {
 		return saveTempFile(fileName, os, null);
+	}
+
+	public Path createTempFile(final String fileName, ByteArrayOutputStream os) throws IOException {
+		Path directory = Files.createTempDirectory(DEFAULT_GENERIC_TEMP + System.currentTimeMillis());
+		Path file = Files.createFile( Paths.get(directory.toString(), fileName) );
+		return Files.write(file, os.toByteArray());
 	}
 	
 	/**
