@@ -301,13 +301,24 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		if( typeof formPrint === "function" ) 
 		{
-			console.log("Printing document remotely with formPrint method");
-			formPrint();
-		} 
+			try {
+				console.log("Printing document remotely with formPrint method");
+				formPrint();
+			} catch(e) {
+				console.log("Eform returns fatal error while using formPrint function " + e);
+				hailMary();
+			}
+		}
+
 		else if(typeof printLetter === "function") 
 		{
-			console.log("Printing document remotely with printLeter method")
-			printLetter(); 
+			try {
+				console.log("Printing document remotely with printLeter method")
+				printLetter();
+			} catch(e) {
+				console.log("Eform returns fatal error while using printLetter function "  + e);
+				hailMary();
+			}
 		}
 
 		else if (document.getElementsByName("PrintButton") && document.getElementsByName("PrintButton")[0])
@@ -316,25 +327,26 @@ document.addEventListener("DOMContentLoaded", function(){
 				console.log(document.getElementsByName("PrintButton"));
 				console.log("Remotely clicking button with name PrintButton");
 				document.getElementsByName("PrintButton")[0].click();
-			} catch {
-				console.log("Error locating PrintButton");
+			} catch(e) {
+				console.log("Error locating PrintButton "  + e);
+				hailMary();
 			}
 		}
 
 		else if(document.getElementById('edit')) 
 		{
-			console.log("Content has been edited and no print method was found. Executing window.print");
-			document.getElementById('edit').contentWindow.print();
+			try {
+				console.log("Content has been edited and no print method was found. Executing window.print");
+				document.getElementById('edit').contentWindow.print();
+			} catch(e) {
+				console.log("Error locating PrintButton "  + e);
+				hailMary();
+			}
 		} 
 
 		else
 		{
-			console.log("Just do window print.")
-			try{
-				window.print();
-			} catch {
-				alert("Cannot print. Try the print button on the eForm.");
-			}
+			hailMary()
 		}
 
 		/*
@@ -345,6 +357,15 @@ document.addEventListener("DOMContentLoaded", function(){
 			remoteSave();
 		} 
 	
+	}
+
+	function hailMary() {
+		console.log("Just do window print.")
+		try{
+			window.print();
+		} catch {
+			alert("Cannot print. Try the print button on the eForm.");
+		}
 	}
 	
 	/**
