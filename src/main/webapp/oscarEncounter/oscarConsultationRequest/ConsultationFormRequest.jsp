@@ -152,6 +152,20 @@ if(!authed) {
 			demo = consultUtil.demoNo;
 		}
 
+		// Check if the selected provider is currently active. If it is not active, add it to the prList, as the list only contains active providers.
+		Boolean isProviderActive = false;
+		for (Provider activeProvider : prList) {
+			if (consultUtil.providerNo != null && consultUtil.providerNo.equalsIgnoreCase(activeProvider.getProviderNo())) {
+				isProviderActive = true;
+				break;
+			}
+		}
+
+		if (!isProviderActive && consultUtil.providerNo != null) {
+			Provider inactiveProvider = rx.getProvider(consultUtil.providerNo);
+			if (inactiveProvider != null) { prList.add(inactiveProvider); }
+		}
+
 		UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
 		if (demo != null) {
 			demoData = new oscar.oscarDemographic.data.DemographicData();
