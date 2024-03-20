@@ -7,6 +7,9 @@
 		<put name="leftNav" value="/PMmodule/navigation_blank.jsp" />
 		<put name="body" value="/PMmodule/Home.jsp" />
 	</definition>
+	<definition name="page.user" path="/user.jsp">
+		<put name="body" value="/body.jsp"/>
+	</definition>
  	<definition name="page.admin.list" path="/PMmodule/layout.jsp">
  		<put name="navigation" value="/PMmodule/navigation.jsp" />
  		<put name="body" value="/admin/admin.jsp" />
