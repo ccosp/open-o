@@ -1807,7 +1807,7 @@ function showPreview(base64PDF, pdfName) {
 					<table height="100%" width="100%">
 						<% if (props.isConsultationFaxEnabled() && OscarProperties.getInstance().isPropertyActive("consultation_dynamic_labelling_enabled")) { %>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.consultationFormPrint.msgAssociated2" />:</td>
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgAssociated2" /></td>
 							<td  class="tite1">
 								<html:select property="providerNo" onchange="switchProvider(this.value)">
 									<%
