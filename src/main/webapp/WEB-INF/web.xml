@@ -154,9 +154,9 @@
 	<listener>
 		<listener-class>org.oscarehr.common.web.OscarSpringContextLoader</listener-class>
 	</listener>
-	<listener>
+	<!-- <listener>
 		<listener-class>org.oscarehr.util.ContextStartupListener</listener-class>
-	</listener>
+	</listener> -->
 	<listener>
 		<listener-class>org.oscarehr.web.OscarSessionListener</listener-class>
 	</listener>

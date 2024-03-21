@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import javax.servlet.ServletContext;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+ import org.oscarehr.util.MiscUtils;
+// import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -100,9 +100,9 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
 		wac.setConfigLocations(configLocations.toArray(new String[0]));
 		wac.refresh();
 		
-        if (SpringUtils.getBeanFactory() == null) {
-			SpringUtils.setBeanFactory(wac);
-		}
+        // if (SpringUtils.getBeanFactory() == null) {
+		// 	SpringUtils.setBeanFactory(wac);
+		// }
         
 		return wac;
 	}

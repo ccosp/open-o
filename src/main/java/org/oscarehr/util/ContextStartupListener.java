@@ -23,7 +23,7 @@
 
 package org.oscarehr.util;
 
-import org.apache.logging.log4j.Logger;
+/*import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorUpdateTask;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
@@ -49,9 +49,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 		// ensure cxf uses log4j2
 		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4j2Logger");
 
-		/*
-		 * Map log4j version 1 to version 2
-		 */
+		
 		System.setProperty("log4j1.compatibility", "true");
 
 		try {
@@ -66,7 +64,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 			MiscUtils.setShutdownSignaled(false);
 			MiscUtils.registerShutdownHook();
 
-			createOscarProgramIfNecessary();
+			//createOscarProgramIfNecessary();
 
 			if(oscarProperties.getBooleanProperty("INTEGRATOR_ENABLED", "true")){
 				CaisiIntegratorUpdateTask.startTask();
@@ -147,4 +145,4 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 			// do nothing it's okay.
 		}
 	}
-}
+}*/
