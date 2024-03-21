@@ -347,9 +347,9 @@ public final class ConvertToEdoc {
 		}
 
 		// DOCTYPE declarations are mandatory. HTML5 if none is declared.
-		if(! incomingDocumentString.startsWith("<!DOCTYPE") || ! incomingDocumentString.startsWith("<!doctype")) {
-			incomingDocumentString = "<!DOCTYPE html>" + incomingDocumentString;
-		}
+//		if(! incomingDocumentString.startsWith("<!DOCTYPE") || ! incomingDocumentString.startsWith("<!doctype")) {
+//			incomingDocumentString = "<!DOCTYPE html>" + incomingDocumentString;
+//		}
 
 		//TODO: COMING SOON.  EForms should be selectively sanitized against potential injection attacks and etc...
 //		Safelist safelist = Safelist.relaxed();
