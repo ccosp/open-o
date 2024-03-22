@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import org.oscarehr.common.dao.ServiceRequestTokenDaoImpl;
 
 import org.apache.cxf.rs.security.oauth.data.AccessToken;
 import org.apache.cxf.rs.security.oauth.data.AccessTokenRegistration;
