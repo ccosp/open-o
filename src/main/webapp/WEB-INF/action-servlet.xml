@@ -3,7 +3,7 @@
         "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
 		
-	<bean name="/documentManager/inboxManage" class="org.oscarehr.documentManager.actions.DmsInboxManageAction">
+	<!-- <bean name="/documentManager/inboxManage" class="org.oscarehr.documentManager.actions.DmsInboxManageAction">
 		<property name="providerInboxRoutingDAO" ref="providerInboxRoutingDAO" />
 		<property name="queueDocumentLinkDAO" ref="queueDocumentLinkDAO" />
 		<property name="secObjectNameDao" ref="secObjectNameDao" />
@@ -219,5 +219,5 @@
  	<property name="billingPaymentTypeDao" ref="billingPaymentTypeDao" />
  	<property name="billPaymentDao" ref="billingONPaymentDao" />
  	</bean>
-	<bean name="/billing/CA/ON/billingON3rdPayments" class="org.oscarehr.billing.CA.ON.web.BillingONPaymentsAction" singleton="false" autowire="byName"/>
+	<bean name="/billing/CA/ON/billingON3rdPayments" class="org.oscarehr.billing.CA.ON.web.BillingONPaymentsAction" singleton="false" autowire="byName"/> -->
 </beans>

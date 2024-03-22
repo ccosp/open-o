@@ -28,7 +28,7 @@
 	<import resource="classpath:spring_hibernate.xml" />
 
 	
-
+	<bean id="userDao" class="org.oscarehr.common.UserDao" autowire="byName"/>
 	
 	
 	<!-- <bean id="ocanDataProcessor" class="oscar.ocan.service.OcanDataProcessor">

@@ -10,7 +10,7 @@
 	<!--
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	 -->
-	<bean id="dataSource" class="org.oscarehr.util.OscarTrackingBasicDataSource" destroy-method="close">
+	 <bean id="dataSource" class="org.oscarehr.util.OscarTrackingBasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${db_driver}" />
 		<property name="url" value="${db_uri}${db_name}" />
 		<property name="defaultAutoCommit" value="true" />
@@ -34,7 +34,7 @@
 		<property name="removeAbandonedTimeout" value="${db_remove_abandoned_timeout}" />
 		<property name="logAbandoned" value="${db_log_abandoned}" />
 		 
-	</bean>
+	</bean> 
 
 	<!-- JPA -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -61,16 +61,6 @@
 	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager" autowire="byName" />
 	<tx:annotation-driven transaction-manager="txManager" />
 
-	<!-- Managed Beans -->
-	<context:component-scan base-package="org.oscarehr.common.dao" />
-	<context:component-scan base-package="org.oscarehr.eyeform.dao" />
-	<context:component-scan base-package="org.oscarehr.hospitalReportManager.dao" />
-	<context:component-scan base-package="org.oscarehr.olis.dao" />
-	<context:component-scan base-package="org.oscarehr.billing.CA.ON.dao" />
-	<context:component-scan base-package="org.oscarehr.billing.CA.BC.dao" />
-	<context:component-scan base-package="org.oscarehr.billing.CA.dao" />
-	<context:component-scan base-package="org.oscarehr.PMmodule.dao" />
-	<!-- Sharing Center -->
-	<context:component-scan base-package="org.oscarehr.sharingcenter.dao" />
+	
 
 </beans>

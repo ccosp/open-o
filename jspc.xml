@@ -14,8 +14,8 @@
 
 	<property environment="env" />
 	<property name="catalina.home" location="${env.CATALINA_HOME}" />
-	<echo message="Using CATALINA_HOME=${catalina.home}" />
-	<import file="${catalina.home}/bin/catalina-tasks.xml" />
+	 <echo message="Using CATALINA_HOME=${catalina.home}" />
+	<!-- <import file="${catalina.home}/bin/catalina-tasks.xml" /> -->
 
 	<property name="jspc.expandedWarDir" value="target/${jspc_target}" />
 	<property name="jspc.generatedDir" value="target/generated_jsp_classes" />
@@ -50,9 +50,9 @@
 			<then>
 				<jasper uriroot="${jspc.expandedWarDir}" webXmlFragment="${jspc.generatedDir}/generated_web.xml" outputDir="${jspc.generatedDir}" failOnError="true" verbose="0" />
 			</then>
-			<else>
+			<!-- <else>
 				<jasper2 uriroot="${jspc.expandedWarDir}" webXmlFragment="${jspc.generatedDir}/generated_web.xml" outputDir="${jspc.generatedDir}" validateXml="false" failOnError="true" />
-			</else>
+			</else> -->
 		</if>
 
 		<javac srcdir="${jspc.generatedDir}" source="8" target="8" debug="on" memoryInitialSize="128m" compiler="modern" includeantruntime="false" memoryMaximumSize="1024m" fork="yes" encoding="UTF8">
