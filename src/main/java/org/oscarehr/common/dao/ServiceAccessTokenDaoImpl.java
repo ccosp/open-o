@@ -24,15 +24,47 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import org.oscarehr.common.dao.ServiceAccessTokenDao;
 
+import javax.persistence.Query;
 
 import org.oscarehr.common.model.ServiceAccessToken;
+import org.springframework.stereotype.Repository;
 
-public interface ServiceAccessTokenDao{
+@Repository
+public class ServiceAccessTokenDaoImpl extends AbstractDao<ServiceAccessToken> implements ServiceAccessTokenDao{
 
-	public List<ServiceAccessToken> findAll();
-	void persist(ServiceAccessToken token);
-    void remove(ServiceAccessToken token);
-	public ServiceAccessToken findByTokenId(String token);
+
+	public ServiceAccessTokenDaoImpl() {
+		super(ServiceAccessToken.class);
+	}
+
+	@Override
+public void persist(ServiceAccessToken token) {
+    this.entityManager.persist(token);
+}
+ 
+@Override
+public void remove(ServiceAccessToken token) {
+    this.entityManager.remove(token);
+}
+ 
+// @Override
+// public ServiceRequestToken merge(ServiceAccessTokenDao token) {
+//     return this.entityManager.merge(token);
+// }
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ServiceAccessToken> findAll() {
+		Query query = createQuery("x", null);
+		return query.getResultList();
+	}
+	@Override
+	public ServiceAccessToken findByTokenId(String token) {
+		Query query = entityManager.createQuery("SELECT x FROM ServiceAccessToken x WHERE x.tokenId=?");
+		query.setParameter(1,token);
+		
+		return this.getSingleResultOrNull(query);
+	}
 
 }

@@ -24,18 +24,50 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import org.oscarehr.common.dao.ServiceClientDao;
 
 import javax.persistence.Query;
 
 import org.oscarehr.common.model.ServiceClient;
 import org.springframework.stereotype.Repository;
 
-public interface ServiceClientDao{
+@Repository
+public class ServiceClientDaoImpl extends AbstractDao<ServiceClient> implements ServiceClientDao{
 
-	public List<ServiceClient> findAll();
-	public ServiceClient findByName(String name);
-	public ServiceClient findByKey(String key);
-	public ServiceClient find(Integer id);
-	// public void persist(ServiceRequestToken token);
-    // public void remove(ServiceRequestToken token);
+	public ServiceClientDaoImpl() {
+		super(ServiceClient.class);
+	}
+	
+    @Override
+	@SuppressWarnings("unchecked")
+	public List<ServiceClient> findAll() {
+		Query query = createQuery("x", null);
+		return query.getResultList();
+	}
+	
+    @Override
+	public ServiceClient findByName(String name) {
+		Query query = entityManager.createQuery("SELECT x FROM ServiceClient x WHERE x.name=?");
+		query.setParameter(1,name);
+		
+		return this.getSingleResultOrNull(query);
+	}
+	
+    @Override
+	public ServiceClient findByKey(String key) {
+		Query query = entityManager.createQuery("SELECT x FROM ServiceClient x WHERE x.key=?");
+		query.setParameter(1,key);
+		
+		return this.getSingleResultOrNull(query);
+	}
+
+    @Override
+    public ServiceClient find(Integer id) {
+        return this.entityManager.find(ServiceClient.class, id);
+    }
+     
+    // @Override
+    // public void remove(ServiceRequestToken token) {
+    //     this.entityManager.remove(token);
+    // }
 }
