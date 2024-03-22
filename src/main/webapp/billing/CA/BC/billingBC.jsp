@@ -921,6 +921,19 @@ function setCodeToChecked(svcCode){
     }
 }
 
+function checkifSet(icd9,feeitem,extrafeeitem){
+	myform = document.forms[0];
+	oscarLog("icd9 "+icd9+" ,feeitem "+feeitem+" "+codeEntered(feeitem)+" extrafeeitem "+extrafeeitem+ " "+codeEntered(extrafeeitem));
+	if (myform.xml_diagnostic_detail1.value == ""){
+		myform.xml_diagnostic_detail1.value = icd9;
+	}
+	setCodeToChecked(feeitem);
+	oscarLog("feeitem did put "+codeEntered(feeitem));
+	setCodeToChecked(extrafeeitem);
+
+	oscarLog("extra feeitem did put"+codeEntered(extrafeeitem));
+}
+
 jQuery(document).ready(function(jQuery){
 
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
