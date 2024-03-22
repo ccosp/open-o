@@ -516,6 +516,15 @@ document.addEventListener("DOMContentLoaded", function(){
 	    if(element)
 	    {
 	    	element.parentNode.removeChild(element);
+
+			/*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+			const inputElement = document.createElement("input");
+			inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "fax_button");
+		    document.forms[0].appendChild(inputElement);
 	    }
 	    
 	    element = document.getElementById("faxSave_button");
@@ -523,15 +532,51 @@ document.addEventListener("DOMContentLoaded", function(){
 	    if(element)
 	    {
 	    	element.parentNode.removeChild(element);
+
+		    /*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+		    const inputElement = document.createElement("input");
+		    inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "faxSave_button");
+		    document.forms[0].appendChild(inputElement);
 	    }
 	    
 	    element = document.getElementById("faxEForm");
 	    
 	    if(element)
 	    {
-	    	element.parentNode.removeChild(element); 
+	    	element.parentNode.removeChild(element);
+
+		    /*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+		    const inputElement = document.createElement("input");
+		    inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "faxEForm");
+		    document.forms[0].appendChild(inputElement);
 	    }
-	
+
+		/*
+		 * sometimes these are in there too.
+		 */
+		let inputElement = document.createElement("input");
+		inputElement.setAttribute("type", "hidden");
+		inputElement.setAttribute("id", "otherFaxInput");
+		document.forms[0].appendChild(inputElement);
+	}
+
+	/**
+	 * A wrapper function to dismiss uncaught exceptions for when
+	 * this function contained in the removed faxControl.js file is
+	 * called.
+	 * Do nothing.
+	 */
+	function AddOtherFax() {
+		// do nothing
+		return false;
 	}
 
 	/**
