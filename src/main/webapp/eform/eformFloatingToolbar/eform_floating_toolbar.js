@@ -29,9 +29,15 @@ document.addEventListener("DOMContentLoaded", function(){
 	 * Triggers the eForm save/submit function
 	 */
 	function remoteSave() {
-		
+
+		// bind the spinner to the form submit event.
+		jQuery('form').on('submit', function(e) {
+			console.log(e);
+			ShowSpin(true);
+		});
+
 		moveSubject();
-		ShowSpin(true);
+
 		if (typeof saveRTL === "function")
 		{
 			console.log("Saving RTL or RTL template");
@@ -103,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		trigger.data('poload', context + '/previewDocs.do?method=fetchEFormDocuments&demographicNo=' + demographicNo + '&fdid=' + fdid);
 		trigger.off('click');
 		let title = trigger.attr("title");
-		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
+		jQuery("#attachDocumentDisplay").load(trigger.data('poload'), function(response, status, xhr){
 			if (status === "success") {
 				// Disable the floating toolbar when the attachment window opens
 				const eformFloatingToolbar = document.getElementById("eform_floating_toolbar");
