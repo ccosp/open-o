@@ -96,13 +96,6 @@
 	left: 0;
 }
 
-.leftBox ul li {
-	display: block;
-}
-.leftBox ul{
-	display: block;
-}
-
 .noteRounded {
 	background-color: #ffffff;
 	box-shadow: 0 2px 4px 0 rgba(38,40,42,0.3);
@@ -158,15 +151,25 @@ textarea.unsigned-textarea, textarea.edit-textarea {
 	border-radius: unset;
 }
 
+div#patient-label div {
+	margin:auto 5px;
+	font-size: small;
+}
+
+div#patient-label div#patient-full-name, div#patient-label div#patient-full-name h1, div#patient-label div#patient-full-name h1 a {
+	margin:unset;
+	margin-bottom:auto;
+}
+
 div#patient-full-name a {
 	text-decoration: none;
 	color:blue;
 	display:block;
+	font-size: larger;
 }
 
-div#patient-label div {
-	margin:auto 5px;
-	font-size: small;
+div#patient-label div#patient-full-name h1 a {
+	font-size: larger;
 }
 
 div#patient-label div#header-top-row {
@@ -178,11 +181,6 @@ div#patient-label .label {
 	font-weight: normal !important;
 	font-size: smaller;
 	text-decoration: none;
-}
-
-
-div#patient-label div#patient-full-name h1 a {
-	font-size: larger;
 }
 
 div#patient-label div#patient-phone:hover, div#patient-label div#patient-cell-phone:hover {
@@ -217,15 +215,15 @@ html, body {
 	height: 100%;
 }
 
-TABLE {
+table {
 	border-collapse: collapse;
 }
 
 
-A IMG {
-	border: none!important;
-	margin:0px !important;
-	padding: 0px !important;
+a img {
+	border: none;
+	margin:0;
+	padding: 0;
 }
 
 
@@ -294,6 +292,9 @@ div#leftNavBar {
 	height: 100%;
 }
 
+#rightNavBar img:first-of-type {
+	align-self:flex-start;
+}
 
 div#notCPP {
 	display: flex;
@@ -378,10 +379,22 @@ div.topBox h3 {
 	font-weight: normal;
 }
 
-div.topBox ul {
+#cppBoxes div.topBox-notes ul {
 	margin:0;
 	padding:0;
 	list-style: none;
+}
+
+#cppBoxes div.topBox-notes ul li:nth-of-type(odd) {
+	background-color:white !important;
+}
+
+#cppBoxes div.topBox-notes ul li:nth-of-type(even) {
+	background-color:whitesmoke !important;
+}
+
+#cppBoxes div.topBox-notes ul li a {
+	background-color:inherit !important;
 }
 
 #cppBoxes .topBox-notes {
@@ -676,26 +689,48 @@ div.demographicWrapper {
 	margin-right: 1px;
 }
 
-/* popup menu style for encounter reason */
+/* popup menu styles for forms */
 .menu {
 	position: absolute;
+	left:20px;
+	top:auto;
+	margin:0;
 	visibility: hidden;
 	background-color: #6699cc;
-	layer-background-color: #6699cc;
 	color: white;
-	border-left: 1px solid black;
-	border-top: 1px solid black;
-	border-bottom: 3px solid black;
-	border-right: 3px solid black;
-	padding: 3px;
-	z-index: 10;
-	width: 25em;
+	border: thin solid #cccccc;
+	box-shadow: 1px 2px 4px 1px rgba(38,40,42,0.3);
+	border-radius: 4px 4px 0 0;
+	z-index: 101;
+	max-height:150px;
+	overflow-y: scroll;
+	padding:0 0 5px 0;
+}
+
+.menu h3 {
+	margin:0;
+	padding:2px 0 !important;
+	border-bottom:#cccccc thin solid;
+	width:100%;
+	display:block;
+	font-weight: 500 !important;
+	position:sticky;
+	top:0;
+	left:0;
+	right:0;
+}
+
+.menu br {
+	display:none;
 }
 
 .menu a {
+	display:block;
+	padding:1px 5px;
 	text-decoration: none;
 	color: white;
 }
+
 
 /*****************/
 
@@ -741,72 +776,81 @@ div.demographicWrapper {
 	color: #3366CC;
 }
 
-div.leftBox {
-	width: 100%;
-	background-color: #FFFFFF;
-}
-
 span.footnote {
 	background-color: #ccccee;
 	border: 1px solid #000;
 	width: 4px;
 }
 
+
+div.leftBox {
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
 div.leftBox h3 a {
 	color: white;
 	text-decoration: none;
-}
-
-div.leftBox h3 {
-	background-color: #6699cc;
-	color: white;
 	font-weight: normal;
 }
 
+div.leftBox h3 {
+	background-color:transparent;
+	color: white;
+}
+
 div.leftBox ul {
-	padding:0 !important;
-	margin: 0 !important;
+	display: flex;
+	flex-direction: column;
+	padding:0;
+	margin: 0;
 	list-style: none;
 	list-style-type: none;
 	list-style-position: outside;
 }
 
 div.leftBox li {
+	padding: unset !important;
+	margin: unset !important;
+	white-space: nowrap;
+}
+
+div.leftBox li:nth-of-type(odd) {
+	background-color:white !important;
+}
+div.leftBox li:nth-of-type(even) {
+	background-color:whitesmoke !important;
+}
+
+div.leftBox li a, div.leftBox li span {
+	display:-webkit-box;
+	display:inline-block;
+	display: inline list-item;
+	padding:unset;
 	word-wrap: anywhere;
-	padding: 1px 5px !important;
+	white-space: nowrap;
+	z-index: unset !important;
+	background-color:inherit !important;
+	height: 100% !important;
+	margin: unset !important;
 }
 
-/* popup menu styles for forms */
-.menu {
-	position: absolute;
-	visibility: hidden;
-	background-color: #6699cc;
-	layer-background-color: #6699cc;
-	color: white;
-	border-left: 1px solid black;
-	border-top: 1px solid black;
-	border-bottom: 3px solid black;
-	border-right: 3px solid black;
-	padding: 3px;
-	z-index: 101;
+div.leftBox li a, div.leftBox li span a {
+	padding: 2px 5px;
+	text-align:left;
+	vertical-align: middle;
 }
 
-.menuItemright {
-	float: right;
-	color: white;
-	text-decoration: none;
+div.leftBox li a {
+	cursor: pointer;
 }
 
-.menuItemleft {
-	float: left;
-	color: white;
-	text-decoration: none;
+div.leftBox li a img[src*="clear.gif"]{
+	display:none;
 }
 
-.addItem {
-	width: 10%;
-	float: right;
-	text-align: center;
+div.leftBox li span a span {
+	all: unset !important;
 }
 
 .view-links {
@@ -903,6 +947,7 @@ ul#issueIdList {
 	bottom: 200px;
 	padding:10px;
 	box-shadow:2px 3px 5px #999;
+	border-radius: 4px;
 }
 
 #showEditButtons,#showEditLogout {
