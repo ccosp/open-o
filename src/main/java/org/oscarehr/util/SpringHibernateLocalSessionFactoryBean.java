@@ -50,6 +50,8 @@ import org.hibernate.Cache;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.hibernate.StatelessSessionBuilder;
 
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+
 public class SpringHibernateLocalSessionFactoryBean extends LocalSessionFactoryBean {
 
 	private static final Logger logger=MiscUtils.getLogger();
@@ -255,9 +257,6 @@ public class SpringHibernateLocalSessionFactoryBean extends LocalSessionFactoryB
 		return(new TrackingSessionFactory(sf));
 	}
 
-	@Override
-    protected SessionFactory buildSessionFactory() {
-        return super.buildSessionFactory();
-    }
+	
 	
 }
