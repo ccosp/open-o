@@ -39,16 +39,18 @@ import org.hibernate.Interceptor;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.classic.Session;
-import org.hibernate.engine.FilterDefinition;
+import org.hibernate.Session;
+import org.hibernate.engine.spi.FilterDefinition;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.stat.Statistics;
 import org.hibernate.TypeHelper;
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.Cache;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.hibernate.StatelessSessionBuilder;
 
-public class SpringHibernateLocalSessionFactoryBean extends org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean {
+public class SpringHibernateLocalSessionFactoryBean extends LocalSessionFactoryBean {
 
 	private static final Logger logger=MiscUtils.getLogger();
 	
@@ -103,7 +105,7 @@ public class SpringHibernateLocalSessionFactoryBean extends org.springframework.
         }
 	}
 	
-	public static class TrackingSessionFactory implements org.hibernate.SessionFactory
+	public static class TrackingSessionFactory implements SessionFactory
 	{
 		private SessionFactory sessionFactory=null;
 		
@@ -168,9 +170,9 @@ public class SpringHibernateLocalSessionFactoryBean extends org.springframework.
 	        return sessionFactory.getCollectionMetadata(arg0);
         }
 
-		public Session getCurrentSession() throws HibernateException {
-            return(trackSession(sessionFactory.getCurrentSession()));
-        }
+		// public Session getCurrentSession() throws HibernateException {
+        //     return(trackSession(sessionFactory.getCurrentSession()));
+        // }
 
 		public Set getDefinedFilterNames() {
 	        return sessionFactory.getDefinedFilterNames();
@@ -192,11 +194,12 @@ public class SpringHibernateLocalSessionFactoryBean extends org.springframework.
 	        return sessionFactory.isClosed();
         }
 
+		@Override
 		public Session openSession() throws HibernateException {
 	        return(trackSession(sessionFactory.openSession()));
         }
 
-		public Session openSession(Connection arg0, Interceptor arg1) {
+		/*public Session openSession(Connection arg0, Interceptor arg1) {
 	        return(trackSession(sessionFactory.openSession(arg0, arg1)));
         }
 
@@ -206,12 +209,23 @@ public class SpringHibernateLocalSessionFactoryBean extends org.springframework.
 
 		public Session openSession(Interceptor arg0) throws HibernateException {
 			return(trackSession(sessionFactory.openSession(arg0)));
-        }
+        }*/
 
+		@Override
 		public StatelessSession openStatelessSession() {
 	        return sessionFactory.openStatelessSession();
         }
 
+		@Override
+		public Session getCurrentSession() {
+			return sessionFactory.getCurrentSession();
+		}
+
+		@Override
+		public StatelessSessionBuilder withOptions() {
+			// Dummy implementation
+			throw new UnsupportedOperationException("withOptions() is not supported in TrackingSessionFactory");
+		}
 		public StatelessSession openStatelessSession(Connection arg0) {
 	        return sessionFactory.openStatelessSession(arg0);
         }
@@ -240,5 +254,10 @@ public class SpringHibernateLocalSessionFactoryBean extends org.springframework.
 		
 		return(new TrackingSessionFactory(sf));
 	}
+
+	@Override
+    protected SessionFactory buildSessionFactory() {
+        return super.buildSessionFactory();
+    }
 	
 }
