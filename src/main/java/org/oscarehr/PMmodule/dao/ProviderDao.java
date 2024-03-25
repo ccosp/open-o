@@ -50,7 +50,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
+import org.hibernate.type.StandardBasicTypes;
 import oscar.OscarProperties;
 
 import com.quatro.model.security.SecProvider;
@@ -414,7 +414,7 @@ public class ProviderDao extends HibernateDaoSupport {
 		Session session = getSession();
 		
 		Query query = session.createSQLQuery(sql);
-    	((SQLQuery) query).addScalar("shelter_id", Hibernate.INTEGER);
+    	((SQLQuery) query).addScalar("shelter_id", StandardBasicTypes.INTEGER);
     	query.setString(0, provider_no);
     	List lst = new ArrayList();
     	try {

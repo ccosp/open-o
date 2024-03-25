@@ -28,6 +28,7 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.type.StandardBasicTypes;
 
 public class BedProgramDao extends HibernateDaoSupport {
     private String bedType = "Geographical";
@@ -74,10 +75,10 @@ public class BedProgramDao extends HibernateDaoSupport {
         String[] result = new String[3];
 
         SQLQuery query = getSession().createSQLQuery("SELECT name,address,phone,fax from program where id=" + programId);
-        query.addScalar("name", Hibernate.STRING);
-        query.addScalar("address", Hibernate.STRING);
-        query.addScalar("phone", Hibernate.STRING);
-        query.addScalar("fax", Hibernate.STRING);
+        query.addScalar("name", StandardBasicTypes.STRING);
+        query.addScalar("address", StandardBasicTypes.STRING);
+        query.addScalar("phone", StandardBasicTypes.STRING);
+        query.addScalar("fax", StandardBasicTypes.STRING);
         Object[] o = (Object[])query.uniqueResult();
         if (o != null) {
             result[0] = new String(o[0] + "\n" + o[1]);
