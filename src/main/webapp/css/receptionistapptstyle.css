@@ -137,7 +137,6 @@ table#firstTable td#userSettings ul#userSettingsMenu li {
 }
 
 table#scheduleNavigation tr td.title {
-	text-wrap: unset;
 	white-space: nowrap;
 }
 
@@ -166,7 +165,6 @@ table#scheduleNavigation, table#monthScheduleNavigation {
 
 table#scheduleNavigation tr td {
 	white-space: nowrap;
-	text-wrap: unset;
 	padding:3px 0;
 }
 
