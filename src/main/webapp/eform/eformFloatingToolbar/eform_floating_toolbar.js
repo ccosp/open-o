@@ -24,6 +24,10 @@ document.addEventListener("DOMContentLoaded", function(){
 			if (error === "true") { showError(errorMessage); }
 
 	});
+
+	window.onerror = function uncaughtExceptionHandler(message, source, lineNumber, colno, error) {
+		return alert('This eForm contains 1 or more fatal errors that may impair some, or all, functionality.\n\nPlease contact OSCARGalaxy.org for an updated version of this eForm, or to request a repair. \n\nError Message:' + message);
+	}
 	
 	/**
 	 * Triggers the eForm save/submit function
@@ -32,12 +36,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
 		// bind the spinner to the form submit event.
 		jQuery('form').on('submit', function(e) {
-			console.log(e);
 			ShowSpin(true);
 		});
 
 		moveSubject();
-
+alert("subject moved");
 		if (typeof saveRTL === "function")
 		{
 			console.log("Saving RTL or RTL template");
@@ -319,7 +322,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		else if(typeof printLetter === "function") 
 		{
 			try {
-				console.log("Printing document remotely with printLeter method")
+				console.log("Printing document remotely with printLetter method")
 				printLetter();
 			} catch(e) {
 				console.log("Eform returns fatal error while using printLetter function "  + e);
@@ -360,8 +363,9 @@ document.addEventListener("DOMContentLoaded", function(){
 		 * a new eForm or it has been altered.
 		 */
 		if(typeof needToConfirm !== 'undefined' && needToConfirm) {
+			console.log("eForm needs to be saved.")
 			remoteSave();
-		} 
+		}
 	
 	}
 
@@ -488,9 +492,9 @@ document.addEventListener("DOMContentLoaded", function(){
 		const toolbarNav = document.getElementById("eform_floating_toolbar_nav");
 		const toolbarContainer = document.getElementById("eform_floating_toolbar");
 		if( toolbarContainer && openToolbarButton && toolbarNav) {
-			toolbarNav.style.display = "initial";			
+			toolbarContainer.removeAttribute("style");
+			toolbarNav.removeAttribute("style");
 			openToolbarButton.style.display = "none";
-			toolbarContainer.style = "";
 		}
 	}
 
