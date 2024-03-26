@@ -92,6 +92,7 @@ public class ClientImage extends BaseObject {
 			return null;
 		}
 		return Hibernate.createBlob(Base64.encodeBase64(getImage_data()));
+		//return Hibernate.getLobCreator(session).createBlob(getImage_data());
 	}
 
 	public void setImage_contents(Blob image_contents) {

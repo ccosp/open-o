@@ -49,6 +49,7 @@ import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.Cache;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.hibernate.StatelessSessionBuilder;
+import org.hibernate.SessionBuilder;
 
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 
@@ -224,10 +225,6 @@ public class SpringHibernateLocalSessionFactoryBean extends LocalSessionFactoryB
 		}
 
 		@Override
-		public StatelessSessionBuilder withOptions() {
-			// Dummy implementation
-			throw new UnsupportedOperationException("withOptions() is not supported in TrackingSessionFactory");
-		}
 		public StatelessSession openStatelessSession(Connection arg0) {
 	        return sessionFactory.openStatelessSession(arg0);
         }
@@ -247,15 +244,32 @@ public class SpringHibernateLocalSessionFactoryBean extends LocalSessionFactoryB
             return null;
     	}
 
+		@Override
+		public SessionFactoryOptions getSessionFactoryOptions() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public SessionBuilder withOptions() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public StatelessSessionBuilder withStatelessOptions() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 	
-	@Override
+	/*@Override
 	public SessionFactory newSessionFactory(Configuration config)
 	{
 		SessionFactory sf=super.newSessionFactory(config);
 		
 		return(new TrackingSessionFactory(sf));
-	}
+	}*/
 
 	
 	
