@@ -343,13 +343,13 @@
 				ArrayList categoryKeys = new ArrayList();
 
 				MiscUtils.getLogger().debug("module=" + module + ", moduleid=" + moduleid + ", view=" + view + ", EDocUtil.PRIVATE=" + EDocUtil.PRIVATE + ", viewstatus=" + viewstatus);
-				ArrayList<EDoc> privatedocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PRIVATE, EDocUtil.EDocSort.DATE, viewstatus);
+				ArrayList<EDoc> privatedocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PRIVATE, EDocUtil.EDocSort.CONTENTDATE, viewstatus);
 				MiscUtils.getLogger().debug("privatedocs:" + privatedocs.size());
 
 				categories.add(privatedocs);
 				categoryKeys.add(moduleName + "'s Private Documents");
 				if (module.equals("provider")) {
-					ArrayList publicdocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PUBLIC, EDocUtil.EDocSort.DATE, viewstatus);
+					ArrayList publicdocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PUBLIC, EDocUtil.EDocSort.CONTENTDATE, viewstatus);
 					categories.add(publicdocs);
 					categoryKeys.add("Public Documents");
 				}
@@ -515,7 +515,7 @@
 								</td>
 								<td><%=Encode.forHtml(curdoc.getResponsibleName())%>
 								</td>
-								<td><%=Encode.forHtml(curdoc.getObservationDate())%>
+								<td><%=curdoc.getContentDateTime()%>
 								</td>
 								<td><%=Encode.forHtml(reviewerName)%>
 								</td>
