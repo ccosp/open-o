@@ -32,13 +32,20 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 import com.quatro.model.security.Secobjprivilege;
 
 public class SecobjprivilegeDao extends HibernateDaoSupport {
 
     private Logger logger = MiscUtils.getLogger();
+	public SessionFactory sessionFactory;
 
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
   
     public void save(Secobjprivilege secobjprivilege) {
         if (secobjprivilege == null) {
@@ -74,7 +81,7 @@ public class SecobjprivilegeDao extends HibernateDaoSupport {
 	}
     public int update(Secobjprivilege instance) {
 		logger.debug("update Secobjprivilege instance");
-		Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			String queryString = "update Secobjprivilege as model set model.providerNo ='" + instance.getProviderNo() + "'"
 				+ " where model.objectname_code ='" + instance.getObjectname_code() + "'"
@@ -89,7 +96,8 @@ public class SecobjprivilegeDao extends HibernateDaoSupport {
 			logger.error("Update failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
     public int deleteByRoleName(String roleName) {
@@ -155,7 +163,7 @@ public class SecobjprivilegeDao extends HibernateDaoSupport {
     public List findByProperty(String propertyName, Object value) {
 		logger.debug("finding Secobjprivilege instance with property: " + propertyName
 				+ ", value: " + value);
-		Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			String queryString = "from Secobjprivilege as model where model."
 					+ propertyName + "= ? order by objectname_code";
@@ -166,7 +174,8 @@ public class SecobjprivilegeDao extends HibernateDaoSupport {
 			logger.error("find by property name failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
     
@@ -190,17 +199,13 @@ public class SecobjprivilegeDao extends HibernateDaoSupport {
 		List<Secobjprivilege> results = new ArrayList<Secobjprivilege>();
 		
 		
-		Session session = getSession();
-		try {
+		Session session = sessionFactory.getCurrentSession();
 			Query q = session.createQuery(queryString);
 			
 			
 			q.setParameterList("roles", roles);
 
-			results = q.list();
-		}finally {
-			this.releaseSession(session);
-		}
+			results = q.list();		
 		
 		return results;
     }

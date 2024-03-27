@@ -52,6 +52,8 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.hibernate.type.StandardBasicTypes;
 import oscar.OscarProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 import com.quatro.model.security.SecProvider;
 
@@ -62,6 +64,13 @@ public class ProviderDao extends HibernateDaoSupport {
         public static final String PR_TYPE_RESIDENT = "resident";
 	
 	private static Logger log = MiscUtils.getLogger();
+
+	public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
 	public boolean providerExists(String providerNo) {
 		return getHibernateTemplate().get(Provider.class, providerNo) != null;
@@ -353,7 +362,8 @@ public class ProviderDao extends HibernateDaoSupport {
 	public List<Provider> search(String name) {
 		boolean isOracle = OscarProperties.getInstance().getDbType().equals(
 				"oracle");
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		
 		Criteria c = session.createCriteria(Provider.class);
 		if (isOracle) {
@@ -370,7 +380,8 @@ public class ProviderDao extends HibernateDaoSupport {
 		try {
 			results = c.list();
 		}finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 
 		if (log.isDebugEnabled()) {
@@ -411,7 +422,8 @@ public class ProviderDao extends HibernateDaoSupport {
 		
 		String sql ="select distinct c.id as shelter_id from lst_shelter c, lst_orgcd a, secUserRole b  where instr('RO',substr(b.orgcd,1,1)) = 0 and a.codecsv like '%' || b.orgcd || ',%'" +
 				" and b.provider_no=? and a.codecsv like '%S' || c.id  || ',%'";
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		
 		Query query = session.createSQLQuery(sql);
     	((SQLQuery) query).addScalar("shelter_id", StandardBasicTypes.INTEGER);
@@ -420,7 +432,8 @@ public class ProviderDao extends HibernateDaoSupport {
     	try {
     		lst=query.list();
     	}finally {
-    		this.releaseSession(session);
+    		//this.releaseSession(session);
+			session.close();
     	}
         return lst;
 
@@ -453,25 +466,29 @@ public class ProviderDao extends HibernateDaoSupport {
 
 	
 	public List<Integer> getFacilityIds(String provider_no) {
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			SQLQuery query = session.createSQLQuery("select facility_id from provider_facility,Facility where Facility.id=provider_facility.facility_id and Facility.disabled=0 and provider_no=\'"+provider_no +"\'");
 			List<Integer> results = query.list();
 			return results;
 		}finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
 
 	
 	public List<String> getProviderIds(int facilityId) {
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			SQLQuery query = session.createSQLQuery("select provider_no from provider_facility where facility_id="+facilityId);
 			List<String> results = query.list();
 			return results;
 		}finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	
 	}
@@ -587,14 +604,16 @@ public class ProviderDao extends HibernateDaoSupport {
 		@NativeSql({"provider", "providersite"})
 		
         public List<String> getActiveTeamsViaSites(String providerNo) {
-			Session session = getSession();
+			//Session session = getSession();
+			Session session = sessionFactory.getCurrentSession();
 			try {
 				// providersite is not mapped in hibernate - this can be rewritten w.o. subselect with a cross product IHMO 
 				SQLQuery query = session.createSQLQuery("select distinct team from provider p inner join providersite s on s.provider_no = p.provider_no " +
 	            		" where s.site_id in (select site_id from providersite where provider_no = '" + providerNo + "') order by team ");
 				return query.list();
 			}finally {
-				this.releaseSession(session);
+				//this.releaseSession(session);
+				session.close();
 			}
         }
 
@@ -652,7 +671,8 @@ public class ProviderDao extends HibernateDaoSupport {
 				
 			}
 
-			Session session = this.getSession();
+			//Session session = this.getSession();
+			Session session = sessionFactory.getCurrentSession();
 			try {
 				Query q = session.createQuery(sqlCommand);
 				if (searchString != null) {
@@ -666,7 +686,8 @@ public class ProviderDao extends HibernateDaoSupport {
 				q.setMaxResults(itemsToReturn);
 				return (q.list());
 			} finally {
-				this.releaseSession(session);
+				//this.releaseSession(session);
+				session.close();
 			}
 		}
 		
@@ -683,7 +704,8 @@ public class ProviderDao extends HibernateDaoSupport {
 
 			
 
-			Session session = this.getSession();
+			//Session session = this.getSession();
+			Session session = sessionFactory.getCurrentSession();
 			try {
 				Query q = session.createQuery(sqlCommand);
 				
@@ -696,13 +718,15 @@ public class ProviderDao extends HibernateDaoSupport {
 				q.setMaxResults(itemsToReturn);
 				return (q.list());
 			} finally {
-				this.releaseSession(session);
+				//this.releaseSession(session);
+				session.close();
 			}
 		}
 
     @NativeSql({"provider", "appointment"})
     public List<String> getProviderNosWithAppointmentsOnDate(Date appointmentDate) {
-        Session session = getSession();
+       // Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             String sql = "SELECT p.provider_no FROM provider p WHERE p.provider_no IN (SELECT DISTINCT a.provider_no FROM appointment a WHERE a.appointment_date = '" + sdf.format(appointmentDate) + "') " +
@@ -711,13 +735,15 @@ public class ProviderDao extends HibernateDaoSupport {
             
             return query.list();
         }finally {
-            this.releaseSession(session);
+            //this.releaseSession(session);
+			session.close();
         }
     }
 
     public List<Provider> getOlisHicProviders() {
         UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
-        Session session = getSession();
+        //Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
         String sql = "FROM Provider p WHERE p.practitionerNo IS NOT NULL AND p.practitionerNo != ''";
         Query query = session.createQuery(sql);
         List<Provider> practitionerNoProviders = query.list();
@@ -749,7 +775,8 @@ public class ProviderDao extends HibernateDaoSupport {
     }
     
     public List<Provider> getOlisProvidersByPractitionerNo(List<String> practitionerNumbers) {
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
         String sql = "FROM Provider p WHERE p.practitionerNo IN (:practitionerNumbers)";
 		Query query = session.createQuery(sql);
 		query.setParameterList("practitionerNumbers", practitionerNumbers);
@@ -764,7 +791,8 @@ public class ProviderDao extends HibernateDaoSupport {
 	 * @return A list of providers
 	 */
 	public List<Provider> getProvidersByIds(List<String> providerNumbers) {
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		String sql = "FROM Provider p WHERE p.ProviderNo IN (:providerNumbers)";
 		Query query = session.createQuery(sql);
 		query.setParameterList("providerNumbers", providerNumbers);

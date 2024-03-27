@@ -32,10 +32,18 @@ import org.oscarehr.PMmodule.model.ProgramClientStatus;
 import org.oscarehr.common.model.Admission;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 public class ProgramClientStatusDAO extends HibernateDaoSupport {
 
     private Logger log=MiscUtils.getLogger();
+    public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
     public List<ProgramClientStatus> getProgramClientStatuses(Integer programId) {
         return (List<ProgramClientStatus>) this.getHibernateTemplate().find("from ProgramClientStatus pcs where pcs.programId=?", programId);
@@ -69,7 +77,8 @@ public class ProgramClientStatusDAO extends HibernateDaoSupport {
             throw new IllegalArgumentException();
         }
 
-        Session session = getSession();
+       // Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
         List teams = new ArrayList();
         try {
 	        Query query =session.createQuery("select pt.id from ProgramClientStatus pt where pt.programId = ? and pt.name = ?");
@@ -82,7 +91,8 @@ public class ProgramClientStatusDAO extends HibernateDaoSupport {
 	            log.debug("teamNameExists: programId = " + programId + ", statusName = " + statusName + ", result = " + !teams.isEmpty());
 	        }
         }finally {
-        	releaseSession(session);
+        	//releaseSession(session);
+            session.close();
         }
         return !teams.isEmpty();
     }

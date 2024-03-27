@@ -29,9 +29,18 @@ import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.hibernate.type.StandardBasicTypes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
 
 public class BedProgramDao extends HibernateDaoSupport {
     private String bedType = "Geographical";
+    public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
     private List getProgramResultList(String q) {
         return getHibernateTemplate().find(q);
@@ -73,8 +82,8 @@ public class BedProgramDao extends HibernateDaoSupport {
 
     public String[] getProgramInfo(int programId) {
         String[] result = new String[3];
-
-        SQLQuery query = getSession().createSQLQuery("SELECT name,address,phone,fax from program where id=" + programId);
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery query = session.createSQLQuery("SELECT name,address,phone,fax from program where id=" + programId);
         query.addScalar("name", StandardBasicTypes.STRING);
         query.addScalar("address", StandardBasicTypes.STRING);
         query.addScalar("phone", StandardBasicTypes.STRING);
