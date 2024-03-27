@@ -131,7 +131,7 @@ public class IssueDAO extends HibernateDaoSupport {
         final String s = search;
         //return this.getHibernateTemplate().find(sql, new Object[] {search, search,roleList});
         return (List<Issue>) getHibernateTemplate().executeFind(new HibernateCallback<List<Issue>>() {
-            public List<Issue> doInHibernate(Session session) throws HibernateException, SQLException {
+            public List<Issue> doInHibernate(Session session) throws HibernateException {
                 Query q = session.createQuery(sql);
                 q.setMaxResults(Math.min(numToReturn,AbstractDao.MAX_LIST_RETURN_SIZE));
                 q.setFirstResult(startIndex);
