@@ -32,6 +32,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.caisi.model.BaseObject;
 import org.hibernate.Hibernate;
 import org.oscarehr.util.MiscUtils;
+import org.hibernate.Session;
 
 public class ClientImage extends BaseObject {
 	public static final String imageMissingPlaceholderUrl="/images/defaultR_img.jpg";
@@ -87,12 +88,12 @@ public class ClientImage extends BaseObject {
 		this.update_date = update_date;
 	}
 
-	public Blob getImage_contents() {
+	public Blob getImage_contents(Session session) {
 		if(image_data == null) {
 			return null;
 		}
-		return Hibernate.createBlob(Base64.encodeBase64(getImage_data()));
-		//return Hibernate.getLobCreator(session).createBlob(getImage_data());
+		//return Hibernate.createBlob(Base64.encodeBase64(getImage_data()));
+		return Hibernate.getLobCreator(session).createBlob(getImage_data());
 	}
 
 	public void setImage_contents(Blob image_contents) {
