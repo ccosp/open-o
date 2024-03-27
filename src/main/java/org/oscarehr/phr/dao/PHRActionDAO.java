@@ -199,7 +199,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 	// checks to see whether this document has been sent to indivo before (for update/add decision)
 	public boolean isIndivoRegistered(final String classification, final String oscarId) {
 		Long num = (Long) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+			public Object doInHibernate(Session session) throws HibernateException {
 				Query q = session.createQuery("select count(*) from PHRAction a where a.phrClassification = '" + classification + "' and a.oscarId = '" + oscarId + "'");
 				q.setCacheable(true);
 				return q.uniqueResult();
@@ -212,7 +212,7 @@ public class PHRActionDAO extends HibernateDaoSupport {
 
 	public String getPhrIndex(final String classification, final String oscarId) {
 		List<PHRAction> list = (List<PHRAction>) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+			public Object doInHibernate(Session session) throws HibernateException {
 				Criteria criteria = session.createCriteria(PHRAction.class);
 				criteria.add(Restrictions.eq("phrClassification", classification));
 				criteria.add(Restrictions.eq("oscarId", oscarId));

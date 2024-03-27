@@ -84,7 +84,7 @@ public class HibernateTestDao    {
   	public List<Demographic> getActiveDemographics(final int offset, final int limit) {
 		return (List<Demographic>) template.executeFind(new HibernateCallback<List<Demographic>>() {
 			@Override
-			public List<Demographic> doInHibernate(Session session) throws HibernateException, SQLException {
+			public List<Demographic> doInHibernate(Session session) throws HibernateException {
 				Query query = session.createQuery("FROM Demographic d WHERE d.PatientStatus = 'AC'");
 				if (offset > 0) {
 					query.setFirstResult(offset);
