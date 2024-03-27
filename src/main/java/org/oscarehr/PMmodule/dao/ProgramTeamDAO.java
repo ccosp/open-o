@@ -32,10 +32,18 @@ import org.hibernate.Session;
 import org.oscarehr.PMmodule.model.ProgramTeam;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 public class ProgramTeamDAO extends HibernateDaoSupport {
 
     private Logger log=MiscUtils.getLogger();
+    public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
     /*
      * (non-Javadoc)
@@ -62,7 +70,8 @@ public class ProgramTeamDAO extends HibernateDaoSupport {
         if (teamName == null || teamName.length() <= 0) {
             throw new IllegalArgumentException();
         }
-        Session session = getSession();
+        // Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("select pt.id from ProgramTeam pt where pt.programId = ? and pt.name = ?");
         query.setLong(0, programId.longValue());
         query.setString(1, teamName);
@@ -71,7 +80,8 @@ public class ProgramTeamDAO extends HibernateDaoSupport {
         try {
         	teams = query.list();
         }finally{
-        	this.releaseSession(session);
+        	// this.releaseSession(session);
+            session.close();
         }
 
         if (log.isDebugEnabled()) {
