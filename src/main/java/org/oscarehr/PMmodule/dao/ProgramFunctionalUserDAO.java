@@ -33,10 +33,18 @@ import org.oscarehr.PMmodule.model.FunctionalUserType;
 import org.oscarehr.PMmodule.model.ProgramFunctionalUser;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 public class ProgramFunctionalUserDAO extends HibernateDaoSupport {
 
     private static Logger log = MiscUtils.getLogger();
+    public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
     public List<FunctionalUserType> getFunctionalUserTypes() {
         List<FunctionalUserType> results = (List<FunctionalUserType>) this.getHibernateTemplate().find("from FunctionalUserType");
@@ -146,7 +154,8 @@ public class ProgramFunctionalUserDAO extends HibernateDaoSupport {
 
         Long result = null;
 
-        Session session = getSession();
+       // Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery("select pfu.ProgramId from ProgramFunctionalUser pfu where pfu.ProgramId = ? and pfu.UserTypeId = ?");
         q.setLong(0, programId.longValue());
         q.setLong(1, userTypeId.longValue());
@@ -154,7 +163,8 @@ public class ProgramFunctionalUserDAO extends HibernateDaoSupport {
         try {
         	 results = q.list();
         }finally {
-        	releaseSession(session);
+        	//releaseSession(session);
+            session.close();
         }
         if (results.size() > 0) {
             result = (Long)results.get(0);

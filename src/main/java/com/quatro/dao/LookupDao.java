@@ -48,6 +48,8 @@ import com.quatro.model.LookupTableDefValue;
 import com.quatro.model.LstOrgcd;
 import com.quatro.model.security.SecProvider;
 import com.quatro.util.Utility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 public class LookupDao extends HibernateDaoSupport {
 
@@ -58,6 +60,13 @@ public class LookupDao extends HibernateDaoSupport {
 	 *  10 - 16 Buf3 - Buf9   17 - CodeCSV
 	 */
 	private ProviderDao providerDao;
+
+	public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
 	public List LoadCodeList(String tableId, boolean activeOnly, String code, String codeDesc) {
 		return LoadCodeList(tableId, activeOnly, "", code, codeDesc);
@@ -549,11 +558,13 @@ public class LookupDao extends HibernateDaoSupport {
 
 			String sql = "update lst_orgcd set fullcode =replace(fullcode,'" + oldFullCode + "','" + newFullCode + "')" + ",codetree =replace(codetree,'" + oldTreeCode + "','" + newTreeCode + "')" + ",codecsv =replace(codecsv,'" + oldCsv + "','" + newCsv + "')" + " where codecsv like '" + oldCsv + "_%'";
 
-			Session session = getSession();
+			//Session session = getSession();
+			Session session = sessionFactory.getCurrentSession();
 			try {
 				session.createSQLQuery(sql).executeUpdate();
 			} finally {
-				this.releaseSession(session);
+				//this.releaseSession(session);
+				session.close();
 			}
 
 		}

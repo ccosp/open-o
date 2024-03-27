@@ -37,12 +37,20 @@ import org.hibernate.criterion.Restrictions;
 import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 import oscar.OscarProperties;
 
 public class ProgramDao extends HibernateDaoSupport {
 
     private static final Logger log=MiscUtils.getLogger();
+    public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
     public boolean isBedProgram(Integer programId) {
         Program result=getProgram(programId);
@@ -149,7 +157,8 @@ public class ProgramDao extends HibernateDaoSupport {
      */
     public List <Program> getAllPrograms(String programStatus, String type, int facilityId)
     {
-    	Session session = getSession();
+    	//Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
     	try {
 	        @SuppressWarnings("unchecked")
 	    	Criteria c = session.createCriteria(Program.class);
@@ -164,7 +173,9 @@ public class ProgramDao extends HibernateDaoSupport {
 	    	}
 	    	return 	c.list();
     	}finally {
-    		releaseSession(session);
+    		//releaseSession(session);
+            session.close();
+            
     	}
     }
  
@@ -289,7 +300,8 @@ public class ProgramDao extends HibernateDaoSupport {
         if (program == null) {
             throw new IllegalArgumentException();
         }
-        Session session = getSession();
+        //Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Program.class);
         
         if (program.getName() != null && program.getName().length() > 0) {
@@ -350,7 +362,8 @@ public class ProgramDao extends HibernateDaoSupport {
         try {
         	results = criteria.list();
         }finally {
-        	this.releaseSession(session);
+        	//this.releaseSession(session);
+            session.close();
         }
 
         if (log.isDebugEnabled()) {
@@ -369,7 +382,8 @@ public class ProgramDao extends HibernateDaoSupport {
         }
 
         boolean isOracle = OscarProperties.getInstance().getDbType().equals("oracle");
-        Session session = getSession();
+        //Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Program.class);
 
         if (program.getName() != null && program.getName().length() > 0) {
@@ -440,7 +454,8 @@ public class ProgramDao extends HibernateDaoSupport {
         try {
         	results = criteria.list();
         }finally{
-        	releaseSession(session);
+        	//releaseSession(session);
+            session.close();
         }
 
         if (log.isDebugEnabled()) {

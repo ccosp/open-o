@@ -35,10 +35,18 @@ import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.common.model.Admission;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 public class ClientReferralDAO extends HibernateDaoSupport {
 
     private Logger log = MiscUtils.getLogger();
+    public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
     public List<ClientReferral> getReferrals() {
         @SuppressWarnings("unchecked")
@@ -250,7 +258,8 @@ public class ClientReferralDAO extends HibernateDaoSupport {
 
     @SuppressWarnings("unchecked")
     public List<ClientReferral> search(ClientReferral referral) {
-    	Session session = getSession();
+    	//Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
     	try {
 	        Criteria criteria = session.createCriteria(ClientReferral.class);
 	
@@ -260,7 +269,8 @@ public class ClientReferralDAO extends HibernateDaoSupport {
 	
 	        return criteria.list();
     	}finally {
-    		this.releaseSession(session);
+    		//this.releaseSession(session);
+            session.close();
     	}
     }
     

@@ -32,6 +32,8 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.quatro.model.security.SecProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
 
 /**
  * 
@@ -41,6 +43,13 @@ import com.quatro.model.security.SecProvider;
 
 public class SecProviderDao extends HibernateDaoSupport {
 	private static final Logger logger = MiscUtils.getLogger();
+
+	public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 	// property constants
 	public static final String LAST_NAME = "lastName";
 	public static final String FIRST_NAME = "firstName";
@@ -119,8 +128,8 @@ public class SecProviderDao extends HibernateDaoSupport {
 	}
 
 	public List findByExample(SecProviderDao instance) {
-		logger.debug("finding Provider instance by example");
-		Session session = getSession();
+		logger.debug("finding Provider instance by example");		
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			List results = session.createCriteria(
 					"com.quatro.model.security.SecProvider").add(
@@ -132,14 +141,16 @@ public class SecProviderDao extends HibernateDaoSupport {
 			logger.error("find by example failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
 
 	public List findByProperty(String propertyName, Object value) {
 		logger.debug("finding Provider instance with property: " + propertyName
 				+ ", value: " + value);
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			String queryString = "from Provider as model where model."
 					+ propertyName + "= ?";
@@ -150,7 +161,8 @@ public class SecProviderDao extends HibernateDaoSupport {
 			logger.error("find by property name failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
 
@@ -220,7 +232,8 @@ public class SecProviderDao extends HibernateDaoSupport {
 
 	public List findAll() {
 		logger.debug("finding all Provider instances");
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			String queryString = "from Provider";
 			Query queryObject = session.createQuery(queryString);
@@ -229,13 +242,15 @@ public class SecProviderDao extends HibernateDaoSupport {
 			logger.error("find all failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
 
 	public SecProviderDao merge(SecProviderDao detachedInstance) {
 		logger.debug("merging Provider instance");
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			SecProviderDao result = (SecProviderDao) session.merge(detachedInstance);
 			logger.debug("merge successful");
@@ -244,13 +259,15 @@ public class SecProviderDao extends HibernateDaoSupport {
 			logger.error("merge failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
 
 	public void attachDirty(SecProviderDao instance) {
 		logger.debug("attaching dirty Provider instance");
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.saveOrUpdate(instance);
 			logger.debug("attach successful");
@@ -258,13 +275,15 @@ public class SecProviderDao extends HibernateDaoSupport {
 			logger.error("attach failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
 
 	public void attachClean(SecProviderDao instance) {
 		logger.debug("attaching clean Provider instance");
-		Session session = getSession();
+		//Session session = getSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.lock(instance, LockMode.NONE);
 			logger.debug("attach successful");
@@ -272,7 +291,8 @@ public class SecProviderDao extends HibernateDaoSupport {
 			logger.error("attach failed", re);
 			throw re;
 		} finally {
-			this.releaseSession(session);
+			//this.releaseSession(session);
+			session.close();
 		}
 	}
 }
