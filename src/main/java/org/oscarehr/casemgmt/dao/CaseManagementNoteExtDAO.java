@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.oscarehr.casemgmt.model.CaseManagementNoteExt;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 public class CaseManagementNoteExtDAO extends HibernateDaoSupport {
 

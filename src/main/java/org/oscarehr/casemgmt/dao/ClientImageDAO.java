@@ -31,7 +31,7 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.casemgmt.model.ClientImage;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.QueueCache;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 /**
  * Anyone modifying get and set methods should take note of the dataCache and add/remove items as appropriate.

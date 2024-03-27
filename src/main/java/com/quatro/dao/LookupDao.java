@@ -34,7 +34,7 @@ import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.common.model.Facility;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import oscar.MyDateFormat;
 import oscar.OscarProperties;

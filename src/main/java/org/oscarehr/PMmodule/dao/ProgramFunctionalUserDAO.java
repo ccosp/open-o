@@ -32,7 +32,7 @@ import org.hibernate.Session;
 import org.oscarehr.PMmodule.model.FunctionalUserType;
 import org.oscarehr.PMmodule.model.ProgramFunctionalUser;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 public class ProgramFunctionalUserDAO extends HibernateDaoSupport {
 

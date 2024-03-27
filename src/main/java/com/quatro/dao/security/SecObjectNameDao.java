@@ -25,7 +25,7 @@
 
 package com.quatro.dao.security;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.quatro.model.security.Secobjectname;
 
