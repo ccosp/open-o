@@ -36,8 +36,8 @@ import org.hibernate.Session;
 import org.oscarehr.casemgmt.model.Issue;
 import org.oscarehr.common.dao.AbstractDao;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateCallback;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.quatro.model.security.Secrole;
 

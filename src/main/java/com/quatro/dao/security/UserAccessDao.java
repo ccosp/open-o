@@ -22,7 +22,7 @@ package com.quatro.dao.security;
 
 import java.util.List;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 public class UserAccessDao extends HibernateDaoSupport {
 	  public List GetUserAccessList(String providerNo, Integer shelterId)
 	  {

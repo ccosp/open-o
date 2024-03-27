@@ -78,8 +78,8 @@ import org.oscarehr.ws.rest.to.model.DemographicSearchRequest.SORTMODE;
 import org.oscarehr.ws.rest.to.model.DemographicSearchResult;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateCallback;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import oscar.MyDateFormat;
 import oscar.OscarProperties;
@@ -146,9 +146,9 @@ public class DemographicDao extends HibernateDaoSupport implements ApplicationEv
 
 	@SuppressWarnings("unchecked")
 	public List<Demographic> getActiveDemographics(final int offset, final int limit) {
-		return (List<Demographic>) getHibernateTemplate().executeFind(new HibernateCallback<List<Demographic>>() {
+		return (List<Demographic>) getHibernateTemplate().execute(new HibernateCallback<List<Demographic>>() {
 			@Override
-			public List<Demographic> doInHibernate(Session session) throws HibernateException, SQLException {
+			public List<Demographic> doInHibernate(Session session) throws HibernateException {
 				Query query = session.createQuery("FROM Demographic d WHERE d.PatientStatus = 'AC'");
 				if (offset > 0) {
 					query.setFirstResult(offset);

@@ -31,7 +31,7 @@ import org.hibernate.Session;
 import org.oscarehr.PMmodule.model.ProgramClientStatus;
 import org.oscarehr.common.model.Admission;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 public class ProgramClientStatusDAO extends HibernateDaoSupport {
 

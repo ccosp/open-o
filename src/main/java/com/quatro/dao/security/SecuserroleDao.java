@@ -32,7 +32,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.oscarehr.PMmodule.web.formbean.StaffForm;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.quatro.model.security.Secuserrole;
 

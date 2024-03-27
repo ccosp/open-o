@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.hibernate.type.StandardBasicTypes;
 
 public class BedProgramDao extends HibernateDaoSupport {

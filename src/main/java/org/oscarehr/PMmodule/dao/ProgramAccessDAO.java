@@ -31,7 +31,7 @@ import org.oscarehr.PMmodule.model.AccessType;
 import org.oscarehr.PMmodule.model.ProgramAccess;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.QueueCache;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 public class ProgramAccessDAO extends HibernateDaoSupport {
 
