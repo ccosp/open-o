@@ -50,14 +50,17 @@
 				<prop key="hibernate.cache.use_query_cache">false</prop>				
 			</props>
 		</property>
-		<property name="eventListeners">
+		
+	</bean>
+
+	<!-- <property name="eventListeners">
 			<map>
 				<entry key="merge">
 					<bean class="org.springframework.orm.hibernate4.support.IdTransferringMergeEventListener" />
+					<bean class="org.hibernate.event.internal.DefaultMergeEventListener" />
 				</entry>
 			</map>
-		</property>
-	</bean>
+		</property> -->
 
 <!--
 	<bean id="auditSessionFactory" class="org.oscarehr.util.SpringHibernateLocalSessionFactoryBean">
