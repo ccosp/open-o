@@ -1001,7 +1001,7 @@ if(temp.equals("diab2") || temp.equals("chf")) {
 					<br/>
 					<ul>
 					<%
-						thisDrug.sort(new Drug.RxDateCompator());
+						thisDrug.sort(Drug.START_DATE_COMPARATOR);
 						Collections.reverse(thisDrug);
 						for(Drug d : thisDrug) {
 							%>

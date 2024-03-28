@@ -24,14 +24,25 @@ document.addEventListener("DOMContentLoaded", function(){
 			if (error === "true") { showError(errorMessage); }
 
 	});
+
+	window.onerror = function uncaughtExceptionHandler(message, source, lineNumber, colno, error) {
+		return alert('This eForm contains source code errors that will cause a failure of functionality or loss of data.\n\n' +
+			'Please go to OSCARGalaxy.org for an updated version of this eForm, or  if a new version is not available, contact info@oscarbc.ca to request a repair.\n\n' +
+			'E-forms are a community project managed by OSCAR BC; eForm collections are hosted on OSCAR Galaxy for download and import.\n\n' +
+			'Error Message:' + message);
+	}
 	
 	/**
 	 * Triggers the eForm save/submit function
 	 */
 	function remoteSave() {
-		
+
+		// bind the spinner to the form submit event.
+		jQuery('form').on('submit', function(e) {
+			ShowSpin(true);
+		});
+
 		moveSubject();
-		ShowSpin(true);
 		if (typeof saveRTL === "function")
 		{
 			console.log("Saving RTL or RTL template");
@@ -103,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		trigger.data('poload', context + '/previewDocs.do?method=fetchEFormDocuments&demographicNo=' + demographicNo + '&fdid=' + fdid);
 		trigger.off('click');
 		let title = trigger.attr("title");
-		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
+		jQuery("#attachDocumentDisplay").load(trigger.data('poload'), function(response, status, xhr){
 			if (status === "success") {
 				// Disable the floating toolbar when the attachment window opens
 				const eformFloatingToolbar = document.getElementById("eform_floating_toolbar");
@@ -301,13 +312,24 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		if( typeof formPrint === "function" ) 
 		{
-			console.log("Printing document remotely with formPrint method");
-			formPrint();
-		} 
+			try {
+				console.log("Printing document remotely with formPrint method");
+				formPrint();
+			} catch(e) {
+				console.log("Eform returns fatal error while using formPrint function " + e);
+				hailMary();
+			}
+		}
+
 		else if(typeof printLetter === "function") 
 		{
-			console.log("Printing document remotely with printLeter method")
-			printLetter(); 
+			try {
+				console.log("Printing document remotely with printLetter method")
+				printLetter();
+			} catch(e) {
+				console.log("Eform returns fatal error while using printLetter function "  + e);
+				hailMary();
+			}
 		}
 
 		else if (document.getElementsByName("PrintButton") && document.getElementsByName("PrintButton")[0])
@@ -316,25 +338,26 @@ document.addEventListener("DOMContentLoaded", function(){
 				console.log(document.getElementsByName("PrintButton"));
 				console.log("Remotely clicking button with name PrintButton");
 				document.getElementsByName("PrintButton")[0].click();
-			} catch {
-				console.log("Error locating PrintButton");
+			} catch(e) {
+				console.log("Error locating PrintButton "  + e);
+				hailMary();
 			}
 		}
 
 		else if(document.getElementById('edit')) 
 		{
-			console.log("Content has been edited and no print method was found. Executing window.print");
-			document.getElementById('edit').contentWindow.print();
+			try {
+				console.log("Content has been edited and no print method was found. Executing window.print");
+				document.getElementById('edit').contentWindow.print();
+			} catch(e) {
+				console.log("Error locating PrintButton "  + e);
+				hailMary();
+			}
 		} 
 
 		else
 		{
-			console.log("Just do window print.")
-			try{
-				window.print();
-			} catch {
-				alert("Cannot print. Try the print button on the eForm.");
-			}
+			hailMary()
 		}
 
 		/*
@@ -342,9 +365,19 @@ document.addEventListener("DOMContentLoaded", function(){
 		 * a new eForm or it has been altered.
 		 */
 		if(typeof needToConfirm !== 'undefined' && needToConfirm) {
+			console.log("eForm needs to be saved.")
 			remoteSave();
-		} 
+		}
 	
+	}
+
+	function hailMary() {
+		console.log("Just do window print.")
+		try{
+			window.print();
+		} catch {
+			alert("Cannot print. Try the print button on the eForm.");
+		}
 	}
 	
 	/**
@@ -461,9 +494,9 @@ document.addEventListener("DOMContentLoaded", function(){
 		const toolbarNav = document.getElementById("eform_floating_toolbar_nav");
 		const toolbarContainer = document.getElementById("eform_floating_toolbar");
 		if( toolbarContainer && openToolbarButton && toolbarNav) {
-			toolbarNav.style.display = "initial";			
+			toolbarContainer.removeAttribute("style");
+			toolbarNav.removeAttribute("style");
 			openToolbarButton.style.display = "none";
-			toolbarContainer.style = "";
 		}
 	}
 
@@ -495,6 +528,15 @@ document.addEventListener("DOMContentLoaded", function(){
 	    if(element)
 	    {
 	    	element.parentNode.removeChild(element);
+
+			/*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+			const inputElement = document.createElement("input");
+			inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "fax_button");
+		    document.forms[0].appendChild(inputElement);
 	    }
 	    
 	    element = document.getElementById("faxSave_button");
@@ -502,15 +544,51 @@ document.addEventListener("DOMContentLoaded", function(){
 	    if(element)
 	    {
 	    	element.parentNode.removeChild(element);
+
+		    /*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+		    const inputElement = document.createElement("input");
+		    inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "faxSave_button");
+		    document.forms[0].appendChild(inputElement);
 	    }
 	    
 	    element = document.getElementById("faxEForm");
 	    
 	    if(element)
 	    {
-	    	element.parentNode.removeChild(element); 
+	    	element.parentNode.removeChild(element);
+
+		    /*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+		    const inputElement = document.createElement("input");
+		    inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "faxEForm");
+		    document.forms[0].appendChild(inputElement);
 	    }
-	
+
+		/*
+		 * sometimes these are in there too.
+		 */
+		let inputElement = document.createElement("input");
+		inputElement.setAttribute("type", "hidden");
+		inputElement.setAttribute("id", "otherFaxInput");
+		document.forms[0].appendChild(inputElement);
+	}
+
+	/**
+	 * A wrapper function to dismiss uncaught exceptions for when
+	 * this function contained in the removed faxControl.js file is
+	 * called.
+	 * Do nothing.
+	 */
+	function AddOtherFax() {
+		// do nothing
+		return false;
 	}
 
 	/**
