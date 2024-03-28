@@ -26,7 +26,10 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 
 	window.onerror = function uncaughtExceptionHandler(message, source, lineNumber, colno, error) {
-		return alert('This eForm contains 1 or more fatal errors that may impair some, or all, functionality.\n\nPlease contact OSCARGalaxy.org for an updated version of this eForm, or to request a repair. \n\nError Message:' + message);
+		return alert('This eForm contains source code errors that will cause a failure of functionality or loss of data.\n\n' +
+			'Please go to OSCARGalaxy.org for an updated version of this eForm, or  if a new version is not available, contact info@oscarbc.ca to request a repair.\n\n' +
+			'E-forms are a community project managed by OSCAR BC; eForm collections are hosted on OSCAR Galaxy for download and import.\n\n' +
+			'Error Message:' + message);
 	}
 	
 	/**
@@ -40,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function(){
 		});
 
 		moveSubject();
-alert("subject moved");
 		if (typeof saveRTL === "function")
 		{
 			console.log("Saving RTL or RTL template");
