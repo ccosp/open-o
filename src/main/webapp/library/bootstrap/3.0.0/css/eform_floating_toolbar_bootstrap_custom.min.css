@@ -69,6 +69,7 @@
 	bottom: 0;
 	height: auto;
 	max-height: 50px;
+	z-index: 10000;
 }
 
 div#eform_floating_toolbar * {
