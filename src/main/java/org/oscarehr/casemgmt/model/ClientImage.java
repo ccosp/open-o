@@ -33,8 +33,11 @@ import org.caisi.model.BaseObject;
 import org.hibernate.Hibernate;
 import org.oscarehr.util.MiscUtils;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-public class ClientImage extends BaseObject {
+public class ClientImage extends HibernateDaoSupport {
 	public static final String imageMissingPlaceholderUrl="/images/defaultR_img.jpg";
 	public static final String imagePresentPlaceholderUrl="/images/default_img.jpg";
 	
@@ -43,6 +46,13 @@ public class ClientImage extends BaseObject {
 	private String image_type;
 	private byte[] image_data;
 	private Date update_date;
+
+	public SessionFactory sessionFactory;
+
+	@Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 	
 	public ClientImage() {
 		update_date = new Date();
@@ -88,7 +98,8 @@ public class ClientImage extends BaseObject {
 		this.update_date = update_date;
 	}
 
-	public Blob getImage_contents(Session session) {
+	public Blob getImage_contents() {
+		Session session = sessionFactory.getCurrentSession();
 		if(image_data == null) {
 			return null;
 		}
