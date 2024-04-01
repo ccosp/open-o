@@ -29,7 +29,7 @@ import org.oscarehr.common.model.TableModification;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TableModificationDao extends AbstractDao<TableModification>{
+public class TableModificationDao extends AbstractDaoImpl<TableModification>{
 
 	public TableModificationDao() {
 		super(TableModification.class);

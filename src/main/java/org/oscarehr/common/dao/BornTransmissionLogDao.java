@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 import oscar.util.UtilDateUtilities;
 
 @Repository
-public class BornTransmissionLogDao extends AbstractDao<BornTransmissionLog>{
+public class BornTransmissionLogDao extends AbstractDaoImpl<BornTransmissionLog>{
 
 	public BornTransmissionLogDao() {
 		super(BornTransmissionLog.class);

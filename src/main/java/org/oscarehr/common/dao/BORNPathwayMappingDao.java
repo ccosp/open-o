@@ -31,7 +31,7 @@ import org.oscarehr.common.model.BORNPathwayMapping;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BORNPathwayMappingDao extends AbstractDao<BORNPathwayMapping> {
+public class BORNPathwayMappingDao extends AbstractDaoImpl<BORNPathwayMapping> {
 
 	public BORNPathwayMappingDao() {
 		super(BORNPathwayMapping.class);

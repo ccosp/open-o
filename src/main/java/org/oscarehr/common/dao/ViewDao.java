@@ -35,7 +35,7 @@ import org.oscarehr.common.model.View;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ViewDao extends AbstractDao<View>{
+public class ViewDao extends AbstractDaoImpl<View>{
 
 	public ViewDao() {
 		super(View.class);

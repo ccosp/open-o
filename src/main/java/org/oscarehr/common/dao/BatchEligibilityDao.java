@@ -29,7 +29,7 @@ import org.oscarehr.common.model.BatchEligibility;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BatchEligibilityDao extends AbstractDao<BatchEligibility> {
+public class BatchEligibilityDao extends AbstractDaoImpl<BatchEligibility> {
 
 	public BatchEligibilityDao() {
 		super(BatchEligibility.class);

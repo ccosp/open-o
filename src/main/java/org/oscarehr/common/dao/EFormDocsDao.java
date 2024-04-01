@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class EFormDocsDao extends AbstractDao<EFormDocs>{
+public class EFormDocsDao extends AbstractDaoImpl<EFormDocs>{
 
 	public EFormDocsDao() {
 		super(EFormDocs.class);

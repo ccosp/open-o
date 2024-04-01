@@ -29,12 +29,12 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.billing.CA.model.BillingDetail;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingDetailDao extends AbstractDao<BillingDetail> {
+public class BillingDetailDao extends AbstractDaoImpl<BillingDetail> {
 
 	public BillingDetailDao() {
 		super(BillingDetail.class);

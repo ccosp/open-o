@@ -34,7 +34,7 @@ import org.oscarehr.common.model.Consent;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ConsentDao extends AbstractDao<Consent> {
+public class ConsentDao extends AbstractDaoImpl<Consent> {
 
 	protected ConsentDao() {
 		super(Consent.class);

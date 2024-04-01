@@ -33,7 +33,7 @@ import org.oscarehr.common.model.ConfigImmunization;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ConfigImmunizationDao extends AbstractDao<ConfigImmunization>{
+public class ConfigImmunizationDao extends AbstractDaoImpl<ConfigImmunization>{
 
 	public ConfigImmunizationDao() {
 		super(ConfigImmunization.class);

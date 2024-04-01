@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
  
 @Repository
-public class ServiceRequestTokenDaoImpl extends AbstractDao<ServiceRequestToken> implements ServiceRequestTokenDao{
+public class ServiceRequestTokenDaoImpl extends AbstractDaoImpl<ServiceRequestToken> implements ServiceRequestTokenDao{
  
     public ServiceRequestTokenDaoImpl() {
         super(ServiceRequestToken.class);

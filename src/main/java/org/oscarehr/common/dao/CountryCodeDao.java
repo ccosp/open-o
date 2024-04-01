@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
  * @author Jason Gallagher
  */
 @Repository
-public class CountryCodeDao extends AbstractDao<CountryCode> {
+public class CountryCodeDao extends AbstractDaoImpl<CountryCode> {
 
     public CountryCodeDao() {
     	super(CountryCode.class);

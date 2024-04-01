@@ -39,7 +39,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ConsultResponseDao extends AbstractDao<ConsultationResponse> {
+public class ConsultResponseDao extends AbstractDaoImpl<ConsultationResponse> {
 	private Logger logger = MiscUtils.getLogger();
 	
 	public ConsultResponseDao() {

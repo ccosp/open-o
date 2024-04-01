@@ -31,7 +31,7 @@ import org.oscarehr.common.model.HrmLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HrmLogDao  extends AbstractDao<HrmLog> {
+public class HrmLogDao  extends AbstractDaoImpl<HrmLog> {
 
 	public HrmLogDao() {
 		super(HrmLog.class);

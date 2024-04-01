@@ -27,7 +27,7 @@ import org.oscarehr.common.model.RoomBedHistorical;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RoomBedHistoricalDao extends AbstractDao<RoomBedHistorical>{
+public class RoomBedHistoricalDao extends AbstractDaoImpl<RoomBedHistorical>{
 
 	public RoomBedHistoricalDao() {
 		super(RoomBedHistorical.class);

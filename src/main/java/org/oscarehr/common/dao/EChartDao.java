@@ -40,7 +40,7 @@ import org.springframework.stereotype.Repository;
  * @deprecated
  * Requires too much redundant dataspace
  */
-public class EChartDao extends AbstractDao<EChart>{
+public class EChartDao extends AbstractDaoImpl<EChart>{
 
 	
 	public EChartDao() {

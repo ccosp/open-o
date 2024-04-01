@@ -31,7 +31,7 @@ import org.oscarehr.common.model.PreventionReport;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PreventionReportDao extends AbstractDao<PreventionReport> {
+public class PreventionReportDao extends AbstractDaoImpl<PreventionReport> {
 
 	public PreventionReportDao() {
 		super(PreventionReport.class);

@@ -30,7 +30,7 @@ import org.oscarehr.common.model.OcanConnexOption;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OcanConnexOptionDao extends AbstractDao<OcanConnexOption> {
+public class OcanConnexOptionDao extends AbstractDaoImpl<OcanConnexOption> {
 
 	public OcanConnexOptionDao() {
 		super(OcanConnexOption.class);

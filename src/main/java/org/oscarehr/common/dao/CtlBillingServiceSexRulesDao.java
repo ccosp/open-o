@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class CtlBillingServiceSexRulesDao extends AbstractDao<CtlBillingServiceSexRules> {
+public class CtlBillingServiceSexRulesDao extends AbstractDaoImpl<CtlBillingServiceSexRules> {
 
 	public CtlBillingServiceSexRulesDao() {
 		super(CtlBillingServiceSexRules.class);

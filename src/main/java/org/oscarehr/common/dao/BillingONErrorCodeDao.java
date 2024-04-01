@@ -30,7 +30,7 @@ import org.oscarehr.common.model.BillingONErrorCode;
  * @author mweston4
  */
 @Repository
-public class BillingONErrorCodeDao extends AbstractDao<BillingONErrorCode>{
+public class BillingONErrorCodeDao extends AbstractDaoImpl<BillingONErrorCode>{
     
     public BillingONErrorCodeDao() {
         super(BillingONErrorCode.class);	

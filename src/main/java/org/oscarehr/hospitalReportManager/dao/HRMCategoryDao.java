@@ -14,12 +14,12 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.hospitalReportManager.model.HRMCategory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HRMCategoryDao extends AbstractDao<HRMCategory> {
+public class HRMCategoryDao extends AbstractDaoImpl<HRMCategory> {
 	
 	public HRMCategoryDao() {
 	    super(HRMCategory.class);

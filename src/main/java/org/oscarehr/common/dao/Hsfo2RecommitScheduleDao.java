@@ -40,7 +40,7 @@ import oscar.form.study.hsfo2.HSFODAO;
 import oscar.oscarDemographic.data.DemographicData;
 
 @Repository
-public class Hsfo2RecommitScheduleDao extends AbstractDao<Hsfo2RecommitSchedule>
+public class Hsfo2RecommitScheduleDao extends AbstractDaoImpl<Hsfo2RecommitSchedule>
 {
 	public Hsfo2RecommitScheduleDao() {
 		super(Hsfo2RecommitSchedule.class);

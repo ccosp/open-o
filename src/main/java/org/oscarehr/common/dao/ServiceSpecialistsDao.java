@@ -32,7 +32,7 @@ import org.oscarehr.common.model.ServiceSpecialists;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ServiceSpecialistsDao extends AbstractDao<ServiceSpecialists> {
+public class ServiceSpecialistsDao extends AbstractDaoImpl<ServiceSpecialists> {
 
 	public ServiceSpecialistsDao() {
 		super(ServiceSpecialists.class);	

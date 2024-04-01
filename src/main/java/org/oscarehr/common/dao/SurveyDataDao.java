@@ -36,7 +36,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class SurveyDataDao extends AbstractDao<SurveyData>{
+public class SurveyDataDao extends AbstractDaoImpl<SurveyData>{
 
 	public SurveyDataDao() {
 		super(SurveyData.class);

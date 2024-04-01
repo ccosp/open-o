@@ -30,9 +30,9 @@ import java.util.Set;
 import javax.persistence.Query;
 
 import org.caisi.model.DefaultIssue;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 
-public class DefaultIssueDao extends AbstractDao<DefaultIssue> {
+public class DefaultIssueDao extends AbstractDaoImpl<DefaultIssue> {
 
 	public DefaultIssueDao(){
 		super(DefaultIssue.class);

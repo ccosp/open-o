@@ -33,7 +33,7 @@ import org.oscarehr.common.model.ConsultationRequestExt;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ConsultationRequestExtDao extends AbstractDao<ConsultationRequestExt> {
+public class ConsultationRequestExtDao extends AbstractDaoImpl<ConsultationRequestExt> {
 
 	public ConsultationRequestExtDao() {
 		super(ConsultationRequestExt.class);

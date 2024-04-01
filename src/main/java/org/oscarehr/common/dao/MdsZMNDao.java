@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class MdsZMNDao extends AbstractDao<MdsZMN>{
+public class MdsZMNDao extends AbstractDaoImpl<MdsZMN>{
 
 	public MdsZMNDao() {
 		super(MdsZMN.class);

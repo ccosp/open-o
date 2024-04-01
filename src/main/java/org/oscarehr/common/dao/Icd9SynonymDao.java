@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
  * For: UBC Pharmacy Clinic and McMaster Department of Family Medicine
  */
 @Repository
-public class Icd9SynonymDao extends AbstractDao<Icd9Synonym> {
+public class Icd9SynonymDao extends AbstractDaoImpl<Icd9Synonym> {
 
 	public Icd9SynonymDao() {
 	    super(Icd9Synonym.class);

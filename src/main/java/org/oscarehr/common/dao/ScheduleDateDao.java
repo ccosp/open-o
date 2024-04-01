@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class ScheduleDateDao extends AbstractDao<ScheduleDate>{
+public class ScheduleDateDao extends AbstractDaoImpl<ScheduleDate>{
 
 	public ScheduleDateDao() {
 		super(ScheduleDate.class);

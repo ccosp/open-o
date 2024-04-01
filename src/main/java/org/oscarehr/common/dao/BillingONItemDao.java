@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingONItemDao extends AbstractDao<BillingONItem>{
+public class BillingONItemDao extends AbstractDaoImpl<BillingONItem>{
 
 	
 	public BillingONItemDao() {

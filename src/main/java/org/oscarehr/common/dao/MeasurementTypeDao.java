@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class MeasurementTypeDao extends AbstractDao<MeasurementType> {
+public class MeasurementTypeDao extends AbstractDaoImpl<MeasurementType> {
 
 	public MeasurementTypeDao() {
 		super(MeasurementType.class);

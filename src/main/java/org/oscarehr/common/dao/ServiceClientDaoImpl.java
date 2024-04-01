@@ -32,7 +32,7 @@ import org.oscarehr.common.model.ServiceClient;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ServiceClientDaoImpl extends AbstractDao<ServiceClient> implements ServiceClientDao{
+public class ServiceClientDaoImpl extends AbstractDaoImpl<ServiceClient> implements ServiceClientDao{
 
 	public ServiceClientDaoImpl() {
 		super(ServiceClient.class);

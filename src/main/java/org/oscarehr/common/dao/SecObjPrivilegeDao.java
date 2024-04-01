@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class SecObjPrivilegeDao extends AbstractDao<SecObjPrivilege> {
+public class SecObjPrivilegeDao extends AbstractDaoImpl<SecObjPrivilege> {
 
 	public SecObjPrivilegeDao() {
 		super(SecObjPrivilege.class);

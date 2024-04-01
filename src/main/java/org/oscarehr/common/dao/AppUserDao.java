@@ -31,7 +31,7 @@ import org.oscarehr.common.model.AppUser;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppUserDao extends AbstractDao<AppUser>{
+public class AppUserDao extends AbstractDaoImpl<AppUser>{
 
 	public AppUserDao()  {
 		super(AppUser.class);

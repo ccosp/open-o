@@ -33,7 +33,7 @@ import org.oscarehr.common.model.PublicKey;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PublicKeyDao extends AbstractDao<PublicKey> {
+public class PublicKeyDao extends AbstractDaoImpl<PublicKey> {
 
 	public PublicKeyDao() {
 		super(PublicKey.class);

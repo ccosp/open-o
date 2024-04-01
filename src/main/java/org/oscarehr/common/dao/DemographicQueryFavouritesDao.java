@@ -31,7 +31,7 @@ import org.oscarehr.common.model.DemographicQueryFavourite;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicQueryFavouritesDao extends AbstractDao<DemographicQueryFavourite>{
+public class DemographicQueryFavouritesDao extends AbstractDaoImpl<DemographicQueryFavourite>{
 
 	public DemographicQueryFavouritesDao() {
 		super(DemographicQueryFavourite.class);

@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 import oscar.util.ParamAppender;
 
 @Repository
-public class MdsOBXDao extends AbstractDao<MdsOBX>{
+public class MdsOBXDao extends AbstractDaoImpl<MdsOBX>{
 
 	public MdsOBXDao() {
 		super(MdsOBX.class);

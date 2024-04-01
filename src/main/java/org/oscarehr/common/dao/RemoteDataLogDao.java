@@ -29,7 +29,7 @@ import org.oscarehr.common.model.RemoteDataLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RemoteDataLogDao extends AbstractDao<RemoteDataLog>
+public class RemoteDataLogDao extends AbstractDaoImpl<RemoteDataLog>
 {
 	public RemoteDataLogDao()
 	{

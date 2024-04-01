@@ -34,7 +34,7 @@ import org.oscarehr.common.model.CtlDocType;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CtlDocTypeDao extends AbstractDao<CtlDocType>{
+public class CtlDocTypeDao extends AbstractDaoImpl<CtlDocType>{
 
 	public CtlDocTypeDao() {
 		super(CtlDocType.class);

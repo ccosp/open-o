@@ -29,7 +29,7 @@ import org.oscarehr.common.model.RecycleBinBilling;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RecycleBinBillingDao extends AbstractDao<RecycleBinBilling>{
+public class RecycleBinBillingDao extends AbstractDaoImpl<RecycleBinBilling>{
 
 	public RecycleBinBillingDao() {
 		super(RecycleBinBilling.class);

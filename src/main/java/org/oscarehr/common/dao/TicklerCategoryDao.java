@@ -30,7 +30,7 @@ import org.oscarehr.common.model.TicklerCategory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TicklerCategoryDao extends AbstractDao<TicklerCategory> {
+public class TicklerCategoryDao extends AbstractDaoImpl<TicklerCategory> {
 
 	protected TicklerCategoryDao() {
 		super(TicklerCategory.class);

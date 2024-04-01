@@ -40,7 +40,7 @@ import oscar.util.DateUtils;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class RaDetailDao extends AbstractDao<RaDetail> {
+public class RaDetailDao extends AbstractDaoImpl<RaDetail> {
 
 	//These error codes are used when an RA is "settled" in the sense that invoices submitted to OHIP that are "fully done" are marked "settled".
 	//These error codes are considered irrelevant in the sense that while an error code is being returned, these specific errors

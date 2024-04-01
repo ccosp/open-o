@@ -31,7 +31,7 @@ import org.oscarehr.common.model.EncounterTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EncounterTemplateDao extends AbstractDao<EncounterTemplate> {
+public class EncounterTemplateDao extends AbstractDaoImpl<EncounterTemplate> {
 
 	public EncounterTemplateDao() {
 		super(EncounterTemplate.class);

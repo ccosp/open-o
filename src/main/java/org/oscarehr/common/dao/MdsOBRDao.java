@@ -36,7 +36,7 @@ import oscar.util.ParamAppender;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class MdsOBRDao extends AbstractDao<MdsOBR>{
+public class MdsOBRDao extends AbstractDaoImpl<MdsOBR>{
 
 	public MdsOBRDao() {
 		super(MdsOBR.class);

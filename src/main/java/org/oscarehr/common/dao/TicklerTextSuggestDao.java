@@ -30,7 +30,7 @@ import org.oscarehr.common.model.TicklerTextSuggest;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TicklerTextSuggestDao extends AbstractDao<TicklerTextSuggest>{
+public class TicklerTextSuggestDao extends AbstractDaoImpl<TicklerTextSuggest>{
     
     public TicklerTextSuggestDao() {
 	super(TicklerTextSuggest.class);

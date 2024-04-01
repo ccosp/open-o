@@ -32,7 +32,7 @@ import org.oscarehr.common.model.MeasurementsDeleted;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MeasurementsDeletedDao extends AbstractDao<MeasurementsDeleted> {
+public class MeasurementsDeletedDao extends AbstractDaoImpl<MeasurementsDeleted> {
 
 	public MeasurementsDeletedDao() {
 		super(MeasurementsDeleted.class);

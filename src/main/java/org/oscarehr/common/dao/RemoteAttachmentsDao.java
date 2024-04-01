@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class RemoteAttachmentsDao extends AbstractDao<RemoteAttachments> {
+public class RemoteAttachmentsDao extends AbstractDaoImpl<RemoteAttachments> {
 
 	public RemoteAttachmentsDao() {
 		super(RemoteAttachments.class);

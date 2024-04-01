@@ -29,7 +29,7 @@ import org.oscarehr.common.model.MdsPV1;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MdsPV1Dao extends AbstractDao<MdsPV1>{
+public class MdsPV1Dao extends AbstractDaoImpl<MdsPV1>{
 
 	public MdsPV1Dao() {
 		super(MdsPV1.class);

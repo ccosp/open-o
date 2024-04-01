@@ -32,7 +32,7 @@ import org.oscarehr.common.model.CVCImmunization;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CVCImmunizationDao extends AbstractDao<CVCImmunization> {
+public class CVCImmunizationDao extends AbstractDaoImpl<CVCImmunization> {
 
 	public CVCImmunizationDao() {
 		super(CVCImmunization.class);

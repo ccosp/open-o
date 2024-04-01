@@ -35,7 +35,7 @@ import oscar.util.StringUtils;
 import oscar.util.UtilDateUtilities;
 
 @Repository
-public class PartialDateDao extends AbstractDao<PartialDate> {
+public class PartialDateDao extends AbstractDaoImpl<PartialDate> {
 
 	public PartialDateDao() {
 		super(PartialDate.class);

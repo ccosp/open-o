@@ -33,7 +33,7 @@ import org.oscarehr.common.model.CtlDiagCode;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CtlDiagCodeDao extends AbstractDao<CtlDiagCode> {
+public class CtlDiagCodeDao extends AbstractDaoImpl<CtlDiagCode> {
 
 	public CtlDiagCodeDao() {
 		super(CtlDiagCode.class);

@@ -30,11 +30,11 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.billing.CA.model.BillingInr;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BillingInrDao extends AbstractDao<BillingInr>{
+public class BillingInrDao extends AbstractDaoImpl<BillingInr>{
 
 	public BillingInrDao() {
 		super(BillingInr.class);

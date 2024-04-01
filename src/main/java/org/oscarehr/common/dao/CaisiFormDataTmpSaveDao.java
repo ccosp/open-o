@@ -32,7 +32,7 @@ import org.oscarehr.common.model.CaisiFormDataTmpSave;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CaisiFormDataTmpSaveDao extends AbstractDao<CaisiFormDataTmpSave>{
+public class CaisiFormDataTmpSaveDao extends AbstractDaoImpl<CaisiFormDataTmpSave>{
 
 	public CaisiFormDataTmpSaveDao() {
 		super(CaisiFormDataTmpSave.class);

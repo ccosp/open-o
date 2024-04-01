@@ -29,7 +29,7 @@ import org.oscarehr.common.model.Report;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReportDao extends AbstractDao<Report>{
+public class ReportDao extends AbstractDaoImpl<Report>{
 
 	public ReportDao() {
 		super(Report.class);

@@ -33,7 +33,7 @@ import org.oscarehr.common.model.SecObjectName;
 import org.springframework.stereotype.Repository;
 
 @Repository(value="secObjectNameDaoJpa")
-public class SecObjectNameDao extends AbstractDao<SecObjectName>{
+public class SecObjectNameDao extends AbstractDaoImpl<SecObjectName>{
 
 	public SecObjectNameDao() {
 		super(SecObjectName.class);

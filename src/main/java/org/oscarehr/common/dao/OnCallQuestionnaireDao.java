@@ -27,7 +27,7 @@ import org.oscarehr.common.model.OnCallQuestionnaire;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OnCallQuestionnaireDao extends AbstractDao<OnCallQuestionnaire>{
+public class OnCallQuestionnaireDao extends AbstractDaoImpl<OnCallQuestionnaire>{
 
 	public OnCallQuestionnaireDao() {
 		super(OnCallQuestionnaire.class);

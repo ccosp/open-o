@@ -31,7 +31,7 @@ import org.oscarehr.common.model.OcanStaffFormData;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OcanStaffFormDataDao extends AbstractDao<OcanStaffFormData>{
+public class OcanStaffFormDataDao extends AbstractDaoImpl<OcanStaffFormData>{
 
 	public OcanStaffFormDataDao() {
 		super(OcanStaffFormData.class);

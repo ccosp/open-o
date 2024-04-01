@@ -47,7 +47,7 @@ import org.springframework.stereotype.Repository;
  * @author jackson
  */
 @Repository
-public class QueueDao extends AbstractDao<Queue>{
+public class QueueDao extends AbstractDaoImpl<Queue>{
     public QueueDao(){
         super(Queue.class);
     }

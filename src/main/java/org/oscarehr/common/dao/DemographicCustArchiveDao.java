@@ -29,7 +29,7 @@ import org.oscarehr.common.model.DemographicCustArchive;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicCustArchiveDao extends AbstractDao<DemographicCustArchive> {
+public class DemographicCustArchiveDao extends AbstractDaoImpl<DemographicCustArchive> {
 
 	public DemographicCustArchiveDao() {
 		super(DemographicCustArchive.class);

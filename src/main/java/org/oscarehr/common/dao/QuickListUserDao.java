@@ -33,7 +33,7 @@ import org.oscarehr.common.model.QuickListUser;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class QuickListUserDao extends AbstractDao<QuickListUser>{
+public class QuickListUserDao extends AbstractDaoImpl<QuickListUser>{
 
 	public QuickListUserDao() {
 		super(QuickListUser.class);

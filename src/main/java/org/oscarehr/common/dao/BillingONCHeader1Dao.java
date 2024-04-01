@@ -65,7 +65,7 @@ import oscar.util.ParamAppender;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingONCHeader1Dao extends AbstractDao<BillingONCHeader1>{
+public class BillingONCHeader1Dao extends AbstractDaoImpl<BillingONCHeader1>{
     
     @Autowired
     private DemographicDao demographicDao;

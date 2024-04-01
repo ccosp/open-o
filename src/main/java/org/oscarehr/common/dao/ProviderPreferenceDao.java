@@ -27,7 +27,7 @@ import org.oscarehr.common.model.ProviderPreference;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProviderPreferenceDao extends AbstractDao<ProviderPreference> {
+public class ProviderPreferenceDao extends AbstractDaoImpl<ProviderPreference> {
 
 	public ProviderPreferenceDao() {
 		super(ProviderPreference.class);

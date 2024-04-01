@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public class FormeCARESDao extends AbstractDao<FormeCARES> {
+public class FormeCARESDao extends AbstractDaoImpl<FormeCARES> {
     protected FormeCARESDao() {
         super(FormeCARES.class);
     }

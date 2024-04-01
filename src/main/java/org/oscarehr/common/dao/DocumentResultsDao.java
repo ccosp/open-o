@@ -41,7 +41,7 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
 
-public class DocumentResultsDao extends AbstractDao<Document>{
+public class DocumentResultsDao extends AbstractDaoImpl<Document>{
 
     Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 

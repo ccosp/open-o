@@ -33,7 +33,7 @@ import org.oscarehr.common.model.FlowSheetDrug;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FlowSheetDrugDao extends AbstractDao<FlowSheetDrug>{
+public class FlowSheetDrugDao extends AbstractDaoImpl<FlowSheetDrug>{
 
 	public FlowSheetDrugDao() {
 		super(FlowSheetDrug.class);

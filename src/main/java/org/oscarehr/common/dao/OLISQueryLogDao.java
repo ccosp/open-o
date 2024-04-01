@@ -29,7 +29,7 @@ import org.oscarehr.common.model.OLISQueryLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OLISQueryLogDao extends AbstractDao<OLISQueryLog>{
+public class OLISQueryLogDao extends AbstractDaoImpl<OLISQueryLog>{
 
 	public OLISQueryLogDao() {
 		super(OLISQueryLog.class);

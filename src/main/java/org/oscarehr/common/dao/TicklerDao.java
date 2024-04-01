@@ -37,7 +37,7 @@ import org.oscarehr.common.model.Tickler;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TicklerDao extends AbstractDao<Tickler>{
+public class TicklerDao extends AbstractDaoImpl<Tickler>{
 
 	public TicklerDao() {
 		super(Tickler.class);

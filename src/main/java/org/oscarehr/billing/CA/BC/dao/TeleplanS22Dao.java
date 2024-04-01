@@ -30,11 +30,11 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.billing.CA.BC.model.TeleplanS22;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TeleplanS22Dao extends AbstractDao<TeleplanS22>{
+public class TeleplanS22Dao extends AbstractDaoImpl<TeleplanS22>{
 
 	public TeleplanS22Dao() {
 		super(TeleplanS22.class);

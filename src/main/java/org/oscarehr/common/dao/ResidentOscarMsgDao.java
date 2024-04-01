@@ -29,7 +29,7 @@ import org.oscarehr.common.model.ResidentOscarMsg;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ResidentOscarMsgDao extends AbstractDao<ResidentOscarMsg>{
+public class ResidentOscarMsgDao extends AbstractDaoImpl<ResidentOscarMsg>{
 
     public ResidentOscarMsgDao() {
         super(ResidentOscarMsg.class);

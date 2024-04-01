@@ -27,12 +27,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.sharingcenter.model.EDocMapping;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EDocMappingDao extends AbstractDao<EDocMapping> {
+public class EDocMappingDao extends AbstractDaoImpl<EDocMapping> {
 
     public EDocMappingDao() {
         super(EDocMapping.class);

@@ -33,7 +33,7 @@ import org.oscarehr.common.model.SecPrivilege;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SecPrivilegeDao extends AbstractDao<SecPrivilege>{
+public class SecPrivilegeDao extends AbstractDaoImpl<SecPrivilege>{
 
 	public SecPrivilegeDao() {
 		super(SecPrivilege.class);

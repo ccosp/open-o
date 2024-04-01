@@ -30,11 +30,11 @@ import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.OcanSubmissionLog;
 import org.oscarehr.PMmodule.model.OcanSubmissionRecordLog;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OcanSubmissionLogDao extends AbstractDao<OcanSubmissionLog> {
+public class OcanSubmissionLogDao extends AbstractDaoImpl<OcanSubmissionLog> {
 
 	public OcanSubmissionLogDao() {
 		super(OcanSubmissionLog.class);

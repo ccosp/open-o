@@ -44,7 +44,7 @@ import org.oscarehr.common.model.Provider;
  * @author mweston4
  */
 @Repository
-public class BillingONPremiumDao extends AbstractDao<BillingONPremium>{
+public class BillingONPremiumDao extends AbstractDaoImpl<BillingONPremium>{
     
     public BillingONPremiumDao() {
         super(BillingONPremium.class);	

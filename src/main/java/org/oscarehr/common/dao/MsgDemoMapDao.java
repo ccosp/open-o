@@ -31,7 +31,7 @@ import org.oscarehr.common.model.MsgDemoMap;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MsgDemoMapDao extends AbstractDao<MsgDemoMap>{
+public class MsgDemoMapDao extends AbstractDaoImpl<MsgDemoMap>{
 
 	public MsgDemoMapDao() {
 		super(MsgDemoMap.class);

@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class CtlBillingServiceDao extends AbstractDao<CtlBillingService> {
+public class CtlBillingServiceDao extends AbstractDaoImpl<CtlBillingService> {
 
 	public static final String DEFAULT_STATUS = "A";
 

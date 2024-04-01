@@ -32,7 +32,7 @@ import org.oscarehr.common.model.JointAdmission;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JointAdmissionDao extends AbstractDao<JointAdmission> {
+public class JointAdmissionDao extends AbstractDaoImpl<JointAdmission> {
 
 	public JointAdmissionDao() {
 		super(JointAdmission.class);

@@ -34,7 +34,7 @@ import org.oscarehr.common.model.GroupMembers;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GroupMembersDao extends AbstractDao<GroupMembers>{
+public class GroupMembersDao extends AbstractDaoImpl<GroupMembers>{
 
 	public GroupMembersDao() {
 		super(GroupMembers.class);

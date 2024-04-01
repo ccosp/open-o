@@ -33,7 +33,7 @@ import org.oscarehr.common.model.CtlFrequency;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CtlFrequencyDao extends AbstractDao<CtlFrequency>{
+public class CtlFrequencyDao extends AbstractDaoImpl<CtlFrequency>{
 
 	public CtlFrequencyDao() {
 		super(CtlFrequency.class);

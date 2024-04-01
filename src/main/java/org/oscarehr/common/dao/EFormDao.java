@@ -32,7 +32,7 @@ import org.oscarehr.common.model.EForm;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EFormDao extends AbstractDao<EForm> {
+public class EFormDao extends AbstractDaoImpl<EForm> {
 
 	public enum EFormSortOrder {
 		DATE, NAME, SUBJECT, FILE_NAME;

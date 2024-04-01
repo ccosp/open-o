@@ -28,11 +28,11 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.VacancyClientMatch;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class VacancyClientMatchDao extends AbstractDao<VacancyClientMatch> {
+public class VacancyClientMatchDao extends AbstractDaoImpl<VacancyClientMatch> {
 	
 	public VacancyClientMatchDao() {
 		super(VacancyClientMatch.class);

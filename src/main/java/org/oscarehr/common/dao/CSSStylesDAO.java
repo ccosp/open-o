@@ -33,7 +33,7 @@ import org.oscarehr.common.model.CssStyle;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CSSStylesDAO extends AbstractDao<CssStyle> {
+public class CSSStylesDAO extends AbstractDaoImpl<CssStyle> {
     
  
     public CSSStylesDAO() {

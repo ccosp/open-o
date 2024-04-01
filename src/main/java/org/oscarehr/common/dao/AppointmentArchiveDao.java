@@ -36,7 +36,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppointmentArchiveDao extends AbstractDao<AppointmentArchive> {
+public class AppointmentArchiveDao extends AbstractDaoImpl<AppointmentArchive> {
 
 	public AppointmentArchiveDao() {
 		super(AppointmentArchive.class);

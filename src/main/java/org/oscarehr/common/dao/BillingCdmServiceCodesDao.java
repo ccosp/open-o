@@ -31,7 +31,7 @@ import org.oscarehr.common.model.BillingCdmServiceCodes;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BillingCdmServiceCodesDao extends AbstractDao<BillingCdmServiceCodes> {
+public class BillingCdmServiceCodesDao extends AbstractDaoImpl<BillingCdmServiceCodes> {
 
 	public BillingCdmServiceCodesDao() {
 		super(BillingCdmServiceCodes.class);

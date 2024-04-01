@@ -34,7 +34,7 @@ import org.oscarehr.common.model.ScheduleHoliday;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ScheduleHolidayDao extends AbstractDao<ScheduleHoliday>{
+public class ScheduleHolidayDao extends AbstractDaoImpl<ScheduleHoliday>{
 
 	public ScheduleHolidayDao() {
 		super(ScheduleHoliday.class);

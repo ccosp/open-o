@@ -32,7 +32,7 @@ import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProfessionalSpecialistDao extends AbstractDao<ProfessionalSpecialist> {
+public class ProfessionalSpecialistDao extends AbstractDaoImpl<ProfessionalSpecialist> {
 
 	public ProfessionalSpecialistDao() {
 		super(ProfessionalSpecialist.class);

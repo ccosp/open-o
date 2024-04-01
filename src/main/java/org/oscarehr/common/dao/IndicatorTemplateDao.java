@@ -29,7 +29,7 @@ import org.oscarehr.common.model.IndicatorTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IndicatorTemplateDao extends AbstractDao<IndicatorTemplate> {
+public class IndicatorTemplateDao extends AbstractDaoImpl<IndicatorTemplate> {
 
 	public IndicatorTemplateDao() {
 		super(IndicatorTemplate.class);

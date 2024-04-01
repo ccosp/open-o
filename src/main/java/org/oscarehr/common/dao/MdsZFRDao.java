@@ -29,7 +29,7 @@ import org.oscarehr.common.model.MdsZFR;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MdsZFRDao extends AbstractDao<MdsZFR>{
+public class MdsZFRDao extends AbstractDaoImpl<MdsZFR>{
 
 	public MdsZFRDao() {
 		super(MdsZFR.class);

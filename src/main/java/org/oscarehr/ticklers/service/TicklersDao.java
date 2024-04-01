@@ -30,14 +30,14 @@ import javax.persistence.Query;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.oscarehr.common.PaginationQuery;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.common.model.Tickler;
 import org.oscarehr.ticklers.web.TicklerQuery;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TicklersDao extends AbstractDao<Tickler> {
+public class TicklersDao extends AbstractDaoImpl<Tickler> {
 
 	public TicklersDao() {
 		super(Tickler.class);

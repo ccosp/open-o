@@ -31,7 +31,7 @@ import org.oscarehr.decisionSupport.model.DSGuideline;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DSGuidelineDao extends AbstractDao<DSGuideline>{
+public class DSGuidelineDao extends AbstractDaoImpl<DSGuideline>{
 
 	public DSGuidelineDao() {
 		super(DSGuideline.class);

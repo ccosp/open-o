@@ -31,7 +31,7 @@ import org.oscarehr.common.model.IntegratorConsent;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IntegratorConsentDao extends AbstractDao<IntegratorConsent> {
+public class IntegratorConsentDao extends AbstractDaoImpl<IntegratorConsent> {
 
 	public IntegratorConsentDao() {
 		super(IntegratorConsent.class);

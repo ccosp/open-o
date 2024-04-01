@@ -17,7 +17,7 @@ import org.oscarehr.common.model.ClinicNbr;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ClinicNbrDao extends AbstractDao<ClinicNbr> {
+public class ClinicNbrDao extends AbstractDaoImpl<ClinicNbr> {
 	
 	public ClinicNbrDao() {
 		super(ClinicNbr.class);

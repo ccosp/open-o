@@ -33,7 +33,7 @@ import org.oscarehr.common.model.ScheduleTemplateCode;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ScheduleTemplateCodeDao extends AbstractDao<ScheduleTemplateCode> {
+public class ScheduleTemplateCodeDao extends AbstractDaoImpl<ScheduleTemplateCode> {
 	
 	public ScheduleTemplateCodeDao() {
 		super(ScheduleTemplateCode.class);

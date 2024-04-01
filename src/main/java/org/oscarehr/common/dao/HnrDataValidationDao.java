@@ -29,7 +29,7 @@ import org.oscarehr.common.model.HnrDataValidation;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HnrDataValidationDao extends AbstractDao<HnrDataValidation> {
+public class HnrDataValidationDao extends AbstractDaoImpl<HnrDataValidation> {
 
 	public HnrDataValidationDao() {
 		super(HnrDataValidation.class);

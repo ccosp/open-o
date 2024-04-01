@@ -27,7 +27,7 @@ import org.oscarehr.common.model.IntegratorConsentComplexExitInterview;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IntegratorConsentComplexExitInterviewDao extends AbstractDao<IntegratorConsentComplexExitInterview> {
+public class IntegratorConsentComplexExitInterviewDao extends AbstractDaoImpl<IntegratorConsentComplexExitInterview> {
 
 	public IntegratorConsentComplexExitInterviewDao() {
 		super(IntegratorConsentComplexExitInterview.class);

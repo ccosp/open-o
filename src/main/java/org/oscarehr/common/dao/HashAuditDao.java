@@ -27,7 +27,7 @@ import org.oscarehr.common.model.HashAudit;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HashAuditDao extends AbstractDao<HashAudit> {
+public class HashAuditDao extends AbstractDaoImpl<HashAudit> {
 
 	public HashAuditDao() {
 		super(HashAudit.class);

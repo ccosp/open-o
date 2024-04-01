@@ -36,7 +36,7 @@ import oscar.util.StringUtils;
 import oscar.util.UtilDateUtilities;
 
 @Repository
-public class DemographicArchiveDao extends AbstractDao<DemographicArchive> {
+public class DemographicArchiveDao extends AbstractDaoImpl<DemographicArchive> {
 
 	public DemographicArchiveDao() {
 		super(DemographicArchive.class);

@@ -32,7 +32,7 @@ import org.oscarehr.common.model.Hsfo2Patient;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class Hsfo2PatientDao extends AbstractDao<Hsfo2Patient>
+public class Hsfo2PatientDao extends AbstractDaoImpl<Hsfo2Patient>
 {
 	public Hsfo2PatientDao() {
 		super(Hsfo2Patient.class);

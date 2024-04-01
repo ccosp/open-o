@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository(value="rScheduleDao")
 @SuppressWarnings("unchecked")
-public class RScheduleDao extends AbstractDao<RSchedule>{
+public class RScheduleDao extends AbstractDaoImpl<RSchedule>{
 
 	public RScheduleDao() {
 		super(RSchedule.class);

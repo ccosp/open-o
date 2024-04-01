@@ -34,7 +34,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DxDao extends AbstractDao<DxAssociation> {
+public class DxDao extends AbstractDaoImpl<DxAssociation> {
 
 	public DxDao() {
 		super(DxAssociation.class);

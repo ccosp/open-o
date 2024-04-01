@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
  * @author rjonasz
  */
 @Repository
-public class OscarMsgTypeDao extends AbstractDao<OscarMsgType> implements Serializable {
+public class OscarMsgTypeDao extends AbstractDaoImpl<OscarMsgType> implements Serializable {
 
     public OscarMsgTypeDao() {
         super(OscarMsgType.class);

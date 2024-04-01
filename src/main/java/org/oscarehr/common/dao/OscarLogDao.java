@@ -36,7 +36,7 @@ import org.oscarehr.common.model.OscarLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OscarLogDao extends AbstractDao<OscarLog> {
+public class OscarLogDao extends AbstractDaoImpl<OscarLog> {
 
 	public OscarLogDao() {
 		super(OscarLog.class);

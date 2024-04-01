@@ -30,7 +30,7 @@ import org.oscarehr.common.model.ContactSpecialty;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ContactSpecialtyDao extends AbstractDao<ContactSpecialty> {
+public class ContactSpecialtyDao extends AbstractDaoImpl<ContactSpecialty> {
 
 	protected ContactSpecialtyDao() {
 	    super(ContactSpecialty.class);

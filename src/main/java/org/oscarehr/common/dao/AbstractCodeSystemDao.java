@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.oscarehr.common.model.AbstractCodeSystemModel;
 
-public abstract class AbstractCodeSystemDao<T extends AbstractCodeSystemModel<?>> extends AbstractDao<T> {
+public abstract class AbstractCodeSystemDao<T extends AbstractCodeSystemModel<?>> extends AbstractDaoImpl<T> {
 
 	public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
 	

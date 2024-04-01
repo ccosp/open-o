@@ -32,7 +32,7 @@ import org.oscarehr.common.model.MeasurementsExt;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MeasurementsExtDao extends AbstractDao<MeasurementsExt>{
+public class MeasurementsExtDao extends AbstractDaoImpl<MeasurementsExt>{
 
 	public MeasurementsExtDao() {
 		super(MeasurementsExt.class);

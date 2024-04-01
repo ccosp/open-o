@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class SecurityDao  extends AbstractDao<Security> {
+public class SecurityDao  extends AbstractDaoImpl<Security> {
 
 	public SecurityDao() {
 	    super(Security.class);

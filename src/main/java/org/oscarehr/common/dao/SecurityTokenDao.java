@@ -34,7 +34,7 @@ import org.oscarehr.common.model.SecurityToken;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SecurityTokenDao extends AbstractDao<SecurityToken>{
+public class SecurityTokenDao extends AbstractDaoImpl<SecurityToken>{
 
 	public SecurityTokenDao() {
 		super(SecurityToken.class);

@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class LabTestResultsDao extends AbstractDao<LabTestResults> {
+public class LabTestResultsDao extends AbstractDaoImpl<LabTestResults> {
 
 	public LabTestResultsDao() {
 		super(LabTestResults.class);

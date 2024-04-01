@@ -32,7 +32,7 @@ import org.oscarehr.common.model.Favorite;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FavoriteDao extends AbstractDao<Favorite> {
+public class FavoriteDao extends AbstractDaoImpl<Favorite> {
 
 	public FavoriteDao() {
 		super(Favorite.class);

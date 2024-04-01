@@ -30,7 +30,7 @@ import org.oscarehr.common.model.IssueGroup;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IssueGroupDao extends AbstractDao<IssueGroup> {
+public class IssueGroupDao extends AbstractDaoImpl<IssueGroup> {
 
     public IssueGroupDao() {
         super(IssueGroup.class);

@@ -27,7 +27,7 @@ import org.oscarehr.common.model.Specialty;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SpecialtyDao extends AbstractDao<Specialty>{
+public class SpecialtyDao extends AbstractDaoImpl<Specialty>{
 
 	public SpecialtyDao() {
 	    super(Specialty.class);

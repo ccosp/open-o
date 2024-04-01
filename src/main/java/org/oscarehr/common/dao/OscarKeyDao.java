@@ -29,7 +29,7 @@ import org.oscarehr.common.model.OscarKey;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OscarKeyDao extends AbstractDao<OscarKey> {
+public class OscarKeyDao extends AbstractDaoImpl<OscarKey> {
 
 	public OscarKeyDao() {
 		super(OscarKey.class);

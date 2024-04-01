@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
  * @author rjonasz
  */
 @Repository
-public class ConsultationServiceDao extends AbstractDao<ConsultationServices> {
+public class ConsultationServiceDao extends AbstractDaoImpl<ConsultationServices> {
 	public final String REFERRING_DOCTOR = "Referring Doctor";
     public final String ACTIVE = "1";
     public final String INACTIVE = "02";

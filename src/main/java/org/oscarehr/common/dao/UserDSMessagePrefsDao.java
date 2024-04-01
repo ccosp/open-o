@@ -36,7 +36,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class UserDSMessagePrefsDao extends AbstractDao<UserDSMessagePrefs> {
+public class UserDSMessagePrefsDao extends AbstractDaoImpl<UserDSMessagePrefs> {
 	private static Logger logger = MiscUtils.getLogger();
 	
 	public UserDSMessagePrefsDao() {

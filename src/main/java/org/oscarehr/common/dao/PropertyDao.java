@@ -33,7 +33,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class PropertyDao extends AbstractDao<Property> {
+public class PropertyDao extends AbstractDaoImpl<Property> {
 
 	public PropertyDao() {
 		super(Property.class);

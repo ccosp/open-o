@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.common.dao.OscarJobDao;
 import org.oscarehr.common.dao.OscarJobTypeDao;
 import org.oscarehr.common.jobs.OscarJobUtils;
@@ -72,7 +72,7 @@ public class OscarJobManager {
 		
 		List<OscarJobType> validTypes = new ArrayList<OscarJobType>();
 		
-		for(OscarJobType oscarJobType : oscarJobTypeDao.findAll(0, AbstractDao.MAX_LIST_RETURN_SIZE)) {
+		for(OscarJobType oscarJobType : oscarJobTypeDao.findAll(0, AbstractDaoImpl.MAX_LIST_RETURN_SIZE)) {
 			if(OscarJobUtils.isJobTypeCurrentlyValid(oscarJobType)) {
 				validTypes.add(oscarJobType);
 			}
@@ -81,7 +81,7 @@ public class OscarJobManager {
 	}
 	
 	public List<OscarJobType> getAllJobTypes() {
-		return  oscarJobTypeDao.findAll(0, AbstractDao.MAX_LIST_RETURN_SIZE);
+		return  oscarJobTypeDao.findAll(0, AbstractDaoImpl.MAX_LIST_RETURN_SIZE);
 	}
 	
 	

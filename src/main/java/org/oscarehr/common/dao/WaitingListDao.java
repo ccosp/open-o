@@ -33,7 +33,7 @@ import org.oscarehr.common.model.WaitingList;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class WaitingListDao extends AbstractDao<WaitingList> {
+public class WaitingListDao extends AbstractDaoImpl<WaitingList> {
 
 	public WaitingListDao() {
 		super(WaitingList.class);

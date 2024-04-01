@@ -32,7 +32,7 @@ import org.oscarehr.common.model.FacilityMessage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FacilityMessageDao extends AbstractDao<FacilityMessage>{
+public class FacilityMessageDao extends AbstractDaoImpl<FacilityMessage>{
 
 	public FacilityMessageDao() {
 		super(FacilityMessage.class);

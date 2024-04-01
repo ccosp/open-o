@@ -30,7 +30,7 @@ import org.oscarehr.common.model.SentToPHRTracking;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SentToPHRTrackingDao extends AbstractDao<SentToPHRTracking> {
+public class SentToPHRTrackingDao extends AbstractDaoImpl<SentToPHRTracking> {
 
 	public SentToPHRTrackingDao() {
 		super(SentToPHRTracking.class);

@@ -35,7 +35,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BedDemographicHistoricalDao extends AbstractDao<BedDemographicHistorical>{
+public class BedDemographicHistoricalDao extends AbstractDaoImpl<BedDemographicHistorical>{
 
 	private Logger log = MiscUtils.getLogger();
 	

@@ -38,7 +38,7 @@ import org.oscarehr.common.model.EFormValue;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EFormReportToolDao extends AbstractDao<EFormReportTool> {
+public class EFormReportToolDao extends AbstractDaoImpl<EFormReportTool> {
 
 	public EFormReportToolDao() {
 		super(EFormReportTool.class);

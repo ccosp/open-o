@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class ConsultDocsDao extends AbstractDao<ConsultDocs>{
+public class ConsultDocsDao extends AbstractDaoImpl<ConsultDocs>{
 
 	public ConsultDocsDao() {
 		super(ConsultDocs.class);

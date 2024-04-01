@@ -33,7 +33,7 @@ import org.oscarehr.common.model.CtlSpecialInstructions;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CtlSpecialInstructionsDao extends AbstractDao<CtlSpecialInstructions>{
+public class CtlSpecialInstructionsDao extends AbstractDaoImpl<CtlSpecialInstructions>{
 
 	public CtlSpecialInstructionsDao() {
 		super(CtlSpecialInstructions.class);

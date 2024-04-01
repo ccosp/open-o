@@ -34,7 +34,7 @@ import org.oscarehr.common.model.FlowSheetDx;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FlowSheetDxDao extends AbstractDao<FlowSheetDx>{
+public class FlowSheetDxDao extends AbstractDaoImpl<FlowSheetDx>{
 
 	public FlowSheetDxDao() {
 		super(FlowSheetDx.class);

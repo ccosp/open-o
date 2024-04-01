@@ -32,7 +32,7 @@ import org.oscarehr.common.model.Prescription;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PrescriptionDao extends AbstractDao<Prescription> {
+public class PrescriptionDao extends AbstractDaoImpl<Prescription> {
 
 	public PrescriptionDao() {
 		super(Prescription.class);

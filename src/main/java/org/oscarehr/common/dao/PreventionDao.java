@@ -30,7 +30,7 @@ import javax.persistence.Query;
 import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.Prevention;
 
-public class PreventionDao extends AbstractDao<Prevention> {
+public class PreventionDao extends AbstractDaoImpl<Prevention> {
 
 	public PreventionDao() {
 		super(Prevention.class);

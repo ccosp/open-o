@@ -34,7 +34,7 @@ import org.oscarehr.common.model.FaxClientLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FaxClientLogDao extends AbstractDao<FaxClientLog>{
+public class FaxClientLogDao extends AbstractDaoImpl<FaxClientLog>{
 
 	public FaxClientLogDao() {
 		super(FaxClientLog.class);

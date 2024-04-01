@@ -33,7 +33,7 @@ import org.oscarehr.common.model.LabRequestReportLink;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LabRequestReportLinkDao extends AbstractDao<LabRequestReportLink>{
+public class LabRequestReportLinkDao extends AbstractDaoImpl<LabRequestReportLink>{
 
 	public LabRequestReportLinkDao() {
 		super(LabRequestReportLink.class);

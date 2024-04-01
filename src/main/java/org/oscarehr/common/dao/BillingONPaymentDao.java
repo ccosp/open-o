@@ -49,7 +49,7 @@ import oscar.util.DateUtils;
  */
 
 @Repository
-public class BillingONPaymentDao extends AbstractDao<BillingONPayment>{
+public class BillingONPaymentDao extends AbstractDaoImpl<BillingONPayment>{
     
 	@Autowired
     private BillingONExtDao billingONExtDao;

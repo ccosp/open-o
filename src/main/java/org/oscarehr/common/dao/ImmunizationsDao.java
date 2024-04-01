@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class ImmunizationsDao extends AbstractDao<Immunizations>{
+public class ImmunizationsDao extends AbstractDaoImpl<Immunizations>{
 
 	public ImmunizationsDao() {
 		super(Immunizations.class);

@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CVCMedicationLotNumber;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CVCMedicationLotNumberDao extends AbstractDao<CVCMedicationLotNumber>{
+public class CVCMedicationLotNumberDao extends AbstractDaoImpl<CVCMedicationLotNumber>{
 
 	public CVCMedicationLotNumberDao() {
 		super(CVCMedicationLotNumber.class);

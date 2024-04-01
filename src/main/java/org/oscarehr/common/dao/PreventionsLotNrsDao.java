@@ -31,7 +31,7 @@ import org.oscarehr.common.model.PreventionsLotNrs;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PreventionsLotNrsDao extends AbstractDao<PreventionsLotNrs> {
+public class PreventionsLotNrsDao extends AbstractDaoImpl<PreventionsLotNrs> {
 
 	public PreventionsLotNrsDao() {
 		super(PreventionsLotNrs.class);

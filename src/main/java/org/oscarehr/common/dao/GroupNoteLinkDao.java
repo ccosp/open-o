@@ -29,7 +29,7 @@ import org.oscarehr.common.model.GroupNoteLink;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GroupNoteLinkDao extends AbstractDao<GroupNoteLink>{
+public class GroupNoteLinkDao extends AbstractDaoImpl<GroupNoteLink>{
 
 	public GroupNoteLinkDao() {
 		super(GroupNoteLink.class);

@@ -32,7 +32,7 @@ import org.oscarehr.common.model.PreventionExt;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PreventionExtDao extends AbstractDao<PreventionExt> {
+public class PreventionExtDao extends AbstractDaoImpl<PreventionExt> {
 
 	public PreventionExtDao() {
 		super(PreventionExt.class);

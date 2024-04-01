@@ -31,7 +31,7 @@ import org.oscarehr.common.model.WorkFlow;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class WorkFlowDao extends AbstractDao<WorkFlow>{
+public class WorkFlowDao extends AbstractDaoImpl<WorkFlow>{
 
 	public WorkFlowDao() {
 		super(WorkFlow.class);

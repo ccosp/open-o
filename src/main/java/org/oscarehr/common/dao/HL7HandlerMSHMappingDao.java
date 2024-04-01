@@ -16,7 +16,7 @@ import org.oscarehr.common.model.HL7HandlerMSHMapping;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HL7HandlerMSHMappingDao  extends AbstractDao<HL7HandlerMSHMapping> {
+public class HL7HandlerMSHMappingDao  extends AbstractDaoImpl<HL7HandlerMSHMapping> {
 	
 	public HL7HandlerMSHMappingDao() {
 		super (HL7HandlerMSHMapping.class);

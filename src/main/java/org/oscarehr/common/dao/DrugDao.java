@@ -34,7 +34,7 @@ import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.Drug;
 import org.oscarehr.util.MiscUtils;
 
-public class DrugDao extends AbstractDao<Drug> {
+public class DrugDao extends AbstractDaoImpl<Drug> {
 
 	public DrugDao() {
 		super(Drug.class);
