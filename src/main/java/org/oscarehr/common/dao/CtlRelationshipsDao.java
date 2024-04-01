@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CtlRelationships;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CtlRelationshipsDao extends AbstractDao<CtlRelationships>{
+public class CtlRelationshipsDao extends AbstractDaoImpl<CtlRelationships>{
 
 	public CtlRelationshipsDao() {
 		super(CtlRelationships.class);

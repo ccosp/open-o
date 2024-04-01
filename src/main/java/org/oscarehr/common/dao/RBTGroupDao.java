@@ -33,7 +33,7 @@ import org.oscarehr.common.model.RBTGroup;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RBTGroupDao extends AbstractDao<RBTGroup> {
+public class RBTGroupDao extends AbstractDaoImpl<RBTGroup> {
 
 	public RBTGroupDao() {
 		super(RBTGroup.class);

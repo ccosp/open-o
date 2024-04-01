@@ -31,7 +31,7 @@ import org.oscarehr.common.model.SystemMessage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SystemMessageDao extends AbstractDao<SystemMessage> {
+public class SystemMessageDao extends AbstractDaoImpl<SystemMessage> {
 	
 	public SystemMessageDao() {
 		super(SystemMessage.class);

@@ -33,7 +33,7 @@ import org.oscarehr.common.model.PageMonitor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PageMonitorDao extends AbstractDao<PageMonitor>{
+public class PageMonitorDao extends AbstractDaoImpl<PageMonitor>{
 
 	public PageMonitorDao() {
 		super(PageMonitor.class);

@@ -32,7 +32,7 @@ import org.oscarehr.common.model.CaseManagementTmpSave;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CaseManagementTmpSaveDao extends AbstractDao<CaseManagementTmpSave>{
+public class CaseManagementTmpSaveDao extends AbstractDaoImpl<CaseManagementTmpSave>{
 
 	//This regex represents the dummy note starter e.g. [30-Mar-2018 .: Tel-Progress Notes]
 	private static final String NOTE_TAG_REGEXP = "^\\[[[:digit:]]{2}-[[:alpha:]]{3}-[[:digit:]]{4} \\.\\: [^]]*\\][[:space:]]+$";

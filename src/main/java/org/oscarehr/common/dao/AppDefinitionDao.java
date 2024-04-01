@@ -31,7 +31,7 @@ import org.oscarehr.common.model.AppDefinition;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppDefinitionDao extends AbstractDao<AppDefinition>{
+public class AppDefinitionDao extends AbstractDaoImpl<AppDefinition>{
 
 	public AppDefinitionDao()  {
 		super(AppDefinition.class);

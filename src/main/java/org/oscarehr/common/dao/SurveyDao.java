@@ -31,7 +31,7 @@ import org.oscarehr.common.model.Survey;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SurveyDao extends AbstractDao<Survey> {
+public class SurveyDao extends AbstractDaoImpl<Survey> {
 
 	public SurveyDao() {
 		super(Survey.class);

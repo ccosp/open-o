@@ -30,7 +30,7 @@ import org.oscarehr.common.model.DocumentDescriptionTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DocumentDescriptionTemplateDao extends AbstractDao<DocumentDescriptionTemplate> {
+public class DocumentDescriptionTemplateDao extends AbstractDaoImpl<DocumentDescriptionTemplate> {
 
 	public DocumentDescriptionTemplateDao() {
 		super(DocumentDescriptionTemplate.class);

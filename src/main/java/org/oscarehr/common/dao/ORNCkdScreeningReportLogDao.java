@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class ORNCkdScreeningReportLogDao extends AbstractDao<ORNCkdScreeningReportLog> {
+public class ORNCkdScreeningReportLogDao extends AbstractDaoImpl<ORNCkdScreeningReportLog> {
 
 	public ORNCkdScreeningReportLogDao() {
 		super(ORNCkdScreeningReportLog.class);

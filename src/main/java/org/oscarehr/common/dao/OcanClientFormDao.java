@@ -31,7 +31,7 @@ import org.oscarehr.common.model.OcanClientForm;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OcanClientFormDao extends AbstractDao<OcanClientForm> {
+public class OcanClientFormDao extends AbstractDaoImpl<OcanClientForm> {
 
 	public OcanClientFormDao() {
 		super(OcanClientForm.class);

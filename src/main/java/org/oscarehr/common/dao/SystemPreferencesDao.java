@@ -31,7 +31,7 @@ import java.util.*;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class SystemPreferencesDao extends AbstractDao<SystemPreferences>
+public class SystemPreferencesDao extends AbstractDaoImpl<SystemPreferences>
 {
     public SystemPreferencesDao() { super(SystemPreferences.class); }
 

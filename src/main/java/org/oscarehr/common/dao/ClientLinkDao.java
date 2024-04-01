@@ -31,7 +31,7 @@ import org.oscarehr.common.model.ClientLink;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ClientLinkDao extends AbstractDao<ClientLink> {
+public class ClientLinkDao extends AbstractDaoImpl<ClientLink> {
 	
 	public ClientLinkDao() {
 		super(ClientLink.class);

@@ -34,7 +34,7 @@ import org.oscarehr.common.model.DemographicContact;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicContactDao extends AbstractDao<DemographicContact>{
+public class DemographicContactDao extends AbstractDaoImpl<DemographicContact>{
 
 	public DemographicContactDao() {
 		super(DemographicContact.class);

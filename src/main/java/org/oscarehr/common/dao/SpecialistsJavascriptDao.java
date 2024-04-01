@@ -33,7 +33,7 @@ import org.oscarehr.common.model.SpecialistsJavascript;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SpecialistsJavascriptDao extends AbstractDao<SpecialistsJavascript>{
+public class SpecialistsJavascriptDao extends AbstractDaoImpl<SpecialistsJavascript>{
 
 	public SpecialistsJavascriptDao() {
 		super(SpecialistsJavascript.class);

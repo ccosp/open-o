@@ -34,7 +34,7 @@ import org.oscarehr.common.model.ReportTemp;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReportTempDao extends AbstractDao<ReportTemp>{
+public class ReportTempDao extends AbstractDaoImpl<ReportTemp>{
 
 	public ReportTempDao() {
 		super(ReportTemp.class);

@@ -31,7 +31,7 @@ import org.oscarehr.common.model.FormLabReq07;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FormLabReq07Dao extends AbstractDao<FormLabReq07> {
+public class FormLabReq07Dao extends AbstractDaoImpl<FormLabReq07> {
 
 	public FormLabReq07Dao() {
 		super(FormLabReq07.class);

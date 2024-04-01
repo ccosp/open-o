@@ -78,7 +78,7 @@ import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.oscarehr.casemgmt.model.CaseManagementSearchBean;
 import org.oscarehr.casemgmt.model.Issue;
 import org.oscarehr.casemgmt.model.ProviderExt;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.common.dao.AllergyDao;
 import org.oscarehr.common.dao.AppointmentArchiveDao;
 import org.oscarehr.common.dao.CaseManagementTmpSaveDao;
@@ -1481,7 +1481,7 @@ public class CaseManagementManager {
 	}
 	
 	public List<Issue> searchIssues(String providerNo, String programId, String search) {
-		return searchIssues(providerNo,programId,search,0,AbstractDao.MAX_LIST_RETURN_SIZE);
+		return searchIssues(providerNo,programId,search,0,AbstractDaoImpl.MAX_LIST_RETURN_SIZE);
 	}
 	
 	/**
@@ -1491,8 +1491,8 @@ public class CaseManagementManager {
 	 */
 	public List<Issue> searchIssues(String providerNo, String programId, String search, int startIndex, int numToReturn) {
 		
-		if(numToReturn > AbstractDao.MAX_LIST_RETURN_SIZE) {
-			throw new IllegalArgumentException("Can only return a maximum of " + AbstractDao.MAX_LIST_RETURN_SIZE + " results");
+		if(numToReturn > AbstractDaoImpl.MAX_LIST_RETURN_SIZE) {
+			throw new IllegalArgumentException("Can only return a maximum of " + AbstractDaoImpl.MAX_LIST_RETURN_SIZE + " results");
 		}
 		
 		// Get Role - if no ProgramProvider record found, show no issues.

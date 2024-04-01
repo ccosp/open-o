@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 
 @Repository
-public class FlowSheetUserCreatedDao extends AbstractDao<FlowSheetUserCreated> {
+public class FlowSheetUserCreatedDao extends AbstractDaoImpl<FlowSheetUserCreated> {
 
 	public FlowSheetUserCreatedDao() {
 		super(FlowSheetUserCreated.class);

@@ -31,7 +31,7 @@ import org.oscarehr.common.model.Institution;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class InstitutionDao extends AbstractDao<Institution>{
+public class InstitutionDao extends AbstractDaoImpl<Institution>{
 
 	public InstitutionDao()  {
 		super(Institution.class);

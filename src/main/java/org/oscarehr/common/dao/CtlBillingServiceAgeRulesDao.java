@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class CtlBillingServiceAgeRulesDao extends AbstractDao<CtlBillingServiceAgeRules> {
+public class CtlBillingServiceAgeRulesDao extends AbstractDaoImpl<CtlBillingServiceAgeRules> {
 
 	public CtlBillingServiceAgeRulesDao() {
 		super(CtlBillingServiceAgeRules.class);

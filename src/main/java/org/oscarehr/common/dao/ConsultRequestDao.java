@@ -41,7 +41,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ConsultRequestDao extends AbstractDao<ConsultationRequest> {
+public class ConsultRequestDao extends AbstractDaoImpl<ConsultationRequest> {
 
 	public ConsultRequestDao() {
 		super(ConsultationRequest.class);

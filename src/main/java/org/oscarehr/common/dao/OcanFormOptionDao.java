@@ -30,7 +30,7 @@ import org.oscarehr.common.model.OcanFormOption;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OcanFormOptionDao extends AbstractDao<OcanFormOption> {
+public class OcanFormOptionDao extends AbstractDaoImpl<OcanFormOption> {
 
 	public OcanFormOptionDao() {
 		super(OcanFormOption.class);

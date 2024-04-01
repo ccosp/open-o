@@ -31,7 +31,7 @@ import org.oscarehr.common.model.IntegratorProgressItem;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IntegratorProgressItemDao extends AbstractDao<IntegratorProgressItem> {
+public class IntegratorProgressItemDao extends AbstractDaoImpl<IntegratorProgressItem> {
 
 	public IntegratorProgressItemDao() {
 		super(IntegratorProgressItem.class);

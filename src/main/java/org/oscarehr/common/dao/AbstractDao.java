@@ -20,5 +20,6 @@ public interface AbstractDao<T extends AbstractModel<?>> {
     int getCountAll();
     List<Object[]> runNativeQuery(String sql);
 	T saveEntity(T entity);
+	Class<T> getModelClass();
 }
 

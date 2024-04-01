@@ -31,7 +31,7 @@
 // import org.springframework.stereotype.Repository;
 
 // @Repository
-// public class ServiceRequestTokenDao extends AbstractDao<ServiceRequestToken>{
+// public class ServiceRequestTokenDao extends AbstractDaoImpl<ServiceRequestToken>{
 
 // 	public ServiceRequestTokenDao() {
 // 		super(ServiceRequestToken.class);

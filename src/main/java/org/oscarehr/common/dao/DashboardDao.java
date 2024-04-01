@@ -29,7 +29,7 @@ import org.oscarehr.common.model.Dashboard;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DashboardDao extends AbstractDao<Dashboard> {
+public class DashboardDao extends AbstractDaoImpl<Dashboard> {
 
 	public DashboardDao() {
 		super(Dashboard.class);

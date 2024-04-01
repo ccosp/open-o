@@ -29,7 +29,7 @@ import org.oscarehr.common.model.LogLetters;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LogLettersDao extends AbstractDao<LogLetters>{
+public class LogLettersDao extends AbstractDaoImpl<LogLetters>{
 
 	public LogLettersDao() {
 		super(LogLetters.class);

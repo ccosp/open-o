@@ -47,7 +47,7 @@ import oscar.util.ConversionUtils;
 
 
 @Repository
-public class DocumentDao extends AbstractDao<Document> {
+public class DocumentDao extends AbstractDaoImpl<Document> {
 
 	public enum Module {
 		DEMOGRAPHIC;

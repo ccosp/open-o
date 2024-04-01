@@ -27,7 +27,7 @@ import org.oscarehr.common.model.ReportFilter;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReportFilterDao extends AbstractDao<ReportFilter>{
+public class ReportFilterDao extends AbstractDaoImpl<ReportFilter>{
 
 	public ReportFilterDao() {
 		super(ReportFilter.class);

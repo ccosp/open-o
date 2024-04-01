@@ -31,7 +31,7 @@ import org.oscarehr.common.model.PrintResourceLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PrintResourceLogDao extends AbstractDao<PrintResourceLog>{
+public class PrintResourceLogDao extends AbstractDaoImpl<PrintResourceLog>{
 
 	public PrintResourceLogDao() {
 		super(PrintResourceLog.class);

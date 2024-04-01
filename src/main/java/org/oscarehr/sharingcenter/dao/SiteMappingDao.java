@@ -27,12 +27,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.sharingcenter.model.SiteMapping;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SiteMappingDao extends AbstractDao<SiteMapping> {
+public class SiteMappingDao extends AbstractDaoImpl<SiteMapping> {
 
     public SiteMappingDao() {
         super(SiteMapping.class);

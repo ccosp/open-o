@@ -32,7 +32,7 @@ import org.oscarehr.common.model.SecurityArchive;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SecurityArchiveDao extends AbstractDao<SecurityArchive> {
+public class SecurityArchiveDao extends AbstractDaoImpl<SecurityArchive> {
 
 	public SecurityArchiveDao() {
 		super(SecurityArchive.class);

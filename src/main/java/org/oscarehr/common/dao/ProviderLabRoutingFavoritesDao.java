@@ -34,7 +34,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 @Repository
-public class ProviderLabRoutingFavoritesDao extends AbstractDao<ProviderLabRoutingFavorite> {
+public class ProviderLabRoutingFavoritesDao extends AbstractDaoImpl<ProviderLabRoutingFavorite> {
 
 	public ProviderLabRoutingFavoritesDao() {
 		super(ProviderLabRoutingFavorite.class);

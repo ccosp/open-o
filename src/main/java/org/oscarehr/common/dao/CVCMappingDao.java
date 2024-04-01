@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CVCMapping;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CVCMappingDao extends AbstractDao<CVCMapping> {
+public class CVCMappingDao extends AbstractDaoImpl<CVCMapping> {
 
 	public CVCMappingDao() {
 		super(CVCMapping.class);

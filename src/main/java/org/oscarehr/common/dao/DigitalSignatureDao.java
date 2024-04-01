@@ -26,7 +26,7 @@ import org.oscarehr.common.model.DigitalSignature;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DigitalSignatureDao extends AbstractDao<DigitalSignature> {
+public class DigitalSignatureDao extends AbstractDaoImpl<DigitalSignature> {
     
 	public DigitalSignatureDao() {
 		super(DigitalSignature.class);

@@ -40,7 +40,7 @@ import org.springframework.stereotype.Repository;
  * @author Toby
  */
 @Repository
-public class MyGroupDao extends AbstractDao<MyGroup> {
+public class MyGroupDao extends AbstractDaoImpl<MyGroup> {
 
 	public MyGroupDao() {
 		super(MyGroup.class);

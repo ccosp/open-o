@@ -35,7 +35,7 @@ import org.oscarehr.common.model.ConsultationRequest;
 
 
 @SuppressWarnings("unchecked")
-public class ConsultationRequestDao extends AbstractDao<ConsultationRequest> {
+public class ConsultationRequestDao extends AbstractDaoImpl<ConsultationRequest> {
 	
 	public static final int DEFAULT_CONSULT_REQUEST_RESULTS_LIMIT = 100;
 

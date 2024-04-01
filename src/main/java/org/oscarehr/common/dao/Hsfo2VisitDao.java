@@ -39,7 +39,7 @@ import org.apache.logging.log4j.Logger;
 
 
 @Repository
-public class Hsfo2VisitDao extends AbstractDao<Hsfo2Visit>
+public class Hsfo2VisitDao extends AbstractDaoImpl<Hsfo2Visit>
 {
 	private static Logger logger = MiscUtils.getLogger();
 	public Hsfo2VisitDao() {

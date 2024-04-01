@@ -32,7 +32,7 @@ import org.oscarehr.common.model.IntegratorFileLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IntegratorFileLogDao extends AbstractDao<IntegratorFileLog> {
+public class IntegratorFileLogDao extends AbstractDaoImpl<IntegratorFileLog> {
 
 	public IntegratorFileLogDao() {
 		super(IntegratorFileLog.class);

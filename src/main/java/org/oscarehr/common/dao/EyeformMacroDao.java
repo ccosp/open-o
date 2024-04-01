@@ -17,7 +17,7 @@ import org.oscarehr.common.model.EyeformMacro;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EyeformMacroDao extends AbstractDao<EyeformMacro> {
+public class EyeformMacroDao extends AbstractDaoImpl<EyeformMacro> {
 
 	public EyeformMacroDao() {
 		super(EyeformMacro.class);

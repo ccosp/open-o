@@ -49,7 +49,7 @@ import oscar.oscarResearch.oscarDxResearch.bean.dxQuickListItemsHandler;
  */
 @Repository
 @SuppressWarnings("unchecked")
-public class DxresearchDAO extends AbstractDao<Dxresearch>{
+public class DxresearchDAO extends AbstractDaoImpl<Dxresearch>{
 	private static final Logger logger = MiscUtils.getLogger();
 
 	public DxresearchDAO() {

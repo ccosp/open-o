@@ -31,7 +31,7 @@ import org.oscarehr.common.model.DHIRSubmissionLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DHIRSubmissionLogDao extends AbstractDao<DHIRSubmissionLog> {
+public class DHIRSubmissionLogDao extends AbstractDaoImpl<DHIRSubmissionLog> {
 
 	public DHIRSubmissionLogDao() {
 		super(DHIRSubmissionLog.class);

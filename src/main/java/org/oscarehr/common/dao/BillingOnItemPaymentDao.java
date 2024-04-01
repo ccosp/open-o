@@ -31,7 +31,7 @@ import org.oscarehr.common.model.BillingOnItemPayment;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BillingOnItemPaymentDao extends AbstractDao<BillingOnItemPayment>{
+public class BillingOnItemPaymentDao extends AbstractDaoImpl<BillingOnItemPayment>{
 	public BillingOnItemPaymentDao() {
 		super(BillingOnItemPayment.class);
 	}

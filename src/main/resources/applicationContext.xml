@@ -36,7 +36,10 @@
 		load properties from additional property files; oscar.properties is
 		already loaded
 	-->
-	 <aop:aspectj-autoproxy proxy-target-class="true"/>
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- Enable annotation-driven transaction management with CGLIB proxies -->
+    <tx:annotation-driven proxy-target-class="true"/>
 	<bean id="propertyConfigurer" class="org.oscarehr.common.OscarPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>

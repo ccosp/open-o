@@ -32,7 +32,7 @@ import org.oscarehr.common.model.RemoteReferral;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RemoteReferralDao extends AbstractDao<RemoteReferral> {
+public class RemoteReferralDao extends AbstractDaoImpl<RemoteReferral> {
 
 	public RemoteReferralDao() {
 		super(RemoteReferral.class);

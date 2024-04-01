@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class CtlBillingServicePremiumDao extends AbstractDao<CtlBillingServicePremium>{
+public class CtlBillingServicePremiumDao extends AbstractDaoImpl<CtlBillingServicePremium>{
 
 	public CtlBillingServicePremiumDao() {
 		super(CtlBillingServicePremium.class);

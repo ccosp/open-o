@@ -37,7 +37,7 @@ import oscar.util.ParamAppender;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingONEAReportDao extends AbstractDao<BillingONEAReport> {
+public class BillingONEAReportDao extends AbstractDaoImpl<BillingONEAReport> {
     
     public BillingONEAReportDao() {
         super(BillingONEAReport.class);	

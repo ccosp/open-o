@@ -32,7 +32,7 @@ import org.oscarehr.common.model.DrugDispensingMapping;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DrugDispensingMappingDao extends AbstractDao<DrugDispensingMapping>{
+public class DrugDispensingMappingDao extends AbstractDaoImpl<DrugDispensingMapping>{
 
 	public DrugDispensingMappingDao() {
 		super(DrugDispensingMapping.class);

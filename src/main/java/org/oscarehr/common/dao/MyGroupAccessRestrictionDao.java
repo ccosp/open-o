@@ -31,7 +31,7 @@ import org.oscarehr.common.model.MyGroupAccessRestriction;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MyGroupAccessRestrictionDao extends AbstractDao<MyGroupAccessRestriction>{
+public class MyGroupAccessRestrictionDao extends AbstractDaoImpl<MyGroupAccessRestriction>{
 
 	public MyGroupAccessRestrictionDao() {
 		super(MyGroupAccessRestriction.class);		

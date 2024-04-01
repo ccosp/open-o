@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
  */
 @Deprecated
 @Repository
-public class BillingreferralDao extends AbstractDao<Billingreferral> {
+public class BillingreferralDao extends AbstractDaoImpl<Billingreferral> {
 
 	public BillingreferralDao() {
 		super(Billingreferral.class);

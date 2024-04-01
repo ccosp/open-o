@@ -33,7 +33,7 @@ import org.oscarehr.common.model.FaxJob;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FaxJobDao extends AbstractDao<FaxJob> {
+public class FaxJobDao extends AbstractDaoImpl<FaxJob> {
     
     public FaxJobDao() {
     	super(FaxJob.class);

@@ -35,7 +35,7 @@ import org.oscarehr.common.model.Validations;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ValidationsDao extends AbstractDao<Validations> {
+public class ValidationsDao extends AbstractDaoImpl<Validations> {
 
 	public ValidationsDao() {
 		super(Validations.class);

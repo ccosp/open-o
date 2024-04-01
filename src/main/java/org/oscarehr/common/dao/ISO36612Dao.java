@@ -35,7 +35,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ISO36612Dao  extends AbstractDao<ISO36612>{
+public class ISO36612Dao  extends AbstractDaoImpl<ISO36612>{
 
 	public ISO36612Dao() {
 		super(ISO36612.class);

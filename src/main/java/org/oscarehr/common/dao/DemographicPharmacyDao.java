@@ -34,7 +34,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicPharmacyDao extends AbstractDao<DemographicPharmacy> {
+public class DemographicPharmacyDao extends AbstractDaoImpl<DemographicPharmacy> {
 
 	public DemographicPharmacyDao() {
 		super(DemographicPharmacy.class);

@@ -34,7 +34,7 @@ import org.oscarehr.common.model.enumerator.DemographicExtKey;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicExtDao extends AbstractDao<DemographicExt>{
+public class DemographicExtDao extends AbstractDaoImpl<DemographicExt>{
 
 	public DemographicExtDao() {
 		super(DemographicExt.class);

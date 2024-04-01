@@ -35,7 +35,7 @@ import org.oscarehr.common.model.ReportAgeSex;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReportAgeSexDao extends AbstractDao<ReportAgeSex>{
+public class ReportAgeSexDao extends AbstractDaoImpl<ReportAgeSex>{
 
 	public ReportAgeSexDao() {
 		super(ReportAgeSex.class);

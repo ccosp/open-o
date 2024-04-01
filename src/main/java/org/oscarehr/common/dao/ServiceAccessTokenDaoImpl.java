@@ -32,7 +32,7 @@ import org.oscarehr.common.model.ServiceAccessToken;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ServiceAccessTokenDaoImpl extends AbstractDao<ServiceAccessToken> implements ServiceAccessTokenDao{
+public class ServiceAccessTokenDaoImpl extends AbstractDaoImpl<ServiceAccessToken> implements ServiceAccessTokenDao{
 
 
 	public ServiceAccessTokenDaoImpl() {

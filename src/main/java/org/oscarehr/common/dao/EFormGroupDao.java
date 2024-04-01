@@ -32,7 +32,7 @@ import org.oscarehr.common.model.EFormGroup;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EFormGroupDao extends AbstractDao<EFormGroup> {
+public class EFormGroupDao extends AbstractDaoImpl<EFormGroup> {
 
 	public EFormGroupDao() {
 		super(EFormGroup.class);

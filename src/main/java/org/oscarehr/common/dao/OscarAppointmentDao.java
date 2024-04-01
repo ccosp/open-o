@@ -50,7 +50,7 @@ import oscar.util.UtilDateUtilities;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class OscarAppointmentDao extends AbstractDao<Appointment> {
+public class OscarAppointmentDao extends AbstractDaoImpl<Appointment> {
 
 	public OscarAppointmentDao() {
 		super(Appointment.class);

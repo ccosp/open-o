@@ -46,7 +46,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingONExtDao extends AbstractDao<BillingONExt>{
+public class BillingONExtDao extends AbstractDaoImpl<BillingONExt>{
 	public final static String KEY_PAYMENT = "payment";
 	public final static String KEY_REFUND = "refund";
 	public final static String KEY_DISCOUNT = "discount";

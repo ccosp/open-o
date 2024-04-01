@@ -34,7 +34,7 @@ import org.oscarehr.rx.dispensary.LotBean;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DrugProductDao extends AbstractDao<DrugProduct>{
+public class DrugProductDao extends AbstractDaoImpl<DrugProduct>{
 
 	public DrugProductDao() {
 		super(DrugProduct.class);

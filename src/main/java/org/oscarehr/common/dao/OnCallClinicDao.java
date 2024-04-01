@@ -31,7 +31,7 @@ import org.oscarehr.common.model.OnCallClinic;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OnCallClinicDao extends AbstractDao<OnCallClinic> {
+public class OnCallClinicDao extends AbstractDaoImpl<OnCallClinic> {
 
 	public OnCallClinicDao() {
 		super(OnCallClinic.class);

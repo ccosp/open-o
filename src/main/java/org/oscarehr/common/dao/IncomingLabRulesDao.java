@@ -34,7 +34,7 @@ import org.oscarehr.common.model.Provider;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IncomingLabRulesDao extends AbstractDao<IncomingLabRules>{
+public class IncomingLabRulesDao extends AbstractDaoImpl<IncomingLabRules>{
 
 	public IncomingLabRulesDao() {
 		super(IncomingLabRules.class);

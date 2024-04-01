@@ -35,7 +35,7 @@ import org.oscarehr.common.model.ProfessionalContact;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProfessionalContactDao extends AbstractDao<ProfessionalContact> {
+public class ProfessionalContactDao extends AbstractDaoImpl<ProfessionalContact> {
 
 	public ProfessionalContactDao() {
 		super(ProfessionalContact.class);

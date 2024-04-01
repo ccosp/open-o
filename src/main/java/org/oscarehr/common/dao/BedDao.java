@@ -34,7 +34,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BedDao extends AbstractDao<Bed>{
+public class BedDao extends AbstractDaoImpl<Bed>{
 	
 	private Logger log = MiscUtils.getLogger();
 

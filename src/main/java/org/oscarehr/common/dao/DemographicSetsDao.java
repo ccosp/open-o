@@ -34,7 +34,7 @@ import org.oscarehr.common.model.DemographicSets;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicSetsDao extends AbstractDao<DemographicSets>{
+public class DemographicSetsDao extends AbstractDaoImpl<DemographicSets>{
 
 	public DemographicSetsDao() {
 		super(DemographicSets.class);

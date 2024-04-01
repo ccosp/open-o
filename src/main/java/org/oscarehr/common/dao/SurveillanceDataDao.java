@@ -35,7 +35,7 @@ import org.oscarehr.common.model.SurveillanceData;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SurveillanceDataDao extends AbstractDao<SurveillanceData> {
+public class SurveillanceDataDao extends AbstractDaoImpl<SurveillanceData> {
 
 	public SurveillanceDataDao() {
 		super(SurveillanceData.class);

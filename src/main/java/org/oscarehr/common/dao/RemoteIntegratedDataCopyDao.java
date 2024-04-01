@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class RemoteIntegratedDataCopyDao extends AbstractDao<RemoteIntegratedDataCopy> {
+public class RemoteIntegratedDataCopyDao extends AbstractDaoImpl<RemoteIntegratedDataCopy> {
 
 	public RemoteIntegratedDataCopyDao() {
 		super(RemoteIntegratedDataCopy.class);

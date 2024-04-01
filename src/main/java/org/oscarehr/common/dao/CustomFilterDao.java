@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class CustomFilterDao extends AbstractDao<CustomFilter>{
+public class CustomFilterDao extends AbstractDaoImpl<CustomFilter>{
 
 	public CustomFilterDao() {
 		super(CustomFilter.class);

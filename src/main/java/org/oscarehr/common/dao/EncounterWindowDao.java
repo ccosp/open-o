@@ -29,7 +29,7 @@ import org.oscarehr.common.model.EncounterWindow;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EncounterWindowDao extends AbstractDao<EncounterWindow>{
+public class EncounterWindowDao extends AbstractDaoImpl<EncounterWindow>{
 
 	public EncounterWindowDao() {
 		super(EncounterWindow.class);

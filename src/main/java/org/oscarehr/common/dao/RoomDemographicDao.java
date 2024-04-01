@@ -34,7 +34,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RoomDemographicDao extends AbstractDao<RoomDemographic>{
+public class RoomDemographicDao extends AbstractDaoImpl<RoomDemographic>{
 
 	private Logger log = MiscUtils.getLogger();
 

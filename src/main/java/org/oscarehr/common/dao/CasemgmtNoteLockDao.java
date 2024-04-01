@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CasemgmtNoteLock;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CasemgmtNoteLockDao extends AbstractDao<CasemgmtNoteLock> {
+public class CasemgmtNoteLockDao extends AbstractDaoImpl<CasemgmtNoteLock> {
 	public CasemgmtNoteLockDao() {
 		super(CasemgmtNoteLock.class);
 	}

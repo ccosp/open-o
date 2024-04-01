@@ -37,7 +37,7 @@ import oscar.util.ConversionUtils;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingDao extends AbstractDao<Billing> {
+public class BillingDao extends AbstractDaoImpl<Billing> {
 
 	public BillingDao() {
 		super(Billing.class);

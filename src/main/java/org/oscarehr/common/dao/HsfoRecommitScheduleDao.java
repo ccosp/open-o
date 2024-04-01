@@ -27,7 +27,7 @@ import org.oscarehr.common.model.HsfoRecommitSchedule;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HsfoRecommitScheduleDao extends AbstractDao<HsfoRecommitSchedule>{
+public class HsfoRecommitScheduleDao extends AbstractDaoImpl<HsfoRecommitSchedule>{
 
 	public HsfoRecommitScheduleDao() {
 		super(HsfoRecommitSchedule.class);

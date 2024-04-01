@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class ProviderSiteDao extends AbstractDao<ProviderSite>{
+public class ProviderSiteDao extends AbstractDaoImpl<ProviderSite>{
 
 	public ProviderSiteDao() {
 		super(ProviderSite.class);

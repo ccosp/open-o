@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CaisiAccessType;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CaisiAccessTypeDao extends AbstractDao<CaisiAccessType>{
+public class CaisiAccessTypeDao extends AbstractDaoImpl<CaisiAccessType>{
 
 	public CaisiAccessTypeDao() {
 		super(CaisiAccessType.class);

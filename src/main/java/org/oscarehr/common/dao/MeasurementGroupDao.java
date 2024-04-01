@@ -36,7 +36,7 @@ import oscar.OscarProperties;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class MeasurementGroupDao extends AbstractDao<MeasurementGroup>{
+public class MeasurementGroupDao extends AbstractDaoImpl<MeasurementGroup>{
 
 	public MeasurementGroupDao() {
 		super(MeasurementGroup.class);

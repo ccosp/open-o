@@ -30,7 +30,7 @@ import org.oscarehr.common.model.IndivoDocs;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class IndivoDocsDao extends AbstractDao<IndivoDocs> {
+public class IndivoDocsDao extends AbstractDaoImpl<IndivoDocs> {
 
 	public IndivoDocsDao() {
 		super(IndivoDocs.class);

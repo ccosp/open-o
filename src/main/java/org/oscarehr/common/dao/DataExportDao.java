@@ -33,7 +33,7 @@ import org.oscarehr.common.model.DataExport;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DataExportDao extends AbstractDao<DataExport> {
+public class DataExportDao extends AbstractDaoImpl<DataExport> {
 	
 	public static final String ROURKE = "Rourke";
 	public static final String CIHI_OMD4 = "CIHI_OMD4";

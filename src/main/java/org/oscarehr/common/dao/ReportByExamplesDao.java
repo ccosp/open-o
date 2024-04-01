@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class ReportByExamplesDao extends AbstractDao<ReportByExamples> {
+public class ReportByExamplesDao extends AbstractDaoImpl<ReportByExamples> {
 
 	public ReportByExamplesDao() {
 		super(ReportByExamples.class);

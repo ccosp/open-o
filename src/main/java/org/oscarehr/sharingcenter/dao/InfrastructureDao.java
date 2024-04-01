@@ -27,12 +27,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.sharingcenter.model.InfrastructureDataObject;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class InfrastructureDao extends AbstractDao<InfrastructureDataObject> {
+public class InfrastructureDao extends AbstractDaoImpl<InfrastructureDataObject> {
 
     public InfrastructureDao() {
         super(InfrastructureDataObject.class);

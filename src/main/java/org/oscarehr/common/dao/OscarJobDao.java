@@ -32,7 +32,7 @@ import org.oscarehr.common.model.OscarJobType;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OscarJobDao extends AbstractDao<OscarJob> {
+public class OscarJobDao extends AbstractDaoImpl<OscarJob> {
 
 	public OscarJobDao() {
 		super(OscarJob.class);

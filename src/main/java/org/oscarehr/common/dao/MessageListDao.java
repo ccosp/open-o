@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class MessageListDao extends AbstractDao<MessageList> {
+public class MessageListDao extends AbstractDaoImpl<MessageList> {
 
 	public MessageListDao() {
 		super(MessageList.class);

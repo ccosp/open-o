@@ -36,7 +36,7 @@ import org.springframework.stereotype.Repository;
 import oscar.util.ConversionUtils;
 
 @Repository
-public class ProviderDataDao extends AbstractDao<ProviderData> {
+public class ProviderDataDao extends AbstractDaoImpl<ProviderData> {
 
 	private static final String ACTIVE_WHERE_CLAUSE = " p.status = '1'";
 

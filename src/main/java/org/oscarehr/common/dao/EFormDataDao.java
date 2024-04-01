@@ -40,7 +40,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EFormDataDao extends AbstractDao<EFormData> {
+public class EFormDataDao extends AbstractDaoImpl<EFormData> {
 
 	private static final Logger logger = MiscUtils.getLogger();
 

@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class Billing3rdPartyAddressDao extends AbstractDao<Billing3rdPartyAddress>{
+public class Billing3rdPartyAddressDao extends AbstractDaoImpl<Billing3rdPartyAddress>{
 
 	public Billing3rdPartyAddressDao() {
 		super(Billing3rdPartyAddress.class);

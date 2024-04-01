@@ -29,7 +29,7 @@ import org.oscarehr.common.model.DocumentStorage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DocumentStorageDao extends AbstractDao<DocumentStorage> {
+public class DocumentStorageDao extends AbstractDaoImpl<DocumentStorage> {
 
 	public DocumentStorageDao() {
 		super(DocumentStorage.class);

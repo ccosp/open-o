@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Collections;
 
 @Repository
-public class ConsentTypeDao extends AbstractDao<ConsentType>{
+public class ConsentTypeDao extends AbstractDaoImpl<ConsentType>{
 
 	protected ConsentTypeDao() {
 		super(ConsentType.class);

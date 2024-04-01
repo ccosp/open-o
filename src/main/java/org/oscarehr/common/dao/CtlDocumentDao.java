@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CtlDocument;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CtlDocumentDao extends AbstractDao<CtlDocument>{
+public class CtlDocumentDao extends AbstractDaoImpl<CtlDocument>{
 
 	public CtlDocumentDao() {
 		super(CtlDocument.class);

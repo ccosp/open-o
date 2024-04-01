@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.OcanStaffForm;
 
 @Repository
-public class OcanStaffFormDao extends AbstractDao<OcanStaffForm> {
+public class OcanStaffFormDao extends AbstractDaoImpl<OcanStaffForm> {
 
 	public OcanStaffFormDao() {
 		super(OcanStaffForm.class);

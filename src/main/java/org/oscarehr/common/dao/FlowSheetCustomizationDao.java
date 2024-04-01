@@ -33,7 +33,7 @@ import org.oscarehr.common.model.FlowSheetCustomization;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FlowSheetCustomizationDao extends AbstractDao<FlowSheetCustomization>{
+public class FlowSheetCustomizationDao extends AbstractDaoImpl<FlowSheetCustomization>{
 
 	public FlowSheetCustomizationDao() {
 		super(FlowSheetCustomization.class);

@@ -36,7 +36,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ContactDao extends AbstractDao<Contact> {
+public class ContactDao extends AbstractDaoImpl<Contact> {
 
 	public ContactDao() {
 		super(Contact.class);

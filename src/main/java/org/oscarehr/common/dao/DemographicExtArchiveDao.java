@@ -33,7 +33,7 @@ import org.oscarehr.common.model.DemographicExtArchive;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicExtArchiveDao extends AbstractDao<DemographicExtArchive> {
+public class DemographicExtArchiveDao extends AbstractDaoImpl<DemographicExtArchive> {
 
 	public DemographicExtArchiveDao() {
 		super(DemographicExtArchive.class);

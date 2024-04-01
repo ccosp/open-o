@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 
 @Repository
-public class LookupListItemDao extends AbstractDao<LookupListItem> {
+public class LookupListItemDao extends AbstractDaoImpl<LookupListItem> {
 
 	public LookupListItemDao() {
 		super(LookupListItem.class);

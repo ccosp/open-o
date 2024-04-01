@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CVCMedicationGTIN;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CVCMedicationGTINDao extends AbstractDao<CVCMedicationGTIN>{
+public class CVCMedicationGTINDao extends AbstractDaoImpl<CVCMedicationGTIN>{
 
 	public CVCMedicationGTINDao() {
 		super(CVCMedicationGTIN.class);

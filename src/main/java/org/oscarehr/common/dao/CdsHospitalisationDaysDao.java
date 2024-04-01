@@ -30,7 +30,7 @@ import org.oscarehr.common.model.CdsHospitalisationDays;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CdsHospitalisationDaysDao extends AbstractDao<CdsHospitalisationDays> {
+public class CdsHospitalisationDaysDao extends AbstractDaoImpl<CdsHospitalisationDays> {
 
 	public CdsHospitalisationDaysDao() {
 		super(CdsHospitalisationDays.class);

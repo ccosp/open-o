@@ -19,7 +19,7 @@ import java.util.List;
 @Repository
 @Transactional
 @SuppressWarnings("unchecked")
-public class ReadLabDao extends AbstractDao<ReadLab> {
+public class ReadLabDao extends AbstractDaoImpl<ReadLab> {
 
 	public ReadLabDao() {
 		super(ReadLab.class);

@@ -29,11 +29,11 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.VacancyTemplate;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class VacancyTemplateDao extends AbstractDao<VacancyTemplate> {
+public class VacancyTemplateDao extends AbstractDaoImpl<VacancyTemplate> {
 
 	public VacancyTemplateDao() {
 		super(VacancyTemplate.class);

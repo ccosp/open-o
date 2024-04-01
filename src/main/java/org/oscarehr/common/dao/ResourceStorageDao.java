@@ -34,7 +34,7 @@ import org.oscarehr.common.model.ResourceStorage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ResourceStorageDao extends AbstractDao<ResourceStorage> {
+public class ResourceStorageDao extends AbstractDaoImpl<ResourceStorage> {
 
 	public ResourceStorageDao() {
 		super(ResourceStorage.class);

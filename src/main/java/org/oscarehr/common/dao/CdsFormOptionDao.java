@@ -30,7 +30,7 @@ import org.oscarehr.common.model.CdsFormOption;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CdsFormOptionDao extends AbstractDao<CdsFormOption> {
+public class CdsFormOptionDao extends AbstractDaoImpl<CdsFormOption> {
 
 	public CdsFormOptionDao() {
 		super(CdsFormOption.class);

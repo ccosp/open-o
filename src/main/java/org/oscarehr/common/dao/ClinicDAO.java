@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
  * @author Jason Gallagher
  */
 @Repository
-public class ClinicDAO extends AbstractDao<Clinic> {
+public class ClinicDAO extends AbstractDaoImpl<Clinic> {
 
     public ClinicDAO() {
     	super(Clinic.class);

@@ -33,7 +33,7 @@ import org.oscarehr.common.model.ReportTableFieldCaption;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReportTableFieldCaptionDao extends AbstractDao<ReportTableFieldCaption>{
+public class ReportTableFieldCaptionDao extends AbstractDaoImpl<ReportTableFieldCaption>{
 
 	public ReportTableFieldCaptionDao() {
 		super(ReportTableFieldCaption.class);

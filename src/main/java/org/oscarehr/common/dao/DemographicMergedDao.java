@@ -31,7 +31,7 @@ import org.oscarehr.common.model.DemographicMerged;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DemographicMergedDao extends AbstractDao<DemographicMerged> {
+public class DemographicMergedDao extends AbstractDaoImpl<DemographicMerged> {
 
 	public DemographicMergedDao() {
 		super(DemographicMerged.class);

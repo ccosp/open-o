@@ -32,7 +32,7 @@ import org.oscarehr.common.model.ScratchPad;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ScratchPadDao extends AbstractDao<ScratchPad> {
+public class ScratchPadDao extends AbstractDaoImpl<ScratchPad> {
 
 	public ScratchPadDao() {
 		super(ScratchPad.class);

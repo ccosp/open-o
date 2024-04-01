@@ -29,7 +29,7 @@ import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.AppointmentType;
 
 @Repository
-public class AppointmentTypeDao extends AbstractDao<AppointmentType>{
+public class AppointmentTypeDao extends AbstractDaoImpl<AppointmentType>{
 	
 	public AppointmentTypeDao() {
 		super(AppointmentType.class);

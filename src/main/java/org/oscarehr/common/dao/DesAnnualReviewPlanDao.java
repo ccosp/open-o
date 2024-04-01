@@ -33,7 +33,7 @@ import org.oscarehr.common.model.DesAnnualReviewPlan;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DesAnnualReviewPlanDao extends AbstractDao<DesAnnualReviewPlan>{
+public class DesAnnualReviewPlanDao extends AbstractDaoImpl<DesAnnualReviewPlan>{
 
 	public DesAnnualReviewPlanDao() {
 		super(DesAnnualReviewPlan.class);

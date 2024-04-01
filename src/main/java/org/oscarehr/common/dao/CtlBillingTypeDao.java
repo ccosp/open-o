@@ -33,7 +33,7 @@ import org.oscarehr.common.model.CtlBillingType;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CtlBillingTypeDao extends AbstractDao<CtlBillingType>{
+public class CtlBillingTypeDao extends AbstractDaoImpl<CtlBillingType>{
 
 	public CtlBillingTypeDao() {
 		super(CtlBillingType.class);

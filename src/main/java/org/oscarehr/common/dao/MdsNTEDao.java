@@ -29,7 +29,7 @@ import org.oscarehr.common.model.MdsNTE;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MdsNTEDao extends AbstractDao<MdsNTE>{
+public class MdsNTEDao extends AbstractDaoImpl<MdsNTE>{
 
 	public MdsNTEDao() {
 		super(MdsNTE.class);

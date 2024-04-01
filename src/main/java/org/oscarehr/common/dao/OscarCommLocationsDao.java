@@ -34,7 +34,7 @@ import org.oscarehr.common.model.OscarCommLocations;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OscarCommLocationsDao extends AbstractDao<OscarCommLocations>{
+public class OscarCommLocationsDao extends AbstractDaoImpl<OscarCommLocations>{
 
 	public OscarCommLocationsDao() {
 		super(OscarCommLocations.class);

@@ -29,11 +29,11 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.Criteria;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CriteriaDao extends AbstractDao<Criteria> {
+public class CriteriaDao extends AbstractDaoImpl<Criteria> {
 
 	public CriteriaDao() {
 		super(Criteria.class);

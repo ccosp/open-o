@@ -31,7 +31,7 @@ import org.oscarehr.common.model.CaisiForm;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CaisiFormDao extends AbstractDao<CaisiForm>{
+public class CaisiFormDao extends AbstractDaoImpl<CaisiForm>{
 
 	public CaisiFormDao() {
 		super(CaisiForm.class);

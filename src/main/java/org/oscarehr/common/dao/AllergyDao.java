@@ -31,7 +31,7 @@ import javax.persistence.Query;
 
 import org.oscarehr.common.model.Allergy;
 
-public class AllergyDao extends AbstractDao<Allergy> {
+public class AllergyDao extends AbstractDaoImpl<Allergy> {
 
 	public AllergyDao() {
 		super(Allergy.class);

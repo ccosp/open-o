@@ -41,7 +41,7 @@ import oscar.util.UtilDateUtilities;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class BillingServiceDao extends AbstractDao<BillingService> {
+public class BillingServiceDao extends AbstractDaoImpl<BillingService> {
 	static public final String BC = "BC";
 
 	public BillingServiceDao() {

@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 import oscar.util.ConversionUtils;
 
 @Repository
-public class RelationshipsDao extends AbstractDao<Relationships> {
+public class RelationshipsDao extends AbstractDaoImpl<Relationships> {
 
 	public RelationshipsDao() {
 		super(Relationships.class);

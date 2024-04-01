@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
  * @author Jason Gallagher
  */
 @Repository
-public class OtherIdDAO extends AbstractDao<OtherId> {
+public class OtherIdDAO extends AbstractDaoImpl<OtherId> {
 
 	/** Creates a new instance of UserPropertyDAO */
 	public OtherIdDAO() {

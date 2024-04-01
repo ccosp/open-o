@@ -30,7 +30,7 @@ import org.oscarehr.common.model.FunctionalCentre;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FunctionalCentreDao extends AbstractDao<FunctionalCentre> {
+public class FunctionalCentreDao extends AbstractDaoImpl<FunctionalCentre> {
 
     public FunctionalCentreDao() {
         super(FunctionalCentre.class);

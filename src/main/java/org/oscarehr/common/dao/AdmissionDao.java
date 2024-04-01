@@ -39,7 +39,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AdmissionDao extends AbstractDao<Admission> {
+public class AdmissionDao extends AbstractDaoImpl<Admission> {
 
 	public AdmissionDao() {
 		super(Admission.class);

@@ -31,7 +31,7 @@ import org.oscarehr.common.model.OLISResults;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OLISResultsDao extends AbstractDao<OLISResults>{
+public class OLISResultsDao extends AbstractDaoImpl<OLISResults>{
 
 	public OLISResultsDao() {
 		super(OLISResults.class);

@@ -41,7 +41,7 @@ import org.oscarehr.util.SpringUtils;
  * @author mweston4
  */
 @Repository
-public class BillingONRepoDao extends AbstractDao<BillingONRepo>{
+public class BillingONRepoDao extends AbstractDaoImpl<BillingONRepo>{
     
     public BillingONRepoDao() {
         super(BillingONRepo.class);        

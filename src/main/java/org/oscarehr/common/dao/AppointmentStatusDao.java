@@ -32,7 +32,7 @@ import org.oscarehr.common.model.AppointmentStatus;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppointmentStatusDao extends AbstractDao<AppointmentStatus> {
+public class AppointmentStatusDao extends AbstractDaoImpl<AppointmentStatus> {
 
 	public AppointmentStatusDao() {
 		super(AppointmentStatus.class);

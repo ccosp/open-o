@@ -30,7 +30,7 @@ import org.oscarehr.common.model.Facility;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FacilityDao extends AbstractDao<Facility> {
+public class FacilityDao extends AbstractDaoImpl<Facility> {
 
 	public FacilityDao() {
 		super(Facility.class);

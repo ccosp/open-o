@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 
 @Repository
-public class PHRVerificationDao extends AbstractDao<PHRVerification> {
+public class PHRVerificationDao extends AbstractDaoImpl<PHRVerification> {
 
 	public PHRVerificationDao() {
 		super(PHRVerification.class);

@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 @SuppressWarnings("unchecked")
-public class ProviderLabRoutingDao extends AbstractDao<ProviderLabRoutingModel> {
+public class ProviderLabRoutingDao extends AbstractDaoImpl<ProviderLabRoutingModel> {
 
 	public enum LAB_TYPE{ DOC, HL7 }
 	public enum STATUS{ X, N, A, D}

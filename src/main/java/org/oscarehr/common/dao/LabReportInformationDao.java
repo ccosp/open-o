@@ -32,7 +32,7 @@ import org.oscarehr.common.model.LabReportInformation;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LabReportInformationDao extends AbstractDao<LabReportInformation> {
+public class LabReportInformationDao extends AbstractDaoImpl<LabReportInformation> {
 
 	public LabReportInformationDao() {
 		super(LabReportInformation.class);

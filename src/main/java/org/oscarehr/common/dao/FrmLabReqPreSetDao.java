@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
  * @author mweston4
  */
 @Repository
-public class FrmLabReqPreSetDao extends AbstractDao<FrmLabReqPreSet>{
+public class FrmLabReqPreSetDao extends AbstractDaoImpl<FrmLabReqPreSet>{
       
     public FrmLabReqPreSetDao() {
         super(FrmLabReqPreSet.class);	

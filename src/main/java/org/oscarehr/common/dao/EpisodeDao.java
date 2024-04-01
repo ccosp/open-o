@@ -32,7 +32,7 @@ import org.oscarehr.common.model.Episode;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EpisodeDao extends AbstractDao<Episode>{
+public class EpisodeDao extends AbstractDaoImpl<Episode>{
 
 	public EpisodeDao() {
 		super(Episode.class);

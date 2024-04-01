@@ -29,7 +29,7 @@ import org.oscarehr.common.model.ProgramAccessRoles;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProgramAccessRolesDao extends AbstractDao<ProgramAccessRoles> {
+public class ProgramAccessRolesDao extends AbstractDaoImpl<ProgramAccessRoles> {
 
 	public ProgramAccessRolesDao() {
 		super(ProgramAccessRoles.class);

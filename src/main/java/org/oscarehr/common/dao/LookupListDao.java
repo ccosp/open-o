@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class LookupListDao extends AbstractDao<LookupList>{
+public class LookupListDao extends AbstractDaoImpl<LookupList>{
 
 	public LookupListDao() {
 		super(LookupList.class);

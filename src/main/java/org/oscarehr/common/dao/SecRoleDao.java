@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class SecRoleDao extends AbstractDao<SecRole> {
+public class SecRoleDao extends AbstractDaoImpl<SecRole> {
 
 	public SecRoleDao() {
 		super(SecRole.class);

@@ -47,7 +47,7 @@ import oscar.OscarProperties;
 
 
 @Repository
-public class Hl7TextInfoDao extends AbstractDao<Hl7TextInfo> {
+public class Hl7TextInfoDao extends AbstractDaoImpl<Hl7TextInfo> {
 
 	public Hl7TextInfoDao() {
 		super(Hl7TextInfo.class);

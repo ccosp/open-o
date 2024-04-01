@@ -41,7 +41,7 @@ import org.springframework.stereotype.Repository;
  * @author Victor Weng
  */
 @Repository
-public class SiteDao extends AbstractDao<Site> {
+public class SiteDao extends AbstractDaoImpl<Site> {
 
 	/** Creates a new instance of UserPropertyDAO */
 	public SiteDao() {

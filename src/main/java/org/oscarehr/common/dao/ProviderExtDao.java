@@ -27,7 +27,7 @@ import org.oscarehr.casemgmt.model.ProviderExt;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProviderExtDao extends AbstractDao<ProviderExt>{
+public class ProviderExtDao extends AbstractDaoImpl<ProviderExt>{
 
 	public ProviderExtDao() {
 		super(ProviderExt.class);

@@ -31,7 +31,7 @@ import org.oscarehr.common.model.DocumentExtraReviewer;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DocumentExtraReviewerDao  extends AbstractDao<DocumentExtraReviewer>  {
+public class DocumentExtraReviewerDao  extends AbstractDaoImpl<DocumentExtraReviewer>  {
 
 	public DocumentExtraReviewerDao() {
 		super(DocumentExtraReviewer.class);

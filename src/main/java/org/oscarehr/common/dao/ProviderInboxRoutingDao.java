@@ -41,7 +41,7 @@ import oscar.oscarLab.ca.on.CommonLabResultData;
  * @author jay gallagher
  */
 @Repository
-public class ProviderInboxRoutingDao extends AbstractDao<ProviderInboxItem> {
+public class ProviderInboxRoutingDao extends AbstractDaoImpl<ProviderInboxItem> {
 
 	public ProviderInboxRoutingDao() {
 		super(ProviderInboxItem.class);

@@ -29,7 +29,7 @@ import org.oscarehr.common.model.FaxConfig;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FaxConfigDao extends AbstractDao<FaxConfig> {
+public class FaxConfigDao extends AbstractDaoImpl<FaxConfig> {
 
 	public FaxConfigDao() {		
     	super(FaxConfig.class);

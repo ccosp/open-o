@@ -31,7 +31,7 @@ import org.oscarehr.common.model.ORNPreImplementationReportLog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ORNPreImplementationReportLogDao extends AbstractDao<ORNPreImplementationReportLog> {
+public class ORNPreImplementationReportLogDao extends AbstractDaoImpl<ORNPreImplementationReportLog> {
 
 	public ORNPreImplementationReportLogDao() {
 		super(ORNPreImplementationReportLog.class);

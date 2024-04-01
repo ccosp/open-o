@@ -31,7 +31,7 @@ import org.oscarehr.common.model.IntegratorControl;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 @Repository
-public class IntegratorControlDao extends AbstractDao<IntegratorControl> {
+public class IntegratorControlDao extends AbstractDaoImpl<IntegratorControl> {
 
 	public static final String REMOVE_DEMO_ID_CTRL = "RemoveDemographicIdentity";
     public static final String UPDATE_INTERVAL_CTRL = "UpdateInterval";

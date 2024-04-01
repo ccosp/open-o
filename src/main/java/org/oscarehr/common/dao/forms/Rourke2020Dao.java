@@ -25,7 +25,7 @@
 
 package org.oscarehr.common.dao.forms;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Repository;
 import oscar.form.model.FormBooleanValue;
@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Repository
-public class Rourke2020Dao extends AbstractDao<FormRourke2020> {
+public class Rourke2020Dao extends AbstractDaoImpl<FormRourke2020> {
 
     public Rourke2020Dao() {
         super(FormRourke2020.class);

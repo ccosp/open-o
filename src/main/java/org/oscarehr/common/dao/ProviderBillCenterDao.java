@@ -29,7 +29,7 @@ import org.oscarehr.common.model.ProviderBillCenter;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProviderBillCenterDao extends AbstractDao<ProviderBillCenter>{
+public class ProviderBillCenterDao extends AbstractDaoImpl<ProviderBillCenter>{
 
 	public ProviderBillCenterDao() {
 		super(ProviderBillCenter.class);

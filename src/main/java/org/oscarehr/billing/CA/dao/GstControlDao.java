@@ -29,7 +29,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.billing.CA.model.GstControl;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
  * @author rjonasz
  */
 @Repository
-public class GstControlDao extends AbstractDao<GstControl> {
+public class GstControlDao extends AbstractDaoImpl<GstControl> {
 
     public GstControlDao() {
         super(GstControl.class);

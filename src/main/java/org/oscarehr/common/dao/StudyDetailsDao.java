@@ -33,7 +33,7 @@ import org.oscarehr.common.model.StudyDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class StudyDetailsDao extends AbstractDao<StudyDetails>{
+public class StudyDetailsDao extends AbstractDaoImpl<StudyDetails>{
 
 	public StudyDetailsDao() {
 		super(StudyDetails.class);

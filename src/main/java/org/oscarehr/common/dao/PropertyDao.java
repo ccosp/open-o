@@ -34,7 +34,7 @@ import org.oscarehr.common.model.Property;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PropertyDao extends AbstractDao<Property> {
+public class PropertyDao extends AbstractDaoImpl<Property> {
 
 	public PropertyDao() {
 		super(Property.class);

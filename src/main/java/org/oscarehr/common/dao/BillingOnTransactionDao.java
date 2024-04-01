@@ -39,7 +39,7 @@ import oscar.oscarBilling.ca.on.data.BillingDataHlp;
 import org.oscarehr.common.model.BillingONItem;
 
 @Repository
-public class BillingOnTransactionDao extends AbstractDao<BillingOnTransaction> {
+public class BillingOnTransactionDao extends AbstractDaoImpl<BillingOnTransaction> {
 	
 	public BillingOnTransactionDao() {
         super(BillingOnTransaction.class);

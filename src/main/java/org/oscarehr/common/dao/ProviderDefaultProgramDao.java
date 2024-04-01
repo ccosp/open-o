@@ -36,7 +36,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProviderDefaultProgramDao extends AbstractDao<ProviderDefaultProgram>{
+public class ProviderDefaultProgramDao extends AbstractDaoImpl<ProviderDefaultProgram>{
 
 	public ProviderDefaultProgramDao() {
 		super(ProviderDefaultProgram.class);

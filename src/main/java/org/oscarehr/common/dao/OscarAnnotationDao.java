@@ -34,7 +34,7 @@ import org.oscarehr.common.model.OscarAnnotation;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OscarAnnotationDao extends AbstractDao<OscarAnnotation>{
+public class OscarAnnotationDao extends AbstractDaoImpl<OscarAnnotation>{
 
 	public OscarAnnotationDao() {
 		super(OscarAnnotation.class);

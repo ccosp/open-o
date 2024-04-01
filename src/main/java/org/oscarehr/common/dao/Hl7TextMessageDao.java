@@ -34,7 +34,7 @@ import org.oscarehr.common.model.Hl7TextMessage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class Hl7TextMessageDao extends AbstractDao<Hl7TextMessage> {
+public class Hl7TextMessageDao extends AbstractDaoImpl<Hl7TextMessage> {
 
 	public Hl7TextMessageDao() {
 		super(Hl7TextMessage.class);

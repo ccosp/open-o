@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class RaHeaderDao extends AbstractDao<RaHeader>{
+public class RaHeaderDao extends AbstractDaoImpl<RaHeader>{
 
 	public RaHeaderDao() {
 		super(RaHeader.class);
