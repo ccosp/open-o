@@ -32,52 +32,15 @@ import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.common.model.DemographicExtArchive;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class DemographicExtArchiveDao extends AbstractDaoImpl<DemographicExtArchive> {
+public interface DemographicExtArchiveDao extends AbstractDao<DemographicExtArchive> {
 
-	public DemographicExtArchiveDao() {
-		super(DemographicExtArchive.class);
-	}
+	public List<DemographicExtArchive> getDemographicExtArchiveByDemoAndKey(Integer demographicNo, String key);
 
-	public List<DemographicExtArchive> getDemographicExtArchiveByDemoAndKey(Integer demographicNo, String key) {
-		Query query = entityManager.createQuery("SELECT d from DemographicExtArchive d where d.demographicNo=? and d.key = ? order by d.dateCreated DESC");
-		query.setParameter(1, demographicNo);
-		query.setParameter(2, key);
+	public DemographicExtArchive getDemographicExtArchiveByArchiveIdAndKey(Long archiveId, String key);
 
-		@SuppressWarnings("unchecked")
-		List<DemographicExtArchive> results = query.getResultList();
-		return results;
-	}
+	public List<DemographicExtArchive> getDemographicExtArchiveByArchiveId(Long archiveId);
 
-	public DemographicExtArchive getDemographicExtArchiveByArchiveIdAndKey(Long archiveId, String key) {
-		Query query = entityManager.createQuery("SELECT d from DemographicExtArchive d where d.archiveId=? and d.key = ? order by d.dateCreated DESC");
-		query.setParameter(1, archiveId);
-		query.setParameter(2, key);
+	public List<DemographicExtArchive> getDemographicExtArchiveByDemoReverseCronological(Integer demographicNo);
 
-		return this.getSingleResultOrNull(query);
-	}
-	
-	public List<DemographicExtArchive> getDemographicExtArchiveByArchiveId(Long archiveId) {
-		Query query = entityManager.createQuery("SELECT d from DemographicExtArchive d where d.archiveId=?");
-		query.setParameter(1, archiveId);
-		
-		@SuppressWarnings("unchecked")
-		List<DemographicExtArchive> results = query.getResultList();
-		return results;
-	}
-	
-	public List<DemographicExtArchive> getDemographicExtArchiveByDemoReverseCronological(Integer demographicNo) {
-		Query query = entityManager.createQuery("SELECT d from DemographicExtArchive d where d.demographicNo=? order by d.dateCreated ASC");
-		query.setParameter(1, demographicNo);
-		
-		@SuppressWarnings("unchecked")
-		List<DemographicExtArchive> results = query.getResultList();
-		return results;
-	}
-	
-	public Integer archiveDemographicExt(DemographicExt de) {
-		DemographicExtArchive dea = new DemographicExtArchive(de);
-		persist(dea);
-		return dea.getId();
-	}
+	public Integer archiveDemographicExt(DemographicExt de);
 }
