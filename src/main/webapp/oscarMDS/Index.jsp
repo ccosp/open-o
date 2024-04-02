@@ -470,6 +470,7 @@ String endDate = (String) request.getAttribute("endDate");
 
 		function updateListView() {
 			var query = getQuery();
+
 			if (page == 1) {
 				document.getElementById("docViews").innerHTML = "";
 				canLoad = true;
@@ -493,7 +494,7 @@ String endDate = (String) request.getAttribute("endDate");
 			}	
 			jQuery("#readerSwitcher").prop("disabled",true);
 			jQuery("#listSwitcher").prop("disabled",true);
-	
+
 			return new Ajax.Updater(div,url,{
 				method:'get',
 				parameters:query,
@@ -565,11 +566,11 @@ String endDate = (String) request.getAttribute("endDate");
 				}
 				break;
 			case CATEGORY_NORMAL:
-				query  += "&abnormalStatus=N";
+				query  += "&view=normal";
 				query  += "&fname=" + firstName + "&lname=" + lastName + "&hnum=" + hin;
 				break;
 			case CATEGORY_ABNORMAL:
-				query  += "&abnormalStatus=A";
+				query  += "&view=abnormal";
 				query  += "&fname=" + firstName + "&lname=" + lastName + "&hnum=" + hin;
 				break;
 			case CATEGORY_PATIENT:
