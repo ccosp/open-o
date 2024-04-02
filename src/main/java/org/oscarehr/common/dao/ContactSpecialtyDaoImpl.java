@@ -21,18 +21,34 @@
  * Hamilton
  * Ontario, Canada
  */
-
 package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import org.oscarehr.common.model.PHRVerification;
-import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
+import org.oscarehr.common.model.ContactSpecialty;
+import org.springframework.stereotype.Repository;
 
-public interface PHRVerificationDao extends AbstractDao<PHRVerification> {
+@Repository
+public class ContactSpecialtyDaoImpl extends AbstractDaoImpl<ContactSpecialty> implements ContactSpecialtyDao {
 
-    public PHRVerification findLatestByDemographicId(Integer demographicId);
+    protected ContactSpecialtyDaoImpl() {
+        super(ContactSpecialty.class);
+    }
 
-    public List<PHRVerification> findByDemographic(Integer demographicId, boolean active);
+    @Override
+    public List<ContactSpecialty> findAll() {
+        Query findAll = entityManager.createNamedQuery("ContactSpecialty.findAll");
+        List<ContactSpecialty> contactSpecialtyList = findAll.getResultList();
+        return contactSpecialtyList;
+    }
+
+    @Override
+    public ContactSpecialty findBySpecialty(String specialtyName) {
+        Query query = entityManager.createQuery("SELECT s FROM ContactSpecialty s WHERE s.specialty LIKE :SPECIALTY");
+        query.setParameter("SPECIALTY", specialtyName);
+        ContactSpecialty contactSpecialty = getSingleResultOrNull(query);
+        return contactSpecialty;
+    }
+
 }

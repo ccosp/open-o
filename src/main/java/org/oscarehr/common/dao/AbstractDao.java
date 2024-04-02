@@ -6,20 +6,36 @@ import org.oscarehr.common.model.AbstractModel;
 
 public interface AbstractDao<T extends AbstractModel<?>> {
     void merge(AbstractModel<?> o);
-    void persist(AbstractModel<?> o);
-    void batchPersist(List<AbstractModel<?>> oList);
-    void batchPersist(List<AbstractModel<?>> oList, int batchSize);
-    void remove(AbstractModel<?> o);
-    void batchRemove(List<AbstractModel<?>> oList);
-    void batchRemove(List<AbstractModel<?>> oList, int batchSize);
-    void refresh(AbstractModel<?> o);
-    T find(Object id);
-    boolean contains(AbstractModel<?> o);
-    List<T> findAll(Integer offset, Integer limit);
-    boolean remove(Object id);
-    int getCountAll();
-    List<Object[]> runNativeQuery(String sql);
-	T saveEntity(T entity);
-	Class<T> getModelClass();
-}
 
+    void persist(AbstractModel<?> o);
+
+    void batchPersist(List<AbstractModel<?>> oList);
+
+    void batchPersist(List<AbstractModel<?>> oList, int batchSize);
+
+    void remove(AbstractModel<?> o);
+
+    void batchRemove(List<AbstractModel<?>> oList);
+
+    void batchRemove(List<AbstractModel<?>> oList, int batchSize);
+
+    void refresh(AbstractModel<?> o);
+
+    T find(Object id);
+
+    T find(int id);
+
+    boolean contains(AbstractModel<?> o);
+
+    List<T> findAll(Integer offset, Integer limit);
+
+    boolean remove(Object id);
+
+    int getCountAll();
+
+    List<Object[]> runNativeQuery(String sql);
+
+    T saveEntity(T entity);
+
+    Class<T> getModelClass();
+}

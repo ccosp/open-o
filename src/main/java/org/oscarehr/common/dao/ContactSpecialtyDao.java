@@ -29,24 +29,9 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.ContactSpecialty;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class ContactSpecialtyDao extends AbstractDaoImpl<ContactSpecialty> {
+public interface ContactSpecialtyDao extends AbstractDao<ContactSpecialty> {
 
-	protected ContactSpecialtyDao() {
-	    super(ContactSpecialty.class);
-    }
+	public List<ContactSpecialty> findAll();
 
-	public List<ContactSpecialty> findAll() {
-		Query findAll = entityManager.createNamedQuery("ContactSpecialty.findAll");
-		List<ContactSpecialty> contactSpecialtyList = findAll.getResultList();		
-		return contactSpecialtyList;
-	}
-	
-	public ContactSpecialty findBySpecialty( String specialtyName ) {
-		Query query = entityManager.createQuery("SELECT s FROM ContactSpecialty s WHERE s.specialty LIKE :SPECIALTY");
-		query.setParameter("SPECIALTY", specialtyName);
-		ContactSpecialty contactSpecialty = getSingleResultOrNull(query);		
-		return contactSpecialty;
-	}
-
+	public ContactSpecialty findBySpecialty(String specialtyName);
 }

@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 import oscar.util.ParamAppender;
 
 @Transactional
-public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements AbstractDao<T>{
+public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements AbstractDao<T> {
 	public static final int MAX_LIST_RETURN_SIZE = 5000;
 
 	protected Class<T> modelClass;
@@ -58,24 +58,24 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 * aka update
 	 */
 	@Override
-     public void merge(AbstractModel<?> o) {
+	public void merge(AbstractModel<?> o) {
 		entityManager.merge(o);
 	}
 
 	/**
 	 * aka create
 	 */
-    @Override
+	@Override
 	public void persist(AbstractModel<?> o) {
 		entityManager.persist(o);
 	}
 
-    @Override
+	@Override
 	public void batchPersist(List<AbstractModel<?>> oList) {
 		batchPersist(oList, 25);
 	}
-	
-    @Override
+
+	@Override
 	public void batchPersist(List<AbstractModel<?>> oList, int batchSize) {
 		EntityManager batchEntityManager = null;
 		EntityTransaction transaction = null;
@@ -94,10 +94,14 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 			}
 			transaction.commit();
 		} catch (RuntimeException e) {
-			if (transaction != null && transaction.isActive()) { transaction.rollback(); }
+			if (transaction != null && transaction.isActive()) {
+				transaction.rollback();
+			}
 			throw e;
 		} finally {
-			if (batchEntityManager != null) { batchEntityManager.close(); }
+			if (batchEntityManager != null) {
+				batchEntityManager.close();
+			}
 		}
 	}
 
@@ -105,17 +109,17 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 * You can only remove attached instances.
 	 */
 	@Override
-     public void remove(AbstractModel<?> o) {
+	public void remove(AbstractModel<?> o) {
 		entityManager.remove(o);
 	}
 
 	@Override
-    public void batchRemove(List<AbstractModel<?>> oList) {
+	public void batchRemove(List<AbstractModel<?>> oList) {
 		batchRemove(oList, 25);
 	}
 
 	@Override
-    public void batchRemove(List<AbstractModel<?>> oList, int batchSize) {
+	public void batchRemove(List<AbstractModel<?>> oList, int batchSize) {
 		EntityManager batchEntityManager = null;
 		EntityTransaction transaction = null;
 		try {
@@ -129,17 +133,22 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 					transaction.commit();
 					transaction.begin();
 				}
-				// Gets the model and gets the reference to it so that it is attached to the new entity manager's session
+				// Gets the model and gets the reference to it so that it is attached to the new
+				// entity manager's session
 				AbstractModel<?> model = oList.get(i);
 				Object entity = batchEntityManager.getReference(model.getClass(), model.getId());
 				batchEntityManager.remove(entity);
 			}
 			transaction.commit();
 		} catch (RuntimeException e) {
-			if (transaction != null && transaction.isActive()) { transaction.rollback(); }
+			if (transaction != null && transaction.isActive()) {
+				transaction.rollback();
+			}
 			throw e;
 		} finally {
-			if (batchEntityManager != null) { batchEntityManager.close(); }
+			if (batchEntityManager != null) {
+				batchEntityManager.close();
+			}
 		}
 	}
 
@@ -147,35 +156,39 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 * You can only refresh attached instances.
 	 */
 	@Override
-     public void refresh(AbstractModel<?> o) {
+	public void refresh(AbstractModel<?> o) {
 		entityManager.refresh(o);
 	}
 
 	@Override
-    public T find(Object id) {
+	public T find(Object id) {
 		return (entityManager.find(modelClass, id));
 	}
-	
+
+	@Override
+	public T find(int id) {
+		return (entityManager.find(modelClass, id));
+	}
 
 	/**
 	 * Check if entity exists in the current transaction context.
 	 */
 	@Override
-     public boolean contains(AbstractModel<?> o) {
+	public boolean contains(AbstractModel<?> o) {
 		return entityManager.contains(o);
 	}
 
 	/**
-	 * Fetches all instances of the persistent class handled by this DAO. 
+	 * Fetches all instances of the persistent class handled by this DAO.
 	 * 
 	 * @return
-	 * 		Returns all instances available in the backend  
+	 *         Returns all instances available in the backend
 	 */
 	@Override
-     @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<T> findAll(Integer offset, Integer limit) {
 		Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName());
-		
+
 		if (offset != null && offset > 0) {
 			query.setFirstResult(offset);
 		}
@@ -185,23 +198,24 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 			throw new MaxSelectLimitExceededException(getMaxSelectSize(), limit);
 		}
 		query.setMaxResults(intLimit);
-		
+
 		return query.getResultList();
 	}
-	
-	protected int getMaxSelectSize() {
-	    return MAX_LIST_RETURN_SIZE;
-    }
 
-	/** Removes an entity based on the ID
+	protected int getMaxSelectSize() {
+		return MAX_LIST_RETURN_SIZE;
+	}
+
+	/**
+	 * Removes an entity based on the ID
 	 * 
 	 * @param id
-	 * 		ID of the entity to be removed
+	 *           ID of the entity to be removed
 	 * @return
-	 * 		Returns true if entity has been removed and false otherwise
+	 *         Returns true if entity has been removed and false otherwise
 	 */
 	@Override
-     public boolean remove(Object id) {
+	public boolean remove(Object id) {
 		T abstractModel = find(id);
 		if (abstractModel == null) {
 			return false;
@@ -216,26 +230,35 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 
 		@SuppressWarnings("unchecked")
 		List<T> results = query.getResultList();
-		if (results.size() == 1) return (results.get(0));
-		else if (results.size() == 0) return (null);
+		if (results.size() == 1)
+			return (results.get(0));
+		else if (results.size() == 0)
+			return (null);
 		// this should never happen if we set max results to 1 :)
-		else throw (new NonUniqueResultException("SingleResult requested but result was not unique : " + results.size()));
+		else
+			throw (new NonUniqueResultException(
+					"SingleResult requested but result was not unique : " + results.size()));
 	}
-	
+
 	protected Long getCountResult(Query query) {
 		query.setMaxResults(1);
 
 		@SuppressWarnings("unchecked")
 		List<Long> results = query.getResultList();
-		if (results.size() == 1) return (results.get(0));
-		else if (results.size() == 0) return (null);
+		if (results.size() == 1)
+			return (results.get(0));
+		else if (results.size() == 0)
+			return (null);
 		// this should never happen if we set max results to 1 :)
-		else throw (new NonUniqueResultException("SingleResult requested but result was not unique : " + results.size()));
+		else
+			throw (new NonUniqueResultException(
+					"SingleResult requested but result was not unique : " + results.size()));
 	}
 
 	@Override
-    public int getCountAll() {
-		// new JPA way of doing it, but our hibernate is too old or doesn't support primitives yet?
+	public int getCountAll() {
+		// new JPA way of doing it, but our hibernate is too old or doesn't support
+		// primitives yet?
 		// String sqlCommand="select count(*) from "+modelClass.getSimpleName();
 		// Query query = entityManager.createNativeQuery(sqlCommand, Integer.class);
 		// return((Integer)query.getSingleResult());
@@ -256,7 +279,9 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 * Gets base JPQL query for the model class.
 	 * 
 	 * @return
-	 * 		Returns the JPQL clause in the form of <code>"FROM {@link #getModelClassName()} AS e "</code>. <code>e</code> stands for "entity"
+	 *         Returns the JPQL clause in the form of
+	 *         <code>"FROM {@link #getModelClassName()} AS e "</code>.
+	 *         <code>e</code> stands for "entity"
 	 */
 	protected String getBaseQuery() {
 		return getBaseQueryBuf(null, null).toString();
@@ -267,14 +292,15 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	}
 
 	/**
-	 * Creates new string builder containing the base query with the specified select and alias strings
+	 * Creates new string builder containing the base query with the specified
+	 * select and alias strings
 	 * 
 	 * @param select
-	 * 		Select clause to be appended to the query. May be null
+	 *               Select clause to be appended to the query. May be null
 	 * @param alias
-	 * 		Alias to be used for referencing the base entity class
+	 *               Alias to be used for referencing the base entity class
 	 * @return
-	 * 		Returns the string buffer containing the base query 
+	 *         Returns the string buffer containing the base query
 	 */
 	protected StringBuilder getBaseQueryBuf(String select, String alias) {
 		StringBuilder buf = new StringBuilder();
@@ -284,12 +310,13 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 		}
 		buf.append("FROM ");
 		buf.append(getModelClassName());
-		if (alias != null) buf.append(" AS ").append(alias).append(" ");
+		if (alias != null)
+			buf.append(" AS ").append(alias).append(" ");
 		return buf;
 	}
 
 	@Override
-    public Class<T> getModelClass() {
+	public Class<T> getModelClass() {
 		return modelClass;
 	}
 
@@ -315,13 +342,13 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 * </pre>
 	 * 
 	 * @param select
-	 * 		Select clause to be included in the query 
+	 *                    Select clause to be included in the query
 	 * @param alias
-	 * 		Alias to be included in the query
+	 *                    Alias to be included in the query
 	 * @param whereClause
-	 * 		Where clause to be included in the query
+	 *                    Where clause to be included in the query
 	 * @return
-	 * 		Returns the query
+	 *         Returns the query
 	 */
 	protected Query createQuery(String select, String alias, String whereClause) {
 		StringBuilder buf = createQueryString(select, alias, whereClause);
@@ -329,16 +356,16 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	}
 
 	/**
-	 * Creates query string for the specified alias and where clause 
+	 * Creates query string for the specified alias and where clause
 	 * 
 	 * @param select
-	 * 		Select clause
+	 *                    Select clause
 	 * @param alias
-	 * 		Alias to be included in the query
+	 *                    Alias to be included in the query
 	 * @param whereClause
-	 * 		Where clause to be included in the query
+	 *                    Where clause to be included in the query
 	 * @return
-	 * 		Returns the query string
+	 *         Returns the query string
 	 * 
 	 * @see #createQuery(String, String)
 	 */
@@ -359,7 +386,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 * Gets name of the model class.
 	 * 
 	 * @return
-	 * 		Returns the class name without package prefix
+	 *         Returns the class name without package prefix
 	 */
 	protected String getModelClassName() {
 		return getModelClass().getSimpleName();
@@ -370,17 +397,20 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	}
 
 	/**
-	 * Saves or updates the entity based on depending if it's persistent, as determined by {@link AbstractModel#isPersistent()} 
+	 * Saves or updates the entity based on depending if it's persistent, as
+	 * determined by {@link AbstractModel#isPersistent()}
 	 * 
 	 * @param entity
-	 * 		Entity to be saved or updated
+	 *               Entity to be saved or updated
 	 * @return
-	 * 		Returns the entity
+	 *         Returns the entity
 	 */
 	@Override
-     public T saveEntity(T entity) {
-		if (entity.isPersistent()) merge(entity);
-		else persist(entity);
+	public T saveEntity(T entity) {
+		if (entity.isPersistent())
+			merge(entity);
+		else
+			persist(entity);
 		return entity;
 	}
 
@@ -388,12 +418,12 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 * Runs native SQL query.
 	 * 
 	 * @param sql
-	 * 		SQL query to run.
+	 *            SQL query to run.
 	 * @return
-	 * 		Returns list containing query results.
+	 *         Returns list containing query results.
 	 */
 	@Override
-     @SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Object[]> runNativeQuery(String sql) {
 		Query query = entityManager.createNativeQuery(sql);
 		List resultList = query.getResultList();
@@ -401,10 +431,10 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	}
 
 	/**
-	 * Gets parameter appender with default base query set 
+	 * Gets parameter appender with default base query set
 	 * 
 	 * @return
-	 * 		Returns new appender
+	 *         Returns new appender
 	 * 
 	 * @see #getBaseQuery()
 	 */
@@ -413,33 +443,31 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	}
 
 	/**
-	 * Gets parameter appender with default base query set 
+	 * Gets parameter appender with default base query set
 	 * 
 	 * @param alias
-	 * 		Alias to be used in the query
+	 *              Alias to be used in the query
 	 * @return
-	 * 		Returns new appender
+	 *         Returns new appender
 	 * 
 	 * @see #getBaseQuery(String)
 	 */
 	protected ParamAppender getAppender(String alias) {
 		return new ParamAppender(getBaseQuery(alias));
 	}
-	
-	protected final void setDefaultLimit(Query query)
-	{
+
+	protected final void setDefaultLimit(Query query) {
 		query.setMaxResults(getMaxSelectSize());
 	}
 
-	protected final void setLimit(Query query, int itemsToReturn)
-	{
-		if (itemsToReturn > getMaxSelectSize()) throw(new IllegalArgumentException("Requested too large of a result list size : " + itemsToReturn));
+	protected final void setLimit(Query query, int itemsToReturn) {
+		if (itemsToReturn > getMaxSelectSize())
+			throw (new IllegalArgumentException("Requested too large of a result list size : " + itemsToReturn));
 
 		query.setMaxResults(itemsToReturn);
 	}
 
-	protected final void setLimit(Query query, int startIndex, int itemsToReturn)
-	{
+	protected final void setLimit(Query query, int startIndex, int itemsToReturn) {
 		query.setFirstResult(startIndex);
 		setLimit(query, itemsToReturn);
 	}

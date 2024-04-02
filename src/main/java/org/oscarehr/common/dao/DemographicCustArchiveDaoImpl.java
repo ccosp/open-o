@@ -24,15 +24,22 @@
 
 package org.oscarehr.common.dao;
 
-import java.util.List;
-
-import org.oscarehr.common.model.PHRVerification;
+import org.oscarehr.common.model.DemographicCust;
+import org.oscarehr.common.model.DemographicCustArchive;
 import org.springframework.stereotype.Repository;
-import javax.persistence.Query;
 
-public interface PHRVerificationDao extends AbstractDao<PHRVerification> {
+@Repository
+public class DemographicCustArchiveDaoImpl extends AbstractDaoImpl<DemographicCustArchive>
+        implements DemographicCustArchiveDao {
 
-    public PHRVerification findLatestByDemographicId(Integer demographicId);
+    public DemographicCustArchiveDaoImpl() {
+        super(DemographicCustArchive.class);
+    }
 
-    public List<PHRVerification> findByDemographic(Integer demographicId, boolean active);
+    @Override
+    public Integer archiveDemographicCust(DemographicCust dc) {
+        DemographicCustArchive dca = new DemographicCustArchive(dc);
+        persist(dca);
+        return dca.getId();
+    }
 }

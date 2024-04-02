@@ -28,16 +28,7 @@ import org.oscarehr.common.model.DemographicCust;
 import org.oscarehr.common.model.DemographicCustArchive;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class DemographicCustArchiveDao extends AbstractDaoImpl<DemographicCustArchive> {
+public interface DemographicCustArchiveDao extends AbstractDao<DemographicCustArchive> {
 
-	public DemographicCustArchiveDao() {
-		super(DemographicCustArchive.class);
-	}
-	
-	public Integer archiveDemographicCust(DemographicCust dc) {
-		DemographicCustArchive dca = new DemographicCustArchive(dc);
-		persist(dca);
-		return dca.getId();
-	}
+	public Integer archiveDemographicCust(DemographicCust dc);
 }
