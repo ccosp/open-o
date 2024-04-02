@@ -4,7 +4,7 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * of the License, or (at your option) any later version. 
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,34 +21,53 @@
  * Hamilton
  * Ontario, Canada
  */
+
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
 
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.model.BedCheckTime;
-import org.oscarehr.util.MiscUtils;
+import org.oscarehr.common.model.Clinic;
 import org.springframework.stereotype.Repository;
 
-public interface BedCheckTimeDao extends AbstractDao<BedCheckTime> {
+/**
+ *
+ * @author Jason Gallagher
+ */
+@Repository
+public class ClinicDAOImpl extends AbstractDaoImpl<Clinic> implements ClinicDAO {
 
-    public boolean bedCheckTimeExists(Integer programId, Date time);
+    public ClinicDAOImpl() {
+        super(Clinic.class);
+    }
 
-    public BedCheckTime getBedCheckTime(Integer id);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Clinic> findAll() {
+        Query query = entityManager.createQuery("SELECT x FROM " + modelClass.getSimpleName() + " x");
+        List<Clinic> results = query.getResultList();
+        return results;
+    }
 
-    public BedCheckTime[] getBedCheckTimes(Integer programId);
+    @Override
+    public Clinic getClinic() {
+        Query query = entityManager.createQuery("select c from Clinic c");
+        @SuppressWarnings("unchecked")
+        List<Clinic> codeList = query.getResultList();
+        if (codeList.size() > 0) {
+            return codeList.get(0);
+        }
+        return null;
+    }
 
-    public void saveBedCheckTime(BedCheckTime bedCheckTime);
+    @Override
+    public void save(Clinic clinic) {
+        if (clinic.getId() != null && clinic.getId().intValue() > 0) {
+            merge(clinic);
+        } else {
+            persist(clinic);
+        }
+    }
 
-    public void deleteBedCheckTime(BedCheckTime bedCheckTime);
-
-    public String getBedCheckTimesQuery(Integer programId);
-
-    public Object[] getBedCheckTimesValues(Integer programId);
-
-    public List<BedCheckTime> getBedCheckTimes(String queryStr, Object[] values);
 }
