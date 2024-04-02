@@ -352,6 +352,11 @@ if(!authed) {
         line-height: 1 !important;
     }
 
+    table {
+        margin-bottom: unset !important;
+        width: 100%;
+    }
+
     .btn {
         font-size: 14px !important;
         font-weight: normal;
@@ -359,23 +364,34 @@ if(!authed) {
     }
 
     div.tool-table {
-        display: block;
-        width: 100%;
-        vertical-align: middle;
         background-color: #fff;
-        /*border: 1px solid #ccc;*/
-        /*border-radius: 4px;*/
-        /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);*/
-        /*box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);*/
-        /*-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
-        /*transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
-	    margin-right: 3px;
     }
+
+    div.tool-table table tr td {
+        padding: unset;
+    }
+
+    td > div.tool-table div.input-group, td > div.tool-table .form-control,
+    td > div.tool-table div .form-control {
+        padding-bottom: 5px;
+
+    }
+
+    div.tool-table table tr td:nth-of-type(2) {
+        padding-left: 3px !important;
+    }
+
     table {
-	    margin-bottom: 5px !important;
+        margin-bottom: unset !important;
     }
-    div.tool-table:last-of-type {
-	    margin-right:0;
+
+
+    div.tool-table:last-of-type{
+        margin-right:3px;
+    }
+
+    div.tool-table:first-of-type{
+        margin-left:3px;
     }
 
 	div#wcbForms p {
@@ -395,16 +411,13 @@ if(!authed) {
 		border-color:#ddd;
 	}
 
-	table {
-		width: 100%;
-	}
-	
 	table.tool-bar tr td {
 		vertical-align: bottom;
 	}
 	
 	strong, label {
 		font-weight: normal !important;
+        padding:0 3px 0 0;
 	}
 	
 	#billingPatientInfo {
@@ -491,7 +504,11 @@ if(!authed) {
 	}
 	
 	.serviceCodesTable {
+        display: block;
+        display: -webkit-inline-box;
+        display: -webkit-box;
 		margin-bottom: 5px !important;
+        border-radius: 4px;
 	}
 	
 	.serviceCodesTable tr:nth-child(even) {
@@ -1206,7 +1223,9 @@ jQuery(document).ready(function(jQuery){
 	<div id="page-header" >	
 		<table id="oscarBillingHeader" class="table-borderless">
 			<tr>
-				<td id="oscarBillingHeaderLeftColumn"><h1><bean:message key="billing.bc.title"/></h1></td>
+				<td id="oscarBillingHeaderLeftColumn">
+					<h1><bean:message key="billing.bc.title"/></h1>
+				</td>
 
 				<td id="oscarBillingHeaderCenterColumn">				
 					<span class="badge badge-primary"><bean:message key="billing.patient"/></span>
@@ -1664,7 +1683,8 @@ if(wcbneeds != null){%>
 
 </td>
 </tr>
-<td style="display:flex;">
+	  <tr>
+<td style="display:flex;gap:3px;">
 
 	<div class="tool-table table-responsive" style="width:100%;flex-basis: 25%;">
 	<table class="table table-condensed table-borderless"><tr><td>
@@ -1912,7 +1932,7 @@ if(wcbneeds != null){%>
 								</c:when>
 								<c:otherwise>
 									<input type="hidden" id="codingSystem" value="msp" />
-									<bean:message key="billing.diagnostic.code"/>
+									<label><bean:message key="billing.diagnostic.code"/></label>
 								</c:otherwise>
 							</c:choose>
 						</div>
