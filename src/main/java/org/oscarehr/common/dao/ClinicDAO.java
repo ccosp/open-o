@@ -22,7 +22,6 @@
  * Ontario, Canada
  */
 
-
 package org.oscarehr.common.dao;
 
 import java.util.List;
@@ -36,38 +35,12 @@ import org.springframework.stereotype.Repository;
  *
  * @author Jason Gallagher
  */
-@Repository
-public class ClinicDAO extends AbstractDaoImpl<Clinic> {
+public interface ClinicDAO extends AbstractDao<Clinic> {
 
-    public ClinicDAO() {
-    	super(Clinic.class);
-    }
+    public List<Clinic> findAll();
 
-    @SuppressWarnings("unchecked")
- 	public List<Clinic> findAll() {
- 		Query query = entityManager.createQuery("SELECT x FROM " + modelClass.getSimpleName() + " x");
- 		List<Clinic> results = query.getResultList();
- 		return results;
- 	}
-    
-    public Clinic getClinic(){
-    	Query query = entityManager.createQuery("select c from Clinic c");
-        @SuppressWarnings("unchecked")
-        List<Clinic> codeList = query.getResultList();
-        if(codeList.size()>0) {
-        	return codeList.get(0);
-        }
-        return null;
-    }
+    public Clinic getClinic();
 
-
-    public void save(Clinic clinic) {
-        if(clinic.getId() != null && clinic.getId().intValue()>0) {
-        	merge(clinic);
-        } else {
-        	persist(clinic);
-        }
-    }
-
+    public void save(Clinic clinic);
 
 }
