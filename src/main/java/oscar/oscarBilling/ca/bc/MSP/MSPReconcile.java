@@ -1537,7 +1537,7 @@ public class MSPReconcile {
 				b.provName = this.getProvider(b.apptDoctorNo, 0).getInitials();
 
 				double amountReceived = Double.parseDouble(rs.getString("amount_received"));
-				double billAmount = Double.parseDouble(rs.getString("bill_amount"));
+//				double billAmount = Double.parseDouble(rs.getString("bill_amount"));
 //				double gst = Double.parseDouble(rs.getString("gst"));
 				b.amount = "" + amountReceived;
 
