@@ -34,7 +34,26 @@ import org.oscarehr.common.model.BedDemographicHistorical;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
-public interface BedDemographicHistoricalDao extends AbstractDao<BedDemographicHistorical> {
+@Repository
+public class BedDemographicHistoricalDaoImpl extends AbstractDaoImpl<BedDemographicHistorical>
+        implements BedDemographicHistoricalDao {
 
-	public BedDemographicHistorical[] getBedDemographicHistoricals(Date since);
+    private Logger log = MiscUtils.getLogger();
+
+    public BedDemographicHistoricalDaoImpl() {
+        super(BedDemographicHistorical.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public BedDemographicHistorical[] getBedDemographicHistoricals(Date since) {
+        Query query = entityManager.createQuery("select bdh from BedDemographicHistorical bdh where bdh.usageEnd >= ?");
+        query.setParameter(1, DateTimeFormatUtils.getDateFromDate(since));
+
+        List<BedDemographicHistorical> bedDemographicHistoricals = query.getResultList();
+
+        log.debug("getBedDemographicHistoricals: size: " + bedDemographicHistoricals.size());
+
+        return bedDemographicHistoricals.toArray(new BedDemographicHistorical[bedDemographicHistoricals.size()]);
+    }
 }
