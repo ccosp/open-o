@@ -5,6 +5,8 @@ import java.util.List;
 import org.oscarehr.common.model.AbstractModel;
 
 public interface AbstractDao<T extends AbstractModel<?>> {
+    public static final int MAX_LIST_RETURN_SIZE = 5000;
+
     void merge(AbstractModel<?> o);
 
     void persist(AbstractModel<?> o);

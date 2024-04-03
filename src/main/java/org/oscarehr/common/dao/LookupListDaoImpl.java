@@ -27,20 +27,34 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.MsgDemoMap;
+import org.oscarehr.common.model.LookupList;
 import org.springframework.stereotype.Repository;
 
-public interface MsgDemoMapDao extends AbstractDao<MsgDemoMap> {
+@Repository
+public class LookupListDaoImpl extends AbstractDaoImpl<LookupList> implements LookupListDao {
 
-	public List<MsgDemoMap> findByDemographicNo(Integer demographicNo);
+    public LookupListDaoImpl() {
+        super(LookupList.class);
+    }
 
-	public List<MsgDemoMap> findByMessageId(Integer messageId);
+    @Override
+    public List<LookupList> findAllActive() {
+        Query q = entityManager.createQuery("select l from LookupList l where l.active=? order by l.name asc");
+        q.setParameter(1, true);
 
-	public List<Object[]> getMessagesAndDemographicsByMessageId(Integer messageId);
+        @SuppressWarnings("unchecked")
+        List<LookupList> result = q.getResultList();
 
-	public List<Object[]> getMapAndMessagesByDemographicNo(Integer demoNo);
+        return result;
+    }
 
-	public List<Object[]> getMapAndMessagesByDemographicNoAndType(Integer demoNo, Integer type);
+    @Override
+    public LookupList findByName(String name) {
+        Query q = entityManager.createQuery("select l from LookupList l where l.name=?");
+        q.setParameter(1, name);
 
-	public void remove(Integer messageID, Integer demographicNo);
+        LookupList ll = this.getSingleResultOrNull(q);
+
+        return ll;
+    }
 }

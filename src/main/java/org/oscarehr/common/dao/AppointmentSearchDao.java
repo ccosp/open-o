@@ -30,60 +30,14 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.AppointmentSearch;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class AppointmentSearchDao extends AbstractDaoImpl<AppointmentSearch> {
+public interface AppointmentSearchDao extends AbstractDao<AppointmentSearch> {
 
-	public AppointmentSearchDao() {
-		super(AppointmentSearch.class);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<AppointmentSearch> findAll() {
-		Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() +" a order by a.createDate desc");
-		return query.getResultList();
-	}
-    
-    public List<AppointmentSearch> findActive() {
-	    	Query q = entityManager.createQuery("select a from AppointmentSearch a where a.active= true");
-	    	@SuppressWarnings("unchecked")
-	    	List<AppointmentSearch> results = q.getResultList();
-	    	
-	    	return results;
-    }
-    
-    public List<AppointmentSearch> findByUUID(String uuid,Boolean active) {
-    	String queryStr = "select a from AppointmentSearch a where a.uuid=?1";
-    	if(active != null && active.booleanValue()) {
-    		queryStr = queryStr + " and a.active = true";
-    	}
-    	Query q = entityManager.createQuery(queryStr);
-    	q.setParameter(1, uuid);
-    	
-    	@SuppressWarnings("unchecked")
-    	List<AppointmentSearch> results = q.getResultList();
-    	
-    	return results;
-}
-    
-    public AppointmentSearch findForProvider(String providerNo) {
-	    	if(providerNo == null || providerNo.length() == 0){
-	    		return null;
-	    	}
-	    	
-	    	Query q = entityManager.createQuery("select a from AppointmentSearch a where a.providerNo = ? and a.active = true order by a.updateDate desc");
-	    	q.setParameter(1, providerNo);
-    	
-	    	@SuppressWarnings("unchecked")
-	    	List<AppointmentSearch> results = q.getResultList();
-    	
-	    	if(results.isEmpty()) {
-	    		return null;
-	    	}
-		
-	    	return results.get(0);	
-    }
+	public List<AppointmentSearch> findAll();
 
-    
-    
-    
+	public List<AppointmentSearch> findActive();
+
+	public List<AppointmentSearch> findByUUID(String uuid, Boolean active);
+
+	public AppointmentSearch findForProvider(String providerNo);
+
 }

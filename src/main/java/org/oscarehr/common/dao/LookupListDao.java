@@ -30,30 +30,9 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.LookupList;
 import org.springframework.stereotype.Repository;
 
+public interface LookupListDao extends AbstractDao<LookupList> {
 
-@Repository
-public class LookupListDao extends AbstractDaoImpl<LookupList>{
+	public List<LookupList> findAllActive();
 
-	public LookupListDao() {
-		super(LookupList.class);
-	}
-	
-	public List<LookupList> findAllActive() {
-		Query q = entityManager.createQuery("select l from LookupList l where l.active=? order by l.name asc");
-		q.setParameter(1,true);
-		
-		@SuppressWarnings("unchecked")
-		List<LookupList> result = q.getResultList();
-		
-		return result;
-	}
-	
-	public LookupList findByName(String name) {
-		Query q = entityManager.createQuery("select l from LookupList l where l.name=?");
-		q.setParameter(1,name);
-		
-		LookupList ll = this.getSingleResultOrNull(q);
-		
-		return ll;
-	}
+	public LookupList findByName(String name);
 }

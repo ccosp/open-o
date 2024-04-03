@@ -23,24 +23,39 @@
  */
 package org.oscarehr.common.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.MsgDemoMap;
+import org.oscarehr.common.model.MsgIntegratorDemoMap;
 import org.springframework.stereotype.Repository;
 
-public interface MsgDemoMapDao extends AbstractDao<MsgDemoMap> {
+@Repository
+public class MsgIntegratorDemoMapDaoImpl extends AbstractDaoImpl<MsgIntegratorDemoMap>
+        implements MsgIntegratorDemoMapDao {
 
-	public List<MsgDemoMap> findByDemographicNo(Integer demographicNo);
+    public MsgIntegratorDemoMapDaoImpl() {
+        super(MsgIntegratorDemoMap.class);
+    }
 
-	public List<MsgDemoMap> findByMessageId(Integer messageId);
+    /**
+     * Find remote integrated demographics where the local message demographic
+     * number has not
+     * been linked to the remote demographic number
+     */
+    @Override
+    public List<MsgIntegratorDemoMap> findByMessageIdandMsgDemoMapId(Integer messageId, long msgDemoMapId) {
+        String sql = "select x from MsgIntegratorDemoMap x where x.messageId=?1 and x.msgDemoMapId = ?2";
+        Query query = entityManager.createQuery(sql);
+        query.setParameter(1, messageId);
+        query.setParameter(2, msgDemoMapId);
 
-	public List<Object[]> getMessagesAndDemographicsByMessageId(Integer messageId);
-
-	public List<Object[]> getMapAndMessagesByDemographicNo(Integer demoNo);
-
-	public List<Object[]> getMapAndMessagesByDemographicNoAndType(Integer demoNo, Integer type);
-
-	public void remove(Integer messageID, Integer demographicNo);
+        @SuppressWarnings("unchecked")
+        List<MsgIntegratorDemoMap> results = query.getResultList();
+        if (results == null) {
+            results = Collections.emptyList();
+        }
+        return results;
+    }
 }
