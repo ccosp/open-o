@@ -30,8 +30,8 @@ import org.oscarehr.common.merge.MergedDemographicTemplate;
 import org.oscarehr.common.model.Prevention;
 import org.springframework.stereotype.Repository;
 
-@Repository("preventionDao")
-public class PreventionMergedDemographicDao extends PreventionDao {
+@Repository("preventionDaoImpl")
+public class PreventionMergedDemographicDao extends PreventionDaoImpl {
 
 	@Override
 	public List<Prevention> findByDemographicId(Integer demographicId) {
