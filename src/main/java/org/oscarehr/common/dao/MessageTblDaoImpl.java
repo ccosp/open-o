@@ -32,11 +32,39 @@ import org.oscarehr.common.model.MessageTbl;
 import org.oscarehr.common.model.MsgDemoMap;
 import org.springframework.stereotype.Repository;
 
-public interface MessageTblDao extends AbstractDao<MessageTbl> {
+@Repository
+@SuppressWarnings("unchecked")
+public class MessageTblDaoImpl extends AbstractDaoImpl<MessageTbl> implements MessageTblDao {
 
-	public List<MessageTbl> findByMaps(List<MsgDemoMap> m);
+    public MessageTblDaoImpl() {
+        super(MessageTbl.class);
+    }
 
-	public List<MessageTbl> findByProviderAndSendBy(String providerNo, Integer sendBy);
+    @Override
+    public List<MessageTbl> findByMaps(List<MsgDemoMap> m) {
+        String sql = "select x from MessageTbl x where x.id in (:m)";
+        Query query = entityManager.createQuery(sql);
+        List<Integer> ids = new ArrayList<Integer>();
+        for (MsgDemoMap temp : m) {
+            ids.add(temp.getMessageID());
+        }
+        query.setParameter("m", ids);
+        List<MessageTbl> results = query.getResultList();
+        return results;
+    }
 
-	public List<MessageTbl> findByIds(List<Integer> ids);
+    @Override
+    public List<MessageTbl> findByProviderAndSendBy(String providerNo, Integer sendBy) {
+        Query query = createQuery("m", "m.sentByNo = :providerNo and m.sentByLocation = :sendBy");
+        query.setParameter("providerNo", providerNo);
+        query.setParameter("sendBy", sendBy);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<MessageTbl> findByIds(List<Integer> ids) {
+        Query query = createQuery("m", "m.id in (:ids) order by m.date");
+        query.setParameter("ids", ids);
+        return query.getResultList();
+    }
 }

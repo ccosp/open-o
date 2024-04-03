@@ -30,22 +30,7 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.AppUser;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class AppUserDao extends AbstractDaoImpl<AppUser>{
+public interface AppUserDao extends AbstractDao<AppUser>{
 
-	public AppUserDao()  {
-		super(AppUser.class);
-	}
-	
-	public AppUser findForProvider(int appId,String providerNo){
-		Query query = entityManager.createQuery("select x from AppUser x where x.appId = ?1 and x.providerNo = ?2");
-		query.setParameter(1,appId);
-		query.setParameter(2,providerNo);
-		List<AppUser> list = query.getResultList();
-		if (list == null || list.size() == 0){
-			return null;
-		}
-		
-		return list.get(0);
-	}
+	public AppUser findForProvider(int appId,String providerNo);
 }
