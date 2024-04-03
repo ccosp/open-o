@@ -21,63 +21,23 @@
  * Toronto, Ontario, Canada
  */
 
-package org.oscarehr.common.dao;
+ package org.oscarehr.common.dao;
 
-import java.util.HashMap;
-import java.util.List;
+ import java.util.HashMap;
+ import java.util.List;
+ 
+ import javax.persistence.Query;
+ 
+ import org.oscarehr.common.model.PreventionExt;
 
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.PreventionExt;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class PreventionExtDao extends AbstractDaoImpl<PreventionExt> {
-
-	public PreventionExtDao() {
-		super(PreventionExt.class);
-	}
-	
-	public List<PreventionExt> findByPreventionId(Integer preventionId) {
-		Query query = entityManager.createQuery("select x from PreventionExt x where preventionId=?1");
-		query.setParameter(1, preventionId);
-
-		@SuppressWarnings("unchecked")
-		List<PreventionExt> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<PreventionExt> findByKeyAndValue(String key, String value) {
-		Query query = entityManager.createQuery("select x from PreventionExt x where keyval=?1 and val=?2");
-		query.setParameter(1, key);
-		query.setParameter(2, value);
-		
-		@SuppressWarnings("unchecked")
-		List<PreventionExt> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<PreventionExt> findByPreventionIdAndKey(Integer preventionId, String key) {
-		Query query = entityManager.createQuery("select x from PreventionExt x where preventionId=?1 and keyval=?2");
-		query.setParameter(1, preventionId);
-		query.setParameter(2, key);
-		
-		@SuppressWarnings("unchecked")
-		List<PreventionExt> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public HashMap<String, String> getPreventionExt(Integer preventionId) {
-		HashMap<String, String> results=new HashMap<String, String>();
-		
-		List<PreventionExt> preventionExts = findByPreventionId(preventionId);
-		for (PreventionExt preventionExt : preventionExts) {
-			results.put(preventionExt.getkeyval(), preventionExt.getVal());
-		}
-
-		return results;
-	}
-}
+ public interface PreventionExtDao extends AbstractDao<PreventionExt>{
+ 
+    public List<PreventionExt> findByPreventionId(Integer preventionId);
+     
+     public List<PreventionExt> findByKeyAndValue(String key, String value);
+     
+     public List<PreventionExt> findByPreventionIdAndKey(Integer preventionId, String key);
+     
+     public HashMap<String, String> getPreventionExt(Integer preventionId);
+ }
+ 
