@@ -324,10 +324,10 @@ if(!authed) {
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.theme-1.12.1.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/jquery/jquery-ui.structure-1.12.1.min.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/share/calendar/calendar.css" title="win2k-cold-1"/>
-<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
+
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/bootstrap-datetimepicker-standalone.css" />
 <link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/css/bootstrap-datetimepicker.min.css" />
-
+	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.servletContext.contextPath}/library/bootstrap/3.0.0/css/bootstrap.min.css" />
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/moment.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/library/jquery/jquery-3.6.4.min.js"></script>
@@ -346,18 +346,29 @@ if(!authed) {
 
 <style>
 
+    :root * {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, 'Glyphicons Halflings';
+        font-size: 12px;
+        line-height: 1 !important;
+    }
+
+    .btn {
+        font-size: 14px !important;
+        font-weight: normal;
+        line-height: 1.428571429 !important;
+    }
+
     div.tool-table {
         display: block;
         width: 100%;
-        padding: 6px 12px;
         vertical-align: middle;
         background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        /*border: 1px solid #ccc;*/
+        /*border-radius: 4px;*/
+        /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);*/
+        /*box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);*/
+        /*-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
+        /*transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
 	    margin-right: 3px;
     }
     table {
@@ -383,11 +394,7 @@ if(!authed) {
 	div#wcbForms table tr td, div#wcbForms table tr th, div#wcbForms table{
 		border-color:#ddd;
 	}
-	
-	.button-bar {
-		margin-bottom:15px;
-	}
-	
+
 	table {
 		width: 100%;
 	}
@@ -441,25 +448,11 @@ if(!authed) {
 		color: white;
 		font-weight: bold;
 	}
-	
-	#oscarBillingHeaderRightColumn {
-		vertical-align: top !important;
-		text-align: right;
-		padding-top: 3px !important;
-		padding-right: 3px !important;
 
-	}
-	
-	#oscarBillingHeader #oscarBillingHeaderRightColumn, #oscarBillingHeader #oscarBillingHeaderCenterColumn {
+	#oscarBillingHeader #oscarBillingHeaderCenterColumn {
 		border-bottom: 1px solid #ccc;
 	}
-	
-	span.HelpAboutLogout a {
-		font-size: x-small;
-		color: black;
-		float: right;
-		padding: 0 3px;
-	}
+
 	
 	h3 {
 		font-size: small;
@@ -539,6 +532,10 @@ if(!authed) {
 	.has-error {
 		background-color: #f2dede;
 	}
+
+    table#billingFormTable tr td{
+        vertical-align: top;
+    }
 	
 </style>
 <script type="text/javascript" >
@@ -924,6 +921,19 @@ function setCodeToChecked(svcCode){
     }
 }
 
+function checkifSet(icd9,feeitem,extrafeeitem){
+	myform = document.forms[0];
+	oscarLog("icd9 "+icd9+" ,feeitem "+feeitem+" "+codeEntered(feeitem)+" extrafeeitem "+extrafeeitem+ " "+codeEntered(extrafeeitem));
+	if (myform.xml_diagnostic_detail1.value == ""){
+		myform.xml_diagnostic_detail1.value = icd9;
+	}
+	setCodeToChecked(feeitem);
+	oscarLog("feeitem did put "+codeEntered(feeitem));
+	setCodeToChecked(extrafeeitem);
+
+	oscarLog("extra feeitem did put"+codeEntered(extrafeeitem));
+}
+
 jQuery(document).ready(function(jQuery){
 
 	jQuery("#bcBillingForm").attr('autocomplete', 'off');
@@ -1272,8 +1282,10 @@ if(wcbneeds != null){%>
 <%}%>
 
 <html:form styleId="bcBillingForm" styleClass="form-inline" action="/billing/CA/BC/CreateBilling" onsubmit="toggleWCB();">
+
 	<input autocomplete="false" name="hidden" type="text" style="display:none;">
-  	<input type="hidden" name="fromBilling" value=""/>
+  	<input type="hidden" name="fromBilling" value="">
+
 	<%
 		// set up this form
 		BillingCreateBillingForm thisForm = (BillingCreateBillingForm) request.getSession().getAttribute("BillingCreateBillingForm");
@@ -1652,10 +1664,9 @@ if(wcbneeds != null){%>
 
 </td>
 </tr>
-<tr>
 <td style="display:flex;">
 
-	<div class="tool-table">
+	<div class="tool-table table-responsive" style="width:100%;flex-basis: 25%;">
 	<table class="table table-condensed table-borderless"><tr><td>
 				<table class="table table-condensed table-borderless">
 					<tr>
@@ -1717,10 +1728,10 @@ if(wcbneeds != null){%>
 	  <tr>
 		  <td>
 
-			  <table class="table table-condensed table-borderless">
+			  <table class="table table-condensed table-borderless" style="max-height: 100px;display: block;overflow-y: scroll">
 				  <tr><td>
 
-					  <table class="table table-condensed table-borderless" style="background-color:#fff;">
+					  <table class="table table-condensed table-borderless" >
 						  <tr><td colspan="2">Recent Referral Doctors</td></tr>
 						  <%
 							  String bgColor="#fff";
@@ -1731,7 +1742,7 @@ if(wcbneeds != null){%>
 									  rProvider = billingReferralDao.getReferralDocName(r);
 						  %>
 						  <tr bgcolor="<%=bgColor%>">
-							  <td width="20%">
+							  <td>
 								  <a href="javascript:void(0)" class="referral-doctor" data-num="<%=r%>" data-doc="<%=rProvider%>"><%=r%></a>
 							  </td>
 							  <td><%=rProvider%></td>
@@ -1742,19 +1753,21 @@ if(wcbneeds != null){%>
 							  }
 						  }else{
 						  %>
-						  <tr><td width="20%"></td><td>none</td></tr>
+						  <tr><td></td><td>
+							  none
+						  </td></tr>
 						  <%
 							  }
 						  %>
 					  </table>
 
 				  </td>
-					  <td width="50%" valign="top">
+					  <td>
 
-						  <table class="table table-condensed table-borderless" style="background-color:#fff;">
+						  <table class="table table-condensed table-borderless" >
 							  <tr><td style="border-top:none;" colspan="2">Referral Doctor on Master Record</td></tr>
 							  <tr>
-								  <td width="20%">
+								  <td>
 									  <a href="javascript:void(0)" title="Populate referral doctor from master record" class="referral-doctor" data-num="<%=mRecRefDoctorNum%>" data-doc="<%=mRecRefDoctor%>"><%=mRecRefDoctorNum%></a>
 								  </td>
 								  <td><%=mRecRefDoctor%></td>
@@ -1772,14 +1785,14 @@ if(wcbneeds != null){%>
 
 
 </div>
-		<div class="tool-table">
+		<div class="tool-table table-responsive" style="width:100%;flex-basis: 25%;">
 
 							<table class="table table-condensed table-borderless">
 								<tr>
-									<td width="70%">
+									<td>
 										<label><bean:message key="billing.service.otherservice"/></label>
 									</td>
-									<td width="30%">
+									<td>
 										<label><bean:message key="billing.service.unit"/></label>
 									</td>
 								</tr>
@@ -1797,7 +1810,7 @@ if(wcbneeds != null){%>
                           	</span>
 										</div>
 									</td>
-									<td>
+									<td style="width:40%;">
 										<div class="input-group">
 											<html:text styleClass="form-control" property="xml_other1_unit" size="6" maxlength="6" styleId="xml_other1_unit"/>
 											<span class="input-group-btn">
@@ -1865,7 +1878,7 @@ if(wcbneeds != null){%>
 
 	<!-- ONSCREEN DX CODE DISPLAY -->
 		</div>
-	<div class="tool-table">
+	<div class="tool-table table-responsive" style="width:100%;flex-basis: 15%;">
 				<table class="table table-condensed table-borderless">
 					<tr><td style="width:60%">
 						<div class="input-group">
@@ -1947,25 +1960,24 @@ if(wcbneeds != null){%>
 	                          	</span>
 						</div>
 					</td></tr>
-					<tr>
 
-						<td>
-							Recently used
-
-							<div id="DX_REFERENCE"></div>
-						</td>
-					</tr>
 
 				</table>
 
 	<!-- ONSCREEN DX CODE DISPLAY END-->
 	</div>
-	<div class="tool-table">
+	<div class="tool-table table-responsive" style="width:100%;flex-basis: 10%;">
 
-	<table class="table table-condensed table-borderless">
+			  <label for="DX_REFERENCE">Recent Dx codes</label>
+
+			  <div id="DX_REFERENCE"></div>
+	</div>
+	<div class="tool-table table-responsive" style="width:100%;flex-basis: 25%;">
+
+	<table class="table table-condensed table-borderless" style="height:100%">
 		<tr>
-			<td style="padding-top:5px !important;">
-				<label for="shortClaimNote"></label><label>Short Claim Note</label></label>
+			<td>
+				<label for="shortClaimNote">Short Claim Note</label>
 				<html:text styleId="shortClaimNote" styleClass="form-control" property="shortClaimNote" />
 			</td>
 
@@ -1982,17 +1994,33 @@ if(wcbneeds != null){%>
 			</td>
 		</tr>
 		<tr>
-			<td style="padding-bottom:5px !important;" colspan="2" valign="top">
+			<td>
 				<div id="CORRESPONDENCENOTE" style="display:none;">
 					<html:textarea styleClass="form-control notes-box" property="notes" onkeyup="checkTextLimit(this.form.notes,400);"></html:textarea>
 					<small>400 characters max.</small>
 				</div>
 				<div>
 					<div>
-						<label>Billing Notes</label>
-						<small>(Internal use. Not sent to MSP)</small>
+						<label for="billing-notes-box">Billing Notes
+						<small>(Internal use. Not sent to MSP)</small></label>
 					</div>
-					<html:textarea styleClass="form-control notes-box" property="messageNotes"></html:textarea>
+					<html:textarea styleClass="form-control notes-box" styleId="billing-notes-box" property="messageNotes"></html:textarea>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="height:100%;vertical-align: bottom;">
+				<div class="row-fluid pull-right ">
+					<div id="ignoreWarningsButton">
+						<label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">
+							<input type="checkbox" name="ignoreWarn" id="ignoreWarn"/>
+							Ignore Warnings
+						</label>
+					</div>
+					<div id="buttonRow" class="button-bar">
+						<input class="btn btn-md btn-primary" type="submit" name="Submit" value="Continue">
+						<input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();">
+					</div>
 				</div>
 			</td>
 		</tr>
@@ -2004,18 +2032,7 @@ if(wcbneeds != null){%>
 </tr>
 	  <tr><td>
 		  <div id="bcBillingError"></div>
-		  <div class="row-fluid pull-right ">
-			  <div id="ignoreWarningsButton">
-				  <label class="checkbox" for="ignoreWarn" title="Check to ignore validation warnings">
-					  <input type="checkbox" name="ignoreWarn" id="ignoreWarn"/>
-					  Ignore Warnings
-				  </label>
-			  </div>
-			  <div id="buttonRow" class="button-bar">
-				  <input class="btn btn-md btn-primary" type="submit" name="Submit" value="Continue">
-				  <input class="btn btn-md btn-danger" type="button" name="Button" value="Cancel" onClick="window.close();">
-			  </div>
-		  </div>
+
 	  </td></tr>
 	  <tr>
 		  <td>
@@ -2024,7 +2041,7 @@ if(wcbneeds != null){%>
 <div id="billingFormTableWrapper">
         <table id="billingFormTable">
           <tr>
-            <td valign="top" style="width:32%; padding-right:5px;" >
+            <td style="width:32%; padding-right:5px;" >
               <table class="table table-condensed table-bordered serviceCodesTable" >
                 <tr style="background-color:#CCCCFF;">
                   <td width="25%">

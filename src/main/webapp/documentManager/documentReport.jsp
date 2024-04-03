@@ -161,6 +161,15 @@
 
 		<title><bean:message key="dms.documentReport.msgDocuments"/> Manager</title>
 
+		<link rel="stylesheet" type="text/css"
+		      href="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.css"/>
+		<link href="${pageContext.request.contextPath}/library/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet"
+		      type="text/css"/>
+		<link href="${pageContext.request.contextPath}/library/DataTables/DataTables-1.13.4/css/jquery.dataTables.css"
+		      rel="stylesheet" type="text/css"/>
+
+
+
 		<script src="${pageContext.request.contextPath}/library/jquery/jquery-3.6.4.min.js"
 		        type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/library/bootstrap/3.0.0/js/bootstrap.min.js"
@@ -168,14 +177,8 @@
 		<script src="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.js"
 		        type="text/javascript"></script>
 		<script type="text/javascript"
-		        src="${pageContext.request.contextPath}/library/DataTables/DataTables-1.13.4/js/dataTables.bootstrap.js"></script>
+		        src="${pageContext.request.contextPath}/library/DataTables/DataTables-1.13.4/js/jquery.dataTables.js"></script>
 
-		<link rel="stylesheet" type="text/css"
-		      href="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.css"/>
-		<link href="${pageContext.request.contextPath}/library/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet"
-		      type="text/css"/>
-		<link href="${pageContext.request.contextPath}/library/DataTables/DataTables-1.13.4/css/dataTables.bootstrap.css"
-		      rel="stylesheet" type="text/css"/>
 		<script src="${pageContext.request.contextPath}/js/global.js" type="text/javascript"></script>
 		<%
 			CtlDocClassDao docClassDao = (CtlDocClassDao) SpringUtils.getBean("ctlDocClassDao");
@@ -305,11 +308,29 @@
 				if (update === "true" && !window.opener.closed)
 					window.opener.popLeftColumn(Url[parentId], parentId, parentId);
 			}
+
+			jQuery(document).ready(function () {
+				jQuery("table[id^='tblDocs']").DataTable({
+
+					lengthMenu: [
+						[50, -1],
+						[50, 'All']
+					],
+					"language": {
+						"url": "<%=request.getContextPath() %>/library/DataTables/i18n/<bean:message key="global.i18nLanguagecode"/>.json"
+					}
+				});
+			});
 		</script>
+
 		<style>
             :not(h2) {
                 line-height: 1 !important;
                 font-size: 12px !important;
+            }
+
+            .panel-body {
+	            overflow: auto;
             }
 
 		</style>
@@ -343,13 +364,13 @@
 				ArrayList categoryKeys = new ArrayList();
 
 				MiscUtils.getLogger().debug("module=" + module + ", moduleid=" + moduleid + ", view=" + view + ", EDocUtil.PRIVATE=" + EDocUtil.PRIVATE + ", viewstatus=" + viewstatus);
-				ArrayList<EDoc> privatedocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PRIVATE, EDocUtil.EDocSort.DATE, viewstatus);
+				ArrayList<EDoc> privatedocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PRIVATE, EDocUtil.EDocSort.CONTENTDATE, viewstatus);
 				MiscUtils.getLogger().debug("privatedocs:" + privatedocs.size());
 
 				categories.add(privatedocs);
 				categoryKeys.add(moduleName + "'s Private Documents");
 				if (module.equals("provider")) {
-					ArrayList publicdocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PUBLIC, EDocUtil.EDocSort.DATE, viewstatus);
+					ArrayList publicdocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PUBLIC, EDocUtil.EDocSort.CONTENTDATE, viewstatus);
 					categories.add(publicdocs);
 					categoryKeys.add("Public Documents");
 				}
@@ -365,17 +386,6 @@
 					String currentkey = (String) categoryKeys.get(i);
 					ArrayList category = (ArrayList) categories.get(i);
 			    %>
-				<script>
-					jQuery(document).ready(function () {
-						jQuery('#tblDocs<%=i%>').DataTable({
-							"lengthMenu": [[15, 30, 90, -1], [15, 30, 90, "<bean:message key="oscarEncounter.LeftNavBar.AllLabs"/>"]],
-							"order": [],
-							"language": {
-								"url": "<%=request.getContextPath() %>/library/DataTables/i18n/<bean:message key="global.i18nLanguagecode"/>.json"
-							}
-						});
-					});
-				</script>
 				<div class="doclist panel panel-default">
 					<div class="headerline panel-heading">
 						<div class="container">
@@ -515,7 +525,7 @@
 								</td>
 								<td><%=Encode.forHtml(curdoc.getResponsibleName())%>
 								</td>
-								<td><%=Encode.forHtml(curdoc.getObservationDate())%>
+								<td><%=curdoc.getContentDateTime()%>
 								</td>
 								<td><%=Encode.forHtml(reviewerName)%>
 								</td>
