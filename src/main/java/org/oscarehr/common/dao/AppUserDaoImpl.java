@@ -4,7 +4,7 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
+ * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,22 +21,32 @@
  * Hamilton
  * Ontario, Canada
  */
-
 package org.oscarehr.common.dao;
 
 import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.NativeSql;
-import org.oscarehr.common.model.OscarCommLocations;
+import org.oscarehr.common.model.AppUser;
 import org.springframework.stereotype.Repository;
 
-public interface OscarCommLocationsDao extends AbstractDao<OscarCommLocations> {
+@Repository
+public class AppUserDaoImpl extends AbstractDaoImpl<AppUser> implements AppUserDao{
 
-	public List<OscarCommLocations> findByCurrent1(int current1);
-
-	public List<Object[]> findFormLocationByMesssageId(String messId);
-
-	public List<Object[]> findAttachmentsByMessageId(String messageId);
+	public AppUserDaoImpl()  {
+		super(AppUser.class);
+	}
+	
+	@Override
+	public AppUser findForProvider(int appId,String providerNo){
+		Query query = entityManager.createQuery("select x from AppUser x where x.appId = ?1 and x.providerNo = ?2");
+		query.setParameter(1,appId);
+		query.setParameter(2,providerNo);
+		List<AppUser> list = query.getResultList();
+		if (list == null || list.size() == 0){
+			return null;
+		}
+		
+		return list.get(0);
+	}
 }

@@ -30,55 +30,18 @@ import org.oscarehr.common.merge.MergedDemographicTemplate;
 import org.oscarehr.common.model.Allergy;
 import org.springframework.stereotype.Repository;
 
-@Repository("AllergyDao")
-public class AllergyMergedDemographicDao extends AllergyDao {
+public interface AllergyMergedDemographicDao extends AbstractDao<Allergy>  {
 
-	@Override
-	public List<Allergy> findAllergies(final Integer demographic_no) {
-		List<Allergy> result = super.findAllergies(demographic_no);
-		MergedDemographicTemplate<Allergy> template = new MergedDemographicTemplate<Allergy>() {
-			@Override
-			public List<Allergy> findById(Integer demographic_no) {
-				return AllergyMergedDemographicDao.super.findAllergies(demographic_no);
-			}
-		};
-		return template.findMerged(demographic_no, result);
-	}
 
-	@Override
-	public List<Allergy> findActiveAllergies(final Integer demographic_no) {
-		List<Allergy> result = super.findActiveAllergies(demographic_no);
-		MergedDemographicTemplate<Allergy> template = new MergedDemographicTemplate<Allergy>() {
-			@Override
-			public List<Allergy> findById(Integer demographic_no) {
-				return AllergyMergedDemographicDao.super.findActiveAllergies(demographic_no);
-			}
-		};
-		return template.findMerged(demographic_no, result);
+	public List<Allergy> findAllergies(final Integer demographic_no);
 
-	}
 
-	@Override
-	public List<Allergy> findActiveAllergiesOrderByDescription(final Integer demographic_no) {
-		List<Allergy> result = super.findActiveAllergiesOrderByDescription(demographic_no);
-		MergedDemographicTemplate<Allergy> template = new MergedDemographicTemplate<Allergy>() {
-			@Override
-			public List<Allergy> findById(Integer demographic_no) {
-				return AllergyMergedDemographicDao.super.findActiveAllergiesOrderByDescription(demographic_no);
-			}
-		};
-		return template.findMerged(demographic_no, result);
-	}
+	public List<Allergy> findActiveAllergies(final Integer demographic_no);
 
-	@Override
-	public List<Allergy> findByDemographicIdUpdatedAfterDate(final Integer demographicId, final Date updatedAfterThisDate) {
-		List<Allergy> result = super.findByDemographicIdUpdatedAfterDate(demographicId, updatedAfterThisDate);
-		MergedDemographicTemplate<Allergy> template = new MergedDemographicTemplate<Allergy>() {
-			@Override
-			public List<Allergy> findById(Integer demographic_no) {
-				return AllergyMergedDemographicDao.super.findByDemographicIdUpdatedAfterDate(demographicId, updatedAfterThisDate);
-			}
-		};
-		return template.findMerged(demographicId, result);
-	}
+	
+	public List<Allergy> findActiveAllergiesOrderByDescription(final Integer demographic_no);
+	public List<Allergy> findByDemographicIdUpdatedAfterDate(final Integer demographicId,
+			final Date updatedAfterThisDate);
+
+    public List<Allergy> findAllCustomAllergiesWithNullNonDrugFlag(int start, int limit);
 }

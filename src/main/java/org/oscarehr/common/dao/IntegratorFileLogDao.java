@@ -31,67 +31,16 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.IntegratorFileLog;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class IntegratorFileLogDao extends AbstractDaoImpl<IntegratorFileLog> {
+public interface IntegratorFileLogDao extends AbstractDao<IntegratorFileLog> {
 
-	public IntegratorFileLogDao() {
-		super(IntegratorFileLog.class);
-	}
+	public IntegratorFileLog getLastFileData();
 
-	public IntegratorFileLog getLastFileData() {
-		String queryStr = "FROM IntegratorFileLog c ORDER BY c.id DESC";
+	public List<IntegratorFileLog> getFileLogHistory();
 
-		Query query = entityManager.createQuery(queryStr);
-		query.setMaxResults(1);
-		
-		return this.getSingleResultOrNull(query);
-		
-	}
-	
-	public List<IntegratorFileLog> getFileLogHistory() {
-		String queryStr = "FROM IntegratorFileLog c ORDER BY c.id DESC";
+	public IntegratorFileLog findByFilenameAndChecksum(String filename, String checksum);
 
-		Query query = entityManager.createQuery(queryStr);
-		
-		List<IntegratorFileLog> results = query.getResultList();
-		
-		return (results);
-		
-	}
-	
-	public IntegratorFileLog findByFilenameAndChecksum(String filename, String checksum) {
-		String queryStr = "FROM IntegratorFileLog c WHERE c.filename = ?1 and c.checksum = ?2 ORDER BY c.id DESC";
+	public List<IntegratorFileLog> findAllWithNoCompletedIntegratorStatus();
 
-		Query query = entityManager.createQuery(queryStr);
-		query.setParameter(1, filename);
-		query.setParameter(2, checksum);
-		
-		return this.getSingleResultOrNull(query);
-		
-	}
-	
-	public List<IntegratorFileLog> findAllWithNoCompletedIntegratorStatus() {
-		String queryStr = "FROM IntegratorFileLog c WHERE c.integratorStatus IS NULL OR c.integratorStatus != 'COMPLETED' ORDER BY c.id DESC";
-
-		Query query = entityManager.createQuery(queryStr);
-		
-		List<IntegratorFileLog> results = query.getResultList();
-		
-		return (results);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<IntegratorFileLog> findAllWithNoCompletedOrErrorIntegratorStatus() {
-		String queryStr = "FROM IntegratorFileLog c WHERE c.integratorStatus IS NULL OR c.integratorStatus NOT LIKE 'COMPLETED' AND c.integratorStatus NOT LIKE 'ERROR' ORDER BY c.id DESC";
-
-		Query query = entityManager.createQuery(queryStr);
-		
-		List<IntegratorFileLog> results = query.getResultList();
-		if(results == null) {
-			results = Collections.emptyList();
-		}
-		
-		return results;
-	}
+	public List<IntegratorFileLog> findAllWithNoCompletedOrErrorIntegratorStatus();
 
 }
