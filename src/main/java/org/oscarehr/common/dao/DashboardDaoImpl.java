@@ -24,23 +24,41 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
 import javax.persistence.Query;
-
-import org.oscarehr.common.model.MsgDemoMap;
+import org.oscarehr.common.model.Dashboard;
 import org.springframework.stereotype.Repository;
 
-public interface MsgDemoMapDao extends AbstractDao<MsgDemoMap> {
+@Repository
+public class DashboardDaoImpl extends AbstractDaoImpl<Dashboard> implements DashboardDao {
 
-	public List<MsgDemoMap> findByDemographicNo(Integer demographicNo);
+    public DashboardDaoImpl() {
+        super(Dashboard.class);
+    }
 
-	public List<MsgDemoMap> findByMessageId(Integer messageId);
+    @Override
+    public List<Dashboard> getActiveDashboards() {
+        return getDashboardsByStatus(Boolean.TRUE);
+    }
 
-	public List<Object[]> getMessagesAndDemographicsByMessageId(Integer messageId);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Dashboard> getDashboardsByStatus(boolean status) {
+        Query query = entityManager.createQuery("SELECT x FROM Dashboard x WHERE x.active = :status");
+        query.setParameter("status", status);
+        List<Dashboard> result = query.getResultList();
+        return result;
+    }
 
-	public List<Object[]> getMapAndMessagesByDemographicNo(Integer demoNo);
+    /**
+     * This is a safe operation because the database is not expected to grow
+     * large enough to cause performance issues.
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Dashboard> getDashboards() {
+        Query query = entityManager.createQuery("SELECT x FROM Dashboard x");
+        List<Dashboard> result = query.getResultList();
+        return result;
+    }
 
-	public List<Object[]> getMapAndMessagesByDemographicNoAndType(Integer demoNo, Integer type);
-
-	public void remove(Integer messageID, Integer demographicNo);
 }

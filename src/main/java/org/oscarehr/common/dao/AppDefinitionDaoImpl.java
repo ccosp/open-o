@@ -27,20 +27,33 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.MsgDemoMap;
+import org.oscarehr.common.model.AppDefinition;
 import org.springframework.stereotype.Repository;
 
-public interface MsgDemoMapDao extends AbstractDao<MsgDemoMap> {
+@Repository
+public class AppDefinitionDaoImpl extends AbstractDaoImpl<AppDefinition> implements AppDefinitionDao{
 
-	public List<MsgDemoMap> findByDemographicNo(Integer demographicNo);
-
-	public List<MsgDemoMap> findByMessageId(Integer messageId);
-
-	public List<Object[]> getMessagesAndDemographicsByMessageId(Integer messageId);
-
-	public List<Object[]> getMapAndMessagesByDemographicNo(Integer demoNo);
-
-	public List<Object[]> getMapAndMessagesByDemographicNoAndType(Integer demoNo, Integer type);
-
-	public void remove(Integer messageID, Integer demographicNo);
+	public AppDefinitionDaoImpl()  {
+		super(AppDefinition.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+    @Override
+	public List<AppDefinition> findAll() {
+		Query query = createQuery("x", null);
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+    @Override
+	public AppDefinition findByName(String name) {
+		Query query = entityManager.createQuery("select x from AppDefinition x where x.name = ?1");
+		query.setParameter(1,name);
+		
+		List<AppDefinition> list = query.getResultList();
+		if (list == null || list.isEmpty()){
+			return null;
+		}
+		return list.get(0); 
+	}
 }

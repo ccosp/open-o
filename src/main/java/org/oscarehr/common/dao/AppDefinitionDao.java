@@ -30,28 +30,8 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.AppDefinition;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class AppDefinitionDao extends AbstractDaoImpl<AppDefinition>{
+public interface AppDefinitionDao extends AbstractDao<AppDefinition>{
 
-	public AppDefinitionDao()  {
-		super(AppDefinition.class);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<AppDefinition> findAll() {
-		Query query = createQuery("x", null);
-		return query.getResultList();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public AppDefinition findByName(String name) {
-		Query query = entityManager.createQuery("select x from AppDefinition x where x.name = ?1");
-		query.setParameter(1,name);
-		
-		List<AppDefinition> list = query.getResultList();
-		if (list == null || list.isEmpty()){
-			return null;
-		}
-		return list.get(0); 
-	}
+	public List<AppDefinition> findAll();
+	public AppDefinition findByName(String name);
 }

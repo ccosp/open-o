@@ -28,34 +28,11 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.Dashboard;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class DashboardDao extends AbstractDaoImpl<Dashboard> {
+public interface DashboardDao extends AbstractDao<Dashboard> {
 
-	public DashboardDao() {
-		super(Dashboard.class);
-	}
-	
-	public List<Dashboard> getActiveDashboards() {
-		return  getDashboardsByStatus(Boolean.TRUE);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Dashboard> getDashboardsByStatus(boolean status) {
-		Query query = entityManager.createQuery("SELECT x FROM Dashboard x WHERE x.active = :status");
-		query.setParameter("status", status);
-		List<Dashboard> result = query.getResultList();
-		return result;
-	}
-	
-	/**
-	 * This is a safe operation because the database is not expected to grow
-	 * large enough to cause performance issues.
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Dashboard> getDashboards() {
-		Query query = entityManager.createQuery("SELECT x FROM Dashboard x");
-		List<Dashboard> result = query.getResultList();
-		return result;
-	}
+	public List<Dashboard> getActiveDashboards();
 
+	public List<Dashboard> getDashboardsByStatus(boolean status);
+
+	public List<Dashboard> getDashboards();
 }

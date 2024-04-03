@@ -34,9 +34,36 @@ import org.oscarehr.common.model.AppointmentArchive;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
-public interface AppointmentArchiveDao extends AbstractDao<AppointmentArchive> {
+@Repository
+public class AppointmentArchiveDaoImpl extends AbstractDaoImpl<AppointmentArchive> implements AppointmentArchiveDao {
 
-	public AppointmentArchive archiveAppointment(Appointment appointment);
+    public AppointmentArchiveDaoImpl() {
+        super(AppointmentArchive.class);
+    }
 
-	public List<AppointmentArchive> findByUpdateDate(Date updatedAfterThisDateExclusive, int itemsToReturn);
+    @Override
+    public AppointmentArchive archiveAppointment(Appointment appointment) {
+        AppointmentArchive aa = new AppointmentArchive();
+        BeanUtils.copyProperties(appointment, aa, new String[] { "id" });
+        aa.setAppointmentNo(appointment.getId());
+        persist(aa);
+        return aa;
+    }
+
+    /**
+     * @return results ordered by lastUpdateDate
+     */
+    @Override
+    public List<AppointmentArchive> findByUpdateDate(Date updatedAfterThisDateExclusive, int itemsToReturn) {
+        String sqlCommand = "select x from " + modelClass.getSimpleName()
+                + " x where x.updateDateTime>?1 order by x.updateDateTime";
+
+        Query query = entityManager.createQuery(sqlCommand);
+        query.setParameter(1, updatedAfterThisDateExclusive);
+        setLimit(query, itemsToReturn);
+
+        @SuppressWarnings("unchecked")
+        List<AppointmentArchive> results = query.getResultList();
+        return (results);
+    }
 }
