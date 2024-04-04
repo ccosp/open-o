@@ -77,18 +77,14 @@
 
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/messenger/messenger.js"> </script>
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.js"> </script>
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger.css"> </link>
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.css"> </link>
+<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger.css"/>
+<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.css"/>
 
 <script type="text/javascript" src="newEncounterLayout.js.jsp"> </script>
 	
 <%-- for popup menu of forms --%>
 <script src="<c:out value="${ctx}"/>/share/javascript/popupmenu.js" type="text/javascript"></script>
 <script src="<c:out value="${ctx}"/>/share/javascript/menutility.js" type="text/javascript"></script>
-
-<!-- library for rounded elements -->
-<%--<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/share/css/niftyCorners.css" />">--%>
-<%--<script type="text/javascript" src="<c:out value="${ctx}/share/javascript/nifty.js"/>"></script>--%>
 
 <!-- calendar stylesheet -->
 <link rel="stylesheet" type="text/css" media="all" href="<c:out value="${ctx}"/>/share/calendar/calendar.css" title="win2k-cold-1">
@@ -107,10 +103,6 @@
 
 <!-- scriptaculous based select box -->
 <script type="text/javascript" src="<c:out value="${ctx}/share/javascript/select.js"/>"></script>
-
-<!-- phr popups -->
-<%--<script type="text/javascript" src="<c:out value="${ctx}/phr/phr.js"/>"></script>--%>
-
 
 <link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/css/oscarRx.css" />">
 
