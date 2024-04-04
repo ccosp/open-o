@@ -23,40 +23,49 @@
  */
 package org.oscarehr.common.dao;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Query;
+
 import org.oscarehr.common.model.CustomFilter;
+import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.Tickler;
+import org.springframework.stereotype.Repository;
 
-public interface TicklerDao extends AbstractDao<Tickler>{
+public interface TicklerDao extends AbstractDao<Tickler> {
 
-	Tickler find(Integer id);
+	public Tickler find(Integer id);
 
-	List<Tickler> findActiveByMessageForPatients(List<Integer> demographicNos, String remString);
+	public List<Tickler> findActiveByMessageForPatients(List<Integer> demographicNos, String remString);
 
-	List<Tickler> findActiveByDemographicNoAndMessage(Integer demoNo, String message);
+	public List<Tickler> findActiveByDemographicNoAndMessage(Integer demoNo, String message);
 
-	List<Tickler> findActiveByDemographicNo(Integer demoNo);
+	public List<Tickler> findActiveByDemographicNo(Integer demoNo);
 
-	List<Tickler> findByTicklerNoDemo(Integer ticklerNo, Integer demoNo);
+	public List<Tickler> findByTicklerNoDemo(Integer ticklerNo, Integer demoNo);
 
-	List<Tickler> findByTicklerNoAssignedTo(Integer ticklerNo, String assignedTo, Integer demoNo);
+	public List<Tickler> findByTicklerNoAssignedTo(Integer ticklerNo, String assignedTo, Integer demoNo);
 
-	List<Tickler> findByDemographicIdTaskAssignedToAndMessage(Integer demographicNo, String taskAssignedTo, String message);
+	public List<Tickler> findByDemographicIdTaskAssignedToAndMessage(Integer demographicNo, String taskAssignedTo,
+			String message);
 
-	List<Tickler> search_tickler_bydemo(Integer demographicNo, String status, Date beginDate, Date endDate);
+	public List<Tickler> search_tickler_bydemo(Integer demographicNo, String status, Date beginDate, Date endDate);
 
-	List<Tickler> search_tickler(Integer demographicNo, Date endDate);
+	public List<Tickler> search_tickler(Integer demographicNo, Date endDate);
 
-	List<Tickler> listTicklers(Integer demographicNo, Date beginDate, Date endDate);
+	public List<Tickler> listTicklers(Integer demographicNo, Date beginDate, Date endDate);
 
-	int getActiveTicklerCount(String providerNo);
+	public int getActiveTicklerCount(String providerNo);
 
-	int getActiveTicklerByDemoCount(Integer demographicNo);
+	public int getActiveTicklerByDemoCount(Integer demographicNo);
 
-	List<Tickler> getTicklers(CustomFilter filter, int offset, int limit);
+	public List<Tickler> getTicklers(CustomFilter filter, int offset, int limit);
 
-	List<Tickler> getTicklers(CustomFilter filter);
+	public List<Tickler> getTicklers(CustomFilter filter);
 
-	int getNumTicklers(CustomFilter filter);
+	public int getNumTicklers(CustomFilter filter);
 }

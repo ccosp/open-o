@@ -24,7 +24,8 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.TicklerUpdate;
+import org.springframework.stereotype.Repository;
 
 public interface TicklerUpdateDao extends AbstractDao<TicklerUpdate> {
-	
+
 }

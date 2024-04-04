@@ -24,8 +24,12 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+
+import javax.persistence.Query;
 import org.oscarehr.common.model.TicklerCategory;
+import org.springframework.stereotype.Repository;
 
 public interface TicklerCategoryDao extends AbstractDao<TicklerCategory> {
-	List<TicklerCategory> getActiveCategories();
+	
+	public List<TicklerCategory> getActiveCategories();
 }

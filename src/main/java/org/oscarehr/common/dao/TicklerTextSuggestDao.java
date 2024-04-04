@@ -25,9 +25,12 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.TicklerTextSuggest;
+import org.springframework.stereotype.Repository;
 
-public interface TicklerTextSuggestDao extends AbstractDao<TicklerTextSuggest> {
-    List<TicklerTextSuggest> getActiveTicklerTextSuggests();
-    List<TicklerTextSuggest> getInactiveTicklerTextSuggests();
+public interface TicklerTextSuggestDao extends AbstractDao<TicklerTextSuggest>{
+
+    public List<TicklerTextSuggest> getActiveTicklerTextSuggests();
+    public List<TicklerTextSuggest> getInactiveTicklerTextSuggests();
 }

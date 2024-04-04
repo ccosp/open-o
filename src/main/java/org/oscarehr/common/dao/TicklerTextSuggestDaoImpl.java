@@ -31,26 +31,30 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TicklerTextSuggestDaoImpl extends AbstractDaoImpl<TicklerTextSuggest> implements TicklerTextSuggestDao {
-    
+
     public TicklerTextSuggestDaoImpl() {
-	super(TicklerTextSuggest.class);
+        super(TicklerTextSuggest.class);
     }
 
+    @Override
     public List<TicklerTextSuggest> getActiveTicklerTextSuggests() {
-        Query query = entityManager.createQuery("SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
-        query.setParameter(1,true);
+        Query query = entityManager.createQuery(
+                "SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
+        query.setParameter(1, true);
 
-	@SuppressWarnings("unchecked")
-	List<TicklerTextSuggest> results = query.getResultList();
-	return results;
+        @SuppressWarnings("unchecked")
+        List<TicklerTextSuggest> results = query.getResultList();
+        return results;
     }
-    
-    public List<TicklerTextSuggest> getInactiveTicklerTextSuggests() {
-        Query query = entityManager.createQuery("SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
-        query.setParameter(1,false);
 
-	@SuppressWarnings("unchecked")
-	List<TicklerTextSuggest> results = query.getResultList();
-	return results;
-    }          
+    @Override
+    public List<TicklerTextSuggest> getInactiveTicklerTextSuggests() {
+        Query query = entityManager.createQuery(
+                "SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
+        query.setParameter(1, false);
+
+        @SuppressWarnings("unchecked")
+        List<TicklerTextSuggest> results = query.getResultList();
+        return results;
+    }
 }
