@@ -30,28 +30,10 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.CtlDocument;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class CtlDocumentDao extends AbstractDaoImpl<CtlDocument>{
+public interface CtlDocumentDao extends AbstractDao<CtlDocument> {
 
-	public CtlDocumentDao() {
-		super(CtlDocument.class);
-	}
-	
-	public CtlDocument getCtrlDocument(Integer docId) {
-		Query query = entityManager.createQuery("select x from CtlDocument x where x.id.documentNo=?");
-		query.setParameter(1, docId);
-		
-		return(getSingleResultOrNull(query));
-	}
+	public CtlDocument getCtrlDocument(Integer docId);
 
-    public List<CtlDocument> findByDocumentNoAndModule(Integer ctlDocNo, String module) {
-		Query query = entityManager.createQuery("select x from CtlDocument x where x.id.documentNo=? and x.id.module = ?");
-		query.setParameter(1, ctlDocNo);
-		query.setParameter(2, module);
-		
-		@SuppressWarnings("unchecked")
-        List<CtlDocument> cList = query.getResultList();
-		return cList;
-    }
+	public List<CtlDocument> findByDocumentNoAndModule(Integer ctlDocNo, String module);
 
 }

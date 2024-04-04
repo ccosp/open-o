@@ -23,18 +23,13 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.CVCMedication;
+import org.oscarehr.common.model.ProductLocation;
 import org.springframework.stereotype.Repository;
 
-public interface CVCMedicationDao extends AbstractDao<CVCMedication> {
+@Repository
+public class ProductLocationDaoImpl extends AbstractDaoImpl<ProductLocation> implements ProductLocationDao {
 
-	public List<CVCMedication> findByDIN(String din);
-
-	public CVCMedication findBySNOMED(String conceptId);
-
-	public void removeAll();
+    public ProductLocationDaoImpl() {
+        super(ProductLocation.class);
+    }
 }

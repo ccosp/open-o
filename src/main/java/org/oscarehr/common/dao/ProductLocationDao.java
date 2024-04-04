@@ -26,10 +26,6 @@ package org.oscarehr.common.dao;
 import org.oscarehr.common.model.ProductLocation;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class ProductLocationDao extends AbstractDaoImpl<ProductLocation> {
+public interface ProductLocationDao extends AbstractDao<ProductLocation> {
 
-	public ProductLocationDao() {
-		super(ProductLocation.class);
-	}
 }

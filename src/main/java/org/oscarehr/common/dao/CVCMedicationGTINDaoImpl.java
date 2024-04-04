@@ -27,14 +27,27 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.CVCMedication;
+import org.oscarehr.common.model.CVCMedicationGTIN;
 import org.springframework.stereotype.Repository;
 
-public interface CVCMedicationDao extends AbstractDao<CVCMedication> {
+@Repository
+public class CVCMedicationGTINDaoImpl extends AbstractDaoImpl<CVCMedicationGTIN> implements CVCMedicationGTINDao {
 
-	public List<CVCMedication> findByDIN(String din);
+    public CVCMedicationGTINDaoImpl() {
+        super(CVCMedicationGTIN.class);
+    }
 
-	public CVCMedication findBySNOMED(String conceptId);
+    @Override
+    public void removeAll() {
+        Query query = entityManager.createQuery("DELETE FROM CVCMedicationGTIN");
+        query.executeUpdate();
+    }
 
-	public void removeAll();
+    @Override
+    public List<CVCMedicationGTIN> query(String term) {
+        Query query = entityManager.createQuery("SELECT x FROM CVCMedicationGTIN x WHERE x.gtin = :term");
+        query.setParameter("term", term);
+        List<CVCMedicationGTIN> results = query.getResultList();
+        return results;
+    }
 }
