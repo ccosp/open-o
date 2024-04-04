@@ -4,7 +4,7 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * of the License, or (at your option) any later version. 
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,17 +21,29 @@
  * Hamilton
  * Ontario, Canada
  */
+
 package org.oscarehr.common.dao;
 
 import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.DrugDispensing;
+import org.oscarehr.common.model.Groups;
 import org.springframework.stereotype.Repository;
 
-public interface DrugDispensingDao extends AbstractDao<DrugDispensing>{
-	
-	public List<DrugDispensing> findByDrugId(Integer drugId);
+@Repository
+public class GroupsDaoImpl extends AbstractDaoImpl<Groups> implements GroupsDao {
+
+    public GroupsDaoImpl() {
+        super(Groups.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Groups> findByParentId(int groupId) {
+        Query query = createQuery("g", "g.parentId = :id");
+        query.setParameter("id", groupId);
+        return query.getResultList();
+    }
 
 }

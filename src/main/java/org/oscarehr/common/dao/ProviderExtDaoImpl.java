@@ -23,15 +23,13 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.DrugDispensing;
+import org.oscarehr.casemgmt.model.ProviderExt;
 import org.springframework.stereotype.Repository;
 
-public interface DrugDispensingDao extends AbstractDao<DrugDispensing>{
-	
-	public List<DrugDispensing> findByDrugId(Integer drugId);
+@Repository
+public class ProviderExtDaoImpl extends AbstractDaoImpl<ProviderExt> implements ProviderExtDao {
 
+    public ProviderExtDaoImpl() {
+        super(ProviderExt.class);
+    }
 }
