@@ -26,10 +26,6 @@ package org.oscarehr.common.dao;
 import org.oscarehr.common.model.DrugProductTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class DrugProductTemplateDao extends AbstractDaoImpl<DrugProductTemplate> {
+public interface DrugProductTemplateDao extends AbstractDao<DrugProductTemplate> {
 
-	public DrugProductTemplateDao() {
-		super(DrugProductTemplate.class);
-	}
 }

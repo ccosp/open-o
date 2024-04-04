@@ -27,14 +27,34 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.CVCMedication;
+import org.oscarehr.common.model.CtlDocument;
 import org.springframework.stereotype.Repository;
 
-public interface CVCMedicationDao extends AbstractDao<CVCMedication> {
+@Repository
+public class CtlDocumentDaoImpl extends AbstractDaoImpl<CtlDocument> implements CtlDocumentDao {
 
-	public List<CVCMedication> findByDIN(String din);
+    public CtlDocumentDaoImpl() {
+        super(CtlDocument.class);
+    }
 
-	public CVCMedication findBySNOMED(String conceptId);
+    @Override
+    public CtlDocument getCtrlDocument(Integer docId) {
+        Query query = entityManager.createQuery("select x from CtlDocument x where x.id.documentNo=?");
+        query.setParameter(1, docId);
 
-	public void removeAll();
+        return (getSingleResultOrNull(query));
+    }
+
+    @Override
+    public List<CtlDocument> findByDocumentNoAndModule(Integer ctlDocNo, String module) {
+        Query query = entityManager
+                .createQuery("select x from CtlDocument x where x.id.documentNo=? and x.id.module = ?");
+        query.setParameter(1, ctlDocNo);
+        query.setParameter(2, module);
+
+        @SuppressWarnings("unchecked")
+        List<CtlDocument> cList = query.getResultList();
+        return cList;
+    }
+
 }

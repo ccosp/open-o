@@ -27,14 +27,38 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.CVCMedication;
+import org.oscarehr.common.model.CVCMedicationLotNumber;
 import org.springframework.stereotype.Repository;
 
-public interface CVCMedicationDao extends AbstractDao<CVCMedication> {
+@Repository
+public class CVCMedicationLotNumberDaoImpl extends AbstractDaoImpl<CVCMedicationLotNumber>
+        implements CVCMedicationLotNumberDao {
 
-	public List<CVCMedication> findByDIN(String din);
+    public CVCMedicationLotNumberDaoImpl() {
+        super(CVCMedicationLotNumber.class);
+    }
 
-	public CVCMedication findBySNOMED(String conceptId);
+    @Override
+    public void removeAll() {
+        Query query = entityManager.createQuery("DELETE FROM CVCMedicationLotNumber");
+        query.executeUpdate();
+    }
 
-	public void removeAll();
+    @Override
+    public CVCMedicationLotNumber findByLotNumber(String lotNumber) {
+        Query query = entityManager.createQuery("SELECT x FROM CVCMedicationLotNumber x WHERE x.lotNumber = :ln");
+        query.setParameter("ln", lotNumber);
+
+        CVCMedicationLotNumber result = this.getSingleResultOrNull(query);
+
+        return result;
+    }
+
+    @Override
+    public List<CVCMedicationLotNumber> query(String term) {
+        Query query = entityManager.createQuery("SELECT x FROM CVCMedicationLotNumber x WHERE x.lotNumber like :term");
+        query.setParameter("term", term + "%");
+        List<CVCMedicationLotNumber> results = query.getResultList();
+        return results;
+    }
 }
