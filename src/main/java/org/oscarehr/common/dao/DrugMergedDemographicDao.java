@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 import oscar.util.ConversionUtils;
 
 @Repository("drugDao")
-public class DrugMergedDemographicDao extends DrugDao {
+public class DrugMergedDemographicDao extends DrugDaoImpl {
 
 	@Override
 	public List<Drug> findByDemographicId(Integer demographicId) {
@@ -87,36 +87,45 @@ public class DrugMergedDemographicDao extends DrugDao {
 	}
 
 	@Override
-	public List<Drug> findByDemographicIdSimilarDrugOrderByDate(Integer demographicId, final String regionalIdentifier, final String customName) {
-		List<Drug> result = super.findByDemographicIdSimilarDrugOrderByDate(demographicId, regionalIdentifier, customName);
+	public List<Drug> findByDemographicIdSimilarDrugOrderByDate(Integer demographicId, final String regionalIdentifier,
+			final String customName) {
+		List<Drug> result = super.findByDemographicIdSimilarDrugOrderByDate(demographicId, regionalIdentifier,
+				customName);
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName);
+				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no,
+						regionalIdentifier, customName);
 			}
 		};
 		return template.findMerged(demographicId, result);
 	}
 
 	@Override
-	public List<Drug> findByDemographicIdSimilarDrugOrderByDate(Integer demographicId, final String regionalIdentifier, final String customName, final String brandName) {
-		List<Drug> result = super.findByDemographicIdSimilarDrugOrderByDate(demographicId, regionalIdentifier, customName, brandName);
+	public List<Drug> findByDemographicIdSimilarDrugOrderByDate(Integer demographicId, final String regionalIdentifier,
+			final String customName, final String brandName) {
+		List<Drug> result = super.findByDemographicIdSimilarDrugOrderByDate(demographicId, regionalIdentifier,
+				customName, brandName);
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName, brandName);
+				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no,
+						regionalIdentifier, customName, brandName);
 			}
 		};
 		return template.findMerged(demographicId, result);
 	}
 
 	@Override
-	public List<Drug> findByDemographicIdSimilarDrugOrderByDate(Integer demographicId, final String regionalIdentifier, final String customName, final String brandName, final String atc) {
-		List<Drug> result = super.findByDemographicIdSimilarDrugOrderByDate(demographicId, regionalIdentifier, customName, brandName, atc);
+	public List<Drug> findByDemographicIdSimilarDrugOrderByDate(Integer demographicId, final String regionalIdentifier,
+			final String customName, final String brandName, final String atc) {
+		List<Drug> result = super.findByDemographicIdSimilarDrugOrderByDate(demographicId, regionalIdentifier,
+				customName, brandName, atc);
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName, brandName, atc);
+				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no,
+						regionalIdentifier, customName, brandName, atc);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -126,13 +135,16 @@ public class DrugMergedDemographicDao extends DrugDao {
 	public List<Drug> getUniquePrescriptions(final String demographic_no) {
 		List<Drug> result = super.getUniquePrescriptions(demographic_no);
 		// super.getUniquePrescriptions already finds all the necessary prescriptions
-//		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
-//			@Override
-//			public List<Drug> findById(Integer demographic_no) {
-//				return DrugMergedDemographicDao.super.getUniquePrescriptions(demographic_no.toString());
-//			}
-//		};
-//		return template.findMerged(ConversionUtils.fromIntString(demographic_no), result);
+		// MergedDemographicTemplate<Drug> template = new
+		// MergedDemographicTemplate<Drug>() {
+		// @Override
+		// public List<Drug> findById(Integer demographic_no) {
+		// return
+		// DrugMergedDemographicDao.super.getUniquePrescriptions(demographic_no.toString());
+		// }
+		// };
+		// return template.findMerged(ConversionUtils.fromIntString(demographic_no),
+		// result);
 		return result;
 	}
 
@@ -166,7 +178,8 @@ public class DrugMergedDemographicDao extends DrugDao {
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdUpdatedAfterDate(demographic_no, updatedAfterThisDate);
+				return DrugMergedDemographicDao.super.findByDemographicIdUpdatedAfterDate(demographic_no,
+						updatedAfterThisDate);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -222,36 +235,43 @@ public class DrugMergedDemographicDao extends DrugDao {
 	}
 
 	@Override
-	public List<Drug> findByRegionBrandDemographicAndProvider(final String regionalIdentifier, final String brandName, int demographicNo, final String providerNo) {
-		List<Drug> result = super.findByRegionBrandDemographicAndProvider(regionalIdentifier, brandName, demographicNo, providerNo);
+	public List<Drug> findByRegionBrandDemographicAndProvider(final String regionalIdentifier, final String brandName,
+			int demographicNo, final String providerNo) {
+		List<Drug> result = super.findByRegionBrandDemographicAndProvider(regionalIdentifier, brandName, demographicNo,
+				providerNo);
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByRegionBrandDemographicAndProvider(regionalIdentifier, brandName, demographic_no, providerNo);
+				return DrugMergedDemographicDao.super.findByRegionBrandDemographicAndProvider(regionalIdentifier,
+						brandName, demographic_no, providerNo);
 			}
 		};
 		return template.findMerged(demographicNo, result);
 	}
 
 	@Override
-	public Drug findByBrandNameDemographicAndProvider(final String brandName, int demographicNo, final String providerNo) {
+	public Drug findByBrandNameDemographicAndProvider(final String brandName, int demographicNo,
+			final String providerNo) {
 		Drug result = super.findByBrandNameDemographicAndProvider(brandName, demographicNo, providerNo);
 		MergedDemographicSingleResultTemplate<Drug> template = new MergedDemographicSingleResultTemplate<Drug>() {
 			@Override
 			protected Drug findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByBrandNameDemographicAndProvider(brandName, demographic_no, providerNo);
+				return DrugMergedDemographicDao.super.findByBrandNameDemographicAndProvider(brandName, demographic_no,
+						providerNo);
 			}
 		};
 		return template.findMerged(demographicNo, result);
 	}
 
 	@Override
-	public Drug findByCustomNameDemographicIdAndProviderNo(final String customName, int demographicNo, final String providerNo) {
+	public Drug findByCustomNameDemographicIdAndProviderNo(final String customName, int demographicNo,
+			final String providerNo) {
 		Drug result = super.findByCustomNameDemographicIdAndProviderNo(customName, demographicNo, providerNo);
 		MergedDemographicSingleResultTemplate<Drug> template = new MergedDemographicSingleResultTemplate<Drug>() {
 			@Override
 			protected Drug findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByCustomNameDemographicIdAndProviderNo(customName, demographic_no, providerNo);
+				return DrugMergedDemographicDao.super.findByCustomNameDemographicIdAndProviderNo(customName,
+						demographic_no, providerNo);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -270,12 +290,14 @@ public class DrugMergedDemographicDao extends DrugDao {
 	}
 
 	@Override
-	public Drug findByDemographicIdRegionalIdentifierAndAtcCode(final String atcCode, final String regionalIdentifier, int demographicNo) {
+	public Drug findByDemographicIdRegionalIdentifierAndAtcCode(final String atcCode, final String regionalIdentifier,
+			int demographicNo) {
 		Drug result = super.findByDemographicIdRegionalIdentifierAndAtcCode(atcCode, regionalIdentifier, demographicNo);
 		MergedDemographicSingleResultTemplate<Drug> template = new MergedDemographicSingleResultTemplate<Drug>() {
 			@Override
 			protected Drug findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdRegionalIdentifierAndAtcCode(atcCode, regionalIdentifier, demographic_no);
+				return DrugMergedDemographicDao.super.findByDemographicIdRegionalIdentifierAndAtcCode(atcCode,
+						regionalIdentifier, demographic_no);
 			}
 		};
 		return template.findMerged(demographicNo, result);

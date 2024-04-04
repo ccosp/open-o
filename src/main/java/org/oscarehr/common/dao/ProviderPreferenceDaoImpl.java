@@ -23,39 +23,15 @@
 
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.EForm;
+import org.oscarehr.common.dao.AbstractDaoImpl;
+import org.oscarehr.common.dao.ProviderPreferenceDao;
+import org.oscarehr.common.model.ProviderPreference;
 import org.springframework.stereotype.Repository;
 
-public interface EFormDao extends AbstractDao<EForm> {
+@Repository
+public class ProviderPreferenceDaoImpl extends AbstractDaoImpl<ProviderPreference> implements ProviderPreferenceDao {
 
-	public enum EFormSortOrder {
-		DATE, NAME, SUBJECT, FILE_NAME;
-	}
-
-	public EForm findByName(String name);
-
-	public List<EForm> findByNameSimilar(String name);
-
-	public EForm findById(Integer formId);
-
-	public List<EForm> findAll(Boolean current);
-
-	public boolean isIndivicaRTLEnabled();
-
-	public void setIndivicaRTLEnabled(boolean enabled);
-
-	public List<EForm> findByStatus(boolean status);
-
-	public List<EForm> findByStatus(boolean status, EFormSortOrder sortOrder);
-
-	public Integer findMaxIdForActiveForm(String formName);
-
-	public Long countFormsOtherThanSpecified(String formName, Integer id);
-
-	public List<EForm> getEfromInGroupByGroupName(String groupName);
+    public ProviderPreferenceDaoImpl() {
+        super(ProviderPreference.class);
+    }
 }

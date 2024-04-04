@@ -51,342 +51,49 @@ import com.quatro.model.security.Secuserrole;
  * @author MyEclipse Persistence Tools
  */
 
-public class SecuserroleDao extends HibernateDaoSupport {
-	private static final Logger logger = MiscUtils.getLogger();
-	// property constants
+public interface SecuserroleDao {
 	public static final String PROVIDER_NO = "providerNo";
 	public static final String ROLE_NAME = "roleName";
 	public static final String ORGCD = "orgcd";
 	public static final String ACTIVEYN = "activeyn";
-	public SessionFactory sessionFactory;
 
-	@Autowired
-    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
-        super.setSessionFactory(sessionFactory);
-    }
+	public void saveAll(List list);
 
-	public void saveAll(List list) {
-		logger.debug("saving ALL Secuserrole instances");
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			for(int i =0; i< list.size(); i++){
-				Secuserrole obj = (Secuserrole)list.get(i);
-				obj.setLastUpdateDate(new Date());
-				int rowcount = update(obj);
+	public void save(Secuserrole transientInstance);
 
-				if(rowcount <= 0){
-					session.save(obj);
-				}
+	public void updateRoleName(Integer id, String roleName);
 
-			}
-			//this.getHibernateTemplate().saveOrUpdateAll(list);
-			logger.debug("save ALL successful");
-		} catch (RuntimeException re) {
-			logger.error("save ALL failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
-	public void save(Secuserrole transientInstance) {
-		logger.debug("saving Secuserrole instance");
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			transientInstance.setLastUpdateDate(new Date());
-			session.saveOrUpdate(transientInstance);
-			logger.debug("save successful");
-		} catch (RuntimeException re) {
-			logger.error("save failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
+	public void delete(Secuserrole persistentInstance);
 
-	public void updateRoleName(Integer id, String roleName) {
-		Secuserrole sur = this.getHibernateTemplate().get(Secuserrole.class, id);
-		if(sur != null) {
-			sur.setRoleName(roleName);
-			sur.setLastUpdateDate(new Date());
-			this.getHibernateTemplate().update(sur);
-		}
-	}
+	public int deleteByOrgcd(String orgcd);
 
-	public void delete(Secuserrole persistentInstance) {
-		logger.debug("deleting Secuserrole instance");
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			session.delete(persistentInstance);
-			logger.debug("delete successful");
-		} catch (RuntimeException re) {
-			logger.error("delete failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
-	public int deleteByOrgcd(String orgcd) {
-		logger.debug("deleting Secuserrole by orgcd");
-		try {
+	public int deleteByProviderNo(String providerNo);
 
-			return getHibernateTemplate().bulkUpdate("delete Secuserrole as model where model.orgcd =?", orgcd);
+	public int deleteById(Integer id);
 
-		} catch (RuntimeException re) {
-			logger.error("delete failed", re);
-			throw re;
-		}
-	}
-	public int deleteByProviderNo(String providerNo) {
-		logger.debug("deleting Secuserrole by providerNo");
-		try {
+	public int update(Secuserrole instance);
 
-			return getHibernateTemplate().bulkUpdate("delete Secuserrole as model where model.providerNo =?", providerNo);
+	public Secuserrole findById(java.lang.Integer id);
 
-		} catch (RuntimeException re) {
-			logger.error("delete failed", re);
-			throw re;
-		}
-	}
+	public List findByExample(Secuserrole instance);
 
-	public int deleteById(Integer id) {
-		logger.debug("deleting Secuserrole by ID");
-		try {
+	public List findByProperty(String propertyName, Object value);
 
-			return getHibernateTemplate().bulkUpdate("delete Secuserrole as model where model.id =?", id);
+	public List findByProviderNo(Object providerNo);
 
-		} catch (RuntimeException re) {
-			logger.error("delete failed", re);
-			throw re;
-		}
-	}
-	public int update(Secuserrole instance) {
-		logger.debug("Update Secuserrole instance");
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			String queryString = "update Secuserrole as model set model.activeyn ='" + instance.getActiveyn() + "' , lastUpdateDate=now() "
-				+ " where model.providerNo ='" + instance.getProviderNo() + "'"
-				+ " and model.roleName ='" + instance.getRoleName() + "'"
-				+ " and model.orgcd ='" + instance.getOrgcd() + "'";
+	public List findByRoleName(Object roleName);
 
-			Query queryObject = session.createQuery(queryString);
+	public List findByOrgcd(Object orgcd, boolean activeOnly);
 
-			return queryObject.executeUpdate();
+	public List searchByCriteria(StaffForm staffForm);
 
-		} catch (RuntimeException re) {
-			logger.error("Update failed", re);
-			throw re;
-		}
-	}
-	public Secuserrole findById(java.lang.Integer id) {
-		logger.debug("getting Secuserrole instance with id: " + id);
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			Secuserrole instance = (Secuserrole) session.get(
-					"com.quatro.model.security.Secuserrole", id);
-			return instance;
-		} catch (RuntimeException re) {
-			logger.error("get failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
+	public List findByActiveyn(Object activeyn);
 
-	public List findByExample(Secuserrole instance) {
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		logger.debug("finding Secuserrole instance by example");
-		try {
-			List results = session.createCriteria(
-					"com.quatro.model.security.Secuserrole").add(
-					Example.create(instance)).list();
-			logger.debug("find by example successful, result size: "
-					+ results.size());
-			return results;
-		} catch (RuntimeException re) {
-			logger.error("find by example failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
+	public List findAll();
 
-	public List findByProperty(String propertyName, Object value) {
-		logger.debug("finding Secuserrole instance with property: " + propertyName
-				+ ", value: " + value);
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			String queryString = "from Secuserrole as model where model."
-					+ propertyName + "= ?";
-			Query queryObject = session.createQuery(queryString);
-			queryObject.setParameter(0, value);
-			return queryObject.list();
-		} catch (RuntimeException re) {
-			logger.error("find by property name failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
+	public Secuserrole merge(Secuserrole detachedInstance);
 
-	public List findByProviderNo(Object providerNo) {
-		return findByProperty(PROVIDER_NO, providerNo);
-	}
+	public void attachDirty(Secuserrole instance);
 
-	public List findByRoleName(Object roleName) {
-		return findByProperty(ROLE_NAME, roleName);
-	}
-
-	public List findByOrgcd(Object orgcd, boolean activeOnly) {
-		//return findByProperty(ORGCD, orgcd);
-		/* SQL:
-		select * from secUserRole s,
-		(select codecsv from lst_orgcd where code = 'P200011') b
-		where b.codecsv like '%' || s.orgcd || ',%'
-		and not (s.orgcd like 'R%' or s.orgcd like 'O%')
-
-		*/
-		logger.debug("Find staff instance .");
-		try {
-
-			String queryString = "select a from Secuserrole a, LstOrgcd b, SecProvider p"
-				+ " where a.providerNo=p.providerNo and b.code ='" + orgcd + "'";
-			if (activeOnly) queryString += " and p.status='1'";
-
-			queryString = queryString
-				+ " and b.codecsv like '%' || a.orgcd || ',%'"
-				+ " and not (a.orgcd like 'R%' or a.orgcd like 'O%')";
-
-
-			return this.getHibernateTemplate().find(queryString);
-
-		} catch (RuntimeException re) {
-			logger.error("Find staff failed", re);
-			throw re;
-		}
-
-	}
-	public List searchByCriteria(StaffForm staffForm){
-
-		logger.debug("Search staff instance .");
-		try {
-
-
-			String AND = " and ";
-			//String OR = " or ";
-
-
-			String orgcd = staffForm.getOrgcd();
-
-			String queryString = "select a from Secuserrole a, LstOrgcd b"
-				+ " where b.code ='" + orgcd + "'"
-				+ " and b.codecsv like '%' || a.orgcd || ',%'"
-				+ " and not (a.orgcd like 'R%' or a.orgcd like 'O%')";
-
-			String fname = staffForm.getFirstName();
-			String lname = staffForm.getLastName();
-
-			if (fname != null && fname.length() > 0) {
-				fname = StringEscapeUtils.escapeSql(fname);
-				fname = fname.toLowerCase();
-				queryString = queryString + AND + "lower(a.providerFName) like '%" + fname + "%'";
-			}
-			if (lname != null && lname.length() > 0) {
-				lname = StringEscapeUtils.escapeSql(lname);
-				lname = lname.toLowerCase();
-				queryString = queryString + AND + "lower(a.providerLName) like '%" + lname + "%'";
-			}
-
-			return this.getHibernateTemplate().find(queryString);
-
-		} catch (RuntimeException re) {
-			logger.error("Search staff failed", re);
-			throw re;
-		}
-	}
-
-	public List findByActiveyn(Object activeyn) {
-		return findByProperty(ACTIVEYN, activeyn);
-	}
-
-	public List findAll() {
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		logger.debug("finding all Secuserrole instances");
-		try {
-			String queryString = "from Secuserrole";
-			Query queryObject = session.createQuery(queryString);
-			return queryObject.list();
-		} catch (RuntimeException re) {
-			logger.error("find all failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
-
-	public Secuserrole merge(Secuserrole detachedInstance) {
-		logger.debug("merging Secuserrole instance");
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			detachedInstance.setLastUpdateDate(new Date());
-			Secuserrole result = (Secuserrole) session.merge(
-					detachedInstance);
-			logger.debug("merge successful");
-			return result;
-		} catch (RuntimeException re) {
-			logger.error("merge failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
-
-	public void attachDirty(Secuserrole instance) {
-		logger.debug("attaching dirty Secuserrole instance");
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			instance.setLastUpdateDate(new Date());
-			session.saveOrUpdate(instance);
-			logger.debug("attach successful");
-		} catch (RuntimeException re) {
-			logger.error("attach failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
-
-	public void attachClean(Secuserrole instance) {
-		logger.debug("attaching clean Secuserrole instance");
-		// Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			session.lock(instance, LockMode.NONE);
-			logger.debug("attach successful");
-		} catch (RuntimeException re) {
-			logger.error("attach failed", re);
-			throw re;
-		} 
-		// finally {
-		// 	this.releaseSession(session);
-		// }
-	}
+	public void attachClean(Secuserrole instance);
 }

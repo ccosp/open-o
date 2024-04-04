@@ -30,47 +30,14 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.EncounterForm;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class EncounterFormDao extends AbstractDaoImpl<EncounterForm> {
+public interface EncounterFormDao extends AbstractDao<EncounterForm> {
 
-	public EncounterFormDao() {
-		super(EncounterForm.class);
-	}
+	public List<EncounterForm> findAll();
 
-	@SuppressWarnings("unchecked")
-	public List<EncounterForm> findAll() {
-		Query query = entityManager.createQuery("SELECT x FROM " + modelClass.getSimpleName() + " x");
-		List<EncounterForm> results = query.getResultList();
-		return results;
-	}
-		
-	@SuppressWarnings("unchecked")
-	public List<EncounterForm> findAllNotHidden() {
-		Query query = entityManager.createQuery("SELECT x FROM " + modelClass.getSimpleName() + " x where x.displayOrder!=0");
-		List<EncounterForm> results = query.getResultList();
-		return results;
-	}
-	
-    public List<EncounterForm> findByFormName(String formName)
-	{
-		Query query = entityManager.createQuery("select x from " + modelClass.getSimpleName() + " x where x.formName=?1");
-		query.setParameter(1, formName);
+	public List<EncounterForm> findAllNotHidden();
 
-		@SuppressWarnings("unchecked")
-		List<EncounterForm> results=query.getResultList();
-		
-		return(results);
-	}
-    
-    public List<EncounterForm> findByFormTable(String formTable)
- 	{
- 		Query query = entityManager.createQuery("select x from " + modelClass.getSimpleName() + " x where x.formTable=?1");
- 		query.setParameter(1, formTable);
+	public List<EncounterForm> findByFormName(String formName);
 
- 		@SuppressWarnings("unchecked")
- 		List<EncounterForm> results=query.getResultList();
- 		
- 		return(results);
- 	}
-        
+	public List<EncounterForm> findByFormTable(String formTable);
+
 }
