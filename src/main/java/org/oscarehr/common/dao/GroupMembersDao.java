@@ -22,7 +22,6 @@
  * Ontario, Canada
  */
 
-
 package org.oscarehr.common.dao;
 
 import java.util.Collections;
@@ -33,91 +32,17 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.GroupMembers;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class GroupMembersDao extends AbstractDaoImpl<GroupMembers>{
+public interface GroupMembersDao extends AbstractDao<GroupMembers> {
 
-	public GroupMembersDao() {
-		super(GroupMembers.class);
-	}
-	
-	/**
-	 * Only group members with an integrated facility ID that is remote - greater than zero.
-	 * @param groupId
-	 * @return
-	 */
-	public List<GroupMembers> findRemoteByGroupId(int groupId) {
-		Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId > 0 AND x.groupId=?");
-		q.setParameter(1, groupId);
-		
-		@SuppressWarnings("unchecked")
-		List<GroupMembers> results = q.getResultList();
-		
-		return results;
-	}
-	
-	/**
-	 * Only group members that have a facility id of 0 - for local. 
-	 * @param groupId
-	 * @return
-	 */
-	public List<GroupMembers> findLocalByGroupId(int groupId) {
-		Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId = 0 AND x.groupId=?");
-		q.setParameter(1, groupId);
-		
-		@SuppressWarnings("unchecked")
-		List<GroupMembers> results = q.getResultList();
-		
-		return results;
-	}
-	
-	public List<GroupMembers> findByGroupId(int groupId) {
-		Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.groupId=?");
-		q.setParameter(1, groupId);
-		
-		@SuppressWarnings("unchecked")
-		List<GroupMembers> results = q.getResultList();
-		
-		return results;
-	}
+	public List<GroupMembers> findRemoteByGroupId(int groupId);
 
-	@SuppressWarnings("unchecked")
-    public List<Object[]> findMembersByGroupId(int groupId) {
-        String sql = "FROM GroupMembers g, Provider p " 
-        		+ "WHERE g.providerNo = p.ProviderNo "
-                + "AND g.groupId = :id " 
-        		+ "ORDER BY p.LastName, p.FirstName";
-        Query query = entityManager.createQuery(sql);
-        query.setParameter("id", groupId);
-        return query.getResultList();
-    }
-	
-    public List<GroupMembers> findByProviderNumberAndFacilityId(String providerNo, Integer facilityId) {
-		Query query = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.providerNo LIKE ? AND x.facilityId=?");
-		query.setParameter(1, providerNo);
-		query.setParameter(2, facilityId);
-		
-		@SuppressWarnings("unchecked")
-		List<GroupMembers> results = query.getResultList();
-		
-		if(results == null) {
-			results = Collections.emptyList();
-		}
-		
-		return results;
-    }
-    
-    public List<GroupMembers> findByFacilityId(Integer facilityId) {
-		Query query = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId=?");
-		query.setParameter(1, facilityId);
-		
-		@SuppressWarnings("unchecked")
-		List<GroupMembers> results = query.getResultList();
-		
-		if(results == null) {
-			results = Collections.emptyList();
-		}
-		
-		return results;
-    }
-	
+	public List<GroupMembers> findLocalByGroupId(int groupId);
+
+	public List<GroupMembers> findByGroupId(int groupId);
+
+	public List<Object[]> findMembersByGroupId(int groupId);
+
+	public List<GroupMembers> findByProviderNumberAndFacilityId(String providerNo, Integer facilityId);
+
+	public List<GroupMembers> findByFacilityId(Integer facilityId);
 }

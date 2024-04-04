@@ -30,21 +30,8 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.DrugDispensing;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class DrugDispensingDao extends AbstractDaoImpl<DrugDispensing>{
+public interface DrugDispensingDao extends AbstractDao<DrugDispensing>{
 	
-	public DrugDispensingDao() {
-		super(DrugDispensing.class);
-	}
-	
-	public List<DrugDispensing> findByDrugId(Integer drugId) {
-		Query query = entityManager.createQuery("SELECT x FROM DrugDispensing x where x.drugId = ?1  order by x.dateCreated DESC");
-		query.setParameter(1, drugId);
-		
-		@SuppressWarnings("unchecked")
-        List<DrugDispensing> results = query.getResultList();
-		return results;
-	}
-	
+	public List<DrugDispensing> findByDrugId(Integer drugId);
 
 }

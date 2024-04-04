@@ -29,19 +29,7 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.TicklerCategory;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class TicklerCategoryDao extends AbstractDaoImpl<TicklerCategory> {
-
-	protected TicklerCategoryDao() {
-		super(TicklerCategory.class);
-	}
+public interface TicklerCategoryDao extends AbstractDao<TicklerCategory> {
 	
-	@SuppressWarnings("unchecked")
-	public List<TicklerCategory> getActiveCategories() {
-		String sql = "SELECT x FROM TicklerCategory x WHERE x.active = true ORDER BY x.category";
-		Query query = entityManager.createQuery(sql);		
-		List<TicklerCategory> results = query.getResultList();
-		return results;
-	}
-
+	public List<TicklerCategory> getActiveCategories();
 }

@@ -32,48 +32,8 @@ import org.oscarehr.common.model.BedType;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class BedTypeDao extends AbstractDaoImpl<BedType>{
-
-	private Logger log = MiscUtils.getLogger();
-
-	public BedTypeDao() {
-		super(BedType.class);
-	}
-	
-	/**
-	 * Return if this is a valid bed type
-	 *
-	 * @param bedTypeId type of bed
-	 * @return boolean
-	 */
-	public boolean bedTypeExists(Integer bedTypeId) {
-		Query query = entityManager.createQuery("select count(*) from BedType b where b.id = ?");
-		query.setParameter(1, bedTypeId);
-		
-		Long result = (Long)query.getSingleResult();
-		
-		return (result.intValue() == 1);
-	}
-	
-	//use find(bedTypeId)
-	@Deprecated
-	public BedType getBedType(Integer bedTypeId) {
-	    return find(bedTypeId);
-	}
-	
-	   /**
-     * @return all bed types
-     */
-    @SuppressWarnings("unchecked")
-    public BedType[] getBedTypes() {
-    	Query query = entityManager.createQuery("select b from BedType b");
-		
-        List<BedType> bedTypes = query.getResultList();
-        
-        log.debug("getRooms: size: " + bedTypes.size());
-
-        return bedTypes.toArray(new BedType[bedTypes.size()]);
-    }
-
+public interface BedTypeDao extends AbstractDao<BedType>{
+	public boolean bedTypeExists(Integer bedTypeId);
+	public BedType getBedType(Integer bedTypeId);
+    public BedType[] getBedTypes();
 }

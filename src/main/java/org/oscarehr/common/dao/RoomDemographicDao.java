@@ -33,96 +33,19 @@ import org.oscarehr.common.model.RoomDemographicPK;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class RoomDemographicDao extends AbstractDaoImpl<RoomDemographic>{
+public interface RoomDemographicDao extends AbstractDao<RoomDemographic> {
 
-	private Logger log = MiscUtils.getLogger();
+    public boolean roomDemographicExists(Integer demographicNo);
 
-	public RoomDemographicDao() {
-		super(RoomDemographic.class);
-	}
-	
-    public boolean roomDemographicExists(Integer demographicNo) {
-    	Query query = entityManager.createQuery("select count(*) from RoomDemographic rd where rd.id.demographicNo = ?");
-		query.setParameter(1, demographicNo);
-		
-		Long result = (Long)query.getSingleResult();
-		
-		return (result.intValue() == 1);
-    }
+    public boolean roomDemographicExists(RoomDemographicPK id);
 
-    boolean roomDemographicExists(RoomDemographicPK id) {
-    	Query query = entityManager.createQuery("select count(*) from RoomDemographic rd where rd.id.roomId = ?1 and rd.id.demographicNo = ?2");
-		query.setParameter(1, id.getRoomId());
-		query.setParameter(2, id.getDemographicNo());
-		
-		Long result = (Long)query.getSingleResult();
-		
-		return (result.intValue() == 1);
-    }
+    public int getRoomOccupanyByRoom(Integer roomId);
 
+    public List<RoomDemographic> getRoomDemographicByRoom(Integer roomId);
 
-    public int getRoomOccupanyByRoom(Integer roomId) {
-    	Query query = entityManager.createQuery("select count(*) from RoomDemographic rd where rd.id.roomId = ?1");
-		query.setParameter(1, roomId);
-		
-		Long result = (Long)query.getSingleResult();
-		
-        return result.intValue();
-    }
+    public RoomDemographic getRoomDemographicByDemographic(Integer demographicNo);
 
- 
-    public List<RoomDemographic> getRoomDemographicByRoom(Integer roomId) {
-    	Query query = entityManager.createQuery("select rd from RoomDemographic rd where rd.id.roomId = ?1");
-		query.setParameter(1, roomId);
-		
-		@SuppressWarnings("unchecked")
-		List<RoomDemographic> roomDemographics = query.getResultList();
-        
-        if(roomDemographics != null){
-        	log.debug("getRoomDemographicByRoom: roomDemographics.size()" + roomDemographics.size());
-        }
-        return roomDemographics;
-    }
+    public void saveRoomDemographic(RoomDemographic roomDemographic);
 
-   
-    public RoomDemographic getRoomDemographicByDemographic(Integer demographicNo) {
-    	Query query = entityManager.createQuery("select rd from RoomDemographic rd where rd.id.demographicNo = ?1");
-		query.setParameter(1, demographicNo);
-		
-		@SuppressWarnings("unchecked")
-		List<RoomDemographic> roomDemographics = query.getResultList();
-   	
-        if(roomDemographics == null){
-        	return null;
-        }
-        if (roomDemographics.size() > 1) {
-            throw new IllegalStateException("Client is assigned to more than one room");
-        }
-
-        RoomDemographic roomDemographic = ((roomDemographics.size() == 1)? roomDemographics.get(0): null);
-
-        log.debug("getRoomDemographicByDemographic: " + demographicNo);
-        return roomDemographic;
-    }
-
-   
-    @Deprecated
-    public void saveRoomDemographic(RoomDemographic roomDemographic) {
-    	if(roomDemographic==null)
-    		return;
-        //updateHistory(roomDemographic);
-    	
-    	if(roomDemographic.getId() == null || roomDemographic.getId().getDemographicNo() == null || roomDemographic.getId().getRoomId() == null)
-    		persist(roomDemographic);
-    	else
-    		merge(roomDemographic);
-        
-        log.debug("saveRoomDemographic: " + roomDemographic);
-    }
-
-    @Deprecated
-    public void deleteRoomDemographic(RoomDemographic roomDemographic) {
-        remove(roomDemographic.getId());
-    }
+    public void deleteRoomDemographic(RoomDemographic roomDemographic);
 }

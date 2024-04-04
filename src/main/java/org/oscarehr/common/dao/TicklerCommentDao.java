@@ -26,11 +26,6 @@ package org.oscarehr.common.dao;
 import org.oscarehr.common.model.TicklerComment;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class TicklerCommentDao extends AbstractDaoImpl<TicklerComment>{
+public interface TicklerCommentDao extends AbstractDao<TicklerComment> {
 
-	public TicklerCommentDao() {
-		super(TicklerComment.class);
-	}
-	
 }
