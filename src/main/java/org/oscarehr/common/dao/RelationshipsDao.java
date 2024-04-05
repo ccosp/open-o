@@ -22,21 +22,13 @@
  * Ontario, Canada
  */
 
-package org.oscarehr.common.dao;
+public interface RelationshipsDao extends AbstractDao<Relationships> {
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.Relationships;
-import org.springframework.stereotype.Repository;
-
-import oscar.util.ConversionUtils;
-
-@Repository
-public class RelationshipsDao extends AbstractDaoImpl<Relationships> {
-
-	public RelationshipsDao() {
+	List<Relationships> findAll();
+	Relationships findActive(Integer id);
+	List<Relationships> findByDemographicNumber(Integer demographicNumber);
+	List<Relationships> findActiveSubDecisionMaker(Integer demographicNumber);
+	List<Relationships> findActiveByDemographicNumberAndFacility(Integer demographicNumber, Integer facilityId);
 		super(Relationships.class);
 	}
 
@@ -104,6 +96,18 @@ public class RelationshipsDao extends AbstractDaoImpl<Relationships> {
 		query.setParameter("facilityId", facilityId);
 		return query.getResultList();
 	}
+}
+package org.oscarehr.common.dao;
+
+import java.util.List;
+import org.oscarehr.common.model.Relationships;
+
+public interface RelationshipsDao extends AbstractDao<Relationships> {
+    List<Relationships> findAll();
+    Relationships findActive(Integer id);
+    List<Relationships> findByDemographicNumber(Integer demographicNumber);
+    List<Relationships> findActiveSubDecisionMaker(Integer demographicNumber);
+    List<Relationships> findActiveByDemographicNumberAndFacility(Integer demographicNumber, Integer facilityId);
 }
 package org.oscarehr.common.dao;
 
