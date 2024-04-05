@@ -26,8 +26,24 @@ package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.ProviderLabRoutingFavorite;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-public interface ProviderLabRoutingFavoritesDao extends AbstractDao<ProviderLabRoutingFavorite> {
-    List<ProviderLabRoutingFavorite> findFavorites(String provider_no);
+import javax.persistence.Query;
+
+@Repository
+public class ProviderLabRoutingFavoritesDaoImpl extends AbstractDaoImpl<ProviderLabRoutingFavorite> implements ProviderLabRoutingFavoritesDao {
+
+	public ProviderLabRoutingFavoritesDaoImpl() {
+		super(ProviderLabRoutingFavorite.class);
+	}
+
+	@SuppressWarnings("unchecked")
+    public List<ProviderLabRoutingFavorite> findFavorites(String provider_no) {
+		String sql = "select fav from ProviderLabRoutingFavorite fav where fav.provider_no = :provider";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter("provider", provider_no);
+		return query.getResultList();
+	}
 }
