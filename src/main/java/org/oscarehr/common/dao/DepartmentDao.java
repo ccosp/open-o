@@ -23,28 +23,6 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.Department;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class DepartmentDao extends AbstractDaoImpl<Department>{
-
-	public DepartmentDao()  {
-		super(Department.class);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Department> findAll() {
-		Query query = createQuery("x", null);
-		return query.getResultList();
-	}
-}
-package org.oscarehr.common.dao;
-
 import org.oscarehr.common.model.Department;
 import java.util.List;
 
