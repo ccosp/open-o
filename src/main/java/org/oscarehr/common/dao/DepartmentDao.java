@@ -43,3 +43,11 @@ public class DepartmentDao extends AbstractDaoImpl<Department>{
 		return query.getResultList();
 	}
 }
+package org.oscarehr.common.dao;
+
+import org.oscarehr.common.model.Department;
+import java.util.List;
+
+public interface DepartmentDao extends AbstractDao<Department> {
+    List<Department> findAll();
+}
