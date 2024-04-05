@@ -24,10 +24,33 @@
 
 package org.oscarehr.common.dao;
 
+import javax.persistence.Query;
+
 import org.oscarehr.common.model.ProviderStudy;
 import org.oscarehr.common.model.ProviderStudyPK;
+import org.springframework.stereotype.Repository;
 
-public interface ProviderStudyDao extends AbstractDao<ProviderStudy> {
-    int removeByDemographicNo(Integer providerNo);
-    ProviderStudy findByProviderNoAndStudyNo(String providerNo, int studyNo);
+@Repository
+public class ProviderStudyDaoImpl extends AbstractDaoImpl<ProviderStudy> implements ProviderStudyDao {
+
+	public ProviderStudyDaoImpl() {
+		super(ProviderStudy.class);
+	}
+
+	@Override
+	public int removeByDemographicNo(Integer providerNo) {
+		Query query = entityManager.createQuery("delete x from ProviderStudy x where x.providerNo=?");
+		query.setParameter(1, providerNo);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public ProviderStudy findByProviderNoAndStudyNo(String providerNo, int studyNo) {
+		ProviderStudyPK pk = new ProviderStudyPK();
+		pk.setProviderNo(providerNo);
+		pk.setStudyNo(studyNo);
+
+		return find(pk);
+	}
+
 }
