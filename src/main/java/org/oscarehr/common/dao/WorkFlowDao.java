@@ -24,50 +24,10 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.WorkFlow;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class WorkFlowDao extends AbstractDaoImpl<WorkFlow>{
-
-	public WorkFlowDao() {
-		super(WorkFlow.class);
-		
-	}
-	
-	public List<WorkFlow> findByWorkflowType(String type) {
-		Query q = entityManager.createQuery("SELECT w FROM WorkFlow w WHERE w.workflowType=?");
-		q.setParameter(1, type);
-		
-		@SuppressWarnings("unchecked")
-		List<WorkFlow> results = q.getResultList();
-		
-		return results;
-	}
-	
-	public List<WorkFlow> findActiveByWorkflowType(String type) {
-		Query q = entityManager.createQuery("SELECT w FROM WorkFlow w WHERE w.workflowType=? AND w.currentState <> ?");
-		q.setParameter(1, type);
-		q.setParameter(2, "C");
-		
-		@SuppressWarnings("unchecked")
-		List<WorkFlow> results = q.getResultList();
-		
-		return results;
-	}
-	
-	public List<WorkFlow> findActiveByWorkflowTypeAndDemographicNo(String type, String demographicNo) {
-		Query q = entityManager.createQuery("SELECT w FROM WorkFlow w WHERE w.workflowType=? AND w.demographicNo=? AND w.currentState <> ?");
-		q.setParameter(1, type);
-		q.setParameter(2, demographicNo);
-		q.setParameter(3, "C");
-		
-		@SuppressWarnings("unchecked")
-		List<WorkFlow> results = q.getResultList();
-		
-		return results;
-	}
+public interface WorkFlowDao extends AbstractDao<WorkFlow> {
+	List<WorkFlow> findByWorkflowType(String type);
+	List<WorkFlow> findActiveByWorkflowType(String type);
+	List<WorkFlow> findActiveByWorkflowTypeAndDemographicNo(String type, String demographicNo);
 }
