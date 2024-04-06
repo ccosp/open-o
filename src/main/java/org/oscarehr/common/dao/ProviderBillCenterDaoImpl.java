@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.ProviderBillCenter;
+import org.springframework.stereotype.Repository;
 
-public interface ProviderBillCenterDao extends AbstractDao<ProviderBillCenter> {
+@Repository
+public class ProviderBillCenterDaoImpl extends AbstractDaoImpl<ProviderBillCenter> implements ProviderBillCenterDao {
+
+	public ProviderBillCenterDaoImpl() {
+		super(ProviderBillCenter.class);
+	}
 }
