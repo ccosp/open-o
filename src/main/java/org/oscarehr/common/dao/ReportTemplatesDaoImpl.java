@@ -25,10 +25,36 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.ReportTemplates;
+import org.springframework.stereotype.Repository;
 
-public interface ReportTemplatesDao extends AbstractDao<ReportTemplates> {
-    List<ReportTemplates> findAll();
-    List<ReportTemplates> findActive();
-    ReportTemplates findByUuid(String uuid);
+@Repository
+@SuppressWarnings("unchecked")
+public class ReportTemplatesDaoImpl extends AbstractDaoImpl<ReportTemplates> implements ReportTemplatesDao {
+
+	public ReportTemplatesDaoImpl() {
+		super(ReportTemplates.class);
+	}
+	
+	public List<ReportTemplates> findAll() {
+		Query q = createQuery("t", null);
+		return q.getResultList();
+    }
+
+    public List<ReportTemplates> findActive() {
+		Query q = createQuery("t", "t.active = 1");
+		return q.getResultList();
+    }
+    
+    public ReportTemplates findByUuid(String uuid) {
+    	Query query = entityManager.createQuery("SELECT r from ReportTemplates r where r.uuid = ? and r.active = 1");
+    	query.setParameter(1, uuid);
+    	
+        @SuppressWarnings("unchecked")
+        List<ReportTemplates> results = query.getResultList();
+        if(!results.isEmpty())
+        	return results.get(0);
+        return null;
+    }
 }
