@@ -26,9 +26,32 @@ package org.oscarehr.common.dao;
 
 import java.util.Date;
 import java.util.List;
-import org.oscarehr.common.model.ScheduleHoliday;
 
-public interface ScheduleHolidayDao extends AbstractDao<ScheduleHoliday> {
-    List<ScheduleHoliday> findAll();
-    List<ScheduleHoliday> findAfterDate(Date date);
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.ScheduleHoliday;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ScheduleHolidayDaoImpl extends AbstractDaoImpl<ScheduleHoliday> implements ScheduleHolidayDao {
+
+	public ScheduleHolidayDaoImpl() {
+		super(ScheduleHoliday.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ScheduleHoliday> findAll() {
+		Query query = createQuery("x", null);
+		return query.getResultList();
+	}
+	
+	public List<ScheduleHoliday> findAfterDate(Date date) {
+		Query query = entityManager.createQuery("select s from ScheduleHoliday s where s.id > ?");
+		query.setParameter(1, date);
+
+		@SuppressWarnings("unchecked")
+        List<ScheduleHoliday> results = query.getResultList();
+		return results;
+	}
+	
 }
