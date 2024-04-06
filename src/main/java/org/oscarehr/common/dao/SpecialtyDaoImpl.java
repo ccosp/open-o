@@ -24,6 +24,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.Specialty;
+import org.springframework.stereotype.Repository;
 
-public interface SpecialtyDao extends AbstractDao<Specialty> {
+@Repository
+public class SpecialtyDaoImpl extends AbstractDaoImpl<Specialty> implements SpecialtyDao {
+
+	public SpecialtyDaoImpl() {
+	    super(Specialty.class);
+    }
 }
