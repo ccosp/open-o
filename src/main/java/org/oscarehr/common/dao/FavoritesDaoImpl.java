@@ -24,8 +24,24 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.Favorites;
+import org.springframework.stereotype.Repository;
 
-public interface FavoritesDao extends AbstractDao<Favorites> {
-    List<Favorites> findByProviderNo(String providerNo);
+@Repository
+public class FavoritesDaoImpl extends AbstractDaoImpl<Favorites> implements FavoritesDao {
+
+	public FavoritesDaoImpl() {
+		super(Favorites.class);	
+	}
+	
+	public List<Favorites> findByProviderNo(String providerNo) {
+		Query query = entityManager.createQuery("select x from Favorites x where x.providerNo=?");
+		query.setParameter(1, providerNo);
+		
+		@SuppressWarnings("unchecked")
+		List<Favorites> results = query.getResultList();
+		
+		return results;
+	}
 }
