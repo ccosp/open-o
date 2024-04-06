@@ -25,7 +25,13 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.BatchEligibility;
+import org.springframework.stereotype.Repository;
 
-public interface BatchEligibilityDao extends AbstractDao<BatchEligibility> {
+@Repository
+public class BatchEligibilityDaoImpl extends AbstractDaoImpl<BatchEligibility> implements BatchEligibilityDao {
+
+	public BatchEligibilityDaoImpl() {
+		super(BatchEligibility.class);
+	}
 
 }
