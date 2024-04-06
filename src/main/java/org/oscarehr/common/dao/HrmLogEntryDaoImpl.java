@@ -24,8 +24,22 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.HrmLogEntry;
+import org.springframework.stereotype.Repository;
 
-public interface HrmLogEntryDao extends AbstractDao<HrmLogEntry> {
-    List<HrmLogEntry> findByHrmLogId(int hrmLogId);
+@Repository
+public class HrmLogEntryDaoImpl extends AbstractDaoImpl<HrmLogEntry> implements HrmLogEntryDao {
+
+	public HrmLogEntryDaoImpl() {
+		super(HrmLogEntry.class);
+	}
+
+	@SuppressWarnings("unchecked")
+    public List<HrmLogEntry> findByHrmLogId(int hrmLogId) {
+		Query query = entityManager.createQuery("FROM HrmLogEntry d where d.hrmLogId=?1");
+		query.setParameter(1, hrmLogId);
+		
+	    return query.getResultList();
+    }
 }
