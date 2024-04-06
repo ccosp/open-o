@@ -1,128 +1,15 @@
-/**
- *
- * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
- * This software is published under the GPL GNU General Public License.
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * This software was written for
- * Centre for Research on Inner City Health, St. Michael's Hospital,
- * Toronto, Ontario, Canada
- */
-
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.MeasurementType;
-import org.springframework.stereotype.Repository;
 
-@Repository
-@SuppressWarnings("unchecked")
-public class MeasurementTypeDao extends AbstractDaoImpl<MeasurementType> {
-
-	public MeasurementTypeDao() {
-		super(MeasurementType.class);
-	}
-
-	public List<MeasurementType> findAll() {
-		String sqlCommand = "select x from " + modelClass.getSimpleName() + " x order by x.type";
-
-		Query query = entityManager.createQuery(sqlCommand);
-
-		
-		List<MeasurementType> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<MeasurementType> findAllOrderByName() {
-		String sqlCommand = "select x from " + modelClass.getSimpleName() + " x order by x.typeDisplayName";
-
-		Query query = entityManager.createQuery(sqlCommand);
-
-		
-		List<MeasurementType> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<MeasurementType> findAllOrderById() {
-		String sqlCommand = "select x from " + modelClass.getSimpleName() + " x order by x.id";
-
-		Query query = entityManager.createQuery(sqlCommand);
-
-		
-		List<MeasurementType> results = query.getResultList();
-
-		return (results);
-	}
-	
-	
-	public List<MeasurementType> findByType(String type) {
-		String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.type=?1";
-
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, type);
-
-		
-		List<MeasurementType> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<MeasurementType> findByMeasuringInstructionAndTypeDisplayName(String measuringInstruction, String typeDisplayName) {
-		String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.measuringInstruction=?1 AND x.typeDisplayName=?2";
-
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, measuringInstruction);
-		query.setParameter(2, typeDisplayName);
-
-		
-		List<MeasurementType> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<MeasurementType> findByTypeDisplayName(String typeDisplayName) {
-		String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.typeDisplayName=?1";
-
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, typeDisplayName);
-
-		List<MeasurementType> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<MeasurementType> findByTypeAndMeasuringInstruction(String type, String measuringInstruction) {
-		String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.type=?1 AND x.measuringInstruction=?2 ";
-
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, type);
-		query.setParameter(2, measuringInstruction);
-
-		List<MeasurementType> results = query.getResultList();
-
-		return (results);
-	}
-
-	public List<Object> findUniqueTypeDisplayNames() {
-	    String sql = "SELECT DISTINCT m.typeDisplayName FROM MeasurementType m order by m.typeDisplayName";
-		Query query = entityManager.createQuery(sql);
-		return query.getResultList();
-    }
+public interface MeasurementTypeDao extends AbstractDao<MeasurementType> {
+    List<MeasurementType> findAll();
+    List<MeasurementType> findAllOrderByName();
+    List<MeasurementType> findAllOrderById();
+    List<MeasurementType> findByType(String type);
+    List<MeasurementType> findByMeasuringInstructionAndTypeDisplayName(String measuringInstruction, String typeDisplayName);
+    List<MeasurementType> findByTypeDisplayName(String typeDisplayName);
+    List<MeasurementType> findByTypeAndMeasuringInstruction(String type, String measuringInstruction);
+    List<Object> findUniqueTypeDisplayNames();
 }
