@@ -23,8 +23,23 @@
  */
 package org.oscarehr.common.dao;
 
-import org.oscarehr.common.model.OLISQueryLog;
+import javax.persistence.Query;
 
-public interface OLISQueryLogDao extends AbstractDao<OLISQueryLog> {
-    OLISQueryLog findByUUID(String uuid);
+import org.oscarehr.common.model.OLISQueryLog;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class OLISQueryLogDaoImpl extends AbstractDaoImpl<OLISQueryLog> implements OLISQueryLogDao {
+
+	public OLISQueryLogDaoImpl() {
+		super(OLISQueryLog.class);
+	}
+
+	@Override
+	public OLISQueryLog findByUUID(String uuid) {
+		Query query = entityManager.createQuery("select x from OLISQueryLog x where x.uuid=?");
+		query.setParameter(1, uuid);
+		
+		return this.getSingleResultOrNull(query);
+	}
 }
