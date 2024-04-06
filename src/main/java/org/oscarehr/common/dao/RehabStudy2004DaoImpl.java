@@ -24,7 +24,13 @@
 
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.RehabStudy2004;
 
-public interface RehabStudy2004Dao extends AbstractDao<RehabStudy2004> {
+@Repository
+public class RehabStudy2004DaoImpl extends AbstractDaoImpl<RehabStudy2004> implements RehabStudy2004Dao {
+
+	public RehabStudy2004DaoImpl() {
+		super(RehabStudy2004.class);
+	}
 }
