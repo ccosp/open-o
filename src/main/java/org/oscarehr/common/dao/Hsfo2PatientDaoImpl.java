@@ -25,9 +25,34 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.Hsfo2Patient;
+import org.springframework.stereotype.Repository;
 
-public interface Hsfo2PatientDao extends AbstractDao<Hsfo2Patient> {
-	Hsfo2Patient getHsfoPatientByPatientId(String patientId);
-	List<Hsfo2Patient> getAllHsfoPatients();
+@Repository
+public class Hsfo2PatientDaoImpl extends AbstractDaoImpl<Hsfo2Patient> implements Hsfo2PatientDao {
+	public Hsfo2PatientDaoImpl() {
+		super(Hsfo2Patient.class);
+	}
+	
+	public Hsfo2Patient getHsfoPatientByPatientId(String patientId) {
+		String sqlCommand = "select x from Hsfo2Patient x where x.Patient_Id=? order by x.id desc ";
+		Query query = entityManager.createQuery(sqlCommand);
+		query.setParameter(1, patientId);
+		List<Hsfo2Patient> results=query.getResultList();
+		if(results!=null && results.size()>0)
+			return results.get(0);
+		else 
+			return null;
+	}
+	
+	public List<Hsfo2Patient> getAllHsfoPatients() {
+		String sqlCommand = "select x from Hsfo2Patient x";
+		Query query = entityManager.createQuery(sqlCommand);		
+				
+		@SuppressWarnings("unchecked")
+		List<Hsfo2Patient> results=query.getResultList();		
+		
+		return results;
+	}
 }
