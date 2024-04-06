@@ -23,21 +23,25 @@
 
 package org.oscarehr.common.dao;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Query;
+
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.ConsultationRequest;
 
-public interface ConsultationRequestDao extends AbstractDao<ConsultationRequest> {
-    int getCountReferralsAfterCutOffDateAndNotCompleted(Date referralDateCutoff);
-    int getCountReferralsAfterCutOffDateAndNotCompleted(Date referralDateCutoff,String sendto);
-    List<ConsultationRequest> getConsults(Integer demoNo);
-    List<ConsultationRequest> getConsults(String team, boolean showCompleted, Date startDate, Date endDate, String orderby, String desc, String searchDate, Integer offset, Integer limit);
-    List<ConsultationRequest> getConsultationsByStatus(Integer demographicNo, String status);
-    ConsultationRequest getConsultation(Integer requestId);
-    List<ConsultationRequest> getReferrals(String providerId, Date cutoffDate);
-    List<Object[]> findRequests(Date timeLimit, String providerNo);
-    List<ConsultationRequest> findRequestsByDemoNo(Integer demoId, Date cutoffDate);
-    List<ConsultationRequest> findByDemographicAndService(Integer demographicNo, String serviceName);
-    List<ConsultationRequest> findByDemographicAndServices(Integer demographicNo, List<String> serviceNameList);
-    List<Integer> findNewConsultationsSinceDemoKey(String keyName);
+
+@SuppressWarnings("unchecked")
+public class ConsultationRequestDaoImpl extends AbstractDaoImpl<ConsultationRequest> implements ConsultationRequestDao {
+	
+	public static final int DEFAULT_CONSULT_REQUEST_RESULTS_LIMIT = 100;
+
+	public ConsultationRequestDaoImpl() {
+		super(ConsultationRequest.class);
+	}
+
+	//... rest of the methods implementation goes here
 }
