@@ -24,9 +24,34 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.Survey;
+import org.springframework.stereotype.Repository;
 
-public interface SurveyDao extends AbstractDao<Survey> {
-	List<Survey> findAll();
-	Survey findByName(String name);
+@Repository
+public class SurveyDaoImpl extends AbstractDaoImpl<Survey> implements SurveyDao {
+
+	public SurveyDaoImpl() {
+		super(Survey.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Deprecated
+	public List<Survey> findAll() {
+		Query query = createQuery("x", null);
+		return query.getResultList();
+	}
+	
+	public Survey findByName(String name) {
+		Query q = entityManager.createQuery("select s from Survey s where s.description = ?1");
+		q.setParameter(1, name);
+		
+		@SuppressWarnings("unchecked")
+		List<Survey> results = q.getResultList();
+		
+		if(results.size()>0) {
+			return results.get(0);
+		}
+		return null;
+	}
 }
