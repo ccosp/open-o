@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.GroupNoteLink;
+import org.springframework.stereotype.Repository;
 
-public interface GroupNoteLinkDao extends AbstractDao<GroupNoteLink> {
+@Repository
+public class GroupNoteLinkDaoImpl extends AbstractDaoImpl<GroupNoteLink> implements GroupNoteLinkDao {
+
+	public GroupNoteLinkDaoImpl() {
+		super(GroupNoteLink.class);
+	}
 }
