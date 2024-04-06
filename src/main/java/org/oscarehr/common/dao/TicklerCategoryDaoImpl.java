@@ -37,6 +37,7 @@ public class TicklerCategoryDaoImpl extends AbstractDaoImpl<TicklerCategory> imp
 	}
 	
 	@SuppressWarnings("unchecked")
+    @Override
 	public List<TicklerCategory> getActiveCategories() {
 		String sql = "SELECT x FROM TicklerCategory x WHERE x.active = true ORDER BY x.category";
 		Query query = entityManager.createQuery(sql);		

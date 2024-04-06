@@ -26,5 +26,4 @@ package org.oscarehr.common.dao;
 import org.oscarehr.common.model.TicklerComment;
 
 public interface TicklerCommentDao extends AbstractDao<TicklerComment> {
-	
 }

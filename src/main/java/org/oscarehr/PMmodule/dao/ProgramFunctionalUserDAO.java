@@ -41,13 +41,14 @@ public class ProgramFunctionalUserDAO extends HibernateDaoSupport {
     private static Logger log = MiscUtils.getLogger();
     public SessionFactory sessionFactory;
 
-	@Autowired
+    @Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
         super.setSessionFactory(sessionFactory);
     }
 
     public List<FunctionalUserType> getFunctionalUserTypes() {
-        List<FunctionalUserType> results = (List<FunctionalUserType>) this.getHibernateTemplate().find("from FunctionalUserType");
+        List<FunctionalUserType> results = (List<FunctionalUserType>) this.getHibernateTemplate()
+                .find("from FunctionalUserType");
 
         if (log.isDebugEnabled()) {
             log.debug("getFunctionalUserTypes: # of results=" + results.size());
@@ -98,7 +99,8 @@ public class ProgramFunctionalUserDAO extends HibernateDaoSupport {
             throw new IllegalArgumentException();
         }
 
-        List<FunctionalUserType> results = (List<FunctionalUserType>) this.getHibernateTemplate().find("from ProgramFunctionalUser pfu where pfu.ProgramId = ?", programId);
+        List<FunctionalUserType> results = (List<FunctionalUserType>) this.getHibernateTemplate()
+                .find("from ProgramFunctionalUser pfu where pfu.ProgramId = ?", programId);
 
         if (log.isDebugEnabled()) {
             log.debug("getFunctionalUsers: programId=" + programId + ",# of results=" + results.size());
@@ -154,24 +156,26 @@ public class ProgramFunctionalUserDAO extends HibernateDaoSupport {
 
         Long result = null;
 
-       // Session session = getSession();
+        // Session session = getSession();
         Session session = sessionFactory.getCurrentSession();
-        Query q = session.createQuery("select pfu.ProgramId from ProgramFunctionalUser pfu where pfu.ProgramId = ? and pfu.UserTypeId = ?");
+        Query q = session.createQuery(
+                "select pfu.ProgramId from ProgramFunctionalUser pfu where pfu.ProgramId = ? and pfu.UserTypeId = ?");
         q.setLong(0, programId.longValue());
         q.setLong(1, userTypeId.longValue());
         List results = new ArrayList();
         try {
-        	 results = q.list();
-        }finally {
-        	//releaseSession(session);
+            results = q.list();
+        } finally {
+            // releaseSession(session);
             session.close();
         }
         if (results.size() > 0) {
-            result = (Long)results.get(0);
+            result = (Long) results.get(0);
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("getFunctionalUserByUserType: programId=" + programId + ",userTypeId=" + userTypeId + ",result=" + result);
+            log.debug("getFunctionalUserByUserType: programId=" + programId + ",userTypeId=" + userTypeId + ",result="
+                    + result);
         }
 
         return result;
