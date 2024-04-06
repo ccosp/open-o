@@ -25,6 +25,11 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.RemoteDataLog;
+import org.springframework.stereotype.Repository;
 
-public interface RemoteDataLogDao extends AbstractDao<RemoteDataLog> {
+@Repository
+public class RemoteDataLogDaoImpl extends AbstractDaoImpl<RemoteDataLog> implements RemoteDataLogDao {
+    public RemoteDataLogDaoImpl() {
+        super(RemoteDataLog.class);
+    }
 }
