@@ -26,6 +26,25 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-public interface LabReportInformationDao extends AbstractDao<LabReportInformation> {
-	List<Object[]> findReportsByPhysicianId(Integer physicianId);
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.LabReportInformation;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class LabReportInformationDaoImpl extends AbstractDaoImpl<LabReportInformation> implements LabReportInformationDao {
+
+	public LabReportInformationDaoImpl() {
+		super(LabReportInformation.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> findReportsByPhysicianId(Integer physicianId) {
+		String sql = "FROM LabReportInformation lri, LabPatientPhysicianInfo lpp " 
+				+ "WHERE lpp.id = :physicianId "
+				+ "AND lri.id = lpp.labReportInfoId";
+		Query q = entityManager.createQuery(sql);
+		q.setParameter("physicianId", physicianId);
+		return q.getResultList();
+	}
 }
