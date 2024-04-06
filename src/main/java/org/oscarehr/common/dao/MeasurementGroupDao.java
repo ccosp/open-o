@@ -22,76 +22,15 @@
  * Ontario, Canada
  */
 
-
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.MeasurementGroup;
-import org.springframework.stereotype.Repository;
 
-import oscar.OscarProperties;
-
-@Repository
-@SuppressWarnings("unchecked")
-public class MeasurementGroupDao extends AbstractDaoImpl<MeasurementGroup>{
-
-	public MeasurementGroupDao() {
-		super(MeasurementGroup.class);
-	}
-	
-	public List<MeasurementGroup> findAll() {
-		Query query = createQuery("x", null);
-		return query.getResultList();
-	}
-	
-	public List<MeasurementGroup> findByNameAndTypeDisplayName(String name, String typeDisplayName) {
-		String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.name=?1 AND x.typeDisplayName=?2";
-
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, name);
-		query.setParameter(2, typeDisplayName);
-
-		
-		List<MeasurementGroup> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<MeasurementGroup> findByTypeDisplayName(String typeDisplayName) {
-		String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.typeDisplayName=?1";
-
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, typeDisplayName);
-
-		
-		List<MeasurementGroup> results = query.getResultList();
-
-		return (results);
-	}
-	
-	public List<MeasurementGroup> findByName(String name) {
-		boolean orderById = "true".equals(OscarProperties.getInstance().getProperty("oscarMeasurements.orderGroupById","false"));
-		String orderBy="";
-    	if(orderById) {
-    		orderBy =  " ORDER BY x.id ASC";
-    	}
-		String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.name=?";
-
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, name);
-
-		List<MeasurementGroup> results = query.getResultList();
-
-		return (results);
-	}
-
-	public List<Object> findUniqueTypeDisplayNamesByGroupName(String groupName) {
-		String sql = "SELECT DISTINCT mg.typeDisplayName FROM MeasurementGroup mg WHERE mg.name = :groupName";
-		Query query = entityManager.createQuery(sql);
-		query.setParameter("groupName", groupName);
-		return query.getResultList();
-    }
+public interface MeasurementGroupDao extends AbstractDao<MeasurementGroup> {
+    List<MeasurementGroup> findAll();
+    List<MeasurementGroup> findByNameAndTypeDisplayName(String name, String typeDisplayName);
+    List<MeasurementGroup> findByTypeDisplayName(String typeDisplayName);
+    List<MeasurementGroup> findByName(String name);
+    List<Object> findUniqueTypeDisplayNamesByGroupName(String groupName);
 }
