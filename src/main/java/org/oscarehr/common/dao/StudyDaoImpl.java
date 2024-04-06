@@ -25,10 +25,39 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.Study;
+import org.springframework.stereotype.Repository;
 
-public interface StudyDao extends AbstractDao<Study> {
-    List<Study> findAll();
-    Study findByName(String studyName);
-    List<Study> findByCurrent1(Integer current1);
+@Repository
+public class StudyDaoImpl extends AbstractDaoImpl<Study> implements StudyDao {
+
+	public StudyDaoImpl() {
+		super(Study.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Study> findAll() {
+		Query query = createQuery("x", null);
+		return query.getResultList();
+	}
+	
+	public Study findByName(String studyName) {
+		Query query = entityManager.createQuery("select s from Study s where s.studyName = ?1");
+		query.setParameter(1, studyName);
+		
+		Study study = this.getSingleResultOrNull(query);
+		
+		return study;
+	}
+	
+	public List<Study> findByCurrent1(Integer current1) {
+		Query query = entityManager.createQuery("select s from Study s where s.current1 = ?1");
+		query.setParameter(1, current1);
+		
+		@SuppressWarnings("unchecked")
+		List<Study> results = query.getResultList();
+		
+		return results;
+	}
 }
