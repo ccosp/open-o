@@ -22,47 +22,12 @@
  * Ontario, Canada
  */
 
-
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.ReportConfig;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class ReportConfigDao extends AbstractDaoImpl<ReportConfig>{
-
-	public ReportConfigDao() {
-		super(ReportConfig.class);
-	}
-	
-	public List<ReportConfig> findByReportIdAndNameAndCaptionAndTableNameAndSave(int reportId, String name, String caption, String tableName, String save) {
-		Query q = entityManager.createQuery("select x from ReportConfig x where x.reportId=? and x.name=? and x.caption=? and x.tableName=? and x.save=?");
-		q.setParameter(1, reportId);
-		q.setParameter(2, name);
-		q.setParameter(3, caption);
-		q.setParameter(4, tableName);
-		q.setParameter(5, save);
-		
-		@SuppressWarnings("unchecked")
-		List<ReportConfig> results = q.getResultList();
-		
-		return results;
-	}
-	
-	public List<ReportConfig> findByReportIdAndSaveAndGtOrderNo(int reportId, String save, int orderNo) {
-		Query q = entityManager.createQuery("select x from ReportConfig x where x.reportId=? and x.save=? and x.orderNo >= ? order by x.orderNo DESC");
-		q.setParameter(1, reportId);
-		q.setParameter(2, save);
-		q.setParameter(3, orderNo);
-		
-		
-		@SuppressWarnings("unchecked")
-		List<ReportConfig> results = q.getResultList();
-		
-		return results;
-	}
+public interface ReportConfigDao extends AbstractDao<ReportConfig> {
+    List<ReportConfig> findByReportIdAndNameAndCaptionAndTableNameAndSave(int reportId, String name, String caption, String tableName, String save);
+    List<ReportConfig> findByReportIdAndSaveAndGtOrderNo(int reportId, String save, int orderNo);
 }
