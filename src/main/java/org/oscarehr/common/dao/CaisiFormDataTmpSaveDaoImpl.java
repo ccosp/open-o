@@ -24,8 +24,25 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.CaisiFormDataTmpSave;
+import org.springframework.stereotype.Repository;
 
-public interface CaisiFormDataTmpSaveDao extends AbstractDao<CaisiFormDataTmpSave> {
-    List<CaisiFormDataTmpSave> getTmpFormData(Long tmpInstanceId);
+@Repository
+public class CaisiFormDataTmpSaveDaoImpl extends AbstractDaoImpl<CaisiFormDataTmpSave> implements CaisiFormDataTmpSaveDao {
+
+	public CaisiFormDataTmpSaveDaoImpl() {
+		super(CaisiFormDataTmpSave.class);
+	}
+	
+	@Override
+	public List<CaisiFormDataTmpSave> getTmpFormData(Long tmpInstanceId) {
+    	Query query = entityManager.createQuery("select f from CaisiFormDataTmpSave f where f.tmpInstanceId = ?");
+		query.setParameter(1, tmpInstanceId);
+		
+		@SuppressWarnings("unchecked")
+        List<CaisiFormDataTmpSave> result = query.getResultList();
+		
+        return result;
+    }
 }
