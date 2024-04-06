@@ -23,8 +23,25 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.IssueGroup;
+import org.springframework.stereotype.Repository;
 
-public interface IssueGroupDao extends AbstractDao<IssueGroup> {
-    List<IssueGroup> findAll();
+@Repository
+public class IssueGroupDaoImpl extends AbstractDaoImpl<IssueGroup> implements IssueGroupDao {
+
+    public IssueGroupDaoImpl() {
+        super(IssueGroup.class);
+    }
+
+    @Override
+    public List<IssueGroup> findAll() {
+        Query query = entityManager.createQuery("select x from IssueGroup x");
+
+        @SuppressWarnings("unchecked")
+        List<IssueGroup> results = query.getResultList();
+
+        return(results);
+    }
+    
 }
