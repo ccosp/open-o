@@ -24,51 +24,11 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.Security;
 import org.oscarehr.common.model.SecurityArchive;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class SecurityArchiveDao extends AbstractDaoImpl<SecurityArchive> {
-
-	public SecurityArchiveDao() {
-		super(SecurityArchive.class);
-	}
-
-	public List<SecurityArchive> findBySecurityNo(Integer securityNo) {
-
-		String sqlCommand = "select x from SecurityArchive x where x.securityNo=?1";
-	
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, securityNo);
-	
-		@SuppressWarnings("unchecked")
-		List<SecurityArchive> results = query.getResultList();
-
-		return results;
-	}
-	
-	public List<String> findPreviousPasswordsByProviderNo(String providerNo, int maxResult) {
-
-		String sqlCommand = "select distinct x.password from SecurityArchive x where x.providerNo=?1 order by x.passwordUpdateDate DESC";
-	
-		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, providerNo);
-		query.setMaxResults(maxResult);
-		
-		@SuppressWarnings("unchecked")
-		List<String> results = query.getResultList();
-
-		return results;
-	}
-
-	public Integer archiveRecord(Security s) {
-		SecurityArchive sa = new SecurityArchive(s);
-		persist(sa);
-		return sa.getId();
-	}
-
+public interface SecurityArchiveDao extends AbstractDao<SecurityArchive> {
+    List<SecurityArchive> findBySecurityNo(Integer securityNo);
+    List<String> findPreviousPasswordsByProviderNo(String providerNo, int maxResult);
+    Integer archiveRecord(Security s);
 }
