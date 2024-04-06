@@ -24,9 +24,30 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.BillCenter;
+import org.springframework.stereotype.Repository;
 
-public interface BillCenterDao extends AbstractDao<BillCenter> {
-	List<BillCenter> findAll();
-	List<BillCenter> findByBillCenterDesc(String descr);
+@Repository
+public class BillCenterDaoImpl extends AbstractDaoImpl<BillCenter> implements BillCenterDao {
+
+	public BillCenterDaoImpl() {
+		super(BillCenter.class);
+	}
+	
+	public List<BillCenter> findAll() {
+		Query query = entityManager.createQuery("SELECT b FROM BillCenter b");
+		
+		@SuppressWarnings("unchecked")
+        List<BillCenter> results = query.getResultList();
+		return results;
+	}
+	
+	public List<BillCenter> findByBillCenterDesc(String descr) {
+		Query query = entityManager.createQuery("SELECT b FROM BillCenter b WHERE b.billCenterDesc like ?");
+		query.setParameter(1,descr);
+		@SuppressWarnings("unchecked")
+        List<BillCenter> results = query.getResultList();
+		return results;
+	}
 }
