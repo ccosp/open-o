@@ -24,8 +24,26 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.PrintResourceLog;
+import org.springframework.stereotype.Repository;
 
-public interface PrintResourceLogDao extends AbstractDao<PrintResourceLog> {
-    List<PrintResourceLog> findByResource(String resourceName, String resourceId);
+@Repository
+public class PrintResourceLogDaoImpl extends AbstractDaoImpl<PrintResourceLog> implements PrintResourceLogDao {
+
+	public PrintResourceLogDaoImpl() {
+		super(PrintResourceLog.class);
+	}
+	
+	@Override
+	public List<PrintResourceLog> findByResource(String resourceName, String resourceId) {
+		Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x WHERE x.resourceName=? and x.resourceId = ? order by x.dateTime DESC");
+		query.setParameter(1, resourceName);
+		query.setParameter(2, resourceId);
+
+		@SuppressWarnings("unchecked")
+		List<PrintResourceLog> results = query.getResultList();
+
+		return results;
+	}
 }
