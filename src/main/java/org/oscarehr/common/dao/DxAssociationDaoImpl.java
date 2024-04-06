@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.DxAssociation;
+import org.springframework.stereotype.Repository;
 
-public interface DxAssociationDao extends AbstractDao<DxAssociation> {
+@Repository
+public class DxAssociationDaoImpl extends AbstractDaoImpl<DxAssociation> implements DxAssociationDao {
+
+	public DxAssociationDaoImpl() {
+		super(DxAssociation.class);
+	}
 }
