@@ -25,8 +25,25 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.SpecialistsJavascript;
+import org.springframework.stereotype.Repository;
 
-public interface SpecialistsJavascriptDao extends AbstractDao<SpecialistsJavascript> {
-    List<SpecialistsJavascript> findBySetId(String setId);
+@Repository
+public class SpecialistsJavascriptDaoImpl extends AbstractDaoImpl<SpecialistsJavascript> implements SpecialistsJavascriptDao {
+
+    public SpecialistsJavascriptDaoImpl() {
+        super(SpecialistsJavascript.class);
+    }
+    
+    @Override
+    public List<SpecialistsJavascript> findBySetId(String setId) {
+        Query q = entityManager.createQuery("select x from SpecialistsJavascript x where x.setId=?");
+        q.setParameter(1, setId);
+        
+        @SuppressWarnings("unchecked")
+        List<SpecialistsJavascript> results = q.getResultList();
+        
+        return results;
+    }
 }
