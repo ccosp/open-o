@@ -29,6 +29,16 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.OscarMsgType;
+import org.springframework.stereotype.Repository;
 
-public interface OscarMsgTypeDao extends AbstractDao<OscarMsgType> {
+/**
+ *
+ * @author rjonasz
+ */
+@Repository
+public class OscarMsgTypeDaoImpl extends AbstractDaoImpl<OscarMsgType> implements OscarMsgTypeDao {
+
+    public OscarMsgTypeDaoImpl() {
+        super(OscarMsgType.class);
+    }
 }
