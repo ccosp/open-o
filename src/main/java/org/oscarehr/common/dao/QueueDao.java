@@ -3,6 +3,7 @@ package org.oscarehr.common.dao;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import org.oscarehr.common.model.Queue;
 
 public interface QueueDao extends AbstractDao<Queue> {
     HashMap getHashMapOfQueues();
