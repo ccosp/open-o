@@ -23,9 +23,33 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.OcanFormOption;
+import org.springframework.stereotype.Repository;
 
-public interface OcanFormOptionDao extends AbstractDao<OcanFormOption> {
-	List<OcanFormOption> findByVersionAndCategory(String formVersion, String mainCatgeory);
-	List<OcanFormOption> findByVersion(String formVersion);
+@Repository
+public class OcanFormOptionDaoImpl extends AbstractDaoImpl<OcanFormOption> implements OcanFormOptionDao {
+
+	public OcanFormOptionDaoImpl() {
+		super(OcanFormOption.class);
+	}
+	
+	public List<OcanFormOption> findByVersionAndCategory(String formVersion, String mainCatgeory) {
+		String sqlCommand = "select x from OcanFormOption x where x.ocanFormVersion=?1 and x.ocanDataCategory=?2 order by x.ocanDataCategoryName";
+		Query query = entityManager.createQuery(sqlCommand);
+		query.setParameter(1, formVersion);
+		query.setParameter(2, mainCatgeory);
+		@SuppressWarnings("unchecked")
+		List<OcanFormOption> results = query.getResultList();
+		return (results);
+	}
+
+	public List<OcanFormOption> findByVersion(String formVersion) {
+		String sqlCommand = "select x from OcanFormOption x where x.ocanFormVersion=?1 order by x.id";
+		Query query = entityManager.createQuery(sqlCommand);
+		query.setParameter(1, formVersion);
+		@SuppressWarnings("unchecked")
+		List<OcanFormOption> results = query.getResultList();
+		return (results);
+	}
 }
