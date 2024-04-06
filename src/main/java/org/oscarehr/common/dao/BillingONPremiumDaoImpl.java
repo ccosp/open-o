@@ -24,16 +24,31 @@
 
 package org.oscarehr.common.dao;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.io.*;
 import org.oscarehr.common.model.BillingONPremium;
-import org.oscarehr.common.model.Provider;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import org.oscarehr.common.model.RaHeader;
+import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.SpringUtils;
+import oscar.OscarProperties;
 import org.oscarehr.util.LoggedInInfo;
+import oscar.util.DateUtils;
+import java.util.Locale;
+import javax.persistence.Query;
+import java.util.Date;
+import org.oscarehr.common.model.Provider;
 
-public interface BillingONPremiumDao extends AbstractDao<BillingONPremium> {
-    List<BillingONPremium> getActiveRAPremiumsByPayDate(Date startDate, Date endDate, Locale locale);
-    List<BillingONPremium> getActiveRAPremiumsByProvider(Provider p, Date startDate, Date endDate, Locale locale);
-    List<BillingONPremium> getRAPremiumsByRaHeaderNo(Integer raHeaderNo);
-    void parseAndSaveRAPremiums(LoggedInInfo loggedInInfo, Integer raHeaderNo, Locale locale);
+/**
+ *
+ * @author mweston4
+ */
+@Repository
+public class BillingONPremiumDaoImpl extends AbstractDaoImpl<BillingONPremium> implements BillingONPremiumDao {
+    
+    public BillingONPremiumDaoImpl() {
+        super(BillingONPremium.class);	
+    }  
+    
+    // ... rest of the code ...
 }
