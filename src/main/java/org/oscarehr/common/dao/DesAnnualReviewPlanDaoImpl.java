@@ -24,8 +24,35 @@
 
 package org.oscarehr.common.dao;
 
-import org.oscarehr.common.model.DesAnnualReviewPlan;
+import java.util.List;
 
-public interface DesAnnualReviewPlanDao extends AbstractDao<DesAnnualReviewPlan> {
-    DesAnnualReviewPlan search(Integer formNo, Integer demographicNo);
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.DesAnnualReviewPlan;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class DesAnnualReviewPlanDaoImpl extends AbstractDaoImpl<DesAnnualReviewPlan> implements DesAnnualReviewPlanDao {
+
+	public DesAnnualReviewPlanDaoImpl() {
+		super(DesAnnualReviewPlan.class);
+	}
+
+	@Override
+	public DesAnnualReviewPlan search(Integer formNo, Integer demographicNo) {
+
+	    	String sqlCommand = "select x from DesAnnualReviewPlan x where x.formNo <= ? and x.demographicNo=? order by x.formNo DESC, x.desDate DESC, x.desTime DESC";
+
+	        Query query = entityManager.createQuery(sqlCommand);
+	        query.setParameter(1, formNo);
+	        query.setParameter(2, demographicNo);
+
+	        @SuppressWarnings("unchecked")
+	        List<DesAnnualReviewPlan> results = query.getResultList();
+
+	        if(results.size()>0 ){
+	        	return results.get(0);
+	        }
+	        return null;
+	    }
 }
