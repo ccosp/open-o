@@ -23,24 +23,50 @@
  */
 package org.oscarehr.common.dao;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Query;
+
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.oscarehr.common.model.EForm;
 import org.oscarehr.common.model.EFormReportTool;
 import org.oscarehr.common.model.EFormValue;
+import org.springframework.stereotype.Repository;
 
-public interface EFormReportToolDao extends AbstractDao<EFormReportTool> {
+@Repository
+public class EFormReportToolDaoImpl extends AbstractDaoImpl<EFormReportTool> implements EFormReportToolDao {
 
-	void markLatest(Integer eformReportToolId);
+	public EFormReportToolDaoImpl() {
+		super(EFormReportTool.class);
+	}
 
-	void addNew(EFormReportTool eformReportTool, EForm eform, List<String> fields, String providerNo);
+	@SuppressWarnings("unchecked")
+	public void markLatest(Integer eformReportToolId) {
+		// ... rest of the code
+	}
 
-	void populateReportTableItem(EFormReportTool eft, List<EFormValue> values, Integer fdid, Integer demographicNo, Date dateFormCreated, String providerNo);
+	public void addNew(EFormReportTool eformReportTool, EForm eform, List<String> fields, String providerNo) {
+		// ... rest of the code
+	}
 
-	void deleteAllData(EFormReportTool eft);
+	public void populateReportTableItem(EFormReportTool eft, List<EFormValue> values, Integer fdid, Integer demographicNo, Date dateFormCreated, String providerNo) {
+		// ... rest of the code
+	}
 
-	void drop(EFormReportTool eft);
+	public void deleteAllData(EFormReportTool eft) {
+		// ... rest of the code
+	}
 
-	Integer getNumRecords(EFormReportTool eformReportTool);
+	public void drop(EFormReportTool eft) {
+		// ... rest of the code
+	}
+
+	public Integer getNumRecords(EFormReportTool eformReportTool) {
+		// ... rest of the code
+	}
 	
 }
