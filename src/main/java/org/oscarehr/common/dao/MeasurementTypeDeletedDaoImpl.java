@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.MeasurementTypeDeleted;
+import org.springframework.stereotype.Repository;
 
-public interface MeasurementTypeDeletedDao extends AbstractDao<MeasurementTypeDeleted> {
+@Repository
+public class MeasurementTypeDeletedDaoImpl extends AbstractDaoImpl<MeasurementTypeDeleted> implements MeasurementTypeDeletedDao {
+
+	public MeasurementTypeDeletedDaoImpl() {
+		super(MeasurementTypeDeleted.class);
+	}
 }
