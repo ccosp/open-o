@@ -24,9 +24,28 @@
 
 package org.oscarehr.common.dao;
 
-import org.oscarehr.common.model.IndivoDocs;
+import javax.persistence.Query;
 
-public interface IndivoDocsDao extends AbstractDao<IndivoDocs> {
-	IndivoDocs findByOscarDocNo(Integer id);
-	IndivoDocs findByOscarDocNo(Integer id, String docType);
+import org.oscarehr.common.model.IndivoDocs;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class IndivoDocsDaoImpl extends AbstractDaoImpl<IndivoDocs> implements IndivoDocsDao {
+
+	public IndivoDocsDaoImpl() {
+		super(IndivoDocs.class);
+	}
+
+	@Override
+	public IndivoDocs findByOscarDocNo(Integer id) {
+		return findByOscarDocNo(id, "Rx");
+	}
+
+	@Override
+	public IndivoDocs findByOscarDocNo(Integer id, String docType) {
+		Query query = createQuery("i", "i.oscarDocNo = :docNo AND i.docType = :docType");
+		query.setParameter("docNo", id);
+		query.setParameter("docType", docType);
+		return getSingleResultOrNull(query);
+	}
 }
