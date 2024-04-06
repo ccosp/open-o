@@ -24,8 +24,22 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.CtlBillingServiceAgeRules;
+import org.springframework.stereotype.Repository;
 
-public interface CtlBillingServiceAgeRulesDao extends AbstractDao<CtlBillingServiceAgeRules> {
-	List<CtlBillingServiceAgeRules> findByServiceCode(String serviceCode);
+@Repository
+@SuppressWarnings("unchecked")
+public class CtlBillingServiceAgeRulesDaoImpl extends AbstractDaoImpl<CtlBillingServiceAgeRules> implements CtlBillingServiceAgeRulesDao {
+
+	public CtlBillingServiceAgeRulesDaoImpl() {
+		super(CtlBillingServiceAgeRules.class);
+	}
+
+	@Override
+	public List<CtlBillingServiceAgeRules> findByServiceCode(String serviceCode) {
+		Query query = createQuery("r", "r.serviceCode = :serviceCode");
+		query.setParameter("serviceCode", serviceCode);
+		return query.getResultList();
+	}
 }
