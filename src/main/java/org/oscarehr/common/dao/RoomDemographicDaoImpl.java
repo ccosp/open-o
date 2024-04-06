@@ -24,15 +24,21 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.RoomDemographic;
 import org.oscarehr.common.model.RoomDemographicPK;
+import org.oscarehr.util.MiscUtils;
+import org.springframework.stereotype.Repository;
 
-public interface RoomDemographicDao extends AbstractDao<RoomDemographic> {
-    boolean roomDemographicExists(Integer demographicNo);
-    boolean roomDemographicExists(RoomDemographicPK id);
-    int getRoomOccupanyByRoom(Integer roomId);
-    List<RoomDemographic> getRoomDemographicByRoom(Integer roomId);
-    RoomDemographic getRoomDemographicByDemographic(Integer demographicNo);
-    void saveRoomDemographic(RoomDemographic roomDemographic);
-    void deleteRoomDemographic(RoomDemographic roomDemographic);
+@Repository
+public class RoomDemographicDaoImpl extends AbstractDaoImpl<RoomDemographic> implements RoomDemographicDao {
+
+    private Logger log = MiscUtils.getLogger();
+
+    public RoomDemographicDaoImpl() {
+        super(RoomDemographic.class);
+    }
+
+    // ... rest of the methods implementation goes here ...
 }
