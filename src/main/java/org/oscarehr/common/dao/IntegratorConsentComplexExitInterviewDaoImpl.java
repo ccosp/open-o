@@ -24,7 +24,17 @@ package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.FacilityDemographicPrimaryKey;
 import org.oscarehr.common.model.IntegratorConsentComplexExitInterview;
+import org.springframework.stereotype.Repository;
 
-public interface IntegratorConsentComplexExitInterviewDao extends AbstractDao<IntegratorConsentComplexExitInterview> {
-    IntegratorConsentComplexExitInterview find(FacilityDemographicPrimaryKey id);
+@Repository
+public class IntegratorConsentComplexExitInterviewDaoImpl extends AbstractDaoImpl<IntegratorConsentComplexExitInterview> implements IntegratorConsentComplexExitInterviewDao {
+
+	public IntegratorConsentComplexExitInterviewDaoImpl() {
+		super(IntegratorConsentComplexExitInterview.class);
+	}
+	
+    public IntegratorConsentComplexExitInterview find(FacilityDemographicPrimaryKey id) {
+        return(entityManager.find(IntegratorConsentComplexExitInterview.class, id));
+    }
+    
 }
