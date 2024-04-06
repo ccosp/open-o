@@ -25,9 +25,30 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.RemoteAttachments;
+import org.springframework.stereotype.Repository;
 
-public interface RemoteAttachmentsDao extends AbstractDao<RemoteAttachments> {
-	List<RemoteAttachments> findByDemoNo(Integer demoNo);
-	List<RemoteAttachments> findByDemoNoAndMessageId(Integer demographicNo, Integer messageId);
+@Repository
+@SuppressWarnings("unchecked")
+public class RemoteAttachmentsDaoImpl extends AbstractDaoImpl<RemoteAttachments> implements RemoteAttachmentsDao {
+
+	public RemoteAttachmentsDaoImpl() {
+		super(RemoteAttachments.class);
+	}
+
+	@Override
+	public List<RemoteAttachments> findByDemoNo(Integer demoNo) {
+		Query query = createQuery("ra", "ra.demographicNo = :demoNo ORDER BY ra.date");
+		query.setParameter("demoNo", demoNo);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<RemoteAttachments> findByDemoNoAndMessageId(Integer demographicNo, Integer messageId) {
+		Query query = createQuery("a", "a.demographicNo = :demographicNo and a.messageId = :messageId");
+		query.setParameter("demographicNo", demographicNo);
+		query.setParameter("messageId", messageId);
+		return query.getResultList();
+	}
 }
