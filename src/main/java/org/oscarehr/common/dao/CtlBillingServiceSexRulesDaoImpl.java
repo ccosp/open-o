@@ -24,8 +24,22 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.CtlBillingServiceSexRules;
+import org.springframework.stereotype.Repository;
 
-public interface CtlBillingServiceSexRulesDao extends AbstractDao<CtlBillingServiceSexRules> {
-	List<CtlBillingServiceSexRules> findByServiceCode(String serviceCode);
+@Repository
+@SuppressWarnings("unchecked")
+public class CtlBillingServiceSexRulesDaoImpl extends AbstractDaoImpl<CtlBillingServiceSexRules> implements CtlBillingServiceSexRulesDao {
+
+	public CtlBillingServiceSexRulesDaoImpl() {
+		super(CtlBillingServiceSexRules.class);
+	}
+
+	@Override
+	public List<CtlBillingServiceSexRules> findByServiceCode(String serviceCode) {
+		Query query = createQuery("r", "r.serviceCode = :serviceCode");
+		query.setParameter("serviceCode", serviceCode);
+		return query.getResultList();
+	}
 }
