@@ -24,7 +24,13 @@
 
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.MdsPID;
 
-public interface MdsPIDDao extends AbstractDao<MdsPID> {
+@Repository
+public class MdsPIDDaoImpl extends AbstractDaoImpl<MdsPID> implements MdsPIDDao {
+
+	public MdsPIDDaoImpl() {
+		super(MdsPID.class);
+	}
 }
