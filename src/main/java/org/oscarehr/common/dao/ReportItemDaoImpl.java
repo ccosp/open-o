@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.ReportItem;
+import org.springframework.stereotype.Repository;
 
-public interface ReportItemDao extends AbstractDao<ReportItem> {
+@Repository
+public class ReportItemDaoImpl extends AbstractDaoImpl<ReportItem> implements ReportItemDao {
+
+	public ReportItemDaoImpl() {
+		super(ReportItem.class);
+	}
 }
