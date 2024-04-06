@@ -25,8 +25,32 @@
 package org.oscarehr.common.dao;
 
 import java.util.Date;
-import org.oscarehr.common.model.SecurityToken;
+import java.util.List;
 
-public interface SecurityTokenDao {
-    SecurityToken getByTokenAndExpiry(String token, Date expiry);
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.SecurityToken;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class SecurityTokenDaoImpl extends AbstractDaoImpl<SecurityToken> implements SecurityTokenDao {
+
+	public SecurityTokenDaoImpl() {
+		super(SecurityToken.class);
+	}
+	
+	@Override
+	public SecurityToken getByTokenAndExpiry(String token, Date expiry) {
+		Query query = entityManager.createQuery("select t from SecurityToken t where t.token=? and t.expiry >= ?");
+		query.setParameter(1, token);
+		query.setParameter(2, expiry);
+		
+		@SuppressWarnings("unchecked")
+		List<SecurityToken> results = query.getResultList();
+		
+		if(results.size()>0) {
+			return results.get(0);
+		}
+		return null;
+	}
 }
