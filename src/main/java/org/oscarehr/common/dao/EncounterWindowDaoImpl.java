@@ -23,8 +23,22 @@
  */
 package org.oscarehr.common.dao;
 
-import org.oscarehr.common.model.EncounterWindow;
+import javax.persistence.Query;
 
-public interface EncounterWindowDao extends AbstractDao<EncounterWindow> {
-    EncounterWindow findByProvider(String providerNo);
+import org.oscarehr.common.model.EncounterWindow;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class EncounterWindowDaoImpl extends AbstractDaoImpl<EncounterWindow> implements EncounterWindowDao {
+
+	public EncounterWindowDaoImpl() {
+		super(EncounterWindow.class);
+	}
+
+	@Override
+	public EncounterWindow findByProvider(String providerNo) {
+		Query query = createQuery("ew", "ew.providerNo = :providerNo");
+		query.setParameter("providerNo", providerNo);
+		return getSingleResultOrNull(query);
+    }
 }
