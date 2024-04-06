@@ -26,9 +26,35 @@ package org.oscarehr.common.dao;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.ReportTemp;
+import org.springframework.stereotype.Repository;
 
-public interface ReportTempDao extends AbstractDao<ReportTemp> {
-    List<ReportTemp> findAll();
-    List<ReportTemp> findGreateThanEdb(Date edb, int offset, int limit);
+@Repository
+public class ReportTempDaoImpl extends AbstractDaoImpl<ReportTemp> implements ReportTempDao {
+
+	public ReportTempDaoImpl() {
+		super(ReportTemp.class);
+	}
+
+	public List<ReportTemp> findAll() {
+		String sql = "select x from ReportTemp x";
+		Query query = entityManager.createQuery(sql);
+
+		@SuppressWarnings("unchecked")
+		List<ReportTemp> results = query.getResultList();
+		return results;
+	}
+
+	public List<ReportTemp> findGreateThanEdb(Date edb, int offset, int limit) {
+		String sql = "select x from ReportTemp x where x.id.edb >= ?";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter(1, edb);
+		query.setMaxResults(limit);
+		query.setFirstResult(offset);
+
+		@SuppressWarnings("unchecked")
+		List<ReportTemp> results = query.getResultList();
+		return results;
+	}
 }
