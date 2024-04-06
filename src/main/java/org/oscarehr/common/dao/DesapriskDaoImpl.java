@@ -24,8 +24,35 @@
 
 package org.oscarehr.common.dao;
 
-import org.oscarehr.common.model.Desaprisk;
+import java.util.List;
 
-public interface DesapriskDao extends AbstractDao<Desaprisk> {
-    Desaprisk search(Integer formNo, Integer demographicNo);
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.Desaprisk;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class DesapriskDaoImpl extends AbstractDaoImpl<Desaprisk> implements DesapriskDao {
+
+	public DesapriskDaoImpl() {
+		super(Desaprisk.class);
+	}
+
+	@Override
+	public Desaprisk search(Integer formNo, Integer demographicNo) {
+
+    	String sqlCommand = "select x from Desaprisk x where x.formNo <= ? and x.demographicNo=? order by x.formNo DESC, x.desapriskDate DESC, x.desapriskTime DESC";
+
+        Query query = entityManager.createQuery(sqlCommand);
+        query.setParameter(1, formNo);
+        query.setParameter(2, demographicNo);
+
+        @SuppressWarnings("unchecked")
+        List<Desaprisk> results = query.getResultList();
+
+        if(results.size()>0 ){
+        	return results.get(0);
+        }
+        return null;
+    }
 }
