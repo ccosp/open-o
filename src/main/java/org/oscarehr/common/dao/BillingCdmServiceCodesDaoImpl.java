@@ -24,8 +24,23 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-import org.oscarehr.common.model.BillingCdmServiceCodes;
 
-public interface BillingCdmServiceCodesDao extends AbstractDao<BillingCdmServiceCodes> {
-	List<BillingCdmServiceCodes> findAll();
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.BillingCdmServiceCodes;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class BillingCdmServiceCodesDaoImpl extends AbstractDaoImpl<BillingCdmServiceCodes> implements BillingCdmServiceCodesDao {
+
+	public BillingCdmServiceCodesDaoImpl() {
+		super(BillingCdmServiceCodes.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<BillingCdmServiceCodes> findAll() {
+		Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName());
+		return query.getResultList();
+	}
+
 }
