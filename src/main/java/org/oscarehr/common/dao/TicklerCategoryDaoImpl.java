@@ -24,8 +24,24 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-import org.oscarehr.common.model.TicklerCategory;
 
-public interface TicklerCategoryDao extends AbstractDao<TicklerCategory> {
-	List<TicklerCategory> getActiveCategories();
+import javax.persistence.Query;
+import org.oscarehr.common.model.TicklerCategory;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class TicklerCategoryDaoImpl extends AbstractDaoImpl<TicklerCategory> implements TicklerCategoryDao {
+
+	protected TicklerCategoryDaoImpl() {
+		super(TicklerCategory.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TicklerCategory> getActiveCategories() {
+		String sql = "SELECT x FROM TicklerCategory x WHERE x.active = true ORDER BY x.category";
+		Query query = entityManager.createQuery(sql);		
+		List<TicklerCategory> results = query.getResultList();
+		return results;
+	}
+
 }
