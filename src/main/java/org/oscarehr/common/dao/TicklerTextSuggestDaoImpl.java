@@ -25,9 +25,32 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.TicklerTextSuggest;
+import org.springframework.stereotype.Repository;
 
-public interface TicklerTextSuggestDao extends AbstractDao<TicklerTextSuggest> {
-    List<TicklerTextSuggest> getActiveTicklerTextSuggests();
-    List<TicklerTextSuggest> getInactiveTicklerTextSuggests();
+@Repository
+public class TicklerTextSuggestDaoImpl extends AbstractDaoImpl<TicklerTextSuggest> implements TicklerTextSuggestDao {
+    
+    public TicklerTextSuggestDaoImpl() {
+	super(TicklerTextSuggest.class);
+    }
+
+    public List<TicklerTextSuggest> getActiveTicklerTextSuggests() {
+        Query query = entityManager.createQuery("SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
+        query.setParameter(1,true);
+
+	@SuppressWarnings("unchecked")
+	List<TicklerTextSuggest> results = query.getResultList();
+	return results;
+    }
+    
+    public List<TicklerTextSuggest> getInactiveTicklerTextSuggests() {
+        Query query = entityManager.createQuery("SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
+        query.setParameter(1,false);
+
+	@SuppressWarnings("unchecked")
+	List<TicklerTextSuggest> results = query.getResultList();
+	return results;
+    }          
 }
