@@ -25,9 +25,26 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.SurveillanceData;
+import org.springframework.stereotype.Repository;
 
-public interface SurveillanceDataDao extends AbstractDao<SurveillanceData> {
-    List<SurveillanceData> findExportDataBySurveyId(String surveyId);
-    List<SurveillanceData> findUnSentBySurveyId(String surveyId);
+@Repository
+public class SurveillanceDataDaoImpl extends AbstractDaoImpl<SurveillanceData> implements SurveillanceDataDao {
+
+	public SurveillanceDataDaoImpl() {
+		super(SurveillanceData.class);
+	}
+
+	public List<SurveillanceData> findExportDataBySurveyId(String surveyId){
+		Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() + " r WHERE r.surveyId = :surveyId order by r.createDate desc");
+		query.setParameter("surveyId", surveyId);
+		return query.getResultList();
+	}
+	
+	public List<SurveillanceData> findUnSentBySurveyId(String surveyId){
+		Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() + " r WHERE r.surveyId = :surveyId and r.sent = false");
+		query.setParameter("surveyId", surveyId);
+		return query.getResultList();
+	}
 }
