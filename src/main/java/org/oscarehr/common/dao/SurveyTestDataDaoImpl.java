@@ -24,6 +24,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.SurveyTestData;
+import org.springframework.stereotype.Repository;
 
-public interface SurveyTestDataDao extends AbstractDao<SurveyTestData> {
+@Repository
+public class SurveyTestDataDaoImpl extends AbstractDaoImpl<SurveyTestData> implements SurveyTestDataDao {
+
+	public SurveyTestDataDaoImpl() {
+		super(SurveyTestData.class);
+	}
 }
