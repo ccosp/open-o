@@ -10,23 +10,8 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.EyeformMacro;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class EyeformMacroDao extends AbstractDaoImpl<EyeformMacro> {
-
-	public EyeformMacroDao() {
-		super(EyeformMacro.class);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<EyeformMacro> getMacros() {
-		Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x order by x.macroName");
-		return query.getResultList();
-	}
-
+public interface EyeformMacroDao extends AbstractDao<EyeformMacro> {
+	List<EyeformMacro> getMacros();
 }
