@@ -25,16 +25,32 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
+
 import org.oscarehr.common.model.DataExport;
 
-public interface DataExportDao extends AbstractDao<DataExport> {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class DataExportDaoImpl extends AbstractDaoImpl<DataExport> implements DataExportDao {
 	
-	public static final String ROURKE = "Rourke";
-	public static final String CIHI_OMD4 = "CIHI_OMD4";
-	public static final String CIHI_PHC_VRS = "CIHI_PHC_VRS";
+	public DataExportDaoImpl() {
+		super(DataExport.class);
+	}
 	
-	public List<DataExport> findAll();
+	public List<DataExport> findAll() {
+		Query query = entityManager.createQuery("select de from DataExport de order by de.daterun");
+		@SuppressWarnings("unchecked")
+		List<DataExport> list =  query.getResultList();
+		return list;
+	}
 	
-	public List<DataExport> findAllByType(String type);
+	public List<DataExport> findAllByType(String type) {
+		Query query = entityManager.createQuery("select de from DataExport de where de.type = :type order by de.daterun");
+		query = query.setParameter("type", type);
+		@SuppressWarnings("unchecked")		
+		List<DataExport> list =  query.getResultList();
+		return list;
+	}
 		
 }
