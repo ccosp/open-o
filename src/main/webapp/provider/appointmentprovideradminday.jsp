@@ -2002,7 +2002,7 @@
                                                            title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%> <%=Encode.forHtmlAttribute(name)%>&#013;&#010;<%=" type: " + Encode.forHtmlAttribute(type)%>&#013;&#010;<%= " reason: " + Encode.forHtmlAttribute(reasonCodeName)%> <%=Encode.forHtmlAttribute(reason)%>&#013;&#010;<%=" notes: " + Encode.forHtmlAttribute(notes)%>"
                                                         >
                                                             <span>
-                                                            .<%=name.length() > len ? name.substring(0, len).toUpperCase() : Encode.forHtmlContent(name.toUpperCase())%>
+                                                            .<%=(view == 0 && numAvailProvider != 1) ? (name.length() > len ? name.substring(0, len).toUpperCase() : Encode.forHtmlContent(name.toUpperCase())) : Encode.forHtmlContent(name.toUpperCase())%>
                                                             </span>
                                                         </a><!--Inline display of reason -->
 
@@ -2096,7 +2096,7 @@
                                                             <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON_TOOLTIP" value="yes" defaultVal="true">
                                                                 title="<%=Encode.forHtmlAttribute(name)%>&#013;&#010;<%=" type: " + Encode.forHtmlAttribute(type)%>&#013;&#010;<%= " reason: " + Encode.forHtmlAttribute(reasonCodeName)%> <%=Encode.forHtmlAttribute(reason)%>&#013;&#010;<%=" notes: " + Encode.forHtmlAttribute(notes)%>"
                                                             </oscar:oscarPropertiesCheck> >
-                                                        <%=name.length() > len ? Encode.forHtmlContent(name.substring(0, len)) : Encode.forHtmlContent(name)%>
+                                                        <%=(view == 0) ? (name.length() > len ? Encode.forHtmlContent(name.substring(0, len)) : Encode.forHtmlContent(name)) : Encode.forHtmlContent(name)%>
                                                     </a>
 
                                                             <% if(len==lenLimitedL || view!=0 || numAvailProvider==1 ) {%>
