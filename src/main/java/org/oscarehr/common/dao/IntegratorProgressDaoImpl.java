@@ -24,9 +24,32 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.IntegratorProgress;
+import org.springframework.stereotype.Repository;
 
-public interface IntegratorProgressDao extends AbstractDao<IntegratorProgress> {
-    List<IntegratorProgress> findCompleted();
-    List<IntegratorProgress> findRunning();
+@Repository
+public class IntegratorProgressDaoImpl extends AbstractDaoImpl<IntegratorProgress> implements IntegratorProgressDao {
+
+	public IntegratorProgressDaoImpl() {
+		super(IntegratorProgress.class);
+	}
+
+	public List<IntegratorProgress> findCompleted() {
+		Query query = entityManager.createQuery("select f from IntegratorProgress f where f.status = ? order by f.dateCreated DESC");
+		query.setParameter(1,IntegratorProgress.STATUS_COMPLETED);
+		@SuppressWarnings("unchecked")
+		List<IntegratorProgress> results = query.getResultList();
+
+		return results;
+	}
+	
+	public List<IntegratorProgress> findRunning() {
+		Query query = entityManager.createQuery("select f from IntegratorProgress f where f.status = ?");
+		query.setParameter(1,IntegratorProgress.STATUS_RUNNING);
+		@SuppressWarnings("unchecked")
+		List<IntegratorProgress> results = query.getResultList();
+
+		return results;
+	}
 }
