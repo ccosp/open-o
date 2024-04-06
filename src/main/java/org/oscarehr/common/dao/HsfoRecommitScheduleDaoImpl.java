@@ -23,8 +23,14 @@
  */
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.HsfoRecommitSchedule;
 
-public interface HsfoRecommitScheduleDao extends AbstractDao<HsfoRecommitSchedule> {
+@Repository
+public class HsfoRecommitScheduleDaoImpl extends AbstractDaoImpl<HsfoRecommitSchedule> implements HsfoRecommitScheduleDao {
+
+	public HsfoRecommitScheduleDaoImpl() {
+		super(HsfoRecommitSchedule.class);
+	}
 	
 }
