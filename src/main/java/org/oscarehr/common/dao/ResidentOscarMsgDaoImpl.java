@@ -24,9 +24,30 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.ResidentOscarMsg;
+import org.springframework.stereotype.Repository;
 
-public interface ResidentOscarMsgDao extends AbstractDao<ResidentOscarMsg> {
-    List<ResidentOscarMsg> findBySupervisor(String supervisor);
-    ResidentOscarMsg findByNoteId(Long noteId);
+@Repository
+public class ResidentOscarMsgDaoImpl extends AbstractDaoImpl<ResidentOscarMsg> implements ResidentOscarMsgDao {
+
+    public ResidentOscarMsgDaoImpl() {
+        super(ResidentOscarMsg.class);
+    }
+    
+    
+    public List<ResidentOscarMsg> findBySupervisor(String supervisor) {
+        Query query = entityManager.createQuery("select p from ResidentOscarMsg p where p.supervisor_no = :supervisor and p.complete = 0");
+        query.setParameter("supervisor", supervisor);
+        
+        return query.getResultList();
+    }
+    
+    public ResidentOscarMsg findByNoteId(Long noteId) {
+        Query query = entityManager.createQuery("select p from ResidentOscarMsg p where p.note_id = :note_id");
+        query.setParameter("note_id", noteId);
+        
+        return this.getSingleResultOrNull(query);
+    }
+    
 }
