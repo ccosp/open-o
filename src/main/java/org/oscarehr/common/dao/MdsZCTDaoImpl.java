@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.MdsZCT;
+import org.springframework.stereotype.Repository;
 
-public interface MdsZCTDao extends AbstractDao<MdsZCT> {
+@Repository
+public class MdsZCTDaoImpl extends AbstractDaoImpl<MdsZCT> implements MdsZCTDao {
+
+	public MdsZCTDaoImpl() {
+		super(MdsZCT.class);
+	}
 }
