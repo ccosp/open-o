@@ -22,47 +22,13 @@
  * Ontario, Canada
  */
 
-
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.Form;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class FormDao extends AbstractDaoImpl<Form>{
-
-	public FormDao() {
-		super(Form.class);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Form> findByDemographicNo(Integer demographicNo) {
-		Query q = entityManager.createQuery("select f from Form f where f.demographicNo = ? order by f.formDate desc, f.formTime desc, f.id desc");
-		q.setParameter(1, demographicNo);
-		
-		return q.getResultList();
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Form search_form_no(Integer demographicNo, String formName) {
-		Query q = entityManager.createQuery("select f from Form f where f.demographicNo = ? and f.formName like ? order by f.formDate desc, f.formTime desc, f.id ");
-		q.setParameter(1, demographicNo);
-		q.setParameter(2, formName);
-		q.setMaxResults(1);
-		
-		return this.getSingleResultOrNull(q);
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Form> findAllGroupByDemographicNo() {
-		Query q = entityManager.createQuery("select f from Form f group by f.demographicNo");
-		
-		return q.getResultList();	
-	}
+public interface FormDao extends AbstractDao<Form> {
+    List<Form> findByDemographicNo(Integer demographicNo);
+    Form search_form_no(Integer demographicNo, String formName);
+    List<Form> findAllGroupByDemographicNo();
 }
