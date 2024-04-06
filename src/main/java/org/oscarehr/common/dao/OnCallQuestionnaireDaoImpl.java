@@ -23,7 +23,13 @@
  */
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.OnCallQuestionnaire;
 
-public interface OnCallQuestionnaireDao extends AbstractDao<OnCallQuestionnaire> {
+@Repository
+public class OnCallQuestionnaireDaoImpl extends AbstractDaoImpl<OnCallQuestionnaire> implements OnCallQuestionnaireDao {
+
+	public OnCallQuestionnaireDaoImpl() {
+		super(OnCallQuestionnaire.class);
+	}
 }
