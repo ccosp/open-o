@@ -25,8 +25,25 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.PublicKey;
+import org.springframework.stereotype.Repository;
 
-public interface PublicKeyDao extends AbstractDao<PublicKey> {
-    List<PublicKey> findAll();
+@Repository
+public class PublicKeyDaoImpl extends AbstractDaoImpl<PublicKey> implements PublicKeyDao {
+
+	public PublicKeyDaoImpl() {
+		super(PublicKey.class);
+	}
+	
+    public List<PublicKey> findAll()
+	{
+		Query query = entityManager.createQuery("select x from "+modelClass.getSimpleName()+" x");
+		
+		@SuppressWarnings("unchecked")
+		List<PublicKey> results=query.getResultList();
+		
+		return(results);
+	}
+
 }
