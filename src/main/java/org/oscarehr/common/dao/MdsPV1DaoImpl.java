@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.MdsPV1;
+import org.springframework.stereotype.Repository;
 
-public interface MdsPV1Dao extends AbstractDao<MdsPV1> {
+@Repository
+public class MdsPV1DaoImpl extends AbstractDaoImpl<MdsPV1> implements MdsPV1Dao {
+
+	public MdsPV1DaoImpl() {
+		super(MdsPV1.class);
+	}
 }
