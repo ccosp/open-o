@@ -25,9 +25,26 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.StudyLogin;
+import org.springframework.stereotype.Repository;
 
-public interface StudyLoginDao extends AbstractDao<StudyLogin> {
-    List<StudyLogin> find(String providerNo, String studyId);
-    List<StudyLogin> find(String providerNo, Integer studyId);
+@Repository
+public class StudyLoginDaoImpl extends AbstractDaoImpl<StudyLogin> implements StudyLoginDao {
+
+	public StudyLoginDaoImpl() {
+		super(StudyLogin.class);
+	}
+
+	public List<StudyLogin> find(String providerNo, String studyId) {
+		return find(providerNo, Integer.parseInt(studyId));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<StudyLogin> find(String providerNo, Integer studyId) {
+		Query query = entityManager.createQuery("FROM StudyLogin s WHERE s.providerNo = :providerNo and s.studyNo = :studyNo and s.current1 = 1");
+		query.setParameter("providerNo", providerNo);
+		query.setParameter("studyNo", studyId);
+		return query.getResultList();
+	}
 }
