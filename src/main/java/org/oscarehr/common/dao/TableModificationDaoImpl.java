@@ -24,7 +24,13 @@
 
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.TableModification;
 
-public interface TableModificationDao extends AbstractDao<TableModification> {
+@Repository
+public class TableModificationDaoImpl extends AbstractDaoImpl<TableModification> implements TableModificationDao {
+
+	public TableModificationDaoImpl() {
+		super(TableModification.class);
+	}
 }
