@@ -23,7 +23,13 @@
  */
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.BillingONErrorCode;
 
-public interface BillingONErrorCodeDao extends AbstractDao<BillingONErrorCode> {
+@Repository
+public class BillingONErrorCodeDaoImpl extends AbstractDaoImpl<BillingONErrorCode> implements BillingONErrorCodeDao {
+    
+    public BillingONErrorCodeDaoImpl() {
+        super(BillingONErrorCode.class);	
+    }            
 }
