@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.LogLetters;
+import org.springframework.stereotype.Repository;
 
-public interface LogLettersDao extends AbstractDao<LogLetters> {
+@Repository
+public class LogLettersDaoImpl extends AbstractDaoImpl<LogLetters> implements LogLettersDao {
+
+	public LogLettersDaoImpl() {
+		super(LogLetters.class);
+	}
 }
