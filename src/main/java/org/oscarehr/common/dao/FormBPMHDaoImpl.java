@@ -23,6 +23,13 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.FormBPMH;
+import org.springframework.stereotype.Repository;
 
-public interface FormBPMHDao extends AbstractDao<FormBPMH> {
+@Repository
+public class FormBPMHDaoImpl extends AbstractDaoImpl<FormBPMH> implements FormBPMHDao {
+
+	public FormBPMHDaoImpl() {
+	    super(FormBPMH.class);
+    }
+
 }
