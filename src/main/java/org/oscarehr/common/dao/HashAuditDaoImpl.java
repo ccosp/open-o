@@ -24,6 +24,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.HashAudit;
+import org.springframework.stereotype.Repository;
 
-public interface HashAuditDao extends AbstractDao<HashAudit> {
+@Repository
+public class HashAuditDaoImpl extends AbstractDaoImpl<HashAudit> implements HashAuditDao {
+
+	public HashAuditDaoImpl() {
+		super(HashAudit.class);
+	}
 }
