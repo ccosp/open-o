@@ -24,6 +24,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.ReportFilter;
+import org.springframework.stereotype.Repository;
 
-public interface ReportFilterDao extends AbstractDao<ReportFilter> {
+@Repository
+public class ReportFilterDaoImpl extends AbstractDaoImpl<ReportFilter> implements ReportFilterDao {
+
+	public ReportFilterDaoImpl() {
+		super(ReportFilter.class);
+	}
 }
