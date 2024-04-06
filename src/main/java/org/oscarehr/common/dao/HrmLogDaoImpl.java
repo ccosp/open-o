@@ -24,8 +24,36 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-import org.oscarehr.common.model.HrmLog;
 
-public interface HrmLogDao extends AbstractDao<HrmLog> {
-    List<HrmLog> query(int start, int length, String orderColumn, String orderDirection, String providerNo);
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.HrmLog;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class HrmLogDaoImpl extends AbstractDaoImpl<HrmLog> implements HrmLogDao {
+
+	public HrmLogDaoImpl() {
+		super(HrmLog.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+    public List<HrmLog> query(int start, int length, String orderColumn, String orderDirection, String providerNo) {
+		
+		String sql = "FROM HrmLog d ";
+		
+		if(providerNo != null) {
+			sql += " WHERE d.initiatingProviderNo = ?1";
+		}
+		Query query = entityManager.createQuery(sql + " order by d."+orderColumn+" " + orderDirection);
+		
+		if(providerNo != null) {
+			query.setParameter(1, providerNo);
+		}
+		query.setFirstResult(start);
+		query.setMaxResults(length);
+		
+	    return query.getResultList();
+    }
+	
 }
