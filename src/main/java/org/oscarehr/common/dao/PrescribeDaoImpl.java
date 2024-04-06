@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.Prescribe;
+import org.springframework.stereotype.Repository;
 
-public interface PrescribeDao extends AbstractDao<Prescribe> {
+@Repository
+public class PrescribeDaoImpl extends AbstractDaoImpl<Prescribe> implements PrescribeDao {
+
+	public PrescribeDaoImpl() {
+		super(Prescribe.class);
+	}
 }
