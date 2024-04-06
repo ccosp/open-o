@@ -24,8 +24,23 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.OscarJobType;
+import org.springframework.stereotype.Repository;
 
-public interface OscarJobTypeDao extends AbstractDao<OscarJobType> {
-    List<OscarJobType> findByClassName(String className);
+@Repository
+public class OscarJobTypeDaoImpl extends AbstractDaoImpl<OscarJobType> implements OscarJobTypeDao {
+
+	public OscarJobTypeDaoImpl() {
+		super(OscarJobType.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+    public List<OscarJobType> findByClassName(String className) {
+		Query query = entityManager.createQuery("FROM OscarJobType d WHERE d.className = :className");
+		query.setParameter("className", className);
+		
+	    return query.getResultList();
+    }
+
 }
