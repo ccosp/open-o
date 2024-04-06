@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.OscarKey;
+import org.springframework.stereotype.Repository;
 
-public interface OscarKeyDao extends AbstractDao<OscarKey> {
+@Repository
+public class OscarKeyDaoImpl extends AbstractDaoImpl<OscarKey> implements OscarKeyDao {
+
+	public OscarKeyDaoImpl() {
+		super(OscarKey.class);
+	}
 }
