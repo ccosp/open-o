@@ -24,7 +24,13 @@
 
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.MdsNTE;
 
-public interface MdsNTEDao extends AbstractDao<MdsNTE> {
+@Repository
+public class MdsNTEDaoImpl extends AbstractDaoImpl<MdsNTE> implements MdsNTEDao {
+
+	public MdsNTEDaoImpl() {
+		super(MdsNTE.class);
+	}
 }
