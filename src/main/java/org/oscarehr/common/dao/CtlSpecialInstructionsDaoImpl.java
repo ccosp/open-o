@@ -25,8 +25,24 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.CtlSpecialInstructions;
+import org.springframework.stereotype.Repository;
 
-public interface CtlSpecialInstructionsDao extends AbstractDao<CtlSpecialInstructions> {
-    List<CtlSpecialInstructions> findAll();
+@Repository
+public class CtlSpecialInstructionsDaoImpl extends AbstractDaoImpl<CtlSpecialInstructions> implements CtlSpecialInstructionsDao {
+
+	public CtlSpecialInstructionsDaoImpl() {
+		super(CtlSpecialInstructions.class);
+	}
+
+	@Override
+	public List<CtlSpecialInstructions> findAll() {
+	  	String sql = "select x from CtlSpecialInstructions x";
+    	Query query = entityManager.createQuery(sql);
+
+        @SuppressWarnings("unchecked")
+        List<CtlSpecialInstructions> results = query.getResultList();
+        return results;
+	}
 }
