@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.ProviderArchive;
+import org.springframework.stereotype.Repository;
 
-public interface ProviderArchiveDao extends AbstractDao<ProviderArchive> {
+@Repository
+public class ProviderArchiveDaoImpl extends AbstractDaoImpl<ProviderArchive> implements ProviderArchiveDao {
+
+	public ProviderArchiveDaoImpl() {
+		super(ProviderArchive.class);
+	}
 }
