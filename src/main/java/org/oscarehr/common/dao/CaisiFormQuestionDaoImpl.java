@@ -24,8 +24,23 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import javax.persistence.Query;
 import org.oscarehr.common.model.CaisiFormQuestion;
+import org.springframework.stereotype.Repository;
 
-public interface CaisiFormQuestionDao extends AbstractDao<CaisiFormQuestion> {
-    List<CaisiFormQuestion> findByFormId(Integer formId);
+@Repository
+public class CaisiFormQuestionDaoImpl extends AbstractDaoImpl<CaisiFormQuestion> implements CaisiFormQuestionDao {
+
+	public CaisiFormQuestionDaoImpl() {
+		super(CaisiFormQuestion.class);
+	}
+	
+	public List<CaisiFormQuestion> findByFormId(Integer formId) {
+		Query query = entityManager.createQuery("SELECT x FROM CaisiFormQuestion x where x.formId = ?1");
+		query.setParameter(1, formId);
+		
+		@SuppressWarnings("unchecked")
+        List<CaisiFormQuestion> results = query.getResultList();
+		return results;
+	}
 }
