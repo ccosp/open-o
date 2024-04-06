@@ -24,8 +24,23 @@
 package org.oscarehr.common.dao;
 
 import java.util.Date;
+import javax.persistence.Query;
 import org.oscarehr.common.model.OnCallClinic;
+import org.springframework.stereotype.Repository;
 
-public interface OnCallClinicDao extends AbstractDao<OnCallClinic> {
-	OnCallClinic findByDate(Date date);
+@Repository
+public class OnCallClinicDaoImpl extends AbstractDaoImpl<OnCallClinic> implements OnCallClinicDao {
+
+	public OnCallClinicDaoImpl() {
+		super(OnCallClinic.class);
+	}
+	
+	@Override
+	public OnCallClinic findByDate(Date date) {
+		Query query = entityManager.createQuery("select x from OnCallClinic x where x.startDate = :date");
+		query.setParameter("date", date);
+		
+		return this.getSingleResultOrNull(query);				
+	}
+
 }
