@@ -24,36 +24,9 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-
-import org.oscarehr.common.merge.MergedDemographicTemplate;
 import org.oscarehr.common.model.ConsultationRequest;
-import org.springframework.stereotype.Repository;
 
-@Repository("consultationRequestDao")
-public class ConsultationRequestMergedDemographicDao extends ConsultationRequestDao {
-
-	@Override
-	public List<ConsultationRequest> getConsults(Integer demoNo) {
-		List<ConsultationRequest> result = super.getConsults(demoNo);
-		MergedDemographicTemplate<ConsultationRequest> template = new MergedDemographicTemplate<ConsultationRequest>() {
-			@Override
-			protected List<ConsultationRequest> findById(Integer demographic_no) {
-				return ConsultationRequestMergedDemographicDao.super.getConsults(demographic_no);
-			}
-		};
-		return template.findMerged(demoNo, result);
-	}
-
-	@Override
-	public List<ConsultationRequest> getConsultationsByStatus(Integer demographicNo, final String status) {
-		List<ConsultationRequest> result = super.getConsultationsByStatus(demographicNo, status);
-		MergedDemographicTemplate<ConsultationRequest> template = new MergedDemographicTemplate<ConsultationRequest>() {
-			@Override
-			protected List<ConsultationRequest> findById(Integer demographic_no) {
-				return ConsultationRequestMergedDemographicDao.super.getConsultationsByStatus(demographic_no, status);
-			}
-		};
-		return template.findMerged(demographicNo, result);
-	}
-
+public interface ConsultationRequestMergedDemographicDao {
+    List<ConsultationRequest> getConsults(Integer demoNo);
+    List<ConsultationRequest> getConsultationsByStatus(Integer demographicNo, final String status);
 }
