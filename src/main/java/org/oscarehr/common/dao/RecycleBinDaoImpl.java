@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.RecycleBin;
+import org.springframework.stereotype.Repository;
 
-public interface RecycleBinDao extends AbstractDao<RecycleBin> {
+@Repository
+public class RecycleBinDaoImpl extends AbstractDaoImpl<RecycleBin> implements RecycleBinDao {
+
+	public RecycleBinDaoImpl() {
+		super(RecycleBin.class);
+	}
 }
