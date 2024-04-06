@@ -23,8 +23,26 @@
 
 package org.oscarehr.common.dao;
 
-import org.oscarehr.common.model.SentToPHRTracking;
+import javax.persistence.Query;
 
-public interface SentToPHRTrackingDao extends AbstractDao<SentToPHRTracking> {
-    SentToPHRTracking findByDemographicObjectServer(Integer demographicNo, String objectName, String sentToServer);
+import org.oscarehr.common.model.SentToPHRTracking;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class SentToPHRTrackingDaoImpl extends AbstractDaoImpl<SentToPHRTracking> implements SentToPHRTrackingDao {
+
+	public SentToPHRTrackingDaoImpl() {
+		super(SentToPHRTracking.class);
+	}
+
+	@Override
+	public SentToPHRTracking findByDemographicObjectServer(Integer demographicNo, String objectName, String sentToServer) {
+		String sql = "select x from SentToPHRTracking x where x.demographicNo=?1 and x.objectName=?2 and x.sentToServer=?3";
+		Query query = entityManager.createQuery(sql);
+		query.setParameter(1, demographicNo);
+		query.setParameter(2, objectName);
+		query.setParameter(3, sentToServer);
+
+		return(getSingleResultOrNull(query));
+	}
 }
