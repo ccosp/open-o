@@ -25,6 +25,12 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.MdsZFR;
+import org.springframework.stereotype.Repository;
 
-public interface MdsZFRDao extends AbstractDao<MdsZFR> {
+@Repository
+public class MdsZFRDaoImpl extends AbstractDaoImpl<MdsZFR> implements MdsZFRDao {
+
+	public MdsZFRDaoImpl() {
+		super(MdsZFR.class);
+	}
 }
