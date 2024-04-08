@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.*;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class CaseloadDaoImpl implements CaseloadDao {

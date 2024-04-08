@@ -1,6 +1,7 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import org.oscarehr.common.model.MdsZMN;
 
 public interface MdsZMNDao extends AbstractDao<MdsZMN> {
     MdsZMN findBySegmentIdAndReportName(Integer id, String reportName);

@@ -25,6 +25,7 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import org.oscarehr.common.model.LabReportInformation;
 
 public interface LabReportInformationDao extends AbstractDao<LabReportInformation> {
 	List<Object[]> findReportsByPhysicianId(Integer physicianId);
