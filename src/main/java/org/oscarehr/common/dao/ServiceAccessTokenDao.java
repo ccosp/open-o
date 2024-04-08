@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.oscarehr.common.model.ServiceAccessToken;
 
-public interface ServiceAccessTokenDao{
+public interface ServiceAccessTokenDao extends AbstractDao<ServiceAccessToken>{
 
 	public List<ServiceAccessToken> findAll();
 	void persist(ServiceAccessToken token);

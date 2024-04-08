@@ -61,6 +61,7 @@ import org.oscarehr.common.dao.EFormGroupDao;
 import org.oscarehr.common.dao.EpisodeDao;
 import org.oscarehr.common.dao.MeasurementDao;
 import org.oscarehr.common.dao.PregnancyFormsDao;
+import org.oscarehr.common.dao.PregnancyFormsDaoImpl;
 import org.oscarehr.common.dao.PrintResourceLogDao;
 import org.oscarehr.common.model.AbstractCodeSystemModel;
 import org.oscarehr.common.model.Allergy;
@@ -105,7 +106,7 @@ public class PregnancyAction extends DispatchAction {
 		Integer formId = 0;
 		if(episodeId != null) {
 			try {
-				formId = PregnancyFormsDao.getLatestFormIdByPregnancy(Integer.parseInt(episodeId));
+				formId = PregnancyFormsDaoImpl.getLatestFormIdByPregnancy(Integer.parseInt(episodeId));
 			}catch(NumberFormatException e) {
 				//empty
 			}

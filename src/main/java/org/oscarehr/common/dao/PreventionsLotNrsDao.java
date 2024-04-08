@@ -3,7 +3,7 @@ package org.oscarehr.common.dao;
 import java.util.List;
 import org.oscarehr.common.model.PreventionsLotNrs;
 
-public interface PreventionsLotNrsDao {
+public interface PreventionsLotNrsDao extends AbstractDao<PreventionsLotNrs>{
     List<PreventionsLotNrs> findLotNrData(Boolean bDeleted);
     PreventionsLotNrs findByName(String prevention, String lotNr, Boolean bDeleted);
     List<String> findLotNrs(String prevention, Boolean bDeleted);

@@ -1,16 +1,34 @@
 package org.oscarehr.common.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
+import java.util.Map.Entry;
 
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.EncounterUtil.EncounterType;
-import org.springframework.stereotype.Repository;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.joda.time.Days;
+import org.joda.time.MutablePeriod;
+import org.joda.time.PeriodType;
+import org.oscarehr.PMmodule.utility.DateTimeFormatUtils;
+import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.Stay;
+import org.oscarehr.util.DbConnectionFilter;
+import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.EncounterUtil.EncounterType;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-@Repository
+import oscar.util.SqlUtils;
+
 public class PopulationReportDaoImpl extends HibernateDaoSupport implements PopulationReportDao {
 
     public static final int LOW = 0;

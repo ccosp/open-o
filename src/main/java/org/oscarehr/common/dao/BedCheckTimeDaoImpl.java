@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BedCheckTimeDaoImpl extends AbstractDaoImpl<BedCheckTime> implements BedCheckTimeDao {
 
-    private static final Logger logger = MiscUtils.getLogger();
+    private Logger log = MiscUtils.getLogger();
 
     public BedCheckTimeDaoImpl() {
 		super(BedCheckTime.class);

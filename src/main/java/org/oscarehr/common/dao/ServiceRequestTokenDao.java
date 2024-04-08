@@ -57,7 +57,7 @@ package org.oscarehr.common.dao;
 import org.oscarehr.common.model.ServiceRequestToken;
 import java.util.List;
 
-public interface ServiceRequestTokenDao {
+public interface ServiceRequestTokenDao extends AbstractDao<ServiceRequestToken>{
     List<ServiceRequestToken> findAll();
     ServiceRequestToken findByTokenId(String token);
     void persist(ServiceRequestToken token);

@@ -50,7 +50,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
 
-	protected AbstractDaoImpl(Class<T> modelClass) {
+	public AbstractDaoImpl(Class<T> modelClass) {
 		setModelClass(modelClass);
 	}
 

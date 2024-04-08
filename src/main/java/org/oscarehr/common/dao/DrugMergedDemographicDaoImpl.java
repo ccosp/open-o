@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 import oscar.util.ConversionUtils;
 
 @Repository("drugDao")
-public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMergedDemographicDao{
+public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements DrugMergedDemographicDao{
 
 	@Override
 	public List<Drug> findByDemographicId(Integer demographicId) {
@@ -42,7 +42,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicId(demographic_no);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicId(demographic_no);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -54,7 +54,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicId(demographic_no, archived);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicId(demographic_no, archived);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -67,7 +67,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdOrderByDate(demographic_no, archived);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdOrderByDate(demographic_no, archived);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -80,7 +80,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdOrderByPosition(demographic_no, archived);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdOrderByPosition(demographic_no, archived);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -92,7 +92,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -104,7 +104,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName, brandName);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName, brandName);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -116,7 +116,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName, brandName, atc);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdSimilarDrugOrderByDate(demographic_no, regionalIdentifier, customName, brandName, atc);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -129,7 +129,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 //		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 //			@Override
 //			public List<Drug> findById(Integer demographic_no) {
-//				return DrugMergedDemographicDao.super.getUniquePrescriptions(demographic_no.toString());
+//				return DrugMergedDemographicDaoImpl.super.getUniquePrescriptions(demographic_no.toString());
 //			}
 //		};
 //		return template.findMerged(ConversionUtils.fromIntString(demographic_no), result);
@@ -142,7 +142,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.getPrescriptions(demographic_no.toString());
+				return DrugMergedDemographicDaoImpl.super.getPrescriptions(demographic_no.toString());
 			}
 		};
 		return template.findMerged(ConversionUtils.fromIntString(demographic_no), result);
@@ -154,7 +154,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.getPrescriptions(demographic_no.toString(), all);
+				return DrugMergedDemographicDaoImpl.super.getPrescriptions(demographic_no.toString(), all);
 			}
 		};
 		return template.findMerged(ConversionUtils.fromIntString(demographic_no), result);
@@ -166,7 +166,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdUpdatedAfterDate(demographic_no, updatedAfterThisDate);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdUpdatedAfterDate(demographic_no, updatedAfterThisDate);
 			}
 		};
 		return template.findMerged(demographicId, result);
@@ -178,7 +178,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdAndAtc(demographic_no, atc);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdAndAtc(demographic_no, atc);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -190,7 +190,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdAndRegion(demographic_no, regionalIdentifier);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdAndRegion(demographic_no, regionalIdentifier);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -203,7 +203,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdAndDrugId(demographic_no, drugId);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdAndDrugId(demographic_no, drugId);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -215,7 +215,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Object[]> template = new MergedDemographicTemplate<Object[]>() {
 			@Override
 			public List<Object[]> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findDrugsAndPrescriptions(demographic_no);
+				return DrugMergedDemographicDaoImpl.super.findDrugsAndPrescriptions(demographic_no);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -227,7 +227,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicTemplate<Drug> template = new MergedDemographicTemplate<Drug>() {
 			@Override
 			public List<Drug> findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByRegionBrandDemographicAndProvider(regionalIdentifier, brandName, demographic_no, providerNo);
+				return DrugMergedDemographicDaoImpl.super.findByRegionBrandDemographicAndProvider(regionalIdentifier, brandName, demographic_no, providerNo);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -239,7 +239,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicSingleResultTemplate<Drug> template = new MergedDemographicSingleResultTemplate<Drug>() {
 			@Override
 			protected Drug findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByBrandNameDemographicAndProvider(brandName, demographic_no, providerNo);
+				return DrugMergedDemographicDaoImpl.super.findByBrandNameDemographicAndProvider(brandName, demographic_no, providerNo);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -251,7 +251,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicSingleResultTemplate<Drug> template = new MergedDemographicSingleResultTemplate<Drug>() {
 			@Override
 			protected Drug findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByCustomNameDemographicIdAndProviderNo(customName, demographic_no, providerNo);
+				return DrugMergedDemographicDaoImpl.super.findByCustomNameDemographicIdAndProviderNo(customName, demographic_no, providerNo);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -263,7 +263,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicSingleResultTemplate<Integer> template = new MergedDemographicSingleResultTemplate<Integer>() {
 			@Override
 			protected Integer findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findLastNotArchivedId(brandName, genericName, demographic_no);
+				return DrugMergedDemographicDaoImpl.super.findLastNotArchivedId(brandName, genericName, demographic_no);
 			}
 		};
 		return template.findMerged(demographicNo, result);
@@ -275,7 +275,7 @@ public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements  DrugMe
 		MergedDemographicSingleResultTemplate<Drug> template = new MergedDemographicSingleResultTemplate<Drug>() {
 			@Override
 			protected Drug findById(Integer demographic_no) {
-				return DrugMergedDemographicDao.super.findByDemographicIdRegionalIdentifierAndAtcCode(atcCode, regionalIdentifier, demographic_no);
+				return DrugMergedDemographicDaoImpl.super.findByDemographicIdRegionalIdentifierAndAtcCode(atcCode, regionalIdentifier, demographic_no);
 			}
 		};
 		return template.findMerged(demographicNo, result);

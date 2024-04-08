@@ -41,6 +41,7 @@ import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.BillingONCHeader1Dao;
 import org.oscarehr.common.dao.BillingONExtDao;
 import org.oscarehr.common.dao.BillingONPaymentDao;
+import org.oscarehr.common.dao.BillingONPaymentDaoImpl;
 import org.oscarehr.common.dao.BillingONRepoDao;
 import org.oscarehr.common.dao.BillingPaymentTypeDao;
 import org.oscarehr.common.dao.BillingServiceDao;
@@ -356,8 +357,8 @@ public class BillingCorrectionAction extends DispatchAction{
              * total amount paid by the 3rd party.
              */
             List<BillingONPayment> paymentRecords = bPaymentDao.find3rdPartyPayRecordsByBill(bCh1);
-            BigDecimal payments = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
-            BigDecimal refunds = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
+            BigDecimal payments = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
+            BigDecimal refunds = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
             BigDecimal reversedFunds = payments.subtract(refunds);
 
             int doReverse = reversedFunds.compareTo(new BigDecimal("0.00"));
@@ -378,8 +379,8 @@ public class BillingCorrectionAction extends DispatchAction{
             List<BillingONPayment> paymentRecords = bPaymentDao.find3rdPartyPayRecordsByBill(bCh1);
                    
             BigDecimal totalOwing =  bCh1.getTotal();
-            BigDecimal totalPaid = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
-            BigDecimal totalRefund = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
+            BigDecimal totalPaid = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
+            BigDecimal totalRefund = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
             BigDecimal amtOutstanding = totalOwing.subtract(totalPaid).add(totalRefund);
 
             int doSettlePayment = amtOutstanding.compareTo(new BigDecimal("0.00"));

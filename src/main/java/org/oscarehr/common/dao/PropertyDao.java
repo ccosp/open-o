@@ -16,4 +16,6 @@ public interface PropertyDao extends AbstractDao<Property>{
     void removeByName(String name);
     Boolean isActiveBooleanProperty(Property.PROPERTY_KEY name);
     Boolean isActiveBooleanProperty(Property.PROPERTY_KEY name, String providerNo);
+    Boolean isActiveBooleanProperty(String name);
+    Boolean isActiveBooleanProperty(String name, String providerNo);
 }

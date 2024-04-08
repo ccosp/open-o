@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.oscarehr.common.model.Drug;
 
-public interface DrugMergedDemographicDao {
+public interface DrugMergedDemographicDao extends DrugDao{
     List<Drug> findByDemographicId(Integer demographicId);
     List<Drug> findByDemographicId(Integer demographicId, Boolean archived);
     List<Drug> findByDemographicIdOrderByDate(Integer demographicId, Boolean archived);

@@ -472,7 +472,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public String getDescription(String codingSystem, String code){
 		String description = null;
         try{ 
-	        String daoName = AbstractCodeSystemDao.getDaoName(AbstractCodeSystemDao.codingSystem.valueOf(codingSystem));
+	        String daoName = AbstractCodeSystemDaoImpl.getDaoName(AbstractCodeSystemDaoImpl.codingSystem.valueOf(codingSystem));
 	        @SuppressWarnings("unchecked")
 	        AbstractCodeSystemDao<AbstractCodeSystemModel<?>> csDao = (AbstractCodeSystemDao<AbstractCodeSystemModel<?>>) SpringUtils.getBean(daoName);
 	        
