@@ -1,5 +1,7 @@
 package org.oscarehr.common.dao;
 
+import java.util.List;
+
 import org.oscarehr.common.model.AppUser;
 import org.springframework.stereotype.Repository;
 

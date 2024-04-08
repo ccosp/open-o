@@ -7,7 +7,7 @@ public interface AbstractCodeSystemDao<T extends AbstractCodeSystemModel<?>> ext
 
     public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
 
-    public static String getDaoName(codingSystem codeSystem);
+   // public static String getDaoName(codingSystem codeSystem);
 
     public List<T> searchCode(String term);
 

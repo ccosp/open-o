@@ -6,7 +6,7 @@ import org.oscarehr.common.NativeSql;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BillingBCDaoImpl extends BillingDao implements BillingBCDao {
+public class BillingBCDaoImpl extends BillingDaoImpl implements BillingBCDao {
 
     @NativeSql({"ctl_billingservice", "billingservice"})
     @SuppressWarnings("unchecked")

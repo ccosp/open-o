@@ -11,6 +11,6 @@ public interface BillingOnItemPaymentDao extends AbstractDao<BillingOnItemPaymen
     BigDecimal getAmountPaidByItemId(int itemId);
     List<BillingOnItemPayment> getItemPaymentByInvoiceNoItemId(Integer ch1_id, Integer item_id);
     List<BillingOnItemPayment> findByBillingNo(int billingNo);
-    static BigDecimal calculateItemPaymentTotal(List<BillingOnItemPayment> paymentRecords);
-    static BigDecimal calculateItemRefundTotal(List<BillingOnItemPayment> paymentRecords);
+    //BigDecimal calculateItemPaymentTotal(List<BillingOnItemPayment> paymentRecords);
+    //BigDecimal calculateItemRefundTotal(List<BillingOnItemPayment> paymentRecords);
 }

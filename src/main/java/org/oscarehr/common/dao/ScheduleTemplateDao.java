@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.oscarehr.common.model.ScheduleTemplate;
 
-public interface ScheduleTemplateDao {
+public interface ScheduleTemplateDao extends AbstractDao<ScheduleTemplate> {
     List<ScheduleTemplate> findBySummary(String summary);
     List<Object[]> findSchedules(Date date_from, Date date_to, String provider_no);
     List<Object[]> findSchedules(Date dateFrom, List<String> providerIds);
