@@ -7,23 +7,49 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DemographicMergedDaoImpl extends AbstractDaoImpl<DemographicMerged> implements DemographicMergedDao {
 
+    public DemographicMergedDaoImpl() {
+		super(DemographicMerged.class);
+	}
+
     @Override
     public List<DemographicMerged> findCurrentByMergedTo(int demographicNo) {
-        // Implement the method here
+        Query q = entityManager.createQuery("select d from DemographicMerged d where d.mergedTo=? and d.deleted=0");
+		q.setParameter(1, demographicNo);
+		
+		@SuppressWarnings("unchecked")
+		List<DemographicMerged> results = q.getResultList();
+		
+		return results;
     }
 
     @Override
     public List<DemographicMerged> findCurrentByDemographicNo(int demographicNo) {
-        // Implement the method here
+        Query q = entityManager.createQuery("select d from DemographicMerged d where d.demographicNo=? and d.deleted=0");
+		q.setParameter(1, demographicNo);
+		
+		@SuppressWarnings("unchecked")
+		List<DemographicMerged> results = q.getResultList();
+		
+		return results;
     }
 
     @Override
     public List<DemographicMerged> findByDemographicNo(int demographicNo) {
-        // Implement the method here
+        Query q = entityManager.createQuery("select d from DemographicMerged d where d.demographicNo=?");
+		q.setParameter(1, demographicNo);
+		
+		@SuppressWarnings("unchecked")
+		List<DemographicMerged> results = q.getResultList();
+		
+		return results;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<DemographicMerged> findByParentAndChildIds(Integer parentId, Integer childId) {
-        // Implement the method here
+        Query q = createQuery("d", "d.demographicNo = :childId AND d.mergedTo = :parentId");
+		q.setParameter("parentId", parentId);
+		q.setParameter("childId", childId);
+		return q.getResultList();
     }
 }

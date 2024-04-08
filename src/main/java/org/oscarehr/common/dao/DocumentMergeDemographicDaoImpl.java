@@ -7,7 +7,7 @@ import org.oscarehr.common.model.Document;
 import org.oscarehr.documentManager.EDocUtil.EDocSort;
 import oscar.util.ConversionUtils;
 
-public class DocumentMergeDemographicDaoImpl extends DocumentDaoImpl implements DocumentMergeDemographicDao {
+public class DocumentMergeDemographicDaoImpl extends DocumentDaoImpl implements DocumentMergeDemographicDAO {
 
     @Override
     public List<Object[]> findDocuments(final String module, String moduleid, final String docType,
