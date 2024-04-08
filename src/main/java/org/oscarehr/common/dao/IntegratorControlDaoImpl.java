@@ -18,5 +18,108 @@ public class IntegratorControlDaoImpl extends AbstractDaoImpl<IntegratorControl>
         super(IntegratorControl.class);
     }
 
-    // ... rest of the methods implementation from the original IntegratorControlDao class
+    public List<IntegratorControl> getAllByFacilityId(Integer facilityId) {
+        String queryStr = "FROM IntegratorControl c WHERE c.facilityId = "+facilityId+" ORDER BY c.control";
+
+        @SuppressWarnings("unchecked")
+        List<IntegratorControl> rs = entityManager.createQuery(queryStr).getResultList();
+
+        return rs;
+    }
+
+    public boolean readRemoveDemographicIdentity(Integer facilityId) {
+        boolean rid = false;
+        IntegratorControl ic_rid = readRemoveDemographicIdentityCtrl(facilityId);
+        if (ic_rid!=null) rid = ic_rid.getExecute();
+        return rid;
+    }
+
+    private IntegratorControl readRemoveDemographicIdentityCtrl(Integer facilityId) {
+        IntegratorControl ic_rid = null;
+
+        List<IntegratorControl> lic = getAllByFacilityId(facilityId);
+        for (IntegratorControl ic : lic) {
+            String ctrl = ic.getControl();
+            if (ctrl!=null & ctrl.equals(REMOVE_DEMO_ID_CTRL)) {
+                ic_rid = ic;
+                break;
+            }
+        }
+        return ic_rid;
+    }
+
+    public void saveRemoveDemographicIdentity(Integer facilityId, boolean removeDemoId) {
+        IntegratorControl ic_rid = readRemoveDemographicIdentityCtrl(facilityId);
+        if (ic_rid==null) { //create new control
+            ic_rid = new IntegratorControl();
+            ic_rid.setFacilityId(facilityId);
+            ic_rid.setControl(REMOVE_DEMO_ID_CTRL);
+        }
+        ic_rid.setExecute(removeDemoId);
+        save(ic_rid);
+    }
+
+    public Integer readUpdateInterval(Integer facilityId) {
+        Integer upi = 0;
+        IntegratorControl ic_upi = readUpdateIntervalCtrl(facilityId);
+        if (ic_upi!=null && ic_upi.getExecute()) {
+            upi = getIntervalTime(ic_upi.getControl());
+        }
+        return upi;
+    }
+
+    public IntegratorControl readUpdateIntervalCtrl(Integer facilityId) {
+        IntegratorControl ic_upi = null;
+
+        List<IntegratorControl> lic = getAllByFacilityId(facilityId);
+        for (IntegratorControl ic : lic) {
+            String ctrl = ic.getControl();
+            if (ctrl!=null & ctrl.startsWith(UPDATE_INTERVAL_CTRL)) {
+                ic_upi = ic;
+                break;
+            }
+        }
+        return ic_upi;
+    }
+
+    public void saveUpdateInterval(Integer facilityId, Integer updateInterval) {
+        if (updateInterval==null) updateInterval=0;
+
+        IntegratorControl ic_rid = readUpdateIntervalCtrl(facilityId);
+        if (ic_rid==null) { //create new control
+            ic_rid = new IntegratorControl();
+            ic_rid.setFacilityId(facilityId);
+        }
+        ic_rid.setControl(UPDATE_INTERVAL_CTRL+"="+updateInterval+INTERVAL_HR);
+        ic_rid.setExecute(updateInterval>0);
+        save(ic_rid);
+    }
+
+    public void save(IntegratorControl ic) {
+        if (ic == null) {
+            throw new IllegalArgumentException();
+        }
+        if(ic.getId() == null || ic.getId().intValue() == 0) {
+        	persist(ic);
+        } else {
+        	merge(ic);
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("saveIntegratorControl: " + ic.getId());
+        }
+    }
+
+    private Integer getIntervalTime(String sIntervalTime) {
+        Integer ret = 0;
+        int begin = UPDATE_INTERVAL_CTRL.length()+1;
+        if (sIntervalTime!=null && sIntervalTime.length()>begin) {
+            int end = sIntervalTime.indexOf(INTERVAL_HR, begin);
+            if (end>begin) {
+                String sTime = sIntervalTime.substring(begin, end);
+                ret = Integer.parseInt(sTime);
+            }
+        }
+        return ret;
+    }
 }
