@@ -2,6 +2,7 @@ package org.oscarehr.common.dao;
 
 import java.util.Date;
 import java.util.List;
+import org.oscarehr.common.model.LabPatientPhysicianInfo;
 
 public interface LabPatientPhysicianInfoDao extends AbstractDao<LabPatientPhysicianInfo> {
     List<Object[]> findRoutings(Integer demographicNo, String labType);

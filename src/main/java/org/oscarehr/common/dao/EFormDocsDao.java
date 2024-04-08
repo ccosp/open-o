@@ -25,6 +25,7 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import org.oscarehr.common.model.EFormDocs;
 
 public interface EFormDocsDao extends AbstractDao<EFormDocs> {
     List<EFormDocs> findByFdidIdDocNoDocType(Integer fdid, Integer documentNo, String docType);

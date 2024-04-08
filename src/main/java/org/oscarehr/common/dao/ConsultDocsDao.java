@@ -1,6 +1,7 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import org.oscarehr.common.model.ConsultDocs;
 
 public interface ConsultDocsDao {
     List<ConsultDocs> findByRequestIdDocNoDocType(Integer requestId, Integer documentNo, String docType);

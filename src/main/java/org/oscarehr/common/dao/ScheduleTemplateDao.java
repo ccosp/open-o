@@ -2,6 +2,7 @@ package org.oscarehr.common.dao;
 
 import java.util.Date;
 import java.util.List;
+import org.oscarehr.common.model.ScheduleTemplate;
 
 public interface ScheduleTemplateDao {
     List<ScheduleTemplate> findBySummary(String summary);

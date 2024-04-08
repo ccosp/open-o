@@ -26,6 +26,7 @@ package org.oscarehr.common.dao;
 
 import java.util.Date;
 import java.util.List;
+import org.oscarehr.common.model.ReportByExamples;
 
 public interface ReportByExamplesDao extends AbstractDao<ReportByExamples> {
 	List<Object[]> findReportsAndProviders();
