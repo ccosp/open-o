@@ -29,7 +29,7 @@ import org.oscarehr.common.model.ConsultationRequest;
 import org.springframework.stereotype.Repository;
 
 @Repository("consultationRequestDao")
-public class ConsultationRequestMergedDemographicDaoImpl extends ConsultationRequestDao implements ConsultationRequestMergedDemographicDao {
+public class ConsultationRequestMergedDemographicDaoImpl extends ConsultationRequestDaoImpl implements ConsultationRequestMergedDemographicDao {
 
 	@Override
 	public List<ConsultationRequest> getConsults(Integer demoNo) {

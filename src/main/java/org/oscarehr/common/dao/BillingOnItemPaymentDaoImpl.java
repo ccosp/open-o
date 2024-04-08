@@ -74,7 +74,6 @@ public class BillingOnItemPaymentDaoImpl extends AbstractDaoImpl<BillingOnItemPa
 	     return paidTotal;
     }
 
-    @Override
     public static BigDecimal calculateItemPaymentTotal(List<BillingOnItemPayment> paymentRecords) {
         BigDecimal refundTotal = new BigDecimal("0.00");
         for (BillingOnItemPayment bPay : paymentRecords) {
@@ -85,7 +84,6 @@ public class BillingOnItemPaymentDaoImpl extends AbstractDaoImpl<BillingOnItemPa
         return refundTotal;
     }
 
-    @Override
     public static BigDecimal calculateItemRefundTotal(List<BillingOnItemPayment> paymentRecords) {
         Query query = entityManager.createQuery("select boip from BillingOnItemPayment boip where boip.ch1Id = ?1");
 		query.setParameter(1, billingNo);

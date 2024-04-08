@@ -62,7 +62,7 @@ import oscar.OscarProperties;
 import oscar.util.ConversionUtils;
 import oscar.util.StringUtils;
 
-public class EctConsultationFormRequestUtil {
+public class EctConsultationFormRequestUtil  {
 
 	public String patientName;
 	public String patientFirstName;
