@@ -6,7 +6,7 @@ import org.oscarehr.common.model.BatchBilling;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BatchBillingDaoImpl extends AbstractDaoImpl<BatchBilling> implements BatchBillingDao {
+public class BatchBillingDaoImpl extends AbstractDaoImpl<BatchBilling> implements BatchBillingDAO {
     
     public BatchBillingDaoImpl() {
     	super(BatchBilling.class);

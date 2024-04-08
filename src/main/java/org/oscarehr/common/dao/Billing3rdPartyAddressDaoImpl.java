@@ -1,14 +1,17 @@
 package org.oscarehr.common.dao;
 
-import org.oscarehr.billing.CA.ON.model.Billing3rdPartyAddress;
-import org.springframework.stereotype.Repository;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.persistence.Query;
+
+import org.oscarehr.billing.CA.ON.model.Billing3rdPartyAddress;
 import org.oscarehr.common.NativeSql;
+import org.oscarehr.util.MiscUtils;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @SuppressWarnings("unchecked")

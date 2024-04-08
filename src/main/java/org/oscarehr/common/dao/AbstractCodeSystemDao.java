@@ -5,7 +5,7 @@ import org.oscarehr.common.model.AbstractCodeSystemModel;
 
 public interface AbstractCodeSystemDao<T extends AbstractCodeSystemModel<?>> extends AbstractDao<T> {
 
-    public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
+    //public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
 
    // public static String getDaoName(codingSystem codeSystem);
 

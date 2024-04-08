@@ -27,6 +27,6 @@ package org.oscarehr.common.dao;
 import java.util.Date;
 import org.oscarehr.common.model.SecurityToken;
 
-public interface SecurityTokenDao {
+public interface SecurityTokenDao extends AbstractDao<SecurityToken>{
     SecurityToken getByTokenAndExpiry(String token, Date expiry);
 }

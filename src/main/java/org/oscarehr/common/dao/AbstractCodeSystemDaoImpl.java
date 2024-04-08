@@ -5,6 +5,10 @@ import org.oscarehr.common.model.AbstractCodeSystemModel;
 
 public abstract class AbstractCodeSystemDaoImpl<T extends AbstractCodeSystemModel<?>> extends AbstractDaoImpl<T> implements AbstractCodeSystemDao<T> {
 
+    public AbstractCodeSystemDaoImpl(Class<T> modelClass) {
+        super(modelClass);
+    }
+
     public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
 
     public static String getDaoName(codingSystem codeSystem) {

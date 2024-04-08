@@ -1,16 +1,23 @@
 package org.oscarehr.common.dao;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.BillingONPayment;
-import org.springframework.stereotype.Repository;
-import org.springframework.beans.factory.annotation.Autowired;
-import javax.persistence.Query;
-import javax.persistence.NoResultException;
 import java.text.NumberFormat;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+
+import org.oscarehr.common.model.BillingONCHeader1;
+import org.oscarehr.common.model.BillingONExt;
+import org.oscarehr.common.model.BillingONPayment;
+import org.oscarehr.util.SpringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import oscar.util.DateUtils;
 
 @Repository
 public class BillingONPaymentDaoImpl extends AbstractDaoImpl<BillingONPayment> implements BillingONPaymentDao {

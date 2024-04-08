@@ -4,7 +4,7 @@ import org.oscarehr.common.model.MyGroup;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
-
+import org.oscarehr.common.model.MyGroupPrimaryKey;
 import javax.persistence.Query;
 import java.util.List;
 

@@ -1,10 +1,20 @@
 package org.oscarehr.common.dao;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Query;
+
+import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.BillingService;
 import org.springframework.stereotype.Repository;
-import org.oscarehr.common.NativeSql;
+
+import oscar.util.UtilDateUtilities;
 
 @Repository
 @SuppressWarnings("unchecked")

@@ -2,7 +2,7 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-public interface BillingBCDao {
+public interface BillingBCDao extends BillingDao{
     List<Object[]> findBillingServices(String billRegion, String serviceGroup, String serviceType);
     List<Object[]> findBillingServicesByType(String serviceType);
     List<Object[]> findBillingServices(String billRegion, String serviceGroup, String serviceType, String billReferenceDate);

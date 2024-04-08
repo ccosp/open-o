@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RoomBedDaoImpl extends AbstractDaoImpl<RoomBed> implements RoomBedDao {
 
+    private Logger log = MiscUtils.getLogger();
+
+    public RoomBedDaoImpl() {
+		super(RoomBed.class);
+	}
+
     @Override
     public boolean bedExists(Integer roomId) {
         Query query = entityManager.createQuery("select count(*) from RoomBed rb where rb.id.roomId = ?");

@@ -5,6 +5,7 @@ import java.util.List;
 import org.oscarehr.common.model.BillingService;
 
 public interface BillingServiceDao extends AbstractDao<BillingService> {
+    static public final String BC = "BC";
     List<BillingService> getBillingCodeAttr(String serviceCode);
     boolean codeRequiresSLI(String code);
     List<BillingService> findBillingCodesByCode(String code, String region);

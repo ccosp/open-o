@@ -6,7 +6,7 @@ import org.oscarehr.common.model.CssStyle;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CSSStylesDaoImpl extends AbstractDaoImpl<CssStyle> implements CSSStylesDao {
+public class CSSStylesDaoImpl extends AbstractDaoImpl<CssStyle> implements CSSStylesDAO {
     
     public CSSStylesDaoImpl() {
     	super(CssStyle.class);

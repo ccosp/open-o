@@ -33,4 +33,5 @@ public interface BillingDao extends AbstractDao<Billing> {
     List<Billing> findBillingsByDemoNoServiceCodeAndDate(Integer demoNo, Date date, List<String> serviceCodes);
     List<Billing> search_bill_history_daterange(String providerNo, Date startBillingDate, Date endBillingDate);
     List<Billing> findByProviderStatusForTeleplanFileWriter(String hin);
+    List<Object[]> search_bill_generic(int billingNo);
 }
