@@ -37,6 +37,7 @@ public class OcanClientFormDaoImpl extends AbstractDaoImpl<OcanClientForm> imple
 		super(OcanClientForm.class);
 	}
 
+	@Override
 	public OcanClientForm findLatestByFacilityClient(Integer facilityId, Integer clientId) {
 
 		String sqlCommand = "select * from OcanClientForm where facilityId=?1 and clientId=?2 order by created desc";
@@ -48,6 +49,7 @@ public class OcanClientFormDaoImpl extends AbstractDaoImpl<OcanClientForm> imple
 		return getSingleResultOrNull(query);
 	}
 
+	@Override
     public List<OcanClientForm> findByFacilityClient(Integer facilityId, Integer clientId) {
 
 		String sqlCommand = "select x from OcanClientForm x where x.facilityId=?1 and x.clientId=?2 order by x.created desc";
@@ -62,6 +64,7 @@ public class OcanClientFormDaoImpl extends AbstractDaoImpl<OcanClientForm> imple
 		return (results);
 	}
 
+	@Override
     public List<OcanClientForm> findLatestSignedOcanForms(Integer facilityId, String formVersion, Date startDate, Date endDate) {
 		
 		String sqlCommand="select x from OcanClientForm x where x.facilityId=?1 and x.signed=?2 and x.ocanFormVersion=?3 and x.startDate>=?4 and x.startDate<?5";
@@ -79,6 +82,7 @@ public class OcanClientFormDaoImpl extends AbstractDaoImpl<OcanClientForm> imple
 		return(results);
     }
     
+	@Override
     public OcanClientForm findLatestSignedOcanForm(Integer facilityId, Integer demographicNo, String formVersion, Date startDate, Date endDate) {
 		
 		String sqlCommand="select x from OcanClientForm x where x.facilityId=?1 and x.clientId=?2 and x.ocanFormVersion=?3 and x.completionDate>=?4 and x.completionDate<?5 order by x.created DESC";

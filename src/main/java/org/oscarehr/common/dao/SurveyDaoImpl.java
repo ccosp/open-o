@@ -37,11 +37,13 @@ public class SurveyDaoImpl extends AbstractDaoImpl<Survey> implements SurveyDao 
 	
 	@SuppressWarnings("unchecked")
 	@Deprecated
+	@Override
 	public List<Survey> findAll() {
 		Query query = createQuery("x", null);
 		return query.getResultList();
 	}
 	
+	@Override
 	public Survey findByName(String name) {
 		Query q = entityManager.createQuery("select s from Survey s where s.description = ?1");
 		q.setParameter(1, name);

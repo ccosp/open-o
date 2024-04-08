@@ -38,6 +38,7 @@ public class SnomedCoreDaoImpl extends AbstractCodeSystemDao<SnomedCore> impleme
 		super(SnomedCore.class);
 	}
 
+	@Override
 	public List<SnomedCore> getSnomedCoreCode(String snomedCoreCode){
 		Query query = entityManager.createQuery("select i from SnomedCore i where i.snomedCore=?");
 		query.setParameter(1, snomedCoreCode);
@@ -48,7 +49,7 @@ public class SnomedCoreDaoImpl extends AbstractCodeSystemDao<SnomedCore> impleme
 		return results;
 	}
 
-
+	@Override
     public List<SnomedCore> getSnomedCore(String query) {
 		Query q = entityManager.createQuery("select i from SnomedCore i where i.snomedCore like ? or i.description like ? order by i.description");
 		q.setParameter(1, "%"+query+"%");
@@ -60,6 +61,7 @@ public class SnomedCoreDaoImpl extends AbstractCodeSystemDao<SnomedCore> impleme
 		return results;
     }
 
+	@Override
     public List<SnomedCore> searchCode(String term) {
     	return getSnomedCore(term);
     }

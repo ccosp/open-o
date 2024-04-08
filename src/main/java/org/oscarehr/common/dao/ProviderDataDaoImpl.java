@@ -45,6 +45,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public ProviderData findByOhipNumber(String ohipNumber) {
 		Query query;
 		List<ProviderData> results;
@@ -61,6 +62,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 		return null;
 	}
 
+	@Override
 	public ProviderData findByProviderNo(String providerNo) {
 
 		String sqlCommand = "select x from ProviderData x where x.id=?1";
@@ -75,6 +77,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 		return null;
 	}
 
+	@Override
 	public List<ProviderData> findByProviderNo(String providerNo, String status, int limit, int offset) {
 
 		String sqlCommand = "From ProviderData p where p.id like ?";
@@ -95,6 +98,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 		return results;
 	}
 
+	@Override
 	public  List<ProviderData> findByProviderName(String searchStr, String status, int limit, int offset) {
 		
 		String queryString = "From ProviderData p where p.lastName like :lastName ";
@@ -121,7 +125,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 		return list;
 	}
 	
-	
+	@Override
 	public List<ProviderData> findAllOrderByLastName() {
 
 		String sqlCommand = "select x from ProviderData x order by x.lastName";
@@ -134,6 +138,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 		return results;
 	}
 	
+	@Override
     public List<ProviderData> findByProviderSite(String providerNo) {
     	
 		String queryStr = "select * from provider p inner join providersite s on s.provider_no = p.provider_no " 
@@ -149,6 +154,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
     	return proList;
     }
 
+	@Override
     public List<Object[]> findProviderSecUserRoles(String lastName, String firstName) {
     	
 		String queryStr = "select u.id, u.role_name, p.provider_no, p.first_name, p.last_name from provider p LEFT JOIN secUserRole u ON  p.provider_no=u.provider_no " 
@@ -162,6 +168,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
     	return proList;
     }
 
+	@Override
     public List<ProviderData> findByProviderTeam(String providerNo) {
     	
 		String queryStr = "select * from provider p  " +
@@ -176,6 +183,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
     	return proList;
     }
     
+	@Override
     public List<ProviderData> findAllBilling(String active) {
         Query query = createQuery("p", "p.ohipNo is not null and p.ohipNo != '' and p.status = :active order by p.lastName");
         query.setParameter("active", active);
@@ -195,6 +203,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 	 * 		Returns all matching providers
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ProviderData> findByTypeAndOhip(String providerType, String insuranceNo) {
 		Query query = createQuery("p", "p.providerType = :pt and p.ohipNo like :in order by p.lastName");
 		query.setParameter("pt", providerType);
@@ -211,6 +220,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 	 * 		Returns all the active matching providers.
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ProviderData> findByType(String providerType) {
 		Query query = createQuery("p", "p.providerType = :pt and p.status = '1' order by p.lastName, p.firstName");
 		query.setParameter("pt", providerType);
@@ -218,6 +228,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ProviderData> findByName(String firstName, String lastName, boolean onlyActive) {
 		StringBuilder buf = createQueryString("p", "");
 		boolean isAppended = false;
@@ -259,18 +270,21 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ProviderData> findAll() {
 		Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName());
 		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ProviderData> findAll(boolean inactive) {
 		if (inactive) return findAll();
 		Query query = createQuery("p", ACTIVE_WHERE_CLAUSE);
 		return query.getResultList();
 	}
 
+	@Override
 	public Integer getLastId() {
 		Query query = entityManager.createQuery("SELECT p.id FROM ProviderData p ORDER BY CAST(p.id AS integer) ASC");
 		query.setMaxResults(1);

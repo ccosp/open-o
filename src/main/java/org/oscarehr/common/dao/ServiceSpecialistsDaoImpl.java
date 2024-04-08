@@ -13,6 +13,7 @@ public class ServiceSpecialistsDaoImpl extends AbstractDaoImpl<ServiceSpecialist
         super(ServiceSpecialists.class);    
     }
     
+    @Override
     public List<ServiceSpecialists> findByServiceId(int serviceId) {
         Query q = entityManager.createQuery("select x from ServiceSpecialists x where x.id.serviceId = ?");
         q.setParameter(1, serviceId);
@@ -24,6 +25,7 @@ public class ServiceSpecialistsDaoImpl extends AbstractDaoImpl<ServiceSpecialist
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public List<Object[]> findSpecialists(Integer servId) {
         String sql = "FROM ServiceSpecialists ser, " + ProfessionalSpecialist.class.getSimpleName() + " pro " +
                 "WHERE pro.id = ser.id.specId and ser.id.serviceId = :serviceId " +

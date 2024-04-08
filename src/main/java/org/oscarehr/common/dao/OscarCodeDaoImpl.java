@@ -13,6 +13,7 @@ public class OscarCodeDaoImpl extends AbstractDaoImpl<OscarCode> implements Osca
         super(OscarCode.class);
     }
 
+    @Override
     public List<OscarCode> getIcd9Code(String icdCode){
         Query query = entityManager.createQuery("select i from OscarCode i where i.oscarCode=?");
         query.setParameter(1, icdCode);
@@ -23,6 +24,7 @@ public class OscarCodeDaoImpl extends AbstractDaoImpl<OscarCode> implements Osca
         return results;
     }
 
+    @Override
     public List<OscarCode> getOscarCode(String query) {
         Query q = entityManager.createQuery("select i from OscarCode i where i.oscarCode like ? or i.description like ? order by i.description");
         q.setParameter(1, "%"+query+"%");
@@ -34,6 +36,7 @@ public class OscarCodeDaoImpl extends AbstractDaoImpl<OscarCode> implements Osca
         return results;
     }
 
+    @Override
     public OscarCode findByCode(String code) {
         List<OscarCode> results =  getOscarCode(code);
         if(results.isEmpty())
@@ -41,6 +44,7 @@ public class OscarCodeDaoImpl extends AbstractDaoImpl<OscarCode> implements Osca
         return results.get(0);
     }
 
+    @Override
     public AbstractCodeSystemModel<?> findByCodingSystem(String codingSystem) {
         Query query = entityManager.createQuery("FROM OscarCode i WHERE i.oscarCode like :cs");
         query.setParameter("cs", codingSystem);

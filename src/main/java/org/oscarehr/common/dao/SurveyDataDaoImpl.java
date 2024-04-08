@@ -17,6 +17,7 @@ public class SurveyDataDaoImpl extends AbstractDaoImpl<SurveyData> implements Su
         super(SurveyData.class);
     }
 
+    @Override
     public int getMaxProcessed(String surveyId) {
         Query q = entityManager.createQuery("SELECT MAX(s.processed) FROM SurveyData s WHERE s.surveyId = :sid");
         q.setParameter("sid", surveyId);
@@ -27,6 +28,7 @@ public class SurveyDataDaoImpl extends AbstractDaoImpl<SurveyData> implements Su
         return (Integer)result;
     }
 
+    @Override
     public int getProcessCount(String surveyId) {
         String sql = "SELECT COUNT(s.id) FROM SurveyData s " +
                 "WHERE s.surveyId = :sid " +
@@ -41,6 +43,7 @@ public class SurveyDataDaoImpl extends AbstractDaoImpl<SurveyData> implements Su
         return ((Long)result).intValue();	    
     }
 
+    @Override
     public List<SurveyData> findByDemoSurveyIdAndPeriod(Integer demoNo, String surveyId, int cutoffInDays) {
         Query query = createQuery("sd", "sd.surveyId = :surveyId AND sd.demographicNo = :demoNo AND sd.surveyDate >= :surveyDate");
         query.setParameter("surveyId", surveyId);
@@ -51,6 +54,7 @@ public class SurveyDataDaoImpl extends AbstractDaoImpl<SurveyData> implements Su
         return query.getResultList();	    
     }
 
+    @Override
     public List<Object[]> countStatuses(String surveyId) {
         String sql = "SELECT sd.status , COUNT(sd.status) FROM SurveyData sd WHERE sd.surveyId = :surveyId GROUP BY sd.status";
         Query query = entityManager.createQuery(sql);
@@ -58,6 +62,7 @@ public class SurveyDataDaoImpl extends AbstractDaoImpl<SurveyData> implements Su
         return query.getResultList();
     }
 
+    @Override
     public List<Object[]> countAnswers(String surveyId) {
         String sql = "SELECT sd.answer, COUNT(sd.answer) FROM SurveyData sd WHERE sd.surveyId = :surveyId AND sd.status = 'A' GROUP BY sd.answer";
         Query query = entityManager.createQuery(sql);

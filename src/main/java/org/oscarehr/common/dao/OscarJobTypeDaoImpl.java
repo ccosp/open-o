@@ -36,6 +36,7 @@ public class OscarJobTypeDaoImpl extends AbstractDaoImpl<OscarJobType> implement
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
     public List<OscarJobType> findByClassName(String className) {
 		Query query = entityManager.createQuery("FROM OscarJobType d WHERE d.className = :className");
 		query.setParameter("className", className);

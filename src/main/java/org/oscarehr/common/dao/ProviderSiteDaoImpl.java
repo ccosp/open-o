@@ -14,6 +14,7 @@ public class ProviderSiteDaoImpl extends AbstractDaoImpl<ProviderSite> implement
         super(ProviderSite.class);
     }
 
+    @Override
     public List<ProviderSite> findByProviderNo(String providerNo) {
         String sql = "select x from ProviderSite x where x.id.providerNo=?";
         Query query = entityManager.createQuery(sql);
@@ -23,6 +24,7 @@ public class ProviderSiteDaoImpl extends AbstractDaoImpl<ProviderSite> implement
         return results;
     }
 
+    @Override
     public List<Provider> findActiveProvidersWithSites(String provider_no) { 
         String sql = "FROM Provider p where p.Status = '1' AND p.OhipNo != '' " +
                         "AND EXISTS( " +
@@ -37,6 +39,7 @@ public class ProviderSiteDaoImpl extends AbstractDaoImpl<ProviderSite> implement
         return query.getResultList();
     }
 
+    @Override
     public List<String> findByProviderNoBySiteName(String siteName) {
         String sql = "select x.id.providerNo from ProviderSite x, Site s where x.id.siteId=s.siteId and s.name=?";
         Query query = entityManager.createQuery(sql);
@@ -47,6 +50,7 @@ public class ProviderSiteDaoImpl extends AbstractDaoImpl<ProviderSite> implement
         return results;
     }
 
+    @Override
     public List<ProviderSite> findBySiteId(Integer siteId) {
         String sql = "select x from ProviderSite x where x.id.siteId=?";
         Query query = entityManager.createQuery(sql);

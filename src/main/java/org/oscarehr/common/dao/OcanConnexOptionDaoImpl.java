@@ -12,6 +12,7 @@ public class OcanConnexOptionDaoImpl extends AbstractDaoImpl<OcanConnexOption> i
         super(OcanConnexOption.class);
     }
 
+    @Override
     public List<OcanConnexOption> findByLHINCode(String LHIN_code) {
         String sqlCommand = "select x from OcanConnexOption x where x.LHINCode=?1 order by x.orgName";
         Query query = entityManager.createQuery(sqlCommand);
@@ -21,6 +22,7 @@ public class OcanConnexOptionDaoImpl extends AbstractDaoImpl<OcanConnexOption> i
         return (results);
     }
 
+    @Override
     public List<OcanConnexOption> findByLHINCodeOrgName(String LHIN_code, String orgName) {
         String sqlCommand = "select x from OcanConnexOption x where x.LHINCode=?1 and x.orgName=?2 order by x.programName";
         Query query = entityManager.createQuery(sqlCommand);
@@ -31,6 +33,7 @@ public class OcanConnexOptionDaoImpl extends AbstractDaoImpl<OcanConnexOption> i
         return (results);
     }
 
+    @Override
     public List<OcanConnexOption> findByLHINCodeOrgNameProgramName(String LHIN_code, String orgName, String programName) {
         String sqlCommand = "select x from OcanConnexOption x where x.LHINCode=?1 and x.orgName=?2 and x.programName=?3 order by x.programName";
         Query query = entityManager.createQuery(sqlCommand);
@@ -42,6 +45,7 @@ public class OcanConnexOptionDaoImpl extends AbstractDaoImpl<OcanConnexOption> i
         return (results);
     }
 
+    @Override
     public OcanConnexOption findByID(Integer connexOptionId) {
         String sqlCommand = "select x from OcanConnexOption x where x.id=?1";
         Query query = entityManager.createQuery(sqlCommand);

@@ -15,6 +15,7 @@ public class MdsZRGDaoImpl extends AbstractDaoImpl<MdsZRG> implements MdsZRGDao 
 		super(MdsZRG.class);
 	}
 
+	@Override
     public List<Object[]> findById(Integer id) {
 		String sql = "SELECT zrg.reportGroupDesc, zrg.reportGroupId, count(zrg.reportGroupID), zrg.reportGroupHeading, zrg.reportSequence " +
 				"FROM MdsZRG zrg where zrg.id = :id group by zrg.reportGroupDesc, zrg.reportGroupID " +
@@ -24,6 +25,7 @@ public class MdsZRGDaoImpl extends AbstractDaoImpl<MdsZRG> implements MdsZRGDao 
 		return query.getResultList();
     }
 
+	@Override
 	public List<Object> findReportGroupHeadingsById(Integer id, String reportGroupId) {
 		String sql = "SELECT zrg.reportGroupHeading FROM MdsZRG zrg where zrg.id = :id " +
 				"AND zrg.reportGroupId = :reportGroupId " +

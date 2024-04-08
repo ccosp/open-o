@@ -16,6 +16,7 @@ public class MdsMSHDaoImpl extends AbstractDaoImpl<MdsMSH> implements MdsMSHDao 
 		super(MdsMSH.class);
 	}
 
+	@Override
 	public List<Object[]> findLabsByAccessionNumAndId(Integer id, String controlId) {
 		String sql = "FROM MdsMSH a, MdsMSH b " + "WHERE a.controlId like :controlId " + "AND b.id = :id" + "ORDER BY a.controlId";
 		Query query = entityManager.createQuery(sql);
@@ -24,6 +25,7 @@ public class MdsMSHDaoImpl extends AbstractDaoImpl<MdsMSH> implements MdsMSHDao 
 		return query.getResultList();
 	}
 	
+	@Override
 	public List<Object[]> findMdsSementDataById(Integer id) {
 		String sql = "select mdsMSH.dateTime, mdsMSH.controlId, min(mdsZFR.reportFormStatus) " +
 				"FROM MdsMSH mdsMSH, MdsZFR mdsZFR " +
@@ -36,6 +38,7 @@ public class MdsMSHDaoImpl extends AbstractDaoImpl<MdsMSH> implements MdsMSHDao 
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Integer> getLabResultsSince(Integer demographicNo, Date updateDate) {
 		String query = "select m.id from MdsMSH m, PatientLabRouting p WHERE m.id = p.labNo and p.labType='MDS' and p.demographicNo = ?1 and (m.dateTime > ?2 or p.created > ?3) ";
 		Query q = entityManager.createQuery(query);

@@ -42,18 +42,21 @@ public class QuickListDaoImpl extends AbstractDaoImpl<QuickList> implements Quic
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<QuickList> findAll() {
 		Query query = createQuery("x", null);
 		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Object> findDistinct() {
     	Query query = entityManager.createQuery("select distinct ql.quickListName from QuickList ql");
     	return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
     public List<QuickList> findByNameResearchCodeAndCodingSystem(String quickListName, String researchCode, String codingSystem) {
 	    Query query = entityManager.createQuery("from QuickList q where q.quickListName = :qlName AND q.dxResearchCode = :rc AND q.codingSystem = :cs");
 	    query.setParameter("qlName", quickListName);
@@ -63,6 +66,7 @@ public class QuickListDaoImpl extends AbstractDaoImpl<QuickList> implements Quic
     }
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<QuickList> findByCodingSystem(String codingSystem) {
 		String csQuery = "";
         if ( codingSystem != null ){
@@ -77,6 +81,7 @@ public class QuickListDaoImpl extends AbstractDaoImpl<QuickList> implements Quic
 
 	@NativeSql
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Object[]> findResearchCodeAndCodingSystemDescriptionByCodingSystem(String codingSystem, String quickListName) {
 		try {
         	String sql = "Select q.dxResearchCode, c.description FROM quickList q, "+codingSystem

@@ -16,6 +16,7 @@ public class MdsZMNDaoImpl extends AbstractDaoImpl<MdsZMN> implements MdsZMNDao 
         super(MdsZMN.class);
     }
 
+    @Override
     public MdsZMN findBySegmentIdAndReportName(Integer id, String reportName) {
         Query query = createQuery("z", "z.id = :id AND z.reportName = :reportName");
         query.setParameter("id", id);
@@ -23,6 +24,7 @@ public class MdsZMNDaoImpl extends AbstractDaoImpl<MdsZMN> implements MdsZMNDao 
         return getSingleResultOrNull(query);
     }
 
+    @Override
     public MdsZMN findBySegmentIdAndResultMnemonic(Integer id, String rm) {
         Query query = createQuery("z", "z.id = :id and z.resultMnemonic = :rm");
         query.setParameter("id", id);
@@ -30,6 +32,7 @@ public class MdsZMNDaoImpl extends AbstractDaoImpl<MdsZMN> implements MdsZMNDao 
         return getSingleResultOrNull(query);
     }
 
+    @Override
     public List<String> findResultCodes(Integer id, String reportSequence) {        
         String sql = "SELECT zmn.resultCode FROM MdsZMN zmn WHERE zmn.id = :id " +
                 "AND zmn.reportGroup = :reportSequence ";

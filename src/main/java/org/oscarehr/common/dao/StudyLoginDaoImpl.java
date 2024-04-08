@@ -36,11 +36,13 @@ public class StudyLoginDaoImpl extends AbstractDaoImpl<StudyLogin> implements St
 		super(StudyLogin.class);
 	}
 
+	@Override
 	public List<StudyLogin> find(String providerNo, String studyId) {
 		return find(providerNo, Integer.parseInt(studyId));
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<StudyLogin> find(String providerNo, Integer studyId) {
 		Query query = entityManager.createQuery("FROM StudyLogin s WHERE s.providerNo = :providerNo and s.studyNo = :studyNo and s.current1 = 1");
 		query.setParameter("providerNo", providerNo);

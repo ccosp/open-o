@@ -36,6 +36,7 @@ public class ReportConfigDaoImpl extends AbstractDaoImpl<ReportConfig> implement
         super(ReportConfig.class);
     }
     
+    @Override
     public List<ReportConfig> findByReportIdAndNameAndCaptionAndTableNameAndSave(int reportId, String name, String caption, String tableName, String save) {
         Query q = entityManager.createQuery("select x from ReportConfig x where x.reportId=? and x.name=? and x.caption=? and x.tableName=? and x.save=?");
         q.setParameter(1, reportId);
@@ -50,6 +51,7 @@ public class ReportConfigDaoImpl extends AbstractDaoImpl<ReportConfig> implement
         return results;
     }
     
+    @Override
     public List<ReportConfig> findByReportIdAndSaveAndGtOrderNo(int reportId, String save, int orderNo) {
         Query q = entityManager.createQuery("select x from ReportConfig x where x.reportId=? and x.save=? and x.orderNo >= ? order by x.orderNo DESC");
         q.setParameter(1, reportId);

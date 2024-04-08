@@ -36,6 +36,7 @@ public class ReportLettersDaoImpl extends AbstractDaoImpl<ReportLetters> impleme
         super(ReportLetters.class);
     }
     
+    @Override
     public List<ReportLetters> findCurrent() {
         Query q = entityManager.createQuery("select l from ReportLetters l WHERE l.archive=? ORDER BY l.dateTime,l.reportName");
         q.setParameter(1, "0");

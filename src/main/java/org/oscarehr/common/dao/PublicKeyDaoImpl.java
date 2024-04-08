@@ -36,6 +36,7 @@ public class PublicKeyDaoImpl extends AbstractDaoImpl<PublicKey> implements Publ
 		super(PublicKey.class);
 	}
 	
+	@Override
     public List<PublicKey> findAll()
 	{
 		Query query = entityManager.createQuery("select x from "+modelClass.getSimpleName()+" x");

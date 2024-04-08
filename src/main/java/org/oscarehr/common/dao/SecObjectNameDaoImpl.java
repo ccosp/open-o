@@ -36,6 +36,7 @@ public class SecObjectNameDaoImpl extends AbstractDaoImpl<SecObjectName> impleme
 		super(SecObjectName.class);
 	}
 
+	@Override
 	public List<SecObjectName> findAll() {
 		String sql = "SELECT s FROM SecObjectName s order by s.id";
 		Query query = entityManager.createQuery(sql);
@@ -44,6 +45,7 @@ public class SecObjectNameDaoImpl extends AbstractDaoImpl<SecObjectName> impleme
 		return result;
 	}
 
+	@Override
 	public List<String> findDistinctObjectNames() {
 		String sql = "SELECT distinct(s.id) FROM SecObjectName s order by s.id";
 		Query query = entityManager.createQuery(sql);
