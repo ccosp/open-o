@@ -32,7 +32,7 @@ import org.oscarehr.common.model.SnomedCore;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SnomedCoreDaoImpl extends AbstractCodeSystemDao<SnomedCore> implements SnomedCoreDao {
+public class SnomedCoreDaoImpl extends AbstractCodeSystemDaoImpl<SnomedCore> implements SnomedCoreDao {
 
 	public SnomedCoreDaoImpl() {
 		super(SnomedCore.class);

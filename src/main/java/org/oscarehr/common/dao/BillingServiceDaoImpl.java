@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.oscarehr.common.model.BillingService;
 import org.springframework.stereotype.Repository;
+import org.oscarehr.common.NativeSql;
 
 @Repository
 @SuppressWarnings("unchecked")
