@@ -41,7 +41,7 @@
   * @author Victor Weng
   */
  @Repository
- public class SiteDaoImpl extends AbstractDao<Site>  implements SiteDao{
+ public class SiteDaoImpl extends AbstractDaoImpl<Site>  implements SiteDao{
  
      /** Creates a new instance of UserPropertyDAO */
      public SiteDaoImpl() {

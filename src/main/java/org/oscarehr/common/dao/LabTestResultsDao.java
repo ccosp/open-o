@@ -23,7 +23,7 @@
  */
 
 package org.oscarehr.common.dao;
-
+import org.oscarehr.common.model.LabTestResults;
 import java.util.List;
 
 public interface LabTestResultsDao extends AbstractDao<LabTestResults> {

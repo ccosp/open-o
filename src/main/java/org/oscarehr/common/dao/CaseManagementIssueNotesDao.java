@@ -23,6 +23,7 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
+import org.oscarehr.casemgmt.model.CaseManagementIssue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

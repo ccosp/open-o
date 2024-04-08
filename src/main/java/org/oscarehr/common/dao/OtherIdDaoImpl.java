@@ -37,7 +37,7 @@
   * @author Jason Gallagher
   */
  @Repository
- public class OtherIdDaoImpl extends AbstractDao<OtherId> implements OtherIdDao {
+ public class OtherIdDaoImpl extends AbstractDaoImpl<OtherId> implements OtherIdDAO {
  
      /** Creates a new instance of UserPropertyDAO */
      public OtherIdDaoImpl() {

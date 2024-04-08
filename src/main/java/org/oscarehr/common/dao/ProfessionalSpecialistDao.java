@@ -3,7 +3,7 @@ package org.oscarehr.common.dao;
 import java.util.List;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 
-public interface ProfessionalSpecialistDao extends AbstractDao<ProfessionalSpecialist> {
+public interface ProfessionalSpecialistDao extends AbstractDao<ProfessionalSpecialist>{
 
     List<ProfessionalSpecialist> findAll();
 

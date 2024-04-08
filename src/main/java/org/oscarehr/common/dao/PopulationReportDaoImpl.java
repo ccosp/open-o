@@ -7,6 +7,8 @@ import java.util.SortedSet;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.EncounterUtil.EncounterType;
 import org.springframework.stereotype.Repository;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.apache.logging.log4j.Logger;
 
 @Repository
 public class PopulationReportDaoImpl extends HibernateDaoSupport implements PopulationReportDao {
