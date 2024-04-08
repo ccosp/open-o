@@ -41,6 +41,7 @@
          super(PartialDate.class);
      }
      
+     @Override
      public PartialDate getPartialDate(Integer tableName, Integer tableId, Integer fieldName) {
  
          String sqlCommand = "select x from PartialDate x where x.tableName=?1 and x.tableId=?2 and x.fieldName=?3 order by x.id desc limit 1";
@@ -60,20 +61,24 @@
          return result;
      }
      
+     @Override
      public String getDatePartial(Date fieldDate, Integer tableName, Integer tableId, Integer fieldName) {
          String dateString = UtilDateUtilities.DateToString(fieldDate, "yyyy-MM-dd");
          return getDatePartial(dateString, tableName, tableId, fieldName);
      }
  
+     @Override
      public String getDatePartial(String fieldDate, Integer tableName, Integer tableId, Integer fieldName) {
          return getDatePartial(fieldDate, getFormat(tableName, tableId, fieldName));
      }
      
+     @Override
      public String getDatePartial(Date partialDate, String format) {
          String dateString = UtilDateUtilities.DateToString(partialDate, "yyyy-MM-dd");
          return getDatePartial(dateString, format);
      }
      
+     @Override
      public String getDatePartial(String dateString, String format) {
          if (dateString==null || dateString.length()<10) return dateString;
          
@@ -86,11 +91,13 @@
          return dateString;
      }
  
+     @Override
      public void setPartialDate(String fieldDate, Integer tableName, Integer tableId, Integer fieldName) {
          String format = getFormat(fieldDate);
          setPartialDate(tableName, tableId, fieldName, format);
      }
  
+     @Override
      public void setPartialDate(Integer tableName, Integer tableId, Integer fieldName, String format) {
          if (tableName==null || fieldName==null || tableId==null || tableId.equals(0)) return;
          
@@ -103,6 +110,7 @@
          if (partialDate!=null) persist(partialDate);
      }
  
+     @Override
      public String getFormat(Integer tableName, Integer tableId, Integer fieldName) {
          PartialDate partialDate = getPartialDate(tableName, tableId, fieldName);
          if (partialDate!=null) return partialDate.getFormat();
@@ -110,6 +118,7 @@
          return null;
      }
  
+     @Override
      public String getFormat(String dateValue) {
          if (StringUtils.empty(dateValue)) return null;
  
@@ -125,6 +134,7 @@
          return null;
      }
      
+     @Override
      public String getFullDate(String partialDate) {
          String format = getFormat(partialDate);
          
@@ -134,6 +144,7 @@
          return partialDate;
      }
      
+     @Override
      public Date StringToDate(String partialDate) {
          return UtilDateUtilities.StringToDate(getFullDate(partialDate), "yyyy-MM-dd");
      }

@@ -14,6 +14,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
         super(ReportAgeSex.class);
     }
 
+    @Override
     public List<ReportAgeSex> findBeforeReportDate(Date reportDate) {
         String sql = "select x from ReportAgeSex x where x.reportDate=?";
         Query query = entityManager.createQuery(sql);
@@ -24,6 +25,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
         return results;
     }
 
+    @Override
     public void deleteAllByDate(Date reportDate) {
         String sql = "delete from ReportAgeSex x where x.reportDate <= ?";
         Query query = entityManager.createQuery(sql);
@@ -32,6 +34,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
     }
 
     @NativeSql("reportagesex")
+    @Override
     public void populateAll(String yearOfBirth) {
         String copyQuery = 
             "INSERT INTO reportagesex(demographic_no, age, roster, sex, provider_no, reportdate, status, date_joined) " +
@@ -42,6 +45,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
         query.executeUpdate();
     }
 
+    @Override
     public Long count_reportagesex_roster(String roster, String sex, String providerNo, int age, Date dateStarted, Date dateEnded) {
         String sql = "select count(x) from ReportAgeSex x where (x.status<>'OP' and x.status<>'IN' and x.status<>'DE') and x.roster=? and x.sex like ? and x.providerNo = ? and x.age >= ? and x.dateJoined >= ? and x.dateJoined <= ?";
         Query query = entityManager.createQuery(sql);
@@ -56,6 +60,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
         return results;
     }
 
+    @Override
     public Long count_reportagesex_noroster(String roster, String sex, String providerNo,int minAge, int maxAge, Date dateStarted, Date dateEnded) {
         String sql = "select count(x)  from ReportAgeSex x  where (x.status<>'OP' and x.status<>'IN' and x.status<>'DE') and x.roster<>? and x.sex like ? and x.providerNo=? and x.age >= ? and x.age <=? and x.dateJoined >=? and x.dateJoined <=?";
         Query query = entityManager.createQuery(sql);
@@ -71,6 +76,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
         return results;
     }
 
+    @Override
     public Long count_reportagesex(String roster, String sex, String providerNo, int minAge, int maxAge, Date startDate, Date endDate) {
         String sql = 
                 "select count(x) from ReportAgeSex x " +

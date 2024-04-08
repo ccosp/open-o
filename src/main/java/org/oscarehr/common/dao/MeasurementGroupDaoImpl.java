@@ -38,11 +38,13 @@ public class MeasurementGroupDaoImpl extends AbstractDaoImpl<MeasurementGroup> i
         super(MeasurementGroup.class);
     }
     
+    @Override
     public List<MeasurementGroup> findAll() {
         Query query = createQuery("x", null);
         return query.getResultList();
     }
     
+    @Override
     public List<MeasurementGroup> findByNameAndTypeDisplayName(String name, String typeDisplayName) {
         String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.name=?1 AND x.typeDisplayName=?2";
 
@@ -56,6 +58,7 @@ public class MeasurementGroupDaoImpl extends AbstractDaoImpl<MeasurementGroup> i
         return (results);
     }
     
+    @Override
     public List<MeasurementGroup> findByTypeDisplayName(String typeDisplayName) {
         String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.typeDisplayName=?1";
 
@@ -68,6 +71,7 @@ public class MeasurementGroupDaoImpl extends AbstractDaoImpl<MeasurementGroup> i
         return (results);
     }
     
+    @Override
     public List<MeasurementGroup> findByName(String name) {
         boolean orderById = "true".equals(OscarProperties.getInstance().getProperty("oscarMeasurements.orderGroupById","false"));
         String orderBy="";
@@ -84,6 +88,7 @@ public class MeasurementGroupDaoImpl extends AbstractDaoImpl<MeasurementGroup> i
         return (results);
     }
 
+    @Override
     public List<Object> findUniqueTypeDisplayNamesByGroupName(String groupName) {
         String sql = "SELECT DISTINCT mg.typeDisplayName FROM MeasurementGroup mg WHERE mg.name = :groupName";
         Query query = entityManager.createQuery(sql);

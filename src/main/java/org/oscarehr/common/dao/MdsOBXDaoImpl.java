@@ -17,6 +17,7 @@ public class MdsOBXDaoImpl extends AbstractDaoImpl<MdsOBX> implements MdsOBXDao 
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
     public List<MdsOBX> findByIdObrAndCodes(Integer id, String associatedOBR, List<String> codes) {
 		ParamAppender pa = getAppender("obx");
 		pa.and("obx.id = :id", "id", id);

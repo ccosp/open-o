@@ -44,6 +44,7 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
      * Find by name.
      * @param name: property key name
      */
+	@Override
     public List<Property> findByName(String name)
 	{
     	String sqlCommand="select x from " + modelClass.getSimpleName() + " x where x.name=?1";
@@ -58,6 +59,7 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
 	 * @param name property key name
 	 * @return list of properties found matching criteria
 	 */
+	@Override
 	public List<Property> findGlobalByName(String name)
 	{
 		String sqlCommand="select x from "+modelClass.getSimpleName()+" x where x.name=?1 and x.providerNo is null";
@@ -74,6 +76,7 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
 	 * use method with enum parameter
 	 */
 	@Deprecated
+	@Override
     public List<Property> findByNameAndProvider(String propertyName, String providerNo) {
        	Query query = createQuery("p", "p.name = :name AND p.providerNo = :pno");
    		query.setParameter("name", propertyName);
@@ -81,13 +84,14 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
    		return query.getResultList();
    	}
     
-    
+    @Override
     public List<Property> findByProvider(String providerNo) {
        	Query query = createQuery("p", "p.providerNo = :pno");
    		query.setParameter("pno", providerNo);
    		return query.getResultList();
    	}
     
+	@Override
     public Property checkByName(String name) {
     	
 		String sql = " select x from " + this.modelClass.getName() + " x where x.name='"+name+"'";
@@ -101,6 +105,7 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
 		
 	}
 
+	@Override
     public String getValueByNameAndDefault(String name, String defaultValue) {
         Property result = checkByName(name);
         if (result == null) {
@@ -110,6 +115,7 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
         }
     }
 
+	@Override
     public List<Property> findByNameAndValue(String name, String value)
  	{
      	String sqlCommand="select x from Property x where x.name=?1 and x.value=?2";
@@ -119,6 +125,7 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
  		return query.getResultList();
  	}
 
+	@Override
 	public void removeByName(String name) {
 		String sqlCommand="delete from "+modelClass.getSimpleName()+" where name=?1";
 		Query query = entityManager.createQuery(sqlCommand);
@@ -126,16 +133,19 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
 		query.executeUpdate();
 	}
 
+	@Override
 	public Boolean isActiveBooleanProperty(Property.PROPERTY_KEY name) {
 		return isActiveBooleanProperty(name.name());
 	}
 
 	@Deprecated
+	@Override
 	public Boolean isActiveBooleanProperty(String name) {
 		List<Property> properties = findByName(name);
 		return !properties.isEmpty() && "true".equals(properties.get(0).getValue());
 	}
 
+	@Override
 	public Boolean isActiveBooleanProperty(Property.PROPERTY_KEY name, String providerNo) {
 		return isActiveBooleanProperty(name.name(), providerNo);
 	}
@@ -144,6 +154,7 @@ public class PropertyDaoImpl extends AbstractDaoImpl<Property> implements Proper
 	 * use method with the enum parameter
 	 */
 	@Deprecated
+	@Override
 	public Boolean isActiveBooleanProperty(String name, String providerNo) {
 		List<Property> properties = findByNameAndProvider(name, providerNo);
 		return !properties.isEmpty() && "true".equals(properties.get(0).getValue());

@@ -13,6 +13,7 @@ public class RaHeaderDaoImpl extends AbstractDaoImpl<RaHeader> implements RaHead
         super(RaHeader.class);
     }     
 
+    @Override
     public List<RaHeader> findCurrentByFilenamePaymentDate(String filename, String paymentDate) {
         Query query = entityManager.createQuery("SELECT r from RaHeader r WHERE r.filename = :filename and r.paymentDate = :pd and status != :status ORDER BY r.paymentDate");
         query.setParameter("filename", filename);
@@ -21,6 +22,7 @@ public class RaHeaderDaoImpl extends AbstractDaoImpl<RaHeader> implements RaHead
         return query.getResultList();
     }
 
+    @Override
     public List<RaHeader> findByFilenamePaymentDate(String filename, String paymentDate) {
         Query query = entityManager.createQuery("SELECT r from RaHeader r WHERE r.filename = :filename and r.paymentDate = :pd  ORDER BY r.paymentDate");
         query.setParameter("filename", filename);
@@ -28,12 +30,14 @@ public class RaHeaderDaoImpl extends AbstractDaoImpl<RaHeader> implements RaHead
         return query.getResultList();
     }
 
+    @Override
     public List<RaHeader> findAllExcludeStatus(String status) {
         Query query = entityManager.createQuery("SELECT r FROM RaHeader r WHERE r.status != :status ORDER BY r.paymentDate DESC, r.readDate DESC");
         query.setParameter("status", status);
         return query.getResultList();
     }
 
+    @Override
     public List<RaHeader> findByHeaderDetailsAndProviderMagic(String status, String providerNo) {
         String sql =
             "SELECT r " +
@@ -54,6 +58,7 @@ public class RaHeaderDaoImpl extends AbstractDaoImpl<RaHeader> implements RaHead
         return query.getResultList();
     }
 
+    @Override
     public List<RaHeader> findByStatusAndProviderMagic(String status, String providerNo) {
         String sql = "SELECT r " + 
             "FROM RaHeader r, RaDetail t, Provider p " +
@@ -75,6 +80,7 @@ public class RaHeaderDaoImpl extends AbstractDaoImpl<RaHeader> implements RaHead
         return query.getResultList();
     }
 
+    @Override
     public List<Object[]> findHeadersAndProvidersById(Integer id) {
         String sql = "FROM RaDetail r, Provider p " + 
             "WHERE p.OhipNo = r.providerOhipNo " +

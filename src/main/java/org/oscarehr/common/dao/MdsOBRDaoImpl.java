@@ -17,6 +17,7 @@ public class MdsOBRDaoImpl extends AbstractDaoImpl<MdsOBR> implements MdsOBRDao 
 		super(MdsOBR.class);
 	}
 
+	@Override
     public List<Object[]> findByIdAndResultCodes(Integer id, List<String> resultCodes) {
 		ParamAppender pa = new ParamAppender("SELECT DISTINCT mdsOBX.associatedOBR, mdsOBR.observationDateTime " +
 				"FROM MdsOBX mdsOBX, MdsOBR mdsOBR");

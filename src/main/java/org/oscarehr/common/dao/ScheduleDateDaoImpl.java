@@ -14,5 +14,106 @@ public class ScheduleDateDaoImpl extends AbstractDaoImpl<ScheduleDate> implement
         super(ScheduleDate.class);
     }
 
-    // ... rest of the methods from the original ScheduleDateDao class ...
+    @Override
+    public ScheduleDate findByProviderNoAndDate(String providerNo, Date date) {
+		Query query = entityManager.createQuery("select s from ScheduleDate s where s.providerNo=? and s.date=? and s.status=?");
+		query.setParameter(1, providerNo);
+		query.setParameter(2, date);
+		query.setParameter(3, 'A');
+
+		return(getSingleResultOrNull(query));
+	}
+
+    @Override
+	public List<ScheduleDate> findByProviderPriorityAndDateRange(String providerNo, char priority, Date date, Date date2) {
+		Query query = entityManager.createQuery("select s from ScheduleDate s where s.providerNo=? and s.priority=? and s.date>=? and s.date <=?");
+		query.setParameter(1, providerNo);
+		query.setParameter(2, priority);
+		query.setParameter(3, date);
+		query.setParameter(4, date2);
+
+		
+        List<ScheduleDate> results = query.getResultList();
+		return results;
+	}
+
+    @Override
+	public List<ScheduleDate> findByProviderAndDateRange(String providerNo, Date date, Date date2) {
+		Query query = entityManager.createQuery("select s from ScheduleDate s where s.providerNo=? and s.date>=? and s.date <=?");
+		query.setParameter(1, providerNo);
+		query.setParameter(2, date);
+		query.setParameter(3, date2);
+
+		
+        List<ScheduleDate> results = query.getResultList();
+		return results;
+	}
+
+    @Override
+	public List<ScheduleDate> search_scheduledate_c(String providerNo) {
+		Query query = entityManager.createQuery("select s from ScheduleDate s where s.priority='c' and s.status = 'A' and s.providerNo=?");
+		query.setParameter(1, providerNo);
+		
+		@SuppressWarnings("unchecked")
+        List<ScheduleDate> results = query.getResultList();
+		return results;
+	}
+	
+    @Override
+	public List<ScheduleDate> search_numgrpscheduledate(String myGroupNo, Date sDate) {
+		Query query = entityManager.createQuery("select s from MyGroup m, ScheduleDate s where m.id.myGroupNo = ? and s.date=? and m.id.providerNo = s.providerNo and s.available = '1' and s.status='A'");
+		query.setParameter(1, myGroupNo);
+		query.setParameter(2, sDate);
+		
+		
+		@SuppressWarnings("unchecked")
+        List<ScheduleDate> results = query.getResultList();
+		return results;
+	}
+	
+    @Override
+	public List<Object[]> search_appttimecode(Date sDate, String providerNo) {
+		Query query = entityManager.createQuery("FROM ScheduleTemplate st, ScheduleDate sd WHERE st.id.name=sd.hour and sd.date=? and sd.providerNo=? and sd.status='A' and (st.id.providerNo = sd.providerNo or st.id.providerNo='Public')");
+		query.setParameter(1, sDate);
+		query.setParameter(2, providerNo);
+		
+		
+		@SuppressWarnings("unchecked")
+        List<Object[]> results = query.getResultList();
+		return results;
+	}
+	
+    @Override
+	public List<ScheduleDate> search_scheduledate_teamp(Date date, Date date2, String status, List<String> providerNos) {
+		Query query = entityManager.createQuery("select s from ScheduleDate s where s.date>=:sdate and s.date <=:edate and s.status=:status and s.providerNo in (:providers) order by s.date");
+		query.setParameter("sdate", date);
+		query.setParameter("edate", date2);
+		query.setParameter("status", status);
+		query.setParameter("providers", providerNos);
+
+		@SuppressWarnings("unchecked")
+        List<ScheduleDate> results = query.getResultList();
+		return results;
+	}
+	
+    @Override
+	public List<ScheduleDate> search_scheduledate_datep(Date date, Date date2, String status) {
+		Query query = entityManager.createQuery("select s from ScheduleDate s where s.date>=:sdate and s.date <=:edate and s.status=:status  order by s.date");
+		query.setParameter("sdate", date);
+		query.setParameter("edate", date2);
+		query.setParameter("status", status);
+	
+		@SuppressWarnings("unchecked")
+        List<ScheduleDate> results = query.getResultList();
+		return results;
+	}
+	
+    @Override
+	public List<ScheduleDate> findByProviderStartDateAndPriority(String providerNo, Date apptDate, String priority) {
+		Query query = createQuery("sd", "sd.date = :apptDate AND sd.providerNo = :providerNo AND sd.priority = :priority");
+		query.setParameter("providerNo", providerNo);
+		query.setParameter("apptDate", apptDate);
+		query.setParameter("priority", priority);
+		return query.getResultList();
+    }
 }

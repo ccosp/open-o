@@ -38,18 +38,21 @@ public class StudyDataDaoImpl extends AbstractDaoImpl<StudyData> implements Stud
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<StudyData> findByContent(String content) {
 		Query query = createQuery("s", "s.content LIKE :content AND s.deleted = false");
 		query.setParameter("content", content);
 		return query.getResultList();
 	}
 	
+	@Override
 	public StudyData findSingleByContent(String content) {
 		Query query = createQuery("s", "s.content LIKE :content AND s.deleted = false");
 		query.setParameter("content", content);
 		return getSingleResultOrNull(query);
 	}
 	
+	@Override
 	public int removeByDemoAndStudy(Integer demographicNo, Integer studyId ) {
 		Query query = entityManager.createQuery("from StudyData s where s.demographicNo = :demoNo and s.studyNo = :studyId");
 		query.setParameter("demoNo", demographicNo);
@@ -66,6 +69,7 @@ public class StudyDataDaoImpl extends AbstractDaoImpl<StudyData> implements Stud
 		return i;
 	}
 	
+	@Override
 	public List<StudyData> findByDemoAndStudy(Integer demographicNo, Integer studyId ) {
 		Query query = entityManager.createQuery("select s from StudyData s where s.demographicNo = :demoNo and s.studyNo = :studyId and s.deleted = false");
 		

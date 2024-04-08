@@ -35,6 +35,7 @@ public class OLISResultsDaoImpl extends AbstractDaoImpl<OLISResults> implements 
 		super(OLISResults.class);
 	}
 
+	@Override
 	public boolean hasExistingResult(String requestingHICProviderNo, String queryType, String hash) {
 		Query query = entityManager.createQuery("select x from OLISResults x where x.requestingHICProviderNo=? and x.queryType=? and x.hash = ?");
 		query.setParameter(1, requestingHICProviderNo);
@@ -48,6 +49,7 @@ public class OLISResultsDaoImpl extends AbstractDaoImpl<OLISResults> implements 
 		return false;
 	}
 	
+	@Override
 	public List<OLISResults> getResultList(String requestingHICProviderNo, String queryType) {
 		Query query = entityManager.createQuery("select x from OLISResults x where x.requestingHICProviderNo=? and x.queryType=? and status IS NULL");
 		query.setParameter(1, requestingHICProviderNo);
@@ -59,6 +61,7 @@ public class OLISResultsDaoImpl extends AbstractDaoImpl<OLISResults> implements 
 		return results;
 	}
 	
+	@Override
 	public OLISResults findByUUID(String uuid) {
 		Query query = entityManager.createQuery("select x from OLISResults x where x.uuid=?");
 		query.setParameter(1, uuid);

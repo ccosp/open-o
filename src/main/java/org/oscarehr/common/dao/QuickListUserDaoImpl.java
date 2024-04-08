@@ -36,6 +36,7 @@ public class QuickListUserDaoImpl extends AbstractDaoImpl<QuickListUser> impleme
         super(QuickListUser.class);
     }
     
+    @Override
     public List<QuickListUser> findByNameAndProviderNo(String name, String providerNo) {
         Query q = entityManager.createQuery("SELECT x FROM QuickListUser x WHERE x.quickListName=? AND x.providerNo=?");
         q.setParameter(1, name);

@@ -39,21 +39,21 @@ public class LabTestResultsDaoImpl extends AbstractDaoImpl<LabTestResults> imple
 		super(LabTestResults.class);
 	}
 
-	
+	@Override
 	public List<LabTestResults> findByTitleAndLabInfoId(Integer labId) {
 		Query query = createQuery("r", "r.title IS NOT EMPTY and r.labPatientPhysicianInfoId = :labId");
 		query.setParameter("labId", labId);
 		return query.getResultList();
 	}
 	
-	
+	@Override
 	public List<LabTestResults> findByLabInfoId(Integer labId) {
 		Query query = createQuery("r", "r.labPatientPhysicianInfoId = :labId");
 		query.setParameter("labId", labId);
 		return query.getResultList();
 	}
 
-	
+	@Override
     public List<LabTestResults> findByAbnAndLabInfoId(String abn, Integer labId) {
 		Query query = createQuery("r", "r.abn = :abn and r.labPatientPhysicianInfoId = :labId");
 		query.setParameter("labId", labId);
@@ -71,6 +71,7 @@ public class LabTestResultsDaoImpl extends AbstractDaoImpl<LabTestResults> imple
 	 * @return
 	 * 		Returns a list of triples containing lab type, test title and test name.
 	 */
+	@Override
     public List<Object[]> findUniqueTestNames(Integer demoNo, String labType) {
         String jpql = "SELECT DISTINCT p.labType, ltr.title, ltr.testName " +
                 "FROM " +
@@ -91,6 +92,7 @@ public class LabTestResultsDaoImpl extends AbstractDaoImpl<LabTestResults> imple
         return query.getResultList();
     }
 
+	@Override
 	public List<LabTestResults> findByAbnAndPhysicianId(String abn, Integer lppii) {
 		Query q = createQuery("ltr", "ltr.abn = :abn and ltr.labPatientPhysicianInfoId = :lppii");
 		q.setParameter("abn", abn);
@@ -98,6 +100,7 @@ public class LabTestResultsDaoImpl extends AbstractDaoImpl<LabTestResults> imple
 		return q.getResultList();
     }
 
+	@Override
 	public List<LabTestResults> findByLabPatientPhysicialInfoId(Integer labid) {
 		Query query = createQuery("r", "r.labPatientPhysicianInfoId = :labid");
 		query.setParameter("labid", labid);

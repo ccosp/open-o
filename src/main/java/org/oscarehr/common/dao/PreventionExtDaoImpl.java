@@ -38,6 +38,7 @@ public class PreventionExtDaoImpl extends AbstractDaoImpl<PreventionExt> impleme
 		super(PreventionExt.class);
 	}
 	
+	@Override
 	public List<PreventionExt> findByPreventionId(Integer preventionId) {
 		Query query = entityManager.createQuery("select x from PreventionExt x where preventionId=?1");
 		query.setParameter(1, preventionId);
@@ -48,6 +49,7 @@ public class PreventionExtDaoImpl extends AbstractDaoImpl<PreventionExt> impleme
 		return (results);
 	}
 	
+	@Override
 	public List<PreventionExt> findByKeyAndValue(String key, String value) {
 		Query query = entityManager.createQuery("select x from PreventionExt x where keyval=?1 and val=?2");
 		query.setParameter(1, key);
@@ -59,6 +61,7 @@ public class PreventionExtDaoImpl extends AbstractDaoImpl<PreventionExt> impleme
 		return (results);
 	}
 	
+	@Override
 	public List<PreventionExt> findByPreventionIdAndKey(Integer preventionId, String key) {
 		Query query = entityManager.createQuery("select x from PreventionExt x where preventionId=?1 and keyval=?2");
 		query.setParameter(1, preventionId);
@@ -70,6 +73,7 @@ public class PreventionExtDaoImpl extends AbstractDaoImpl<PreventionExt> impleme
 		return (results);
 	}
 	
+	@Override
 	public HashMap<String, String> getPreventionExt(Integer preventionId) {
 		HashMap<String, String> results=new HashMap<String, String>();
 		

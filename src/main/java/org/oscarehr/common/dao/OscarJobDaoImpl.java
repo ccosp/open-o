@@ -37,12 +37,15 @@ public class OscarJobDaoImpl extends AbstractDaoImpl<OscarJob> implements OscarJ
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
     public List<OscarJob> findByType(OscarJobType oscarJobType) {
 		Query query = entityManager.createQuery("FROM OscarJob d WHERE d.oscarJobType = :oscarJobType");
 		query.setParameter("oscarJobType", oscarJobType);
 		
 	    return query.getResultList();
     }
+	
+	@Override
 	public List<OscarJob> getJobByName(String name){
 		Query query = entityManager.createQuery("select x from " + modelClass.getSimpleName() + " x where x.name = ?1 ");
 		query.setParameter(1, name);

@@ -35,6 +35,7 @@ public class RemoteReferralDaoImpl extends AbstractDaoImpl<RemoteReferral> imple
 		super(RemoteReferral.class);
 	}
 	
+	@Override
     public List<RemoteReferral> findByFacilityIdDemogprahicId(Integer facilityId, Integer demographicId) {
     	String sql = "select x from "+modelClass.getSimpleName()+" x where x.facilityId=?1 and x.demographicId=?2";
     	Query query = entityManager.createQuery(sql);

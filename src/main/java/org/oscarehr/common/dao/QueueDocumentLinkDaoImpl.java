@@ -44,6 +44,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
 		super(QueueDocumentLink.class);
 	}
 
+    @Override
     public List<QueueDocumentLink> getQueueDocLinks(){
     	Query query = entityManager.createQuery("SELECT q from QueueDocumentLink q");
 
@@ -52,6 +53,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
         return queues;
     }
 
+    @Override
     public  List<QueueDocumentLink> getActiveQueueDocLink(){
     	Query query = entityManager.createQuery("SELECT q from QueueDocumentLink q where q.status=?");
     	query.setParameter(1, "A");
@@ -62,6 +64,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
        return queues;
     }
 
+    @Override
     public  List<QueueDocumentLink> getQueueFromDocument(Integer docId){
     	Query query = entityManager.createQuery("SELECT q from QueueDocumentLink q where q.docId=?");
     	query.setParameter(1,docId);
@@ -72,6 +75,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
         return queues;
     }
 
+    @Override
     public  List<QueueDocumentLink> getDocumentFromQueue(Integer qId){
     	Query query = entityManager.createQuery("SELECT q from QueueDocumentLink q where queueId=?");
     	query.setParameter(1, qId);
@@ -82,6 +86,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
     	return queues;
     }
 
+    @Override
     public boolean hasQueueBeenLinkedWithDocument(Integer dId,Integer qId){
     	Query query = entityManager.createQuery("SELECT q from QueueDocumentLink q where q.docId=? and q.queueId=?");
     	query.setParameter(1, dId);
@@ -91,6 +96,8 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
 
         return (queues.size()>0);
     }
+
+    @Override
     public boolean setStatusInactive(Integer docId){
     	if(docId == null) return false;
     	
@@ -108,6 +115,8 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
         //if status is not I, change to I
         //if status is I, do nothing
     }
+
+    @Override
     public void addActiveQueueDocumentLink(Integer qId,Integer dId){
         try{
             if(!hasQueueBeenLinkedWithDocument(dId,qId)){
@@ -122,6 +131,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
         }
     }
     
+    @Override
     public void addToQueueDocumentLink(Integer qId,Integer dId){
         try{
             if(!hasQueueBeenLinkedWithDocument(dId,qId)){

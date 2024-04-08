@@ -36,6 +36,7 @@ public class SecurityArchiveDaoImpl extends AbstractDaoImpl<SecurityArchive> imp
 		super(SecurityArchive.class);
 	}
 
+	@Override
 	public List<SecurityArchive> findBySecurityNo(Integer securityNo) {
 
 		String sqlCommand = "select x from SecurityArchive x where x.securityNo=?1";
@@ -49,6 +50,7 @@ public class SecurityArchiveDaoImpl extends AbstractDaoImpl<SecurityArchive> imp
 		return results;
 	}
 	
+	@Override
 	public List<String> findPreviousPasswordsByProviderNo(String providerNo, int maxResult) {
 
 		String sqlCommand = "select distinct x.password from SecurityArchive x where x.providerNo=?1 order by x.passwordUpdateDate DESC";
@@ -63,6 +65,7 @@ public class SecurityArchiveDaoImpl extends AbstractDaoImpl<SecurityArchive> imp
 		return results;
 	}
 
+	@Override
 	public Integer archiveRecord(Security s) {
 		SecurityArchive sa = new SecurityArchive(s);
 		persist(sa);

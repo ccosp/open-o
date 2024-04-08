@@ -36,6 +36,7 @@ public class TicklerTextSuggestDaoImpl extends AbstractDaoImpl<TicklerTextSugges
 	super(TicklerTextSuggest.class);
     }
 
+    @Override
     public List<TicklerTextSuggest> getActiveTicklerTextSuggests() {
         Query query = entityManager.createQuery("SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
         query.setParameter(1,true);
@@ -45,6 +46,7 @@ public class TicklerTextSuggestDaoImpl extends AbstractDaoImpl<TicklerTextSugges
 	return results;
     }
     
+    @Override
     public List<TicklerTextSuggest> getInactiveTicklerTextSuggests() {
         Query query = entityManager.createQuery("SELECT tTextSuggest from TicklerTextSuggest tTextSuggest WHERE tTextSuggest.active = ? order by tTextSuggest.suggestedText");
         query.setParameter(1,false);

@@ -12,6 +12,7 @@ public class MyGroupAccessRestrictionDaoImpl extends AbstractDaoImpl<MyGroupAcce
         super(MyGroupAccessRestriction.class);        
     }
     
+    @Override
     public List<MyGroupAccessRestriction> findByGroupId(String myGroupNo) {
         Query query = entityManager.createQuery("select x from MyGroupAccessRestriction x where x.myGroupNo=?");
         query.setParameter(1,myGroupNo);
@@ -22,6 +23,7 @@ public class MyGroupAccessRestrictionDaoImpl extends AbstractDaoImpl<MyGroupAcce
         return results;
     }
     
+    @Override
     public List<MyGroupAccessRestriction> findByProviderNo(String providerNo) {
         Query query = entityManager.createQuery("select x from MyGroupAccessRestriction x where x.providerNo=?");
         query.setParameter(1,providerNo);
@@ -32,6 +34,7 @@ public class MyGroupAccessRestrictionDaoImpl extends AbstractDaoImpl<MyGroupAcce
         return results;
     }
     
+    @Override
     public MyGroupAccessRestriction findByGroupNoAndProvider(String myGroupNo, String providerNo) {
         Query query = entityManager.createQuery("select x from MyGroupAccessRestriction x where x.myGroupNo=? and x.providerNo=?");
         query.setParameter(1,myGroupNo);

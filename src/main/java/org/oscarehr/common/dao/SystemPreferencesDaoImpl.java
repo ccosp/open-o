@@ -35,7 +35,7 @@ public class SystemPreferencesDaoImpl extends AbstractDaoImpl<SystemPreferences>
 {
     public SystemPreferencesDaoImpl() { super(SystemPreferences.class); }
 
-
+    @Override
     public <T extends Enum<T>> SystemPreferences findPreferenceByName(Enum<T> name) {
         return findPreferenceByName(name.name());
     }
@@ -65,7 +65,7 @@ public class SystemPreferencesDaoImpl extends AbstractDaoImpl<SystemPreferences>
         return results;
     }
 
-
+    @Override
     public <E extends Enum<E>> List<SystemPreferences> findPreferencesByNames(Class<E> clazz) {
         List<String> parameters = new ArrayList<>();
         for(Enum<E> enumValue : EnumSet.allOf(clazz)) {
@@ -75,6 +75,7 @@ public class SystemPreferencesDaoImpl extends AbstractDaoImpl<SystemPreferences>
         return findPreferencesByNames(parameters);
     }
 
+    @Override
     public <E extends Enum<E>> Map<String, Boolean> findByKeysAsMap(Class<E> clazz) {
         List<String> keyList = new ArrayList<>();
         for(Enum<E> enumValue : EnumSet.allOf(clazz)) {
@@ -105,6 +106,7 @@ public class SystemPreferencesDaoImpl extends AbstractDaoImpl<SystemPreferences>
      * @param keys List of keys to get the preferences for
      * @return A map of SystemPreferences with the preference name as the key
      */
+    @Override
     public Map<String, SystemPreferences> findByKeysAsPreferenceMap(List<String> keys) {
         Map<String, SystemPreferences> preferenceMap = new HashMap<>();
         
@@ -117,6 +119,7 @@ public class SystemPreferencesDaoImpl extends AbstractDaoImpl<SystemPreferences>
         return preferenceMap;
     }
 
+    @Override
     public <T extends Enum<T>> boolean isReadBooleanPreference(Enum<T> name) {
         return isReadBooleanPreference(name.name());
     }
@@ -126,6 +129,7 @@ public class SystemPreferencesDaoImpl extends AbstractDaoImpl<SystemPreferences>
         return (preference != null && Boolean.parseBoolean(preference.getValue()));
     }
 
+    @Override
     public <T extends Enum<T>> boolean isPreferenceValueEquals(Enum<T> preferenceName, String trueValueStr) {
         return isPreferenceValueEquals(preferenceName.name(), trueValueStr);
     }

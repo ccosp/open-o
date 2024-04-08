@@ -36,6 +36,7 @@ public class StudyDetailsDaoImpl extends AbstractDaoImpl<StudyDetails> implement
         super(StudyDetails.class);
     }
     
+    @Override
     public List<StudyDetails> findAll() {        
         Query query = entityManager.createQuery("select study from StudyDetails study");
         @SuppressWarnings("unchecked")

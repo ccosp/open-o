@@ -37,6 +37,7 @@ public class ReportTempDaoImpl extends AbstractDaoImpl<ReportTemp> implements Re
 		super(ReportTemp.class);
 	}
 
+	@Override
 	public List<ReportTemp> findAll() {
 		String sql = "select x from ReportTemp x";
 		Query query = entityManager.createQuery(sql);
@@ -46,6 +47,7 @@ public class ReportTempDaoImpl extends AbstractDaoImpl<ReportTemp> implements Re
 		return results;
 	}
 
+	@Override
 	public List<ReportTemp> findGreateThanEdb(Date edb, int offset, int limit) {
 		String sql = "select x from ReportTemp x where x.id.edb >= ?";
 		Query query = entityManager.createQuery(sql);

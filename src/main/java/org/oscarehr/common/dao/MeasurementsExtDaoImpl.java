@@ -37,6 +37,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
 		super(MeasurementsExt.class);
 	}
 	
+	@Override
 	public List<MeasurementsExt> getMeasurementsExtByMeasurementId(Integer measurementId) {
 		String queryStr = "select m FROM MeasurementsExt m WHERE m.measurementId = ?1";
 		Query q = entityManager.createQuery(queryStr);
@@ -48,6 +49,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
 		return rs;
 	}
 
+	@Override
 	public List<MeasurementsExt> getMeasurementsExtListByMeasurementIdList(List<Integer> measurementIdList) {
 		String queryStr = "select m FROM MeasurementsExt m WHERE m.measurementId IN (?1) order by m.measurementId";
 		Query q = entityManager.createQuery(queryStr);
@@ -55,6 +57,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
 		return q.getResultList();
 	}
 	
+	@Override
 	public MeasurementsExt getMeasurementsExtByMeasurementIdAndKeyVal(Integer measurementId, String keyVal) {
 		String queryStr = "select m FROM MeasurementsExt m WHERE m.measurementId = ?1 AND m.keyVal = ?2";
 		Query q = entityManager.createQuery(queryStr);
@@ -70,6 +73,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
 		return rs.get(0);
 	}
 	
+	@Override
 	public Integer getMeasurementIdByKeyValue(String key, String value) {
 		String queryStr = "select m FROM MeasurementsExt m WHERE m.keyVal=?1 AND m.val=?2";
 		Query q = entityManager.createQuery(queryStr);
@@ -83,6 +87,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
 		return null;
 	}
 	
+	@Override
 	public List<MeasurementsExt> findByKeyValue(String key, String value) {
 		String queryStr = "select m FROM MeasurementsExt m WHERE m.keyVal=?1 AND m.val=?2";
 		Query q = entityManager.createQuery(queryStr);
@@ -95,6 +100,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
 		return rs;
 	}
 
+	@Override
 	public List<Integer> findUnmappedMeasuremntIds(List<String> excludeList) {
 		String queryStr = "SELECT MAX(m.measurementId) FROM MeasurementsExt m WHERE m.keyVal LIKE 'identifier' AND m.val NOT IN (?1)";
 		Query q = entityManager.createQuery(queryStr);

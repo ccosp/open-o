@@ -16,11 +16,13 @@ public class ProfessionalContactDaoImpl extends AbstractDaoImpl<ProfessionalCont
     
     @Deprecated
     @SuppressWarnings("unchecked")
+    @Override
     public List<ProfessionalContact> findAll() {
         Query query = createQuery("x", null);
         return query.getResultList();
     }
     
+    @Override
     public List<ProfessionalContact> search(String searchMode, String orderBy, String keyword) {
         StringBuilder where = new StringBuilder();
         List<String> paramList = new ArrayList<String>();

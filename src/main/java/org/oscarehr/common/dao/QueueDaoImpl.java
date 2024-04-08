@@ -18,6 +18,7 @@ public class QueueDaoImpl extends AbstractDaoImpl<Queue> implements QueueDao {
         super(Queue.class);
     }
 
+    @Override
     public HashMap getHashMapOfQueues(){
         String q="select q from Queue q";
         Query query=entityManager.createQuery(q);
@@ -29,6 +30,8 @@ public class QueueDaoImpl extends AbstractDaoImpl<Queue> implements QueueDao {
         }
         return hm;
     }
+
+    @Override
     public List<Hashtable> getQueues(){
         String q="select q from Queue q";
         Query query=entityManager.createQuery(q);
@@ -44,6 +47,7 @@ public class QueueDaoImpl extends AbstractDaoImpl<Queue> implements QueueDao {
         return r;
     }
 
+    @Override
     public String getLastId(){
         String r="";
         try {
@@ -56,6 +60,8 @@ public class QueueDaoImpl extends AbstractDaoImpl<Queue> implements QueueDao {
        
         return r;
     }
+
+    @Override
     public String getQueueName(int id){
 
         String q="select q from Queue q where q.id="+id;
@@ -68,6 +74,8 @@ public class QueueDaoImpl extends AbstractDaoImpl<Queue> implements QueueDao {
         }
         return "";
     }
+
+    @Override
     public String getQueueid(String name){
         String q="select q from Queue q where q.name="+name;
         Query query=entityManager.createQuery(q);
@@ -79,6 +87,8 @@ public class QueueDaoImpl extends AbstractDaoImpl<Queue> implements QueueDao {
         }
        return "";
     }
+
+    @Override
     public boolean addNewQueue(String qn){
        try{
             Queue q=new Queue();

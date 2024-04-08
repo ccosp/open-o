@@ -12,6 +12,7 @@ public class OcanClientFormDataDaoImpl extends AbstractDaoImpl<OcanClientFormDat
         super(OcanClientFormData.class);
     }
     
+    @Override
     public List<OcanClientFormData> findByQuestion(Integer ocanClientFormId, String question) {
         String sqlCommand = "select x from OcanClientFormData x where x.ocanClientFormId=?1 and x.question=?2";
         Query query = entityManager.createQuery(sqlCommand);
@@ -22,6 +23,7 @@ public class OcanClientFormDataDaoImpl extends AbstractDaoImpl<OcanClientFormDat
         return (results);
     }
 
+    @Override
     public OcanClientFormData findByAnswer(Integer ocanClientFormId, String answer) {
         String sqlCommand = "select x from OcanClientFormData x where x.ocanClientFormId=?1 and x.answer=?2";
         Query query = entityManager.createQuery(sqlCommand);
@@ -30,6 +32,7 @@ public class OcanClientFormDataDaoImpl extends AbstractDaoImpl<OcanClientFormDat
         return (getSingleResultOrNull(query));
     }
 
+    @Override
     public List<OcanClientFormData> findByForm(Integer ocanClientFormId) {
         String sqlCommand = "select x from OcanClientFormData x where x.ocanClientFormId=?1";
         Query query = entityManager.createQuery(sqlCommand);

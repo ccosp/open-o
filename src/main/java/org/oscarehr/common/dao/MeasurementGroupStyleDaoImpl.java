@@ -13,12 +13,14 @@ public class MeasurementGroupStyleDaoImpl extends AbstractDaoImpl<MeasurementGro
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public List<MeasurementGroupStyle> findAll() {
         Query query = entityManager.createQuery("SELECT x FROM " + modelClass.getSimpleName() + " x");
         List<MeasurementGroupStyle> results = query.getResultList();
         return results;
     }
     
+    @Override
     public List<MeasurementGroupStyle> findByGroupName(String groupName) {
         String sql = "select x from MeasurementGroupStyle x where x.groupName=?";
         Query query = entityManager.createQuery(sql);
@@ -30,6 +32,7 @@ public class MeasurementGroupStyleDaoImpl extends AbstractDaoImpl<MeasurementGro
     }
     
     @SuppressWarnings("unchecked")
+    @Override
     public List<MeasurementGroupStyle> findByCssId(Integer cssId) {
         Query query = createQuery("m", "m.cssId = :cssId");
         query.setParameter("cssId", cssId);

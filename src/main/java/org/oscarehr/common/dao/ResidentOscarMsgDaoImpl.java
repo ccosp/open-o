@@ -35,7 +35,7 @@ public class ResidentOscarMsgDaoImpl extends AbstractDaoImpl<ResidentOscarMsg> i
         super(ResidentOscarMsg.class);
     }
     
-    
+    @Override
     public List<ResidentOscarMsg> findBySupervisor(String supervisor) {
         Query query = entityManager.createQuery("select p from ResidentOscarMsg p where p.supervisor_no = :supervisor and p.complete = 0");
         query.setParameter("supervisor", supervisor);
@@ -43,6 +43,7 @@ public class ResidentOscarMsgDaoImpl extends AbstractDaoImpl<ResidentOscarMsg> i
         return query.getResultList();
     }
     
+    @Override
     public ResidentOscarMsg findByNoteId(Long noteId) {
         Query query = entityManager.createQuery("select p from ResidentOscarMsg p where p.note_id = :note_id");
         query.setParameter("note_id", noteId);

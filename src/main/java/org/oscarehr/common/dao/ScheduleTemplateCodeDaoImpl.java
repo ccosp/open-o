@@ -13,11 +13,13 @@ public class ScheduleTemplateCodeDaoImpl extends AbstractDaoImpl<ScheduleTemplat
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ScheduleTemplateCode> findAll() {
 		Query query = createQuery("x", null);
 		return query.getResultList();
 	}
 		
+	@Override
 	public ScheduleTemplateCode getByCode(char code) {
 		Query query = entityManager.createQuery("select s from ScheduleTemplateCode s where s.code=?");
 		query.setParameter(1, code);
@@ -30,6 +32,7 @@ public class ScheduleTemplateCodeDaoImpl extends AbstractDaoImpl<ScheduleTemplat
 		return null;
 	}
 	
+	@Override
 	public List<ScheduleTemplateCode> findTemplateCodes() {
 		Query query = entityManager.createQuery("select s from ScheduleTemplateCode s where s.bookinglimit > 0 and s.duration <>''");
 		
@@ -39,6 +42,7 @@ public class ScheduleTemplateCodeDaoImpl extends AbstractDaoImpl<ScheduleTemplat
 		return results;
 	}
 	
+	@Override
 	public ScheduleTemplateCode findByCode(String code) {
 		Query query = entityManager.createQuery("select s from ScheduleTemplateCode s where s.code like ?");
 		query.setParameter(1, code);

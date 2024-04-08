@@ -15,6 +15,7 @@ public class OscarAnnotationDaoImpl extends AbstractDaoImpl<OscarAnnotation> imp
 		super(OscarAnnotation.class);
 	}
 
+    @Override
     public OscarAnnotation getAnnotations(String demoNo, String tableName,Long tableId){
     	Query query = entityManager.createQuery("select a from OscarAnnotation a where a.demographicNo=? and a.tableName=? and a.tableId=?");
     	query.setParameter(1, demoNo);
@@ -28,6 +29,7 @@ public class OscarAnnotationDaoImpl extends AbstractDaoImpl<OscarAnnotation> imp
         return null;
     }
 
+    @Override
     public void save(OscarAnnotation anno) {
         if (anno.isUuidSet()){
             UUID uuid = UUID.randomUUID();
@@ -36,6 +38,7 @@ public class OscarAnnotationDaoImpl extends AbstractDaoImpl<OscarAnnotation> imp
         persist(anno);
     }
 
+    @Override
    public int getNumberOfNotes(String demoNo, String tableName,Long tableId){
    	Query query = entityManager.createQuery("select a from OscarAnnotation a where a.demographicNo=? and a.tableName=? and a.tableId=?");
    	query.setParameter(1, demoNo);

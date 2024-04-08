@@ -12,6 +12,7 @@ public class ScratchPadDaoImpl extends AbstractDaoImpl<ScratchPad> implements Sc
         super(ScratchPad.class);
     }
 
+    @Override
     public boolean isScratchFilled(String providerNo) {
         String sSQL = "SELECT s FROM ScratchPad s WHERE s.providerNo = ? AND status=1 order by s.id";
         Query query = entityManager.createQuery(sSQL);
@@ -25,6 +26,7 @@ public class ScratchPadDaoImpl extends AbstractDaoImpl<ScratchPad> implements Sc
         return false;
     }
 
+    @Override
     public ScratchPad findByProviderNo(String providerNo) {
         Query query = createQuery("sp", "sp.providerNo = :providerNo AND sp.status=1 order by sp.id DESC");
         query.setMaxResults(1);
@@ -33,6 +35,7 @@ public class ScratchPadDaoImpl extends AbstractDaoImpl<ScratchPad> implements Sc
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public List<Object[]> findAllDatesByProviderNo(String providerNo) {
         String sql = "Select sp.dateTime, sp.id from ScratchPad sp where sp.providerNo = :providerNo AND sp.status=1 order by sp.dateTime DESC";
         Query query = entityManager.createQuery(sql);

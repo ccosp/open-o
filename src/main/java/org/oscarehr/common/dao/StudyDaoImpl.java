@@ -37,11 +37,13 @@ public class StudyDaoImpl extends AbstractDaoImpl<Study> implements StudyDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Study> findAll() {
 		Query query = createQuery("x", null);
 		return query.getResultList();
 	}
 	
+	@Override
 	public Study findByName(String studyName) {
 		Query query = entityManager.createQuery("select s from Study s where s.studyName = ?1");
 		query.setParameter(1, studyName);
@@ -51,6 +53,7 @@ public class StudyDaoImpl extends AbstractDaoImpl<Study> implements StudyDao {
 		return study;
 	}
 	
+	@Override
 	public List<Study> findByCurrent1(Integer current1) {
 		Query query = entityManager.createQuery("select s from Study s where s.current1 = ?1");
 		query.setParameter(1, current1);
