@@ -20,28 +20,14 @@
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
  */
+
 package org.oscarehr.PMmodule.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.logging.log4j.Logger;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.oscarehr.PMmodule.model.ProgramClientStatus;
-import org.oscarehr.common.model.Admission;
-import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.hibernate.SessionFactory;
 
-public interface ProgramClientStatusDAO{
-    public List<ProgramClientStatus> getProgramClientStatuses(Integer programId);
-    public void saveProgramClientStatus(ProgramClientStatus status);
+public class StreetHealthDaoImpl extends HibernateDaoSupport implements StreetHealthDao{
+	//empty
+	
 
-    public ProgramClientStatus getProgramClientStatus(String id);
-
-    public void deleteProgramClientStatus(String id);
-    public boolean clientStatusNameExists(Integer programId, String statusName);
-    public List<Admission> getAllClientsInStatus(Integer programId, Integer statusId);
+	
 }

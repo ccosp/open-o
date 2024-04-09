@@ -22,88 +22,27 @@
  * Ontario, Canada
  */
 
-package org.oscarehr.PMmodule.dao;
+ package org.oscarehr.PMmodule.dao;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.PMmodule.model.Criteria;
-import org.oscarehr.common.dao.AbstractDaoImpl;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class CriteriaDao extends AbstractDaoImpl<Criteria> {
-
-	public CriteriaDao() {
-		super(Criteria.class);
-	}
-
-	public List<Criteria> getCriteriaByTemplateId(Integer templateId) {
-		Query q = entityManager.createQuery("select c from Criteria c where c.templateId=?");
-		q.setParameter(1, templateId);
-		
-		@SuppressWarnings("unchecked")
-		List<Criteria> results = q.getResultList();
-		
-		return results;	
-	}
-	
-	public Criteria getCriteriaByTemplateIdVacancyIdTypeId(Integer templateId, Integer vacancyId, Integer typeId) {
-		if(templateId != null && vacancyId != null) {			
-			Query q = entityManager.createQuery("select c from Criteria c where c.templateId=? and c.criteriaTypeId=? and c.vacancyId=?");
-			q.setParameter(1, templateId);
-			q.setParameter(2, typeId);
-			q.setParameter(3, vacancyId);
-			return this.getSingleResultOrNull(q);
-		} else if(templateId == null && vacancyId != null) 	{	
-			Query q = entityManager.createQuery("select c from Criteria c where c.templateId IS NULL and c.criteriaTypeId=? and c.vacancyId=?");
-			q.setParameter(1, typeId);
-			q.setParameter(2, vacancyId);
-			return this.getSingleResultOrNull(q);
-		} else if(templateId != null && vacancyId == null) 	{	
-			Query q = entityManager.createQuery("select c from Criteria c where c.templateId=? and c.criteriaTypeId=? and c.vacancyId is null");
-			q.setParameter(1, templateId);
-			q.setParameter(2, typeId);
-			return this.getSingleResultOrNull(q);
-		} else {
-			return null;
-		}
-		
-		
-	}
-	
-	public List<Criteria> getCriteriasByVacancyId(Integer vacancyId) {
-		Query q = entityManager.createQuery("select c from Criteria c where c.vacancyId=?");
-		q.setParameter(1, vacancyId);
-		
-		@SuppressWarnings("unchecked")
-		List<Criteria> results = q.getResultList();
-		
-		return results;	
-	}
-	
-	public List<Criteria> getRefinedCriteriasByVacancyId(Integer vacancyId) {
-		Query q = entityManager.createQuery("select c from Criteria c where c.canBeAdhoc!=? and c.vacancyId=?");
-		q.setParameter(1, 0);//canBeAdhoc=0 means don't appear in vacancy.
-		q.setParameter(2, vacancyId);
-		
-		@SuppressWarnings("unchecked")
-		List<Criteria> results = q.getResultList();
-		
-		return results;	
-	}
-	
-	public List<Criteria> getRefinedCriteriasByTemplateId(Integer templateId) {
-		Query q = entityManager.createQuery("select c from Criteria c where c.canBeAdhoc!=? and c.templateId=?");
-		q.setParameter(1, 0); //canBeAdhoc=0 means don't appear in vacancy.
-		q.setParameter(2, templateId);
-		
-		@SuppressWarnings("unchecked")
-		List<Criteria> results = q.getResultList();
-		
-		return results;	
-	}
-	
-	
-}
+ import java.util.List;
+ 
+ import javax.persistence.Query;
+ 
+ import org.oscarehr.PMmodule.model.Criteria;
+ import org.oscarehr.common.dao.AbstractDao;
+ import org.springframework.stereotype.Repository;
+ 
+ public interface CriteriaDao extends AbstractDao<Criteria> {
+     public List<Criteria> getCriteriaByTemplateId(Integer templateId);
+     
+     public Criteria getCriteriaByTemplateIdVacancyIdTypeId(Integer templateId, Integer vacancyId, Integer typeId);
+     
+     public List<Criteria> getCriteriasByVacancyId(Integer vacancyId);
+     
+     public List<Criteria> getRefinedCriteriasByVacancyId(Integer vacancyId);
+     
+     public List<Criteria> getRefinedCriteriasByTemplateId(Integer templateId);
+     
+     
+ }
+ 
