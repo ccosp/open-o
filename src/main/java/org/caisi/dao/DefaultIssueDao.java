@@ -21,24 +21,26 @@
  * Toronto, Ontario, Canada
  */
 
- package org.caisi.dao;
+package org.caisi.dao;
 
- import java.util.HashSet;
- import java.util.List;
- import java.util.Set;
- 
- import javax.persistence.Query;
- 
- import org.caisi.model.DefaultIssue;
- import org.oscarehr.common.dao.AbstractDaoImpl;
- 
- public interface DefaultIssueDao extends AbstractDao<DefaultIssue>{
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-     public DefaultIssue findDefaultIssue(Integer id);
-     public DefaultIssue getLastestDefaultIssue();
-     public List<DefaultIssue> findAll();
-     
-     public void saveDefaultIssue(DefaultIssue issue);
-     public String[] findAllDefaultIssueIds();
- }
- 
+import javax.persistence.Query;
+
+import org.caisi.model.DefaultIssue;
+import org.oscarehr.common.dao.AbstractDao;
+
+public interface DefaultIssueDao extends AbstractDao<DefaultIssue> {
+
+    public DefaultIssue findDefaultIssue(Integer id);
+
+    public DefaultIssue getLastestDefaultIssue();
+
+    public List<DefaultIssue> findAll();
+
+    public void saveDefaultIssue(DefaultIssue issue);
+
+    public String[] findAllDefaultIssueIds();
+}
