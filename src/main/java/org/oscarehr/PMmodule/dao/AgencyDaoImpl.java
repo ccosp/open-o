@@ -20,28 +20,43 @@
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
  */
+
 package org.oscarehr.PMmodule.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.oscarehr.PMmodule.model.ProgramClientStatus;
-import org.oscarehr.common.model.Admission;
+import org.oscarehr.PMmodule.model.Agency;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.hibernate.SessionFactory;
 
-public interface ProgramClientStatusDAO{
-    public List<ProgramClientStatus> getProgramClientStatuses(Integer programId);
-    public void saveProgramClientStatus(ProgramClientStatus status);
+public class AgencyDaoImpl extends HibernateDaoSupport implements AgencyDao{
 
-    public ProgramClientStatus getProgramClientStatus(String id);
+    private Logger log=MiscUtils.getLogger();
 
-    public void deleteProgramClientStatus(String id);
-    public boolean clientStatusNameExists(Integer programId, String statusName);
-    public List<Admission> getAllClientsInStatus(Integer programId, Integer statusId);
+    public Agency getLocalAgency() {
+        Agency agency = null;
+
+        List results = getHibernateTemplate().find("from Agency a");
+
+        if (!results.isEmpty()) {
+            agency = (Agency)results.get(0);
+        }
+
+        return agency;
+    }
+
+    public void saveAgency(Agency agency) {
+        if (agency == null) {
+            throw new IllegalArgumentException();
+        }
+
+        getHibernateTemplate().saveOrUpdate(agency);
+
+        if (log.isDebugEnabled()) {
+            log.debug("saveAgency : id = " + agency.getId());
+        }
+
+    }
+
 }

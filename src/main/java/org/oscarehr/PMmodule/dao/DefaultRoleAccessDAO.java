@@ -21,47 +21,25 @@
  * Toronto, Ontario, Canada
  */
 
-package org.oscarehr.PMmodule.dao;
+ package org.oscarehr.PMmodule.dao;
 
-import java.util.List;
-
-import org.oscarehr.PMmodule.model.DefaultRoleAccess;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-
-@SuppressWarnings("unchecked")
-public class DefaultRoleAccessDAO extends HibernateDaoSupport {
-
-    public void deleteDefaultRoleAccess(Long id) {
-        this.getHibernateTemplate().delete(getDefaultRoleAccess(id));
-    }
-
-    public DefaultRoleAccess getDefaultRoleAccess(Long id) {
-        return this.getHibernateTemplate().get(DefaultRoleAccess.class, id);
-    }
-
-    public List<DefaultRoleAccess> getDefaultRoleAccesses() {
-        return (List<DefaultRoleAccess>) this.getHibernateTemplate().find("from DefaultRoleAccess dra ORDER BY role_id");
-    }
-    
-    public List<DefaultRoleAccess> findAll() {
-        return (List<DefaultRoleAccess>) this.getHibernateTemplate().find("from DefaultRoleAccess dra");
-    }
-
-    public void saveDefaultRoleAccess(DefaultRoleAccess dra) {
-        this.getHibernateTemplate().saveOrUpdate(dra);
-    }
-
-    public DefaultRoleAccess find(Long roleId, Long accessTypeId) {
-        List results = this.getHibernateTemplate().find("from DefaultRoleAccess dra where dra.roleId=? and dra.accessTypeId=?", new Object[] {roleId, accessTypeId});
-
-        if (!results.isEmpty()) {
-            return (DefaultRoleAccess)results.get(0);
-        }
-        return null;
-    }
-    
-    public List<Object[]> findAllRolesAndAccessTypes(){
-    	return (List<Object[]>) getHibernateTemplate().find("FROM DefaultRoleAccess a, AccessType b WHERE a.id = b.Id");
-    }
-
-}
+ import java.util.List;
+ 
+ import org.oscarehr.PMmodule.model.DefaultRoleAccess;
+ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+ 
+ public interface DefaultRoleAccessDAO{
+ 
+     public void deleteDefaultRoleAccess(Long id);
+ 
+     public DefaultRoleAccess getDefaultRoleAccess(Long id);
+ 
+     public List<DefaultRoleAccess> getDefaultRoleAccesses();
+     public List<DefaultRoleAccess> findAll();
+     public void saveDefaultRoleAccess(DefaultRoleAccess dra);
+ 
+     public DefaultRoleAccess find(Long roleId, Long accessTypeId);
+     
+     public List<Object[]> findAllRolesAndAccessTypes();
+ }
+ 

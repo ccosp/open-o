@@ -22,33 +22,21 @@
  * Ontario, Canada
  */
 
-package org.oscarehr.PMmodule.dao;
+ package org.oscarehr.PMmodule.dao;
 
-import java.util.List;
+ import java.util.List;
+ 
+ import javax.persistence.Query;
+ 
+ import org.oscarehr.PMmodule.model.CriteriaSelectionOption;
+ import org.oscarehr.common.dao.AbstractDaoImpl;
+ import org.oscarehr.common.dao.AbstractDao;
+ import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
+ public interface CriteriaSelectionOptionDao extends AbstractDao<CriteriaSelectionOption> {
 
-import org.oscarehr.PMmodule.model.CriteriaSelectionOption;
-import org.oscarehr.common.dao.AbstractDaoImpl;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class CriteriaSelectionOptionDao extends AbstractDaoImpl<CriteriaSelectionOption> {
-
-	public CriteriaSelectionOptionDao() {
-		super(CriteriaSelectionOption.class);
-	}
-
-	public List<CriteriaSelectionOption> getCriteriaSelectedOptionsByCriteriaId(Integer criteriaId) {
-		Query query = entityManager.createQuery("select x from CriteriaSelectionOption x where x.criteriaId=?");
-		query.setParameter(1, criteriaId);
-		
-		@SuppressWarnings("unchecked")
-	    List<CriteriaSelectionOption> results = query.getResultList();
-		
-		return results;
-	}
-	
-
-}
-
+     public List<CriteriaSelectionOption> getCriteriaSelectedOptionsByCriteriaId(Integer criteriaId);
+ 
+ }
+ 
+ 
