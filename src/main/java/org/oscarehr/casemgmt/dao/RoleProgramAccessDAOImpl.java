@@ -28,11 +28,25 @@ import java.util.List;
 import org.oscarehr.PMmodule.model.DefaultRoleAccess;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-public interface RoleProgramAccessDAO {
+public class RoleProgramAccessDAOImpl extends HibernateDaoSupport implements RoleProgramAccessDAO {
 
-    public List<DefaultRoleAccess> getDefaultAccessRightByRole(Long roleId);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<DefaultRoleAccess> getDefaultAccessRightByRole(Long roleId) {
+        String q = "from DefaultRoleAccess da where da.caisi_role.id=?";
+        return (List<DefaultRoleAccess>) getHibernateTemplate().find(q, roleId);
+    }
 
-    public List<DefaultRoleAccess> getDefaultSpecificAccessRightByRole(Long roleId, String accessType);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<DefaultRoleAccess> getDefaultSpecificAccessRightByRole(Long roleId, String accessType) {
+        String q = "from DefaultRoleAccess da where da.caisi_role.id=? and da.access_type.Name like ?";
+        return (List<DefaultRoleAccess>) getHibernateTemplate().find(q, new Object[] { roleId, accessType });
+    }
 
-    public boolean hasAccess(String accessName, Long roleId);
+    @Override
+    public boolean hasAccess(String accessName, Long roleId) {
+        String q = "from DefaultRoleAccess da where da.caisi_role.id=" + roleId + " and da.access_type.Name= ?";
+        return getHibernateTemplate().find(q, accessName).isEmpty() ? false : true;
+    }
 }
