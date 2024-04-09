@@ -22,22 +22,32 @@
  */
 
 
-package org.oscarehr.billing.CA.dao;
+ package org.oscarehr.billing.CA.dao;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.billing.CA.model.GstControl;
-import org.oscarehr.common.dao.AbstractDao;
-import org.springframework.stereotype.Repository;
-
-/**
- *
- * @author rjonasz
- */
-
-public interface GstControlDao extends AbstractDao<GstControl> {
-
-	public List<GstControl> findAll();
-}
+ import java.util.List;
+ 
+ import javax.persistence.Query;
+ 
+ import org.oscarehr.billing.CA.model.GstControl;
+ import org.oscarehr.common.dao.AbstractDaoImpl;
+ import org.springframework.stereotype.Repository;
+ 
+ /**
+  *
+  * @author rjonasz
+  */
+ @Repository
+ public class GstControlDaoImpl extends AbstractDaoImpl<GstControl> implements GstControlDao {
+ 
+     public GstControlDaoImpl() {
+         super(GstControl.class);
+     }
+     
+     @SuppressWarnings("unchecked")
+     @Override
+     public List<GstControl> findAll() {
+         Query query = createQuery("x", null);
+         return query.getResultList();
+     }
+ }
+ 
