@@ -21,7 +21,6 @@
  * Toronto, Ontario, Canada
  */
 
-
 package org.oscarehr.casemgmt.dao;
 
 import java.util.Date;
@@ -30,47 +29,21 @@ import java.util.List;
 import org.oscarehr.casemgmt.model.CaseManagementNoteExt;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-public class CaseManagementNoteExtDAO extends HibernateDaoSupport {
+public interface CaseManagementNoteExtDAO {
 
-	public CaseManagementNoteExt getNoteExt(Long id) {
-		CaseManagementNoteExt noteExt = this.getHibernateTemplate().get(CaseManagementNoteExt.class, id);
-		return noteExt;
-	}
+	public CaseManagementNoteExt getNoteExt(Long id);
 
-	@SuppressWarnings("unchecked")
-    public List<CaseManagementNoteExt> getExtByNote(Long noteId) {
-	    String hql = "from CaseManagementNoteExt cExt where cExt.noteId = ? order by cExt.id desc";
-	    return (List<CaseManagementNoteExt>) this.getHibernateTemplate().find(hql, noteId);
-	}
+	public List<CaseManagementNoteExt> getExtByNote(Long noteId);
 
-	public List getExtByKeyVal(String keyVal) {
-	    String hql = "from CaseManagementNoteExt cExt where cExt.keyVal = ?";
-	    return this.getHibernateTemplate().find(hql, keyVal);
-	}
+	public List getExtByKeyVal(String keyVal);
 
-	public List getExtByValue(String keyVal, String value) {
-	    String[] param = {keyVal, "%"+value+"%"};
-	    String hql = "from CaseManagementNoteExt cExt where cExt.keyVal = ? and cExt.value like ?";
-	    return this.getHibernateTemplate().find(hql, param);
-	}
+	public List getExtByValue(String keyVal, String value);
 
-	public List getExtBeforeDate(String keyVal, Date dateValue) {
-	    Object[] param = {keyVal, dateValue};
-	    String hql = "from CaseManagementNoteExt cExt where cExt.keyVal = ? and cExt.dateValue <= ?";
-	    return this.getHibernateTemplate().find(hql, param);
-	}
+	public List getExtBeforeDate(String keyVal, Date dateValue);
 
-	public List getExtAfterDate(String keyVal, Date dateValue) {
-	    Object[] param = {keyVal, dateValue};
-	    String hql = "from CaseManagementNoteExt cExt where cExt.keyVal = ? and cExt.dateValue >= ?";
-	    return this.getHibernateTemplate().find(hql, param);
-	}
+	public List getExtAfterDate(String keyVal, Date dateValue);
 
-	public void save(CaseManagementNoteExt cExt) {
-	    this.getHibernateTemplate().save(cExt);
-	}
+	public void save(CaseManagementNoteExt cExt);
 
-	public void update(CaseManagementNoteExt cExt) {
-	    this.getHibernateTemplate().update(cExt);
-	}
+	public void update(CaseManagementNoteExt cExt);
 }
