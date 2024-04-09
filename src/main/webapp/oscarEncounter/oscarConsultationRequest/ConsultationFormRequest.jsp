@@ -495,9 +495,11 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
    <script>
      jQuery.noConflict();
    </script>
-
+<% if ("ocean".equals(props.get("cme_js"))) { 
+	int randomNo = new Random().nextInt();%>
+<script id="mainScript" src="${ pageContext.request.contextPath }/js/custom/ocean/conreq.js?no-cache=<%=randomNo%>&autoRefresh=true" ocean-host=<%=Encode.forUriComponent(props.getProperty("ocean_host"))%>></script>
+<% } %>
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/css/healthCareTeam.css" />
-<oscar:customInterface section="conreq"/>
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/oscarEncounter/encounterStyles.css">
 
 <style type="text/css">

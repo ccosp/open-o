@@ -13,7 +13,7 @@
              divR2I2:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=Reminders&title=" + remindersLabel + "&cmd=divR2I2"                                         
      };
 
-     init();
+     // init();
      // rather than highjacking a <div> lets put OCEAN where the OSCAR instance has allowance
      jQuery("#ocean_placeholder").append("<div id='ocean_div' style='width: 100%; display: none; font-size: 11px;'>Sorry, the Ocean toolbar is currently unavailable.</div>");
 
