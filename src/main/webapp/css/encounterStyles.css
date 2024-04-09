@@ -852,10 +852,6 @@ div.leftBox li a img[src*="clear.gif"]{
 	display:none;
 }
 
-div.leftBox li span a span {
-	all: unset !important;
-}
-
 .view-links {
 	color:white;
 }
