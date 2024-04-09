@@ -429,15 +429,15 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         return q.getResultList();
     }
 
-    @Override
-    public GstControlDao getGstControlDao() {
-        return gstControlDao;
-    }
+    // @Override
+    // public GstControlDao getGstControlDao() {
+    //     return gstControlDao;
+    // }
 
-    @Override
-    public void setGstControlDao(GstControlDao gstControlDao) {
-        this.gstControlDao = gstControlDao;
-    }
+    // @Override
+    // public void setGstControlDao(GstControlDao gstControlDao) {
+    //     this.gstControlDao = gstControlDao;
+    // }
 
     @Override
     public BillingONItem findBillingONItemByServiceCode(BillingONCHeader1 ch1, String serviceCode) {
