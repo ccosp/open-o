@@ -31,72 +31,20 @@ import org.oscarehr.PMmodule.model.SecUserRole;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-public class SecUserRoleDao extends HibernateDaoSupport {
+public interface SecUserRoleDao {
 
-    private static Logger log = MiscUtils.getLogger();
+    public List<SecUserRole> getUserRoles(String providerNo);
 
-    public List<SecUserRole> getUserRoles(String providerNo) {
-        if (providerNo == null) {
-            throw new IllegalArgumentException();
-        }
+    public List<SecUserRole> getSecUserRolesByRoleName(String roleName);
 
-        @SuppressWarnings("unchecked")
-        List<SecUserRole> results = (List<SecUserRole>) getHibernateTemplate().find("from SecUserRole s where s.ProviderNo = ?", providerNo);
+    public List<SecUserRole> findByRoleNameAndProviderNo(String roleName, String providerNo);
 
-        if (log.isDebugEnabled()) {
-            log.debug("getUserRoles: providerNo=" + providerNo + ",# of results=" + results.size());
-        }
+    public boolean hasAdminRole(String providerNo);
 
-        return results;
-    }
+    public SecUserRole find(Long id);
 
-    public List<SecUserRole> getSecUserRolesByRoleName(String roleName) {
-        @SuppressWarnings("unchecked")
-        List<SecUserRole> results = (List<SecUserRole>) getHibernateTemplate().find("from SecUserRole s where s.RoleName = ?", roleName);
+    public void save(SecUserRole sur);
 
-        return results;
-    }
-    
-    public List<SecUserRole> findByRoleNameAndProviderNo(String roleName, String providerNo) {
-        @SuppressWarnings("unchecked")
-        List<SecUserRole> results = (List<SecUserRole>) getHibernateTemplate().find("from SecUserRole s where s.RoleName = ? and s.ProviderNo=?", new Object[]{roleName,providerNo});
+    public List<String> getRecordsAddedAndUpdatedSinceTime(Date date);
 
-        return results;
-    }
-
-    public boolean hasAdminRole(String providerNo) {
-        if (providerNo == null) {
-            throw new IllegalArgumentException();
-        }
-
-        boolean result = false;
-        @SuppressWarnings("unchecked")
-        List<SecUserRole> results = (List<SecUserRole>) this.getHibernateTemplate().find("from SecUserRole s where s.ProviderNo = ? and s.RoleName = 'admin'", providerNo);
-        if (!results.isEmpty()) {
-            result = true;
-        }
-
-        if (log.isDebugEnabled()) {
-            log.debug("hasAdminRole: providerNo=" + providerNo + ",result=" + result);
-        }
-
-        return result;
-    }
-
-    public SecUserRole find(Long id) {
-    	return this.getHibernateTemplate().get(SecUserRole.class, id);
-    }
-
-    public void save(SecUserRole sur) {
-    	sur.setLastUpdateDate(new Date());
-    	this.getHibernateTemplate().save(sur);
-    }
-    
-    public List<String> getRecordsAddedAndUpdatedSinceTime(Date date) {
-		@SuppressWarnings("unchecked")
-		List<String> records = (List<String>) getHibernateTemplate().find("select p.ProviderNo From SecUserRole p WHERE p.lastUpdateDate > ?",date);
-		
-		return records;
-	}
-    
 }

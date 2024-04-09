@@ -28,59 +28,19 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.VacancyClientMatch;
-import org.oscarehr.common.dao.AbstractDaoImpl;
+import org.oscarehr.common.dao.AbstractDao;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class VacancyClientMatchDao extends AbstractDaoImpl<VacancyClientMatch> {
-	
-	public VacancyClientMatchDao() {
-		super(VacancyClientMatch.class);
-	}
-	
-	public List<VacancyClientMatch> findByClientIdAndVacancyId(int clientId, int vacancyId){
-		Query q = entityManager.createQuery("select x from VacancyClientMatch x where x.client_id = ? and x.vacancy_id = ?");
-		q.setParameter(1, clientId);
-		q.setParameter(2, vacancyId);
-		
-		@SuppressWarnings("unchecked")
-		List<VacancyClientMatch> results = q.getResultList();
-		
-		return results;
-	}
-	
-	public List<VacancyClientMatch> findByClientId(int clientId){
-		Query q = entityManager.createQuery("select x from VacancyClientMatch x where x.client_id = ?");
-		q.setParameter(1, clientId);
-		
-		@SuppressWarnings("unchecked")
-		List<VacancyClientMatch> results = q.getResultList();
-		
-		return results;
-	}
-	
-	public List<VacancyClientMatch> findBystatus(String status){
-		Query q = entityManager.createQuery("select x from VacancyClientMatch x where x.status = ?");
-		q.setParameter(1, status);
-		
-		@SuppressWarnings("unchecked")
-		List<VacancyClientMatch> results = q.getResultList();
-		
-		return results;
-	}
-	
-	
-	public void updateStatus(String status, int clientId, int vacancyId) {
-		for(VacancyClientMatch v:this.findByClientIdAndVacancyId(clientId, vacancyId)) {
-			v.setStatus(status);
-		}
-	}
+public interface VacancyClientMatchDao extends AbstractDao<VacancyClientMatch> {
 
-	public void updateStatusAndRejectedReason(String status, String rejectedReason, int clientId, int vacancyId) {
-		for(VacancyClientMatch v:this.findByClientIdAndVacancyId(clientId, vacancyId)) {
-			v.setStatus(status);
-			v.setRejectionReason(rejectedReason);
-		}
-	}
+	public List<VacancyClientMatch> findByClientIdAndVacancyId(int clientId, int vacancyId);
+
+	public List<VacancyClientMatch> findByClientId(int clientId);
+
+	public List<VacancyClientMatch> findBystatus(String status);
+
+	public void updateStatus(String status, int clientId, int vacancyId);
+
+	public void updateStatusAndRejectedReason(String status, String rejectedReason, int clientId, int vacancyId);
 
 }

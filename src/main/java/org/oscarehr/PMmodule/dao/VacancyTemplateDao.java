@@ -29,47 +29,18 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.VacancyTemplate;
-import org.oscarehr.common.dao.AbstractDaoImpl;
+import org.oscarehr.common.dao.AbstractDao;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class VacancyTemplateDao extends AbstractDaoImpl<VacancyTemplate> {
+public interface VacancyTemplateDao extends AbstractDao<VacancyTemplate> {
 
-	public VacancyTemplateDao() {
-		super(VacancyTemplate.class);
-	}
+	public void saveVacancyTemplate(VacancyTemplate obj);
 
-	public void saveVacancyTemplate(VacancyTemplate obj) {
-		persist(obj);
-	}
-	
-	public void mergeVacancyTemplate(VacancyTemplate obj) {
-		merge(obj);
-	}
-	
-	public VacancyTemplate getVacancyTemplate(Integer templateId) {
-		return find(templateId);
-	}
-	
-	public List<VacancyTemplate> getVacancyTemplateByWlProgramId(Integer wlProgramId) {
-		Query query = entityManager.createQuery("select x from VacancyTemplate x where x.wlProgramId=?");
-		query.setParameter(1, wlProgramId);
-		
-		@SuppressWarnings("unchecked")
-		List<VacancyTemplate> results = query.getResultList();
-		
-		
-		return results;	
-	}
-	
-	 public List<VacancyTemplate> getActiveVacancyTemplatesByWlProgramId(Integer wlProgramId) {
-		Query query = entityManager.createQuery("select x from VacancyTemplate x where x.wlProgramId=? and x.active=?");
-		query.setParameter(1, wlProgramId);
-		query.setParameter(2, true);
-		
-		@SuppressWarnings("unchecked")
-		List<VacancyTemplate> results = query.getResultList();
-		
-		return results;	
-	}
+	public void mergeVacancyTemplate(VacancyTemplate obj);
+
+	public VacancyTemplate getVacancyTemplate(Integer templateId);
+
+	public List<VacancyTemplate> getVacancyTemplateByWlProgramId(Integer wlProgramId);
+
+	public List<VacancyTemplate> getActiveVacancyTemplatesByWlProgramId(Integer wlProgramId);
 }

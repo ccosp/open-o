@@ -26,19 +26,10 @@ package org.oscarehr.PMmodule.dao;
 import org.oscarehr.common.dao.SecObjPrivilegeDao;
 import org.oscarehr.util.SpringUtils;
 
-public class SurveySecurityDao {
+public interface SurveySecurityDao {
 
-	//switch the quatro security manager when available
-	//true = allowed
-	//false = restricted
-	public boolean checkPrivilege(String formName, String providerNo) {
-		//check to see if there's a privilege defined
-        SecObjPrivilegeDao dao = SpringUtils.getBean(SecObjPrivilegeDao.class);
-        int count = dao.countObjectsByName("_ucf." + formName);
-        if (count <= 0) {
-        	return true;
-        }
-        
-        return !dao.findByFormNamePrivilegeAndProviderNo("_ucf." + formName, "x", providerNo).isEmpty();
-	}
+	// switch the quatro security manager when available
+	// true = allowed
+	// false = restricted
+	public boolean checkPrivilege(String formName, String providerNo);
 }

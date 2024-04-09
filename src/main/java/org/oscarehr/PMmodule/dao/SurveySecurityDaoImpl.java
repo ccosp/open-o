@@ -23,19 +23,23 @@
 
 package org.oscarehr.PMmodule.dao;
 
-import java.util.Date;
-import java.util.List;
+import org.oscarehr.common.dao.SecObjPrivilegeDao;
+import org.oscarehr.util.SpringUtils;
 
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.model.ProgramSignature;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+public class SurveySecurityDaoImpl implements SurveySecurityDao {
 
-public interface ProgramSignatureDao {
+    // switch the quatro security manager when available
+    // true = allowed
+    // false = restricted
+    @Override
+    public boolean checkPrivilege(String formName, String providerNo) {
+        // check to see if there's a privilege defined
+        SecObjPrivilegeDao dao = SpringUtils.getBean(SecObjPrivilegeDao.class);
+        int count = dao.countObjectsByName("_ucf." + formName);
+        if (count <= 0) {
+            return true;
+        }
 
-    public ProgramSignature getProgramFirstSignature(Integer programId);
-
-    public List<ProgramSignature> getProgramSignatures(Integer programId);
-
-    public void saveProgramSignature(ProgramSignature programSignature);
+        return !dao.findByFormNamePrivilegeAndProviderNo("_ucf." + formName, "x", providerNo).isEmpty();
+    }
 }
