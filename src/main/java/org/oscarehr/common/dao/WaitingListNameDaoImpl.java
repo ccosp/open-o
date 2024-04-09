@@ -6,7 +6,9 @@ import org.oscarehr.common.model.WaitingListName;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class WaitingListNameDaoImpl extends AbstractDaoImpl<WaitingListName> implements WaitingListNameDao {
 
     public WaitingListNameDaoImpl() {
