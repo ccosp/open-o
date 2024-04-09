@@ -28,15 +28,38 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.billing.CA.model.BillingDetail;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.billing.CA.model.BillingInr;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
-public interface BillingDetailDao extends AbstractDao<BillingDetail> {
+@Repository
+public class BillingInrDaoImpl extends AbstractDaoImpl<BillingInr> implements BillingInrDao {
 
-	public List<BillingDetail> findByBillingNo(int billingNo);
+    public BillingInrDaoImpl() {
+        super(BillingInr.class);
+    }
 
-	public List<BillingDetail> findByBillingNoAndStatus(Integer billingNo, String status);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Object[]> search_inrbilling_dt_billno(Integer billingInrNo) {
+        String sql = "from BillingInr b, Demographic d where d.DemographicNo=b.demographicNo and b.id=? and b.status<>'D'";
+        Query q = entityManager.createQuery(sql);
+        q.setParameter(1, billingInrNo);
 
-	public List<BillingDetail> findByBillingNo(Integer billingNo);
+        List<Object[]> results = q.getResultList();
+
+        return results;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<BillingInr> findCurrentByProviderNo(String providerNo) {
+        String sql = "select b from BillingInr b where b.providerNo like ? and b.status<>'D'";
+        Query q = entityManager.createQuery(sql);
+        q.setParameter(1, providerNo);
+
+        List<BillingInr> results = q.getResultList();
+
+        return results;
+    }
 }

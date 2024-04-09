@@ -4,7 +4,7 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
+ * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,22 +21,31 @@
  * Hamilton
  * Ontario, Canada
  */
-
 package org.oscarehr.billing.CA.dao;
 
 import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.billing.CA.model.BillingDetail;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.billing.CA.BC.model.WcbBpCode;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
-public interface BillingDetailDao extends AbstractDao<BillingDetail> {
+@Repository
+public class WcbBpCodeDaoImpl extends AbstractDaoImpl<WcbBpCode> implements WcbBpCodeDao {
 
-	public List<BillingDetail> findByBillingNo(int billingNo);
+    protected WcbBpCodeDaoImpl() {
+        super(WcbBpCode.class);
+    }
 
-	public List<BillingDetail> findByBillingNoAndStatus(Integer billingNo, String status);
-
-	public List<BillingDetail> findByBillingNo(Integer billingNo);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<WcbBpCode> findByCodeOrAnyLevel(String code) {
+        String codeParamValue = code.substring(0, Math.min(code.length() - 1, 5));
+        Query query = createQuery("c",
+                "c.code like :codeParamValue OR c.level1 like :c OR c.level2 like :c OR c.level3 like :c ORDER BY c.level1, c.level2, c.level3");
+        query.setParameter("codeParamValue", codeParamValue + "%");
+        query.setParameter("c", code + "%");
+        return query.getResultList();
+    }
 }
