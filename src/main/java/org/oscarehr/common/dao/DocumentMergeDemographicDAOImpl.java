@@ -7,7 +7,7 @@ import org.oscarehr.common.model.Document;
 import org.oscarehr.documentManager.EDocUtil.EDocSort;
 import oscar.util.ConversionUtils;
 
-public class DocumentMergeDemographicDaoImpl extends DocumentDaoImpl implements DocumentMergeDemographicDAO {
+public class DocumentMergeDemographicDAOImpl extends DocumentDaoImpl implements DocumentMergeDemographicDAO {
 
     @Override
     public List<Object[]> findDocuments(final String module, String moduleid, final String docType,
@@ -18,7 +18,7 @@ public class DocumentMergeDemographicDaoImpl extends DocumentDaoImpl implements 
         MergedDemographicTemplate<Object[]> template = new MergedDemographicTemplate<Object[]>() {
             @Override
             protected List<Object[]> findById(Integer demographic_no) {
-                return DocumentMergeDemographicDaoImpl.super.findDocuments(module, demographic_no.toString(), docType,
+                return DocumentMergeDemographicDAOImpl.super.findDocuments(module, demographic_no.toString(), docType,
                         includePublic, includeDeleted, includeActive, sort, since);
             }
         };
@@ -31,7 +31,7 @@ public class DocumentMergeDemographicDaoImpl extends DocumentDaoImpl implements 
         MergedDemographicTemplate<Document> template = new MergedDemographicTemplate<Document>() {
             @Override
             protected List<Document> findById(Integer demographic_no) {
-                return DocumentMergeDemographicDaoImpl.super.findByDemographicId(demographic_no.toString());
+                return DocumentMergeDemographicDAOImpl.super.findByDemographicId(demographic_no.toString());
             }
         };
         return template.findMerged(ConversionUtils.fromIntString(demoNo), result);
