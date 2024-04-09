@@ -196,27 +196,27 @@ String endDate = (String) request.getAttribute("endDate");
 
 			<input type="hidden" id="categoryHash" value="<%=categoryHash%>" />
                <div class="documentSummaryList">
-               	<c:if test="${ totalNumDocs gt 0}" >
+               	<c:if test="${ requestScope.totalNumDocs gt 0}" >
                		<details id="masterDocumentSummary" ${ param.providerNo gt 0 ? 'open' : ''}>    
                         <summary>
                         	<a id="totalAll" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_ALL);">
-                        		All (<span id="totalNumDocs"><c:out value="${totalNumDocs}" /></span>)
+                        		All (<span id="totalNumDocs"><c:out value="${requestScope.totalNumDocs}" /></span>)
                         	</a>
                         </summary>
                         <ul>
     
-						<c:if test="${ totalDocs gt 0 }">
+						<c:if test="${ requestScope.totalDocs gt 0 }">
 							<li>
 								<a id="totalDocs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_DOCUMENTS);"
-								   title="Documents">Documents (<span id="totalDocsNum"><c:out value="${totalDocs}" /></span>)
+								   title="Documents">Documents (<span id="totalDocsNum"><c:out value="${requestScope.totalDocs}" /></span>)
 							   </a>
 						   </li>
 					   </c:if>
 
-                     <c:if test="${ totalLabs  gt 0 }">
+                     <c:if test="${ requestScope.totalLabs  gt 0 }">
                        <li>
                             <a id="totalHL7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_HL7);" title="HL7">
-                           		HL7 (<span id="totalHL7Num"><c:out value="${totalLabs}" /></span>)
+                           		HL7 (<span id="totalHL7Num"><c:out value="${requestScope.totalLabs}" /></span>)
                            	</a>
                        </li>
 					</c:if>
@@ -236,27 +236,27 @@ String endDate = (String) request.getAttribute("endDate");
 					</details>
 				</c:if>	
 	
-				<c:if test="${ unmatchedDocs gt 0 or unmatchedLabs gt 0 }">	
+				<c:if test="${ requestScope.unmatchedDocs gt 0 or requestScope.unmatchedLabs gt 0 }">
 					<details class="unmatchedList" ${ param.providerNo eq 0 ? 'open' : '' }>
 						<summary>
        						<a id="patient0all" href="javascript:void(0);"  
        							onclick="un_bold(this);changeView(CATEGORY_PATIENT,0)" 
-       							title="Unmatched">Unmatched (<span id="patientNumDocs0"><c:out value="${unmatchedDocs+unmatchedLabs}" /></span>)
+       							title="Unmatched">Unmatched (<span id="patientNumDocs0"><c:out value="${requestScope.unmatchedDocs+requestScope.unmatchedLabs}" /></span>)
        						</a>
                     	</summary> 
                     		
                     		<ul id="labdoc0showSublist" >
-                    				<c:if test="${ unmatchedDocs gt 0}" >   
+                    				<c:if test="${ requestScope.unmatchedDocs gt 0}" >
 			                        		<li>
 			                        			<a id="patient0docs" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,0,CATEGORY_TYPE_DOC);" title="Documents">
-			                        				Documents (<span id="pDocNum_0"><c:out value="${unmatchedDocs}" /></span>)
+			                        				Documents (<span id="pDocNum_0"><c:out value="${requestScope.unmatchedDocs}" /></span>)
 			                       				</a>
 			                        		</li>
 			                        </c:if>
-			                        <c:if test="${ unmatchedLabs gt 0 }" >
+			                        <c:if test="${ requestScope.unmatchedLabs gt 0 }" >
 			                     			<li>
 			                     				<a id="patient0hl7s" href="javascript:void(0);" onclick="un_bold(this);changeView(CATEGORY_PATIENT_SUB,0,CATEGORY_TYPE_HL7);" title="HL7">
-			                     					HL7 (<span id="pLabNum_0"><c:out value="${unmatchedLabs}" /></span>)
+			                     					HL7 (<span id="pLabNum_0"><c:out value="${requestScope.unmatchedLabs}" /></span>)
 			                   					</a>
 			                        		</li>
 			                        </c:if>
