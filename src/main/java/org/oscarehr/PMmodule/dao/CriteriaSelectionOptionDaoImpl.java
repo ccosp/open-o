@@ -22,25 +22,33 @@
  * Ontario, Canada
  */
 
- package org.oscarehr.PMmodule.dao;
+package org.oscarehr.PMmodule.dao;
 
- import java.util.List;
- 
- import javax.persistence.Query;
- 
- import org.oscarehr.PMmodule.model.CriteriaType;
- import org.oscarehr.common.dao.AbstractDaoImpl;
- import org.oscarehr.common.dao.AbstractDao;
- import org.springframework.stereotype.Repository;
- 
- public interface CriteriaTypeDao extends AbstractDao<CriteriaType> {
+import java.util.List;
 
-     public List<CriteriaType> findAll();
- 
-     public CriteriaType findByName(String fieldName);
-     
-     public List<CriteriaType> getAllCriteriaTypes();
-     
-     public List<CriteriaType> getAllCriteriaTypesByWlProgramId(Integer wlProgramId);
- }
- 
+import javax.persistence.Query;
+
+import org.oscarehr.PMmodule.model.CriteriaSelectionOption;
+import org.oscarehr.common.dao.AbstractDaoImpl;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class CriteriaSelectionOptionDaoImpl extends AbstractDaoImpl<CriteriaSelectionOption> implements CriteriaSelectionOptionDao{
+
+	public CriteriaSelectionOptionDaoImpl() {
+		super(CriteriaSelectionOption.class);
+	}
+
+	public List<CriteriaSelectionOption> getCriteriaSelectedOptionsByCriteriaId(Integer criteriaId) {
+		Query query = entityManager.createQuery("select x from CriteriaSelectionOption x where x.criteriaId=?");
+		query.setParameter(1, criteriaId);
+		
+		@SuppressWarnings("unchecked")
+	    List<CriteriaSelectionOption> results = query.getResultList();
+		
+		return results;
+	}
+	
+
+}
+

@@ -22,54 +22,25 @@
  * Ontario, Canada
  */
 
-package org.oscarehr.PMmodule.dao;
+ package org.oscarehr.PMmodule.dao;
 
-import java.util.List;
+ import java.util.List;
+ 
+ import javax.persistence.Query;
+ 
+ import org.oscarehr.PMmodule.model.CriteriaTypeOption;
+ import org.oscarehr.common.dao.AbstractDaoImpl;
+ import org.oscarehr.common.dao.AbstractDao;
+ import org.springframework.stereotype.Repository;
+ 
+ public interface CriteriaTypeOptionDao extends AbstractDao<CriteriaTypeOption> {
 
-import javax.persistence.Query;
-
-import org.oscarehr.PMmodule.model.CriteriaTypeOption;
-import org.oscarehr.common.dao.AbstractDaoImpl;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class CriteriaTypeOptionDao extends AbstractDaoImpl<CriteriaTypeOption> {
-
-	public CriteriaTypeOptionDao() {
-		super(CriteriaTypeOption.class);
-	}
-
-	public List<CriteriaTypeOption> findAll() {
-		Query query = entityManager.createQuery("select x from CriteriaTypeOption x");
-		
-		@SuppressWarnings("unchecked")
-	    List<CriteriaTypeOption> results = query.getResultList();
-		
-		return results;
-	}
-	
-	public List<CriteriaTypeOption> getCriteriaTypeOptionByTypeId(Integer typeId) {
-		Query query = entityManager.createQuery("select x from CriteriaTypeOption x where x.criteriaTypeId=?");
-		query.setParameter(1, typeId);
-		
-		@SuppressWarnings("unchecked")
-	    List<CriteriaTypeOption> results = query.getResultList();
-		
-		return results;
-	}
-	
-	public CriteriaTypeOption getByValue(String optionValue) {
-		Query query = entityManager.createQuery("select x from CriteriaTypeOption x where x.optionValue=?");
-		query.setParameter(1, optionValue);
-		
-		return this.getSingleResultOrNull(query);
-	}
-	
-	public CriteriaTypeOption getByValueAndTypeId(String optionValue, Integer typeId) {
-		Query query = entityManager.createQuery("select x from CriteriaTypeOption x where x.optionValue=? and x.criteriaTypeId=?");
-		query.setParameter(1, optionValue);
-		query.setParameter(2, typeId);
-
-		return this.getSingleResultOrNull(query);
-	}
-}
+     public List<CriteriaTypeOption> findAll();
+     
+     public List<CriteriaTypeOption> getCriteriaTypeOptionByTypeId(Integer typeId);
+     
+     public CriteriaTypeOption getByValue(String optionValue);
+     
+     public CriteriaTypeOption getByValueAndTypeId(String optionValue, Integer typeId);
+ }
+ 

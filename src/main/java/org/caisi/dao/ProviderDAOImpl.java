@@ -20,28 +20,32 @@
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
  */
-package org.oscarehr.PMmodule.dao;
 
-import java.util.ArrayList;
+package org.caisi.dao;
+
 import java.util.List;
 
-import org.apache.logging.log4j.Logger;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.oscarehr.PMmodule.model.ProgramClientStatus;
-import org.oscarehr.common.model.Admission;
-import org.oscarehr.util.MiscUtils;
+import org.oscarehr.common.model.Provider;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.hibernate.SessionFactory;
 
-public interface ProgramClientStatusDAO{
-    public List<ProgramClientStatus> getProgramClientStatuses(Integer programId);
-    public void saveProgramClientStatus(ProgramClientStatus status);
+/**
+ * This couldn't possibly work, it's not a spring managed bean according to the xml files.
+ * But oh well, some one imports this class and tries to have it injected so I'll 
+ * leave the code here so it compiles. what ever...
+ */
+public class ProviderDAOImpl extends HibernateDaoSupport implements ProviderDAO{
 
-    public ProgramClientStatus getProgramClientStatus(String id);
+    @SuppressWarnings("unchecked")
+    public List<Provider> getProviders() {
+        return (List<Provider>) getHibernateTemplate().find("from Provider p order by p.lastName");
+    }
 
-    public void deleteProgramClientStatus(String id);
-    public boolean clientStatusNameExists(Integer programId, String statusName);
-    public List<Admission> getAllClientsInStatus(Integer programId, Integer statusId);
+    public Provider getProvider(String provider_no) {
+        return getHibernateTemplate().get(Provider.class, provider_no);
+    }
+
+    public Provider getProviderByName(String lastName, String firstName) {
+        return (Provider)getHibernateTemplate().find("from Provider p where p.first_name = ? and p.last_name = ?", new Object[] {firstName, lastName}).get(0);
+    }
+
 }
