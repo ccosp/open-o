@@ -29,14 +29,37 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.billing.CA.model.BillingDetail;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
-public interface BillingDetailDao extends AbstractDao<BillingDetail> {
+@Repository
+@SuppressWarnings("unchecked")
+public class BillingDetailDaoImpl extends AbstractDaoImpl<BillingDetail> implements BillingDetailDao {
 
-	public List<BillingDetail> findByBillingNo(int billingNo);
+    public BillingDetailDaoImpl() {
+        super(BillingDetail.class);
+    }
 
-	public List<BillingDetail> findByBillingNoAndStatus(Integer billingNo, String status);
+    @Override
+    public List<BillingDetail> findByBillingNo(int billingNo) {
+        Query q = entityManager.createQuery("select x from BillingDetail x where x.billingNo=?");
+        q.setParameter(1, billingNo);
+        List<BillingDetail> results = q.getResultList();
+        return results;
+    }
 
-	public List<BillingDetail> findByBillingNo(Integer billingNo);
+    @Override
+    public List<BillingDetail> findByBillingNoAndStatus(Integer billingNo, String status) {
+        Query query = createQuery("bd", "bd.billingNo = :billingNo AND bd.status = :status");
+        query.setParameter("billingNo", billingNo);
+        query.setParameter("status", status);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<BillingDetail> findByBillingNo(Integer billingNo) {
+        Query query = createQuery("bd", "bd.billingNo = :billingNo AND bd.status <> 'D' ORDER BY service_code");
+        query.setParameter("billingNo", billingNo);
+        return query.getResultList();
+    }
 }

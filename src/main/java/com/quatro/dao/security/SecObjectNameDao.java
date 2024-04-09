@@ -22,7 +22,6 @@
  * Ontario, Canada
  */
 
-
 package com.quatro.dao.security;
 
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -33,16 +32,6 @@ import com.quatro.model.security.Secobjectname;
  *
  * @author jackson
  */
-public class SecObjectNameDao extends HibernateDaoSupport{
-    	public void saveOrUpdate(Secobjectname t) {
-
-		try {
-
-			this.getHibernateTemplate().saveOrUpdate(t);
-
-		} catch (RuntimeException re) {
-
-			throw re;
-		}
-	}
+public interface SecObjectNameDao {
+	public void saveOrUpdate(Secobjectname t);
 }

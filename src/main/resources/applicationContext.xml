@@ -95,7 +95,7 @@
 	<bean id="allergyDao" class="org.oscarehr.common.dao.AllergyMergedDemographicDaoImpl" autowire="byName" />
 	
 	<bean id="IssueDAO" class="org.oscarehr.casemgmt.dao.IssueDAO" autowire="byName" />
-	<bean id="secroleDao" class="com.quatro.dao.security.SecroleDao" autowire="byName"/>
+	<bean id="secroleDao" class="com.quatro.dao.security.SecroleDaoImpl" autowire="byName"/>
 	<bean id="RoleProgramAccessDAO" class="org.oscarehr.casemgmt.dao.RoleProgramAccessDAOImpl" autowire="byName" />
 	<bean id="clientImageDAO" class="org.oscarehr.casemgmt.dao.ClientImageDAOImpl" autowire="byName" />
 	<bean id="programProviderDAO" class="org.oscarehr.PMmodule.dao.ProgramProviderDAOImpl" autowire="byName" />
@@ -126,9 +126,9 @@
 	<bean id="rourke2009Dao" class="org.oscarehr.common.dao.forms.Rourke2009DAO" autowire="byName" />
 	<bean id="ocanSubmissionLogDao" class="org.oscarehr.PMmodule.dao.OcanSubmissionLogDaoImpl" autowire="byName" />
 
-	<bean id="lookupDao" class="com.quatro.dao.LookupDao" autowire="byName" />
+	<bean id="lookupDao" class="com.quatro.dao.LookupDaoImpl" autowire="byName" />
 	<bean id="documentDao" class="org.oscarehr.common.dao.DocumentMergeDemographicDAOImpl" autowire="byName" />
-	<bean id="userAccessDao" class="com.quatro.dao.security.UserAccessDao" autowire="byName" />
+	<bean id="userAccessDao" class="com.quatro.dao.security.UserAccessDaoImpl" autowire="byName" />
 	<bean id="providerInboxRoutingDAO" class="org.oscarehr.common.dao.ProviderInboxRoutingDaoImpl" autowire="byName"/>
 	<bean id="ProviderLabRoutingFavoritesDao" class="org.oscarehr.common.dao.ProviderLabRoutingFavoritesDaoImpl" autowire="byName"/>
 
@@ -258,9 +258,9 @@
 	
 	<!-- Admin Start -->
 	<bean id="secobjprivilegeDao" class="com.quatro.dao.security.SecobjprivilegeDaoImpl" autowire="byName" />
-	<bean id="secProviderDao" class="com.quatro.dao.security.SecProviderDao" autowire="byName" />
+	<bean id="secProviderDao" class="com.quatro.dao.security.SecProviderDaoImpl" autowire="byName" />
 	<bean id="secuserroleDao" class="com.quatro.dao.security.SecuserroleDaoImpl" autowire="byName" />
-        <bean id="secObjectNameDao" class="com.quatro.dao.security.SecObjectNameDao" autowire="byName"/>
+        <bean id="secObjectNameDao" class="com.quatro.dao.security.SecObjectNameDaoImpl" autowire="byName"/>
 
 	<bean id="rolesManager" class="com.quatro.service.security.RolesManager" autowire="byName">
 		<property name="secroleDao" ref="secroleDao" />
