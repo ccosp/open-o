@@ -59,6 +59,7 @@
 
 	<!-- setup CXF -->
 	<import resource="classpath:spring_ws.xml" />
+	<context:component-scan base-package="org.oscarehr.common.dao" />
 	
 	<bean id="hl7HandlerMSHMappingDao" class="org.oscarehr.common.dao.HL7HandlerMSHMappingDaoImpl" autowire="byName" />
 	<!-- hibernated DAO -->
@@ -83,7 +84,10 @@
 	
 	
 	
-	<bean id="AppointmentArchiveDao" class="org.oscarehr.common.dao.AppointmentArchiveDaoImpl" autowire="byName" />
+	<bean id="appointmentArchiveDao" class="org.oscarehr.common.dao.AppointmentArchiveDaoImpl" autowire="byName" />
+	<bean id="appointmentTypeDao" class="org.oscarehr.common.dao.AppointmentTypeDaoImpl" autowire="byName" />
+	<bean id="billingONCHeader1Dao" class="org.oscarehr.common.dao.BillingONCHeader1DaoImpl" autowire="byName" />
+	
 	<bean id="DxDao" class="org.oscarehr.common.dao.DxDaoImpl" autowire="byName" />
 	<bean id="CasemgmtNoteLockDao" class="org.oscarehr.common.dao.CasemgmtNoteLockDaoImpl" autowire="byName" />
 	
@@ -223,7 +227,7 @@
 		<property name="eChartDao" ref="eChartDao"/>
 		<property name="encounterWindowDao" ref="encounterWindowDao"/>
 		
-		<property name="appointmentArchiveDao" ref="AppointmentArchiveDao" />
+		<property name="appointmentArchiveDao" ref="appointmentArchiveDao" />
 		<property name="dxDao" ref="DxDao" />
 	</bean>
 
