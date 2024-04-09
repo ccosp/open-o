@@ -104,7 +104,7 @@
 	<bean id="defaultRoleAccessDAO" class="org.oscarehr.PMmodule.dao.DefaultRoleAccessDAOImpl" autowire="byName" />
 	<bean id="programClientStatusDAO" class="org.oscarehr.PMmodule.dao.ProgramClientStatusDAOImpl" autowire="byName" />
 	<bean id="programTeamDAO" class="org.oscarehr.PMmodule.dao.ProgramTeamDAOImpl" autowire="byName" />
-	<bean id="bedProgramDao" class="org.caisi.dao.BedProgramDao" autowire="byName" />
+	<bean id="bedProgramDao" class="org.caisi.dao.BedProgramDaoImpl" autowire="byName" />
 	<bean id="demographicDao" class="org.oscarehr.common.dao.DemographicDaoImpl" autowire="byName" />
 	<bean id="secUserRoleDao" class="org.oscarehr.PMmodule.dao.SecUserRoleDaoImpl" autowire="byName" />
 	<bean id="programSignatureDao" class="org.oscarehr.PMmodule.dao.ProgramSignatureDaoImpl" autowire="byName" />
@@ -120,7 +120,7 @@
 	<bean id="BillingreferralDAO" class="org.oscarehr.common.dao.BillingreferralDaoImpl" autowire="byName" />
 	<bean id="DxresearchDAO" class="org.oscarehr.common.dao.DxresearchDAOImpl" autowire="byName" />
 	<bean id="Icd9DAO" class="org.oscarehr.common.dao.Icd9DaoImpl" autowire="byName" />
-	<bean id="defaultIssueDao" class="org.caisi.dao.DefaultIssueDao" autowire="byName" />
+	<bean id="defaultIssueDao" class="org.caisi.dao.DefaultIssueDaoImpl" autowire="byName" />
 	
     <bean id="MacroDAO" class="org.oscarehr.eyeform.dao.MacroDao" autowire="byName" />
 	<bean id="rourke2009Dao" class="org.oscarehr.common.dao.forms.Rourke2009DAO" autowire="byName" />
