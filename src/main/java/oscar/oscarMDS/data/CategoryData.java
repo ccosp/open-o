@@ -35,7 +35,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class CategoryData {
 
@@ -83,6 +86,15 @@ public class CategoryData {
 
 	public HashMap<Integer, PatientInfo> getPatients() {
 		return patients;
+	}
+
+	public List<PatientInfo> getPatientList() {
+		if(patients == null || patients.isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<PatientInfo> patientInfoList = new ArrayList<>(patients.values());
+		Collections.sort(patientInfoList);
+		return patientInfoList;
 	}
 
 	private String patientLastName;
@@ -349,7 +361,7 @@ public class CategoryData {
         	else {
         		info = new PatientInfo(id, rs.getString("first_name"), rs.getString("last_name"));
         		info.setLabCount(rs.getInt("count"));
-        		patients.put(info.id, info);
+        		patients.put(info.getId(), info);
         	}
         	count += info.getLabCount();
         }
@@ -403,7 +415,7 @@ public class CategoryData {
         while(rs.next()){
         	info = new PatientInfo(rs.getInt("demographic_no"), rs.getString("first_name"), rs.getString("last_name"));
         	info.setDocCount(rs.getInt("count"));
-        	patients.put(info.id, info);
+        	patients.put(info.getId(), info);
         	count += info.getDocCount();
         }
 
@@ -444,7 +456,7 @@ public class CategoryData {
 			else {
 				info = new PatientInfo(id, rs.getString("first_name"), rs.getString("last_name"));
 				info.setDocCount(hrmCount);
-				patients.put(info.id, info);
+				patients.put(info.getId(), info);
 			}
 
 			count += hrmCount;

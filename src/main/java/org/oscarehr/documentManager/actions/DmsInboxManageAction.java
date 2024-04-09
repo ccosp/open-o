@@ -54,7 +54,6 @@ import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.HRMResultsData;
 import oscar.oscarLab.ca.on.LabResultData;
 import oscar.oscarMDS.data.CategoryData;
-import oscar.oscarMDS.data.PatientInfo;
 import oscar.util.OscarRoleObjectPrivilege;
 
 import javax.servlet.http.HttpServletRequest;
@@ -232,21 +231,14 @@ public class DmsInboxManageAction extends DispatchAction {
 			request.setAttribute("patientFirstName", patientFirstName);
 			request.setAttribute("patientLastName", patientLastName);
 			request.setAttribute("patientHealthNumber", patientHealthNumber);
-			request.setAttribute("patients", new ArrayList<PatientInfo>(cData.getPatients().values()));
-			request.setAttribute("unmatchedDocs", cData.getUnmatchedDocs());
-			request.setAttribute("unmatchedLabs", cData.getUnmatchedLabs());
-			request.setAttribute("totalDocs", cData.getTotalDocs());
-			request.setAttribute("totalLabs", cData.getTotalLabs());
-			request.setAttribute("abnormalCount", cData.getAbnormalCount());
-			request.setAttribute("normalCount", cData.getNormalCount());
-			request.setAttribute("totalNumDocs", cData.getTotalNumDocs());
 			request.setAttribute("providerNo", providerNo);
 			request.setAttribute("searchProviderNo", searchProviderNo);
 			request.setAttribute("ackStatus", status);
 			request.setAttribute("abnormalStatus", abnormalStatus);
-			request.setAttribute("categoryHash", cData.getCategoryHash());
 			request.setAttribute("startDate", startDate);
 			request.setAttribute("endDate", endDate);
+			request.setAttribute("categoryData", cData);
+
 			return mapping.findForward("dms_index");
 		} catch (SQLException e) {
 			return mapping.findForward("error");
