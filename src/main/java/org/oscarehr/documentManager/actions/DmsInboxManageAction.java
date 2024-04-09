@@ -66,7 +66,7 @@ import java.util.*;
 
 public class DmsInboxManageAction extends DispatchAction {
 	
-	private static Logger logger=MiscUtils.getLogger();
+	private static final Logger logger = MiscUtils.getLogger();
 
 	private ProviderInboxRoutingDao providerInboxRoutingDAO = null;
 	private QueueDocumentLinkDao queueDocumentLinkDAO = null;
@@ -178,7 +178,7 @@ public class DmsInboxManageAction extends DispatchAction {
 
 		String providerNo = (String) session.getAttribute("user");
 		String searchProviderNo = request.getParameter("searchProviderNo");
-		Boolean searchAll = request.getParameter("searchProviderAll") != null;
+		boolean searchAll = request.getParameter("searchProviderAll") != null;
 		String status = request.getParameter("status");
 		List<String> abnormalStatusValues = Arrays.asList("all", "abnormalOnly", "normalOnly");
 		String abnormalStatus = request.getParameter("abnormalStatus");

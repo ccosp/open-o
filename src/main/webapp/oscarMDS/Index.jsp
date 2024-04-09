@@ -10,11 +10,11 @@
 --%>
 
 <%@ page import="oscar.oscarMDS.data.*,oscar.OscarProperties" %>
-<%@ page import="org.oscarehr.common.model.inbox.InboxResponse" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="oscar.oscarLab.ca.on.LabResultData" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.oscarehr.common.model.inbox.InboxItemDemographicCount" %>
+<%@ page import="org.oscarehr.common.model.inbox.InboxResponse" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar"%>
@@ -264,6 +264,7 @@ String endDate = (String) request.getAttribute("endDate");
 			                 </ul>
 			            </details>
 				</c:if>
+
 			<c:if test="${ not empty inboxResponse.inboxDemographicCounts }" >
 <%--				<% if(patients.size() > 0) { %>--%>
 
@@ -470,7 +471,7 @@ String endDate = (String) request.getAttribute("endDate");
 
 		function updateListView() {
 			var query = getQuery();
-
+console.log(query);
 			if (page == 1) {
 				document.getElementById("docViews").innerHTML = "";
 				canLoad = true;
