@@ -12371,7 +12371,8 @@ CREATE TABLE IF NOT EXISTS `Consent` (
   `optout_date` datetime,
   `edit_date` datetime,
   `deleted` tinyint(1),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `Consent_demographic_no_IDX` (`demographic_no`)
 );
 
 CREATE TABLE IF NOT EXISTS `consentType` (
