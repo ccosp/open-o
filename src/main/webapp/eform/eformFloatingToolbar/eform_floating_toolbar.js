@@ -1,27 +1,31 @@
 document.addEventListener("DOMContentLoaded", function(){
 		/**
+		 *  Enable Are-you-sure dirty page detection.
+		 */
+		jQuery("form:first").areYouSure();
+
+		/**
 		 * Trigger these functions every time this page loads.
 		 */
+		removeElements();
+		hideElements();
+		addNavElement();
+		moveSubjectReverse();
 
-			removeElements();
-			hideElements();
-			addNavElement();
-			moveSubjectReverse();
+		// Add eForm attachments
+		addEFormAttachments();
 
-			// Add eForm attachments 
-			addEFormAttachments();
-			
-			// Resize the window based on the toolbar width
-			window.resizeTo(1100,1100);
+		// Resize the window based on the toolbar width
+		window.resizeTo(1100,1100);
 
-			// If download EForm
-			const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";
-			if (isDownload && isDownload === "true") { downloadEForm(); }
+		// If download EForm
+		const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";
+		if (isDownload && isDownload === "true") { downloadEForm(); }
 
-			// Handle EForm errors
-			const error = document.getElementById("error") ? document.getElementById("error").value : "false";
-			const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
-			if (error === "true") { showError(errorMessage); }
+		// Handle EForm errors
+		const error = document.getElementById("error") ? document.getElementById("error").value : "false";
+		const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
+		if (error === "true") { showError(errorMessage); }
 
 	});
 
@@ -31,7 +35,9 @@ document.addEventListener("DOMContentLoaded", function(){
 			'E-forms are a community project managed by OSCAR BC; eForm collections are hosted on OSCAR Galaxy for download and import.\n\n' +
 			'Error Message:' + message);
 	}
-	
+
+
+
 	/**
 	 * Triggers the eForm save/submit function
 	 */
@@ -43,6 +49,18 @@ document.addEventListener("DOMContentLoaded", function(){
 		});
 
 		moveSubject();
+
+		if(typeof releaseDirtyFlag === "function")
+		{
+			console.log("Releasing dirty window flag by releaseDirtyFlag function")
+			window["releaseDirtyFlag"]();
+		}
+
+		// don't need the dirty form notification if the form is being autosaved.
+		if(isFormDirty()) {
+			jQuery("form:first").trigger('reinitialize.areYouSure');
+		}
+
 		if (typeof saveRTL === "function")
 		{
 			console.log("Saving RTL or RTL template");
@@ -50,8 +68,7 @@ document.addEventListener("DOMContentLoaded", function(){
 			document.RichTextLetter.submit();
 			return true;
 		} 
-		
-		
+
 		if (document.getElementsByName("SubmitButton") && document.getElementsByName("SubmitButton")[0])
 		{
 			console.log("Saving by remote click of the SubmitButton");
@@ -64,12 +81,6 @@ document.addEventListener("DOMContentLoaded", function(){
 			{
 				console.log(error);
 			}
-		}
-		
-		if(typeof releaseDirtyFlag === "function")
-		{
-			console.log("Releasing dirty window flag by releaseDirtyFlag function")
-			window["releaseDirtyFlag"]();
 		}
 		
 		if(typeof submission === "function")
@@ -99,8 +110,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		}
 
 		HideSpin();
-		return false;
 
+		return false;
 	}
 
 	/**
@@ -300,9 +311,8 @@ document.addEventListener("DOMContentLoaded", function(){
 				document.forms[0].appendChild(recipientNumberElement);
 			}
 		}
-			
+
 		remoteSave();
-	
 	}
 	
 	/**
@@ -364,11 +374,25 @@ document.addEventListener("DOMContentLoaded", function(){
 		 * Needs to be saved if this is
 		 * a new eForm or it has been altered.
 		 */
-		if(typeof needToConfirm !== 'undefined' && needToConfirm) {
+		if(isFormDirty()) {
 			console.log("eForm needs to be saved.")
 			remoteSave();
 		}
-	
+	}
+
+	/**
+	 *  detect if this form is dirty enough to be auto-saved.
+	 * @returns {boolean}
+	 */
+	function isFormDirty() {
+		// new forms are always dirty
+		const formElement = jQuery("#newForm");
+		if(formElement && formElement.val() === "true") {
+			return true;
+		}
+
+		// if the form has be edited added to.
+		return jQuery('form:first').hasClass('dirty');
 	}
 
 	function hailMary() {
@@ -401,8 +425,9 @@ document.addEventListener("DOMContentLoaded", function(){
 			newElement.setAttribute("type", "hidden");
 			document.forms[0].appendChild(newElement);
 		}
+
 		remoteSave();
-	
+
 	}
 	
 	/**
@@ -418,15 +443,15 @@ document.addEventListener("DOMContentLoaded", function(){
 	 * Should be done just before the save process. 
 	 */
 	function moveSubject() {
-		var remoteSubject = document.getElementById("remote_eform_subject");
-		var remoteSubjectValue;
+		let remoteSubject = document.getElementById("remote_eform_subject");
+		let remoteSubjectValue;
 		
 		if(remoteSubject)
 		{
 			remoteSubjectValue = remoteSubject.value;
 		}
 		
-		var localSubject = document.forms[0].elements["subject"];
+		let localSubject = document.forms[0].elements["subject"];
 		if(localSubject)
 		{
 			localSubject.value = remoteSubjectValue;
@@ -465,8 +490,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	 */
 	function closeToolbar() {
 	
-		var toolbarContainer = document.getElementById("eform_floating_toolbar");
-		var toolbarNav = document.getElementById("eform_floating_toolbar_nav");
+		let toolbarContainer = document.getElementById("eform_floating_toolbar");
+		let toolbarNav = document.getElementById("eform_floating_toolbar_nav");
 		if(toolbarContainer && toolbarNav) {
 			toolbarNav.style.display = "none";
 			
@@ -505,7 +530,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	 * eform to avoid any confusion on what fax system is being used. 
 	 */
 	function removeElements() {
-	    var element = document.getElementById("faxControl");
+	    let element = document.getElementById("faxControl");
 	    
 	    if(element)
 	    {
@@ -618,7 +643,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 				if (this.status === 200)
 				{
-					var toolbarWrapper = document.createElement("div");
+					let toolbarWrapper = document.createElement("div");
 					toolbarWrapper.setAttribute("id","toolbarWrapper");
 					toolbarWrapper.setAttribute("class","hidden-print DoNotPrint no-print");
 					toolbarWrapper.innerHTML = this.responseText;
@@ -652,7 +677,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		 */
 		let body = document.body;
 	    let html = document.documentElement;
-		var documentheight = Math.max( body.scrollHeight, body.offsetHeight, 
+		let documentheight = Math.max( body.scrollHeight, body.offsetHeight,
 		                       html.clientHeight, html.scrollHeight, html.offsetHeight );
 		
 		/*
@@ -665,8 +690,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		 * 65 pixels to the bottom so that the eForm clears the remote button 
 		 * panel
 		 */
-		var formelement = document.getElementsByTagName("form");
-		var spacer = document.createElement("div");
+		let formelement = document.getElementsByTagName("form");
+		let spacer = document.createElement("div");
 		spacer.setAttribute("id","eformPageSpacer");
 		spacer.setAttribute("class","hidden-print DoNotPrint no-print");
 		spacer.style.position = "absolute";
@@ -681,8 +706,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		/*
 		 * Place the new CSS style into the parent page. 
 		 */
-		var headelement = document.getElementsByTagName("head");
-		var style = document.createElement("link");
+		let headelement = document.getElementsByTagName("head");
+		let style = document.createElement("link");
 		style.setAttribute("rel", "stylesheet");
 		style.setAttribute("type", "text/css");
 		style.setAttribute("href", "../library/bootstrap/3.0.0/css/eform_floating_toolbar_bootstrap_custom.min.css");
