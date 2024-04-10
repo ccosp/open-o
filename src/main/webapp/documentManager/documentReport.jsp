@@ -305,8 +305,9 @@
 				var parentId = "<%=parentAjaxId%>";
 				var Url = window.opener.URLs;
 
-				if (update === "true" && !window.opener.closed)
+				if (update === "true" && !window.opener.closed) {
 					window.opener.popLeftColumn(Url[parentId], parentId, parentId);
+				}
 			}
 
 			jQuery(document).ready(function () {
@@ -364,13 +365,13 @@
 				ArrayList categoryKeys = new ArrayList();
 
 				MiscUtils.getLogger().debug("module=" + module + ", moduleid=" + moduleid + ", view=" + view + ", EDocUtil.PRIVATE=" + EDocUtil.PRIVATE + ", viewstatus=" + viewstatus);
-				ArrayList<EDoc> privatedocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PRIVATE, EDocUtil.EDocSort.CONTENTDATE, viewstatus);
+				ArrayList<EDoc> privatedocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PRIVATE, EDocUtil.EDocSort.OBSERVATIONDATE, viewstatus);
 				MiscUtils.getLogger().debug("privatedocs:" + privatedocs.size());
 
 				categories.add(privatedocs);
 				categoryKeys.add(moduleName + "'s Private Documents");
 				if (module.equals("provider")) {
-					ArrayList publicdocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PUBLIC, EDocUtil.EDocSort.CONTENTDATE, viewstatus);
+					ArrayList publicdocs = EDocUtil.listDocs(loggedInInfo, module, moduleid, view, EDocUtil.PUBLIC, EDocUtil.EDocSort.OBSERVATIONDATE, viewstatus);
 					categories.add(publicdocs);
 					categoryKeys.add("Public Documents");
 				}
@@ -448,14 +449,14 @@
 									       onclick="selectAll('pdfCheck<%=i%>','privateDocsDiv', 'tightCheckbox<%=i%>');"/>
 								</th>
 								<th>
+									<bean:message key="dms.documentReport.msgContent"/>
+								</th>
+								<th>
                                     <bean:message key="dms.documentReport.msgDocDesc"/>
                                 </th>
 								<th>
-									<bean:message key="dms.documentReport.msgContent"/>
-                                </th>
-								<th>
 									<bean:message key="dms.documentReport.msgType"/>
-                                </th>
+								</th>
 								<th>
                                     <bean:message key="dms.documentReport.msgCreator"/>
                                 </th>
@@ -463,11 +464,12 @@
 									<bean:message key="dms.documentReport.msgResponsible"/>
                                 </th>
 								<th>
+									<bean:message key="dms.documentReport.observationDate"/>
+								</th>
+								<th>
 									<bean:message key="dms.documentReport.msgDate"/>
                                 </th>
-								<th>
-									<bean:message key="dms.documentReport.msgReviewer"/>
-                                </th>
+
 								<th></th>
 							</tr>
 							</thead>
@@ -490,10 +492,10 @@
                                     }else {
                                         dStatus = "active";
                                     }
-									String reviewerName = curdoc.getReviewerName();
-									if (reviewerName.equals("")) {
-                                        reviewerName = "- - -";
-                                    }
+//									String reviewerName = curdoc.getReviewerName();
+//									if (reviewerName.equals("")) {
+//                                        reviewerName = "- - -";
+//                                    }
 							%>
 							    <tr>
 								<td>
@@ -502,6 +504,9 @@
                                            id="docNo<%=curdoc.getDocId()%>" value="<%=curdoc.getDocId()%>" style="margin: 0; padding: 0;"/>
 									<%}%>
 								</td>
+								    <td><%=curdoc.getType() == null ? "N/A" : Encode.forHtmlContent(curdoc.getType())%>
+								    </td>
+
 								<td>
 									<%
 										String url = "ManageDocument.do?method=display&doc_no=" + curdoc.getDocId() + "&providerNo=" + user_no + (curdoc.getRemoteFacilityId() != null ? "&remoteFacilityId=" + curdoc.getRemoteFacilityId() : "");
@@ -513,22 +518,22 @@
                                         <%=Encode.forHtml(curdoc.getDescription())%>
 								    </a>
                                 </td>
-								<td>
-									<div style="overflow:hidden; text-overflow: ellipsis;"
-									     title="<%=contentType%>" >
-                                        <%=Encode.forHtmlContent(contentType)%>
-									</div>
-								</td>
-								<td><%=curdoc.getType() == null ? "N/A" : Encode.forHtmlContent(curdoc.getType())%>
-								</td>
+								    <td>
+									    <div style="overflow:hidden; text-overflow: ellipsis;"
+									         title="<%=contentType%>" >
+										    <%=Encode.forHtmlContent(contentType)%>
+									    </div>
+								    </td>
+
 								<td><%=Encode.forHtml(curdoc.getCreatorName())%>
 								</td>
 								<td><%=Encode.forHtml(curdoc.getResponsibleName())%>
 								</td>
+								    <td><%=Encode.forHtml(curdoc.getObservationDate())%>
+								    </td>
 								<td><%=curdoc.getContentDateTime()%>
 								</td>
-								<td><%=Encode.forHtml(reviewerName)%>
-								</td>
+
 								<td style="text-align: right;">
 									<div style="white-space: nowrap;">
 										<%
