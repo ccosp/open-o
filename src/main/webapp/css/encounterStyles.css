@@ -719,6 +719,8 @@ div.demographicWrapper {
 	top:0;
 	left:0;
 	right:0;
+	background-color: inherit !important;
+	opacity: 100;
 }
 
 .menu br {
@@ -848,10 +850,6 @@ div.leftBox li a {
 
 div.leftBox li a img[src*="clear.gif"]{
 	display:none;
-}
-
-div.leftBox li span a span {
-	all: unset !important;
 }
 
 .view-links {
@@ -1182,8 +1180,10 @@ div.autocomplete ul li {
 	display: none;
 	z-index: 1;
 	width: 200px;
-	right: 100px;
-	bottom: 200px;
+	padding:5px;
+	border: thin solid #cccccc;
+	box-shadow: 1px 2px 4px 1px rgba(38,40,42,0.3);
+	border-radius: 4px;
 }
 
 .showEdContainer {
