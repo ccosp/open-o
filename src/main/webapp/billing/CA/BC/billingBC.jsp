@@ -348,8 +348,17 @@ if(!authed) {
 
     :root * {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, 'Glyphicons Halflings';
-        font-size: 12px;
+
         line-height: 1 !important;
+    }
+
+    :root *:not(h1,h2,h3) {
+        font-size: 12px;
+    }
+
+    table {
+        margin-bottom: unset !important;
+        width: 100%;
     }
 
     .btn {
@@ -357,186 +366,175 @@ if(!authed) {
         font-weight: normal;
         line-height: 1.428571429 !important;
     }
+    .container-fluid ul {
+        margin:0;
+        padding:0;
+    }
 
     div.tool-table {
-        display: block;
-        width: 100%;
-        vertical-align: middle;
         background-color: #fff;
-        /*border: 1px solid #ccc;*/
-        /*border-radius: 4px;*/
-        /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);*/
-        /*box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);*/
-        /*-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
-        /*transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
-	    margin-right: 3px;
     }
+
+    div.tool-table table tr td {
+        padding: unset;
+    }
+
+    td > div.tool-table div.input-group, td > div.tool-table .form-control,
+    td > div.tool-table div .form-control {
+        padding-bottom: 5px;
+
+    }
+
+    div.tool-table table tr td:nth-of-type(2) {
+        padding-left: 3px !important;
+    }
+
     table {
-	    margin-bottom: 5px !important;
-    }
-    div.tool-table:last-of-type {
-	    margin-right:0;
+        margin-bottom: unset !important;
     }
 
-	div#wcbForms p {
-		padding:0;
-		margin:0;
-	}
-	div#wcbForms table {
-		margin:0 0 5px 0;
-	}
-	div#wcbForms table th {
-		font-weight: normal;
-	}
-	div#wcbForms pre {
-		display:none;
-	}
-	div#wcbForms table tr td, div#wcbForms table tr th, div#wcbForms table{
-		border-color:#ddd;
-	}
 
-	table {
-		width: 100%;
-	}
-	
-	table.tool-bar tr td {
-		vertical-align: bottom;
-	}
-	
-	strong, label {
-		font-weight: normal !important;
-	}
-	
-	#billingPatientInfo {
-		margin-top: 5px;
-	}
-	
-	.wrapper {
-		margin: 0 10px 10px 10px;
-	}
-	
-	div#page-header {
-		position: sticky;
-		width: 100%;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 100000;
-	}
+    div.tool-table:last-of-type{
+        margin-right:3px;
+    }
 
-	table#oscarBillingHeader tr td {
-		padding: 1px 5px;
-		background-color: #F3F3F3;
-		vertical-align: middle;
-	}
-	
-	#oscarBillingHeader #oscarBillingHeaderLeftColumn {
-		width: 20% !important;
-		background-color: black;	
-		border-bottom: black 1px solid;
-		line-height: 1;
-		border-top: black 1px solid;
-        vertical-align: top;
-	}
-	
-	#oscarBillingHeader #oscarBillingHeaderLeftColumn h1 {
-		margin: 0px;
-		padding: 7px !important;
-		display: block;
-		font-size: large !important;
-		background-color: black;
-		color: white;
-		font-weight: bold;
-	}
+    div.tool-table:first-of-type{
+        margin-left:3px;
+    }
 
-	#oscarBillingHeader #oscarBillingHeaderCenterColumn {
-		border-bottom: 1px solid #ccc;
-	}
+    div#wcbForms p {
+        padding:0;
+        margin:0;
+    }
+    div#wcbForms table {
+        margin:0 0 5px 0;
+    }
+    div#wcbForms table th {
+        font-weight: normal;
+    }
+    div#wcbForms pre {
+        display:none;
+    }
+    div#wcbForms table tr td, div#wcbForms table tr th, div#wcbForms table{
+        border-color:#ddd;
+    }
 
-	
-	h3 {
-		font-size: small;
-		width: 100%;
-		border-top: red thin solid;
-		border-bottom: red thin solid;
-		margin: 0;
-		margin-top: 5px;
-		padding: 0;
-	}
-	h3 ul {
-		margin:0;
-	}
-	
-	table#billingFormTable table.tool-table tr td table {
-		background-color: whitesmoke;
-		margin: 4px 0;
-		border:#ccc thin solid;
-	}
-	
-	table#billingFormTable table.tool-table tr:nth-of-type(2) td table {
-		margin: 0 0 4px 0;
-	}
-	
-	table#billingFormTable table.tool-table {
-		background-color: whitesmoke;
-		margin-top: 5px;
-		border:#ccc thin solid;
-	}
+    table.tool-bar tr td {
+        vertical-align: bottom;
+    }
 
-	table#billingFormTable table.tool-table tr td table tr:first-of-type td {
-		padding-top:5px !important;
-	}
-	table#billingFormTable table.tool-table tr td table tr:last-of-type td {
-		padding-bottom:5px !important;
-	}
-	
-	.serviceCodesTable {
-		margin-bottom: 5px !important;
-	}
-	
-	.serviceCodesTable tr:nth-child(even) {
-		background: #f5f5f5
-	}
-	
-	.serviceCodesTable tr:nth-child(odd) {
-		background: #FFF
-	}
-	
-	#billingFormTable table tr td {
-		padding: 1px 5px !important;
-	}
-	
-	tr#buttonRow td {
-		padding-top: 15px !important;
-		padding-bottom: 15px !important;
-	}
-	
-	.ui-autocomplete {
-		max-height: 200px;
-		overflow-y: auto;
-		/* prevent horizontal scrollbar */
-		overflow-x: hidden;
-		width: 200px;
-	}
-	/* IE 6 doesn't support max-height
+    strong, label {
+        font-weight: normal !important;
+        padding:0 3px 0 0;
+    }
+
+    #billingPatientInfo {
+        margin-top: 5px;
+    }
+
+    .wrapper {
+        margin: auto 15px;
+    }
+
+    div#page-header {
+        position: sticky;
+        width: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100000;
+        border-bottom: 1px solid #ccc;
+        padding: 1px 5px;
+        background-color: #F3F3F3;
+        display:flex;
+        align-items: first baseline;
+        gap: 5px;
+    }
+
+    div#page-header h3 {
+        margin:0;
+    }
+
+    table#billingFormTable table.tool-table tr td table {
+        background-color: whitesmoke;
+        margin: 4px 0;
+        border:#ccc thin solid;
+    }
+
+    table#billingFormTable table.tool-table tr:nth-of-type(2) td table {
+        margin: 0 0 4px 0;
+    }
+
+    table#billingFormTable table.tool-table {
+        background-color: whitesmoke;
+        margin-top: 5px;
+        border:#ccc thin solid;
+    }
+
+    table#billingFormTable table.tool-table tr td table tr:first-of-type td {
+        padding-top:5px !important;
+    }
+    table#billingFormTable table.tool-table tr td table tr:last-of-type td {
+        padding-bottom:5px !important;
+    }
+
+    .serviceCodesTable {
+        display: block;
+        display: -webkit-inline-box;
+        display: -webkit-box;
+        margin-bottom: 5px !important;
+        border-radius: 4px;
+    }
+
+    .serviceCodesTable tr:nth-child(even) {
+        background: #f5f5f5
+    }
+
+    .serviceCodesTable tr:nth-child(odd) {
+        background: #FFF
+    }
+
+    #billingFormTable table tr td {
+        padding: 1px 5px !important;
+    }
+
+    tr#buttonRow td {
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+    }
+
+    .ui-autocomplete {
+        max-height: 200px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+        width: 200px;
+    }
+    /* IE 6 doesn't support max-height
 		   * we use height instead, but this forces the menu to always be this tall
 		   */
-	* html .ui-autocomplete {
-		height: 100px;
-	}
-	
-	table.table-borderless tr td, table.table-borderless tr th, table.table-borderless {
-	   	border: none;
-		border: 0;
-	}
-	.has-error {
-		background-color: #f2dede;
-	}
+    * html .ui-autocomplete {
+        height: 100px;
+    }
+
+    table.table-borderless tr td, table.table-borderless tr th, table.table-borderless {
+        border: none;
+        border: 0;
+    }
+    .has-error {
+        background-color: #f2dede;
+    }
 
     table#billingFormTable tr td{
         vertical-align: top;
     }
-	
+    .icon-container {
+        align-self: flex-start;
+        padding:3px 10px;
+    }
+
+
+
 </style>
 <script type="text/javascript" >
 
@@ -1203,65 +1201,49 @@ jQuery(document).ready(function(jQuery){
 </head>
 
 <body style="background-color:#FFFFFF;" onLoad="CheckType();correspondenceNote();">
-	<div id="page-header" >	
-		<table id="oscarBillingHeader" class="table-borderless">
-			<tr>
-				<td id="oscarBillingHeaderLeftColumn"><h1><bean:message key="billing.bc.title"/></h1></td>
+	<div id="page-header" >
+		<div class="icon-container">
+			<img alt="OSCAR EMR" src="${pageContext.servletContext.contextPath}/images/oscar_logo_small.png" width="19px">
+		</div>
+		<h3><bean:message key="billing.bc.title"/></h3>
+		<span class="badge badge-primary"><bean:message key="billing.patient"/></span>
+        <label class="label-text" ><%=Encode.forHtmlContent(demo.getLastName())%>, <%=Encode.forHtmlContent(demo.getFirstName())%></label>
 
-				<td id="oscarBillingHeaderCenterColumn">				
-					<span class="badge badge-primary"><bean:message key="billing.patient"/></span>
-	                <label class="label-text" ><%=Encode.forHtmlContent(demo.getLastName())%>, <%=Encode.forHtmlContent(demo.getFirstName())%></label>
-	            	
-	            	<span class="badge badge-primary"><bean:message key="billing.patient.age"/></span>  
-	            	<label class="label-text"><%=demo.getAge()%></label>
+        <span class="badge badge-primary"><bean:message key="billing.patient.age"/></span>
+        <label class="label-text"><%=demo.getAge()%></label>
 
 <%-- 	Keep until confirmed not needed.
 
-					<span class="badge badge-primary"><bean:message key="billing.patient.status"/></span> 
-					<strong class="label-text"><%=demo.getPatientStatus()%></label>
-	
-              <span class="badge badge-primary"><bean:message key="billing.patient.roster"/></span> 
-	                <label><%=demo.getRosterStatus()%></label> 
---%>	         
-	                <span class="badge badge-primary" title="Most Responsible Provider"><bean:message key="billing.provider.assignedProvider"/></span>
-	                <label class="label-text">
-		                <c:choose>
-		                	<c:when test="<%= demo.getProviderNo() != null && ! demo.getProviderNo().trim().isEmpty() %>">
-		                		<%=billform.getProviderName(demo.getProviderNo())%> 
-		                	</c:when>
-		                	<c:otherwise>
-		                		Unknown
-		                	</c:otherwise>
-		                </c:choose>
-	                </label>
+		<span class="badge badge-primary"><bean:message key="billing.patient.status"/></span>
+		<strong class="label-text"><%=demo.getPatientStatus()%></label>
 
-					<security:oscarSec roleName="<%=roleName$%>" objectName="_eChart" rights="x" >
-		                <button type="button" class="btn btn-link" title="View this patient's Electronic Chart" onclick="popup(710, 1024,'${pageContext.servletContext.contextPath}/oscarEncounter/IncomingEncounter.do?providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&appointmentNo=&demographicNo=<%=demo.getDemographicNo()%>&curProviderNo=<%=loggedInInfo.getLoggedInProviderNo()%>&reason=&encType=face+to+face+encounter+with+client&userName=&curDate=<%= new Date().toString() %>&appointmentDate=&startTime=&status=&apptProvider_no=&providerview=<%=loggedInInfo.getLoggedInProviderNo()%>','encounter', 12556);return false;">
-							<bean:message key="billing.patient.encounter" />
-						</button>	
-					</security:oscarSec>
-					
-	                <button type="button" class="btn btn-link" title="View previous invoices for this patient" onclick="popup(800, 1000, 'billStatus.jsp?lastName=<%=demo.getLastName()%>&firstName=<%=demo.getFirstName()%>&filterPatient=true&demographicNo=<%=demo.getDemographicNo()%>','InvoiceList');return false;">
-						<bean:message key="demographic.demographiceditdemographic.msgInvoiceList"/>
-					</button>
-					
-<%--					<button type="button" class="btn btn-link" title="Set a default Billing Physician to use when a physician is not pre-selected" onclick="setDefaultProvider()">--%>
-<%--						<bean:message key="billing.provider.defaultProvider"/>--%>
-<%--					</button>				--%>
-				</td>
-<%--				<td id="oscarBillingHeaderRightColumn" align=right>--%>
-<%--					<span class="HelpAboutLogout"> --%>
-<%--						<a style="font-size: 10px; font-style: normal;" href="${ ctx }oscarEncounter/About.jsp" target="_new">About</a>--%>
-<%--						<a style="font-size: 10px; font-style: normal;" target="_blank"--%>
-<%--									href="http://www.oscarmanual.org/search?SearchableText=&Title=Chart+Interface&portal_type%3Alist=Document">Help</a>		--%>
-<%--					</span>--%>
-<%--				</td>--%>
-			</tr>
-		</table>
+  <span class="badge badge-primary"><bean:message key="billing.patient.roster"/></span>
+        <label><%=demo.getRosterStatus()%></label>
+--%>	         
+        <span class="badge badge-primary" title="Most Responsible Provider"><bean:message key="billing.provider.assignedProvider"/></span>
+        <label class="label-text">
+            <c:choose>
+                <c:when test="<%= demo.getProviderNo() != null && ! demo.getProviderNo().trim().isEmpty() %>">
+                    <%=billform.getProviderName(demo.getProviderNo())%>
+                </c:when>
+                <c:otherwise>
+                    Unknown
+                </c:otherwise>
+            </c:choose>
+        </label>
+
+		<security:oscarSec roleName="<%=roleName$%>" objectName="_eChart" rights="x" >
+            <button type="button" class="btn btn-link" title="View this patient's Electronic Chart" onclick="popup(710, 1024,'${pageContext.servletContext.contextPath}/oscarEncounter/IncomingEncounter.do?providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&appointmentNo=&demographicNo=<%=demo.getDemographicNo()%>&curProviderNo=<%=loggedInInfo.getLoggedInProviderNo()%>&reason=&encType=face+to+face+encounter+with+client&userName=&curDate=<%= new Date().toString() %>&appointmentDate=&startTime=&status=&apptProvider_no=&providerview=<%=loggedInInfo.getLoggedInProviderNo()%>','encounter', 12556);return false;">
+				<bean:message key="billing.patient.encounter" />
+			</button>
+		</security:oscarSec>
+
+        <button type="button" class="btn btn-link" title="View previous invoices for this patient" onclick="popup(800, 1000, 'billStatus.jsp?lastName=<%=demo.getLastName()%>&firstName=<%=demo.getFirstName()%>&filterPatient=true&demographicNo=<%=demo.getDemographicNo()%>','InvoiceList');return false;">
+			<bean:message key="demographic.demographiceditdemographic.msgInvoiceList"/>
+		</button>
+
 	</div>
 <div class="wrapper">
-
-
 
 <div class="container-fluid">
 <html:errors/>
@@ -1355,7 +1337,6 @@ if(wcbneeds != null){%>
         <table class="tool-bar" id="billingPatientInfo">
           <tr>
           	<td>
-
 	          	<div class="form-group" > 
 			      
 			        <label for="selectBillingForm" ><bean:message key="billing.billingform"/></label>
@@ -1664,7 +1645,8 @@ if(wcbneeds != null){%>
 
 </td>
 </tr>
-<td style="display:flex;">
+	  <tr>
+<td style="display:flex;gap:3px;">
 
 	<div class="tool-table table-responsive" style="width:100%;flex-basis: 25%;">
 	<table class="table table-condensed table-borderless"><tr><td>
@@ -1912,7 +1894,7 @@ if(wcbneeds != null){%>
 								</c:when>
 								<c:otherwise>
 									<input type="hidden" id="codingSystem" value="msp" />
-									<bean:message key="billing.diagnostic.code"/>
+									<label><bean:message key="billing.diagnostic.code"/></label>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -2041,8 +2023,8 @@ if(wcbneeds != null){%>
 <div id="billingFormTableWrapper">
         <table id="billingFormTable">
           <tr>
-            <td style="width:32%; padding-right:5px;" >
-              <table class="table table-condensed table-bordered serviceCodesTable" >
+            <td style="width:33%;" >
+              <table class="table table-condensed serviceCodesTable" >
                 <tr style="background-color:#CCCCFF;">
                   <td width="25%">
                     <div align="left">
@@ -2086,8 +2068,8 @@ if(wcbneeds != null){%>
 
               
             </td>
-            <td valign="top" style="width:32%; padding-right:5px;">
-              <table class="table table-condensed table-bordered serviceCodesTable">
+            <td valign="top" style="width:33%;">
+              <table class="table table-condensed serviceCodesTable">
                 <tr style="background-color:#CCCCFF;">
                   <td width="21%">
                         <label>
@@ -2123,8 +2105,8 @@ if(wcbneeds != null){%>
               </table>
              <!-- former tool table -->
             </td>
-            <td valign="top" style="width:32%;" >
-              <table class="table table-condensed table-bordered serviceCodesTable">
+            <td valign="top" style="width:33%;" >
+              <table class="table table-condensed serviceCodesTable">
                 <tr style="background-color:#CCCCFF;">
                   <td width="25%" align="left" valign="middle">
                         <label><%=group3Header%></label>
