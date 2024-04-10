@@ -13128,3 +13128,43 @@ CREATE TABLE IF NOT EXISTS billing_preferences (
   defaultPayeeNo varchar(11) NOT NULL default '0',
   PRIMARY KEY  (id)
 ) ;
+
+CREATE TABLE IF NOT EXISTS emailConfig (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    emailType VARCHAR(20),
+    emailProvider VARCHAR(20),
+    active BOOLEAN,
+    senderFirstName VARCHAR(50),
+    senderLastName VARCHAR(50),
+    senderEmail VARCHAR(255),
+    configDetails VARCHAR(1000)
+);
+CREATE TABLE IF NOT EXISTS emailLog (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    configId BIGINT,
+    fromEmail VARCHAR(255),
+    toEmail VARCHAR(255),
+    subject VARCHAR(1024),
+    body BLOB,
+    status VARCHAR(20),
+    errorMessage VARCHAR(1000),
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    encryptedMessage BLOB,
+    password VARCHAR(50),
+    passwordClue VARCHAR(1024),
+    isEncrypted BOOLEAN,
+    isAttachmentEncrypted BOOLEAN,
+    chartDisplayOption VARCHAR(20),
+    transactionType VARCHAR(20),
+    demographicNo INT,
+    FOREIGN KEY (configId) REFERENCES emailConfig (id)
+);
+CREATE TABLE IF NOT EXISTS emailAttachment (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    logId BIGINT,
+    fileName VARCHAR(100),
+    filePath VARCHAR(500),
+    documentType VARCHAR(20),
+    documentId INT,
+    FOREIGN KEY (logId) REFERENCES emailLog (id)
+);
