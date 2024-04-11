@@ -334,21 +334,6 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
         var savedNoteId=0;
    </script>
 
-<script type="text/javascript" src=" ${ctx}/jspspellcheck/spellcheck-caller.js" ></script>
-<script>
-	function spellCheck()
-    {
-		// Build an array of form elements (not there values)
-        var elements = new Array(0);
-
-        // Your form elements that you want to have spell checked
-        elements[elements.length] = document.getElementById(caseNote);
-
-        // Start the spell checker
-        startSpellCheck(ctx + '\/jspspellcheck\/', elements);
-	}
-</script>
-
 <!-- set size of window if customized in preferences -->
 <%
 	UserPropertyDAO uPropDao = SpringUtils.getBean(UserPropertyDAO.class);
@@ -799,8 +784,7 @@ if (OscarProperties.getInstance().getBooleanProperty("note_program_ui_enabled", 
 %>
 		</form>
 	</div>
-<%--</div>--%>
-<div id="encounterModal" ></div>
+	<div id="encounterModal" ></div>
 <%
     String apptNo = request.getParameter("appointmentNo");
     if( OscarProperties.getInstance().getProperty("resident_review", "false").equalsIgnoreCase("true") && 
