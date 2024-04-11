@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import oscar.dao.OscarSuperDao;
+
 public class OscarSuperManagerImpl implements OscarSuperManager {
 
     private Map<String, OscarSuperDao> oscarDaoMap = new TreeMap<String, OscarSuperDao>();

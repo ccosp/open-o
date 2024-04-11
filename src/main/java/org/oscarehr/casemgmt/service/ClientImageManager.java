@@ -1,6 +1,8 @@
 package org.oscarehr.casemgmt.service;
 
+import org.oscarehr.casemgmt.dao.ClientImageDAO;
 import org.oscarehr.casemgmt.model.ClientImage;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ClientImageManager {
     void setClientImageDAO(ClientImageDAO dao);

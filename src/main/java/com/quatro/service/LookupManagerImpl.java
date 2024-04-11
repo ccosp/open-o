@@ -1,4 +1,4 @@
-package com.quatro.service.impl;
+package com.quatro.service;
 
 import java.sql.SQLException;
 import java.util.List;

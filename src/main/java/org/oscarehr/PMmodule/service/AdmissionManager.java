@@ -1,16 +1,37 @@
 package org.oscarehr.PMmodule.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.oscarehr.PMmodule.dao.ClientReferralDAO;
+import org.oscarehr.PMmodule.dao.ProgramClientStatusDAO;
+import org.oscarehr.PMmodule.dao.ProgramDao;
+import org.oscarehr.PMmodule.dao.ProgramQueueDao;
+import org.oscarehr.PMmodule.dao.VacancyDao;
 import org.oscarehr.PMmodule.exception.AdmissionException;
 import org.oscarehr.PMmodule.exception.AlreadyAdmittedException;
 import org.oscarehr.PMmodule.exception.ProgramFullException;
 import org.oscarehr.PMmodule.exception.ServiceRestrictionException;
-import org.oscarehr.PMmodule.model.Admission;
 import org.oscarehr.PMmodule.model.AdmissionSearchBean;
+import org.oscarehr.PMmodule.model.ClientReferral;
 import org.oscarehr.PMmodule.model.Program;
+import org.oscarehr.PMmodule.model.ProgramClientRestriction;
+import org.oscarehr.PMmodule.model.ProgramQueue;
+import org.oscarehr.PMmodule.model.Vacancy;
+import org.oscarehr.common.dao.AdmissionDao;
+import org.oscarehr.common.model.Admission;
+import org.oscarehr.common.model.BedDemographic;
 import org.oscarehr.common.model.JointAdmission;
+import org.oscarehr.common.model.RoomDemographic;
+import org.oscarehr.managers.BedManager;
+import org.oscarehr.managers.BedDemographicManager;
+import org.oscarehr.managers.RoomManager;
+import org.oscarehr.managers.RoomDemographicManager;
 import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.SpringUtils;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface AdmissionManager {
 
@@ -32,8 +53,10 @@ public interface AdmissionManager {
     void saveAdmission(Admission admission);
     void processAdmission(Integer demographicNo, String providerNo, Program program, String dischargeNotes, String admissionNotes) throws ProgramFullException, AdmissionException, ServiceRestrictionException;
     void processAdmission(Integer demographicNo, String providerNo, Program program, String dischargeNotes, String admissionNotes, boolean tempAdmission) throws ProgramFullException, AdmissionException, ServiceRestrictionException;
+    void processAdmission(Integer demographicNo, String providerNo, Program program, String dischargeNotes, String admissionNotes, boolean tempAdmission,List<Integer> dependents) throws ProgramFullException, AdmissionException, ServiceRestrictionException;
     void processAdmission(Integer demographicNo, String providerNo, Program program, String dischargeNotes, String admissionNotes, boolean tempAdmission, boolean overrideRestriction) throws ProgramFullException, AdmissionException, ServiceRestrictionException;
     void processAdmission(Integer demographicNo, String providerNo, Program program, String dischargeNotes, String admissionNotes, Date admissionDate) throws ProgramFullException, AdmissionException, ServiceRestrictionException;
+    void processAdmission(Integer demographicNo, String providerNo, Program program, String dischargeNotes, String admissionNotes, boolean tempAdmission,List<Integer> dependents, Date admissionDate) throws ProgramFullException, AdmissionException, ServiceRestrictionException;    
     void processAdmission(Integer demographicNo, String providerNo, Program program, String dischargeNotes, String admissionNotes, boolean tempAdmission, Date admissionDate, boolean overrideRestriction, List<Integer> dependents) throws ProgramFullException, AdmissionException, ServiceRestrictionException;
     void processInitialAdmission(Integer demographicNo, String providerNo, Program program, String admissionNotes, Date admissionDate) throws ProgramFullException, AlreadyAdmittedException, ServiceRestrictionException;
     Admission getTemporaryAdmission(Integer demographicNo);
