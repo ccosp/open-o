@@ -38,59 +38,19 @@ import org.springframework.stereotype.Service;
 
 import oscar.log.LogAction;
 
-@Service
-public class ProgramManager2 {
-	
-	@Autowired
-	private ProgramDao programDao;
+public interface ProgramManager2 {
 
-	@Autowired
-	private ProgramProviderDAO programProviderDAO;
-	
-	@Autowired
-	private ProviderDefaultProgramDao providerDefaultProgramDao;
-	
+	public Program getProgram(LoggedInInfo loggedInInfo, Integer programId);
 
-	public Program getProgram(LoggedInInfo loggedInInfo, Integer programId) {
-		return programDao.getProgram(programId);
-	}
+	public List<Program> getAllPrograms(LoggedInInfo loggedInInfo);
 
+	public List<ProgramProvider> getAllProgramProviders(LoggedInInfo loggedInInfo);
 
-	public List<Program> getAllPrograms(LoggedInInfo loggedInInfo) {
-		return programDao.findAll();
-	}
+	public List<ProgramProvider> getProgramDomain(LoggedInInfo loggedInInfo, String providerNo);
 
-	public List<ProgramProvider> getAllProgramProviders(LoggedInInfo loggedInInfo) {
-		return programProviderDAO.getAllProgramProviders();
-	}
-	
-	public List<ProgramProvider> getProgramDomain(LoggedInInfo loggedInInfo, String providerNo) {
-		return programProviderDAO.getProgramProvidersByProvider(providerNo);
-	}
-	
-	public ProgramProvider getCurrentProgramInDomain(LoggedInInfo loggedInInfo) {
-		return getCurrentProgramInDomain(loggedInInfo, loggedInInfo.getLoggedInProviderNo());
-	}
-	
-	public ProgramProvider getCurrentProgramInDomain(LoggedInInfo loggedInInfo, String providerNo) {
-		ProgramProvider result = null;
-		int defProgramId = 0;
-        List<ProviderDefaultProgram> rs = providerDefaultProgramDao.getProgramByProviderNo(providerNo);
-        if(!rs.isEmpty()) {
-    	   defProgramId = rs.get(0).getProgramId();
-    	   if(defProgramId >0) {
-    		   result =  programProviderDAO.getProgramProvider(providerNo, Long.valueOf(defProgramId));
-    	   }
-        }
-        return (result);
-	}
-	
-	public void setCurrentProgramInDomain(String providerNo, Integer programId) {
+	public ProgramProvider getCurrentProgramInDomain(LoggedInInfo loggedInInfo);
 
-		if(programProviderDAO.getProgramProvider(providerNo, programId.longValue()) != null) {
-			providerDefaultProgramDao.setDefaultProgram(providerNo, programId);
-		} else {
-			throw new RuntimeException("Program not in user's domain");
-		}
-	}
+	public ProgramProvider getCurrentProgramInDomain(LoggedInInfo loggedInInfo, String providerNo);
+
+	public void setCurrentProgramInDomain(String providerNo, Integer programId);
 }

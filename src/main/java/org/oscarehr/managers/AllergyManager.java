@@ -39,85 +39,22 @@ import org.springframework.stereotype.Service;
 
 import oscar.log.LogAction;
 
-@Service
-public class AllergyManager {
-	@Autowired
-	private AllergyDao allergyDao;
-	
-	@Autowired
-	private PatientConsentManager patientConsentManager;
+public interface AllergyManager {
 
+	public Allergy getAllergy(LoggedInInfo loggedInInfo, Integer id);
 
-	public Allergy getAllergy(LoggedInInfo loggedInInfo, Integer id) {
-		Allergy result = allergyDao.find(id);
+	public List<Allergy> getActiveAllergies(LoggedInInfo loggedInInfo, Integer demographicNo);
 
-		//--- log action ---
-		if (result != null) {
-			LogAction.addLogSynchronous(loggedInInfo, "AllergyManager.getAllergy", "id=" + id);
-		}
+	public List<Allergy> getUpdatedAfterDate(LoggedInInfo loggedInInfo, Date updatedAfterThisDateInclusive,
+			int itemsToReturn);
 
-		return (result);
-	}
-	
-	public List<Allergy> getActiveAllergies(LoggedInInfo loggedInInfo, Integer demographicNo) {
-		List<Allergy> results = allergyDao.findActiveAllergiesOrderByDescription(demographicNo);
-		
-		//--- log action ---
-		if (results!=null && results.size()>0) {
-			LogAction.addLogSynchronous(loggedInInfo, "AllergyManager.getActiveAllergies", "demographicNo=" + demographicNo);
-		}
+	public List<Allergy> getByDemographicIdUpdatedAfterDate(LoggedInInfo loggedInInfo, Integer demographicId,
+			Date updatedAfterThisDate);
 
-		return(results);
-	}
-	
-	public List<Allergy> getUpdatedAfterDate(LoggedInInfo loggedInInfo, Date updatedAfterThisDateInclusive, int itemsToReturn) {
-		List<Allergy> results = allergyDao.findByUpdateDate(updatedAfterThisDateInclusive, itemsToReturn);
-		patientConsentManager.filterProviderSpecificConsent(loggedInInfo, results);
-		LogAction.addLogSynchronous(loggedInInfo, "AllergyManager.getUpdatedAfterDate", "updatedAfterThisDateInclusive=" + updatedAfterThisDateInclusive);
+	public List<Allergy> getAllergiesByProgramProviderDemographicDate(LoggedInInfo loggedInInfo, Integer programId,
+			String providerNo, Integer demographicId, Calendar updatedAfterThisDateInclusive, int itemsToReturn);
 
-		return (results);
-	}
-	
-	public List<Allergy> getByDemographicIdUpdatedAfterDate(LoggedInInfo loggedInInfo, Integer demographicId, Date updatedAfterThisDate) {
-		List<Allergy> results = new ArrayList<Allergy>();
-		ConsentType consentType = patientConsentManager.getProviderSpecificConsent(loggedInInfo);
-		if (patientConsentManager.hasPatientConsented(demographicId, consentType)) {
-			results = allergyDao.findByDemographicIdUpdatedAfterDate(demographicId, updatedAfterThisDate);
-			LogAction.addLogSynchronous(loggedInInfo, "AllergyManager.getByDemographicIdUpdatedAfterDate", "demographicId="+demographicId+" updatedAfterThisDate="+updatedAfterThisDate);
-		}
-		return (results);
-	}
+	public void createAllergies(List<Allergy> allergies);
 
-	/**
-	 * At this time, not all criteria maybe available in oscar but the method signature is what is "should" be
-	 * and hopefully can be refactored as data becomes available.
-	 */
-	public List<Allergy> getAllergiesByProgramProviderDemographicDate(LoggedInInfo loggedInInfo, Integer programId, String providerNo, Integer demographicId, Calendar updatedAfterThisDateInclusive, int itemsToReturn) {
-		List<Allergy> results = allergyDao.findByProviderDemographicLastUpdateDate(providerNo, demographicId, updatedAfterThisDateInclusive.getTime(), itemsToReturn);
-
-		LogAction.addLogSynchronous(loggedInInfo, "AllergyManager.getUpdatedAfterDate", "programId=" + programId + ", providerNo=" + providerNo + ", demographicId=" + demographicId + ", updatedAfterThisDateInclusive=" + updatedAfterThisDateInclusive.getTime());
-
-		return (results);
-	}
-
-	public void createAllergies(List<Allergy> allergies){
-		List<AbstractModel<?>> toPersist = new ArrayList<>();
-		for(Allergy allergy : allergies){
-			allergy.setId(null);
-			toPersist.add(allergy);
-		}
-		allergyDao.batchPersist(toPersist);
-	}
-	public void saveAllergies(List<Allergy> allergies){
-		List<AbstractModel<?>> toPersist = new ArrayList<>();
-		for(Allergy allergy : allergies){
-			if(allergy.getId() == null){
-				toPersist.add(allergy);
-			}
-			else{
-				allergyDao.merge(allergy);
-			}
-		}
-		allergyDao.batchPersist(toPersist);
-	}
+	public void saveAllergies(List<Allergy> allergies);
 }
