@@ -23,45 +23,34 @@
  */
 package org.oscarehr.managers;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.AbstractDaoImpl;
-import org.oscarehr.common.dao.OscarJobDao;
-import org.oscarehr.common.dao.OscarJobTypeDao;
-import org.oscarehr.common.jobs.OscarJobUtils;
-import org.oscarehr.common.model.OscarJob;
-import org.oscarehr.common.model.OscarJobType;
+import org.oscarehr.common.dao.DemographicSetsDao;
+import org.oscarehr.common.model.DemographicSets;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import oscar.log.LogAction;
+@Service
+public class DemographicSetsManagerImpl implements DemographicSetsManager {
 
-public interface OscarJobManager{
-
+	@Autowired
+	DemographicSetsDao demographicSetsDao;
 	
-	public void saveJob(LoggedInInfo loggedInInfo, OscarJob oscarJob);
 	
-	public void updateJob(LoggedInInfo loggedInInfo, OscarJob oscarJob);
+	public List<DemographicSets> getAllDemographicSets(LoggedInInfo loggedInInfo, int offset, int itemsToReturn) {
+		
+		List<DemographicSets> results = demographicSetsDao.findAll(offset, itemsToReturn);
+		
+		return (results);
+	}
 	
-	/*
-	 * Make sure it's a valid class, and that it implements OscarRunnable
-	 */
-	public List<OscarJobType> getCurrentlyAvaliableJobTypes();
+	public List<String> getNames(LoggedInInfo loggedInInfo) {
+		
+		return (demographicSetsDao.findSetNames());
+	}
 	
-	public List<OscarJobType> getAllJobTypes();
-	
-	public List<OscarJob> getAllJobs(LoggedInInfo loggedInInfo);
-	public List<OscarJob> getJobByName(LoggedInInfo loggedInInfo,String name);
-	
-	public OscarJob getJob(LoggedInInfo loggedInInfo, Integer id);
-	public OscarJobType addIfNotLoaded(LoggedInInfo loggedInInfo,OscarJobType jobType);
-	
-	public OscarJobType getJobType(LoggedInInfo loggedInInfo, Integer id);
-	
-	public void saveJobType(LoggedInInfo loggedInInfo, OscarJobType oscarJob);
-	public void updateJobType(LoggedInInfo loggedInInfo, OscarJobType oscarJob);
-	
+	public List<DemographicSets> getByName(LoggedInInfo loggedInInfo, String setName) {
+		return (demographicSetsDao.findBySetName(setName));
+	}
 }

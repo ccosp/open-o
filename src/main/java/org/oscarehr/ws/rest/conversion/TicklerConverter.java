@@ -45,7 +45,7 @@ import org.springframework.stereotype.Component;
 
 //this isn't working - not being injected
 @Component
-public class TicklerConverter extends AbstractConverter<Tickler, TicklerTo1> {
+public class TicklerConverter extends AbstractConverter<Tickler, TicklerTo1>{
 	
 	private boolean includeLinks;
 	private boolean includeComments;
