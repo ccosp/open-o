@@ -206,7 +206,7 @@
 	<bean id="programQueueManager" class="org.oscarehr.PMmodule.service.ProgramQueueManagerImpl" autowire="byName" />
 	<bean id="admissionManager" class="org.oscarehr.PMmodule.service.AdmissionManagerImpl" autowire="byType" />
 	
-	<bean id="caseManagementManager" class="org.oscarehr.casemgmt.service.CaseManagementManager" autowire="byName">
+	<bean id="caseManagementManager" class="org.oscarehr.casemgmt.service.CaseManagementManagerImpl" autowire="byName">
 		<property name="caseManagementNoteDAO" ref="CaseManagementNoteDAO" />
 		<property name="caseManagementNoteExtDAO" ref="CaseManagementNoteExtDAO" />
 		<property name="caseManagementNoteLinkDAO" ref="CaseManagementNoteLinkDAO" />
@@ -280,6 +280,61 @@
 	<bean id="FormBCAR2020Dao" class="org.oscarehr.common.dao.forms.FormBCAR2020Dao" autowire="byName"/>
 	<bean id="FormBCAR2020DataDao" class="org.oscarehr.common.dao.forms.FormBCAR2020DataDao" autowire="byName"/>
 	<bean id="FormBCAR2020TextDao" class="org.oscarehr.common.dao.forms.FormBCAR2020TextDao" autowire="byName"/>
+
+	<!--<bean id="preventionMgr" class="org.oscarehr.managers.PreventionManagerImpl"></bean>-->
+	<bean id="allergyManager" class="org.oscarehr.managers.AllergyManagerImpl"></bean>
+	<bean id="programManager2" class="org.oscarehr.managers.ProgramManager2Impl"></bean>
+	<bean id="measurementManager" class="org.oscarehr.managers.MeasurementManagerImpl"></bean>
+	<bean id="prescriptionManager" class="org.oscarehr.managers.PrescriptionManagerImpl"></bean>
+	<bean id="formsManager" class="org.oscarehr.managers.FormsManagerImpl"></bean>
+	<bean id="drugDispensingManager" class="org.oscarehr.managers.DrugDispensingManagerImpl"></bean>
+	<bean id="drugProductManager" class="org.oscarehr.managers.DrugProductManagerImpl"></bean>
+	<bean id="rxManager" class="org.oscarehr.managers.RxManagerImpl"></bean>
+	<bean id="drugConverter" class="org.oscarehr.ws.rest.conversion.DrugConverterImpl"></bean>
+	<bean id="prescriptionConverter" class="org.oscarehr.ws.rest.conversion.PrescriptionConverterImpl"></bean>
+	<bean id="favoriteConverter" class="org.oscarehr.ws.rest.conversion.FavoriteConverterImpl"></bean>
+	<bean id="consultationManager" class="org.oscarehr.managers.ConsultationManagerImpl"></bean>
+	<bean id="demographicManager" class="org.oscarehr.managers.DemographicManagerImpl"></bean>
+	<bean id="appManager" class="org.oscarehr.managers.AppManagerImpl"></bean>
+	<bean id="billingManager" class="org.oscarehr.managers.BillingManagerImpl"></bean>
+	<!--<bean id="admissionManager" class="org.oscarehr.PMmodule.service.AdmissionManagerImpl"></bean> -->
+	<bean id="drugLookUp" class="org.oscarehr.managers.DrugLookUpImpl"></bean>
+	<bean id="documentManager" class="org.oscarehr.managers.DocumentManagerImpl"></bean>
+	<bean id="scheduleManager" class="org.oscarehr.managers.ScheduleManagerImpl"></bean>
+	<bean id="appointmentManager" class="org.oscarehr.managers.AppointmentManagerImpl"></bean>
+	<!--<bean id="providerManager" class="org.oscarehr.PMmodule.service.ProviderManagerImpl"></bean>-->
+	<bean id="preferenceManager" class="org.oscarehr.managers.PreferenceManagerImpl"></bean>
+	<bean id="demographicSetsManager" class="org.oscarehr.managers.DemographicSetsManagerImpl"></bean>
+	<bean id="eFormReportToolManager" class="org.oscarehr.managers.EFormReportToolManagerImpl"></bean>
+	<bean id="oscarJobManager" class="org.oscarehr.managers.OscarJobManagerImpl"></bean>
+	<bean id="ticklerManager" class="org.oscarehr.managers.TicklerManagerImpl"></bean>
+	<bean id="ticklerConverter" class="org.oscarehr.ws.rest.conversion.TicklerConverterImpl"></bean>
+<bean id="dSService" class="org.oscarehr.decisionSupport.service.DSServiceImpl"></bean>
+<bean id="noteService" class="org.oscarehr.casemgmt.service.NoteServiceImpl"></bean>
+<!--<bean id="programManager" class="org.oscarehr.PMmodule.service.ProgramManagerImpl"></bean>-->
+<bean id="messagingManager" class="org.oscarehr.managers.MessagingManagerImpl"></bean>
+<bean id="dashboardManager" class="org.oscarehr.managers.DashboardManagerImpl"></bean>
+<bean id="oscarLogManager" class="org.oscarehr.managers.OscarLogManagerImpl"></bean>
+<bean id="patientConsentManager" class="org.oscarehr.managers.PatientConsentManagerImpl"></bean>
+<bean id="messagingConverter" class="org.oscarehr.ws.rest.conversion.MessagingConverterImpl"></bean>
+<bean id="labManager" class="org.oscarehr.managers.LabManagerImpl"></bean>
+<bean id="inboxManager" class="org.oscarehr.managers.InboxManagerImpl"></bean>
+<bean id="appointmentSearchManager" class="org.oscarehr.managers.AppointmentSearchManagerImpl"></bean>
+<bean id="facilityManager" class="org.oscarehr.managers.FacilityManagerImpl"></bean>
+<bean id="vacancyTemplateManager" class="org.oscarehr.PMmodule.service.VacancyTemplateManagerImpl"></bean>
+<bean id="eformDataManager" class="org.oscarehr.managers.EformDataManagerImpl"></bean>
+<bean id="nioFileManager" class="org.oscarehr.managers.NioFileManagerImpl"></bean>
+<bean id="preventionDS" class="oscar.oscarPrevention.PreventionDSImpl"></bean>
+<bean id="integratorProgressDao" class="org.oscarehr.common.dao.IntegratorProgressDaoImpl"></bean>
+<bean id="messengerDemographicManager" class="org.oscarehr.managers.MessengerDemographicManagerImpl"></bean>
+<bean id="roomDemographicManager" class="org.oscarehr.managers.RoomDemographicManagerImpl"></bean>
+<bean id="documentAttachmentManager" class="org.oscarehr.documentManager.DocumentAttachmentManagerImpl"></bean>
+<bean id="faxDocumentManager" class="org.oscarehr.managers.FaxDocumentManagerImpl"></bean>
+<bean id="bedDemographicManager" class="org.oscarehr.managers.BedDemographicManagerImpl"></bean>
+
+
+
+
 
 
 	<!--Email Support -->
