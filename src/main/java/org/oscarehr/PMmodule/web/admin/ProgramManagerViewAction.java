@@ -60,6 +60,7 @@ import org.oscarehr.PMmodule.service.ClientRestrictionManager;
 import org.oscarehr.PMmodule.service.ProgramManager;
 import org.oscarehr.PMmodule.service.ProgramQueueManager;
 import org.oscarehr.PMmodule.service.VacancyTemplateManager;
+import org.oscarehr.PMmodule.service.VacancyTemplateManagerImpl;
 import org.oscarehr.PMmodule.web.formbean.ProgramManagerViewFormBean;
 import org.oscarehr.caisi_integrator.ws.ReferralWs;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
@@ -377,10 +378,10 @@ public class ProgramManagerViewAction extends DispatchAction {
 			admissionManager.processAdmission(Integer.valueOf(clientId), loggedInInfo.getLoggedInProviderNo(), fullProgram, dischargeNotes, admissionNotes, queue.isTemporaryAdmission(), dependents, admissionDate);
 			
 			//change vacancy status to filled after one patient is admitted to associated program in that vacancy.
-	    	Vacancy vacancy = VacancyTemplateManager.getVacancyByName(queue.getVacancyName());
+	    	Vacancy vacancy = VacancyTemplateManagerImpl.getVacancyByName(queue.getVacancyName());
 	    	if(vacancy!=null) {
 	    		vacancy.setStatus("Filled");	    	
-	    		VacancyTemplateManager.saveVacancy(vacancy);
+	    		VacancyTemplateManagerImpl.saveVacancy(vacancy);
 	    	}
 	    	
 			ActionMessages messages = new ActionMessages();

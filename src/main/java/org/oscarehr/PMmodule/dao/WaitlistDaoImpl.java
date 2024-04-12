@@ -39,6 +39,7 @@ import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.Vacancy;
 import org.oscarehr.PMmodule.service.VacancyTemplateManager;
+import org.oscarehr.PMmodule.service.VacancyTemplateManagerImpl;
 import org.oscarehr.PMmodule.wlmatch.CriteriaBO;
 import org.oscarehr.PMmodule.wlmatch.CriteriasBO;
 import org.oscarehr.PMmodule.wlmatch.MatchBO;
@@ -563,7 +564,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
     @Override
     public VacancyData loadVacancyData(final int vacancyId) {
         VacancyData vacancyData = new VacancyData();
-        Vacancy vacancy = VacancyTemplateManager.getVacancyById(vacancyId);
+        Vacancy vacancy = VacancyTemplateManagerImpl.getVacancyById(vacancyId);
         if (vacancy == null) {
             return vacancyData;
         }
@@ -613,7 +614,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
     @Override
     public VacancyData loadVacancyData(final int vacancyId, final int wlProgramId) {
         VacancyData vacancyData = new VacancyData();
-        Vacancy vacancy = VacancyTemplateManager.getVacancyById(vacancyId);
+        Vacancy vacancy = VacancyTemplateManagerImpl.getVacancyById(vacancyId);
         if (vacancy == null) {
             return vacancyData;
         }
