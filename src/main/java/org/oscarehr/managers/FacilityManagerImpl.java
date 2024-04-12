@@ -4,7 +4,7 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * of the License, or (at your option) any later version. 
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,40 +21,43 @@
  * Hamilton
  * Ontario, Canada
  */
+
 package org.oscarehr.managers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.Hl7TextInfoDao;
-import org.oscarehr.common.dao.Hl7TextMessageDao;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.model.Hl7TextInfo;
-import org.oscarehr.common.model.Hl7TextMessage;
-import org.oscarehr.common.model.PatientLabRouting;
+import org.oscarehr.common.dao.FacilityDao;
+import org.oscarehr.common.model.Facility;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lowagie.text.DocumentException;
-
 import oscar.log.LogAction;
-import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import oscar.util.StringUtils;
 
+@Service
+public class FacilityManagerImpl implements FacilityManager{
+	@Autowired
+	private FacilityDao facilityDao;
 
-public interface LabManager{
-	public List<Hl7TextMessage> getHl7Messages(LoggedInInfo loggedInInfo, Integer demographicNo, int offset, int limit);
-	public List<Hl7TextInfo> getHl7TextInfo(LoggedInInfo loggedInInfo, int demographicNo);
-	
-	public Hl7TextMessage getHl7Message(LoggedInInfo loggedInInfo, int labId);
+	public Facility getDefaultFacility(LoggedInInfo loggedInInfo) {
+		List<Facility> results = facilityDao.findAll(true);
+		if (results.size() == 0) {
+			return (null);
+		} else {
 
-	public Path renderLab(LoggedInInfo loggedInInfo, Integer segmentId) throws PDFGenerationException;
+			//--- log action ---
+			LogAction.addLogSynchronous(loggedInInfo,"FacilityManager.getDefaultFacility", null);
+
+			return (results.get(0));
+		}
+	}
+
+	public List<Facility> getAllFacilities(LoggedInInfo loggedInInfo, Boolean active) {
+		List<Facility> results = facilityDao.findAll(active);
+		
+		//--- log action ---
+		LogAction.addLogSynchronous(loggedInInfo,"FacilityManager.getAllFacilities", null);
+
+		return (results);
+	}
 }
