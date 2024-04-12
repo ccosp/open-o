@@ -31,26 +31,10 @@ import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class DemographicSetsManager {
+public interface DemographicSetsManager {
 
-	@Autowired
-	DemographicSetsDao demographicSetsDao;
 	
-	
-	public List<DemographicSets> getAllDemographicSets(LoggedInInfo loggedInInfo, int offset, int itemsToReturn) {
-		
-		List<DemographicSets> results = demographicSetsDao.findAll(offset, itemsToReturn);
-		
-		return (results);
-	}
-	
-	public List<String> getNames(LoggedInInfo loggedInInfo) {
-		
-		return (demographicSetsDao.findSetNames());
-	}
-	
-	public List<DemographicSets> getByName(LoggedInInfo loggedInInfo, String setName) {
-		return (demographicSetsDao.findBySetName(setName));
-	}
+	public List<DemographicSets> getAllDemographicSets(LoggedInInfo loggedInInfo, int offset, int itemsToReturn);
+	public List<String> getNames(LoggedInInfo loggedInInfo);
+	public List<DemographicSets> getByName(LoggedInInfo loggedInInfo, String setName);
 }
