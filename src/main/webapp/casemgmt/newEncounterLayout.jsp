@@ -65,6 +65,14 @@
 	</title>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	scope="request" />
 <link rel="stylesheet" href="<c:out value="${ctx}"/>/css/encounterStyles.css" type="text/css">
+
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/library/jquery/jquery-ui-1.12.1.min.css" />
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/css/oscarRx.css" />">
+	<!-- calendar stylesheet -->
+	<link rel="stylesheet" type="text/css" media="all" href="<c:out value="${ctx}"/>/share/calendar/calendar.css" title="win2k-cold-1">
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger.css"/>
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.css"/>
+	<link rel="stylesheet" href="<c:out value="${ctx}"/>/css/encounterStyles.css" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/css/print.css" media="print">
 
  <script type="text/javascript" src="<c:out value="${ctx}/js/jquery-1.7.1.min.js"/>"></script>
@@ -78,17 +86,11 @@
 
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/messenger/messenger.js"> </script>
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.js"> </script>
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger.css"/>
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.css"/>
-	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/library/jquery/jquery-ui-1.12.1.min.css" />
 <script type="text/javascript" src="newEncounterLayout.js.jsp"> </script>
 	
 <%-- for popup menu of forms --%>
 <script src="<c:out value="${ctx}"/>/share/javascript/popupmenu.js" type="text/javascript"></script>
 <script src="<c:out value="${ctx}"/>/share/javascript/menutility.js" type="text/javascript"></script>
-
-<!-- calendar stylesheet -->
-<link rel="stylesheet" type="text/css" media="all" href="<c:out value="${ctx}"/>/share/calendar/calendar.css" title="win2k-cold-1">
 
 <!-- main calendar program -->
 <script type="text/javascript" src="<c:out value="${ctx}"/>/share/calendar/calendar.js"></script>
@@ -104,9 +106,6 @@
 
 <!-- scriptaculous based select box -->
 <script type="text/javascript" src="<c:out value="${ctx}/share/javascript/select.js"/>"></script>
-
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/css/oscarRx.css" />">
-
 
 <script type="text/javascript">
 var Colour = {
@@ -488,7 +487,7 @@ window.onbeforeunload = onClosing;
 				name="value" class="boxsizingBorder"></textarea>
 			<br>
 
-			<table style="text-align: left; width:100%;">
+			<table>
 				<tr id="Itemproblemdescription">
 					<td><bean:message
 							key="oscarEncounter.problemdescription.title" />:</td>
