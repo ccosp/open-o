@@ -625,7 +625,45 @@ try
 
 </nested:form>
 
+<script type="text/javascript">
 
+
+	/**
+	 * enable autocomplete for Issue search menus.
+	 * I don't know why Javascript is scattered all over either. Sorry.
+	 */
+	jQuery(".issueAutocomplete").autocomplete({
+		source:function( request, response ) {
+			jQuery.ajax( {
+				url: ctx + "/CaseManagementEntry.do",
+				dataType: "json",
+				data: {
+					term: request.term,
+					method: "issueList",
+					demographicNo: demographicNo,
+					providerNo: providerNo
+				},
+				success: function( data ) {
+					response(jQuery.map( data, function(item) {
+						return {
+							label: item.description.trim() + ' (' + item.code + ')',
+							value: item.description.trim(),
+							id: item.id
+						};
+					}))
+				}
+			} );
+		},
+		delay: 100,
+		minLength: 3,
+		select: function( event, ui ) {
+			// <input type="hidden" name="newIssueId" id="newIssueId"/>
+			// <input type="hidden" name="newIssueName" id="newIssueName"/>
+			document.getElementById("newIssueId").value = ui.item.id;
+			document.getElementById("newIssueName").value = ui.item.value;
+		}
+	})
+</script>
 
 <%
 }

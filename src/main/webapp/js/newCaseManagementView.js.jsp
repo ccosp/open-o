@@ -2005,8 +2005,8 @@ function editNote(e) {
 
 
     //AutoCompleter for Issues
-    var issueURL = ctx + "/CaseManagementEntry.do?method=issueList&demographicNo=" + demographicNo + "&providerNo=" + providerNo;
-	issueAutoCompleter = new Ajax.Autocompleter("issueAutocomplete", "issueAutocompleteList", issueURL, {minChars: 4, indicator: 'busy', afterUpdateElement: saveIssueId, onShow: autoCompleteShowMenu, onHide: autoCompleteHideMenu});
+    <%--var issueURL = ctx + "/CaseManagementEntry.do?method=issueList&demographicNo=" + demographicNo + "&providerNo=" + providerNo;--%>
+	<%--issueAutoCompleter = new Ajax.Autocompleter("issueAutocomplete", "issueAutocompleteList", issueURL, {minChars: 4, indicator: 'busy', afterUpdateElement: saveIssueId, onShow: autoCompleteShowMenu, onHide: autoCompleteHideMenu});--%>
 
     //if note is already signed, remove save button to force edits to be signed
     var sign = "signed" + nId;
@@ -2073,7 +2073,7 @@ function showHideIssues(e, issueType) {
 				
 	Event.stop(e);
 	//Element.toggle('noteIssues');
-	if(issueType=="hide" || issueType=="")
+	if(issueType==="hide" || issueType==="")
 		showIssue = false;
 	else
 		showIssue = true;
@@ -2623,27 +2623,6 @@ function savePage(method, chain) {
     		   }
     		 );
 
-
-    /*var frm = document.forms["caseManagementViewForm"];
-    var url = ctx + "/CaseManagementView.do";
-    var objAjax = new Ajax.Request (
-                    url,
-                    {
-                        method: 'post',
-                        postBody: Form.serialize(frm),
-                        onSuccess: function(request) {
-                            tmpSaveNeeded = false;
-                            caseMgtEntryfrm.submit();
-                        },
-                        onFailure: function(request) {
-                            if( request.status == 403 )
-                                alert(sessionExpiredError);
-                            else
-                                alert(request.status + " " + savingNoteError);
-                        }
-                     }
-                   );
-*/
     return false;
 }
 
@@ -2769,13 +2748,12 @@ function updateIssues(e) {
 	var args = $A(arguments);
     args.shift();
 
-
-    if( $("newIssueId").value.length == 0 || $("issueAutocomplete").value != $("newIssueName").value )
+    if( $("newIssueId").value.length === 0 || $("issueAutocomplete").value !== $("newIssueName").value )
         alert(pickIssueMsg);
     else
         ajaxUpdateIssues(args[0], args[1]);
 
-    if( $F("asgnIssues") != assignIssueMsg ) {
+    if( $F("asgnIssues") !== assignIssueMsg ) {
         $("asgnIssues").value= assignIssueMsg;
         Element.stopObserving('asgnIssues', 'click', changeIssueFunc);
         Element.observe('asgnIssues', 'click', addIssueFunc);
@@ -2814,10 +2792,10 @@ function onIssueUpdate() {
 
 function submitIssue(event) {
     var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-    if (keyCode == 13 ) {
-        if( submitIssues)
-            $("asgnIssues").click();
-
+    if (keyCode === 13 ) {
+        if( submitIssues) {
+	        $("asgnIssues").click();
+        }
         return false;
     }
 }
@@ -2920,8 +2898,8 @@ function newNote(e) {
         Element.observe('asgnIssues', 'click', addIssueFunc);
 
         //AutoCompleter for Issues
-        var issueURL = "/CaseManagementEntry.do?method=issueList&demographicNo=" + demographicNo + "&providerNo=" + providerNo;
-        issueAutoCompleter = new Ajax.Autocompleter("issueAutocomplete", "issueAutocompleteList", issueURL, {minChars: 4, indicator: 'busy', afterUpdateElement: saveIssueId, onShow: autoCompleteShowMenu, onHide: autoCompleteHideMenu});
+        <%--var issueURL = "/CaseManagementEntry.do?method=issueList&demographicNo=" + demographicNo + "&providerNo=" + providerNo;--%>
+        <%--let issueAutoCompleter = new Ajax.Autocompleter("issueAutocomplete", "issueAutocompleteList", issueURL, {minChars: 4, indicator: 'busy', afterUpdateElement: saveIssueId, onShow: autoCompleteShowMenu, onHide: autoCompleteHideMenu});--%>
 
         //hide new note button
         //$("newNoteImg").hide();

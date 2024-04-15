@@ -67,7 +67,8 @@
 <link rel="stylesheet" href="<c:out value="${ctx}"/>/css/encounterStyles.css" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/css/print.css" media="print">
 
- <script src="<c:out value="${ctx}/js/jquery-1.7.1.min.js"/>"></script>
+ <script type="text/javascript" src="<c:out value="${ctx}/js/jquery-1.7.1.min.js"/>"></script>
+	<script type="text/javascript" src="<c:out value="${ctx}/library/jquery/jquery-ui-1.12.1.min.js" />"></script>
 <script type="text/javascript">
      jQuery.noConflict();
 </script>
@@ -79,7 +80,7 @@
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.js"> </script>
 <link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger.css"/>
 <link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.css"/>
-
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/library/jquery/jquery-ui-1.12.1.min.css" />
 <script type="text/javascript" src="newEncounterLayout.js.jsp"> </script>
 	
 <%-- for popup menu of forms --%>
@@ -417,6 +418,7 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
         month[10] = "<bean:message key="share.CalendarPopUp.msgNov"/>";
         month[11] = "<bean:message key="share.CalendarPopUp.msgDec"/>";
 
+
 jQuery(window).on("load", function() {
 
 	viewFullChart(false);
@@ -424,11 +426,6 @@ jQuery(window).on("load", function() {
 
     var navBars = new navBarLoader();
     navBars.load();
-
-    // monitorNavBars(null);
-
-    // Element.observe(window, "resize", monitorNavBars);
-
     Calendar.setup({ inputField : "printStartDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printStartDate_cal", singleClick : true, step : 1 });
     Calendar.setup({ inputField : "printEndDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printEndDate_cal", singleClick : true, step : 1 });
 
@@ -438,7 +435,10 @@ jQuery(window).on("load", function() {
         <c:param name="providerNo" value="${providerNo}" />
         <c:param name="all" value="true" />
     </c:url>
-    var issueAutoCompleterCPP = new Ajax.Autocompleter("issueAutocompleteCPP", "issueAutocompleteListCPP", "<c:out value="${issueURLCPP}" />", {minChars: 3, indicator: 'busy2', afterUpdateElement: addIssue2CPP, onShow: autoCompleteShowMenuCPP, onHide: autoCompleteHideMenuCPP});    
+
+    <%--var issueAutoCompleterCPP = new Ajax.Autocompleter("issueAutocompleteCPP", "issueAutocompleteListCPP",--%>
+	<%--    "<c:out value="${issueURLCPP}" />", {minChars: 3, indicator: 'busy2', afterUpdateElement: addIssue2CPP,--%>
+	<%--	    onShow: autoCompleteShowMenuCPP, onHide: autoCompleteHideMenuCPP});--%>
     
     <nested:notEmpty name="DateError">
         alert("<nested:write name="DateError"/>");
@@ -460,8 +460,6 @@ window.onbeforeunload = onClosing;
 <div id="header" >
 	<tiles:insert attribute="header" />
 </div>
-
-<%--<div id="newEncounterLayoutWrapper">--%>
 
 	<div id="navigation-layout" >
 		<div id="rightNavBar">
@@ -609,14 +607,14 @@ window.onbeforeunload = onClosing;
 				<label for="position">
 			<bean:message key="oscarEncounter.Index.btnPosition" />
 				</label>
-			<select id="position" name="position"><option id="popt0"
-					value="0">1</option>
+			<select id="position" name="position">
+				<option id="popt0" value="0">1</option>
 			</select>
 			</div>
 			<div id="issueNoteInfo"></div>
 			<div id="issueListCPP"
 				style="background-color: #FFFFFF; height: 200px; width: 350px; position: absolute; z-index: 1; display: none; overflow: auto;">
-				<div class="enTemplate_name_auto_complete"
+				<div class="enTemplate_name_auto_complete issueAutocompleteList"
 					id="issueAutocompleteListCPP"
 					style="position: relative; left: 0; display: none;"></div>
 			</div>
@@ -624,7 +622,7 @@ window.onbeforeunload = onClosing;
 			<label for="issueAutocompleteCPP">
 			<bean:message key="oscarEncounter.Index.assnIssue" />
 			</label>
-			&nbsp;<input tabindex="100" type="text" id="issueAutocompleteCPP"
+			&nbsp;<input tabindex="100" type="text" id="issueAutocompleteCPP" class="issueAutocomplete"
 				name="issueSearch" style="z-index: 2;" size="25">&nbsp; <span
 				id="busy2" style="display: none"><img
 				style="position: absolute;"
@@ -846,7 +844,7 @@ if (OscarProperties.getInstance().getBooleanProperty("note_program_ui_enabled", 
                             <tr>
                                 <td colspan="2">
                                     <input id="submitResident" value="Continue" name="submitResident" type="submit" onclick="return subResident();"/>
-                                    <input id="submitResident" value="Return to Chart" name="submitResident" type="submit" onclick="return cancelResident();"/>                                
+                                    <input id="submitResidentReturn" value="Return to Chart" name="submitResident" type="submit" onclick="return cancelResident();"/>
                                 </td>                                
                             </tr>
                         </table>
