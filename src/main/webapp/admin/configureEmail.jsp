@@ -54,6 +54,29 @@ if(!authed) {
                </code>
             </dd>
          </dl>
+         <p>Sample API configuration data:</p>
+         <dl class="row">
+            <dt class="col-sm-3">emailType:</dt>
+            <dd class="col-sm-9">API</dd>
+            <dt class="col-sm-3">emailProvider:</dt>
+            <dd class="col-sm-9">SENDGRID</dd>
+            <dt class="col-sm-3">active:</dt>
+            <dd class="col-sm-9">1</dd>
+            <dt class="col-sm-3">senderFirstName:</dt>					
+            <dd class="col-sm-9">Test</dd>
+            <dt class="col-sm-3">senderLastName:</dt>
+            <dd class="col-sm-9">Clinic</dd>
+            <dt class="col-sm-3">senderEmail:</dt>
+            <dd class="col-sm-9">do.not.email@test.clinic</dd>
+            <dt class="col-sm-3">configDetails:</dt>
+            <dd class="col-sm-9">
+               <code>
+               {
+               "api_key": "1234512345123451234512345123451234512345"               
+               }
+               </code>
+            </dd>
+         </dl>
       </div>
    </div>
 </div>
