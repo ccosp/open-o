@@ -401,7 +401,7 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 			        </div>
 				    <textarea tabindex="7" cols="84" rows="10" class="txtArea boxsizingBorder <%= note.isSigned() ? "" : "unsigned-textarea"%>" wrap="soft" style="line-height: 1.1em;" name="caseNote_note" id="caseNote_note<%=savedId%>"><%=cform.getCaseNote_note()%></textarea>
 						
-						<div class="sig <%= note.isSigned() ? "" : "note-unsigned"%>" style="<%=bgColour%>" id="sig<%=globalNoteId%>">
+						<div class="sig <%= note.isSigned() ? "" : "note-unsigned"%>" id="sig<%=globalNoteId%>">
 							<%@ include file="noteIssueList.jsp"%>
 						</div>
 
@@ -629,7 +629,7 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 
 							<div id="wrapper<%=globalNoteId%>" style="<%=(note.isDocument()||note.isCpp()||note.isEformData()||note.isEncounterForm()||note.isInvoice())?(bgColour):""%>">
 							<%-- render the note contents here --%>
-			  				<div id="txt<%=globalNoteId%>" style="display:inline-block;">
+			  				<div id="txt<%=globalNoteId%>" >
 
 		  						<%=noteStr%>
 							</div> <!-- end of txt<%=globalNoteId%> -->
@@ -694,7 +694,7 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 							<%
 							}
 						%>						
-							<div id="sig<%=globalNoteId%>" class="sig" style="clear:both;<%=bgColour%>">
+							<div id="sig<%=globalNoteId%>" class="sig" >
 								<div id="sumary<%=globalNoteId%>">
 									<div id="observation<%=globalNoteId%>" style="float: right; margin-right: 3px;">
 											<bean:message key="oscarEncounter.encounterDate.title"/>:&nbsp;
@@ -905,6 +905,7 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 %>
 
 	jQuery(document).ready(function() {
+
 		<%
 		String singleLineFormat="false";
     	UserProperty slProp = (UserProperty)request.getAttribute(UserProperty.STALE_FORMAT);
@@ -927,6 +928,7 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
 				jQuery("#"+staleIds[i]).trigger('click');
 			}
 		}
+
 	});
 
     document.forms["caseManagementEntryForm"].noteId.value = "<%=savedId%>";
@@ -976,8 +978,8 @@ CasemgmtNoteLock casemgmtNoteLock = (CasemgmtNoteLock)session.getAttribute("case
     //flag for determining if we want to submit case management entry form with enter key pressed in auto completer text box
     var submitIssues = false;
    //AutoCompleter for Issues
-    <c:url value="/CaseManagementEntry.do?method=issueList&demographicNo=${param.demographicNo}&providerNo=${param.providerNo}" var="issueURL" />
-    var issueAutoCompleter = new Ajax.Autocompleter("issueAutocomplete", "issueAutocompleteList", "<c:out value="${issueURL}"/>", {minChars: 3, indicator: 'busy', afterUpdateElement: saveIssueId, onShow: autoCompleteShowMenu, onHide: autoCompleteHideMenu});
+<%--    <c:url value="/CaseManagementEntry.do?method=issueList&demographicNo=${param.demographicNo}&providerNo=${param.providerNo}" var="issueURL" />--%>
+<%--    let issueAutoCompleter = new Ajax.Autocompleter("issueAutocomplete", "issueAutocompleteList", "<c:out value="${issueURL}"/>", {minChars: 3, indicator: 'busy', afterUpdateElement: saveIssueId, onShow: autoCompleteShowMenu, onHide: autoCompleteHideMenu});--%>
 
     <%int MaxLen = 20;
 			int TruncLen = 17;
