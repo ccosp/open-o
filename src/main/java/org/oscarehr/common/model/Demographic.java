@@ -1572,7 +1572,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		sb.append("<div class='label'>");
 		sb.append("age");
 		sb.append("</div>");
-		sb.append(getAgeInYears());
+		sb.append(getAgeAsOf(new Date()));
 		sb.append("</div>");
 
 		//--> Insurance number
