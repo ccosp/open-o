@@ -47,4 +47,15 @@ public abstract class JSONAction extends DispatchAction {
             logger.error("Error while creating JSON response", e);
         }
     }
+
+    protected void jsonResponse(HttpServletResponse response, String jsonString) {
+        try (PrintWriter out = response.getWriter()) {
+            response.setContentType(CONTENT_TYPE);
+            response.setCharacterEncoding(ENCODING);
+            out.print(jsonString);
+            out.flush();
+        } catch (IOException e) {
+            logger.error("Error while creating JSON response", e);
+        }
+    }
 }
