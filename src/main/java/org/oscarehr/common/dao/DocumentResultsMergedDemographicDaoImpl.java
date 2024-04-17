@@ -8,7 +8,7 @@ import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.ConversionUtils;
 
 @Repository("documentResultsDao")
-public class DocumentResultsMergedDemographicDaoImpl extends DocumentResultsDao implements DocumentResultsMergedDemographicDao {
+public class DocumentResultsMergedDemographicDaoImpl extends DocumentResultsDaoImpl implements DocumentResultsMergedDemographicDao {
 
     @Override
     public ArrayList<LabResultData> populateDocumentResultsDataOfAllProviders(final String providerNo, String demographicNo, final String status) {

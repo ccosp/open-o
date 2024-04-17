@@ -54,7 +54,7 @@ import oscar.OscarProperties;
  * in every single page of OSCAR code.
  */
 @Service
-public final class NioFileManagerImpl implements NioFileManager{
+public class NioFileManagerImpl implements NioFileManager{
 	
 	@Autowired
 	private ServletContext context;

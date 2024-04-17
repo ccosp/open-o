@@ -59,7 +59,7 @@
  import oscar.log.LogAction;
  
  @Transactional
- public class AdmissionManagerImpl implements  AdmissionManager{
+ public class AdmissionManagerImpl implements AdmissionManager{
  
      private AdmissionDao dao;
      private ProgramDao programDao;

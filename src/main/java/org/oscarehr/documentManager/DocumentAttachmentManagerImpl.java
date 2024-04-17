@@ -51,6 +51,11 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 	@Autowired
 	private SecurityInfoManager securityInfoManager;
 
+	// @Autowired
+    // public void setEformDataManager(EformDataManager eformDataManager) {
+    //     this.eformDataManager = eformDataManager;
+    // }
+
 	public List<String> getConsultAttachments(LoggedInInfo loggedInInfo, Integer requestId, DocumentType documentType, Integer demographicNo) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_con", SecurityInfoManager.READ, demographicNo)) {
 			throw new RuntimeException("missing required security object (_con)");

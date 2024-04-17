@@ -70,14 +70,24 @@
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 	<!-- TransactionManager -->
-	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager" autowire="byName">
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" autowire="byName">
 		<!-- <property name="entityManagerFactory" ref="entityManagerFactory" /> -->
 	</bean>
 	
-	<tx:annotation-driven transaction-manager="txManager" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- Managed Beans -->
-	<context:component-scan base-package="org.oscarehr.common.dao" />
+	<context:component-scan base-package="org.oscarehr.common.dao">
+    <context:exclude-filter type="regex" expression=".*\.UserPropertyDAOImpl$"/>
+    <context:exclude-filter type="regex" expression=".*\.DemographicDaoImpl$"/>
+    <context:exclude-filter type="regex" expression=".*\.DxresearchDAOImpl$"/>
+    <context:exclude-filter type="regex" expression=".*\.EChartDaoImpl$"/>
+    <context:exclude-filter type="regex" expression=".*\.EncounterWindowDaoImpl$"/>
+    <context:exclude-filter type="regex" expression=".*\.AppointmentArchiveDaoImpl$"/>
+    <context:exclude-filter type="regex" expression=".*\.DemographicExtDaoImpl$"/>
+</context:component-scan>
+
+
 	<context:component-scan base-package="org.oscarehr.eyeform.dao" />
 	<context:component-scan base-package="org.oscarehr.hospitalReportManager.dao" />
 	<context:component-scan base-package="org.oscarehr.olis.dao" />

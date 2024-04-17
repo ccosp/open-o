@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.oscarehr.common.dao.CtlBillingServiceDao;
+import org.oscarehr.common.dao.CtlBillingServiceDaoImpl;
 import org.oscarehr.managers.model.ServiceType;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class BillingManagerImpl implements BillingManager {
      */
     @Override
     public List<ServiceType> getUniqueServiceTypes(LoggedInInfo loggedInInfo) {
-        return getUniqueServiceTypes(loggedInInfo, CtlBillingServiceDao.DEFAULT_STATUS);
+        return getUniqueServiceTypes(loggedInInfo, CtlBillingServiceDaoImpl.DEFAULT_STATUS);
     }
 
     /*
