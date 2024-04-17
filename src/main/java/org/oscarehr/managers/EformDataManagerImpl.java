@@ -41,6 +41,7 @@ import org.oscarehr.documentManager.ConvertToEdoc;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.hospitalReportManager.HRMUtil;
+import org.springframework.context.annotation.Lazy;
 
 import oscar.eform.EFormUtil;
 import oscar.eform.data.EForm;
@@ -60,6 +61,7 @@ public class EformDataManagerImpl implements EformDataManager{
 	DocumentManager documentManager;
 
 	@Autowired
+	@Lazy
 	private DocumentAttachmentManager documentAttachmentManager;
 
 	@Autowired
@@ -68,6 +70,11 @@ public class EformDataManagerImpl implements EformDataManager{
 	public EformDataManagerImpl() {
 		// Default
 	}
+
+	// @Autowired
+    // public void setDocumentAttachmentManager(DocumentAttachmentManager documentAttachmentManager) {
+    //     this.documentAttachmentManager = documentAttachmentManager;
+    // }
 	
 	public Integer saveEformData( LoggedInInfo loggedInInfo, EForm eform ) {
 		Integer formid = null;

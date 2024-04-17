@@ -39,24 +39,24 @@
 	</bean>
 
 	<!-- DAO -->
-	<bean id="genericIntakeNodeDAO" class="org.oscarehr.PMmodule.dao.GenericIntakeNodeDAO" autowire="byName" />
-	<bean id="genericIntakeDAO" class="org.oscarehr.PMmodule.dao.GenericIntakeDAO" autowire="byName" />
-	<bean id="healthSafetyDao" class="org.oscarehr.PMmodule.dao.HealthSafetyDao" autowire="byName" />
-	<bean id="formsDAO" class="org.oscarehr.PMmodule.dao.FormsDAO" autowire="byName" />
-	<bean id="populationReportDao" class="org.oscarehr.common.dao.PopulationReportDao" autowire="byName" />
+	<bean id="genericIntakeNodeDAO" class="org.oscarehr.PMmodule.dao.GenericIntakeNodeDAOImpl" autowire="byName" />
+	<bean id="genericIntakeDAO" class="org.oscarehr.PMmodule.dao.GenericIntakeDAOImpl" autowire="byName" />
+	<bean id="healthSafetyDao" class="org.oscarehr.PMmodule.dao.HealthSafetyDaoImpl" autowire="byName" />
+	<bean id="formsDAO" class="org.oscarehr.PMmodule.dao.FormsDAOImpl" autowire="byName" />
+	<bean id="populationReportDao" class="org.oscarehr.common.dao.PopulationReportDaoImpl" autowire="byName" />
 
 
 	<!-- managers  -->
 	<bean id="issueAdminManager" class="org.caisi.service.IssueAdminManager" autowire="byName" />
 
 	<!-- Generic Intake -->
-	<bean id="genericIntakeManager" class="org.oscarehr.PMmodule.service.GenericIntakeManager" autowire="byName" />
+	<bean id="genericIntakeManager" class="org.oscarehr.PMmodule.service.GenericIntakeManagerImpl" autowire="byName" />
 	<bean id="streetHealthReportManager" class="org.oscarehr.PMmodule.service.impl.StreetHealthReportManagerImpl">
 		<property name="demographicDao" ref="demographicDao" />
 		<property name="genericIntakeManager" ref="genericIntakeManager" />
 	</bean>
 	<!-- Generic Intake -->
-	<bean id="healthSafetyManager" class="org.oscarehr.PMmodule.service.HealthSafetyManager">
+	<bean id="healthSafetyManager" class="org.oscarehr.PMmodule.service.HealthSafetyManagerImpl">
 		<property name="healthSafetyDao" ref="healthSafetyDao" />
 	</bean>
 

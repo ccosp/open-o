@@ -33,8 +33,25 @@ import org.springframework.stereotype.Service;
 
 import oscar.log.LogAction;
 
-public interface OscarLogManager{
-	public List<Object[]> getRecentDemographicsViewedByProvider(LoggedInInfo loggedInInfo, String providerNo, int startPosition, int itemsToReturn);
+@Service
+public class OscarLogManagerImpl implements OscarLogManager{
 
-	public List<Object[]> getRecentDemographicsViewedByProviderAfterDateIncluded(LoggedInInfo loggedInInfo, String providerNo, Date date, int startPosition, int itemsToReturn);
+	@Autowired 
+	private OscarLogDao oscarLogDao;
+	
+	public List<Object[]> getRecentDemographicsViewedByProvider(LoggedInInfo loggedInInfo, String providerNo, int startPosition, int itemsToReturn) {
+		List<Object[]> results = oscarLogDao.getRecentDemographicsViewedByProvider(providerNo, startPosition, itemsToReturn);
+		
+		LogAction.addLogSynchronous(loggedInInfo,"OscarLogManager.getRecentDemographicsViewedByProvider", "providerNo"+providerNo);
+		
+		return results;
+			
+	}
+
+	public List<Object[]> getRecentDemographicsViewedByProviderAfterDateIncluded(LoggedInInfo loggedInInfo, String providerNo, Date date, int startPosition, int itemsToReturn) {
+		List<Object[]> results = oscarLogDao.getRecentDemographicsViewedByProviderAfterDateIncluded(providerNo, date, startPosition, itemsToReturn);
+		LogAction.addLogSynchronous(loggedInInfo,"OscarLogManager.getRecentDemographicsViewedByProviderAfterDateIncluded", "providerNo"+providerNo);
+		return results;
+	}
+	
 }

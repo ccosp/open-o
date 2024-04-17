@@ -19,17 +19,30 @@
  *     <Quatro Group Software Systems inc.>  <OSCAR Team>
  */
 
- package org.oscarehr.PMmodule.service;
+package org.oscarehr.PMmodule.service;
 
- import org.oscarehr.PMmodule.dao.HealthSafetyDao;
- import org.oscarehr.PMmodule.model.HealthSafety;
- import org.springframework.transaction.annotation.Transactional;
- 
- public interface HealthSafetyManager{
-     public HealthSafetyDao getHealthSafetyDao();
- 
-     public void setHealthSafetyDao(HealthSafetyDao healthSafetyDao);
-     public HealthSafety getHealthSafetyByDemographic(Long demographicNo);
-     public void saveHealthSafetyByDemographic(HealthSafety healthsafety);
- }
- 
+import org.oscarehr.PMmodule.dao.HealthSafetyDao;
+import org.oscarehr.PMmodule.model.HealthSafety;
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional
+public class HealthSafetyManagerImpl implements HealthSafetyManager{
+    
+    private HealthSafetyDao healthSafetyDao=null;
+
+	public HealthSafetyDao getHealthSafetyDao() {
+		return healthSafetyDao;
+	}
+
+	public void setHealthSafetyDao(HealthSafetyDao healthSafetyDao) {
+		this.healthSafetyDao = healthSafetyDao;
+	}
+
+	public HealthSafety getHealthSafetyByDemographic(Long demographicNo) {
+		return healthSafetyDao.getHealthSafetyByDemographic(demographicNo);
+	}
+
+    public void saveHealthSafetyByDemographic(HealthSafety healthsafety) {
+    	healthSafetyDao.saveHealthSafetyByDemographic(healthsafety);
+    }
+}

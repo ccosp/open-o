@@ -133,7 +133,7 @@
      ConsentDao consentDao;
  
      @Autowired
-     ProgramManager2 programManager;
+     ProgramManager2 programManager2;
  
      @Override
      public Demographic getDemographic(LoggedInInfo loggedInInfo, Integer demographicId)
@@ -1096,7 +1096,7 @@
          if (loggedInInfo.getCurrentFacility().isIntegratorEnabled()) {
              try {
                  // find the program id
-                 ProgramProvider programProvider = programManager.getCurrentProgramInDomain(loggedInInfo);
+                 ProgramProvider programProvider = programManager2.getCurrentProgramInDomain(loggedInInfo);
                  createDemographic(loggedInInfo, remoteDemographic, (int) (long) programProvider.getProgramId());
  
                  // get the remote patient consent status

@@ -46,7 +46,7 @@
  import org.springframework.transaction.annotation.Transactional;
  
  @Transactional
- public class ClientManagerImpl implements  ClientManager{
+ public class ClientManagerImpl implements ClientManager{
  
      private DemographicDao dao;
      private DemographicExtDao demographicExtDao;
