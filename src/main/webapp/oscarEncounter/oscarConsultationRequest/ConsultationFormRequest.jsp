@@ -735,6 +735,8 @@ function disableEditing()
 		form.status[3].disabled = disableFields;
 
 		form.referalDate.disabled = disableFields;
+		form.providerNo.selectedIndex = -1;
+		disableIfExists(form.providerNo, disableFields);
 		disableIfExists(form.specialist, disableFields);
 		disableIfExists(form.service, disableFields);
 		form.urgency.disabled = disableFields;
