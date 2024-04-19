@@ -3,8 +3,8 @@
 	<groupId>org.oscarehr</groupId>
 	<artifactId>oscar</artifactId>
 	<packaging>war</packaging>
-	<version>v24.02.0</version>
-	<name>OpenOSCAR</name>
+	<version>0-SNAPSHOT</version>
+	<name>OpenO</name>
 	<description>OSCAR McMaster is a web-based electronic medical record (EMR) system initially developed for academic primary care clinics. It has grown into a comprehensive EMR and billing system used by many doctor's offices and private medical clinics in Canada and other parts of the world. The name is derived from where it was created and an acronym; OSCAR stands for Open Source Clinical Application and Resource and McMaster refers to McMaster University, where it was developed. It enables the delivery of evidence resources at the point of care.</description>
 	<issueManagement>
 		<system>SourceForge Tracker</system>
@@ -1442,8 +1442,7 @@
 								<replace file="target/classes/oscar_mcmaster.properties" token="${build.dateTime}" value="${build.dateTime.value}" />
 
 								<property environment="env" />
-								<echo message="ENVIRONMENT ${env}" />
-								<echo message="JOB_NAME - BUILD_NUMBER : ${env.JOB_NAME} - ${env.BUILD_NUMBER}" />
+								<echo message="JOB_NAME - BUILD_NUMBER : ${env.JOB_NAME}-${env.BUILD_NUMBER}" />
 								<replace file="target/classes/oscar_mcmaster.properties" token="${build.JOB_NAME}" value="${env.JOB_NAME}" />
 								<replace file="target/classes/oscar_mcmaster.properties" token="${build.BUILD_NUMBER}" value="${env.BUILD_NUMBER}" />
 							</target>
@@ -1451,7 +1450,9 @@
 					</execution>
 
 					<execution>
-						<!-- We're doing jspc this way because the codehaus jspc seems to be abandonded, it doesn't go beyond jdk 1.5 and the documentation is sparse, and the source code links to a broken page and I can't find the goals it supports. -->
+						<!-- We're doing jspc this way because the codehaus jspc seems to be abandonded,
+						it doesn't go beyond jdk 1.5 and the documentation is sparse, and the source
+						code links to a broken page and I can't find the goals it supports. -->
 						<id>jspc</id>
 						<phase>verify</phase>
 						<goals>
@@ -1460,7 +1461,7 @@
 						<configuration>
 							<target>
 								<property name="build.compiler" value="extJavac" />
-								<property name='jspc_target' value="${project.name}-${project.version}" />
+								<property name='jspc_target' value="${project.artifactId}-${project.version}" />
 								<ant antfile="jspc.xml" target="jspc" />
 							</target>
 						</configuration>
