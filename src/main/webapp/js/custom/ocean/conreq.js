@@ -29,9 +29,9 @@ jQuery(document).ready(function(){
     });
 });
 
-function eRefer() {
+function eRefer(event) {
     let demographicNo = document.getElementById("demographicNo").serialize();
-    let documents = getDocuments();
+    let documents = getDocuments(event);
     let data = demographicNo + "&" + documents;
     jQuery.ajax({
         type: 'POST',
@@ -43,12 +43,23 @@ function eRefer() {
     });
 }
 
-function getDocuments() {
+function getDocuments(event) {
     let documents = "";
     let attachments = document.getElementsByClassName("delegateAttachment");
+    let isFormAttached = false;
     for (const attachment of attachments) {
         documents = documents + attachment.name.charAt(0).toUpperCase() + attachment.value + "|";
+        if (attachment.name.charAt(0).toUpperCase() === 'F') { isFormAttached = true; }
     }
+
+    if (isFormAttached) {
+        const canProceed = confirm("Forms cannot be attached to Ocean referrals.\n\nWorkaround:\nCreate a PDF of the form and upload it to the patient's chart as a document. Then you can attach that document with the referral.\n\nTo proceed without attaching Form, please press \'OK\'");
+        if (!canProceed) { 
+            event.stopImmediatePropagation(); 
+            documents = "";
+        }
+    }
+
     return "documents=" + documents;
 }
 

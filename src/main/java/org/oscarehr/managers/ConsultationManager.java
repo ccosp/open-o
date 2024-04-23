@@ -524,11 +524,12 @@ public class ConsultationManager {
 						String hrmName = String.format("HRM_%03d.pdf", eReferAttachmentData.getLabId());
 						consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.HRM.getType(), hrmName, Files.readAllBytes(hrmPDFPath));
 						break;
-					case ConsultDocs.DOCTYPE_FORM:
-						Path formPDFPath = formsManager.renderForm(request, response, String.valueOf(eReferAttachmentData.getLabId()));
-						String formName = String.format("Form_%03d.pdf", eReferAttachmentData.getLabId());
-						consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.FORM.getType(), formName, Files.readAllBytes(formPDFPath));
-						break;
+					// Checkout the comment in ConsultationWebService:getEReferAttachments() for more details
+					// case ConsultDocs.DOCTYPE_FORM:
+					// 	Path formPDFPath = formsManager.renderForm(request, response, String.valueOf(eReferAttachmentData.getLabId()));
+					// 	String formName = String.format("Form_%03d.pdf", eReferAttachmentData.getLabId());
+					// 	consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.FORM.getType(), formName, Files.readAllBytes(formPDFPath));
+					// 	break;
 				}
 				if (consultationAttachment != null) { consultationAttachments.add(consultationAttachment); }
 			} catch (IOException e) {

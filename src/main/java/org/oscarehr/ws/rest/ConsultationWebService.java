@@ -489,6 +489,11 @@ public class ConsultationWebService extends AbstractServiceImpl {
 	public Response getEReferAttachments(@QueryParam("demographicNo") Integer demographicNo, @Context HttpServletRequest httpServletRequest, @Context HttpServletResponse httpServletResponse) {
 		Response response;
 		try {
+			/*
+			 * Currently, Forms (EncounterForms) cannot be attached as PDFs to Ocean referrals.
+			 * The issue lies in how we retrieve the HTML content of the form to generate the PDF using the endpoint's servlet response.
+			 * As a solution is not yet determined, the PDF generation code for Forms in ConsultationManager:getEReferAttachments() is being commented out until a solution is found by the developer.
+			 */
 			List<ConsultationAttachment> attachments = consultationManager.getEReferAttachments(getLoggedInInfo(), httpServletRequest, httpServletResponse, demographicNo);
 			httpServletResponse.setContentType("application/json");
 			response = Response.ok().entity(attachments).build();
