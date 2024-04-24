@@ -68,7 +68,7 @@ public final class ConvertToEdoc {
 
 	public enum DocumentType { eForm, form }
 	public enum ElementAttribute { src, href, value, name, id, title, type, rel, media }
-	private enum FileType { pdf, css, jpeg, png, gif, js }
+	private enum FileType { pdf, css, jpeg, png, gif, js, jpg }
 	public static final String CUSTOM_STYLESHEET_ID = "pdfMediaStylesheet";
 	private static final String DEFAULT_IMAGE_DIRECTORY = String.format( "%1$s", OscarProperties.getInstance().getProperty( "eform_image" ) );
 	private static final String DEFAULT_FILENAME = "temporaryPDF";

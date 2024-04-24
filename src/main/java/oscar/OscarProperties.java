@@ -227,11 +227,11 @@ public class OscarProperties extends Properties {
 	}
 
 	public static String getBuildDate() {
-		return oscarProperties.getProperty("buildDateTime");
+		return oscarProperties.getProperty("buildDate");
 	}
 
 	public static String getBuildTag() {
-		return oscarProperties.getProperty("buildtag");
+		return oscarProperties.getProperty("buildVersion");
 	}
 
 	public boolean isOscarLearning() {
