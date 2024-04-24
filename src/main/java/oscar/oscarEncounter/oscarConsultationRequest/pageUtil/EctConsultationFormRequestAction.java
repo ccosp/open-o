@@ -199,6 +199,9 @@ public class EctConsultationFormRequestAction extends Action {
 							                MiscUtils.getLogger().error("Invalid Time", nfEx);
 										}
 									}
+								} else {
+									consult.setAppointmentDate(null);
+									consult.setAppointmentTime(null);
 								}
                                 consult.setReasonForReferral(frm.getReasonForConsultation());
                                 consult.setClinicalInfo(frm.getClinicalInformation());
@@ -350,14 +353,17 @@ public class EctConsultationFormRequestAction extends Action {
                 if( frm.getAppointmentDate() != null && !frm.getAppointmentDate().equals("") ) {
                 	date = DateUtils.parseDate(frm.getAppointmentDate(), format);
                 	consult.setAppointmentDate(date);
-			try {
-	                	date = DateUtils.setHours(date, new Integer(appointmentHour));
-        	        	date = DateUtils.setMinutes(date, new Integer(frm.getAppointmentMinute()));
-                		consult.setAppointmentTime(date);
-			}catch(NumberFormatException nfEx) {
-				MiscUtils.getLogger().error("Invalid Time", nfEx);
-			}
-                }
+					try {
+						date = DateUtils.setHours(date, new Integer(appointmentHour));
+						date = DateUtils.setMinutes(date, new Integer(frm.getAppointmentMinute()));
+						consult.setAppointmentTime(date);
+					}catch(NumberFormatException nfEx) {
+						MiscUtils.getLogger().error("Invalid Time", nfEx);
+					}
+                } else {
+					consult.setAppointmentDate(null);
+					consult.setAppointmentTime(null);
+				}
                 consult.setReasonForReferral(frm.getReasonForConsultation());
                 consult.setClinicalInfo(frm.getClinicalInformation());
                 consult.setCurrentMeds(frm.getCurrentMedications());

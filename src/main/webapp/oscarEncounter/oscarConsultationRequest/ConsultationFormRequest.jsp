@@ -1503,6 +1503,13 @@ function showPreview(base64PDF, pdfName) {
 	downloadLink.click();
 	URL.revokeObjectURL(downloadLink.href);
 }
+
+function clearAppointmentDateAndTime() {
+	document.EctConsultationFormRequestForm.appointmentDate.value = "";
+	document.EctConsultationFormRequestForm.appointmentHour.options.selectedIndex = 0;
+	document.EctConsultationFormRequestForm.appointmentMinute.options.selectedIndex = 0;
+	document.EctConsultationFormRequestForm.appointmentPm.options.selectedIndex = 0;
+}
 </script>
 
 <%=WebUtils.popErrorMessagesAsAlert(session)%>
@@ -2045,7 +2052,9 @@ function showPreview(base64PDF, pdfName) {
 									<td><html:select property="appointmentPm">
 										<html:option value="AM">AM</html:option>
 										<html:option value="PM">PM</html:option>
-									</html:select></td>					</tr>
+									</html:select></td>					
+									<td><input type="button" value="Clear Date & Time" onclick="clearAppointmentDateAndTime()" /></td>
+								</tr>
 							</table>
 			
 							</td>
