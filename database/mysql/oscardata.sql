@@ -2602,7 +2602,8 @@ INSERT INTO `secObjPrivilege`(`roleUserGroup`, `objectName`, `privilege`, `prior
 
 insert into lst_gender (code,description,isactive,displayorder) values ('M','Male',1,2);
 insert into lst_gender (code,description,isactive,displayorder) values ('F','Female',1,1);
-insert into lst_gender (code,description,isactive,displayorder) values ('T','Transgender',1,3);
+insert into lst_gender (code,description,isactive,displayorder) values ('X','Intersex',1,3);
+insert into lst_gender (code,description,isactive,displayorder) values ('U','Undisclosed',1,4);
 
 INSERT INTO `property`(`name`, `value`, `provider_no`) VALUES ('integrator_patient_consent', '1', NULL); 
 
