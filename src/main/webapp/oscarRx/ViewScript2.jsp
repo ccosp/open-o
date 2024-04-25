@@ -685,7 +685,7 @@ function toggleView(form) {
 				<td valign=top><html:form action="/oscarRx/clearPending">
 					<html:hidden property="action" value="" />
 					<div class="warning-note" id="faxWarningNote">
-						<strong>Warning:</strong> no pharmacy has been selected.</br></br>If you are faxing this prescription, please click 'Close Window' and select a pharmacy before trying again.
+						<strong>Warning:</strong> faxing is disabled because no pharmacy fax number is available.</br></br>To enable faxing, close this window and select a pharmacy with a fax number before trying again.
 					</div>
 				</html:form>
                                     <script type="text/javascript">
