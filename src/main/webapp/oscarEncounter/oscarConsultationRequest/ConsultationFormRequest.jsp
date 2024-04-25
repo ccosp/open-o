@@ -152,6 +152,20 @@ if(!authed) {
 			demo = consultUtil.demoNo;
 		}
 
+		// Check if the selected provider is currently active. If it is not active, add it to the prList, as the list only contains active providers.
+		Boolean isProviderActive = false;
+		for (Provider activeProvider : prList) {
+			if (consultUtil.providerNo != null && consultUtil.providerNo.equalsIgnoreCase(activeProvider.getProviderNo())) {
+				isProviderActive = true;
+				break;
+			}
+		}
+
+		if (!isProviderActive && consultUtil.providerNo != null) {
+			Provider inactiveProvider = rx.getProvider(consultUtil.providerNo);
+			if (inactiveProvider != null) { prList.add(inactiveProvider); }
+		}
+
 		UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
 		if (demo != null) {
 			demoData = new oscar.oscarDemographic.data.DemographicData();
@@ -1490,6 +1504,13 @@ function showPreview(base64PDF, pdfName) {
 	downloadLink.click();
 	URL.revokeObjectURL(downloadLink.href);
 }
+
+function clearAppointmentDateAndTime() {
+	document.EctConsultationFormRequestForm.appointmentDate.value = "";
+	document.EctConsultationFormRequestForm.appointmentHour.options.selectedIndex = 0;
+	document.EctConsultationFormRequestForm.appointmentMinute.options.selectedIndex = 0;
+	document.EctConsultationFormRequestForm.appointmentPm.options.selectedIndex = 0;
+}
 </script>
 
 <%=WebUtils.popErrorMessagesAsAlert(session)%>
@@ -1808,7 +1829,7 @@ function showPreview(base64PDF, pdfName) {
 					<table height="100%" width="100%">
 						<% if (props.isConsultationFaxEnabled() && OscarProperties.getInstance().isPropertyActive("consultation_dynamic_labelling_enabled")) { %>
 						<tr>
-							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.consultationFormPrint.msgAssociated2" />:</td>
+							<td class="tite4"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgAssociated2" /></td>
 							<td  class="tite1">
 								<html:select property="providerNo" onchange="switchProvider(this.value)">
 									<%
@@ -2032,7 +2053,9 @@ function showPreview(base64PDF, pdfName) {
 									<td><html:select property="appointmentPm">
 										<html:option value="AM">AM</html:option>
 										<html:option value="PM">PM</html:option>
-									</html:select></td>					</tr>
+									</html:select></td>					
+									<td><input type="button" value="Clear Date & Time" onclick="clearAppointmentDateAndTime()" /></td>
+								</tr>
 							</table>
 			
 							</td>

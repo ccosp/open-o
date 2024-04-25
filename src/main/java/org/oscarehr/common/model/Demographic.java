@@ -1280,6 +1280,9 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 	}
 
 	public String getSexDesc() {
+		if(sexDesc == null) {
+			return "";
+		}
 		return sexDesc;
 	}
 
