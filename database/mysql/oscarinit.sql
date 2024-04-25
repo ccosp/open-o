@@ -9492,7 +9492,9 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentToDemographic` (
   `demographicNo` varchar(20) ,
   `hrmDocumentId` varchar(20) ,
   `timeAssigned` datetime ,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX idx_hrmDocumentId_hd (`hrmDocumentId`),
+  INDEX idx_demographicNo_hd (`demographicNo`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS `HRMDocumentToProvider` (
@@ -9503,7 +9505,9 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentToProvider` (
   `signedOffTimestamp` datetime ,
   `viewed` int(11),
   `filed` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX idx_hrmDocumentId_hp (`hrmDocumentId`),
+  INDEX idx_signedOff_providerNo_hp (`signedOff`, `providerNo`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS `HrmLog` (
