@@ -163,9 +163,6 @@
         .attachmentContainer ul li:nth-of-type(even) {
             background-color: whitesmoke;
         }
-        .attachmentContainer ul li.lab label:not(.attachmentContainer ul li.lab em label) {
-            font-weight: bold;
-        }
 
 		.attachmentContainer .collapse-arrow {
 			font-family: FontAwesome !important;
@@ -365,7 +362,7 @@
 												<input class="lab_check" data-version="${totalVersions - versionLoop.index}" type="checkbox" name="labNo" id="labNo${ version.key }" value="${version.key}" title="v${totalVersions - versionLoop.index} ${ labName }" />
 												<em>
 													<label for="labNo${version.key}" title="v${totalVersions - versionLoop.index} ${ labName }" >
-														<c:out value="Version ${ totalVersions - versionLoop.index }" />&nbsp;
+														<c:out value="Earlier Version ${ totalVersions - versionLoop.index } of ${ totalVersions + 1 }" />&nbsp;
 													</label>
 													<label for="labNo${version.key}" class="lab-date">(${version.value})</label>
 												</em>
