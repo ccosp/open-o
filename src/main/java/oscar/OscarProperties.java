@@ -47,6 +47,17 @@ public class OscarProperties extends Properties {
 		return oscarProperties;
 	}
 
+	/**
+	 * Override for filtering properties
+	 * @param key   the property key.
+	 */
+	public String getProperty(String key) {
+		if("FORMS_PROMOTEXT".equals(key)) {
+			return "";
+		}
+		return super.getProperty(key);
+	}
+
 	/* If cant find the file, inform and continue */
 	/*
 	 * private OscarProperties() {
@@ -216,11 +227,11 @@ public class OscarProperties extends Properties {
 	}
 
 	public static String getBuildDate() {
-		return oscarProperties.getProperty("buildDateTime");
+		return oscarProperties.getProperty("buildDate");
 	}
 
 	public static String getBuildTag() {
-		return oscarProperties.getProperty("buildtag");
+		return oscarProperties.getProperty("buildVersion");
 	}
 
 	public boolean isOscarLearning() {

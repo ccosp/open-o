@@ -65,9 +65,18 @@
 	</title>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	scope="request" />
 <link rel="stylesheet" href="<c:out value="${ctx}"/>/css/encounterStyles.css" type="text/css">
+
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/library/jquery/jquery-ui-1.12.1.min.css" />
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/css/oscarRx.css" />">
+	<!-- calendar stylesheet -->
+	<link rel="stylesheet" type="text/css" media="all" href="<c:out value="${ctx}"/>/share/calendar/calendar.css" title="win2k-cold-1">
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger.css"/>
+	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.css"/>
+	<link rel="stylesheet" href="<c:out value="${ctx}"/>/css/encounterStyles.css" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/css/print.css" media="print">
 
- <script src="<c:out value="${ctx}/js/jquery-1.7.1.min.js"/>"></script>
+ <script type="text/javascript" src="<c:out value="${ctx}/js/jquery-1.7.1.min.js"/>"></script>
+	<script type="text/javascript" src="<c:out value="${ctx}/library/jquery/jquery-ui-1.12.1.min.js" />"></script>
 <script type="text/javascript">
      jQuery.noConflict();
 </script>
@@ -77,17 +86,11 @@
 
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/messenger/messenger.js"> </script>
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.js"> </script>
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger.css"> </link>
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}"/>/js/messenger/messenger-theme-future.css"> </link>
-
 <script type="text/javascript" src="newEncounterLayout.js.jsp"> </script>
 	
 <%-- for popup menu of forms --%>
 <script src="<c:out value="${ctx}"/>/share/javascript/popupmenu.js" type="text/javascript"></script>
 <script src="<c:out value="${ctx}"/>/share/javascript/menutility.js" type="text/javascript"></script>
-
-<!-- calendar stylesheet -->
-<link rel="stylesheet" type="text/css" media="all" href="<c:out value="${ctx}"/>/share/calendar/calendar.css" title="win2k-cold-1">
 
 <!-- main calendar program -->
 <script type="text/javascript" src="<c:out value="${ctx}"/>/share/calendar/calendar.js"></script>
@@ -103,13 +106,6 @@
 
 <!-- scriptaculous based select box -->
 <script type="text/javascript" src="<c:out value="${ctx}/share/javascript/select.js"/>"></script>
-
-<!-- phr popups -->
-<%--<script type="text/javascript" src="<c:out value="${ctx}/phr/phr.js"/>"></script>--%>
-
-
-<link rel="stylesheet" type="text/css" href="<c:out value="${ctx}/css/oscarRx.css" />">
-
 
 <script type="text/javascript">
 var Colour = {
@@ -339,21 +335,6 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
         var savedNoteId=0;
    </script>
 
-<script type="text/javascript" src=" ${ctx}/jspspellcheck/spellcheck-caller.js" ></script>
-<script>
-	function spellCheck()
-    {
-		// Build an array of form elements (not there values)
-        var elements = new Array(0);
-
-        // Your form elements that you want to have spell checked
-        elements[elements.length] = document.getElementById(caseNote);
-
-        // Start the spell checker
-        startSpellCheck(ctx + '\/jspspellcheck\/', elements);
-	}
-</script>
-
 <!-- set size of window if customized in preferences -->
 <%
 	UserPropertyDAO uPropDao = SpringUtils.getBean(UserPropertyDAO.class);
@@ -437,6 +418,7 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
         month[10] = "<bean:message key="share.CalendarPopUp.msgNov"/>";
         month[11] = "<bean:message key="share.CalendarPopUp.msgDec"/>";
 
+
 jQuery(window).on("load", function() {
 
 	viewFullChart(false);
@@ -444,11 +426,6 @@ jQuery(window).on("load", function() {
 
     var navBars = new navBarLoader();
     navBars.load();
-
-    // monitorNavBars(null);
-
-    // Element.observe(window, "resize", monitorNavBars);
-
     Calendar.setup({ inputField : "printStartDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printStartDate_cal", singleClick : true, step : 1 });
     Calendar.setup({ inputField : "printEndDate", ifFormat : "%d-%b-%Y", showsTime :false, button : "printEndDate_cal", singleClick : true, step : 1 });
 
@@ -458,7 +435,10 @@ jQuery(window).on("load", function() {
         <c:param name="providerNo" value="${providerNo}" />
         <c:param name="all" value="true" />
     </c:url>
-    var issueAutoCompleterCPP = new Ajax.Autocompleter("issueAutocompleteCPP", "issueAutocompleteListCPP", "<c:out value="${issueURLCPP}" />", {minChars: 3, indicator: 'busy2', afterUpdateElement: addIssue2CPP, onShow: autoCompleteShowMenuCPP, onHide: autoCompleteHideMenuCPP});    
+
+    <%--var issueAutoCompleterCPP = new Ajax.Autocompleter("issueAutocompleteCPP", "issueAutocompleteListCPP",--%>
+	<%--    "<c:out value="${issueURLCPP}" />", {minChars: 3, indicator: 'busy2', afterUpdateElement: addIssue2CPP,--%>
+	<%--	    onShow: autoCompleteShowMenuCPP, onHide: autoCompleteHideMenuCPP});--%>
     
     <nested:notEmpty name="DateError">
         alert("<nested:write name="DateError"/>");
@@ -480,8 +460,6 @@ window.onbeforeunload = onClosing;
 <div id="header" >
 	<tiles:insert attribute="header" />
 </div>
-
-<%--<div id="newEncounterLayoutWrapper">--%>
 
 	<div id="navigation-layout" >
 		<div id="rightNavBar">
@@ -511,7 +489,7 @@ window.onbeforeunload = onClosing;
 				name="value" class="boxsizingBorder"></textarea>
 			<br>
 
-			<table style="text-align: left; width:100%;">
+			<table>
 				<tr id="Itemproblemdescription">
 					<td><bean:message
 							key="oscarEncounter.problemdescription.title" />:</td>
@@ -630,14 +608,14 @@ window.onbeforeunload = onClosing;
 				<label for="position">
 			<bean:message key="oscarEncounter.Index.btnPosition" />
 				</label>
-			<select id="position" name="position"><option id="popt0"
-					value="0">1</option>
+			<select id="position" name="position">
+				<option id="popt0" value="0">1</option>
 			</select>
 			</div>
 			<div id="issueNoteInfo"></div>
 			<div id="issueListCPP"
 				style="background-color: #FFFFFF; height: 200px; width: 350px; position: absolute; z-index: 1; display: none; overflow: auto;">
-				<div class="enTemplate_name_auto_complete"
+				<div class="enTemplate_name_auto_complete issueAutocompleteList"
 					id="issueAutocompleteListCPP"
 					style="position: relative; left: 0; display: none;"></div>
 			</div>
@@ -645,7 +623,7 @@ window.onbeforeunload = onClosing;
 			<label for="issueAutocompleteCPP">
 			<bean:message key="oscarEncounter.Index.assnIssue" />
 			</label>
-			&nbsp;<input tabindex="100" type="text" id="issueAutocompleteCPP"
+			&nbsp;<input tabindex="100" type="text" id="issueAutocompleteCPP" class="issueAutocomplete"
 				name="issueSearch" style="z-index: 2;" size="25">&nbsp; <span
 				id="busy2" style="display: none"><img
 				style="position: absolute;"
@@ -805,8 +783,7 @@ if (OscarProperties.getInstance().getBooleanProperty("note_program_ui_enabled", 
 %>
 		</form>
 	</div>
-<%--</div>--%>
-<div id="encounterModal" ></div>
+	<div id="encounterModal" ></div>
 <%
     String apptNo = request.getParameter("appointmentNo");
     if( OscarProperties.getInstance().getProperty("resident_review", "false").equalsIgnoreCase("true") && 
