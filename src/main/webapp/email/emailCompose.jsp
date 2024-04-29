@@ -584,11 +584,14 @@ function validateField(field, errorMessage, errors, errorElementId) {
 function displayError(errorElementId, errorMessage) {
 	const errorElement = document.getElementById(errorElementId);
 	errorElement.innerHTML = errorMessage;
+	errorElement.parentNode.firstElementChild.classList.add("is-invalid");
+	setTimeout(function() { errorElement.scrollIntoView({ block: 'center' }); }, 100);
 }
 
 function clearError(errorElementId) {
 	const errorElement = document.getElementById(errorElementId);
 	errorElement.innerHTML = '';
+	errorElement.parentNode.firstElementChild.classList.remove("is-invalid");
 }
 
 function showEncryptionOptions() {
