@@ -43,6 +43,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
 import org.oscarehr.common.dao.BORNPathwayMappingDao;
@@ -219,7 +222,11 @@ public class ConsultationWebService extends AbstractServiceImpl {
 	@Path("/createConsultation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createConsultation(ConsultationRequestTo1 data) {
+	public Response createConsultation(JSONObject jsonObject) throws JsonParseException, JsonMappingException, IOException {
+		String formattedJson = formatJson(jsonObject.toString(2));
+        System.out.println(formattedJson);
+		ObjectMapper objectMapper = new ObjectMapper();
+		ConsultationRequestTo1 data = objectMapper.readValue(jsonObject.toString(), ConsultationRequestTo1.class);
 		LoggedInInfo loggedInInfo = getLoggedInInfo();
 		
 		if(data.getId() != null) {
@@ -251,7 +258,11 @@ public class ConsultationWebService extends AbstractServiceImpl {
 	@Path("/updateConsultation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateConsultation(ConsultationRequestTo1 data) {
+	public Response updateConsultation(JSONObject jsonObject) throws JsonParseException, JsonMappingException, IOException {
+		String formattedJson = formatJson(jsonObject.toString(2));
+        System.out.println(formattedJson);
+		ObjectMapper objectMapper = new ObjectMapper();
+		ConsultationRequestTo1 data = objectMapper.readValue(jsonObject.toString(), ConsultationRequestTo1.class);
 		LoggedInInfo loggedInInfo = getLoggedInInfo();
 
 		if(data.getId() == null) {
@@ -283,21 +294,48 @@ public class ConsultationWebService extends AbstractServiceImpl {
 		return Response.ok().entity(data).build();
 	}
 
-	@POST
-	@Path("/saveRequest")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response saveRequest(ConsultationRequestTo1 data) {
-		Response response = null;
+	// @POST
+	// @Path("/saveRequest")
+	// @Consumes(MediaType.APPLICATION_JSON)
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public Response saveRequest(ConsultationRequestTo1 data) {
+	// 	Response response = null;
 		
-		if (data.getId()==null) { //new consultation request
-			response = createConsultation(data);
-		} else {
-			response = updateConsultation(data);
-		}
+	// 	if (data.getId()==null) { //new consultation request
+	// 		response = createConsultation(data);
+	// 	} else {
+	// 		response = updateConsultation(data);
+	// 	}
 		
-		return response;
-	}
+	// 	return response;
+	// }
+
+	private static String formatJson(String jsonString) {
+        int level = 0;
+        StringBuilder formatted = new StringBuilder();
+        for (char c : jsonString.toCharArray()) {
+            if (c == '{' || c == '[') {
+                level++;
+                formatted.append(c).append('\n').append(indent(level));
+            } else if (c == '}' || c == ']') {
+                level--;
+                formatted.append('\n').append(indent(level)).append(c);
+            } else if (c == ',') {
+                formatted.append(c).append('\n').append(indent(level));
+            } else {
+                formatted.append(c);
+            }
+        }
+        return formatted.toString();
+    }
+
+	private static String indent(int level) {
+        StringBuilder indentation = new StringBuilder();
+        for (int i = 0; i < level; i++) {
+            indentation.append("  "); // Use 2 spaces for indentation
+        }
+        return indentation.toString();
+    }
 	
 	@GET
 	@Path("/eSendRequest")
