@@ -1707,6 +1707,25 @@ function clearAppointmentDateAndTime() {
 					</table>
 					</td>
 				</tr>
+				<%
+					if (thisForm.iseReferral())
+					{
+						%>
+							<tr>
+								<td colspan="2">
+								<table>
+									<tr>
+										<td class="stat"><html:radio property="status" value="5" />
+										</td>
+										<td class="stat"><bean:message key="oscarEncounter.oscarConsultationRequest.ConsultationFormRequest.msgBookCon" />
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						<%
+					}
+				%>
 				<tr>
 					<td colspan="2">
 					<table>
