@@ -206,9 +206,9 @@
 							<div class="row">	
 							<div class="col-sm-12 form-group">
 								<label for="senderEmailAddress">Sender</label>
-								<select class="form-select" name="senderEmailAddress"  id="senderEmailAddress">
+								<select class="form-select" name="senderEmailAddress"  id="senderEmailAddress" onchange="showAdditionalParamOption()">
 									<c:forEach items="${ senderAccounts }" var="senderAccount">
-										<option value="${ senderAccount.senderEmail }" ${ senderAccount.senderEmail eq senderEmail or senderAccount.senderEmail eq param.senderEmail ? 'selected' : '' }>
+										<option value="${ senderAccount.senderEmail }" data-email-type="${ senderAccount.emailType }" ${ senderAccount.senderEmail eq senderEmail or senderAccount.senderEmail eq param.senderEmail ? 'selected' : '' }>
 											<c:out value="${ senderAccount.senderFirstName }"/> <c:out value="${ senderAccount.senderLastName }"/> <c:out value="(${ senderAccount.senderEmail })"/>
 										</option>
 									</c:forEach>
@@ -454,6 +454,15 @@
                         </div>
                     </div>
                 </div>
+
+				<div id="additionalParams" class="m-2 row hide">
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-link text-decoration-none" onclick="showAdditionalParamsTextBox()">Add Additional Parameters</button>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" class="form-control hide" name="additionalURLParams" id="additionalURLParams" placeholder="Extra Parameters (if applicable)" value="">
+					</div>
+				</div>
 				
 				<div class="container mt-4" id="form-control-buttons">
 					<div class="row">
@@ -517,6 +526,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// Select chart option from user's preference
 	selectPatientChartOption();
+
+	// Show additional field option if API type sender is selected
+	showAdditionalParamOption();
 });
 
 document.addEventListener("keydown", function(event) {
@@ -701,6 +713,23 @@ function cancelEmail() {
 	const emailComposeForm = document.getElementById("emailComposeForm");
 	emailComposeForm.action = "${ctx}/email/emailSendAction.do?method=cancel";
 	emailComposeForm.submit();
+}
+
+function showAdditionalParamOption() {
+	const senderEmailAddress = document.getElementById('senderEmailAddress');
+	const selectedSender = senderEmailAddress.options[senderEmailAddress.selectedIndex];
+	if (selectedSender === null) { return; }
+	
+	const senderEmailType = selectedSender.getAttribute('data-email-type');
+	if (senderEmailType && senderEmailType === "API") { 
+		document.getElementById('additionalParams').classList.remove('hide');
+	} else {
+		document.getElementById('additionalParams').classList.add('hide');
+	}
+}
+
+function showAdditionalParamsTextBox() {
+	document.getElementById('additionalURLParams').classList.toggle('hide');
 }
 
 </script>

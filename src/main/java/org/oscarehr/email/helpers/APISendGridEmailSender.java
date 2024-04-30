@@ -1,6 +1,8 @@
 package org.oscarehr.email.helpers;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import oscar.util.StringUtils;
 
 public class APISendGridEmailSender {
     private LoggedInInfo loggedInInfo;
@@ -34,8 +37,9 @@ public class APISendGridEmailSender {
     private String[] recipients = new String[0];
     private String subject;
     private String body;
+    private String additionalParams;
+    private String DEFAULT_END_POINT = "https://api.sendgrid.com/v3/mail/send";
     private List<EmailAttachment> attachments;
-    private String endpoint;
 
     private APISendGridEmailSender() { }
 
@@ -46,7 +50,16 @@ public class APISendGridEmailSender {
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
-        this.endpoint = "https://api.sendgrid.com/v3/mail/send";
+    }
+
+    public APISendGridEmailSender(LoggedInInfo loggedInInfo, EmailConfig emailConfig, String[] recipients, String subject, String body, String additionalParams, List<EmailAttachment> attachments) {
+        this.loggedInInfo = loggedInInfo;
+        this.emailConfig = emailConfig;
+        this.recipients = recipients;
+        this.subject = subject;
+        this.body = body;
+        this.additionalParams = additionalParams;
+        this.attachments = attachments;
     }
 
     public void send() throws EmailSendingException {
@@ -55,7 +68,7 @@ public class APISendGridEmailSender {
 		}
 
         HttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(endpoint);
+        HttpPost httpPost = new HttpPost(getEndPoint());
         httpPost.setHeader("Content-Type", "application/json");
         httpPost.setHeader("Authorization", "Bearer " + getAPIKey());
         try {
@@ -143,5 +156,29 @@ public class APISendGridEmailSender {
             throw new EmailSendingException("Invalid credentials configured for " + emailConfig.getSenderEmail());
         }
         return apiKey;
+    }
+
+    private String getEndPoint() throws EmailSendingException {
+        StringBuilder endPointBuilder = new StringBuilder();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(emailConfig.getConfigDetailsJson());
+            endPointBuilder.append(jsonNode.get("end_point") != null ? jsonNode.get("end_point").asText() : DEFAULT_END_POINT);
+        } catch (IOException e) {
+            throw new EmailSendingException("Invalid credentials configured for " + emailConfig.getSenderEmail());
+        }
+
+        addAdditionalParams(endPointBuilder);
+        return endPointBuilder.toString();
+    }
+
+    private void addAdditionalParams(StringBuilder endPointBuilder) throws EmailSendingException {
+        if (StringUtils.isNullOrEmpty(additionalParams)) { return; }
+        if (!additionalParams.startsWith("?")) { endPointBuilder.append("?"); }
+        try {
+            endPointBuilder.append(URLEncoder.encode(additionalParams, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new EmailSendingException("Unsupported encoding exception occurred: " + e.getMessage(), e);
+        }
     }
 }

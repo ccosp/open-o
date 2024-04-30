@@ -86,6 +86,7 @@ public class EmailSendAction extends DispatchAction {
         String chartDisplayOption = request.getParameter("patientChartOption");
         String transactionType = request.getParameter("transactionType");
         String demographicNo = request.getParameter("demographicId");
+        String additionalParams = request.getParameter("additionalURLParams");
         List<EmailAttachment> emailAttachmentList = (List<EmailAttachment>) request.getSession().getAttribute("emailAttachmentList");
 
         EmailData emailData = new EmailData();
@@ -101,6 +102,7 @@ public class EmailSendAction extends DispatchAction {
         emailData.setChartDisplayOption(chartDisplayOption);
         emailData.setTransactionType(transactionType);
         emailData.setDemographicNo(demographicNo);
+        emailData.setAdditionalParams(additionalParams);
         emailData.setAttachments(emailAttachmentList);
 
         request.getSession().removeAttribute("emailAttachmentList");

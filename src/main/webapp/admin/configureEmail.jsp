@@ -72,7 +72,8 @@ if(!authed) {
             <dd class="col-sm-9">
                <code>
                {
-               "api_key": "1234512345123451234512345123451234512345"               
+               "api_key": "1234512345123451234512345123451234512345",
+               "end_point": "https://api.example.com/mail/send"               
                }
                </code>
             </dd>

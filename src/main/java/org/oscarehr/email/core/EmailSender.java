@@ -26,6 +26,7 @@ public class EmailSender {
     private String[] recipients = new String[0];
     private String subject;
     private String body;
+    private String additionalParams;
     private List<EmailAttachment> attachments;
 
     private EmailSender() { }
@@ -37,6 +38,7 @@ public class EmailSender {
         this.subject = emailData.getSubject();
         this.body = emailData.getBody();
         this.attachments = emailData.getAttachments();
+        this.additionalParams = emailData.getAdditionalParams();
     }
 
     public EmailSender(LoggedInInfo loggedInInfo, EmailConfig emailConfig, String[] recipients, String subject, String body, List<EmailAttachment> attachments) {
@@ -46,6 +48,16 @@ public class EmailSender {
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
+    }
+
+    public EmailSender(LoggedInInfo loggedInInfo, EmailConfig emailConfig, String[] recipients, String subject, String body, String additionalParams, List<EmailAttachment> attachments) {
+        this.loggedInInfo = loggedInInfo;
+        this.emailConfig = emailConfig;
+        this.recipients = recipients;
+        this.subject = subject;
+        this.body = body;
+        this.attachments = attachments;
+        this.additionalParams = additionalParams;
     }
     
     public void send() throws EmailSendingException {
@@ -69,7 +81,7 @@ public class EmailSender {
     private void sendAPIMail() throws EmailSendingException {
         switch (emailConfig.getEmailProvider()) {
             case SENDGRID:
-                APISendGridEmailSender apiSendGridSendHelper = new APISendGridEmailSender(loggedInInfo, emailConfig, recipients, subject, body, attachments);
+                APISendGridEmailSender apiSendGridSendHelper = new APISendGridEmailSender(loggedInInfo, emailConfig, recipients, subject, body, additionalParams, attachments);
                 apiSendGridSendHelper.send();
                 break;
             default:

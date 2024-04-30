@@ -78,6 +78,8 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
+    private String additionalParams;
+
     private Integer demographicNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -233,6 +235,14 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     public void setDemographicNo(Integer demographicNo) {
         this.demographicNo = demographicNo;
+    }
+
+    public String getAdditionalParams() {
+        return additionalParams;
+    }
+
+    public void setAdditionalParams(String additionalParams) {
+        this.additionalParams = additionalParams;
     }
 
     public List<EmailAttachment> getEmailAttachments() {
