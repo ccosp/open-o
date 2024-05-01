@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function(){
 		eform.formId = document.getElementById("fid").value;
 		eform.error = message;
 		let context = document.getElementById("context").value;
-		console.log(eform);
 		jQuery.post(context + "/eform/logEformError.do", eform);
 	}
 
@@ -629,7 +628,16 @@ document.addEventListener("DOMContentLoaded", function(){
 		const idsOfButtonsToHide = ["SubmitButton","ResetButton","PrintButton","PrintSubmitButton"];
 		for (let i = 0; i < idsOfButtonsToHide.length; i++) {
 			let el = document.getElementById(idsOfButtonsToHide[i]);
-			if (el) {
+
+			if(!el) {
+				el = document.getElementsByName(idsOfButtonsToHide[i]);
+			}
+
+			if (el && el.constructor === NodeList && el.length > 0) {
+				for (let i = 0; i < el.length; i++) {
+					el[i].style.display = "none";
+				}
+			} else if (el && el.constructor !== NodeList) {
 				el.style.display = "none";
 			}
 		}	
