@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -174,7 +175,7 @@ public class ConsultationWebService extends AbstractServiceImpl {
 	@GET
 	@Path("/getRequest")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ConsultationRequestTo1 getRequest(@QueryParam("requestId")Integer requestId, @QueryParam("demographicId")Integer demographicId) {
+	public ConsultationRequestTo1 getRequest(@QueryParam("requestId")Integer requestId, @QueryParam("demographicId")Integer demographicId, @DefaultValue("false") @QueryParam("datesAsTimestamp") boolean datesAsTimestamp) {
 		ConsultationRequestTo1 request = new ConsultationRequestTo1();
 		
 		if (requestId>0) {
@@ -195,6 +196,22 @@ public class ConsultationWebService extends AbstractServiceImpl {
 		request.setServiceList(serviceConverter.getAllAsTransferObjects(getLoggedInInfo(), consultationManager.getConsultationServices()));
 		request.setSendToList(providerDao.getActiveTeams());
 		request.setProviderNo(getLoggedInInfo().getLoggedInProviderNo());
+
+		if (datesAsTimestamp) {
+			// Converts the dates to dates that appear as unix timestamps when returned
+			if (request.getReferralDate() != null) {
+				request.setReferralDate(new Date(request.getReferralDate().getTime()));
+			}
+			if (request.getAppointmentDate() != null) {
+				request.setAppointmentDate(new Date(request.getAppointmentDate().getTime()));
+			}
+			if (request.getAppointmentTime() != null) {
+				request.setAppointmentTime(new Date(request.getAppointmentTime().getTime()));
+			}
+			if (request.getFollowUpDate() != null) {
+				request.setFollowUpDate(new Date(request.getFollowUpDate().getTime()));
+			}
+		}
 		
 		return request;
 	}
