@@ -30,13 +30,16 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 
 	window.onerror = function uncaughtExceptionHandler(message, source, lineNumber, colno, error) {
-		return alert('This eForm contains source code errors that will cause a failure of functionality or loss of data.\n\n' +
-			'Please go to OSCARGalaxy.org for an updated version of this eForm, or  if a new version is not available, contact info@oscarbc.ca to request a repair.\n\n' +
-			'E-forms are a community project managed by OSCAR BC; eForm collections are hosted on OSCAR Galaxy for download and import.\n\n' +
-			'Error Message:' + message);
+		// return alert('This eForm contains source code errors that will cause a failure of functionality or loss of data.\n\n' +
+		// 	'Please go to OSCARGalaxy.org for an updated version of this eForm, or  if a new version is not available, contact info@oscarbc.ca to request a repair.\n\n' +
+		// 	'E-forms are a community project managed by OSCAR BC; eForm collections are hosted on OSCAR Galaxy for download and import.\n\n' +
+		// 	'Error Message:' + message);
+		let eform = {};
+		eform.formId = document.getElementById("fid").value;
+		eform.error = message;
+		let context = document.getElementById("context").value;
+		jQuery.post(context + "/eform/logEformError.do", eform);
 	}
-
-
 
 	/**
 	 * Triggers the eForm save/submit function
@@ -628,7 +631,16 @@ document.addEventListener("DOMContentLoaded", function(){
 		const idsOfButtonsToHide = ["SubmitButton","ResetButton","PrintButton","PrintSubmitButton"];
 		for (let i = 0; i < idsOfButtonsToHide.length; i++) {
 			let el = document.getElementById(idsOfButtonsToHide[i]);
-			if (el) {
+
+			if(!el) {
+				el = document.getElementsByName(idsOfButtonsToHide[i]);
+			}
+
+			if (el && el.constructor === NodeList && el.length > 0) {
+				for (let i = 0; i < el.length; i++) {
+					el[i].style.display = "none";
+				}
+			} else if (el && el.constructor !== NodeList) {
 				el.style.display = "none";
 			}
 		}	
