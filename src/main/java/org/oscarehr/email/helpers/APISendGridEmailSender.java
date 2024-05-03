@@ -72,7 +72,6 @@ public class APISendGridEmailSender {
 
         HttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(getEndPoint());
-        httpPost.setEntity(addAdditionalParams());
         httpPost.setHeader("Content-Type", "application/json");
         httpPost.setHeader("Authorization", "Bearer " + getAPIKey());
         try {
@@ -92,6 +91,8 @@ public class APISendGridEmailSender {
         addSubject(emailJson);
         addBody(emailJson);
         addAttachments(emailJson);
+        addAdditionalParams(emailJson);
+        addApiKey(emailJson);
         return emailJson.toString();
     }
 
@@ -149,6 +150,14 @@ public class APISendGridEmailSender {
         }
         emailJson.put("attachments", jsonAttachments);
     }
+    
+    private void addAdditionalParams(JSONObject emailJson) throws EmailSendingException {
+        emailJson.put("additionalParams", additionalParams);
+    }
+    
+    private void addApiKey(JSONObject emailJson) throws EmailSendingException {
+        emailJson.put("apiKey", getAPIKey());
+    }
 
     private String getAPIKey() throws EmailSendingException {
         String apiKey;
@@ -172,16 +181,5 @@ public class APISendGridEmailSender {
             throw new EmailSendingException("Invalid credentials configured for " + emailConfig.getSenderEmail());
         }
         return endPointBuilder.toString();
-    }
-
-    private HttpEntity addAdditionalParams() throws EmailSendingException {
-        List<NameValuePair> params = new ArrayList<>();
-        additionalParams = additionalParams + "&apiKey=" + getAPIKey();
-        params.add(new BasicNameValuePair("additionalParams", additionalParams));
-        try {
-            return new UrlEncodedFormEntity(params);
-        } catch (UnsupportedEncodingException e) {
-            throw new EmailSendingException("Unsupported encoding exception occurred: " + e.getMessage(), e);
-        }
     }
 }
