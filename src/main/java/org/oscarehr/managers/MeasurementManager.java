@@ -99,6 +99,19 @@ public class MeasurementManager {
 		return results;
 	}
 
+	public List<Measurement> getLatestMeasurementsByDemographicIdObservedAfter(LoggedInInfo loggedInInfo, Integer demographicId, Date observedDate) {
+		List<Measurement> results = new ArrayList<>();
+		//If the consent type does not exist in the table assume this consent type is not being managed by the clinic, otherwise ensure patient has consented
+		boolean hasConsent = patientConsentManager.hasProviderSpecificConsent(loggedInInfo) || patientConsentManager.getConsentType(ConsentType.PROVIDER_CONSENT_FILTER) == null;
+		if (hasConsent) {
+			results = measurementDao.findLatestByDemographicObservedAfterDate(demographicId, observedDate);
+			if (results.size() > 0) {
+				LogAction.addLogSynchronous(loggedInInfo, "MeasurementManager.getMeasurementByDemographicIdAfter", "demographicId="+demographicId+" updateAfter="+ observedDate);
+			}
+		}
+		return results;
+	}
+
 	public List<MeasurementMap> getMeasurementMaps() {
 		// should be safe to get all as they're a defined set of loinic codes or human entered entries
 		List<MeasurementMap> results = measurementMapDao.getAllMaps();
