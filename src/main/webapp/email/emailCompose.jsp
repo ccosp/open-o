@@ -39,6 +39,11 @@
 		font-size: small;
 	}
 
+	body {
+		max-width: 1600px;
+  		margin: auto;
+	}
+
 	img {
 		max-width: 100%;
 		height: auto;
@@ -184,6 +189,8 @@
 				</c:when>
 			</c:choose>
 
+			<input type="hidden" name="isEmailError" id="isEmailError" value="${isEmailError}" />
+			<input type="hidden" name="emailErrorMessage" id="emailErrorMessage" value="${emailErrorMessage}" />
 			<input type="hidden" name="isEmailSuccessful" id="isEmailSuccessful" value="${isEmailSuccessful}" />
 			<input type="hidden" name="emailPatientChartOption" id="emailPatientChartOption" value="${ empty param.emailPatientChartOption ? emailPatientChartOption : param.emailPatientChartOption }" />
 			<input type="hidden" name="totalSenderEmails" id="totalSenderEmails" value="${fn:length(senderAccounts)}" />
@@ -505,6 +512,13 @@
 
 <script type="text/javascript" >
 document.addEventListener("DOMContentLoaded", function () {
+	// Check if any error
+	if (document.getElementById('isEmailError').value === 'true') {
+		// Open EForm again on sent
+		showErrorAndClose();
+		return;
+	}
+
 	// After sending email
 	if (document.getElementById('isEmailSuccessful').value === 'true' || document.getElementById('isEmailSuccessful').value === 'false') {
 		// Open EForm again on sent
@@ -730,6 +744,12 @@ function showAdditionalParamOption() {
 
 function showAdditionalParamsTextBox() {
 	document.getElementById('additionalURLParams').classList.toggle('hide');
+}
+
+function showErrorAndClose() {
+	const errorMessage = document.getElementById('emailErrorMessage').value.replace(/\\n/g, '\n');
+	alert(errorMessage);
+	window.close();
 }
 
 </script>

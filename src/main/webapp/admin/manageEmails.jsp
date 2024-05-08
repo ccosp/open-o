@@ -222,27 +222,28 @@
 	}
 
     function resend(emailLogId) {
-        ShowSpin(true);
+        //ShowSpin(true);
 		const url = $("#emailSearchForm").attr("action");
 		const data = "method=resendEmail&logId=" + emailLogId;
-        $.ajax({
-			url: url,
-			method: 'POST',
-			data: data,			
-			success: function(data) {
-				HideSpin();
-                const emailComposeWindow = window.open("", "_blank", "width=1100,height=1000");
-                emailComposeWindow.document.write(data);
-                emailComposeWindow.document.close();
-			},
-            error: function(xhr, status, error) {
-                HideSpin();
-                if (xhr.responseJSON) { 
-                    alert(xhr.responseJSON.errorMessage); 
-                } else {
-                    alert("500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.");
-                }
-            }});
+        window.open(url + "?" + data, "_blank", "width=1100,height=1000");
+        // $.ajax({
+		// 	url: url,
+		// 	method: 'POST',
+		// 	data: data,			
+		// 	success: function(data) {
+		// 		HideSpin();
+        //         const emailComposeWindow = window.open("", "_blank", "width=1100,height=1000");
+        //         emailComposeWindow.document.write(data);
+        //         emailComposeWindow.document.close();
+		// 	},
+        //     error: function(xhr, status, error) {
+        //         HideSpin();
+        //         if (xhr.responseJSON) { 
+        //             alert(xhr.responseJSON.errorMessage); 
+        //         } else {
+        //             alert("500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.");
+        //         }
+        //     }});
     }
 
     function resetForm() {

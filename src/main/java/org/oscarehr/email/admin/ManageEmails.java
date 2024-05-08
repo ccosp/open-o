@@ -81,8 +81,8 @@ public class ManageEmails extends JSONAction {
 		try {
 			emailAttachmentList = emailComposeManager.refreshEmailAttachments(request, response, emailLog);
 		} catch(PDFGenerationException e) {
-			errorResponse(response, "errorMessage", "This eForm (and attachments, if applicable) could not be downloaded. \\n\\n" + e.getMessage()); 
-			return null;
+			request.setAttribute("emailErrorMessage", "This eForm (and attachments, if applicable) could not be emailed. \\n\\n" + e.getMessage());
+			request.setAttribute("isEmailError", true);
 		}
 		
 		String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, emailLog.getDemographicNo());
