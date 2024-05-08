@@ -193,6 +193,13 @@ if(!authed) {
 		}
 	}
 
+	// 3.a. in some situations if the default billing form is set as Private it may be possible
+	// to set the Billing Type to private as well
+	// The common code for a private billing form is PRI
+	if("PRI".equals(defaultBillingForm)) {
+		bean.setBillType("Pri");
+	}
+
 	// 4. logged in user is overriding billing form preference during billing process.
 	/* horrible hack. Do not repeat.
 	 * If the targetProvider is set to "none" then this indicates that the
@@ -214,7 +221,7 @@ if(!authed) {
 	String defaultServiceLocation = OscarProperties.getInstance().getProperty("visittype");
 
 	// 2. global billing settings
-	List<Property> userSetDefaultServiceLocationList = propertyDao.findGlobalByName("bc_default_service_location");
+	List<Property> userSetDefaultServiceLocationList = propertyDao.findGlobalByName(Property.PROPERTY_KEY.bc_default_service_location);
 	if(userSetDefaultServiceLocationList != null && ! userSetDefaultServiceLocationList.isEmpty()) {
 		Property uerSetDefaultServiceLocationProperty = userSetDefaultServiceLocationList.get(0);
 		String userSetDefaultServiceLocation = null;
@@ -695,15 +702,16 @@ function replaceWCB(id){
 }
 
 function gotoPrivate(){
+
    if (document.BillingCreateBillingForm.xml_billtype.value === "Pri"){
 	   // change the billing sheet to private billing
 	   jQuery("#selectBillingForm").val("PRI").trigger('change');
    }
 
    // otherwise go back to the default billing form
-   else {
-	   jQuery("#selectBillingForm").val('${ billingSessionBean.billForm }').trigger('change');
-   }
+   <%--else {--%>
+	<%--   jQuery("#selectBillingForm").val('${ billingSessionBean.billForm }').trigger('change');--%>
+   <%--}--%>
 }
 
 function correspondenceNote(){
@@ -955,7 +963,7 @@ jQuery(document).ready(function(jQuery){
 
 	jQuery(document).on('change', '#xml_provider', function() {
 		let url = '${pageContext.servletContext.contextPath}/billing.do?demographic_no=' + '<%=Encode.forUriComponent(bean.getPatientNo())%>' + '&appointment_no=' + '<%=Encode.forUriComponent(bean.getApptNo())%>' + '&apptProvider_no=' + '<%=Encode.forUriComponent(bean.getApptProviderNo())%>' + '&demographic_name=' + '<%=URLEncoder.encode(bean.getPatientName(),"UTF-8")%>' + '&billRegion=BC&xml_provider=' + this.value;
-		console.log(url);
+
 		jQuery("#billingPatientInfoWrapper").load(url + " #billingPatientInfo", function(){
 			// re-bind all the javascript
 			jQuery("#selectBillingForm").trigger('change');
