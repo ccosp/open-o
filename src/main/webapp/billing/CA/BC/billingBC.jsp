@@ -1283,7 +1283,19 @@ if(wcbneeds != null){%>
 		if (thisForm != null) {
 
 			thisForm.setXml_provider(bean.getBillingProvider());
-			thisForm.setXml_location(OscarProperties.getInstance().getProperty("visitlocation"));
+			String visitLocation = OscarProperties.getInstance().getProperty("visitlocation");
+
+			// sometimes the visit locations tend to contain punctuation that is offending to struts.
+			if(visitLocation != null && ! visitLocation.isEmpty()) {
+				// split the code and description, then reassemble without punctuation
+				String visitLocationCode = visitLocation.split("\\|")[0];
+				String visitLocationDescription = visitLocation.split("\\|")[1];
+				visitLocationDescription = visitLocationDescription.replaceAll("[^A-Za-z]+", "").toUpperCase();
+				visitLocation = visitLocationCode + "|" + visitLocationDescription;
+
+				thisForm.setXml_location(visitLocation);
+			}
+
 			thisForm.setXml_visittype(bean.getVisitType());
 
 			if ( OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING") != null && OscarProperties.getInstance().getProperty("BC_DEFAULT_ALT_BILLING").equalsIgnoreCase("YES")){
@@ -1405,7 +1417,7 @@ if(wcbneeds != null){%>
                 <html:select styleClass="form-control" styleId="xml_location" property="xml_location">
                 <%
                   for (int i = 0; i < billlocation.length; i++) {
-                    String locationDescription = billlocation[i].getBillingLocation() + "|" + billlocation[i].getDescription();
+                    String locationDescription = billlocation[i].getBillingLocation() + "|" + billlocation[i].getDescription().replaceAll("[^A-Za-z]+", "").toUpperCase();;
                 %>
                   <html:option value="<%=Encode.forHtmlAttribute(locationDescription)%>"><%=Encode.forHtmlContent(billlocation[i].getDescription())%></html:option>
                 <%}                %>
