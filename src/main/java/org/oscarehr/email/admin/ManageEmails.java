@@ -81,7 +81,7 @@ public class ManageEmails extends JSONAction {
 		try {
 			emailAttachmentList = emailComposeManager.refreshEmailAttachments(request, response, emailLog);
 		} catch(PDFGenerationException e) {
-			request.setAttribute("emailErrorMessage", "This eForm (and attachments, if applicable) could not be emailed. \\n\\n" + e.getMessage());
+			request.setAttribute("emailErrorMessage", "This previously sent email cannot be re-opened for editing/resending. Please generate a new email instead. \\n\\n" + e.getMessage());
 			request.setAttribute("isEmailError", true);
 		}
 		
