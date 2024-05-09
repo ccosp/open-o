@@ -165,7 +165,7 @@ if(!authed) {
 	}
 
 	// 2. Default value set in Billing Settings
-	List<Property> defaultBillingFormPropertyList = propertyDao.findGlobalByName("default_billing_form");
+	List<Property> defaultBillingFormPropertyList = propertyDao.findGlobalByName(Property.PROPERTY_KEY.default_billing_form.name());
 	if(defaultBillingFormPropertyList != null && ! defaultBillingFormPropertyList.isEmpty()) {
 		Property defaultBillingFormProperty = defaultBillingFormPropertyList.get(0);
 		String billingForm = null;
@@ -173,7 +173,7 @@ if(!authed) {
 			billingForm = defaultBillingFormProperty.getValue();
 		}
 		if(billingForm != null && !  billingForm.isEmpty()
-				&& ! "clinicdefault".equalsIgnoreCase( billingForm)) {
+				&& ! Property.PROPERTY_VALUE.clinicdefault.name().equalsIgnoreCase(billingForm)) {
 			defaultBillingForm = billingForm;
 		}
 	}
@@ -187,7 +187,7 @@ if(!authed) {
 			userSetBillingForm = userSetDefaultBillingFormProperty.getValue();
 		}
 		if( userSetBillingForm != null && !  userSetBillingForm.isEmpty()
-				&& ! "clinicdefault".equalsIgnoreCase(userSetBillingForm.trim())) {
+				&& ! Property.PROPERTY_VALUE.clinicdefault.name().equalsIgnoreCase(userSetBillingForm.trim())) {
 			// override the billingform preset/default in session with the providers preference.
 			defaultBillingForm = userSetBillingForm;
 		}
@@ -203,7 +203,7 @@ if(!authed) {
 	// 4. logged in user is overriding billing form preference during billing process.
 	/* horrible hack. Do not repeat.
 	 * If the targetProvider is set to "none" then this indicates that the
-	 * Billing sheet selection has been overiden from the billing form.
+	 * Billing sheet selection has been overridden from the billing form.
 	 * The strange part is that the billing form selection has already been
 	 * set into the "bean" object before reaching this point.
 	 * Normally not a big deal - but - in this case the billing sheet is loaded
@@ -242,10 +242,15 @@ if(!authed) {
 			providerSetDefaultLocation = defaultServiceLocationProperty.getValue();
 		}
 		if(providerSetDefaultLocation != null && ! providerSetDefaultLocation.isEmpty()
-				&& ! "clinicdefault".equalsIgnoreCase(providerSetDefaultLocation)) {
+				&& ! Property.PROPERTY_VALUE.clinicdefault.name().equalsIgnoreCase(providerSetDefaultLocation))  {
 			// override default from Oscar properties or billing properties with the provider preference
 			defaultServiceLocation = providerSetDefaultLocation;
 		}
+	}
+
+	// this captures and modifies any legacy codes that may be still hanging around
+	if(defaultServiceLocation.contains("|")) {
+		defaultServiceLocation = defaultServiceLocation.split("\\|")[0].trim();
 	}
 
 	/*
@@ -1434,8 +1439,8 @@ if(wcbneeds != null){%>
                 <%
                   for (BillingFormData.BillingVisit billingVisit : billvisit) {
                 %>
-                    <html:option value="<%=Encode.forHtmlAttribute(billingVisit.getDisplayName())%>">
-	                    <%=Encode.forHtmlContent(billingVisit.getDisplayName())%>
+                    <html:option value="<%=Encode.forHtmlAttribute(billingVisit.getVisitType())%>">
+	                    <%=Encode.forHtmlContent(billingVisit.getDescription())%>
                     </html:option>
                 <%}%>
                 </html:select>
