@@ -1415,7 +1415,7 @@ function requestSignature()
 	document.getElementById('newSignature').value = "true";
 	document.getElementById('signatureShow').style.display = "block";
 	document.getElementById('clickToSign').style.display = "none";
-	document.getElementById('signatureShow').style.display = "block";
+	// document.getElementById('signatureShow').style.display = "block";
 	setInterval('refreshImage()', POLL_TIME);
 	document.location='<%=request.getContextPath()%>/signature_pad/topaz_signature_pad.jnlp.jsp?<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>=<%=signatureRequestId%>';
 
@@ -2557,7 +2557,7 @@ function clearAppointmentDateAndTime() {
 						<% if (OscarProperties.getInstance().getBooleanProperty("topaz_enabled", "true")) { %>
 						<input type="button" id="clickToSign" onclick="requestSignature()" value="click to sign" />
 						<% } else { %>
-						<iframe style="width:500px; height:132px;"id="signatureFrame" src="<%= request.getContextPath() %>/signature_pad/tabletSignature.jsp?inWindow=true&<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>=<%=signatureRequestId%>" ></iframe>
+						<iframe style="width:500px; height:132px;" id="signatureFrame" src="<%= request.getContextPath() %>/signature_pad/tabletSignature.jsp?inWindow=true&<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>=<%=signatureRequestId%>" ></iframe>
 						<% } %>
 
 					</td>
