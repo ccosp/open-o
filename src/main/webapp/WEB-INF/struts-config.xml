@@ -1303,6 +1303,11 @@
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/attachSuccessfull.jsp" />
 		</action>
 
+		<action input="/eform/efmshowform_data.jsp" path="/eform/logEformError" type="oscar.eform.EformLogErrorAction">
+		</action>
+		<action input="/eform/efmformadd_data.jsp" path="/eform/logEformError" type="oscar.eform.EformLogErrorAction">
+		</action>
+
 		<action input="/oscarConsultationRequest/ViewConsultationRequests.jsp" name="EctViewConsultationRequestsForm" path="/oscarEncounter/ViewConsultation" scope="request" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp" />
 
@@ -3078,7 +3083,7 @@
 		
 		
 	</action-mappings>
-	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" maxFileSize="100M" />
+	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" maxFileSize="500M" />
 	<message-resources parameter="oscarResources" null="false" />
 	<message-resources parameter="HelpResources" key="help" null="false" />
 	<message-resources parameter="MessageResources_program" key="pmm" null="false" />
