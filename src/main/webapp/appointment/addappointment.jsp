@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
@@ -160,7 +160,8 @@
 %>
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
 <%@page import="org.oscarehr.common.model.Site"%>
-<html:html locale="true">
+	<%@ page import="org.owasp.encoder.Encode" %>
+	<html:html locale="true">
 <head>
 <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-ui-1.8.18.custom.min.js"></script>
@@ -194,8 +195,6 @@ function onAdd() {
     return calculateEndTime() ;
 }
 
-
-<!--
 function setfocus() {
 	this.focus();
   document.ADDAPPT.keyword.focus();
@@ -315,7 +314,7 @@ function calculateEndTime() {
   }
 
   //no show
-  if(document.ADDAPPT.keyword.value.substring(0,1)=="." && document.ADDAPPT.demographic_no.value=="" ) {
+  if(document.ADDAPPT.keyword.value.substring(0,1) === "." && document.ADDAPPT.demographic_no.value === "" ) {
     document.ADDAPPT.status.value = 'N' ;
   }
 
@@ -364,7 +363,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
         document.forms[0].notes.value = "<%= StringEscapeUtils.escapeJavaScript(apptObj.getNotes()) %>";
         document.forms[0].resources.value = "<%=apptObj.getResources()%>";
         document.forms[0].type.value = "<%=apptObj.getType()%>";
-        if('<%=apptObj.getUrgency()%>' == 'critical') {
+        if('<%=apptObj.getUrgency()%>' === 'critical') {
                 document.forms[0].urgency.checked = "checked";
         }
 		document.forms[0].reasonCode.value = "<%=apptObj.getReasonCode() %>";
@@ -871,7 +870,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
 
             <div class="input">
                 <INPUT TYPE="TEXT" NAME="type"
-                    VALUE='<%=bFirstDisp?"":request.getParameter("type").equals("")?"":request.getParameter("type")%>'
+                    VALUE='<%=Encode.forHtmlAttribute(bFirstDisp?"":request.getParameter("type").equals("")?"":request.getParameter("type"))%>'
                     WIDTH="25" HEIGHT="20" border="0" hspace="2">
             </div>
         </li>
@@ -879,9 +878,9 @@ function pasteAppt(multipleSameDayGroupAppt) {
             <div class="label"><bean:message key="Appointment.formDuration" />:</div> <!--font face="arial"> End Time :</font-->
             <div class="input">
                 <INPUT TYPE="TEXT" NAME="duration"
-                        VALUE="<%=duration%>" WIDTH="25" HEIGHT="20" border="0" hspace="2" onChange="checkPageLock()">
+                        VALUE="<%=Encode.forHtmlAttribute(duration)%>" WIDTH="25" HEIGHT="20" border="0" hspace="2" onChange="checkPageLock()">
                 <INPUT TYPE="hidden" NAME="end_time"
-                        VALUE='<%=request.getParameter("end_time")%>' WIDTH="25"
+                        VALUE='<%=Encode.forHtmlAttribute(request.getParameter("end_time"))%>' WIDTH="25"
                         HEIGHT="20" border="0" hspace="2" onChange="checkTimeTypeIn(this)">
             </div>
             <div class="space">&nbsp;</div>
@@ -899,7 +898,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
             		name = String.valueOf((bFirstDisp && !bFromWL)?"":request.getParameter("name")==null?session.getAttribute("appointmentname")==null?"":session.getAttribute("appointmentname"):request.getParameter("name"));
             	%>
                 <INPUT TYPE="TEXT" NAME="keyword"
-                        VALUE="<%=name%>"
+                        VALUE="<%= Encode.forHtmlAttribute(name) %>"
                         HEIGHT="20" border="0" hspace="2" width="25" tabindex="1">
             </div>
             <div class="space">
@@ -927,7 +926,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
             <div class="input">
                 <input type="TEXT" name="demographic_no"
                     ONFOCUS="onBlockFieldFocus(this)" readonly
-                    value='<%=(bFirstDisp && !bFromWL)?"":request.getParameter("demographic_no").equals("")?"":request.getParameter("demographic_no")%>'
+                    value='<%=Encode.forHtmlAttribute((bFirstDisp && !bFromWL)?"":request.getParameter("demographic_no").equals("")?"":request.getParameter("demographic_no"))%>'
                     width="25" height="20" border="0" hspace="2">
             </div>
         </li>
@@ -951,12 +950,12 @@ function pasteAppt(multipleSameDayGroupAppt) {
 	                </c:choose>
 				</select>
 				</br>
-				<textarea id="reason" name="reason" tabindex="2" rows="2" wrap="virtual" cols="18"><%=bFirstDisp?"":request.getParameter("reason").equals("")?"":request.getParameter("reason")%></textarea>
+				<textarea id="reason" name="reason" tabindex="2" rows="2" wrap="virtual" cols="18"><%=Encode.forHtmlContent(bFirstDisp?"":request.getParameter("reason").equals("")?"":request.getParameter("reason"))%></textarea>
             </div>
             <div class="space">&nbsp;</div>
             <div class="label"><bean:message key="Appointment.formNotes" />:</div>
             <div class="input">
-                <textarea name="notes" tabindex="3" rows="2" wrap="virtual" cols="18"><%=bFirstDisp?"":request.getParameter("notes").equals("")?"":request.getParameter("notes")%></textarea>
+                <textarea name="notes" tabindex="3" rows="2" wrap="virtual" cols="18"><%=Encode.forHtmlContent(bFirstDisp?"":request.getParameter("notes").equals("")?"":request.getParameter("notes"))%></textarea>
             </div>
         </li>
         <% if (pros.isPropertyActive("mc_number")) { %>
@@ -1011,7 +1010,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
             <div class="input">
                 <input type="TEXT" name="resources"
                     tabindex="5"
-                    value='<%=bFirstDisp?"":request.getParameter("resources").equals("")?"":request.getParameter("resources")%>'
+                    value='<%=Encode.forHtmlAttribute(bFirstDisp?"":request.getParameter("resources").equals("")?"":request.getParameter("resources"))%>'
                     width="25" height="20" border="0" hspace="2">
             </div>
         </li>
@@ -1019,7 +1018,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
             <div class="label"><bean:message key="Appointment.formCreator" />:</div>
             <div class="input">
                 <INPUT TYPE="TEXT" NAME="user_id" readonly
-                    VALUE='<%=bFirstDisp?(StringEscapeUtils.escapeHtml(userlastname)+", "+StringEscapeUtils.escapeHtml(userfirstname)):request.getParameter("user_id").equals("")?"Unknown":request.getParameter("user_id")%>'
+                    VALUE='<%=Encode.forHtmlAttribute(bFirstDisp?(StringEscapeUtils.escapeHtml(userlastname)+", "+StringEscapeUtils.escapeHtml(userfirstname)):request.getParameter("user_id").equals("")?"Unknown":request.getParameter("user_id"))%>'
                     WIDTH="25" HEIGHT="20" border="0" hspace="2">
             </div>
             <div class="space">&nbsp;</div>
