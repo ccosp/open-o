@@ -1562,6 +1562,16 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
 		sb.append(getSex());
         sb.append("</div>");
 
+		//--> gender
+		if(getGender() != null && ! getGender().isEmpty()) {
+			sb.append("<div id='patient-gender'>");
+			sb.append("<div class='label'>");
+			sb.append("gender");
+			sb.append("</div>");
+			sb.append(getGender());
+			sb.append("</div>");
+		}
+
 		//--> Birthdate
 		sb.append("<div id='patient-dob'>");
 		sb.append("<div class='label'>");

@@ -662,7 +662,7 @@ function setType(typeSel,reasonSel,locSel,durSel,notesSel,resSel) {
 
             <div class="input">
                 <INPUT TYPE="TEXT" NAME="type"
-					VALUE="<%=bFirstDisp?appt.getType():request.getParameter("type")%>"
+					VALUE="<%=Encode.forHtmlAttribute(bFirstDisp?appt.getType():request.getParameter("type"))%>"
                     WIDTH="25">
             </div>
         </li>
@@ -693,18 +693,18 @@ function setType(typeSel,reasonSel,locSel,durSel,notesSel,resSel) {
     }
   }
 %> <INPUT TYPE="hidden" NAME="end_time"
-					VALUE="<%=bFirstDisp?ConversionUtils.toTimeStringNoSeconds(appt.getEndTime()):request.getParameter("end_time")%>"
+					VALUE="<%=Encode.forHtmlAttribute(bFirstDisp?ConversionUtils.toTimeStringNoSeconds(appt.getEndTime()):request.getParameter("end_time"))%>"
 					WIDTH="25" HEIGHT="20" border="0" onChange="checkTimeTypeIn(this)">
 				<%--              <INPUT TYPE="hidden" NAME="end_time" VALUE="<%=request.getParameter("end_time")%>" WIDTH="25" HEIGHT="20" border="0" onChange="checkTimeTypeIn(this)">--%>
 				<INPUT TYPE="TEXT" NAME="duration"
-					VALUE="<%=request.getParameter("duration")!=null?(request.getParameter("duration").equals(" ")||request.getParameter("duration").equals("")||request.getParameter("duration").equals("null")?(""+everyMin) :request.getParameter("duration")):(""+everyMin)%>"
+					VALUE="<%=Encode.forHtmlAttribute(request.getParameter("duration")!=null?(request.getParameter("duration").equals(" ")||request.getParameter("duration").equals("")||request.getParameter("duration").equals("null")?(""+everyMin) :request.getParameter("duration")):(""+everyMin))%>"
                     WIDTH="25">
             </div>
             <div class="space">&nbsp;</div>
             <div class="label"><bean:message key="Appointment.formChartNo" />:</div>
             <div class="input">
                 <input type="TEXT" name="chart_no"
-                    readonly value="<%=bFirstDisp?StringUtils.trimToEmpty(chartno):request.getParameter("chart_no")%>"
+                    readonly value="<%=Encode.forHtmlAttribute(bFirstDisp?StringUtils.trimToEmpty(chartno):request.getParameter("chart_no"))%>"
                     width="25">
             </div>
         </li>
@@ -726,9 +726,10 @@ function setType(typeSel,reasonSel,locSel,durSel,notesSel,resSel) {
                     <bean:message key="Appointment.formName" /></a>:
             </div>
             <div class="input">
+
                 <INPUT TYPE="TEXT" NAME="keyword"
 					tabindex="1"
-					VALUE="<%=Encode.forHtmlContent(bFirstDisp?nameSb.toString():request.getParameter("name"))%>"
+					VALUE="<%=Encode.forHtmlAttribute(bFirstDisp?nameSb.toString():request.getParameter("name"))%>"
                     width="25">
             </div>
             <div class="space">&nbsp;</div>
@@ -753,7 +754,7 @@ function setType(typeSel,reasonSel,locSel,durSel,notesSel,resSel) {
             <div class="input">
                 <input type="TEXT"
 					name="demographic_no" onFocus="onBlockFieldFocus(this)" readonly
-					value="<%=bFirstDisp?( (appt.getDemographicNo())==0?"":(""+appt.getDemographicNo()) ):request.getParameter("demographic_no")%>"
+					value="<%=Encode.forHtmlAttribute(bFirstDisp?( (appt.getDemographicNo())==0?"":(""+appt.getDemographicNo()) ):request.getParameter("demographic_no"))%>"
                     width="25">
             </div>
         </li>
@@ -853,7 +854,7 @@ if (bMultisites) { %>
             <div class="input">
                 <input type="TEXT"
 					name="resources" tabindex="5"
-					value="<%=Encode.forHtmlContent(bFirstDisp?appt.getResources():request.getParameter("resources"))%>"
+					value="<%=Encode.forHtmlAttribute(bFirstDisp?appt.getResources():request.getParameter("resources"))%>"
                     width="25">
             </div>
         </li>
