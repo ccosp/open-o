@@ -319,7 +319,8 @@
 						<div class="container">
 							<div class="row">	
 							<div class="col-sm-12">	
-								<input class="form-control" type="text" name="subjectEmail" id="subjectEmail" placeholder="Subject" value='${ empty param.subjectEmail ? subjectEmail : param.subjectEmail }' autocomplete="off" />			
+								<c:set var="subjectEmail" value="${ empty param.subjectEmail ? subjectEmail : param.subjectEmail }" />
+								<input class="form-control" type="text" name="subjectEmail" id="subjectEmail" placeholder="Subject" value="<c:out value='${subjectEmail}' />" autocomplete="off" />			
 							  <div class="error-message" id="subjectError"></div>
 							</div>
 							</div>
@@ -467,7 +468,8 @@
 						<button type="button" class="btn btn-link text-decoration-none" onclick="showAdditionalParamsTextBox()">Add Additional Parameters</button>
 					</div>
 					<div class="col-sm-9">
-						<input type="text" class="form-control hide" name="additionalURLParams" id="additionalURLParams" placeholder="Extra Parameters (if applicable)" value="">
+						<c:set var="emailAdditionalParams" value="${not empty emailAdditionalParams ? emailAdditionalParams : ''}" />
+						<input type="text" class="form-control ${ not empty emailAdditionalParams ? '' : 'hide' }" name="additionalURLParams" id="additionalURLParams" placeholder="Extra Parameters (if applicable)" value="<c:out value='${emailAdditionalParams}' />">
 					</div>
 				</div>
 				
