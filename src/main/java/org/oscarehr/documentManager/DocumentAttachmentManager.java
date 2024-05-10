@@ -168,6 +168,15 @@ public class DocumentAttachmentManager {
 		documentAttach.attachToConsult(attachments, documentType, providerNo, requestId);
 	}
 
+	public void attachToConsult(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer requestId, Integer demographicNo, Boolean editOnOcean) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_con", SecurityInfoManager.WRITE, demographicNo)) {
+			throw new RuntimeException("missing required security object (_con)");
+		}
+
+		DocumentAttach documentAttach = new DocumentAttach(demographicNo, editOnOcean);
+		documentAttach.attachToConsult(attachments, documentType, providerNo, requestId);
+	}
+
 	public void attachToEForm(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer fdid, Integer demographicNo) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.WRITE, demographicNo)) {
 			throw new RuntimeException("missing required security object (_eform)");

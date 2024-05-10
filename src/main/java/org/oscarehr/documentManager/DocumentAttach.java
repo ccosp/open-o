@@ -7,6 +7,8 @@ import org.oscarehr.common.model.EFormDocs;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.util.SpringUtils;
 
+import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.OceanEReferralAttachmentUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +17,15 @@ public class DocumentAttach {
 	private final ConsultDocsDao consultDocsDao = SpringUtils.getBean(ConsultDocsDao.class);
 	private final EFormDocsDao eFormDocsDao = SpringUtils.getBean(EFormDocsDao.class);
 
+	private Boolean editOnOcean = false;
+	private Integer demographicNo;
+
 	public DocumentAttach() {
+	}
+
+	public DocumentAttach(Integer demographicNo, Boolean editOnOcean) {
+		this.demographicNo = demographicNo;
+		this.editOnOcean = editOnOcean;
 	}
 
 	public void attachToConsult(String[] attachments, DocumentType documentType, String providerNo, Integer requestId) {
@@ -34,6 +44,8 @@ public class DocumentAttach {
 			if (oldList.contains(docId)) { continue; }
 			ConsultDocs consultDoc = new ConsultDocs(requestId, Integer.parseInt(docId), documentType.getType(), providerNo);
 			consultDocsDao.persist(consultDoc);
+
+			if (editOnOcean) { OceanEReferralAttachmentUtil.attachOceanEReferralConsult(docId, demographicNo, documentType.getType()); }
 		}
 	}
 
@@ -45,6 +57,8 @@ public class DocumentAttach {
 				consultDoc.setDeleted("Y");
 				consultDocsDao.merge(consultDoc);
 			}
+
+			if (editOnOcean) { OceanEReferralAttachmentUtil.detachOceanEReferralConsult(docId, documentType.getType()); }
 		}
 	}
 

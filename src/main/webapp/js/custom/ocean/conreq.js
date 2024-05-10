@@ -32,7 +32,7 @@ jQuery(document).ready(function(){
 function eRefer(event) {
     let demographicNo = document.getElementById("demographicNo").serialize();
     let documents = getDocuments(event);
-    let data = demographicNo + "&" + documents;
+    let data = demographicNo + "&" + documents + "&method=attachOceanEReferralConsult";
     jQuery.ajax({
         type: 'POST',
         url: document.getElementById("contextPath").value + '/oscarEncounter/eRefer.do',
@@ -61,5 +61,20 @@ function getDocuments(event) {
     }
 
     return "documents=" + documents;
+}
+
+function attachOceanAttachments() {
+    let demographicNo = document.getElementById("demographicNo").serialize();
+    let requestId = document.getElementById("requestId").serialize();
+    let documents = getDocuments();
+    let data = demographicNo + "&" + requestId + "&" + documents + "&method=editOceanEReferralConsult";
+    jQuery.ajax({
+        type: 'POST',
+        url: document.getElementById("contextPath").value + '/oscarEncounter/eRefer.do',
+        data: data,
+        success: function(response) {
+            console.log(response);
+        }
+    });
 }
 
