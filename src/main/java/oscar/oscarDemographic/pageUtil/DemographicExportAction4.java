@@ -2495,7 +2495,7 @@ public class DemographicExportAction4 extends Action {
 	}
 
 	//create ReadMe.txt & ExportEvent.log
-	files.add(makeReadMe(files));
+	files.add(makeReadMe(dirs, files));
 	dirs.add("");
 	files.add(makeExportLog(files.get(0).getParentFile()));
 	dirs.add("");
@@ -2691,7 +2691,7 @@ public class DemographicExportAction4 extends Action {
 	}
 }
 
-	File makeReadMe(ArrayList<File> fs) throws IOException {
+	File makeReadMe(ArrayList<String> dirs, ArrayList<File> fs) throws IOException {
 		File readMe = new File(fs.get(0).getParentFile(), "ReadMe.txt");
 		BufferedWriter out = new BufferedWriter(new FileWriter(readMe));
 		out.write("Physician Group					: ");
@@ -2716,9 +2716,20 @@ public class DemographicExportAction4 extends Action {
 		out.write("Date and Time stamp				: ");
 		out.write(UtilDateUtilities.getToday("yyyy-MM-dd hh:mm:ss aa"));
 		out.newLine();
-		out.write("Total patients files extracted	 : ");
-		out.write(String.valueOf(fs.size()));
+		out.write("Total patients files extracted per physician:");
 		out.newLine();
+		Map<String, Integer> fileCount = new HashMap<>();
+        for (String dir : dirs) {
+            if (fileCount.containsKey(dir)) {
+                fileCount.put(dir, fileCount.get(dir) + 1);
+            } else {
+                fileCount.put(dir, 1);
+            }
+        }
+		for (Map.Entry<String, Integer> entry : fileCount.entrySet()) {
+            out.write("	" + entry.getKey().split("_")[0] + " " + entry.getKey().split("_")[1] + ": " + entry.getValue());
+			out.newLine();
+        }
 		out.write("Number of errors				   : ");
 		out.write(String.valueOf(exportError.size()));
 		if (exportError.size()>0) out.write(" (See ExportEvent.log for detail)");
