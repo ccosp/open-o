@@ -537,6 +537,10 @@ public class ConsultationManager {
 			}
 		}
 
+		// Archives the retrieved attachments so they can't be retrieved again
+		eReferAttachment.setArchived(true);
+		eReferAttachmentDao.merge(eReferAttachment);
+
 		return consultationAttachments;
 	}
 	
