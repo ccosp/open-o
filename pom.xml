@@ -694,15 +694,15 @@
 		<!-- email -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>
-			<artifactId>javax.mail</artifactId>
-			<version>1.6.1</version>
+			<artifactId>jakarta.mail</artifactId>
+			<version>1.6.7</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
 			<version>1.5</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
 		<dependency>
@@ -1085,7 +1085,7 @@
 					<artifactId>util</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>javax.mail</groupId>
+					<groupId>jakarta.mail</groupId>
 					<artifactId>mail</artifactId>
 				</exclusion>
 			</exclusions>
@@ -1151,7 +1151,7 @@
 			<version>1.0.8</version>
 			<exclusions>
 				<exclusion>
-					<groupId>javax.mail</groupId>
+					<groupId>jakarta.mail</groupId>
 					<artifactId>mail</artifactId>
 				</exclusion>
 			</exclusions>
