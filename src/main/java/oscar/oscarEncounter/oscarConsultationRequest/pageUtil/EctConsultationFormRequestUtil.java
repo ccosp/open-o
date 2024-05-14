@@ -24,34 +24,10 @@
 
 package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
-
 import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.dao.ConsultationRequestDao;
-import org.oscarehr.common.dao.ConsultationRequestExtDao;
-import org.oscarehr.common.dao.ConsultationServiceDao;
-import org.oscarehr.common.dao.ContactDao;
-import org.oscarehr.common.dao.FaxClientLogDao;
-import org.oscarehr.common.dao.FaxJobDao;
-import org.oscarehr.common.dao.ProfessionalSpecialistDao;
-import org.oscarehr.common.model.Clinic;
-import org.oscarehr.common.model.ConsultationRequest;
-import org.oscarehr.common.model.ConsultationServices;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DemographicContact;
-import org.oscarehr.common.model.DemographicExt;
+import org.oscarehr.common.dao.*;
+import org.oscarehr.common.model.*;
 import org.oscarehr.common.model.DemographicExt.DemographicProperty;
-import org.oscarehr.common.model.FaxClientLog;
-import org.oscarehr.common.model.FaxJob;
-import org.oscarehr.common.model.ProfessionalContact;
-import org.oscarehr.common.model.ProfessionalSpecialist;
-import org.oscarehr.common.model.Provider;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.DemographicContactCreator;
@@ -61,6 +37,8 @@ import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 import oscar.util.ConversionUtils;
 import oscar.util.StringUtils;
+
+import java.util.*;
 
 public class EctConsultationFormRequestUtil {
 
@@ -405,7 +383,7 @@ public class EctConsultationFormRequestUtil {
 			
 
 			// isolate the main specialist fax log
-			if(faxRecipient != null && faxRecipient.getFax().equals(specialistFax)) {
+			if(faxRecipient != null && specialistFax.equals(faxRecipient.getFax())) {
 				setSpecialistFaxLog(faxRecipient);
 			} 
 			

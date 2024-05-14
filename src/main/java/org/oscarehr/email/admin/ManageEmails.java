@@ -81,8 +81,8 @@ public class ManageEmails extends JSONAction {
 		try {
 			emailAttachmentList = emailComposeManager.refreshEmailAttachments(request, response, emailLog);
 		} catch(PDFGenerationException e) {
-			errorResponse(response, "errorMessage", "This eForm (and attachments, if applicable) could not be downloaded. \\n\\n" + e.getMessage()); 
-			return null;
+			request.setAttribute("emailErrorMessage", "This previously sent email cannot be re-opened for editing/resending. Please generate a new email instead. \\n\\n" + e.getMessage());
+			request.setAttribute("isEmailError", true);
 		}
 		
 		String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, emailLog.getDemographicNo());
@@ -107,6 +107,7 @@ public class ManageEmails extends JSONAction {
 		request.setAttribute("isEmailEncrypted", emailLog.getIsEncrypted());
 		request.setAttribute("isEmailAttachmentEncrypted", emailLog.getIsAttachmentEncrypted());
 		request.setAttribute("emailPatientChartOption", emailLog.getChartDisplayOption().getValue());
+		request.setAttribute("emailAdditionalParams", emailLog.getAdditionalParams());
         request.getSession().setAttribute("emailAttachmentList", emailAttachmentList);
 
 		return mapping.findForward("compose");

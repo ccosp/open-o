@@ -39,6 +39,11 @@
 		font-size: small;
 	}
 
+	body {
+		max-width: 1600px;
+  		margin: auto;
+	}
+
 	img {
 		max-width: 100%;
 		height: auto;
@@ -184,6 +189,8 @@
 				</c:when>
 			</c:choose>
 
+			<input type="hidden" name="isEmailError" id="isEmailError" value="${isEmailError}" />
+			<input type="hidden" name="emailErrorMessage" id="emailErrorMessage" value="${emailErrorMessage}" />
 			<input type="hidden" name="isEmailSuccessful" id="isEmailSuccessful" value="${isEmailSuccessful}" />
 			<input type="hidden" name="emailPatientChartOption" id="emailPatientChartOption" value="${ empty param.emailPatientChartOption ? emailPatientChartOption : param.emailPatientChartOption }" />
 			<input type="hidden" name="totalSenderEmails" id="totalSenderEmails" value="${fn:length(senderAccounts)}" />
@@ -206,9 +213,9 @@
 							<div class="row">	
 							<div class="col-sm-12 form-group">
 								<label for="senderEmailAddress">Sender</label>
-								<select class="form-select" name="senderEmailAddress"  id="senderEmailAddress">
+								<select class="form-select" name="senderEmailAddress"  id="senderEmailAddress" onchange="showAdditionalParamOption()">
 									<c:forEach items="${ senderAccounts }" var="senderAccount">
-										<option value="${ senderAccount.senderEmail }" ${ senderAccount.senderEmail eq senderEmail or senderAccount.senderEmail eq param.senderEmail ? 'selected' : '' }>
+										<option value="${ senderAccount.senderEmail }" data-email-type="${ senderAccount.emailType }" ${ senderAccount.senderEmail eq senderEmail or senderAccount.senderEmail eq param.senderEmail ? 'selected' : '' }>
 											<c:out value="${ senderAccount.senderFirstName }"/> <c:out value="${ senderAccount.senderLastName }"/> <c:out value="(${ senderAccount.senderEmail })"/>
 										</option>
 									</c:forEach>
@@ -312,7 +319,8 @@
 						<div class="container">
 							<div class="row">	
 							<div class="col-sm-12">	
-								<input class="form-control" type="text" name="subjectEmail" id="subjectEmail" placeholder="Subject" value='${ empty param.subjectEmail ? subjectEmail : param.subjectEmail }' autocomplete="off" />			
+								<c:set var="subjectEmail" value="${ empty param.subjectEmail ? subjectEmail : param.subjectEmail }" />
+								<input class="form-control" type="text" name="subjectEmail" id="subjectEmail" placeholder="Subject" value="<c:out value='${subjectEmail}' />" autocomplete="off" />			
 							  <div class="error-message" id="subjectError"></div>
 							</div>
 							</div>
@@ -454,6 +462,16 @@
                         </div>
                     </div>
                 </div>
+
+				<div id="additionalParams" class="m-2 row hide">
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-link text-decoration-none" onclick="showAdditionalParamsTextBox()">Add Additional Parameters</button>
+					</div>
+					<div class="col-sm-9">
+						<c:set var="emailAdditionalParams" value="${not empty emailAdditionalParams ? emailAdditionalParams : ''}" />
+						<input type="text" class="form-control ${ not empty emailAdditionalParams ? '' : 'hide' }" name="additionalURLParams" id="additionalURLParams" placeholder="Extra Parameters (if applicable)" value="<c:out value='${emailAdditionalParams}' />">
+					</div>
+				</div>
 				
 				<div class="container mt-4" id="form-control-buttons">
 					<div class="row">
@@ -496,6 +514,13 @@
 
 <script type="text/javascript" >
 document.addEventListener("DOMContentLoaded", function () {
+	// Check if any error
+	if (document.getElementById('isEmailError').value === 'true') {
+		// Open EForm again on sent
+		showErrorAndClose();
+		return;
+	}
+
 	// After sending email
 	if (document.getElementById('isEmailSuccessful').value === 'true' || document.getElementById('isEmailSuccessful').value === 'false') {
 		// Open EForm again on sent
@@ -517,6 +542,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// Select chart option from user's preference
 	selectPatientChartOption();
+
+	// Show additional field option if API type sender is selected
+	showAdditionalParamOption();
 });
 
 document.addEventListener("keydown", function(event) {
@@ -584,11 +612,14 @@ function validateField(field, errorMessage, errors, errorElementId) {
 function displayError(errorElementId, errorMessage) {
 	const errorElement = document.getElementById(errorElementId);
 	errorElement.innerHTML = errorMessage;
+	errorElement.parentNode.firstElementChild.classList.add("is-invalid");
+	setTimeout(function() { errorElement.scrollIntoView({ block: 'center' }); }, 100);
 }
 
 function clearError(errorElementId) {
 	const errorElement = document.getElementById(errorElementId);
 	errorElement.innerHTML = '';
+	errorElement.parentNode.firstElementChild.classList.remove("is-invalid");
 }
 
 function showEncryptionOptions() {
@@ -698,6 +729,29 @@ function cancelEmail() {
 	const emailComposeForm = document.getElementById("emailComposeForm");
 	emailComposeForm.action = "${ctx}/email/emailSendAction.do?method=cancel";
 	emailComposeForm.submit();
+}
+
+function showAdditionalParamOption() {
+	const senderEmailAddress = document.getElementById('senderEmailAddress');
+	const selectedSender = senderEmailAddress.options[senderEmailAddress.selectedIndex];
+	if (selectedSender === null) { return; }
+	
+	const senderEmailType = selectedSender.getAttribute('data-email-type');
+	if (senderEmailType && senderEmailType === "API") { 
+		document.getElementById('additionalParams').classList.remove('hide');
+	} else {
+		document.getElementById('additionalParams').classList.add('hide');
+	}
+}
+
+function showAdditionalParamsTextBox() {
+	document.getElementById('additionalURLParams').classList.toggle('hide');
+}
+
+function showErrorAndClose() {
+	const errorMessage = document.getElementById('emailErrorMessage').value.replace(/\\n/g, '\n');
+	alert(errorMessage);
+	window.close();
 }
 
 </script>

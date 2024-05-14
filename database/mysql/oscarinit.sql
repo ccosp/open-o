@@ -906,6 +906,8 @@ CREATE TABLE IF NOT EXISTS eform (
   roleType varchar(50) default NULL,
   programNo int(10) DEFAULT NULL,
   restrictToProgram tinyint(1) NOT NULL DEFAULT '0',
+  `stable` tinyint(1) NOT NULL DEFAULT 1,
+  `errorLog` tinyblob NULL,
   PRIMARY KEY  (fid),
   UNIQUE KEY id (fid)
 ) ;
@@ -13157,6 +13159,7 @@ CREATE TABLE IF NOT EXISTS emailLog (
     chartDisplayOption VARCHAR(20),
     transactionType VARCHAR(20),
     demographicNo INT,
+    additionalParams VARCHAR(1000),
     FOREIGN KEY (configId) REFERENCES emailConfig (id)
 );
 CREATE TABLE IF NOT EXISTS emailAttachment (

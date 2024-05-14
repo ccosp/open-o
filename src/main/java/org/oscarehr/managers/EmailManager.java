@@ -97,6 +97,7 @@ public class EmailManager {
         emailLog.setChartDisplayOption(emailData.getChartDisplayOption());
         emailLog.setTransactionType(emailData.getTransactionType());
         emailLog.setErrorMessage("Email was not sent successfully for unknown reasons.");
+        emailLog.setAdditionalParams(emailData.getAdditionalParams());
         emailLog.setDemographicNo(emailData.getDemographicNo());
         emailLogDao.persist(emailLog);
         return emailLog;

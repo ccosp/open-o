@@ -25,7 +25,7 @@
 --%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page import="java.sql.*, oscar.eform.data.*"%>
+<%@ page import="oscar.eform.data.*"%>
 <%@ page import="org.oscarehr.util.LoggedInInfo"%>
 <%@ page import="oscar.oscarEncounter.data.EctFormData"%>
 <%@ page import="org.oscarehr.common.model.enumerator.DocumentType"%>
@@ -34,7 +34,6 @@
 <%@ page import="org.oscarehr.util.SpringUtils"%>
 <%@ page import="oscar.util.StringUtils" %>
 <%@ page import="java.util.List"%>
-<%@ page import="java.util.ArrayList"%>
 
 <%!
     public void addHiddenEFormAttachments(LoggedInInfo loggedInInfo, EForm eForm, String eFormId) {
