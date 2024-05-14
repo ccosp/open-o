@@ -49,6 +49,8 @@ if(!authed) {
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
+<%@ page import="org.owasp.encoder.Encode" %>
+
 
 <%!
 CBIUtil cbiUtil = new CBIUtil();
@@ -89,7 +91,7 @@ if(submissionLogList!=null)
 <table class="table_main_details" width="100%" height="100%" border="1" bordercolor="#C0CBDB">
 	<tr>
 		<td class="summary">
-			<span>Date : <input type="text" id="txt_date" value="<%=dateStr%>" readonly="readonly"></span>
+			<span>Date : <input type="text" id="txt_date" value="<%= Encode.forHtmlContent(dateStr) %>" readonly="readonly"></span>
 			<span>Attempted : <font style="bold" color="blue"> <%=totalCount %></font></span>
 			<span>Successful : <font style="bold" color="green"> <%=successCount %></font></span>
 			<span>Unsuccessful : <font style="bold" color="red"> <%=failureCount %></font></span>
@@ -161,15 +163,15 @@ if(submissionLogList!=null)
 										cls = "error";
 									%>
 									<tr class="<%=cls%>" onclick="onclick_submission('<%=ocanSubmissionLog.getId()%>');">
-										<td align="center"><%=ocanStaffForm.getClientId() %></td>
-										<td align="center"><%=ocanStaffForm.getFirstName() %></td>
-										<td align="center"><%=ocanStaffForm.getLastName() %></td>
-										<td align="center"><%=admissionDate %></td>
-										<td align="center"><%=functionalCentre %></td>
-										<td align="center"><%=dateFormat.format(ocanStaffForm.getCreated()) %></td>
-										<td align="center"><%=result %></td>
-										<td align="center"><%=dateFormat.format(ocanSubmissionLog.getSubmitDateTime()) %></td>
-										<td align="center"><%=ocanSubmissionLog.getResultMessage() %></td>
+										<td align="center"><%= Encode.forHtmlContent(ocanStaffForm.getClientId()) %></td>
+										<td align="center"><%= Encode.forHtmlContent(ocanStaffForm.getFirstName()) %></td>
+										<td align="center"><%= Encode.forHtmlContent(ocanStaffForm.getLastName()) %></td>
+										<td align="center"><%= Encode.forHtmlContent(admissionDate) %></td>
+										<td align="center"><%= Encode.forHtmlContent(functionalCentre) %></td>
+										<td align="center"><%= Encode.forHtmlContent(dateFormat.format(ocanStaffForm.getCreated())) %></td>
+										<td align="center"><%= Encode.forHtmlContent(result) %></td>
+										<td align="center"><%= Encode.forHtmlContent(dateFormat.format(ocanSubmissionLog.getSubmitDateTime())) %></td>
+										<td align="center"><%= Encode.forHtmlContent(ocanSubmissionLog.getResultMessage()) %></td>
 									</tr>
 									<%
 								}
