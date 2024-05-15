@@ -33,6 +33,8 @@
 <%@ page import="org.oscarehr.common.model.MyGroup" %>
 <%@ page import="org.oscarehr.common.model.MyGroupPrimaryKey" %>
 <%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
+<%@ page import="org.owasp.encoder.Encode" %>
+
 
 <%
 	MyGroupDao myGroupDao = SpringUtils.getBean(MyGroupDao.class);
@@ -43,7 +45,7 @@
     boolean isSiteAccessPrivacy=false;
 %>
 
-<security:oscarSec objectName="_site_access_privacy" roleName="<%=roleName$%>" rights="r" reverse="false">
+<security:oscarSec objectName="_site_access_privacy" roleName="<%= Encode.forHtmlAttribute(roleName$) %>" rights="r" reverse="false">
 	<%isSiteAccessPrivacy=true; %>
 </security:oscarSec>
 
@@ -112,11 +114,11 @@ for(MyGroup myGroup : groupList) {
 			<tr class="<%=toggleLine?"":"info"%>">
 				<td width="20px">
 					<input type="checkbox"
-					name="<%=myGroup.getId().getMyGroupNo() + myGroup.getId().getProviderNo()%>"
-					value="<%=myGroup.getId().getMyGroupNo()%>">
+					name="<%= Encode.forHtmlAttribute(myGroup.getId().getMyGroupNo() + myGroup.getId().getProviderNo()) "
+					value="<%= Encode.forHtmlAttribute(myGroup.getId().getMyGroupNo()) %>">
 				</td>
-				<td><%=myGroup.getId().getMyGroupNo()%></td>
-				<td> <%=myGroup.getLastName()+","+ myGroup.getFirstName()%>
+				<td><%= Encode.forHtml(myGroup.getId().getMyGroupNo()) %></td>
+				<td> <%= Encode.forHtml(myGroup.getLastName() + "," + myGroup.getFirstName()) %>
 				</td>
 			</tr>
 <%
