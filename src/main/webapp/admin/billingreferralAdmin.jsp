@@ -20,13 +20,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="org.apache.commons.lang.StringEscapeUtils"%>
+<%@page import="org.owasp.encoder.Encode"%>
+
 <%@ include file="/taglibs.jsp"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
     if(session.getAttribute("userrole") == null )  response.sendRedirect("../logout.jsp");
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 %>
-<security:oscarSec roleName="<%=roleName$%>"
+<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 	objectName="_admin,_admin.misc" rights="r" reverse="<%=true%>">
 	<%response.sendRedirect("../logout.jsp");%>
 </security:oscarSec>
@@ -143,11 +145,11 @@ function clearMe() {
 
 <nested:form action="/admin/ManageBillingReferral">
 	 <nested:hidden property="method" value="advancedSearch"/>
-	 <input type="text" name="nameQuery" id="nameQuery" placeholder="Name or ReferralId" value="<%=(name != null)?name:""%>">
+	 <input type="text" name="nameQuery" id="nameQuery" placeholder="Name or ReferralId" value="<%= Encode.forHtmlAttribute((name != null) ? name : "") %>">
 	 &nbsp;
-	 <input type="text" name="specialtyQuery" id="specialtyQuery" placeholder="Specialty" value="<%=(specialty != null)?specialty:""%>">
+	 <input type="text" name="specialtyQuery" id="specialtyQuery" placeholder="Specialty" value="<%= Encode.forHtmlAttribute((specialty != null) ? specialty : "") %>">
 	  &nbsp;
-	 <input type="text" name="addressQuery" id="addressQuery" placeholder="Address" value="<%=(addressQ != null)?addressQ:""%>">
+	 <input type="text" name="addressQuery" id="addressQuery" placeholder="Address" value="<%= Encode.forHtmlAttribute((addressQ != null) ? addressQ : "") %>">
 	  &nbsp;
 	  Include hidden:
 	  <input type="checkbox" name="showHidden" id="showHidden" <%=(checked!=null&&checked)?" checked=\"checked\" ":"" %> />
@@ -175,7 +177,7 @@ function clearMe() {
     %>
     	
     <display:column><input type="checkbox" name="checked_${referral.id}" onChange="checkUncheck('${referral.id}')"/></display:column>
-    <display:column><a href="javascript:void(0)" onclick="openEditSpecialist('${referral.id}')"><%=linkName %></a></display:column>
+    <display:column><a href="javascript:void(0)" onclick="openEditSpecialist('<%= Encode.forJavaScriptAttribute(referral.id) %>')"><%= Encode.forHtml(linkName) %></a></display:column>
     <display:column property="firstName" title="First Name" />
     <display:column property="lastName" title="Last Name" />
     <display:column property="specialtyType" title="Specialty" />
@@ -201,7 +203,7 @@ function clearMe() {
 						for(ProfessionalSpecialist ps:checkedSpecs) {
 					%>
 						<tr>
-							<td><%=StringEscapeUtils.escapeHtml(ps.getFormattedName()) %></td>
+							<td><%= Encode.forHtml(ps.getFormattedName()) %></td>
 						</tr>
 					<%} } else { %>
 						<tr>
