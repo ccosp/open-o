@@ -24,6 +24,14 @@ document.addEventListener("DOMContentLoaded", function(){
 		const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
 		if (error === "true") { showError(errorMessage); }
 
+		// add listener to the subject element
+		document.forms[0].elements["subject"].addEventListener("input", function() {
+			document.getElementById("remote_eform_subject").value = this.value;
+		})
+		document.forms[0].elements["subject"].addEventListener("click", function() {
+			document.getElementById("remote_eform_subject").value = this.value;
+		})
+
 	});
 
 	window.onerror = function uncaughtExceptionHandler(message, source, lineNumber, colno, error) {
