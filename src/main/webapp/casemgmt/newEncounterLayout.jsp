@@ -345,10 +345,10 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 
 	if(maximizeP != null && maximizeP.getValue().equals("yes")) {%>
 		<script> jQuery(window).load(function(){window.resizeTo(screen.width,screen.height);});</script>
-	<% } else if(widthP != null && widthP.getValue().length()>0 && heightP != null && heightP.getValue().length()>0) {
+	<% } else if(widthP != null && !widthP.getValue().isEmpty() && heightP != null && !heightP.getValue().isEmpty()) {
 		String width = widthP.getValue();
 		String height = heightP.getValue();%>
-		<script> jQuery(window).load(function(){window.resizeTo(<%=width%>,<%=height%>)}) </script>;
+		<script> jQuery(window).load(function(){window.resizeTo(<%=width%>,<%=height%>)}) </script>
 	<% } %>
 
 <html:base />
