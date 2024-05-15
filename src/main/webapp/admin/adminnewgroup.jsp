@@ -46,7 +46,7 @@
     boolean isSiteAccessPrivacy=false;
 %>
 
-<security:oscarSec objectName="_site_access_privacy" roleName="<%=roleName$%>" rights="r" reverse="false">
+<security:oscarSec objectName="_site_access_privacy" roleName="<%= Encode.forHtmlAttribute(roleName$) %>" rights="r" reverse="false">
 	<%isSiteAccessPrivacy=true; %>
 </security:oscarSec>
 
@@ -68,7 +68,9 @@ function validate() {
   group = document.UPDATEPRE.mygroup_no.value;
 
   if (group.length <=0 || group <= " ") {
-     alert("<bean:message key="admin.adminNewGroup.msgGroupIsRequired"/>");
+     //alert("<bean:message key="admin.adminNewGroup.msgGroupIsRequired"/>");
+	 alert("<%= Encode.forJavaScriptBlock(properties.getString("admin.adminNewGroup.msgGroupIsRequired")) %>");
+
 
      return false;
   }
@@ -159,12 +161,12 @@ function validate() {
 			<tr class="<%=i%2==0?"":"info"%>">
 				<td width="20px" ALIGN="center">
 				<input type="checkbox" name="data" value="<%=i%>"> 
-				<input type="hidden" name="provider_no<%=i%>" value="<%= provider.getId() %>"> 
-				<input type="hidden" name="last_name<%=i%>" value='<%= provider.getLastName() %>'> 
-				<input type="hidden" name="first_name<%=i%>" value='<%= provider.getFirstName() %>'>
+				<input type="hidden" name="provider_no<%=i%>" value="<%= Encode.forHtmlAttribute(provider.getId()) %>"> 
+				<input type="hidden" name="last_name<%=i%>" value='<%= Encode.forHtmlAttribute(provider.getLastName()) %>'> 
+				<input type="hidden" name="first_name<%=i%>" value='<%= Encode.forHtmlAttribute(provider.getFirstName()) %>'>
 				</td>
 				
-				<td><%= provider.getLastName() %>, <%= provider.getFirstName() %></td>
+				<td><%= Encode.forHtml(provider.getLastName()) %>, <%= Encode.forHtml(provider.getFirstName()) %></td>
 
 			</tr>
 <%
