@@ -28,12 +28,14 @@
 <%@page import="oscar.OscarProperties"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.ParseException"%>
+<%@page import="org.owasp.encoder.Encode"%>
+
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin.auditLogPurge" rights="w" reverse="<%=true%>">
+<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin.auditLogPurge" rights="w" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_admin.auditLogPurge");%>
 </security:oscarSec>
