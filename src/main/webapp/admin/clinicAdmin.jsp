@@ -43,9 +43,13 @@ if(!authed) {
 
 <%@ page import="java.util.*"%>
 <%@ page import="oscar.oscarReport.reportByTemplate.*"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+
+
+
 <html:html locale="true">
 <head>
 <title>Clinic</title>
@@ -67,61 +71,61 @@ if(!authed) {
   <div class="control-group">
     <label class="control-label" for="clinic.clinicName"><bean:message key="admin.k2a.clinicName" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicName" />
+      <input type="text" name="clinic.clinicName" value=" <%= Encode.forHtlmAttribute(clinic.getClinicName()) %>" />
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="clinic.clinicAddress"><bean:message key="admin.provider.formAddress" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicAddress" />
+      <input type="text" name="clinic.clinicAddress" value="<%= Encode.forHtlmAttribute(clinic.getClinicAddress()) %>" />
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="clinic.clinicCity"><bean:message key="oscarReport.oscarReportCatchment.msgCity" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicCity" />
+      <input type="text" name="clinic.clinicCity" value="<%= Encode.forHtmlAttribute(clinic.getClinicCity()) %>" />
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="clinic.clinicPostal"><bean:message key="oscarReport.oscarReportCatchment.msgPostal" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicPostal" />
+      <input type="text" name="clinic.clinicPostal" value="<%= Encode.forHtmlAttribute(clinic.getClinicPostal()) %>" />
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="clinic.clinicPhone"><bean:message key="appointment.addappointment.msgPhone" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicPhone" />
+      <input type="text" name="clinic.clinicPhone" value="<%= Encode.forHtmlAttribute(clinic.getClinicPhone()) %>" />
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="clinic.clinicFax"><bean:message key="admin.provider.formFax" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicFax" />
+      <input type="text" name="clinic.clinicFax" value="<%= Encode.forHtmlAttribute(clinic.getClinicFax()) %>" />
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="clinic.clinicLocationCode" ><bean:message key="location" />&nbsp;  <bean:message key="billing.billingDigSearch.formCode" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicLocationCode" />
+      <input type="text" name="clinic.clinicLocationCode" value="<%= Encode.forHtmlAttribute(clinic.getClinicLocationCode()) %>"/>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="clinic.clinicProvince"><bean:message key="demographic.demographicaddrecordhtm.formprovince" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicProvince" />
+      <input type="text" name="clinic.clinicProvince" value="<%= Encode.forHtmlAttribute(clinic.getClinicProvince()) %>" />
     </div>
   </div>
   <div class="control-group" title="Multi phone delimited by |">
     <label class="control-label" for="clinic.clinicDelimPhone" ><bean:message key="appointment.addappointment.msgPhone" />|<bean:message key="appointment.addappointment.msgPhone" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicDelimPhone" />
+      <input type="text" name="clinic.clinicDelimPhone" value="<%= Encode.forHtmlAttribute(clinic.getClinicDelimPhone()) %>" />
     </div>
   </div>
   <div class="control-group" title="Multi fax delimited by |">
     <label class="control-label" for="clinic.clinicDelimFax" ><bean:message key="admin.provider.formFax" />|<bean:message key="admin.provider.formFax" /></label>
     <div class="controls">
-      <html:text property="clinic.clinicDelimFax" />
+      <input type="text" name="clinic.clinicDelimFax" value="<%= Encode.forHtmlAttribute(clinic.getClinicDelimFax()) %>" />
     </div>
   </div>
   <div class="control-group">
