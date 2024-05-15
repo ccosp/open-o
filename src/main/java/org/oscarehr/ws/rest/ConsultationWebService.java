@@ -781,8 +781,12 @@ public class ConsultationWebService extends AbstractServiceImpl {
 			doc.setDeleted(ConsultDocs.DELETED);
 		}
 		
+		List<String> uniqueAttachments = new ArrayList<>();
 		//compare current & new, remove from current list the unchanged ones - no need to update them
 		for (ConsultationAttachmentTo1 newAtth : newAttachments) {
+			if (uniqueAttachments.contains(newAtth.getDocumentType() + newAtth.getDocumentNo())) { continue; }
+			uniqueAttachments.add(newAtth.getDocumentType() + newAtth.getDocumentNo());
+
 			boolean isNew = true;
 			for (ConsultDocs doc : currentDocs) {
 				if (doc.getDocType().equals(newAtth.getDocumentType()) && doc.getDocumentNo()==newAtth.getDocumentNo()) {
