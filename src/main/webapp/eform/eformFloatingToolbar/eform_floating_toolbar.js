@@ -1,48 +1,85 @@
-	document.addEventListener("DOMContentLoaded", function(){   
+document.addEventListener("DOMContentLoaded", function(){
+		/**
+		 *  Enable Are-you-sure dirty page detection.
+		 */
+		jQuery("form:first").areYouSure();
+
 		/**
 		 * Trigger these functions every time this page loads.
 		 */
+		removeElements();
+		hideElements();
+		addNavElement();
+		moveSubjectReverse();
 
-			removeElements();
-			hideElements();
-			addNavElement();
-			moveSubjectReverse();
+		// Add eForm attachments
+		addEFormAttachments();
 
-			// Add eForm attachments 
-			addEFormAttachments();
-			
-			// Resize the window based on the toolbar width
-			window.resizeTo(1100,1100);
+		// If download EForm
+		const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";
+		if (isDownload && isDownload === "true") { downloadEForm(); }
 
-			// If download EForm
-			const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";
-			if (isDownload && isDownload === "true") { downloadEForm(); }
+		// Handle EForm errors
+		const error = document.getElementById("error") ? document.getElementById("error").value : "false";
+		const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
+		if (error === "true") { showError(errorMessage); }
 
-			// Handle EForm errors
-			const error = document.getElementById("error") ? document.getElementById("error").value : "false";
-			const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
-			if (error === "true") { showError(errorMessage); }
+		// add listener to the subject element
+		document.forms[0].elements["subject"].addEventListener("input", function() {
+			document.getElementById("remote_eform_subject").value = this.value;
+		})
+		document.forms[0].elements["subject"].addEventListener("click", function() {
+			document.getElementById("remote_eform_subject").value = this.value;
+		})
 
 	});
-	
+
+	window.onerror = function uncaughtExceptionHandler(message, source, lineNumber, colno, error) {
+		// return alert('This eForm contains source code errors that will cause a failure of functionality or loss of data.\n\n' +
+		// 	'Please go to OSCARGalaxy.org for an updated version of this eForm, or  if a new version is not available, contact info@oscarbc.ca to request a repair.\n\n' +
+		// 	'E-forms are a community project managed by OSCAR BC; eForm collections are hosted on OSCAR Galaxy for download and import.\n\n' +
+		// 	'Error Message:' + message);
+		let eform = {};
+		eform.formId = document.getElementById("fid").value;
+		eform.error = message;
+		let context = document.getElementById("context").value;
+		jQuery.post(context + "/eform/logEformError.do", eform);
+	}
+
 	/**
 	 * Triggers the eForm save/submit function
 	 */
 	function remoteSave() {
-		
+
+		// bind the spinner to the form submit event.
+		jQuery('form').on('submit', function(e) {
+			ShowSpin(true);
+		});
+
 		moveSubject();
-		ShowSpin(true);
+
+		if(typeof releaseDirtyFlag === "function")
+		{
+			console.log("Releasing dirty window flag by releaseDirtyFlag function")
+			window["releaseDirtyFlag"]();
+		}
+
+		// don't need the dirty form notification if the form is being autosaved.
+		if(isFormDirty()) {
+			jQuery("form:first").trigger('reinitialize.areYouSure');
+		}
+
 		if (typeof saveRTL === "function")
 		{
+			console.log("Saving RTL or RTL template");
 			window["saveRTL"]();
 			document.RichTextLetter.submit();
 			return true;
 		} 
-		
-		
-		if (document.getElementsByName("SubmitButton") && 
-				typeof document.getElementsByName("SubmitButton")[0].click() === "function") 
+
+		if (document.getElementsByName("SubmitButton") && document.getElementsByName("SubmitButton")[0])
 		{
+			console.log("Saving by remote click of the SubmitButton");
 			try
 			{
 				document.getElementsByName("SubmitButton")[0].click();
@@ -54,13 +91,9 @@
 			}
 		}
 		
-		if(typeof releaseDirtyFlag === "function")
-		{
-			window["releaseDirtyFlag"]();
-		}
-		
 		if(typeof submission === "function")
 		{
+			console.log("Executing submission method before submitting first form directly");
 			try
 			{
 				window["submission"]();
@@ -75,6 +108,7 @@
 		
 		try
 		{
+			console.log("Submitting first form in document directly");
 			document.forms[0].submit();
 			return true;
 		} 
@@ -82,9 +116,10 @@
 		{
 			console.log(error);
 		}
-		HideSpin();
-		return false;
 
+		HideSpin();
+
+		return false;
 	}
 
 	/**
@@ -98,7 +133,7 @@
 		trigger.data('poload', context + '/previewDocs.do?method=fetchEFormDocuments&demographicNo=' + demographicNo + '&fdid=' + fdid);
 		trigger.off('click');
 		let title = trigger.attr("title");
-		jQuery("#attachDocumentDisplay").load( trigger.data('poload'), function(response, status, xhr){
+		jQuery("#attachDocumentDisplay").load(trigger.data('poload'), function(response, status, xhr){
 			if (status === "success") {
 				// Disable the floating toolbar when the attachment window opens
 				const eformFloatingToolbar = document.getElementById("eform_floating_toolbar");
@@ -284,9 +319,8 @@
 				document.forms[0].appendChild(recipientNumberElement);
 			}
 		}
-			
+
 		remoteSave();
-	
 	}
 	
 	/**
@@ -296,33 +330,86 @@
 		
 		if( typeof formPrint === "function" ) 
 		{
-			formPrint();
-		} 
+			try {
+				console.log("Printing document remotely with formPrint method");
+				formPrint();
+			} catch(e) {
+				console.log("Eform returns fatal error while using formPrint function " + e);
+				hailMary();
+			}
+		}
+
 		else if(typeof printLetter === "function") 
 		{
-			printLetter(); 
-		} 
+			try {
+				console.log("Printing document remotely with printLetter method")
+				printLetter();
+			} catch(e) {
+				console.log("Eform returns fatal error while using printLetter function "  + e);
+				hailMary();
+			}
+		}
+
+		else if (document.getElementsByName("PrintButton") && document.getElementsByName("PrintButton")[0])
+		{
+			try {
+				console.log(document.getElementsByName("PrintButton"));
+				console.log("Remotely clicking button with name PrintButton");
+				document.getElementsByName("PrintButton")[0].click();
+			} catch(e) {
+				console.log("Error locating PrintButton "  + e);
+				hailMary();
+			}
+		}
+
 		else if(document.getElementById('edit')) 
 		{
-			document.getElementById('edit').contentWindow.print();
+			try {
+				console.log("Content has been edited and no print method was found. Executing window.print");
+				document.getElementById('edit').contentWindow.print();
+			} catch(e) {
+				console.log("Error locating PrintButton "  + e);
+				hailMary();
+			}
 		} 
-		else if (document.getElementsByName("PrintButton") &&
-				typeof document.getElementsByName("PrintButton")[0].click() === "function")
+
+		else
 		{
-			document.getElementsByName("PrintButton")[0].click();
+			hailMary()
 		}
-		else 
-		{
-			alert("Cannot print. Try the print button on the eForm.");
-		}
+
 		/*
 		 * Needs to be saved if this is
 		 * a new eForm or it has been altered.
 		 */
-		if(needToConfirm) {			
+		if(isFormDirty()) {
+			console.log("eForm needs to be saved.")
 			remoteSave();
-		} 
-	
+		}
+	}
+
+	/**
+	 *  detect if this form is dirty enough to be auto-saved.
+	 * @returns {boolean}
+	 */
+	function isFormDirty() {
+		// new forms are always dirty
+		const formElement = jQuery("#newForm");
+		if(formElement && formElement.val() === "true") {
+			return true;
+		}
+
+		// if the form has be edited added to.
+		return jQuery('form:first').hasClass('dirty');
+	}
+
+	function hailMary() {
+		console.log("Just do window print.")
+		try{
+			window.print();
+		} catch {
+			alert("Cannot print. Try the print button on the eForm.");
+		}
 	}
 	
 	/**
@@ -346,8 +433,9 @@
 			newElement.setAttribute("type", "hidden");
 			document.forms[0].appendChild(newElement);
 		}
+
 		remoteSave();
-	
+
 	}
 	
 	/**
@@ -363,15 +451,15 @@
 	 * Should be done just before the save process. 
 	 */
 	function moveSubject() {
-		var remoteSubject = document.getElementById("remote_eform_subject");
-		var remoteSubjectValue;
+		let remoteSubject = document.getElementById("remote_eform_subject");
+		let remoteSubjectValue;
 		
 		if(remoteSubject)
 		{
 			remoteSubjectValue = remoteSubject.value;
 		}
 		
-		var localSubject = document.forms[0].elements["subject"];
+		let localSubject = document.forms[0].elements["subject"];
 		if(localSubject)
 		{
 			localSubject.value = remoteSubjectValue;
@@ -410,8 +498,8 @@
 	 */
 	function closeToolbar() {
 	
-		var toolbarContainer = document.getElementById("eform_floating_toolbar");
-		var toolbarNav = document.getElementById("eform_floating_toolbar_nav");
+		let toolbarContainer = document.getElementById("eform_floating_toolbar");
+		let toolbarNav = document.getElementById("eform_floating_toolbar_nav");
 		if(toolbarContainer && toolbarNav) {
 			toolbarNav.style.display = "none";
 			
@@ -439,9 +527,9 @@
 		const toolbarNav = document.getElementById("eform_floating_toolbar_nav");
 		const toolbarContainer = document.getElementById("eform_floating_toolbar");
 		if( toolbarContainer && openToolbarButton && toolbarNav) {
-			toolbarNav.style.display = "initial";			
+			toolbarContainer.removeAttribute("style");
+			toolbarNav.removeAttribute("style");
 			openToolbarButton.style.display = "none";
-			toolbarContainer.style = "";
 		}
 	}
 
@@ -450,7 +538,7 @@
 	 * eform to avoid any confusion on what fax system is being used. 
 	 */
 	function removeElements() {
-	    var element = document.getElementById("faxControl");
+	    let element = document.getElementById("faxControl");
 	    
 	    if(element)
 	    {
@@ -473,6 +561,15 @@
 	    if(element)
 	    {
 	    	element.parentNode.removeChild(element);
+
+			/*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+			const inputElement = document.createElement("input");
+			inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "fax_button");
+		    document.forms[0].appendChild(inputElement);
 	    }
 	    
 	    element = document.getElementById("faxSave_button");
@@ -480,15 +577,51 @@
 	    if(element)
 	    {
 	    	element.parentNode.removeChild(element);
+
+		    /*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+		    const inputElement = document.createElement("input");
+		    inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "faxSave_button");
+		    document.forms[0].appendChild(inputElement);
 	    }
 	    
 	    element = document.getElementById("faxEForm");
 	    
 	    if(element)
 	    {
-	    	element.parentNode.removeChild(element); 
+	    	element.parentNode.removeChild(element);
+
+		    /*
+			 * add a dummy placeholder back in because the eForm developers
+			 * created a hard dependency on the existence of this element.
+			 */
+		    const inputElement = document.createElement("input");
+		    inputElement.setAttribute("type", "hidden");
+		    inputElement.setAttribute("id", "faxEForm");
+		    document.forms[0].appendChild(inputElement);
 	    }
-	
+
+		/*
+		 * sometimes these are in there too.
+		 */
+		let inputElement = document.createElement("input");
+		inputElement.setAttribute("type", "hidden");
+		inputElement.setAttribute("id", "otherFaxInput");
+		document.forms[0].appendChild(inputElement);
+	}
+
+	/**
+	 * A wrapper function to dismiss uncaught exceptions for when
+	 * this function contained in the removed faxControl.js file is
+	 * called.
+	 * Do nothing.
+	 */
+	function AddOtherFax() {
+		// do nothing
+		return false;
 	}
 
 	/**
@@ -500,7 +633,16 @@
 		const idsOfButtonsToHide = ["SubmitButton","ResetButton","PrintButton","PrintSubmitButton"];
 		for (let i = 0; i < idsOfButtonsToHide.length; i++) {
 			let el = document.getElementById(idsOfButtonsToHide[i]);
-			if (el) {
+
+			if(!el) {
+				el = document.getElementsByName(idsOfButtonsToHide[i]);
+			}
+
+			if (el && el.constructor === NodeList && el.length > 0) {
+				for (let i = 0; i < el.length; i++) {
+					el[i].style.display = "none";
+				}
+			} else if (el && el.constructor !== NodeList) {
 				el.style.display = "none";
 			}
 		}	
@@ -514,11 +656,11 @@
 		const file = "../eform/eformFloatingToolbar/eform_floating_toolbar.jspf";
 		const xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4) {
+			if (this.readyState === 4) {
 
-				if (this.status == 200)
+				if (this.status === 200)
 				{
-					var toolbarWrapper = document.createElement("div");
+					let toolbarWrapper = document.createElement("div");
 					toolbarWrapper.setAttribute("id","toolbarWrapper");
 					toolbarWrapper.setAttribute("class","hidden-print DoNotPrint no-print");
 					toolbarWrapper.innerHTML = this.responseText;
@@ -528,7 +670,7 @@
 					jQuery('#remoteTotalAttachments').empty().append(jQuery('.delegateAttachment').length);
 				}
 
-				if (this.status == 404)
+				if (this.status === 404)
 				{
 					elmnt.append("eForm tool bar not found.");
 				}
@@ -552,7 +694,7 @@
 		 */
 		let body = document.body;
 	    let html = document.documentElement;
-		var documentheight = Math.max( body.scrollHeight, body.offsetHeight, 
+		let documentheight = Math.max( body.scrollHeight, body.offsetHeight,
 		                       html.clientHeight, html.scrollHeight, html.offsetHeight );
 		
 		/*
@@ -565,8 +707,8 @@
 		 * 65 pixels to the bottom so that the eForm clears the remote button 
 		 * panel
 		 */
-		var formelement = document.getElementsByTagName("form");
-		var spacer = document.createElement("div");
+		let formelement = document.getElementsByTagName("form");
+		let spacer = document.createElement("div");
 		spacer.setAttribute("id","eformPageSpacer");
 		spacer.setAttribute("class","hidden-print DoNotPrint no-print");
 		spacer.style.position = "absolute";
@@ -581,8 +723,8 @@
 		/*
 		 * Place the new CSS style into the parent page. 
 		 */
-		var headelement = document.getElementsByTagName("head");
-		var style = document.createElement("link");
+		let headelement = document.getElementsByTagName("head");
+		let style = document.createElement("link");
 		style.setAttribute("rel", "stylesheet");
 		style.setAttribute("type", "text/css");
 		style.setAttribute("href", "../library/bootstrap/3.0.0/css/eform_floating_toolbar_bootstrap_custom.min.css");
@@ -632,4 +774,25 @@
 			spinner.style.opacity = "1";
 		}, 300);
 	}
-	
+
+	/**
+	 * A counter hack for a hack.
+	 * This method moves the image SRC values into hidden place-holders in the Form element
+	 * A counter-measure to ensure images that are set by Javascript methods are captured
+	 * when the form is saved or rendered into a pdf.
+	 */
+	jQuery(window).on('load', function() {
+		const imageTags = jQuery('img');
+		if(imageTags) {
+			imageTags.each(function(){
+				const id = jQuery(this).attr('id') || "";
+				const value = jQuery(this).attr('src') || "";
+				jQuery('<input>', {
+					id: Math.random().toString(36) + '-' + id,
+					name: 'openosp-image-link',
+					value: JSON.stringify({id: id, value: value}),
+					type: 'hidden'
+				}).appendTo("form[method='POST']");
+			})
+		}
+	})

@@ -231,28 +231,7 @@
     %>
     <c:import url="/infirm.do?action=showProgram"/>
 </caisi:isModuleLoad>
-<!-- caisi infirmary view extension add end -->
-<%
-//    //Gets the request URL
-//    StringBuffer oscarUrl = request.getRequestURL();
-//    //Sets the length of the URL, found by subtracting the length of the servlet path from the length of the full URL, that way it only gets up to the context path
-//    oscarUrl.setLength(oscarUrl.length() - request.getServletPath().length());
 
-
-%>
-<%!
-    /**
-     Checks if the schedule day is patients birthday
-     **/
-    public boolean isBirthday(String schedDate, String demBday) {
-        return schedDate.equals(demBday);
-    }
-
-    public boolean patientHasOutstandingPrivateBills(String demographicNo) {
-        oscar.oscarBilling.ca.bc.MSP.MSPReconcile msp = new oscar.oscarBilling.ca.bc.MSP.MSPReconcile();
-        return msp.patientHasOutstandingPrivateBill(demographicNo);
-    }
-%>
 <%
     ProviderPreference providerPreference = ProviderPreferencesUIBean.getProviderPreference(loggedInInfo1.getLoggedInProviderNo());
 
@@ -520,9 +499,21 @@
 
         <script type="text/javascript">
 
+            document.addEventListener("DOMContentLoaded", () => {
+                const birthdayCakes = document.getElementsByClassName('birthday-cake');
+                for(let item in birthdayCakes) {
+                    if(! birthdayCakes[item].dataset) {
+                        continue;
+                    }
+                    if(birthdayCakes[item].dataset.month === birthdayCakes[item].dataset.bday) {
+                        birthdayCakes[item].style.display = 'inline';
+                    }
+                }
+            })
+
             function changeGroup(s) {
                 var newGroupNo = s.options[s.selectedIndex].value;
-                if (newGroupNo.indexOf("_grp_") != -1) {
+                if (newGroupNo.indexOf("_grp_") !== -1) {
                     newGroupNo = s.options[s.selectedIndex].value.substring(5);
                 } else {
                     newGroupNo = s.options[s.selectedIndex].value;
@@ -581,11 +572,10 @@
 
 
         </script>
-        <style type="text/css">
+        <style>
             .ds-btn {
                 background-color: #f4ead7;
                 border: 1px solid #0097cf;
-                span-size: 11px;
             }
         </style>
 
@@ -820,10 +810,11 @@
 
     <table id="firstTable" class="noprint">
         <tr>
-            <td class="icon-container">
-                <img alt="OSCAR EMR" src="<%=request.getContextPath()%>/images/oscar_logo_small.png" width="19" >
-            </td>
+
             <td id="firstMenu">
+                <div class="icon-container">
+                    <img alt="OSCAR EMR" src="<%=request.getContextPath()%>/images/oscar_logo_small.png" width="19px" >
+                </div>
                 <ul id="navlist">
                     <logic:notEqual name="infirmaryView_isOscar" value="false">
                         <% if (request.getParameter("viewall") != null && request.getParameter("viewall").equals("1")) { %>
@@ -1142,11 +1133,11 @@
                         </a>
                     </li>
                 </ul>
-            </td>
-            <td>
-                <a id="logoutButton" title="<bean:message key="global.btnLogout"/>" href="../logout.jsp">
-                    <span class="glyphicon glyphicon-off"></span>
-                </a>
+                <div>
+                    <a id="logoutButton" title="<bean:message key="global.btnLogout"/>" href="../logout.jsp">
+                        <span class="glyphicon glyphicon-off"></span>
+                    </a>
+                </div>
             </td>
 
         </tr>
@@ -1198,7 +1189,7 @@
                         key="global.calendar"/></a>
 
                 <logic:notEqual name="infirmaryView_isOscar" value="false">
-                    | <% if (request.getParameter("viewall") != null && request.getParameter("viewall").equals("1")) { %>
+                    <% if (request.getParameter("viewall") != null && request.getParameter("viewall").equals("1")) { %>
                     <u><a href=# onClick="review('0')"
                           title="<bean:message key="provider.appointmentProviderAdminDay.viewAllProv"/>"><bean:message
                             key="provider.appointmentProviderAdminDay.schedView"/></a></u>
@@ -1212,7 +1203,7 @@
 
                 <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
                     <security:oscarSec roleName="<%=roleName$%>" objectName="_day" rights="r">
-                        | <a class="rightButton top"
+                       <a class="rightButton top"
                              href="providercontrol.jsp?year=<%=curYear%>&month=<%=curMonth%>&day=<%=curDay%><%=viewString%>&displaymode=day&dboperation=searchappointmentday"
                              TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>'
                              OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewDaySched"/>' ; return true"><bean:message
@@ -1220,7 +1211,7 @@
                     </security:oscarSec>
                     <security:oscarSec roleName="<%=roleName$%>" objectName="_month" rights="r">
 
-                        | <a
+                        <a
                             href="providercontrol.jsp?year=<%=year%>&month=<%=month%>&day=1<%=viewString%>&displaymode=month&dboperation=searchappointmentmonth"
                             TITLE='<bean:message key="provider.appointmentProviderAdminDay.viewMonthSched"/>'
                             OnMouseOver="window.status='<bean:message key="provider.appointmentProviderAdminDay.viewMonthSched"/>' ; return true"><bean:message
@@ -1258,45 +1249,48 @@
                 %>
             </td>
 
-            <td class="title noprint" ALIGN="center">
+            <td class="title noprint">
 
                 <%
                     if (isWeekView) {
                         for (int provIndex = 0; provIndex < numProvider; provIndex++) {
                             if (curProvider_no[provIndex].equals(provNum)) {
                 %>
-                <bean:message key="provider.appointmentProviderAdminDay.weekView"/>: <%=curProviderName[provIndex]%>
+                <%=Encode.forHtml(curProviderName[provIndex])%>
                 <%
                         }
                     }
-                } else {
-                    if (view == 1) {
-                %>
-                <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message
-                        key="provider.appointmentProviderAdminDay.grpView"/></a>
-                <% } %>
-<%--                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>--%>
-<%--                <% out.println(userfirstname + " " + userlastname); %>--%>
-            </td>
-            <%
-            } %>
+                } %>
 
-            <td id="group" ALIGN="RIGHT" BGCOLOR="Ivory">
+<%--                    else {--%>
+<%--                    if (view == 1) {--%>
+<%--                %>--%>
+<%--                <a href='providercontrol.jsp?year=<%=strYear%>&month=<%=strMonth%>&day=<%=strDay%>&view=0&displaymode=day&dboperation=searchappointmentday'><bean:message--%>
+<%--                        key="provider.appointmentProviderAdminDay.grpView"/></a>--%>
+<%--                <% } %>--%>
+<%--&lt;%&ndash;                <% if (!isMobileOptimized) { %> <bean:message key="global.hello"/> <% } %>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <% out.println(userfirstname + " " + userlastname); %>&ndash;%&gt;--%>
+<%--                <%} %>--%>
+            </td>
+
+
+            <td id="group">
 
                 <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
+                    <div>
                     <form method="post" name="findprovider"
                           onSubmit="findProvider(<%=year%>,<%=month%>,<%=day%>);return false;" target="apptReception"
-                          action="receptionistfindprovider.jsp"
-                          style="display:inline;margin:0px;padding:0px;padding-right:10px">
-                        <INPUT TYPE="text" NAME="providername" VALUE="" WIDTH="2" HEIGHT="10" border="0" size="10"
+                          action="receptionistfindprovider.jsp">
+                        <INPUT TYPE="text" NAME="providername" VALUE=""
                                maxlength="10" class="noprint" title="Find a Provider" placeholder="Enter Lastname">
                         <INPUT TYPE="SUBMIT" NAME="Go"
                                VALUE='<bean:message key="provider.appointmentprovideradminmonth.btnGo"/>'
                                class="noprint" onClick="findProvider(<%=year%>,<%=month%>,<%=day%>);return false;">
                     </form>
+                    </div>
                 </caisi:isModuleLoad>
-
-                <form name="appointmentForm" style="display:inline;margin:0px;padding:0px;">
+<div>
+                <form name="appointmentForm" >
                     <% if (isWeekView) { %>
                     <bean:message key="provider.appointmentProviderAdminDay.provider"/>:
                     <select name="provider_select" onChange="goWeekView(this.options[this.selectedIndex].value)">
@@ -1463,6 +1457,7 @@
 
 
                 </form>
+</div>
             </td>
         </tr>
     </table>
@@ -1799,7 +1794,19 @@
                                                               String name = ".";
                                                               if (demographic_no != 0) {
                                                                   demographic = demographicManager.getDemographic(loggedInInfo1, demographic_no);
-																  name = UtilMisc.toUpperLowerCase(demographic.getLastName()) + ", " + UtilMisc.toUpperLowerCase(demographic.getFirstName());
+                                                                  StringBuilder nameBuilder = new StringBuilder();
+																  nameBuilder.append(UtilMisc.toUpperLowerCase(demographic.getLastName()))
+																  .append(", ")
+																  .append(UtilMisc.toUpperLowerCase(demographic.getFirstName()));
+																  if(demographic.getPrefName() != null && ! demographic.getPrefName().isEmpty()) {
+                                                                      nameBuilder.append(" (")
+                                                                      .append(UtilMisc.toUpperLowerCase(demographic.getPrefName()))
+                                                                      .append(")");
+																  }
+																  if(demographic.getPronoun() != null && ! demographic.getPronoun().isEmpty()) {
+																    nameBuilder.append("; ").append(demographic.getPronoun());
+                                                                  }
+                                                                  name = nameBuilder.toString();
                                                               }
                                                               else {
 																  name = appointment.getName();
@@ -1867,23 +1874,23 @@
                                                                       String sitename = String.valueOf(appointment.getLocation()).trim();
                                                                       String type = appointment.getType();
                                                                       String urgency = appointment.getUrgency();
-                                                                      String reasonCodeName = null;
+                                                                      String reasonCodeName = "";
                                                                       if(appointment.getReasonCode() != null)    {
-                                                                        LookupListItem lli  = reasonCodesMap.get(appointment.getReasonCode());
-                                                                        if(lli != null) {
-                                                                            reasonCodeName = lli.getLabel();
-                                                                        }
-                                                                        if(reasonCodeName != null)
-                                                                        {
-                                                                            reasonCodeName = reasonCodeName.trim();
-                                                                        }
+                                                                            LookupListItem lli  = reasonCodesMap.get(appointment.getReasonCode());
+                                                                            if(lli != null) {
+                                                                                reason = lli.getLabel().trim() + " " + reason;
+                                                                            }
                                                                       }
-                                                                    if ( "yes".equalsIgnoreCase(OscarProperties.getInstance().getProperty("SHOW_APPT_TYPE_WITH_REASON")) ) {
-                                                                        reasonCodeName = ( type
+
+                                                                      if(reason != null && ! reason.isEmpty()) {
+                                                                            reasonCodeName += reason;
+                                                                      }
+
+                                                                      if ( "yes".equalsIgnoreCase(OscarProperties.getInstance().getProperty("SHOW_APPT_TYPE_WITH_REASON")) ) {
+                                                                        reasonCodeName = type
                                                                                 + ((type != null && ! type.isEmpty()) ? " : " : "")
-                                                                                + reasonCodeName );
-                                                                    }
-																	reasonCodeName = reasonCodeName;
+                                                                                + reasonCodeName;
+                                                                      }
 
                                                                   bFirstTimeRs=true;
                                                             as.setApptStatus(status);
@@ -2003,15 +2010,15 @@
 
                                                         <a href="javascript:void(0)"
                                                            onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=0&displaymode=edit&dboperation=search');return false;"
-                                                           title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%> <%=Encode.forHtmlAttribute(name)%>&#013;&#010;<%=" type: " + Encode.forHtmlAttribute(type)%>&#013;&#010;<%= " reason: " + Encode.forHtmlAttribute(reasonCodeName)%> <%=Encode.forHtmlAttribute(reason)%>&#013;&#010;<%=" notes: " + Encode.forHtmlAttribute(notes)%>"
-                                                        >
+                                                           title="<%=iS+":"+(iSm>10?"":"0")+iSm%>-<%=iE+":"+iEm%>
+                                                                <%=Encode.forHtmlAttribute(name)%><%= (type != null && ! type.isEmpty()) ? "&#013;&#010;type: " + Encode.forHtmlAttribute(type) : "" %>&#013;&#010;<%="reason: " + Encode.forHtmlAttribute(reason)%>&#013;&#010;<%="notes: " + Encode.forHtmlAttribute(notes)%>">
                                                             <span>
                                                             .<%=(view == 0 && numAvailProvider != 1) ? (name.length() > len ? name.substring(0, len).toUpperCase() : Encode.forHtmlContent(name.toUpperCase())) : Encode.forHtmlContent(name.toUpperCase())%>
                                                             </span>
                                                         </a><!--Inline display of reason -->
 
                                                         <span class="reason reason_<%=curProvider_no[nProvider]%> hideReason">
-                                                            <c:out value="<%=reason%>" />
+                                                            <%= Encode.forHtmlContent(reasonCodeName) %>
                                                         </span>
 
 
@@ -2062,24 +2069,22 @@
                                                             <% if (ver!=null && ver!="" && "##".compareTo(ver.toString()) == 0){%><a
                                                         href="#"
                                                         title="<bean:message key="provider.appointmentProviderAdminDay.versionMsg"/> <%=UtilMisc.htmlEscape(ver)%>">
-                                                    <span color="red">*</span></a><%}%>
+                                                    <span style="color:red;">*</span></a><%}%>
 
                                                             <% if (roster!="" && "FS".equalsIgnoreCase(roster)){%>
                                                     <a href="#"
-                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span
-                                                            color="red">$</span></a><%}%>
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span style="color:red;">$</span></a><%}%>
 
                                                             <% if ("NR".equalsIgnoreCase(roster) || "PL".equalsIgnoreCase(roster)){%>
                                                     <a href="#"
-                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span
-                                                            color="red">#</span></a><%}%>
+                                                       title="<bean:message key="provider.appointmentProviderAdminDay.rosterMsg"/> <%=UtilMisc.htmlEscape(roster)%>"><span style="color:red;">#</span></a><%}%>
 
                                                            </c:if>
                                                     <!-- doctor code block 2 -->
                                                         <c:if test="${not isPreventionWarningDisabled}">
                                                             <%String warning = providerPreventionManager.getWarnings(loggedInInfo1, String.valueOf(demographic_no));
                                                             if( !warning.isEmpty()) { %>
-                                                                  <img src="${pageContext.servletContext.contextPath}/images/stop_sign.png" height="14" width="14" title="<%=Encode.forHtmlContent(warning)%>" />&nbsp;
+                                                                  <img src="${pageContext.servletContext.contextPath}/images/stop_sign.png" width="14px" height="14px" style="margin-bottom: 3px;margin-left: 3px;" title="<%=Encode.forHtmlContent(warning)%>" />&nbsp;
                                                             <% } %>
                                                         </c:if>
                                                         <%
@@ -2098,7 +2103,7 @@
                                                     <a class="apptLink" href="javascript:void(0)"
                                                        onClick="popupPage(535,860,'../appointment/appointmentcontrol.jsp?appointment_no=<%=appointment.getId()%>&provider_no=<%=curProvider_no[nProvider]%>&year=<%=year%>&month=<%=month%>&day=<%=day%>&start_time=<%=iS+":"+iSm%>&demographic_no=<%=demographic_no%>&displaymode=edit&dboperation=search');return false;"
                                                             <oscar:oscarPropertiesCheck property="SHOW_APPT_REASON_TOOLTIP" value="yes" defaultVal="true">
-                                                                title="<%=Encode.forHtmlAttribute(name)%>&#013;&#010;<%=" type: " + Encode.forHtmlAttribute(type)%>&#013;&#010;<%= " reason: " + Encode.forHtmlAttribute(reasonCodeName)%> <%=Encode.forHtmlAttribute(reason)%>&#013;&#010;<%=" notes: " + Encode.forHtmlAttribute(notes)%>"
+                                                                title="<%=Encode.forHtmlAttribute(name)%><%= (type != null && ! type.isEmpty()) ? "&#013;&#010;type: " + Encode.forHtmlAttribute(type) : "" %>&#013;&#010;<%="reason: " + Encode.forHtmlAttribute(reason)%>&#013;&#010;<%="notes: " + Encode.forHtmlAttribute(notes)%>"
                                                             </oscar:oscarPropertiesCheck> >
                                                         <%=(view == 0) ? (name.length() > len ? Encode.forHtmlContent(name.substring(0, len)) : Encode.forHtmlContent(name)) : Encode.forHtmlContent(name)%>
                                                     </a>
@@ -2108,7 +2113,7 @@
 
                                                     <oscar:oscarPropertiesCheck
                                                             property="eform_in_appointment" value="yes">
-                                                    &#124;<b><a href="#"
+                                                    &#124; <b><a href="#"
                                                                 onclick="popupPage(500,1024,'../eform/efmformslistadd.jsp?parentAjaxId=eforms&demographic_no=<%=demographic_no%>&appointment=<%=appointment.getId()%>'); return false;"
                                                                 title="eForm Library">F</a></b>
                                                     </oscar:oscarPropertiesCheck>
@@ -2245,17 +2250,10 @@
                                                             %>
                                                             <%= (providerColor != null ? "<span style=\"background-color:"+providerColor+";width:5px\">&nbsp;</span>" : "") %>
                                                     </oscar:oscarPropertiesCheck>
-                                                            <%
-                                                          if("bc".equalsIgnoreCase(prov)){
-                                                          if(patientHasOutstandingPrivateBills(String.valueOf(demographic_no))){
-                                                          %>
-                                                    &#124;<b style="color:#FF0000">$</b>
-                                                            <%}}%>
 
                                                     <span class='reason reason_<%=curProvider_no[nProvider]%> hideReason'>
-                                                        <strong><i>
-                                                            &#124;<c:out value='<%=reasonCodeName == null ? "" : " " + reasonCodeName %>' />
-                                                            <c:out value='<%=(reason == null || reason.isEmpty()) ? "" : ((reasonCodeName != null && !reasonCodeName.isEmpty()) ? "- " : "") + reason%>' />
+                                                        &#124; <strong><i>
+                                                            <%= Encode.forHtmlContent(reasonCodeName)%>
                                                         </i></strong>
                                                     </span>
                                                     </c:if>
@@ -2265,13 +2263,10 @@
                                                     <a href=${pageContext.servletContext.contextPath}'/PMmodule/ClientManager.do?id=<%=demographic_no%>'
                                                        title="Program Management">|P</a>
                                                     </caisi:isModuleLoad>
-                                                            <%
 
-                                                                  if(isBirthday(monthDay,demBday)){%>
-                                                    &#124; <img src="${pageContext.servletContext.contextPath}/images/cake.gif" height="20"
-                                                                alt="Happy Birthday"/>
-                                                            <%}%>
-
+                                                        <span class="birthday-cake" data-month="<%= monthDay %>" data-bday="<%= demBday %>" style="display:none;">
+                                                            &#124;<img src="${pageContext.servletContext.contextPath}/images/cake.gif" width="14" height="14" style="margin-bottom: 3px;margin-left: 3px;" alt="Happy Birthday"/>
+                                                        </span>
                                                         <c:forEach items="${formNamesList}" var="form">
                                                             |<a href="javascript:void(0)" onClick='popupPage2("${pageContext.servletContext.contextPath}/form/forwardshortcutname.do?formname=<c:out value="${form}" />&amp;formId=0&provNo=${appointment.providerNo}&parentAjaxId=forms&amp;demographic_no=${appointment.demographicNo}&amp;appointmentNo=${appointment.id}")'
                                                             title='<c:out value="${form}" />'>
