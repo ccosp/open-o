@@ -25,6 +25,9 @@
 --%>
 <%@ page import="org.oscarehr.common.dao.StudyDao, org.oscarehr.common.model.Study" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
+
+<%@ page import="org.owasp.encoder.Encode" %>
+
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -111,15 +114,15 @@ else {
 <center>
 <table>
 <tr>
-	<td>Study Name<br><input type="text" id="studyName" name="studyName" value="<%=study == null ? "" : study.getStudyName()%>"/></td>
-	<td>Description<br><input type="text" id="studyDescription" name="studyDescription" value="<%=study == null || study.getDescription() == null ? "" : study.getDescription()%>"/></td>
+	<td>Study Name<br><input type="text" id="studyName" name="studyName" value="<%= Encode.forHtmlAttribute(study == null ? "" : study.getStudyName()) %>"/></td>
+	<td>Description<br><input type="text" id="studyDescription" name="studyDescription" value="<%= Encode.forHtmlAttribute(study == null || study.getDescription() == null ? "" : study.getDescription()) %>"/></td>
 </tr>
 <tr>
-	<td>Form Name<br><input type="text" name="studyForm" value="<%=study == null || study.getFormName() == null ? "" : study.getFormName()%>"/></td>
-	<td>Remote Server URL<br><input type="text" name="studyRemoteURL" value="<%=study == null || study.getRemoteServerUrl() == null ? "" : study.getRemoteServerUrl()%>"/></td>
+	<td>Form Name<br><input type="text" name="studyForm" value="<%= Encode.forHtmlAttribute(study == null || study.getFormName() == null ? "" : study.getFormName()) %>"/></td>
+	<td>Remote Server URL<br><input type="text" name="studyRemoteURL" value="<%= Encode.forHtmlAttribute(study == null || study.getRemoteServerUrl() == null ? "" : study.getRemoteServerUrl()) %>"/></td>
 </tr>
 <tr>
-	<td colspan="2" style="text-align:center;">Study Link<br><input type="text" name="studyLink" value="<%=study == null || study.getStudyLink() == null ? "" : study.getStudyLink()%>"/></td>
+	<td colspan="2" style="text-align:center;">Study Link<br><input type="text" name="studyLink" value="<%= Encode.forHtmlAttribute(study == null || study.getStudyLink() == null ? "" : study.getStudyLink()) %>"/></td>
 </tr>
 <tr>
 	<td colspan="2" style="text-align:center;"><input type="submit" value="Save" onclick="return validateForm();"/></td>
