@@ -25,6 +25,9 @@
 --%>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
+
+<%@page import="org.owasp.encoder.Encode"%>
+
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-html"
@@ -33,7 +36,7 @@
 	String roleName$ = (String)session.getAttribute("userrole") + "," + (String)session.getAttribute("user");
 	boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>"
+<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 	objectName="_admin,_admin.userAdmin,_admin.schedule,_admin.billing,_admin.invoices,_admin.resource,_admin.reporting,_admin.backup,_admin.messenger,_admin.eform,_admin.encounter,_admin.misc,_admin.torontoRfq"
 	rights="r" reverse="<%=true%>">
 		<%authed=false; %>
@@ -214,7 +217,7 @@ div.logoutBox {
 </div>
 
 <!-- #USER MANAGEMENT -->
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.userAdmin,_admin.torontoRfq,_admin.provider" rights="r" reverse="<%=false%>">
+<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.userAdmin,_admin.torontoRfq,_admin.provider" rights="r" reverse="<%=false%>">
 	
 	<div class="adminBox">
 	<h3>&nbsp;<bean:message key="admin.admin.UserManagement" /></h3>
@@ -236,7 +239,7 @@ div.logoutBox {
 			onclick='popupPage(500,700,&quot;<html:rewrite page="/admin/providerRole.jsp"/>&quot;);return false;'>
 		<bean:message key="admin.admin.assignRole"/></a></li>
 			
-		<security:oscarSec roleName="<%=roleName$%>"
+		<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 			objectName="_admin,_admin.unlockAccount" rights="r">
 			<li><a href="#"
 				onclick='popupPage(500,800,&quot;<html:rewrite page="/admin/unLock.jsp" />&quot;);return false;'>
@@ -249,11 +252,11 @@ div.logoutBox {
 <!-- #USER MANAGEMENT END -->
 
 <!-- #BILLING -->
-        <security:oscarSec roleName="<%=roleName$%>" objectName="_admin.invoices,_admin,_admin.billing" rights="r" reverse="<%=false%>">
+        <security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin.invoices,_admin,_admin.billing" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.billing" /></h3>
 		<ul>
-            <security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.billing" rights="r" reverse="<%=false%>">
+            <security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.billing" rights="r" reverse="<%=false%>">
 			<%
 				// Only show link to Clinicaid admin if Clinicaid Billing is enabled
 				if (oscarVariables.getProperty("billregion", "").equals("CLINICAID"))
@@ -397,7 +400,7 @@ div.logoutBox {
 <!-- #BILLING END-->
 
 <!-- #LABS/INBOX -->
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin," rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin," rights="r" reverse="<%=false%>">
 
 		<div class="adminBox">
 			<h3>&nbsp;<bean:message key="admin.admin.LabsInbox" /></h3>
@@ -417,7 +420,7 @@ div.logoutBox {
 <!-- #LABS/INBOX END -->	
 
 <!--  #FORMS/EFORMS -->	
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.eform" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.eform" rights="r" reverse="<%=false%>">
 	
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.FormsEforms" /></h3>
@@ -446,7 +449,7 @@ div.logoutBox {
 				<bean:message key="admin.admin.frmIndependent"/>
 			</html:link></li>
 
-			<security:oscarSec roleName="<%=roleName$%>" objectName="_admin.fieldnote" rights="r" reverse="<%=false%>">
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin.fieldnote" rights="r" reverse="<%=false%>">
 			<li><a href="#" 
 				onclick='popupPage(600,900,&quot;<html:rewrite page="/admin/../eform/fieldNoteReport/fieldnotereport.jsp"/>&quot;);return false;'>
 				<bean:message key="admin.admin.fieldNoteReport" /></a>
@@ -459,7 +462,7 @@ div.logoutBox {
 
 <!-- #REPORTS-->
 <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.reporting" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.reporting" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.oscarReport" /></h3>
 		<ul>
@@ -570,13 +573,13 @@ div.logoutBox {
 
 <!-- #ECHART -->
 <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.encounter" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.encounter" rights="r" reverse="<%=false%>">
 		
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.eChart" /></h3>
 		<ul>
 
-			<security:oscarSec roleName="<%=roleName$%>" objectName="_newCasemgmt.templates" rights="w" reverse="<%=false%>">
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_newCasemgmt.templates" rights="w" reverse="<%=false%>">
 			<li><a href="#"
 				onclick='popupPage(550,800,&quot;<html:rewrite page="/admin/providertemplate.jsp"/>&quot;);return false;'>
 				<bean:message key="admin.admin.btnInsertTemplate" /></a>
@@ -591,7 +594,7 @@ div.logoutBox {
 
 <%-- -add by caisi  TODO: move these under integration or system management?--%>
 <caisi:isModuleLoad moduleName="caisi">
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin.caisi" 	rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin.caisi" 	rights="r" reverse="<%=false%>">
 	
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.caisi" /></h3>
@@ -613,32 +616,32 @@ div.logoutBox {
 		</div>
 	</security:oscarSec>
 
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin.caisi" rights="r" reverse="<%=true%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin.caisi" rights="r" reverse="<%=true%>">
 
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.caisi" /></h3>
 		<ul>
-			<security:oscarSec roleName="<%=roleName$%>"
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 				objectName="_admin.systemMessage" rights="r" reverse="<%=false%>">
 				<li><html:link action="/SystemMessage.do">
 					<bean:message key="admin.admin.systemMessage" />
 				</html:link></li>
 			</security:oscarSec>
-			<security:oscarSec roleName="<%=roleName$%>"
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 				objectName="_admin.facilityMessage" rights="r" reverse="<%=false%>">
 				<li><html:link action="/FacilityMessage.do?"><bean:message key="admin.admin.FacilitiesMsgs"/></html:link></li>
 			</security:oscarSec>
-			<security:oscarSec roleName="<%=roleName$%>"
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 				objectName="_admin.lookupFieldEditor" rights="r">
 				<li><html:link action="/Lookup/LookupTableList.do"> <bean:message key="admin.admin.LookupFieldEditor"/></html:link></li>
 			</security:oscarSec>
-			<security:oscarSec roleName="<%=roleName$%>"
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 				objectName="_admin.issueEditor" rights="r">
 				<li><html:link action="/issueAdmin.do?method=list">
 					<bean:message key="admin.admin.issueEditor" />
 				</html:link></li>
 			</security:oscarSec>
-			<security:oscarSec roleName="<%=roleName$%>"
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 				objectName="_admin.userCreatedForms" rights="r">
 				<li><html:link action="/SurveyManager.do">
 					<bean:message key="admin.admin.surveyManager" />
@@ -656,7 +659,7 @@ div.logoutBox {
 <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">
 
 <!-- #Schedule Management -->
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.schedule,_admin.schedule.curprovider_only" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.schedule,_admin.schedule.curprovider_only" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.ScheduleManagement" /></h3>
 		<ul>
@@ -664,7 +667,7 @@ div.logoutBox {
 				onclick='popupPage(550,800,&quot;<html:rewrite page="/schedule/scheduletemplatesetting.jsp"/>&quot;);return false;'
 				title="<bean:message key="admin.admin.scheduleSettingTitle"/>"><bean:message
 				key="admin.admin.scheduleSetting" /></a></li>
-		<security:oscarSec roleName="<%=roleName$%>" objectName="_admin.schedule.curprovider_only" rights="r" reverse="<%=true%>">
+		<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin.schedule.curprovider_only" rights="r" reverse="<%=true%>">
 			<oscar:oscarPropertiesCheck property="ENABLE_EDIT_APPT_STATUS"
 				value="yes">
 				<li><a href="#"
@@ -694,7 +697,7 @@ div.logoutBox {
 	</security:oscarSec>
 <!-- #Schedule Management END-->
 
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.document" rights="r" reverse="<%=false%>">
+<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.document" rights="r" reverse="<%=false%>">
 <div class="adminBox">
 		<h3>&nbsp;Document Management</h3>
 		<ul>
@@ -708,7 +711,7 @@ div.logoutBox {
                                       
                         
 <!-- #SYSTEM Management-->
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.SystemManagement" /></h3>
 		<ul>
@@ -719,7 +722,7 @@ div.logoutBox {
 		
 		<li><a href="javascript:void(0);" onclick="popupPage(550,800,&quot;<html:rewrite page="/lookupListManagerAction.do?method=manage"/>&quot;);return false;" ><bean:message key="admin.admin.lookUpLists"/></a></li>
  
-		<security:oscarSec roleName="<%=roleName$%>"
+		<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 			objectName="_admin,_admin.userAdmin" rights="r" reverse="<%=false%>">
 			<li><a href="#"
 				onclick='popupPage(300,600,&quot;<html:rewrite page="/admin/providerAddRole.jsp"/>&quot;);return false;'>
@@ -763,7 +766,7 @@ div.logoutBox {
 				title='<bean:message key="admin.admin.baseURLSettingTitle"/>'><bean:message
 				key="admin.admin.btnBaseURLSetting" /></a></li>
 		
-			<security:oscarSec roleName="<%=roleName$%>"
+			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 				objectName="_admin,_admin.messenger" rights="r" reverse="<%=false%>">
 					<li><a href="#"
 						onclick='popupOscarRx(600,900,&quot;<html:rewrite page="/oscarMessenger/DisplayMessages.do"/>?providerNo=<%=curProvider_no%>&amp;userName=<%=userfirstname%>%20<%=userlastname%>&quot;);return false;'><bean:message
@@ -791,7 +794,7 @@ div.logoutBox {
 <%--				if (oscar.oscarSecurity.CRHelper.isCRFrameworkEnabled())--%>
 <%--						{--%>
 <%--			%>--%>
-<%--			<security:oscarSec roleName="<%=roleName$%>"--%>
+<%--			<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"--%>
 <%--				objectName="_admin.cookieRevolver" rights="r">--%>
 <%--		--%>
 <%--				<li>&nbsp; <bean:message key="admin.admin.titleFactorAuth"/>--%>
@@ -825,18 +828,18 @@ div.logoutBox {
 <!-- #SYSTEM Management END-->
 
 <!-- #SYSTEM REPORTS-->
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.SystemReports" /></h3>
 		<ul>
 		
-		<security:oscarSec roleName="<%=roleName$%>"
+		<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 			objectName="_admin,_admin.securityLogReport" rights="r">
 			<li><a href="#"
 				onclick='popupPage(500,800,&quot;<html:rewrite page="/admin/logReport.jsp"/>?keyword=admin&quot;);return false;'>
 			<bean:message key="admin.admin.securityLogReport"/></a></li>
 		</security:oscarSec>
-		<security:oscarSec roleName="<%=roleName$%>"
+		<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>"
 			objectName="_admin, _admin.traceability" rights="r">
 			<li><a href="#"
 				onclick='popupPage(500,800,&quot;<html:rewrite page="/admin/traceReport.jsp"/>?keyword=admin&quot;);return false;'>
@@ -851,7 +854,7 @@ div.logoutBox {
 
 
 <!-- #INTEGRATION-->
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.Integration" /></h3>
 		<ul>
@@ -919,7 +922,7 @@ div.logoutBox {
 <!-- #INTEGRATION END -->
 
 <!-- #STATUS-->
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.Status" /></h3>
 		<ul>
@@ -934,7 +937,7 @@ div.logoutBox {
 <!-- #STATUS END -->
 	
 <!-- #Data Management -->
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.backup" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin,_admin.backup" rights="r" reverse="<%=false%>">
 
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.DataManagement" /></h3>
@@ -962,7 +965,7 @@ div.logoutBox {
 
 
 <oscar:oscarPropertiesCheck property="OSCAR_LEARNING" value="yes">
-	<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=false%>">
+	<security:oscarSec roleName="<%= Encode.forHtlmAttribute(roleName$) %>" objectName="_admin" rights="r" reverse="<%=false%>">
 		<div class="adminBox">
 		<h3>&nbsp;<bean:message key="admin.admin.learning" /></h3>
 		<ul>
