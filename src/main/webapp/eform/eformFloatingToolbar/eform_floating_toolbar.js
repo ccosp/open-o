@@ -15,9 +15,6 @@ document.addEventListener("DOMContentLoaded", function(){
 		// Add eForm attachments
 		addEFormAttachments();
 
-		// Resize the window based on the toolbar width
-		window.resizeTo(1100,1100);
-
 		// If download EForm
 		const isDownload = document.getElementById("isDownloadEForm") ? document.getElementById("isDownloadEForm").value : "false";
 		if (isDownload && isDownload === "true") { downloadEForm(); }
@@ -26,6 +23,14 @@ document.addEventListener("DOMContentLoaded", function(){
 		const error = document.getElementById("error") ? document.getElementById("error").value : "false";
 		const errorMessage = document.getElementById("errorMessage") ? document.getElementById("errorMessage").value : "";
 		if (error === "true") { showError(errorMessage); }
+
+		// add listener to the subject element
+		document.forms[0].elements["subject"].addEventListener("input", function() {
+			document.getElementById("remote_eform_subject").value = this.value;
+		})
+		document.forms[0].elements["subject"].addEventListener("click", function() {
+			document.getElementById("remote_eform_subject").value = this.value;
+		})
 
 	});
 
