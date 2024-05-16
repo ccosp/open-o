@@ -26,13 +26,14 @@
 <%@ page import="org.oscarehr.common.dao.StudyDao, org.oscarehr.common.model.Study" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.owasp.encoder.Encode"%>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
       boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.reporting" rights="w" reverse="<%=true%>">
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>" objectName="_admin,_admin.reporting" rights="w" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect("../securityError.jsp?type=_admin&type=_admin.reporting");%>
 </security:oscarSec>
@@ -154,9 +155,9 @@ for( Study study : listStudies ) {
     active = study.getCurrent1() == 1;
 %>
 <tr>
-	<td><a href="#" onclick="popupStart(768, 1024, '<%= request.getContextPath() %>/admin/addStudy.jsp?studyId=<%=study.getId()%>', 'editStudy')"><%=study.getStudyName()%></a></td>
-	<td><input type="radio" name="status_<%=study.getId()%>" <%=active ? "checked" : ""%> value="active" onclick="changeStatus('<%=study.getId()%>','1');"/>&nbsp;Active<br/>
-		<input type="radio" name="status_<%=study.getId()%>" <%=active ? "" : "checked"%> value="inactive" onclick="changeStatus('<%=study.getId()%>','0');"/>Inactive
+	<td><a href="#" onclick="popupStart(768, 1024, '<%= Encode.forHtmlAttribute(request.getContextPath()) %>/admin/addStudy.jsp?studyId=<%= Encode.forHtmlAttribute(study.getId()) %>', 'editStudy')"><%= Encode.forHtmlAttribute(study.getStudyName()) %></a></td>
+	<td><input type="radio" name="status_<%= Encode.forHtmlAttribute(study.getId()) %>" <%=active ? "checked" : ""%> value="active" onclick="changeStatus('<%= Encode.forHtmlAttribute(study.getId()) %>','1');"/>&nbsp;Active<br/>
+		<input type="radio" name="status_<%= Encode.forHtmlAttribute(study.getId()) %>" <%=active ? "" : "checked"%> value="inactive" onclick="changeStatus('<%= Encode.forHtmlAttribute(study.getId()) %>','0');"/>Inactive
 	</td>
 	<td><input type="button" class="smallButton" value="Add Demographic" onclick="window.open('<%= request.getContextPath() %>/oscarReport/ReportDemographicReport.jsp?studyId=<%=study.getId()%>')"/></td>
 	<td><input type="button" class="smallButton" value="Add Provider" onclick="popupStart(768, 1024, '<%= request.getContextPath() %>/admin/addProvider.jsp?studyId=<%=study.getId()%>', 'providerselect')"/></td>
