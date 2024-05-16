@@ -28,7 +28,7 @@
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
       boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=true%>">
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>" objectName="_admin" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect("../securityError.jsp?type=_admin");%>
 </security:oscarSec>
@@ -44,6 +44,7 @@ if(!authed) {
 <%@page import="org.oscarehr.common.model.OcanStaffForm"%>
 <%@page import="oscar.util.CBIUtil"%>
 <%@page import="org.oscarehr.util.SpringUtils"%>
+<%@page import="org.owasp.encoder.Encode"%>
 
 <%!
 public String getFieldVal(int ocanStaffFormId, String key)
@@ -82,67 +83,67 @@ if(ocanStaffForm!=null)
 	<table border="1" class="table_form_dtl" bordercolor="#C0CBDB">
 		<tr>
 			<td width="25%" class="label">Last Name at Birth: </td>
-			<td width="25%"><%=ocanStaffForm.getLastNameAtBirth() %></td>
+			<td width="25%"><%= Encode.forHtmlAttribute(ocanStaffForm.getLastNameAtBirth()) %></td>
 			<td width="25%" class="label">Current Last Name:</td>
-			<td width="25%"><%=ocanStaffForm.getLastName() %></td>
+			<td width="25%"><%= Encode.forHtmlAttribute(ocanStaffForm.getLastName()) %></td>
 		</tr>
 		<tr>
 			<td class="label">Middle Name: </td>
-			<td><%=getFieldVal(formId, "middle") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "middle")) %></td>
 			<td class="label">First Name: </td>
-			<td><%=ocanStaffForm.getFirstName() %></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getFirstName()) %></td>
 		</tr>
 		<tr>
 			<td class="label">Preferred Name: </td>
-			<td><%=getFieldVal(formId, "preferred") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "preferred")) %></td>
 			<td class="label">Address Line 1: </td>
-			<td><%=ocanStaffForm.getAddressLine1()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getAddressLine1()) %></td>
 		</tr>
 		<tr>
 			<td class="label">Address Line 2: </td>
-			<td><%=ocanStaffForm.getAddressLine2()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getAddressLine2()) %></td>
 			<td class="label">City: </td>
-			<td><%=ocanStaffForm.getCity()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getCity()) %></td>
 		</tr>
 		<tr>
 			<td class="label">Province: </td>
-			<td><%=ocanStaffForm.getProvince()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getProvince()) %></td>
 			<td class="label">Postal Code (e.g. M4H 2T1): </td>
-			<td><%=ocanStaffForm.getPostalCode()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getPostalCode()) %></td>
 		</tr>
 		<tr>
 			<td class="label">Phone Number: </td>
-			<td><%=ocanStaffForm.getPhoneNumber()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getPhoneNumber()) %></td>
 			<td class="label">Ext: </td>
-			<td><%=getFieldVal(formId, "extension") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "extension")) %></td>
 		</tr>
 		<tr>
 			<td class="label">Email address: </td>
-			<td><%=ocanStaffForm.getEmail()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getEmail()) %></td>
 			<td class="label">Date of Birth (YYYY-MM-DD): </td>
-			<td><%=getFieldVal(formId, "date_of_birth") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "date_of_birth")) %></td>
 		</tr>
 		<tr>
 			<td class="label">Estimated Age: </td>
-			<td><%=ocanStaffForm.getEstimatedAge()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getEstimatedAge()) %></td>
 			<td class="label">Health Card # and Version Code: </td>
-			<td><%=ocanStaffForm.getHcNumber()%>&nbsp;&nbsp;<%=ocanStaffForm.getHcVersion()%></td>
+			<td><%= Encode.forHtmlAttribute(ocanStaffForm.getHcNumber()) %>&nbsp;&nbsp;<%= Encode.forHtmlAttribute(ocanStaffForm.getHcVersion()) %></td>
 		</tr>
 		<tr>
 			<td class="label">Issuing Territory: </td>
-			<td><%=getFieldVal(formId, "issuingTerritory") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "issuingTerritory")) %></td>
 			<td class="label">Service Recipient Location: </td>
-			<td><%=getFieldVal(formId, "service_recipient_location") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "service_recipient_location")) %></td>
 		</tr>
 		<tr>
 			<td class="label">LHIN Consumer Resides in: </td>
-			<td><%=getFieldVal(formId, "service_recipient_lhin") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "service_recipient_lhin")) %></td>
 			<td class="label">Gender: </td>
-			<td><%=getFieldVal(formId, "gender") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "gender")) %></td>
 		</tr>
 		<tr>
 			<td class="label">Marital Status: </td>
-			<td><%=getFieldVal(formId, "marital_status") %></td>
+			<td><%= Encode.forHtmlAttribute(getFieldVal(formId, "marital_status")) %></td>
 		</tr>
 	</table>
 	<%
