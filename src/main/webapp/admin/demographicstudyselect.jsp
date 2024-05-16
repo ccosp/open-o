@@ -140,8 +140,8 @@ function setfocus() {
 		<td align='center'><input type="checkbox" name="study_no"
 			value="<%= Encode.forHtmlAttribute(s.getId()) %>"
 			<%=demographic_no.equals(ds!=null?ds.getId().getDemographicNo().toString():"0") ? "checked" : "" %>></td>
-		<td><%= Encode.forHtmlAttribute(s.getStudyName()) %></td>
-		<td align="center"><%= Encode.forHtmlAttribute(s.getDescription()) %></td>
+		<td><%= Encode.forHtml(s.getStudyName()) %></td>
+		<td align="center"><%= Encode.forHtml(s.getDescription()) %></td>
 	</tr>
 	<%
   }
