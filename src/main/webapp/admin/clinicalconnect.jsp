@@ -30,7 +30,7 @@
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 	boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>"
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>"
 	objectName="_admin,_admin.misc" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect("../securityError.jsp?type=_admin&type=_admin.misc");%>
@@ -41,6 +41,7 @@
 
 <%@ page import="java.util.*"%>
 <%@ page import="org.oscarehr.ws.rest.util.ClinicalConnectUtil" %>
+<%@ page import="org.owasp.encoder.Encode"%>
 
 <%
 	String username = request.getParameter("serviceUsername");
@@ -76,19 +77,19 @@
 		<div class="control-group">
 			<label class="control-label">Service Username</label>
 			<div class="controls">
-				<input name="serviceUsername" type="password" value="<%=username%>"/><br/>
+				<input name="serviceUsername" type="password" value="<%= Encode.forHtmlAttribute(username) %>"/><br/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">Service Password</label>
 			<div class="controls">
-				<input name="servicePassword" type="password" value="<%=password%>"/><br/>
+				<input name="servicePassword" type="password" value="<%= Encode.forHtmlAttribute(password) %>"/><br/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">Service Location (URL)</label>
 			<div class="controls">
-				<input name="serviceLocation" type="text" style="width:450px;" value="<%=location%>"/><br/>
+				<input name="serviceLocation" type="text" style="width:450px;" value="<%= Encode.forHtmlAttribute(location) %>"/><br/>
 			</div>
 		</div>
 		<div class="control-group">
