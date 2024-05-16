@@ -29,7 +29,7 @@
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
       boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=true%>">
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>" objectName="_admin" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect("../securityError.jsp?type=_admin");%>
 </security:oscarSec>
@@ -42,7 +42,7 @@ if(!authed) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
-
+<%@page import="org.owasp.encoder.Encode"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@page import="oscar.util.CBIUtil"%>
