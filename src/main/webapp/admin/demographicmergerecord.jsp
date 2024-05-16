@@ -31,7 +31,7 @@
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
       boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_demographic" rights="w" reverse="<%=true%>">
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>" objectName="_demographic" rights="w" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect("../securityError.jsp?type=_demographic");%>
 </security:oscarSec>
@@ -94,7 +94,8 @@ if( outcome !=null){
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Demographic"%>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="org.owasp.encoder.Encode"%>
 
 <%
 	List<Demographic> demoList = null;  //demographicDao.getDemographicByProvider( "55");
@@ -187,13 +188,13 @@ margin-left:8px;
 
 Search:
 
-<input type="radio" name="search_mode" value="search_name" <%=searchMode.equals("search_name")?"checked":""%> > Name
-<input type="radio" name="search_mode" value="search_phone" <%=searchMode.equals("search_phone")?"checked":""%>	> Phone
-<input type="radio" name="search_mode" value="search_dob" <%=searchMode.equals("search_dob")?"checked":""%> > DOB
-<input type="radio" name="search_mode" value="search_address" <%=searchMode.equals("search_address")?"checked":""%>> Address
-<input type="radio" name="search_mode" value="search_hin" <%=searchMode.equals("search_hin")?"checked":""%>> HIN
+<input type="radio" name="search_mode" value="search_name" <%= searchMode.equals("search_name")? Encode.forHtmlAttribute("checked"):"" %> > Name
+<input type="radio" name="search_mode" value="search_phone" <%=searchMode.equals("search_phone")? Encode.forHtmlAttribute("checked"):""%>	> Phone
+<input type="radio" name="search_mode" value="search_dob" <%=searchMode.equals("search_dob")? Encode.forHtmlAttribute("checked"):""%> > DOB
+<input type="radio" name="search_mode" value="search_address" <%=searchMode.equals("search_address")? Encode.forHtmlAttribute("checked"):""%>> Address
+<input type="radio" name="search_mode" value="search_hin" <%=searchMode.equals("search_hin")? Encode.forHtmlAttribute("checked"):""%>> HIN
 
-<input type="text" NAME="keyword" class="span6" MAXLENGTH="100" value="<%=(keyword != null)?keyword:""%>"> 
+<input type="text" NAME="keyword" class="span6" MAXLENGTH="100" value="<%=(keyword != null)? Encode.forHtmlAttribute(keyword):""%>"> 
 			<INPUT TYPE="hidden" NAME="orderby" VALUE="last_name"> 
 			<INPUT TYPE="hidden" NAME="limit1" VALUE="0"> 
 			<INPUT TYPE="hidden" NAME="limit2" VALUE="10"> 
@@ -320,28 +321,28 @@ else {
         	isHeadRecord = false;
     
         if(mergedSearch || isHeadRecord  ){%>
-			<td align="center" width="5%" height="25"><input type="checkbox" name="records" value="<%= demographicNo%>"></td>
+			<td align="center" width="5%" height="25"><input type="checkbox" name="records" value="<%= Encode.forHtmlAttribute(demographicNo) %>"></td>
 		<%}
         else{%>
 		<td align="center" width="5%" height="25">&nbsp;</td>
 		<%}
 		if (!mergedSearch ){
        		if(isHeadRecord){%>
-				<td align="center" width="5%" height="25"><input type="radio" name="head" value="<%= demographicNo %>"></td>
+				<td align="center" width="5%" height="25"><input type="radio" name="head" value="<%= Encode.forHtmlAttribute(demographicNo) %>"></td>
 			<%}else{%>
 				<td align="center" width="5%" height="25">&nbsp;</td>
 			<%}
 		}%>
 		<td width="15%" align="center" height="25">
 		<caisi:isModuleLoad	moduleName="TORONTO_RFQ" reverse="true">
-			<a href="javascript:popupWindow('../demographic/demographiccontrol.jsp?demographic_no=<%= head %>&displaymode=edit&dboperation=search_detail')"><%=demographicNo%></a>
+			<a href="javascript:popupWindow('../demographic/demographiccontrol.jsp?demographic_no=<%= Encode.forHtmlAttribute(head) %>&displaymode=edit&dboperation=search_detail')"><%= Encode.forHtmlAttribute(demographicNo) %></a>
 		</caisi:isModuleLoad></td>
-		<td align="center" width="20%" height="25"><%=demo.getLastName()%></td>
-		<td align="center" width="20%" height="25"><%=demo.getFirstName()%></td>
-		<td align="center" width="10%" height="25"><%=demo.getAge()%></td>
-		<td align="center" width="10%" height="25"><%=demo.getRosterStatus()%></td>
-		<td align="center" width="10%" height="25"><%=demo.getSex()%></td>
-		<td align="center" width="10%" height="25"><%=demo.getFormattedDob()%></td>
+		<td align="center" width="20%" height="25"><%= Encode.forHtmlAttribute(demo.getLastName()) %></td>
+		<td align="center" width="20%" height="25"><%= Encode.forHtmlAttribute(demo.getFirstName()) %></td>
+		<td align="center" width="10%" height="25"><%= Encode.forHtmlAttribute(demo.getAge()) %></td>
+		<td align="center" width="10%" height="25"><%= Encode.forHtmlAttribute(demo.getRosterStatus()) %></td>
+		<td align="center" width="10%" height="25"><%= Encode.forHtmlAttribute(demo.getSex()) %></td>
+		<td align="center" width="10%" height="25"><%= Encode.forHtmlAttribute(demo.getFormattedDob()) %></td>
 	</tr>
 	<%
     }
