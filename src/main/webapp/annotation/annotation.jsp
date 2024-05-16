@@ -29,7 +29,7 @@
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_demographic" rights="w" reverse="<%=true%>">
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>>" objectName="_demographic" rights="w" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect(request.getContextPath() + "/securityError.jsp?type=_demographic");%>
 </security:oscarSec>
@@ -53,6 +53,7 @@
 		java.util.Date, java.util.List"%>
 <%@page import="oscar.log.LogAction, oscar.log.LogConst"%>
 <%@page import="org.oscarehr.documentManager.EDocUtil"%>
+<%@page import="org.owasp.encoder.Encode"%>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -207,30 +208,30 @@
 
 <body bgcolor="#EEEEFF" onload="document.forms[0].note.focus();">
     <form action="annotation.jsp" method="post">
-	<input type="hidden" name="atbname" value="<%=attrib_name%>" />
-	<input type="hidden" name="demo" value="<%=demo%>" />
-	<input type="hidden" name="display" value="<%=display%>" />
-	<input type="hidden" name="table_id" value="<%=tid%>" />
-	<input type="hidden" name="other_id" value="<%=oid%>" />
+	<input type="hidden" name="atbname" value="<%= Encode.forHtmlAttribute(attrib_name) %>" />
+	<input type="hidden" name="demo" value="<%= Encode.forHtmlAttribute(demo) %>" />
+	<input type="hidden" name="display" value="<%= Encode.forHtmlAttribute(display) %>" />
+	<input type="hidden" name="table_id" value="<%= Encode.forHtmlAttribute(tid) %>" />
+	<input type="hidden" name="other_id" value="<%= Encode.forHtmlAttribute(oid) %>" />
 	<input type="hidden" name="saved" />
         <div class="header"></div>
         <div class="panel">
-            <%=display%> Annotation:
+            <%= Encode.forHtml(display) %> Annotation:
             <%if(lastCmn!=null){%>
-            <div class="label">Documentation Date: <%=lastCmn.getCreate_date()%></div>
-            <div class="label">Saved by <%=lastCmn.getProviderName()%></div>
+            <div class="label">Documentation Date: <%= Encode.forHtml(lastCmn.getCreate_date()) %></div>
+            <div class="label">Saved by <%= Encode.forHtml(lastCmn.getProviderName()) %></div>
             <%}%>
-            <textarea name="note" rows="10"><%=note%></textarea>
+            <textarea name="note" rows="10"><%= Encode.forHtml(note) %></textarea>
             <input type="submit" class="rightButton blueButton top"value="Save" onclick="this.form.saved.value='true';"/> &nbsp;
             <input type="button" class="leftButton top" value="Cancel" onclick="window.close();"/>
             <p>&nbsp;</p>
             <p>
                 Extra data from Import:<br>
-                <textarea rows="10" name="dump" readonly="readonly"><%=dump%></textarea>
+                <textarea rows="10" name="dump" readonly="readonly"><%= Encode.forHtml(dump) %></textarea>
             </p>
 	<% if (rev>0) { %>
             <div class="revision" style="float: right;">
-		    rev<a href="#" onclick="showHistory('<%=uuid%>','<%=display%>');"><%=rev%></a>
+		    rev<a href="#" onclick="showHistory('<%= Encode.forHtml(uuid) %>','<%= Encode.forHtml(display) %>');"><%= Encode.forHtml(rev) %></a>
             </div>
 	<% } %>
         </div>

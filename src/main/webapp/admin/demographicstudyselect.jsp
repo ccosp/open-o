@@ -30,12 +30,13 @@
 <%@page import="org.oscarehr.common.dao.DemographicStudyDao" %>
 <%@page import="org.oscarehr.common.model.Study" %>
 <%@page import="org.oscarehr.common.dao.StudyDao" %>
+<%@ page import="org.owasp.encoder.Encode"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
       String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 	  boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>" objectName="_admin,_admin.reporting" rights="w" reverse="<%=true%>">
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>" objectName="_admin,_admin.reporting" rights="w" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect("../securityError.jsp?type=_admin&type=_admin.reporting");%>
 </security:oscarSec>
@@ -137,10 +138,10 @@ function setfocus() {
 %>
 	<tr bgcolor="<%=bgcolor%>">
 		<td align='center'><input type="checkbox" name="study_no"
-			value="<%=s.getId()%>"
+			value="<%= Encode.forHtmlAttribute(s.getId()) %>"
 			<%=demographic_no.equals(ds!=null?ds.getId().getDemographicNo().toString():"0") ? "checked" : "" %>></td>
-		<td><%=s.getStudyName()%></td>
-		<td align="center"><%=s.getDescription()%></td>
+		<td><%= Encode.forHtml(s.getStudyName()) %></td>
+		<td align="center"><%= Encode.forHtml(s.getDescription()) %></td>
 	</tr>
 	<%
   }
