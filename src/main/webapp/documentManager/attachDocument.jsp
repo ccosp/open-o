@@ -165,8 +165,6 @@
         }
 
 		.attachmentContainer .collapse-arrow {
-			font-family: FontAwesome !important;
-			font-size: 14px;
 			cursor: pointer;
 		}
 
@@ -174,16 +172,30 @@
 			display: none;
 			padding: 0 0 0 20px !important;
 		}
+
+		.attachmentContainer .caret {
+			display: inline-block;
+            width: 6px;
+            height: 6px;
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            transform: rotate(-45deg);
+            border-radius: 0px;
+		}
+
+		.attachmentContainer .caret-down{
+        	transform: rotate(45deg) !important; 
+		}
 	</style>
 
 	<script type="text/javascript">
 		function toggleLabVersionList(collapseBtn) {
-			jQuery(collapseBtn).toggleClass('icon-chevron-down');
+			jQuery(collapseBtn).toggleClass('caret-down');
 			jQuery(collapseBtn).parent().find('.collapsible-content').slideToggle(100);
 		}
 
 		function expandLabVersionList(collapseBtn) {
-			jQuery(collapseBtn).addClass('icon-chevron-down');
+			jQuery(collapseBtn).addClass('caret-down');
 			jQuery(collapseBtn).parent().find('.collapsible-content').slideDown(100);
 		}
 			
@@ -349,11 +361,11 @@
 									<c:set var="labName" value="${fn:substring(lab.labName, 0, 30)}"/>
 									<c:set var="totalVersions" value="${fn:length(lab.labVersionIds)}" />
 									<li class="lab ${loop.index > 19 ? 'hide' : ''}">
-										<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="${ labName }" />
-										<label for="labNo${lab.segmentID}" title="${ labName }" ><c:out value="${ labName }" />&nbsp;</label>
+										<input class="lab_check" type="checkbox" name="labNo" id="labNo${ lab.segmentID }" value="${lab.segmentID}" title="<c:out value='${ labName }' />" />
+										<label for="labNo${lab.segmentID}" title="<c:out value='${ labName }' />" ><c:out value="${ labName }" />&nbsp;</label>
 										<label for="labNo${lab.segmentID}" class="lab-date">${lab.labDateFormated}</label>
 										<c:if test="${not empty lab.labVersionIds}">
-											&nbsp;<i class="icon-chevron-right collapse-arrow" onclick="toggleLabVersionList(this)"></i>&nbsp;
+											&nbsp;<i class="caret collapse-arrow" onclick="toggleLabVersionList(this)"></i>&nbsp;
 										</c:if>
 										<button class="preview-button" type="button" title="Preview" onclick="getPdf('LAB', '${lab.segmentID}', 'method=renderLabPDF&segmentId=${lab.segmentID}')">Preview</button>
 										<ul class="collapsible-content" style="list-style-type: none;padding:0px;">

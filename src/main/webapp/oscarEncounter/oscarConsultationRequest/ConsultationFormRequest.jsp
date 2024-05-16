@@ -512,8 +512,6 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
 <%--<oscar:customInterface section="conreq"/>--%>
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/oscarEncounter/encounterStyles.css">
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/font-awesome.min.css">
-
 <style type="text/css">
 
 #attachedDocumentTable {

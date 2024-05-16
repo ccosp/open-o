@@ -105,20 +105,48 @@ public class DocumentAttachmentManager {
 		CommonLabResultData commonLabResultData = new CommonLabResultData();
 		List<LabResultData> allLabs = commonLabResultData.populateLabResultsData(loggedInInfo, "", demographicNo, "", "", "", "U");
 		Collections.sort(allLabs);
+
 		List<String> allLabVersionIds = new ArrayList<>();
 		List<AttachmentLabResultData> allLabsSortedByVersions = new ArrayList<>();
+
+		Map<String, LabResultData> labMap = new HashMap<>();
+		for (LabResultData lab : allLabs) { 
+			labMap.put(lab.getSegmentID(), lab); 
+		}
+
+		/*
+		 * Explaining this code with an example:
+		 * Let's assume the 'allLabs' variable contains these lab IDs [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]. 
+		 * Among these IDs, ID 2 is the latest version, and 3, 4, and 5 are older versions of that. 
+		 * Similarly, 6 is the latest version, and 1, 7, 8, and 9 are older versions of that. 
+		 * Lab ID 10 doesn't have any version.
+		 * 
+		 * First, I iterate through the 'allLabs' using a for loop.
+		 */
 		for (LabResultData lab : allLabs) {
-			AttachmentLabResultData attachmentLabResultData = new AttachmentLabResultData(lab.getSegmentID(), getDisplayLabName(lab), lab.getDateObj());
 			if (allLabVersionIds.contains(lab.getSegmentID())) { continue; }
 
+			AttachmentLabResultData attachmentLabResultData = new AttachmentLabResultData(lab.getSegmentID(), getDisplayLabName(lab), lab.getDateObj());
+
+			/*
+			 * Then, if, for example, I pass lab ID 1, it will give all its related labs in the correct version order. 
+			 * By 'correct order,' I mean it will return this array [7, 9, 8, 1, 6]. 
+			 * This array will be in version order, where the first is the oldest and the last is the latest.
+			 */
 			String[] matchingLabIds = Hl7textResultsData.getMatchingLabs(lab.getSegmentID()).split(",");
+
+
+			/*
+			 * Here, I add the latest lab (6) to 'allLabsSortedByVersions' after attaching its versions (7, 9, 8, and 1) to the latest lab.
+			 */
 			for (int i = matchingLabIds.length - 2; i >= 0; i--) {
-				for (LabResultData labResultData1 : allLabs) {
-					if (matchingLabIds[i].equals(labResultData1.getSegmentID())) {
-						attachmentLabResultData.getLabVersionIds().put(labResultData1.getSegmentID(), DateUtils.formatDate(labResultData1.getDateObj(), null));
-						break;
-					}
-				}
+				LabResultData versionLab = labMap.get(matchingLabIds[i]);
+				if (versionLab != null) { attachmentLabResultData.getLabVersionIds().put(versionLab.getSegmentID(), DateUtils.formatDate(versionLab.getDateObj(), null)); }
+
+				/*
+				 * Then, I add those version labs (7, 9, and 8) into the 'allLabVersionIds' array so that they can be skipped.
+				 * At the start of the for loop, I use `if (allLabVersionIds.contains(lab.getSegmentID())) { continue; }` to ensure that labs already included in 'allLabVersionIds' are skipped during the iteration.
+				 */
 				allLabVersionIds.add(matchingLabIds[i]);
 			}
 			allLabsSortedByVersions.add(attachmentLabResultData);
