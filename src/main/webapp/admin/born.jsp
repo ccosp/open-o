@@ -30,7 +30,7 @@
     String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 	boolean authed=true;
 %>
-<security:oscarSec roleName="<%=roleName$%>"
+<security:oscarSec roleName="<%= Encode.forHtmlAttribute(roleName$)%>"
 	objectName="_admin" rights="r" reverse="<%=true%>">
 	<%authed=false; %>
 	<%response.sendRedirect("../../securityError.jsp?type=_admin");%>
@@ -44,6 +44,7 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="org.owasp.encoder.Encode"%>
 
 <html:html locale="true">
 <head>
