@@ -456,18 +456,18 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 		return new ParamAppender(getBaseQuery(alias));
 	}
 
-	protected final void setDefaultLimit(Query query) {
+	protected void setDefaultLimit(Query query) {
 		query.setMaxResults(getMaxSelectSize());
 	}
 
-	protected final void setLimit(Query query, int itemsToReturn) {
+	protected void setLimit(Query query, int itemsToReturn) {
 		if (itemsToReturn > getMaxSelectSize())
 			throw (new IllegalArgumentException("Requested too large of a result list size : " + itemsToReturn));
 
 		query.setMaxResults(itemsToReturn);
 	}
 
-	protected final void setLimit(Query query, int startIndex, int itemsToReturn) {
+	protected void setLimit(Query query, int startIndex, int itemsToReturn) {
 		query.setFirstResult(startIndex);
 		setLimit(query, itemsToReturn);
 	}

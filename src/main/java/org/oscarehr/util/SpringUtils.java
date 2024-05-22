@@ -27,6 +27,9 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.beans.BeansException;
 
 /**
  * This class holds utilities used to work with spring.
@@ -34,6 +37,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
  */
 public class SpringUtils {
 	
+	// private static ApplicationContext applicationContext;
     /**
      * This variable is populated by one of the context listeners.
      */
@@ -41,18 +45,38 @@ public class SpringUtils {
 
     public static Object getBean(String beanName)
     {
+		System.out.println(beanFactory + " Bean Name: "+ beanName );
         return(beanFactory.getBean(beanName));
     }
+    // public static Object getBean(String beanName)
+    // {
+	// 	System.out.println(applicationContext + " Bean Name: "+ beanName );
+    //     return(applicationContext.getBean(beanName));
+    // }
 
 	public static void setBeanFactory(BeanFactory beanFactory) {
 		if(SpringUtils.beanFactory == null) {
 			SpringUtils.beanFactory = beanFactory;
 		}
 	}
+	// public static void setBeanFactory(ApplicationContext context) throws BeansException{
+	// 	if (applicationContext == null) {
+    //         applicationContext = context;
+    //     }
+	// }
+
+	// public static void setApplicationContext(ApplicationContext context) throws BeansException {
+    //     if (applicationContext == null) {
+    //         applicationContext = context;
+    //     }
+    // }
 
 	public static BeanFactory getBeanFactory() {
 		return SpringUtils.beanFactory;
 	}
+	// public static ApplicationContext getBeanFactory() {
+	// 	return SpringUtils.applicationContext;
+	// }
 	/**
 	 * Attempts to find a Spring bean based of the specified class. This method first attempts to load a bean
 	 * following the default Spring auto-naming conventions (de-capitalizing class simple name). In case the bean with 
@@ -84,4 +108,20 @@ public class SpringUtils {
 		}
 		throw new NoSuchBeanDefinitionException(clazz);
 	}
+
+	// @SuppressWarnings("unchecked")
+    // public static <T> T getBean(Class<?> clazz) {
+    //     String className = WordUtils.uncapitalize(clazz.getSimpleName());
+    //     if (applicationContext.containsBean(className)) {
+    //         return (T) applicationContext.getBean(className);
+    //     }
+    //     if (applicationContext instanceof ListableBeanFactory) {
+    //         ListableBeanFactory listableBeanFactory = (ListableBeanFactory) applicationContext;
+    //         String[] beanNames = listableBeanFactory.getBeanNamesForType(clazz);
+    //         if (beanNames.length > 0) {
+    //             return (T) listableBeanFactory.getBean(beanNames[0]);
+    //         }
+    //     }
+    //     throw new NoSuchBeanDefinitionException(clazz);
+    // }
 }

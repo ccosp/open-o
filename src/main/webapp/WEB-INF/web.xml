@@ -160,9 +160,9 @@
 	<listener>
 		<listener-class>org.oscarehr.web.OscarSessionListener</listener-class>
 	</listener>
-	<listener>
+	<!-- <listener>
 		<listener-class>oscar.form.study.hsfo2.pageUtil.HsfoQuartzContextListener</listener-class>
-	</listener>
+	</listener> -->
 
     <!--  Cross Site Request Forgery Configuration  -->
     <context-param>

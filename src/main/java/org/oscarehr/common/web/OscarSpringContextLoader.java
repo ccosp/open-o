@@ -49,7 +49,7 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
 	private static final String PROPERTYNAME = "ModuleNames";
 
 	@Override
-    protected WebApplicationContext createWebApplicationContext(ServletContext servletContext, ApplicationContext parent) throws BeansException {
+    protected WebApplicationContext createWebApplicationContext(ServletContext servletContext) {
 		String contextClassName = servletContext.getInitParameter(CONTEXT_CLASS_PARAM);
 		log.info("Creating Spring context");
         Class<?> contextClass;
@@ -68,7 +68,7 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
         }
 
 		ConfigurableWebApplicationContext wac = (ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);
-		wac.setParent(parent);
+		// wac.setParent(parent);
 		wac.setServletContext(servletContext);
 
 		// to load various contexts, we need to get Modules property
@@ -99,8 +99,9 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
 
 		wac.setConfigLocations(configLocations.toArray(new String[0]));
 		wac.refresh();
-		
+		System.out.println("This is setting bean factory. : " + wac + " cc " + SpringUtils.getBeanFactory());
         if (SpringUtils.getBeanFactory() == null) {
+			System.out.println("This is setting bean factory. : " + wac + " cc " + SpringUtils.getBeanFactory());
 			SpringUtils.setBeanFactory(wac);
 		}
         

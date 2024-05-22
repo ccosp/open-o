@@ -38,12 +38,15 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.dao.SystemMessageDao;
 import org.oscarehr.common.model.SystemMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class SystemMessageAction extends DispatchAction {
 
 	private SystemMessageDao systemMessageDao = null;
 	
+	@Autowired
 	public void setSystemMessageDao(SystemMessageDao systemMessageDao) {
+		System.out.println("setter method in autowired" + systemMessageDao);
 		this.systemMessageDao = systemMessageDao;
 	}
 	
@@ -104,6 +107,7 @@ public class SystemMessageAction extends DispatchAction {
 	}
 	
 	public ActionForward view(ActionMapping mapping,ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println(systemMessageDao);
 		List<SystemMessage> messages = systemMessageDao.findAll();
 		if(messages.size()>0) {
 			request.setAttribute("messages",messages);

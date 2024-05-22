@@ -51,17 +51,16 @@
 			</props>
 		</property>
 		
-	</bean>
+	
 
 	<!-- <property name="eventListeners">
 			<map>
 				<entry key="merge">
-					<bean class="org.springframework.orm.hibernate4.support.IdTransferringMergeEventListener" />
-					<bean class="org.hibernate.event.internal.DefaultMergeEventListener" />
-				</entry>
+                <bean class="org.hibernate.event.internal.DefaultMergeEventListener" />
+            </entry>
 			</map>
 		</property> -->
-
+	</bean>
 <!--
 	<bean id="auditSessionFactory" class="org.oscarehr.util.SpringHibernateLocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
