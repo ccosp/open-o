@@ -42,65 +42,12 @@ import oscar.OscarProperties;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-public class ContextStartupListener implements javax.servlet.ServletContextListener, ApplicationListener<ContextRefreshedEvent> {
+public class ContextStartupListener implements javax.servlet.ServletContextListener {
 	private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 	private static final OscarProperties oscarProperties = OscarProperties.getInstance();
 	@Override
 	public void contextInitialized(javax.servlet.ServletContextEvent sce) {
 
-		// ensure cxf uses log4j2
-		// System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4j2Logger");
-
-		// /*
-		//  * Map log4j version 1 to version 2
-		//  */
-		// System.setProperty("log4j1.compatibility", "true");
-
-		// try {
-		// 	String contextPath=sce.getServletContext().getContextPath();
-
-		// 	logger.info("Starting OSCAR context. context=" + contextPath);
-			
-		// 	org.oscarehr.util.MiscUtils.addLoggingOverrideConfiguration(contextPath);
-
-		// 	LocaleUtils.BASE_NAME="oscarResources";
-
-		// 	MiscUtils.setShutdownSignaled(false);
-		// 	MiscUtils.registerShutdownHook();
-
-		// 	createOscarProgramIfNecessary();
-
-		// 	if(oscarProperties.getBooleanProperty("INTEGRATOR_ENABLED", "true")){
-		// 		CaisiIntegratorUpdateTask.startTask();
-		// 	}
-
-		// 	OscarJobUtils.initializeJobExecutionFramework();
-			
-		// 	WaitListEmailThread.startTaskIfEnabled();
-						
-		// 	//Run some optimizations
-		// 	loadCaches();
-
-		// 	logger.info("OSCAR server processes started. context=" + contextPath);
-			
-		// 	//bug 4195 - only runs once so long as it finishes..if you want it to not run, add entry
-		// 	//try your property table called "HRMFixMissingReportHelper.Run" with value = 1
-		// 	HRMFixMissingReportHelper hrmFixer = new HRMFixMissingReportHelper();
-		// 	try {
-		// 		hrmFixer.fixIt();
-		// 	}catch(Exception e) {
-		// 		logger.error("Error running HRM fixer",e);
-		// 	}
-		// } catch (Exception e) {
-		// 	logger.error("Unexpected error.", e);
-		// 	throw (new RuntimeException(e));
-		// }
-	}
-
-	@Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        // Perform initialization operations here
-        // This method will be called when the ApplicationContext is fully initialized
 		//ensure cxf uses log4j2
 		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4j2Logger");
 
@@ -109,7 +56,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 		 */
 		System.setProperty("log4j1.compatibility", "true");
         try {
-            String contextPath = event.getApplicationContext().getApplicationName();
+            String contextPath = sce.getServletContext().getContextPath();
 
             logger.info("Starting OSCAR context. context=" + contextPath);
 
@@ -144,8 +91,8 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
                 logger.error("Error running HRM fixer", e);
             }
         } catch (Exception e) {
-            logger.error("Unexpected error during context initialization.", e);
-            throw new RuntimeException(e);
+            logger.error("Unexpected error.", e);
+            throw (new RuntimeException(e));
         }
     } 
 	
