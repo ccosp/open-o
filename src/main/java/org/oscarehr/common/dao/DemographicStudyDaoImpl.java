@@ -5,7 +5,9 @@ import org.oscarehr.common.model.DemographicStudyPK;
 
 import javax.persistence.Query;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class DemographicStudyDaoImpl extends AbstractDaoImpl<DemographicStudy> implements DemographicStudyDao {
 
     public DemographicStudyDaoImpl() {

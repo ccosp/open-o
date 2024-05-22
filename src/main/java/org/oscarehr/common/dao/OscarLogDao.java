@@ -35,7 +35,6 @@ import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.OscarLog;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public interface OscarLogDao extends AbstractDao<OscarLog> {
 
 	public List<OscarLog> findByDemographicId(Integer demographicId);
