@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
+import org.oscarehr.PMmodule.model.ProgramProvider;
+import org.oscarehr.PMmodule.service.ProgramManager;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
@@ -58,6 +60,8 @@ public class EmailManager {
     private CaseManagementManager caseManagementManager;
     @Autowired
     private DocumentAttachmentManager documentAttachmentManager;
+    @Autowired
+	private ProgramManager programManager;
     @Autowired
 	private SecurityInfoManager securityInfoManager;
 
@@ -155,20 +159,24 @@ public class EmailManager {
         EmailNoteUtil emailNoteUtil = new EmailNoteUtil(loggedInInfo, emailLog);
         String emailNote = emailNoteUtil.createNote();
 
-        SecRole doctorRole = caseManagementManager.getSecRoleByRoleName("doctor");
-        String programId = new EctProgram(loggedInInfo.getSession()).getProgram(loggedInInfo.getLoggedInProviderNo());
+        String providerNo = loggedInInfo.getLoggedInProviderNo();
+        String programId = new EctProgram(loggedInInfo.getSession()).getProgram(providerNo);
         Date creationDate = new Date();
+
+        ProgramProvider programProvider = programManager.getProgramProvider(providerNo, programId);
+        SecRole doctorRole = caseManagementManager.getSecRoleByRoleName("doctor");
+        String role = programProvider != null ? String.valueOf(programProvider.getRoleId()) : String.valueOf(doctorRole.getId());
 
         CaseManagementNote caseManagementNote = new CaseManagementNote();
 		caseManagementNote.setUpdate_date(creationDate);
 		caseManagementNote.setObservation_date(creationDate);
 		caseManagementNote.setDemographic_no(String.valueOf(emailLog.getDemographicNo()));
-		caseManagementNote.setProviderNo(loggedInInfo.getLoggedInProviderNo());
+		caseManagementNote.setProviderNo(providerNo);
 		caseManagementNote.setNote(emailNote);
 		caseManagementNote.setSigned(true);
-		caseManagementNote.setSigning_provider_no(loggedInInfo.getLoggedInProviderNo());
-		caseManagementNote.setProgram_no(programId);		
-		caseManagementNote.setReporter_caisi_role(doctorRole.getId().toString());
+		caseManagementNote.setSigning_provider_no(providerNo);
+		caseManagementNote.setProgram_no(programId);
+        caseManagementNote.setReporter_caisi_role(role);
 		caseManagementNote.setReporter_program_team("0");
 		caseManagementNote.setHistory(emailNote);
 		Long noteId = caseManagementManager.saveNoteSimpleReturnID(caseManagementNote);
