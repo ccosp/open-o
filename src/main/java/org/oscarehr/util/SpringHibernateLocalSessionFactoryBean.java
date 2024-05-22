@@ -50,6 +50,9 @@ import org.hibernate.Cache;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.hibernate.StatelessSessionBuilder;
 import org.hibernate.SessionBuilder;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.service.ServiceRegistry;
 
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 
@@ -271,6 +274,15 @@ public class SpringHibernateLocalSessionFactoryBean extends LocalSessionFactoryB
 		return(new TrackingSessionFactory(sf));
 	}*/
 
+	@Override
+    protected SessionFactory buildSessionFactory(LocalSessionFactoryBuilder sfb) {
+        StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder()
+            .applySettings(sfb.getProperties());
+        ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+        SessionFactory sessionFactory = sfb.buildSessionFactory(serviceRegistry);
+		System.out.println("Output of building session factory: " + sessionFactory);
+        return new TrackingSessionFactory(sessionFactory);
+    }
 	
 	
 }
