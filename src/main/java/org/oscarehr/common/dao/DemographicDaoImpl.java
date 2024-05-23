@@ -83,6 +83,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import oscar.MyDateFormat;
 import oscar.OscarProperties;
@@ -90,6 +91,7 @@ import oscar.util.SqlUtils;
 
 /**
  */
+@Transactional
 public class DemographicDaoImpl extends HibernateDaoSupport implements ApplicationEventPublisherAware, DemographicDao {
 
     private static final int MAX_SELECT_SIZE = 500;
@@ -97,7 +99,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     static Logger log = MiscUtils.getLogger();
 
     private ApplicationEventPublisher publisher;
-    public SessionFactory sessionFactory;
+    // public SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -118,7 +120,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         // Please don't tell me anything about session handling - this hibernate stuff
         // must be refactored into JPA, then we will talk, ok?
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery sqlQuery = session.createSQLQuery(
                     "select demographic_no from demographic_merged where merged_to = :parentId and deleted = 0");
@@ -126,7 +128,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return sqlQuery.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
     }
 
@@ -271,7 +273,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public List<Demographic> getActiveDemosByHealthCardNo(String hcn, String hcnType) {
 
         // Session s = getSession();
-        Session s = sessionFactory.getCurrentSession();
+        Session s = currentSession();
         try {
             List rs = s.createCriteria(Demographic.class).add(Expression.eq("Hin", hcn))
                     .add(Expression.eq("HcType", hcnType)).add(Expression.eq("PatientStatus", "AC")).list();
@@ -293,7 +295,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
                 + programId
                 + " and (d.anonymous is null or d.anonymous != 'one-time-anonymous') ORDER BY d.last_name,d.first_name";
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
 
         SQLQuery q = session.createSQLQuery(sqlQuery);
         q.addScalar("d.demographic_no");
@@ -315,7 +317,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // this.releaseSession(session);
-        session.close();
+        //session.close();
         return archivedClients;
 
     }
@@ -407,7 +409,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public List<Demographic> searchDemographicByNameString(String searchString, int startIndex, int itemsToReturn) {
         String sqlCommand = "select x from Demographic x";
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         String ln = "";
         String fn = "";
         String where = "";
@@ -444,7 +446,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return (q.list());
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
     }
 
@@ -523,7 +525,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -545,7 +547,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -563,7 +565,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -577,7 +579,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -603,7 +605,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         String queryString = "FROM Demographic d WHERE d.Hin like :hin AND d.Sex = :gender AND d.YearOfBirth like :yearOfBirth AND d.MonthOfBirth like :monthOfBirth AND d.DateOfBirth like :dateOfBirth AND d.LastName = :lastName and d.PatientStatus != 'MERGED'";
         String[] params = dob.split("-");
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
 
         try {
             Query q = session.createQuery(queryString);
@@ -616,7 +618,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
 
         return list;
@@ -690,7 +692,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -711,7 +713,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -729,7 +731,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return new ArrayList<Demographic>();
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -742,7 +744,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -837,7 +839,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -856,7 +858,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -869,7 +871,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
         String queryString = "From Demographic d where d.Phone like :phone and d.HeadRecord is not null ";
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -880,7 +882,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -892,7 +894,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         String queryString = "From Demographic d where d.Hin like :hin and d.PatientStatus != 'MERGED' ";
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
 
@@ -901,7 +903,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -972,7 +974,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -991,7 +993,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -1130,7 +1132,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query query = session.createQuery(sqlCommand);
 
@@ -1169,7 +1171,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return (results);
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
     }
 
@@ -1181,7 +1183,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
         String queryString = "From Demographic d where d.Hin like :hin and d.HeadRecord is not null ";
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -1192,7 +1194,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -1268,7 +1270,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -1286,7 +1288,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -1377,7 +1379,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery query = session.createSQLQuery(queryString);
             query.setFirstResult(offset);
@@ -1396,7 +1398,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = query.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -1410,7 +1412,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         String queryString = "From Demographic d where d.Address like :address and d.HeadRecord is not null ";
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             Query q = session.createQuery(queryString);
             q.setFirstResult(offset);
@@ -1421,7 +1423,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -1487,7 +1489,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         List<Demographic> list = null;
 
         try {
@@ -1507,7 +1509,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -1581,7 +1583,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         List<Demographic> list = null;
 
         try {
@@ -1602,7 +1604,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             list = q.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
         return list;
     }
@@ -1836,7 +1838,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @Override
     public List<Demographic> search(ClientSearchFormBean bean, boolean returnOptinsOnly, boolean excludeMerged) {
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
 
         Criteria criteria = session.createCriteria(Demographic.class);
         String firstName = "";
@@ -1878,7 +1880,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
                 results = new ArrayList<Demographic>();
             }
             // this.releaseSession(session);
-            session.close();
+            //session.close();
             return results;
         }
 
@@ -1962,7 +1964,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             log.debug("search: # of results=" + results.size());
         }
         // this.releaseSession(session);
-        session.close();
+        //session.close();
         return results;
     }
 
@@ -1973,7 +1975,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public List<Demographic> search(ClientSearchFormBean bean) {
 
         // Session session = this.getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         Criteria criteria = session.createCriteria(Demographic.class);
         String firstName = "";
         String lastName = "";
@@ -2011,7 +2013,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
                 results = new ArrayList<Demographic>();
             }
             // releaseSession(session);
-            session.close();
+            //session.close();
             return results;
         }
         LogicalExpression condAlias1 = null;
@@ -2145,7 +2147,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // this.releaseSession(session);
-        session.close();
+        //session.close();
         return results;
     }
 
@@ -2483,7 +2485,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public List<Demographic> search_catchment(String rosterStatus, int offset, int limit) {
         String sql = "from Demographic d where d.RosterStatus=:status and (d.Postal not like 'L0R%' and d.Postal not like 'L3M%' and d.Postal not like 'L8E%' and d.Postal not like 'L9A%' and d.Postal not like 'L8G%' and d.Postal not like 'L9B%' and d.Postal not like 'L8H%' and d.Postal not like 'L9C%' and d.Postal not like 'L8J%' and d.Postal not like 'L9G%' and d.Postal not like 'L8K%' and d.Postal not like 'L9H%' and d.Postal not like 'L8L%' and d.Postal not like 'L9K%' and d.Postal not like 'L8M%' and d.Postal not like 'L8N%' and d.Postal not like 'N0A%' and d.Postal not like 'L8P%' and d.Postal not like 'N3W%' and d.Postal not like 'L8R%' and d.Postal not like 'L8S%' and d.Postal not like 'L8T%' and d.Postal not like 'L8V%' and d.Postal not like 'L8W%' and d.Postal not like 'K8R%' and d.Postal not like 'L0R%' and d.Postal not like 'L5P%' and d.Postal not like 'L8A%' and d.Postal not like 'L8B%' and d.Postal not like 'L8C%' and d.Postal not like 'L8L%' and d.Postal not like 'L9L%' and d.Postal not like 'L9N%' and d.Postal not like 'L9S%' and d.Postal not like 'M9C%' and d.Postal not like 'N0B%1L0' and d.Postal not like 'L7L%' and d.Postal not like 'L7M%' and d.Postal not like 'L7N%' and d.Postal not like 'L7P%' and d.Postal not like 'L7R%' and d.Postal not like 'L7S%' and d.Postal not like 'L7T%' )";
         // Session s = getSession();
-        Session s = sessionFactory.getCurrentSession();
+        Session s = currentSession();
 
         try {
             Query q = s.createQuery(sql);
@@ -2512,7 +2514,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         // Session s = getSession();
-        Session s = sessionFactory.getCurrentSession();
+        Session s = currentSession();
         try {
             Query q = s.createQuery(sql);
             if (!isFieldValueEmpty) {
@@ -2565,13 +2567,13 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         sql = sql + " order by last_name ";
 
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery sqlQuery = session.createSQLQuery(sql);
             return sqlQuery.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
     }
 
@@ -2762,7 +2764,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         MiscUtils.getLogger().warn(demographicQuery);
 
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery sqlQuery = session.createSQLQuery(demographicQuery);
             for (String key : params.keySet()) {
@@ -2773,7 +2775,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return result;
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
     }
 
@@ -2789,7 +2791,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
                         "p.first_name as providerFirstName,d.hin,dm.merged_to");
 
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery sqlQuery = session.createSQLQuery(demographicQuery);
 
@@ -2806,7 +2808,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return sqlQuery.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
     }
 
@@ -2965,7 +2967,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @Override
     public List<Integer> getDemographicIdsWithMyOscarAccounts(Integer startDemographicIdExclusive, int itemsToReturn) {
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery sqlQuery = session.createSQLQuery(
                     "select demographic_no from demographic where demographic_no>:startDemographicIdExclusive and myOscarUserName is not null order by demographic_no");
@@ -2977,7 +2979,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return (result);
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
     }
 
@@ -2985,7 +2987,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @Override
     public List<Integer> getMissingExtKey(String keyName) {
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery sqlQuery = session.createSQLQuery(
                     "select distinct d.demographic_no from demographic d where d.demographic_no not in (select distinct d.demographic_no from demographic d, demographicExt e where d.demographic_no = e.demographic_no and key_val=:key)");
@@ -2995,7 +2997,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return ids;
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
 
     }
@@ -3013,7 +3015,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         // RptDemographicQueryBuilder
         int year = cal.get(Calendar.YEAR) - 18;
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery sqlQuery = session.createSQLQuery(
                     "select distinct d.demographic_no from demographic d where d.year_of_birth >= :year1 and  d.demographic_no not in (select distinct d.demographic_no from demographic d, demographicExt e where d.demographic_no = e.demographic_no and d.year_of_birth >= :year2 and key_val=:key)");
@@ -3025,7 +3027,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return ids;
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
 
     }
