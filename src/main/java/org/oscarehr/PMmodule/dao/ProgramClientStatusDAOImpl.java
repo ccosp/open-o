@@ -38,7 +38,7 @@ import org.hibernate.SessionFactory;
 public class ProgramClientStatusDAOImpl extends HibernateDaoSupport implements ProgramClientStatusDAO{
 
     private Logger log=MiscUtils.getLogger();
-    public SessionFactory sessionFactory;
+    // public SessionFactory sessionFactory;
 
 	@Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -78,7 +78,7 @@ public class ProgramClientStatusDAOImpl extends HibernateDaoSupport implements P
         }
 
        // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         List teams = new ArrayList();
         try {
 	        Query query =session.createQuery("select pt.id from ProgramClientStatus pt where pt.programId = ? and pt.name = ?");
@@ -92,7 +92,7 @@ public class ProgramClientStatusDAOImpl extends HibernateDaoSupport implements P
 	        }
         }finally {
         	//releaseSession(session);
-            session.close();
+            // session.close();
         }
         return !teams.isEmpty();
     }

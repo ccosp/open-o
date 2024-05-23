@@ -38,7 +38,7 @@
  public class ProgramTeamDAOImpl extends HibernateDaoSupport implements ProgramTeamDAO {
  
      private Logger log=MiscUtils.getLogger();
-     public SessionFactory sessionFactory;
+    //  public SessionFactory sessionFactory;
  
      @Autowired
      public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -73,7 +73,7 @@
              throw new IllegalArgumentException();
          }
          // Session session = getSession();
-         Session session = sessionFactory.getCurrentSession();
+         Session session = currentSession();
          Query query = session.createQuery("select pt.id from ProgramTeam pt where pt.programId = ? and pt.name = ?");
          query.setLong(0, programId.longValue());
          query.setString(1, teamName);
@@ -83,7 +83,7 @@
              teams = query.list();
          }finally{
              // this.releaseSession(session);
-             session.close();
+            //  session.close();
          }
  
          if (log.isDebugEnabled()) {

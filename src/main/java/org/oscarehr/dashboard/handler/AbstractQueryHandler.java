@@ -46,7 +46,7 @@ import org.hibernate.SessionFactory;
 public abstract class AbstractQueryHandler extends HibernateDaoSupport {
 	
 	private static Logger logger = MiscUtils.getLogger();
-	public SessionFactory sessionFactory;
+	// public SessionFactory sessionFactory;
 
 	@Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -81,7 +81,7 @@ public abstract class AbstractQueryHandler extends HibernateDaoSupport {
 		setResultList( null );
 		
 		//Session session = getSession();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = currentSession();
 		SQLQuery sqlQuery = session.createSQLQuery( query );
 		List<?> results = sqlQuery.setResultTransformer( Criteria.ALIAS_TO_ENTITY_MAP ).list();		
 
@@ -93,7 +93,7 @@ public abstract class AbstractQueryHandler extends HibernateDaoSupport {
 		
 		setResultList( results );			
 		//releaseSession( session );
-		session.close();
+		// session.close();
 
 		return results;
 	}

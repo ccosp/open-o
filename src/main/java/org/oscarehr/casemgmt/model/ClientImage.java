@@ -47,7 +47,7 @@ public class ClientImage extends HibernateDaoSupport {
 	private byte[] image_data;
 	private Date update_date;
 
-	public SessionFactory sessionFactory;
+	// public SessionFactory sessionFactory;
 
 	@Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -99,7 +99,7 @@ public class ClientImage extends HibernateDaoSupport {
 	}
 
 	public Blob getImage_contents() {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = currentSession();
 		if(image_data == null) {
 			return null;
 		}

@@ -41,7 +41,7 @@ import org.hibernate.SessionFactory;
 public class ClientReferralDAOImpl extends HibernateDaoSupport implements ClientReferralDAO{
 
     private Logger log = MiscUtils.getLogger();
-    public SessionFactory sessionFactory;
+    // public SessionFactory sessionFactory;
 
 	@Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -259,7 +259,7 @@ public class ClientReferralDAOImpl extends HibernateDaoSupport implements Client
     @SuppressWarnings("unchecked")
     public List<ClientReferral> search(ClientReferral referral) {
     	//Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
     	try {
 	        Criteria criteria = session.createCriteria(ClientReferral.class);
 	
@@ -270,7 +270,7 @@ public class ClientReferralDAOImpl extends HibernateDaoSupport implements Client
 	        return criteria.list();
     	}finally {
     		//this.releaseSession(session);
-            session.close();
+            // session.close();
     	}
     }
     

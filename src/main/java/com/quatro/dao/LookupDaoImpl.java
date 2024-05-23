@@ -62,7 +62,7 @@ public class LookupDaoImpl extends HibernateDaoSupport implements LookupDao {
      */
     private ProviderDao providerDao;
 
-    public SessionFactory sessionFactory;
+    // public SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -588,12 +588,12 @@ public class LookupDaoImpl extends HibernateDaoSupport implements LookupDao {
                     + "_%'";
 
             // Session session = getSession();
-            Session session = sessionFactory.getCurrentSession();
+            Session session = currentSession();
             try {
                 session.createSQLQuery(sql).executeUpdate();
             } finally {
                 // this.releaseSession(session);
-                session.close();
+                // session.close();
             }
 
         }

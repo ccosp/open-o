@@ -35,7 +35,7 @@ import org.hibernate.Session;
 
 public class BedProgramDaoImpl extends HibernateDaoSupport implements BedProgramDao{
     private String bedType = "Geographical";
-    public SessionFactory sessionFactory;
+    // public SessionFactory sessionFactory;
 
 	@Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -82,7 +82,7 @@ public class BedProgramDaoImpl extends HibernateDaoSupport implements BedProgram
 
     public String[] getProgramInfo(int programId) {
         String[] result = new String[3];
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         SQLQuery query = session.createSQLQuery("SELECT name,address,phone,fax from program where id=" + programId);
         query.addScalar("name", StandardBasicTypes.STRING);
         query.addScalar("address", StandardBasicTypes.STRING);

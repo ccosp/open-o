@@ -40,7 +40,7 @@ import com.quatro.model.security.Secobjprivilege;
 public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements SecobjprivilegeDao {
 
     private Logger logger = MiscUtils.getLogger();
-    public SessionFactory sessionFactory;
+    // public SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -87,7 +87,7 @@ public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements Secob
     @Override
     public int update(Secobjprivilege instance) {
         logger.debug("update Secobjprivilege instance");
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             String queryString = "update Secobjprivilege as model set model.providerNo ='" + instance.getProviderNo()
                     + "'"
@@ -104,7 +104,7 @@ public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements Secob
             throw re;
         } finally {
             // this.releaseSession(session);
-            session.close();
+            // session.close();
         }
     }
 
@@ -185,7 +185,7 @@ public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements Secob
     public List findByProperty(String propertyName, Object value) {
         logger.debug("finding Secobjprivilege instance with property: " + propertyName
                 + ", value: " + value);
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             String queryString = "from Secobjprivilege as model where model."
                     + propertyName + "= ? order by objectname_code";
@@ -197,7 +197,7 @@ public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements Secob
             throw re;
         } finally {
             // this.releaseSession(session);
-            session.close();
+            // session.close();
         }
     }
 
@@ -222,7 +222,7 @@ public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements Secob
         String queryString = "from Secobjprivilege obj where obj.roleusergroup IN (:roles)";
         List<Secobjprivilege> results = new ArrayList<Secobjprivilege>();
 
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         Query q = session.createQuery(queryString);
 
         q.setParameterList("roles", roles);
