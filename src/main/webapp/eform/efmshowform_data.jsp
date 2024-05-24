@@ -25,7 +25,7 @@
 --%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page import="java.sql.*, oscar.eform.data.*"%>
+<%@ page import="oscar.eform.data.*"%>
 <%@ page import="org.oscarehr.util.LoggedInInfo"%>
 <%@ page import="oscar.oscarEncounter.data.EctFormData"%>
 <%@ page import="org.oscarehr.common.model.enumerator.DocumentType"%>
@@ -33,7 +33,6 @@
 <%@ page import="org.oscarehr.util.SpringUtils"%>
 <%@ page import="oscar.util.StringUtils" %>
 <%@ page import="java.util.List"%>
-<%@ page import="java.util.ArrayList"%>
 
 <%!
     public void addHiddenEFormAttachments(LoggedInInfo loggedInInfo, EForm eForm, String eFormId) {
@@ -84,11 +83,18 @@
         eForm.setFdid("");
     }
 
-    // Modifying EForm by directly incorporating libraries and adding hidden fields.
-    eForm.addJavascript(request.getContextPath()+"/library/jquery/jquery-3.6.4.min.js");
-    eForm.addJavascript(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.js");
-    eForm.addJavascript(request.getContextPath()+"/eform/eformFloatingToolbar/eform_floating_toolbar.js");
+    /*
+     * Modifying EForm by directly incorporating libraries and adding hidden fields.
+     * Ordering is very important.
+     * For Javascript: First is last.
+     */
+
+    eForm.addHeadJavascript(request.getContextPath()+"/js/jquery.are-you-sure.js");
+    eForm.addHeadJavascript(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.js");
+    eForm.addHeadJavascript(request.getContextPath()+"/library/jquery/jquery-3.6.4.min.js");
+
     eForm.addCSS(request.getContextPath()+"/library/jquery/jquery-ui-1.12.1.min.css", "all");
+    eForm.addBodyJavascript(request.getContextPath()+"/eform/eformFloatingToolbar/eform_floating_toolbar.js");
     eForm.addFontLibrary(request.getContextPath()+"/share/javascript/eforms/dejavufonts/ttf/DejaVuSans.ttf");
     eForm.addHiddenInputElement("context", request.getContextPath());
     eForm.addHiddenInputElement("demographicNo", eForm.getDemographicNo());
@@ -103,10 +109,11 @@
     eForm.addHiddenInputElement("eFormPDFName", (String) request.getAttribute("eFormPDFName"));
     eForm.addHiddenInputElement("eFormPDF", (String) request.getAttribute("eFormPDF"));
     eForm.addHiddenInputElement("isDownloadEForm", (String) request.getAttribute("isDownload"));
-
+    eForm.addHiddenInputElement("newForm", "false");
     // Add EForm attachments
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     addHiddenEFormAttachments(loggedInInfo, eForm, fdid);
 
     out.print(eForm.getFormHtml());
 %>
+<script type="text/javascript" src="${oscar_javascript_path}/moment.js" ></script>

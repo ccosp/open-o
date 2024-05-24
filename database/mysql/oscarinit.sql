@@ -543,7 +543,7 @@ CREATE TABLE IF NOT EXISTS demographic (
   phone varchar(20),
   phone2 varchar(20),
   email varchar(100),
-  myOscarUserName varchar(1) unique,
+  myOscarUserName varchar(1),
   year_of_birth varchar(4),
   month_of_birth varchar(2),
   date_of_birth varchar(2),
@@ -906,6 +906,8 @@ CREATE TABLE IF NOT EXISTS eform (
   roleType varchar(50) default NULL,
   programNo int(10) DEFAULT NULL,
   restrictToProgram tinyint(1) NOT NULL DEFAULT '0',
+  `stable` tinyint(1) NOT NULL DEFAULT 1,
+  `errorLog` tinyblob NULL,
   PRIMARY KEY  (fid),
   UNIQUE KEY id (fid)
 ) ;
@@ -7822,6 +7824,7 @@ CREATE TABLE IF NOT EXISTS `waitingList` (
 -- Table structure for table `pharmacyInfo`
 --
 CREATE TABLE IF NOT EXISTS pharmacyInfo (
+    `uid` int(10) NOT NULL,
   `recordID` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `address` varchar(255),
@@ -9002,7 +9005,7 @@ CREATE TABLE IF NOT EXISTS demographicArchive (
   phone varchar(20),
   phone2 varchar(20),
   email varchar(100),
-  myOscarUserName varchar(255),
+  myOscarUserName varchar(1),
   year_of_birth varchar(4),
   month_of_birth char(2),
   date_of_birth char(2),
@@ -9489,7 +9492,9 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentToDemographic` (
   `demographicNo` varchar(20) ,
   `hrmDocumentId` varchar(20) ,
   `timeAssigned` datetime ,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX idx_hrmDocumentId_hd (`hrmDocumentId`),
+  INDEX idx_demographicNo_hd (`demographicNo`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS `HRMDocumentToProvider` (
@@ -9500,7 +9505,9 @@ CREATE TABLE IF NOT EXISTS `HRMDocumentToProvider` (
   `signedOffTimestamp` datetime ,
   `viewed` int(11),
   `filed` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX idx_hrmDocumentId_hp (`hrmDocumentId`),
+  INDEX idx_signedOff_providerNo_hp (`signedOff`, `providerNo`)
 ) ;
 
 CREATE TABLE IF NOT EXISTS `HrmLog` (
@@ -12371,7 +12378,8 @@ CREATE TABLE IF NOT EXISTS `Consent` (
   `optout_date` datetime,
   `edit_date` datetime,
   `deleted` tinyint(1),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `Consent_demographic_no_IDX` (`demographic_no`)
 );
 
 CREATE TABLE IF NOT EXISTS `consentType` (
