@@ -293,6 +293,10 @@
 	<bean id="FormBCAR2020DataDao" class="org.oscarehr.common.dao.forms.FormBCAR2020DataDao" autowire="byName"/>
 	<bean id="FormBCAR2020TextDao" class="org.oscarehr.common.dao.forms.FormBCAR2020TextDao" autowire="byName"/>
 
+	<!-- Bed Program DAO (Used for Accessing Caseload in the dashboard)-->
+	<!-- <bean id="bedProgramDao" class="org.caisi.dao.BedProgramDaoImpl" autowire="byName">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+	</bean> -->
 
 
 	<!--<bean id="preventionMgr" class="org.oscarehr.managers.PreventionManagerImpl"></bean>-->
