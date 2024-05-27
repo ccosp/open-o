@@ -23,6 +23,8 @@
  */
 package org.oscarehr.managers;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -303,6 +305,25 @@ public class AppointmentManagerImpl implements AppointmentManager {
 		}
 		
 		return results;
+	}
+	public String getNextAppointmentDate(Integer demographicNo) {
+		Date nextApptDate = null;
+		String appointmentString = "";
+
+		Appointment appointment = appointmentDao.findNextAppointment(demographicNo);
+		if(appointment != null) {
+			nextApptDate = appointment.getAppointmentDate();
+		}
+
+		if (nextApptDate != null) {
+			try {
+				Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+				appointmentString = formatter.format(nextApptDate);
+			} catch (Exception e) {
+				MiscUtils.getLogger().error("Could not parse appointment date " + nextApptDate, e);
+			}
+		}
+		return appointmentString;
 	}
 	
 }

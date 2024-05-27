@@ -61,7 +61,6 @@ import org.oscarehr.common.model.TicklerComment;
 import org.oscarehr.common.model.TicklerLink;
 import org.oscarehr.common.model.TicklerTextSuggest;
 import org.oscarehr.common.model.TicklerUpdate;
-import org.oscarehr.util.EmailUtilsOld;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;

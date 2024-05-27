@@ -67,6 +67,7 @@ public class NioFileManagerImpl implements NioFileManager{
 	public static final String DOCUMENT_DIRECTORY = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 	private static final String TEMP_PDF_DIRECTORY = "tempPDF";
 	private static final String DEFAULT_FILE_SUFFIX = "pdf";
+	private static final String DEFAULT_GENERIC_TEMP = "tempDirectory";
 	private static final String BASE_DOCUMENT_DIR = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR");
 	
 	public Path hasCacheVersion2(LoggedInInfo loggedInInfo, String filename, Integer pageNum) {
@@ -80,7 +81,7 @@ public class NioFileManagerImpl implements NioFileManager{
 			filename.replace(File.separator, "");
 		}
 
-		Path documentCacheDir = getDocumentCacheDir(loggedInInfo);		
+		Path documentCacheDir = getDocumentCacheDirectory(loggedInInfo);
 		Path outfile = Paths.get(documentCacheDir.toString(), filename + "_" + pageNum + ".png");
 
 		if (! Files.exists(outfile)) {
@@ -89,7 +90,7 @@ public class NioFileManagerImpl implements NioFileManager{
 		return outfile;
 	}
 	
-	public Path getDocumentCacheDir(LoggedInInfo loggedInInfo) {
+	public Path getDocumentCacheDirectory(LoggedInInfo loggedInInfo) {
 	
 		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", SecurityInfoManager.READ, "" ) ) {
             throw new RuntimeException("Read Access Denied _edoc for provider " + loggedInInfo.getLoggedInProviderNo() );
@@ -133,7 +134,7 @@ public class NioFileManagerImpl implements NioFileManager{
 		if(cacheFilePath == null)
 		{
 			Path sourceFile = Paths.get(sourceDirectory, filename);		
-			Path documentCacheDir = getDocumentCacheDir(loggedInInfo);
+			Path documentCacheDir = getDocumentCacheDirectory(loggedInInfo);
 			cacheFilePath = Paths.get(documentCacheDir.toString(), filename + "_" + pageNum + ".png");
 	
 			PdfDecoder decode_pdf = new PdfDecoder(true);
@@ -169,7 +170,7 @@ public class NioFileManagerImpl implements NioFileManager{
 	 */
 	public final boolean removeCacheVersion(LoggedInInfo loggedInInfo, final String fileName) {
 
-		Path documentCacheDir = getDocumentCacheDir(loggedInInfo);
+		Path documentCacheDir = getDocumentCacheDirectory(loggedInInfo);
 		Path cacheFilePath = Paths.get(fileName);
 		cacheFilePath = Paths.get(documentCacheDir.toString(), cacheFilePath.getFileName().toString());
 		
@@ -199,7 +200,13 @@ public class NioFileManagerImpl implements NioFileManager{
 	public final Path saveTempFile(final String fileName, ByteArrayOutputStream os) throws IOException {
 		return saveTempFile(fileName, os, null);
 	}
-	
+
+	public Path createTempFile(final String fileName, ByteArrayOutputStream os) throws IOException {
+		Path directory = Files.createTempDirectory(DEFAULT_GENERIC_TEMP + System.currentTimeMillis());
+		Path file = Files.createFile( Paths.get(directory.toString(), fileName) );
+		return Files.write(file, os.toByteArray());
+	}
+
 	/**
 	 * Delete a temp file. Do this often.
 	 * @param fileName

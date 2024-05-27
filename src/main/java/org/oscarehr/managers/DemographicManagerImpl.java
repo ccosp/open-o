@@ -131,9 +131,15 @@
  
      @Autowired
      ConsentDao consentDao;
- 
+
      @Autowired
      ProgramManager2 programManager2;
+
+     @Autowired
+     ProviderManager2 providerManager;
+
+     @Autowired
+     AppointmentManager appointmentManager;
  
      @Override
      public Demographic getDemographic(LoggedInInfo loggedInInfo, Integer demographicId)
@@ -1472,6 +1478,37 @@
              }
          }
          return emergencyContacts;
+     }
+     public Provider getMRP(LoggedInInfo loggedInInfo, Integer demographicNo){
+         return getDemographic(loggedInInfo, demographicNo).getMrp();
+     }
+     public Provider getMRP(LoggedInInfo loggedInInfo, Demographic demographic){
+         String providerNo = demographic.getProviderNo();
+         Provider mrp = null;
+         if(providerNo != null && ! providerNo.isEmpty()) {
+             mrp = providerManager.getProvider(loggedInInfo, providerNo);
+         }
+
+         if(mrp == null) {
+             DemographicContact demographicContact = getMostResponsibleProviderFromHealthCareTeam(loggedInInfo, demographic.getDemographicNo());
+             String contactId = null;
+             if(demographicContact != null && DemographicContact.TYPE_PROVIDER == demographicContact.getType() ) {
+                 contactId = demographicContact.getContactId();
+             }
+             if(contactId != null && ! contactId.isEmpty()) {
+                 mrp = providerManager.getProvider(loggedInInfo, contactId);
+             }
+         }
+         demographic.setMrp(mrp);
+         return mrp;
+     }
+     public String getNextAppointmentDate(LoggedInInfo loggedInInfo, Integer demographicNo){
+         return appointmentManager.getNextAppointmentDate(demographicNo);
+     }
+     public String getNextAppointmentDate(LoggedInInfo loggedInInfo, Demographic demographic){
+         String appointmentString = getNextAppointmentDate(loggedInInfo, demographic.getDemographicNo());
+         demographic.setNextAppointment(appointmentString);
+         return appointmentString;
      }
  
  }

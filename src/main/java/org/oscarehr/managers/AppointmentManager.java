@@ -80,5 +80,6 @@ public interface AppointmentManager {
 	public List<LookupListItem> getReasons();
 
 	public List<Appointment> findMonthlyAppointments(LoggedInInfo loggedInInfo, String providerNo, int year, int month);
-	
+
+	public String getNextAppointmentDate(Integer demographicNo);
 }
