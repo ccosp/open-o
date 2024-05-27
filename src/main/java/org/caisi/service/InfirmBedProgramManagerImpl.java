@@ -222,29 +222,8 @@
          this.programProviderDAOT = programProviderDAOT;
      }
  
-    //  public String[] getProgramInformation(int programId) {
-    //      return this.bedProgramDao.getProgramInfo(programId);
-    //  }
-
-    public String[] getProgramInformation(int programId) {
-        // Check for invalid programId
-        if (programId <= 0) {
-            // Optionally log this error or handle it according to your application's needs
-            System.err.println("Invalid program ID provided: " + programId);
-            return null; // or you could return an empty array or default values depending on your business logic
-        }
-    
-        // Attempt to retrieve program information
-        String[] programInfo = this.bedProgramDao.getProgramInfo(programId);
-    
-        // Check if the returned information is null
-        if (programInfo == null) {
-            // Log or handle the case where no information is found for the given ID
-            System.err.println("No program information found for ID: " + programId);
-            return null; // or return an empty array or default values
-        }
-    
-        return programInfo;
-    }
+     public String[] getProgramInformation(int programId) {
+         return this.bedProgramDao.getProgramInfo(programId);
+     }
  
  }

@@ -33,13 +33,8 @@ import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
-
-
 public class BedProgramDaoImpl extends HibernateDaoSupport implements BedProgramDao{
     private String bedType = "Geographical";
-
-    @Autowired
-    public SessionFactory sessionFactory;
 
 
 	@Autowired
@@ -85,55 +80,21 @@ public class BedProgramDaoImpl extends HibernateDaoSupport implements BedProgram
         return rs;
     }
 
-    // public String[] getProgramInfo(int programId) {
-    //     String[] result = new String[3];
-    //     Session session = sessionFactory.getCurrentSession();
-    //     SQLQuery query = session.createSQLQuery("SELECT name,address,phone,fax from program where id=" + programId);
-    //     query.addScalar("name", StandardBasicTypes.STRING);
-    //     query.addScalar("address", StandardBasicTypes.STRING);
-    //     query.addScalar("phone", StandardBasicTypes.STRING);
-    //     query.addScalar("fax", StandardBasicTypes.STRING);
-    //     Object[] o = (Object[])query.uniqueResult();
-    //     if (o != null) {
-    //         result[0] = new String(o[0] + "\n" + o[1]);
-    //         result[1] = (String)o[2];
-    //         result[2] = (String)o[3];
-    //     }
-    //     return result;
-    // }
-
     public String[] getProgramInfo(int programId) {
-    
-    if (programId <= 0) {
-        //logger.error("Invalid program ID: " + programId);
-        return null;
-    }
-    //logger.debug("Fetching program info for ID: " + programId);
-    
-    String[] result = new String[3]; 
-    Session session = null;
-    try {
-        session = sessionFactory.getCurrentSession();
-        SQLQuery query = session.createSQLQuery("SELECT name, address, phone, fax FROM program WHERE id = :programId");
-        query.setParameter("programId", programId);
+        String[] result = new String[3];
+        Session session = currentSession();
+        SQLQuery query = session.createSQLQuery("SELECT name,address,phone,fax from program where id=" + programId);
         query.addScalar("name", StandardBasicTypes.STRING);
         query.addScalar("address", StandardBasicTypes.STRING);
         query.addScalar("phone", StandardBasicTypes.STRING);
         query.addScalar("fax", StandardBasicTypes.STRING);
-        
-        Object[] o = (Object[]) query.uniqueResult();
-
-        if (o != null && o.length == 4) {
-            result[0] = (o[0] != null && o[1] != null) ? o[0] + "\n" + o[1] : null; // Safely concatenate address details
-            result[1] = (String) o[2]; // Phone
-            result[2] = (String) o[3]; // Fax
+        Object[] o = (Object[])query.uniqueResult();
+        if (o != null) {
+            result[0] = new String(o[0] + "\n" + o[1]);
+            result[1] = (String)o[2];
+            result[2] = (String)o[3];
         }
-    } catch (HibernateException e) {
-        // Log and handle exception
-        //System.err.println("Database error: " + e.getMessage());
-        return null;
+        return result;
     }
-    return result;
-}
 
 }
