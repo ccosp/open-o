@@ -105,12 +105,12 @@ public class BedProgramDaoImpl extends HibernateDaoSupport implements BedProgram
     public String[] getProgramInfo(int programId) {
     
     if (programId <= 0) {
-        logger.error("Invalid program ID: " + programId);
+        //logger.error("Invalid program ID: " + programId);
         return null;
     }
-    logger.debug("Fetching program info for ID: " + programId);
+    //logger.debug("Fetching program info for ID: " + programId);
     
-    String[] result = new String[3]; // It's better to handle this only after ensuring there's a result
+    String[] result = new String[3]; 
     Session session = null;
     try {
         session = sessionFactory.getCurrentSession();
@@ -129,9 +129,9 @@ public class BedProgramDaoImpl extends HibernateDaoSupport implements BedProgram
             result[2] = (String) o[3]; // Fax
         }
     } catch (HibernateException e) {
-        // Log and handle exception appropriately. Optionally rethrow or return null/error status
-        System.err.println("Database error: " + e.getMessage());
-        return null; // or rethrow as a custom checked exception
+        // Log and handle exception
+        //System.err.println("Database error: " + e.getMessage());
+        return null;
     }
     return result;
 }
