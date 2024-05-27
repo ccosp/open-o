@@ -30,6 +30,7 @@ import java.util.List;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
@@ -39,13 +40,15 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import oscar.OscarProperties;
 
+@Transactional
 public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
 
     private static final Logger log = MiscUtils.getLogger();
-    public SessionFactory sessionFactory;
+    // public SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -179,7 +182,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
     @Override
     public List<Program> getAllPrograms(String programStatus, String type, int facilityId) {
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             @SuppressWarnings("unchecked")
             Criteria c = session.createCriteria(Program.class);
@@ -195,7 +198,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             return c.list();
         } finally {
             // releaseSession(session);
-            session.close();
+            //session.close();
 
         }
     }
@@ -317,6 +320,17 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             throw new IllegalArgumentException();
         }
         program.setLastUpdateDate(new Date());
+
+        // Adjusting flush mode
+    Session session = currentSession();
+    FlushMode previousFlushMode = session.getFlushMode();
+    session.setFlushMode(FlushMode.COMMIT);
+    
+    try {
+        getHibernateTemplate().saveOrUpdate(program);
+    } finally {
+        session.setFlushMode(previousFlushMode); // Restore the original flush mode
+    }
         getHibernateTemplate().saveOrUpdate(program);
 
         if (log.isDebugEnabled()) {
@@ -348,7 +362,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             throw new IllegalArgumentException();
         }
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         Criteria criteria = session.createCriteria(Program.class);
 
         if (program.getName() != null && program.getName().length() > 0) {
@@ -411,7 +425,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             results = criteria.list();
         } finally {
             // this.releaseSession(session);
-            session.close();
+            //session.close();
         }
 
         if (log.isDebugEnabled()) {
@@ -432,7 +446,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
 
         boolean isOracle = OscarProperties.getInstance().getDbType().equals("oracle");
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         Criteria criteria = session.createCriteria(Program.class);
 
         if (program.getName() != null && program.getName().length() > 0) {
@@ -505,7 +519,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             results = criteria.list();
         } finally {
             // releaseSession(session);
-            session.close();
+            //session.close();
         }
 
         if (log.isDebugEnabled()) {
