@@ -1092,7 +1092,7 @@
       * @param remoteDemographicId
       * @return
       */
-      @Override
+     @Override
      public Demographic copyRemoteDemographic(LoggedInInfo loggedInInfo, Demographic remoteDemographic,
              int remoteFacilityId, int remoteDemographicId) {
          checkPrivilege(loggedInInfo, SecurityInfoManager.WRITE);
@@ -1504,9 +1504,11 @@
          demographic.setMrp(mrp);
          return mrp;
      }
+     @Override
      public String getNextAppointmentDate(LoggedInInfo loggedInInfo, Integer demographicNo){
          return appointmentManager.getNextAppointmentDate(demographicNo);
      }
+     @Override
      public String getNextAppointmentDate(LoggedInInfo loggedInInfo, Demographic demographic){
          String appointmentString = getNextAppointmentDate(loggedInInfo, demographic.getDemographicNo());
          demographic.setNextAppointment(appointmentString);
