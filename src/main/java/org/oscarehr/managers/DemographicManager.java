@@ -193,6 +193,11 @@ public interface DemographicManager {
 			int remoteFacilityId, int remoteDemographicNo);
 	public List<Integer> getLinkedDemographicIds(LoggedInInfo loggedInInfo, int demographicNo, int sourceFacilityId);
 	public List<DemographicTransfer> getLinkedDemographics(LoggedInInfo loggedInInfo, int demographicNo);
+
+	void checkPrivilege(LoggedInInfo loggedInInfo, String privilege);
+
+	void checkPrivilege(LoggedInInfo loggedInInfo, String privilege, int demographicNo);
+
 	public List<DemographicContact> getHealthCareTeam(LoggedInInfo loggedInInfo, Integer demographicNo);
 
 	public List<Object[]> getArchiveMeta(LoggedInInfo loggedInInfo, Integer demographicNo);

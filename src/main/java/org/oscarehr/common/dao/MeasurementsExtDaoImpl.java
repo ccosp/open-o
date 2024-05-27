@@ -109,7 +109,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
 		
 		return rs;
 	}
-
+	@Override
 	public Integer getMeasurementIdByLabNoAndTestName(String labNo, String testName) {
 		//TODO: consider replacing this with a simpler query.   This approach was taken because a self join such as the following was resulting in hibernate errors and in the interests in time
 		//a procedural approach was taken

@@ -1063,7 +1063,7 @@
       * @param remoteDemographicId
       * @return
       */
-      @Override
+     @Override
      public Demographic getRemoteDemographic(LoggedInInfo loggedInInfo, int remoteFacilityId, int remoteDemographicId) {
          checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
          Demographic demographic = null;
@@ -1267,14 +1267,14 @@
  
          return Collections.emptyList();
      }
- 
-     private void checkPrivilege(LoggedInInfo loggedInInfo, String privilege) {
+     @Override
+     public void checkPrivilege(LoggedInInfo loggedInInfo, String privilege) {
          if (!securityInfoManager.hasPrivilege(loggedInInfo, "_demographic", privilege, null)) {
              throw new RuntimeException("missing required security object (_demographic)");
          }
      }
- 
-     private void checkPrivilege(LoggedInInfo loggedInInfo, String privilege, int demographicNo) {
+     @Override
+     public void checkPrivilege(LoggedInInfo loggedInInfo, String privilege, int demographicNo) {
          if (!securityInfoManager.hasPrivilege(loggedInInfo, "_demographic", privilege, demographicNo)) {
              throw new RuntimeException("missing required security object (_demographic)");
          }
@@ -1479,9 +1479,11 @@
          }
          return emergencyContacts;
      }
+     @Override
      public Provider getMRP(LoggedInInfo loggedInInfo, Integer demographicNo){
          return getDemographic(loggedInInfo, demographicNo).getMrp();
      }
+     @Override
      public Provider getMRP(LoggedInInfo loggedInInfo, Demographic demographic){
          String providerNo = demographic.getProviderNo();
          Provider mrp = null;
