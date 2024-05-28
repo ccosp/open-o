@@ -30,6 +30,7 @@ CREATE TABLE emailLog (
     chartDisplayOption VARCHAR(20),
     transactionType VARCHAR(20),
     demographicNo INT,
+    providerNo INT,
     additionalParams VARCHAR(1000),
     FOREIGN KEY (configId) REFERENCES emailConfig (id)
 );

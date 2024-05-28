@@ -22,6 +22,7 @@ public class EmailData {
     private ChartDisplayOption chartDisplayOption;
     private TransactionType transactionType;
     private Integer demographicNo;
+    private Integer providerNo;
     private String additionalParams;
     private List<EmailAttachment> attachments;
 
@@ -158,6 +159,18 @@ public class EmailData {
 
     public void setDemographicNo(String demographicNo) {
         this.demographicNo = (StringUtils.isNullOrEmpty(demographicNo)) ? -1 : Integer.parseInt(demographicNo);
+    }
+
+    public Integer getProviderNo() {
+        return providerNo;
+    }
+
+    public void setProviderNo(Integer providerNo) {
+        this.providerNo = providerNo;
+    }
+
+    public void setProviderNo(String providerNo) {
+        this.providerNo = (StringUtils.isNullOrEmpty(providerNo)) ? -1 : Integer.parseInt(providerNo);
     }
 
     public String getAdditionalParams() {

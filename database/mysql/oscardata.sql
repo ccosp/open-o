@@ -2632,5 +2632,4 @@ bromyalgia', '41'), ('73390', 'osteopenia', '42'), ('7506', 'Hiatis Hernia', '43
 -- From update-2019-06-13.sql
 update ServiceClient set lifetime = -1 where lifetime is null;
 
--- From update-2024-04-10.sql
 INSERT INTO `property`(`name`, `value`, `provider_no`) VALUES ('email_communication', 'electronic_communication_consent', NULL);

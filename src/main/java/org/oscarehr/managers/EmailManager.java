@@ -103,6 +103,7 @@ public class EmailManager {
         emailLog.setErrorMessage("Email was not sent successfully for unknown reasons.");
         emailLog.setAdditionalParams(emailData.getAdditionalParams());
         emailLog.setDemographicNo(emailData.getDemographicNo());
+        emailLog.setProviderNo(emailData.getProviderNo());
         emailLogDao.persist(emailLog);
         return emailLog;
     }

@@ -39,7 +39,12 @@
                         ${ empty emailStatusResult.errorMessage ? '' : "data-bs-toggle='popover'" } data-bs-trigger='hover click' data-bs-content="${emailStatusResult.errorMessage}">
                         <c:out value="${ emailStatusResult.status }"/>
                     </div>
-                    <div class="date-time text-muted"><c:out value="${ emailStatusResult.createdDate }"/> &#x2022; <c:out value="${ emailStatusResult.createdTime }"/></div>
+                    <div class="date-time text-muted">
+                        <c:out value="${ emailStatusResult.createdDate }"/> &#x2022; <c:out value="${ emailStatusResult.createdTime }"/> 
+                        <c:if test="${not empty emailStatusResult.providerFullName}">
+							<c:out value="by ${ emailStatusResult.providerFullName }"/>
+						</c:if>
+                    </div>
                 </td>
                 <td class="action-menu">
                     <c:if test="${emailStatusResult.status eq 'FAILED'}">

@@ -14,6 +14,8 @@ public class EmailStatusResult implements Comparable<EmailStatusResult> {
     private String senderEmail;
     private String recipientFirstName;
     private String recipientLastName;
+    private String providerFirstName;
+    private String providerLastName;
     private String recipientEmail;
     private Boolean isEncrypted;
     private String password;
@@ -96,6 +98,31 @@ public class EmailStatusResult implements Comparable<EmailStatusResult> {
     public void setRecipientFullName(String recipientFirstName, String recipientLastName) {
         this.recipientFirstName = recipientFirstName;
         this.recipientLastName = recipientLastName;
+    }
+
+    public String getProviderFirstName() {
+        return providerFirstName;
+    }
+
+    public void setProviderFirstName(String providerFirstName) {
+        this.providerFirstName = providerFirstName;
+    }
+
+    public String getProviderLastName() {
+        return providerLastName;
+    }
+
+    public void setProviderLastName(String providerLastName) {
+        this.providerLastName = providerLastName;
+    }
+
+    public String getProviderFullName() {
+        return toCamelCase(providerLastName) + ", " + toCamelCase(providerFirstName);
+    }
+
+    public void setProviderFullName(String providerFirstName, String providerLastName) {
+        this.providerFirstName = providerFirstName;
+        this.providerLastName = providerLastName;
     }
 
     public String getRecipientEmail() {

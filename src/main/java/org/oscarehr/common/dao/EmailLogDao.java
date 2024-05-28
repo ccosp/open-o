@@ -47,7 +47,7 @@ public class EmailLogDao {
 
     @SuppressWarnings("unchecked")
     public List<EmailStatusResult> getEmailStatusByDateDemographicSenderStatus(Date dateBegin, Date dateEnd, String demographicNo, String senderEmailAddress, String emailStatus) {
-        StringBuilder sql = new StringBuilder("SELECT el.id, el.subject, el.fromEmail, el.toEmail, el.status, el.errorMessage, el.timestamp, el.password, el.isEncrypted, ec.senderFirstName, ec.senderLastName, d.FirstName as recipientFirstName, d.LastName as recipientLastName FROM EmailLog el, EmailConfig ec, Demographic d WHERE el.emailConfig.id = ec.id AND el.demographicNo = d.DemographicNo");
+        StringBuilder sql = new StringBuilder("SELECT el.id, el.subject, el.fromEmail, el.toEmail, el.status, el.errorMessage, el.timestamp, el.password, el.isEncrypted, ec.senderFirstName, ec.senderLastName, d.FirstName as recipientFirstName, d.LastName as recipientLastName, p.FirstName as providerFirstName, p.LastName as providerLastName FROM EmailLog el, EmailConfig ec, Demographic d, Provider p WHERE el.emailConfig.id = ec.id AND el.demographicNo = d.DemographicNo AND el.providerNo = p.ProviderNo");
     	
         Map<String, Object> parameters = new HashMap<>();
         if (demographicNo != null) { appendToSqlAndParameters(sql, "el.demographicNo = :demo", "demo", Integer.parseInt(demographicNo), parameters); }
@@ -80,6 +80,7 @@ public class EmailLogDao {
             emailStatusResult.setIsEncrypted((boolean) result[8]);
             emailStatusResult.setSenderFullName((String) result[9], (String) result[10]);
             emailStatusResult.setRecipientFullName((String) result[11], (String) result[12]);
+            emailStatusResult.setProviderFullName((String) result[13], (String) result[14]);
             emailStatusResults.add(emailStatusResult);
         }
         Collections.sort(emailStatusResults);

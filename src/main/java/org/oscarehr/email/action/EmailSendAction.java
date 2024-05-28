@@ -89,6 +89,9 @@ public class EmailSendAction extends DispatchAction {
         String additionalParams = request.getParameter("additionalURLParams");
         List<EmailAttachment> emailAttachmentList = (List<EmailAttachment>) request.getSession().getAttribute("emailAttachmentList");
 
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+        String providerNo = loggedInInfo.getLoggedInProviderNo();
+
         EmailData emailData = new EmailData();
         emailData.setSender(fromEmail);
         emailData.setRecipients(receiverEmails);
@@ -102,6 +105,7 @@ public class EmailSendAction extends DispatchAction {
         emailData.setChartDisplayOption(chartDisplayOption);
         emailData.setTransactionType(transactionType);
         emailData.setDemographicNo(demographicNo);
+        emailData.setProviderNo(providerNo);
         emailData.setAdditionalParams(additionalParams);
         emailData.setAttachments(emailAttachmentList);
 
