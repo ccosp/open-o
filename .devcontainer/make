@@ -7,7 +7,9 @@ case $command in
     mvn clean
     ;;
   *)
-    mvn -T 1C -Dmaven.test.skip=true prepare-package war:exploded
+    mvn -Dmaven.test.skip=true prepare-package war:exploded
+    
+
 
     # Assuming the pom.xml file is in the current directory
     pom_file="pom.xml"
