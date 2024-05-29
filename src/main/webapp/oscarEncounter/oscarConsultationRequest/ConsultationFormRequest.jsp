@@ -1343,22 +1343,7 @@ function showSignatureImage()
 
 		document.getElementById('signatureImgTag').src = "<%=storedImgUrl %>" + document.getElementById('signatureImg').value;
 		document.getElementById('newSignature').value = "false";
-
-		<% if (OscarProperties.getInstance().getBooleanProperty("topaz_enabled", "true")) { 
-		  //this is empty
-		%>
-
-		document.getElementById('clickToSign').style.display = "none";
-
-		<% } else { 
-		  //this is empty
-		%>
-
 		document.getElementById("signatureFrame").style.display = "none";
-
-		<% } %>
-
-
 		document.getElementById('signatureShow').style.display = "block";
 	}
 
@@ -1376,21 +1361,6 @@ if (userAgent != null) {
 	}
 }
 %>
-
-function requestSignature()
-{
-
-
-	<% if (OscarProperties.getInstance().getBooleanProperty("topaz_enabled", "true")) { %>
-	document.getElementById('newSignature').value = "true";
-	document.getElementById('signatureShow').style.display = "block";
-	document.getElementById('clickToSign').style.display = "none";
-	// document.getElementById('signatureShow').style.display = "block";
-	setInterval('refreshImage()', POLL_TIME);
-	document.location='<%=request.getContextPath()%>/signature_pad/topaz_signature_pad.jnlp.jsp?<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>=<%=signatureRequestId%>';
-
-	<% } %>
-}
 
 var isSignatureDirty = false;
 var isSignatureSaved = <%= consultUtil.signatureImg != null && !"".equals(consultUtil.signatureImg) ? "true" : "false" %>;
@@ -2471,11 +2441,8 @@ function clearAppointmentDateAndTime() {
 							<img id="signatureImgTag" src="" />
 						</div>
 
-						<% if (OscarProperties.getInstance().getBooleanProperty("topaz_enabled", "true")) { %>
-						<input type="button" id="clickToSign" onclick="requestSignature()" value="click to sign" />
-						<% } else { %>
-						<iframe style="width:500px; height:132px;" id="signatureFrame" src="<%= request.getContextPath() %>/signature_pad/tabletSignature.jsp?inWindow=true&<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>=<%=signatureRequestId%>" ></iframe>
-						<% } %>
+						<iframe style="width:500px; height:132px;" id="signatureFrame"
+						        src="<%= request.getContextPath() %>/signature_pad/tabletSignature.jsp?inWindow=true&<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>=<%=signatureRequestId%>" ></iframe>
 
 					</td>
 				</tr>
