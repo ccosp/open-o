@@ -27,9 +27,6 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./../database:/database
-      - ./db/scripts/populate_db.sh:/docker-entrypoint-initdb.d/populate_db.sh
-      - ./development/config/shared/my.cnf:/etc/mysql/my.cnf
       - mariadb-files:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password

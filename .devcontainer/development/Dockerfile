@@ -76,3 +76,10 @@ RUN apt-get autoclean \
 RUN mkdir -p /root/.m2 && \
     chown -R root:root /root/.m2 && \
     chmod -R 777 /root/.m2
+
+ADD ./scripts /scripts
+
+RUN export make=/scripts/make.sh
+
+CMD ["tail", "-f", "/dev/null"]
+
