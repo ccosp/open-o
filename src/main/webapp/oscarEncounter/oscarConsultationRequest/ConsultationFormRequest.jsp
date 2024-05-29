@@ -957,7 +957,7 @@ function onSelectSpecialist(SelectedSpec)	{
 	var selectedIdx = SelectedSpec.selectedIndex;
 	var form=document.EctConsultationFormRequestForm;
 
-	if (selectedIdx==null || selectedIdx==-1 || (SelectedSpec.options[ selectedIdx ]).value == "-1") {   		//if its the first item set everything to blank
+	if (selectedIdx==null || selectedIdx === -1 || (SelectedSpec.options[ selectedIdx ]).value === "-1") {   		//if its the first item set everything to blank
 		form.phone.value = ("");
 		form.fax.value = ("");
 		form.address.value = ("");
@@ -989,7 +989,7 @@ function onSelectSpecialist(SelectedSpec)	{
 								
         for( var idx = 0; idx < specs.length; ++idx ) {
             aSpeci = specs[idx];									// get the specialist Object for the currently selected spec
-            if( aSpeci.specNbr == SelectedSpec.value ) {
+            if( aSpeci.specNbr === SelectedSpec.value ) {
             	form.phone.value = (aSpeci.phoneNum.replace(null,""));
             	form.fax.value = (aSpeci.specFax.replace(null,""));					// load the text fields with phone fax and address
             	form.address.value = (aSpeci.specAddress.replace(null,""));
@@ -1004,12 +1004,13 @@ function onSelectSpecialist(SelectedSpec)	{
 				updateFaxButton();
         		<% } %>
             	
-            	jQuery.getJSON("getProfessionalSpecialist.json", {id: aSpeci.specNbr},
+            	jQuery.post(ctx + "/getProfessionalSpecialist.do", {id: aSpeci.specNbr},
                     function(xml)
                     {
-                        var hasUrl=xml.eDataUrl!=null&&xml.eDataUrl!="";
+						console.log(xml);
+                        let hasUrl = xml.eDataUrl != null && xml.eDataUrl !== "";
                         enableDisableRemoteReferralButton(form, !hasUrl);
-                        var annotation = document.getElementById("annotation");
+                        let annotation = document.getElementById("annotation");
                         annotation.value = xml.annotation;
                         updateEFormLink(xml.eformId)
                 	}
@@ -1339,6 +1340,7 @@ function refreshImage()
 function showSignatureImage()
 {
 	if (document.getElementById('signatureImg') != null && document.getElementById('signatureImg').value.length > 0) {
+
 		document.getElementById('signatureImgTag').src = "<%=storedImgUrl %>" + document.getElementById('signatureImg').value;
 		document.getElementById('newSignature').value = "false";
 
