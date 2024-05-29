@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) 2024. Magenta Health. All Rights Reserved.
  * Copyright (c) 2005, 2009 IBM Corporation and others.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
@@ -17,6 +18,8 @@
  *
  * Contributors:
  *     <Quatro Group Software Systems inc.>  <OSCAR Team>
+ *
+ * Modifications made by Magenta Health in 2024.
  */
 package com.quatro.dao.security;
 

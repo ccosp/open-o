@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) 2024. Magenta Health. All Rights Reserved.
  * Copyright (c) 2015-2019. The Pharmacists Clinic, Faculty of Pharmaceutical Sciences, University of British Columbia. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
@@ -20,6 +21,8 @@
  * Faculty of Pharmaceutical Sciences
  * University of British Columbia
  * Vancouver, British Columbia, Canada
+ *
+ * Modifications made by Magenta Health in 2024.
  */
 
  package org.oscarehr.managers;

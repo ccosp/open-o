@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) 2024. Magenta Health. All Rights Reserved.
  * Copyright (C) 2007  Heart & Stroke Foundation
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
@@ -20,6 +21,8 @@
  * McMaster University
  * Hamilton
  * Ontario, Canada
+ *
+ * Modifications made by Magenta Health in 2024.
  */
 
 package org.oscarehr.common.dao;

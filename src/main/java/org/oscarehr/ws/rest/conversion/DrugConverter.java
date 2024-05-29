@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) 2024. Magenta Health. All Rights Reserved.
  * Copyright (c) 2013-2015. Department of Computer Science, University of Victoria. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
@@ -20,6 +21,8 @@
  * LeadLab
  * University of Victoria
  * Victoria, Canada
+ *
+ * Modifications made by Magenta Health in 2024.
  */
 
 package org.oscarehr.ws.rest.conversion;
