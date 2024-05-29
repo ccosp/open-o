@@ -325,6 +325,22 @@ function referralScriptAttach2(elementName, name2) {
      rs('att',('../billing/CA/ON/searchRefDoc.jsp?param='+t0+'&param2='+t1),600,600,1);
 }
 
+// Validate email address
+function formatEmail() {
+    var emailField = document.adddemographic.email;
+    var emailValue = emailField.value;
+    
+    if (emailValue.length > 0) {
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailPattern.test(emailValue)) {
+            alert("Invalid email address");
+            emailField.focus();
+            return false; // Indicate validation failure
+        }
+    }
+}
+
 function checkName() {
 	var typeInOK = false;
 	if(document.adddemographic.last_name.value!="" && document.adddemographic.first_name.value!="" && document.adddemographic.last_name.value!=" " && document.adddemographic.first_name.value!=" ") {
@@ -1191,10 +1207,8 @@ function updateResidentialProvinces(province) {
 				</select>
 			</tr>
 			<tr valign="top">
-				<td id="emailLbl" align="right"><b><bean:message
-					key="demographic.demographicaddrecordhtm.formEMail" />: </b></td>
-				<td id="emailCell" align="left"><input type="text" id="email" name="email" value="">
-				</td>
+				<td id="emailLbl" align="right"><b><bean:message key="demographic.demographicaddrecordhtm.formEMail" />: </b></td>
+                <td id="emailCell" align="left"><input type="text" id="email" name="email" onBlur="formatEmail()" value=""></td>
 				<td id="myOscarLbl" align="right"><b><bean:message
 					key="demographic.demographicaddrecordhtm.formPHRUserName" />:</b></td>
 				<td id="myOscarCell"  align="left"><input type="text" name="myOscarUserName" value="">
