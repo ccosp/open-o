@@ -275,6 +275,7 @@ div#leftNavBar {
 	flex-direction: column;
 	flex-grow: 1;
 	flex-basis: 20%;
+	padding-bottom: 20px;
 }
 
 #rightNavBar {
@@ -284,6 +285,7 @@ div#leftNavBar {
 	flex-grow: 1;
 	flex-basis: 20%;
 	height: 100%;
+	padding-bottom: 20px;
 }
 
 #rightNavBar img:first-of-type {
@@ -307,6 +309,7 @@ div#notCPP {
 	align-content: end;
 	width: 100%;
 	gap: 3px;
+	padding-bottom: 20px;
 }
 
 div#cppBoxes {
