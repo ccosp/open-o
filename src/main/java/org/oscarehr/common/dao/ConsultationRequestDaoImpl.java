@@ -35,7 +35,10 @@ import javax.persistence.Query;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.ConsultationRequest;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3b8c3c3e36... feat(fix): Fixed previous code for the Caseload fix to better fit proper coding practices
 
 @SuppressWarnings("unchecked")
 public class ConsultationRequestDaoImpl extends AbstractDaoImpl<ConsultationRequest> implements ConsultationRequestDao {
