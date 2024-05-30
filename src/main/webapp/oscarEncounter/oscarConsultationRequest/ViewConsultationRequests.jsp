@@ -41,6 +41,7 @@ if(!authed) {
 
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@page import="org.oscarehr.common.dao.ConsultationRequestDao"%>
+
 <%@ page import="oscar.oscarEncounter.pageUtil.*,java.text.*,java.util.*"%>
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO, org.oscarehr.common.model.UserProperty, org.springframework.web.context.support.WebApplicationContextUtils" %>
