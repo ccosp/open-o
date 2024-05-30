@@ -41,6 +41,8 @@ if(!authed) {
 
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@page import="org.oscarehr.common.dao.ConsultationRequestDao"%>
+<%@ page import="org.oscarehr.common.dao.ConsultationRequestDaoImpl" %>
+
 <%@ page import="oscar.oscarEncounter.pageUtil.*,java.text.*,java.util.*"%>
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO, org.oscarehr.common.model.UserProperty, org.springframework.web.context.support.WebApplicationContextUtils" %>
@@ -70,7 +72,7 @@ if(!authed) {
 	String strLimit =  request.getParameter("limit");
 	String strOffset = request.getParameter("offset");
 	
-	Integer limit = ConsultationRequestDao.DEFAULT_CONSULT_REQUEST_RESULTS_LIMIT;
+	Integer limit = ConsultationRequestDaoImpl.DEFAULT_CONSULT_REQUEST_RESULTS_LIMIT;
 	Integer offset = 0;
 	
 	try {
