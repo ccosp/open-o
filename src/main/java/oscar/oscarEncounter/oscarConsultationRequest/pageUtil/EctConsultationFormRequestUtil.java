@@ -98,7 +98,7 @@ public class EctConsultationFormRequestUtil {
 	private String appointmentInstructions;
 	private String appointmentInstructionsLabel;
 	
-	private final ConsultationServiceDao consultationServiceDao = (ConsultationServiceDao) SpringUtils.getBean("consultationServiceDao");
+	private final ConsultationServiceDao consultationServiceDao = (ConsultationServiceDao) SpringUtils.getBean(ConsultationServiceDao.class);
 	private final DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
 	private final ContactDao contactDao = SpringUtils.getBean(ContactDao.class);
 	private final FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
