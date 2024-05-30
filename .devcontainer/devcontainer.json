@@ -1,5 +1,5 @@
 {
-  "name": "Oscar Dev",
+  "name": "OSCAR",
   "workspaceFolder": "/workspace",
   "dockerComposeFile": "docker-compose.yml",
   "service": "oscar",
