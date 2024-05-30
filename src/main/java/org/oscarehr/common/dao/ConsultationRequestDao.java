@@ -28,6 +28,9 @@ import java.util.List;
 import org.oscarehr.common.model.ConsultationRequest;
 
 public interface ConsultationRequestDao extends AbstractDao<ConsultationRequest> {
+
+    public static final int DEFAULT_CONSULT_REQUEST_RESULTS_LIMIT = 100;
+
     int getCountReferralsAfterCutOffDateAndNotCompleted(Date referralDateCutoff);
     int getCountReferralsAfterCutOffDateAndNotCompleted(Date referralDateCutoff,String sendto);
     List<ConsultationRequest> getConsults(Integer demoNo);

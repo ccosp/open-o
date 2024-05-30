@@ -41,7 +41,6 @@ if(!authed) {
 
 <%@page import="org.oscarehr.util.LoggedInInfo"%>
 <%@page import="org.oscarehr.common.dao.ConsultationRequestDao"%>
-<%@ page import="org.oscarehr.common.dao.ConsultationRequestDaoImpl" %>
 
 <%@ page import="oscar.oscarEncounter.pageUtil.*,java.text.*,java.util.*"%>
 <%@ page import="java.sql.ResultSet"%>
@@ -72,7 +71,7 @@ if(!authed) {
 	String strLimit =  request.getParameter("limit");
 	String strOffset = request.getParameter("offset");
 	
-	Integer limit = ConsultationRequestDaoImpl.DEFAULT_CONSULT_REQUEST_RESULTS_LIMIT;
+	Integer limit = ConsultationRequestDao.DEFAULT_CONSULT_REQUEST_RESULTS_LIMIT;
 	Integer offset = 0;
 	
 	try {
