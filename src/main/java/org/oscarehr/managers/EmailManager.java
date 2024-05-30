@@ -44,6 +44,7 @@ import org.owasp.encoder.Encode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import oscar.log.LogAction;
 import oscar.oscarEncounter.data.EctProgram;
 import oscar.util.StringUtils;
 
@@ -105,6 +106,9 @@ public class EmailManager {
         emailLog.setDemographicNo(emailData.getDemographicNo());
         emailLog.setProviderNo(emailData.getProviderNo());
         emailLogDao.persist(emailLog);
+
+        LogAction.addLog(loggedInInfo, "EmailManager.prepareEmailForOutbox", "Email", "emailLogId=" + emailLog.getId(), String.valueOf(emailLog.getDemographicNo()), "");
+
         return emailLog;
     }
 
