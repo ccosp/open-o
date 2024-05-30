@@ -67,7 +67,7 @@ String rdOhip = null;
 String rdName = null;
 
 try {
-	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 
 	rdOhip = SxmlMisc.getXmlContent(d.getFamilyDoctor(),"rdohip").trim();
 	rdName = professionalSpecialistDao.getByReferralNo(rdOhip).getFormattedName();

@@ -61,7 +61,7 @@ import org.oscarehr.util.SpringUtils;
 public final class SendOruR01UIBean {
 	
 	private static Logger logger=MiscUtils.getLogger();
-	private static ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	private static ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	private static Hl7TextMessageDao hl7TextMessageDao = (Hl7TextMessageDao) SpringUtils.getBean("hl7TextMessageDao");
 	private static PublicKeyDao publicKeyDao = (PublicKeyDao) SpringUtils.getBean("publicKeyDao");
 	private static DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
