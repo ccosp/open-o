@@ -137,12 +137,12 @@
         
     java.util.Locale vLocale = (java.util.Locale) session.getAttribute(org.apache.struts.Globals.LOCALE_KEY);
     WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-    ProviderLabRoutingDao providerLabRoutingDao = (ProviderLabRoutingDao) ctx.getBean("providerLabRoutingDao");
+    ProviderLabRoutingDao providerLabRoutingDao = (ProviderLabRoutingDao) ctx.getBean(ProviderLabRoutingDao.class);
     ProviderDao providerDao = (ProviderDao) ctx.getBean("providerDao");
     DemographicDao demographicDao = (DemographicDao) ctx.getBean("demographicDao");
     QueueDao queueDao = (QueueDao) ctx.getBean("queueDao");
 
-    CtlDocClassDao docClassDao = (CtlDocClassDao) ctx.getBean("ctlDocClassDao");
+    CtlDocClassDao docClassDao = (CtlDocClassDao) ctx.getBean(CtlDocClassDao.class);
     List<String> reportClasses = docClassDao.findUniqueReportClasses();
     ArrayList<String> subClasses = new ArrayList<String>();
     ArrayList<String> consultA = new ArrayList<String>();
