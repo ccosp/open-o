@@ -50,7 +50,7 @@ public class ProcessConsultationTickler extends AbstractPreparedTickler implemen
 
 	private TicklerManager ticklerMgr;
 	private ConsultationRequestDao consultationRequestDao = (ConsultationRequestDao) SpringUtils.getBean("consultationRequestDao");
-	private ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	private ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 
 	public void setTicklerManager(TicklerManager ticklerMgr) {
 		this.ticklerMgr = ticklerMgr;

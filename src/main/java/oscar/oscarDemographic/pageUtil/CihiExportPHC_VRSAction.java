@@ -135,7 +135,7 @@ public class CihiExportPHC_VRSAction extends DispatchAction {
 
 	private Logger log = MiscUtils.getLogger();
 
-	private static final PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean("partialDateDao");
+	private static final PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean(PartialDateDao.class);
 
 	public void setDemographicDao(DemographicDao demographicDao) {
 	    this.demographicDao = demographicDao;

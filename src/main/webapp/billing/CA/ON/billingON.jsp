@@ -51,7 +51,7 @@
 <%@page import="org.oscarehr.managers.DemographicManager,org.oscarehr.billing.CA.filters.CodeFilterManager"%>
 
 <%
-	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	DxresearchDAO dxresearchDao = SpringUtils.getBean(DxresearchDAO.class);
 	UserPropertyDAO userPropertyDao = SpringUtils.getBean(UserPropertyDAO.class);
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);

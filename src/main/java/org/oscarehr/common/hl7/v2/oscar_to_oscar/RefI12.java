@@ -81,7 +81,7 @@ public final class RefI12 {
 		Provider referringProvider=providerDao.getProvider(consultationRequest.getProviderNo());
 		DataTypeUtils.fillPrd(referralMsg.getPROVIDER_CONTACT(0).getPRD(), referringProvider, "RP", "Referring Provider", clinic);
 
-		ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+		ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 		ProfessionalSpecialist referredToProfessionalSpecialist=professionalSpecialistDao.find(consultationRequest.getSpecialistId());
 		DataTypeUtils.fillPrd(referralMsg.getPROVIDER_CONTACT(1).getPRD(), referredToProfessionalSpecialist, "RT", "Referred to Provider");
 

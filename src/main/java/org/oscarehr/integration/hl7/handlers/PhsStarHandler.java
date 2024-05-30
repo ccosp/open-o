@@ -659,7 +659,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
 		logger.info("need to do a provider add/update for id " + practId);
 
 		//logger.info("mfId="+mfId);
-		ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+		ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 		ProfessionalSpecialist specialist = null;
 		specialist = professionalSpecialistDao.getByReferralNo(practId);
 		if(specialist == null) {

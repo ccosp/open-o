@@ -82,7 +82,7 @@
 
 <jsp:useBean id="apptMainBean" class="oscar.AppointmentMainBean" scope="session" />
 <%!
-	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
+	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 	ProgramManager pm = SpringUtils.getBean(ProgramManager.class);
 	DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
