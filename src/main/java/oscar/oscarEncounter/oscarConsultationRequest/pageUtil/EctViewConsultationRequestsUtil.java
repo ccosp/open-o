@@ -85,7 +85,7 @@ public class EctViewConsultationRequestsUtil {
           ConsultationRequestDao consultReqDao = (ConsultationRequestDao) SpringUtils.getBean("consultationRequestDao");
           DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
           ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
-          ConsultationServiceDao serviceDao = (ConsultationServiceDao) SpringUtils.getBean("consultationServiceDao");
+          ConsultationServiceDao serviceDao = (ConsultationServiceDao) SpringUtils.getBean(ConsultationServiceDao.class);
           ConsultationRequest consult;
           Demographic demo;
           Provider prov;
@@ -185,7 +185,7 @@ public class EctViewConsultationRequestsUtil {
 
           ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
           DemographicManager demoManager = SpringUtils.getBean(DemographicManager.class);
-          ConsultationServiceDao serviceDao = (ConsultationServiceDao) SpringUtils.getBean("consultationServiceDao");
+          ConsultationServiceDao serviceDao = (ConsultationServiceDao) SpringUtils.getBean(ConsultationServiceDao.class);
           ConsultationRequest consult;
           Provider prov;
           Demographic demo;
