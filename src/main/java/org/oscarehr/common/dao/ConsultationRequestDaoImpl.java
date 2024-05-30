@@ -32,7 +32,7 @@ import javax.persistence.Query;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.ConsultationRequest;
-
+import org.springframework.stereotype.Repository;
 
 @SuppressWarnings("unchecked")
 public class ConsultationRequestDaoImpl extends AbstractDaoImpl<ConsultationRequest> implements ConsultationRequestDao {
