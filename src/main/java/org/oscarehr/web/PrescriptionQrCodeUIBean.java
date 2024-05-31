@@ -59,7 +59,7 @@ public final class PrescriptionQrCodeUIBean {
 	private static ClinicDAO clinicDAO = (ClinicDAO) SpringUtils.getBean("clinicDAO");
 	private static ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
 	private static DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
-	private static PrescriptionDao prescriptionDao = (PrescriptionDao) SpringUtils.getBean("prescriptionDao");
+	private static PrescriptionDao prescriptionDao = (PrescriptionDao) SpringUtils.getBean(PrescriptionDao.class);
 	private static DrugDao drugDao = (DrugDao) SpringUtils.getBean("drugDao");
 
 	private PrescriptionQrCodeUIBean() {
