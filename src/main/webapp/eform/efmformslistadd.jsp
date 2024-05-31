@@ -56,7 +56,7 @@ else if (orderByRequest.equals("form_date")) orderBy = EFormUtil.DATE;
 
 String groupView = request.getParameter("group_view");
 if (groupView == null) {
-    UserPropertyDAO userPropDAO = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+    UserPropertyDAO userPropDAO = (UserPropertyDAO)SpringUtils.getBean(UserPropertyDAO.class);
     UserProperty usrProp = userPropDAO.getProp(user, UserProperty.EFORM_FAVOURITE_GROUP);
     if( usrProp != null ) {
         groupView = usrProp.getValue();

@@ -168,7 +168,7 @@
 
 <%
     if (bMultisites) {
-        SiteDao siteDao = (SiteDao) SpringUtils.getBean("siteDao");
+        SiteDao siteDao = (SiteDao) SpringUtils.getBean(SiteDao.class);
         sites = siteDao.getAllActiveSites();
 
         String requestSite = request.getParameter("site");

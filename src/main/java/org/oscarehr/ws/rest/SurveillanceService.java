@@ -64,6 +64,7 @@ import org.oscarehr.common.model.ResourceStorage;
 import org.oscarehr.common.model.SurveillanceData;
 import org.oscarehr.managers.AppManager;
 import org.oscarehr.managers.OscarJobManager;
+import org.oscarehr.managers.OscarJobManagerImpl;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -325,7 +326,7 @@ public class SurveillanceService extends AbstractServiceImpl {
 				List<OscarJob> jobList =  oscarJobManager.getJobByName(loggedInInfo,"Surveillance "+survey.getSurveyId());
 				OscarJob job = null;
 				if(jobList.isEmpty()) {					
-					OscarJobType oscarJobType = oscarJobManager.addIfNotLoaded(loggedInInfo,OscarJobManager.getFTPSJob());
+					OscarJobType oscarJobType = oscarJobManager.addIfNotLoaded(loggedInInfo,OscarJobManagerImpl.getFTPSJob());
 					job = new OscarJob();
 					job.setOscarJobTypeId(oscarJobType.getId());
 					job.setEnabled(true);

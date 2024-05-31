@@ -55,8 +55,8 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%
-	AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao)SpringUtils.getBean("appointmentArchiveDao");
-	OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean("oscarAppointmentDao");
+	AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao)SpringUtils.getBean(AppointmentArchiveDao.class);
+	OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean(OscarAppointmentDao.class);
 	SimpleDateFormat dayFormatter = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

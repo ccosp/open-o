@@ -74,6 +74,7 @@ import org.oscarehr.PMmodule.service.ProgramManager;
 import org.oscarehr.PMmodule.service.ProgramQueueManager;
 import org.oscarehr.PMmodule.service.ProviderManager;
 import org.oscarehr.PMmodule.service.VacancyTemplateManager;
+import org.oscarehr.PMmodule.service.VacancyTemplateManagerImpl;
 import org.oscarehr.PMmodule.utility.ProgramAccessCache;
 import org.oscarehr.caisi_integrator.ws.CachedProvider;
 import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
@@ -890,11 +891,11 @@ public class ProgramManagerAction extends DispatchAction {
 		Vacancy vacancy = new Vacancy();
 		String vacancyId = request.getParameter("vacancyId");
 		if(!StringUtils.isBlank(vacancyId)) {
-			vacancy = VacancyTemplateManager.getVacancyById(Integer.valueOf(vacancyId));	
+			vacancy = VacancyTemplateManagerImpl.getVacancyById(Integer.valueOf(vacancyId));	
 			vacancy.setStatus(parameters.get("vacancyStatus")[0]);
 			vacancy.setReasonClosed(parameters.get("reasonClosed")[0]);	
 			vacancy.setDateClosed(dateClosedFormatted);
-			VacancyTemplateManager.saveVacancy(vacancy);
+			VacancyTemplateManagerImpl.saveVacancy(vacancy);
 
 			Facility f = loggedInInfo.getCurrentFacility();
 			if(f.getAssignNewVacancyTicklerProvider() != null && f.getAssignNewVacancyTicklerProvider().length()>0 
@@ -909,7 +910,7 @@ public class ProgramManagerAction extends DispatchAction {
 			vacancy.setStatus(parameters.get("vacancyStatus")[0]);
 			vacancy.setReasonClosed(parameters.get("reasonClosed")[0]);	
 			vacancy.setDateClosed(dateClosedFormatted);
-			VacancyTemplateManager.saveVacancy(vacancy);	
+			VacancyTemplateManagerImpl.saveVacancy(vacancy);	
 			
 			Facility f = loggedInInfo.getCurrentFacility();
 			if(f.getAssignNewVacancyTicklerProvider() != null && f.getAssignNewVacancyTicklerProvider().length()>0 
@@ -917,9 +918,9 @@ public class ProgramManagerAction extends DispatchAction {
 				createWaitlistNotificationTickler(loggedInInfo,f,vacancy,loggedInInfo.getLoggedInProviderNo());
 			}
 				
-			List<Criteria> criteriaList = VacancyTemplateManager.getRefinedCriteriasByTemplateId(templateId);
+			List<Criteria> criteriaList = VacancyTemplateManagerImpl.getRefinedCriteriasByTemplateId(templateId);
 			for(Criteria c : criteriaList) {
-				CriteriaType type = VacancyTemplateManager.getCriteriaTypeById(c.getCriteriaTypeId());
+				CriteriaType type = VacancyTemplateManagerImpl.getCriteriaTypeById(c.getCriteriaTypeId());
 				Criteria newCriteria = new Criteria();			
 				newCriteria.setVacancyId(vacancy.getId());			
 				newCriteria.setMatchScoreWeight(1.0); //???
@@ -930,7 +931,7 @@ public class ProgramManagerAction extends DispatchAction {
                                 	newCriteria.setCriteriaValue(c.getCriteriaValue());
                                 	newCriteria.setRangeEndValue(c.getRangeEndValue());
                                 	newCriteria.setRangeStartValue(c.getRangeStartValue());
-                                	VacancyTemplateManager.saveCriteria(newCriteria);
+                                	VacancyTemplateManagerImpl.saveCriteria(newCriteria);
                                 	continue;
                         	}
 
@@ -1000,17 +1001,17 @@ public class ProgramManagerAction extends DispatchAction {
 		
 		//save tmeplate
 		String vacancyTemplateId = request.getParameter("vacancyOrTemplateId");
-		VacancyTemplate vacancyTemplate=VacancyTemplateManager.createVacancyTemplate(vacancyTemplateId);
+		VacancyTemplate vacancyTemplate=VacancyTemplateManagerImpl.createVacancyTemplate(vacancyTemplateId);
 		vacancyTemplate.setName(request.getParameter("templateName"));
 		if (request.getParameter("templateActive") == null) {
 			vacancyTemplate.setActive(false);
 		}		
 		vacancyTemplate.setWlProgramId(Integer.parseInt(request.getParameter("programId")));
-		VacancyTemplateManager.saveVacancyTemplate(vacancyTemplate);	
+		VacancyTemplateManagerImpl.saveVacancyTemplate(vacancyTemplate);	
 		
 		//Save Criteria
-		//List<CriteriaType> typeList = VacancyTemplateManager.getAllCriteriaTypes();
-		List<CriteriaType> typeList = VacancyTemplateManager.getAllCriteriaTypesByWlProgramId(Integer.parseInt(request.getParameter("programId")));
+		//List<CriteriaType> typeList = VacancyTemplateManagerImpl.getAllCriteriaTypes();
+		List<CriteriaType> typeList = VacancyTemplateManagerImpl.getAllCriteriaTypesByWlProgramId(Integer.parseInt(request.getParameter("programId")));
 		for(CriteriaType type : typeList) {
 			Criteria criteria = new Criteria();		
 			criteria.setTemplateId(vacancyTemplate.getId());			
@@ -1052,7 +1053,7 @@ public class ProgramManagerAction extends DispatchAction {
 			
 			criteria.setCriteriaTypeId(type.getId()); 	
 			
-			VacancyTemplateManager.saveCriteria(criteria);
+			VacancyTemplateManagerImpl.saveCriteria(criteria);
 		
 		} else if(type.getFieldType().equalsIgnoreCase("select_one")) {
 			
@@ -1065,7 +1066,7 @@ public class ProgramManagerAction extends DispatchAction {
 			
 			criteria.setCriteriaTypeId(type.getId()); 	
 			
-			VacancyTemplateManager.saveCriteria(criteria);
+			VacancyTemplateManagerImpl.saveCriteria(criteria);
 			
 		} else if(type.getFieldType().equalsIgnoreCase("number")) {
 			
@@ -1078,7 +1079,7 @@ public class ProgramManagerAction extends DispatchAction {
 			
 			criteria.setCriteriaTypeId(type.getId());
 			
-			VacancyTemplateManager.saveCriteria(criteria);
+			VacancyTemplateManagerImpl.saveCriteria(criteria);
 			
 		} else {
 			//do nothing for now
@@ -1095,14 +1096,14 @@ public class ProgramManagerAction extends DispatchAction {
 			}
 			
 			//criteria.setMatchScoreWeight(Double.parseDouble("0.5"));
-			VacancyTemplateManager.saveCriteria(criteria);
+			VacancyTemplateManagerImpl.saveCriteria(criteria);
 			
 			//Save criteria_selection_option
 			CriteriaSelectionOption selectedOption = new CriteriaSelectionOption();
 			selectedOption.setCriteriaId(criteria.getId());
 			//selectedOption.setOptionValue(String.valueOf(option.getId()));
 			selectedOption.setOptionValue(option.getOptionValue());
-			VacancyTemplateManager.saveCriteriaSelectedOption(selectedOption);	
+			VacancyTemplateManagerImpl.saveCriteriaSelectedOption(selectedOption);	
 		}
 	}
 	
@@ -1642,17 +1643,17 @@ public class ProgramManagerAction extends DispatchAction {
 	}
 
 	/**
-     * @return the vacancyTemplateManager
+     * @return the VacancyTemplateManagerImpl
      */
     public VacancyTemplateManager getVacancyTemplateManager() {
-    	return vacancyTemplateManager;
+    	return this.vacancyTemplateManager;
     }
 
 	/**
-     * @param vacancyTemplateManager the vacancyTemplateManager to set
+     * @param VacancyTemplateManager the VacancyTemplateManager to set
      */
-    public void setVacancyTemplateManager(VacancyTemplateManager vacancyTemplateManager) {
-    	this.vacancyTemplateManager = vacancyTemplateManager;
+    public void setVacancyTemplateManager(VacancyTemplateManager VacancyTemplateManager) {
+    	this.vacancyTemplateManager = VacancyTemplateManager;
     }
 
 	protected Integer getParameterAsInteger(HttpServletRequest request, String name, Integer defaultVal) {

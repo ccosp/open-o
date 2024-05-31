@@ -25,7 +25,7 @@ package org.oscarehr.sharingcenter.dao;
 
 import java.util.List;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 
 import javax.persistence.Query;
 
@@ -34,7 +34,7 @@ import org.oscarehr.sharingcenter.model.PolicyDefinitionDataObject;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PolicyDefinitionDao extends AbstractDao<PolicyDefinitionDataObject> {
+public class PolicyDefinitionDao extends AbstractDaoImpl<PolicyDefinitionDataObject> {
 
     public PolicyDefinitionDao() {
         super(PolicyDefinitionDataObject.class);

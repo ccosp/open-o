@@ -61,7 +61,7 @@
     FrmRecord rec = (new FrmRecordFactory()).factory(formClass);
     java.util.Properties props = rec.getFormRecord(LoggedInInfo.getLoggedInInfoFromSession(request),demoNo, formId);  
     
-    DemographicDao demoDao = (DemographicDao) SpringUtils.getBean("demographicDao");
+    DemographicDao demoDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
     Demographic demo = demoDao.getDemographic(request.getParameter("demographic_no"));
     String demoName = demo.getFormattedName();
     

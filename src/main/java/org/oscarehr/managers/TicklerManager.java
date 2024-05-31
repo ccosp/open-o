@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) 2024. Magenta Health. All Rights Reserved.
  * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
@@ -20,6 +21,8 @@
  * McMaster University
  * Hamilton
  * Ontario, Canada
+ *
+ * Modifications made by Magenta Health in 2024.
  */
 package org.oscarehr.managers;
 
@@ -36,6 +39,7 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.mail.EmailException;
 import org.apache.velocity.VelocityContext;
 import org.oscarehr.PMmodule.dao.ProgramAccessDAO;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
@@ -74,178 +78,120 @@ import oscar.log.LogAction;
 
 import com.quatro.model.security.Secrole;
 
-@Service
-public class TicklerManager {
-	   
-    	public static String DEMOGRAPHIC_NAME = "demographic_name";
-        public static String CREATOR = "creator";
-        public static String SERVICE_DATE = "service_date";
-        public static String CREATION_DATE = "creation_date";
-        public static String PRIORITY = "priority";
-        public static String TASK_ASSIGNED_TO = "task_assigned_to";
-        public static String STATUS = "status";
-        public static String SORT_ASC = "asc";
-        public static String SORT_DESC = "desc";
-        
-	private static final String TICKLER_EMAIL_TEMPLATE_FILE="/tickler_email_notification_template.txt";
-	private static final String PRIVILEGE_READ = "r";
-	private static final String PRIVILEGE_WRITE = "w";
-	private static final String PRIVILEGE_UPDATE = "u";
-	
-	@Autowired
-	private ProgramAccessDAO programAccessDAO;
-   
-	@Autowired
-	private ProgramProviderDAO programProviderDAO;
-	 
-	@Autowired
-	private TicklerDao ticklerDao;
-	
-	@Autowired
-	private TicklerLinkDao ticklerLinkDao;
-	
-	@Autowired
-	private TicklerCommentDao ticklerCommentDao;
-	
-	@Autowired
-	private TicklerUpdateDao ticklerUpdateDao;
-	
-	@Autowired
-	private ProviderDao providerDao;
-	
-	@Autowired
-	private ProgramManager programManager;
-	    
-	@Autowired
-	private CaseManagementManager caseManagementManager;
-	    
-	@Autowired
-	private CustomFilterDao customFilterDao;
-	
-	@Autowired
-	private TicklerTextSuggestDao ticklerTextSuggestDao;
-	
-	@Autowired
-	private SecurityInfoManager securityInfoManager;
-	
-	@Autowired
-	private TicklerCategoryDao ticklerCategoryDao;
-	
-	public List<TicklerCategory> getActiveTicklerCategories( LoggedInInfo loggedInInfo ) {
-		checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-		
-		LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.getActiveTicklerCategories", "All active categories");
-		
-		return ticklerCategoryDao.getActiveCategories();
-	}
-        
-	
-	public boolean validateTicklerIsValid(Tickler tickler) {
-		if(tickler == null)
-			return false;
-		if(StringUtils.isEmpty(tickler.getCreator()))
-			return false;
-		if(StringUtils.isEmpty(tickler.getTaskAssignedTo()))
-			return false;
-		if(tickler.getDemographicNo() == null || tickler.getDemographicNo().intValue() == 0)
-			return false;
-		return true;
-	}
-	
-	public boolean addTicklerLink(LoggedInInfo loggedInInfo, TicklerLink ticklerLink )
-        {
-            checkPrivilege(loggedInInfo, PRIVILEGE_WRITE);    	    	
-            ticklerDao.persist(ticklerLink);
-	     
-	    //--- log action ---
-            LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.addTicklerLink", "ticklerLinkId="+ticklerLink.getId());
-		
-            return true;			
-	}
-        
-    public boolean addTickler(LoggedInInfo loggedInInfo, Tickler tickler) {
-    	checkPrivilege(loggedInInfo, PRIVILEGE_WRITE);
-    	
-    	if(!validateTicklerIsValid(tickler)) {
-    		return false;
-    	}
-    	
-    	ticklerDao.persist(tickler);
-	     
-	    //--- log action ---
-		LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.addtickler", "ticklerId="+tickler.getId());
-		
-		return true;
-    }
-        
-    public boolean updateTickler(LoggedInInfo loggedInInfo, Tickler tickler) {
-    	checkPrivilege(loggedInInfo, PRIVILEGE_UPDATE);
-    	
-    	if(!validateTicklerIsValid(tickler)) {
-    		return false;
-    	}
-    	for(TicklerUpdate tu:tickler.getUpdates()) {
-    		if(tu.getId() == null || tu.getId().intValue() == 0) {
-    			ticklerUpdateDao.persist(tu);
-    		}
-    	}
-    	for(TicklerComment tc:tickler.getComments()) {
-    			if(tc.getId() == null || tc.getId().intValue() == 0) {
-    				ticklerCommentDao.persist(tc);
-    		}
-    	}
-        ticklerDao.merge(tickler);
-     
-        //--- log action ---
-		LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.updatetickler", "ticklerId="+tickler.getId());
-		
-		return true;
-    }
-   
-    
-    public List<Tickler> getTicklers(LoggedInInfo loggedInInfo,CustomFilter filter,String providerNo,String programId) {
-    	checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    	
-        List<Tickler> results = ticklerDao.getTicklers(filter);     
-           
-          
-        if (OscarProperties.getInstance().getBooleanProperty("FILTER_ON_FACILITY", "true")) {        	
-        	//filter based on facility
-        	results = ticklerFacilityFiltering(loggedInInfo,results);
-        	
-        	//filter based on caisi role access
-            results = filterTicklersByAccess(results,providerNo,programId);
-        }
-        return(results);
-    }
-    
-    public List<Tickler> getTicklers(LoggedInInfo loggedInInfo, CustomFilter filter) {
-    	checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    	
-    	return ticklerDao.getTicklers(filter);
-    }
-    
-    public List<Tickler> getTicklers(LoggedInInfo loggedInInfo, CustomFilter filter, int offset, int limit) {
-    	checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    	
-    	return ticklerDao.getTicklers(filter,offset,limit);
-    }
+public interface TicklerManager {
+
+	public static String DEMOGRAPHIC_NAME = "demographic_name";
+	public static String CREATOR = "creator";
+	public static String SERVICE_DATE = "service_date";
+	public static String CREATION_DATE = "creation_date";
+	public static String PRIORITY = "priority";
+	public static String TASK_ASSIGNED_TO = "task_assigned_to";
+	public static String STATUS = "status";
+	public static String SORT_ASC = "asc";
+	public static String SORT_DESC = "desc";
+
+	public List<TicklerCategory> getActiveTicklerCategories(LoggedInInfo loggedInInfo);
+
+	public boolean validateTicklerIsValid(Tickler tickler);
+
+	public boolean addTicklerLink(LoggedInInfo loggedInInfo, TicklerLink ticklerLink);
+
+	public boolean addTickler(LoggedInInfo loggedInInfo, Tickler tickler);
+
+	public boolean updateTickler(LoggedInInfo loggedInInfo, Tickler tickler);
+
+	public List<Tickler> getTicklers(LoggedInInfo loggedInInfo, CustomFilter filter, String providerNo,
+			String programId);
+
+	public List<Tickler> getTicklers(LoggedInInfo loggedInInfo, CustomFilter filter);
+
+	public List<Tickler> getTicklers(LoggedInInfo loggedInInfo, CustomFilter filter, int offset, int limit);
+
+	public List<Tickler> getTicklerByLabId(LoggedInInfo loggedInInfo, int labId, Integer demoNo);
+
+	public List<Tickler> getTicklerByLabIdAnyProvider(LoggedInInfo loggedInInfo, int labId, Integer demoNo);
+
+	public List<Tickler> ticklerFacilityFiltering(LoggedInInfo loggedInInfo, List<Tickler> ticklers);
+
+	public List<Tickler> filterTicklersByAccess(List<Tickler> ticklers, String providerNo, String programNo);
+
+	public int getActiveTicklerCount(LoggedInInfo loggedInInfo, String providerNo);
+
+	public int getActiveTicklerByDemoCount(LoggedInInfo loggedInInfo, Integer demographicNo);
+
+	public int getNumTicklers(LoggedInInfo loggedInInfo, CustomFilter filter);
+
+	public Tickler getTickler(LoggedInInfo loggedInInfo, String tickler_no);
+
+	public Tickler getTickler(LoggedInInfo loggedInInfo, Integer id);
+
+	public void addComment(LoggedInInfo loggedInInfo, Integer tickler_id, String provider, String message);
+
+	public void reassign(LoggedInInfo loggedInInfo, Integer tickler_id, String provider, String task_assigned_to);
+
+	public void updateStatus(LoggedInInfo loggedInInfo, Integer tickler_id, String provider, Tickler.STATUS status);
+
+	public void sendNotification(LoggedInInfo loggedInInfo, Tickler t) throws EmailException, IOException;
+
+	public void completeTickler(LoggedInInfo loggedInInfo, Integer tickler_id, String provider);
+
+	public void deleteTickler(LoggedInInfo loggedInInfo, Integer tickler_id, String provider);
+
+	public void activateTickler(LoggedInInfo loggedInInfo, Integer tickler_id, String provider);
+
+	public void resolveTicklersBySubstring(LoggedInInfo loggedInInfo, String providerNo, List<String> demographicIds,
+			String remString);
+
+	public List<CustomFilter> getCustomFilters();
+
+	public List<CustomFilter> getCustomFilters(String provider_no);
+
+	public List<CustomFilter> getCustomFilterWithShortCut(String providerNo);
+
+	public CustomFilter getCustomFilter(String name);
+
+	public CustomFilter getCustomFilter(String name, String providerNo);
+
+	public CustomFilter getCustomFilterById(Integer id);
+
+	public void saveCustomFilter(CustomFilter filter);
+
+	public void deleteCustomFilter(String name);
+
+	public void deleteCustomFilterById(Integer id);
+
+	public void addTickler(String demographic_no, String message, Tickler.STATUS status, String service_date,
+			String creator, Tickler.PRIORITY priority, String task_assigned_to);
+
+	public boolean hasTickler(String demographic, String task_assigned_to, String message);
+
+	public void createTickler(String demoNo, String provNo, String message, String assignedTo);
+
+	public void resolveTicklers(LoggedInInfo loggedInInfo, String providerNo, List<String> cdmPatientNos,
+			String remString);
+
+	public List<Tickler> listTicklers(LoggedInInfo loggedInInfo, Integer demographicNo, Date beginDate, Date endDate);
+
+	public List<Tickler> findActiveByDemographicNo(LoggedInInfo loggedInInfo, Integer demographicNo);
+
+	public List<Tickler> search_tickler_bydemo(LoggedInInfo loggedInInfo, Integer demographicNo, String status,
+			Date beginDate, Date endDate);
 
     public List<Tickler> getTicklerByLabId(LoggedInInfo loggedInInfo, int labId, Integer demoNo){
     	checkPrivilege(loggedInInfo, PRIVILEGE_READ);
     	String providerNo = loggedInInfo.getLoggedInProviderNo();
-    	
+
     	List<TicklerLink> links = ticklerLinkDao.getLinkByTableId("HL7", Long.valueOf(labId));
-    	
+
     	ArrayList<Tickler> results = new ArrayList<Tickler>();
-    	
+
     	for(TicklerLink link:links){
     		List<Tickler> ticklers = ticklerDao.findByTicklerNoAssignedTo(link.getTicklerNo(), providerNo, demoNo);
     		for(Tickler tickler:ticklers){
     			results.add(tickler);
     		}
     	}
-    	
+
     	Collections.sort(results, Tickler.StatusAscComparator);
     	return results;
     }
@@ -253,67 +199,67 @@ public class TicklerManager {
     public List<Tickler> getTicklerByLabIdAnyProvider(LoggedInInfo loggedInInfo, int labId, Integer demoNo){
     	checkPrivilege(loggedInInfo, PRIVILEGE_READ);
     	String providerNo = loggedInInfo.getLoggedInProviderNo();
-    	
+
     	List<TicklerLink> links = ticklerLinkDao.getLinkByTableId("HL7", Long.valueOf(labId));
-    	
+
     	ArrayList<Tickler> results = new ArrayList<Tickler>();
-    	
+
     	for(TicklerLink link:links){
     		List<Tickler> ticklers = ticklerDao.findByTicklerNoDemo(link.getTicklerNo(), demoNo);
     		for(Tickler tickler:ticklers){
     			results.add(tickler);
     		}
     	}
-    	
+
     	Collections.sort(results, Tickler.StatusAscComparator);
     	return results;
     }
-    
+
     protected List<Tickler> ticklerFacilityFiltering(LoggedInInfo loggedInInfo, List<Tickler> ticklers) {
         ArrayList<Tickler> results = new ArrayList<Tickler>();
 
         for (Tickler tickler : ticklers) {
             Integer programId = tickler.getProgramId();
-            
-            if (programManager.hasAccessBasedOnCurrentFacility(loggedInInfo, programId)) {            	
+
+            if (programManager.hasAccessBasedOnCurrentFacility(loggedInInfo, programId)) {
             	results.add(tickler);
-            }        
+            }
         }
 
         return results;
     }
-    
+
     protected List<Tickler> filterTicklersByAccess(List<Tickler> ticklers, String providerNo, String programNo) {
     	List<Tickler> filteredTicklers = new ArrayList<Tickler>();
 
     	if (ticklers.isEmpty()) {
     		return ticklers;
-    	}    	
-    	
+    	}
+
 	    String programId = "";
 	    //iterate through the tickler list
 	    for (Iterator<Tickler> iter = ticklers.iterator(); iter.hasNext();) {
 	        Tickler t =iter.next();
-	        boolean add = false;	        
+	        boolean add = false;
 	        List<ProgramProvider> ppList = new ArrayList<ProgramProvider>();
-	        
+
 	        programId = String.valueOf(t.getProgramId());
-	        
+
 	        //If the ticklers are not in any program (old ticklers), show them.
 	        //They will not be filtered by the role access.
 	        if(programId==null || "".equals(programId) || "null".equals(programId)) {
 	        	filteredTicklers.add(t);
 	        	continue;
 	        }
-	        
+
 	        //load up the program_provider entry to get the role for this provider in the tickler's program
 	        ppList = programProviderDAO.getProgramProviderByProviderProgramId(providerNo, new Long(programId));
 	        if (ppList == null || ppList.isEmpty()) {
 	        	continue;
 	        }
 	        ProgramProvider pp = ppList.get(0);
-		    Secrole role = pp.getRole();		   
-		    
+		    Secrole role = pp.getRole();
+
 	        //Get the tickler assigned to provider's role in the tickler's program
 		    String ticklerRole = null;
 	        List<ProgramProvider> ppList2 = new  ArrayList<ProgramProvider>();
@@ -321,46 +267,46 @@ public class TicklerManager {
         	if (ppList2 != null && !ppList2.isEmpty()) {
         		ticklerRole = ppList2.get(0).getRole().getRoleName().toLowerCase();
         	}
-	        
-	        ProgramAccess pa = null;        
-	        
+
+	        ProgramAccess pa = null;
+
 	        //Load up access list from program
 		    List<ProgramAccess> programAccessList = programAccessDAO.getAccessListByProgramId(new Long(programId));
 		    Map<String,ProgramAccess> programAccessMap = caseManagementManager.convertProgramAccessListToMap(programAccessList);
-			
+
 	        //read
-		    
+
 		    //if the provider's role is allowed to read tickler's assigned to "ticklerRole". add.
 		    //if no entry exists, but the the provider has same role as assigned to role, then we add
 	        pa = programAccessMap.get("read ticklers assigned to a " + ticklerRole );
 	        if (pa != null) {
-	            if (pa.isAllRoles() || caseManagementManager.isRoleIncludedInAccess(pa, role)) {                
+	            if (pa.isAllRoles() || caseManagementManager.isRoleIncludedInAccess(pa, role)) {
 	                add = true;
 	            }
 	        }
 	        else {
-	            if (ticklerRole.equals(role.getRoleName())) {                               
+	            if (ticklerRole.equals(role.getRoleName())) {
 	                add = true;
 	            }
 	        }
 	        pa = null;
-	        
+
 	        //if this provider wrote the tickler, they should see it..doesn't matter
 	        //about the role based access
 	        if(!add) {
 	        	if(t.getProvider().getProviderNo().equals(providerNo)) {
 	        		add=true;
 	        	}
-	        
+
 	        }
-	
+
 	        //apply defaults - i think this is already added above
 	        if (!add) {
-	            if (ticklerRole.equals(role.getRoleName())) {                
+	            if (ticklerRole.equals(role.getRoleName())) {
 	                add = true;
 	            }
 	        }
-	
+
 	        //did it pass the test?
 	        if (add) {
 	        	filteredTicklers.add(t);
@@ -368,50 +314,50 @@ public class TicklerManager {
 	    }
 	    return filteredTicklers;
 	}
-   
-    
+
+
     public int getActiveTicklerCount(LoggedInInfo loggedInInfo, String providerNo) {
         return ticklerDao.getActiveTicklerCount(providerNo);
     }
-    
+
     public int getActiveTicklerByDemoCount(LoggedInInfo loggedInInfo, Integer demographicNo) {
         return ticklerDao.getActiveTicklerByDemoCount(demographicNo);
     }
-    
+
 
     public int getNumTicklers(LoggedInInfo loggedInInfo, CustomFilter filter) {
         return ticklerDao.getNumTicklers(filter);
     }
 
 
-    
+
     public Tickler getTickler(LoggedInInfo loggedInInfo, String tickler_no) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    	
+
         Integer id = Integer.valueOf(tickler_no);
         Tickler tickler =  ticklerDao.find(id);
-        
+
         //--- log action ---
       	LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.getTickler",(tickler != null)?"id="+tickler.getId():"");
-      	
+
         return tickler;
     }
-    
+
     public Tickler getTickler(LoggedInInfo loggedInInfo, Integer id) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    	
+
         Tickler tickler =  ticklerDao.find(id);
-        
+
         //--- log action ---
       	LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.getTickler",(tickler != null)?"id="+tickler.getId():"");
-      	
+
         return tickler;
     }
-    
-    
+
+
 	public void addComment(LoggedInInfo loggedInInfo, Integer tickler_id, String provider, String message) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_UPDATE);
-    	
+
 		Tickler tickler = ticklerDao.find(tickler_id);
 		if (tickler != null && message != null && !"".equals(message)) {
 			TicklerComment comment = new TicklerComment();
@@ -419,42 +365,42 @@ public class TicklerManager {
 			comment.setProviderNo(provider);
 			comment.setMessage(message);
 			ticklerCommentDao.persist(comment);
-			
+
 			//--- log action ---
 			LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.addComment", "ticklerId="+tickler_id+ ",provider="+provider+",message="+message+",id="+comment.getId());
 		}
 	}
-	
+
 	public void reassign(LoggedInInfo loggedInInfo, Integer tickler_id, String provider, String task_assigned_to) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_UPDATE);
-    	
+
 		Tickler tickler = ticklerDao.find(tickler_id);
 		if (tickler != null && !task_assigned_to.equals(tickler.getTaskAssignedTo())) {
 			String message;
 			String former_assignee = tickler.getAssignee().getFormattedName();
 			String current_assignee;
 			tickler.setTaskAssignedTo(task_assigned_to);
-			
+
 			TicklerComment comment = new TicklerComment();
 			comment.setTicklerNo(tickler_id.intValue());
 			comment.setProviderNo(provider);
-			
+
 			current_assignee = providerDao.getProvider(task_assigned_to).getFormattedName();
-			
+
 			message = "RE-ASSIGNMENT RECORD: [Tickler \"" + tickler.getDemographic().getFormattedName() + "\" was reassigned from \"" + former_assignee + "\"  to \"" + current_assignee + "\"]";
 			comment.setMessage(message);
-			
+
 			ticklerCommentDao.persist(comment);
 			ticklerDao.merge(tickler);
-			
+
 			//--- log action ---
 			LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.reassign", "ticklerId="+tickler_id+ ",provider="+provider+",task_assigned_to="+task_assigned_to);
 		}
 	}
-	
+
 	public void updateStatus(LoggedInInfo loggedInInfo, Integer tickler_id, String provider, Tickler.STATUS status) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_UPDATE);
-		
+
 		Tickler tickler = ticklerDao.find(tickler_id);
 		if (tickler != null && tickler.getStatus() != null && tickler.getStatus() != null && !status.equals(tickler.getStatus())) {
 			tickler.setStatus(status);
@@ -463,36 +409,36 @@ public class TicklerManager {
 			update.setStatus(status);
 			update.setTicklerNo(tickler_id.intValue());
 			update.setUpdateDate(new Date());
-			
+
 			ticklerUpdateDao.persist(update);
 			ticklerDao.merge(tickler);
-			
+
 			//--- log action ---
 			LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.updateStatus", "ticklerId="+tickler_id+ ",provider="+provider+",status="+status);
 		}
 	}
-	
+
 	/*
     * This method is deprecated because EmailUtilOld.java has been removed.
     * Currently, a new email feature (EmailManager.java) is in production.
-    * 
+    *
     * TODO: Once the new emailing feature is fully implemented, refactor and update this method to make it compatible with the latest email handling in EmailManager.java.
     */
 	@Deprecated
 	public void sendNotification(LoggedInInfo loggedInInfo, Tickler t) throws IOException {
 		throw new UnsupportedOperationException("This method is no longer supported.");
 		// checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-		
+
 		// if (t == null) {
 		// 	throw new IllegalArgumentException("Tickler object required to send tickler email");
 		// }
-		
-		// boolean ticklerEditEnabled = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("tickler_edit_enabled"));        
-		// boolean ticklerEmailEnabled = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("tickler_email_enabled")); 
-		
+
+		// boolean ticklerEditEnabled = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("tickler_edit_enabled"));
+		// boolean ticklerEmailEnabled = Boolean.parseBoolean(OscarProperties.getInstance().getProperty("tickler_email_enabled"));
+
 		// if (ticklerEditEnabled & ticklerEmailEnabled) {
 		// 	String emailTo = t.getDemographic().getEmail();
-		// 	if (EmailUtilsOld.isValidEmailAddress(emailTo)) { 
+		// 	if (EmailUtilsOld.isValidEmailAddress(emailTo)) {
 
 		// 		InputStream is = TicklerManager.class.getResourceAsStream(TICKLER_EMAIL_TEMPLATE_FILE);
 		// 		String emailTemplate=IOUtils.toString(is);
@@ -502,7 +448,7 @@ public class TicklerManager {
 		// 		ClinicDAO clinicDao = (ClinicDAO)SpringUtils.getBean("clinicDAO");
 		// 		Clinic c = clinicDao.getClinic();
 
-		// 		VelocityContext velocityContext=VelocityUtils.createVelocityContextWithTools();            
+		// 		VelocityContext velocityContext=VelocityUtils.createVelocityContextWithTools();
 		// 		velocityContext.put("tickler", t);
 		// 		velocityContext.put("clinic", c);
 
@@ -510,7 +456,7 @@ public class TicklerManager {
 		// 		String mergedBody=VelocityUtils.velocityEvaluate(velocityContext, emailTemplate);
 
 		// 		EmailUtilsOld.sendEmail(emailTo, null, emailFrom, null, mergedSubject, mergedBody, null);
-				
+
 		// 		//--- log action ---
 		// 		LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.sendNotification", "ticklerId="+t.getId());
 		// 	}else {
@@ -518,10 +464,10 @@ public class TicklerManager {
 		// 	}
 		// }
 	}
-	
+
 	public void completeTickler(LoggedInInfo loggedInInfo, Integer tickler_id, String provider) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_UPDATE);
-    	
+
 		updateStatus(loggedInInfo, tickler_id, provider, Tickler.STATUS.C);
 	}
 
@@ -533,13 +479,13 @@ public class TicklerManager {
 
 	public void activateTickler(LoggedInInfo loggedInInfo, Integer tickler_id, String provider) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_UPDATE);
-    	
+
 		updateStatus(loggedInInfo, tickler_id, provider, Tickler.STATUS.A);
 	}
-	
+
 	public void resolveTicklersBySubstring(LoggedInInfo loggedInInfo, String providerNo, List<String> demographicIds, String remString) {
     	checkPrivilege(loggedInInfo, PRIVILEGE_UPDATE);
-    	
+
 		List<Integer> tmp = new ArrayList<Integer>();
 		for(String str:demographicIds) {
 			tmp.add(Integer.parseInt(str));
@@ -549,9 +495,9 @@ public class TicklerManager {
 			deleteTickler(loggedInInfo, t.getId(),providerNo);
 		}
 	}
-	
-	
-	
+
+
+
     public List<CustomFilter> getCustomFilters() {
         return customFilterDao.getCustomFilters();
     }
@@ -592,14 +538,14 @@ public class TicklerManager {
         customFilterDao.remove(id);
     }
 
-    
+
     public void addTickler(String demographic_no,String message,Tickler.STATUS status,String service_date,String creator,Tickler.PRIORITY priority,String task_assigned_to){
-        
+
         String date = service_date;
         if ( date != null && !date.equals("now()")){          //Just a hack for now.
            date = "'"+StringEscapeUtils.escapeSql(service_date)+"'";
         }
-        
+
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Tickler t = new Tickler();
   		t.setDemographicNo(Integer.parseInt(demographic_no));
@@ -615,10 +561,10 @@ public class TicklerManager {
   		t.setCreator(creator);
   		t.setPriority(priority);
   		t.setTaskAssignedTo(task_assigned_to);
-  		
+
   		ticklerDao.persist(t);
      }
-     
+
      public boolean hasTickler(String demographic,String task_assigned_to,String message){
         List<Tickler> ticklers = ticklerDao.findByDemographicIdTaskAssignedToAndMessage(Integer.parseInt(demographic), task_assigned_to, message);
         return !ticklers.isEmpty();
@@ -634,40 +580,40 @@ public class TicklerManager {
     		  }
 
     	  public void resolveTicklers(LoggedInInfo loggedInInfo, String providerNo, List<String> cdmPatientNos, String remString) {
-    		  resolveTicklersBySubstring(loggedInInfo, providerNo, cdmPatientNos, remString);  
+    		  resolveTicklersBySubstring(loggedInInfo, providerNo, cdmPatientNos, remString);
     	  }
-    	  
+
     	  public List<Tickler> listTicklers(LoggedInInfo loggedInInfo, Integer demographicNo, Date beginDate, Date endDate) {
     		  checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    		  
+
     		  List<Tickler> result = ticklerDao.listTicklers(demographicNo, beginDate, endDate);
-    		  
+
     		  for(Tickler tmp:result) {
 	    		//--- log action ---
 	  			LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.listTicklers", "ticklerId="+tmp.getId());
     		  }
-    		  
+
     		  return result;
     	  }
-    	  
+
     	  public List<Tickler> findActiveByDemographicNo(LoggedInInfo loggedInInfo, Integer demographicNo) {
     		  checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    		  
+
     		  List<Tickler> result = ticklerDao.findActiveByDemographicNo(demographicNo);
-    		  
+
     		  for(Tickler tmp:result) {
 	    		//--- log action ---
 	  			LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.listTicklers", "ticklerId="+tmp.getId());
     		  }
-    		  
+
     		  return result;
     	  }
-    	  
+
     	  public List<Tickler> search_tickler_bydemo(LoggedInInfo loggedInInfo, Integer demographicNo, String status, Date beginDate, Date endDate) {
     		  checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    		  
+
     		  List<Tickler> result = ticklerDao.search_tickler_bydemo(demographicNo,status,beginDate,endDate);
-    		  
+
     		  for(Tickler tmp:result) {
 	    		//--- log action ---
 	  			LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.search_tickler_bydemo", "ticklerId="+tmp.getId());
@@ -675,12 +621,12 @@ public class TicklerManager {
 
     		  return result;
     	  }
-    	  
+
     	  public List<Tickler> search_tickler(LoggedInInfo loggedInInfo, Integer demographicNo, Date endDate) {
     		  checkPrivilege(loggedInInfo, PRIVILEGE_READ);
-    		  
+
     		  return ticklerDao.search_tickler(demographicNo,endDate);
-    		  
+
 //    		  for(Tickler tmp:result) {
 //	    		//--- log action ---
 //	  			LogAction.addLogSynchronous(loggedInInfo, "TicklerManager.search_tickler", "ticklerId="+tmp.getId());
@@ -688,17 +634,17 @@ public class TicklerManager {
 //
 //    		  return result;
     	  }
-    	  
+
     	  public List<TicklerTextSuggest> getActiveTextSuggestions(LoggedInInfo loggedInInfo) {
     		  return this.ticklerTextSuggestDao.getActiveTicklerTextSuggests();
     	  }
-    	  
+
     	  public List<TicklerTextSuggest> getAllTextSuggestions(LoggedInInfo loggedInInfo, int offset, int itemsToReturn) {
     		  return this.ticklerTextSuggestDao.findAll(offset,itemsToReturn);
     	  }
-          
+
           public List<Tickler> sortTicklerList(Boolean isSortAscending, String sortColumn, List<Tickler> ticklers) {
-				
+
                 if (isSortAscending) {
                     if (sortColumn.equals(DEMOGRAPHIC_NAME)) {
                         Collections.sort(ticklers, Tickler.DemographicNameAscComparator);

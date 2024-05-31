@@ -61,7 +61,7 @@
     if (tid!=null && !tid.trim().isEmpty()) tableId = Long.valueOf(tid);
 
     WebApplicationContext  ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-    CaseManagementManager cmm = (CaseManagementManager) ctx.getBean("caseManagementManager");
+    CaseManagementManager cmm = (CaseManagementManager) ctx.getBean(CaseManagementManager.class);
 
     Integer tableName = cmm.getTableNameByDisplay(display);
     String dump = "";
