@@ -102,7 +102,7 @@ public class GenericIntakeEditAction extends DispatchAction {
 	protected static final String CLIENT_EDIT_ID = "id";
 	
 	private ClientImageDAO clientImageDAO = null;
-	private SurveyManager surveyManager = (SurveyManager)SpringUtils.getBean(SurveyManager.class);
+	private SurveyManager surveyManager = (SurveyManager)SpringUtils.getBean("surveyManager2");
 	//private IMatchManager matchManager = new MatchManager();
 	
 	protected static final String PROGRAM_ID = "programId";
