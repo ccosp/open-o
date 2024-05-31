@@ -112,7 +112,7 @@ public class OcularProcAction extends DispatchAction {
 
     	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 
-    	EyeformOcularProcedureDao dao = (EyeformOcularProcedureDao)SpringUtils.getBean(OcularProcDao.class);
+    	EyeformOcularProcedureDao dao = (EyeformOcularProcedureDao)SpringUtils.getBean(EyeformOcularProcedureDao.class);
 		procedure.setProvider(loggedInInfo.getLoggedInProviderNo());
 
     	if(request.getParameter("proc.id") != null && request.getParameter("proc.id").length()>0) {

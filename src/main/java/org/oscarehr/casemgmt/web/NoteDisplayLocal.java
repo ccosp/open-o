@@ -40,7 +40,7 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarRx.data.RxPrescriptionData;
 
 public class NoteDisplayLocal implements NoteDisplay {
-	private CaseManagementIssueNotesDao caseManagementIssueNotesDao=(CaseManagementIssueNotesDao)SpringUtils.getBean(CaseManagementIssueNotesDao);
+	private CaseManagementIssueNotesDao caseManagementIssueNotesDao=(CaseManagementIssueNotesDao)SpringUtils.getBean(CaseManagementIssueNotesDao.class);
 
 	private CaseManagementNote caseManagementNote;
 	private boolean editable = false;

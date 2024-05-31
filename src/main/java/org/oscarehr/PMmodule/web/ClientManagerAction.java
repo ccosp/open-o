@@ -140,7 +140,7 @@ public class ClientManagerAction extends DispatchAction {
 
 	private HealthSafetyManager healthSafetyManager;
 	private ClientRestrictionManager clientRestrictionManager;
-	private SurveyManager surveyManager = (SurveyManager)SpringUtils.getBean(SurveyManager2.class);
+	private SurveyManager surveyManager = (SurveyManager)SpringUtils.getBean(SurveyManager.class);
 	private LookupManager lookupManager;
 	private CaseManagementManager caseManagementManager;
 	private AdmissionManager admissionManager;

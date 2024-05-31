@@ -57,25 +57,25 @@ public class TestServlet extends HttpServlet {
 			
 			switch(fileno) {
 			case 1:
-				exporter = (DATISAgencyInformation)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(IntakeExporterAgencyInformation.class);
+				exporter = (DATISAgencyInformation)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(DATISAgencyInformation.class);
 				break;
 			case 2:
-				exporter = (DATISListOfPrograms)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(IntakeExporterListOfPrograms.class);
+				exporter = (DATISListOfPrograms)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(DATISListOfPrograms.class);
 				break;
 			case 3:
-				exporter = (DATISMain)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(IntakeExporterMain.class);
+				exporter = (DATISMain)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(DATISMain.class);
 				break;
 			case 4:
-				exporter = (DATISProgramInformation)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(IntakeExporterProgramInformation.class);
+				exporter = (DATISProgramInformation)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(DATISProgramInformation.class);
 				break;
 			case 5:
-				exporter = (DATISGamingForm)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(IntakeExporterGamblingForm.class);
+				exporter = (DATISGamingForm)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(DATISGamingForm.class);
 				break;
 			case 6:
-				exporter = (DATISNonClientService)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(IntakeExporterNonClientService.class);
+				exporter = (DATISNonClientService)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(DATISNonClientService.class);
 				break;
 			default:
-				exporter = (DATISAgencyInformation)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(IntakeExporterAgencyInformation.class);
+				exporter = (DATISAgencyInformation)WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean(DATISAgencyInformation.class);
 				break;
 			}
 			

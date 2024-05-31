@@ -79,7 +79,7 @@ public class AppointmentMailer implements MessageMailer{
 
     
     public AppointmentMailer(Integer apptNo, Demographic demographic) {
-        this.mailSender = (MailSender) SpringUtils.getBean(AsyncMailSender.class);
+        this.mailSender = (MailSender) SpringUtils.getBean(MailSender.class);
         this.message = null;
         this.msgTextTemplate = new StringBuilder();
         this.apptNo = apptNo;

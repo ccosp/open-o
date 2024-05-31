@@ -63,7 +63,7 @@ public class MacroAction extends DispatchAction {
 		sliCodeList.add(new LabelValueBean("OTN | Ontario Telemedicine Network","OTN"));
 	}
 
-	MacroDao dao = (MacroDao)SpringUtils.getBean(MacroDAO.class);
+	MacroDao dao = (MacroDao)SpringUtils.getBean(MacroDao.class);
 	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 	BillingServiceDao billingServiceDao = (BillingServiceDao)SpringUtils.getBean(BillingServiceDao.class);
 

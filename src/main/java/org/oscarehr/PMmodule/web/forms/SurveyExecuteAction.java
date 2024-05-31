@@ -78,7 +78,7 @@ import org.oscarehr.util.SpringUtils;
 public class SurveyExecuteAction extends DispatchAction {
     private static Logger log = MiscUtils.getLogger();
 
-    private SurveyManager surveyManager = (SurveyManager) SpringUtils.getBean(SurveyManager2.class);
+    private SurveyManager surveyManager = (SurveyManager) SpringUtils.getBean(SurveyManager.class);
     private CaseManagementManager caseManagementManager = (CaseManagementManager) SpringUtils
             .getBean(CaseManagementManager.class);
     private ClientManager clientManager = (ClientManager) SpringUtils.getBean(ClientManager.class);

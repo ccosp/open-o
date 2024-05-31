@@ -93,7 +93,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 	private SecUserRoleDao secUserRoleDao = (SecUserRoleDao) SpringUtils.getBean(SecUserRoleDao.class);
 	private GroupNoteDao groupNoteDao = (GroupNoteDao) SpringUtils.getBean(GroupNoteDao.class);
 	private DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
-	private CaseManagementIssueNotesDao cmeIssueNotesDao = (CaseManagementIssueNotesDao) SpringUtils.getBean(CaseManagementIssueNotesDao);
+	private CaseManagementIssueNotesDao cmeIssueNotesDao = (CaseManagementIssueNotesDao) SpringUtils.getBean(CaseManagementIssueNotesDao.class);
 	private BillingONCHeader1Dao billingONCHeader1Dao = (BillingONCHeader1Dao) SpringUtils.getBean(BillingONCHeader1Dao.class);
 	private NoteService noteService = SpringUtils.getBean(NoteService.class);
 	private TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
@@ -1518,7 +1518,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 	}
 
 	public ActionForward run_macro_script(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		MacroDao macroDao = (MacroDao) SpringUtils.getBean(MacroDAO.class);
+		MacroDao macroDao = (MacroDao) SpringUtils.getBean(MacroDao.class);
 		Macro macro = macroDao.find(Integer.parseInt(request.getParameter("id")));
 		logger.info("loaded macro " + macro.getLabel());
 		StringBuilder sb = new StringBuilder();
@@ -1557,7 +1557,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 	public ActionForward run_macro(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 
-		MacroDao macroDao = (MacroDao) SpringUtils.getBean(MacroDAO.class);
+		MacroDao macroDao = (MacroDao) SpringUtils.getBean(MacroDao.class);
 		Macro macro = macroDao.find(Integer.parseInt(request.getParameter("id")));
 		logger.info("loaded macro " + macro.getLabel());
 

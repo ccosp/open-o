@@ -140,7 +140,7 @@ public class EyeformAction extends DispatchAction {
 	BillingreferralDao billingreferralDao = (BillingreferralDao) SpringUtils.getBean(BillingreferralDao.class);
 	ClinicDAO clinicDao = (ClinicDAO)SpringUtils.getBean(ClinicDAO.class);
 	SiteDao siteDao = (SiteDao)SpringUtils.getBean(SiteDao.class);
-	CaseManagementIssueNotesDao caseManagementIssueNotesDao=(CaseManagementIssueNotesDao)SpringUtils.getBean(CaseManagementIssueNotesDao);
+	CaseManagementIssueNotesDao caseManagementIssueNotesDao=(CaseManagementIssueNotesDao)SpringUtils.getBean(CaseManagementIssueNotesDao.class);
 	DemographicExtDao demographicExtDao = SpringUtils.getBean(DemographicExtDao.class);
 	TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
 	

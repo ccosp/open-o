@@ -225,7 +225,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 	private CaseManagementNoteDAO caseManagementNoteDAO = (CaseManagementNoteDAO) SpringUtils
 			.getBean(CaseManagementNoteDAO.class);
 	private CaseManagementIssueNotesDao caseManagementIssueNotesDao = (CaseManagementIssueNotesDao) SpringUtils
-			.getBean(CaseManagementIssueNotesDao);
+			.getBean(CaseManagementIssueNotesDao.class);
 	private ClientImageDAO clientImageDAO = (ClientImageDAO) SpringUtils.getBean(ClientImageDAO.class);
 	private IntegratorConsentDao integratorConsentDao = (IntegratorConsentDao) SpringUtils
 			.getBean(IntegratorConsentDao.class);

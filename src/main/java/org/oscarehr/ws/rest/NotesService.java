@@ -917,7 +917,7 @@ public class NotesService extends AbstractServiceImpl {
 		long newNoteId =  Long.valueOf(note.getNoteId());
 		
 		logger.debug("ISSUES LIST START for note " + newNoteId);
-		CaseManagementIssueNotesDao cmeIssueNotesDao = (CaseManagementIssueNotesDao) SpringUtils.getBean(CaseManagementIssueNotesDao);
+		CaseManagementIssueNotesDao cmeIssueNotesDao = (CaseManagementIssueNotesDao) SpringUtils.getBean(CaseManagementIssueNotesDao.class);
 		List<CaseManagementIssue> issuesList = cmeIssueNotesDao.getNoteIssues(note.getNoteId());
 		for (CaseManagementIssue issueItem : issuesList) {
 			logger.debug("ISSUES LIST " + issueItem + " for note " + newNoteId);

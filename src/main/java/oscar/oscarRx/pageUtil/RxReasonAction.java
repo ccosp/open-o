@@ -72,7 +72,7 @@ public final class RxReasonAction extends DispatchAction {
 		
     		MessageResources mResources = MessageResources.getMessageResources( "oscarResources" );
     		DrugReasonDao drugReasonDao     = (DrugReasonDao) SpringUtils.getBean(DrugReasonDao.class);
-    		Icd9Dao icd9Dao = (Icd9Dao)  SpringUtils.getBean(Icd9DAO.class);
+    		Icd9Dao icd9Dao = (Icd9Dao)  SpringUtils.getBean(Icd9Dao.class);
 
             String codingSystem = request.getParameter("codingSystem");
             String primaryReasonFlagStr = request.getParameter("primaryReasonFlag");

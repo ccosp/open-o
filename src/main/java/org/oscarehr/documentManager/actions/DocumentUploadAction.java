@@ -148,14 +148,14 @@ public class DocumentUploadAction extends DispatchAction {
 			String providerId = request.getParameter("provider");
 			if (providerId != null) { 
 				WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-				ProviderInboxRoutingDao providerInboxRoutingDao = (ProviderInboxRoutingDao) ctx.getBean(ProviderInboxRoutingDAO.class);
+				ProviderInboxRoutingDao providerInboxRoutingDao = (ProviderInboxRoutingDao) ctx.getBean(ProviderInboxRoutingDao.class);
 				providerInboxRoutingDao.addToProviderInbox(providerId, Integer.parseInt(doc_no), "DOC");
 			}
 	
 			String queueId=request.getParameter("queue");
 	        if (queueId !=null &&!queueId.equals("-1")) {
 	            WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-	            QueueDocumentLinkDao queueDocumentLinkDAO = (QueueDocumentLinkDao) ctx.getBean(QueueDocumentLinkDAO.class);
+	            QueueDocumentLinkDao queueDocumentLinkDAO = (QueueDocumentLinkDao) ctx.getBean(QueueDocumentLinkDao.class);
 	            Integer qid=Integer.parseInt(queueId.trim());
 	            Integer did=Integer.parseInt(doc_no.trim());
 	            queueDocumentLinkDAO.addActiveQueueDocumentLink(qid,did);

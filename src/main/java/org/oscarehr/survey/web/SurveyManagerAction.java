@@ -79,7 +79,7 @@ public class SurveyManagerAction extends AbstractSurveyAction {
 	private QuestionTypes questionTypes = (QuestionTypes)SpringUtils.getBean(QuestionTypes.class);
 	private CaisiFormDao caisiFormDao = SpringUtils.getBean(CaisiFormDao.class);
 	private OscarFormManager oscarFormManager = (OscarFormManager)SpringUtils.getBean(OscarFormManager.class);
-	private UserManager surveyUserManager = (UserManager)SpringUtils.getBean(SurveyUserManager.class);
+	private UserManager surveyUserManager = (UserManager)SpringUtils.getBean(UserManager.class);
 	
 	public void setSurveyManager(SurveyManager mgr) {
 		this.surveyManager = mgr;
