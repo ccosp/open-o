@@ -13,12 +13,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.hospitalReportManager.model.HRMSubClass;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HRMSubClassDao extends AbstractDao<HRMSubClass> {
+public class HRMSubClassDao extends AbstractDaoImpl<HRMSubClass> {
 
 	public HRMSubClassDao() {
 		super(HRMSubClass.class);

@@ -39,7 +39,7 @@
     String providerNo = (String) session.getAttribute("user");
     String temp = "diab3";
 
-    AllergyDao allergyDao = (AllergyDao)SpringUtils.getBean("allergyDao");
+    AllergyDao allergyDao = (AllergyDao)SpringUtils.getBean(AllergyDao.class);
 %>
     <security:oscarSec roleName="<%=roleName$%>" objectName="_flowsheet" rights="r" reverse="<%=true%>">
         "You have no right to access this page!"
@@ -55,8 +55,8 @@ boolean dsProblems = false;
 
 WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 
-FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) ctx.getBean("flowSheetCustomizationDao");
-FlowSheetDrugDao flowSheetDrugDao = (FlowSheetDrugDao) ctx.getBean("flowSheetDrugDao");
+FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) ctx.getBean(FlowSheetCustomizationDao.class);
+FlowSheetDrugDao flowSheetDrugDao = (FlowSheetDrugDao) ctx.getBean(FlowSheetDrugDao.class);
 
 List<FlowSheetCustomization> custList = flowSheetCustomizationDao.getFlowSheetCustomizations( temp,(String) session.getAttribute("user"),Integer.parseInt(demographic_no));
 

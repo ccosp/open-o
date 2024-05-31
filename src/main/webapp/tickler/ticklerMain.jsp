@@ -609,7 +609,7 @@
 						<option value="all" <%=mrpview.equals("all") ? "selected" : ""%>><bean:message
 								key="tickler.ticklerMain.formAllProviders"/></option>
 						<%
-							ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
+							ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
 							List<Provider> providers = providerDao.getActiveProviders();
 							for (Provider p : providers) {
 						%>
@@ -642,7 +642,7 @@
 					<label for="assignedTo"><bean:message key="tickler.ticklerMain.msgAssignedTo"/></label>
 					<%
 						if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
-							SiteDao siteDao = (SiteDao) SpringUtils.getBean("siteDao");
+							SiteDao siteDao = (SiteDao) SpringUtils.getBean(SiteDao.class);
 							List<Site> sites = siteDao.getActiveSitesByProviderNo(user_no);
 					%>
 					<script>

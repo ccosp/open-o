@@ -138,7 +138,7 @@ function upCaseCtrl(ctrl) {
           String [] siteList;
           if (bMultisites) {
         		//multisite starts =====================	  
-        		  SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+        		  SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
         	      List<Site> sites = siteDao.getActiveSitesByProviderNo(request.getParameter("provider_no")); 
         	      siteList = new String[sites.size()+1];
         		  bgColors = new String[sites.size()+1];

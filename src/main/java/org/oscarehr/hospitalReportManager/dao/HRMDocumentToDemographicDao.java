@@ -15,7 +15,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.EFormDocs;
 import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
@@ -23,7 +23,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HRMDocumentToDemographicDao extends AbstractDao<HRMDocumentToDemographic> {
+public class HRMDocumentToDemographicDao extends AbstractDaoImpl<HRMDocumentToDemographic> {
 	
 	public HRMDocumentToDemographicDao() {
 		super(HRMDocumentToDemographic.class);

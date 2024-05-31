@@ -39,6 +39,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.oscarehr.common.dao.AbstractCodeSystemDao;
+import org.oscarehr.common.dao.AbstractCodeSystemDaoImpl;
 import org.oscarehr.common.dao.DxresearchDAO;
 import org.oscarehr.common.model.AbstractCodeSystemModel;
 import org.oscarehr.common.model.Dxresearch;
@@ -99,7 +100,7 @@ public class dxResearchAction extends Action {
         }
         boolean valid = true;
         ActionMessages errors = new ActionMessages();  
-        DxresearchDAO dao = (DxresearchDAO) SpringUtils.getBean("DxresearchDAO");
+        DxresearchDAO dao = (DxresearchDAO) SpringUtils.getBean(DxresearchDAO.class);
         
 		for (int i = 0; i < xml_research.length; i++) {
 			int count = 0;
@@ -122,7 +123,7 @@ public class dxResearchAction extends Action {
 				}
 
 				if (count == 0) {
-					String daoName = AbstractCodeSystemDao.getDaoName(AbstractCodeSystemDao.codingSystem.valueOf(codingSystem));
+					String daoName = AbstractCodeSystemDaoImpl.getDaoName(AbstractCodeSystemDaoImpl.codingSystem.valueOf(codingSystem));
 					@SuppressWarnings("unchecked")
 					AbstractCodeSystemDao<AbstractCodeSystemModel<?>> csDao = (AbstractCodeSystemDao<AbstractCodeSystemModel<?>>) SpringUtils.getBean(daoName);
 

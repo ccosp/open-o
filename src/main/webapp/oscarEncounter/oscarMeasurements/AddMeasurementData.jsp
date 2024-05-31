@@ -42,8 +42,8 @@
   String[] measurements = request.getParameterValues("measurement");
   String temp = request.getParameter("template");
 
-  FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) SpringUtils.getBean("flowSheetCustomizationDao");
-  ValidationsDao validationsDao = (ValidationsDao) SpringUtils.getBean("validationsDao");
+  FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) SpringUtils.getBean(FlowSheetCustomizationDao.class);
+  ValidationsDao validationsDao = (ValidationsDao) SpringUtils.getBean(ValidationsDao.class);
   MeasurementTemplateFlowSheetConfig templateConfig = MeasurementTemplateFlowSheetConfig.getInstance();
 
 

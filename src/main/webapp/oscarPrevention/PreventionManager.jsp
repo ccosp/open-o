@@ -113,7 +113,7 @@ ArrayList<HashMap<String,String>> prevList = pdc.getPreventions();
 //TODO the rest of this code should be moved into an Action Class and handled by the PreventionManager
 	org.oscarehr.managers.PreventionManager preventionManager = SpringUtils.getBean(org.oscarehr.managers.PreventionManager.class);
 
-	PropertyDao propDao = (PropertyDao)SpringUtils.getBean("propertyDao");
+	PropertyDao propDao = (PropertyDao)SpringUtils.getBean(PropertyDao.class);
 	List<Property> pList = propDao.findByName(vProp);
 
   	Iterator<Property> i = pList.iterator();
