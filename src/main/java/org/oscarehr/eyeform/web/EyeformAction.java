@@ -124,7 +124,7 @@ public class EyeformAction extends DispatchAction {
 	OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean(OscarAppointmentDao.class);
 	DemographicDao demographicDao= (DemographicDao)SpringUtils.getBean(DemographicDao.class);
 	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
-	CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO)SpringUtils.getBean(CaseManagementNoteDAO);
+	CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO)SpringUtils.getBean(CaseManagementNoteDAO.class);
 	EyeformOcularProcedureDao ocularProcDao = SpringUtils.getBean(EyeformOcularProcedureDao.class);
 	private EyeformSpecsHistoryDao specsHistoryDao = (EyeformSpecsHistoryDao)SpringUtils.getBean(EyeformSpecsHistoryDao.class);
 	

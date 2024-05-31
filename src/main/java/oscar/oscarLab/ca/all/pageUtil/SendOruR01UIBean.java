@@ -65,7 +65,7 @@ public final class SendOruR01UIBean {
 	private static Hl7TextMessageDao hl7TextMessageDao = (Hl7TextMessageDao) SpringUtils.getBean(Hl7TextMessageDao.class);
 	private static PublicKeyDao publicKeyDao = (PublicKeyDao) SpringUtils.getBean(PublicKeyDao.class);
 	private static DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
-	private static CaseManagementNoteDAO caseManagementNoteDAO = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO);
+	private static CaseManagementNoteDAO caseManagementNoteDAO = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO.class);
 	private static CaseManagementIssueNotesDao caseManagementIssueNotesDao= (CaseManagementIssueNotesDao) SpringUtils.getBean(CaseManagementIssueNotesDao);
 	
 	private Integer professionalSpecialistId=null;

@@ -74,7 +74,7 @@ if(!authed) {
 	String providerNo = request.getParameter("providerNo");
 
 OscarAppointmentDao appointmentDao          	=(OscarAppointmentDao)SpringUtils.getBean(OscarAppointmentDao.class);
-CaseManagementNoteDAO caseManagementNoteDao 	=(CaseManagementNoteDAO)SpringUtils.getBean(CaseManagementNoteDAO);
+CaseManagementNoteDAO caseManagementNoteDao 	=(CaseManagementNoteDAO)SpringUtils.getBean(CaseManagementNoteDAO.class);
 BillingDao billingDAO 							=(BillingDao)SpringUtils.getBean(BillingDao.class);
 DrugDao drugDao 								= (DrugDao) SpringUtils.getBean(DrugDao.class);
 ProviderInboxRoutingDao providerInboxRoutingDao = (ProviderInboxRoutingDao) SpringUtils.getBean(ProviderInboxRoutingDAO.class);

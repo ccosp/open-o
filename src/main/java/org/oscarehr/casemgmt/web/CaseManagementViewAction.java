@@ -89,7 +89,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 	private static Logger logger = MiscUtils.getLogger();
 	private CaseManagementManager caseManagementManager = (CaseManagementManager) SpringUtils.getBean(CaseManagementManager.class);
 	private IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
-	private CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO);
+	private CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO.class);
 	private SecUserRoleDao secUserRoleDao = (SecUserRoleDao) SpringUtils.getBean(SecUserRoleDao.class);
 	private GroupNoteDao groupNoteDao = (GroupNoteDao) SpringUtils.getBean(GroupNoteDao.class);
 	private DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);

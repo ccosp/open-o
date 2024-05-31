@@ -55,7 +55,7 @@ public final class MisReportUIBean {
 	private AdmissionDao admissionDao = (AdmissionDao) SpringUtils.getBean(AdmissionDao.class);
 	private ProgramDao programDao = (ProgramDao) SpringUtils.getBean(ProgramDao.class);
 	private DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
-	private CaseManagementNoteDAO caseManagementNoteDAO=(CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO);
+	private CaseManagementNoteDAO caseManagementNoteDAO=(CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO.class);
 	
 	private static int ELDERLY_AGE = 65;
 

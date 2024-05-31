@@ -91,7 +91,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
 	private static Logger logger = MiscUtils.getLogger();
 
-	private CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO);
+	private CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO.class);
 	private CaseManagementIssueDAO caseManagementIssueDao = (CaseManagementIssueDAO) SpringUtils.getBean(CaseManagementIssueDAO.class);
 	private CaseManagementNoteExtDAO caseManagementNoteExtDao = (CaseManagementNoteExtDAO) SpringUtils.getBean(CaseManagementNoteExtDAO.class);
 	private IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);

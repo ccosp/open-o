@@ -54,7 +54,7 @@ import com.itextpdf.text.DocumentException;
 
 public class EChartPrintAction extends DispatchAction {
 
-	CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO)SpringUtils.getBean(CaseManagementNoteDAO);
+	CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO)SpringUtils.getBean(CaseManagementNoteDAO.class);
 	AllergyDao allergyDao = (AllergyDao)SpringUtils.getBean(AllergyDao.class);
 	static String[] cppIssues = {"MedHistory","OMeds","SocHistory","FamHistory","Reminders","Concerns","RiskFactors"};
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
