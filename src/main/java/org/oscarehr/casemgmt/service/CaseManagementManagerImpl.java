@@ -658,13 +658,13 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
 
     @Override
     public List<Allergy> getAllergies(String demographic_no) {
-        AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean("allergyDao");
+        AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean(AllergyDao.class);
         return allergyDao.findAllergies(Integer.parseInt(demographic_no));
     }
 
     @Override
     public List<Drug> getPrescriptions(String demographic_no, boolean all) {
-        DrugDao drugDao = (DrugDao) SpringUtils.getBean("drugDao");
+        DrugDao drugDao = (DrugDao) SpringUtils.getBean(DrugDao.class);
 
         if (all) {
             return (drugDao.findByDemographicIdOrderByPosition(new Integer(demographic_no), null));
@@ -674,7 +674,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
 
     @Override
     public List<Drug> getCurrentPrescriptions(int demographic_no) {
-        DrugDao drugDao = (DrugDao) SpringUtils.getBean("drugDao");
+        DrugDao drugDao = (DrugDao) SpringUtils.getBean(DrugDao.class);
 
         return (drugDao.findByDemographicIdOrderByPosition(new Integer(demographic_no), false));
     }
@@ -2306,7 +2306,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         note.setDemographic_no(demographicNo);
 
         if (!OscarProperties.getInstance().isPropertyActive("encounter.empty_new_note")) {
-            OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean("oscarAppointmentDao");
+            OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
             String encounterText = "";
             try {
                 Appointment appointment = appointmentDao.find(Integer.parseInt(appointmentNo));
@@ -2390,8 +2390,8 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
             List<CaseManagementIssue> issuelist, CaseManagementCPP cpp, String ongoing, boolean verify, Locale locale,
             Date now, CaseManagementNote annotationNote, String userName, String user, String remoteAddr,
             String lastSavedNoteString) throws Exception {
-        ProgramManager programManager = (ProgramManager) SpringUtils.getBean("programManager");
-        AdmissionManager admissionManager = (AdmissionManager) SpringUtils.getBean("admissionManager");
+        ProgramManager programManager = (ProgramManager) SpringUtils.getBean(ProgramManager.class);
+        AdmissionManager admissionManager = (AdmissionManager) SpringUtils.getBean(AdmissionManager.class);
 
         Long old_note_id = note.getId(); // saved for use with annotation
 
@@ -2437,7 +2437,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         if (inCaisi)
             cpp.setOngoingConcerns(ongoing); // << Check on this one???
 
-        OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean("oscarAppointmentDao");
+        OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
 
         String roleName = getRoleName(note.getProviderNo(), note.getProgram_no());
 

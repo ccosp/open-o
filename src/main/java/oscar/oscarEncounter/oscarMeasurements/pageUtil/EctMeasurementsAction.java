@@ -99,7 +99,7 @@ public class EctMeasurementsAction extends Action {
 			WebApplicationContext ctx = WebApplicationContextUtils
 					.getRequiredWebApplicationContext(session.getServletContext());
 			FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) ctx
-					.getBean("flowSheetCustomizationDao");
+					.getBean(FlowSheetCustomizationDao.class);
 			MeasurementTemplateFlowSheetConfig templateConfig = MeasurementTemplateFlowSheetConfig.getInstance();
 
 			List<FlowSheetCustomization> custList = flowSheetCustomizationDao.getFlowSheetCustomizations(template,
@@ -314,9 +314,9 @@ public class EctMeasurementsAction extends Action {
 
 		if (valid && !skipCreateNote) {
 			// create note
-			CaseManagementManager cmm = (CaseManagementManager) SpringUtils.getBean("caseManagementManager");
+			CaseManagementManager cmm = (CaseManagementManager) SpringUtils.getBean(CaseManagementManager.class);
 
-			SecRoleDao secRoleDao = (SecRoleDao) SpringUtils.getBean("secRoleDao");
+			SecRoleDao secRoleDao = (SecRoleDao) SpringUtils.getBean(SecRoleDao.class);
 			SecRole doctorRole = secRoleDao.findByName("doctor");
 			String reporter_caisi_role = doctorRole.getId().toString();
 

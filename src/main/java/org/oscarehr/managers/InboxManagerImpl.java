@@ -144,7 +144,7 @@ public class InboxManagerImpl implements InboxManager {
 			docQueue.put(i.toString(), n.toString());
 		}
 
-		InboxResultsDao inboxResultsDao = (InboxResultsDao) SpringUtils.getBean("inboxResultsDao");
+		InboxResultsDao inboxResultsDao = (InboxResultsDao) SpringUtils.getBean(InboxResultsDao.class);
 		String patientFirstName = query.getPatientFirstName();
 		String patientLastName = query.getPatientLastName();
 		String patientHealthNumber = query.getPatientHIN();
@@ -163,7 +163,7 @@ public class InboxManagerImpl implements InboxManager {
 
 		ArrayList<LabResultData> validlabdocs = new ArrayList<LabResultData>();
 
-		DocumentResultsDao documentResultsDao = (DocumentResultsDao) SpringUtils.getBean("documentResultsDao");
+		DocumentResultsDao documentResultsDao = (DocumentResultsDao) SpringUtils.getBean(DocumentResultsDao.class);
 		// check privilege for documents only
 		for (LabResultData data : labdocs) {
 			if (data.isDocument()) {

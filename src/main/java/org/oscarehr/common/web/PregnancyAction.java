@@ -500,7 +500,7 @@ public class PregnancyAction extends DispatchAction {
 	}
 	
 	public ActionForward loadEformByName(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)  {
-		EFormDao eformDao = (EFormDao)SpringUtils.getBean("EFormDao");
+		EFormDao eformDao = (EFormDao)SpringUtils.getBean(EFormDao.class);
 		//Prenatal Screening (IPS) Credit Valley
 		//Prenatal Screening - North York
 		String demographicNo = request.getParameter("demographicNo");
@@ -613,8 +613,8 @@ Repeat antibody screen
 	
 	public ActionForward getEformsByGroupAjax(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {		
 		String name = request.getParameter("name");
-		EFormDao eformDao = (EFormDao)SpringUtils.getBean("EFormDao");		
-		EFormGroupDao eformGroupDao = (EFormGroupDao)SpringUtils.getBean("EFormGroupDao");
+		EFormDao eformDao = (EFormDao)SpringUtils.getBean(EFormDao.class);		
+		EFormGroupDao eformGroupDao = (EFormGroupDao)SpringUtils.getBean(EFormGroupDao.class);
 		List<LabelValueBean> results = new ArrayList<LabelValueBean>();
 		
 		List<EFormGroup> items = eformGroupDao.getByGroupName(name);
@@ -635,8 +635,8 @@ Repeat antibody screen
 	}
 	
 	public static List<LabelValueBean> getEformsByGroup(String name) {		
-		EFormDao eformDao = (EFormDao)SpringUtils.getBean("EFormDao");		
-		EFormGroupDao eformGroupDao = (EFormGroupDao)SpringUtils.getBean("EFormGroupDao");
+		EFormDao eformDao = (EFormDao)SpringUtils.getBean(EFormDao.class);		
+		EFormGroupDao eformGroupDao = (EFormGroupDao)SpringUtils.getBean(EFormGroupDao.class);
 		List<LabelValueBean> results = new ArrayList<LabelValueBean>();
 		
 		List<EFormGroup> items = eformGroupDao.getByGroupName(name);
@@ -1001,7 +1001,7 @@ Repeat antibody screen
 	
 	public ActionForward getPrintData(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintResourceLogDao dao = SpringUtils.getBean(PrintResourceLogDao.class);
-		ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
+		ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 		String resourceName = request.getParameter("resourceName");
 		String resourceId = request.getParameter("resourceId");
 		List<PrintResourceLog> results = dao.findByResource(resourceName, resourceId);

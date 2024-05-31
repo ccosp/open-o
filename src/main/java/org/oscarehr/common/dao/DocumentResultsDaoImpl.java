@@ -144,7 +144,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
 
 
                 //BAD!!!! CODING APROACHING
-                DocumentDao documentDao=(DocumentDao) SpringUtils.getBean("documentDao");
+                DocumentDao documentDao=(DocumentDao) SpringUtils.getBean(DocumentDao.class);
                 Demographic demo =documentDao.getDemoFromDocNo(lbData.segmentID);
 
                 lbData.isMatchedToPatient = false;
@@ -239,7 +239,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
 
                 lbData.patientName = "Not, Assigned";//change to use internationalization
 
-                DocumentDao documentDao=(DocumentDao) SpringUtils.getBean("documentDao");
+                DocumentDao documentDao=(DocumentDao) SpringUtils.getBean(DocumentDao.class);
                 Demographic demo =documentDao.getDemoFromDocNo(lbData.segmentID);
 
                 lbData.isMatchedToPatient = false;
@@ -338,7 +338,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
 
 
                 //BAD!!!! CODING APROACHING
-                DocumentDao documentDAO=(DocumentDao) SpringUtils.getBean("documentDao");
+                DocumentDao documentDAO=(DocumentDao) SpringUtils.getBean(DocumentDao.class);
                 Demographic demo =documentDAO.getDemoFromDocNo(lbData.segmentID);
 
                 lbData.isMatchedToPatient = false;

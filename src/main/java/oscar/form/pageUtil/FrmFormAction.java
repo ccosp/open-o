@@ -297,7 +297,7 @@ public class FrmFormAction extends Action {
             return (new ActionForward("/form/formSaveAndExit.jsp"));
         }
         logger.debug("formName from Frm ForamAction" + formName);
-        EncounterFormDao encounterFormDao = (EncounterFormDao) SpringUtils.getBean("encounterFormDao");
+        EncounterFormDao encounterFormDao = (EncounterFormDao) SpringUtils.getBean(EncounterFormDao.class);
         EncounterForm encounterForm = encounterFormDao
                 .find("../form/SetupForm.do?formName=" + formName + "&demographic_no=");
         String formNameByFormTable = encounterForm.getFormName();

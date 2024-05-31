@@ -592,7 +592,7 @@ for(org.oscarehr.common.model.Allergy allergy : patient.getAllergies(LoggedInInf
 							<td><%=allergy.getLifeStageDesc() %></td>
 							<td><%=allergy.getAgeOfOnset()==null ? "" : allergy.getAgeOfOnset()%></td>
 <%
-		CaseManagementManager cmm = (CaseManagementManager) SpringUtils.getBean("caseManagementManager");
+		CaseManagementManager cmm = (CaseManagementManager) SpringUtils.getBean(CaseManagementManager.class);
 		@SuppressWarnings("unchecked")
 		List<CaseManagementNoteLink> existingAnnots = cmm.getLinkByTableId(org.oscarehr.casemgmt.model.CaseManagementNoteLink.ALLERGIES,Long.valueOf(allergy.getAllergyId()));
 %>

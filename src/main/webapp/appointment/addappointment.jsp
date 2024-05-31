@@ -122,7 +122,7 @@
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session" />
 
 <%
-	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean("demographicCustDao");
+	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean(DemographicCustDao.class);
 	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 	DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 	EncounterFormDao encounterFormDao = SpringUtils.getBean(EncounterFormDao.class);
@@ -852,7 +852,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
             <%
 				    // multisites start ==================
 				    boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
-				    SiteDao siteDao = (SiteDao)SpringUtils.getBean("siteDao");
+				    SiteDao siteDao = (SiteDao)SpringUtils.getBean(SiteDao.class);
 				    List<Site> sites = siteDao.getActiveSitesByProviderNo((String) session.getAttribute("user"));
 				    // multisites end ==================
 

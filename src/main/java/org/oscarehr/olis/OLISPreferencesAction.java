@@ -55,7 +55,7 @@ public class OLISPreferencesAction extends DispatchAction  {
 	     
 	     	Integer pollFrequency = oscar.Misc.getInt(request.getParameter("pollFrequency"), 30);
 	     	String filterPatients = request.getParameter("filter_patients");
-	     	OLISSystemPreferencesDao olisPrefDao = (OLISSystemPreferencesDao)SpringUtils.getBean("OLISSystemPreferencesDao");
+	     	OLISSystemPreferencesDao olisPrefDao = (OLISSystemPreferencesDao)SpringUtils.getBean(OLISSystemPreferencesDao.class);;
 	        OLISSystemPreferences olisPrefs =  olisPrefDao.getPreferences();
 	     	
 	     	try{
@@ -68,11 +68,11 @@ public class OLISPreferencesAction extends DispatchAction  {
 	     		request.setAttribute("success", true);
 	     		
 	     		if (restartTimer) {
-	     		/* 	ScheduledTimerTask task = (ScheduledTimerTask)SpringUtils.getBean("olisScheduledPullTask");		
+	     		/* 	ScheduledTimerTask task = (ScheduledTimerTask)SpringUtils.getBean(ScheduledExecutorTask.class);		
 	     			TimerTask tt = task.getTimerTask();
 	     			Thread t = new Thread(tt);
 	     			t.start();*/
-					 ScheduledExecutorTask task = (ScheduledExecutorTask) SpringUtils.getBean("olisScheduledPullTask");
+					 ScheduledExecutorTask task = (ScheduledExecutorTask) SpringUtils.getBean(ScheduledExecutorTask.class);
 					 Runnable tt = task.getRunnable();
 	     			Thread t = new Thread(tt);
 	     			t.start();

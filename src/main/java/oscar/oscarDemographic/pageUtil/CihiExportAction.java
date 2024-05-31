@@ -669,7 +669,7 @@ public class CihiExportAction extends DispatchAction {
 
 	private void buildAllergies(Demographic demo, PatientRecord patientRecord) {
 		String[] severity = new String[] {"MI","MO","LT","NO"};
-		AllergyDao allergyDao=(AllergyDao)SpringUtils.getBean("allergyDao");
+		AllergyDao allergyDao=(AllergyDao)SpringUtils.getBean(AllergyDao.class);
 		List<Allergy> allergies = allergyDao.findActiveAllergies(demo.getDemographicNo());
 		int index;
 		Date date;

@@ -90,7 +90,7 @@ Program program = null;
 if (pId == null) {
     pId = "";
 } else {
-    ProgramDao programDao=(ProgramDao)SpringUtils.getBean("programDao");
+    ProgramDao programDao=(ProgramDao)SpringUtils.getBean(ProgramDao.class);
     program = programDao.getProgram(Integer.valueOf(pId));
 }
 

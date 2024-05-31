@@ -106,7 +106,7 @@ public class RxPatientData {
 
 	public static class Patient {
 		private Demographic demographic = null;
-		private static AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean("allergyDao");
+		private static AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean(AllergyDao.class);
 		private PartialDateDao partialDateDao = (PartialDateDao) SpringUtils.getBean(PartialDateDao.class);
 
 		public Patient(Demographic demographic) {

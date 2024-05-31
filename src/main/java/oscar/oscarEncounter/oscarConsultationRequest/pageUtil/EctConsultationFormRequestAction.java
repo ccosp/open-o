@@ -128,8 +128,8 @@ public class EctConsultationFormRequestAction extends Action {
 		}
 	
 		
-        ConsultationRequestDao consultationRequestDao=(ConsultationRequestDao)SpringUtils.getBean("consultationRequestDao");
-        ConsultationRequestExtDao consultationRequestExtDao=(ConsultationRequestExtDao)SpringUtils.getBean("consultationRequestExtDao");
+        ConsultationRequestDao consultationRequestDao=(ConsultationRequestDao)SpringUtils.getBean(ConsultationRequestDao.class);;
+        ConsultationRequestExtDao consultationRequestExtDao=(ConsultationRequestExtDao)SpringUtils.getBean(ConsultationRequestExtDao.class);
         ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao)SpringUtils.getBean(ProfessionalSpecialistDao.class);
         DemographicManager demographicManager = SpringUtils.getBean( DemographicManager.class );
         
@@ -513,10 +513,10 @@ public class EctConsultationFormRequestAction extends Action {
 	
 	private void doHl7Send(LoggedInInfo loggedInInfo, Integer consultationRequestId) throws InvalidKeyException, SignatureException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException, IOException, HL7Exception, ServletException {
 		
-	    ConsultationRequestDao consultationRequestDao=(ConsultationRequestDao)SpringUtils.getBean("consultationRequestDao");
+	    ConsultationRequestDao consultationRequestDao=(ConsultationRequestDao)SpringUtils.getBean(ConsultationRequestDao.class);;
 	    ProfessionalSpecialistDao professionalSpecialistDao=(ProfessionalSpecialistDao)SpringUtils.getBean(ProfessionalSpecialistDao.class);
-	    Hl7TextInfoDao hl7TextInfoDao=(Hl7TextInfoDao)SpringUtils.getBean("hl7TextInfoDao");
-	    ClinicDAO clinicDAO=(ClinicDAO)SpringUtils.getBean("clinicDAO");
+	    Hl7TextInfoDao hl7TextInfoDao=(Hl7TextInfoDao)SpringUtils.getBean(Hl7TextInfoDao.class);
+	    ClinicDAO clinicDAO=(ClinicDAO)SpringUtils.getBean(ClinicDAO.class);
 
 	    ConsultationRequest consultationRequest=consultationRequestDao.find(consultationRequestId);
 	    ProfessionalSpecialist professionalSpecialist=professionalSpecialistDao.find(consultationRequest.getSpecialistId());

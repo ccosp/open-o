@@ -29,7 +29,7 @@ if(!authed) {
 
     OscarProperties props = OscarProperties.getInstance();
 
-    UserPropertyDAO userPropertyDao = (UserPropertyDAO) SpringUtils.getBean("UserPropertyDAO");
+    UserPropertyDAO userPropertyDao = (UserPropertyDAO) SpringUtils.getBean(UserPropertyDAO.class);
 
     String userName = "";
     String location = "";

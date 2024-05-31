@@ -212,7 +212,7 @@ public class EctConsultationFormRequestUtil {
 
 		ConsultationRequestDao dao = SpringUtils.getBean(ConsultationRequestDao.class);
 		ConsultationRequest cr = dao.find(ConversionUtils.fromIntString(id));
-		ConsultationRequestExtDao daoExt = (ConsultationRequestExtDao) SpringUtils.getBean("consultationRequestExtDao");
+		ConsultationRequestExtDao daoExt = (ConsultationRequestExtDao) SpringUtils.getBean(ConsultationRequestExtDao.class);
 		
 		if (cr != null) {
 			fdid = cr.getFdid();
@@ -488,7 +488,7 @@ public class EctConsultationFormRequestUtil {
 	}
 
 	public String getClinicName() {
-		ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean("clinicDAO");
+		ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean(ClinicDAO.class);
 
 		String retval = new String();
 		Clinic clinic = clinicDao.getClinic();

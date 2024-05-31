@@ -142,12 +142,12 @@ public final class EDocUtil {
 	public static final String REVIEW_DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
         public static final String CONTENT_DATETIME_FORMAT ="yyyy-MM-dd HH:mm:ss";
 
-	private static ProgramManager programManager = (ProgramManager) SpringUtils.getBean("programManager");
-	private static CaseManagementNoteLinkDAO caseManagementNoteLinkDao = (CaseManagementNoteLinkDAO) SpringUtils.getBean("CaseManagementNoteLinkDAO");
-        private static CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils.getBean("CaseManagementNoteDAO");
+	private static ProgramManager programManager = (ProgramManager) SpringUtils.getBean(ProgramManager.class);
+	private static CaseManagementNoteLinkDAO caseManagementNoteLinkDao = (CaseManagementNoteLinkDAO) SpringUtils.getBean(CaseManagementNoteLinkDAO.class);
+        private static CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO.class);
         private static TicklerLinkDao ticklerLinkDao = (TicklerLinkDao) SpringUtils.getBean(TicklerLinkDao.class);
         private static TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
-	private static ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
+	private static ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 	private static CtlDocTypeDao ctldoctypedao = (CtlDocTypeDao) SpringUtils.getBean(CtlDocTypeDao.class);
 	private static DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
 	private static CtlDocumentDao ctlDocumentDao = (CtlDocumentDao) SpringUtils.getBean(CtlDocumentDao.class);

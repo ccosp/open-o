@@ -56,7 +56,7 @@
 		demographicTransfer=directLinks.get(0);
 	}		
 				
-	DemographicDao demographicDao=(DemographicDao) SpringUtils.getBean("demographicDao");
+	DemographicDao demographicDao=(DemographicDao) SpringUtils.getBean(DemographicDao.class);
 	Demographic demographic=demographicDao.getDemographicById(localDemographicId);
 	
 	

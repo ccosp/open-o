@@ -524,7 +524,7 @@ public class TicklerManagerImpl implements TicklerManager {
 //                String emailSubject = OscarProperties.getInstance().getProperty("tickler_email_subject");
 //                String emailFrom = OscarProperties.getInstance().getProperty("tickler_email_from_address");
 //
-//                ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean("clinicDAO");
+//                ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean(ClinicDAO.class);
 //                Clinic c = clinicDao.getClinic();
 //
 //                VelocityContext velocityContext = VelocityUtils.createVelocityContextWithTools();

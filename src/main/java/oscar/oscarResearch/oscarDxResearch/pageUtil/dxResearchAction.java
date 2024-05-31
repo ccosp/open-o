@@ -100,7 +100,7 @@ public class dxResearchAction extends Action {
         }
         boolean valid = true;
         ActionMessages errors = new ActionMessages();  
-        DxresearchDAO dao = (DxresearchDAO) SpringUtils.getBean("DxresearchDAO");
+        DxresearchDAO dao = (DxresearchDAO) SpringUtils.getBean(DxresearchDAO.class);
         
 		for (int i = 0; i < xml_research.length; i++) {
 			int count = 0;

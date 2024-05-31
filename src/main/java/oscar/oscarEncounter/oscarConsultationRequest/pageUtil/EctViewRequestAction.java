@@ -126,7 +126,7 @@ public class EctViewRequestAction extends Action {
         public static void fillFormValues(LoggedInInfo loggedInInfo, EctConsultationFormRequestForm thisForm, Integer requestId) {
         	checkPrivilege(loggedInInfo);
         	
-            ConsultationRequestDao consultDao = (ConsultationRequestDao)SpringUtils.getBean("consultationRequestDao");
+            ConsultationRequestDao consultDao = (ConsultationRequestDao)SpringUtils.getBean(ConsultationRequestDao.class);;
             ConsultationRequest consult = consultDao.find(requestId);
 
             thisForm.setAllergies(consult.getAllergies());
@@ -177,7 +177,7 @@ public class EctViewRequestAction extends Action {
             thisForm.setPatientEmail(demo.getEmail());
             thisForm.setPatientAge(demo.getAge());
 
-            ProviderDao provDao = (ProviderDao)SpringUtils.getBean("providerDao");
+            ProviderDao provDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
             Provider prov = provDao.getProvider(consult.getProviderNo());
             thisForm.setProviderName(prov.getFormattedName());
 
@@ -236,7 +236,7 @@ public class EctViewRequestAction extends Action {
 	
 	public static void fillFormValues(EctConsultationFormRequestForm thisForm, String segmentId) throws HL7Exception, UnsupportedEncodingException, Base64DecodingException
 	{
-		Hl7TextMessageDao hl7TextMessageDao=(Hl7TextMessageDao) SpringUtils.getBean("hl7TextMessageDao");
+		Hl7TextMessageDao hl7TextMessageDao=(Hl7TextMessageDao) SpringUtils.getBean(Hl7TextMessageDao.class);
 		Hl7TextMessage hl7TextMessage=hl7TextMessageDao.find(Integer.parseInt(segmentId));
 		
 		String encodedMessage=hl7TextMessage.getBase64EncodedeMessage();

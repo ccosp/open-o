@@ -505,7 +505,7 @@ public class InboxResultsDaoImpl implements  InboxResultsDao{
 				lbData.accessionNumber = "";
 				lbData.resultStatus = "N";
 
-                DocumentDao documentDao = (DocumentDao) SpringUtils.getBean("documentDao");
+                DocumentDao documentDao = (DocumentDao) SpringUtils.getBean(DocumentDao.class);
                 Date contentDateTime = documentDao.findActiveByDocumentNo(Integer.parseInt(getStringValue(r[docNoLoc]))).get(0).getContentdatetime();
 
                 if(!StringUtils.isNullOrEmpty(getStringValue(r[obsDateLoc]))){

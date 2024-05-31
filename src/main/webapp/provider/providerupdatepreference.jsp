@@ -66,7 +66,7 @@
 	LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 	String curUser_providerno = loggedInInfo.getLoggedInProviderNo();
 	String ticklerforproviderno = request.getParameter("ticklerforproviderno");
-	UserPropertyDAO propDao =(UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+	UserPropertyDAO propDao =(UserPropertyDAO)SpringUtils.getBean(UserPropertyDAO.class);
 	UserProperty prop = propDao.getProp(curUser_providerno, UserProperty.PROVIDER_FOR_TICKLER_WARNING);
 	if (prop == null) {
 		prop = new UserProperty();

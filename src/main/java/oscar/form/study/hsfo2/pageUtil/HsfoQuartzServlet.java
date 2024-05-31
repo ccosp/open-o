@@ -51,7 +51,7 @@ public class HsfoQuartzServlet implements Servlet
 
 	public static final String RESUBMIT_TRIGGER = "hsfoResubmitTrigger";
 
-	private static Hsfo2RecommitScheduleDao rDao = (Hsfo2RecommitScheduleDao) SpringUtils.getBean("hsfo2RecommitScheduleDao");
+	private static Hsfo2RecommitScheduleDao rDao = (Hsfo2RecommitScheduleDao) SpringUtils.getBean(Hsfo2RecommitScheduleDao.class);
 	
 	public static void schedule() throws Exception
 	{		

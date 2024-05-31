@@ -58,7 +58,7 @@ public class VacancyTemplateManagerImpl implements VacancyTemplateManager{
 	private static CriteriaTypeDao criteriaTypeDAO = SpringUtils.getBean(CriteriaTypeDao.class);
 	private static CriteriaTypeOptionDao criteriaTypeOptionDAO =  SpringUtils.getBean(CriteriaTypeOptionDao.class);
 	private static CriteriaSelectionOptionDao criteriaSelectionOptionDAO = SpringUtils.getBean(CriteriaSelectionOptionDao.class);
-	private static ProgramDao programDao = (ProgramDao) SpringUtils.getBean("programDao");
+	private static ProgramDao programDao = (ProgramDao) SpringUtils.getBean(ProgramDao.class);
 	private static VacancyDao vacancyDAO= SpringUtils.getBean(VacancyDao.class);
 	
 	public static List<Program> getPrograms(Integer facilityId) {
