@@ -29,11 +29,11 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.oscarehr.billing.CA.ON.model.BillingONDiskName;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BillingONDiskNameDao extends AbstractDao<BillingONDiskName>{
+public class BillingONDiskNameDao extends AbstractDaoImpl<BillingONDiskName>{
 
 	public BillingONDiskNameDao() {
 		super(BillingONDiskName.class);

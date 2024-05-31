@@ -16,12 +16,12 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.hospitalReportManager.model.HRMDocument;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HRMDocumentDao extends AbstractDao<HRMDocument> {
+public class HRMDocumentDao extends AbstractDaoImpl<HRMDocument> {
 
 	public HRMDocumentDao() {
 	    super(HRMDocument.class);

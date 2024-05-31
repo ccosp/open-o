@@ -105,7 +105,7 @@
 			<td>
 			<select id="xml_p_nbr" name="xml_p_nbr">
 			<%
-			ClinicNbrDao clinicNbrDAO = (ClinicNbrDao)SpringUtils.getBean("clinicNbrDao");
+			ClinicNbrDao clinicNbrDAO = (ClinicNbrDao)SpringUtils.getBean(ClinicNbrDao.class);
 			List<ClinicNbr> nbrList = clinicNbrDAO.findAll();
 			Iterator<ClinicNbr> nbrIter = nbrList.iterator();
 			while (nbrIter.hasNext()) {

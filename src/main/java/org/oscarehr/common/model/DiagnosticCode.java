@@ -33,7 +33,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.oscarehr.common.dao.AbstractCodeSystemDao.codingSystem;
+import org.oscarehr.common.dao.AbstractCodeSystemDaoImpl.codingSystem;
 
 @Entity
 @Table(name="diagnosticcode")

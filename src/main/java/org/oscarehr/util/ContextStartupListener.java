@@ -39,6 +39,8 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import com.quatro.dao.security.SecroleDao;
 import oscar.OscarProperties;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 
 public class ContextStartupListener implements javax.servlet.ServletContextListener {
 	private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
@@ -46,57 +48,56 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 	@Override
 	public void contextInitialized(javax.servlet.ServletContextEvent sce) {
 
-		// ensure cxf uses log4j2
+		//ensure cxf uses log4j2
 		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4j2Logger");
 
 		/*
 		 * Map log4j version 1 to version 2
 		 */
 		System.setProperty("log4j1.compatibility", "true");
+        try {
+            String contextPath = sce.getServletContext().getContextPath();
 
-		try {
-			String contextPath=sce.getServletContext().getContextPath();
+            logger.info("Starting OSCAR context. context=" + contextPath);
 
-			logger.info("Starting OSCAR context. context=" + contextPath);
-			
-			org.oscarehr.util.MiscUtils.addLoggingOverrideConfiguration(contextPath);
+            org.oscarehr.util.MiscUtils.addLoggingOverrideConfiguration(contextPath);
 
-			LocaleUtils.BASE_NAME="oscarResources";
+            LocaleUtils.BASE_NAME = "oscarResources";
 
-			MiscUtils.setShutdownSignaled(false);
-			MiscUtils.registerShutdownHook();
+            MiscUtils.setShutdownSignaled(false);
+            MiscUtils.registerShutdownHook();
 
-			createOscarProgramIfNecessary();
+            createOscarProgramIfNecessary();
 
-			if(oscarProperties.getBooleanProperty("INTEGRATOR_ENABLED", "true")){
-				CaisiIntegratorUpdateTask.startTask();
-			}
+            if (oscarProperties.getBooleanProperty("INTEGRATOR_ENABLED", "true")) {
+                CaisiIntegratorUpdateTask.startTask();
+            }
 
-			OscarJobUtils.initializeJobExecutionFramework();
-			
-			WaitListEmailThread.startTaskIfEnabled();
-						
-			//Run some optimizations
-			loadCaches();
+            OscarJobUtils.initializeJobExecutionFramework();
 
-			logger.info("OSCAR server processes started. context=" + contextPath);
-			
-			//bug 4195 - only runs once so long as it finishes..if you want it to not run, add entry
-			//try your property table called "HRMFixMissingReportHelper.Run" with value = 1
-			HRMFixMissingReportHelper hrmFixer = new HRMFixMissingReportHelper();
-			try {
-				hrmFixer.fixIt();
-			}catch(Exception e) {
-				logger.error("Error running HRM fixer",e);
-			}
-		} catch (Exception e) {
-			logger.error("Unexpected error.", e);
-			throw (new RuntimeException(e));
-		}
-	}
+            WaitListEmailThread.startTaskIfEnabled();
+
+            // Run some optimizations
+            loadCaches();
+
+            logger.info("OSCAR server processes started. context=" + contextPath);
+
+            // bug 4195 - only runs once so long as it finishes..if you want it to not run, add entry
+            // try your property table called "HRMFixMissingReportHelper.Run" with value = 1
+            HRMFixMissingReportHelper hrmFixer = new HRMFixMissingReportHelper();
+            try {
+                hrmFixer.fixIt();
+            } catch (Exception e) {
+                logger.error("Error running HRM fixer", e);
+            }
+        } catch (Exception e) {
+            logger.error("Unexpected error.", e);
+            throw (new RuntimeException(e));
+        }
+    } 
 	
 	public void loadCaches() {
-		ProgramDao programDao = (ProgramDao)SpringUtils.getBean("programDao");
+		ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
 		for(Program program:programDao.getActivePrograms()) {
 			ProgramAccessCache.setAccessMap(program.getId().longValue());
 		}
@@ -105,9 +106,9 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 	
 
 	private void createOscarProgramIfNecessary() {
-		ProgramDao programDao = SpringUtils.getBean(ProgramDao.class);
-		SecroleDao secRoleDao = (SecroleDao)SpringUtils.getBean("secroleDao");
-		ProgramProviderDAO programProviderDao = (ProgramProviderDAO)SpringUtils.getBean("programProviderDAO");
+		ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
+		SecroleDao secRoleDao = (SecroleDao)SpringUtils.getBean(SecroleDao.class);
+		ProgramProviderDAO programProviderDao = (ProgramProviderDAO)SpringUtils.getBean(ProgramProviderDAO.class);
 		
 		Program p = programDao.getProgramByName("OSCAR");
 		if(p !=null) 

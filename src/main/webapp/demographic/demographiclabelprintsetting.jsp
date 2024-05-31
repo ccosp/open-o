@@ -59,7 +59,7 @@
 
 	java.util.Properties oscarVariables = oscar.OscarProperties.getInstance();
 
-	DemographicDao demographicDao = (DemographicDao)SpringUtils.getBean("demographicDao");
+	DemographicDao demographicDao = (DemographicDao)SpringUtils.getBean(DemographicDao.class);
  	ProviderDataDao providerDao = SpringUtils.getBean(ProviderDataDao.class);
 %>
 

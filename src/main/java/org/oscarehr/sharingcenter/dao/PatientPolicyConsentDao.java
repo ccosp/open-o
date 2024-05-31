@@ -27,12 +27,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.sharingcenter.model.PatientPolicyConsent;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PatientPolicyConsentDao extends AbstractDao<PatientPolicyConsent> {
+public class PatientPolicyConsentDao extends AbstractDaoImpl<PatientPolicyConsent> {
 
     public PatientPolicyConsentDao() {
         super(PatientPolicyConsent.class);

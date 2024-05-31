@@ -57,7 +57,7 @@ if(!authed2) {
     if(session.getAttribute("userrole") == null )  response.sendRedirect("../logout.jsp");
  //TODO: MOVE THIS TO AN ACTION
 WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) ctx.getBean("flowSheetCustomizationDao");
+FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) ctx.getBean(FlowSheetCustomizationDao.class);
 MeasurementTemplateFlowSheetConfig templateConfig = MeasurementTemplateFlowSheetConfig.getInstance();
 
 String flowsheet   = request.getParameter("flowsheet");

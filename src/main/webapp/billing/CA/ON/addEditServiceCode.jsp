@@ -241,7 +241,7 @@
                     }
                 }
 
-				CSSStylesDAO cssStylesDao = (CSSStylesDAO) SpringUtils.getBean("CSSStylesDAO");
+				CSSStylesDAO cssStylesDao = (CSSStylesDAO) SpringUtils.getBean(CSSStylesDAO.class);
 				styles = cssStylesDao.findAll();
 
 				if( count == 0 ) {
@@ -288,7 +288,7 @@
         }
     }
 
-    CSSStylesDAO cssStylesDao = (CSSStylesDAO) SpringUtils.getBean("CSSStylesDAO");
+    CSSStylesDAO cssStylesDao = (CSSStylesDAO) SpringUtils.getBean(CSSStylesDAO.class);
 	styles = cssStylesDao.findAll();
   }
 
