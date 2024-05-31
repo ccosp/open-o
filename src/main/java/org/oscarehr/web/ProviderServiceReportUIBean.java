@@ -46,7 +46,7 @@ public class ProviderServiceReportUIBean {
 
 	private static Logger logger = MiscUtils.getLogger();
 
-	private ProgramDao programDao = (ProgramDao) SpringUtils.getBean("programDao");
+	private ProgramDao programDao = (ProgramDao) SpringUtils.getBean(ProgramDao.class);
 	private SecRoleDao secRoleDao = SpringUtils.getBean(SecRoleDao.class);
 
 	private Date startDate = null;

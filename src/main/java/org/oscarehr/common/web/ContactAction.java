@@ -83,7 +83,7 @@ public class ContactAction extends DispatchAction {
 	static DemographicContactDao demographicContactDao = (DemographicContactDao)SpringUtils.getBean(DemographicContactDao.class);
 	static DemographicDao demographicDao= (DemographicDao)SpringUtils.getBean(DemographicDao.class);
 	static DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
-	static ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
+	static ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 	static ProfessionalSpecialistDao professionalSpecialistDao = SpringUtils.getBean(ProfessionalSpecialistDao.class);
 	static ContactSpecialtyDao contactSpecialtyDao = SpringUtils.getBean(ContactSpecialtyDao.class);
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);

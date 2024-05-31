@@ -217,45 +217,45 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
 	private int numberOfTimesRun = 0;
 
-	private FacilityDao facilityDao = (FacilityDao) SpringUtils.getBean("facilityDao");
-	private DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
+	private FacilityDao facilityDao = (FacilityDao) SpringUtils.getBean(FacilityDao.class);
+	private DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
 	private CaseManagementIssueDAO caseManagementIssueDAO = (CaseManagementIssueDAO) SpringUtils
-			.getBean("caseManagementIssueDAO");
-	private IssueDAO issueDao = (IssueDAO) SpringUtils.getBean("IssueDAO");
+			.getBean(CaseManagementIssueDAO.class);
+	private IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
 	private CaseManagementNoteDAO caseManagementNoteDAO = (CaseManagementNoteDAO) SpringUtils
-			.getBean("CaseManagementNoteDAO");
+			.getBean(CaseManagementNoteDAO.class);
 	private CaseManagementIssueNotesDao caseManagementIssueNotesDao = (CaseManagementIssueNotesDao) SpringUtils
-			.getBean("caseManagementIssueNotesDao");
-	private ClientImageDAO clientImageDAO = (ClientImageDAO) SpringUtils.getBean("clientImageDAO");
+			.getBean(CaseManagementIssueNotesDao.class);
+	private ClientImageDAO clientImageDAO = (ClientImageDAO) SpringUtils.getBean(ClientImageDAO.class);
 	private IntegratorConsentDao integratorConsentDao = (IntegratorConsentDao) SpringUtils
-			.getBean("integratorConsentDao");
-	private ProgramDao programDao = (ProgramDao) SpringUtils.getBean("programDao");
-	private ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
-	private PreventionDao preventionDao = (PreventionDao) SpringUtils.getBean("preventionDao");
-	private PreventionExtDao preventionExtDao = (PreventionExtDao) SpringUtils.getBean("preventionExtDao");
-	private DrugDao drugDao = (DrugDao) SpringUtils.getBean("drugDao");
-	private SecUserRoleDao secUserRoleDao = (SecUserRoleDao) SpringUtils.getBean("secUserRoleDao");
-	private AdmissionDao admissionDao = (AdmissionDao) SpringUtils.getBean("admissionDao");
-	private OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean("oscarAppointmentDao");
+			.getBean(IntegratorConsentDao.class);
+	private ProgramDao programDao = (ProgramDao) SpringUtils.getBean(ProgramDao.class);
+	private ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
+	private PreventionDao preventionDao = (PreventionDao) SpringUtils.getBean(PreventionDao.class);
+	private PreventionExtDao preventionExtDao = (PreventionExtDao) SpringUtils.getBean(PreventionExtDao.class);
+	private DrugDao drugDao = (DrugDao) SpringUtils.getBean(DrugDao.class);
+	private SecUserRoleDao secUserRoleDao = (SecUserRoleDao) SpringUtils.getBean(SecUserRoleDao.class);
+	private AdmissionDao admissionDao = (AdmissionDao) SpringUtils.getBean(AdmissionDao.class);
+	private OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
 	private IntegratorControlDao integratorControlDao = (IntegratorControlDao) SpringUtils
-			.getBean("integratorControlDao");
+			.getBean(IntegratorControlDao.class);
 	private MeasurementsExtDao measurementsExtDao = SpringUtils.getBean(MeasurementsExtDao.class);
-	private MeasurementMapDao measurementMapDao = (MeasurementMapDao) SpringUtils.getBean("measurementMapDao");
-	private DxresearchDAO dxresearchDao = (DxresearchDAO) SpringUtils.getBean("dxresearchDAO");
+	private MeasurementMapDao measurementMapDao = (MeasurementMapDao) SpringUtils.getBean(MeasurementMapDao.class);
+	private DxresearchDAO dxresearchDao = (DxresearchDAO) SpringUtils.getBean(DxresearchDAO.class);
 	private BillingONItemDao billingONItemDao = SpringUtils.getBean(BillingONItemDao.class);
-	private EFormValueDao eFormValueDao = (EFormValueDao) SpringUtils.getBean("EFormValueDao");
-	private EFormDataDao eFormDataDao = (EFormDataDao) SpringUtils.getBean("EFormDataDao");
-	private GroupNoteDao groupNoteDao = (GroupNoteDao) SpringUtils.getBean("groupNoteDao");
+	private EFormValueDao eFormValueDao = (EFormValueDao) SpringUtils.getBean(EFormValueDao.class);
+	private EFormDataDao eFormDataDao = (EFormDataDao) SpringUtils.getBean(EFormDataDao.class);
+	private GroupNoteDao groupNoteDao = (GroupNoteDao) SpringUtils.getBean(GroupNoteDao.class);
 	private DemographicExtDao demographicExtDao = SpringUtils.getBean(DemographicExtDao.class);
-	private MeasurementDao measurementDao = (MeasurementDao) SpringUtils.getBean("measurementDao");
-	private AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean("allergyDao");
+	private MeasurementDao measurementDao = (MeasurementDao) SpringUtils.getBean(MeasurementDao.class);
+	private AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean(AllergyDao.class);
 	private PatientLabRoutingDao patientLabRoutingDao = SpringUtils.getBean(PatientLabRoutingDao.class);
 
-	private UserPropertyDAO userPropertyDao = (UserPropertyDAO) SpringUtils.getBean("UserPropertyDAO");
+	private UserPropertyDAO userPropertyDao = (UserPropertyDAO) SpringUtils.getBean(UserPropertyDAO.class);
 	private PatientConsentManager patientConsentManager = (PatientConsentManager) SpringUtils
 			.getBean(PatientConsentManager.class);
 	private IntegratorFileLogManager integratorFileLogManager = SpringUtils.getBean(IntegratorFileLogManager.class);
-	private MeasurementTypeDao measurementTypeDao = (MeasurementTypeDao) SpringUtils.getBean("measurementTypeDao");
+	private MeasurementTypeDao measurementTypeDao = (MeasurementTypeDao) SpringUtils.getBean(MeasurementTypeDao.class);
 	private MessengerIntegratorManager messengerIntegratorManager = SpringUtils
 			.getBean(MessengerIntegratorManager.class);
 
@@ -1837,7 +1837,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 			return;
 		}
 
-		AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean("allergyDao");
+		AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean(AllergyDao.class);
 		List<Allergy> allergies = allergyDao.findByDemographicIdUpdatedAfterDate(demographicId, lastDataUpdated);
 		if (allergies.size() == 0)
 			return;

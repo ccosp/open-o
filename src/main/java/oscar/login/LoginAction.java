@@ -668,7 +668,7 @@ public final class LoginAction extends DispatchAction {
 	 */
 	private Security getSecurity(String username) {
 
-		SecurityDao securityDao = (SecurityDao) SpringUtils.getBean("securityDao");
+		SecurityDao securityDao = (SecurityDao) SpringUtils.getBean(SecurityDao.class);
 		List<Security> results = securityDao.findByUserName(username);
 		Security security = null;
 		if (results.size() > 0)
@@ -695,7 +695,7 @@ public final class LoginAction extends DispatchAction {
 		Security security = getSecurity(userName);
 		security.setPassword(encodePassword(newPassword));
 		security.setForcePasswordReset(Boolean.FALSE);
-		SecurityDao securityDao = (SecurityDao) SpringUtils.getBean("securityDao");
+		SecurityDao securityDao = (SecurityDao) SpringUtils.getBean(SecurityDao.class);
 		securityDao.saveEntity(security);
 
 	}

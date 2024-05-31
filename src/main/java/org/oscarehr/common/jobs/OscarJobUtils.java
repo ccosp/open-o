@@ -95,7 +95,7 @@ public class OscarJobUtils {
 	
 	public static boolean scheduleJob(OscarJob job) throws Exception {
 		//SpringTaskScheduler
-		TaskScheduler taskScheduler = (TaskScheduler) SpringUtils.getBean("taskScheduler");
+		TaskScheduler taskScheduler = (TaskScheduler) SpringUtils.getBean(TaskScheduler.class);
 		OscarJobDao oscarJobDao = SpringUtils.getBean(OscarJobDao.class);
 		ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 		

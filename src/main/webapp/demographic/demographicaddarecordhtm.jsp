@@ -87,8 +87,8 @@
 	ProgramManager pm = SpringUtils.getBean(ProgramManager.class);
 	DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 	WaitingListNameDao waitingListNameDao = SpringUtils.getBean(WaitingListNameDao.class);
-	EFormDao eformDao = (EFormDao)SpringUtils.getBean("EFormDao");
-	ProgramDao programDao = (ProgramDao)SpringUtils.getBean("programDao");
+	EFormDao eformDao = (EFormDao)SpringUtils.getBean(EFormDao.class);
+	ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
 	ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
     String privateConsentEnabledProperty = OscarProperties.getInstance().getProperty("privateConsentEnabled");
     boolean privateConsentEnabled = privateConsentEnabledProperty != null && privateConsentEnabledProperty.equals("true");

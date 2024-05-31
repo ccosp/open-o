@@ -60,7 +60,7 @@
 
 
     String userProviderNo = (String) session.getAttribute("user");
-    ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
+    ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
     BillingONExtDao bExtDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);
 
     BillingONPaymentDao billingOnPaymentDao = SpringUtils.getBean(BillingONPaymentDao.class);
@@ -120,7 +120,7 @@
     List<String> mgrSites = new ArrayList<String>();
 
     if (bMultisites) {
-        SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+        SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
         List<Site> sites = siteDao.getActiveSitesByProviderNo(userProviderNo);
         for (Site s : sites) {
                 mgrSites.add(s.getName());
@@ -695,12 +695,12 @@ OHIP Claim No  <br>
 <!-- RA error -->
 <%
     if(bFlag) {
-        BillingONEAReportDao billingONEAReportDao = (BillingONEAReportDao) SpringUtils.getBean("billingONEAReportDao");
+        BillingONEAReportDao billingONEAReportDao = (BillingONEAReportDao) SpringUtils.getBean(BillingONEAReportDao.class);
 	List<String> lReject = billingONEAReportDao.getBillingErrorList(billingNo);
 	List<String> lError = raDetailDao.getBillingExplanatoryList(billingNo);
 	lError.addAll(lReject);
 
-        BillingONErrorCodeDao billingONErrorCodeDao = (BillingONErrorCodeDao) SpringUtils.getBean("billingONErrorCodeDao");
+        BillingONErrorCodeDao billingONErrorCodeDao = (BillingONErrorCodeDao) SpringUtils.getBean(BillingONErrorCodeDao.class);
 %>
 <table>
 <%
@@ -922,7 +922,7 @@ Pay Program:<br>
 
 <% // multisite start ==========================================
     if (bMultisites) {
-        SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+        SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
         List<Site> sites = siteDao.getActiveSitesByProviderNo(userProviderNo);
         // now get all providers eligible
 
@@ -1110,7 +1110,7 @@ for (ClinicNbr clinic : nbrs) {
         String itemStatus = "";
 
         if (bFlag) {
-            BillingONService billingONService = (BillingONService) SpringUtils.getBean("billingONService");
+            BillingONService billingONService = (BillingONService) SpringUtils.getBean(BillingONService.class);
             List<BillingONItem> bItems = new ArrayList<BillingONItem>();
 
             if (bCh1 != null)

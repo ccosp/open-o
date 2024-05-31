@@ -184,7 +184,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
 
         String dsHTML = null;
 
-        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean("propertyDao");
+        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean(PropertyDao.class);
         Property p = propertyDao.checkByName(propKey);
 
         if (p != null) {
@@ -197,7 +197,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
 
     @Override
     public boolean isProperty(String prop) {
-        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean("propertyDao");
+        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean(PropertyDao.class);
         Property props = propertyDao.checkByName(prop);
         if (props != null) {
             return true;
@@ -209,7 +209,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
     public String findGroupId(String groupName) {
         String id = null;
         MeasurementGroupStyleDao measurementGroupStyleDao = (MeasurementGroupStyleDao) SpringUtils
-                .getBean("measurementGroupStyleDao");
+                .getBean(MeasurementGroupStyleDao.class);
         List<MeasurementGroupStyle> results = measurementGroupStyleDao.findByGroupName(groupName);
 
         if (results.size() > 0) {
@@ -223,7 +223,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
 
     @Override
     public void addMeasurementGroupDS(String groupName, String dsHTML) {
-        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean("propertyDao");
+        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean(PropertyDao.class);
         String id = findGroupId(groupName);
         boolean propertyExists = isProperty("mgroup.ds.html." + id);
         if (propertyExists) {
@@ -240,7 +240,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
 
     @Override
     public void removeMeasurementGroupDS(String propKey) {
-        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean("propertyDao");
+        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean(PropertyDao.class);
         boolean propertyExists = isProperty(propKey);
         if (propertyExists) {
             Property p = propertyDao.checkByName(propKey);
@@ -251,7 +251,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
     }
 
     public static String getPropertyValue(String prop) {
-        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean("propertyDao");
+        PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean(PropertyDao.class);
         Property p = propertyDao.checkByName(prop);
         String value = p.getValue();
 

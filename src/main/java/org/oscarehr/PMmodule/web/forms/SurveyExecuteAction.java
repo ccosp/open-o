@@ -78,11 +78,11 @@ import org.oscarehr.util.SpringUtils;
 public class SurveyExecuteAction extends DispatchAction {
     private static Logger log = MiscUtils.getLogger();
 
-    private SurveyManager surveyManager = (SurveyManager) SpringUtils.getBean("surveyManager2");
+    private SurveyManager surveyManager = (SurveyManager) SpringUtils.getBean(SurveyManager.class);
     private CaseManagementManager caseManagementManager = (CaseManagementManager) SpringUtils
-            .getBean("caseManagementManager");
-    private ClientManager clientManager = (ClientManager) SpringUtils.getBean("clientManager");
-    private AdmissionManager admissionManager = (AdmissionManager) SpringUtils.getBean("admissionManager");
+            .getBean(CaseManagementManager.class);
+    private ClientManager clientManager = (ClientManager) SpringUtils.getBean(ClientManager.class);
+    private AdmissionManager admissionManager = (AdmissionManager) SpringUtils.getBean(AdmissionManager.class);
 
     protected String getProviderNo(HttpServletRequest request) {
         return getProvider(request).getProviderNo();

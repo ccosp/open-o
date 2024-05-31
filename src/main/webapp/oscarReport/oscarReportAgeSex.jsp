@@ -67,7 +67,7 @@ if(!authed) {
 	}
 	String providerview = request.getParameter("providerview") == null ? "all" : request.getParameter("providerview");
 
-	ClinicLocationDao clinicLocationDao = (ClinicLocationDao) SpringUtils.getBean("clinicLocationDao");
+	ClinicLocationDao clinicLocationDao = (ClinicLocationDao) SpringUtils.getBean(ClinicLocationDao.class);
 	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 	ReportAgeSexDao reportAgeSexDao = SpringUtils.getBean(ReportAgeSexDao.class);
 

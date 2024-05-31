@@ -84,7 +84,7 @@ public class EctIncomingEncounterAction extends Action {
 
 	private static Logger log = MiscUtils.getLogger();
 	private CaseManagementNoteDAO caseManagementNoteDao = (CaseManagementNoteDAO) SpringUtils
-			.getBean("caseManagementNoteDAO");
+			.getBean(CaseManagementNoteDAO.class);
 	private CaseManagementManager caseManagementMgr = SpringUtils.getBean(CaseManagementManager.class);
 	private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
@@ -253,8 +253,8 @@ public class EctIncomingEncounterAction extends Action {
 				// assign default issues for a feature: WL: default issues assignment
 				String wlProgramId = (String) request.getSession().getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
 				DefaultIssueDao defaultIssueDao = SpringUtils.getBean(DefaultIssueDao.class);
-				IssueDAO issueDao = (IssueDAO) SpringUtils.getBean("IssueDAO");
-				CaseManagementIssueDAO cmiDao = (CaseManagementIssueDAO) SpringUtils.getBean("CaseManagementIssueDAO");
+				IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
+				CaseManagementIssueDAO cmiDao = (CaseManagementIssueDAO) SpringUtils.getBean(CaseManagementIssueDAO.class);
 				Set<Long> issueIdSet = getIssueIdSet(bean.getCurProviderNo(), wlProgramId);
 				String[] issueIds = defaultIssueDao.findAllDefaultIssueIds();
 				for (String id : issueIds) {
@@ -300,7 +300,7 @@ public class EctIncomingEncounterAction extends Action {
 	}
 
 	private Set<Long> getIssueIdSet(String providerNo, String wlProgramId) {
-		ProgramProviderDAO programProviderDao = (ProgramProviderDAO) SpringUtils.getBean("programProviderDAO");
+		ProgramProviderDAO programProviderDao = (ProgramProviderDAO) SpringUtils.getBean(ProgramProviderDAO.class);
 		List<ProgramProvider> ppList = programProviderDao.getProgramProviderByProviderProgramId(providerNo,
 				new Long(wlProgramId));
 		ProgramProvider pp = ppList.get(0);
@@ -308,7 +308,7 @@ public class EctIncomingEncounterAction extends Action {
 
 		// get program accesses... program allows either all roles or not all roles
 		// (does this mean no roles?)
-		ProgramAccessDAO programAccessDAO = (ProgramAccessDAO) SpringUtils.getBean("programAccessDAO");
+		ProgramAccessDAO programAccessDAO = (ProgramAccessDAO) SpringUtils.getBean(ProgramAccessDAO.class);
 		List<ProgramAccess> paList = programAccessDAO.getAccessListByProgramId(new Long(wlProgramId));
 		Map<String, ProgramAccess> paMap = new HashMap<String, ProgramAccess>();
 		for (Iterator<ProgramAccess> iter = paList.iterator(); iter.hasNext();) {
@@ -318,10 +318,10 @@ public class EctIncomingEncounterAction extends Action {
 
 		// get all roles
 		CaseManagementManager cmm = new CaseManagementManagerImpl();
-		SecroleDao secroleDao = (SecroleDao) SpringUtils.getBean("secroleDao");
+		SecroleDao secroleDao = (SecroleDao) SpringUtils.getBean(SecroleDao.class);
 		List<Secrole> allRoles = secroleDao.getRoles();
 
-		RoleProgramAccessDAO roleProgramAccessDAO = (RoleProgramAccessDAO) SpringUtils.getBean("RoleProgramAccessDAO");
+		RoleProgramAccessDAO roleProgramAccessDAO = (RoleProgramAccessDAO) SpringUtils.getBean(RoleProgramAccessDAO.class);
 
 		List<Secrole> allowableSearchRoles = new ArrayList<Secrole>();
 		for (Iterator<Secrole> iter = allRoles.iterator(); iter.hasNext();) {
@@ -342,7 +342,7 @@ public class EctIncomingEncounterAction extends Action {
 				allowableSearchRoles.add(r);
 			}
 		}
-		IssueDAO issueDAO = (IssueDAO) SpringUtils.getBean("IssueDAO");
+		IssueDAO issueDAO = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
 		List<Long> issIdList = issueDAO.getIssueCodeListByRoles(allowableSearchRoles);
 		Set<Long> issueSet = new HashSet<Long>();
 		for (Long id : issIdList) {

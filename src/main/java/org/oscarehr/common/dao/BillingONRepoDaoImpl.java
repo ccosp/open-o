@@ -93,7 +93,7 @@ public class BillingONRepoDaoImpl extends AbstractDaoImpl<BillingONRepo> impleme
             MiscUtils.getLogger().warn("Invalid Date or Time",e);
         }
         
-        ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
+        ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
         Provider provider = providerDao.getProvider(bCh1.getProviderNo());
                         
         StringBuilder content = new StringBuilder();

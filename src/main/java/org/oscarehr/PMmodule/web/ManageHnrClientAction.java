@@ -51,11 +51,11 @@ import oscar.util.DateUtils;
 
 public class ManageHnrClientAction {
 	private static Logger logger = MiscUtils.getLogger();
-	private static DemographicDaoImpl demographicDao = (DemographicDaoImpl) SpringUtils.getBean("demographicDao");
-	private static ClientLinkDao clientLinkDao = (ClientLinkDao) SpringUtils.getBean("clientLinkDao");
-	private static ClientImageDAO clientImageDAO = (ClientImageDAO) SpringUtils.getBean("clientImageDAO");
+	private static DemographicDaoImpl demographicDao = (DemographicDaoImpl) SpringUtils.getBean(DemographicDao.class);
+	private static ClientLinkDao clientLinkDao = (ClientLinkDao) SpringUtils.getBean(ClientLinkDao.class);
+	private static ClientImageDAO clientImageDAO = (ClientImageDAO) SpringUtils.getBean(ClientImageDAO.class);
 	private static HnrDataValidationDao hnrDataValidationDao = (HnrDataValidationDao) SpringUtils
-			.getBean("hnrDataValidationDao");
+			.getBean(HnrDataValidationDao.class);
 
 	public static void copyHnrToLocal(LoggedInInfo loggedInInfo, Integer clientId) throws ConnectException_Exception {
 		try {

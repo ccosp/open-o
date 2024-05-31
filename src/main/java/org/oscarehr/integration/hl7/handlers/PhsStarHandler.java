@@ -70,12 +70,12 @@ public class PhsStarHandler extends BasePhsStarHandler {
 
 	Logger logger = MiscUtils.getLogger();
 
-	DemographicDao demographicDao = (DemographicDao)SpringUtils.getBean("demographicDao");
-	OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean("oscarAppointmentDao");
-	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
-	ProgramDao programDao = (ProgramDao)SpringUtils.getBean("programDao");
-	AdmissionDao admissionDao = (AdmissionDao)SpringUtils.getBean("admissionDao");
-	OscarLogDao logDao = (OscarLogDao)SpringUtils.getBean("oscarLogDao");
+	DemographicDao demographicDao = (DemographicDao)SpringUtils.getBean(DemographicDao.class);
+	OscarAppointmentDao appointmentDao = (OscarAppointmentDao)SpringUtils.getBean(OscarAppointmentDao.class);
+	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
+	ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
+	AdmissionDao admissionDao = (AdmissionDao)SpringUtils.getBean(AdmissionDao.class);
+	OscarLogDao logDao = (OscarLogDao)SpringUtils.getBean(OscarLogDao.class);
 
 	public PhsStarHandler() {
 		// default

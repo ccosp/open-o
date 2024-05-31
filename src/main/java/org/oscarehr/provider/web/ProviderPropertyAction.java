@@ -415,7 +415,7 @@ public class ProviderPropertyAction extends DispatchAction {
         }
         if(mode.equals("new")){
             //save and get most recent id
-            QueueDao queueDao = (QueueDao) SpringUtils.getBean("queueDao");
+            QueueDao queueDao = (QueueDao) SpringUtils.getBean(QueueDao.class);
             queueDao.addNewQueue(defaultQ);
             String lastId=queueDao.getLastId();
             prop.setValue(lastId);
@@ -447,7 +447,7 @@ public class ProviderPropertyAction extends DispatchAction {
         if(prop==null){
             prop=new UserProperty();
         }
-        QueueDao queueDao = (QueueDao) SpringUtils.getBean("queueDao");
+        QueueDao queueDao = (QueueDao) SpringUtils.getBean(QueueDao.class);
         List<Hashtable> queues= queueDao.getQueues();
         Collection<LabelValueBean> viewChoices=new ArrayList<LabelValueBean>();
         viewChoices.add(new LabelValueBean("None","-1"));

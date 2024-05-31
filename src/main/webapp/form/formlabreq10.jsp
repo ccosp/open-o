@@ -116,7 +116,7 @@
 
    if (request.getParameter("labType") != null){
       if (formId == 0 ){
-         FrmLabReqPreSetDao preSetDao = (FrmLabReqPreSetDao) SpringUtils.getBean("frmLabReqPreSetDao");
+         FrmLabReqPreSetDao preSetDao = (FrmLabReqPreSetDao) SpringUtils.getBean(FrmLabReqPreSetDao.class);
          String labPreSet = request.getParameter("labType");
          props = preSetDao.fillPropertiesByLabType(labPreSet,props);
       }

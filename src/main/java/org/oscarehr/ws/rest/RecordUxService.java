@@ -151,7 +151,7 @@ public class RecordUxService extends AbstractServiceImpl {
 		
 		//PHR
 		if( ProviderMyOscarIdData.idIsSet(loggedInInfo.getLoggedInProviderNo())) {
-			DemographicDao demographicDao=(DemographicDao)SpringUtils.getBean("demographicDao");
+			DemographicDao demographicDao=(DemographicDao)SpringUtils.getBean(DemographicDao.class);
 			Demographic demographic=demographicDao.getDemographic(""+demographicNo);
 			
 			if (demographic.getMyOscarUserName()==null ||demographic.getMyOscarUserName().equals("")) {		/*register link -myoscar (strikethrough) links to create account*/

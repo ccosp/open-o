@@ -97,7 +97,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
     } 
 	
 	public void loadCaches() {
-		ProgramDao programDao = (ProgramDao)SpringUtils.getBean("programDao");
+		ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
 		for(Program program:programDao.getActivePrograms()) {
 			ProgramAccessCache.setAccessMap(program.getId().longValue());
 		}
@@ -106,9 +106,9 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 	
 
 	private void createOscarProgramIfNecessary() {
-		ProgramDao programDao = SpringUtils.getBean(ProgramDao.class);
-		SecroleDao secRoleDao = (SecroleDao)SpringUtils.getBean("secroleDao");
-		ProgramProviderDAO programProviderDao = (ProgramProviderDAO)SpringUtils.getBean("programProviderDAO");
+		ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
+		SecroleDao secRoleDao = (SecroleDao)SpringUtils.getBean(SecroleDao.class);
+		ProgramProviderDAO programProviderDao = (ProgramProviderDAO)SpringUtils.getBean(ProgramProviderDAO.class);
 		
 		Program p = programDao.getProgramByName("OSCAR");
 		if(p !=null) 

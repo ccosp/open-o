@@ -66,7 +66,7 @@ else
 
 
 List<EyeformOcularProcedure> procs = (List<EyeformOcularProcedure>)request.getAttribute("procs");
-ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
+ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 %>
 
 <html:html locale="true">

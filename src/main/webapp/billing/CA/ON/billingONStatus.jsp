@@ -73,7 +73,7 @@
     HashMap<String,String> siteShortName = new HashMap<String,String>();
     int patientCount = 0;
     if (bMultisites) {
-       	SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+       	SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
 
        	List<Site> sites = siteDao.getAllSites();
        	for (Site st : sites) {
@@ -413,7 +413,7 @@
                                 String curSite = request.getParameter("site");
                                 if (bMultisites)
                                 {
-                                        	SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+                                        	SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
                                           	List<Site> sites = siteDao.getActiveSitesByProviderNo((String) session.getAttribute("user"));
                                           	// now get all providers eligible
                                           	HashSet<String> pros=new HashSet<String>();

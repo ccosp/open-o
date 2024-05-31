@@ -40,7 +40,7 @@ import org.oscarehr.common.model.Clinic;
 
 public class JdbcBilling3rdPartImpl {
 
-	private ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean("clinicDAO");
+	private ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean(ClinicDAO.class);
 	private Billing3rdPartyAddressDao dao = SpringUtils.getBean(Billing3rdPartyAddressDao.class);
 	BillingONExtDao extDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);
 	private BillingPaymentTypeDao typeDao = (BillingPaymentTypeDao) SpringUtils.getBean(BillingPaymentTypeDao.class);
