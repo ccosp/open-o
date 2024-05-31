@@ -363,7 +363,7 @@ function load() {
 							</tr>
 
 							<%
-								CaseManagementManager caseManagementManager=(CaseManagementManager)SpringUtils.getBean("caseManagementManager");
+								CaseManagementManager caseManagementManager=(CaseManagementManager)SpringUtils.getBean(CaseManagementManager.class);
 								List<Drug> prescriptDrugs=caseManagementManager.getPrescriptions(loggedInInfo, patient.getDemographicNo(), showall);
 
 								long now = System.currentTimeMillis();

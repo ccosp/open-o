@@ -82,7 +82,7 @@ oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBea
 			prescription = prescribedDrugs[x];
 		}
 	}
-	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
+	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 
 %>
 

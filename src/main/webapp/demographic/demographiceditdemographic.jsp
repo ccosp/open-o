@@ -122,8 +122,8 @@ if(!authed) {
 	OscarProperties oscarProps = OscarProperties.getInstance();
 	String privateConsentEnabledProperty = oscarProps.getProperty("privateConsentEnabled");
 	boolean privateConsentEnabled = (privateConsentEnabledProperty != null && privateConsentEnabledProperty.equals("true"));
-	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean("professionalSpecialistDao");
-	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean("demographicCustDao");
+	ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
+	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean(DemographicCustDao.class);
 	DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 	List<Provider> providers = providerDao.getActiveProviders();
@@ -1632,8 +1632,8 @@ if(oscarProps.getProperty("new_label_print") != null && oscarProps.getProperty("
 						<bean:message key="demographic.demographiceditdemographic.msgManageContacts"/><!--i18n--></a></b></h3>
 						<ul>
 						<%
-							ContactDao contactDao = (ContactDao)SpringUtils.getBean("contactDao");
-							DemographicContactDao dContactDao = (DemographicContactDao)SpringUtils.getBean("demographicContactDao");
+							ContactDao contactDao = (ContactDao)SpringUtils.getBean(ContactDao.class);
+							DemographicContactDao dContactDao = (DemographicContactDao)SpringUtils.getBean(DemographicContactDao.class);
 							List<DemographicContact> dContacts = dContactDao.findByDemographicNo(demographic.getDemographicNo());
 							dContacts = ContactAction.fillContactNames(dContacts);
 							for(DemographicContact dContact:dContacts) {

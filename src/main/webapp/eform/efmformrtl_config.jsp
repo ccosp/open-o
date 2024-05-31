@@ -18,7 +18,7 @@
   if(session.getAttribute("user") == null) response.sendRedirect("../logout.jsp");
   String userRole = (String)session.getAttribute("userrole");
   String status = (String)request.getAttribute("status");
-  EFormDao efd = (EFormDao) SpringUtils.getBean("EFormDao");
+  EFormDao efd = (EFormDao) SpringUtils.getBean(EFormDao.class);
 %>
 
 <html:html locale="true">

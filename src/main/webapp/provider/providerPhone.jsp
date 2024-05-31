@@ -76,7 +76,7 @@
 		<td class="MainTableLeftColumn">&nbsp;</td>
 		<td class="MainTableRightColumn">
 		<%
-			UserPropertyDAO propertyDao = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+			UserPropertyDAO propertyDao = (UserPropertyDAO)SpringUtils.getBean(UserPropertyDAO.class);
 			UserProperty prop = propertyDao.getProp(curUser_no,"rxPhone");			
 			String phoneNum = "";
             if(prop!=null) {

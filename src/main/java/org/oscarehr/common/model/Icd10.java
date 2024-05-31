@@ -29,7 +29,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.oscarehr.common.dao.AbstractCodeSystemDao.codingSystem;
+import org.oscarehr.common.dao.AbstractCodeSystemDaoImpl.codingSystem;
 
 @Entity
 @Table(name="icd10")

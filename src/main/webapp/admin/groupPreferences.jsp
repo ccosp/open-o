@@ -49,8 +49,8 @@ if(!authed) {
 %>
 
 <%
-    MyGroupDao myGroupDao = (MyGroupDao) SpringUtils.getBean("myGroupDao");
-    CtlBillingServiceDao ctlBillingServiceDao = (CtlBillingServiceDao) SpringUtils.getBean("ctlBillingServiceDao");
+    MyGroupDao myGroupDao = (MyGroupDao) SpringUtils.getBean(MyGroupDao.class);
+    CtlBillingServiceDao ctlBillingServiceDao = (CtlBillingServiceDao) SpringUtils.getBean(CtlBillingServiceDao.class);
     String currentForm = "";
 %>
 <html:html locale="true">

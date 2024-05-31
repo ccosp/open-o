@@ -37,7 +37,7 @@ private String getSiteHTML(String reason, List<Site> sites) {
 %>
 <%
 if (bMultisites) {
-	SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+	SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
 	sites = siteDao.getAllSites();
 }
 //multisite ends =====================
@@ -68,7 +68,7 @@ if (bMultisites) {
 <%@page import="oscar.util.ConversionUtils" %>
 <%
 	ScheduleDateDao scheduleDateDao = SpringUtils.getBean(ScheduleDateDao.class);
-	RScheduleDao rScheduleDao = (RScheduleDao)SpringUtils.getBean("rScheduleDao");
+	RScheduleDao rScheduleDao = (RScheduleDao)SpringUtils.getBean(RScheduleDao.class);
 	ScheduleHolidayDao scheduleHolidayDao = SpringUtils.getBean(ScheduleHolidayDao.class);
 %>
 <%

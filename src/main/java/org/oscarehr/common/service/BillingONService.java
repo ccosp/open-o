@@ -35,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.oscarehr.common.model.BillingONPayment;
 import org.oscarehr.common.dao.BillingONPaymentDao;
+import org.oscarehr.common.dao.BillingONPaymentDaoImpl;
 
 /**
  *
@@ -69,8 +70,8 @@ public class BillingONService {
         if (billingONCHeader1 != null) {
 
             List<BillingONPayment> paymentRecords = billingONPaymentDao.find3rdPartyPayRecordsByBill(billingONCHeader1);
-            BigDecimal paidTotal = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
-            BigDecimal refundTotal = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
+            BigDecimal paidTotal = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
+            BigDecimal refundTotal = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
 
             BigDecimal billTotal = billingONCHeader1.getTotal();
 

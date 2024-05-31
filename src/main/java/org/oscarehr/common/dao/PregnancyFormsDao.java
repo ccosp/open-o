@@ -1,4 +1,5 @@
 /**
+ * Copyright (c) 2024. Magenta Health. All Rights Reserved.
  * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
@@ -20,65 +21,13 @@
  * McMaster University
  * Hamilton
  * Ontario, Canada
+ *
+ * Modifications made by Magenta Health in 2024.
  */
 package org.oscarehr.common.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import org.oscarehr.util.MiscUtils;
-
-import oscar.login.DBHelp;
-
-/**
- * using OSCAR Forms...so DBHelp it is.
- * @author marc
- *
- */
-public class PregnancyFormsDao {
-
-	public static Integer getLatestFormIdByPregnancy(Integer episodeId) {
-		String sql = "SELECT id from formONAREnhancedRecord WHERE episodeId="+episodeId+" ORDER BY formEdited DESC";                
-        ResultSet rs = DBHelp.searchDBRecord(sql);
-        try {
-	        if(rs.next()) {
-	        	Integer id = rs.getInt("id");
-	        	return id;
-	        }
-        }catch(SQLException e) {
-        	MiscUtils.getLogger().error("Error",e);
-        	return 0;
-        }
-		return 0;
-	}
-	
-	public static Integer getLatestFormIdByDemographicNo(Integer demographicNo) {
-		String sql = "SELECT id from formONAREnhancedRecord WHERE demographic_no="+demographicNo+" ORDER BY formEdited DESC";                
-        ResultSet rs = DBHelp.searchDBRecord(sql);
-        try {
-	        if(rs.next()) {
-	        	Integer id = rs.getInt("id");
-	        	return id;
-	        }
-        }catch(SQLException e) {
-        	MiscUtils.getLogger().error("Error",e);
-        	return 0;
-        }
-		return 0;
-	}
-	
-	public static Integer getLatestAR2005FormIdByDemographicNo(Integer demographicNo) {
-		String sql = "SELECT id from formONAR WHERE demographic_no="+demographicNo+" ORDER BY formEdited DESC";                
-        ResultSet rs = DBHelp.searchDBRecord(sql);
-        try {
-	        if(rs.next()) {
-	        	Integer id = rs.getInt("id");
-	        	return id;
-	        }
-        }catch(SQLException e) {
-        	MiscUtils.getLogger().error("Error",e);
-        	return 0;
-        }
-		return 0;
-	}
+public interface PregnancyFormsDao {
+    // Integer getLatestFormIdByPregnancy(Integer episodeId);
+    // Integer getLatestFormIdByDemographicNo(Integer demographicNo);
+    // Integer getLatestAR2005FormIdByDemographicNo(Integer demographicNo);
 }

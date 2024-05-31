@@ -41,6 +41,7 @@ import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.BillingONCHeader1Dao;
 import org.oscarehr.common.dao.BillingONExtDao;
 import org.oscarehr.common.dao.BillingONPaymentDao;
+import org.oscarehr.common.dao.BillingONPaymentDaoImpl;
 import org.oscarehr.common.dao.BillingONRepoDao;
 import org.oscarehr.common.dao.BillingPaymentTypeDao;
 import org.oscarehr.common.dao.BillingServiceDao;
@@ -66,9 +67,9 @@ import oscar.util.StringUtils;
  */
 public class BillingCorrectionAction extends DispatchAction{
     
-    private BillingONPaymentDao bPaymentDao = (BillingONPaymentDao) SpringUtils.getBean("billingONPaymentDao");        
-    private BillingONCHeader1Dao bCh1Dao = (BillingONCHeader1Dao) SpringUtils.getBean("billingONCHeader1Dao");     
-    private  BillingONExtDao billExtDao = (BillingONExtDao) SpringUtils.getBean("billingONExtDao");
+    private BillingONPaymentDao bPaymentDao = (BillingONPaymentDao) SpringUtils.getBean(BillingONPaymentDao.class);        
+    private BillingONCHeader1Dao bCh1Dao = (BillingONCHeader1Dao) SpringUtils.getBean(BillingONCHeader1Dao.class);     
+    private  BillingONExtDao billExtDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);
     private final BillingPaymentTypeDao billingPaymentTypeDao = SpringUtils.getBean(BillingPaymentTypeDao.class);
         
     public ActionForward add3rdPartyPayment(ActionMapping mapping,ActionForm form,HttpServletRequest request,HttpServletResponse response){
@@ -148,7 +149,7 @@ public class BillingCorrectionAction extends DispatchAction{
                            
         if (!bCh1.getBillingItems().isEmpty()) {
             updateBillingItems(bCh1, request);
-            BillingONService billingONService = (BillingONService) SpringUtils.getBean("billingONService");
+            BillingONService billingONService = (BillingONService) SpringUtils.getBean(BillingONService.class);
             if (!billingONService.updateTotal(bCh1))
                 return mapping.findForward("failure");
         }
@@ -271,7 +272,7 @@ public class BillingCorrectionAction extends DispatchAction{
         if (hasInvoiceChanged(bCh1, request)){
                                                                          
             //Add Existing state of Invoice to Billing Repository
-            BillingONRepoDao billRepoDao = (BillingONRepoDao) SpringUtils.getBean("billingONRepoDao");                                  
+            BillingONRepoDao billRepoDao = (BillingONRepoDao) SpringUtils.getBean(BillingONRepoDao.class);                                  
             billRepoDao.createBillingONCHeader1Entry(bCh1, locale); 
                                     
             Date billingDate = null;
@@ -296,7 +297,7 @@ public class BillingCorrectionAction extends DispatchAction{
                 manualReview = "Y";
             }
             
-            ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
+            ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
             Provider provider = providerDao.getProvider(bCh1.getProviderNo());
                                                            
             bCh1.setStatus(status);
@@ -356,8 +357,8 @@ public class BillingCorrectionAction extends DispatchAction{
              * total amount paid by the 3rd party.
              */
             List<BillingONPayment> paymentRecords = bPaymentDao.find3rdPartyPayRecordsByBill(bCh1);
-            BigDecimal payments = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
-            BigDecimal refunds = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
+            BigDecimal payments = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
+            BigDecimal refunds = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
             BigDecimal reversedFunds = payments.subtract(refunds);
 
             int doReverse = reversedFunds.compareTo(new BigDecimal("0.00"));
@@ -378,8 +379,8 @@ public class BillingCorrectionAction extends DispatchAction{
             List<BillingONPayment> paymentRecords = bPaymentDao.find3rdPartyPayRecordsByBill(bCh1);
                    
             BigDecimal totalOwing =  bCh1.getTotal();
-            BigDecimal totalPaid = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
-            BigDecimal totalRefund = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
+            BigDecimal totalPaid = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
+            BigDecimal totalRefund = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
             BigDecimal amtOutstanding = totalOwing.subtract(totalPaid).add(totalRefund);
 
             int doSettlePayment = amtOutstanding.compareTo(new BigDecimal("0.00"));
@@ -438,7 +439,7 @@ public class BillingCorrectionAction extends DispatchAction{
                  //Determine fee
                 String fee = request.getParameter("billingamount" + i);                
                 if (fee == null || fee.isEmpty() || fee.trim().isEmpty()) {
-                    BillingServiceDao bServiceDao = (BillingServiceDao) SpringUtils.getBean("billingServiceDao");
+                    BillingServiceDao bServiceDao = (BillingServiceDao) SpringUtils.getBean(BillingServiceDao.class);
                     BillingService bService = bServiceDao.searchBillingCode(serviceCodeId, "ON", serviceDate);
                     
                     if( bService == null ) {
@@ -497,7 +498,7 @@ public class BillingCorrectionAction extends DispatchAction{
                  || (bItemExisting.getServiceDate().compareTo(serviceDate) != 0)
                  || statusChanged) {
 
-                    BillingONRepoDao billRepoDao = (BillingONRepoDao) SpringUtils.getBean("billingONRepoDao");
+                    BillingONRepoDao billRepoDao = (BillingONRepoDao) SpringUtils.getBean(BillingONRepoDao.class);
                     billRepoDao.createBillingONItemEntry(bItemExisting, request.getLocale());				
                 }
 

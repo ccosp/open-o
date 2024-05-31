@@ -19,7 +19,7 @@
   
     if(session.getAttribute("user") == null ) response.sendRedirect("../logout.jsp");
     String curProvider = (String) session.getAttribute("userlastname") + ","+ (String) session.getAttribute("userfirstname");
-    OLISSystemPreferencesDao olisPrefDao = (OLISSystemPreferencesDao)SpringUtils.getBean("OLISSystemPreferencesDao");
+    OLISSystemPreferencesDao olisPrefDao = (OLISSystemPreferencesDao)SpringUtils.getBean(OLISSystemPreferencesDao.class);;
     OLISSystemPreferences olisPreferences =  olisPrefDao.getPreferences();
     
     String startTime = oscar.Misc.getStr(olisPreferences.getStartTime(), "");

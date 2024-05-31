@@ -570,7 +570,7 @@ function fmtOscarMsg() {
 								<%
 									//Hide old echart link
 									boolean showOldEchartLink = true;
-								    UserPropertyDAO propDao =(UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+								    UserPropertyDAO propDao =(UserPropertyDAO)SpringUtils.getBean(UserPropertyDAO.class);
 									UserProperty oldEchartLink = propDao.getProp(curUser_no, UserProperty.HIDE_OLD_ECHART_LINK_IN_APPT);
 									if (oldEchartLink!=null && "Y".equals(oldEchartLink.getValue())) showOldEchartLink = false;
 									CaseManagementNoteDAO caseManagementNoteDAO = SpringUtils.getBean(CaseManagementNoteDAO.class);

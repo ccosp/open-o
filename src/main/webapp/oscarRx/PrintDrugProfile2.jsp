@@ -183,7 +183,7 @@ if(ids != null) {
 
                                                 <%
 
-                                                DrugDao drugDao = (DrugDao) SpringUtils.getBean("drugDao");
+                                                DrugDao drugDao = (DrugDao) SpringUtils.getBean(DrugDao.class);
             List<Drug> prescriptDrugs = drugDao.getPrescriptions(""+patient.getDemographicNo(), showall);
 
 

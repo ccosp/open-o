@@ -44,7 +44,7 @@ import org.oscarehr.util.SpringUtils;
 
 public class OscarAppointmentDaoTest extends DaoTestFixtures {
 
-	static OscarAppointmentDao dao = (OscarAppointmentDao) SpringUtils.getBean("oscarAppointmentDao");
+	static OscarAppointmentDao dao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
 
 	@Before
 	public void before() throws Exception {

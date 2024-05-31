@@ -56,7 +56,7 @@
 	String remoteFacilityId = request.getParameter("remoteFacilityId");
 	String remoteProviderId = request.getParameter("remoteProviderId");
 	
-	DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao"); 
+	DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
 	Demographic demographic = demographicDao.getDemographic(demographicId);
 %>
 <html>

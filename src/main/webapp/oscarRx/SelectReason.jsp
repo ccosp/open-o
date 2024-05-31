@@ -97,9 +97,9 @@ boolean showQuicklist=false;
 	showQuicklist=true;
 } */
 
-DxresearchDAO dxResearchDAO  = (DxresearchDAO) SpringUtils.getBean("dxresearchDAO");
+DxresearchDAO dxResearchDAO  = (DxresearchDAO) SpringUtils.getBean(DxresearchDAO.class);
 List<Dxresearch> dxList = dxResearchDAO.getByDemographicNo(demoNo);
-Icd9Dao icd9Dao = (Icd9Dao)  SpringUtils.getBean("Icd9DAO");
+Icd9Dao icd9Dao = (Icd9Dao)  SpringUtils.getBean(Icd9DAO.class);
 
 pageContext.setAttribute("showQuicklist", showQuicklist);
 
@@ -258,7 +258,7 @@ pageContext.setAttribute("showQuicklist", showQuicklist);
 			<tr>
 				<td style="padding:0px;margin:0px;" >
 				<%
-				DrugReasonDao drugReasonDao  = (DrugReasonDao) SpringUtils.getBean("drugReasonDao");
+				DrugReasonDao drugReasonDao  = (DrugReasonDao) SpringUtils.getBean(DrugReasonDao.class);
 
 				List<DrugReason> drugReasons  = drugReasonDao.getReasonsForDrugID(drugId,true);
 				%>

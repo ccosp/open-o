@@ -31,7 +31,7 @@
 <%
     if (session.getAttribute("userrole") == null) { response.sendRedirect("../logout.jsp"); }
     String curUser_no = (String) session.getAttribute("user");
-    UserPropertyDAO propertyDao = (UserPropertyDAO) SpringUtils.getBean("UserPropertyDAO");
+    UserPropertyDAO propertyDao = (UserPropertyDAO) SpringUtils.getBean(UserPropertyDAO.class);
     String defaultPrinterNameAppointmentReceipt = "";
     boolean silentPrintAppointmentReceipt = false;
     UserProperty prop = null;

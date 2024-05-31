@@ -78,10 +78,10 @@
 
 <%
 	String demographicNo = request.getParameter("demographicNo");
-	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean("providerDao");
+	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 	
 	//load demographic
-	DemographicDao demographicDao=(DemographicDao)SpringUtils.getBean("demographicDao");
+	DemographicDao demographicDao=(DemographicDao)SpringUtils.getBean(DemographicDao.class);
 	Demographic demographic = demographicDao.getClientByDemographicNo(Integer.valueOf(demographicNo));
 
 	//load current roster status
@@ -151,7 +151,7 @@
 			
 			<table width="80%">
 			<%
-				DemographicArchiveDao demoArchiveDao = (DemographicArchiveDao)SpringUtils.getBean("demographicArchiveDao");
+				DemographicArchiveDao demoArchiveDao = (DemographicArchiveDao)SpringUtils.getBean(DemographicArchiveDao.class);
 				List<DemographicArchive> archiveList = demoArchiveDao.findByDemographicNoChronologically(demographic.getDemographicNo());
 				
 				String currentRosterStatus = null;

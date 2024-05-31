@@ -37,7 +37,7 @@
         response.sendRedirect("../logout.jsp");
     }
     String curUser_no = (String) session.getAttribute("user");
-    UserPropertyDAO propertyDao = (UserPropertyDAO) SpringUtils.getBean("UserPropertyDAO");
+    UserPropertyDAO propertyDao = (UserPropertyDAO) SpringUtils.getBean(UserPropertyDAO.class);
     
     OscarProperties oscarProps = OscarProperties.getInstance();
 %>

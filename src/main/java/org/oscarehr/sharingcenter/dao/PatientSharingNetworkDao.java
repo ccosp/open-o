@@ -27,12 +27,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.sharingcenter.model.PatientSharingNetworkDataObject;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PatientSharingNetworkDao extends AbstractDao<PatientSharingNetworkDataObject> {
+public class PatientSharingNetworkDao extends AbstractDaoImpl<PatientSharingNetworkDataObject> {
 
     public PatientSharingNetworkDao() {
         super(PatientSharingNetworkDataObject.class);

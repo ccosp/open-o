@@ -27,12 +27,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.sharingcenter.model.EFormMapping;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EFormMappingDao extends AbstractDao<EFormMapping> {
+public class EFormMappingDao extends AbstractDaoImpl<EFormMapping> {
 
     public EFormMappingDao() {
         super(EFormMapping.class);

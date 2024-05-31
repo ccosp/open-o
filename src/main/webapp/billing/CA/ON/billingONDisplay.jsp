@@ -476,7 +476,7 @@ if(bFlag) {
 				key="billing.billingCorrection.msgSelectVisitType" /></option>
 				 <% if (OscarProperties.getInstance().getBooleanProperty("rma_enabled", "true")) { %>
                    <% 
-			    ClinicNbrDao cnDao = (ClinicNbrDao) SpringUtils.getBean("clinicNbrDao"); 
+			    ClinicNbrDao cnDao = (ClinicNbrDao) SpringUtils.getBean(ClinicNbrDao.class); 
 				ArrayList<ClinicNbr> nbrs = cnDao.findAll();
                	for (ClinicNbr clinic : nbrs) {
 					String valueString = String.format("%s | %s", clinic.getNbrValue(), clinic.getNbrString());

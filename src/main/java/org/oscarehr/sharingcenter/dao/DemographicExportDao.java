@@ -27,7 +27,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.sharingcenter.DocumentType;
 import org.oscarehr.sharingcenter.model.DemographicExport;
 import org.springframework.stereotype.Repository;
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class DemographicExportDao extends AbstractDao<DemographicExport> {
+public class DemographicExportDao extends AbstractDaoImpl<DemographicExport> {
 
     /**
      * Initializes a new instance of the DemographicExportDao class.

@@ -24,7 +24,6 @@
 package org.oscarehr.util;
 
 import org.apache.logging.log4j.Logger;
-import org.apache.xml.security.utils.resolver.ResourceResolver;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorUpdateTask;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
@@ -34,7 +33,6 @@ import org.oscarehr.PMmodule.utility.ProgramAccessCache;
 import org.oscarehr.PMmodule.utility.RoleCache;
 import org.oscarehr.common.jobs.OscarJobUtils;
 import org.oscarehr.hospitalReportManager.HRMFixMissingReportHelper;
-import org.oscarehr.integration.mcedt.mailbox.CidPrefixResourceResolver;
 import org.oscarehr.threads.WaitListEmailThread;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
@@ -81,7 +79,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 			if (oscarProperties.isPropertyActive("encrypted_xml.remove_cid_prefix")) {
 				ResourceResolver.register(CidPrefixResourceResolver.class, true);
 			}
-						
+
 			//Run some optimizations
 			loadCaches();
 
@@ -102,7 +100,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 	}
 	
 	public void loadCaches() {
-		ProgramDao programDao = (ProgramDao)SpringUtils.getBean("programDao");
+		ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
 		for(Program program:programDao.getActivePrograms()) {
 			ProgramAccessCache.setAccessMap(program.getId().longValue());
 		}
@@ -111,9 +109,9 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
 	
 
 	private void createOscarProgramIfNecessary() {
-		ProgramDao programDao = SpringUtils.getBean(ProgramDao.class);
-		SecroleDao secRoleDao = (SecroleDao)SpringUtils.getBean("secroleDao");
-		ProgramProviderDAO programProviderDao = (ProgramProviderDAO)SpringUtils.getBean("programProviderDAO");
+		ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);
+		SecroleDao secRoleDao = (SecroleDao)SpringUtils.getBean(SecroleDao.class);
+		ProgramProviderDAO programProviderDao = (ProgramProviderDAO)SpringUtils.getBean(ProgramProviderDAO.class);
 		
 		Program p = programDao.getProgramByName("OSCAR");
 		if(p !=null) 
