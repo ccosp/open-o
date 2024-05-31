@@ -1,5 +1,5 @@
 {
-  "name": "OSCAR",
+  "name": "Open-OSP EMR Dev",
   "workspaceFolder": "/workspace",
   "dockerComposeFile": "docker-compose.yml",
   "service": "oscar",
