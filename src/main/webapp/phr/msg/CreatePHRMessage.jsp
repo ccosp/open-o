@@ -51,7 +51,7 @@
 	Demographic demographic= null;
 	String DemographicNo = null;
 	String myOscarUserName = null;
-	DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean("demographicDao");
+	DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
 	
 	MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(session);
 	

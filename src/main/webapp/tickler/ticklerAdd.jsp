@@ -102,7 +102,7 @@
 	if (request.getParameter("priority") != null) priority = request.getParameter("priority");
 	if (request.getParameter("recall") != null) recall = true;
 
-	UserPropertyDAO propertyDao = (UserPropertyDAO) SpringUtils.getBean("UserPropertyDAO");
+	UserPropertyDAO propertyDao = (UserPropertyDAO) SpringUtils.getBean(UserPropertyDAO.class);
 	UserProperty prop = propertyDao.getProp(user_no, "tickler_task_assignee");
 
 //don't over ride taskTo query param
@@ -473,7 +473,7 @@
 					<td class="tickler-label"><bean:message key="tickler.ticklerAdd.assignTaskTo"/>:</td>
 					<td>
 						<% if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) { // multisite start ==========================================
-							SiteDao siteDao = (SiteDao) WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+							SiteDao siteDao = (SiteDao) WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
 							List<Site> sites = siteDao.getActiveSitesByProviderNo(user_no);
 							String appNo = (String) session.getAttribute("cur_appointment_no");
 							String location = null;

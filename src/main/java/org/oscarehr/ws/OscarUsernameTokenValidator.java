@@ -47,7 +47,7 @@ import org.oscarehr.util.SpringUtils;
  */
 public class OscarUsernameTokenValidator extends UsernameTokenValidator {
 	private static final Logger logger = MiscUtils.getLogger();
-	private SecurityDao securityDao = (SecurityDao) SpringUtils.getBean("securityDao");
+	private SecurityDao securityDao = (SecurityDao) SpringUtils.getBean(SecurityDao.class);
 
 	@Override
 	protected void verifyPlaintextPassword(UsernameToken usernameToken, RequestData data) throws WSSecurityException {

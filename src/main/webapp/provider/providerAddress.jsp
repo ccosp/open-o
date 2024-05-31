@@ -33,7 +33,7 @@
 <%@ page import="org.oscarehr.util.SpringUtils"%>
 
 <%
-	UserPropertyDAO propertyDao = (UserPropertyDAO)SpringUtils.getBean("UserPropertyDAO");
+	UserPropertyDAO propertyDao = (UserPropertyDAO)SpringUtils.getBean(UserPropertyDAO.class);
 %>
 <%
   if(session.getValue("user") == null) response.sendRedirect("../logout.htm");

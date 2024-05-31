@@ -61,7 +61,7 @@ if (demographicNo == null) demographicNo = request.getParameter("demographicNo")
 if (demographicNo == null) demographicNo = (String) request.getAttribute("demographicNo");
 Integer demoNo = Integer.parseInt(demographicNo);
 
-ProviderDao providerDao = (ProviderDao) SpringUtils.getBean("providerDao");
+ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
 
 AppManager appManager = SpringUtils.getBean(AppManager.class);
 ConsentDao consentDao = SpringUtils.getBean(ConsentDao.class);

@@ -61,7 +61,7 @@ private String getSiteHTML(String scDate, String provider_no, List<Site> sites) 
 }
 %>
 <% if (bMultisites) {
-SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean("siteDao");
+SiteDao siteDao = (SiteDao)WebApplicationContextUtils.getWebApplicationContext(application).getBean(SiteDao.class);
 sites = siteDao.getAllSites(); 
 }
 //multisite ends =======================

@@ -194,7 +194,7 @@ oscar.oscarRx.pageUtil.RxSessionBean rxBean = null;
 						<th colspan="2"></th>
 					</tr>
 					<%
-						PartialDateDao partialDateDao = (PartialDateDao)SpringUtils.getBean("partialDateDao");
+						PartialDateDao partialDateDao = (PartialDateDao)SpringUtils.getBean(PartialDateDao.class);
 						for (StaticScriptBean.DrugDisplayData drug : drugs)
 							{
 								String arch="";
