@@ -283,7 +283,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return rs;
         } finally {
             // releaseSession(s);
-            s.close();
+            //s.close();
         }
     }
 
@@ -2498,7 +2498,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return q.list();
         } finally {
             // this.releaseSession(s);
-            s.close();
+            //s.close();
         }
     }
 
@@ -2532,7 +2532,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return q.list();
         } finally {
             // this.releaseSession(s);
-            s.close();
+            //s.close();
 
         }
     }
