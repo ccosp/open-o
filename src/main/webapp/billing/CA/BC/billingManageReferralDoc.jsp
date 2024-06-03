@@ -50,7 +50,7 @@ if(!authed) {
 <%
 	BillingreferralDao billingReferralDao = (BillingreferralDao)SpringUtils.getBean("BillingreferralDAO");
 %>
-<html:html locale="true">
+<html:html lang="en">
 
 <head>
 <title><bean:message key="admin.admin.ManageReferralDoc"/></title>

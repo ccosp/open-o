@@ -72,7 +72,7 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.oscarehr.common.model.Site"%>
 <%@page import="oscar.login.*,org.apache.commons.lang.StringUtils"%>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao"%><html:html locale="true">
+<%@page import="org.oscarehr.PMmodule.dao.ProviderDao"%><html:html lang="en">
 <%@page import="org.oscarehr.common.model.ProviderSite"%>
 <%@page import="org.oscarehr.common.model.ProviderSitePK"%>
 <%@page import="org.oscarehr.common.dao.ProviderSiteDao"%>

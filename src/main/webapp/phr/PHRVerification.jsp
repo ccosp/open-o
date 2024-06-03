@@ -81,7 +81,7 @@ if(appDef != null && appDef.getConsentTypeId() != null) {
 
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <script type="text/javascript" src="<c:out value="${ctx}"/>/js/jquery.js"></script>

@@ -88,7 +88,7 @@ if(!authed) {
 	String xml_appointment_date = request.getParameter("xml_appointment_date") == null ? "" : request.getParameter("xml_appointment_date");
 
 %>
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title><bean:message key="oscarReport.oscarReportAgeSex.title" /></title>

@@ -80,7 +80,7 @@
 
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 <% response.setHeader("Cache-Control","no-cache");%>
 
 <HEAD>
