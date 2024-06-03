@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+command=$1
+
+case $command in
+  log)
+    tail -f /usr/local/tomcat/logs/catalina.out
+    ;;
+
+  start)
+    catalina.sh
+    ;;
+
+  stop)
+    catalina.sh stop
+    ;;
+esac

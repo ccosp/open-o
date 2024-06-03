@@ -2,10 +2,9 @@
 
 # Define the directory and the script name
 SCRIPTS_DIR="/scripts"
-SCRIPT_NAME="make"
 
 # Make the script executable
-chmod +x "$SCRIPTS_DIR/$SCRIPT_NAME"
+chmod +x "$SCRIPTS_DIR/*"
 
 # Add the scripts directory to the PATH if it's not already included
 SHELL_CONFIG="$HOME/.bashrc"

@@ -5,6 +5,28 @@ command=$1
 case $command in
   clean)
     mvn clean
+    rm -rf /usr/local/tomcat/webapps/oscar
+    ;;
+
+  install)
+    # Stop the Catalina server.
+    catalina.sh stop
+
+    # Build the project.
+    mvn -Dmaven.test.skip=true prepare-package war:exploded
+
+    # Create a symlink from the exploded WAR directory to the Tomcat webapps directory.
+    pom_file="pom.xml"
+    version=$(grep -oPm 1 '<version>\K[^<]+' "$pom_file")
+    snapshot_src_dir='oscar-'$version
+    snapshot_dest_dir='oscar'
+    if [ -d "target/$snapshot_src_dir" ] && [ ! -L "target/$snapshot_src_dir" ]; then
+          mv target/$snapshot_src_dir /usr/local/tomcat/webapps/$snapshot_dest_dir
+          ln -s /usr/local/tomcat/webapps/$snapshot_dest_dir target/$snapshot_src_dir
+    fi
+
+    # Start the Catalina server.
+    catalina.sh start
     ;;
   *)
     mvn -Dmaven.test.skip=true prepare-package war:exploded
