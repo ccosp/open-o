@@ -6,7 +6,8 @@ services:
       - "8080:8080"
     volumes:
       - ../.:/workspace
-      - m2-volume:/root/.m2
+#      - m2-volume:/root/.m2
+      - ~/.m2:/root/.m2
     env_file:
       - ./development/config/shared/local.env
     environment:
