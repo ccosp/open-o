@@ -53,7 +53,7 @@ if(!authed) {
     CtlBillingServiceDao ctlBillingServiceDao = (CtlBillingServiceDao) SpringUtils.getBean(CtlBillingServiceDao.class);
     String currentForm = "";
 %>
-<html:html locale="true">
+<html:html lang="en">
     <head>
             <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
             <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.7.1.min.js"></script>          

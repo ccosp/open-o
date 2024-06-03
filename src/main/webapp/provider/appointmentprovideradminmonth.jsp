@@ -315,7 +315,7 @@
 <%@page import="org.oscarehr.common.model.Site" %>
 <%@page import="oscar.appt.JdbcApptImpl" %>
 <%@page import="oscar.appt.ApptUtil" %>
-<html:html locale="true">
+<html:html lang="en">
     <body bgcolor="#EEEEFF" onLoad="refreshAllTabAlerts();">
 
     <head>

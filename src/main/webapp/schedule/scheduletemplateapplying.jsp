@@ -49,7 +49,7 @@
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@ page import="org.oscarehr.common.model.Site"%>
 <%@ page import="org.owasp.encoder.Encode" %>
-<html:html locale="true">
+<html:html locale="en">
 
 <%
     if(session.getAttribute("user") == null ) response.sendRedirect("../logout.jsp");

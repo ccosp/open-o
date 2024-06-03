@@ -170,7 +170,7 @@
     ResultSet rsPatient = null;
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <title><bean:message key="billing.billingCorrection.title" /></title>
 

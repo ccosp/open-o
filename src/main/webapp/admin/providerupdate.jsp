@@ -62,7 +62,7 @@ if(!authed) {
 	ProviderDao providerDao = (ProviderDao)SpringUtils.getBean(ProviderDao.class);
 	ProviderSiteDao providerSiteDao = SpringUtils.getBean(ProviderSiteDao.class);
 %>
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title><bean:message key="admin.providerupdate.title" /></title>

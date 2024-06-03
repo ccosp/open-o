@@ -249,7 +249,7 @@ if(!authed) {
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="org.owasp.encoder.Encode" %>
 <!DOCTYPE html>
-<html:html locale="true">
+<html:html lang="en">
 
 <head>
 <title><bean:message key="demographic.demographiceditdemographic.title" /></title>

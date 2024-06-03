@@ -47,7 +47,7 @@ if (request.getParameter("submit") != null && request.getParameter("submit").equ
 }
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <title><bean:message key="admin.admin.btnAddBillingLocation" /></title>
 <link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">

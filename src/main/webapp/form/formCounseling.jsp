@@ -83,7 +83,7 @@
 %>
 
 
-<html:html locale="true">
+<html:html lang="en">
 <% response.setHeader("Cache-Control","no-cache");%>
                                                        
 <style type="text/css" media="print">
