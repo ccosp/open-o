@@ -98,4 +98,6 @@ public interface PreventionManager {
 
 	public List<Prevention> getImmunizationsByDemographic(LoggedInInfo loggedInInfo, Integer demographicNo);
 
+	public String getCustomPreventionItems();
+
 }

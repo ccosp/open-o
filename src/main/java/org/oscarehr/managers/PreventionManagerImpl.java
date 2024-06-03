@@ -160,7 +160,8 @@ public class PreventionManagerImpl implements Serializable, PreventionManager {
         return false;
     }
 
-    public static String getCustomPreventionItems() {
+    @Override
+    public String getCustomPreventionItems() {
         String itemsToRemove = "";
         PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean(PropertyDao.class);
         Property p = propertyDao.checkByName(HIDE_PREVENTION_ITEM);
