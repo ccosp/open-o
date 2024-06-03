@@ -177,7 +177,7 @@
 %>
 
 
-<html:html locale="true">
+<html:html lang="en">
 <head>
     <title>Annotation</title>
     <% if (isMobileOptimized) { %>

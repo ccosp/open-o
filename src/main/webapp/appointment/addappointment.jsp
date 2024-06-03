@@ -178,7 +178,7 @@
     ProgramManager2 programManager2 = SpringUtils.getBean(ProgramManager2.class);
 %>
 
-<html:html locale="true">
+<html:html locale="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><bean:message key="appointment.addappointment.title" /></title>

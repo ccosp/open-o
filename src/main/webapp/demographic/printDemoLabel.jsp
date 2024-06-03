@@ -62,7 +62,7 @@
         }
     }
 %>
-<html:html locale="true">
+<html:html lang="en">
     <head>
         <title><bean:message key="report.printLabel.title" /></title>
     </head>

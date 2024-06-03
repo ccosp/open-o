@@ -63,7 +63,7 @@
 	CtlBillingServiceDao ctlBillingServiceDao = SpringUtils.getBean(CtlBillingServiceDao.class);
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 
 <head>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />

@@ -44,7 +44,7 @@
 	
 	EFormDao eformDao = (EFormDao)SpringUtils.getBean(EFormDao.class);
 %>
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <title><bean:message key="admin.fieldNote.selectEforms" /></title>
 <link rel="stylesheet" href="../../share/css/OscarStandardLayout.css">
