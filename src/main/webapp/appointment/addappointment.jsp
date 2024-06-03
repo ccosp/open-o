@@ -161,7 +161,7 @@
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
 <%@page import="org.oscarehr.common.model.Site"%>
 	<%@ page import="org.owasp.encoder.Encode" %>
-	<html:html locale="true">
+	<html:html lang="en">
 <head>
 <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-ui-1.8.18.custom.min.js"></script>

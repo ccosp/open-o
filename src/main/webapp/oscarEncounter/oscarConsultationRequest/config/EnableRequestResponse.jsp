@@ -61,7 +61,7 @@ if(!authed) {
 
 	if (!consultRequestEnabled && !consultResponseEnabled) consultRequestEnabled = true;
 %>
-<html:html locale="true">
+<html:html lang="en">
 
 
 <head>

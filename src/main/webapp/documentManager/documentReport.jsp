@@ -156,7 +156,7 @@
 		DocumentBrowserLink = true;
 	}
 %>
-<html:html locale="true">
+<html:html lang="en">
 	<head>
 
 		<title><bean:message key="dms.documentReport.msgDocuments"/> Manager</title>

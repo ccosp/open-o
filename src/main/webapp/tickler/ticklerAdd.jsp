@@ -159,7 +159,7 @@
 <%@ page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
 <%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
 <!DOCTYPE html>
-<html:html locale="true">
+<html:html lang="en">
 	<head>
 		<title><bean:message key="tickler.ticklerAdd.title"/></title>
 

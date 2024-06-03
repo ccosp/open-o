@@ -61,7 +61,7 @@
 		request.setAttribute("subject", request.getParameter("subject")); 
 	}
 %>
-<html:html locale="true">
+<html:html lang="en">
 
 <head>
     <html:base/>

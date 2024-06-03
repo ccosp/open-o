@@ -158,7 +158,7 @@
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
 <%@page import="org.oscarehr.common.model.Site"%>
 <%@ page import="org.owasp.encoder.Encode" %>
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <% if (isMobileOptimized) { %>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width" />

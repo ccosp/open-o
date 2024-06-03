@@ -63,7 +63,7 @@
  	ProviderDataDao providerDao = SpringUtils.getBean(ProviderDataDao.class);
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <title><bean:message key="demographic.demographiclabelprintsetting.title" /></title>
 <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css"> <!-- Bootstrap 2.3.1 -->

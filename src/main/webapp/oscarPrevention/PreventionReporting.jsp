@@ -64,7 +64,7 @@ if(!authed) {
   BillingONCHeader1Dao bCh1Dao = (BillingONCHeader1Dao)SpringUtils.getBean("billingONCHeader1Dao");
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 
 <head>
 <html:base/>

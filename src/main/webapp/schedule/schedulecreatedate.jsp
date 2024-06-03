@@ -230,7 +230,7 @@ if(request.getParameter("bFirstDisp")==null || request.getParameter("bFirstDisp"
 <%@page import="org.oscarehr.common.model.Site"%>
 <%@page import="oscar.appt.ApptUtil"%>
 <%@page import="org.oscarehr.common.dao.SiteDao"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%><html:html locale="true">
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%><html:html lang="en">
 <head>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
 <title><bean:message key="schedule.schedulecreatedate.title" /></title>

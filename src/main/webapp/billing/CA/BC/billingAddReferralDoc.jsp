@@ -51,7 +51,7 @@ if(!authed) {
 	BillingreferralDao billingReferralDao = (BillingreferralDao)SpringUtils.getBean("BillingreferralDAO");
 %>
 
-<%@page import="org.oscarehr.util.MiscUtils"%><html:html locale="true">
+<%@page import="org.oscarehr.util.MiscUtils"%><html:html lang="en">
 
 <head>
 <title><bean:message key="admin.admin.ManageReferralDoc"/></title>
