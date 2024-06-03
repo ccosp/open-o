@@ -77,6 +77,8 @@
 	<bean id="caseManagementIssueDAO" class="org.oscarehr.casemgmt.dao.CaseManagementIssueDAOImpl" autowire="byName" />
 	<bean id="CaseManagementNoteDAO" class="org.oscarehr.casemgmt.dao.CaseManagementNoteDAOImpl" autowire="byName" />
 	<bean id="caseManagementNoteDAO" class="org.oscarehr.casemgmt.dao.CaseManagementNoteDAOImpl" autowire="byName" />
+	<bean id="CaseManagementTmpSaveDao" class="org.oscarehr.common.dao.CaseManagementTmpSaveDaoImpl" autowire="byName" />
+	<bean id="caseManagementTmpSaveDao" class="org.oscarehr.common.dao.CaseManagementTmpSaveDaoImpl" autowire="byName" />
 	<bean id="CaseManagementNoteExtDAO" class="org.oscarehr.casemgmt.dao.CaseManagementNoteExtDAOImpl" autowire="byName" />
 	<bean id="CaseManagementNoteLinkDAO" class="org.oscarehr.casemgmt.dao.CaseManagementNoteLinkDAOImpl" autowire="byName" />
 	<bean id="CaseManagementCPPDAO" class="org.oscarehr.casemgmt.dao.CaseManagementCPPDAOImpl" autowire="byName" />
@@ -221,6 +223,7 @@
 		<property name="caseManagementNoteExtDAO" ref="CaseManagementNoteExtDAO" />
 		<property name="caseManagementNoteLinkDAO" ref="CaseManagementNoteLinkDAO" />
 		<property name="caseManagementIssueDAO" ref="CaseManagementIssueDAO" />
+		<property name="caseManagementTmpSaveDao" ref="CaseManagementTmpSaveDao" />
 		<property name="caseManagementCPPDAO" ref="CaseManagementCPPDAO" />
 		<property name="issueDAO" ref="IssueDAO" />
 		<property name="demographicDao" ref="demographicDao" />
