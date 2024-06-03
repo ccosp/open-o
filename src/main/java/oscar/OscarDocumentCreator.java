@@ -3,10 +3,9 @@ package oscar;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRCsvExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
+import net.sf.jasperreports.export.*;
 import org.oscarehr.util.MiscUtils;
 
 import java.io.ByteArrayInputStream;
@@ -119,12 +118,12 @@ public class OscarDocumentCreator {
    * @param sos ServletOutputStream
    * @throws JRException
    */
-  private void exportReportToCSVStream(JasperPrint jasperPrint,
-                                       OutputStream sos) throws
-      JRException {
-	  JRXlsxExporter exp = new JRXlsxExporter();
+  private void exportReportToCSVStream(JasperPrint jasperPrint, OutputStream sos) throws JRException {
+      JRCsvExporter exp = new JRCsvExporter();
 	  exp.setExporterInput(new SimpleExporterInput(jasperPrint));
-	  exp.setExporterOutput(new SimpleOutputStreamExporterOutput(sos));
+	  exp.setExporterOutput(new SimpleWriterExporterOutput(sos));
+      SimpleCsvReportConfiguration configuration = new SimpleCsvReportConfiguration();
+      exp.setConfiguration(configuration);
       exp.exportReport();
   }
 

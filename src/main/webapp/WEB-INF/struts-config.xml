@@ -2584,6 +2584,14 @@
 
 		<!-- END OSCAR Report By Template -->
 
+		<action path="/searchProfessionalSpecialist" type="org.oscarehr.contactRegistry.ProfessionalSpecialistAction"
+		        parameter="method"  scope="request">
+		</action>
+
+		<action path="/getProfessionalSpecialist" type="org.oscarehr.contactRegistry.ProfessionalSpecialistAction"
+		        parameter="method" scope="request">
+		</action>
+
 		<action path="/demographic/Contact" type="org.oscarehr.common.web.ContactAction" parameter="method" scope="request" validate="false" name="contactForm">
 			<forward name="pForm" path="/demographic/addEditProfessionalContact.jsp" />
 			<forward name="cForm" path="/demographic/addEditContact.jsp" />
