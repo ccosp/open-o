@@ -78,7 +78,7 @@
 %>
 
 
-<html:html locale="true">
+<html:html lang="en">
 <head>
     <title><%=display %> Import</title>
     <% if (isMobileOptimized) { %>
