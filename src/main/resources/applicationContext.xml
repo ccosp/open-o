@@ -272,7 +272,7 @@
 	<bean id="secobjprivilegeDao" class="com.quatro.dao.security.SecobjprivilegeDaoImpl" autowire="byName" />
 	<bean id="secProviderDao" class="com.quatro.dao.security.SecProviderDaoImpl" autowire="byName" />
 	<bean id="secuserroleDao" class="com.quatro.dao.security.SecuserroleDaoImpl" autowire="byName" />
-        <bean id="secObjectNameDao" class="com.quatro.dao.security.SecObjectNameDaoImpl" autowire="byName"/>
+    <bean id="secObjectNameDao" class="com.quatro.dao.security.SecObjectNameDaoImpl" autowire="byName"/>
 
 	<bean id="rolesManager" class="com.quatro.service.security.RolesManagerImpl" autowire="byName">
 		<property name="secroleDao" ref="secroleDao" />
