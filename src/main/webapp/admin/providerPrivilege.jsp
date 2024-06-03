@@ -73,7 +73,7 @@
 <%
 	SecRoleDao secRoleDao = SpringUtils.getBean(SecRoleDao.class);
 	SecPrivilegeDao secPrivilegeDao = SpringUtils.getBean(SecPrivilegeDao.class);
-	SecObjectNameDao secObjectNameDao = SpringUtils.getBean(SecObjectNameDao.class);
+	SecObjectNameDao secObjectNameDao = (SecObjectNameDao)SpringUtils.getBean(SecObjectNameDaoJpa.class);
 	ProviderDataDao providerDataDao = SpringUtils.getBean(ProviderDataDao.class);
 	SecObjPrivilegeDao secObjPrivilegeDao = SpringUtils.getBean(SecObjPrivilegeDao.class);
 	RecycleBinDao recycleBinDao = SpringUtils.getBean(RecycleBinDao.class);
