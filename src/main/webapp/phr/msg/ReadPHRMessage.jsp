@@ -93,7 +93,7 @@
 	Demographic demographic=MyOscarUtils.getDemographicByMyOscarUserName(myOscarUserName);
 %>
 
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <link rel="stylesheet" type="text/css" href="../oscarMessenger/encounterStyles.css" media="screen">
 <link rel="stylesheet" type="text/css" href="../oscarMessenger/printable.css" media="print">    

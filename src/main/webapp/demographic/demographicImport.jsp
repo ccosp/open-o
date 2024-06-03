@@ -56,7 +56,7 @@
 	}
 
 %>
-<html:html locale="true">
+<html:html lang="en">
 	<script src="${pageContext.request.contextPath}/csrfguard"></script>
 <head>
 <!--I18n-->

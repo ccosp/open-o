@@ -55,7 +55,7 @@
 <%@page import="oscar.util.DateUtils" %>
 <%@page import="oscar.util.StringUtils" %>
 <%@page import="oscar.oscarDemographic.pageUtil.Util" %>
-<html:html locale="true">
+<html:html lang="en">
 <head>
 <title>Enrollment History</title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

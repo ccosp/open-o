@@ -68,7 +68,7 @@ if (groupView == null) {
 %>
 
 
-<%@page import="org.oscarehr.util.LoggedInInfo"%><html:html locale="true">
+<%@page import="org.oscarehr.util.LoggedInInfo"%><html:html lang="en">
 
 <head>
 <title>
