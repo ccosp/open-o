@@ -43,7 +43,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserPropertyDAOImpl extends AbstractDaoImpl<UserProperty> implements UserPropertyDAO{
 
-	public final static String COLOR_PROPERTY = "ProviderColour";
+	// public final static String COLOR_PROPERTY = "ProviderColour";
 
     /** Creates a new instance of UserPropertyDAO */
     public UserPropertyDAOImpl() {
