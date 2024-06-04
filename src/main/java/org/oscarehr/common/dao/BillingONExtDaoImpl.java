@@ -50,14 +50,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 @SuppressWarnings("unchecked")
 public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implements BillingONExtDao {
-    // public final static String KEY_PAYMENT = "payment";
-    // public final static String KEY_REFUND = "refund";
-    // public final static String KEY_DISCOUNT = "discount";
-    // public final static String KEY_CREDIT = "credit";
-    // public final static String KEY_PAY_DATE = "payDate";
-    // public final static String KEY_PAY_METHOD = "payMethod";
-    // public final static String KEY_TOTAL = "total";
-    // public final static String KEY_GST = "gst";
+    public final static String KEY_PAYMENT = "payment";
+    public final static String KEY_REFUND = "refund";
+    public final static String KEY_DISCOUNT = "discount";
+    public final static String KEY_CREDIT = "credit";
+    public final static String KEY_PAY_DATE = "payDate";
+    public final static String KEY_PAY_METHOD = "payMethod";
+    public final static String KEY_TOTAL = "total";
+    public final static String KEY_GST = "gst";
 
     public BillingONExtDaoImpl() {
         super(BillingONExt.class);

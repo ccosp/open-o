@@ -29,9 +29,6 @@ import org.oscarehr.common.model.IntegratorControl;
 import java.util.List;
 
 public interface IntegratorControlDao extends AbstractDao<IntegratorControl> {
-    public static final String REMOVE_DEMO_ID_CTRL = "RemoveDemographicIdentity";
-    public static final String UPDATE_INTERVAL_CTRL = "UpdateInterval";
-    public static final String INTERVAL_HR = "h";
     List<IntegratorControl> getAllByFacilityId(Integer facilityId);
     boolean readRemoveDemographicIdentity(Integer facilityId);
     void saveRemoveDemographicIdentity(Integer facilityId, boolean removeDemoId);

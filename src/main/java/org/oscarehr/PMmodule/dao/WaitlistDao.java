@@ -53,35 +53,6 @@ import org.oscarehr.match.vacancy.VacancyTemplateData;
 import org.springframework.stereotype.Repository;
 
 public interface WaitlistDao {
-	static final String QUERY_ALL_CLIENT_DATA = "SELECT DISTINCT demographic_no, fdid, var_name, var_value "
-            + "FROM eform_values LEFT JOIN client_referral cr ON cr.client_id=demographic_no, "
-            + "(SELECT demographic_no AS dmb,MAX(fdid) AS ffdid FROM eform_values GROUP BY demographic_no) xyz "
-            + "WHERE cr.referral_id IS NULL AND " + "demographic_no= xyz.dmb AND fdid=xyz.ffdid";
-
-    static final String QUERY_ALL_CLIENT_DATA_BY_PROGRAMID = "SELECT DISTINCT ef.demographic_no, ef.fdid, ef.var_name, ef.var_value "
-            + "FROM eform_values ef LEFT JOIN client_referral cr ON cr.client_id=ef.demographic_no"
-            + " where cr.program_id=?1 and ef.var_name in ('age-years','gender','current-housing','preferred-language','location-preferences','referrer-contact-province','contact-province','Age category','prepared-live-toronto','bed_community_program_id','has-mental-illness-primary','current-legal-involvements')"
-            + " and LENGTH(ef.var_value)>0 and not exists (select * from eform_values where demographic_no=ef.demographic_no and var_name=ef.var_name and fdid>ef.fdid)";
-
-    static final String QUERY_GET_CLIENT_DATA = "SELECT DISTINCT ef.demographic_no, ef.fdid, ef.var_name, ef.var_value "
-            + "FROM eform_values ef WHERE ef.demographic_no= ?1 and "
-            + " ef.var_name in ('age-years','gender','current-housing','preferred-language','location-preferences','referrer-contact-province','contact-province','Age category','prepared-live-toronto','bed_community_program_id','has-mental-illness-primary','current-legal-involvements')"
-            + "and LENGTH(ef.var_value)>0 AND not exists (select * from eform_values where ef.demographic_no=demographic_no and var_name=ef.var_name and fdid>ef.fdid)";
-
-	static final String QUERY_VACANCY_DATA = "SELECT v.id, v.wlProgramId, ct.field_name,ct.field_type,"
-            + "c.criteria_value,cso.option_value,c.range_start_value,c.range_end_value "
-            + "FROM criteria c JOIN criteria_type ct ON c.CRITERIA_TYPE_ID=ct.CRITERIA_TYPE_ID "
-            + "LEFT JOIN criteria_selection_option cso ON cso.CRITERIA_ID=c.CRITERIA_ID "
-            + "JOIN vacancy v ON v.id=c.VACANCY_ID WHERE v.id=?1";
-
-    static final String QUERY_VACANCY_DATA_BY_PROGRAMID = "SELECT v.id, v.wlProgramId, ct.field_name,ct.field_type,"
-            + "c.criteria_value,cso.option_value,c.range_start_value,c.range_end_value "
-            + "FROM criteria c JOIN criteria_type ct ON c.CRITERIA_TYPE_ID=ct.CRITERIA_TYPE_ID "
-            + "LEFT JOIN criteria_selection_option cso ON cso.CRITERIA_ID=c.CRITERIA_ID "
-            + "JOIN vacancy v ON v.id=c.VACANCY_ID WHERE v.id=?1 and v.wlProgramId=?2";
-
-    static final String field_type_multiple = "select_multiple";
-    static final String field_type_range = "select_one_range";
 
 	public List<MatchBO> getClientMatches(int vacancyId);
 

@@ -33,7 +33,6 @@ import java.util.Map;
 import org.oscarehr.common.model.UserProperty;
 
 public interface UserPropertyDAO extends AbstractDao<UserProperty>{
-    final static String COLOR_PROPERTY = "ProviderColour";
     void delete(UserProperty prop);
     void saveProp(String provider, String userPropertyName, String value);
     void saveProp(UserProperty prop);

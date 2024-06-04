@@ -93,7 +93,6 @@ import oscar.util.SqlUtils;
 /**
  */
 public interface DemographicDao {
-	static final int MAX_SELECT_SIZE = 500;
 
 	public List<Integer> getMergedDemographics(Integer demographicNo);
 

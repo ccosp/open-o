@@ -30,7 +30,6 @@ import java.util.Date;
 import org.oscarehr.common.model.CaseManagementTmpSave;
 
 public interface CaseManagementTmpSaveDao extends AbstractDao<CaseManagementTmpSave> {
-    static final String NOTE_TAG_REGEXP = "^\\[[[:digit:]]{2}-[[:alpha:]]{3}-[[:digit:]]{4} \\.\\: [^]]*\\][[:space:]]+$";
     void remove(String providerNo, Integer demographicNo, Integer programId);
     CaseManagementTmpSave find(String providerNo, Integer demographicNo, Integer programId);
     CaseManagementTmpSave find(String providerNo, Integer demographicNo, Integer programId, Date date);

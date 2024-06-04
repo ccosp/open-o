@@ -97,7 +97,7 @@ import oscar.util.SqlUtils;
 @Transactional
 public class DemographicDaoImpl extends HibernateDaoSupport implements ApplicationEventPublisherAware, DemographicDao {
 
-    // private static final int MAX_SELECT_SIZE = 500;
+    private static final int MAX_SELECT_SIZE = 500;
 
     static Logger log = MiscUtils.getLogger();
 

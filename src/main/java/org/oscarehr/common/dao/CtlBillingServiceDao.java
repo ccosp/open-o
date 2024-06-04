@@ -35,8 +35,6 @@
  import org.springframework.stereotype.Repository;
  
  public interface CtlBillingServiceDao {
-
-    public static final String DEFAULT_STATUS = "A";
      public List<CtlBillingService> findAll();
  
      /**
