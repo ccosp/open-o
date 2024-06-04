@@ -56,9 +56,9 @@ import oscar.util.SqlUtils;
 
 public class PopulationReportDaoImpl extends HibernateDaoSupport implements PopulationReportDao {
 
-    public static final int LOW = 0;
-    public static final int MEDIUM = 1;
-    public static final int HIGH = 2;
+    // public static final int LOW = 0;
+    // public static final int MEDIUM = 1;
+    // public static final int HIGH = 2;
 
     private static final Logger logger = MiscUtils.getLogger();
 

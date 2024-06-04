@@ -36,7 +36,7 @@ public class ProviderLabRoutingDaoImpl extends AbstractDaoImpl<ProviderLabRoutin
         X, N, A, D
     }
 
-    public static final String UNCLAIMED_PROVIDER = "0";
+    // public static final String UNCLAIMED_PROVIDER = "0";
 
     public ProviderLabRoutingDaoImpl() {
         super(ProviderLabRoutingModel.class);

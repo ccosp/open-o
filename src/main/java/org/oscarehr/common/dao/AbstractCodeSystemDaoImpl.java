@@ -35,7 +35,7 @@ public abstract class AbstractCodeSystemDaoImpl<T extends AbstractCodeSystemMode
         super(modelClass);
     }
 
-    public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
+    // public static enum codingSystem {icd9,icd10,ichppccode,msp,SnomedCore}
 
     public static String getDaoName(codingSystem codeSystem) {
         String object;
