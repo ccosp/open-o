@@ -523,7 +523,7 @@
 </h2>
 
 <%
-	PreventionManager prevMgr = (PreventionManager) SpringUtils.getBean(PreventionMgr.class);
+	PreventionManager prevMgr = (PreventionManager) SpringUtils.getBean(PreventionManager.class);
 	prevMgr.removePrevention(request.getParameter("demographic_no"));
 
     String ip = request.getRemoteAddr();
