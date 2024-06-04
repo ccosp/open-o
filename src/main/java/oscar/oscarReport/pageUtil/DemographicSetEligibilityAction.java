@@ -57,17 +57,27 @@ public class DemographicSetEligibilityAction extends Action {
         DemographicSets dsets = new DemographicSets();
         
         if (request.getParameter("delete")!= null && request.getParameter("delete").equals("Delete")){
-            for (int i = 0; i < s.length;i++){
-              dsets.setDemographicDelete(setName, s[i]);
-           }
-        }else{
-        
-            if(s != null){
-               for (int i = 0; i < s.length;i++){
-                  dsets.setDemographicIneligible(setName, s[i]);
-               }
+            if (s != null) {
+                for (int i = 0; i < s.length; i++) {
+                    dsets.setDemographicDelete(setName, s[i]);
+                }
+            } else {
+                // Handle the case where there is nothing to delete
+                // Log a warning or set a message to be shown to the user
+                request.setAttribute("errorMessage", "No demographics selected for deletion.");
             }
-        
+        }else{
+
+            if (s != null) {
+                for (int i = 0; i < s.length; i++) {
+                    dsets.setDemographicIneligible(setName, s[i]);
+                }
+            } else {
+                // Handle the case where there are no demographics to set ineligible
+                // Log a warning or set a message to be shown to the user
+                request.setAttribute("errorMessage", "No demographics selected for ineligibility.");
+            }
+      
         }
                 
         return mapping.findForward("success");
