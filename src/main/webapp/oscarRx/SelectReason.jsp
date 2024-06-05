@@ -99,7 +99,7 @@ boolean showQuicklist=false;
 
 DxresearchDAO dxResearchDAO  = (DxresearchDAO) SpringUtils.getBean(DxresearchDAO.class);
 List<Dxresearch> dxList = dxResearchDAO.getByDemographicNo(demoNo);
-Icd9Dao icd9Dao = (Icd9Dao)  SpringUtils.getBean(Icd9DAO.class);
+Icd9Dao icd9Dao = (Icd9Dao)  SpringUtils.getBean(Icd9Dao.class);
 
 pageContext.setAttribute("showQuicklist", showQuicklist);
 
