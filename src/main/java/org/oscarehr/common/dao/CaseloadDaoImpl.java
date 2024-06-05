@@ -162,7 +162,7 @@ public class CaseloadDaoImpl implements CaseloadDao {
 		caseloadDemoQueries.put("cl_new_docs", "select count(*) from providerLabRouting left join patientLabRouting using (lab_no) where providerLabRouting.lab_type='DOC' and status='N' and provider_no=? and demographic_no=?");
 		caseloadDemoQueries.put("cl_new_ticklers", "select count(*) from tickler where status='A' and demographic_no=?");
 		caseloadDemoQueries.put("cl_new_msgs", "select count(*) from msgDemoMap left join messagelisttbl on message = messageID where demographic_no=? and status='new'");
-		caseloadDemoQueries.put("cl_measurement", "select dataField from measurements where type=? and demographicNo=? order by dateObserved desc limit 1");
+		caseloadDemoQueries.put("cl_measurement", "select dataField from measurements where type=? and demographicNo=? order by dateObserved desc");
 		
 		caseloadDemoQueries.put("LastEncounterDate", "select max(update_date) from casemgmt_note where update_date < now() and demographic_no=?");
 		caseloadDemoQueries.put("LastEncounterType", "SELECT encounter_type FROM casemgmt_note AS c WHERE demographic_no=? AND NOT EXISTS (SELECT * FROM casemgmt_note WHERE update_date > c.update_date)");
@@ -257,6 +257,10 @@ public class CaseloadDaoImpl implements CaseloadDao {
 				q.setParameter(i+1, params[i]);
 			}
 		}
+
+		if ("cl_measurement".equals(searchQuery)) {
+			q.setMaxResults(1);
+		}	
 
 		List<Object> result = q.getResultList();
 
