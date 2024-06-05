@@ -36,6 +36,7 @@ import org.oscarehr.common.model.Facility;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.QueueCache;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 public class ProgramProviderDAOImpl extends HibernateDaoSupport implements ProgramProviderDAO {
 
@@ -184,6 +185,7 @@ public class ProgramProviderDAOImpl extends HibernateDaoSupport implements Progr
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void saveProgramProvider(ProgramProvider pp) {
         if (pp == null) {
             throw new IllegalArgumentException();
