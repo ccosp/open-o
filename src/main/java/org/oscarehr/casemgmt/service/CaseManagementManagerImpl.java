@@ -27,6 +27,7 @@
 package org.oscarehr.casemgmt.service;
 
 import java.net.MalformedURLException;
+import java.nio.file.ProviderNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2178,21 +2179,35 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         SimpleDateFormat dt = new SimpleDateFormat("dd-MMM-yyyy H:mm", locale);
         Date now = new Date();
         // add the time, signiture and role at the end of note
-        String rolename = "";
-        rolename = roleName;
-        if (rolename == null)
-            rolename = "";
+        String rolename = (roleName != null) ? roleName : "";
         // if have signiture setting, use signiture as username
         String tempS = null;
         // if (providerSignitureDao.isOnSig(cproviderNo))
-        ProviderExt pe = providerExtDao.find(cproviderNo);
-        if (pe != null)
-            tempS = pe.getSignature();
-        if (tempS != null && !"".equals(tempS.trim()))
-            userName = tempS;
+        try {
+            // Fetch provider's signature
+            ProviderExt pe = providerExtDao.find(cproviderNo);
+            if (pe != null) {
+                tempS = pe.getSignature();
+            } else {
+                // Handle the case where ProviderExt is not found
+                logger.warn("ProviderExt not found for provider number: " + cproviderNo);
+            }
+        } catch (Exception e) {
+            logger.error("Error fetching provider's signature for provider number: " + cproviderNo, e);
+        }
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("oscarResources", locale);
+        if (tempS != null && !tempS.trim().isEmpty()) {
+            userName = tempS;
+        }
+
         String signature;
+        ResourceBundle resourceBundle = null;
+        try {
+            resourceBundle = ResourceBundle.getBundle("oscarResources", locale);
+        } catch (Exception e) {
+            logger.error("Error fetching resource bundle for locale: " + locale, e);
+        }
+
         if (userName != null && !"".equals(userName.trim())) {
             try {
                 HashMap map = new HashMap();
@@ -2200,16 +2215,24 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 map.put("USERSIGNATURE", userName);
                 map.put("ROLENAME", rolename);
 
+                String signLine;
+
                 if (type == this.SIGNATURE_SIGNED) {
                     // TODO: In the future pull this from a USER/PROGRAM preference.
-                    String signLine = OscarProperties.getInstance().getProperty("ECHART_SIGN_LINE");
+                    signLine = OscarProperties.getInstance().getProperty("ECHART_SIGN_LINE");
                     signature = getTemplateSignature(signLine, resourceBundle, map);
                 } else if (type == this.SIGNATURE_VERIFY) {
-                    String signLine = OscarProperties.getInstance().getProperty("ECHART_VERSIGN_LINE");
+                    signLine = OscarProperties.getInstance().getProperty("ECHART_VERSIGN_LINE");
                     signature = getTemplateSignature(signLine, resourceBundle, map);
                 } else {
-                    throw new Exception("No Signature type defined");
+                    throw new IllegalArgumentException("No Signature type defined");
                 }
+
+                if (signLine == null) {
+                    throw new IllegalStateException("Sign line property not found for type: " + type);
+                }
+
+                signature = getTemplateSignature(signLine, resourceBundle, map);
             } catch (Exception eSignature) {
                 signature = "[Unknown Signature Type Requested]";
                 logger.error("Signature error while signing note ", eSignature);
@@ -2451,25 +2474,41 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         logger.debug("note.getAppointmentNo() " + note.getAppointmentNo() + " --- " + appointment);
 
         if (verify) {
-            String message = getSignature(note.getProviderNo(), userName, roleName, locale, SIGNATURE_VERIFY);
+            try {
+                if (note.getProviderNo() != null) {
+                    String message = getSignature(note.getProviderNo(), userName, roleName, locale, SIGNATURE_VERIFY);
+                    String n = note.getNote() + "\n" + message;
+                    note.setNote(n);
 
-            String n = note.getNote() + "\n" + message;
-            note.setNote(n);
-
-            // only update appt if there is one
-            if (appointment != null) {
-                appointment.setStatus(updateApptStatus(appointment.getStatus(), "verify"));
+                    // only update appt if there is one
+                    if (appointment != null) {
+                        appointment.setStatus(updateApptStatus(appointment.getStatus(), "verify"));
+                    }
+                } else {
+                    logger.warn("Provider number is null for verification");
+                }
+            } catch (ProviderNotFoundException e) {
+                logger.error("Error while getting signature for verification: " + e.getMessage());
+                // Handle exception: either log it, return a default message, or rethrow as needed
             }
 
         } else if (note.isSigned()) {
-            String message = getSignature(note.getProviderNo(), userName, roleName, locale, SIGNATURE_SIGNED);
-
-            String n = note.getNote() + "\n" + message;
-            note.setNote(n);
-
-            // only update appt if there is one
-            if (appointment != null) {
-                appointment.setStatus(updateApptStatus(appointment.getStatus(), "sign"));
+            try {
+                if (note.getProviderNo() != null) {
+                    String message = getSignature(note.getProviderNo(), userName, roleName, locale, SIGNATURE_SIGNED);
+                    String n = note.getNote() + "\n" + message;
+                    note.setNote(n);
+        
+                    // only update appt if there is one
+                    if (appointment != null) {
+                        appointment.setStatus(updateApptStatus(appointment.getStatus(), "sign"));
+                    }
+                } else {
+                    logger.warn("Provider number is null for signing");
+                }
+            } catch (ProviderNotFoundException e) {
+                logger.error("Error while getting signature for signing: " + e.getMessage());
+                // Handle exception: either log it, return a default message, or rethrow as needed
             }
         }
 
