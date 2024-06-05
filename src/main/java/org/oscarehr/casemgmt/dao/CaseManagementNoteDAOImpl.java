@@ -64,14 +64,15 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import oscar.OscarProperties;
 import oscar.util.SqlUtils;
 
+@Transactional
 public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements CaseManagementNoteDAO {
 
     private static Logger log = MiscUtils.getLogger();
-    public SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -446,8 +447,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
         String sqlCommand = "select distinct casemgmt_note.note_id from issue,casemgmt_issue,casemgmt_issue_notes,casemgmt_note where casemgmt_issue.issue_id=issue.issue_id and casemgmt_issue.demographic_no='"
                 + demographic_no + "' " + (issueCodeList != null ? "and issue.code in " + issueCodeList : "")
                 + " and casemgmt_issue_notes.id=casemgmt_issue.id and casemgmt_issue_notes.note_id=casemgmt_note.note_id";
-        // Session session=getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         List<CaseManagementNote> notes = new ArrayList<CaseManagementNote>();
         try {
             SQLQuery query = session.createSQLQuery(sqlCommand);
@@ -456,7 +456,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
             for (Integer id : ids)
                 notes.add(getNote(id.longValue()));
         } finally {
-            session.close();
+            //session.close();
         }
 
         // make unique for uuid
@@ -487,7 +487,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
                 + demographic_no + "' " + (issueCodeList != null ? "and issue.code in " + issueCodeList : "")
                 + " and casemgmt_issue_notes.id=casemgmt_issue.id and casemgmt_issue_notes.note_id=casemgmt_note.note_id order by casemgmt_note.note_id DESC";
         // Session session=getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         List<CaseManagementNote> notes = new ArrayList<CaseManagementNote>();
         try {
             SQLQuery query = session.createSQLQuery(sqlCommand);
@@ -496,7 +496,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
             for (Integer id : ids)
                 notes.add(getNote(id.longValue()));
         } finally {
-            session.close();
+            //session.close();
         }
 
         // make unique for appointmentNo
@@ -565,7 +565,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
 
         List<CaseManagementNote> results = null;
 
@@ -602,7 +602,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
         } catch (ParseException e) {
             log.warn("Warning", e);
         } finally {
-            session.close();
+            //session.close();
         }
 
         return results;
@@ -619,7 +619,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
     @Override
     public boolean haveIssue(Long issid, String demoNo) {
         // Session session = getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery query = session.createSQLQuery("select * from casemgmt_issue_notes where id=" + issid.longValue());
             List results = query.list();
@@ -628,14 +628,14 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
                 return true;
             return false;
         } finally {
-            session.close();
+            //session.close();
         }
     }
 
     @Override
     public boolean haveIssue(String issueCode, Integer demographicId) {
         // Session session=getSession();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = currentSession();
         try {
             SQLQuery query = session.createSQLQuery(
                     "select casemgmt_issue.id from casemgmt_issue_notes,casemgmt_issue,issue   where issue.issue_id=casemgmt_issue.issue_id and casemgmt_issue.id=casemgmt_issue_notes.id and demographic_no="
@@ -646,7 +646,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
                 return true;
             return false;
         } finally {
-            session.close();
+            //session.close();
         }
     }
 
