@@ -318,12 +318,13 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         boolean hasBeenBilled = false;
         String sql = "select b from BillingONCHeader1 h1, BillingONItem b where b.ch1Id = h1.id and b.serviceCode = :code and"
                 +
-                " h1.demographicNo = :demo and h1.status != 'D' and h1.billingDate >= :startDate and h1.billingDate <= :endDate order by h1.billingDate desc limit 1";
+                " h1.demographicNo = :demo and h1.status != 'D' and h1.billingDate >= :startDate and h1.billingDate <= :endDate order by h1.billingDate desc";
         Query q = entityManager.createQuery(sql);
         q.setParameter("code", serviceCode);
         q.setParameter("demo", demographicNo);
         q.setParameter("startDate", (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
         q.setParameter("endDate", (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        q.setMaxResults(1);
 
         List<BillingONItem> billingClaims = q.getResultList();
 
@@ -338,10 +339,12 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public int getDaysSinceBilled(String serviceCode, Integer demographicNo) {
         String sql = "select b from BillingONCHeader1 h1, BillingONItem b where b.ch1Id = h1.id and b.serviceCode = :code and"
                 +
-                " h1.demographicNo = :demo and h1.status != 'D' order by h1.billingDate desc limit 1";
+                " h1.demographicNo = :demo and h1.status != 'D' order by h1.billingDate desc";
         Query q = entityManager.createQuery(sql);
         q.setParameter("code", serviceCode);
         q.setParameter("demo", demographicNo);
+        q.setMaxResults(1);
+
         List<BillingONItem> billingClaims = q.getResultList();
         int numDays = -1;
 
@@ -363,10 +366,12 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public int getDaysSincePaid(String serviceCode, Integer demographic_no) {
         String sql = "select b from BillingONCHeader1 h1, BillingONItem b where b.ch1Id = h1.id and b.serviceCode = :code and"
                 +
-                " h1.demographicNo = :demo and h1.status = 'S' order by h1.billingDate desc limit 1";
+                " h1.demographicNo = :demo and h1.status = 'S' order by h1.billingDate desc";
         Query q = entityManager.createQuery(sql);
         q.setParameter("code", serviceCode);
         q.setParameter("demo", demographic_no);
+        q.setMaxResults(1);
+        
         List<BillingONItem> billingClaims = q.getResultList();
         int numDays = -1;
 
