@@ -80,7 +80,17 @@
 			<url>http://oscarmcmaster.sourceforge.net/m2</url>
 		</pluginRepository>
 	</pluginRepositories>
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>4.2.6.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 
 		<!-- For Jasper Reports and backwards compatibility -->
@@ -240,44 +250,41 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>4.1.9.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>4.1.9.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>4.1.9.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.1.9.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-ftp</artifactId>
-			<version>4.1.9.RELEASE</version>
+			<version>4.2.4.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-sftp</artifactId>
-			<version>4.1.9.RELEASE</version>
+			<version>4.2.4.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
-			<version>4.1.9.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>4.1.9.RELEASE</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.onelogin</groupId>
 			<artifactId>java-saml</artifactId>
@@ -332,7 +339,7 @@
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
-			<version>2.2</version>
+			<version>3.2.5</version>
 		</dependency>
 
 		<!-- pdf / jpedal -->
@@ -1044,7 +1051,7 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>apache-cxf</artifactId>
-			<version>2.7.11</version>
+			<version>3.2.0</version>
 			<type>pom</type>
 			<exclusions>
 				<exclusion>
@@ -1089,14 +1096,18 @@
 		<dependency>
     		<groupId>org.apache.cxf</groupId>
     		<artifactId>cxf-rt-frontend-jaxws</artifactId>
-    		<version>2.7.11</version>
+    		<version>3.2.0</version>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.cxf</groupId>
     		<artifactId>cxf-rt-transports-http</artifactId>
-    		<version>2.7.11</version>
+    		<version>3.2.0</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.apache.wss4j</groupId>
+			<artifactId>wss4j-ws-security-common</artifactId>
+			<version>2.1.8</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.oscarehr</groupId>
