@@ -297,10 +297,26 @@
 			<version>2.9.0</version>
 			<exclusions>
 				<exclusion>
-					<groupId>org.codehaus.woodstox</groupId>
-					<artifactId>woodstox-core</artifactId>
+					<groupId>org.apache.santuario</groupId>
+					<artifactId>xmlsec</artifactId>
 				</exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.woodstox</groupId>
+                    <artifactId>woodstox-core</artifactId>
+                </exclusion>
 			</exclusions>
+		</dependency>
+
+		<!--
+			At present, the maximum version we can bump org.apache.santuario:xmlsec to is 2.1.8.
+			If we aim to go beyond this version, we'll need to update 'ebs-client', 'edt-stubs',
+			and 'hcv-stubs' as they are currently utilizing xmlsec version 1.5.6.
+			Thus, we need to update all dependencies together.
+		-->
+		<dependency>
+			<groupId>org.apache.santuario</groupId>
+			<artifactId>xmlsec</artifactId>
+			<version>2.1.8</version>
 		</dependency>
 
 		<!-- hibernate / sql -->
@@ -1161,7 +1177,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<dependency>
     		<groupId>org.apache.cxf</groupId>
     		<artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -1189,7 +1205,7 @@
         	<artifactId>wss4j-ws-security-dom</artifactId>
         	<version>2.3.1</version>
 		</dependency>
-	
+
 
 		<dependency>
 			<groupId>org.oscarehr</groupId>
@@ -1493,8 +1509,8 @@
 <!--    <type>pom</type>-->
 <!--</dependency>-->
 
-	
-   
+
+
  </dependencies>
 
 	<build>
