@@ -132,7 +132,7 @@ public class UploadAction extends DispatchAction {
 				}
 				catch (Faultexception e){
 					logger.error("A fault exception has occured while auto uploading MCEDT files at " + new Date());
-					saveErrors(request, ActionUtils.addMessage("uploadAction.upload.faultException", McedtMessageCreator.exceptionToString(e)));
+					saveErrors(request, ActionUtils.addMessage("uploadAction.upload.failure", McedtMessageCreator.exceptionToString(e)));
 					return mapping.findForward("failure");
 				}
 				
@@ -177,7 +177,7 @@ public class UploadAction extends DispatchAction {
 				}
 				catch (Faultexception e){
 					logger.error("A fault exception has occured while auto submitting MCEDT files at " + new Date());
-					saveErrors(request, ActionUtils.addMessage("uploadAction.upload.faultException", McedtMessageCreator.exceptionToString(e)));
+					saveErrors(request, ActionUtils.addMessage("uploadAction.submit.failure", McedtMessageCreator.exceptionToString(e)));
 					return mapping.findForward("failure");
 				}
 				
@@ -217,7 +217,7 @@ public class UploadAction extends DispatchAction {
 				}
 				catch (Faultexception e){
 					logger.error("A fault exception has occured while manually uploading MCEDT files at " + new Date());
-					saveErrors(request, ActionUtils.addMessage("uploadAction.upload.faultException", McedtMessageCreator.exceptionToString(e)));
+					saveErrors(request, ActionUtils.addMessage("uploadAction.submit.failure", McedtMessageCreator.exceptionToString(e)));
 					return mapping.findForward("failure");
 				}
 				
@@ -244,7 +244,7 @@ public class UploadAction extends DispatchAction {
 					}
 					catch (Faultexception e){
 						logger.error("A fault exception has occured while manually submitting MCEDT files at " + new Date());
-						saveErrors(request, ActionUtils.addMessage("uploadAction.submit.faultException", McedtMessageCreator.exceptionToString(e)));
+						saveErrors(request, ActionUtils.addMessage("uploadAction.submit.failure", McedtMessageCreator.exceptionToString(e)));
 						return mapping.findForward("failure");
 					}
 					
@@ -272,7 +272,7 @@ public class UploadAction extends DispatchAction {
 			
 		} catch (IOException e) {
 			logger.error("An IO Exception has occured while moving the files to the sent folder at " + new Date(), e);
-			saveErrors(request, ActionUtils.addMessage("uploadAction.upload.submit.IOException", McedtMessageCreator.exceptionToString(e)));
+			saveErrors(request, ActionUtils.addMessage("uploadAction.upload.submit.failure", McedtMessageCreator.exceptionToString(e)));
 		} catch (Exception e) {
 			logger.error("Unable to Upload/Submit file", e);
 			saveErrors(request, ActionUtils.addMessage("uploadAction.upload.submit.failure", McedtMessageCreator.exceptionToString(e)));			
@@ -309,7 +309,7 @@ public class UploadAction extends DispatchAction {
 			try (FileOutputStream outputStream = new FileOutputStream(myFile)) {
 				outputStream.write(formFile.getFileData());
 				outputStream.close();
-				saveMessages(request, ActionUtils.addMessage("uploadAction.upload.add.success", formFile.getFileName() + "is succesfully added to the uploads list!"));
+				saveMessages(request, ActionUtils.addMessage("uploadAction.upload.add.success", formFile.getFileName() + " is succesfully added to the uploads list!"));
 			} catch (IOException e) {
 				logger.error("An error has occured with the addUpload file at " + new Date(), e);
 				saveErrors(request, ActionUtils.addMessage("uploadAction.upload.add.failure", McedtMessageCreator.exceptionToString(e)));
