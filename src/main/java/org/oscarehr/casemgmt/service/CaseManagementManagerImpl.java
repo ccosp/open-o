@@ -46,6 +46,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.LabelValueBean;
@@ -150,7 +152,10 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     private RolesManager roleManager;
     private CaseManagementTmpSaveDao caseManagementTmpSaveDao;
     private AdmissionManager admissionManager;
+
+    @Autowired
     private HashAuditDao hashAuditDao;
+
     private UserPropertyDAO userPropertyDAO;
     private DxresearchDAO dxresearchDAO;
     private ProgramProviderDAO programProviderDao;
@@ -278,38 +283,74 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     @Override
     public String saveNote(CaseManagementCPP cpp, CaseManagementNote note, String cproviderNo, String userName,
             String lastStr, String roleName) {
-        String noteStr = note.getNote();
-        String noteHistory = note.getHistory();
 
-        noteStr = noteStr.replaceAll("\r\n", "\n");
-        noteStr = noteStr.replaceAll("\r", "\n");
+        try{
+            if (note == null) {
+                throw new NullPointerException("Note is null");
+            }
 
-        if (noteHistory == null)
-            noteHistory = noteStr;
-        else
-            noteHistory = noteStr + "\n" + "   ----------------History Record----------------   \n" + noteHistory
-                    + "\n";
+            String noteStr = note.getNote();
+            String noteHistory = note.getHistory();
 
-        // note.setNote(noteStr);
-        note.setHistory(noteHistory);
+            if (noteStr == null) {
+                throw new NullPointerException("Note string is null");
+            }
 
-        caseManagementNoteDAO.saveNote(note);
+            noteStr = noteStr.replaceAll("\r\n", "\n");
+            noteStr = noteStr.replaceAll("\r", "\n");
 
-        // if note is signed we hash it and save hash
-        if (note.isSigned()) {
-            HashAudit hashAudit = new HashAudit();
-            hashAudit.setType(HashAudit.NOTE);
-            hashAudit.setId2(note.getId().toString());
-            hashAudit.makeHash(note.getNote().getBytes());
-            hashAuditDao.persist(hashAudit);
+            if (noteHistory == null){
+                noteHistory = noteStr;
+            } else {
+                noteHistory = noteStr + "\n" + "   ----------------History Record----------------   \n" + noteHistory + "\n";
+            }
+
+            // note.setNote(noteStr);
+            note.setHistory(noteHistory);
+
+            if (caseManagementNoteDAO == null) {
+                throw new NullPointerException("caseManagementNoteDAO is null");
+            }
+
+            caseManagementNoteDAO.saveNote(note);
+
+            // if note is signed we hash it and save hash
+            if (note.isSigned()) {
+                if (note.getId() == null) {
+                    throw new NullPointerException("Note ID is null");
+                }
+                HashAudit hashAudit = new HashAudit();
+                hashAudit.setType(HashAudit.NOTE);
+                hashAudit.setId2(note.getId().toString());
+
+                if (note.getNote() == null) {
+                    throw new NullPointerException("Note string for hashing is null");
+                }
+                hashAudit.makeHash(note.getNote().getBytes());
+
+                if (hashAuditDao == null) {
+                    throw new NullPointerException("hashAuditDao is null");
+                }
+                hashAuditDao.persist(hashAudit);
+            }
+
+            OscarProperties properties = OscarProperties.getInstance();
+            if (properties == null) {
+                throw new NullPointerException("OscarProperties instance is null");
+            }
+
+            if (!Boolean.parseBoolean(properties.getProperty("AbandonOldChart", "false"))) {
+                if (eChartDao == null) {
+                    throw new NullPointerException("eChartDao is null");
+                }
+                return eChartDao.saveEchart(note, cpp, userName, lastStr);
+            }
+
+            return "";
+        } catch (NullPointerException e) {
+            logger.error("Note is null", e);
+            return "Note is null";
         }
-
-        OscarProperties properties = OscarProperties.getInstance();
-        if (!Boolean.parseBoolean(properties.getProperty("AbandonOldChart", "false"))) {
-            return eChartDao.saveEchart(note, cpp, userName, lastStr);
-        }
-
-        return "";
 
     }
 
@@ -2182,8 +2223,13 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         String rolename = (roleName != null) ? roleName : "";
         // if have signiture setting, use signiture as username
         String tempS = null;
-        // if (providerSignitureDao.isOnSig(cproviderNo))
         try {
+            // Null check for providerExtDao and cproviderNo
+            if (providerExtDao == null || cproviderNo == null) {
+                logger.warn("providerExtDao or cproviderNo is null. Cannot fetch provider's signature.");
+                return "";
+            }
+
             // Fetch provider's signature
             ProviderExt pe = providerExtDao.find(cproviderNo);
             if (pe != null) {
@@ -2192,7 +2238,9 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 // Handle the case where ProviderExt is not found
                 logger.warn("ProviderExt not found for provider number: " + cproviderNo);
             }
+            return "";
         } catch (Exception e) {
+            // Log the exception with error details
             logger.error("Error fetching provider's signature for provider number: " + cproviderNo, e);
         }
 
