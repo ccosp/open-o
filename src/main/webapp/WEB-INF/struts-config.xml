@@ -3012,6 +3012,7 @@
 		
 		<action path="/mcedt/upload" input="/mcedt/mailbox/upload.jsp" type="org.oscarehr.integration.mcedt.mailbox.UploadAction" name="kaiedtAutoUploadForm" parameter="method" validate="false" >			
 			<forward name="success" path="/mcedt/mailbox/index.jsp?tab=upload" />
+			<forward name="failure" path="/mcedt/mailbox/index.jsp?tab=upload" />
 			<forward name="cancel" path="/mcedt/kaimcedt.do" redirect="true" />
 		</action>
 		
