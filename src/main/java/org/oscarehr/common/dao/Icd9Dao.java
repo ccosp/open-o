@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * Modifications made by Magenta Health in 2024.
  */
@@ -24,7 +25,7 @@ import java.util.List;
 import org.oscarehr.common.model.AbstractCodeSystemModel;
 import org.oscarehr.common.model.Icd9;
 
-public interface Icd9Dao extends AbstractDao<Icd9> {
+public interface Icd9Dao extends AbstractCodeSystemDao<Icd9> {
     List<Icd9> getIcd9Code(String icdCode);
     List<Icd9> getIcd9(String query);
     Icd9 findByCode(String code);
