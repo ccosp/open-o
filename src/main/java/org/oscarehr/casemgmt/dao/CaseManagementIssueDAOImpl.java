@@ -39,7 +39,8 @@ import org.oscarehr.casemgmt.model.CaseManagementIssue;
 import org.oscarehr.casemgmt.model.Issue;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
 public class CaseManagementIssueDAOImpl extends HibernateDaoSupport implements CaseManagementIssueDAO {
 
     private static Logger log = MiscUtils.getLogger();
