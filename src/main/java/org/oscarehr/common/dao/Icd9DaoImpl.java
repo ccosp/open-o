@@ -39,7 +39,7 @@ import org.springframework.stereotype.Repository;
  * @author toby
  */
 @Repository
-public class Icd9DaoImpl extends AbstractDaoImpl<Icd9> implements Icd9Dao {
+public class Icd9DaoImpl extends AbstractCodeSystemDaoImpl<Icd9> implements Icd9Dao {
 
 	public Icd9DaoImpl() {
 		super(Icd9.class);
