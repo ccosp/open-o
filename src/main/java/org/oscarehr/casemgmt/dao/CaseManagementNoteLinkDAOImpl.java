@@ -30,7 +30,9 @@ import java.util.List;
 
 import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class CaseManagementNoteLinkDAOImpl extends HibernateDaoSupport implements CaseManagementNoteLinkDAO {
 
     @Override

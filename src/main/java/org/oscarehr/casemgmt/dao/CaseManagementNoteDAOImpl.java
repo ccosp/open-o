@@ -535,12 +535,14 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
     }
 
     @Override
+    @Transactional (readOnly = false)
     public void updateNote(CaseManagementNote note) {
         note.setUpdate_date(new Date());
         this.getHibernateTemplate().update(note);
     }
 
     @Override
+    @Transactional (readOnly = false)
     public void saveNote(CaseManagementNote note) {
         if (note.getUuid() == null) {
             UUID uuid = UUID.randomUUID();
@@ -551,6 +553,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
     }
 
     @Override
+    @Transactional (readOnly = false)
     public Object saveAndReturn(CaseManagementNote note) {
         if (note.getUuid() == null) {
             UUID uuid = UUID.randomUUID();
