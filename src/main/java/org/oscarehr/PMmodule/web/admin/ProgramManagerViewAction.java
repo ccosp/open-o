@@ -378,10 +378,10 @@ public class ProgramManagerViewAction extends DispatchAction {
 			admissionManager.processAdmission(Integer.valueOf(clientId), loggedInInfo.getLoggedInProviderNo(), fullProgram, dischargeNotes, admissionNotes, queue.isTemporaryAdmission(), dependents, admissionDate);
 			
 			//change vacancy status to filled after one patient is admitted to associated program in that vacancy.
-	    	Vacancy vacancy = VacancyTemplateManagerImpl.getVacancyByName(queue.getVacancyName());
+	    	Vacancy vacancy = VacancyTemplateManager.getVacancyByName(queue.getVacancyName());
 	    	if(vacancy!=null) {
 	    		vacancy.setStatus("Filled");	    	
-	    		VacancyTemplateManagerImpl.saveVacancy(vacancy);
+	    		VacancyTemplateManager.saveVacancy(vacancy);
 	    	}
 	    	
 			ActionMessages messages = new ActionMessages();

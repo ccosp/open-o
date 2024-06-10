@@ -37,6 +37,39 @@ import org.springframework.stereotype.Service;
 
 
 public interface PreferenceManager {
+	public static final String SOCHX = "SocHistory";
+	public static final String MEDHX = "MedHistory";
+	public static final String CONCERNS = "Concerns";
+	public static final String REMINDERS = "Reminders";
+	public static final String CUSTOM_SUMMARY_ENABLE = "cpp.pref.enable";
+	public static final String OLD_SOCIAL_HISTORY_POS = "cpp.social_hx.position";
+	public static final String OLD_MEDICAL_HISTORY_POS = "cpp.medical_hx.position";
+	public static final String OLD_ONGOING_CONCERNS_POS = "cpp.ongoing_concerns.position";
+	public static final String OLD_REMINDERS_POS = "cpp.reminders.position";
+	public static final String SOC_HX_POS = "summary.item.social_hx.position";
+	public static final String MED_HX_POS = "summary.item.med_hx.position";
+	public static final String ONGOING_POS = "summary.item.ongoing_concerns.position";
+	public static final String REMINDERS_POS = "summary.item.reminders.position";
+	public static final String SOC_HX_START_DATE = "cpp.social_hx.start_date";
+	public static final String SOC_HX_RES_DATE = "cpp.social_hx.res_date";
+	public static final String MED_HX_START_DATE = "cpp.med_hx.start_date";
+	public static final String MED_HX_RES_DATE = "cpp.med_hx.res_date";
+	public static final String MED_HX_TREATMENT = "cpp.med_hx.treatment";
+	public static final String MED_HX_PROCEDURE_DATE = "cpp.med_hx.procedure_date";
+	public static final String ONGOING_START_DATE = "cpp.ongoing_concerns.start_date";
+	public static final String ONGOING_RES_DATE = "cpp.ongoing_concerns.res_date";
+	public static final String ONGOING_PROBLEM_STATUS = "cpp.ongoing_concerns.problem_status";
+	public static final String REMINDERS_START_DATE = "cpp.reminders.start_date";
+	public static final String REMINDERS_RES_DATE = "cpp.reminders.res_date";
+	public static final String PREVENTION_POS = "summary.item.prevention.position";
+	public static final String FAM_HX_POS = "summary.item.famhx.position";
+	public static final String RISK_FACTORS_POS = "summary.item.riskfactors.position";
+	public static final String ALLERGIES_POS = "summary.item.allergies.position";
+	public static final String MEDS_POS = "summary.item.meds.position";
+	public static final String OTHER_MEDS_POS = "summary.item.othermeds.position";
+	public static final String ASSESSMENTS_POS = "summary.item.assessments.position";
+	public static final String INCOMING_POS = "summary.item.incoming.position";
+	public static final String DS_SUPPORT_POS = "summary.item.dssupport.position";
 	
 	public boolean displaySummaryItem(LoggedInInfo loggedInInfo, String item);
 

@@ -67,12 +67,11 @@ public class NioFileManagerImpl implements NioFileManager{
 
 	private static Logger log = MiscUtils.getLogger();
 	private static final String DOCUMENT_CACHE_DIRECTORY = "document_cache";
-	public static final String DOCUMENT_DIRECTORY = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 	private static final String TEMP_PDF_DIRECTORY = "tempPDF";
 	private static final String DEFAULT_FILE_SUFFIX = "pdf";
 	private static final String DEFAULT_GENERIC_TEMP = "tempDirectory";
 	private static final String BASE_DOCUMENT_DIR = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR");
-	
+
 	public Path hasCacheVersion2(LoggedInInfo loggedInInfo, String filename, Integer pageNum) {
 		
 		if ( ! securityInfoManager.hasPrivilege( loggedInInfo, "_edoc", SecurityInfoManager.READ, "" ) ) {
