@@ -357,8 +357,8 @@ public class BillingCorrectionAction extends DispatchAction{
              * total amount paid by the 3rd party.
              */
             List<BillingONPayment> paymentRecords = bPaymentDao.find3rdPartyPayRecordsByBill(bCh1);
-            BigDecimal payments = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
-            BigDecimal refunds = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
+            BigDecimal payments = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
+            BigDecimal refunds = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
             BigDecimal reversedFunds = payments.subtract(refunds);
 
             int doReverse = reversedFunds.compareTo(new BigDecimal("0.00"));
@@ -379,8 +379,8 @@ public class BillingCorrectionAction extends DispatchAction{
             List<BillingONPayment> paymentRecords = bPaymentDao.find3rdPartyPayRecordsByBill(bCh1);
                    
             BigDecimal totalOwing =  bCh1.getTotal();
-            BigDecimal totalPaid = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
-            BigDecimal totalRefund = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
+            BigDecimal totalPaid = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
+            BigDecimal totalRefund = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
             BigDecimal amtOutstanding = totalOwing.subtract(totalPaid).add(totalRefund);
 
             int doSettlePayment = amtOutstanding.compareTo(new BigDecimal("0.00"));

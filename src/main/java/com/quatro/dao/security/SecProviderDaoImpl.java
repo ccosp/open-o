@@ -46,22 +46,6 @@ import com.quatro.model.security.SecProvider;
 public class SecProviderDaoImpl extends HibernateDaoSupport implements SecProviderDao {
     private static final Logger logger = MiscUtils.getLogger();
     // property constants
-    public static final String LAST_NAME = "lastName";
-    public static final String FIRST_NAME = "firstName";
-    public static final String PROVIDER_TYPE = "providerType";
-    public static final String SPECIALTY = "specialty";
-    public static final String TEAM = "team";
-    public static final String SEX = "sex";
-    public static final String ADDRESS = "address";
-    public static final String PHONE = "phone";
-    public static final String WORK_PHONE = "workPhone";
-    public static final String OHIP_NO = "ohipNo";
-    public static final String RMA_NO = "rmaNo";
-    public static final String BILLING_NO = "billingNo";
-    public static final String HSO_NO = "hsoNo";
-    public static final String STATUS = "status";
-    public static final String COMMENTS = "comments";
-    public static final String PROVIDER_ACTIVITY = "providerActivity";
 
     @Override
     public void save(SecProvider transientInstance) {
