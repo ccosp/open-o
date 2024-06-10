@@ -35,7 +35,8 @@ import org.oscarehr.PMmodule.model.ProgramAccess;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.QueueCache;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
 public class ProgramAccessDAOImpl extends HibernateDaoSupport implements ProgramAccessDAO {
 
     private static Logger log = MiscUtils.getLogger();

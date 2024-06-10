@@ -33,7 +33,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.quatro.model.security.SecProvider;
 
 /**
@@ -42,6 +42,7 @@ import com.quatro.model.security.SecProvider;
  *
  */
 
+@Transactional
 public class SecProviderDaoImpl extends HibernateDaoSupport implements SecProviderDao {
     private static final Logger logger = MiscUtils.getLogger();
     // property constants

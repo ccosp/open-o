@@ -34,9 +34,11 @@ import org.oscarehr.PMmodule.model.ProgramClientRestriction;
 import org.oscarehr.common.dao.DemographicDao;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  */
+@Transactional
 public class ProgramClientRestrictionDAOImpl extends HibernateDaoSupport implements ProgramClientRestrictionDAO{
     private DemographicDao demographicDao;
     private ProgramDao programDao;

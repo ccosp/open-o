@@ -51,9 +51,10 @@ import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.EncounterUtil.EncounterType;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
+import org.springframework.transaction.annotation.Transactional;
 import oscar.util.SqlUtils;
 
+@Transactional
 public class PopulationReportDaoImpl extends HibernateDaoSupport implements PopulationReportDao {
 
     public static final int LOW = 0;

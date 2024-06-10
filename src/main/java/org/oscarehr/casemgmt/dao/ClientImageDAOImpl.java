@@ -35,11 +35,13 @@ import org.oscarehr.casemgmt.model.ClientImage;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.QueueCache;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Anyone modifying get and set methods should take note of the dataCache and
  * add/remove items as appropriate.
  */
+@Transactional
 public class ClientImageDAOImpl extends HibernateDaoSupport implements ClientImageDAO {
 
     private static final Logger logger = MiscUtils.getLogger();

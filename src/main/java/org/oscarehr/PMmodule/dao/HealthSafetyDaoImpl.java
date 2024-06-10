@@ -30,7 +30,9 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.model.HealthSafety;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class HealthSafetyDaoImpl extends HibernateDaoSupport implements HealthSafetyDao{
 
     private Logger log=MiscUtils.getLogger();

@@ -38,6 +38,7 @@ import org.oscarehr.util.QueueCache;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class ProgramProviderDAOImpl extends HibernateDaoSupport implements ProgramProviderDAO {
 
     private Logger log = MiscUtils.getLogger();

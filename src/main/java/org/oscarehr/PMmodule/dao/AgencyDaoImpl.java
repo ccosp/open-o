@@ -32,7 +32,9 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.model.Agency;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class AgencyDaoImpl extends HibernateDaoSupport implements AgencyDao{
 
     private Logger log=MiscUtils.getLogger();

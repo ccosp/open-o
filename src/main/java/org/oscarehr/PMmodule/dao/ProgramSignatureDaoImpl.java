@@ -33,7 +33,9 @@
  import org.oscarehr.PMmodule.model.ProgramSignature;
  import org.oscarehr.util.MiscUtils;
  import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
- 
+ import org.springframework.transaction.annotation.Transactional;
+
+@Transactional
  public class ProgramSignatureDaoImpl extends HibernateDaoSupport implements ProgramSignatureDao{
  
      private static final Logger log=MiscUtils.getLogger();
