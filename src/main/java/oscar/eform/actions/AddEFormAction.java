@@ -449,7 +449,7 @@ public class AddEFormAction extends Action {
 	private void addEmailAttachments(HttpServletRequest request, String[] attachedEForms, String[] attachedDocuments, String[] attachedLabs, String[] attachedHRMDocuments, String[] attachedForms) {
 		Boolean attachEFormItSelf = request.getParameter("attachEFormItSelf") == null || "true".equals(request.getParameter("attachEFormItSelf")) ? true : false;
 		Boolean openEFormAfterEmail = request.getParameter("openEFormAfterEmail") == null || "false".equals(request.getParameter("openEFormAfterEmail")) ? false : true;
-		Boolean isEmailEncrypted = request.getParameter("isEmailEncrypted") == null || "true".equals(request.getParameter("isEmailAttachmentEncrypted")) ? true : false;
+		Boolean isEmailEncrypted = request.getParameter("isEmailEncrypted") == null || "true".equals(request.getParameter("isEmailEncrypted")) ? true : false;
 		Boolean isEmailAttachmentEncrypted = request.getParameter("isEmailAttachmentEncrypted") == null || "true".equals(request.getParameter("isEmailAttachmentEncrypted")) ? true : false;
 		Boolean isEmailAutoSend = request.getParameter("isEmailAutoSend") == null || "false".equals(request.getParameter("isEmailAutoSend")) ? false : true;
 		Boolean deleteEFormAfterEmail = request.getParameter("deleteEFormAfterEmail") == null || "false".equals(request.getParameter("deleteEFormAfterEmail")) ? false : true;
