@@ -33,6 +33,7 @@
  import java.nio.file.Path;
 
  import org.oscarehr.util.LoggedInInfo;
+ import oscar.OscarProperties;
 
 /**
   * the NioFileManager handles all file input and output of all OscarDocument files
@@ -42,6 +43,7 @@
   * in every single page of OSCAR code.
   */
  public interface NioFileManager{
+    public static final String DOCUMENT_DIRECTORY = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
      
      public Path hasCacheVersion2(LoggedInInfo loggedInInfo, String filename, Integer pageNum);
      

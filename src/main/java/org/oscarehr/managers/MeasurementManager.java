@@ -82,4 +82,38 @@ public interface MeasurementManager {
 
 	public void removeMeasurementGroupDS(String propKey);
 
+	public static List<String> getFlowsheetDsHTML() {
+		List<String> dsHtml = new ArrayList<String>();
+		String path_set_by_property = OscarProperties.getInstance().getProperty("MEASUREMENT_DS_HTML_DIRECTORY");
+
+		if (path_set_by_property != null) {
+			File[] files1 = new File(path_set_by_property).listFiles();
+
+			for (File file1 : files1) {
+				if (file1.isFile()) {
+					dsHtml.add(file1.getName());
+				}
+			}
+		}
+
+		URL path_of_resource = MeasurementFlowSheet.class.getClassLoader()
+				.getResource("/oscar/oscarEncounter/oscarMeasurements/flowsheets/html/");
+		File[] files2 = new File(path_of_resource.getPath()).listFiles();
+
+		for (File file2 : files2) {
+			if (file2.isFile()) {
+				dsHtml.add(file2.getName());
+			}
+		}
+
+		return dsHtml;
+	}
+	
+	public static String getPropertyValue(String prop) {
+		PropertyDao propertyDao = (PropertyDao) SpringUtils.getBean(PropertyDao.class);
+		Property p = propertyDao.checkByName(prop);
+		String value = p.getValue();
+
+		return value;
+	}
 }

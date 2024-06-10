@@ -44,7 +44,6 @@ import oscar.util.ParamAppender;
 
 @Transactional
 public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements AbstractDao<T> {
-	//public static final int MAX_LIST_RETURN_SIZE = 5000;
 
 	protected Class<T> modelClass;
 

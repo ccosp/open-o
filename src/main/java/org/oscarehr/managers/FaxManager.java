@@ -236,7 +236,23 @@
       * RESENT and cannot be resent again.
       */
       boolean resendFax(LoggedInInfo loggedInInfo, String jobId, String destination);
- 
- 
+
+     /**
+      * Check if fax services are enabled.
+      */
+     public static boolean isEnabled() {
+
+         FaxConfigDao faxConfigDao = SpringUtils.getBean(FaxConfigDao.class);
+         List<FaxConfig> accounts = faxConfigDao.findAll(0,null);
+         for(FaxConfig account : accounts)
+         {
+             if(account.isActive())
+             {
+                 return Boolean.TRUE;
+             }
+
+         }
+         return Boolean.FALSE;
+     }
  }
  

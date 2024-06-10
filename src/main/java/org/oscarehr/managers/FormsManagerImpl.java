@@ -87,8 +87,6 @@ public class FormsManagerImpl implements FormsManager {
     @Autowired
     private SecurityInfoManager securityInfoManager;
 
-    public static final String EFORM = "eform";
-    public static final String FORM = "form";
 
     /**
      * Finds all eforms based on the status.

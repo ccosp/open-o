@@ -65,8 +65,6 @@ import com.quatro.model.security.SecProvider;
 @Transactional
 public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao {
 
-    public static final String PR_TYPE_DOCTOR = "doctor";
-    public static final String PR_TYPE_RESIDENT = "resident";
 
     private static Logger log = MiscUtils.getLogger();
 

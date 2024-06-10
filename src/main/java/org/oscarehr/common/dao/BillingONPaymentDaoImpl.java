@@ -308,32 +308,4 @@ public class BillingONPaymentDaoImpl extends AbstractDaoImpl<BillingONPayment> i
         
         billingPayment.getBillingONExtItems().add(bExt);                            
      }
-          
-     public static BigDecimal calculatePaymentTotal(List<BillingONPayment> paymentRecords) {
-        
-         BigDecimal paidTotal = new BigDecimal("0.00");
-         //BillingONExtDao bExtDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);    
-         for (BillingONPayment bPay : paymentRecords) {
-                          
-             //BigDecimal amtPaid = bExtDao.getPayment(bPay);
-        	 BigDecimal amtPaid = bPay.getTotal_payment();
-             paidTotal = paidTotal.add(amtPaid);                                   
-         }
-         
-         return paidTotal;
-    }
-    
-    public static BigDecimal calculateRefundTotal(List<BillingONPayment> paymentRecords) {
-        
-         BigDecimal refundTotal = new BigDecimal("0.00");
-         //BillingONExtDao bExtDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);       
-         for (BillingONPayment bPay : paymentRecords) {
-                          
-             //BigDecimal amtRefunded = bExtDao.getRefund(bPay);
-        	 BigDecimal amtRefunded = bPay.getTotal_refund();
-             refundTotal = refundTotal.add(amtRefunded);                                   
-         }
-         
-         return refundTotal;
-    }    
 }

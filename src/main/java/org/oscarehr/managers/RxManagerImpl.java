@@ -615,20 +615,6 @@
              throw new AccessDeniedException("_rx", "w", demographicNo);
          }
      }
- 
-     /**
-      * Utility class for returning a prescription and associated drugs.
-      */
-     public static class PrescriptionDrugs{
-         public Prescription prescription;
-         public List<Drug> drugs;
- 
-         public PrescriptionDrugs(Prescription p, List<Drug> d){
-             this.prescription = p;
-             this.drugs = d;
-         }
- 
-     }
      
      @Override
      public List<Drug> getLongTermDrugs( LoggedInInfo info,  int demographicNo) {
@@ -643,9 +629,6 @@
  
  
      // statuses for drugs
-     public static final String ALL = "all";
-     public static final String CURRENT = "current";
-     public static final String ARCHIVED = "archived";
  
  }
  
