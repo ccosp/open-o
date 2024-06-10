@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ProviderLabRoutingDao extends AbstractDao<ProviderLabRoutingModel> {
+    public static final String UNCLAIMED_PROVIDER = "0";
 
 	public enum LAB_TYPE {
 		DOC, HL7
@@ -31,8 +32,6 @@ public interface ProviderLabRoutingDao extends AbstractDao<ProviderLabRoutingMod
 	public enum STATUS {
 		X, N, A, D
 	}
-
-	public static final String UNCLAIMED_PROVIDER = "0";
 
 	public List<ProviderLabRoutingModel> findByLabNoAndLabTypeAndProviderNo(int labNo, String labType,
 			String providerNo);

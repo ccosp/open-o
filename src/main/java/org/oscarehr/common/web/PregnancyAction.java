@@ -106,7 +106,7 @@ public class PregnancyAction extends DispatchAction {
 		Integer formId = 0;
 		if(episodeId != null) {
 			try {
-				formId = PregnancyFormsDaoImpl.getLatestFormIdByPregnancy(Integer.parseInt(episodeId));
+				formId = PregnancyFormsDao.getLatestFormIdByPregnancy(Integer.parseInt(episodeId));
 			}catch(NumberFormatException e) {
 				//empty
 			}

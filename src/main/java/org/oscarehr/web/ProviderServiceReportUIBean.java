@@ -34,7 +34,7 @@ import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.casemgmt.dao.CaseManagementNoteDAO;
 import org.oscarehr.casemgmt.dao.CaseManagementNoteDAOImpl;
-import org.oscarehr.casemgmt.dao.CaseManagementNoteDAOImpl.EncounterCounts;
+import org.oscarehr.casemgmt.dao.CaseManagementNoteDAO.EncounterCounts;
 import org.oscarehr.common.dao.SecRoleDao;
 import org.oscarehr.common.model.SecRole;
 import org.oscarehr.util.MiscUtils;
@@ -113,7 +113,7 @@ public class ProviderServiceReportUIBean {
 			dataRow.programName = "all programs";
 			dataRow.programType = "all program types";
 			dataRow.date = dateFormatter.format(tempStart.getTime());
-			dataRow.encounterCounts = CaseManagementNoteDAOImpl.getDemographicEncounterCountsByProgramAndRoleId(null,
+			dataRow.encounterCounts = CaseManagementNoteDAO.getDemographicEncounterCountsByProgramAndRoleId(null,
 					doctorRole.getId().intValue(),
 					tempStart.getTime(), tempEnd.getTime());
 
@@ -126,7 +126,7 @@ public class ProviderServiceReportUIBean {
 		dataRow.programName = "all programs";
 		dataRow.programType = "all program types";
 		dataRow.date = dateFormatter.format(startCal.getTime()) + " to " + dateFormatter.format(endCal.getTime());
-		dataRow.encounterCounts = CaseManagementNoteDAOImpl.getDemographicEncounterCountsByProgramAndRoleId(null,
+		dataRow.encounterCounts = CaseManagementNoteDAO.getDemographicEncounterCountsByProgramAndRoleId(null,
 				doctorRole.getId().intValue(), startCal.getTime(),
 				endCal.getTime());
 
@@ -148,7 +148,7 @@ public class ProviderServiceReportUIBean {
 			dataRow.programName = program.getName();
 			dataRow.programType = program.getType();
 			dataRow.date = dateFormatter.format(tempStart.getTime());
-			dataRow.encounterCounts = CaseManagementNoteDAOImpl.getDemographicEncounterCountsByProgramAndRoleId(
+			dataRow.encounterCounts = CaseManagementNoteDAO.getDemographicEncounterCountsByProgramAndRoleId(
 					program.getId(), doctorRole.getId().intValue(),
 					tempStart.getTime(), tempEnd.getTime());
 
@@ -161,7 +161,7 @@ public class ProviderServiceReportUIBean {
 		dataRow.programName = program.getName();
 		dataRow.programType = program.getType();
 		dataRow.date = dateFormatter.format(startCal.getTime()) + " to " + dateFormatter.format(endCal.getTime());
-		dataRow.encounterCounts = CaseManagementNoteDAOImpl.getDemographicEncounterCountsByProgramAndRoleId(
+		dataRow.encounterCounts = CaseManagementNoteDAO.getDemographicEncounterCountsByProgramAndRoleId(
 				program.getId(),
 				doctorRole.getId().intValue(), startCal.getTime(),
 				endCal.getTime());

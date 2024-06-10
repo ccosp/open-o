@@ -68,4 +68,14 @@ public interface AppointmentSearchManager {
 	
 	public List<TimeSlot> findAppointment(LoggedInInfo loggedInInfo,SearchConfig config, Integer demographicNo,Long appointmentTypeId,Calendar startDate) throws java.lang.ClassNotFoundException,java.lang.InstantiationException,java.lang.IllegalAccessException;
 
+	public static List<TimeSlot> getAllowedTimesByType(DayWorkSchedule dayWorkSchedule, Character[] codes, String providerNo){
+		ArrayList<TimeSlot> allowedTimesFilteredByType = new ArrayList<TimeSlot>();
+		for (CalendarScheduleCodePairTransfer entry : CalendarScheduleCodePairTransfer.toTransfer(dayWorkSchedule.getTimeSlots())  ){
+			char c = entry.getScheduleCode();
+			if (Arrays.binarySearch(codes, c) >= 0){
+				allowedTimesFilteredByType.add(new TimeSlot(providerNo, null, entry.getDate(), c));
+			}
+		}
+		return allowedTimesFilteredByType;
+	}
 }

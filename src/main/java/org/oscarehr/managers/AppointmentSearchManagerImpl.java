@@ -141,7 +141,7 @@ public class AppointmentSearchManagerImpl implements AppointmentSearchManager {
 				if (dayWorkSchedule == null || dayWorkSchedule.isHoliday())	continue;
 				// Is this still needed?  probably if (BookingLearningManager.isDaySetToSkip(clinic, provider.getProviderNo(), calDayToSearch, appointmentTypeId)) continue;
 				
-				List<TimeSlot> providerAppointments = getAllowedTimesByType(dayWorkSchedule, providerMap.get(provider),provider.getProviderNo());
+				List<TimeSlot> providerAppointments = AppointmentSearchManager.getAllowedTimesByType(dayWorkSchedule, providerMap.get(provider),provider.getProviderNo());
 				/// keep? or change ? recordFilterForSearchedProvider(doc,searchedProviderRecord,dayWorkScheduleTransfer,"N/A" , providerAppointments);						
 
 				List<FilterDefinition> filterClassNames = provider.getFilter();
@@ -172,18 +172,6 @@ public class AppointmentSearchManagerImpl implements AppointmentSearchManager {
 		
 		Collections.sort(appointments,TimeSlot.getTimeSlotComparator());
 		return appointments;
-	}
-	
-	
-	public static List<TimeSlot> getAllowedTimesByType(DayWorkSchedule dayWorkSchedule, Character[] codes, String providerNo){
-		ArrayList<TimeSlot> allowedTimesFilteredByType = new ArrayList<TimeSlot>();
-		for (CalendarScheduleCodePairTransfer entry : CalendarScheduleCodePairTransfer.toTransfer(dayWorkSchedule.getTimeSlots())  ){
-			char c = entry.getScheduleCode();
-			if (Arrays.binarySearch(codes, c) >= 0){
-				allowedTimesFilteredByType.add(new TimeSlot(providerNo, null, entry.getDate(), c));
-			}
-		}
-		return allowedTimesFilteredByType;
 	}
 
 	

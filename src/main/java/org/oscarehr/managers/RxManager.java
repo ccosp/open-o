@@ -66,6 +66,19 @@ public interface RxManager {
     public List<Drug> getLongTermDrugs( LoggedInInfo info,  int demographicNo);
 
 
+    /**
+     * Utility class for returning a prescription and associated drugs.
+     */
+    public static class PrescriptionDrugs{
+        public Prescription prescription;
+        public List<Drug> drugs;
+
+        public PrescriptionDrugs(Prescription p, List<Drug> d){
+            this.prescription = p;
+            this.drugs = d;
+        }
+
+    }
     // statuses for drugs
     public static final String ALL = "all";
     public static final String CURRENT = "current";

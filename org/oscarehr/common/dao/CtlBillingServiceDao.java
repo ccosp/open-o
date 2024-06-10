@@ -4,6 +4,7 @@ import java.util.List;
 import org.oscarehr.common.model.CtlBillingService;
 
 public interface CtlBillingServiceDao extends AbstractDao<CtlBillingService> {
+    public static final String DEFAULT_STATUS = "A";
     List<CtlBillingService> findAll();
     List<Object[]> getUniqueServiceTypes(String serviceStatus);
     List<Object[]> getUniqueServiceTypes();

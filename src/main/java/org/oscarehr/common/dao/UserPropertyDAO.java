@@ -45,4 +45,5 @@ public interface UserPropertyDAO extends AbstractDao<UserProperty>{
     List<UserProperty> getDemographicProperties(String providerNo);
     Map<String, String> getProviderPropertiesAsMap(String providerNo);
     void saveProperties(String providerNo, Map<String, String> props);
+    public final static String COLOR_PROPERTY = "ProviderColour";
 }

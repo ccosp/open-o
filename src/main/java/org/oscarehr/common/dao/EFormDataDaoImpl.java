@@ -51,8 +51,6 @@ public class EFormDataDaoImpl extends AbstractDaoImpl<EFormData> implements EFor
         super(EFormData.class);
     }
 
-    public static final String SORT_NAME = "form_name";
-    public static final String SORT_SUBJECT = "subject";
 
     @Override
     public List<EFormData> findByDemographicId(Integer demographicId) {

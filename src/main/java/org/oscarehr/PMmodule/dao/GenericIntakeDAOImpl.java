@@ -379,24 +379,7 @@ public class GenericIntakeDAOImpl extends HibernateDaoSupport implements Generic
 		return(genericIntakeReportStatistics);
 	}
 
-	public static class GenericIntakeReportStatistics {
-		public int totalIntakeCount = 0;
-		/**
-		 * This is a map of <intake_node_id, <intake_answer.val, count>>
-		 */
-		public HashMap<Integer, AccumulatorMap<String>> intakeNodeResults = new HashMap<Integer, AccumulatorMap<String>>();
 
-		public void addResult(int intakeNodeId, String answer) {
-			AccumulatorMap<String> accumulatorMap = intakeNodeResults.get(intakeNodeId);
-
-			if (accumulatorMap == null) {
-				accumulatorMap = new AccumulatorMap<String>();
-				intakeNodeResults.put(intakeNodeId, accumulatorMap);
-			}
-
-			accumulatorMap.increment(answer);
-		}
-	}
 
 	// Private
 

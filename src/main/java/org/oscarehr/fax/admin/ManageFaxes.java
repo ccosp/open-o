@@ -151,7 +151,7 @@ public class ManageFaxes extends FaxAction {
 		/*
 		 *  Dont even try to resend a fax if the service is not enabled.
 		 */
-		if(FaxManagerImpl.isEnabled()){
+		if(FaxManager.isEnabled()){
 			success = faxManager.resendFax(loggedInInfo, JobId, faxNumber);
 		}
 

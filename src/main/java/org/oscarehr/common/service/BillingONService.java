@@ -70,8 +70,8 @@ public class BillingONService {
         if (billingONCHeader1 != null) {
 
             List<BillingONPayment> paymentRecords = billingONPaymentDao.find3rdPartyPayRecordsByBill(billingONCHeader1);
-            BigDecimal paidTotal = BillingONPaymentDaoImpl.calculatePaymentTotal(paymentRecords);
-            BigDecimal refundTotal = BillingONPaymentDaoImpl.calculateRefundTotal(paymentRecords);
+            BigDecimal paidTotal = BillingONPaymentDao.calculatePaymentTotal(paymentRecords);
+            BigDecimal refundTotal = BillingONPaymentDao.calculateRefundTotal(paymentRecords);
 
             BigDecimal billTotal = billingONCHeader1.getTotal();
 

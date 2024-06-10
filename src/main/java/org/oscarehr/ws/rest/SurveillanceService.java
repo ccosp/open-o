@@ -326,7 +326,7 @@ public class SurveillanceService extends AbstractServiceImpl {
 				List<OscarJob> jobList =  oscarJobManager.getJobByName(loggedInInfo,"Surveillance "+survey.getSurveyId());
 				OscarJob job = null;
 				if(jobList.isEmpty()) {					
-					OscarJobType oscarJobType = oscarJobManager.addIfNotLoaded(loggedInInfo,OscarJobManagerImpl.getFTPSJob());
+					OscarJobType oscarJobType = oscarJobManager.addIfNotLoaded(loggedInInfo,OscarJobManager.getFTPSJob());
 					job = new OscarJob();
 					job.setOscarJobTypeId(oscarJobType.getId());
 					job.setEnabled(true);

@@ -34,9 +34,6 @@ import java.util.List;
 @Repository
 public class IntegratorControlDaoImpl extends AbstractDaoImpl<IntegratorControl> implements IntegratorControlDao {
 
-    public static final String REMOVE_DEMO_ID_CTRL = "RemoveDemographicIdentity";
-    public static final String UPDATE_INTERVAL_CTRL = "UpdateInterval";
-    public static final String INTERVAL_HR = "h";
     private static final Logger log=MiscUtils.getLogger();
 
     public IntegratorControlDaoImpl() {

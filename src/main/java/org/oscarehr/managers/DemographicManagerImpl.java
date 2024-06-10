@@ -89,9 +89,6 @@
   */
  @Service
  public class DemographicManagerImpl implements DemographicManager  {
-     public static final String PHR_VERIFICATION_LEVEL_3 = "+3";
-     public static final String PHR_VERIFICATION_LEVEL_2 = "+2";
-     public static final String PHR_VERIFICATION_LEVEL_1 = "+1";
  
      private static Logger logger = MiscUtils.getLogger();
  

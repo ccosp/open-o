@@ -38,7 +38,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unchecked")
 public class CtlBillingServiceDaoImpl extends AbstractDaoImpl<CtlBillingService> implements CtlBillingServiceDao {
 
-	public static final String DEFAULT_STATUS = "A";
 
 	public CtlBillingServiceDaoImpl() {
 		super(CtlBillingService.class);

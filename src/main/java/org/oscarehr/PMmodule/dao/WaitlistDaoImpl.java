@@ -567,7 +567,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
     @Override
     public VacancyData loadVacancyData(final int vacancyId) {
         VacancyData vacancyData = new VacancyData();
-        Vacancy vacancy = VacancyTemplateManagerImpl.getVacancyById(vacancyId);
+        Vacancy vacancy = VacancyTemplateManager.getVacancyById(vacancyId);
         if (vacancy == null) {
             return vacancyData;
         }
@@ -617,7 +617,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
     @Override
     public VacancyData loadVacancyData(final int vacancyId, final int wlProgramId) {
         VacancyData vacancyData = new VacancyData();
-        Vacancy vacancy = VacancyTemplateManagerImpl.getVacancyById(vacancyId);
+        Vacancy vacancy = VacancyTemplateManager.getVacancyById(vacancyId);
         if (vacancy == null) {
             return vacancyData;
         }

@@ -90,28 +90,7 @@ public class BillingOnItemPaymentDaoImpl extends AbstractDaoImpl<BillingOnItemPa
                               
         return results;
     }
-    
-    public static BigDecimal calculateItemPaymentTotal(List<BillingOnItemPayment> paymentRecords) {
-	        
-	     BigDecimal paidTotal = new BigDecimal("0.00");	        
-	     for (BillingOnItemPayment bPay : paymentRecords) {
-	         BigDecimal amtPaid = bPay.getPaid();
-	         paidTotal = paidTotal.add(amtPaid);                                   
-	     }
-	         
-	     return paidTotal;
-	}
-	
-    public static BigDecimal calculateItemRefundTotal(List<BillingOnItemPayment> paymentRecords) {
-        
-        BigDecimal refundTotal = new BigDecimal("0.00");
-        for (BillingOnItemPayment bPay : paymentRecords) {
-       	 	BigDecimal amtRefunded = bPay.getRefund();
-            refundTotal = refundTotal.add(amtRefunded);                                   
-        }
-        
-        return refundTotal;
-   }   
+
 	
     @Override
     public List<BillingOnItemPayment> findByBillingNo(int billingNo) {

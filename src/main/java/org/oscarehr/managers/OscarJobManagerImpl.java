@@ -158,14 +158,4 @@ public class OscarJobManagerImpl implements OscarJobManager{
 		LogAction.addLogSynchronous(loggedInInfo, "OscarJobManager.updateJobType", "oscarJobType.id="+oscarJob.getId());
     }
 	
-	public static OscarJobType getFTPSJob() {
-		OscarJobType oscarJobType = new OscarJobType();
-		oscarJobType.setDescription("Common FTPS Job type");
-		oscarJobType.setClassName("org.oscarehr.integration.surveillance.FTPSJob");
-		oscarJobType.setEnabled(true);
-		oscarJobType.setName("FTPS");
-		oscarJobType.setUpdated(new Date());
-		return oscarJobType;
-	}
-	
 }

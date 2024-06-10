@@ -66,7 +66,6 @@ import oscar.log.LogAction;
 @Service
 public class DashboardManagerImpl implements DashboardManager {
 
-	public static final boolean MULTI_THREAD_ON = Boolean.TRUE;
 
 	// public enum ObjectName {
 	// 	IndicatorTemplate, Dashboard
