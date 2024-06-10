@@ -46,11 +46,6 @@ import javax.servlet.http.HttpSession;
 
 @Service
 public class SecurityInfoManagerImpl implements SecurityInfoManager {
-    public static final String READ = "r";
-    public static final String WRITE = "w";
-    public static final String UPDATE = "u";
-    public static final String DELETE = "d";
-    public static final String NORIGHTS = "o";
 
     @Autowired
     private SecuserroleDao secUserRoleDao;

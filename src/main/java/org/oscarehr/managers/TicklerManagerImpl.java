@@ -81,16 +81,6 @@ import com.quatro.model.security.Secrole;
 @Service
 public class TicklerManagerImpl implements TicklerManager {
 
-    public static String DEMOGRAPHIC_NAME = "demographic_name";
-    public static String CREATOR = "creator";
-    public static String SERVICE_DATE = "service_date";
-    public static String CREATION_DATE = "creation_date";
-    public static String PRIORITY = "priority";
-    public static String TASK_ASSIGNED_TO = "task_assigned_to";
-    public static String STATUS = "status";
-    public static String SORT_ASC = "asc";
-    public static String SORT_DESC = "desc";
-
     private static final String TICKLER_EMAIL_TEMPLATE_FILE = "/tickler_email_notification_template.txt";
     private static final String PRIVILEGE_READ = "r";
     private static final String PRIVILEGE_WRITE = "w";

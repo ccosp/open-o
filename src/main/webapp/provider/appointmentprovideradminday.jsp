@@ -29,7 +29,6 @@
 <%@ page import="org.oscarehr.common.dao.DemographicStudyDao" %>
 <%@ page import="org.oscarehr.common.dao.StudyDao" %>
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAOImpl" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.dao.SiteDao" %>
@@ -2243,7 +2242,7 @@
                                                                     String providerColor = null;
                                                                     if(view == 1 && demographic != null && userPropertyDao != null) {
                                                                             String providerNo = demographic.getProviderNo();
-                                                                            UserProperty property = userPropertyDao.getProp(providerNo, UserPropertyDAOImpl.COLOR_PROPERTY);
+                                                                            UserProperty property = userPropertyDao.getProp(providerNo, UserPropertyDAO.COLOR_PROPERTY);
                                                                             if(property != null) {
                                                                                     providerColor = property.getValue();
                                                                             }

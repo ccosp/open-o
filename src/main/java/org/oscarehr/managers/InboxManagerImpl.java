@@ -70,11 +70,6 @@ public class InboxManagerImpl implements InboxManager {
 	@Autowired
 	private SecUserRoleDao secUserRoleDao ;
 	
-	public static final String NORMAL = "normal";
-	public static final String ALL = "all";
-	public static final String ABNORMAL = "abnormal";
-	public static final String LABS = "labs";
-	public static final String DOCUMENTS = "documents";
 	
 
 	public InboxManagerResponse getInboxResults(LoggedInInfo loggedInInfo, InboxManagerQuery query) {

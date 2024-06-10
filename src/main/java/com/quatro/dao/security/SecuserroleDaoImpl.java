@@ -57,10 +57,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class SecuserroleDaoImpl extends HibernateDaoSupport implements SecuserroleDao {
     private static final Logger logger = MiscUtils.getLogger();
     // property constants
-    public static final String PROVIDER_NO = "providerNo";
-    public static final String ROLE_NAME = "roleName";
-    public static final String ORGCD = "orgcd";
-    public static final String ACTIVEYN = "activeyn";
     public SessionFactory sessionFactory;
 
     @Autowired
