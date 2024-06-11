@@ -50,30 +50,25 @@
 <%@ page import="oscar.log.*"%>
 <%@ page import="org.oscarehr.util.SpringUtils"%>
 <%@ page import="org.oscarehr.common.model.SecRole"%>
-<%@ page import="org.oscarehr.common.dao.SecRoleDao"%>
 <%@ page import="org.oscarehr.common.model.SecPrivilege"%>
-<%@ page import="org.oscarehr.common.dao.SecPrivilegeDao"%>
 <%@ page import="org.oscarehr.common.model.SecObjectName"%>
-<%@ page import="org.oscarehr.common.dao.SecObjectNameDao"%>
 <%@ page import="org.oscarehr.common.model.ProviderData"%>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao"%>
 <%@ page import="org.oscarehr.common.model.SecObjPrivilege"%>
 <%@ page import="org.oscarehr.common.model.SecObjPrivilegePrimaryKey"%>
-<%@ page import="org.oscarehr.common.dao.SecObjPrivilegeDao"%>
 <%@ page import="org.oscarehr.common.model.RecycleBin"%>
-<%@ page import="org.oscarehr.common.dao.RecycleBinDao"%>
 <%@ page import="org.springframework.dao.DataIntegrityViolationException"%>
 <%@ page import="org.springframework.web.util.HtmlUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="org.oscarehr.common.dao.*" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <%
 	SecRoleDao secRoleDao = SpringUtils.getBean(SecRoleDao.class);
 	SecPrivilegeDao secPrivilegeDao = SpringUtils.getBean(SecPrivilegeDao.class);
-	SecObjectNameDao secObjectNameDao = SpringUtils.getBean(SecObjectNameDao.class);
+	SecObjectNameDao secObjectNameDao = SpringUtils.getBean(SecObjectNameDaoImpl.class);
 	ProviderDataDao providerDataDao = SpringUtils.getBean(ProviderDataDao.class);
 	SecObjPrivilegeDao secObjPrivilegeDao = SpringUtils.getBean(SecObjPrivilegeDao.class);
 	RecycleBinDao recycleBinDao = SpringUtils.getBean(RecycleBinDao.class);
