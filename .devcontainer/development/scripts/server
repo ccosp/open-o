@@ -8,10 +8,28 @@ case $command in
     ;;
 
   start)
-    catalina.sh
+    catalina.sh start
+
+    sleep 2
+    # Save PID to file tomcat.pid
+    JAVA_PID=$(jps -l | grep org.apache.catalina.startup.Bootstrap | awk '{print $1}')
+    echo "Tomcat/Java PID: $JAVA_PID"
+    echo $JAVA_PID > /tomcat.pid
     ;;
 
   stop)
     catalina.sh stop
+
+    if [ -f /tomcat.pid ]; then
+      JAVA_PID=$(cat /tomcat.pid)
+      echo "Killing Tomcat/Java PID: $JAVA_PID"
+      kill $JAVA_PID
+    fi
+    ;;
+
+  restart)
+    server stop
+    sleep 2
+    server start
     ;;
 esac
