@@ -149,6 +149,9 @@
     <bean id="EFormDao" class="org.oscarehr.common.dao.EFormDaoImpl" autowire="byName" />
     <bean id="encounterFormDao" class="org.oscarehr.common.dao.EncounterFormDaoImpl" autowire="byName" />
     <bean id="systemMessageDao" class="org.oscarehr.common.dao.SystemMessageDaoImpl" autowire="byName" />
+    <bean id="billingPaymentTypeDao" class="org.oscarehr.common.dao.BillingPaymentTypeDaoImpl" autowire="byName" />
+    <bean id="billingONPaymentDao" class="org.oscarehr.common.dao.BillingONPaymentDaoImpl" autowire="byName" />
+	
 
 	<!-- Dao classes that implement OscarSuperDao -->
 	<bean id="providerSuperDao" class="oscar.dao.ProviderDao" autowire="byName" />
