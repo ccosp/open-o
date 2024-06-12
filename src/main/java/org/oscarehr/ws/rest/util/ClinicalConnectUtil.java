@@ -32,14 +32,12 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.logging.log4j.Logger;
-
 
 import org.oscarehr.common.dao.DemographicDao;
 import org.oscarehr.common.dao.UserPropertyDAO;
