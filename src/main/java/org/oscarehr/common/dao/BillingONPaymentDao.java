@@ -53,31 +53,21 @@ public interface BillingONPaymentDao extends AbstractDao<BillingONPayment> {
     List<BillingONPayment> find3rdPartyPaymentsByBillingNo(Integer billingNo);
     List<BillingONPayment> find3rdPartyPayRecordsByBill(BillingONCHeader1 bCh1, Date startDate, Date endDate);
     void createPayment(BillingONCHeader1 bCh1,Locale locale, String payType, BigDecimal paidAmt, String payMethod, String providerNo);
-    public static BigDecimal calculatePaymentTotal(List<BillingONPayment> paymentRecords) {
-
+    static BigDecimal calculatePaymentTotal(List<BillingONPayment> paymentRecords) {
         BigDecimal paidTotal = new BigDecimal("0.00");
-        //BillingONExtDao bExtDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);
         for (BillingONPayment bPay : paymentRecords) {
-
-            //BigDecimal amtPaid = bExtDao.getPayment(bPay);
             BigDecimal amtPaid = bPay.getTotal_payment();
             paidTotal = paidTotal.add(amtPaid);
         }
-
         return paidTotal;
     }
 
-    public static BigDecimal calculateRefundTotal(List<BillingONPayment> paymentRecords) {
-
+    static BigDecimal calculateRefundTotal(List<BillingONPayment> paymentRecords) {
         BigDecimal refundTotal = new BigDecimal("0.00");
-        //BillingONExtDao bExtDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);
         for (BillingONPayment bPay : paymentRecords) {
-
-            //BigDecimal amtRefunded = bExtDao.getRefund(bPay);
             BigDecimal amtRefunded = bPay.getTotal_refund();
             refundTotal = refundTotal.add(amtRefunded);
         }
-
         return refundTotal;
     }
 }
