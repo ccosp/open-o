@@ -559,8 +559,8 @@ table td,th{font-size:12px;}
                                         numBillItems++;
 										
                                         List<BillingOnItemPayment> bItemPayList = bItemPaymentDao.getItemPaymentByInvoiceNoItemId(bCh1.getId(), bItem.getId());                                        
-                                        BigDecimal amtPaid = bItemPaymentDao.calculateItemPaymentTotal(bItemPayList);
-                                        BigDecimal amtRefund = bItemPaymentDao.calculateItemRefundTotal(bItemPayList);
+                                        BigDecimal amtPaid = BillingOnItemPaymentDao.calculateItemPaymentTotal(bItemPayList);
+                                        BigDecimal amtRefund = BillingOnItemPaymentDao.calculateItemRefundTotal(bItemPayList);
                                         if (numBillItems > 1) {
                      %>
                        </tr>
