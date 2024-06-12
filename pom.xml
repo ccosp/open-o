@@ -67,6 +67,12 @@
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
+
+    	<repository>
+        	<id>central</id>
+       		<url>https://repo.maven.apache.org/maven2</url>
+    	</repository>
+
 	</repositories>
 
 	<pluginRepositories>
@@ -1127,6 +1133,13 @@
 			<version>2.1.8</version>
 		</dependency>
 		
+
+		<dependency>
+       		<groupId>org.apache.wss4j</groupId>
+        	<artifactId>wss4j-ws-security-dom</artifactId>
+        	<version>2.3.1</version>
+		</dependency>
+	
 
 		<dependency>
 			<groupId>org.oscarehr</groupId>

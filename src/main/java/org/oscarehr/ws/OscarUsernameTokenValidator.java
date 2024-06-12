@@ -30,10 +30,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
 import org.apache.logging.log4j.Logger;
-import org.apache.ws.security.WSSecurityException;
-import org.apache.ws.security.handler.RequestData;
-import org.apache.ws.security.message.token.UsernameToken;
-import org.apache.ws.security.validate.UsernameTokenValidator;
+import org.apache.wss4j.common.ext.WSSecurityException;
+import org.apache.wss4j.dom.handler.RequestData;
+import org.apache.wss4j.dom.message.token.UsernameToken;
+import org.apache.wss4j.dom.validate.UsernameTokenValidator;
+
 import org.oscarehr.common.dao.SecurityDao;
 import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
@@ -52,20 +53,20 @@ public class OscarUsernameTokenValidator extends UsernameTokenValidator {
 	@Override
 	protected void verifyPlaintextPassword(UsernameToken usernameToken, RequestData data) throws WSSecurityException {
 		logger.debug("userIdString=" + usernameToken.getName());
-		logger.debug("password=" + usernameToken.getPassword());
+        logger.debug("password=" + usernameToken.getPassword());
 
-		try {
-			Integer securityUserId = Integer.parseInt(usernameToken.getName());
-			Security security = securityDao.find(securityUserId);
-			
-			// if it's all good just return
-			SoapMessage soapMessage = (SoapMessage) data.getMsgContext();
-			HttpServletRequest request = (HttpServletRequest) soapMessage.get(AbstractHTTPDestination.HTTP_REQUEST);
-			if (WsUtils.checkAuthenticationAndSetLoggedInInfo(request, security, usernameToken.getPassword())) return;
-		} catch (NumberFormatException e) {
-			logger.error("userIdString is not a number? usernameToken.getName()='" + usernameToken.getName() + '\'');
-		}
+        try {
+            Integer securityUserId = Integer.parseInt(usernameToken.getName());
+            Security security = securityDao.find(securityUserId);
 
-		throw new WSSecurityException(WSSecurityException.FAILED_AUTHENTICATION);
-	}
+            // if it's all good just return
+            SoapMessage soapMessage = (SoapMessage) data.getMsgContext();
+            HttpServletRequest request = (HttpServletRequest) soapMessage.get(AbstractHTTPDestination.HTTP_REQUEST);
+            if (WsUtils.checkAuthenticationAndSetLoggedInInfo(request, security, usernameToken.getPassword())) return;
+        } catch (NumberFormatException e) {
+            logger.error("userIdString is not a number? usernameToken.getName()='" + usernameToken.getName() + '\'');
+        }
+
+        throw new WSSecurityException(WSSecurityException.ErrorCode.FAILED_AUTHENTICATION);
+    }
 }
