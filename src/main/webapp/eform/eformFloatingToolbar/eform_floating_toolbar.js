@@ -147,6 +147,9 @@ document.addEventListener("DOMContentLoaded", function(){
 					let element = jQuery('#attachDocumentsForm').find(delegate);
 					if (element.length === 0) { element = addFormIfNotFound(data, demographicNo, delegate); }
 					element.attr("checked", true);
+
+					// Expand list if selected lab is older version
+					if (element.attr('data-version')) { expandLabVersionList(element.parent().parent().parent().find('.collapse-arrow')); }
 				});
 			}
 		}).dialog({

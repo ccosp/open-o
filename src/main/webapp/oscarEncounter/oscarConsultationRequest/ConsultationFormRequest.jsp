@@ -233,8 +233,7 @@ if(!authed) {
 			for (int i = matchingLabIds.length - 1; i >= 0; i--) {
 				for (LabResultData attachedLab2 : attachedLabs) {
 					if (!attachedLab2.getSegmentID().equals(matchingLabIds[i])) { continue; }
-					String labTitle = "v" + (i+1);
-					attachedLab2.setDescription(labTitle);
+					if (i != matchingLabIds.length - 1) { attachedLab2.setDescription("v" + (i+1)); }
 					attachedLabsSortedByVersions.add(attachedLab2);
 					break;
 				}
@@ -2713,6 +2712,9 @@ jQuery(document).ready(function(){
 					if (element.length === 0) { element = addFormIfNotFound(data, '<%=demo%>', delegate); }
 					let elementClassType = element.attr("class").split("_")[0];
 					element.attr("checked", true).attr("class", elementClassType + "_pre_check");
+
+					// Expand list if selected lab is older version
+					if (element.attr('data-version')) { expandLabVersionList(element.parent().parent().parent().find('.collapse-arrow')); }
 				});
 			}
 		}).dialog({
