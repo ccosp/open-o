@@ -238,38 +238,6 @@ public class EctFormData {
 		return (forms);
 	}
 
-	public static PatientForm getPatientFormByFormId(String formId, String formName, String table) {
-		if (table == null) { return null; }
-
-		PatientForm patientForm = null;
-		try (Connection c = DbConnectionFilter.getThreadLocalDbConnection()) {
-			String sql;
-			if (!table.equals("form")) {
-				sql = "SELECT ID, demographic_no, formCreated, formEdited FROM " + table + " WHERE ID=?";
-			} else {
-				sql = "SELECT form_no, demographic_no, form_date FROM " + table + " WHERE form_no=?";
-			}
-
-			try (PreparedStatement ps = c.prepareStatement(sql)) {
-				ps.setString(1, formId);
-				try (ResultSet rs = ps.executeQuery()) {
-					if (rs.next()) {
-						if (!table.equals("form")) {
-							patientForm = new PatientForm(table, formName, rs.getInt("ID"), rs.getInt("demographic_no"), rs.getDate("formCreated"), rs.getTimestamp("formEdited"));
-						} else {
-							patientForm = new PatientForm(table, formName, rs.getInt("form_no"), rs.getInt("demographic_no"), rs.getDate("form_date"), rs.getDate("form_date"));
-						}
-					}
-				}
-			}
-		} catch (SQLException e) {
-			logger.error("Error occurred while executing SQL query.", e);
-			throw new PersistenceException(e);
-		}
-
-		return patientForm;
-	}
-
 	public static ArrayList<PatientForm> getRemotePatientForms(LoggedInInfo loggedInInfo, Integer demographicId, String formName, String table) {
 		ArrayList<PatientForm> forms = new ArrayList<PatientForm>();
 		List<CachedDemographicForm> remoteForms = null;
@@ -386,6 +354,14 @@ public class EctFormData {
 		public String formName;
 		public String jsp;
 		public String table;
+
+		// Constructor
+		public PatientForm(String table, String formName, Integer formId, Integer demographicId) {
+			this.table = table;
+			this.formName = formName;
+			this.formId = formId;
+			this.demographicId = demographicId;
+		}
 
 		// Constructor
 		public PatientForm(String formName, Integer formId, Integer demographicId, Date created, Date edited) {

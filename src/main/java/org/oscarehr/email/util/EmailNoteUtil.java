@@ -98,7 +98,7 @@ public class EmailNoteUtil {
                     if (hrmDocument != null) { hrmDocumentList.add(hrmDocument); }
                     break;
                 case FORM:
-                    PatientForm form = formsManager.getFormById(loggedInInfo, String.valueOf(emailAttachment.getDocumentId()));
+                    PatientForm form = formsManager.getFormById(loggedInInfo, emailAttachment.getDocumentId(), emailLog.getDemographicNo());
                     if (form != null) { formList.add(form); }
                     break;
             }
@@ -165,7 +165,9 @@ public class EmailNoteUtil {
         Collections.sort(formList, PatientForm.EDITED_DATE_COMPARATOR);
         for (PatientForm form : formList) {
             noteBuilder.append("Form: ").append(form.getFormName()).append(" ");
-            noteBuilder.append(getFormattedDate(form.getEdited(), "dd-MM-yyyy HH:mm:ss")).append(" ");
+            if (form.edited != null) { 
+                noteBuilder.append(getFormattedDate(form.getEdited(), "dd-MM-yyyy HH:mm:ss")).append(" "); 
+            }
             noteBuilder.append("(").append("ID: ").append(form.getFormId()).append(") ");
             if (emailLog.getIsAttachmentEncrypted()) { noteBuilder.append("Password: ").append(emailLog.getPassword()); }
             noteBuilder.append("\n");

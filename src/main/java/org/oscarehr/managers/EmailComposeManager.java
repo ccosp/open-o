@@ -94,7 +94,7 @@ public class EmailComposeManager {
                     emailAttachment.setFileSize(getFileSize(hrmPDFPath));
                     break;
                 case FORM:
-                    Path formPDFPath = formsManager.renderForm(request, response, emailAttachment.getDocumentId().toString());
+                    Path formPDFPath = formsManager.renderForm(request, response, emailAttachment.getDocumentId(), emailLog.getDemographicNo());
                     emailAttachment.setFilePath(formPDFPath.toString());
                     emailAttachment.setFileSize(getFileSize(formPDFPath));
                     break;
@@ -168,9 +168,9 @@ public class EmailComposeManager {
         return emailAttachments;
     }
 
-    public List<EmailAttachment> prepareFormAttachments(HttpServletRequest request, HttpServletResponse response, String[] attachedForms) throws PDFGenerationException {
+    public List<EmailAttachment> prepareFormAttachments(HttpServletRequest request, HttpServletResponse response, String[] attachedForms, Integer demographicId) throws PDFGenerationException {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, String.valueOf(demographicId))) {
 			throw new RuntimeException("missing required security object (_form)");
 		}
 
@@ -178,7 +178,7 @@ public class EmailComposeManager {
 
         List<EmailAttachment> emailAttachments = new ArrayList<>();
         for (String formId : attachedFormIds) {
-            Path formPDFPath = formsManager.renderForm(request, response, formId);
+            Path formPDFPath = formsManager.renderForm(request, response, Integer.parseInt(formId), demographicId);
             if (formPDFPath != null) { emailAttachments.add(new EmailAttachment(formPDFPath.getFileName().toString(), formPDFPath.toString(), DocumentType.FORM, Integer.parseInt(formId), getFileSize(formPDFPath))); }
         }
 

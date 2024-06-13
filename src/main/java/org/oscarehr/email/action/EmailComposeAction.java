@@ -57,7 +57,7 @@ public class EmailComposeAction extends DispatchAction {
             emailAttachmentList.addAll(emailComposeManager.prepareEDocAttachments(loggedInInfo, attachedDocuments));
             emailAttachmentList.addAll(emailComposeManager.prepareLabAttachments(loggedInInfo, attachedLabs));
             emailAttachmentList.addAll(emailComposeManager.prepareHRMAttachments(loggedInInfo, attachedHRMDocuments));
-            emailAttachmentList.addAll(emailComposeManager.prepareFormAttachments(request, response, attachedForms));
+            emailAttachmentList.addAll(emailComposeManager.prepareFormAttachments(request, response, attachedForms, Integer.parseInt(demographicId)));
         } catch (PDFGenerationException e) {
             logger.error(e.getMessage(), e);
             return emailComposeError(request, mapping, "This eForm (and attachments, if applicable) could not be emailed. \\n\\n" + e.getMessage(), "eFormError");
