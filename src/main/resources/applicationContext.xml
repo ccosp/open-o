@@ -38,6 +38,7 @@
 	-->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 
+	<bean class="org.ServletContextConfig"/>
     <!-- Enable annotation-driven transaction management with CGLIB proxies -->
     <tx:annotation-driven proxy-target-class="true"/>
 	<bean id="propertyConfigurer" class="org.oscarehr.common.OscarPropertyPlaceholderConfigurer">
