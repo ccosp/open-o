@@ -28,7 +28,7 @@
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%
-    String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+    String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
     boolean authed=true;
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_appointment" rights="w" reverse="<%=true%>">
@@ -52,9 +52,7 @@
 
 
 <%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.text.*"%>
-<%@ page import="java.net.*"%>
+
 <%@ page import="java.math.*"%>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
@@ -62,7 +60,6 @@
 <%@ page import="java.time.ZoneId" %>
 <%@ page import="oscar.appt.*"%>
 <%@ page import="oscar.util.*"%>
-<%@ page import="oscar.oscarDemographic.data.*"%>
 <%@ page import="oscar.appt.status.service.AppointmentStatusMgr"%>
 <%@ page import="oscar.OscarProperties"%>
 <%@ page import="org.oscarehr.common.OtherIdManager"%>
@@ -73,7 +70,6 @@
 <%@ page import="org.oscarehr.common.model.AppointmentStatus"%>
 <%@ page import="org.oscarehr.common.dao.BillingONCHeader1Dao"%>
 <%@ page import="org.oscarehr.common.model.BillingONCHeader1"%>
-<%@ page import="org.oscarehr.common.dao.DemographicDao"%>
 <%@ page import="org.oscarehr.common.model.DemographicCust" %>
 <%@ page import="org.oscarehr.common.dao.DemographicCustDao" %>
 <%@ page import="org.oscarehr.common.model.EncounterForm" %>
@@ -85,16 +81,13 @@
 <%@ page import="org.oscarehr.common.dao.SiteDao"%>
 <%@ page import="org.oscarehr.common.model.Site"%>
 <%@ page import="org.oscarehr.common.dao.BillingONExtDao" %>
-<%@ page import="org.oscarehr.billing.CA.ON.dao.*" %>
 <%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
 <%@ page import="org.oscarehr.common.model.Facility" %>
 <%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
 <%@ page import="org.oscarehr.PMmodule.service.ProgramManager" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo"%>
 <%@ page import="org.oscarehr.managers.LookupListManager"%>
 <%@ page import="org.oscarehr.common.model.LookupList"%>
-<%@ page import="org.oscarehr.common.model.LookupListItem"%>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@ page import="oscar.oscarEncounter.data.EctFormData"%>
@@ -119,7 +112,7 @@
   String origDate = null;
 
   boolean bFirstDisp = true; //this is the first time to display the window
-  if (request.getParameter("bFirstDisp")!=null) bFirstDisp = (request.getParameter("bFirstDisp")).equals("true");
+  if (request.getParameter("bFirstDisp")!=null) bFirstDisp = ("true".equals(request.getParameter("bFirstDisp")));
 
     String mrpName = "";
 	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean("demographicCustDao");
@@ -170,8 +163,6 @@
     AppointmentStatusMgr apptStatusMgr =  new AppointmentStatusMgrImpl();
     List allStatus = apptStatusMgr.getAllActiveStatus();
 
-    Boolean isMobileOptimized = session.getAttribute("mobileOptimized") != null;
-
     String useProgramLocation = OscarProperties.getInstance().getProperty("useProgramLocation");
     String moduleNames = OscarProperties.getInstance().getProperty("ModuleNames");
     boolean caisiEnabled = moduleNames != null && org.apache.commons.lang.StringUtils.containsIgnoreCase(moduleNames, "Caisi");
@@ -180,11 +171,11 @@
 	String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_APPOINTMENT;
 	CaseManagementManager caseManagementManager = (CaseManagementManager) SpringUtils.getBean("caseManagementManager");
 
-// multisites start ==================
+
     boolean isSiteSelected = false;
     boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
     List<Site> sites = siteDao.getActiveSitesByProviderNo((String) session.getAttribute("user"));
-// multisites end ==================
+
 
 	Appointment appt = null;
 	String demono="", chartno="", phone="", rosterstatus="", alert="", doctorNo="";
@@ -241,7 +232,8 @@
 <title><bean:message key="appointment.editappointment.title" /></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${ pageContext.request.contextPath }/css/bootstrap.css" rel="stylesheet" type="text/css"> <!-- Bootstrap 2.3.1 -->
-<link href="${ pageContext.request.contextPath }/css/datepicker.css" rel="stylesheet">
+
+	<link href="${ pageContext.request.contextPath }/css/datepicker.css" rel="stylesheet">
 <link href="${ pageContext.request.contextPath }/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="${ pageContext.request.contextPath }/css/font-awesome.min.css" rel="stylesheet">
 <link href="${ pageContext.request.contextPath }/css/helpdetails.css" rel="stylesheet">
@@ -339,16 +331,7 @@ console.log("minute="+minute+" minDeg ="+minuteDeg);
 
 </script>
 
-
-
-<% if (isMobileOptimized) { %>
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width" />
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/mobile/appointmentstyle.css" type="text/css">
-<% } else { %>
-    <link rel="stylesheet" href="appointmentstyle.css" type="text/css">
-
-<% } %>
-
+    <link rel="stylesheet" href="appointmentstyle.css" type="text/css" >
    <script>
      jQuery.noConflict();
    </script>
@@ -361,7 +344,7 @@ function toggleView() {
 }
 
 function demographicdetail(vheight,vwidth) {
-  if(document.forms['EDITAPPT'].demographic_no.value=="") return;
+  if(document.forms['EDITAPPT'].demographic_no.value==="") return;
   self.close();
   var page = "<%=request.getContextPath() %>/demographic/demographiccontrol.jsp?demographic_no=" + document.forms['EDITAPPT'].demographic_no.value+"&displaymode=edit&dboperation=search_detail";
   //windowprops = "height="+vheight+",width="+vwidth+",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes,screenX=600,screenY=200,top=0,left=0";
@@ -406,7 +389,7 @@ function onButUpdate() {
 
 function onButCancel(){
    var aptStat = document.EDITAPPT.status.value;
-   if (aptStat.indexOf('B') == 0){
+   if (aptStat.indexOf('B') === 0){
        var agree = confirm("<bean:message key="appointment.editappointment.msgCanceledBilledConfirmation"/>") ;
        if (agree){
           window.location='appointmentcontrol.jsp?buttoncancel=Cancel Appt&displaymode=Update Appt&appointment_no=<%=appointment_no%>';
@@ -421,15 +404,15 @@ function upCaseCtrl(ctrl) {
 }
 
 function onSub() {
-  if( saveTemp==1 ) {
+  if( saveTemp===1 ) {
     var aptStat = document.EDITAPPT.status.value;
-    if (aptStat.indexOf('B') == 0){
+    if (aptStat.indexOf('B') === 0){
        return (confirm("<bean:message key="appointment.editappointment.msgDeleteBilledConfirmation"/>")) ;
     }else{
        return (confirm("<bean:message key="appointment.editappointment.msgDeleteConfirmation"/>")) ;
     }
   }
-   if( saveTemp==2 ) {
+   if( saveTemp===2 ) {
     return calculateEndTime() ;
   } else
       return true;
@@ -437,9 +420,9 @@ function onSub() {
 
 function calculateEndTime() {
   var stime = document.EDITAPPT.start_time.value;
-  var vlen = stime.indexOf(':')==-1?1:2;
+  var vlen = stime.indexOf(':')===-1?1:2;
 
-  if(vlen==1 && stime.length==4 ) {
+  if(vlen===1 && stime.length===4 ) {
     document.EDITAPPT.start_time.value = stime.substring(0,2) +":"+ stime.substring(2);
     stime = document.EDITAPPT.start_time.value;
   }
@@ -458,7 +441,7 @@ function calculateEndTime() {
 	  return false;
   }
 
-  if(eval(duration) == 0) { duration =1; }
+  if(eval(duration) === 0) { duration =1; }
   if(eval(duration) < 0) { duration = Math.abs(duration) ; }
 
   var lmin = eval(smin)+eval(duration)-1 ;
@@ -490,7 +473,7 @@ function checkTypeNum(typeIn) {
 	if (length>=1) {
 	  while (i <  length) {
 		  ch = typeIn.substring(i, i+1);
-		  if (ch == ":") { i++; continue; }
+		  if (ch === ":") { i++; continue; }
 		  if ((ch < "0") || (ch > "9") ) {
 			  typeInOK = false;
 			  break;
@@ -507,7 +490,7 @@ function checkTimeTypeIn(obj) {
 	  alert ("<bean:message key="Appointment.msgFillTimeField"/>");
   } else {
       colonIdx = obj.value.indexOf(':');
-      if(colonIdx==-1) {
+      if(colonIdx===-1) {
         if(obj.value.length < 3) alert("<bean:message key="Appointment.msgFillValidTimeField"/>");
         obj.value = obj.value.substring(0, obj.value.length-2 )+":"+obj.value.substring( obj.value.length-2 );
   }
@@ -519,15 +502,15 @@ function checkTimeTypeIn(obj) {
   colonIdx = obj.value.indexOf(':');
   if (colonIdx < 1)
       hours = "00";
-  else if (colonIdx == 1)
+  else if (colonIdx === 1)
       hours = "0" + obj.value.substring(0,1);
   else
       hours = obj.value.substring(0,2);
 
   minutes = obj.value.substring(colonIdx+1,colonIdx+3);
-  if (minutes.length == 0)
+  if (minutes.length === 0)
 	    minutes = "00";
-	else if (minutes.length == 1)
+	else if (minutes.length === 1)
 		minutes = "0" + minutes;
 	else if (minutes > 59)
 		minutes = "00";
@@ -577,7 +560,7 @@ function pasteAppt(multipleSameDayGroupAppt) {
 	document.EDITAPPT.location.value = "<%=Encode.forJavaScriptBlock(apptObj.getLocation())%>";
 	document.EDITAPPT.resources.value = "<%=Encode.forJavaScriptBlock(apptObj.getResources())%>";
 	document.EDITAPPT.type.value = "<%=Encode.forJavaScriptBlock(apptObj.getType())%>";
-	if('<%=apptObj.getUrgency()%>' == 'critical') {
+	if('<%=apptObj.getUrgency()%>' === 'critical') {
 		document.EDITAPPT.urgency.checked = "checked";
 	}
 }
@@ -591,7 +574,7 @@ function openTypePopup () {
     windowprops = "height=250,width=500,location=no,scrollbars=no,menubars=no,toolbars=no,resizable=yes,screenX=0,screenY=0,top=100,left=100";
     var popup=window.open("appointmentType.jsp?type="+document.forms['EDITAPPT'].type.value, "Appointment Type", windowprops);
     if (popup != null) {
-      if (popup.opener == null) {
+      if (popup.opener === null) {
         popup.opener = self;
       }
       popup.focus();
@@ -606,15 +589,15 @@ function setType(typeSel,reasonSel,locSel,durSel,notesSel,resSel) {
   document.forms['EDITAPPT'].duration.value = durSel;
   document.forms['EDITAPPT'].resources.value = resSel;
   var loc = document.forms['EDITAPPT'].location;
-  if(loc.nodeName.toUpperCase() == 'SELECT') {
+  if(loc.nodeName.toUpperCase() === 'SELECT') {
           for(c = 0;c < loc.length;c++) {
-                  if(loc.options[c].innerHTML == locSel) {
+                  if(loc.options[c].innerHTML === locSel) {
                           loc.selectedIndex = c;
                           loc.style.backgroundColor=loc.options[loc.selectedIndex].style.backgroundColor;
                           break;
                   }
           }
-  } else if (loc.nodeName.toUpperCase() == "INPUT") {
+  } else if (loc.nodeName.toUpperCase() === "INPUT") {
 	  document.forms['EDITAPPT'].location.value = locSel;
   }
 }
@@ -670,7 +653,7 @@ function parseSearch() {
     }
 
     //swipe pattern
-    if (keyVal.indexOf('%b610054') == 0 && keyVal.length > 18){
+    if (keyVal.indexOf('%b610054') === 0 && keyVal.length > 18){
          keyObj.value = keyVal.substring(8,18);
          document.getElementById("search_mode").value="search_hin";
     }
@@ -683,7 +666,7 @@ function parseSearch() {
 
 jQuery(document).ready(function(){
 	var belowTbl = jQuery("#belowTbl");
-	if (belowTbl != null && belowTbl.length > 0 && belowTbl.find("tr").length == 2) {
+	if (belowTbl != null && belowTbl.length > 0 && belowTbl.find("tr").length === 2) {
 		jQuery(belowTbl.find("tr")[1]).remove();
 	}
 });
@@ -753,7 +736,7 @@ jQuery(document).ready(function(){
         jQuery('#type').myselectmenu({
             change: function( event, data ) {
                 label=data.item.value;
-                origReason = jQuery("[name=reason").val();
+                origReason = jQuery("textarea[name='reason']").val();
                 reason=data.item.element.attr("data-reason");
                 if (origReason.length > 0 ) {
                     reason = reason.concat(" -- ".concat(origReason));
@@ -780,18 +763,14 @@ function locale(){
 <body onload="setfocus();updateTime();locale()" >
 <!-- The mobile optimized page is split into two sections: viewing and editing an appointment
      In the mobile version, we only display the edit section first if we are returning from a search -->
-<div id="editAppointment" style="display:<%= (isMobileOptimized && bFirstDisp) ? "none":"block"%>;">
+<div id="editAppointment" style="display:<%= (false && bFirstDisp) ? "none":"block"%>;">
 <form name="EDITAPPT" METHOD="post" ACTION="appointmentcontrol.jsp"
 	onSubmit="return(onSub())"><input type="hidden"
 	name="displaymode" value="">
     <div class="header deep">
         <div class="time" id="header"><H4>
             <!-- We display a shortened title for the mobile version -->
-            <% if (isMobileOptimized) { %>
-                <bean:message key="appointment.editappointment.msgMainLabelMobile" />
-            <% } else { %>
                 <bean:message key="appointment.editappointment.msgMainLabel" />
-            <% } %>
 
  <%
 
@@ -1001,7 +980,6 @@ function locale(){
             </td>
             <td>
             <%
-            // multisites start ==================
 
 
             boolean bMoreAddr = bMultisites? true : props.getProperty("scheduleSiteID", "").equals("") ? false : true;
@@ -1029,7 +1007,6 @@ function locale(){
 				</select>
         <% } else {
 	        isSiteSelected = true;
-	        // multisites end ==================
 	        if (locationEnabled) {
         %>
 		<select name="location" >
@@ -1459,87 +1436,85 @@ function locale(){
 <%  }   %>
 
 
-<!-- View Appointment: Screen that summarizes appointment data.
-Currently this is only used in the mobile version -->
-<div id="viewAppointment" style="display:<%=(bFirstDisp && isMobileOptimized) ? "block":"none"%>;">
-    <%
-        // Format date to be more readable
-        java.text.SimpleDateFormat inform = new java.text.SimpleDateFormat ("yyyy-MM-dd");
-        String strDate = bFirstDisp ? ConversionUtils.toDateString(appt.getAppointmentDate()) : request.getParameter("appointment_date");
-        java.util.Date d = inform.parse(strDate);
-        String formatDate = "";
-        try { // attempt to change string format
-        java.util.ResourceBundle prop = ResourceBundle.getBundle("oscarResources", request.getLocale());
-        formatDate = oscar.util.UtilDateUtilities.DateToString(d, prop.getString("date.EEEyyyyMMdd"));
-        } catch (Exception e) {
-            org.oscarehr.util.MiscUtils.getLogger().error("Error", e);
-            formatDate = oscar.util.UtilDateUtilities.DateToString(inform.parse(strDate), "EEE, yyyy-MM-dd");
-        }
-    %>
-    <div class="header">
-        <div class="title" id="appointmentTitle">
-            <bean:message key="appointment.editappointment.btnView" />
-        </div>
-        <a href=# onclick="window.close();" id="backButton" class="leftButton top"><%= strDate%></a>
-        <a href="javascript:toggleView();" id="editButton" class="rightButton top">Edit</a>
-    </div>
-    <div id="info" class="panel">
-        <ul>
-            <li class="mainInfo"><a href="#" onclick="demographicdetail(550,700)">
-                <%
-                    String apptName = (bFirstDisp ? appt.getName() : request.getParameter("name")).toString();
-                    //If a comma exists, need to split name into first and last to prevent overflow
-                    int comma = apptName.indexOf(",");
-                    if (comma != -1)
-                        apptName = apptName.substring(0, comma) + ", " + apptName.substring(comma+1);
-                %>
-                <%=Encode.forHtmlContent(apptName)%>
-            </a></li>
-            <li><div class="label"><bean:message key="Appointment.formDate" />: </div>
-                <div class="info"><%=formatDate%></div>
-            </li>
-            <% // Determine appointment status from code so we can access
-   // the description, colour, image, etc.
-      AppointmentStatus apptStatus = (AppointmentStatus)allStatus.get(0);
-      for (int i = 0; i < allStatus.size(); i++) {
-            AppointmentStatus st = (AppointmentStatus) allStatus.get(i);
-            if (st.getStatus().equals(statusCode)) {
-                apptStatus = st;
-                break;
-            }
-      }
-%>
-            <li><div class="label"><bean:message key="Appointment.formStatus" />: </div>
-                <div class="info" style="background-color:<%=apptStatus.getColor()%>; font-weight:bold;">
-                    <img src="<%=request.getContextPath() %>/images/<%=apptStatus.getIcon()%>" alt="image">
-                    <%=Encode.forHtmlContent(apptStatus.getDescription())%>
-                </div>
-            </li>
-            <li><div class="label"><bean:message key="appointment.editappointment.msgTime" />: </div>
-                <div class="info">From <%=bFirstDisp ? ConversionUtils.toTimeStringNoSeconds(appt.getStartTime()) : request.getParameter("start_time")%>
-                to <%=bFirstDisp ? ConversionUtils.toTimeStringNoSeconds(appt.getEndTime()) : request.getParameter("end_time")%></div>
-            </li>
-            <li><div class="label"><bean:message key="Appointment.formType" />: </div>
-                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getType() : request.getParameter("type"))%></div>
-            </li>
-            <li><div class="label"><bean:message key="Appointment.formReason" />: </div>
-                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getReason() : request.getParameter("reason"))%></div>
-            </li>
-            <li><div class="label"><bean:message key="Appointment.formLocation" />: </div>
-                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getLocation() : request.getParameter("location"))%></div>
-            </li>
-            <li><div class="label"><bean:message key="Appointment.formResources" />: </div>
-                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getResources() : request.getParameter("resources"))%></div>
-            </li>
-            <li>&nbsp;</li>
-            <li class="notes">
-                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getNotes() : request.getParameter("notes"))%></div>
-                <div class="info"><%=Encode.forHtml(bFirstDisp ? appt.getNotes() : request.getParameter("notes"))%></div>
-            </li>
-        </ul>
-    </div>
-</div> <!-- end of screen to view appointment -->
-</body>
+<%--<div id="viewAppointment" style="display:<%=(bFirstDisp && false) ? "block":"none"%>;">--%>
+<%--    <%--%>
+<%--        // Format date to be more readable--%>
+<%--        java.text.SimpleDateFormat inform = new java.text.SimpleDateFormat ("yyyy-MM-dd");--%>
+<%--        String strDate = bFirstDisp ? ConversionUtils.toDateString(appt.getAppointmentDate()) : request.getParameter("appointment_date");--%>
+<%--        java.util.Date d = inform.parse(strDate);--%>
+<%--        String formatDate = "";--%>
+<%--        try { // attempt to change string format--%>
+<%--        java.util.ResourceBundle prop = ResourceBundle.getBundle("oscarResources", request.getLocale());--%>
+<%--        formatDate = oscar.util.UtilDateUtilities.DateToString(d, prop.getString("date.EEEyyyyMMdd"));--%>
+<%--        } catch (Exception e) {--%>
+<%--            org.oscarehr.util.MiscUtils.getLogger().error("Error", e);--%>
+<%--            formatDate = oscar.util.UtilDateUtilities.DateToString(inform.parse(strDate), "EEE, yyyy-MM-dd");--%>
+<%--        }--%>
+<%--    %>--%>
+<%--    <div class="header">--%>
+<%--        <div class="title" id="appointmentTitle">--%>
+<%--            <bean:message key="appointment.editappointment.btnView" />--%>
+<%--        </div>--%>
+<%--        <a href=# onclick="window.close();" id="backButton" class="leftButton top"><%= strDate%></a>--%>
+<%--        <a href="javascript:toggleView();" id="editButton" class="rightButton top">Edit</a>--%>
+<%--    </div>--%>
+<%--    <div id="info" class="panel">--%>
+<%--        <ul>--%>
+<%--            <li class="mainInfo"><a href="#" onclick="demographicdetail(550,700)">--%>
+<%--                <%--%>
+<%--                    String apptName = (bFirstDisp ? appt.getName() : request.getParameter("name")).toString();--%>
+<%--                    //If a comma exists, need to split name into first and last to prevent overflow--%>
+<%--                    int comma = apptName.indexOf(",");--%>
+<%--                    if (comma != -1)--%>
+<%--                        apptName = apptName.substring(0, comma) + ", " + apptName.substring(comma+1);--%>
+<%--                %>--%>
+<%--                <%=Encode.forHtmlContent(apptName)%>--%>
+<%--            </a></li>--%>
+<%--            <li><div class="label"><bean:message key="Appointment.formDate" />: </div>--%>
+<%--                <div class="info"><%=formatDate%></div>--%>
+<%--            </li>--%>
+<%--            <% // Determine appointment status from code so we can access--%>
+<%--   // the description, colour, image, etc.--%>
+<%--      AppointmentStatus apptStatus = (AppointmentStatus)allStatus.get(0);--%>
+<%--      for (int i = 0; i < allStatus.size(); i++) {--%>
+<%--            AppointmentStatus st = (AppointmentStatus) allStatus.get(i);--%>
+<%--            if (st.getStatus().equals(statusCode)) {--%>
+<%--                apptStatus = st;--%>
+<%--                break;--%>
+<%--            }--%>
+<%--      }--%>
+<%--%>--%>
+<%--            <li><div class="label"><bean:message key="Appointment.formStatus" />: </div>--%>
+<%--                <div class="info" style="background-color:<%=apptStatus.getColor()%>; font-weight:bold;">--%>
+<%--                    <img src="<%=request.getContextPath() %>/images/<%=apptStatus.getIcon()%>" alt="image">--%>
+<%--                    <%=Encode.forHtmlContent(apptStatus.getDescription())%>--%>
+<%--                </div>--%>
+<%--            </li>--%>
+<%--            <li><div class="label"><bean:message key="appointment.editappointment.msgTime" />: </div>--%>
+<%--                <div class="info">From <%=bFirstDisp ? ConversionUtils.toTimeStringNoSeconds(appt.getStartTime()) : request.getParameter("start_time")%>--%>
+<%--                to <%=bFirstDisp ? ConversionUtils.toTimeStringNoSeconds(appt.getEndTime()) : request.getParameter("end_time")%></div>--%>
+<%--            </li>--%>
+<%--            <li><div class="label"><bean:message key="Appointment.formType" />: </div>--%>
+<%--                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getType() : request.getParameter("type"))%></div>--%>
+<%--            </li>--%>
+<%--            <li><div class="label"><bean:message key="Appointment.formReason" />: </div>--%>
+<%--                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getReason() : request.getParameter("reason"))%></div>--%>
+<%--            </li>--%>
+<%--            <li><div class="label"><bean:message key="Appointment.formLocation" />: </div>--%>
+<%--                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getLocation() : request.getParameter("location"))%></div>--%>
+<%--            </li>--%>
+<%--            <li><div class="label"><bean:message key="Appointment.formResources" />: </div>--%>
+<%--                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getResources() : request.getParameter("resources"))%></div>--%>
+<%--            </li>--%>
+<%--            <li>&nbsp;</li>--%>
+<%--            <li class="notes">--%>
+<%--                <div class="info"><%=Encode.forHtmlContent(bFirstDisp ? appt.getNotes() : request.getParameter("notes"))%></div>--%>
+<%--                <div class="info"><%=Encode.forHtml(bFirstDisp ? appt.getNotes() : request.getParameter("notes"))%></div>--%>
+<%--            </li>--%>
+<%--        </ul>--%>
+<%--    </div>--%>
+<%--</div>--%>
 
+</body>
 
 </html:html>
