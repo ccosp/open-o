@@ -250,9 +250,17 @@ public class WaitlistDaoImpl implements WaitlistDao {
     @Override
     public VacancyDisplayBO getDisplayVacancy(int vacancyID) {
         VacancyDisplayBO bo = new VacancyDisplayBO();
-        String queryString = "SELECT v.vacancyName, t.NAME, " +
-                "v.dateCreated, p.name, v.vacancyName  FROM vacancy v JOIN vacancy_template t ON v.templateId=t.TEMPLATE_ID JOIN program p ON v.wlProgramId=p.id  WHERE v.id=?1";
+        // String queryString = "SELECT v.vacancyName, t.NAME, " +
+        //         "v.dateCreated, p.name, v.vacancyName  FROM vacancy v JOIN vacancy_template t ON v.templateId=t.TEMPLATE_ID JOIN program p ON v.wlProgramId=p.id  WHERE v.id=?1";
 
+        String queryString = "SELECT v.vacancyName AS v_vacancyName, t.NAME AS t_name, " +
+                         "v.dateCreated AS v_dateCreated, p.name AS p_name, " +
+                         "v.vacancyName AS v_vacancyName_duplicate " +
+                         "FROM vacancy v " +
+                         "JOIN vacancy_template t ON v.templateId = t.TEMPLATE_ID " +
+                         "JOIN program p ON v.wlProgramId = p.id " +
+                         "WHERE v.id = ?1";
+                         
         Query query = entityManager.createNativeQuery(queryString);
         query.setParameter(1, vacancyID);
 
