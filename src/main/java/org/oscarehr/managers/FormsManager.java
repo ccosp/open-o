@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -170,7 +169,7 @@ public class FormsManager {
 	 * Please refrain from using this method unless your form ID is sourced from PDF-ready forms, as the form ID alone is not guaranteed to be unique.
 	 * Fetch a specific form by providing both the form ID and name, as they collectively ensure accurate identification.
 	 */
-	public PatientForm getFormById(LoggedInInfo loggedInInfo, String formId) {
+	public PatientForm getFormById(LoggedInInfo loggedInInfo, Integer formId, Integer demographicNo) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", SecurityInfoManager.READ, null)) {
 			throw new RuntimeException("missing required security object (_form)");
 		}
@@ -183,7 +182,7 @@ public class FormsManager {
 			String formName = encounterForm.getFormName();
 			String table = encounterForm.getFormTable();
 			if (!pdfReadyFormList.contains(formName)) { continue; }
-			patientForm = EctFormData.getPatientFormByFormId(formId, formName, table);
+			patientForm = new PatientForm(table, formName, formId, demographicNo);
 			if (patientForm != null) { break; }
 		}
 
@@ -247,7 +246,7 @@ public class FormsManager {
 	 * Please refrain from using this method unless your form ID is sourced from PDF-ready forms, as the form ID alone is not guaranteed to be unique.
 	 * To generate a PDF of a specific form, provide both the form ID and name, as they collectively ensure accurate identification.
 	 */
-	public Path renderForm(HttpServletRequest request, HttpServletResponse response, String formId) throws PDFGenerationException {
+	public Path renderForm(HttpServletRequest request, HttpServletResponse response, Integer formId, Integer demographicNo) throws PDFGenerationException {
 		EctFormData.PatientForm patientForm = null;
 		List<EncounterForm> encounterFormList = getAllEncounterForms();
 		List<String> pdfReadyFormList = getPDFReadyFormNames();
@@ -256,8 +255,7 @@ public class FormsManager {
 			String formName = encounterForm.getFormName();
 			String table = encounterForm.getFormTable();
 			if (!pdfReadyFormList.contains(formName)) { continue; }
-			patientForm = EctFormData.getPatientFormByFormId(formId, formName, table);
-			if (patientForm == null) { continue; }
+			patientForm = new PatientForm(table, formName, formId, demographicNo);
 		}
 
 		if (patientForm == null) {

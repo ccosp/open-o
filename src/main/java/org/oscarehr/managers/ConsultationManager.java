@@ -33,6 +33,7 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -276,31 +277,19 @@ public class ConsultationManager {
 			
 			request.setProfessionalSpecialist(specialist);
 			consultationRequestDao.merge(request);
-
-			// Batch saves the provided extras if any exist
-			List<ConsultationRequestExt> extras = request.getExtras();
-			if (!extras.isEmpty()) {
-				List<AbstractModel<?>> toSave = new ArrayList<>();
-				Date dateCreated = new Date();
-				for (ConsultationRequestExt extra : extras) {
-					extra.setRequestId(request.getId());
-					extra.setDateCreated(dateCreated);
-					toSave.add(extra);
-				}
-				consultationRequestExtDao.batchPersist(toSave);
-			}
 		} else {
 			checkPrivilege(loggedInInfo, SecurityInfoManager.UPDATE);
-			
 			consultationRequestDao.merge(request);
-
-			if (!request.getExtras().isEmpty()) {
-				saveOrUpdateExts(request.getId(), request.getExtras());
-				// Sets the request's extras to all current extras with the updated information
-				List<ConsultationRequestExt> extras = consultationRequestExtDao.getConsultationRequestExts(request.getId());
-				request.setExtras(extras);
-			}
 		}
+
+		// Batch saves the provided extras if any exist
+		if (!request.getExtras().isEmpty()) {
+			saveOrUpdateExts(request.getId(), request.getExtras());
+			// Sets the request's extras to all current extras with the updated information
+			List<ConsultationRequestExt> extras = consultationRequestExtDao.getConsultationRequestExts(request.getId());
+			request.setExtras(extras);
+		}
+
 		LogAction.addLogSynchronous(loggedInInfo,"ConsultationManager.saveConsultationRequest", "id="+request.getId());
 	}
 	
@@ -496,10 +485,12 @@ public class ConsultationManager {
 	public List<ConsultationAttachment> getEReferAttachments(LoggedInInfo loggedInInfo, HttpServletRequest request, HttpServletResponse response, Integer demographicNo) throws PDFGenerationException {
 		checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
 
-		List<ConsultationAttachment> consultationAttachments = new ArrayList<>();
-		EReferAttachment eReferAttachment = eReferAttachmentDao.getRecentByDemographic(demographicNo);
-		if (eReferAttachment == null) { return consultationAttachments; }
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.HOUR_OF_DAY, -1);
+		EReferAttachment eReferAttachment = eReferAttachmentDao.getRecentByDemographic(demographicNo, calendar.getTime());
+		if (eReferAttachment == null) { return Collections.emptyList(); }
 
+		List<ConsultationAttachment> consultationAttachments = new ArrayList<>();
 		for (EReferAttachmentData eReferAttachmentData : eReferAttachment.getAttachments()) {
 			try {
 				ConsultationAttachment consultationAttachment = null;
@@ -526,7 +517,7 @@ public class ConsultationManager {
 						break;
 					// Checkout the comment in ConsultationWebService:getEReferAttachments() for more details
 					// case ConsultDocs.DOCTYPE_FORM:
-					// 	Path formPDFPath = formsManager.renderForm(request, response, String.valueOf(eReferAttachmentData.getLabId()));
+					// 	Path formPDFPath = formsManager.renderForm(request, response, eReferAttachmentData.getLabId(), demographicNo);
 					// 	String formName = String.format("Form_%03d.pdf", eReferAttachmentData.getLabId());
 					// 	consultationAttachment = new ConsultationAttachment(eReferAttachmentData.getLabId(), DocumentType.FORM.getType(), formName, Files.readAllBytes(formPDFPath));
 					// 	break;
@@ -778,21 +769,18 @@ public class ConsultationManager {
 	public void saveOrUpdateExts(int requestId, List<ConsultationRequestExt> extras) {
 		List<ConsultationRequestExt> existingExtras = consultationRequestExtDao.getConsultationRequestExts(requestId);
 		Map<String, ConsultationRequestExt> extraMap = getExtsAsMap(existingExtras);
-		List<AbstractModel<?>> newExtras = new ArrayList<>();
+		List<ConsultationRequestExt> newExtras = new ArrayList<>();
 		
 		for (ConsultationRequestExt extra : extras) {
 			extra.setRequestId(requestId);
 			
 			// If the map contains the key then the extra already exists and will be updated, else saves a new one
-			if (extraMap.containsKey(extra.getKey())) {
-				ConsultationRequestExt savedExtra = extraMap.get(extra.getKey());
-				
-				extra.setId(savedExtra.getId());
-				extra.setDateCreated(savedExtra.getDateCreated());
-				
+			ConsultationRequestExt savedExtra = extraMap.get(extra.getKey());
+			if (savedExtra != null) {
 				// If the value isn't the same, update it
 				if (!savedExtra.getValue().equals(extra.getValue())) {
-					consultationRequestExtDao.merge(extra);
+					savedExtra.setValue(extra.getValue());
+					consultationRequestExtDao.merge(savedExtra);
 				}
 			} else {
 				extra.setDateCreated(new Date());

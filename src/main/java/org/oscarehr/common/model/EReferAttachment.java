@@ -43,10 +43,6 @@ public class EReferAttachment extends AbstractModel<Integer> {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public Integer getDemographicNo() {
 		return demographicNo;
 	}

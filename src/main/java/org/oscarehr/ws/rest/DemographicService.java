@@ -61,6 +61,7 @@ import org.oscarehr.common.model.DemographicContact;
 import org.oscarehr.common.model.DemographicCust;
 import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.common.model.DemographicExt.DemographicProperty;
+import org.oscarehr.common.model.enumerator.CppCode;
 import org.oscarehr.common.model.Measurement;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Provider;
@@ -107,11 +108,30 @@ import oscar.oscarWaitingList.util.WLWaitingListUtil;
 @Component("demographicService")
 public class DemographicService extends AbstractServiceImpl {
 
-	private final String ALLERGIES = "allergies";
-	private final String MEASUREMENTS = "measurements";
-	private final String NOTES = "notes";
-	private final String MEDICATIONS = "medications";
-	private final String CONTACTS = "contacts";
+	private enum IncludeType {
+        ALLERGIES("allergies"),
+        MEASUREMENTS("measurements"),
+        NOTES("notes"),
+        MEDICATIONS("medications"),
+        CONTACTS("contacts");
+
+        private final String value;
+
+        IncludeType(String value) { this.value = value; }
+
+        public String getValue() { return value; }
+    }
+
+	public enum MeasurementType {
+		HEIGHT("ht"),
+		WEIGHT("wt");
+	
+		private final String abbreviation;
+	
+		MeasurementType(String abbreviation) { this.abbreviation = abbreviation; }
+	
+		public String getAbbreviation() { return abbreviation; }
+	}
 	
 	
 	@Autowired
@@ -220,8 +240,6 @@ public class DemographicService extends AbstractServiceImpl {
 		if (demoCust!=null) {
 			result.setNurse(demoCust.getNurse());
 			result.setResident(demoCust.getResident());
-			//alert and alert_dismissal tables and code not present in Open OSP
-			//result.setAlert(demoCust.getBookingAlert());
 			result.setMidwife(demoCust.getMidwife());
 			result.setNotes(demoCust.getNotes());
 		}
@@ -333,15 +351,15 @@ public class DemographicService extends AbstractServiceImpl {
 			}
 		}
 
-		if (include.contains(ALLERGIES)) {
+		if (include.contains(IncludeType.ALLERGIES.getValue())) {
 			result.setAllergies(new AllergyConverter().getAllAsTransferObjects(loggedInInfo, allergyManager.getActiveAllergies(getLoggedInInfo(), demo.getDemographicNo())));
 		}
 		
-		if (include.contains(MEASUREMENTS)) {
+		if (include.contains(IncludeType.MEASUREMENTS.getValue())) {
 			List<String> heightType = new ArrayList<>();
-			heightType.add("ht");
+			heightType.add(MeasurementType.HEIGHT.getAbbreviation());
 			List<String> weightType = new ArrayList<>();
-			weightType.add("wt");
+			weightType.add(MeasurementType.WEIGHT.getAbbreviation());
 			List<Measurement> heights = measurementManager.getMeasurementByType(loggedInInfo, demo.getDemographicNo(), heightType);
 			List<Measurement> weights = measurementManager.getMeasurementByType(loggedInInfo, demo.getDemographicNo(), weightType);
 			Calendar calendar = Calendar.getInstance();
@@ -357,12 +375,14 @@ public class DemographicService extends AbstractServiceImpl {
 			result.setMeasurements(new MeasurementConverter().getAllAsTransferObjects(loggedInInfo, new ArrayList<>(measurements)));
 		}
 
-		if (include.contains(NOTES)) {
-			String cppCodes[] = {"OMeds", "SocHistory", "MedHistory", "FamHistory", "Reminders", "RiskFactors","OcularMedication","TicklerNote"};
-			result.setEncounterNotes(noteManager.getActiveCppNotes(loggedInInfo, demo.getDemographicNo(), cppCodes));
+		if (include.contains(IncludeType.NOTES.getValue())) {
+			// Avoid sending out 'concerns' as it is too sensitive to pass
+			List<String> cppCodeList = CppCode.toStringList();
+			cppCodeList.remove(CppCode.CONCERNS.getCode());
+			result.setEncounterNotes(noteManager.getActiveCppNotes(loggedInInfo, demo.getDemographicNo(), cppCodeList.toArray(new String[0])));
 		}
 
-		if (include.contains(MEDICATIONS)) {
+		if (include.contains(IncludeType.MEDICATIONS.getValue())) {
 			List<String> singleLineMedications = rxManager.getCurrentSingleLineMedications(loggedInInfo, demo.getDemographicNo());
 			result.setMedicationSummary(singleLineMedications);
 		}
@@ -430,10 +450,14 @@ public class DemographicService extends AbstractServiceImpl {
 		}
 
 		// If the contacts are included add Demographic Contacts to the basic results (relationships/healthcareteam/etc)
-		if (includes.contains(CONTACTS)) {
+		if (includes.contains(IncludeType.CONTACTS.getValue())) {
 			List<DemographicContact> demoContacts = demographicManager.getDemographicContacts(getLoggedInInfo(), id);
 			if (demoContacts != null) {
 				for (DemographicContact demoContact : demoContacts) {
+					// Check if 'demoContact' has given consent to be contacted;
+					// if not, skip sharing 'demoContact'.
+					if (!demoContact.isConsentToContact()) { continue; }
+
 					Integer contactId = Integer.valueOf(demoContact.getContactId());
 					DemographicContactFewTo1 demoContactTo1 = new DemographicContactFewTo1();
 

@@ -80,6 +80,7 @@ if(!authed) {
 <%@page import="org.oscarehr.common.dao.ContactSpecialtyDao" %>
 <%@page import="org.oscarehr.common.dao.DemographicContactDao" %>
 <%@page import="org.oscarehr.common.model.ContactSpecialty" %>
+<%@ page import="org.oscarehr.common.model.enumerator.ConsultationRequestExtKey" %>
 <%@ page import="org.oscarehr.common.dao.ConsultationRequestExtDao" %>
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
 <%@ page import="oscar.oscarEncounter.data.EctFormData" %>
@@ -508,6 +509,8 @@ private static void setHealthCareTeam( List<DemographicContact> demographicConta
    <script>
      jQuery.noConflict();
    </script>
+
+<!-- Instead of importing conreq.js using the CME tag (as done in Oscar19/OscarPro), we are opting to directly import conreq.js without utilizing the CME tag. -->
 <% if ("ocean".equals(props.get("cme_js"))) { 
 	int randomNo = new Random().nextInt();%>
 <script id="mainScript" src="${ pageContext.request.contextPath }/js/custom/ocean/conreq.js?no-cache=<%=randomNo%>&autoRefresh=true" ocean-host=<%=Encode.forUriComponent(props.getProperty("ocean_host"))%>></script>
@@ -1822,7 +1825,7 @@ function clearAppointmentDateAndTime() {
 				<% if (requestId != null && "ocean".equals(props.get("cme_js"))) {
 					ConsultationRequestExtDao consultationRequestExtDao = SpringUtils.getBean(ConsultationRequestExtDao.class);
 					Integer consultId = Integer.parseInt(requestId);
-					String eReferralRef = consultationRequestExtDao.getConsultationRequestExtsByKey(consultId, "ereferral_ref");
+					String eReferralRef = consultationRequestExtDao.getConsultationRequestExtsByKey(consultId, ConsultationRequestExtKey.EREFERRAL_REF.getKey());
 					if(eReferralRef != null) {
 				%>
 				<input id="ereferral_ref" type="hidden" value="<%= Encode.forHtmlAttribute(eReferralRef) %>"/>

@@ -9,7 +9,7 @@ public class ConsultationRequestExtConverter extends AbstractConverter<Consultat
 	public ConsultationRequestExt getAsDomainObject(LoggedInInfo loggedInInfo, ConsultationRequestExtTo1 t) throws ConversionException {
 		ConsultationRequestExt d = new ConsultationRequestExt();
 		
-		d.setId(t.getId());
+		//d.setId(t.getId());
 		if (t.getRequestId() != null) {
 			d.setRequestId(t.getRequestId());
 		}

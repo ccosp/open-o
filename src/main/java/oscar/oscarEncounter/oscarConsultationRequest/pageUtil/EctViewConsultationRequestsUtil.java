@@ -41,6 +41,7 @@ import org.oscarehr.common.model.ConsultationServices;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Provider;
+import org.oscarehr.common.model.enumerator.ConsultationRequestExtKey;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -106,7 +107,7 @@ public class EctViewConsultationRequestsUtil {
               String serviceDescription = "";
               // If service id is 0, check the extensions table
               if (consult.getServiceId() == 0) {
-                  serviceDescription = consultationRequestExtDao.getConsultationRequestExtsByKey(consult.getId(), "ereferral_service");
+                  serviceDescription = consultationRequestExtDao.getConsultationRequestExtsByKey(consult.getId(), ConsultationRequestExtKey.EREFERRAL_SERVICE.getKey());
               } else {
                   services = serviceDao.find(consult.getServiceId());
                   if (services != null) {
@@ -221,7 +222,7 @@ public class EctViewConsultationRequestsUtil {
               String serviceDescription;
               // If service id is 0, check the extensions table
               if (consult.getServiceId() == 0) {
-                  serviceDescription = consultationRequestExtDao.getConsultationRequestExtsByKey(consult.getId(), "ereferral_service");
+                  serviceDescription = consultationRequestExtDao.getConsultationRequestExtsByKey(consult.getId(), ConsultationRequestExtKey.EREFERRAL_SERVICE.getKey());
               } else {
                   services = serviceDao.find(consult.getServiceId());
                   serviceDescription = services.getServiceDesc();

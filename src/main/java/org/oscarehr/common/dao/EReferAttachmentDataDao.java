@@ -5,7 +5,8 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.Calendar;
+import java.util.Date;
+
 import org.hibernate.Hibernate;
 import org.oscarehr.common.model.EReferAttachmentData;
 import org.springframework.stereotype.Repository;
@@ -18,17 +19,14 @@ public class EReferAttachmentDataDao extends AbstractDao<EReferAttachmentData> {
         super(EReferAttachmentData.class);
     }
 
-    public EReferAttachmentData getByDocumentId(Integer docId, String type) {
+    public EReferAttachmentData getRecentByDocumentId(Integer docId, String type, Date expiry) {
         EReferAttachmentData eReferAttachmentData = null;
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR_OF_DAY, -1);
 
         String sql = "SELECT d FROM EReferAttachmentData d WHERE d.labId = :docId AND d.labType = :labType AND d.eReferAttachment.created > :expiry AND d.eReferAttachment.archived = FALSE";
 
         Query query = entityManager.createQuery(sql);
         query.setParameter("docId", docId);
-        query.setParameter("expiry", calendar.getTime());
+        query.setParameter("expiry", expiry);
         query.setParameter("labType", type);
 
         List<EReferAttachmentData> eReferAttachmentDataList = query.getResultList();

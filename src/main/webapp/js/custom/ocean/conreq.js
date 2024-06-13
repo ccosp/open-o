@@ -1,5 +1,11 @@
 var section = 'consultation';
 
+// Instead of importing conreq.js using the CME tag (as done in Oscar19/OscarPro),
+// we are opting to directly import conreq.js into ConsultationFormRequest.jsp to load the ocean refer button without utilizing the CME tag.
+
+// Here, the 'ocean-host' script attribute is added in the conreq.js script tag as follows:
+// '<script id="mainScript" src="${ pageContext.request.contextPath }/js/custom/ocean/conreq.js?no-cache=<%=randomNo%>&autoRefresh=true" ocean-host=<%=Encode.forUriComponent(props.getProperty("ocean_host"))%>></script>'
+// when it is being imported into the ConsultationFormRequest.jsp.
 (function (script) {
     let oceanHost = script.attributes['ocean-host'];
     if (oceanHost && oceanHost.value) {
@@ -29,6 +35,9 @@ jQuery(document).ready(function(){
     });
 });
 
+// This code will be executed when a user sends a new e-refer to OceanMD from the consult request form.
+// It involves saving attachments in the 'EreferAttachment' table by sending the selected attachments (documents)
+// and demographic information to the EreferAction.java class.
 function eRefer(event) {
     let demographicNo = document.getElementById("demographicNo").serialize();
     let documents = getDocuments(event);
@@ -63,6 +72,9 @@ function getDocuments(event) {
     return "documents=" + documents;
 }
 
+// This code will be executed when a user tries to edit attachments on an already created consult request for Ocean e-refer.
+// It will update the attachments in the consult request and send those attachments to OceanMD
+// by saving them into the 'EreferAttachment' table.
 function attachOceanAttachments() {
     let demographicNo = document.getElementById("demographicNo").serialize();
     let requestId = document.getElementById("requestId").serialize();

@@ -7,7 +7,7 @@ import org.oscarehr.common.model.EFormDocs;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.OceanEReferralAttachmentUtil;
+import oscar.oscarEncounter.oceanEReferal.pageUtil.OceanEReferralAttachmentUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,16 @@ public class DocumentAttach {
 	private final ConsultDocsDao consultDocsDao = SpringUtils.getBean(ConsultDocsDao.class);
 	private final EFormDocsDao eFormDocsDao = SpringUtils.getBean(EFormDocsDao.class);
 
+	/*
+	 * When editOnOcean is set to false, it signifies a normal consult request, performing just attach or detach operations on the consult request form.
+	 * When editOnOcean is set to true, it signifies that the attach or detach operation is being performed on a consult request created by OceanMD.
+	 * In this case, it will do two things:
+	 * 1. Attach or detach attachments from the consult request.
+	 * 2. Add those new attachments to the 'EreferAttachment' table, so Oscar can sent those attachment to OceanMD.
+	 * By doing this, the user will not have to manually upload new attachments to e-refer. They will be automatically fetched.
+	 */
 	private Boolean editOnOcean = false;
+	
 	private Integer demographicNo;
 
 	public DocumentAttach() {

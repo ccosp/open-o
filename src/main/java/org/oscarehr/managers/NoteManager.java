@@ -1,7 +1,6 @@
 package org.oscarehr.managers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
@@ -12,6 +11,7 @@ import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.casemgmt.model.CaseManagementNoteExt;
 import org.oscarehr.casemgmt.model.Issue;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
+import org.oscarehr.common.model.enumerator.CppCode;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.rest.conversion.CaseManagementIssueConverter;
@@ -23,8 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class NoteManager {
     
-    public static String cppCodes[] = {"OMeds", "SocHistory", "MedHistory", "Concerns", "FamHistory", "Reminders", "RiskFactors","OcularMedication","TicklerNote"};
-
     private static Logger logger = MiscUtils.getLogger();
 
     @Autowired
@@ -37,7 +35,7 @@ public class NoteManager {
     private IssueDAO issueDAO;
 
     public List<NoteTo1> getCppNotes(LoggedInInfo loggedInInfo, Integer demographicNo){
-        List<CaseManagementNote> notes = new ArrayList<>(caseManagementNoteDAO.findNotesByDemographicAndIssueCode(demographicNo, cppCodes));
+        List<CaseManagementNote> notes = new ArrayList<>(caseManagementNoteDAO.findNotesByDemographicAndIssueCode(demographicNo, CppCode.toArray()));
         List<NoteTo1> noteTo1s = new ArrayList<>();
         for(CaseManagementNote note : notes){
             noteTo1s.add(convertNote(loggedInInfo, note));
@@ -141,7 +139,7 @@ public class NoteManager {
     }
 
     public boolean isCppCode(CaseManagementIssue cmeIssue) {
-        return Arrays.asList(cppCodes).contains(cmeIssue.getIssue().getCode());
+        return (CppCode.toStringList()).contains(cmeIssue.getIssue().getCode());
     }
 
     public String[] getIssueIds(String[] newCppCodes) {
@@ -149,7 +147,7 @@ public class NoteManager {
         if (newCppCodes != null && newCppCodes.length > 0) { 
             issues = issueDAO.findIssueByCode(newCppCodes);
         } else {
-            issues = issueDAO.findIssueByCode(cppCodes);
+            issues = issueDAO.findIssueByCode(CppCode.toArray());
         }
 
         List<String> issueIdList = new ArrayList<>();

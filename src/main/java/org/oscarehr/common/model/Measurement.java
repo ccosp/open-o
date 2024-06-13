@@ -88,10 +88,6 @@ public class Measurement extends AbstractModel<Integer> implements Serializable 
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getType() {
 		return (type);
 	}

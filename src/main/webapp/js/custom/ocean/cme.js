@@ -1,3 +1,9 @@
+// Instead of importing cme.js using the CME tag (as done in Oscar19/OscarPro),
+// we are opting to directly import cme.js into newEncounterLayout.jsp to load the ocean toolbar without utilizing the CME tag.
+
+// Here, the 'ocean-host' script attribute is added in the cme.js script tag as follows:
+// '<script id="mainScript" src="${ pageContext.request.contextPath }/js/custom/ocean/cme.js?no-cache=<%=randomNo%>&autoRefresh=true" ocean-host=<%=Encode.forUriComponent(OscarProperties.getInstance().getProperty("ocean_host"))%>></script>'
+// when it is being imported into the newEncounterLayout.jsp.
 (function (script) {
   let oceanHost = script.attributes['ocean-host'];
   if (oceanHost && oceanHost.value) {
@@ -6,13 +12,6 @@
 })(document.currentScript);
 
  jQuery(document).ready(function(){
-   issueNoteUrls = {
-       divR1I1:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=SocHistory&title=" + socHistoryLabel + "&cmd=divR1I1",
-             divR1I2:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=MedHistory&title=" + medHistoryLabel + "&cmd=divR1I2",
-             divR2I1:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=Concerns&title=" + onGoingLabel + "&cmd=divR2I1",
-             divR2I2:    ctx + "/CaseManagementView.do?hc=996633&method=listNotes&providerNo=" + providerNo + "&demographicNo=" + demographicNo + "&issue_code=Reminders&title=" + remindersLabel + "&cmd=divR2I2"                                         
-     };
-
      // init();
      // rather than highjacking a <div> lets put OCEAN where the OSCAR instance has allowance
      jQuery("#ocean_placeholder").append("<div id='ocean_div' style='width: 100%; display: none; font-size: 11px;'>Sorry, the Ocean toolbar is currently unavailable.</div>");
@@ -35,11 +34,3 @@
          }
      });
    });
-
-
- function notifyIssueUpdate() {
-   
- }
-
- function notifyDivLoaded(divId) {	  
- }

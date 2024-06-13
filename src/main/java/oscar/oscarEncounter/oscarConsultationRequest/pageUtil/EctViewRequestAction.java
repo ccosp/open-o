@@ -57,6 +57,7 @@ import org.oscarehr.common.model.ConsultationRequestExt;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.common.model.DemographicExt.DemographicProperty;
+import org.oscarehr.common.model.enumerator.ConsultationRequestExtKey;
 import org.oscarehr.common.model.Hl7TextMessage;
 import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.Provider;
@@ -191,12 +192,12 @@ public class EctViewRequestAction extends Action {
             Provider prov = provDao.getProvider(consult.getProviderNo());
             thisForm.setProviderName(prov.getFormattedName());
 
-            boolean isEReferral = extraMap.containsKey("ereferral_ref");
+            boolean isEReferral = extraMap.containsKey(ConsultationRequestExtKey.EREFERRAL_REF.getKey());
             thisForm.seteReferral(isEReferral);
             if (isEReferral) {
-                thisForm.setProfessionalSpecialistName(extraMap.getOrDefault("ereferral_doctor", ""));
-                thisForm.seteReferralService(extraMap.getOrDefault("ereferral_service", ""));
-                thisForm.seteReferralId(extraMap.get("ereferral_ref"));
+                thisForm.setProfessionalSpecialistName(extraMap.getOrDefault(ConsultationRequestExtKey.EREFERRAL_DOCTOR.getKey(), ""));
+                thisForm.seteReferralService(extraMap.getOrDefault(ConsultationRequestExtKey.EREFERRAL_SERVICE.getKey(), ""));
+                thisForm.seteReferralId(extraMap.get(ConsultationRequestExtKey.EREFERRAL_REF.getKey()));
             }
 
             thisForm.setFdid(consult.getFdid());

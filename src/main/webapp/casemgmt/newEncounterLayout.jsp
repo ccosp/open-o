@@ -352,6 +352,7 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 		<script> jQuery(window).load(function(){window.resizeTo(<%=width%>,<%=height%>)}) </script>
 	<% } %>
 
+<!-- Instead of importing cme.js using the CME tag (as done in Oscar19/OscarPro), we are opting to directly import cme.js without utilizing the CME tag. -->
 <% if ("ocean".equals(OscarProperties.getInstance().get("cme_js"))) { 
 	int randomNo = new Random().nextInt();%>
 <script id="mainScript" src="${ pageContext.request.contextPath }/js/custom/ocean/cme.js?no-cache=<%=randomNo%>&autoRefresh=true" ocean-host=<%=Encode.forUriComponent(OscarProperties.getInstance().getProperty("ocean_host"))%>></script>

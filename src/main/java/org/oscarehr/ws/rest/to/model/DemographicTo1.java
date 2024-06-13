@@ -26,8 +26,6 @@ package org.oscarehr.ws.rest.to.model;
 //import net.sf.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -98,7 +96,7 @@ public class DemographicTo1 implements Serializable {
 	private Date onWaitingListSinceDate;
 	private AgeTo1 age;
 	private Integer admissionProgramId;
-	private String middleNames = "";
+	private String middleNames;
 	private String gender;
 	private String pronoun;
 	private Integer genderId;
@@ -107,23 +105,23 @@ public class DemographicTo1 implements Serializable {
 	private String cellPhone;
 	private String phoneComment;
 
-	private List<DemographicContactFewTo1> demoContacts = new ArrayList<DemographicContactFewTo1>();
-	private List<DemographicContactFewTo1> demoContactPros = new ArrayList<DemographicContactFewTo1>();
-	private List<DemographicExtTo1> extras = new ArrayList<DemographicExtTo1>();
-	private List<ProviderTo1> doctors = new ArrayList<ProviderTo1>();
-	private List<ProviderTo1> nurses = new ArrayList<ProviderTo1>();
-	private List<ProviderTo1> midwives = new ArrayList<ProviderTo1>();
-	private List<ProfessionalSpecialistTo1> referralDoctors = new ArrayList<ProfessionalSpecialistTo1>();
-	private List<WaitingListNameTo1> waitingListNames = new ArrayList<WaitingListNameTo1>();
-	private List<StatusValueTo1> patientStatusList = new ArrayList<StatusValueTo1>();
-	private List<StatusValueTo1> rosterStatusList = new ArrayList<StatusValueTo1>();
-	private List<AllergyTo1> allergies = new ArrayList<>();
-	private List<MeasurementTo1> measurements = new ArrayList<>();
-	private List<ConsultationRequestTo1> consultationRequests = new ArrayList<>();
-	private List<ConsultationResponseTo1> consultationResponses = new ArrayList<>();
-	private List<NoteTo1> encounterNotes = new ArrayList<>();
-	private List<DocumentTo1> documents = new ArrayList<>();
-	private List<String> medicationSummary = Collections.emptyList();
+	private List<DemographicContactFewTo1> demoContacts;
+	private List<DemographicContactFewTo1> demoContactPros;
+	private List<DemographicExtTo1> extras;
+	private List<ProviderTo1> doctors;
+	private List<ProviderTo1> nurses;
+	private List<ProviderTo1> midwives;
+	private List<ProfessionalSpecialistTo1> referralDoctors;
+	private List<WaitingListNameTo1> waitingListNames;
+	private List<StatusValueTo1> patientStatusList;
+	private List<StatusValueTo1> rosterStatusList;
+	private List<AllergyTo1> allergies;
+	private List<MeasurementTo1> measurements;
+	private List<ConsultationRequestTo1> consultationRequests;
+	private List<ConsultationResponseTo1> consultationResponses;
+	private List<NoteTo1> encounterNotes;
+	private List<DocumentTo1> documents;
+	private List<String> medicationSummary;
 	
 	
 	public Integer getDemographicNo() {

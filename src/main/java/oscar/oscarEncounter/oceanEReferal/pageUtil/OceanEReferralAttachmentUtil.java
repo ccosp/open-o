@@ -1,5 +1,6 @@
-package oscar.oscarEncounter.oscarConsultationRequest.pageUtil;
+package oscar.oscarEncounter.oceanEReferal.pageUtil;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public class OceanEReferralAttachmentUtil {
     private static EReferAttachmentDao eReferAttachmentDao = SpringUtils.getBean(EReferAttachmentDao.class);
 
     public static void detachOceanEReferralConsult(String docId, String type) {
-        EReferAttachmentData eReferAttachmentData = eReferAttachmentDataDao.getByDocumentId(Integer.parseInt(docId), type);        
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY, -1);
+        EReferAttachmentData eReferAttachmentData = eReferAttachmentDataDao.getRecentByDocumentId(Integer.parseInt(docId), type, calendar.getTime());        
         if (eReferAttachmentData == null) { return; }
 
         List<EReferAttachmentData> eReferAttachmentDataList = eReferAttachmentData.geteReferAttachment().getAttachments();
@@ -25,7 +28,9 @@ public class OceanEReferralAttachmentUtil {
     }
 
     public static void attachOceanEReferralConsult(String documentId, Integer demographicNo, String type) {
-        EReferAttachment eReferAttachment = eReferAttachmentDao.getRecentByDemographic(demographicNo);
+        Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.HOUR_OF_DAY, -1);
+        EReferAttachment eReferAttachment = eReferAttachmentDao.getRecentByDemographic(demographicNo, calendar.getTime());
         if (eReferAttachment == null) { eReferAttachment = new EReferAttachment(demographicNo); }
         EReferAttachmentData attachmentData = new EReferAttachmentData(eReferAttachment, Integer.parseInt(documentId), type);
 
