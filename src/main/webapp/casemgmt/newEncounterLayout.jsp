@@ -37,7 +37,8 @@
 <%@page import="org.oscarehr.casemgmt.common.Colour" %>
 <%@page import="org.oscarehr.common.dao.ProviderDataDao" %>
 <%@page import="org.oscarehr.common.model.ProviderData"%>
-<%@page import="java.util.List"%>
+<%@page import="org.owasp.encoder.Encode" %>
+<%@page import="java.util.List, java.util.Random"%>
 
 
 <%
@@ -350,6 +351,12 @@ LoggedInInfo loggedInInfo=LoggedInInfo.getLoggedInInfoFromSession(request);
 		String height = heightP.getValue();%>
 		<script> jQuery(window).load(function(){window.resizeTo(<%=width%>,<%=height%>)}) </script>
 	<% } %>
+
+<!-- Instead of importing cme.js using the CME tag (as done in Oscar19/OscarPro), we are opting to directly import cme.js without utilizing the CME tag. -->
+<% if ("ocean".equals(OscarProperties.getInstance().get("cme_js"))) { 
+	int randomNo = new Random().nextInt();%>
+<script id="mainScript" src="${ pageContext.request.contextPath }/js/custom/ocean/cme.js?no-cache=<%=randomNo%>&autoRefresh=true" ocean-host=<%=Encode.forUriComponent(OscarProperties.getInstance().getProperty("ocean_host"))%>></script>
+<% } %>
 
 <html:base />
 <title><bean:message key="oscarEncounter.Index.title" /></title>
