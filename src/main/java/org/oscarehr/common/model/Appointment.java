@@ -141,6 +141,19 @@ public class Appointment extends AbstractModel<Integer> implements Serializable,
 		this.endTime = endTime;
 	}
 
+	public String getDuration(){
+		String ret="";
+		
+		long diff = endTime.getTime() - startTime.getTime();
+		long diffMinutes = diff / (60 * 1000) % 60;         
+		long diffHours = diff / (60 * 60 * 1000);
+		
+		if(diffHours > 0) ret += (int)diffHours + "H "; 
+		if(diffMinutes > 0) ret += (int)diffMinutes + "m ";
+		
+		return ret;
+	}
+
 	public String getName() {
 		return name;
 	}
