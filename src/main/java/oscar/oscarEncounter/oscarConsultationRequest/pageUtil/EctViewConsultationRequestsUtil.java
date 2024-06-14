@@ -182,17 +182,11 @@ public class EctViewConsultationRequestsUtil {
       try {                           
 
           ConsultationRequestDao consultReqDao = (ConsultationRequestDao) SpringUtils.getBean(ConsultationRequestDao.class);;
-
           ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
           DemographicManager demoManager = SpringUtils.getBean(DemographicManager.class);
           ConsultationServiceDao serviceDao = (ConsultationServiceDao) SpringUtils.getBean(ConsultationServiceDao.class);
-          ConsultationRequest consult;
-          Provider prov;
-          Demographic demo;
-          ConsultationServices services;
-          String providerId, providerName;
 
-          List consultList = consultReqDao.getConsults(Integer.parseInt(demoNo));
+          List <ConsultationRequest> consultList = consultReqDao.getConsults(Integer.parseInt(demoNo));
           for( int idx = 0; idx < consultList.size(); ++idx ) {
               consult = (ConsultationRequest)consultList.get(idx);
               demo = demoManager.getDemographic(loggedInInfo, consult.getDemographicId());
