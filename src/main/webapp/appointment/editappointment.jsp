@@ -861,17 +861,17 @@ function locale(){
     <table>
         <tr>
             <td>
-                <bean:message key="Appointment.formDate" />:
+                <label for="date"><bean:message key="Appointment.formDate" />:</label>
             </td>
             <td>
-                <input type="date" name="appointment_date"
+                <input type="date" name="appointment_date" id="date"
                     value="<%=bFirstDisp?ConversionUtils.toDateString(appt.getAppointmentDate()):strApptDate%>"
                     >
             </td>
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formStartTime" />:
+	            <label><bean:message key="Appointment.formStartTime" />:</label>
             </td>
             <td>
                 <input type="time" name="start_time"
@@ -880,8 +880,8 @@ function locale(){
             </td>
         </tr>
         <tr>
-            <td style="font-size:8pt;">
-                <bean:message key="Appointment.formDuration" />:
+            <td>
+	            <label><bean:message key="Appointment.formDuration" />:</label>
             </td>
             <td>
                 				<%
@@ -942,7 +942,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formReason" />:
+	            <label><bean:message key="Appointment.formReason" />:</label>
             </td>
             <td>
 				<select name="reasonCode">
@@ -976,7 +976,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formLocation" />:
+	            <label><bean:message key="Appointment.formLocation" />:</label>
             </td>
             <td>
             <%
@@ -1030,7 +1030,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formCreator" />:
+	            <label><bean:message key="Appointment.formCreator" />:</label>
             </td>
             <td>
                 <% String lastCreatorNo = bFirstDisp?(appt.getCreator()):request.getParameter("user_id"); %>
@@ -1064,7 +1064,7 @@ function locale(){
                 %>
         <tr>
             <td>
-                <bean:message key="Appointment.CreateDate" />:
+	            <label><bean:message key="Appointment.CreateDate" />:</label>
             </td>
             <td>
                 <input type="hidden" name="createDate" value="<%=origDate%>">
@@ -1075,10 +1075,10 @@ function locale(){
         String mcNumber = OtherIdManager.getApptOtherId(appointment_no, "appt_mc_number"); %>
         <tr>
             <td>
-                <bean:message key="Appointment.formMC" />:
+	            <label for="appt_mc_number"><bean:message key="Appointment.formMC" />:</label>
             </td>
             <td>
-                <input type="text" name="appt_mc_number" value="<%=bFirstDisp?mcNumber:request.getParameter("appt_mc_number")%>" />
+                <input type="text" name="appt_mc_number" id="appt_mc_number" value="<%=bFirstDisp?mcNumber:Encode.forHtmlAttribute(request.getParameter("appt_mc_number"))%>" />
             </td>
         </tr>
         <% } %>
@@ -1090,7 +1090,7 @@ function locale(){
     <table>
         <tr>
             <td>
-                <bean:message key="Appointment.formStatus" />:
+	            <label><bean:message key="Appointment.formStatus" />:</label>
             </td>
             <td>
             <%
@@ -1117,7 +1117,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formType"/>:
+	            <label><bean:message key="Appointment.formType"/>:</label>
                 <!-- <input type="button" class="btn" name="typeButton" value="<bean:message key="Appointment.formType"/>" style="margin-bottom:10px;"  onClick="openTypePopup();"> -->
              </td>
              <td>
@@ -1143,7 +1143,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formDoctor" />:
+	            <label><bean:message key="Appointment.formDoctor" />:</label>
             </td>
             <td>
                 <input type="text" readonly name="doctorNo" id="mrp"
@@ -1152,8 +1152,8 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <a href="#" onclick="demographicdetail(550,700)" class="btn btn-link" style="padding-left:0px;">
-                    <bean:message key="global.master" /></a>
+               <label><a href="#" onclick="demographicdetail(550,700)" class="btn btn-link" style="padding-left:0px;">
+                    <bean:message key="global.master" /></a></label>
             </td>
             <td>
                 <input type="text" name="demographic_no" id="demographic_no"
@@ -1163,7 +1163,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formChartNo" />:
+	            <label><bean:message key="Appointment.formChartNo" />:</label>
             </td>
             <td>
                 <input type="text" name="chart_no"
@@ -1173,7 +1173,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formNotes" />:
+                <label><bean:message key="Appointment.formNotes" />:</label>
             </td>
             <td>
 				<textarea name="notes" maxlength="255" rows="9" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' onfocus='this.style.height = "";this.style.height = this.scrollHeight + "px"'><%=Encode.forHtmlContent(bFirstDisp?appt.getNotes():request.getParameter("notes"))%></textarea>
@@ -1181,7 +1181,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formResources" />:
+	            <label><bean:message key="Appointment.formResources" />:</label>
             </td>
             <td>
                 <input type="text" name="resources" tabindex="5"
@@ -1190,7 +1190,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formLastCreator" />:
+	            <label><bean:message key="Appointment.formLastCreator" />:</label>
             </td>
             <td>
         <%  lastCreatorNo = request.getParameter("user_id");
@@ -1211,7 +1211,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formLastTime" />:
+	            <label><bean:message key="Appointment.formLastTime" />:</label>
             </td>
             <td>
                 <input type="hidden" name="lastcreatedatetime"
@@ -1227,7 +1227,7 @@ function locale(){
         </tr>
         <tr>
             <td>
-                <bean:message key="Appointment.formCritical" /> <i class="icon-warning-sign"></i>:
+	            <label for="urgency"><bean:message key="Appointment.formCritical" /> <i class="icon-warning-sign"></i>:</label>
             </td>
             <td>
             	<%
@@ -1244,14 +1244,14 @@ function locale(){
             			}
             		}
             	%>
-            	<input type="checkbox" name="urgency" value="critical" <%=urgencyChecked%> >
+            	<input type="checkbox" name="urgency" id="urgency" value="critical" <%=urgencyChecked%> >
             </td>
         </tr>
             <% String emailReminder = pros.getProperty("emailApptReminder");
                if ((emailReminder != null) && emailReminder.equalsIgnoreCase("yes")) { %>
         <tr>
             <td>
-                <bean:message key="Appointment.formEmailReminder" />:
+	            <label><bean:message key="Appointment.formEmailReminder" />:</label>
             </td>
             <td>
                 <input type="checkbox" name="emailPt" value="email reminder">
@@ -1323,8 +1323,8 @@ function locale(){
 <div id="bottomInfo">
 <table style="width:95%;">
 	<tr >
-		<td style="padding-left:10px;"><bean:message key="Appointment.msgTelephone" />: <%= Encode.forHtmlContent(StringUtils.trimToEmpty(phone))%><br>
-		<bean:message key="Appointment.msgRosterStatus" />: <%=Encode.forHtmlContent(StringUtils.trimToEmpty(rosterstatus))%>
+		<td style="padding-left:10px;"><label><bean:message key="Appointment.msgTelephone" />:</label> <%= Encode.forHtmlContent(StringUtils.trimToEmpty(phone))%><br>
+			<label><bean:message key="Appointment.msgRosterStatus" />:</label> <%=Encode.forHtmlContent(StringUtils.trimToEmpty(rosterstatus))%>
 		</td>
 		<% if (alert!=null && !alert.equals("")) { %>
 		<td class="alert alert-error"><%=Encode.forHtmlContent(alert)%></td>
@@ -1410,7 +1410,7 @@ function locale(){
                 if (numForms == 1) {
 
 %>
-          <table style="font-size: 9pt; background-color: #e8e8e8; margin-left:auto; vertical-align: top; padding:3px">
+          <table style="background-color: #e8e8e8; margin-left:auto; vertical-align: top; padding:3px">
             <tr style="background-color:#f3f6f9">
                 <th colspan="2">
                     <bean:message key="appointment.addappointment.msgFormsSaved"/>
