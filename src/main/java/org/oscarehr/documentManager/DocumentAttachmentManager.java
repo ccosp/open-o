@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
+import oscar.oscarEncounter.data.EctFormData.PatientForm;
 import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -185,6 +186,23 @@ public class DocumentAttachmentManager {
 		documentAttach.attachToConsult(attachments, documentType, providerNo, requestId);
 	}
 
+	/*
+	 * @param editOnOcean When editOnOcean is set to false, it signifies a normal consult request, performing just attach or detach operations on the consult request form.
+	 * When editOnOcean is set to true, it signifies that the attach or detach operation is being performed on a consult request created by OceanMD.
+	 * In this case, it will do two things:
+	 * 1. Attach or detach attachments from the consult request.
+	 * 2. Add those new attachments to the 'EreferAttachment' table, so Oscar can sent those attachment to OceanMD.
+	 * By doing this, the user will not have to manually upload new attachments to e-refer. They will be automatically fetched.
+	 */
+	public void attachToConsult(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer requestId, Integer demographicNo, Boolean editOnOcean) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_con", SecurityInfoManager.WRITE, demographicNo)) {
+			throw new RuntimeException("missing required security object (_con)");
+		}
+
+		DocumentAttach documentAttach = new DocumentAttach(demographicNo, editOnOcean);
+		documentAttach.attachToConsult(attachments, documentType, providerNo, requestId);
+	}
+
 	public void attachToEForm(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer fdid, Integer demographicNo) {
 		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_eform", SecurityInfoManager.WRITE, demographicNo)) {
 			throw new RuntimeException("missing required security object (_eform)");
@@ -302,7 +320,8 @@ public class DocumentAttachmentManager {
 				path = HRMUtil.renderHRM(loggedInInfo, documentId);
 				break;
 			case FORM:
-				path = formsManager.renderForm(request, response, null);
+				PatientForm patientForm = null;
+				path = formsManager.renderForm(request, response, patientForm);
 				break;
 		}
 		return path;
