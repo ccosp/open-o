@@ -187,25 +187,25 @@ public class EctViewConsultationRequestsUtil {
           ConsultationServiceDao serviceDao = (ConsultationServiceDao) SpringUtils.getBean(ConsultationServiceDao.class);
 
           List <ConsultationRequest> consultList = consultReqDao.getConsults(Integer.parseInt(demoNo));
-          for( int idx = 0; idx < consultList.size(); ++idx ) {
-              consult = (ConsultationRequest)consultList.get(idx);
-              demo = demoManager.getDemographic(loggedInInfo, consult.getDemographicId());
-              providerId = demo.getProviderNo();
-              if( providerId != null && !providerId.equals("")) {
-              prov = providerDao.getProvider(demo.getProviderNo());
-                providerName = prov.getFormattedName();
-              }
-              else {
-                  providerName = "N/A";
+          for( ConsultationRequest consult : consultList ) {
+              // Initialize serviceDesc and handle invalid service IDs
+              String serviceDesc;
+              if (consult.getServiceId() == null || consult.getServiceId() == 0) {
+                serviceDesc = "Unknown Service"; 
+              } else {
+                ConsultationServices services = serviceDao.find(consult.getServiceId());
+                serviceDesc = (services != null) ? services.getServiceDesc() : "Unknown Service";
               }
 
-              services = serviceDao.find(consult.getServiceId());
+              Demographic demo = demoManager.getDemographic(loggedInInfo, consult.getDemographicId());
+              String providerId = demo.getProviderNo();
+              String providerName = (providerId != null && !providerId.isEmpty()) ? providerDao.getProvider(providerId).getFormattedName() : "N/A";
 
               ids.add(consult.getId().toString());
               status.add(consult.getStatus());
               patient.add(demo.getFormattedName());
               provider.add(providerName);
-              service.add(services.getServiceDesc());
+              service.add(serviceDesc);
               urgency.add(consult.getUrgency());
               patientWillBook.add(""+consult.isPatientWillBook());
               date.add(DateFormatUtils.ISO_DATE_FORMAT.format(consult.getReferralDate()));
