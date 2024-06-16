@@ -68,9 +68,9 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     private String passwordClue;
 
-    private Boolean isEncrypted;
+    private boolean isEncrypted;
 
-    private Boolean isAttachmentEncrypted;
+    private boolean isAttachmentEncrypted;
 
     @Enumerated(EnumType.STRING)
     private ChartDisplayOption chartDisplayOption;
@@ -80,9 +80,9 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     private String additionalParams;
 
-    private Integer demographicNo;
+    private int demographicNo;
 
-    private Integer providerNo;
+    private String providerNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "configId")
@@ -105,10 +105,6 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public EmailConfig getEmailConfig() {
@@ -199,19 +195,19 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         this.passwordClue = passwordClue;
     }
 
-    public Boolean getIsEncrypted() {
+    public boolean getIsEncrypted() {
         return isEncrypted;
     }
 
-    public void setIsEncrypted(Boolean isEncrypted) {
+    public void setIsEncrypted(boolean isEncrypted) {
         this.isEncrypted = isEncrypted;
     }
 
-    public Boolean getIsAttachmentEncrypted() {
+    public boolean getIsAttachmentEncrypted() {
         return isAttachmentEncrypted;
     }
 
-    public void setIsAttachmentEncrypted(Boolean isAttachmentEncrypted) {
+    public void setIsAttachmentEncrypted(boolean isAttachmentEncrypted) {
         this.isAttachmentEncrypted = isAttachmentEncrypted;
     }
 
@@ -231,19 +227,19 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         this.transactionType = transactionType;
     }
 
-    public Integer getDemographicNo() {
+    public int getDemographicNo() {
         return demographicNo;
     }
 
-    public void setDemographicNo(Integer demographicNo) {
+    public void setDemographicNo(int demographicNo) {
         this.demographicNo = demographicNo;
     }
 
-    public Integer getProviderNo() {
+    public String getProviderNo() {
         return providerNo;
     }
 
-    public void setProviderNo(Integer providerNo) {
+    public void setProviderNo(String providerNo) {
         this.providerNo = providerNo;
     }
 

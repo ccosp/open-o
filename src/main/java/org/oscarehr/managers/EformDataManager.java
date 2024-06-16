@@ -234,7 +234,6 @@ public class EformDataManager {
 			throw new RuntimeException("missing required security object (_eform)");
 		}
 
-		if (!StringUtils.isInteger(fdid)) { return; }
 		EFormData eFormData = eFormDataDao.find(Integer.parseInt(fdid));
 		if (eFormData == null) { return; }
 		eFormData.setCurrent(false);

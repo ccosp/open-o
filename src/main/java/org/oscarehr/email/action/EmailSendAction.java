@@ -27,28 +27,25 @@ public class EmailSendAction extends DispatchAction {
     private EformDataManager eformDataManager = SpringUtils.getBean(EformDataManager.class);
 
     public ActionForward sendEFormEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        boolean deleteEFormAfterEmail = request.getParameter("deleteEFormAfterEmail") != null && "true".equalsIgnoreCase(request.getParameter("deleteEFormAfterEmail"));
+
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        sendEmail(request);
-        EmailLog emailLog = (EmailLog) request.getAttribute("emailLog");
-        if (!emailLog.getStatus().equals(EmailStatus.SUCCESS)) { 
-            request.setAttribute("isEmailSuccessful", false); 
-        } else {
-            request.setAttribute("isEmailSuccessful", true);
-            if (request.getParameter("deleteEFormAfterEmail") != null && "true".equalsIgnoreCase(request.getParameter("deleteEFormAfterEmail"))) { eformDataManager.removeEFormData(loggedInInfo, request.getParameter("fdid")); }
-        }
+        EmailLog emailLog = sendEmail(request);
+
+        boolean isEmailSuccessful = emailLog.getStatus() == EmailStatus.SUCCESS;
+        request.setAttribute("isEmailSuccessful", isEmailSuccessful);
+        if (isEmailSuccessful && deleteEFormAfterEmail) { eformDataManager.removeEFormData(loggedInInfo, request.getParameter("fdid")); }
         request.setAttribute("isOpenEForm", request.getParameter("openEFormAfterEmail"));
         request.setAttribute("fdid", request.getParameter("fdid"));
+        request.setAttribute("emailLog", emailLog);
         return mapping.findForward("success");
     }
 
     public ActionForward sendDirectEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        sendEmail(request);
-        EmailLog emailLog = (EmailLog) request.getAttribute("emailLog");
-        if (!emailLog.getStatus().equals(EmailStatus.SUCCESS)) { 
-            request.setAttribute("isEmailSuccessful", false); 
-        } else {
-            request.setAttribute("isEmailSuccessful", true);
-        }
+        EmailLog emailLog = sendEmail(request);
+        boolean isEmailSuccessful = emailLog.getStatus() == EmailStatus.SUCCESS;
+        request.setAttribute("isEmailSuccessful", isEmailSuccessful);
+        request.setAttribute("emailLog", emailLog);
         return mapping.findForward("success");
     }
 
@@ -66,11 +63,10 @@ public class EmailSendAction extends DispatchAction {
         return emailRedirect;
     }
 
-    private void sendEmail(HttpServletRequest request) {
+    private EmailLog sendEmail(HttpServletRequest request) {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
         EmailData emailData = prepareEmailFields(request);
-        EmailLog emailLog = emailManager.sendEmail(loggedInInfo, emailData);
-        request.setAttribute("emailLog", emailLog);
+        return emailManager.sendEmail(loggedInInfo, emailData);
     }
 
     private EmailData prepareEmailFields(HttpServletRequest request) {

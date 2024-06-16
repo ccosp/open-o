@@ -117,7 +117,7 @@ public class EmailManager {
 			throw new RuntimeException("missing required security object (_email)");
 		}
         
-        EmailLog emailLog = emailLogDao.getEmailLogById(emailLogId);
+        EmailLog emailLog = emailLogDao.find(emailLogId);
         return updateEmailStatus(loggedInInfo, emailLog, emailStatus, errorMessage);
     }
 
@@ -142,7 +142,8 @@ public class EmailManager {
         Date dateEnd = parseDate(dateEndStr, "yyyy-MM-dd", "23:59:59");
         if (dateBegin == null || dateEnd == null) { return Collections.emptyList(); }
         
-        return emailLogDao.getEmailStatusByDateDemographicSenderStatus(dateBegin, dateEnd, demographic_no, senderEmailAddress, emailStatus);
+        List<Object[]> emailStatusResultList = emailLogDao.getEmailStatusByDateDemographicSenderStatus(dateBegin, dateEnd, demographic_no, senderEmailAddress, emailStatus);
+        return retriveEmailStatusResultList(emailStatusResultList);
     }
 
     public EmailLog getEmailLogByCaseManagementNoteId(LoggedInInfo loggedInInfo, Long noteId) {
@@ -153,7 +154,7 @@ public class EmailManager {
         CaseManagementNoteLink caseManagementNoteLink = caseManagementManager.getLatestLinkByNote(noteId);
         if (caseManagementNoteLink == null || !caseManagementNoteLink.getTableName().equals(CaseManagementNoteLink.EMAIL)) { return null; }
         Long emailLogId = caseManagementNoteLink.getTableId();
-        return emailLogDao.getEmailLogById(emailLogId.intValue());
+        return emailLogDao.find(emailLogId.intValue());
     }
 
     public void addEmailNote(LoggedInInfo loggedInInfo, EmailLog emailLog) {
@@ -222,7 +223,7 @@ public class EmailManager {
     private void encryptEmail(EmailData emailData) throws EmailSendingException {
         // Encrypt message and attachment
         List<EmailAttachment> encryptableAttachments = new ArrayList<>();
-        if (!StringUtils.isNullOrEmpty(emailData.getEncryptedMessage())) { encryptableAttachments.add(createMessageAttachment(emailData.getEncryptedMessage())); }
+        if (!StringUtils.isNullOrEmpty(emailData.getEncryptedMessage())) { encryptableAttachments.add(createMessageAttachment(emailData)); }
         if (emailData.getIsAttachmentEncrypted() && !emailData.getAttachments().isEmpty()) { encryptableAttachments.addAll(emailData.getAttachments()); }
         encryptAttachments(encryptableAttachments, emailData.getPassword());
 
@@ -235,10 +236,11 @@ public class EmailManager {
         emailData.setBody(emailData.getBody() + "\n\n*****\n" + emailData.getPasswordClue().trim() + "\n*****\n");
     }
 
-    private EmailAttachment createMessageAttachment(String message) {
-        if (StringUtils.isNullOrEmpty(message)) { return null; }
-        String htmlSafeMessage = Encode.forHtmlContent(message).replace("\n", "<br>");
-        Path encryptedMessagePDF = ConvertToEdoc.saveAsTempPDF(htmlSafeMessage);
+    private EmailAttachment createMessageAttachment(EmailData emailData) {
+        if (StringUtils.isNullOrEmpty(emailData.getEncryptedMessage())) { return null; }
+        String htmlSafeMessage = Encode.forHtmlContent(emailData.getEncryptedMessage()).replace("\n", "<br>");
+        emailData.setEncryptedMessage(htmlSafeMessage);
+        Path encryptedMessagePDF = ConvertToEdoc.saveAsTempPDF(emailData);
         EmailAttachment emailAttachment = new EmailAttachment("message.pdf", encryptedMessagePDF.toString(), DocumentType.DOC, -1);
         return emailAttachment;
     }
@@ -280,5 +282,34 @@ public class EmailManager {
             logger.error("UNPARSEABLE DATE " + date);
             return null;
         }
+    }
+
+    /**
+     * Converts a list of Object arrays into a list of EmailStatusResult DTOs.
+     * This method facilitates easy transfer of data to the UI layer.
+     *
+     * @param resultList The list of Object arrays containing email log data, demographic name, and provider name.
+     * @return List of EmailStatusResult DTOs representing email status information.
+     */
+    private List<EmailStatusResult> retriveEmailStatusResultList(List<Object[]> resultList) {
+        List<EmailStatusResult> emailStatusResults = new ArrayList<>();
+        for (Object[] result : resultList) {
+            EmailStatusResult emailStatusResult = new EmailStatusResult();
+            emailStatusResult.setLogId((Integer) result[0]);
+            emailStatusResult.setSubject((String) result[1]);
+            emailStatusResult.setSenderEmail((String) result[2]);
+            emailStatusResult.setRecipientEmail((String) result[3]);
+            emailStatusResult.setStatus((EmailStatus) result[4]);
+            emailStatusResult.setErrorMessage((String) result[5]);
+            emailStatusResult.setCreated((Date) result[6]);
+            emailStatusResult.setPassword((String) result[7]);
+            emailStatusResult.setIsEncrypted((boolean) result[8]);
+            emailStatusResult.setSenderFullName((String) result[9], (String) result[10]);
+            emailStatusResult.setRecipientFullName((String) result[11], (String) result[12]);
+            emailStatusResult.setProviderFullName((String) result[13], (String) result[14]);
+            emailStatusResults.add(emailStatusResult);
+        }
+        Collections.sort(emailStatusResults);
+        return emailStatusResults;
     }
 }

@@ -167,6 +167,10 @@ public class EDoc extends TagObject implements Comparable<EDoc> {
 		private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		@Override
         public int compare(EDoc eDoc1, EDoc eDoc2) {
+			if (eDoc1.getObservationDate() == null || eDoc2.getObservationDate() == null) {
+				return 0; // Return 0 if any observation date is null (no change in order)
+			}
+
             try {
                 Date date1 = dateFormat.parse(eDoc1.getObservationDate());
                 Date date2 = dateFormat.parse(eDoc2.getObservationDate());

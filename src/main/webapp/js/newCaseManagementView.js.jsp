@@ -1681,24 +1681,6 @@ function toggleCollapseViewForAll() {
 
 function viewEmailByLogId(width, height, url) {
     window.open(url, "_blank", "width=1100,height=1000");
-    // ShowSpin(true);
-    // jQuery.ajax({
-    //     url: url,
-    //     method: 'POST',
-    //     success: function(data) {
-    //         HideSpin();
-    //         const emailComposeWindow = window.open("", "_blank", "width=" + width + ",height=" + height);
-    //         emailComposeWindow.document.write(data);
-    //         emailComposeWindow.document.close();
-    //     },
-    //     error: function(xhr, status, error) {
-    //         HideSpin();
-    //         if (xhr.responseJSON) { 
-    //             alert(xhr.responseJSON.errorMessage); 
-    //         } else {
-    //             alert("500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.");
-    //         }
-    //     }});
 }
 
 //this func fires only if maximize button is clicked

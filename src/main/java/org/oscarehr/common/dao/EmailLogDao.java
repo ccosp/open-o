@@ -1,40 +1,22 @@
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.oscarehr.common.model.EmailLog;
-import org.oscarehr.common.model.EmailLog.EmailStatus;
-import org.oscarehr.email.core.EmailStatusResult;
 
-@Transactional
 @Repository
-public class EmailLogDao {
+public class EmailLogDao extends AbstractDao<EmailLog> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public void persist(EmailLog emailLog) {
-        entityManager.persist(emailLog);
-    }
-
-    public void merge(EmailLog emailLog) {
-        entityManager.merge(emailLog);
-    }
-
-    public EmailLog getEmailLogById(Integer id) {
-        return entityManager.find(EmailLog.class, id);
+    public EmailLogDao() {
+    	super(EmailLog.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -45,8 +27,19 @@ public class EmailLogDao {
         return emailLogs;
     }
 
+    /**
+     * This method is used for retrieving email logs based on various filters such as date range, demographic number,
+     * sender email address, and email status. It is called from the 'Admin > Emails > Manage Emails' page.
+     *
+     * @param dateBegin The start date for filtering email logs.
+     * @param dateEnd The end date for filtering email logs.
+     * @param demographicNo The demographic number for demographic lastname and firstname.
+     * @param senderEmailAddress The sender email address for filtering email logs.
+     * @param emailStatus The email status for filtering email logs.
+     * @return A list of email logs that match the specified filters.
+     */
     @SuppressWarnings("unchecked")
-    public List<EmailStatusResult> getEmailStatusByDateDemographicSenderStatus(Date dateBegin, Date dateEnd, String demographicNo, String senderEmailAddress, String emailStatus) {
+    public List<Object[]> getEmailStatusByDateDemographicSenderStatus(Date dateBegin, Date dateEnd, String demographicNo, String senderEmailAddress, String emailStatus) {
         StringBuilder sql = new StringBuilder("SELECT el.id, el.subject, el.fromEmail, el.toEmail, el.status, el.errorMessage, el.timestamp, el.password, el.isEncrypted, ec.senderFirstName, ec.senderLastName, d.FirstName as recipientFirstName, d.LastName as recipientLastName, p.FirstName as providerFirstName, p.LastName as providerLastName FROM EmailLog el, EmailConfig ec, Demographic d, Provider p WHERE el.emailConfig.id = ec.id AND el.demographicNo = d.DemographicNo AND el.providerNo = p.ProviderNo");
     	
         Map<String, Object> parameters = new HashMap<>();
@@ -61,30 +54,7 @@ public class EmailLogDao {
             query.setParameter(entry.getKey(), entry.getValue());
         }
 
-        List<Object[]> resultList = query.getResultList();
-        return retriveEmailStatusResultList(resultList);
-    }
-
-    private List<EmailStatusResult> retriveEmailStatusResultList(List<Object[]> resultList) {
-        List<EmailStatusResult> emailStatusResults = new ArrayList<>();
-        for (Object[] result : resultList) {
-            EmailStatusResult emailStatusResult = new EmailStatusResult();
-            emailStatusResult.setLogId((Integer) result[0]);
-            emailStatusResult.setSubject((String) result[1]);
-            emailStatusResult.setSenderEmail((String) result[2]);
-            emailStatusResult.setRecipientEmail((String) result[3]);
-            emailStatusResult.setStatus((EmailStatus) result[4]);
-            emailStatusResult.setErrorMessage((String) result[5]);
-            emailStatusResult.setCreated((Date) result[6]);
-            emailStatusResult.setPassword((String) result[7]);
-            emailStatusResult.setIsEncrypted((boolean) result[8]);
-            emailStatusResult.setSenderFullName((String) result[9], (String) result[10]);
-            emailStatusResult.setRecipientFullName((String) result[11], (String) result[12]);
-            emailStatusResult.setProviderFullName((String) result[13], (String) result[14]);
-            emailStatusResults.add(emailStatusResult);
-        }
-        Collections.sort(emailStatusResults);
-        return emailStatusResults;
+        return query.getResultList();
     }
 
     private void appendToSqlAndParameters(StringBuilder sql, String clause, String paramName, Object paramValue, Map<String, Object> parameters) {

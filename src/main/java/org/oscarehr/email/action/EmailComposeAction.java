@@ -28,7 +28,7 @@ public class EmailComposeAction extends DispatchAction {
 
     public ActionForward prepareComposeEFormMailer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        Boolean attachEFormItSelf = (Boolean) request.getAttribute("attachEFormItSelf");
+        boolean attachEFormItSelf = (boolean) request.getAttribute("attachEFormItSelf");
         String fdid = attachEFormItSelf ? (String) request.getAttribute("fdid") : "";
         String demographicId = (String) request.getAttribute("demographicId");
         String emailPDFPassword = (String) request.getAttribute("emailPDFPassword");

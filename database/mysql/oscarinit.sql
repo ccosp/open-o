@@ -13183,7 +13183,7 @@ CREATE TABLE IF NOT EXISTS emailLog (
     chartDisplayOption VARCHAR(20),
     transactionType VARCHAR(20),
     demographicNo INT,
-    providerNo INT,
+    providerNo varchar(6),
     additionalParams VARCHAR(1000),
     FOREIGN KEY (configId) REFERENCES emailConfig (id)
 );

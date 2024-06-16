@@ -17,12 +17,12 @@ public class EmailData {
     private String encryptedMessage;
     private String password;
     private String passwordClue;
-    private Boolean isEncrypted;
-    private Boolean isAttachmentEncrypted;
+    private boolean isEncrypted;
+    private boolean isAttachmentEncrypted;
     private ChartDisplayOption chartDisplayOption;
     private TransactionType transactionType;
     private Integer demographicNo;
-    private Integer providerNo;
+    private String providerNo;
     private String additionalParams;
     private List<EmailAttachment> attachments;
 
@@ -84,11 +84,11 @@ public class EmailData {
         this.passwordClue = passwordClue != null ? passwordClue : "";
     }
 
-    public Boolean getIsEncrypted() {
+    public boolean getIsEncrypted() {
         return isEncrypted;
     }
 
-    public void setIsEncrypted(Boolean isEncrypted) {
+    public void setIsEncrypted(boolean isEncrypted) {
         this.isEncrypted = isEncrypted;
     }
 
@@ -97,11 +97,11 @@ public class EmailData {
         this.isEncrypted = "true".equals(isEncrypted);
     }
 
-    public Boolean getIsAttachmentEncrypted() {
+    public boolean getIsAttachmentEncrypted() {
         return isAttachmentEncrypted;
     }
 
-    public void setIsAttachmentEncrypted(Boolean isAttachmentEncrypted) {
+    public void setIsAttachmentEncrypted(boolean isAttachmentEncrypted) {
         this.isAttachmentEncrypted = isAttachmentEncrypted;
     }
 
@@ -161,16 +161,12 @@ public class EmailData {
         this.demographicNo = (StringUtils.isNullOrEmpty(demographicNo)) ? -1 : Integer.parseInt(demographicNo);
     }
 
-    public Integer getProviderNo() {
+    public String getProviderNo() {
         return providerNo;
     }
 
-    public void setProviderNo(Integer providerNo) {
-        this.providerNo = providerNo;
-    }
-
     public void setProviderNo(String providerNo) {
-        this.providerNo = (StringUtils.isNullOrEmpty(providerNo)) ? -1 : Integer.parseInt(providerNo);
+        this.providerNo = providerNo == null ? "-1" : providerNo;
     }
 
     public String getAdditionalParams() {

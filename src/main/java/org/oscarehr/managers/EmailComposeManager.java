@@ -33,6 +33,9 @@ import org.springframework.stereotype.Service;
 
 import oscar.util.StringUtils;
 
+/*
+* The purpose of the EmailComposeManager is to help prepare all necessary data to display on the emailCompose.jsp page.
+*/
 @Service
 public class EmailComposeManager {
     private final Logger logger = MiscUtils.getLogger();
@@ -60,47 +63,8 @@ public class EmailComposeManager {
 			throw new RuntimeException("missing required security object (_email)");
 		}
 
-        EmailLog emailLog = emailLogDao.getEmailLogById(emailLogId);
+        EmailLog emailLog = emailLogDao.find(emailLogId);
         return emailLog;
-    }
-
-    public List<EmailAttachment> refreshEmailAttachments(HttpServletRequest request, HttpServletResponse response, EmailLog emailLog) throws PDFGenerationException {
-        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.READ, null)) {
-			throw new RuntimeException("missing required security object (_email)");
-		}
-
-        List<EmailAttachment> emailAttachmentList = emailLog.getEmailAttachments();
-        for (EmailAttachment emailAttachment : emailAttachmentList) {
-            switch (emailAttachment.getDocumentType()) {
-                case EFORM:
-                    Path eFormPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.EFORM, emailAttachment.getDocumentId());
-                    emailAttachment.setFilePath(eFormPDFPath.toString());
-                    emailAttachment.setFileSize(getFileSize(eFormPDFPath));
-                    break;
-                case DOC:
-                    Path eDocPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.DOC, emailAttachment.getDocumentId());
-                    emailAttachment.setFilePath(eDocPDFPath.toString());
-                    emailAttachment.setFileSize(getFileSize(eDocPDFPath));
-                    break;
-                case LAB:
-                    Path labPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.LAB, emailAttachment.getDocumentId());
-                    emailAttachment.setFilePath(labPDFPath.toString());
-                    emailAttachment.setFileSize(getFileSize(labPDFPath));
-                    break;
-                case HRM:
-                    Path hrmPDFPath = documentAttachmentManager.renderDocument(loggedInInfo, DocumentType.HRM, emailAttachment.getDocumentId());
-                    emailAttachment.setFilePath(hrmPDFPath.toString());
-                    emailAttachment.setFileSize(getFileSize(hrmPDFPath));
-                    break;
-                case FORM:
-                    Path formPDFPath = formsManager.renderForm(request, response, emailAttachment.getDocumentId(), emailLog.getDemographicNo());
-                    emailAttachment.setFilePath(formPDFPath.toString());
-                    emailAttachment.setFileSize(getFileSize(formPDFPath));
-                    break;
-            }
-        }
-        return emailAttachmentList;
     }
     
     public List<EmailAttachment> prepareEFormAttachments(LoggedInInfo loggedInInfo, String fdid, String[] attachedEForms) throws PDFGenerationException {
@@ -278,7 +242,7 @@ public class EmailComposeManager {
         return stringList;
     }
 
-    private Long getFileSize(Path filePath) {
+    public Long getFileSize(Path filePath) {
         Long fileSize = 0l;
         try {
             fileSize = Files.size(filePath);

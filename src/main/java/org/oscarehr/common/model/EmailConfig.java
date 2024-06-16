@@ -28,7 +28,7 @@ public class EmailConfig extends AbstractModel<Integer> {
     @Enumerated(EnumType.STRING)
     private EmailProvider emailProvider;
 
-    private Boolean active;
+    private boolean active;
 
     private String senderFirstName;
 
@@ -55,10 +55,6 @@ public class EmailConfig extends AbstractModel<Integer> {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public EmailType getEmailType() {
         return emailType;
     }
@@ -75,11 +71,11 @@ public class EmailConfig extends AbstractModel<Integer> {
         this.emailProvider = emailProvider;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

@@ -1,9 +1,11 @@
 package org.oscarehr.email.core;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.oscarehr.common.model.EmailLog.EmailStatus;
 
 public class EmailStatusResult implements Comparable<EmailStatusResult> {
@@ -17,7 +19,7 @@ public class EmailStatusResult implements Comparable<EmailStatusResult> {
     private String providerFirstName;
     private String providerLastName;
     private String recipientEmail;
-    private Boolean isEncrypted;
+    private boolean isEncrypted;
     private String password;
     private EmailStatus status;
     private String errorMessage;
@@ -133,11 +135,11 @@ public class EmailStatusResult implements Comparable<EmailStatusResult> {
         this.recipientEmail = recipientEmail.replace(";", ", ");
     }
 
-    public Boolean getIsEncrypted() {
+    public boolean getIsEncrypted() {
         return isEncrypted;
     }
 
-    public void setIsEncrypted(Boolean isEncrypted) {
+    public void setIsEncrypted(boolean isEncrypted) {
         this.isEncrypted = isEncrypted;
     }
 
@@ -184,7 +186,9 @@ public class EmailStatusResult implements Comparable<EmailStatusResult> {
     }
 
     public String getCreatedStringDate() {
-        return DateFormatUtils.format(created, "yyyy-MM-dd HH:mm:ss");
+        LocalDateTime createdLocalDateTime = created.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        return createdLocalDateTime.format(formatter);
     }
 
     private String toCamelCase(String inputString) {

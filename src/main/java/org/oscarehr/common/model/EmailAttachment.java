@@ -19,10 +19,10 @@ public class EmailAttachment extends AbstractModel<Integer> {
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
 
-    private Integer documentId;
+    private int documentId;
 
     @Transient
-    private Long fileSize;
+    private long fileSize;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "logId")
@@ -30,14 +30,14 @@ public class EmailAttachment extends AbstractModel<Integer> {
 
     public EmailAttachment() {}
 
-    public EmailAttachment(String fileName, String filePath, DocumentType documentType, Integer documentId) {
+    public EmailAttachment(String fileName, String filePath, DocumentType documentType, int documentId) {
         this.fileName = fileName;
         this.filePath = filePath;
         this.documentType = documentType;
         this.documentId = documentId;
     }
 
-    public EmailAttachment(String fileName, String filePath, DocumentType documentType, Integer documentId, Long fileSize) {
+    public EmailAttachment(String fileName, String filePath, DocumentType documentType, int documentId, long fileSize) {
         this.fileName = fileName;
         this.filePath = filePath;
         this.documentType = documentType;
@@ -55,10 +55,6 @@ public class EmailAttachment extends AbstractModel<Integer> {
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public EmailLog getEmailLog() {
@@ -93,19 +89,19 @@ public class EmailAttachment extends AbstractModel<Integer> {
         this.documentType = documentType;
     }
 
-    public Integer getDocumentId() {
+    public int getDocumentId() {
         return documentId;
     }
 
-    public void setDocumentId(Integer documentId) {
+    public void setDocumentId(int documentId) {
         this.documentId = documentId;
     }
 
-    public Long getFileSize() {
+    public long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Long fileSize) {
+    public void setFileSize(long fileSize) {
         this.fileSize = fileSize;
     }
 }

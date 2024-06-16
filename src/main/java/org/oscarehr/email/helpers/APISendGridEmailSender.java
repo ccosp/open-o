@@ -1,23 +1,21 @@
 package org.oscarehr.email.helpers;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.SSLContext;
+
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
@@ -68,13 +66,19 @@ public class APISendGridEmailSender {
     public void send() throws EmailSendingException {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_email", SecurityInfoManager.WRITE, null)) {
 			throw new RuntimeException("missing required security object (_email)");
-		}
-
-        HttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(getEndPoint());
-        httpPost.setHeader("Content-Type", "application/json");
-        httpPost.setHeader("Authorization", "Bearer " + getAPIKey());
+		} 
+        
         try {
+            SSLContext sslContext = SSLContexts.custom().build();
+            sslContext.getDefaultSSLParameters().setNeedClientAuth(true);
+            sslContext.getDefaultSSLParameters().setWantClientAuth(true);
+            SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
+            HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
+
+            HttpPost httpPost = new HttpPost(getEndPoint());
+            httpPost.setHeader("Content-Type", "application/json");
+            httpPost.setHeader("Authorization", "Bearer " + getAPIKey());
+
             StringEntity entity = new StringEntity(createEmailJSON());
             httpPost.setEntity(entity);
             HttpResponse response = httpClient.execute(httpPost);
