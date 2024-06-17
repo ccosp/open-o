@@ -1397,6 +1397,26 @@
         </resources>
 	<plugins>
 
+		<plugin>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.8</version>
+			<executions>
+				<execution>
+					<goals>
+						<goal>prepare-agent</goal>
+					</goals>
+				</execution>
+				<execution>
+					<id>report</id>
+					<phase>prepare-package</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
@@ -1563,7 +1583,8 @@
 			     <version>3.2.5</version>
 		        <configuration>
 		          <skipTests>false</skipTests>
-		          <argLine>-Xms4096m -Xmx4096m -Xss2048k -XX:MaxNewSize=256m -XX:MaxPermSize=512m</argLine>
+						<!--Required to comment out the following line to run Jacoco reporting-->
+<!--		          <argLine>${surefireArgLine} -Xms4096m -Xmx4096m -Xss2048k -XX:MaxNewSize=256m -XX:MaxPermSize=512m</argLine>-->
 					<excludes>
 						<exclude>**/AR2005*.java</exclude>
 						<exclude>**/OntarioMDSpec4DataTest.java</exclude>
