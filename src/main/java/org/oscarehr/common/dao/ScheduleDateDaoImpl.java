@@ -139,7 +139,10 @@ public class ScheduleDateDaoImpl extends AbstractDaoImpl<ScheduleDate> implement
 		Query query = createQuery("sd", "sd.date = :apptDate AND sd.providerNo = :providerNo AND sd.priority = :priority");
 		query.setParameter("providerNo", providerNo);
 		query.setParameter("apptDate", apptDate);
-		query.setParameter("priority", priority);
+
+		char priorityChar = priority.charAt(0); 
+
+		query.setParameter("priority", priorityChar);
 		return query.getResultList();
     }
 }
