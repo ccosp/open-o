@@ -682,9 +682,7 @@ public class RxManagerTest extends RxManagerImpl {
         List<Drug> drugs;
 
         public MockDrugDao() {
-
             Drug d;
-
             drugs = new ArrayList<Drug>();
 
             d = new Drug();
@@ -798,7 +796,21 @@ public class RxManagerTest extends RxManagerImpl {
 
             return null;
         }
+        /**
+         * Mock find() method that searches that test data
+         * for a drug with appropriate ID.
+         *
+         * @param i
+         *
+         * @return
+         */
+        public Drug find(int i) {
+            for (Drug d : this.drugs) {
+                if (i == d.getId()) return d;
+            }
 
+            return null;
+        }
         /**
          * Override method for testing purposes.
          */
