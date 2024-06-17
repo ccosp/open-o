@@ -23,6 +23,7 @@
  */
 package org.oscarehr.billing.CA.BC.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -48,7 +49,11 @@ public class BillingStatusTypesDao extends AbstractDaoImpl<BillingStatusTypes> {
 	@SuppressWarnings("unchecked")
     public List<BillingStatusTypes> findByCodes(List<String> codes) {
 	    Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() + " bst WHERE bst.id IN (:typeCodes)");
-	    query.setParameter("typeCodes", codes);
+		List<Character> characterCodes = new ArrayList<>();
+		for (String code : codes) {
+			characterCodes.add(code.charAt(0));
+		}
+	    query.setParameter("typeCodes", characterCodes);
 	    return query.getResultList(); 
     }
 
