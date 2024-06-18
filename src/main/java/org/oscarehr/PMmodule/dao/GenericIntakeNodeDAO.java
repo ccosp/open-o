@@ -46,7 +46,7 @@
  import org.oscarehr.PMmodule.model.IntakeNodeTemplate;
  import org.oscarehr.util.DbConnectionFilter;
  import org.oscarehr.util.MiscUtils;
- import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
  
  /**
   * Hibernate implementation of GenericIntakeNodeDAO interface

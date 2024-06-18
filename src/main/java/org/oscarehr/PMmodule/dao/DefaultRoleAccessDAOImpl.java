@@ -29,7 +29,7 @@ package org.oscarehr.PMmodule.dao;
 import java.util.List;
 
 import org.oscarehr.PMmodule.model.DefaultRoleAccess;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 @SuppressWarnings("unchecked")
 public class DefaultRoleAccessDAOImpl extends HibernateDaoSupport implements DefaultRoleAccessDAO{

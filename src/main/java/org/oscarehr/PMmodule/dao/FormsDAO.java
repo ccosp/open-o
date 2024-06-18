@@ -35,7 +35,7 @@
  import org.oscarehr.PMmodule.model.FormInfo;
  import org.oscarehr.common.model.Provider;
  import org.oscarehr.util.MiscUtils;
- import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
  
  public interface FormsDAO{
 

@@ -47,7 +47,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 
 	protected Class<T> modelClass;
 
-	@PersistenceContext
+	@PersistenceContext(unitName = "entityManagerFactory")
 	protected EntityManager entityManager = null;
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
