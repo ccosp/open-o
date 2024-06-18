@@ -1,6 +1,5 @@
 package org.oscarehr.common.dao;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +17,6 @@ public class EmailLogDao extends AbstractDao<EmailLog> {
 
     public EmailLogDao() {
     	super(EmailLog.class);
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<EmailLog> getAllEmailLogs() {
-        Query query = entityManager.createQuery("SELECT el FROM EmailLog el");
-        List<EmailLog> emailLogs = query.getResultList();
-        Collections.sort(emailLogs);
-        return emailLogs;
     }
 
     /**
@@ -48,7 +39,7 @@ public class EmailLogDao extends AbstractDao<EmailLog> {
     	
         Map<String, Object> parameters = new HashMap<>();
         if (demographicNo != null) { 
-            appendToSqlAndParameters(hql, " AND el.demographicNo = :demo", "demo", Integer.parseInt(demographicNo), parameters); 
+            appendToSqlAndParameters(hql, " AND el.demographic.DemographicNo = :demo", "demo", Integer.parseInt(demographicNo), parameters); 
         }
     	if (emailStatus != null) { 
             appendToSqlAndParameters(hql, " AND el.status = :emailStatus", "emailStatus", EmailStatus.valueOf(emailStatus), parameters); 
