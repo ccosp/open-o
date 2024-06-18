@@ -50,8 +50,8 @@ public class WaitingListNameDaoImpl extends AbstractDaoImpl<WaitingListName> imp
     public List<WaitingListName> findCurrentByNameAndGroup(String name, String group) {
         String sql = "select x from WaitingListName x where x.name = ? AND x.groupNo = ? and x.isHistory='N'";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1,name);
-        query.setParameter(2,group);
+        query.setParameter(0,name);
+        query.setParameter(1,group);
 
         @SuppressWarnings("unchecked")
         List<WaitingListName> results = query.getResultList();
@@ -80,7 +80,7 @@ public class WaitingListNameDaoImpl extends AbstractDaoImpl<WaitingListName> imp
     public List<WaitingListName> findCurrentByGroup(String group) {
         String sql = "select x from WaitingListName x where x.groupNo = ? and x.isHistory='N' order by x.name";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1,group);
+        query.setParameter(0,group);
 
         @SuppressWarnings("unchecked")
         List<WaitingListName> results = query.getResultList();

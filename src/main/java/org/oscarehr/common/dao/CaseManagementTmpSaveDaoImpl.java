@@ -44,9 +44,9 @@ public class CaseManagementTmpSaveDaoImpl extends AbstractDaoImpl<CaseManagement
     @Override
     public void remove(String providerNo, Integer demographicNo, Integer programId) {
         Query query = entityManager.createQuery("SELECT x FROM CaseManagementTmpSave x WHERE x.providerNo = ? and x.demographicNo=? and x.programId = ?");
-        query.setParameter(1,providerNo);
-        query.setParameter(2,demographicNo);
-        query.setParameter(3,programId);
+        query.setParameter(0,providerNo);
+        query.setParameter(1,demographicNo);
+        query.setParameter(2,programId);
 
         @SuppressWarnings("unchecked")
         List<CaseManagementTmpSave> results = query.getResultList();
@@ -59,9 +59,9 @@ public class CaseManagementTmpSaveDaoImpl extends AbstractDaoImpl<CaseManagement
     @Override
     public CaseManagementTmpSave find(String providerNo, Integer demographicNo, Integer programId) {
         Query query = entityManager.createQuery("SELECT x FROM CaseManagementTmpSave x WHERE x.providerNo = ? and x.demographicNo=? and x.programId = ? order by x.updateDate DESC");
-        query.setParameter(1,providerNo);
-        query.setParameter(2,demographicNo);
-        query.setParameter(3,programId);
+        query.setParameter(0,providerNo);
+        query.setParameter(1,demographicNo);
+        query.setParameter(2,programId);
 
         return this.getSingleResultOrNull(query);
     }
@@ -69,10 +69,10 @@ public class CaseManagementTmpSaveDaoImpl extends AbstractDaoImpl<CaseManagement
     @Override
     public CaseManagementTmpSave find(String providerNo, Integer demographicNo, Integer programId, Date date) {
         Query query = entityManager.createQuery("SELECT x FROM CaseManagementTmpSave x WHERE x.providerNo = ? and x.demographicNo=? and x.programId = ? and x.updateDate >= ? order by x.updateDate DESC");
-        query.setParameter(1,providerNo);
-        query.setParameter(2,demographicNo);
-        query.setParameter(3,programId);
-        query.setParameter(4, date);
+        query.setParameter(0,providerNo);
+        query.setParameter(1,demographicNo);
+        query.setParameter(2,programId);
+        query.setParameter(3, date);
 
         return this.getSingleResultOrNull(query);
     }

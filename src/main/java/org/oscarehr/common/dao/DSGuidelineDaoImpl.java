@@ -43,7 +43,7 @@ public class DSGuidelineDaoImpl extends AbstractDaoImpl<DSGuideline> implements 
         String sql = "select c from DSGuideline c where c.uuid = ? and c.status = 'A' order by c.dateStart desc";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, uuid);
+        query.setParameter(0, uuid);
 
         @SuppressWarnings("unchecked")
         List<DSGuideline> list = query.getResultList();
@@ -60,7 +60,7 @@ public class DSGuidelineDaoImpl extends AbstractDaoImpl<DSGuideline> implements 
         String sql ="select c from DSGuideline c, DSGuidelineProviderMapping m where c.uuid = m.guidelineUUID and m.providerNo = ? and c.status = 'A'";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, providerNo);
+        query.setParameter(0, providerNo);
 
         @SuppressWarnings("unchecked")
         List<DSGuideline> list = query.getResultList();

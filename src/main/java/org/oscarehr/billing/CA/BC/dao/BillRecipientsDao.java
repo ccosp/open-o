@@ -41,7 +41,7 @@ public class BillRecipientsDao extends AbstractDaoImpl<BillRecipients>{
 	public List<BillRecipients> findByBillingNo(int billingNo) {
 		Query q = entityManager.createQuery("SELECT b FROM BillRecipients b WHERE b.billingNo=?");
 		
-		q.setParameter(1, billingNo);
+		q.setParameter(0, billingNo);
 		
 		@SuppressWarnings("unchecked")
 		List<BillRecipients> results = q.getResultList();

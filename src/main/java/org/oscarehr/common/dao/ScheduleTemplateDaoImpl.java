@@ -44,7 +44,7 @@ public class ScheduleTemplateDaoImpl extends AbstractDaoImpl<ScheduleTemplate> i
     @Override
     public List<ScheduleTemplate> findBySummary(String summary) {
         Query query = entityManager.createQuery("SELECT e FROM ScheduleTemplate e WHERE e.summary=? ");
-		query.setParameter(1, summary);
+		query.setParameter(0, summary);
 
         List<ScheduleTemplate> results = query.getResultList();
 		return results;
@@ -89,8 +89,8 @@ public class ScheduleTemplateDaoImpl extends AbstractDaoImpl<ScheduleTemplate> i
     @Override
     public List<ScheduleTemplate> findByProviderNoAndName(String providerNo, String name) {
         Query query = entityManager.createQuery("SELECT e FROM ScheduleTemplate e WHERE e.id.providerNo=? and e.id.name=? ");
-		query.setParameter(1, providerNo);
-		query.setParameter(2, name);
+		query.setParameter(0, providerNo);
+		query.setParameter(1, name);
 
         List<ScheduleTemplate> results = query.getResultList();
 		return results;
@@ -99,7 +99,7 @@ public class ScheduleTemplateDaoImpl extends AbstractDaoImpl<ScheduleTemplate> i
     @Override
     public List<ScheduleTemplate> findByProviderNo(String providerNo) {
         Query query = entityManager.createQuery("SELECT e FROM ScheduleTemplate e WHERE e.id.providerNo=? order by e.id.name");
-		query.setParameter(1, providerNo);
+		query.setParameter(0, providerNo);
 		
         List<ScheduleTemplate> results = query.getResultList();
 		return results;

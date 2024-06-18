@@ -47,7 +47,7 @@ public class DemographicContactDaoImpl extends AbstractDaoImpl<DemographicContac
     public List<DemographicContact> findByDemographicNo(int demographicNo) {
         String sql = "select x from " + this.modelClass.getName() + " x where x.demographicNo=? and x.deleted=false";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
         @SuppressWarnings("unchecked")
         List<DemographicContact> dContacts = query.getResultList();
         return dContacts;
@@ -58,7 +58,7 @@ public class DemographicContactDaoImpl extends AbstractDaoImpl<DemographicContac
         String sql = "select x from " + this.modelClass.getName()
                 + " x where x.demographicNo=? and x.deleted=false and x.active=1";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
         @SuppressWarnings("unchecked")
         List<DemographicContact> dContacts = query.getResultList();
         return dContacts;
@@ -69,8 +69,8 @@ public class DemographicContactDaoImpl extends AbstractDaoImpl<DemographicContac
         String sql = "select x from " + this.modelClass.getName()
                 + " x where x.demographicNo=? and x.category=? and x.deleted=false";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, category);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, category);
         @SuppressWarnings("unchecked")
         List<DemographicContact> dContacts = query.getResultList();
         return dContacts;
@@ -81,8 +81,8 @@ public class DemographicContactDaoImpl extends AbstractDaoImpl<DemographicContac
         String sql = "select x from " + this.modelClass.getName()
                 + " x where x.demographicNo=? and x.contactId = ? and x.deleted=false";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, new Integer(contactId).toString());
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, new Integer(contactId).toString());
         @SuppressWarnings("unchecked")
         List<DemographicContact> dContacts = query.getResultList();
         return dContacts;
@@ -93,9 +93,9 @@ public class DemographicContactDaoImpl extends AbstractDaoImpl<DemographicContac
         String sql = "select x from " + this.modelClass.getName()
                 + " x where x.contactId = ? and x.category = ? and x.type = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, new Integer(contactId).toString());
-        query.setParameter(2, category);
-        query.setParameter(3, type);
+        query.setParameter(0, new Integer(contactId).toString());
+        query.setParameter(1, category);
+        query.setParameter(2, type);
 
         @SuppressWarnings("unchecked")
         List<DemographicContact> dContacts = query.getResultList();
@@ -108,9 +108,9 @@ public class DemographicContactDaoImpl extends AbstractDaoImpl<DemographicContac
         String sql = "select x from " + this.modelClass.getName()
                 + " x where x.demographicNo = ? and x.category = ? and x.type = ? and x.active=1 and deleted=false";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, category);
-        query.setParameter(3, type);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, category);
+        query.setParameter(2, type);
 
         @SuppressWarnings("unchecked")
         List<DemographicContact> dContacts = query.getResultList();
@@ -125,7 +125,7 @@ public class DemographicContactDaoImpl extends AbstractDaoImpl<DemographicContac
         String sql = "select x from " + this.modelClass.getName()
                 + " x where x.demographicNo = ? and x.sdm = 'true'  and x.active=1 and deleted=false";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<DemographicContact> dContacts = query.getResultList();

@@ -41,7 +41,7 @@ public class DSGuidelineProviderMappingDaoImpl extends AbstractDaoImpl<DSGuideli
     public List<DSGuidelineProviderMapping> getMappingsByProvider(String providerNo) {
         String sql = "select c from DSGuidelineProviderMapping c where c.providerNo = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, providerNo);
+        query.setParameter(0, providerNo);
         @SuppressWarnings("unchecked")
         List<DSGuidelineProviderMapping> list = query.getResultList();
         return list;
@@ -50,8 +50,8 @@ public class DSGuidelineProviderMappingDaoImpl extends AbstractDaoImpl<DSGuideli
     public boolean mappingExists(DSGuidelineProviderMapping dsGuidelineProviderMapping) {
         String sql ="select m from DSGuidelineProviderMapping m where m.guidelineUUID = ? and m.providerNo = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, dsGuidelineProviderMapping.getGuidelineUUID());
-        query.setParameter(2, dsGuidelineProviderMapping.getProviderNo());
+        query.setParameter(0, dsGuidelineProviderMapping.getGuidelineUUID());
+        query.setParameter(1, dsGuidelineProviderMapping.getProviderNo());
         @SuppressWarnings("unchecked")
         List<DSGuidelineProviderMapping> list = query.getResultList();
         if (list == null || list.size() == 0){

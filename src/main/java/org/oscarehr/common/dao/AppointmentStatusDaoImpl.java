@@ -66,7 +66,7 @@ public class AppointmentStatusDaoImpl extends AbstractDaoImpl<AppointmentStatus>
         }
 
         Query q = entityManager.createQuery("select a from AppointmentStatus a where a.status like ?");
-        q.setParameter(1, status.substring(0, 1) + "%");
+        q.setParameter(0, status.substring(0, 1) + "%");
 
         @SuppressWarnings("unchecked")
         List<AppointmentStatus> results = q.getResultList();

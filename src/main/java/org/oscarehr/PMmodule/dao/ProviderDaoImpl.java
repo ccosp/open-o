@@ -463,7 +463,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
 
         Query query = session.createSQLQuery(sql);
         ((SQLQuery) query).addScalar("shelter_id", StandardBasicTypes.INTEGER);
-        query.setString(0, provider_no);
+        query.setString(1, provider_no);
         List lst = new ArrayList();
         try {
             lst = query.list();

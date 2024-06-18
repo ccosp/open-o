@@ -62,7 +62,7 @@ public class ExportedDocumentDao extends AbstractDaoImpl<ExportedDocument> {
     public List<ExportedDocument> findByPatient(int demographicId) {
         String sql = "FROM ExportedDocument e where e.demographicNo = ? ORDER BY id DESC";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicId);
+        query.setParameter(0, demographicId);
 
         @SuppressWarnings("unchecked")
         List<ExportedDocument> retVal = query.getResultList();
@@ -80,8 +80,8 @@ public class ExportedDocumentDao extends AbstractDaoImpl<ExportedDocument> {
         String sql = "FROM ExportedDocument e where e.affinityDomain = ? and e.demographicNo = ? ORDER BY id DESC";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, affinityDomain);
-        query.setParameter(2, demographicId);
+        query.setParameter(0, affinityDomain);
+        query.setParameter(1, demographicId);
 
         @SuppressWarnings("unchecked")
         List<ExportedDocument> retVal = query.getResultList();
@@ -101,9 +101,9 @@ public class ExportedDocumentDao extends AbstractDaoImpl<ExportedDocument> {
         String sql = "FROM ExportedDocument e where e.affinityDomain = ? and e.demographicNo = ? and e.documentType = ? ORDER BY id DESC";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, affinityDomain);
-        query.setParameter(2, demographicId);
-        query.setParameter(3, documentType);
+        query.setParameter(0, affinityDomain);
+        query.setParameter(1, demographicId);
+        query.setParameter(2, documentType);
 
         @SuppressWarnings("unchecked")
         List<ExportedDocument> retVal = query.getResultList();

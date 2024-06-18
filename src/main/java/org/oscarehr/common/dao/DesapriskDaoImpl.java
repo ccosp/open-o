@@ -47,8 +47,8 @@ public class DesapriskDaoImpl extends AbstractDaoImpl<Desaprisk> implements Desa
     	String sqlCommand = "select x from Desaprisk x where x.formNo <= ? and x.demographicNo=? order by x.formNo DESC, x.desapriskDate DESC, x.desapriskTime DESC";
 
         Query query = entityManager.createQuery(sqlCommand);
-        query.setParameter(1, formNo);
-        query.setParameter(2, demographicNo);
+        query.setParameter(0, formNo);
+        query.setParameter(1, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<Desaprisk> results = query.getResultList();

@@ -50,7 +50,7 @@ public class EncounterTemplateDaoImpl extends AbstractDaoImpl<EncounterTemplate>
     @Override
     public List<EncounterTemplate> findByName(String name) {
         Query query = entityManager.createQuery("select x from EncounterTemplate x where x.encounterTemplateName like ?");
-        query.setParameter(1, name);
+        query.setParameter(0, name);
 
         @SuppressWarnings("unchecked")
         List<EncounterTemplate> results = query.getResultList();
@@ -61,7 +61,7 @@ public class EncounterTemplateDaoImpl extends AbstractDaoImpl<EncounterTemplate>
     @Override
     public List<EncounterTemplate> findByName(String name, Integer startIndex, Integer itemsToReturn) {
         Query query = entityManager.createQuery("select x from EncounterTemplate x where x.encounterTemplateName like ?");
-        query.setParameter(1, name);
+        query.setParameter(0, name);
 
         query.setFirstResult(startIndex);
         query.setMaxResults(itemsToReturn);

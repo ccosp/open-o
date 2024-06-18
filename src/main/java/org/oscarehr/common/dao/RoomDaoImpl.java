@@ -57,7 +57,7 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
     @Override
     public boolean roomExists(Integer roomId) {
         Query query = entityManager.createQuery("select count(*) from Room r where r.id = ?");
-        query.setParameter(1, roomId);
+        query.setParameter(0, roomId);
 
         Long result = (Long) query.getSingleResult();
 

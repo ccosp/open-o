@@ -72,7 +72,7 @@ public class SecObjPrivilegeDaoImpl extends AbstractDaoImpl<SecObjPrivilege> imp
         String sql = "select s FROM SecObjPrivilege s WHERE s.id.roleUserGroup like ? order by s.id.roleUserGroup, s.id.objectName";
 
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, roleUserGroup);
+		query.setParameter(0, roleUserGroup);
 		
 		List<SecObjPrivilege> result =  query.getResultList();
 
@@ -84,7 +84,7 @@ public class SecObjPrivilegeDaoImpl extends AbstractDaoImpl<SecObjPrivilege> imp
         String sql = "select s FROM SecObjPrivilege s WHERE s.id.objectName like ? order by s.id.objectName, s.id.roleUserGroup";
 
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, objectName);
+		query.setParameter(0, objectName);
 		
 		List<SecObjPrivilege> result =  query.getResultList();
 

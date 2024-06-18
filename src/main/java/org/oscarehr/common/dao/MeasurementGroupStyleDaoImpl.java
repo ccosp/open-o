@@ -50,7 +50,7 @@ public class MeasurementGroupStyleDaoImpl extends AbstractDaoImpl<MeasurementGro
     public List<MeasurementGroupStyle> findByGroupName(String groupName) {
         String sql = "select x from MeasurementGroupStyle x where x.groupName=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, groupName);
+        query.setParameter(0, groupName);
 
         @SuppressWarnings("unchecked")
         List<MeasurementGroupStyle> results = query.getResultList();

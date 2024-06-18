@@ -55,7 +55,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 		String sqlCommand = "SELECT x FROM ProviderData x WHERE x.ohipNo=?";
 
 		query = this.entityManager.createQuery(sqlCommand);
-		query.setParameter(1, ohipNumber);
+		query.setParameter(0, ohipNumber);
 
 		results = query.getResultList();
 		if (results.size() > 0) {

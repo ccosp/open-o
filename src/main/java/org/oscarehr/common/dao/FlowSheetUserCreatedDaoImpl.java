@@ -40,72 +40,72 @@ public class FlowSheetUserCreatedDaoImpl extends AbstractDaoImpl<FlowSheetUserCr
 
     public List<FlowSheetUserCreated> findActiveNoTemplate(){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? and f.template IS NULL or f.template = ''");
-        query.setParameter(1, false);
+        query.setParameter(0, false);
         return query.getResultList();
     }
 
     public List<FlowSheetUserCreated> getAllUserCreatedFlowSheets(){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=?");
-        query.setParameter(1, false);
+        query.setParameter(0, false);
         return query.getResultList();                
     }
 
     public List<FlowSheetUserCreated> findActiveByScope(String scope){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? AND f.scope = ?");
-        query.setParameter(1, false);
-        query.setParameter(2, scope);
+        query.setParameter(0, false);
+        query.setParameter(1, scope);
         return query.getResultList();
     }
 
     public FlowSheetUserCreated findByPatientScope(String template, Integer demographicNo){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? AND f.scope = ? AND f.scopeDemographicNo = ? AND f.template = ?");
-        query.setParameter(1, false);
-        query.setParameter(2, FlowSheetUserCreated.SCOPE_PATIENT);
-        query.setParameter(3, demographicNo);
-        query.setParameter(4, template);
+        query.setParameter(0, false);
+        query.setParameter(1, FlowSheetUserCreated.SCOPE_PATIENT);
+        query.setParameter(2, demographicNo);
+        query.setParameter(3, template);
         return this.getSingleResultOrNull(query);
     }
 
     public FlowSheetUserCreated findByProviderScope(String template, String providerNo){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? AND f.scope = ? AND f.scopeProviderNo = ? AND f.template = ?");
-        query.setParameter(1, false);
-        query.setParameter(2, FlowSheetUserCreated.SCOPE_PROVIDER);
-        query.setParameter(3, providerNo);
-        query.setParameter(4, template);
+        query.setParameter(0, false);
+        query.setParameter(1, FlowSheetUserCreated.SCOPE_PROVIDER);
+        query.setParameter(2, providerNo);
+        query.setParameter(3, template);
         return this.getSingleResultOrNull(query);
     }
 
     public FlowSheetUserCreated findByClinicScope(String template){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? AND f.scope = ? AND f.template = ?");
-        query.setParameter(1, false);
-        query.setParameter(2, FlowSheetUserCreated.SCOPE_CLINIC);
-        query.setParameter(3, template);
+        query.setParameter(0, false);
+        query.setParameter(1, FlowSheetUserCreated.SCOPE_CLINIC);
+        query.setParameter(2, template);
         return this.getSingleResultOrNull(query);
     }
 
     public FlowSheetUserCreated findByPatientScopeName(String name, Integer demographicNo){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? AND f.scope = ? AND f.scopeDemographicNo = ? AND f.name = ?");
-        query.setParameter(1, false);
-        query.setParameter(2, FlowSheetUserCreated.SCOPE_PATIENT);
-        query.setParameter(3, demographicNo);
-        query.setParameter(4, name);
+        query.setParameter(0, false);
+        query.setParameter(1, FlowSheetUserCreated.SCOPE_PATIENT);
+        query.setParameter(2, demographicNo);
+        query.setParameter(3, name);
         return this.getSingleResultOrNull(query);
     }
 
     public FlowSheetUserCreated findByProviderScopeName(String name, String providerNo){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? AND f.scope = ? AND f.scopeProviderNo = ? AND f.name = ?");
-        query.setParameter(1, false);
-        query.setParameter(2, FlowSheetUserCreated.SCOPE_PROVIDER);
-        query.setParameter(3, providerNo);
-        query.setParameter(4, name);
+        query.setParameter(0, false);
+        query.setParameter(1, FlowSheetUserCreated.SCOPE_PROVIDER);
+        query.setParameter(2, providerNo);
+        query.setParameter(3, name);
         return this.getSingleResultOrNull(query);
     }
 
     public FlowSheetUserCreated findByClinicScopeName(String name){
         Query query = entityManager.createQuery("SELECT f FROM FlowSheetUserCreated f WHERE f.archived=? AND f.scope = ? AND f.name = ?");
-        query.setParameter(1, false);
-        query.setParameter(2, FlowSheetUserCreated.SCOPE_CLINIC);
-        query.setParameter(3, name);
+        query.setParameter(0, false);
+        query.setParameter(1, FlowSheetUserCreated.SCOPE_CLINIC);
+        query.setParameter(2, name);
         return this.getSingleResultOrNull(query);
     }
 }

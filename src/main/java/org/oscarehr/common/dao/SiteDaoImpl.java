@@ -154,7 +154,7 @@
      @Override
      public Site getByLocation(String location) {
          Query query = this.entityManager.createQuery("select s from Site s where s.name=?");
-         query.setParameter(1, location);
+         query.setParameter(0, location);
  
          @SuppressWarnings("unchecked")
          List<Site> rs = query.getResultList();

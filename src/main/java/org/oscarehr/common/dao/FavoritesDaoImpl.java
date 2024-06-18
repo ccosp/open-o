@@ -40,7 +40,7 @@ public class FavoritesDaoImpl extends AbstractDaoImpl<Favorites> implements Favo
 	
 	public List<Favorites> findByProviderNo(String providerNo) {
 		Query query = entityManager.createQuery("select x from Favorites x where x.providerNo=?");
-		query.setParameter(1, providerNo);
+		query.setParameter(0, providerNo);
 		
 		@SuppressWarnings("unchecked")
 		List<Favorites> results = query.getResultList();

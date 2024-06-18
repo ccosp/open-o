@@ -36,7 +36,7 @@ public class OscarCodeDaoImpl extends AbstractDaoImpl<OscarCode> implements Osca
     @Override
     public List<OscarCode> getIcd9Code(String icdCode){
         Query query = entityManager.createQuery("select i from OscarCode i where i.oscarCode=?");
-        query.setParameter(1, icdCode);
+        query.setParameter(0, icdCode);
 
         @SuppressWarnings("unchecked")
         List<OscarCode> results = query.getResultList();
@@ -47,8 +47,8 @@ public class OscarCodeDaoImpl extends AbstractDaoImpl<OscarCode> implements Osca
     @Override
     public List<OscarCode> getOscarCode(String query) {
         Query q = entityManager.createQuery("select i from OscarCode i where i.oscarCode like ? or i.description like ? order by i.description");
+        q.setParameter(0, "%"+query+"%");
         q.setParameter(1, "%"+query+"%");
-        q.setParameter(2, "%"+query+"%");
 
         @SuppressWarnings("unchecked")
         List<OscarCode> results = q.getResultList();

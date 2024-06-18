@@ -49,8 +49,8 @@ public class BedCheckTimeDaoImpl extends AbstractDaoImpl<BedCheckTime> implement
     @Override
     public boolean bedCheckTimeExists(Integer programId, Date time) {
         Query query = entityManager.createQuery("select b from BedCheckTime b where b.programId = ? and b.time = ?");
-    	query.setParameter(1, programId);
-    	query.setParameter(2, time);
+    	query.setParameter(0, programId);
+    	query.setParameter(1, time);
     	
     	@SuppressWarnings("unchecked")
     	List<BedCheckTime> bedCheckTimes = query.getResultList();

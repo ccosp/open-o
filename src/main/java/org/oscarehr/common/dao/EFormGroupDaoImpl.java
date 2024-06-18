@@ -77,7 +77,7 @@ public class EFormGroupDaoImpl extends AbstractDaoImpl<EFormGroup> implements EF
     public List<EFormGroup> getByGroupName(String groupName) {
         String sql = "select eg from EFormGroup eg where eg.groupName=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, groupName);
+        query.setParameter(0, groupName);
 
         @SuppressWarnings("unchecked")
         List<EFormGroup> results = query.getResultList();

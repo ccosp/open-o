@@ -48,7 +48,7 @@ public class BedDemographicStatusDaoImpl extends AbstractDaoImpl<BedDemographicS
     @Override
     public boolean bedDemographicStatusExists(Integer bedDemographicStatusId) {
         Query query = entityManager.createQuery("select count(*) from BedDemographicStatus b where b.id = ?");
-        query.setParameter(1, bedDemographicStatusId);
+        query.setParameter(0, bedDemographicStatusId);
 
         Long result = (Long) query.getSingleResult();
 

@@ -42,7 +42,7 @@ public class ServiceSpecialistsDaoImpl extends AbstractDaoImpl<ServiceSpecialist
     @Override
     public List<ServiceSpecialists> findByServiceId(int serviceId) {
         Query q = entityManager.createQuery("select x from ServiceSpecialists x where x.id.serviceId = ?");
-        q.setParameter(1, serviceId);
+        q.setParameter(0, serviceId);
         
         @SuppressWarnings("unchecked")
         List<ServiceSpecialists> results = q.getResultList();

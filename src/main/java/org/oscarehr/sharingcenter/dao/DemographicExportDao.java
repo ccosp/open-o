@@ -71,7 +71,7 @@ public class DemographicExportDao extends AbstractDaoImpl<DemographicExport> {
                 + "WHERE de.demographic_no = d.demographic_no AND de.demographic_no = ?";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
 
         return query.getResultList();
     }
@@ -85,7 +85,7 @@ public class DemographicExportDao extends AbstractDaoImpl<DemographicExport> {
     public List<DemographicExport> getAllDocumentsOfType(DocumentType documentType) {
         String sql = "FROM DemographicExport d WHERE d.documentType = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, documentType.name());
+        query.setParameter(0, documentType.name());
 
         return query.getResultList();
     }
@@ -98,7 +98,7 @@ public class DemographicExportDao extends AbstractDaoImpl<DemographicExport> {
     public DemographicExport getDocument(int id) {
         String sql = "FROM DemographicExport d WHERE d.id = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, id);
+        query.setParameter(0, id);
 
         return getSingleResultOrNull(query);
     }

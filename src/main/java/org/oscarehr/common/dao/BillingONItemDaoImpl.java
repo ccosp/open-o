@@ -85,7 +85,7 @@ public class BillingONItemDaoImpl extends AbstractDaoImpl<BillingONItem> impleme
     public List<Integer> getDemographicNoSince(Date lastUpdateDate) {
         String queryStr = "select b.demographicNo FROM BillingONCHeader1 b WHERE b.timestamp > ? ORDER BY b.id";
         Query q = entityManager.createQuery(queryStr);
-        q.setParameter(1, lastUpdateDate);
+        q.setParameter(0, lastUpdateDate);
         return q.getResultList();
     }
 }

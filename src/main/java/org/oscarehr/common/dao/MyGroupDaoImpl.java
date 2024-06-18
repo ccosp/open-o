@@ -51,7 +51,7 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
     public List<String> getGroupDoctors (String groupNo){
 
         Query query = entityManager.createQuery("SELECT g.id.providerNo FROM MyGroup g WHERE g.id.myGroupNo=?");
-        query.setParameter(1, groupNo);
+        query.setParameter(0, groupNo);
 
         @SuppressWarnings("unchecked")
         List<String> dList = query.getResultList();
@@ -76,7 +76,7 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
      @Override
      public List<MyGroup> getGroupByGroupNo(String groupNo) {
          Query query = entityManager.createQuery("SELECT g FROM MyGroup g where g.id.myGroupNo = ?");
-         query.setParameter(1, groupNo);
+         query.setParameter(0, groupNo);
          
          @SuppressWarnings("unchecked")
          List<MyGroup> dList = query.getResultList();
@@ -95,7 +95,7 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
      @Override
      public List<MyGroup> getProviderGroups(String providerNo) {
          Query query = entityManager.createQuery("SELECT g FROM MyGroup g WHERE g.id.providerNo = ?");
-         query.setParameter(1, providerNo);
+         query.setParameter(0, providerNo);
          
          @SuppressWarnings("unchecked")
          List<MyGroup> dList = query.getResultList();
@@ -106,7 +106,7 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
      @Override
      public String getDefaultBillingForm(String myGroupNo) {
          Query query = entityManager.createQuery("SELECT distinct g.defaultBillingForm FROM MyGroup g WHERE g.id.myGroupNo = ?");
-         query.setParameter(1, myGroupNo);
+         query.setParameter(0, myGroupNo);
          
          @SuppressWarnings("unchecked")
          List<String> dList = query.getResultList();         
@@ -123,7 +123,7 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
      public List<Provider> search_groupprovider (String groupNo){
 
          Query query = entityManager.createQuery("SELECT p  FROM MyGroup g, Provider p WHERE g.id.myGroupNo=? and p.ProviderNo = g.id.providerNo order by p.LastName");
-         query.setParameter(1, groupNo);
+         query.setParameter(0, groupNo);
 
          @SuppressWarnings("unchecked")
          List<Provider> dList = query.getResultList();
@@ -134,7 +134,7 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
       @Override
      public List<MyGroup> search_mygroup(String groupNo) {
          Query query = entityManager.createQuery("SELECT g FROM MyGroup g WHERE g.id.myGroupNo like ? group by g.id.myGroupNo order by g.id.myGroupNo");
-         query.setParameter(1, groupNo);
+         query.setParameter(0, groupNo);
          
          @SuppressWarnings("unchecked")
          List<MyGroup> dList = query.getResultList();
@@ -155,8 +155,8 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
      @Override
      public List<MyGroup> search_providersgroup(String lastName, String firstName) {
          Query query = entityManager.createQuery("SELECT g FROM MyGroup g where g.lastName like ? and g.firstName like ? order by g.lastName, g.firstName, g.id.myGroupNo");
-         query.setParameter(1, lastName);
-         query.setParameter(2, firstName);
+         query.setParameter(0, lastName);
+         query.setParameter(1, firstName);
          
          @SuppressWarnings("unchecked")
          List<MyGroup> dList = query.getResultList();

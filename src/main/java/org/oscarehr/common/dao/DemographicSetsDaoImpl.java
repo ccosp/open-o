@@ -46,8 +46,8 @@ public class DemographicSetsDaoImpl extends AbstractDaoImpl<DemographicSets> imp
     public List<DemographicSets> findBySetName(String setName) {
         String sql = "select x from DemographicSets x where x.archive != ? and x.name=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, "1");
-        query.setParameter(2, setName);
+        query.setParameter(0, "1");
+        query.setParameter(1, setName);
         @SuppressWarnings("unchecked")
         List<DemographicSets> results = query.getResultList();
         return results;
@@ -68,8 +68,8 @@ public class DemographicSetsDaoImpl extends AbstractDaoImpl<DemographicSets> imp
     public List<DemographicSets> findBySetNameAndEligibility(String setName, String eligibility) {
         String sql = "select x from DemographicSets x where x.name = ? and x.eligibility=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, setName);
-        query.setParameter(2, eligibility);
+        query.setParameter(0, setName);
+        query.setParameter(1, eligibility);
         @SuppressWarnings("unchecked")
         List<DemographicSets> results = query.getResultList();
         return results;
@@ -79,8 +79,8 @@ public class DemographicSetsDaoImpl extends AbstractDaoImpl<DemographicSets> imp
     public List<String> findSetNamesByDemographicNo(Integer demographicNo) {
         String sql = "select distinct(x.name) from DemographicSets x where x.archive = ? and x.demographicNo=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, "1");
-        query.setParameter(2, demographicNo);
+        query.setParameter(0, "1");
+        query.setParameter(1, demographicNo);
         @SuppressWarnings("unchecked")
         List<String> results = query.getResultList();
         return results;
@@ -99,8 +99,8 @@ public class DemographicSetsDaoImpl extends AbstractDaoImpl<DemographicSets> imp
     public List<DemographicSets> findBySetNameAndDemographicNo(String setName, int demographicNo) {
         String sql = "select x from DemographicSets x where x.name = ? and x.demographicNo=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, setName);
-        query.setParameter(2, demographicNo);
+        query.setParameter(0, setName);
+        query.setParameter(1, demographicNo);
         @SuppressWarnings("unchecked")
         List<DemographicSets> results = query.getResultList();
         return results;

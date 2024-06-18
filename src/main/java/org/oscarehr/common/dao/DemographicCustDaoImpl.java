@@ -82,7 +82,7 @@ public class DemographicCustDaoImpl extends AbstractDaoImpl<DemographicCust> imp
     public List<DemographicCust> findByResident(String resident) {
         String sql = "select x from DemographicCust x where x.resident like ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, resident);
+        query.setParameter(0, resident);
 
         @SuppressWarnings("unchecked")
         List<DemographicCust> results = query.getResultList();
@@ -138,7 +138,7 @@ public class DemographicCustDaoImpl extends AbstractDaoImpl<DemographicCust> imp
     public List<DemographicCust> findAllByDemographicNumber(int demographic_no) {
         String sql = "select x from DemographicCust x where x.id = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demographic_no);
+        query.setParameter(0, demographic_no);
 
         @SuppressWarnings("unchecked")
         List<DemographicCust> results = query.getResultList();

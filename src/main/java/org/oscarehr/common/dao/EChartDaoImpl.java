@@ -53,7 +53,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
     public EChart getLatestChart(int demographicNo) {
         
     	Query q = entityManager.createQuery("from EChart c where c.demographicNo = ? order by c.timestamp desc");
-    	q.setParameter(1, demographicNo);
+    	q.setParameter(0, demographicNo);
     	@SuppressWarnings("unchecked")
     	List<EChart> results = 	q.getResultList();
         if(results.size()>0) {
@@ -66,7 +66,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
         String demoNo = note.getDemographic_no();
         String sql = "select e from EChart e where e.demographicNo=? order by e.id";
         Query q = entityManager.createQuery(sql);
-        q.setParameter(1, new Integer(demoNo));
+        q.setParameter(0, new Integer(demoNo));
         @SuppressWarnings("unchecked")
         List<EChart> list =q.getResultList();
         EChart oldec;
@@ -135,7 +135,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
         String demoNo = cpp.getDemographic_no();
         String sql = "select e from EChart e where e.demographicNo=? order by e.id";
         Query q = entityManager.createQuery(sql);
-        q.setParameter(1,  new Integer(demoNo));
+        q.setParameter(0,  new Integer(demoNo));
         List<EChart> list = q.getResultList();
         EChart oldec;
         if (list.size() != 0) oldec = list.get(list.size() - 1);
@@ -152,7 +152,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
         String demoNo = cpp.getDemographic_no();
         String sql = "select e from EChart e where e.demographicNo=? order by e.id";
         Query q= entityManager.createQuery(sql);
-        q.setParameter(1, Integer.parseInt(demoNo));
+        q.setParameter(0, Integer.parseInt(demoNo));
         @SuppressWarnings("unchecked")
         List<EChart> list = q.getResultList();
         

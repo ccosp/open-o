@@ -197,9 +197,9 @@ public class MeasurementDaoImpl extends AbstractDaoImpl<Measurement> implements 
     public List<Measurement> findByDemographicIdObservedDate(Integer demographicId, Date startDate, Date endDate) {
         String sqlCommand = "select x from Measurement x where x.demographicId=? and x.type!='' and x.dateObserved >? and x.dateObserved <? order by x.dateObserved desc, x.createDate desc";
         Query query = entityManager.createQuery(sqlCommand);
-        query.setParameter(1, demographicId);
-        query.setParameter(2, startDate);
-        query.setParameter(3, endDate);
+        query.setParameter(0, demographicId);
+        query.setParameter(1, startDate);
+        query.setParameter(2, endDate);
 
         List<Measurement> results = query.getResultList();
 
@@ -210,7 +210,7 @@ public class MeasurementDaoImpl extends AbstractDaoImpl<Measurement> implements 
     public List<Measurement> findByDemographicId(Integer demographicId) {
         String sqlCommand = "select x from Measurement x where x.demographicId=? and x.type!='' order by x.dateObserved desc";
         Query query = entityManager.createQuery(sqlCommand);
-        query.setParameter(1, demographicId);
+        query.setParameter(0, demographicId);
 
         List<Measurement> results = query.getResultList();
 
@@ -399,10 +399,10 @@ public class MeasurementDaoImpl extends AbstractDaoImpl<Measurement> implements 
 
         String queryStr = "select m from  Measurement m WHERE m.demographicId = ? and m.type=? and m.dateObserved>=? and m.dateObserved<=? ORDER BY m.dateObserved DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, type);
-        query.setParameter(3, startDate);
-        query.setParameter(4, endDate);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, type);
+        query.setParameter(2, startDate);
+        query.setParameter(3, endDate);
 
         List<Measurement> rs = query.getResultList();
         for (Measurement m : rs) {
@@ -416,8 +416,8 @@ public class MeasurementDaoImpl extends AbstractDaoImpl<Measurement> implements 
     public HashMap<String, Measurement> getMeasurementsPriorToDate(Integer demographicNo, Date d) {
         String queryStr = "select m From Measurement m WHERE m.demographicId = ? AND m.dateObserved <= ?";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, d);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, d);
 
         List<Measurement> rs = query.getResultList();
 

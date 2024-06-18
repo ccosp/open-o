@@ -56,7 +56,7 @@ public class Hl7TextMessageDaoImpl extends AbstractDaoImpl<Hl7TextMessage> imple
     @Override
     public List<Hl7TextMessage> findByFileUploadCheckId(int id) {
         Query query = entityManager.createQuery("select x from Hl7TextMessage x where x.fileUploadCheckId = ?");
-        query.setParameter(1, id);
+        query.setParameter(0, id);
 
         @SuppressWarnings("unchecked")
         List<Hl7TextMessage> results = query.getResultList();

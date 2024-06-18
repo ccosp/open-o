@@ -51,7 +51,7 @@ public class CaisiFormInstanceDaoImpl extends AbstractDaoImpl<CaisiFormInstance>
 	
 	   public List<CaisiFormInstance> findByFormId(Integer formId) {
 	        Query query = entityManager.createQuery("SELECT f FROM CaisiFormInstance f where f.formId = ? order by f.clientId, f.dateCreated");
-			query.setParameter(1,formId);
+			query.setParameter(0,formId);
 			
 			@SuppressWarnings("unchecked")
 	        List<CaisiFormInstance> result = query.getResultList();
@@ -61,8 +61,8 @@ public class CaisiFormInstanceDaoImpl extends AbstractDaoImpl<CaisiFormInstance>
 	   
     public List<CaisiFormInstance> getForms(Integer formId, Integer clientId) {
         Query query = entityManager.createQuery("SELECT f FROM CaisiFormInstance f where f.formId = ? and f.clientId = ? order by f.dateCreated DESC");
-		query.setParameter(1,formId);
-		query.setParameter(2, clientId);
+		query.setParameter(0,formId);
+		query.setParameter(1, clientId);
 		@SuppressWarnings("unchecked")
         List<CaisiFormInstance> result = query.getResultList();
 		
@@ -71,8 +71,8 @@ public class CaisiFormInstanceDaoImpl extends AbstractDaoImpl<CaisiFormInstance>
     
     public CaisiFormInstance getLatestForm(Integer formId, Integer clientId) {
 		Query query = entityManager.createQuery("SELECT f FROM CaisiFormInstance f where f.formId = ? and f.clientId = ? order by f.dateCreated DESC");
-		query.setParameter(1,formId);
-		query.setParameter(2, clientId);
+		query.setParameter(0,formId);
+		query.setParameter(1, clientId);
 		@SuppressWarnings("unchecked")
         List<CaisiFormInstance> result = query.getResultList();
 		if (result.size() > 0) {
@@ -109,7 +109,7 @@ public class CaisiFormInstanceDaoImpl extends AbstractDaoImpl<CaisiFormInstance>
     
     public List<CaisiFormInstance> getForms(Long clientId) {
     	Query query = entityManager.createQuery("SELECT f FROM CaisiFormInstance f where f.clientId = ? order by f.dateCreated DESC");
-		query.setParameter(1, clientId);
+		query.setParameter(0, clientId);
 		@SuppressWarnings("unchecked")
         List<CaisiFormInstance> result = query.getResultList();
 		
@@ -119,13 +119,13 @@ public class CaisiFormInstanceDaoImpl extends AbstractDaoImpl<CaisiFormInstance>
 		
     public Integer countAnswersByQuestions(String value, Integer formId, Date startDate, Date endDate, Integer pageNumber, Integer sectionId, Integer questionId) {
     	Query query = entityManager.createQuery("select count(d.value) from CaisiFormInstance i, CaisiFormData d where d.value=? and i.formId=? and i.dateCreated>=? and i.dateCreated<=? and i.id=d.instanceId and d.pageNumber=? and d.sectionId=? and d.questionId= ?");
-		query.setParameter(1, value);
-		query.setParameter(2, formId);
-		query.setParameter(3, startDate);
-		query.setParameter(4, endDate);
-		query.setParameter(5, pageNumber);
-		query.setParameter(6, sectionId);
-		query.setParameter(7, questionId);
+		query.setParameter(0, value);
+		query.setParameter(1, formId);
+		query.setParameter(2, startDate);
+		query.setParameter(3, endDate);
+		query.setParameter(4, pageNumber);
+		query.setParameter(5, sectionId);
+		query.setParameter(6, questionId);
 		
 		BigInteger result = (BigInteger)query.getSingleResult();
 		
@@ -135,12 +135,12 @@ public class CaisiFormInstanceDaoImpl extends AbstractDaoImpl<CaisiFormInstance>
 
     public List<CaisiFormData> query1(Integer formId, Date startDate, Date endDate, int pageNumber, int sectionId, int questionId) {
     	Query query = entityManager.createQuery("select distinct d from CaisiFormInstance i, CaisiFormData d where i.formId=? and i.dateCreated>=? and i.dateCreated<=? and i.id=d.instanceId and d.pageNumber=? and d.sectionId=? and d.questionId= ? group by d.key, d.value");
-		query.setParameter(1, formId);
-		query.setParameter(2, startDate);
-		query.setParameter(3, endDate);
-		query.setParameter(4, pageNumber);
-		query.setParameter(5, sectionId);
-		query.setParameter(6, questionId);
+		query.setParameter(0, formId);
+		query.setParameter(1, startDate);
+		query.setParameter(2, endDate);
+		query.setParameter(3, pageNumber);
+		query.setParameter(4, sectionId);
+		query.setParameter(5, questionId);
 		
 		@SuppressWarnings("unchecked")
         List<CaisiFormData> result = query.getResultList();

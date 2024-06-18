@@ -43,17 +43,17 @@ public class ViewDaoImpl extends AbstractDaoImpl<View> implements ViewDao {
     @Override
     public Map<String, View> getView(String view, String role) {
         Query query = entityManager.createQuery("select v from View v where v.view_name=? and v.role=? and v.providerNo is null");
-        query.setParameter(1, view);
-        query.setParameter(2, role);
+        query.setParameter(0, view);
+        query.setParameter(1, role);
         return getView(query);
     }
 
     @Override
     public Map<String, View> getView(String view, String role, String providerNo) {
         Query query = entityManager.createQuery("select v from View v where v.view_name=? and v.role=? and v.providerNo = ?");
-        query.setParameter(1, view);
-        query.setParameter(2, role);
-        query.setParameter(3, providerNo);
+        query.setParameter(0, view);
+        query.setParameter(1, role);
+        query.setParameter(2, providerNo);
         return getView(query);
     }
 

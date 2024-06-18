@@ -41,8 +41,8 @@ public class BillingONFilenameDao extends AbstractDaoImpl<BillingONFilename>{
 	public List<BillingONFilename> findByDiskIdAndStatus(Integer diskId, String status) {
 		String q = "SELECT b FROM BillingONFilename b WHERE b.diskId = ?  AND b.status = ? ORDER BY b.id DESC";
 		Query query = entityManager.createQuery(q);
-		query.setParameter(1, diskId);
-		query.setParameter(2, status);
+		query.setParameter(0, diskId);
+		query.setParameter(1, status);
 		
 		@SuppressWarnings("unchecked")
 		List<BillingONFilename> results = query.getResultList();
@@ -53,8 +53,8 @@ public class BillingONFilenameDao extends AbstractDaoImpl<BillingONFilename>{
 	public List<BillingONFilename> findByDiskIdAndProvider(Integer diskId, String provider) {
 		String q = "SELECT b FROM BillingONFilename b WHERE b.diskId = ?  AND b.providerNo = ? ORDER BY b.id DESC";
 		Query query = entityManager.createQuery(q);
-		query.setParameter(1, diskId);
-		query.setParameter(2, provider);
+		query.setParameter(0, diskId);
+		query.setParameter(1, provider);
 		
 		@SuppressWarnings("unchecked")
 		List<BillingONFilename> results = query.getResultList();
@@ -65,7 +65,7 @@ public class BillingONFilenameDao extends AbstractDaoImpl<BillingONFilename>{
 	public List<BillingONFilename> findByDiskId(Integer diskId) {
 		String q = "SELECT b FROM BillingONFilename b WHERE b.diskId = ?";
 		Query query = entityManager.createQuery(q);
-		query.setParameter(1, diskId);
+		query.setParameter(0, diskId);
 		
 		@SuppressWarnings("unchecked")
 		List<BillingONFilename> results = query.getResultList();
@@ -76,8 +76,8 @@ public class BillingONFilenameDao extends AbstractDaoImpl<BillingONFilename>{
 	public List<BillingONFilename> findCurrentByDiskId(Integer diskId) {
 		String q = "SELECT b FROM BillingONFilename b WHERE b.diskId = ?  AND b.status != ? ORDER BY b.id DESC";
 		Query query = entityManager.createQuery(q);
-		query.setParameter(1, diskId);
-		query.setParameter(2, "D");
+		query.setParameter(0, diskId);
+		query.setParameter(1, "D");
 		
 		@SuppressWarnings("unchecked")
 		List<BillingONFilename> results = query.getResultList();

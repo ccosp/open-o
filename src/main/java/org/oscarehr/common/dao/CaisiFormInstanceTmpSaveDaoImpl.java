@@ -43,10 +43,10 @@ public class CaisiFormInstanceTmpSaveDaoImpl extends AbstractDaoImpl<CaisiFormIn
 	
 	public List<CaisiFormInstance> getTmpForms(Integer instanceId,Integer formId, Integer clientId, Integer providerNo) {
     	Query query = entityManager.createQuery("select f from CaisiFormInstanceTmpSave f where f.instanceId = ? and f.formId = ? and f.clientId = ? and f.userId = ? order by f.dateCreated DESC");
-		query.setParameter(1, instanceId);
-		query.setParameter(2, formId);
-		query.setParameter(3, clientId);
-		query.setParameter(4, providerNo);
+		query.setParameter(0, instanceId);
+		query.setParameter(1, formId);
+		query.setParameter(2, clientId);
+		query.setParameter(3, providerNo);
 		@SuppressWarnings("unchecked")
         List<CaisiFormInstance> result = query.getResultList();
 		

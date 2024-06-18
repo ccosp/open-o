@@ -54,7 +54,7 @@ public class ReportTempDaoImpl extends AbstractDaoImpl<ReportTemp> implements Re
 	public List<ReportTemp> findGreateThanEdb(Date edb, int offset, int limit) {
 		String sql = "select x from ReportTemp x where x.id.edb >= ?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, edb);
+		query.setParameter(0, edb);
 		query.setMaxResults(limit);
 		query.setFirstResult(offset);
 

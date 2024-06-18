@@ -57,7 +57,7 @@ public class DemographicExtDaoImpl extends AbstractDaoImpl<DemographicExt> imple
 
         Query query = entityManager
                 .createQuery("SELECT d from DemographicExt d where d.demographicNo=? order by d.dateCreated");
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<DemographicExt> results = query.getResultList();
@@ -87,8 +87,8 @@ public class DemographicExtDaoImpl extends AbstractDaoImpl<DemographicExt> imple
 
         Query query = entityManager.createQuery(
                 "SELECT d from DemographicExt d where d.demographicNo=? and d.key = ? order by d.dateCreated DESC");
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, key);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, key);
 
         @SuppressWarnings("unchecked")
         List<DemographicExt> results = query.getResultList();
@@ -114,8 +114,8 @@ public class DemographicExtDaoImpl extends AbstractDaoImpl<DemographicExt> imple
 
         Query query = entityManager.createQuery(
                 "SELECT d from DemographicExt d where d.key = ? and d.value=? order by d.dateCreated DESC");
-        query.setParameter(1, key);
-        query.setParameter(2, value);
+        query.setParameter(0, key);
+        query.setParameter(1, value);
         return query.getResultList();
     }
 
@@ -132,8 +132,8 @@ public class DemographicExtDaoImpl extends AbstractDaoImpl<DemographicExt> imple
 
         Query query = entityManager.createQuery(
                 "SELECT d from DemographicExt d where d.demographicNo=? and d.key = ? order by d.dateCreated DESC, d.id DESC");
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, key);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, key);
 
         @SuppressWarnings("unchecked")
         List<DemographicExt> results = query.getResultList();
@@ -219,7 +219,7 @@ public class DemographicExtDaoImpl extends AbstractDaoImpl<DemographicExt> imple
         Map<String, String> retval = new HashMap<String, String>();
         Query query = entityManager
                 .createQuery("SELECT d from DemographicExt d where d.demographicNo=? order by d.dateCreated");
-        query.setParameter(1, demo);
+        query.setParameter(0, demo);
 
         @SuppressWarnings("unchecked")
         List<DemographicExt> demographicExts = query.getResultList();
@@ -311,8 +311,8 @@ public class DemographicExtDaoImpl extends AbstractDaoImpl<DemographicExt> imple
     public List<Integer> findDemographicIdsByKeyVal(String key, String val) {
         Query query = entityManager
                 .createQuery("SELECT distinct d.demographicNo from DemographicExt d where d.key=? and d.value=?");
-        query.setParameter(1, key);
-        query.setParameter(2, val);
+        query.setParameter(0, key);
+        query.setParameter(1, val);
 
         return query.getResultList();
     }

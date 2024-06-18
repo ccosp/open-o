@@ -74,7 +74,7 @@ public class DocumentDaoImpl extends AbstractDaoImpl<Document> implements Docume
     public List<Document> findActiveByDocumentNo(Integer demoId) {
         String sql = "SELECT d FROM Document d where d.documentNo = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, demoId);
+        query.setParameter(0, demoId);
         return query.getResultList();
     }
 
@@ -235,7 +235,7 @@ public class DocumentDaoImpl extends AbstractDaoImpl<Document> implements Docume
                 + " and c.id.moduleId!='-1' and c.id.moduleId=d.DemographicNo and c.id.documentNo=? ";
 
         Query query = entityManager.createQuery(q);
-        query.setParameter(1, id);
+        query.setParameter(0, id);
 
         List<Demographic> rs = query.getResultList();
         if (rs.size() > 0)
@@ -282,7 +282,7 @@ public class DocumentDaoImpl extends AbstractDaoImpl<Document> implements Docume
         Query query = entityManager.createQuery(
                 "SELECT DISTINCT d FROM Document d, CtlDocument c WHERE d.status = c.status AND d.status != 'D' AND c.id.documentNo=d.documentNo AND "
                         + "c.id.module='demographic' AND c.id.moduleId = ?");
-        query.setParameter(1, id);
+        query.setParameter(0, id);
 
         List<Document> result = query.getResultList();
         return result;

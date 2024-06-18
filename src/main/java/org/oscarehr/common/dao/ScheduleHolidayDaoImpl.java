@@ -52,7 +52,7 @@ public class ScheduleHolidayDaoImpl extends AbstractDaoImpl<ScheduleHoliday> imp
 	@Override
 	public List<ScheduleHoliday> findAfterDate(Date date) {
 		Query query = entityManager.createQuery("select s from ScheduleHoliday s where s.id > ?");
-		query.setParameter(1, date);
+		query.setParameter(0, date);
 
 		@SuppressWarnings("unchecked")
         List<ScheduleHoliday> results = query.getResultList();

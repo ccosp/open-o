@@ -41,7 +41,7 @@ public class CaisiFormDataTmpSaveDaoImpl extends AbstractDaoImpl<CaisiFormDataTm
 	@Override
 	public List<CaisiFormDataTmpSave> getTmpFormData(Long tmpInstanceId) {
     	Query query = entityManager.createQuery("select f from CaisiFormDataTmpSave f where f.tmpInstanceId = ?");
-		query.setParameter(1, tmpInstanceId);
+		query.setParameter(0, tmpInstanceId);
 		
 		@SuppressWarnings("unchecked")
         List<CaisiFormDataTmpSave> result = query.getResultList();

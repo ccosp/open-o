@@ -49,8 +49,8 @@ public class LookupListItemDaoImpl extends AbstractDaoImpl<LookupListItem> imple
         Query q = entityManager.createQuery(
                 "select l from LookupListItem l where l.lookupListId=? and l.active=? order by l.displayOrder");
 
-        q.setParameter(1, lookupListId);
-        q.setParameter(2, active);
+        q.setParameter(0, lookupListId);
+        q.setParameter(1, active);
 
         @SuppressWarnings("unchecked")
         List<LookupListItem> result = q.getResultList();
@@ -62,8 +62,8 @@ public class LookupListItemDaoImpl extends AbstractDaoImpl<LookupListItem> imple
     public LookupListItem findByLookupListIdAndValue(int lookupListId, String value) {
         Query q = entityManager.createQuery("select l from LookupListItem l where l.lookupListId=? and l.value=?");
 
-        q.setParameter(1, lookupListId);
-        q.setParameter(2, value);
+        q.setParameter(0, lookupListId);
+        q.setParameter(1, value);
 
         LookupListItem item = this.getSingleResultOrNull(q);
 

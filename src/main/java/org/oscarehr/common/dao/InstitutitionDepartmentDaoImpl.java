@@ -43,7 +43,7 @@ public class InstitutitionDepartmentDaoImpl extends AbstractDaoImpl<InstitutionD
 	@Override
 	public List<InstitutionDepartment> findByInstitutionId(int institutionId) {
 		Query q = entityManager.createQuery("select x from InstitutionDepartment x where x.id.institutionId = ?");
-		q.setParameter(1, institutionId);
+		q.setParameter(0, institutionId);
 		
 		@SuppressWarnings("unchecked")
 		List<InstitutionDepartment> results = q.getResultList();

@@ -47,7 +47,7 @@ public class BillingInrDaoImpl extends AbstractDaoImpl<BillingInr> implements Bi
     public List<Object[]> search_inrbilling_dt_billno(Integer billingInrNo) {
         String sql = "from BillingInr b, Demographic d where d.DemographicNo=b.demographicNo and b.id=? and b.status<>'D'";
         Query q = entityManager.createQuery(sql);
-        q.setParameter(1, billingInrNo);
+        q.setParameter(0, billingInrNo);
 
         List<Object[]> results = q.getResultList();
 
@@ -59,7 +59,7 @@ public class BillingInrDaoImpl extends AbstractDaoImpl<BillingInr> implements Bi
     public List<BillingInr> findCurrentByProviderNo(String providerNo) {
         String sql = "select b from BillingInr b where b.providerNo like ? and b.status<>'D'";
         Query q = entityManager.createQuery(sql);
-        q.setParameter(1, providerNo);
+        q.setParameter(0, providerNo);
 
         List<BillingInr> results = q.getResultList();
 
