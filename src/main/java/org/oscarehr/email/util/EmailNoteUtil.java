@@ -98,7 +98,7 @@ public class EmailNoteUtil {
                     if (hrmDocument != null) { hrmDocumentList.add(hrmDocument); }
                     break;
                 case FORM:
-                    PatientForm form = formsManager.getFormById(loggedInInfo, emailAttachment.getDocumentId(), emailLog.getDemographicNo());
+                    PatientForm form = formsManager.getFormById(loggedInInfo, emailAttachment.getDocumentId(), emailLog.getDemographic().getDemographicNo());
                     if (form != null) { formList.add(form); }
                     break;
             }

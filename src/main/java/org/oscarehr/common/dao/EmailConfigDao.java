@@ -17,7 +17,7 @@ public class EmailConfigDao extends AbstractDao<EmailConfig> {
 
     @Transactional
     public EmailConfig findActiveEmailConfig(EmailConfig emailConfig) {
-		Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.emailType = :emailType AND e.emailProvider = :emailProvider AND e.active = 1");
+		Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.emailType = :emailType AND e.emailProvider = :emailProvider AND e.active = true");
 		
 		query.setParameter("senderEmail", emailConfig.getSenderEmail());
         query.setParameter("emailType", emailConfig.getEmailType());
@@ -27,14 +27,14 @@ public class EmailConfigDao extends AbstractDao<EmailConfig> {
 	}
 
     public EmailConfig findActiveEmailConfig(String senderEmail) {
-		Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.active = 1");
+		Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.active = true");
 		query.setParameter("senderEmail", senderEmail);		
 		return getSingleResultOrNull(query);
 	}
 
     @SuppressWarnings("unchecked")
     public List<EmailConfig> fillAllActiveEmailConfigs() {
-        Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.active = 1");
+        Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.active = true");
 
         List<EmailConfig> emailConfigs = query.getResultList();
         if (emailConfigs == null) { emailConfigs = Collections.emptyList(); }

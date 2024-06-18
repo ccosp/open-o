@@ -334,6 +334,11 @@ document.addEventListener("DOMContentLoaded", function(){
 	 * open the Oscar Email dialog.
 	 */
 	function remoteEmail() {
+		if (!document.getElementById("hasValidRecipient") || !document.getElementById("emailConsentStatus") || !document.getElementById("emailConsentName")) {
+			alert("Valid recipient or consent parameter is not defined in the EForm.");
+			return;
+		}
+
 		const hasValidRecipient = document.getElementById("hasValidRecipient").value;	
 		const emailConsentStatus = document.getElementById("emailConsentStatus").value;
 		const emailConsentName = document.getElementById("emailConsentName").value;

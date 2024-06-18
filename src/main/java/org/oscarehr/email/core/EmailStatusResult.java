@@ -28,6 +28,27 @@ public class EmailStatusResult implements Comparable<EmailStatusResult> {
     public EmailStatusResult() {
     }
 
+    public EmailStatusResult(Integer logId, String subject, String senderFirstName, String senderLastName, String senderEmail, 
+                             String recipientFirstName, String recipientLastName, String recipientEmail, String providerFirstName, 
+                             String providerLastName, boolean isEncrypted, String password, EmailStatus status, 
+                             String errorMessage, Date created) {
+        this.logId = logId;
+        this.subject = subject;
+        this.senderFirstName = senderFirstName;
+        this.senderLastName = senderLastName;
+        this.senderEmail = senderEmail;
+        this.recipientFirstName = recipientFirstName;
+        this.recipientLastName = recipientLastName;
+        this.providerFirstName = providerFirstName;
+        this.providerLastName = providerLastName;
+        this.recipientEmail = recipientEmail;
+        this.isEncrypted = isEncrypted;
+        this.password = password;
+        this.status = status;
+        this.errorMessage = errorMessage;
+        this.created = created;
+    }
+
     public Integer getLogId() {
         return logId;
     }

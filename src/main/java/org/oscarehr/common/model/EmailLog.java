@@ -80,11 +80,15 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
 
     private String additionalParams;
 
-    private int demographicNo;
+    @ManyToOne
+    @JoinColumn(name = "DemographicNo")
+    private Demographic demographic;
 
-    private String providerNo;
+    @ManyToOne
+    @JoinColumn(name = "ProviderNo")
+    private Provider provider;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "configId")
     private EmailConfig emailConfig;
 
@@ -227,20 +231,20 @@ public class EmailLog extends AbstractModel<Integer> implements Comparable<Email
         this.transactionType = transactionType;
     }
 
-    public int getDemographicNo() {
-        return demographicNo;
+    public Demographic getDemographic() {
+        return demographic;
     }
 
-    public void setDemographicNo(int demographicNo) {
-        this.demographicNo = demographicNo;
+    public void setDemographic(Demographic demographic) {
+        this.demographic = demographic;
     }
 
-    public String getProviderNo() {
-        return providerNo;
+    public Provider getProvider() {
+        return provider;
     }
 
-    public void setProviderNo(String providerNo) {
-        this.providerNo = providerNo;
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
     public String getAdditionalParams() {

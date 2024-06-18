@@ -22,9 +22,11 @@ import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 import org.oscarehr.casemgmt.service.CaseManagementManager;
 import org.oscarehr.common.dao.EmailConfigDao;
 import org.oscarehr.common.dao.EmailLogDao;
+import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.EmailAttachment;
 import org.oscarehr.common.model.EmailConfig;
 import org.oscarehr.common.model.EmailLog;
+import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.EmailLog.ChartDisplayOption;
 import org.oscarehr.common.model.EmailLog.EmailStatus;
 import org.oscarehr.common.model.SecRole;
@@ -60,9 +62,13 @@ public class EmailManager {
     @Autowired
     private CaseManagementManager caseManagementManager;
     @Autowired
+    private DemographicManager demographicManager;
+    @Autowired
     private DocumentAttachmentManager documentAttachmentManager;
     @Autowired
 	private ProgramManager programManager;
+    @Autowired
+    private ProviderManager2 providerManager;
     @Autowired
 	private SecurityInfoManager securityInfoManager;
 
@@ -92,6 +98,9 @@ public class EmailManager {
 		}
 
         EmailConfig emailConfig = emailConfigDao.findActiveEmailConfig(emailData.getSender());
+        Demographic demographic = demographicManager.getDemographic(loggedInInfo, emailData.getDemographicNo());
+        Provider provider = providerManager.getProvider(loggedInInfo, emailData.getProviderNo());
+
         EmailLog emailLog = new EmailLog(emailConfig, emailData.getSender(), emailData.getRecipients(), emailData.getSubject(), emailData.getBody(), EmailStatus.FAILED);
         setEmailAttachments(emailLog, emailData.getAttachments());
         emailLog.setEncryptedMessage(emailData.getEncryptedMessage());
@@ -103,11 +112,11 @@ public class EmailManager {
         emailLog.setTransactionType(emailData.getTransactionType());
         emailLog.setErrorMessage("Email was not sent successfully for unknown reasons.");
         emailLog.setAdditionalParams(emailData.getAdditionalParams());
-        emailLog.setDemographicNo(emailData.getDemographicNo());
-        emailLog.setProviderNo(emailData.getProviderNo());
+        emailLog.setDemographic(demographic);
+        emailLog.setProvider(provider);
         emailLogDao.persist(emailLog);
 
-        LogAction.addLog(loggedInInfo, "EmailManager.prepareEmailForOutbox", "Email", "emailLogId=" + emailLog.getId(), String.valueOf(emailLog.getDemographicNo()), "");
+        LogAction.addLog(loggedInInfo, "EmailManager.prepareEmailForOutbox", "Email", "emailLogId=" + emailLog.getId(), String.valueOf(emailLog.getDemographic().getDemographicNo()), "");
 
         return emailLog;
     }
@@ -142,8 +151,8 @@ public class EmailManager {
         Date dateEnd = parseDate(dateEndStr, "yyyy-MM-dd", "23:59:59");
         if (dateBegin == null || dateEnd == null) { return Collections.emptyList(); }
         
-        List<Object[]> emailStatusResultList = emailLogDao.getEmailStatusByDateDemographicSenderStatus(dateBegin, dateEnd, demographic_no, senderEmailAddress, emailStatus);
-        return retriveEmailStatusResultList(emailStatusResultList);
+        List<EmailLog> resultList = emailLogDao.getEmailStatusByDateDemographicSenderStatus(dateBegin, dateEnd, demographic_no, senderEmailAddress, emailStatus);
+        return retriveEmailStatusResultList(resultList);
     }
 
     public EmailLog getEmailLogByCaseManagementNoteId(LoggedInInfo loggedInInfo, Long noteId) {
@@ -176,7 +185,7 @@ public class EmailManager {
         CaseManagementNote caseManagementNote = new CaseManagementNote();
 		caseManagementNote.setUpdate_date(creationDate);
 		caseManagementNote.setObservation_date(creationDate);
-		caseManagementNote.setDemographic_no(String.valueOf(emailLog.getDemographicNo()));
+		caseManagementNote.setDemographic_no(String.valueOf(emailLog.getDemographic().getDemographicNo()));
 		caseManagementNote.setProviderNo(providerNo);
 		caseManagementNote.setNote(emailNote);
 		caseManagementNote.setSigned(true);
@@ -285,28 +294,22 @@ public class EmailManager {
     }
 
     /**
-     * Converts a list of Object arrays into a list of EmailStatusResult DTOs.
+     * Converts a list of EmailLog arrays into a list of EmailStatusResult DTOs.
      * This method facilitates easy transfer of data to the UI layer.
      *
-     * @param resultList The list of Object arrays containing email log data, demographic name, and provider name.
+     * @param resultList The list of EmailLog arrays containing email log data, demographic name, and provider name.
      * @return List of EmailStatusResult DTOs representing email status information.
      */
-    private List<EmailStatusResult> retriveEmailStatusResultList(List<Object[]> resultList) {
+    private List<EmailStatusResult> retriveEmailStatusResultList(List<EmailLog> resultList) {
         List<EmailStatusResult> emailStatusResults = new ArrayList<>();
-        for (Object[] result : resultList) {
-            EmailStatusResult emailStatusResult = new EmailStatusResult();
-            emailStatusResult.setLogId((Integer) result[0]);
-            emailStatusResult.setSubject((String) result[1]);
-            emailStatusResult.setSenderEmail((String) result[2]);
-            emailStatusResult.setRecipientEmail((String) result[3]);
-            emailStatusResult.setStatus((EmailStatus) result[4]);
-            emailStatusResult.setErrorMessage((String) result[5]);
-            emailStatusResult.setCreated((Date) result[6]);
-            emailStatusResult.setPassword((String) result[7]);
-            emailStatusResult.setIsEncrypted((boolean) result[8]);
-            emailStatusResult.setSenderFullName((String) result[9], (String) result[10]);
-            emailStatusResult.setRecipientFullName((String) result[11], (String) result[12]);
-            emailStatusResult.setProviderFullName((String) result[13], (String) result[14]);
+        for (EmailLog result : resultList) {
+            EmailConfig emailConfig = result.getEmailConfig();
+            Demographic demographic = result.getDemographic();
+            Provider provider = result.getProvider();
+            EmailStatusResult emailStatusResult = new EmailStatusResult(result.getId(), result.getSubject(), emailConfig.getSenderFirstName(), 
+                                                    emailConfig.getSenderLastName(), result.getFromEmail(), demographic.getFirstName(),
+                                                    demographic.getLastName(), String.join(", ", result.getToEmail()), provider.getFirstName(), provider.getLastName(),
+                                                    result.getIsEncrypted(), result.getPassword(), result.getStatus(), result.getErrorMessage(), result.getTimestamp());
             emailStatusResults.add(emailStatusResult);
         }
         Collections.sort(emailStatusResults);

@@ -13159,7 +13159,7 @@ CREATE TABLE IF NOT EXISTS emailConfig (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     emailType VARCHAR(20),
     emailProvider VARCHAR(20),
-    active BOOLEAN,
+    active BOOLEAN DEFAULT FALSE,  -- Set default to false
     senderFirstName VARCHAR(50),
     senderLastName VARCHAR(50),
     senderEmail VARCHAR(255),
@@ -13178,8 +13178,8 @@ CREATE TABLE IF NOT EXISTS emailLog (
     encryptedMessage BLOB,
     password VARCHAR(50),
     passwordClue VARCHAR(1024),
-    isEncrypted BOOLEAN,
-    isAttachmentEncrypted BOOLEAN,
+    isEncrypted BOOLEAN DEFAULT FALSE,  -- Set default to false
+    isAttachmentEncrypted BOOLEAN DEFAULT FALSE,  -- Set default to false
     chartDisplayOption VARCHAR(20),
     transactionType VARCHAR(20),
     demographicNo INT,

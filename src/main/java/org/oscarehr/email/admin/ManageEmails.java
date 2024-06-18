@@ -106,12 +106,13 @@ public class ManageEmails extends JSONAction {
 			request.setAttribute("isEmailError", true);
 		}
 		
-		String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, emailLog.getDemographicNo());
-		String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, emailLog.getDemographicNo());
-		List<?>[] receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, emailLog.getDemographicNo());
+		int demographicNo = emailLog.getDemographic().getDemographicNo();
+		String[] emailConsent = emailComposeManager.getEmailConsentStatus(loggedInInfo, demographicNo);
+		String receiverName = demographicManager.getDemographicFormattedName(loggedInInfo, demographicNo);
+		List<?>[] receiverEmailList = emailComposeManager.getRecipients(loggedInInfo, demographicNo);
 		List<EmailConfig> senderAccounts = emailComposeManager.getAllSenderAccounts();
 
-		request.setAttribute("demographicId", emailLog.getDemographicNo());
+		request.setAttribute("demographicId", demographicNo);
 		request.setAttribute("transactionType", TransactionType.DIRECT);
         request.setAttribute("emailConsentName", emailConsent[0]);
         request.setAttribute("emailConsentStatus", emailConsent[1]);
@@ -164,7 +165,7 @@ public class ManageEmails extends JSONAction {
                     emailAttachment.setFileSize(emailComposeManager.getFileSize(hrmPDFPath));
                     break;
                 case FORM:
-                    Path formPDFPath = formsManager.renderForm(request, response, emailAttachment.getDocumentId(), emailLog.getDemographicNo());
+                    Path formPDFPath = formsManager.renderForm(request, response, emailAttachment.getDocumentId(), emailLog.getDemographic().getDemographicNo());
                     emailAttachment.setFilePath(formPDFPath.toString());
                     emailAttachment.setFileSize(emailComposeManager.getFileSize(formPDFPath));
                     break;
