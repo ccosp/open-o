@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CaseManagementIssueNotesDaoImpl implements CaseManagementIssueNotesDao {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "entityManagerFactory")
     protected EntityManager entityManager = null;
 
     @Override

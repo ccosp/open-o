@@ -32,7 +32,7 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.casemgmt.model.CaseManagementCPP;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 /*
  * Updated by Eugene Petruhin on 09 jan 2009 while fixing #2482832 & #2494061

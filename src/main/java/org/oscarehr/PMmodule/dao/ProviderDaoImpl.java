@@ -52,7 +52,7 @@ import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.hibernate.type.StandardBasicTypes;
 import oscar.OscarProperties;
 import org.springframework.beans.factory.annotation.Autowired;

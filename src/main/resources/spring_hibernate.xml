@@ -49,6 +49,7 @@
 				<prop key="hibernate.cache.use_second_level_cache">false</prop>
 				<prop key="hibernate.cache.use_query_cache">false</prop>
 				<prop key="hibernate.flushMode">AUTO</prop>
+				<prop key="hibernate.allow_update_outside_transaction">true</prop>
 			</props>
 		</property>
 		
@@ -57,7 +58,7 @@
 	<!-- <property name="eventListeners">
 			<map>
 				<entry key="merge">
-					<bean class="org.springframework.orm.hibernate4.support.IdTransferringMergeEventListener" />
+					<bean class="org.springframework.orm.hibernate5.support.IdTransferringMergeEventListener" />
 					<bean class="org.hibernate.event.internal.DefaultMergeEventListener" />
 				</entry>
 			</map>

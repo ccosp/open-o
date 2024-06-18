@@ -35,7 +35,7 @@ import org.oscarehr.util.MiscUtils;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 public class ClientImage extends HibernateDaoSupport {
 	public static final String imageMissingPlaceholderUrl="/images/defaultR_img.jpg";

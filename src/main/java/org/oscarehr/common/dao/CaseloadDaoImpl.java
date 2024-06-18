@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CaseloadDaoImpl implements CaseloadDao {
 
-    @PersistenceContext
+	@PersistenceContext(unitName = "entityManagerFactory")
     protected EntityManager entityManager = null;
 
     public CaseloadDaoImpl() {
