@@ -136,10 +136,15 @@ public class ScheduleDateDaoImpl extends AbstractDaoImpl<ScheduleDate> implement
 	
     @Override
 	public List<ScheduleDate> findByProviderStartDateAndPriority(String providerNo, Date apptDate, String priority) {
+		Character priorityChar = null;
+			if (priority != null && priority.length() == 1) {
+			priorityChar = priority.charAt(0);
+			}
 		Query query = createQuery("sd", "sd.date = :apptDate AND sd.providerNo = :providerNo AND sd.priority = :priority");
 		query.setParameter("providerNo", providerNo);
 		query.setParameter("apptDate", apptDate);
-		query.setParameter("priority", priority);
+		
+		query.setParameter("priority", priorityChar);
 		return query.getResultList();
     }
 }
