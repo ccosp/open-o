@@ -62,6 +62,7 @@ public class JsonUtilTest {
 		demographic.setHin("9374636728674");
 		demographic.setEffDate(new java.sql.Date(new Date().getTime()));
 		demographic.setFamilyDoctor("<rd>Who, Doctor</rd><rdohip>973637</rdohip>");
+		demographic.setFamilyPhysician("<rd>Who, Doctor</rd><rdohip>973637</rdohip>");
 		
 		bpmhDrug1 = new BpmhDrug();
 		bpmhDrug1.setGenericName("GENERIC DRUG");
@@ -78,7 +79,7 @@ public class JsonUtilTest {
 		bpmhDrugList.add(bpmhDrug2);
 	}
 
-	@Ignore
+	@Test
 	public void testPojoToJson() {				
 		assertNotNull( JsonUtil.pojoToJson(demographic, ignoreMethods) );
 	}
