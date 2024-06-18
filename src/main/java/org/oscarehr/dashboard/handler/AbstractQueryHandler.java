@@ -37,7 +37,7 @@ import org.oscarehr.dashboard.query.RangeInterface;
 import org.oscarehr.dashboard.query.RangeInterface.Limit;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;

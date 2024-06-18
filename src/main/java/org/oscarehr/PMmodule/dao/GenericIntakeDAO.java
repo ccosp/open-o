@@ -53,7 +53,7 @@ import org.oscarehr.common.model.ReportStatistic;
 import org.oscarehr.util.AccumulatorMap;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import oscar.util.SqlUtils;
 public interface GenericIntakeDAO {
