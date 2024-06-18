@@ -138,8 +138,8 @@ public class ConsultationRequestDaoImpl extends AbstractDaoImpl<ConsultationRequ
 
         public List<ConsultationRequest> getConsultationsByStatus(Integer demographicNo, String status) {
         	Query query = entityManager.createQuery("SELECT c FROM ConsultationRequest c where c.demographicId = ? and c.status = ?");
-        	query.setParameter(1,demographicNo);
-        	query.setParameter(2,status);
+        	query.setParameter(0,demographicNo);
+        	query.setParameter(1,status);
 
         	
             List<ConsultationRequest> results = query.getResultList();

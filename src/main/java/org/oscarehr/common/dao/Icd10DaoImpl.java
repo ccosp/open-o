@@ -41,8 +41,8 @@ public class Icd10DaoImpl extends AbstractDaoImpl<Icd10> implements Icd10Dao {
     @Override
     public List<Icd10> searchCode(String term) {
         Query q = entityManager.createQuery("select i from Icd10 i where i.icd10 like ? or i.description like ? order by i.description");
+        q.setParameter(0, "%"+term+"%");
         q.setParameter(1, "%"+term+"%");
-        q.setParameter(2, "%"+term+"%");
 
         @SuppressWarnings("unchecked")
         List<Icd10> results = q.getResultList();
@@ -57,7 +57,7 @@ public class Icd10DaoImpl extends AbstractDaoImpl<Icd10> implements Icd10Dao {
     @Override
     public Icd10 findByCode(String code) {
         Query query = entityManager.createQuery("select i from Icd10 i where i.icd10=?");
-        query.setParameter(1, code);
+        query.setParameter(0, code);
 
         return getSingleResultOrNull(query);
     }
@@ -75,7 +75,7 @@ public class Icd10DaoImpl extends AbstractDaoImpl<Icd10> implements Icd10Dao {
     public List<Icd10> searchText(String description) {
         String sql = "select x from DiagnosticCode x where x.description like ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, "%"+description+"%");
+        query.setParameter(0, "%"+description+"%");
 
         @SuppressWarnings("unchecked")
         List<Icd10> results = query.getResultList();

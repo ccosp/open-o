@@ -42,7 +42,7 @@ public class ScratchPadDaoImpl extends AbstractDaoImpl<ScratchPad> implements Sc
     public boolean isScratchFilled(String providerNo) {
         String sSQL = "SELECT s FROM ScratchPad s WHERE s.providerNo = ? AND status=1 order by s.id";
         Query query = entityManager.createQuery(sSQL);
-        query.setParameter(1, providerNo);
+        query.setParameter(0, providerNo);
 
         @SuppressWarnings("unchecked")
         List<ScratchPad> results = query.getResultList();

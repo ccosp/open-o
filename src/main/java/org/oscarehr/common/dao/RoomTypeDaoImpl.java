@@ -54,7 +54,7 @@ public class RoomTypeDaoImpl extends AbstractDaoImpl<RoomType> implements RoomTy
     @Override
     public boolean roomTypeExists(Integer roomTypeId) {
     	Query query = entityManager.createQuery("select count(*) from RoomType r where r.id = ?");
-		query.setParameter(1, roomTypeId);
+		query.setParameter(0, roomTypeId);
 		
 		Long result = (Long)query.getSingleResult();
 		

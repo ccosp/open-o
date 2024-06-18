@@ -54,7 +54,7 @@ public class FlowsheetDaoImpl extends AbstractDaoImpl<Flowsheet> implements Flow
 	@Override
 	public Flowsheet findByName(String name) {
 		Query query = entityManager.createQuery("select f from Flowsheet f where f.name=?");
-		query.setParameter(1, name);
+		query.setParameter(0, name);
 		
 		return getSingleResultOrNull(query);
 	}

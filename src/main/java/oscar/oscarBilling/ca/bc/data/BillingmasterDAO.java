@@ -269,7 +269,7 @@ public class BillingmasterDAO {
 	
 	public List<Billing> search_teleplanbill(Integer billingmasterNo) {
 		Query q = entityManager.createQuery("select b from Billing b, Billingmaster bm where b.id= bm.billingNo and bm.billingmasterNo=?");
-		q.setParameter(1, billingmasterNo);
+		q.setParameter(0, billingmasterNo);
 		
 		@SuppressWarnings("unchecked")
 		List<Billing> results = q.getResultList();
@@ -304,7 +304,7 @@ public class BillingmasterDAO {
 
     public List<Object[]> getRecentReferralDoctors(Integer demographicNo) {
         Query query = entityManager.createQuery("SELECT referralNo1, referralNo2 FROM Billingmaster WHERE demographic_no = ? AND (referralNo1!='' OR referralNo2!='') ORDER BY billingmasterNo DESC");
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
         return query.setMaxResults(3).getResultList();
     }
 

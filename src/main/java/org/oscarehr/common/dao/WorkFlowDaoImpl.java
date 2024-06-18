@@ -40,7 +40,7 @@ public class WorkFlowDaoImpl extends AbstractDaoImpl<WorkFlow> implements WorkFl
 	
 	public List<WorkFlow> findByWorkflowType(String type) {
 		Query q = entityManager.createQuery("SELECT w FROM WorkFlow w WHERE w.workflowType=?");
-		q.setParameter(1, type);
+		q.setParameter(0, type);
 		
 		@SuppressWarnings("unchecked")
 		List<WorkFlow> results = q.getResultList();
@@ -50,8 +50,8 @@ public class WorkFlowDaoImpl extends AbstractDaoImpl<WorkFlow> implements WorkFl
 	
 	public List<WorkFlow> findActiveByWorkflowType(String type) {
 		Query q = entityManager.createQuery("SELECT w FROM WorkFlow w WHERE w.workflowType=? AND w.currentState <> ?");
-		q.setParameter(1, type);
-		q.setParameter(2, "C");
+		q.setParameter(0, type);
+		q.setParameter(1, "C");
 		
 		@SuppressWarnings("unchecked")
 		List<WorkFlow> results = q.getResultList();
@@ -61,9 +61,9 @@ public class WorkFlowDaoImpl extends AbstractDaoImpl<WorkFlow> implements WorkFl
 	
 	public List<WorkFlow> findActiveByWorkflowTypeAndDemographicNo(String type, String demographicNo) {
 		Query q = entityManager.createQuery("SELECT w FROM WorkFlow w WHERE w.workflowType=? AND w.demographicNo=? AND w.currentState <> ?");
-		q.setParameter(1, type);
-		q.setParameter(2, demographicNo);
-		q.setParameter(3, "C");
+		q.setParameter(0, type);
+		q.setParameter(1, demographicNo);
+		q.setParameter(2, "C");
 		
 		@SuppressWarnings("unchecked")
 		List<WorkFlow> results = q.getResultList();

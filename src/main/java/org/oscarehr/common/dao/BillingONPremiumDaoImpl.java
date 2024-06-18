@@ -56,9 +56,9 @@ public class BillingONPremiumDaoImpl extends AbstractDaoImpl<BillingONPremium> i
     public List<BillingONPremium> getActiveRAPremiumsByPayDate(Date startDate, Date endDate, Locale locale) {
         String sql = "select bPrem from BillingONPremium bPrem where payDate >= ? and payDate < ? and status=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, startDate);  
-        query.setParameter(2, endDate);  
-        query.setParameter(3, true);         
+        query.setParameter(0, startDate);
+        query.setParameter(1, endDate);
+        query.setParameter(2, true);
         
         @SuppressWarnings("unchecked")
         List<BillingONPremium> results = query.getResultList();                              
@@ -68,10 +68,10 @@ public class BillingONPremiumDaoImpl extends AbstractDaoImpl<BillingONPremium> i
     public List<BillingONPremium> getActiveRAPremiumsByProvider(Provider p, Date startDate, Date endDate, Locale locale) {
         String sql = "select bPrem from BillingONPremium bPrem where payDate >= ? and payDate < ? and status=? and providerNo=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, startDate);  
-        query.setParameter(2, endDate);  
-        query.setParameter(3, true);  
-        query.setParameter(4, p.getProviderNo());  
+        query.setParameter(0, startDate);
+        query.setParameter(1, endDate);
+        query.setParameter(2, true);
+        query.setParameter(3, p.getProviderNo());
         
         @SuppressWarnings("unchecked")
         List<BillingONPremium> results = query.getResultList();                              
@@ -81,7 +81,7 @@ public class BillingONPremiumDaoImpl extends AbstractDaoImpl<BillingONPremium> i
     public List<BillingONPremium> getRAPremiumsByRaHeaderNo(Integer raHeaderNo) {
         String sql = "select bPrem from BillingONPremium bPrem where raHeaderNo=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, raHeaderNo);    
+        query.setParameter(0, raHeaderNo);
                  
         @SuppressWarnings("unchecked")
         List<BillingONPremium> results = query.getResultList();                              

@@ -54,7 +54,7 @@ public class BedDaoImpl extends AbstractDaoImpl<Bed> implements BedDao {
     @Override
     public boolean bedExists(Integer bedId) {
         Query query = entityManager.createQuery("select count(*) from Bed b where b.id = ?");
-        query.setParameter(1, bedId);
+        query.setParameter(0, bedId);
 
         Long result = (Long) query.getSingleResult();
 

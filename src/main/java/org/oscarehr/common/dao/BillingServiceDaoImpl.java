@@ -86,7 +86,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 
 	public List<BillingService> findByServiceCode(String code) {
 		Query query = entityManager.createQuery("select bs  from BillingService bs where bs.serviceCode = ? order by bs.billingserviceDate desc");
-		query.setParameter(1, code);
+		query.setParameter(0, code);
 
 		
 		List<BillingService> list = query.getResultList();
@@ -95,8 +95,8 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 	
 	public List<BillingService> findByServiceCodeAndDate(String code, Date date) {
 		Query query = entityManager.createQuery("select bs  from BillingService bs where bs.serviceCode = ? and bs.billingserviceDate = ? order by bs.billingserviceDate desc");
-		query.setParameter(1, code);
-		query.setParameter(2, date);
+		query.setParameter(0, code);
+		query.setParameter(1, date);
 
 		
 		List<BillingService> list = query.getResultList();
@@ -233,8 +233,8 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 	public Date getLatestServiceDate(Date endDate, String serviceCode) {
 		String sql = "select max(bs.billingserviceDate) from BillingService bs where bs.billingserviceDate <= ? and bs.serviceCode = ?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, endDate);
-		query.setParameter(2, serviceCode);
+		query.setParameter(0, endDate);
+		query.setParameter(1, serviceCode);
 		Date date = (Date)query.getSingleResult();
 		return date;
 	}
@@ -242,8 +242,8 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 	public Object[] getUnitPrice(String bcode, Date date) {
 		String sql = "select bs from BillingService bs where bs.serviceCode = ? and bs.billingserviceDate = ?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1,bcode);
-		query.setParameter(2, getLatestServiceDate(date,bcode));
+		query.setParameter(0,bcode);
+		query.setParameter(1, getLatestServiceDate(date,bcode));
 
 		
 		List<BillingService> results = query.getResultList();
@@ -258,8 +258,8 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 	public String getUnitPercentage(String bcode, Date date) {
 		String sql = "select bs from BillingService bs where bs.serviceCode = ? and bs.billingserviceDate = ?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1,bcode);
-		query.setParameter(2, getLatestServiceDate(date,bcode));
+		query.setParameter(0,bcode);
+		query.setParameter(1, getLatestServiceDate(date,bcode));
 
 		
 		List<BillingService> results = query.getResultList();
@@ -275,7 +275,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
     public List<BillingService> findBillingCodesByFontStyle(Integer styleId) {
 		String sql = "select bs from BillingService bs where bs.displayStyle = ?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, styleId);
+		query.setParameter(0, styleId);
 
 		return query.getResultList();
 	}
@@ -343,12 +343,12 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 	public List<BillingService> search_service_code(String code, String code1, String code2, String desc, String desc1, String desc2) {
 		String sql = "select b from BillingService b where (b.serviceCode like ? or b.serviceCode like ? or b.serviceCode like ? or b.description like ? or b.description like ? or b.description like ?) and b.id = (select max(b2.id) from BillingService b2 where b2.serviceCode = b.serviceCode)";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, code);
-		query.setParameter(2, code1);
-		query.setParameter(3, code2);
-		query.setParameter(4, desc);
-		query.setParameter(5, desc1);
-		query.setParameter(6, desc2);
+		query.setParameter(0, code);
+		query.setParameter(1, code1);
+		query.setParameter(2, code2);
+		query.setParameter(3, desc);
+		query.setParameter(4, desc1);
+		query.setParameter(5, desc2);
 		
 		return query.getResultList();
 	}

@@ -61,7 +61,7 @@ public class BedDemographicDaoImpl extends AbstractDaoImpl<BedDemographic> imple
     @Override
     public boolean bedExists(int demographicNo) {
         Query query = entityManager.createQuery("select count(*) from BedDemographic b where b.id.demographicNo = ?");
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
 
         Long result = (Long) query.getSingleResult();
 
@@ -71,7 +71,7 @@ public class BedDemographicDaoImpl extends AbstractDaoImpl<BedDemographic> imple
     @Override
     public BedDemographic getBedDemographicByBed(int bedId) {
         Query query = entityManager.createQuery("select b from BedDemographic b where b.id.bedId = ?");
-        query.setParameter(1, bedId);
+        query.setParameter(0, bedId);
 
         @SuppressWarnings("unchecked")
         List<BedDemographic> bedDemographics = query.getResultList();
@@ -90,7 +90,7 @@ public class BedDemographicDaoImpl extends AbstractDaoImpl<BedDemographic> imple
     @Override
     public BedDemographic getBedDemographicByDemographic(int demographicNo) {
         Query query = entityManager.createQuery("select b from BedDemographic b where b.id.demographicNo = ?");
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<BedDemographic> bedDemographics = query.getResultList();
@@ -140,8 +140,8 @@ public class BedDemographicDaoImpl extends AbstractDaoImpl<BedDemographic> imple
     public boolean bedDemographicExists(BedDemographicPK id) {
         Query query = entityManager
                 .createQuery("select count(*) from BedDemographic b where  b.id.bedId = ? and b.id.demographicNo = ?");
-        query.setParameter(1, id.getBedId());
-        query.setParameter(2, id.getDemographicNo());
+        query.setParameter(0, id.getBedId());
+        query.setParameter(1, id.getDemographicNo());
 
         Long result = (Long) query.getSingleResult();
 
