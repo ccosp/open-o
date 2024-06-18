@@ -64,7 +64,7 @@ public class MeasurementMapDaoImpl extends AbstractDaoImpl<MeasurementMap> imple
     public List<MeasurementMap> getMapsByIdent(String identCode) {
         String queryStr = "select m FROM MeasurementMap m WHERE m.identCode=? ORDER BY m.id";
         Query q = entityManager.createQuery(queryStr);
-        q.setParameter(1, identCode);
+        q.setParameter(0, identCode);
 
         @SuppressWarnings("unchecked")
         List<MeasurementMap> rs = q.getResultList();
@@ -93,8 +93,8 @@ public class MeasurementMapDaoImpl extends AbstractDaoImpl<MeasurementMap> imple
     public List<MeasurementMap> findByLoincCodeAndLabType(String loincCode, String labType) {
         String queryStr = "select m FROM MeasurementMap m WHERE m.loincCode=? and m.labType=?";
         Query q = entityManager.createQuery(queryStr);
-        q.setParameter(1, loincCode);
-        q.setParameter(2, labType);
+        q.setParameter(0, loincCode);
+        q.setParameter(1, labType);
 
         @SuppressWarnings("unchecked")
         List<MeasurementMap> rs = q.getResultList();
@@ -107,9 +107,9 @@ public class MeasurementMapDaoImpl extends AbstractDaoImpl<MeasurementMap> imple
             String measurementName) {
         String queryStr = "SELECT m FROM MeasurementMap m WHERE m.loincCode = ? AND m.labType = ? AND m.name = ?";
         Query q = entityManager.createQuery(queryStr);
-        q.setParameter(1, loincCode);
-        q.setParameter(2, labType);
-        q.setParameter(3, measurementName);
+        q.setParameter(0, loincCode);
+        q.setParameter(1, labType);
+        q.setParameter(2, measurementName);
         List<MeasurementMap> resultList = q.getResultList();
         if (resultList.isEmpty()) {
             return null;

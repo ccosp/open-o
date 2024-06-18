@@ -48,7 +48,7 @@ public class Hsfo2VisitDaoImpl extends AbstractDaoImpl<Hsfo2Visit> implements Hs
     	
     	String sqlCommand = "select x from Hsfo2Visit x where x.id=?";
 		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, id);
+		query.setParameter(0, id);
 				
 		return getSingleResultOrNull(query);
     }
@@ -56,7 +56,7 @@ public class Hsfo2VisitDaoImpl extends AbstractDaoImpl<Hsfo2Visit> implements Hs
     public List<Hsfo2Visit> getHsfoVisitByDemographicNo( Integer demographic_no) {
     	String sqlCommand = "select x from Hsfo2Visit x where x.demographic_no=? order by x.VisitDate_Id";
 		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, demographic_no);
+		query.setParameter(0, demographic_no);
 				
 		@SuppressWarnings("unchecked")
 		List<Hsfo2Visit> results=query.getResultList();		
@@ -68,7 +68,7 @@ public class Hsfo2VisitDaoImpl extends AbstractDaoImpl<Hsfo2Visit> implements Hs
     public List<Hsfo2Visit> getLockedVisitByDemographicNo( String demographic_no ) {
     	String sqlCommand = "select x from Hsfo2Visit x where x.locked=true and x.demographic_no=? order by x.VisitDate_Id";
 		Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, demographic_no);
+		query.setParameter(0, demographic_no);
 				
 		@SuppressWarnings("unchecked")
 		List<Hsfo2Visit> results=query.getResultList();
@@ -81,7 +81,7 @@ public class Hsfo2VisitDaoImpl extends AbstractDaoImpl<Hsfo2Visit> implements Hs
     public List<Hsfo2Visit> getVisitRecordByPatientId( String patientId ) {
     	String sqlCommand = "select x FROM Hsfo2Visit x where x.id in (SELECT max(y.id) FROM Hsfo2Visit y WHERE y.Patient_Id = ? group by y.VisitDate_Id)";
     	Query query = entityManager.createQuery(sqlCommand);
-		query.setParameter(1, patientId);
+		query.setParameter(0, patientId);
 				
 		@SuppressWarnings("unchecked")
 		List<Hsfo2Visit> results=query.getResultList();
@@ -141,7 +141,7 @@ public class Hsfo2VisitDaoImpl extends AbstractDaoImpl<Hsfo2Visit> implements Hs
   {
 	  String sqlCommand = "select x FROM Hsfo2Visit x WHERE x.Patient_Id = ? and x.lastBaseLineRecord = 1";
 	  Query query = entityManager.createQuery(sqlCommand);
-	  query.setParameter(1, patientId);	  
+	  query.setParameter(0, patientId);
 	  return getSingleResultOrNull(query);
   }
  

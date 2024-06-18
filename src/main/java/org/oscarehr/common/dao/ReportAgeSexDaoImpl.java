@@ -44,7 +44,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
     public List<ReportAgeSex> findBeforeReportDate(Date reportDate) {
         String sql = "select x from ReportAgeSex x where x.reportDate=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1,reportDate);
+        query.setParameter(0,reportDate);
 
         @SuppressWarnings("unchecked")
         List<ReportAgeSex> results = query.getResultList();
@@ -55,7 +55,7 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
     public void deleteAllByDate(Date reportDate) {
         String sql = "delete from ReportAgeSex x where x.reportDate <= ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1,reportDate);
+        query.setParameter(0,reportDate);
         query.executeUpdate();
     }
 
@@ -75,12 +75,12 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
     public Long count_reportagesex_roster(String roster, String sex, String providerNo, int age, Date dateStarted, Date dateEnded) {
         String sql = "select count(x) from ReportAgeSex x where (x.status<>'OP' and x.status<>'IN' and x.status<>'DE') and x.roster=? and x.sex like ? and x.providerNo = ? and x.age >= ? and x.dateJoined >= ? and x.dateJoined <= ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1,roster);
-        query.setParameter(2,sex);
-        query.setParameter(3,providerNo);
-        query.setParameter(4,age);
-        query.setParameter(5,dateStarted);
-        query.setParameter(6,dateEnded);
+        query.setParameter(0,roster);
+        query.setParameter(1,sex);
+        query.setParameter(2,providerNo);
+        query.setParameter(3,age);
+        query.setParameter(4,dateStarted);
+        query.setParameter(5,dateEnded);
 
         Long results = (Long)query.getSingleResult();
         return results;
@@ -90,13 +90,13 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
     public Long count_reportagesex_noroster(String roster, String sex, String providerNo,int minAge, int maxAge, Date dateStarted, Date dateEnded) {
         String sql = "select count(x)  from ReportAgeSex x  where (x.status<>'OP' and x.status<>'IN' and x.status<>'DE') and x.roster<>? and x.sex like ? and x.providerNo=? and x.age >= ? and x.age <=? and x.dateJoined >=? and x.dateJoined <=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1,roster);
-        query.setParameter(2,sex);
-        query.setParameter(3,providerNo);
-        query.setParameter(4,minAge);
-        query.setParameter(5,maxAge);
-        query.setParameter(6,dateStarted);
-        query.setParameter(7,dateEnded);
+        query.setParameter(0,roster);
+        query.setParameter(1,sex);
+        query.setParameter(2,providerNo);
+        query.setParameter(3,minAge);
+        query.setParameter(4,maxAge);
+        query.setParameter(5,dateStarted);
+        query.setParameter(6,dateEnded);
 
         Long results = (Long)query.getSingleResult();
         return results;
@@ -117,13 +117,13 @@ public class ReportAgeSexDaoImpl extends AbstractDaoImpl<ReportAgeSex> implement
                 "x.dateJoined <=?";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1,roster);
-        query.setParameter(2,sex);
-        query.setParameter(3,providerNo);
-        query.setParameter(4,minAge);
-        query.setParameter(5,maxAge);
-        query.setParameter(6,startDate);
-        query.setParameter(7,endDate);
+        query.setParameter(0,roster);
+        query.setParameter(1,sex);
+        query.setParameter(2,providerNo);
+        query.setParameter(3,minAge);
+        query.setParameter(4,maxAge);
+        query.setParameter(5,startDate);
+        query.setParameter(6,endDate);
 
         Long results = (Long)query.getSingleResult();
         return results;

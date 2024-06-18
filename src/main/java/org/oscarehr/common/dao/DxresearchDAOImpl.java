@@ -252,7 +252,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
     public List<Dxresearch> getDxResearchItemsByPatient(Integer demographicNo) {
     	String hql = "select d from Dxresearch d where d.demographicNo=?";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,demographicNo);
+    	query.setParameter(0,demographicNo);
 
     	
     	List<Dxresearch> items = query.getResultList();
@@ -272,7 +272,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public List<Dxresearch> getByDemographicNo(int demographicNo) {
 		String hql = "select d from Dxresearch d where d.demographicNo=? and d.status='A'";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,demographicNo);
+    	query.setParameter(0,demographicNo);
 
     	
     	List<Dxresearch> items = query.getResultList();
@@ -283,9 +283,9 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public List<Dxresearch> find(int demographicNo, String codeType, String code) {
 		String hql = "select d from Dxresearch d where d.demographicNo=? and d.codingSystem=? and d.dxresearchCode=? order by d.updateDate desc";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,demographicNo);
-    	query.setParameter(2,codeType);
-    	query.setParameter(3,code);
+    	query.setParameter(0,demographicNo);
+    	query.setParameter(1,codeType);
+    	query.setParameter(2,code);
 
     	@SuppressWarnings("unchecked")
     	List<Dxresearch> items = query.getResultList();
@@ -296,8 +296,8 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public List<Dxresearch> findActive(String codeType, String code) {
 		String hql = "select d from Dxresearch d where d.status='A' and d.codingSystem=? and d.dxresearchCode=? order by d.updateDate desc";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,codeType);
-    	query.setParameter(2,code);
+    	query.setParameter(0,codeType);
+    	query.setParameter(1,code);
 
     	@SuppressWarnings("unchecked")
     	List<Dxresearch> items = query.getResultList();
@@ -309,9 +309,9 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public boolean entryExists(int demographicNo, String codeType, String code) {
 		String hql = "select d from Dxresearch d where d.demographicNo=? and d.codingSystem=? and d.dxresearchCode=?";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,demographicNo);
-    	query.setParameter(2,codeType);
-    	query.setParameter(3,code);
+    	query.setParameter(0,demographicNo);
+    	query.setParameter(1,codeType);
+    	query.setParameter(2,code);
 
     	@SuppressWarnings("unchecked")
     	List<Dxresearch> items = query.getResultList();
@@ -322,9 +322,9 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public boolean activeEntryExists(int demographicNo, String codeType, String code) {
 		String hql = "select d from Dxresearch d where d.status='A' and d.demographicNo=? and d.codingSystem=? and d.dxresearchCode=?";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,demographicNo);
-    	query.setParameter(2,codeType);
-    	query.setParameter(3,code);
+    	query.setParameter(0,demographicNo);
+    	query.setParameter(1,codeType);
+    	query.setParameter(2,code);
 
     	
     	List<Dxresearch> items = query.getResultList();
@@ -421,8 +421,8 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public List<Dxresearch> findCurrentByCodeTypeAndCode(String codeType, String code) {
 		String hql = "select d from Dxresearch d where d.codingSystem=? and d.dxresearchCode=? and d.status='A'";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,codeType);
-    	query.setParameter(2,code);
+    	query.setParameter(0,codeType);
+    	query.setParameter(1,code);
 
     	@SuppressWarnings("unchecked")
     	List<Dxresearch> items = query.getResultList();
@@ -433,8 +433,8 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public List<Dxresearch> getByDemographicNoSince(int demographicNo,Date lastUpdateDate) {
 		String hql = "select d from Dxresearch d where d.demographicNo=? and d.updateDate > ?";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1,demographicNo);
-    	query.setParameter(2, lastUpdateDate);
+    	query.setParameter(0,demographicNo);
+    	query.setParameter(1, lastUpdateDate);
 
     	@SuppressWarnings("unchecked")
     	List<Dxresearch> items = query.getResultList();
@@ -446,7 +446,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 	public List<Integer> getByDemographicNoSince(Date lastUpdateDate) {
 		String hql = "select d.demographicNo from Dxresearch d where d.updateDate > ?";
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(1, lastUpdateDate);
+    	query.setParameter(0, lastUpdateDate);
 
     	@SuppressWarnings("unchecked")
     	List<Integer> items = query.getResultList();

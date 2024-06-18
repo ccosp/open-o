@@ -48,7 +48,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
 	public Billingreferral getByReferralNo(String referral_no) {
 		String sql = "select br From Billingreferral br WHERE br.referralNo=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, referral_no);
+		query.setParameter(0, referral_no);
 
 		@SuppressWarnings("unchecked")
 		List<Billingreferral> brs = query.getResultList();
@@ -77,7 +77,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
 	public List<Billingreferral> getBillingreferral(String referral_no) {
 	   String sql = "SELECT br From Billingreferral br WHERE br.referralNo=?";
 	   Query query = entityManager.createQuery(sql);
-	   query.setParameter(1, referral_no);
+	   query.setParameter(0, referral_no);
 
 	   @SuppressWarnings("unchecked")
 	   List<Billingreferral> cList = query.getResultList();
@@ -93,8 +93,8 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
    public List<Billingreferral> getBillingreferral(String last_name, String first_name) {
 	   String sql = "SELECT br From Billingreferral br WHERE br.lastName like ? and br.firstName like ? order by br.lastName";
 	   Query query = entityManager.createQuery(sql);
-	   query.setParameter(1, "%"+last_name+"%");
-	   query.setParameter(2, "%"+first_name+"%");
+	   query.setParameter(0, "%"+last_name+"%");
+	   query.setParameter(1, "%"+first_name+"%");
 
 	   @SuppressWarnings("unchecked")
 	   List<Billingreferral> cList = query.getResultList();
@@ -110,7 +110,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
    public List<Billingreferral> getBillingreferralByLastName(String last_name) {
 	   String sql = "SELECT br From Billingreferral br WHERE br.lastName like ? order by br.lastName";
 	   Query query = entityManager.createQuery(sql);
-	   query.setParameter(1, "%"+last_name+"%");
+	   query.setParameter(0, "%"+last_name+"%");
 
 	   @SuppressWarnings("unchecked")
 	   List<Billingreferral> cList = query.getResultList();
@@ -127,7 +127,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
    public List<Billingreferral> getBillingreferralBySpecialty(String specialty) {
 	   String sql = "SELECT br From Billingreferral br WHERE br.specialty like ? order by br.lastName";
 	   Query query = entityManager.createQuery(sql);
-	   query.setParameter(1, "%"+specialty+"%");
+	   query.setParameter(0, "%"+specialty+"%");
 
 	   @SuppressWarnings("unchecked")
 	   List<Billingreferral> cList = query.getResultList();
@@ -150,15 +150,15 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
 			   + " or (b.lastName LIKE ? and b.firstName LIKE ?)";
 
 	   Query query = entityManager.createQuery(sql);
-	   query.setParameter(1, codeName);
-	   query.setParameter(2, codeName1);
-	   query.setParameter(3, codeName2);
-	   query.setParameter(4, desc);
-	   query.setParameter(5, fDesc);
-	   query.setParameter(6, desc1);
-	   query.setParameter(7, fDesc1);
-	   query.setParameter(8, desc2);
-	   query.setParameter(9, fDesc2);
+	   query.setParameter(0, codeName);
+	   query.setParameter(1, codeName1);
+	   query.setParameter(2, codeName2);
+	   query.setParameter(3, desc);
+	   query.setParameter(4, fDesc);
+	   query.setParameter(5, desc1);
+	   query.setParameter(6, fDesc1);
+	   query.setParameter(7, desc2);
+	   query.setParameter(8, fDesc2);
 
 
 	   @SuppressWarnings("unchecked")

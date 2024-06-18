@@ -97,7 +97,7 @@ public class RBTGroupDaoImpl extends AbstractDaoImpl<RBTGroup> implements RBTGro
     public List<RBTGroup> getByGroupName(String groupName) {
         String sql = "select tg from RBTGroup tg where tg.groupName=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, groupName);
+        query.setParameter(0, groupName);
 
         @SuppressWarnings("unchecked")
         List<RBTGroup> results = query.getResultList();

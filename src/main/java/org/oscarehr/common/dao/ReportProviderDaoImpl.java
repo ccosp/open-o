@@ -48,7 +48,7 @@ public class ReportProviderDaoImpl extends AbstractDaoImpl<ReportProvider> imple
 	public List<ReportProvider> findByAction(String action) {
     	String sql = "select x from ReportProvider x where x.action=?";
     	Query query = entityManager.createQuery(sql);
-    	query.setParameter(1,action);
+    	query.setParameter(0,action);
 
         List<ReportProvider> results = query.getResultList();
         return results;
@@ -58,9 +58,9 @@ public class ReportProviderDaoImpl extends AbstractDaoImpl<ReportProvider> imple
 	public List<ReportProvider> findByProviderNoTeamAndAction(String providerNo, String team, String action) {
     	String sql = "select x from ReportProvider x where x.providerNo=? and x.team=? and x.action=?";
     	Query query = entityManager.createQuery(sql);
-    	query.setParameter(1,providerNo);
-    	query.setParameter(2,team);
-    	query.setParameter(3,action);
+    	query.setParameter(0,providerNo);
+    	query.setParameter(1,team);
+    	query.setParameter(2,action);
     	
         List<ReportProvider> results = query.getResultList();
         return results;
@@ -70,7 +70,7 @@ public class ReportProviderDaoImpl extends AbstractDaoImpl<ReportProvider> imple
 	public List<Object[]> search_reportprovider(String action) {
 		String sql = "from ReportProvider r, Provider p where r.providerNo=p.ProviderNo and r.status<>'D' and r.action=? order by r.team";
     	Query query = entityManager.createQuery(sql);
-    	query.setParameter(1,action);
+    	query.setParameter(0,action);
 
         List<Object[]> results = query.getResultList();
         return results;
@@ -80,8 +80,8 @@ public class ReportProviderDaoImpl extends AbstractDaoImpl<ReportProvider> imple
 	public List<Object[]> search_reportprovider(String action,String providerNo) {
 		String sql = "from ReportProvider r, Provider p where r.providerNo=p.ProviderNo and r.status<>'D' and r.action=? and p.ProviderNo like ? order by r.team";
     	Query query = entityManager.createQuery(sql);
-    	query.setParameter(1,action);
-    	query.setParameter(2, providerNo);
+    	query.setParameter(0,action);
+    	query.setParameter(1, providerNo);
 
         List<Object[]> results = query.getResultList();
         return results;

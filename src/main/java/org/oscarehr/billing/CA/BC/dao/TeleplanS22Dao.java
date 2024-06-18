@@ -43,9 +43,9 @@ public class TeleplanS22Dao extends AbstractDaoImpl<TeleplanS22>{
 	@SuppressWarnings("unchecked")
 	public List<TeleplanS22> search_taS22 (Integer s21Id, String type, String practitionerNo) {
 		Query q = entityManager.createQuery("select t from TeleplanS22 t where t.s21Id=? and t.s22Type<>? and t.practitionerNo like ? order by t.id");
-		q.setParameter(1, s21Id);
-		q.setParameter(2, type);
-		q.setParameter(3, practitionerNo);
+		q.setParameter(0, s21Id);
+		q.setParameter(1, type);
+		q.setParameter(2, practitionerNo);
 		return q.getResultList();
 	}
 }

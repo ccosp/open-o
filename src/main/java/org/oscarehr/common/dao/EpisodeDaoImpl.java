@@ -41,7 +41,7 @@ public class EpisodeDaoImpl extends AbstractDaoImpl<Episode> implements EpisodeD
 
 	public List<Episode> findAll(Integer demographicNo) {
 		Query query = entityManager.createQuery("SELECT e FROM Episode e WHERE e.demographicNo=? ORDER BY e.startDate DESC");
-		query.setParameter(1,demographicNo);
+		query.setParameter(0,demographicNo);
 		@SuppressWarnings("unchecked")
         List<Episode> results = query.getResultList();
 		return results;
@@ -49,7 +49,7 @@ public class EpisodeDaoImpl extends AbstractDaoImpl<Episode> implements EpisodeD
 	
 	public List<Episode> findAllCurrent(Integer demographicNo) {
 		Query query = entityManager.createQuery("SELECT e FROM Episode e WHERE e.status='Current' AND e.demographicNo=? ORDER BY e.startDate DESC");
-		query.setParameter(1,demographicNo);
+		query.setParameter(0,demographicNo);
 		@SuppressWarnings("unchecked")
         List<Episode> results = query.getResultList();
 		return results;

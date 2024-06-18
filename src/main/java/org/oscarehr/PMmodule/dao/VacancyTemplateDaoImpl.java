@@ -60,7 +60,7 @@ public class VacancyTemplateDaoImpl extends AbstractDaoImpl<VacancyTemplate> imp
     @Override
     public List<VacancyTemplate> getVacancyTemplateByWlProgramId(Integer wlProgramId) {
         Query query = entityManager.createQuery("select x from VacancyTemplate x where x.wlProgramId=?");
-        query.setParameter(1, wlProgramId);
+        query.setParameter(0, wlProgramId);
 
         @SuppressWarnings("unchecked")
         List<VacancyTemplate> results = query.getResultList();
@@ -71,8 +71,8 @@ public class VacancyTemplateDaoImpl extends AbstractDaoImpl<VacancyTemplate> imp
     @Override
     public List<VacancyTemplate> getActiveVacancyTemplatesByWlProgramId(Integer wlProgramId) {
         Query query = entityManager.createQuery("select x from VacancyTemplate x where x.wlProgramId=? and x.active=?");
-        query.setParameter(1, wlProgramId);
-        query.setParameter(2, true);
+        query.setParameter(0, wlProgramId);
+        query.setParameter(1, true);
 
         @SuppressWarnings("unchecked")
         List<VacancyTemplate> results = query.getResultList();

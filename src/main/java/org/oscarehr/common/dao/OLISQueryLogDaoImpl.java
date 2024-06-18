@@ -41,7 +41,7 @@ public class OLISQueryLogDaoImpl extends AbstractDaoImpl<OLISQueryLog> implement
 	@Override
 	public OLISQueryLog findByUUID(String uuid) {
 		Query query = entityManager.createQuery("select x from OLISQueryLog x where x.uuid=?");
-		query.setParameter(1, uuid);
+		query.setParameter(0, uuid);
 		
 		return this.getSingleResultOrNull(query);
 	}

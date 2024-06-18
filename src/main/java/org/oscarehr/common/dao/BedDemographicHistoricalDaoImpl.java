@@ -51,7 +51,7 @@ public class BedDemographicHistoricalDaoImpl extends AbstractDaoImpl<BedDemograp
     @Override
     public BedDemographicHistorical[] getBedDemographicHistoricals(Date since) {
         Query query = entityManager.createQuery("select bdh from BedDemographicHistorical bdh where bdh.usageEnd >= ?");
-        query.setParameter(1, DateTimeFormatUtils.getDateFromDate(since));
+        query.setParameter(0, DateTimeFormatUtils.getDateFromDate(since));
 
         List<BedDemographicHistorical> bedDemographicHistoricals = query.getResultList();
 

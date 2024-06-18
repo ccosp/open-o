@@ -49,7 +49,7 @@ public class ProviderDefaultProgramDaoImpl extends AbstractDaoImpl<ProviderDefau
     public List<ProviderDefaultProgram> getProgramByProviderNo(String providerNo) {
         String q = "SELECT pdp FROM ProviderDefaultProgram pdp WHERE pdp.providerNo=?";
         Query query = entityManager.createQuery(q);
-        query.setParameter(1, providerNo);
+        query.setParameter(0, providerNo);
         @SuppressWarnings("unchecked")
         List<ProviderDefaultProgram> results = query.getResultList();
         return results;
@@ -114,7 +114,7 @@ public class ProviderDefaultProgramDaoImpl extends AbstractDaoImpl<ProviderDefau
         Query query;
         try {
             query = entityManager.createQuery(sql);
-            query.setParameter(1, facilityId);
+            query.setParameter(0, facilityId);
         } catch (Exception e) {
             MiscUtils.getLogger().error(e.getMessage(), e);
             return new ArrayList<Program>();
