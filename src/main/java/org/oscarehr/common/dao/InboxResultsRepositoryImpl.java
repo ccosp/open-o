@@ -47,7 +47,7 @@ public class InboxResultsRepositoryImpl implements InboxResultsRepository{
 		put("ascending", "ASC");
 	}};
 
-	@PersistenceContext
+	@PersistenceContext(unitName = "entityManagerFactory")
 	protected EntityManager entityManager = null;
 
 	private final Logger logger = MiscUtils.getLogger();
