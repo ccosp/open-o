@@ -49,7 +49,7 @@ public class FacilityDaoImpl extends AbstractDaoImpl<Facility> implements Facili
 		sb.append(" order by x.name");
 		
 		Query query = entityManager.createQuery(sb.toString());
-		if (active!=null) query.setParameter(1, !active);
+		if (active!=null) query.setParameter(0, !active);
 		
 		@SuppressWarnings("unchecked")
 		List<Facility> results = query.getResultList();

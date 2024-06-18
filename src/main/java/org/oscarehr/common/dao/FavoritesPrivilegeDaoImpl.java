@@ -40,7 +40,7 @@ public class FavoritesPrivilegeDaoImpl extends AbstractDaoImpl<FavoritesPrivileg
 
     public List<String> getProviders(){
     	Query query = entityManager.createQuery("select x.providerNo from FavoritesPrivilege x where x.openToPublic=?");
-    	query.setParameter(1, true);
+    	query.setParameter(0, true);
     	
     	@SuppressWarnings("unchecked")
     	List<String> results = query.getResultList();
@@ -50,7 +50,7 @@ public class FavoritesPrivilegeDaoImpl extends AbstractDaoImpl<FavoritesPrivileg
 
     public FavoritesPrivilege findByProviderNo(String providerNo) {
     	Query query = entityManager.createQuery("select x from FavoritesPrivilege x where x.providerNo=?");
-    	query.setParameter(1, providerNo);
+    	query.setParameter(0, providerNo);
     	
     	FavoritesPrivilege result = this.getSingleResultOrNull(query);
     	

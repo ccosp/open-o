@@ -88,8 +88,8 @@
      public void deletePharmacy(Integer ID){
            String sql = "update PharmacyInfo set status = ? where id = ?";
            Query query = entityManager.createQuery(sql);
-           query.setParameter(1, PharmacyInfo.DELETED);
-           query.setParameter(2, ID);
+           query.setParameter(0, PharmacyInfo.DELETED);
+           query.setParameter(1, ID);
            query.executeUpdate();
       }
      
@@ -113,7 +113,7 @@
      public PharmacyInfo getPharmacyByRecordID(Integer recordID){
          String sql = "SELECT x FROM  PharmacyInfo x where x.id = ?";
          Query query = entityManager.createQuery(sql);
-         query.setParameter(1,recordID);
+         query.setParameter(0,recordID);
          @SuppressWarnings("unchecked")
          List<PharmacyInfo> results = query.getResultList();
          if(results.size()>0) {

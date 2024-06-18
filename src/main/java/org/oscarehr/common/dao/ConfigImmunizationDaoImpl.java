@@ -54,7 +54,7 @@ public class ConfigImmunizationDaoImpl extends AbstractDaoImpl<ConfigImmunizatio
         }
         String sql = "select x from ConfigImmunization x where x.archived=?" + orderBy;
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, archived);
+        query.setParameter(0, archived);
 
         @SuppressWarnings("unchecked")
         List<ConfigImmunization> results = query.getResultList();

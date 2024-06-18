@@ -51,7 +51,7 @@ public class CtlDiagCodeDaoImpl extends AbstractDaoImpl<CtlDiagCode> implements 
 
     public List<CtlDiagCode> findByServiceType(String serviceType) {
         Query q = entityManager.createQuery("select x from CtlDiagCode x where x.serviceType = ?");
-        q.setParameter(1, serviceType);
+        q.setParameter(0, serviceType);
         
         @SuppressWarnings("unchecked")
         List<CtlDiagCode> results = q.getResultList();

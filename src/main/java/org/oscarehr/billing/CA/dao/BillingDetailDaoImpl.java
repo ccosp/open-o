@@ -46,7 +46,7 @@ public class BillingDetailDaoImpl extends AbstractDaoImpl<BillingDetail> impleme
     @Override
     public List<BillingDetail> findByBillingNo(int billingNo) {
         Query q = entityManager.createQuery("select x from BillingDetail x where x.billingNo=?");
-        q.setParameter(1, billingNo);
+        q.setParameter(0, billingNo);
         List<BillingDetail> results = q.getResultList();
         return results;
     }
