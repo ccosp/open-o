@@ -5,10 +5,10 @@ import java.util.List;
 
 
 import org.oscarehr.common.model.Demographic;
-import org.springframework.orm.hibernate4.HibernateTemplate;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate4.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.hibernate.HibernateException;
 import java.sql.SQLException;
 import org.hibernate.Query;

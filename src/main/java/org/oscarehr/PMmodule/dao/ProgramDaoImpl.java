@@ -40,9 +40,10 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import oscar.OscarProperties;
@@ -326,13 +327,13 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
 
         // Adjusting flush mode
     Session session = currentSession();
-    FlushMode previousFlushMode = session.getFlushMode();
-    session.setFlushMode(FlushMode.COMMIT);
+    FlushMode previousFlushMode = session.getHibernateFlushMode();
+    session.setHibernateFlushMode(FlushMode.COMMIT);
     
     try {
         getHibernateTemplate().saveOrUpdate(program);
     } finally {
-        session.setFlushMode(previousFlushMode); // Restore the original flush mode
+        session.setHibernateFlushMode(previousFlushMode); // Restore the original flush mode
     }
         getHibernateTemplate().saveOrUpdate(program);
 

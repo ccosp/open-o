@@ -37,9 +37,9 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.oscarehr.phr.model.PHRAction;
 import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate4.HibernateCallback;
-import org.springframework.orm.hibernate4.HibernateTemplate;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 public class PHRActionDAO extends HibernateDaoSupport {
 	private static Logger logger = MiscUtils.getLogger();

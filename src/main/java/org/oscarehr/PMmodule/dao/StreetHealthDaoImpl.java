@@ -26,7 +26,7 @@
 
 package org.oscarehr.PMmodule.dao;
 
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 public class StreetHealthDaoImpl extends HibernateDaoSupport implements StreetHealthDao{
 	//empty

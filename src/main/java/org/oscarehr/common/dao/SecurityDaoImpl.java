@@ -58,7 +58,7 @@ public class SecurityDaoImpl extends AbstractDaoImpl<Security> implements Securi
     @Override
     public List<Security> findByLikeProviderNo(String providerNo) {
         Query query = entityManager.createQuery("select x from Security x where x.providerNo like ?");
-        query.setParameter(1, providerNo);
+            query.setParameter(1, providerNo);
         @SuppressWarnings("unchecked")
         List<Security> secList = query.getResultList();
         return secList;

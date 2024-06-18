@@ -29,7 +29,7 @@
  import java.util.List;
  
  import org.oscarehr.common.model.Provider;
- import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
  
  /**
   * This couldn't possibly work, it's not a spring managed bean according to the xml files.

@@ -56,7 +56,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class WaitlistDaoImpl implements WaitlistDao {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "entityManagerFactory")
     protected EntityManager entityManager = null;
 
     private List<MatchBO> constructMatchBOList(List<Object[]> results) {
