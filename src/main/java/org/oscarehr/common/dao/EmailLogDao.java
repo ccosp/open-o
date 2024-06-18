@@ -1,16 +1,13 @@
 package org.oscarehr.common.dao;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import org.oscarehr.common.model.EmailLog;
-import org.oscarehr.common.model.EmailLog.EmailStatus;
 
 @Repository
 public class EmailLogDao extends AbstractDao<EmailLog> {
@@ -32,39 +29,21 @@ public class EmailLogDao extends AbstractDao<EmailLog> {
      */
     @SuppressWarnings("unchecked")
     public List<EmailLog> getEmailStatusByDateDemographicSenderStatus(Date dateBegin, Date dateEnd, String demographicNo, String senderEmailAddress, String emailStatus) {
-        StringBuilder hql = new StringBuilder("SELECT el FROM EmailLog el " +
-                                                "JOIN el.emailConfig ec " +
-                                                "JOIN el.demographic d " +
-                                                "JOIN el.provider p WHERE 1=1");
-    	
-        Map<String, Object> parameters = new HashMap<>();
-        if (demographicNo != null) { 
-            appendToSqlAndParameters(hql, " AND el.demographic.DemographicNo = :demo", "demo", Integer.parseInt(demographicNo), parameters); 
-        }
-    	if (emailStatus != null) { 
-            appendToSqlAndParameters(hql, " AND el.status = :emailStatus", "emailStatus", EmailStatus.valueOf(emailStatus), parameters); 
-        }
-        if (senderEmailAddress != null) { 
-            appendToSqlAndParameters(hql, " AND el.fromEmail = :senderEmailAddress", "senderEmailAddress", senderEmailAddress, parameters); 
-        }
-        if (dateBegin != null) { 
-            appendToSqlAndParameters(hql, " AND el.timestamp >= :beginDate", "beginDate", dateBegin, parameters); 
-        }
-        if (dateEnd != null) { 
-            appendToSqlAndParameters(hql, " AND el.timestamp <= :endDate", "endDate", dateEnd, parameters); 
-        }
-    	
-    	Query query = entityManager.createQuery(hql.toString());
-    	for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-            query.setParameter(entry.getKey(), entry.getValue());
-        }
+        String hql = "SELECT el FROM EmailLog el JOIN el.emailConfig ec JOIN el.demographic d JOIN el.provider p " +
+                        "WHERE 1=1 " +
+                        "AND el.demographic.DemographicNo = IFNULL(:demo, el.demographic.DemographicNo) " +
+                        "AND el.status = IFNULL(:emailStatus, el.status) " +
+                        "AND el.fromEmail = IFNULL(:senderEmailAddress, el.fromEmail) " +
+                        "AND DATE(el.timestamp) BETWEEN DATE(:beginDate) AND DATE(:endDate) " +
+                        "ORDER BY el.timestamp DESC";
+    
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("beginDate", dateBegin);
+        query.setParameter("endDate", dateEnd);
+        query.setParameter("demo", demographicNo);
+        query.setParameter("emailStatus", emailStatus);
+        query.setParameter("senderEmailAddress", senderEmailAddress);
 
         return query.getResultList();
     }
-
-    private void appendToSqlAndParameters(StringBuilder sql, String clause, String paramName, Object paramValue, Map<String, Object> parameters) {
-        sql.append(clause);
-        parameters.put(paramName, paramValue);
-    }
-
 }

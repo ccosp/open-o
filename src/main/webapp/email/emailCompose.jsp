@@ -16,7 +16,7 @@
     <link href="${ctx}/library/jquery/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/css/font-awesome.min.css" rel="stylesheet">
 
-	<script type="text/javascript" src="${ctx}/library/jquery/jquery-1.12.0.min.js" ></script>  
+	<script type="text/javascript" src="${ctx}/library/jquery/jquery-3.6.4.min.js" ></script>
 	<script type="text/javascript" src="${ctx}/library/jquery/jquery.validate.min.js" ></script> 	              
 	<script type="text/javascript" src="${ctx}/library/jquery/jquery-ui.min.js" ></script>	
 	<script type="text/javascript" src="${ctx}/library/bootstrap/5.0.2/js/bootstrap.min.js" ></script> 
@@ -42,12 +42,6 @@
 	body {
 		max-width: 1600px;
   		margin: auto;
-	}
-
-	img {
-		max-width: 100%;
-		height: auto;
-		width: auto\9;
 	}
 	
 	#additionalRecipientControlPanel, #form-control-buttons {
@@ -83,7 +77,6 @@
 	}
 	
 	#oscarEmailHeader #oscarEmailHeaderLeftColumn {
-		width: 19.5% !important;
 		background-color: white;
 		padding: 0px;
 		padding-right: .5% !important;
@@ -236,13 +229,13 @@
 								</div>
 							</div>
 							<div id="receiverEmailsContainer">	
-								<c:forEach items="${ receiverEmailList }" var="receiverEmail">
+								<c:forEach items="${ receiverEmailList }" var="receiverEmail" varStatus="loop">
 								<div class="row form-group mt-3">
 									<div class="col-sm-1">
-										<label for="receiverEmailAddress">Email(s)</label>
+										<label for="receiverEmailAddress${loop.index + 1}">Email(s)</label>
 									</div>
 									<div class="col-sm-10">
-										<input class="form-control" type="email" name="receiverEmailAddress" value="${ receiverEmail }" id="receiverEmail" placeholder="example@example.com"  disabled/>
+										<input class="form-control" type="email" name="receiverEmailAddress" value="${ receiverEmail }" id="receiverEmailAddress${loop.index + 1}" placeholder="example@example.com"  disabled/>
 										<c:if test="${not empty receiverEmail}">
 											<input type="hidden" name="receiverEmailAddress" value="${receiverEmail}" />
 										</c:if>
@@ -440,8 +433,8 @@
 										<div class="accordion-item emailAttachmentItem">
 											<div class="accordion-header" id="emailAttachmentHeader${loop.index + 1}">
 												<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#emailAttachmentBody${loop.index + 1}" aria-expanded="false" aria-controls="emailAttachmentBody${loop.index + 1}">
-													<i class="icon-file attachmentIcon"></i> <div class="attachmentName"><c:out value="${emailAttachment.fileName}" /></div>
-													<div class="text-muted attachmentSize"><c:out value="${emailAttachment.fileSize}" /></div>
+													<i class="icon-file attachmentIcon"></i> <span class="attachmentName"><c:out value="${emailAttachment.fileName}" /></span>
+													<span class="text-muted attachmentSize"><c:out value="${emailAttachment.fileSize}" /></span>
 												</button>
 											</div>
 											<div id="emailAttachmentBody${loop.index + 1}" class="accordion-collapse collapse" aria-labelledby="emailAttachmentHeader${loop.index + 1}" data-bs-parent="#emailAttachmentList">

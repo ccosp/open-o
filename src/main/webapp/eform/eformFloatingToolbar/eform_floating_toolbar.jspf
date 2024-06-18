@@ -44,7 +44,7 @@
 		<form class="navbar-form" >
 			<div class="input-group">
 		  		<input type="text" class="form-control" aria-label="Subject" name="remote_eform_subject" id="remote_eform_subject" placeholder="Subject" required/>
-		  		<div class="input-group-btn" id="input-group-btn-1">
+		  		<div class="input-group-btn">
 		  			<button type="button" class="btn btn-primary" value="Save" name="remoteSubmitButton" title="Save only" id="remoteSubmitButton" onclick="remoteSave()" >
 		  				<span class="btn-label"><i class="glyphicon glyphicon-save"></i></span>
 		  				Save
