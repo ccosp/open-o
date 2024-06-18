@@ -65,7 +65,7 @@ public void remove(ServiceAccessToken token) {
 	@Override
 	public ServiceAccessToken findByTokenId(String token) {
 		Query query = entityManager.createQuery("SELECT x FROM ServiceAccessToken x WHERE x.tokenId=?");
-		query.setParameter(1,token);
+		query.setParameter(0,token);
 		
 		return this.getSingleResultOrNull(query);
 	}

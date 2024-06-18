@@ -49,9 +49,9 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
 
         String sql = "select x from DemographicPharmacy x where x.status = ? and x.demographicNo = ? and x.pharmacyId = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, DemographicPharmacy.ACTIVE);
-        query.setParameter(2, demographicNo);
-        query.setParameter(3, pharmacyId);
+        query.setParameter(0, DemographicPharmacy.ACTIVE);
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, pharmacyId);
         DemographicPharmacy demographicPharmacy = getSingleResultOrNull(query);
         int currentOrder;
         if (demographicPharmacy != null) {
@@ -61,7 +61,7 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
             min = currentOrder > preferredOrder ? preferredOrder : currentOrder;
             max = currentOrder > preferredOrder ? currentOrder : preferredOrder;
 
-            sql = "select x from DemographicPharmacy x where x.status = ? and x.demographicNo = ? and x.preferredOrder >= ? and x.preferredOrder < ?";
+            sql = "select x from DemographicPharmacy x where x.status = ?1 and x.demographicNo = ?2 and x.preferredOrder >= ?3 and x.preferredOrder < ?4";
             query = entityManager.createQuery(sql);
             query.setParameter(1, DemographicPharmacy.ACTIVE);
             query.setParameter(2, demographicNo);
@@ -70,9 +70,9 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
         } else {
             sql = "select x from DemographicPharmacy x where x.status = ? and x.demographicNo = ? and x.preferredOrder >= ?";
             query = entityManager.createQuery(sql);
-            query.setParameter(1, DemographicPharmacy.ACTIVE);
-            query.setParameter(2, demographicNo);
-            query.setParameter(3, preferredOrder);
+            query.setParameter(0, DemographicPharmacy.ACTIVE);
+            query.setParameter(1, demographicNo);
+            query.setParameter(2, preferredOrder);
         }
 
         @SuppressWarnings("unchecked")
@@ -113,9 +113,9 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
 
         String sql = "select x from DemographicPharmacy x where x.status = ? and x.demographicNo = ? and x.pharmacyId = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, DemographicPharmacy.ACTIVE);
-        query.setParameter(2, demographicNo);
-        query.setParameter(3, pharmacyId);
+        query.setParameter(0, DemographicPharmacy.ACTIVE);
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, pharmacyId);
         DemographicPharmacy demographicPharmacy = getSingleResultOrNull(query);
 
         if (demographicPharmacy != null) {
@@ -125,9 +125,9 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
 
             sql = "select x from DemographicPharmacy x where x.status = ? and x.demographicNo = ? and x.preferredOrder > ?";
             query = entityManager.createQuery(sql);
-            query.setParameter(1, DemographicPharmacy.ACTIVE);
-            query.setParameter(2, demographicNo);
-            query.setParameter(3, demographicPharmacy.getPreferredOrder());
+            query.setParameter(0, DemographicPharmacy.ACTIVE);
+            query.setParameter(1, demographicNo);
+            query.setParameter(2, demographicPharmacy.getPreferredOrder());
 
             @SuppressWarnings("unchecked")
             List<DemographicPharmacy> demographicPharmacies = query.getResultList();
@@ -149,8 +149,8 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
     public List<DemographicPharmacy> findByDemographicId(Integer demographicNo) {
         String sql = "select x from DemographicPharmacy x where x.status=? and x.demographicNo=? order by x.preferredOrder";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, DemographicPharmacy.ACTIVE);
-        query.setParameter(2, demographicNo);
+        query.setParameter(0, DemographicPharmacy.ACTIVE);
+        query.setParameter(1, demographicNo);
         @SuppressWarnings("unchecked")
         List<DemographicPharmacy> results = query.getResultList();
         return results;
@@ -170,7 +170,7 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
 
         String sql = "select x from DemographicPharmacy x where x.pharmacyId = ?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, pharmacyId);
+        query.setParameter(0, pharmacyId);
 
         return query.getResultList();
 

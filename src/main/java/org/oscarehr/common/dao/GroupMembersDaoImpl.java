@@ -52,7 +52,7 @@ public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implement
     @Override
     public List<GroupMembers> findRemoteByGroupId(int groupId) {
         Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId > 0 AND x.groupId=?");
-        q.setParameter(1, groupId);
+        q.setParameter(0, groupId);
 
         @SuppressWarnings("unchecked")
         List<GroupMembers> results = q.getResultList();
@@ -69,7 +69,7 @@ public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implement
     @Override
     public List<GroupMembers> findLocalByGroupId(int groupId) {
         Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId = 0 AND x.groupId=?");
-        q.setParameter(1, groupId);
+        q.setParameter(0, groupId);
 
         @SuppressWarnings("unchecked")
         List<GroupMembers> results = q.getResultList();
@@ -80,7 +80,7 @@ public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implement
     @Override
     public List<GroupMembers> findByGroupId(int groupId) {
         Query q = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.groupId=?");
-        q.setParameter(1, groupId);
+        q.setParameter(0, groupId);
 
         @SuppressWarnings("unchecked")
         List<GroupMembers> results = q.getResultList();
@@ -104,8 +104,8 @@ public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implement
     public List<GroupMembers> findByProviderNumberAndFacilityId(String providerNo, Integer facilityId) {
         Query query = entityManager
                 .createQuery("SELECT x FROM GroupMembers x WHERE x.providerNo LIKE ? AND x.facilityId=?");
-        query.setParameter(1, providerNo);
-        query.setParameter(2, facilityId);
+        query.setParameter(0, providerNo);
+        query.setParameter(1, facilityId);
 
         @SuppressWarnings("unchecked")
         List<GroupMembers> results = query.getResultList();
@@ -120,7 +120,7 @@ public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implement
     @Override
     public List<GroupMembers> findByFacilityId(Integer facilityId) {
         Query query = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId=?");
-        query.setParameter(1, facilityId);
+        query.setParameter(0, facilityId);
 
         @SuppressWarnings("unchecked")
         List<GroupMembers> results = query.getResultList();

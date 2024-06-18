@@ -114,9 +114,9 @@
      public List<RaDetail> getRaDetailByDate(Date startDate, Date endDate, Locale locale) {
          Query query = entityManager.createQuery("SELECT rad from RaHeader rah, RaDetail rad WHERE rah.paymentDate >= ? and rah.paymentDate < ? and rah.id = rad.raHeaderNo order by rad.raHeaderNo, rad.billingNo, rad.serviceCode");
          String startDateStr = DateUtils.format("yyyyMMdd", startDate, locale);
-         query.setParameter(1, startDateStr);
+         query.setParameter(0, startDateStr);
          String endDateStr = DateUtils.format("yyyyMMdd", endDate, locale);
-         query.setParameter(2, endDateStr);
+         query.setParameter(1, endDateStr);
  
          
          List<RaDetail> results = query.getResultList();
@@ -128,10 +128,10 @@
      public List<RaDetail> getRaDetailByDate(Provider p, Date startDate, Date endDate, Locale locale) {
          Query query = entityManager.createQuery("SELECT rad from RaHeader rah, RaDetail rad WHERE rah.paymentDate >= ? and rah.paymentDate < ? and rah.id = rad.raHeaderNo and rad.providerOhipNo = ? order by rad.raHeaderNo, rad.billingNo, rad.serviceCode");
          String startDateStr = DateUtils.format("yyyyMMdd", startDate, locale);
-         query.setParameter(1, startDateStr);
+         query.setParameter(0, startDateStr);
          String endDateStr = DateUtils.format("yyyyMMdd", endDate, locale);
-         query.setParameter(2, endDateStr);
-         query.setParameter(3, p.getOhipNo());
+         query.setParameter(1, endDateStr);
+         query.setParameter(2, p.getOhipNo());
  
          
          List<RaDetail> results = query.getResultList();
@@ -143,7 +143,7 @@
      public List<RaDetail> getRaDetailByClaimNo(String claimNo) {
  
          Query query = entityManager.createQuery("SELECT rad from RaDetail rad where rad.claimNo = ?");
-         query.setParameter(1, claimNo);
+         query.setParameter(0, claimNo);
  
          
          List<RaDetail> raDetails = query.getResultList();

@@ -68,7 +68,7 @@ public class IndicatorTemplateDaoImpl extends AbstractDaoImpl<IndicatorTemplate>
     @Override
     public List<IndicatorTemplate> getNotSharedIndicatorTemplates() {
         Query query = entityManager.createQuery("SELECT x FROM IndicatorTemplate x where x.shared = ?");
-        query.setParameter(1, false);
+        query.setParameter(0, false);
         List<IndicatorTemplate> result = query.getResultList();
         return result;
     }
@@ -80,7 +80,7 @@ public class IndicatorTemplateDaoImpl extends AbstractDaoImpl<IndicatorTemplate>
     @Override
     public List<IndicatorTemplate> getSharedIndicatorTemplates() {
         Query query = entityManager.createQuery("SELECT x FROM IndicatorTemplate x where x.shared = ?");
-        query.setParameter(1, true);
+        query.setParameter(0, true);
         List<IndicatorTemplate> result = query.getResultList();
         return result;
     }

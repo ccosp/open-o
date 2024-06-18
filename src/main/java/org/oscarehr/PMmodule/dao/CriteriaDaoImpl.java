@@ -44,7 +44,7 @@ public class CriteriaDaoImpl extends AbstractDaoImpl<Criteria> implements Criter
 
 	public List<Criteria> getCriteriaByTemplateId(Integer templateId) {
 		Query q = entityManager.createQuery("select c from Criteria c where c.templateId=?");
-		q.setParameter(1, templateId);
+		q.setParameter(0, templateId);
 		
 		@SuppressWarnings("unchecked")
 		List<Criteria> results = q.getResultList();
@@ -55,19 +55,19 @@ public class CriteriaDaoImpl extends AbstractDaoImpl<Criteria> implements Criter
 	public Criteria getCriteriaByTemplateIdVacancyIdTypeId(Integer templateId, Integer vacancyId, Integer typeId) {
 		if(templateId != null && vacancyId != null) {			
 			Query q = entityManager.createQuery("select c from Criteria c where c.templateId=? and c.criteriaTypeId=? and c.vacancyId=?");
-			q.setParameter(1, templateId);
-			q.setParameter(2, typeId);
-			q.setParameter(3, vacancyId);
-			return this.getSingleResultOrNull(q);
-		} else if(templateId == null && vacancyId != null) 	{	
-			Query q = entityManager.createQuery("select c from Criteria c where c.templateId IS NULL and c.criteriaTypeId=? and c.vacancyId=?");
+			q.setParameter(0, templateId);
 			q.setParameter(1, typeId);
 			q.setParameter(2, vacancyId);
 			return this.getSingleResultOrNull(q);
+		} else if(templateId == null && vacancyId != null) 	{	
+			Query q = entityManager.createQuery("select c from Criteria c where c.templateId IS NULL and c.criteriaTypeId=? and c.vacancyId=?");
+			q.setParameter(0, typeId);
+			q.setParameter(1, vacancyId);
+			return this.getSingleResultOrNull(q);
 		} else if(templateId != null && vacancyId == null) 	{	
 			Query q = entityManager.createQuery("select c from Criteria c where c.templateId=? and c.criteriaTypeId=? and c.vacancyId is null");
-			q.setParameter(1, templateId);
-			q.setParameter(2, typeId);
+			q.setParameter(0, templateId);
+			q.setParameter(1, typeId);
 			return this.getSingleResultOrNull(q);
 		} else {
 			return null;
@@ -78,7 +78,7 @@ public class CriteriaDaoImpl extends AbstractDaoImpl<Criteria> implements Criter
 	
 	public List<Criteria> getCriteriasByVacancyId(Integer vacancyId) {
 		Query q = entityManager.createQuery("select c from Criteria c where c.vacancyId=?");
-		q.setParameter(1, vacancyId);
+		q.setParameter(0, vacancyId);
 		
 		@SuppressWarnings("unchecked")
 		List<Criteria> results = q.getResultList();
@@ -88,8 +88,8 @@ public class CriteriaDaoImpl extends AbstractDaoImpl<Criteria> implements Criter
 	
 	public List<Criteria> getRefinedCriteriasByVacancyId(Integer vacancyId) {
 		Query q = entityManager.createQuery("select c from Criteria c where c.canBeAdhoc!=? and c.vacancyId=?");
-		q.setParameter(1, 0);//canBeAdhoc=0 means don't appear in vacancy.
-		q.setParameter(2, vacancyId);
+		q.setParameter(0, 0);//canBeAdhoc=0 means don't appear in vacancy.
+		q.setParameter(1, vacancyId);
 		
 		@SuppressWarnings("unchecked")
 		List<Criteria> results = q.getResultList();
@@ -99,8 +99,8 @@ public class CriteriaDaoImpl extends AbstractDaoImpl<Criteria> implements Criter
 	
 	public List<Criteria> getRefinedCriteriasByTemplateId(Integer templateId) {
 		Query q = entityManager.createQuery("select c from Criteria c where c.canBeAdhoc!=? and c.templateId=?");
-		q.setParameter(1, 0); //canBeAdhoc=0 means don't appear in vacancy.
-		q.setParameter(2, templateId);
+		q.setParameter(0, 0); //canBeAdhoc=0 means don't appear in vacancy.
+		q.setParameter(1, templateId);
 		
 		@SuppressWarnings("unchecked")
 		List<Criteria> results = q.getResultList();

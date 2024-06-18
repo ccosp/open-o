@@ -44,7 +44,7 @@ public class CtlBillingServicePremiumDaoImpl extends AbstractDaoImpl<CtlBillingS
 	
 	public List<CtlBillingServicePremium> findByServiceCode(String serviceCode) {
 		Query q = entityManager.createQuery("select x from CtlBillingServicePremium x where x.serviceCode=?");
-		q.setParameter(1, serviceCode);
+		q.setParameter(0, serviceCode);
 		
 		
 		List<CtlBillingServicePremium> results = q.getResultList();
@@ -54,7 +54,7 @@ public class CtlBillingServicePremiumDaoImpl extends AbstractDaoImpl<CtlBillingS
 	
 	public List<CtlBillingServicePremium> findByStatus(String status) {
 		Query q = entityManager.createQuery("select x from CtlBillingServicePremium x where x.status=?");
-		q.setParameter(1, status);
+		q.setParameter(0, status);
 		
 		
 		List<CtlBillingServicePremium> results = q.getResultList();
@@ -64,7 +64,7 @@ public class CtlBillingServicePremiumDaoImpl extends AbstractDaoImpl<CtlBillingS
 	
 	public List<Object[]> search_ctlpremium(String status) {
 		Query q = entityManager.createQuery("select b.serviceCode, c.description from CtlBillingServicePremium b, BillingService c where b.serviceCode=c.serviceCode and b.status=?");
-		q.setParameter(1, status);
+		q.setParameter(0, status);
 		
 		List<Object[]> results = q.getResultList();
 		

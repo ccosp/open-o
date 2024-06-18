@@ -55,10 +55,10 @@
      @Override
      public OtherId getOtherId(Integer tableName, String tableId, String otherKey){
          Query query = entityManager.createQuery("select o from OtherId o where o.tableName=? and o.tableId=? and o.otherKey=? and o.deleted=? order by o.id desc");
-         query.setParameter(1, tableName);
-         query.setParameter(2, tableId);
-         query.setParameter(3, otherKey);
-         query.setParameter(4, false);
+         query.setParameter(0, tableName);
+         query.setParameter(1, tableId);
+         query.setParameter(2, otherKey);
+         query.setParameter(3, false);
  
          @SuppressWarnings("unchecked")
          List<OtherId> otherIdList = query.getResultList();
@@ -69,10 +69,10 @@
      @Override
      public OtherId searchTable(Integer tableName, String otherKey, String otherValue){
          Query query = entityManager.createQuery("select o from OtherId o where o.tableName=? and o.otherKey=? and o.otherId=? and o.deleted=? order by o.id desc");
-         query.setParameter(1, tableName);
-         query.setParameter(2, otherKey);
-         query.setParameter(3, otherValue);
-         query.setParameter(4, false);
+         query.setParameter(0, tableName);
+         query.setParameter(1, otherKey);
+         query.setParameter(2, otherValue);
+         query.setParameter(3, false);
  
          @SuppressWarnings("unchecked")
          List<OtherId> otherIdList = query.getResultList();

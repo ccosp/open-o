@@ -88,7 +88,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> getBillCheader1ByDemographicNo(int demographic_no) {
         Query query = entityManager
                 .createQuery("select ch from BillingONCHeader1 ch where ch.demographicNo=? AND ch.status!='D'");
-        query.setParameter(1, demographic_no);
+        query.setParameter(0, demographic_no);
         return query.getResultList();
     }
 
@@ -472,9 +472,9 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> get3rdPartyInvoiceByProvider(Provider p, Date start, Date end, Locale locale) {
         String sql = "select distinct bCh1 from BillingONPayment bPay, BillingONCHeader1 bCh1 where bPay.billingNo=bCh1.id and bCh1.providerNo=? and bPay.paymentdate >= ? and bPay.paymentdate <= ? order by bCh1.id";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, p.getProviderNo());
-        query.setParameter(2, start);
-        query.setParameter(3, end);
+        query.setParameter(0, p.getProviderNo());
+        query.setParameter(1, start);
+        query.setParameter(2, end);
 
         List<BillingONCHeader1> results = query.getResultList();
 
@@ -485,8 +485,8 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> get3rdPartyInvoiceByDate(Date start, Date end, Locale locale) {
         String sql = "select distinct bCh1 from BillingONPayment bPay, BillingONCHeader1 bCh1 where bPay.billingNo=bCh1.id and bPay.paymentdate >= ? and bPay.paymentdate <= ? order by bCh1.id";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, start);
-        query.setParameter(2, end);
+        query.setParameter(0, start);
+        query.setParameter(1, end);
 
         List<BillingONCHeader1> results = query.getResultList();
 
@@ -497,8 +497,8 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public BillingONCHeader1 getLastOHIPBillingDateForServiceCode(Integer demographicNo, String serviceCode) {
         String sql = "select b from BillingONItem i, BillingONCHeader1 b where i.ch1Id=b.id and i.status!='D' and i.serviceCode=? and b.demographicNo=?  and (b.payProgram='HCP' or b.payProgram='RMB' or b.payProgram='WCB') and (b.status='S' or b.status='O' or b.status='B') order by b.billingDate desc";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, serviceCode);
-        query.setParameter(2, demographicNo);
+        query.setParameter(0, serviceCode);
+        query.setParameter(1, demographicNo);
 
         List<BillingONCHeader1> results = query.getResultList();
         BillingONCHeader1 result = null;
@@ -513,7 +513,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         String sql = "select h1 from BillingONCHeader1 h1 where h1.appointmentNo=?";
         Query q = entityManager.createQuery(sql);
 
-        q.setParameter(1, appointmentNo);
+        q.setParameter(0, appointmentNo);
 
         return q.getResultList();
     }
@@ -555,9 +555,9 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         Query q = entityManager.createQuery(
                 "select count(b) from BillingONCHeader1 b where b.visitType = '00' and b.faciltyNum = ? and b.status <> 'D' and b.billingDate >=? and b.billingDate <=?");
 
-        q.setParameter(1, facilityNum);
-        q.setParameter(2, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
-        q.setParameter(3, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        q.setParameter(0, facilityNum);
+        q.setParameter(1, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
+        q.setParameter(2, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
 
         return q.getResultList();
     }
@@ -568,12 +568,12 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         Query q = entityManager.createQuery(
                 "select count(b) from BillingONCHeader1 b where b.visitType<>'00' and (b.faciltyNum=? or b.faciltyNum=? or b.faciltyNum=? or b.faciltyNum=?) and status<>'D' and b.billingDate >=? and b.billingDate <=?");
 
-        q.setParameter(1, facilityNum1);
-        q.setParameter(2, facilityNum2);
-        q.setParameter(3, facilityNum3);
-        q.setParameter(4, facilityNum4);
-        q.setParameter(5, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
-        q.setParameter(6, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        q.setParameter(0, facilityNum1);
+        q.setParameter(1, facilityNum2);
+        q.setParameter(2, facilityNum3);
+        q.setParameter(3, facilityNum4);
+        q.setParameter(4, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
+        q.setParameter(5, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
 
         return q.getResultList();
     }
@@ -584,13 +584,13 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         Query q = entityManager.createQuery(
                 "select count(b) from BillingONCHeader1 b where b.visitType<>'00' and status<>'D' and  (b.faciltyNum<>? and b.faciltyNum<>? and b.faciltyNum<>? and b.faciltyNum<>? and b.faciltyNum<>?) and b.billingDate >=? and b.billingDate<=?");
 
-        q.setParameter(1, facilityNum1);
-        q.setParameter(2, facilityNum2);
-        q.setParameter(3, facilityNum3);
-        q.setParameter(4, facilityNum4);
-        q.setParameter(5, facilityNum5);
-        q.setParameter(6, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
-        q.setParameter(7, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        q.setParameter(0, facilityNum1);
+        q.setParameter(1, facilityNum2);
+        q.setParameter(2, facilityNum3);
+        q.setParameter(3, facilityNum4);
+        q.setParameter(4, facilityNum5);
+        q.setParameter(5, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
+        q.setParameter(6, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
 
         return q.getResultList();
     }
@@ -705,10 +705,10 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> getBillingItemByDxCode(Integer demographicNo, String dxCode) {
         String queryStr = "select h FROM BillingONItem b, BillingONCHeader1 h WHERE h.id = b.ch1Id and h.demographicNo=? and (b.dx =? or b.dx1 = ? or b.dx2=?)";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(1, demographicNo);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, dxCode);
         query.setParameter(2, dxCode);
         query.setParameter(3, dxCode);
-        query.setParameter(4, dxCode);
 
         @SuppressWarnings("unchecked")
         List<BillingONCHeader1> rs = query.getResultList();
@@ -904,7 +904,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> findAllByPayProgram(String payProgram, int startIndex, int limit) {
         String sql = "select b FROM BillingONCHeader1 b where b.payProgram=? order by b.id ASC";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, payProgram);
+        query.setParameter(0, payProgram);
         query.setFirstResult(startIndex);
         query.setMaxResults(limit);
 

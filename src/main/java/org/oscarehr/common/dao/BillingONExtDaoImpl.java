@@ -75,8 +75,8 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
     public List<BillingONExt> findByBillingNoAndKey(Integer billingNo, String key) {
         String sql = "select bExt from BillingONExt bExt where bExt.billingNo=? and bExt.keyVal=? order by bExt.id DESC";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, billingNo);
-        query.setParameter(2, key);
+        query.setParameter(0, billingNo);
+        query.setParameter(1, key);
 
         List<BillingONExt> results = query.getResultList();
 
@@ -87,9 +87,9 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
     public List<BillingONExt> findByBillingNoAndPaymentIdAndKey(Integer billingNo, Integer paymentId, String key) {
         String sql = "select bExt from BillingONExt bExt where bExt.billingNo=? and bExt.paymentId=? and bExt.keyVal=? order by bExt.id DESC";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, billingNo);
-        query.setParameter(2, paymentId);
-        query.setParameter(3, key);
+        query.setParameter(0, billingNo);
+        query.setParameter(1, paymentId);
+        query.setParameter(2, key);
         List<BillingONExt> results = query.getResultList();
 
         return results;
@@ -109,8 +109,8 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
         String sql = "select bExt from BillingONExt bExt where billingNo=? and keyVal=?";
         Query query = entityManager.createQuery(sql);
 
-        query.setParameter(1, paymentRecord.getBillingNo());
-        query.setParameter(2, "payment");
+        query.setParameter(0, paymentRecord.getBillingNo());
+        query.setParameter(1, "payment");
 
         List<BillingONExt> results = query.getResultList();
 
@@ -138,9 +138,9 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
     public BigDecimal getRefund(BillingONPayment paymentRecord) {
         String sql = "select bExt from BillingONExt bExt where paymentId=? and billingNo=? and keyVal=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, paymentRecord.getId());
-        query.setParameter(2, paymentRecord.getBillingNo());
-        query.setParameter(3, "refund");
+        query.setParameter(0, paymentRecord.getId());
+        query.setParameter(1, paymentRecord.getBillingNo());
+        query.setParameter(2, "refund");
 
         List<BillingONExt> results = query.getResultList();
 
@@ -170,9 +170,9 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
 
         String sql = "select bExt from BillingONExt bExt where billingNo=? and status=? and keyVal=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, bCh1.getId());
-        query.setParameter(2, '1');
-        query.setParameter(3, "remitTo");
+        query.setParameter(0, bCh1.getId());
+        query.setParameter(1, '1');
+        query.setParameter(2, "remitTo");
 
         List<BillingONExt> results = query.getResultList();
 
@@ -191,9 +191,9 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
 
         String sql = "select bExt from BillingONExt bExt where billingNo=? and status=? and keyVal=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, bCh1.getId());
-        query.setParameter(2, '1');
-        query.setParameter(3, "billTo");
+        query.setParameter(0, bCh1.getId());
+        query.setParameter(1, '1');
+        query.setParameter(2, "billTo");
 
         List<BillingONExt> results = query.getResultList();
 
@@ -212,9 +212,9 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
 
         String sql = "select bExt from BillingONExt bExt where billingNo=? and status=? and keyVal=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, bCh1.getId());
-        query.setParameter(2, '0');
-        query.setParameter(3, "billTo");
+        query.setParameter(0, bCh1.getId());
+        query.setParameter(1, '0');
+        query.setParameter(2, "billTo");
 
         List<BillingONExt> results = query.getResultList();
 
@@ -233,9 +233,9 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
 
         String sql = "select bExt from BillingONExt bExt where billingNo=? and status=? and keyVal=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, bCh1.getId());
-        query.setParameter(2, '1');
-        query.setParameter(3, "dueDate");
+        query.setParameter(0, bCh1.getId());
+        query.setParameter(1, '1');
+        query.setParameter(2, "dueDate");
 
         List<BillingONExt> results = query.getResultList();
 
@@ -256,9 +256,9 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
 
         String sql = "select bExt from BillingONExt bExt where billingNo=? and status=? and keyVal=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, bCh1.getId());
-        query.setParameter(2, '1');
-        query.setParameter(3, "useBillTo");
+        query.setParameter(0, bCh1.getId());
+        query.setParameter(1, '1');
+        query.setParameter(2, "useBillTo");
 
         List<BillingONExt> results = query.getResultList();
 
@@ -289,8 +289,8 @@ public class BillingONExtDaoImpl extends AbstractDaoImpl<BillingONExt> implement
 
         String sql = "select bExt from BillingONExt bExt where bExt.paymentId=? and bExt.billingNo=?";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(1, paymentId);
-        query.setParameter(2, billingNo);
+        query.setParameter(0, paymentId);
+        query.setParameter(1, billingNo);
 
         List<BillingONExt> results = query.getResultList();
 

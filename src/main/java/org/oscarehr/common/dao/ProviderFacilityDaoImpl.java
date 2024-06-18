@@ -42,8 +42,8 @@ public class ProviderFacilityDaoImpl extends AbstractDaoImpl<ProviderFacility> i
 	@Override
 	public List<ProviderFacility> findByProviderNoAndFacilityId(String providerNo, int facilityId) {
 		Query q = entityManager.createQuery("SELECT x FROM ProviderFacility x WHERE x.id.providerNo=? AND x.id.facilityId=?");
-		q.setParameter(1, providerNo);
-		q.setParameter(2, facilityId);
+		q.setParameter(0, providerNo);
+		q.setParameter(1, facilityId);
 		
 		@SuppressWarnings("unchecked")
 		List<ProviderFacility> results = q.getResultList();
