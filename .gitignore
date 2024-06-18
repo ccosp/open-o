@@ -27,3 +27,7 @@ src/main/resources/uiResources_*.properties
 .vscode/
 tmp/
 .aider*
+/hs_err_pid53473.log
+/hs_err_pid53710.log
+/hs_err_pid73647.log
+/hs_err_pid74180.log
