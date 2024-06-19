@@ -1,5 +1,6 @@
 package org.oscarehr.documentManager;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.EFormDocsDao;
 import org.oscarehr.common.model.ConsultDocs;
@@ -8,8 +9,6 @@ import org.oscarehr.common.model.EFormDocs;
 import org.oscarehr.hospitalReportManager.HRMUtil;
 import org.oscarehr.managers.*;
 import org.oscarehr.common.model.enumerator.DocumentType;
-import org.oscarehr.documentManager.data.AttachmentLabResultData;
-import org.oscarehr.util.DateUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,10 @@ import org.springframework.stereotype.Service;
 
 import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
-import oscar.oscarEncounter.data.EctFormData.PatientForm;
 import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
 import oscar.util.ConcatPDF;
-import oscar.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +51,16 @@ public interface DocumentAttachmentManager {
 
 	public void attachToConsult(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer requestId, Integer demographicNo);
 
+	/*
+	 * @param editOnOcean When editOnOcean is set to false, it signifies a normal consult request, performing just attach or detach operations on the consult request form.
+	 * When editOnOcean is set to true, it signifies that the attach or detach operation is being performed on a consult request created by OceanMD.
+	 * In this case, it will do two things:
+	 * 1. Attach or detach attachments from the consult request.
+	 * 2. Add those new attachments to the 'EreferAttachment' table, so Oscar can sent those attachment to OceanMD.
+	 * By doing this, the user will not have to manually upload new attachments to e-refer. They will be automatically fetched.
+	 */
+	public void attachToConsult(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer requestId, Integer demographicNo, Boolean editOnOcean);
+
 	public void attachToEForm(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer fdid, Integer demographicNo);
 
 	/**
@@ -84,4 +91,4 @@ public interface DocumentAttachmentManager {
 	public String convertPDFToBase64(Path renderedDocument) throws PDFGenerationException;
 }
 
-
+	
