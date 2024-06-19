@@ -28,6 +28,7 @@
 package com.quatro.dao.security;
 
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.quatro.model.security.Secobjectname;
 
@@ -37,6 +38,7 @@ import com.quatro.model.security.Secobjectname;
  */
 public class SecObjectNameDaoImpl extends HibernateDaoSupport implements SecObjectNameDao {
 
+    @Transactional
     @Override
     public void saveOrUpdate(Secobjectname t) {
 
