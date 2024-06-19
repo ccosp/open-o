@@ -82,6 +82,8 @@ public interface MeasurementManager {
 
 	public void removeMeasurementGroupDS(String propKey);
 
+	public List<Measurement> getLatestMeasurementsByDemographicIdObservedAfter(LoggedInInfo loggedInInfo, Integer demographicId, Date observedDate);
+
 	public static List<String> getFlowsheetDsHTML() {
 		List<String> dsHtml = new ArrayList<String>();
 		String path_set_by_property = OscarProperties.getInstance().getProperty("MEASUREMENT_DS_HTML_DIRECTORY");

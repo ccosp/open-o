@@ -36,15 +36,15 @@ public interface AbstractDao<T extends AbstractModel<?>> {
 
     void persist(AbstractModel<?> o);
 
-    void batchPersist(List<AbstractModel<?>> oList);
+    void batchPersist(List<T> oList);
 
-    void batchPersist(List<AbstractModel<?>> oList, int batchSize);
+    void batchPersist(List<T> oList, int batchSize);
 
     void remove(AbstractModel<?> o);
 
-    void batchRemove(List<AbstractModel<?>> oList);
+    void batchRemove(List<T> oList);
 
-    void batchRemove(List<AbstractModel<?>> oList, int batchSize);
+    void batchRemove(List<T> oList, int batchSize);
 
     void refresh(AbstractModel<?> o);
 

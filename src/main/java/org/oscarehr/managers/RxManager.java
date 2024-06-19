@@ -54,6 +54,7 @@ public interface RxManager {
             throws UnsupportedOperationException;
 
     public List<Drug> getDrugs( LoggedInInfo info,  int demographicNo,  RxStatus status);
+	public List<String> getCurrentSingleLineMedications(LoggedInInfo loggedInInfo, int demographicNo);
     public Drug getDrug( LoggedInInfo info,  int drugId) throws UnsupportedOperationException;
     public Drug addDrug( LoggedInInfo info,  Drug d);
     public Drug updateDrug( LoggedInInfo info,  Drug d);

@@ -47,6 +47,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Collections;
 
 import oscar.OscarProperties;
 import oscar.log.LogAction;
@@ -109,7 +110,18 @@ public class MeasurementManagerImpl implements MeasurementManager {
         }
         return results;
     }
-
+	@Override
+	public List<Measurement> getLatestMeasurementsByDemographicIdObservedAfter(LoggedInInfo loggedInInfo, Integer demographicId, Date observedDate) {
+		//If the consent type does not exist in the table assume this consent type is not being managed by the clinic, otherwise ensure patient has consented
+		boolean hasConsent = patientConsentManager.hasProviderSpecificConsent(loggedInInfo) || patientConsentManager.getConsentType(ConsentType.PROVIDER_CONSENT_FILTER) == null;
+		if (!hasConsent) { return Collections.emptyList(); }
+		
+		List<Measurement> results = measurementDao.findLatestByDemographicObservedAfterDate(demographicId, observedDate);
+		if (results.size() > 0) {
+			LogAction.addLogSynchronous(loggedInInfo, "MeasurementManager.getMeasurementByDemographicIdAfter", "demographicId="+demographicId+" updateAfter="+ observedDate);
+		}
+		return results;
+	}
     @Override
     public List<MeasurementMap> getMeasurementMaps() {
         // should be safe to get all as they're a defined set of loinic codes or human
