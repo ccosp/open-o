@@ -26,10 +26,10 @@
 	<licenses>
 		<license>
 			<name>GPLv2</name>
-			<url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+			<url>https://www.gnu.org/licenses/gpl-2.0.txt</url>
 		</license>
 	</licenses>
-	<url>http://www.oscarcanada.org</url>
+	<url>https://www.oscarcanada.org</url>
 	<scm>
 		<url>https://bitbucket.org/openoscar/oscar/wiki/Home</url>
 		<connection>scm:git:https://bitbucket.org/openoscar/oscar/branch/master</connection>
@@ -53,12 +53,12 @@
 		<repository>
 			<id>hapi-sf</id>
 			<name>HAPI Sourceforge Repository</name>
-			<url>http://hl7api.sourceforge.net/m2</url>
+			<url>https://hl7api.sourceforge.net/m2</url>
 		</repository>
 
 		<repository>
 			<id>oscar_repo</id>
-			<url>http://oscarmcmaster.sourceforge.net/m2</url>
+			<url>https://oscarmcmaster.sourceforge.net/m2</url>
 		</repository>
 
 		<!-- for the com.github.openosp htmltopdf dependency only. Upgrades
@@ -83,7 +83,7 @@
 
 		<pluginRepository>
 			<id>oscar_repo</id>
-			<url>http://oscarmcmaster.sourceforge.net/m2</url>
+			<url>https://oscarmcmaster.sourceforge.net/m2</url>
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencyManagement>
@@ -205,7 +205,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.4</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -295,6 +295,12 @@
 			<groupId>com.onelogin</groupId>
 			<artifactId>java-saml</artifactId>
 			<version>2.9.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>woodstox-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- hibernate / sql -->
@@ -1091,6 +1097,10 @@
 					<groupId>joda-time</groupId>
 					<artifactId>joda-time</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.woodstox</groupId>
+					<artifactId>woodstox-core</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1102,6 +1112,12 @@
     		<groupId>org.apache.cxf</groupId>
     		<artifactId>cxf-rt-frontend-jaxws</artifactId>
     		<version>3.2.0</version>
+			<exclusions>
+        		<exclusion>
+            	<groupId>org.codehaus.woodstox</groupId>
+           		<artifactId>woodstox-core-asl</artifactId>
+        	</exclusion>
+    </exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.cxf</groupId>
@@ -1157,6 +1173,10 @@
 					<groupId>log4j</groupId>
 					<artifactId>log4j</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>apache-cxf</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1183,6 +1203,10 @@
 				<exclusion>
 					<groupId>joda-time</groupId>
 					<artifactId>joda-time</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>woodstox-core-asl</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1390,6 +1414,12 @@
    <artifactId>flowsheets</artifactId>
    <version>1.0</version>
 </dependency>
+
+	<dependency>
+        <groupId>org.codehaus.woodstox</groupId>
+        <artifactId>stax2-api</artifactId>
+        <version>4.2</version>
+    </dependency>
 
 <!-- Coming soon: JAVA 11 -->
 <!--<dependency>-->
