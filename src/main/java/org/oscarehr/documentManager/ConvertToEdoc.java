@@ -35,6 +35,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.oscarehr.common.model.EFormData;
+import org.oscarehr.email.core.EmailData;
 import org.oscarehr.managers.NioFileManager;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
@@ -219,6 +220,20 @@ public final class ConvertToEdoc {
 		ConvertToEdoc.realPath = formTransportContainer.getRealPath();
 		String filename = buildFilename( formTransportContainer.getFormName(), formTransportContainer.getDemographicNo() );
 		return execute( htmlString, filename );
+	}
+
+	/**
+	 * 
+	 * Save the document as a temporary PDF. Does not save or return an eDoc entity. 
+	 * This is a temporary file location. Ensure that the file is deleted after it's used. 
+	 * 
+	 * @param emailData An object representing email-related data, including HTML content.
+	 * @return temporary path to the produced PDF.. 
+	 */
+	public synchronized static Path saveAsTempPDF(EmailData emailData) {
+		String htmlString = emailData.getEncryptedMessage();
+		String filename = buildFilename("emailbody_", "");
+		return execute(htmlString, filename);
 	}
 	
 	/**
