@@ -91,7 +91,7 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 			sql += " and x.signedOff = :signedOff";
 
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, providerNo);
+		query.setParameter(0, providerNo);
 		
         if (demographicNumbers != null && !demographicNumbers.isEmpty()) {
             for (int i = 0; i < demographicNumbers.size(); i++) { //String demographicNumber : demographicNumbers) {
