@@ -38,6 +38,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -92,6 +93,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.ws.rest.conversion.OtnEconsultConverter;
+import org.oscarehr.ws.rest.to.model.ConsultationAttachment;
 import org.oscarehr.ws.rest.to.model.ConsultationRequestSearchResult;
 import org.oscarehr.ws.rest.to.model.ConsultationResponseSearchResult;
 import org.oscarehr.ws.rest.to.model.OtnEconsult;
@@ -149,7 +151,7 @@ public interface ConsultationManager {
 	public void doHl7Send(LoggedInInfo loggedInInfo, Integer consultationRequestId) throws InvalidKeyException, SignatureException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException, IOException, HL7Exception, ServletException, com.lowagie.text.DocumentException;
 	public void importEconsult(LoggedInInfo loggedInInfo, OtnEconsult otnEconsult) throws Exception;
 	public List<Document> getEconsultDocuments(LoggedInInfo loggedInInfo, int demographicNo);
-	
+	public List<ConsultationAttachment> getEReferAttachments(LoggedInInfo loggedInInfo, HttpServletRequest request, HttpServletResponse response, Integer demographicNo) throws PDFGenerationException;
 	
 	public List<ProfessionalSpecialist> findByService(LoggedInInfo loggedInInfo, String serviceName);
 	public List<ProfessionalSpecialist> findByServiceId(LoggedInInfo loggedInInfo, Integer serviceId);
@@ -163,4 +165,7 @@ public interface ConsultationManager {
 	public ArrayList<HashMap<String, ? extends Object>> getAttachedHRMDocuments(LoggedInInfo loggedInInfo, String demographicNo, String requestId);
 
 	public void archiveConsultationRequest(Integer requestId);
+	public void saveOrUpdateExts(int requestId, List<ConsultationRequestExt> extras);
+	public Map<String, ConsultationRequestExt> getExtsAsMap(List<ConsultationRequestExt> extras);
+	public Map<String, String> getExtValuesAsMap(List<ConsultationRequestExt> extras);
 }

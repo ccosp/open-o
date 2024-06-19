@@ -175,4 +175,13 @@ public class DemographicPharmacyDaoImpl extends AbstractDaoImpl<DemographicPharm
         return query.getResultList();
 
     }
+
+    @Override
+    public Long getTotalDemographicsPreferedToPharmacyByPharmacyId(Integer pharmacyId) {
+        String sql = "SELECT COUNT(*) FROM DemographicPharmacy x WHERE x.pharmacyId = :pharmacyId AND x.status = 1";
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("pharmacyId", pharmacyId);
+
+        return (Long) query.getSingleResult();
+    }
 }

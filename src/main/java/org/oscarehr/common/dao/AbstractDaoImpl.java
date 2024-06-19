@@ -73,26 +73,28 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	}
 
 	@Override
-	public void batchPersist(List<AbstractModel<?>> oList) {
+	public void batchPersist(List<T> oList) {
 		batchPersist(oList, 25);
 	}
 
 	@Override
-	public void batchPersist(List<AbstractModel<?>> oList, int batchSize) {
+	public void batchPersist(List<T> oList, int batchSize) {
 		EntityManager batchEntityManager = null;
 		EntityTransaction transaction = null;
 		try {
 			batchEntityManager = entityManagerFactory.createEntityManager();
 			transaction = batchEntityManager.getTransaction();
 			transaction.begin();
-			for (int i = 0; i < oList.size(); i++) {
+			int i = 0;
+			for (T entity : oList) {
+				batchEntityManager.persist(entity);
+				i++;
 				if (i > 0 && i % batchSize == 0) {
 					batchEntityManager.flush();
 					batchEntityManager.clear();
 					transaction.commit();
 					transaction.begin();
 				}
-				batchEntityManager.persist(oList.get(i));
 			}
 			transaction.commit();
 		} catch (RuntimeException e) {
@@ -116,19 +118,25 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	}
 
 	@Override
-	public void batchRemove(List<AbstractModel<?>> oList) {
+	public void batchRemove(List<T> oList) {
 		batchRemove(oList, 25);
 	}
 
 	@Override
-	public void batchRemove(List<AbstractModel<?>> oList, int batchSize) {
+	public void batchRemove(List<T> oList, int batchSize) {
 		EntityManager batchEntityManager = null;
 		EntityTransaction transaction = null;
 		try {
 			batchEntityManager = entityManagerFactory.createEntityManager();
 			transaction = batchEntityManager.getTransaction();
 			transaction.begin();
-			for (int i = 0; i < oList.size(); i++) {
+			int i = 0;
+			for (T entity : oList) {
+				// Gets the model and gets the reference to it so that it is attached to the new entity manager's session
+				//AbstractModel<?> model = oList.get(i);
+				//Object entity = batchEntityManager.getReference(model.getClass(), model.getId());
+				batchEntityManager.remove(entity);
+				i++;
 				if (i > 0 && i % batchSize == 0) {
 					batchEntityManager.flush();
 					batchEntityManager.clear();
@@ -137,9 +145,6 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 				}
 				// Gets the model and gets the reference to it so that it is attached to the new
 				// entity manager's session
-				AbstractModel<?> model = oList.get(i);
-				Object entity = batchEntityManager.getReference(model.getClass(), model.getId());
-				batchEntityManager.remove(entity);
 			}
 			transaction.commit();
 		} catch (RuntimeException e) {
@@ -409,10 +414,12 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 	 */
 	@Override
 	public T saveEntity(T entity) {
-		if (entity.isPersistent())
+		if (entity.isPersistent()) {
 			merge(entity);
-		else
+		}
+		else {
 			persist(entity);
+		}
 		return entity;
 	}
 

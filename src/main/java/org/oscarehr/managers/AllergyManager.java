@@ -27,20 +27,11 @@
 
 package org.oscarehr.managers;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.oscarehr.common.dao.AllergyDao;
-import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Allergy;
-import org.oscarehr.common.model.ConsentType;
 import org.oscarehr.util.LoggedInInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import oscar.log.LogAction;
 
 public interface AllergyManager {
 
@@ -56,8 +47,4 @@ public interface AllergyManager {
 
 	public List<Allergy> getAllergiesByProgramProviderDemographicDate(LoggedInInfo loggedInInfo, Integer programId,
 			String providerNo, Integer demographicId, Calendar updatedAfterThisDateInclusive, int itemsToReturn);
-
-	public void createAllergies(List<Allergy> allergies);
-
-	public void saveAllergies(List<Allergy> allergies);
 }
