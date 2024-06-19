@@ -34,7 +34,7 @@ public class HRMDocumentToDemographicDao extends AbstractDaoImpl<HRMDocumentToDe
 		String sql = "select x from " + this.modelClass.getName() + " x, HRMDocument h where x.hrmDocumentId = h.id and  x.demographicNo=? order by h.reportDate DESC";
 		Query query = entityManager.createQuery(sql);
 		Integer demographicNoInteger = Integer.parseInt(demographicNo);
-		query.setParameter(1, demographicNoInteger);
+		query.setParameter(0, demographicNoInteger);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToDemographic> documentToDemographics = query.getResultList();
 		return documentToDemographics;
@@ -47,7 +47,7 @@ public class HRMDocumentToDemographicDao extends AbstractDaoImpl<HRMDocumentToDe
 	public List<HRMDocumentToDemographic> findByHrmDocumentId(String hrmDocumentId) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, hrmDocumentId);
+		query.setParameter(0, hrmDocumentId);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToDemographic> documentToDemographics = query.getResultList();
 		return documentToDemographics;
@@ -56,7 +56,7 @@ public class HRMDocumentToDemographicDao extends AbstractDaoImpl<HRMDocumentToDe
 	public List<HRMDocumentToDemographic> findByHrmDocumentId(Integer hrmDocumentId) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, hrmDocumentId);
+		query.setParameter(0, hrmDocumentId);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToDemographic> documentToDemographics = query.getResultList();
 		return documentToDemographics;
@@ -88,7 +88,7 @@ public class HRMDocumentToDemographicDao extends AbstractDaoImpl<HRMDocumentToDe
 				//Creates the query using the SQL
 				Query query = entityManager.createQuery(sql);
 				//Sets the query parameters
-				query.setParameter(1, parsedConsultationId);
+				query.setParameter(0, parsedConsultationId);
 				//Gets the query results and converts them to ConsultDocs
 				attachedHRMDocumentToDemographics = query.getResultList();
 			}
@@ -136,7 +136,7 @@ public class HRMDocumentToDemographicDao extends AbstractDaoImpl<HRMDocumentToDe
 				//Creates the query using the SQL
 				Query query = entityManager.createQuery(sql);
 				//Sets the query parameters
-				query.setParameter(1, parsedFdid);
+				query.setParameter(0, parsedFdid);
 				//Gets the query results and converts them to EFormDocs
 				attachedHRMDocumentToDemographics = query.getResultList();
 			}
