@@ -48,4 +48,6 @@ public interface DemographicPharmacyDao extends AbstractDao<DemographicPharmacy>
 	public List<DemographicPharmacy> findAllByDemographicId(Integer demographicNo);
 
 	public List<DemographicPharmacy> findAllByPharmacyId(Integer pharmacyId);
+
+	public Long getTotalDemographicsPreferedToPharmacyByPharmacyId(Integer pharmacyId);
 }
