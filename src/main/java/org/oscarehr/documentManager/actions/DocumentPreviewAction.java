@@ -24,10 +24,16 @@ import org.oscarehr.util.SpringUtils;
 
 import oscar.util.StringUtils;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,6 +104,25 @@ public class DocumentPreviewAction extends DispatchAction {
 		} catch (PDFGenerationException e) {
 			logger.error("Error occured while rendering Form. " + e.getMessage(), e);
 			generateResponse(response, e.getMessage());
+		}
+	}
+
+	public void renderPDF(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {		
+		String pdfPathString = StringUtils.isNullOrEmpty(request.getParameter("pdfPath")) ? "" : request.getParameter("pdfPath");
+		Path pdfPath = Paths.get(pdfPathString);
+		response.setContentType("application/pdf");
+		try (InputStream inputStream = Files.newInputStream(pdfPath);
+			 BufferedInputStream bfis = new BufferedInputStream(inputStream);
+			 ServletOutputStream outs = response.getOutputStream()) {
+
+			int data;
+			while ((data = bfis.read()) != -1) {
+				outs.write(data);
+			}
+			
+			outs.flush();
+		} catch (IOException e) {
+			logger.error("Error", e);	
 		}
 	}
 

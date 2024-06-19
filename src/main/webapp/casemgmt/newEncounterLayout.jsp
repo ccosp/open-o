@@ -464,6 +464,7 @@ window.onbeforeunload = onClosing;
 </script>
 </head>
 <body id="body">
+<jsp:include page="../images/spinner.jsp" flush="true"/>
 <div id="header" >
 	<tiles:insert attribute="header" />
 </div>

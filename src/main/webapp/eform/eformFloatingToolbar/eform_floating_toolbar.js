@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		addNavElement();
 		moveSubjectReverse();
 
-		// Add eForm attachments
+		// Add eForm attachments 
 		addEFormAttachments();
 
 		// If download EForm
@@ -324,6 +324,40 @@ document.addEventListener("DOMContentLoaded", function(){
 		}
 
 		remoteSave();
+	}
+
+	/**
+	 * Adds a hidden input field into the eForm form with instructions to 
+	 * open the Oscar Email dialog.
+	 */
+	function remoteEmail() {
+		if (!document.getElementById("hasValidRecipient") || !document.getElementById("emailConsentStatus") || !document.getElementById("emailConsentName")) {
+			alert("Valid recipient or consent parameter is not defined in the EForm.");
+			return;
+		}
+
+		const hasValidRecipient = document.getElementById("hasValidRecipient").value;	
+		const emailConsentStatus = document.getElementById("emailConsentStatus").value;
+		const emailConsentName = document.getElementById("emailConsentName").value;
+
+		if (hasValidRecipient === "false") {
+			alert("Sorry - this patient does not have a valid email address in their demographic. Please update their demographic and try again." );
+			return;
+		}
+
+		if (emailConsentStatus !== "Explicit Opt-In") {
+			const userResponse = prompt("This patient has not explicitly opted-in: [" + emailConsentName + "]\nType 'Yes' to acknowledge you understand the risks before proceeding.", "No");
+			if (userResponse === null || userResponse.toLowerCase() !== 'yes') { return; }
+		}
+
+		const newElement = document.createElement("input");
+		newElement.setAttribute("id", "emailAction");
+		newElement.setAttribute("name", "emailEForm");
+		newElement.setAttribute("value", "true");
+		newElement.setAttribute("type", "hidden");
+		document.forms[0].appendChild(newElement);
+		remoteSave();
+	
 	}
 	
 	/**

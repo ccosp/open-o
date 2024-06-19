@@ -304,6 +304,23 @@ public class DocumentAttachmentManager {
 		return base64 != null ? base64 : "";
 	}
 
+	public Path concatPDF(ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
+		Path path = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			ConcatPDF.concat(pdfDocumentList, outputStream);
+			path = nioFileManager.saveTempFile("combinedPDF_" + new Date().getTime(), outputStream);
+		} catch (IOException e) {
+			throw new PDFGenerationException("An error occurred while concatenating PDF.", e);
+		}
+		return path;
+	}
+
+	public Path concatPDF(List<Path> pdfDocuments) throws PDFGenerationException {
+		ArrayList<Object> pdfDocumentList = new ArrayList<>();
+        for (Path pdfDocument : pdfDocuments) { pdfDocumentList.add(pdfDocument.toString()); }
+		return concatPDF(pdfDocumentList);
+	}
+
 	private Path renderDocument(LoggedInInfo loggedInInfo, HttpServletRequest request, HttpServletResponse response, DocumentType documentType, Integer documentId) throws PDFGenerationException {
 		Path path = null;
 		switch (documentType) {
@@ -360,17 +377,6 @@ public class DocumentAttachmentManager {
 			Path path = formsManager.renderForm(request, response, form);
 			pdfDocumentList.add(path.toString());
 		}
-	}
-
-	private Path concatPDF(ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
-		Path path = null;
-		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-			ConcatPDF.concat(pdfDocumentList, outputStream);
-			path = nioFileManager.saveTempFile("combinedPDF_" + new Date().getTime(), outputStream);
-		} catch (IOException e) {
-			throw new PDFGenerationException("An error occurred while concatenating PDF.", e);
-		}
-		return path;
 	}
 
 	private String getDisplayLabName(LabResultData labResultData) {
