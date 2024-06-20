@@ -130,7 +130,7 @@ public class BedCheckTimeDaoImpl extends AbstractDaoImpl<BedCheckTime> implement
         Query query = entityManager.createQuery(queryStr);
     	if(values != null) {
 	    	for(int x=0;x<values.length;x++) {
-	    		query.setParameter(x+1, values[x]);
+	    		query.setParameter(x, values[x]);
 	    	}
     	}
     	

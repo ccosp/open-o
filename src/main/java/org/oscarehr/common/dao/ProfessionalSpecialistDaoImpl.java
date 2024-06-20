@@ -71,8 +71,8 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
     @Override
 	public List<ProfessionalSpecialist> findByFullName(String lastName, String firstName) {
 		Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x WHERE x.lastName like ? and x.firstName like ? order by x.lastName");
-		query.setParameter(1, "%"+lastName+"%");
-		query.setParameter(2, "%"+firstName+"%");
+		query.setParameter(0, "%"+lastName+"%");
+		query.setParameter(1, "%"+firstName+"%");
 
 		@SuppressWarnings("unchecked")
 		List<ProfessionalSpecialist> cList = query.getResultList();
@@ -92,7 +92,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
     @Override
 	public List<ProfessionalSpecialist> findBySpecialty(String specialty) {
 		Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x WHERE x.specialtyType like ? order by x.lastName");
-		query.setParameter(1, "%"+specialty+"%");
+		query.setParameter(0, "%"+specialty+"%");
 
 		@SuppressWarnings("unchecked")
 		List<ProfessionalSpecialist> cList = query.getResultList();
@@ -113,7 +113,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
 		
 		// referral numbers often have zeros prepended and are stored as varchar.
 		Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x WHERE x.referralNo LIKE ? order by x.lastName");
-		query.setParameter(1, referralNo);
+		query.setParameter(0, referralNo);
 
 		@SuppressWarnings("unchecked")
 		List<ProfessionalSpecialist> cList = query.getResultList();
@@ -167,7 +167,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
 
 		Query query = entityManager.createQuery(sql);
 		for(int x=0;x<paramList.size();x++) {
-			query.setParameter(x+1,paramList.get(x));
+			query.setParameter(x,paramList.get(x));
 		}		
 		
 		@SuppressWarnings("unchecked")
@@ -193,8 +193,8 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
 		sql += " order by x.lastName";
 		
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, "%"+lastName+"%");
-		query.setParameter(2, "%"+firstName+"%");
+		query.setParameter(0, "%"+lastName+"%");
+		query.setParameter(1, "%"+firstName+"%");
 
 		int index=3;
 		if(!StringUtils.isEmpty(specialty)) {
@@ -213,7 +213,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
     @Override
 	public List<ProfessionalSpecialist> findByService(String serviceName) {
 		Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x, ConsultationServices cs, ServiceSpecialists ss WHERE x.id = ss.id.specId and ss.id.serviceId = cs.serviceId and cs.serviceDesc = ?");
-		query.setParameter(1, serviceName);
+		query.setParameter(0, serviceName);
 
 		@SuppressWarnings("unchecked")
 		List<ProfessionalSpecialist> cList = query.getResultList();
@@ -225,7 +225,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
     @Override
 	public List<ProfessionalSpecialist> findByServiceId(Integer serviceId) {
 		Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x, ServiceSpecialists ss WHERE x.id = ss.id.specId and ss.id.serviceId = ?");
-		query.setParameter(1, serviceId);
+		query.setParameter(0, serviceId);
 
 		@SuppressWarnings("unchecked")
 		List<ProfessionalSpecialist> cList = query.getResultList();
