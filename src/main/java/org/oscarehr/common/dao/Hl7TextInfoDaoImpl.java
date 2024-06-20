@@ -158,12 +158,15 @@
  
      @Override
      public void updateReportStatusByLabId(String reportStatus, int labNumber){
-         Query query = entityManager.createQuery("update " + modelClass.getName() + " x set x.reportStatus=? where x.labNumber=?");
-         query.setParameter(1, reportStatus);
-         query.setParameter(2, labNumber);
- 
-         query.executeUpdate();
- 
+        if (reportStatus == null || reportStatus.isEmpty()) {
+            throw new IllegalArgumentException("Report status must not be null or empty");
+        }
+        char reportStatusChar = reportStatus.charAt(0);
+
+        Query query = entityManager.createQuery("update " + modelClass.getName() + " x set x.reportStatus = :reportStatus where x.labNumber = :labNumber");
+        query.setParameter(1, reportStatusChar);
+        query.setParameter(2, labNumber);
+        query.executeUpdate();
      }
  
      @Override
@@ -211,12 +214,16 @@
  
      @Override
      public void updateResultStatusByLabId(String resultStatus, int labNumber){
-         Query query = entityManager.createQuery("update " + modelClass.getName() + " x set x.resultStatus=? where x.labNumber=?");
-         query.setParameter(1, resultStatus);
-         query.setParameter(2, labNumber);
- 
-         query.executeUpdate();
- 
+        if (resultStatus == null || resultStatus.isEmpty()) {
+            throw new IllegalArgumentException("Result status must not be null or empty");
+        }
+        
+        char resultStatusChar = resultStatus.charAt(0);
+
+        Query query = entityManager.createQuery("update " + modelClass.getName() + " x set x.resultStatus = :resultStatus where x.labNumber = :labNumber");
+        query.setParameter(1, resultStatusChar);
+        query.setParameter(2, labNumber);
+        query.executeUpdate();
      }
  
      @Override
