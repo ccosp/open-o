@@ -389,7 +389,9 @@ public class EForm extends EFormBase {
 	}
 	
 	public void setFdid(String fdid) {
-		this.formHtml = this.formHtml.replace(fdidMarker, fdid);
+		if (this.formHtml != null && this.fdidMarker != null && fdid != null) {
+			this.formHtml = this.formHtml.replace(fdidMarker, fdid);
+		} 
 	}
 	
 	public void setSource(String source) {
