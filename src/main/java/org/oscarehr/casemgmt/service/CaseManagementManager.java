@@ -163,6 +163,8 @@ public interface CaseManagementManager {
     public void saveEctWin(EncounterWindow ectWin);
 
     public EncounterWindow getEctWin(String provider);
+	
+	public SecRole getSecRoleByRoleName(String roleName);
 
     public void saveNoteExt(CaseManagementNoteExt cExt);
 

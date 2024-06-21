@@ -77,6 +77,8 @@ public interface DemographicManager {
 	public Demographic getDemographicWithExt(LoggedInInfo loggedInInfo, Integer demographicId);
 	public String getDemographicFormattedName(LoggedInInfo loggedInInfo, Integer demographicId);
 
+	public String getDemographicEmail(LoggedInInfo loggedInInfo, Integer demographicId);
+
 	public Demographic getDemographicByMyOscarUserName(LoggedInInfo loggedInInfo, String myOscarUserName);
 	public List<Demographic> searchDemographicByName(LoggedInInfo loggedInInfo, String searchString, int startIndex,
 			int itemsToReturn);

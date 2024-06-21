@@ -63,14 +63,10 @@ public interface DocumentAttachmentManager {
 
 	public void attachToEForm(LoggedInInfo loggedInInfo, DocumentType documentType, String[] attachments, String providerNo, Integer fdid, Integer demographicNo);
 
-	/**
-	 * This renderDocument method is written specifically to render Forms.
-	 *
-	 * @param request      The HttpServletRequest object.
-	 * @param response     The HttpServletResponse object.
-	 * @param documentType The type of the document to be rendered.
-	 * @return The Path to the rendered document.
-	 */
+	public Path concatPDF(ArrayList<Object> pdfDocumentList) throws PDFGenerationException;
+
+	public Path concatPDF(List<Path> pdfDocuments) throws PDFGenerationException;
+
 	public Path renderDocument(HttpServletRequest request, HttpServletResponse response, DocumentType documentType) throws PDFGenerationException;
 
 	/**
