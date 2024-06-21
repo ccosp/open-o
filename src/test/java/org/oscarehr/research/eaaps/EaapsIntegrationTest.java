@@ -39,8 +39,7 @@ import org.oscarehr.common.hl7.v2.oscar_to_oscar.SendingUtils;
 import org.oscarehr.common.model.Demographic;
 
 import oscar.util.ConversionUtils;
-//Ignored until we fix foreign keys with tests
-@Ignore
+
 public class EaapsIntegrationTest extends DaoTestFixtures {
 
 	private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
