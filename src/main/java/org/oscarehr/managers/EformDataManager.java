@@ -62,6 +62,8 @@ public interface EformDataManager{
 
 	public Integer saveEFormWithAttachmentsAsEDoc(LoggedInInfo loggedInInfo, String fdid, String demographicId, Path eFormPDFPath) throws PDFGenerationException;
 	
+	public EFormData findByFdid(LoggedInInfo loggedInInfo, Integer fdid);
+	
 	/**
 	 * Saves an form as PDF in a temp directory.
 	 *  
@@ -81,5 +83,7 @@ public interface EformDataManager{
 	public ArrayList<HashMap<String, ? extends Object>> getHRMDocumentsAttachedToEForm(LoggedInInfo loggedInInfo, String fdid, String demographicId);
 
 	public List<EctFormData.PatientForm> getFormsAttachedToEForm(LoggedInInfo loggedInInfo, String fdid, String demographicId);
+
+	public void removeEFormData(LoggedInInfo loggedInInfo, String fdid);
 
 }

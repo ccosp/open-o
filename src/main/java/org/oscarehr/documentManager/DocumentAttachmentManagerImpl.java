@@ -218,14 +218,23 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 		documentAttach.attachToEForm(attachments, documentType, providerNo, fdid);
 	}
 
-	/**
-	 * This renderDocument method is written specifically to render Forms.
-	 *
-	 * @param request      The HttpServletRequest object.
-	 * @param response     The HttpServletResponse object.
-	 * @param documentType The type of the document to be rendered.
-	 * @return The Path to the rendered document.
-	 */
+	public Path concatPDF(ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
+		Path path = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			ConcatPDF.concat(pdfDocumentList, outputStream);
+			path = nioFileManager.saveTempFile("combinedPDF_" + new Date().getTime(), outputStream);
+		} catch (IOException e) {
+			throw new PDFGenerationException("An error occurred while concatenating PDF.", e);
+		}
+		return path;
+	}
+
+	public Path concatPDF(List<Path> pdfDocuments) throws PDFGenerationException {
+		ArrayList<Object> pdfDocumentList = new ArrayList<>();
+		for (Path pdfDocument : pdfDocuments) { pdfDocumentList.add(pdfDocument.toString()); }
+		return concatPDF(pdfDocumentList);
+	}
+
 	public Path renderDocument(HttpServletRequest request, HttpServletResponse response, DocumentType documentType) throws PDFGenerationException {
 		return renderDocument(null, request, response, documentType, 0);
 	}
@@ -326,7 +335,8 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 				path = HRMUtil.renderHRM(loggedInInfo, documentId);
 				break;
 			case FORM:
-				path = formsManager.renderForm(request, response, null);
+				EctFormData.PatientForm patientForm = null;
+				path = formsManager.renderForm(request, response, patientForm);
 				break;
 		}
 		return path;
@@ -365,17 +375,6 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 			Path path = formsManager.renderForm(request, response, form);
 			pdfDocumentList.add(path.toString());
 		}
-	}
-
-	private Path concatPDF(ArrayList<Object> pdfDocumentList) throws PDFGenerationException {
-		Path path = null;
-		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-			ConcatPDF.concat(pdfDocumentList, outputStream);
-			path = nioFileManager.saveTempFile("combinedPDF_" + new Date().getTime(), outputStream);
-		} catch (IOException e) {
-			throw new PDFGenerationException("An error occurred while concatenating PDF.", e);
-		}
-		return path;
 	}
 
 	private String getDisplayLabName(LabResultData labResultData) {
