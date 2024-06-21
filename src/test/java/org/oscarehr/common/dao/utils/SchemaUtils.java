@@ -274,13 +274,30 @@ public class SchemaUtils
 		{
 			Statement s=c.createStatement();
 			s.executeUpdate("use "+schema);
-			for (String tableName:createTableStatements.keySet()) {
-				s.executeUpdate("drop table if exists " + tableName);
-				s.executeUpdate(createTableStatements.get(tableName));
-				s.executeUpdate("insert into " + tableName + " select * from " + tableName + "_maventest");
-            }
-			s.close();
+			// Disable foreign key checks
+        	s.executeUpdate("SET foreign_key_checks = 0");
+			
+			// Drop foreign key constraints associated with tableName_maventest
+			for (String tableName : createTableStatements.keySet()) {
+			Statement s1 = c.createStatement();
+			ResultSet newrs = s1.executeQuery("SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE " +
+				"WHERE TABLE_NAME = '" + tableName + "_maventest" + "' AND " +
+				"CONSTRAINT_NAME LIKE 'fk_%'");
+			while (newrs.next()) {
+				String constraintName = newrs.getString("CONSTRAINT_NAME");
+				s.executeUpdate("ALTER TABLE " + tableName + "_maventest" + " DROP FOREIGN KEY " + constraintName);
+			}
+			newrs.close();
+			s1.close();
 
+			s.executeUpdate("drop table if exists " + tableName);
+			s.executeUpdate(createTableStatements.get(tableName));
+			s.executeUpdate("insert into " + tableName + " select * from " + tableName + "_maventest");
+            }
+			
+		// Re-enable foreign key checks
+        s.executeUpdate("SET foreign_key_checks = 1");
+		s.close();
 		}
 		finally
 		{
