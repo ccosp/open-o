@@ -96,8 +96,8 @@ public class ConsultationServiceDaoImpl extends AbstractDaoImpl<ConsultationServ
     	if (activeOnly) sql += " and x.active=?";
     	
     	Query query = entityManager.createQuery(sql);
-    	query.setParameter(1, REFERRING_DOCTOR);
-    	if (activeOnly) query.setParameter(2, ACTIVE);
+    	query.setParameter(0, REFERRING_DOCTOR);
+    	if (activeOnly) query.setParameter(1, ACTIVE);
 
         @SuppressWarnings("unchecked")
         List<ConsultationServices> results = query.getResultList();
