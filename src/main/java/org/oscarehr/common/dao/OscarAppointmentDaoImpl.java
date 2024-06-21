@@ -582,13 +582,13 @@ public class OscarAppointmentDaoImpl extends AbstractDaoImpl<Appointment> implem
         String sql = "select a from Appointment a where a.providerNo=? and a.appointmentDate=? and a.startTime=? and " +
                 "a.endTime=? and a.createDateTime=? and a.creator=? and a.demographicNo=? order by a.id desc";
         Query query = entityManager.createQuery(sql.toString());
-        query.setParameter(1, providerNo);
-        query.setParameter(2, appointmentDate);
-        query.setParameter(3, startTime);
-        query.setParameter(4, endTime);
-        query.setParameter(5, createDateTime);
-        query.setParameter(6, creator);
-        query.setParameter(7, demographicNo);
+        query.setParameter(0, providerNo);
+        query.setParameter(1, appointmentDate);
+        query.setParameter(2, startTime);
+        query.setParameter(3, endTime);
+        query.setParameter(4, createDateTime);
+        query.setParameter(5, creator);
+        query.setParameter(6, demographicNo);
         query.setMaxResults(1);
 
         return this.getSingleResultOrNull(query);
