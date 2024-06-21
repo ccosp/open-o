@@ -194,7 +194,17 @@
  
          return (name);
      }
- 
+
+     @Override
+     public String getDemographicEmail(LoggedInInfo loggedInInfo, Integer demographicId) {
+         Demographic result = getDemographic(loggedInInfo, demographicId);
+         String email = null;
+         if (result != null) {
+             email = result.getEmail();
+         }
+         return (email);
+     }
+
      @Override
      public Demographic getDemographicByMyOscarUserName(LoggedInInfo loggedInInfo, String myOscarUserName) {
          checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
