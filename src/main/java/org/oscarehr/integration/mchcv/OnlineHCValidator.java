@@ -30,14 +30,24 @@ import ca.ontario.health.hcv.HcvRequest;
 import ca.ontario.health.hcv.HcvResults;
 import ca.ontario.health.hcv.Requests;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.xml.soap.SOAPFault;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.apache.logging.log4j.Logger;
 import org.oscarehr.integration.ebs.client.EdtClientBuilder;
 import org.oscarehr.integration.ebs.client.EdtClientBuilderConfig;
+import org.oscarehr.util.MiscUtils;
+
 import oscar.OscarProperties;
 
 public class OnlineHCValidator implements HCValidator {
+    private static Logger logger = MiscUtils.getLogger();
 
     private HCValidation validation;
     private EdtClientBuilder builder;
@@ -55,6 +65,7 @@ public class OnlineHCValidator implements HCValidator {
         config.setServiceId(properties.getProperty("hcv.service.id"));
 
         setBuilder(new EdtClientBuilder(config));
+        setExternalClientKeystoreFilename(properties.getProperty("mcedt.service.clientKeystore.properties"));
         validation = builder.build(HCValidation.class);
     }
 
@@ -111,5 +122,22 @@ public class OnlineHCValidator implements HCValidator {
     private void setBuilder(EdtClientBuilder builder) {
         this.builder = builder;
     }
+
+    /*
+	 * Set an external `clientKeystore.properties` by providing the path to the file. 
+	 * If the path is not provided, it will default to `src/main/resources/clientKeystore.properties`.
+	 */
+	private static void setExternalClientKeystoreFilename(String clientKeystorePropertiesPath) {
+		if (clientKeystorePropertiesPath == null) { return; }
+		Path signaturePropFile = Paths.get(clientKeystorePropertiesPath);
+		if (Files.exists(signaturePropFile)) {
+			File file = new File(clientKeystorePropertiesPath);
+			try {
+				EdtClientBuilder.setClientKeystoreFilename(file.toURI().toURL().toString());
+			} catch (MalformedURLException e) {
+				logger.error("Malformed URL: " + clientKeystorePropertiesPath, e);
+			}
+		}
+	}
 
 }

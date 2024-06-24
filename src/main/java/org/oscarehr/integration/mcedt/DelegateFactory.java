@@ -35,6 +35,11 @@ import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 import ca.ontario.health.edt.EDTDelegate;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,6 +76,7 @@ public class DelegateFactory {
 		config.setServiceId((serviceId==null ||serviceId.trim().equals(""))?props.getProperty("mcedt.service.id"):serviceId);
 		config.setMtomEnabled(true);
 		EdtClientBuilder builder = new EdtClientBuilder(config);
+		setExternalClientKeystoreFilename(props.getProperty("mcedt.service.clientKeystore.properties"));
 		EDTDelegate edtDelegate = builder.build(EDTDelegate.class);
 		if (logger.isInfoEnabled()) {
 			logger.info("Created new EDT delegate " + edtDelegate);
@@ -96,6 +102,23 @@ public class DelegateFactory {
 
 	public static void setUserPropertyDAO(UserPropertyDAO userPropertyDAO) {
 		DelegateFactory.userPropertyDAO = userPropertyDAO;
+	}
+
+	/*
+	 * Set an external `clientKeystore.properties` by providing the path to the file. 
+	 * If the path is not provided, it will default to `src/main/resources/clientKeystore.properties`.
+	 */
+	private static void setExternalClientKeystoreFilename(String clientKeystorePropertiesPath) {
+		if (clientKeystorePropertiesPath == null) { return; }
+		Path signaturePropFile = Paths.get(clientKeystorePropertiesPath);
+		if (Files.exists(signaturePropFile)) {
+			File file = new File(clientKeystorePropertiesPath);
+			try {
+				EdtClientBuilder.setClientKeystoreFilename(file.toURI().toURL().toString());
+			} catch (MalformedURLException e) {
+				logger.error("Malformed URL: " + clientKeystorePropertiesPath, e);
+			}
+		}
 	}
 	
 }
