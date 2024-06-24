@@ -51,7 +51,6 @@ public class MeasurementDaoTest extends DaoTestFixtures {
 	}
 
 	@Test
-	@Ignore
 	public void testFind() {
 		Measurement m = populate();
 
