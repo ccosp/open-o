@@ -84,7 +84,7 @@ public class MeasurementGroupDaoImpl extends AbstractDaoImpl<MeasurementGroup> i
         String sqlCommand = "select x from " + modelClass.getSimpleName()+" x where x.name=?";
 
         Query query = entityManager.createQuery(sqlCommand);
-        query.setParameter(1, name);
+        query.setParameter(0, name);
 
         List<MeasurementGroup> results = query.getResultList();
 
