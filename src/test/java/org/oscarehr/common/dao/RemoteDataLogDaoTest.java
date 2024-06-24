@@ -45,7 +45,7 @@ public class RemoteDataLogDaoTest extends DaoTestFixtures {
 		SchemaUtils.restoreTable("RemoteDataLog");
 	}
 
-	@Ignore //Skipping until issue is resolved
+	@Test
 	public void testCreate() throws Exception {
 		RemoteDataLog entity = new RemoteDataLog();
 		EntityDataGenerator.generateTestDataForModelClass(entity);
