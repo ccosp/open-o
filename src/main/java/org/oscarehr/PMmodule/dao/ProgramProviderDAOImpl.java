@@ -31,19 +31,29 @@ import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.common.model.Facility;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.QueueCache;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class ProgramProviderDAOImpl extends HibernateDaoSupport implements ProgramProviderDAO {
 
     private Logger log = MiscUtils.getLogger();
 
     private static QueueCache<String, List<ProgramProvider>> programProviderByProviderProgramIdCache = new QueueCache<String, List<ProgramProvider>>(
             4, 100, DateUtils.MILLIS_PER_HOUR, null);
+
+    @Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {
+        super.setSessionFactory(sessionFactory);
+    }
 
     private static String makeCacheKey(String providerNo, Long programId) {
         return (providerNo + ':' + programId);
@@ -339,7 +349,11 @@ public class ProgramProviderDAOImpl extends HibernateDaoSupport implements Progr
 
     @Override
     public void updateProviderRoles(Long providerId, Long roleId) {
-        getHibernateTemplate().bulkUpdate("UPDATE ProgramProvider pp SET pp.RoleId = ? WHERE pp.Id = ?",
-                new Object[] { roleId, providerId });
+        String hql = "UPDATE ProgramProvider pp SET pp.roleId = :roleId WHERE pp.id = :providerId";
+        Session session = currentSession();
+        Query<?> query = session.createQuery(hql);
+        query.setParameter("roleId", roleId);
+        query.setParameter("providerId", providerId);
+        int rowCount = query.executeUpdate();
     }
 }
