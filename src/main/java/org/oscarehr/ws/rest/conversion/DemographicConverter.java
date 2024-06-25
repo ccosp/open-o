@@ -29,6 +29,7 @@ import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.util.AgeCalculator;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.ws.rest.to.model.AgeTo1;
+import org.oscarehr.ws.rest.to.model.DemographicExtTo1;
 import org.oscarehr.ws.rest.to.model.DemographicTo1;
 
 public class DemographicConverter extends AbstractConverter<Demographic, DemographicTo1> {
@@ -191,6 +192,10 @@ public class DemographicConverter extends AbstractConverter<Demographic, Demogra
 
 		
 		if (d.getExtras() != null) {
+			if (t.getExtras() == null) {
+				t.setExtras(new java.util.ArrayList<DemographicExtTo1>(d.getExtras().length));
+			}
+
 			for (DemographicExt ext : d.getExtras()) {
 				t.getExtras().add(demoExtConverter.getAsTransferObject(loggedInInfo,ext));
 			}
