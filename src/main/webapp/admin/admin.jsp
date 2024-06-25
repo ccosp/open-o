@@ -27,7 +27,7 @@
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi"%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
-<%@ taglib uri="http://jakarta.apache.org/struts/tags-html"
+<%@ taglib uri="http://struts.apache.org/tags-html"
 	prefix="html"%>
 <%
 	String roleName$ = (String)session.getAttribute("userrole") + "," + (String)session.getAttribute("user");
