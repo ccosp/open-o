@@ -153,6 +153,7 @@ function add(control) {
 			<td><select class="fileTypes">
 					<option value="CL" <%= (file.getName().startsWith("H")? "selected":"") %> >Claims</option>
 					<option value="OB" <%= (file.getName().startsWith("OBEC")?"selected":"") %> >OBEC</option>
+					<option value="SDC">Stale Dated Claim</option>
 				</select> </td>
 			<td><%=new java.util.Date(file.lastModified()) %></td>		
 		</tr><% }	     
