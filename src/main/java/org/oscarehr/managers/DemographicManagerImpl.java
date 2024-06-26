@@ -396,6 +396,11 @@
      public List<Demographic> getDemographicsNameRangeByProvider(LoggedInInfo loggedInInfo, Provider provider,
              String regex) {
          checkPrivilege(loggedInInfo, SecurityInfoManager.READ);
+
+         if (provider == null || provider.getProviderNo() == null || regex == null) {
+            return new ArrayList<>(); // Return an empty list if provider or regex is null
+         }
+
          List<Demographic> demographicList = demographicDao.getDemographicByProvider(provider.getProviderNo());
          /*
           * A reluctant method to sort the results due to the lack of REGEX functions
