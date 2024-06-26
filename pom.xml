@@ -1085,8 +1085,12 @@
 					<artifactId>util</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>jakarta.mail</groupId>
+					<groupId>javax.mail</groupId>
 					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-email</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1151,7 +1155,7 @@
 			<version>1.0.8</version>
 			<exclusions>
 				<exclusion>
-					<groupId>jakarta.mail</groupId>
+					<groupId>javax.mail</groupId>
 					<artifactId>mail</artifactId>
 				</exclusion>
 			</exclusions>
