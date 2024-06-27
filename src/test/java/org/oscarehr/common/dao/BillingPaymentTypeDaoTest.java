@@ -40,6 +40,8 @@ import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.BillingPaymentType;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class BillingPaymentTypeDaoTest extends DaoTestFixtures {
 
@@ -58,7 +60,7 @@ public class BillingPaymentTypeDaoTest extends DaoTestFixtures {
 		assertNotNull(entity.getId());
 	}
 
-	@Ignore //Skipping until issue is resolved
+	@Test //Skipping until issue is resolved
 	public void testFindAll() throws Exception {
 		
 		BillingPaymentType bPT1 = new BillingPaymentType();
@@ -76,6 +78,7 @@ public class BillingPaymentTypeDaoTest extends DaoTestFixtures {
 		List<BillingPaymentType> expectedResult = new ArrayList<BillingPaymentType>(Arrays.asList(bPT1, bPT2, bPT3));
 		List<BillingPaymentType> result = dao.findAll();
 
+		result.sort(Comparator.comparingInt(BillingPaymentType::getId));
 		Logger logger = MiscUtils.getLogger();
 		
 		if (result.size() != expectedResult.size()) {
