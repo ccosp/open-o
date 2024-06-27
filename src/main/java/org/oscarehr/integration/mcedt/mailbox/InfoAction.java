@@ -171,9 +171,12 @@ public class InfoAction extends DispatchAction {
 						//Collections.sort(resourceList, DetailDataCustom.ResourceIdComparator);										
 						request.getSession().setAttribute("resourceListDL",resourceList);
 					}
-				} else if (result.getResultSize() == null)	
+				} else if (result == null) {
+					// No documents found
+				} else if (result.getResultSize() == null) {
 					// if a result is returned with no size, meaning you are accessing a list that is not permitted, one response will be returned holding the error message
-					saveErrors(request,ActionUtils.addMessage("resourceAction.getResourceList.fault", result.getData().get(0).getResult().getMsg()));							
+					saveErrors(request,ActionUtils.addMessage("resourceAction.getResourceList.fault", result.getData().get(0).getResult().getMsg()));		
+				}					
 				
 			} catch (Exception e) {
 				logger.error("Unable to load resource list ", e);

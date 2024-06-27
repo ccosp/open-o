@@ -89,11 +89,7 @@ public class ResourceAction extends DispatchAction {
 		try{
 			resetPage(form);
 			resourceList = loadList(form,request,response,ResourceStatus.DOWNLOADABLE);			
-			
-			if(resourceList.size()>0){																					
-				request.getSession().setAttribute("resourceListDL",resourceList);
-			}			
-			
+			request.getSession().setAttribute("resourceListDL",resourceList);
 		}
 		catch(Exception e) {
 			logger.error("Unable to load resource list ", e);
