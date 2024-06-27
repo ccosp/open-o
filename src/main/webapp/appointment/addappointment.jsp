@@ -141,7 +141,7 @@
 
 
 <%
-	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean("demographicCustDao");
+	DemographicCustDao demographicCustDao = (DemographicCustDao)SpringUtils.getBean(DemographicCustDao.class);
 	ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 	DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 	EncounterFormDao encounterFormDao = SpringUtils.getBean(EncounterFormDao.class);
@@ -1247,7 +1247,7 @@ function locale(){
 	                <select name="type" id="type" title="<bean:message key="billing.billingCorrection.msgSelectVisitType"/>">
 	                <option data-dur="" data-reason=""></option><!-- important leave a blank top entry  -->
 
-	        <% AppointmentTypeDao appDao = (AppointmentTypeDao) SpringUtils.getBean("appointmentTypeDao");
+	        <% AppointmentTypeDao appDao = (AppointmentTypeDao) SpringUtils.getBean(AppointmentTypeDao.class);
 	           List<AppointmentType> types = appDao.listAll();
 	                for(int j = 0;j < types.size(); j++) {
 	%>
