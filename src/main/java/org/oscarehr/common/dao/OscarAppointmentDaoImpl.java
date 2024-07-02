@@ -552,9 +552,9 @@ public class OscarAppointmentDaoImpl extends AbstractDaoImpl<Appointment> implem
                 "order by a.appointmentDate desc, a.startTime desc");
 
         Query query = entityManager.createQuery(sql.toString());
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, from);
-        query.setParameter(3, to);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, from);
+        query.setParameter(2, to);
 
         return query.getResultList();
     }
@@ -569,9 +569,9 @@ public class OscarAppointmentDaoImpl extends AbstractDaoImpl<Appointment> implem
                 "order by a.appointmentDate desc, a.startTime desc");
 
         Query query = entityManager.createQuery(sql.toString());
-        query.setParameter(1, demographicNo);
-        query.setParameter(2, from);
-        query.setParameter(3, to);
+        query.setParameter(0, demographicNo);
+        query.setParameter(1, from);
+        query.setParameter(2, to);
 
         return query.getResultList();
     }
