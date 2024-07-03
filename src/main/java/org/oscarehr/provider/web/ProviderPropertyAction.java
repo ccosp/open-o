@@ -1445,8 +1445,13 @@ public class ProviderPropertyAction extends DispatchAction {
 
          if( saveProperty == null ) {
              saveProperty = new UserProperty();
-             saveProperty.setProviderNo(providerNo);
-             saveProperty.setName(UserProperty.EFORM_FAVOURITE_GROUP);
+            //  saveProperty.setProviderNo(providerNo);
+            //  saveProperty.setName(UserProperty.EFORM_FAVOURITE_GROUP);
+             request.setAttribute("status", "success");
+             request.setAttribute("providermsgPrefs","provider.setFavEfrmGrp.msgPrefs"); //=Preferences"); //
+             request.setAttribute("providermsgProvider","provider.setFavEfrmGrp.msgProvider"); //=Default Eform Group
+             request.setAttribute("providermsgSuccess","provider.setFavEfrmGrp.msgSuccess");
+             return actionmapping.findForward("gen");
          }
 
          if( group.equalsIgnoreCase("")) {
