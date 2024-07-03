@@ -37,7 +37,7 @@ if(!authed) {
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<html:html locale="true" >
+<html:html>
 <head>
 <html:base />
 	<meta charset="utf-8">
