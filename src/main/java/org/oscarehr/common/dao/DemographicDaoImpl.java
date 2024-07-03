@@ -92,6 +92,11 @@ import oscar.MyDateFormat;
 import oscar.OscarProperties;
 import oscar.util.SqlUtils;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+
+
 /**
  */
 @Transactional
@@ -103,6 +108,9 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     private ApplicationEventPublisher publisher;
     // public SessionFactory sessionFactory;
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactoryOverride(SessionFactory sessionFactory) {
@@ -1618,25 +1626,38 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return;
         }
 
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+    try {
+        transaction = session.beginTransaction();
+
         boolean objExists = false;
         if (demographic.getDemographicNo() != null) {
-            objExists = clientExistsThenEvict(demographic.getDemographicNo());
+            objExists = clientExistsThenEvict(demographic.getDemographicNo(), session);
         }
 
-        this.getHibernateTemplate().saveOrUpdate(demographic);
+        session.saveOrUpdate(demographic);
 
         if (OscarProperties.getInstance().isHL7A04GenerationEnabled() && !objExists) {
             (new HL7A04Generator()).generateHL7A04(demographic);
         }
 
         // the new way
-        if (objExists == false) {
+        if (!objExists) {
             publisher.publishEvent(new DemographicCreateEvent(demographic, demographic.getDemographicNo()));
         } else {
             publisher.publishEvent(new DemographicUpdateEvent(demographic, demographic.getDemographicNo()));
         }
 
+        transaction.commit();
+    } catch (RuntimeException e) {
+        if (transaction != null) transaction.rollback();
+        throw e;
+    } finally {
+        session.close();
     }
+}
 
     @Override
     public String getOrderField(String orderBy, boolean nativeQuery) {
@@ -1788,36 +1809,47 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
      * and the demographic already exists in the Hibernate cache.
      */
     @Override
-    public boolean clientExistsThenEvict(Integer demographicNo) {
-        boolean exists = false;
+public boolean clientExistsThenEvict(Integer demographicNo) {
+    Session session = sessionFactory.openSession();
+    Transaction transaction = null;
+    boolean exists = false;
 
-        Demographic existingDemo = this.getClientByDemographicNo(demographicNo);
+    try {
+        transaction = session.beginTransaction();
+
+        Demographic existingDemo = this.getClientByDemographicNo(demographicNo, session);
 
         exists = (existingDemo != null);
 
-        if (exists)
-            this.getHibernateTemplate().evict(existingDemo);
-
-        log.debug("exists (then evict): " + exists);
-
-        return exists;
-    }
-
-    @Override
-    public Demographic getClientByDemographicNo(Integer demographicNo) {
-
-        if (demographicNo == null || demographicNo.intValue() <= 0) {
-            throw new IllegalArgumentException();
+        if (exists) {
+            session.evict(existingDemo);
         }
 
-        Demographic result = getHibernateTemplate().get(Demographic.class, demographicNo);
-
-        if (log.isDebugEnabled()) {
-            log.debug("getClientByDemographicNo: id=" + demographicNo + ", found=" + (result != null));
-        }
-
-        return result;
+        transaction.commit();
+    } catch (RuntimeException e) {
+        if (transaction != null) transaction.rollback();
+        throw e;
+    } finally {
+        session.close();
     }
+
+    log.debug("exists (then evict): " + exists);
+    return exists;
+}
+
+public Demographic getClientByDemographicNo(Integer demographicNo, Session session) {
+    if (demographicNo == null || demographicNo.intValue() <= 0) {
+        throw new IllegalArgumentException("Demographic number must be positive and non-null.");
+    }
+
+    Demographic result = session.get(Demographic.class, demographicNo);
+
+    if (log.isDebugEnabled()) {
+        log.debug("getClientByDemographicNo: id=" + demographicNo + ", found=" + (result != null));
+    }
+
+    return result;
+}
 
     @Override
     public List<Demographic> getClients() {
@@ -2156,28 +2188,43 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public void saveClient(Demographic client) {
-
         if (client == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Client cannot be null.");
         }
-
-        boolean objExists = false;
-        if (client.getDemographicNo() != null)
-            objExists = clientExistsThenEvict(client.getDemographicNo());
-
-        client.setLastUpdateDate(new Date());
-        this.getHibernateTemplate().saveOrUpdate(client);
-
-        if (OscarProperties.getInstance().isHL7A04GenerationEnabled() && !objExists)
-            (new HL7A04Generator()).generateHL7A04(client);
-
-        // the new way
-        if (objExists == false) {
-            publisher.publishEvent(new DemographicCreateEvent(client, client.getDemographicNo()));
-        } else {
-            publisher.publishEvent(new DemographicUpdateEvent(client, client.getDemographicNo()));
+    
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+    
+        try {
+            transaction = session.beginTransaction();
+    
+            boolean objExists = false;
+            if (client.getDemographicNo() != null) {
+                objExists = clientExistsThenEvict(client.getDemographicNo(), session);
+            }
+    
+            client.setLastUpdateDate(new Date());
+            session.saveOrUpdate(client);
+    
+            if (OscarProperties.getInstance().isHL7A04GenerationEnabled() && !objExists) {
+                (new HL7A04Generator()).generateHL7A04(client);
+            }
+    
+            // the new way
+            if (!objExists) {
+                publisher.publishEvent(new DemographicCreateEvent(client, client.getDemographicNo()));
+            } else {
+                publisher.publishEvent(new DemographicUpdateEvent(client, client.getDemographicNo()));
+            }
+    
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        } finally {
+            session.close();
         }
-
+    
         if (log.isDebugEnabled()) {
             log.debug("saveClient: id=" + client.getDemographicNo());
         }

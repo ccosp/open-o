@@ -409,7 +409,7 @@ public interface DemographicDao {
 
 	public boolean clientExistsThenEvict(Integer demographicNo);
 
-	public Demographic getClientByDemographicNo(Integer demographicNo);
+	public Demographic getClientByDemographicNo(Integer demographicNo, Session session);
 
 	public List<Demographic> getClients();
 
