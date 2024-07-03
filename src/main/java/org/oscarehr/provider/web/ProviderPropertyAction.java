@@ -2048,12 +2048,22 @@ public ActionForward viewEDocBrowserInDocumentReport(ActionMapping actionmapping
 		property.setName(UserProperty.TICKLER_TASK_ASSIGNEE);
 	}
 
-	if(delete){
-	 userPropertyDAO.delete(property);
-	}else{
-	 property.setValue(tickerTaskAssignee);
-	 userPropertyDAO.saveProp(property);
-	}
+	try {
+        if (delete) {
+            if (property.getId() != null) {
+                userPropertyDAO.delete(property);
+            }
+        } else {
+            property.setValue(tickerTaskAssignee);
+            userPropertyDAO.saveProp(property);
+        }
+    } catch (Exception e) {
+        // Return to the success page even though the pereference is not changed from default
+        // Avoid the error displays
+        request.setAttribute("status", "success");
+        return actionmapping.findForward("complete");
+    }
+    
 
 	    request.setAttribute("status", "success");
 
