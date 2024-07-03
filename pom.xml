@@ -711,15 +711,16 @@
 
 		<!-- email -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>jakarta.mail</artifactId>
+			<version>1.6.7</version>
 		</dependency>
-		<dependency>
+
+		<!-- <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
-			<version>1.1</version>
-		</dependency>
+			<version>1.5</version>
+		</dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
 		<dependency>
@@ -1101,6 +1102,10 @@
 					<groupId>org.oscarehr</groupId>
 					<artifactId>util</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>jakarta.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
@@ -1162,6 +1167,12 @@
 			<groupId>org.marc.shic</groupId>
 			<artifactId>shic-pix</artifactId>
 			<version>1.0.8</version>
+			<exclusions>
+				<exclusion>
+					<groupId>jakarta.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.marc.shic</groupId>

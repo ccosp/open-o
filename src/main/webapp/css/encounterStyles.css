@@ -275,6 +275,7 @@ div#leftNavBar {
 	flex-direction: column;
 	flex-grow: 1;
 	flex-basis: 20%;
+	padding-bottom: 20px;
 }
 
 #rightNavBar {
@@ -284,6 +285,7 @@ div#leftNavBar {
 	flex-grow: 1;
 	flex-basis: 20%;
 	height: 100%;
+	padding-bottom: 20px;
 }
 
 #rightNavBar img:first-of-type {
@@ -307,6 +309,7 @@ div#notCPP {
 	align-content: end;
 	width: 100%;
 	gap: 3px;
+	padding-bottom: 20px;
 }
 
 div#cppBoxes {
@@ -1056,23 +1059,6 @@ div.note pre {
 p.passwd {
 	margin: 0 3px 0 3px;
 }
-
-/* span formatting for measurements div found in ajax call */
-span.measureCol1 {
-	float: left;
-	width: 50px;
-}
-
-span.measureCol2 {
-	float: left;
-	width: 55px;
-}
-
-span.measureCol3 {
-	float: left;
-}
-
-
 
 /* formatting for navbar */
 .links {
