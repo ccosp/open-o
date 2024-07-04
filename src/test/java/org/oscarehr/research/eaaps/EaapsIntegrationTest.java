@@ -155,8 +155,8 @@ public class EaapsIntegrationTest extends DaoTestFixtures {
  		demo.setYearOfBirth("1983");
 		
 		EaapsHash hash = new EaapsHash(demo, "Stonechurch");
-		assertEquals("JOEDOE19831223Stonechurch", hash.getKey());
-		assertEquals("6cf8b86a2f7e5d68e09cd1c116cb847282a1cdeb4746c0916b14ad493e157a79", hash.getHash());
+		assertEquals("19831223", hash.getKey());
+		assertEquals("1b0cd8e92f521cb598e962bcb90d974aa1348ae1b52915268840fe957096619f", hash.getHash());
 	}
 	
 	@Test
