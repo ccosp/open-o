@@ -44,22 +44,25 @@ public class RptByExampleData {
     public String results= null;
     public String connect = null;
     DBPreparedHandler accessDB=null;
-  Properties oscarVariables = null;
-
+    Properties oscarVariables = null;
 
     public RptByExampleData() {
     }
-
 
     public String exampleTextGenerate (String sql, Properties oscarVariables ){
 	      return exampleReportGenerate(sql, oscarVariables);
     }
 
     public String exampleReportGenerate( String sql, Properties oscarVariables ){
+        if (sql == null || sql.trim().isEmpty()) {
+            return ""; 
+        }
+      
         if (sql.compareTo("") != 0){
             sql = replaceSQLString (";","",sql);
             sql =  replaceSQLString("\"", "\'", sql);
-		    }
+		}
+
         this.sql = sql;
         this.oscarVariables = oscarVariables;
 
@@ -72,7 +75,7 @@ public class RptByExampleData {
             if (rs != null){
                 results =  RptResultStruct.getStructure(rs);
             } else {
-	              results = "";
+	            results = "";
             }
 
             rs.close();
