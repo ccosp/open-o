@@ -191,4 +191,21 @@ public class CtlBillingServiceDaoImpl extends AbstractDaoImpl<CtlBillingService>
 			query.setParameter("serviceType", serviceType);
 			return query.getResultList();
         }
+
+	@Override
+    public void remove(Integer id) {
+        CtlBillingService entity = entityManager.find(CtlBillingService.class, id);
+        if (entity != null) {
+            entityManager.remove(entity);
+        }
+    }
+
+    @Override
+    public void persist(CtlBillingService ctlBillingService) {
+        if (ctlBillingService.getId() == null) {
+            entityManager.persist(ctlBillingService);
+        } else {
+            entityManager.merge(ctlBillingService);
+        }
+    }
 }

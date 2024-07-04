@@ -98,5 +98,8 @@
          
          public List<Object[]> findServiceTypesByStatus(String status);
          public List<Object> findServiceCodesByType(String serviceType);
+
+         void remove(Integer id);
+         void persist(CtlBillingService ctlBillingService);
  }
  
