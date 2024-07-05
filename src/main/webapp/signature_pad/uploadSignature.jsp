@@ -26,12 +26,13 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="roleName" value='<c:out value="${sessionScope.userrole}, ${sessionScope.user}" />' />
+<c:set var="roleName" value='${sessionScope.userrole}, ${sessionScope.user}' />
 <c:set var="authenticated" value="false" />
-<c:out value="${sessionScope.userrole}, ${sessionScope.user}" />
+
 <security:oscarSec roleName="${pageScope.roleName}" objectName="_con" rights="w" reverse="false">
 	<c:set var="authenticated" value="true" />
 </security:oscarSec>
+
 <c:if test="${authenticated eq true}">
 
 	<%@page import="org.oscarehr.util.DigitalSignatureUtils"%>
