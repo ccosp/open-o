@@ -28,7 +28,6 @@ import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.*;
 import org.oscarehr.common.model.*;
 import org.oscarehr.common.model.DemographicExt.DemographicProperty;
-import org.oscarehr.common.model.enumerator.ConsultationRequestExtKey;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.DemographicContactCreator;
@@ -98,12 +97,8 @@ public class EctConsultationFormRequestUtil {
 	
 	private String appointmentInstructions;
 	private String appointmentInstructionsLabel;
-
-	public boolean isEReferral = false;
 	
-	private final ConsultationRequestDao consultationRequestDao = SpringUtils.getBean(ConsultationRequestDao.class);
-	private final ConsultationRequestExtDao consultationRequestExtDao = SpringUtils.getBean(ConsultationRequestExtDao.class);
-	private final ConsultationServiceDao consultationServiceDao = SpringUtils.getBean(ConsultationServiceDao.class);
+	private final ConsultationServiceDao consultationServiceDao = (ConsultationServiceDao) SpringUtils.getBean(ConsultationServiceDao.class);
 	private final DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
 	private final ContactDao contactDao = SpringUtils.getBean(ContactDao.class);
 	private final FaxJobDao faxJobDao = SpringUtils.getBean(FaxJobDao.class);
@@ -214,7 +209,10 @@ public class EctConsultationFormRequestUtil {
 		boolean verdict = true;
 		getSpecailistsName(id);
 	
-		ConsultationRequest cr = consultationRequestDao.find(Integer.parseInt(id));
+
+		ConsultationRequestDao dao = SpringUtils.getBean(ConsultationRequestDao.class);
+		ConsultationRequest cr = dao.find(ConversionUtils.fromIntString(id));
+		ConsultationRequestExtDao daoExt = (ConsultationRequestExtDao) SpringUtils.getBean(ConsultationRequestExtDao.class);
 		
 		if (cr != null) {
 			fdid = cr.getFdid();
@@ -289,7 +287,7 @@ public class EctConsultationFormRequestUtil {
 			setAppointmentInstructions( cr.getAppointmentInstructions() );
 			setAppointmentInstructionsLabel( cr.getAppointmentInstructionsLabel() );
 			letterheadName = cr.getLetterheadName();
-			letterheadTitle = consultationRequestExtDao.getConsultationRequestExtsByKey(Integer.parseInt(id),"letterheadTitle");
+			letterheadTitle = daoExt.getConsultationRequestExtsByKey(ConversionUtils.fromIntString(id),"letterheadTitle");
 			letterheadAddress = cr.getLetterheadAddress();
 			letterheadPhone = cr.getLetterheadPhone();
 			letterheadFax = cr.getLetterheadFax();
@@ -343,8 +341,6 @@ public class EctConsultationFormRequestUtil {
                 	appointmentPm = "";
 				}
             }
-
-			isEReferral = consultationRequestExtDao.getConsultationRequestExtsByKey(Integer.parseInt(id),ConsultationRequestExtKey.EREFERRAL_REF.getKey()) != null;
         }
 		
 		getFaxLogs(id);
@@ -492,7 +488,7 @@ public class EctConsultationFormRequestUtil {
 	}
 
 	public String getClinicName() {
-		ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean("clinicDAO");
+		ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean(ClinicDAO.class);
 
 		String retval = new String();
 		Clinic clinic = clinicDao.getClinic();

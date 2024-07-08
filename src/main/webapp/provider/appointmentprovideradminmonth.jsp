@@ -168,7 +168,7 @@
 
 <%
     if (bMultisites) {
-        SiteDao siteDao = (SiteDao) SpringUtils.getBean("siteDao");
+        SiteDao siteDao = (SiteDao) SpringUtils.getBean(SiteDao.class);
         sites = siteDao.getAllActiveSites();
 
         String requestSite = request.getParameter("site");
@@ -315,7 +315,7 @@
 <%@page import="org.oscarehr.common.model.Site" %>
 <%@page import="oscar.appt.JdbcApptImpl" %>
 <%@page import="oscar.appt.ApptUtil" %>
-<html:html locale="true">
+<html:html lang="en">
     <body bgcolor="#EEEEFF" onLoad="refreshAllTabAlerts();">
 
     <head>

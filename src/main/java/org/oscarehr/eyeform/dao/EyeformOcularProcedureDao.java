@@ -31,13 +31,13 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.AbstractDao;
+import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.eyeform.model.EyeformOcularProcedure;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EyeformOcularProcedureDao extends AbstractDao<EyeformOcularProcedure> {
+public class EyeformOcularProcedureDao extends AbstractDaoImpl<EyeformOcularProcedure> {
 	
 	Logger logger = MiscUtils.getLogger();
 	
