@@ -41,7 +41,7 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 	public List<HRMDocumentToProvider> findByProviderNo(String providerNo, Integer page, Integer pageSize) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.providerNo=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, providerNo);
+		query.setParameter(0, providerNo);
 		query.setMaxResults(pageSize);
 		query.setFirstResult(page*pageSize);
 		@SuppressWarnings("unchecked")
@@ -124,7 +124,7 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 	public List<HRMDocumentToProvider> findByHrmDocumentId(Integer hrmDocumentId) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, hrmDocumentId);
+		query.setParameter(0, hrmDocumentId);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToProvider> documentToProviders = query.getResultList();
 		return documentToProviders;
@@ -133,7 +133,7 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 	public List<HRMDocumentToProvider> findByHrmDocumentIdNoSystemUser(Integer hrmDocumentId) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=? and x.providerNo != '-1'";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, hrmDocumentId);
+		query.setParameter(0, hrmDocumentId);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToProvider> documentToProviders = query.getResultList();
 		return documentToProviders;
@@ -142,8 +142,8 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 	public HRMDocumentToProvider findByHrmDocumentIdAndProviderNo(Integer hrmDocumentId, String providerNo) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=? and x.providerNo=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, hrmDocumentId);
-		query.setParameter(2, providerNo);
+		query.setParameter(0, hrmDocumentId);
+		query.setParameter(1, providerNo);
 		try {
 			List<HRMDocumentToProvider> results = query.getResultList();
 			return results.get(results.size() - 1);
@@ -155,8 +155,8 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 	public List<HRMDocumentToProvider> findByHrmDocumentIdAndProviderNoList(Integer hrmDocumentId, String providerNo) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=? and x.providerNo=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, hrmDocumentId);
-		query.setParameter(2, providerNo);
+		query.setParameter(0, hrmDocumentId);
+		query.setParameter(1, providerNo);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToProvider> documentToProviders = query.getResultList();
 		return documentToProviders;
@@ -165,7 +165,7 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 	public List<HRMDocumentToProvider> findSignedByHrmDocumentId(Integer hrmDocumentId) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.hrmDocumentId=? and x.signedOff=1";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, hrmDocumentId);
+		query.setParameter(0, hrmDocumentId);
 		@SuppressWarnings("unchecked")
 		List<HRMDocumentToProvider> documentToProviders = query.getResultList();
 		return documentToProviders;
@@ -174,7 +174,7 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
 	public Integer getCountByProviderNo(String providerNo){
 		String sql = "select count(*) from " + this.modelClass.getName() + " x where x.providerNo=? and x.signedOff=0";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, providerNo);
+		query.setParameter(0, providerNo);
 		@SuppressWarnings("unchecked")
         Long result = (Long)query.getSingleResult();
 		return result.intValue();
