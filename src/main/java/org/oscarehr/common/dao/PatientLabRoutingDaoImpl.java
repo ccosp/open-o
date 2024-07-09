@@ -88,8 +88,8 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
         String query = "select x from " + modelClass.getName() + " x where x.labNo=? and x.labType=?";
         Query q = entityManager.createQuery(query);
 
-        q.setParameter(1, docNum);
-        q.setParameter(2, "DOC");
+        q.setParameter(0, docNum);
+        q.setParameter(1, "DOC");
 
         return q.getResultList();
     }
@@ -98,7 +98,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     public PatientLabRouting findByLabNo(int labNo) {
         String query = "select x from " + modelClass.getName() + " x where x.labNo=?";
         Query q = entityManager.createQuery(query);
-        q.setParameter(1, labNo);
+        q.setParameter(0, labNo);
         return this.getSingleResultOrNull(q);
     }
 
@@ -109,8 +109,8 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
         String query = "select x from " + modelClass.getName() + " x where x.labNo=? and x.labType=?";
         Query q = entityManager.createQuery(query);
 
-        q.setParameter(1, labNo);
-        q.setParameter(2, labType);
+        q.setParameter(0, labNo);
+        q.setParameter(1, labType);
 
         return q.getResultList();
     }
@@ -374,7 +374,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
                 + ")";
         Query q = entityManager.createQuery(query);
 
-        q.setParameter(1, demographicNo);
+        q.setParameter(0, demographicNo);
 
         return q.getResultList();
     }
