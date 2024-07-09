@@ -93,12 +93,32 @@ public class SubmitLabByFormAction extends DispatchAction {
 		Lab lab = new Lab();
 		lab.setLabName(labName);
 		lab.setAccession(accession);
-		lab.setLabReqDate(dateTimeFormatter.parse(labReqDate));
+
+		if (labReqDate != null && !labReqDate.isEmpty()) {
+			try {
+				lab.setLabReqDate(dateTimeFormatter.parse(labReqDate));
+			} catch (Exception e) {
+				logger.error("Invalid lab request date: " + labReqDate, e);
+			}
+		} else {
+			return mapping.findForward("manage");
+		}
+
 		lab.setLastName(lastName);
 		lab.setFirstName(firstName);
 		lab.setHin(hin);
 		lab.setSex(sex);
-		lab.setDob(dateFormatter.parse(dob));
+
+		if (dob != null && !dob.isEmpty()) {
+			try {
+				lab.setDob(dateFormatter.parse(dob));
+			} catch (Exception e) {
+				logger.error("Invalid date of birth: " + dob, e);
+			}
+		} else {
+			return mapping.findForward("manage");
+		}
+
 		lab.setPhone(phone);
 		lab.setBillingNo(billingNo);
 		lab.setProviderLastName(pLastName);
@@ -130,7 +150,17 @@ public class SubmitLabByFormAction extends DispatchAction {
     			String blocked = request.getParameter("test_"+x+".blocked");
     			String labNotes = request.getParameter("test_"+x+".labnotes");
     			LabTest test = new LabTest();
-    			test.setDate(dateTimeFormatter.parse(testDate));
+
+				if (testDate != null && !testDate.isEmpty()) {
+					try {
+						test.setDate(dateTimeFormatter.parse(testDate));
+					} catch (Exception e) {
+						logger.error("Invalid test date: " + testDate, e);
+					}
+				} else {
+					return mapping.findForward("manage");
+				}
+
     			test.setName(testName);
     			test.setDescription(testDescr);
     			test.setCodeType(codeType);
@@ -148,6 +178,9 @@ public class SubmitLabByFormAction extends DispatchAction {
     		}
     	}
 
+		if (lab.getTests() == null || lab.getTests().isEmpty()) {
+			return mapping.findForward("manage");
+		}
 
     	//generate the HL7 from the Lab object.
     	String hl7 = generateHL7(lab);
