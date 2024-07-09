@@ -1189,23 +1189,12 @@
         	</exclusion>
     </exclusions>
 		</dependency>
+
 		<dependency>
     		<groupId>org.apache.cxf</groupId>
     		<artifactId>cxf-rt-transports-http</artifactId>
     		<version>3.2.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.wss4j</groupId>
-			<artifactId>wss4j-ws-security-common</artifactId>
-			<version>2.1.8</version>
-		</dependency>
-
-		<dependency>
-       		<groupId>org.apache.wss4j</groupId>
-        	<artifactId>wss4j-ws-security-dom</artifactId>
-        	<version>2.3.1</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>org.oscarehr</groupId>
@@ -1495,12 +1484,16 @@
    <version>1.0</version>
 </dependency>
 
-	<dependency>
-        <groupId>org.codehaus.woodstox</groupId>
-        <artifactId>stax2-api</artifactId>
-        <version>4.2</version>
-    </dependency>
-
+		<dependency>
+			<groupId>org.codehaus.woodstox</groupId>
+			<artifactId>stax2-api</artifactId>
+			<version>4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.woodstox</groupId>
+			<artifactId>woodstox-core-asl</artifactId>
+			<version>4.4.1</version>
+		</dependency>
 <!-- Coming soon: JAVA 11 -->
 <!--<dependency>-->
 <!--    <groupId>com.sun.xml.ws</groupId>-->
