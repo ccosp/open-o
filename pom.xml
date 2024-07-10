@@ -282,6 +282,24 @@
 			<groupId>com.onelogin</groupId>
 			<artifactId>java-saml</artifactId>
 			<version>2.9.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.santuario</groupId>
+					<artifactId>xmlsec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- 
+			At present, the maximum version we can bump org.apache.santuario:xmlsec to is 2.1.8. 
+			If we aim to go beyond this version, we'll need to update 'ebs-client', 'edt-stubs', 
+			and 'hcv-stubs' as they are currently utilizing xmlsec version 1.5.6. 
+			Thus, we need to update all dependencies together.
+		-->
+		<dependency>
+			<groupId>org.apache.santuario</groupId>
+			<artifactId>xmlsec</artifactId>
+			<version>2.1.8</version>
 		</dependency>
 
 		<!-- hibernate / sql -->
@@ -1085,8 +1103,12 @@
 					<artifactId>util</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>jakarta.mail</groupId>
+					<groupId>javax.mail</groupId>
 					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-email</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -1151,7 +1173,7 @@
 			<version>1.0.8</version>
 			<exclusions>
 				<exclusion>
-					<groupId>jakarta.mail</groupId>
+					<groupId>javax.mail</groupId>
 					<artifactId>mail</artifactId>
 				</exclusion>
 			</exclusions>
