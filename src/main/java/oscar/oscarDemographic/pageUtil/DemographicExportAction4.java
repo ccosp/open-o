@@ -2692,12 +2692,16 @@ public class DemographicExportAction4 extends Action {
 }
 
 	File makeReadMe(ArrayList<String> dirs, ArrayList<File> fs) throws IOException {
+        ClinicData clinicData = new ClinicData();
 		File readMe = new File(fs.get(0).getParentFile(), "ReadMe.txt");
 		BufferedWriter out = new BufferedWriter(new FileWriter(readMe));
-		out.write("Physician Group					: ");
-		out.write(new ClinicData().getClinicName());
+		out.write("Physician Group               : ");
+		out.write(clinicData.getClinicName());
 		out.newLine();
-		out.write("CMS Vendor, Product & Version	  : ");
+		out.write("Contact Information           : ");
+		out.write(clinicData.getClinicAddress() + ", " + clinicData.getClinicCity() + ", " + clinicData.getClinicProvince() + ", " + clinicData.getClinicPostal() + ". " + clinicData.getClinicPhone());
+		out.newLine();
+		out.write("CMS Vendor, Product & Version : ");
 		String vendor = oscarProperties.getProperty("Vendor_Product");
 		if (StringUtils.empty(vendor)) {
 			exportError.add("Error! Vendor_Product not defined in oscar.properties");
@@ -2705,7 +2709,7 @@ public class DemographicExportAction4 extends Action {
 			out.write(vendor);
 		}
 		out.newLine();
-		out.write("Application Support Contact		: ");
+		out.write("Application Support Contact   : ");
 		String support = oscarProperties.getProperty("Support_Contact");
 		if (StringUtils.empty(support)) {
 			exportError.add("Error! Support_Contact not defined in oscar.properties");
@@ -2713,7 +2717,7 @@ public class DemographicExportAction4 extends Action {
 			out.write(support);
 		}
 		out.newLine();
-		out.write("Date and Time stamp				: ");
+		out.write("Date and Time stamp           : ");
 		out.write(UtilDateUtilities.getToday("yyyy-MM-dd hh:mm:ss aa"));
 		out.newLine();
 		out.write("Total patients files extracted per physician:");
