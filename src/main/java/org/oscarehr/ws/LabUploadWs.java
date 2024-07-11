@@ -27,6 +27,7 @@ package org.oscarehr.ws;
 import org.apache.commons.io.FileUtils;
 import org.apache.cxf.annotations.GZIP;
 import org.apache.logging.log4j.Logger;
+import org.oscarehr.common.model.enumerator.LabType;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Component;
@@ -54,14 +55,6 @@ import java.util.Date;
 @GZIP(threshold=AbstractWs.GZIP_THRESHOLD)
 public class LabUploadWs extends AbstractWs {
 
-	private static final String LAB_TYPE_CML = "CML";
-	private static final String LAB_TYPE_LIFELABS = "MDS";
-	private static final String LAB_TYPE_EXCELLERIS = "PATHL7";
-	private static final String LAB_TYPE_IHA = "IHA";
-	private static final String LAB_TYPE_GAMMADYNACARE = "GDML";
-	private static final String LAB_TYPE_CDL = "CDL";
-	private static final String LAB_TYPE_CLS = "CLS";
-
     private static final Logger logger=MiscUtils.getLogger();
 
     public String uploadCLS(
@@ -73,7 +66,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LAB_TYPE_CLS, oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.CLS.name(), oscarProviderNo);
 
         } catch(Exception e)
         {
@@ -96,7 +89,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LAB_TYPE_CML, oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.CML.name(),oscarProviderNo);
 
         } catch(Exception e)
         {
@@ -119,7 +112,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-        	audit = importLab(fileName, contents, LAB_TYPE_LIFELABS, oscarProviderNo);
+        	audit = importLab(fileName, contents, LabType.MDS.name(), oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -141,7 +134,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-        	audit = importLab(fileName, contents, LAB_TYPE_EXCELLERIS, oscarProviderNo);
+        	audit = importLab(fileName, contents, LabType.EXCELLERIS.name(), oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -162,7 +155,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-        	audit = importLab(fileName, contents, LAB_TYPE_IHA, oscarProviderNo);
+        	audit = importLab(fileName, contents, LabType.IHAPOI.name(), oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -184,7 +177,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LAB_TYPE_GAMMADYNACARE, oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.GDML.name(), oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -206,7 +199,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LAB_TYPE_CDL, oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.CDL.name(), oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
