@@ -66,7 +66,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LabType.CLS.name(), oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.CLS, oscarProviderNo);
 
         } catch(Exception e)
         {
@@ -89,7 +89,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LabType.CML.name(),oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.CML,oscarProviderNo);
 
         } catch(Exception e)
         {
@@ -112,7 +112,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-        	audit = importLab(fileName, contents, LabType.MDS.name(), oscarProviderNo);
+        	audit = importLab(fileName, contents, LabType.MDS, oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -132,9 +132,19 @@ public class LabUploadWs extends AbstractWs {
     )
     {
         String returnMessage, audit;
+
+	    LabType labType = LabType.EXCELLERIS;
+		/*
+		 * Quick and dirty work around to enable the different lab handler
+		 * for Exelleris lab versions used in Ontario.
+		 * This wont be a forever solution.
+		 */
+		if(OscarProperties.getInstance().isOntarioBillingRegion()) {
+			labType = LabType.ExcellerisON;
+		}
         
         try {
-        	audit = importLab(fileName, contents, LabType.EXCELLERIS.name(), oscarProviderNo);
+        	audit = importLab(fileName, contents, labType, oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -155,7 +165,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-        	audit = importLab(fileName, contents, LabType.IHAPOI.name(), oscarProviderNo);
+        	audit = importLab(fileName, contents, LabType.IHAPOI, oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -177,7 +187,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LabType.GDML.name(), oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.GDML, oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -199,7 +209,7 @@ public class LabUploadWs extends AbstractWs {
         String returnMessage, audit;
         
         try {
-            audit = importLab(fileName, contents, LabType.CDL.name(), oscarProviderNo);
+            audit = importLab(fileName, contents, LabType.CDL, oscarProviderNo);
         } catch(Exception e)
         {
             logger.error(e.getMessage());
@@ -248,7 +258,7 @@ public class LabUploadWs extends AbstractWs {
 			return returnMessageHandler;
     }
 
-    private String importLab(String fileName, String labContent, String labType, String oscarProviderNo) 
+    private String importLab(String fileName, String labContent, LabType labType, String oscarProviderNo)
 		throws Exception
     {
 		HttpServletRequest request = getHttpServletRequest();
@@ -286,8 +296,8 @@ public class LabUploadWs extends AbstractWs {
         is.close();
         if (checkFileUploadedSuccessfully != FileUploadCheck.UNSUCCESSFUL_SAVE){
             logger.info("filePath" + labFilePath);
-            logger.info("Type :" + labType);
-            MessageHandler msgHandler = HandlerClassFactory.getHandler(labType);
+            logger.info("Type :" + labType.name());
+            MessageHandler msgHandler = HandlerClassFactory.getHandler(labType.name());
             logger.info("MESSAGE HANDLER "+msgHandler.getClass().getName());
             
             // Parse and handle the lab
@@ -298,11 +308,11 @@ public class LabUploadWs extends AbstractWs {
 				checkFileUploadedSuccessfully,
 				ipAddr
 			)) == null) {
-            	throw new ParseException("Failed to parse lab: " + fileName + " of type: " + labType, 0);
+            	throw new ParseException("Failed to parse lab: " + fileName + " of type: " + labType.name(), 0);
             }
                         
         }else{
-        	throw new SQLException("Failed insert lab into DB (Likely duplicate lab): " + fileName + " of type: " + labType);
+        	throw new SQLException("Failed insert lab into DB (Likely duplicate lab): " + fileName + " of type: " + labType.name());
         }
         
         // This will always contain one line, so let's just remove the newline characters
