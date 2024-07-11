@@ -24,6 +24,22 @@
 
 package org.oscarehr.ws;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.cxf.annotations.GZIP;
+import org.apache.logging.log4j.Logger;
+import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
+import org.springframework.stereotype.Component;
+import oscar.OscarProperties;
+import oscar.log.LogAction;
+import oscar.oscarLab.FileUploadCheck;
+import oscar.oscarLab.ca.all.upload.HandlerClassFactory;
+import oscar.oscarLab.ca.all.upload.handlers.MessageHandler;
+import oscar.oscarLab.ca.all.util.Utilities;
+
+import javax.jws.WebParam;
+import javax.jws.WebService;
+import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,25 +47,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
-
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.cxf.annotations.GZIP;
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.LoggedInInfo;
-
-import org.springframework.stereotype.Component;
-
-import oscar.OscarProperties;
-import oscar.oscarLab.FileUploadCheck;
-import oscar.oscarLab.ca.all.upload.HandlerClassFactory;
-import oscar.oscarLab.ca.all.upload.handlers.MessageHandler;
-import oscar.oscarLab.ca.all.util.Utilities;
-import oscar.log.LogAction;
 
 
 @WebService
@@ -226,35 +223,40 @@ public class LabUploadWs extends AbstractWs {
     						   @WebParam(name="contents") byte[] contents,
     						   @WebParam(name="oscar_provider_no") String oscarProviderNo ){
     		logger.error("uploadPDF called file name "+fileName+" provider "+oscarProviderNo+" contnets "+contents);
-    	
-    		ByteArrayInputStream is = new ByteArrayInputStream(contents);
-    		String filePath = Utilities.savePdfFile(is,fileName);
-    		HttpServletRequest request = getHttpServletRequest();
-    		LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromRequest(request);
-    		
-    		MessageHandler msgHandler = HandlerClassFactory.getHandler("PDFDOC");
-    		String retVal = msgHandler.parse(loggedInInfo,oscarProviderNo, filePath,0,request.getRemoteAddr()); 
-    	
-    		return retVal;
+    	    String returnMessageHandler = "{\"success\":0,\"message\":\"\"}";
+
+    		try(ByteArrayInputStream is = new ByteArrayInputStream(contents)) {
+			    String filePath = Utilities.savePdfFile(is, fileName);
+			    HttpServletRequest request = getHttpServletRequest();
+			    LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromRequest(request);
+
+			    MessageHandler msgHandler = HandlerClassFactory.getHandler("PDFDOC");
+			    returnMessageHandler =  msgHandler.parse(loggedInInfo, oscarProviderNo, filePath, 0, request.getRemoteAddr());
+		    } catch (Exception e) {
+				logger.error("", e);
+	        }
+	        return returnMessageHandler;
     }
     
     public String uploadDocumentReference(@WebParam(name="file_name") String fileName,
 			   @WebParam(name="contents") byte[] contents,
 			   @WebParam(name="oscar_provider_no") String oscarProviderNo ){
+	        String returnMessageHandler = "{\"success\":0,\"message\":\"\"}";
+            try(ByteArrayInputStream is = new ByteArrayInputStream(contents)) {
+			    String filePath = Utilities.saveFile(is, fileName);
+			    HttpServletRequest request = getHttpServletRequest();
+			    LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromRequest(request);
 
-    				ByteArrayInputStream is = new ByteArrayInputStream(contents);
-    				String filePath = Utilities.saveFile(is,fileName);
-    				HttpServletRequest request = getHttpServletRequest();
-    				LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromRequest(request);
-
-    				MessageHandler msgHandler = HandlerClassFactory.getHandler("FHIR_COMMUNICATION_REQUEST");
-    				String retVal = msgHandler.parse(loggedInInfo,oscarProviderNo, filePath,0,request.getRemoteAddr()); 
-
-    				return retVal;
+			    MessageHandler msgHandler = HandlerClassFactory.getHandler("FHIR_COMMUNICATION_REQUEST");
+			    returnMessageHandler = msgHandler.parse(loggedInInfo, oscarProviderNo, filePath, 0, request.getRemoteAddr());
+		    } catch (Exception e) {
+				logger.error("", e);
+		    }
+			return returnMessageHandler;
     }
 
     private String importLab(String fileName, String labContent, String labType, String oscarProviderNo) 
-		throws ParseException, SQLException, Exception
+		throws Exception
     {
 		HttpServletRequest request = getHttpServletRequest();
 
