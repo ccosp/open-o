@@ -1483,12 +1483,6 @@
    <artifactId>flowsheets</artifactId>
    <version>1.0</version>
 </dependency>
-
-		<dependency>
-			<groupId>org.codehaus.woodstox</groupId>
-			<artifactId>stax2-api</artifactId>
-			<version>4.2</version>
-		</dependency>
 		<dependency>
 			<groupId>org.codehaus.woodstox</groupId>
 			<artifactId>woodstox-core-asl</artifactId>
