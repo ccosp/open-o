@@ -24,6 +24,7 @@
 package org.oscarehr.util;
 
 import org.apache.logging.log4j.Logger;
+import org.apache.xml.security.utils.resolver.ResourceResolver;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorUpdateTask;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
@@ -33,6 +34,7 @@ import org.oscarehr.PMmodule.utility.ProgramAccessCache;
 import org.oscarehr.PMmodule.utility.RoleCache;
 import org.oscarehr.common.jobs.OscarJobUtils;
 import org.oscarehr.hospitalReportManager.HRMFixMissingReportHelper;
+import org.oscarehr.integration.mcedt.mailbox.CidPrefixResourceResolver;
 import org.oscarehr.threads.WaitListEmailThread;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
@@ -73,12 +75,16 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
                 CaisiIntegratorUpdateTask.startTask();
             }
 
-            OscarJobUtils.initializeJobExecutionFramework();
+			OscarJobUtils.initializeJobExecutionFramework();
+			
+			WaitListEmailThread.startTaskIfEnabled();
 
-            WaitListEmailThread.startTaskIfEnabled();
+			if (oscarProperties.isPropertyActive("encrypted_xml.remove_cid_prefix")) {
+				ResourceResolver.register(CidPrefixResourceResolver.class, true);
+			}
 
-            // Run some optimizations
-            loadCaches();
+			//Run some optimizations
+			loadCaches();
 
             logger.info("OSCAR server processes started. context=" + contextPath);
 
@@ -94,7 +100,7 @@ public class ContextStartupListener implements javax.servlet.ServletContextListe
             logger.error("Unexpected error.", e);
             throw (new RuntimeException(e));
         }
-    } 
+    }
 	
 	public void loadCaches() {
 		ProgramDao programDao = (ProgramDao)SpringUtils.getBean(ProgramDao.class);

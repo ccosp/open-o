@@ -881,6 +881,25 @@ function updateEnrolledTo() {
 	}
 }
 
+function validateHC() {
+	const hin = jQuery("#hinBox").val();
+	const ver = jQuery("#verBox").val();
+	const hcType = jQuery("#hcTypeBox").val();
+
+    jQuery.ajax({
+        type: "GET",
+        url:  '<%=request.getContextPath() %>/ws/rs/patientDetailStatusService/validateHC?hin='+hin+'&ver='+ver,
+        dataType:'json',
+        contentType:'application/json',
+        success: function (data) {
+        	alert(data.responseDescription);
+        },
+        error: function(data) {
+        	alert('An error occured.');
+        }
+	});
+}
+
 </script>
 	<script type="application/javascript">
 <%
