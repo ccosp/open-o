@@ -124,7 +124,6 @@ public class BedCheckTimeDaoTest extends DaoTestFixtures {
 		assertTrue(true);
 	}
 	
-	@Ignore ///Returns the query instead of the result...check dao file
 	@Test
 	public void testGetBedCheckTimesQuery() throws Exception {
 		
@@ -156,7 +155,7 @@ public class BedCheckTimeDaoTest extends DaoTestFixtures {
 		String result = dao.getBedCheckTimesQuery(programId1);
 		Logger logger = MiscUtils.getLogger();
 		logger.warn(result);
-		String expectedResult = date3.toString();
+		String expectedResult = "select bct from BedCheckTime bct where bct.programId = ? order by bct.time asc";
 		
 		assertEquals(expectedResult, result);
 	}	
