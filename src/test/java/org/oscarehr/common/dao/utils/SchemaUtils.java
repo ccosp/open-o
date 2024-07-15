@@ -235,6 +235,20 @@ public class SchemaUtils
 				if (isWindows()) {
 					tableName = tableName.toLowerCase(); // make it case insensitive by default
 				}
+
+			// Drop foreign key constraints associated with tableName_maventest
+            Statement s1 = c.createStatement();
+            ResultSet newrs = s1.executeQuery("SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE " +
+                "WHERE TABLE_NAME = '" + tableName + "_maventest" + "' AND " +
+                "CONSTRAINT_NAME LIKE 'fk_%'");
+            while (newrs.next()) {
+				
+                String constraintName = newrs.getString("CONSTRAINT_NAME");
+                s.executeUpdate("ALTER TABLE " + tableName + "_maventest" + " DROP FOREIGN KEY " + constraintName);
+            }
+            newrs.close();
+            s1.close();
+
 				s.executeUpdate("drop table if exists " + tableName);
 				
 				String createTableStatement = createTableStatements.get(tableName);
