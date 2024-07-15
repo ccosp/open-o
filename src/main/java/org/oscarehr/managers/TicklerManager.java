@@ -39,7 +39,6 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.mail.EmailException;
 import org.apache.velocity.VelocityContext;
 import org.oscarehr.PMmodule.dao.ProgramAccessDAO;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
@@ -131,7 +130,7 @@ public interface TicklerManager {
 
 	public void updateStatus(LoggedInInfo loggedInInfo, Integer tickler_id, String provider, Tickler.STATUS status);
 
-	public void sendNotification(LoggedInInfo loggedInInfo, Tickler t) throws EmailException, IOException;
+	public void sendNotification(LoggedInInfo loggedInInfo, Tickler t) throws IOException;
 
 	public void completeTickler(LoggedInInfo loggedInInfo, Integer tickler_id, String provider);
 
