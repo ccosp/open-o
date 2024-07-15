@@ -39,7 +39,6 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.mail.EmailException;
 import org.apache.velocity.VelocityContext;
 import org.oscarehr.PMmodule.dao.ProgramAccessDAO;
 import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
@@ -492,7 +491,7 @@ public class TicklerManagerImpl implements TicklerManager {
 
     @Deprecated
     @Override
-    public void sendNotification(LoggedInInfo loggedInInfo, Tickler t) throws EmailException, IOException {
+    public void sendNotification(LoggedInInfo loggedInInfo, Tickler t) throws IOException {
         throw new UnsupportedOperationException("This method is no longer supported.");
 //        checkPrivilege(loggedInInfo, PRIVILEGE_READ);
 
