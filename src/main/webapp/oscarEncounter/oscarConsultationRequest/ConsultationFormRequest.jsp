@@ -1012,9 +1012,9 @@ function onSelectSpecialist(SelectedSpec)	{
     
 	// load the text fields with phone fax and address for past consult review even if spec has been removed from service list
 	<%if(requestId!=null && ! "null".equals( consultUtil.specialist ) ){ %>
-	form.phone.value = '<%=Encode.forHtmlContent(consultUtil.specPhone)%>';
-	form.fax.value = '<%=Encode.forHtmlContent(consultUtil.specFax)%>';
-	form.address.value = '<%=Encode.forHtmlContent(consultUtil.specAddr) %>';
+	form.phone.value = '<%=Encode.forHtmlAttribute(consultUtil.specPhone)%>';
+	form.fax.value = '<%=Encode.forHtmlAttribute(consultUtil.specFax)%>';
+	form.address.value = '<%=Encode.forHtmlAttribute(consultUtil.specAddr) %>';
 
 	//make sure this dislaimer is displayed
 	document.getElementById("consult-disclaimer").style.display='inline';
@@ -1244,18 +1244,23 @@ String lhndType = "provider"; //set default as provider
 String providerDefault = providerNo;
 
 if(consultUtil.letterheadName == null ){
-//nothing saved so find default	
-UserProperty lhndProperty = userPropertyDAO.getProp(providerNo, UserProperty.CONSULTATION_LETTERHEADNAME_DEFAULT);
-String lhnd = lhndProperty != null?lhndProperty.getValue():null;
-//1 or null = provider, 2 = MRP and 3 = clinic
+	//nothing saved so find default
+	UserProperty lhndProperty = userPropertyDAO.getProp(providerNo, UserProperty.CONSULTATION_LETTERHEADNAME_DEFAULT);
+	String lhnd = null;
 
-	if(lhnd!=null){	
-		if(lhnd.equals("2")){
+	if(lhndProperty != null) {
+		lhnd = lhndProperty.getValue();
+	}
+
+	//1 or null = provider, 2 = MRP and 3 = clinic
+
+	if(lhnd != null){
+		if("2".equals(lhnd)){
 			//mrp
 			providerDefault = providerNoFromChart;
-		}else if(lhnd.equals("3")){
+		}else if("3".equals(lhnd)){
 			//clinic
-			lhndType="clinic";
+			lhndType = "clinic";
 		}
 	}	
 
@@ -2253,7 +2258,7 @@ function clearAppointmentDateAndTime() {
 							</td>							
 							<td  class="tite1">				
 								<select name="letterheadName" id="letterheadName" onchange="switchProvider(this.value)">
-									<option value="<%=Encode.forHtmlAttribute(clinic.getClinicName())%>" <%=(consultUtil.letterheadName != null && consultUtil.letterheadName.equalsIgnoreCase(clinic.getClinicName()) ? "selected='selected'" : lhndType.equals("clinic") ? "selected='selected'" : "" )%>>
+									<option value="<%=Encode.forHtmlAttribute(clinic.getClinicName())%>" <%=(consultUtil.letterheadName != null && consultUtil.letterheadName.equalsIgnoreCase(clinic.getClinicName())) ? "selected='selected'" : (lhndType.equals("clinic") ? "selected='selected'" : "") %>>
 										<%=Encode.forHtmlContent(clinic.getClinicName()) %>
 									</option>
 								<%
@@ -2261,7 +2266,7 @@ function clearAppointmentDateAndTime() {
 										if (p.getProviderNo().compareTo("-1") != 0 && (p.getFirstName() != null || p.getSurname() != null)) {
 								%>
 								<option value="<%=p.getProviderNo() %>" 
-								<%=(consultUtil.letterheadName != null && consultUtil.letterheadName.equalsIgnoreCase(p.getProviderNo()) ? "selected='selected'"  : consultUtil.letterheadName == null && p.getProviderNo().equalsIgnoreCase(providerDefault) && lhndType.equals("provider") ? "selected='selected'"  : "") %>>
+								<%=(consultUtil.letterheadName != null && consultUtil.letterheadName.equalsIgnoreCase(p.getProviderNo())) ? "selected='selected'"  : (consultUtil.letterheadName == null && p.getProviderNo().equalsIgnoreCase(providerDefault) && lhndType.equals("provider") ? "selected='selected'"  : "") %>>
 									<%=Encode.forHtmlContent(p.getSurname())%>,&nbsp;<%=Encode.forHtmlContent(p.getFirstName().replace("Dr.", ""))%>
 								</option>
 								<% }

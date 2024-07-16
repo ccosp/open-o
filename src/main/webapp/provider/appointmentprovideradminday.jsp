@@ -1117,19 +1117,30 @@
             </td>
 
             <td id="userSettings">
-                <ul id="userSettingsMenu">
+                <ul id="userSettingsMenu"  style="display: flex; gap:5px;">
                     <li>
                         <a title="Scratch Pad" href="javascript: function myFunction() {return false; }"
-                           onClick="popup(700,1024,'../scratch/index.jsp','scratch')"><span class="glyphicon glyphicon-list-alt"></span></a>
+                           onClick="popup(700,1024,'../scratch/index.jsp','scratch')">
+                            		<span class="glyphicon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+								<path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"></path>
+								<path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"></path>
+							</svg>
+						</span>
+                        </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)"
+                        <a href="javascript:void(0)" style="display: flex; align-items: flex-end;"
                            onClick="popupPage(715,680,'providerpreference.jsp?provider_no=<%=loggedInInfo1.getLoggedInProviderNo()%>')"
                            title='<bean:message key="provider.appointmentProviderAdminDay.msgSettings"/>'>
-                            <span class="glyphicon glyphicon-user"></span>
-                            <span>
+                            <span class="glyphicon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"></path>
+                                </svg>
+						    </span>
+                            <div>
                                 <c:out value='<%= userfirstname + " " + userlastname %>' />
-                            </span>
+                            </div>
                         </a>
                     </li>
                 </ul>
