@@ -156,11 +156,11 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
 			String[] temp = keyword.split("\\,\\p{Space}*");
 			if(temp.length>1) {
 		      where.append("c.lastName like ?1 and c.firstName like ?2");
-		      paramList.add(temp[0]+"%");
 		      paramList.add(temp[1]+"%");
+		      paramList.add(temp[2]+"%");
 		    } else {
 		      where.append("c.lastName like ?1");
-		      paramList.add(temp[0]+"%");
+		      paramList.add(temp[1]+"%");
 		    }
 		}		
 		String sql = "SELECT c from ProfessionalSpecialist c where " + where.toString() + " order by " + orderBy;
