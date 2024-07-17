@@ -391,11 +391,16 @@
 
     //verify the input date is really existed
     cal = new GregorianCalendar(year, (month - 1), day);
-
+    boolean weekendsEnabled = true;
+    int weekViewDays = 7;
     if (isWeekView) {
-        cal.add(Calendar.DATE, -(cal.get(Calendar.DAY_OF_WEEK) - 1)); // change the day to the current weeks initial sunday
+        UserProperty weekViewWeekendProp = userPropertyDao.getProp(loggedInInfo1.getLoggedInProviderNo(), UserProperty.SCHEDULE_WEEK_VIEW_WEEKENDS);
+        if (weekViewWeekendProp!= null && StringUtils.trimToNull(weekViewWeekendProp.getValue()) != null) {
+            weekendsEnabled = Boolean.parseBoolean(weekViewWeekendProp.getValue());
+        }
+        weekViewDays = weekendsEnabled ? 7 : 5;
+        cal.add(Calendar.DATE, -(cal.get(Calendar.DAY_OF_WEEK)- (weekendsEnabled ? 1 : 2)));
     }
-
     int week = cal.get(Calendar.WEEK_OF_YEAR);
     year = cal.get(Calendar.YEAR);
     month = (cal.get(Calendar.MONTH) + 1);
@@ -1502,7 +1507,7 @@
                             // set up the iterator appropriately (today - for each doctor; this week - for each day)
                             int iterMax;
                             if (isWeekView) {
-                                iterMax = 7;
+                                iterMax = weekViewDays;
                                 // find the nProvider value that corresponds to provNum
                                 if (numProvider == 1) {
                                     nProvider = 0;
