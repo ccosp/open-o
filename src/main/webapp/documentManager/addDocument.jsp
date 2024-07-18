@@ -132,7 +132,7 @@
 		}
 	}
 %>
-<script src="${ pageContext.request.contextPath }/share/javascript/Oscar.js" type="text/javascript"></script>
+<%--<script src="${ pageContext.request.contextPath }/share/javascript/Oscar.js" type="text/javascript"></script>--%>
 <script type="text/javascript">
 
 	// request attribute "linkhtmlerrors" & "docerrors" is used to check if a document was just submitted
@@ -280,9 +280,9 @@
 					</option>
 			<%}%>
 		</select>
-			<div class="input-group-btn">
-		<input id="docTypeinput" type="button" class="btn" onClick="newDocType();"
-		       value="<bean:message key="dms.documentEdit.formAddNewDocType"/>"/>
+			<div class="input-group-btn btn-group">
+		<input id="docTypeinput" type="button" class="btn btn-default form-control" onClick="newDocType();"
+		        value="<bean:message key="dms.documentEdit.formAddNewDocType"/>" />
 			</div>
 		</div>
 	</div>
@@ -336,13 +336,15 @@
 	<div class="form-group">
 		<label for="docFile">Select Document</label>
 		<div class="input-group">
-		<input type="file" name="docFile" id="docFile" class="form-control <c:if test="${ docerrors['uploaderror'] != null }" >alert-danger</c:if>">
-			<div class="input-group-btn">
+		<input type="file" name="docFile" id="docFile" class="form-control" <c:if test="${ docerrors['uploaderror'] != null }" >alert-danger</c:if>">
+
 				<input type="hidden" name="mode" value="add">
-				<input type="submit" name="Submit" value="Add" class="btn btn-primary">
-				<input type="button" name="Button" class="btn btn-error"
-				       value="<bean:message key="global.btnCancel"/>"
-				       onclick="window.location='documentReport.jsp?function=<%=module%>&functionid=<%=moduleid%>'">
+			<div class="input-group-btn">
+					<input type="submit" name="Submit" value="Add" class="btn btn-primary">
+					<input type="button" name="Button" class="btn btn-error"
+					       value="<bean:message key="global.btnCancel"/>"
+					       onclick="window.location='documentReport.jsp?function=<%=module%>&functionid=<%=moduleid%>'">
+
 			</div>
 		</div>
 	</div>
@@ -380,8 +382,8 @@
 			</option>
 			<%}%>
 		</select>
-					<div class="input-group-btn">
-		<input id="docTypeinput1" type="button" class="btn" onClick="newDocTypeLink();"
+					<div class="input-group-btn btn-group">
+		<input id="docTypeinput1" type="button" class="btn btn-default form-control" onClick="newDocTypeLink();"
 		       value="<bean:message key="dms.documentEdit.formAddNewDocType"/>"/>
 				</div>
 				</div>

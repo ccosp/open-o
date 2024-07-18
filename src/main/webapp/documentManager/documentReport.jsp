@@ -325,13 +325,20 @@
 		</script>
 
 		<style>
-            :not(h2) {
-                line-height: 1 !important;
-                font-size: 12px !important;
+            :root *:not(h2) {
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+                font-size: 12px;
+                overscroll-behavior: none;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
 
             .panel-body {
 	            overflow: auto;
+            }
+
+            a {
+	            color:blue;
             }
 
 		</style>
@@ -486,6 +493,7 @@
 									} else {
 										contentType = curdoc.getContentType();
 									}
+									contentType = contentType.substring(0,3);
 									String dStatus = "";
 									if ((curdoc.getStatus() + "").compareTo("H") == 0) {
                                         dStatus = "html";
@@ -513,14 +521,14 @@
 									%>
                                     <a <%=curdoc.getStatus() == 'D' ? "style='text-decoration:line-through'" : ""%>
 										href="javascript:void(0);" title="<%=Encode.forHtmlAttribute(curdoc.getDescription())%>"
-										style="display: block;overflow-wrap: anywhere;word-break: break-all;overflow: hidden;text-overflow: ellipsis;text-decoration: none;"
+										style="word-break: break-word;overflow-wrap: anywhere;overflow: hidden;text-overflow: ellipsis;text-decoration: none;"
 										onclick="popupFocusPage(500,700,'<%=url%>','demographic_document');">
                                         <%=Encode.forHtml(curdoc.getDescription())%>
 								    </a>
                                 </td>
 								    <td>
 									    <div style="overflow:hidden; text-overflow: ellipsis;"
-									         title="<%=contentType%>" >
+									         title="<%=Encode.forHtmlAttribute(contentType)%>" >
 										    <%=Encode.forHtmlContent(contentType)%>
 									    </div>
 								    </td>
