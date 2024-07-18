@@ -23,8 +23,5 @@ RUN chmod 644 /etc/mysql/my.cnf
 RUN dos2unix /docker-entrypoint-initdb.d/populate_db.sh
 RUN dos2unix /database/mysql/*.sh
 
-# Make the script executable
-RUN chmod +x /docker-entrypoint-initdb.d/populate_db.sh
-
 # Ports
 EXPOSE 3306

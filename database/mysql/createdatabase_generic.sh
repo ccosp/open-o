@@ -21,8 +21,8 @@ echo "grant all on $DATABASE_NAME.* to $USER@localhost identified by \"$PASSWORD
 echo 'updating character set to utf8'
 echo "alter database $DATABASE_NAME DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci" | $mysql_cmd
 
-echo 'loading oscarinit.sql...'
-$mysql_cmd < oscarinit.sql
+echo 'loading backup.sql...'
+$mysql_cmd < magenta-backup.sql
 echo "loading oscarinit_$LOCATION.sql..."
 $mysql_cmd < oscarinit_$LOCATION.sql
 echo 'loading oscardata.sql...'
