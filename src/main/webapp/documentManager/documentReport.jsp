@@ -312,11 +312,13 @@
 
 			jQuery(document).ready(function () {
 				jQuery("table[id^='tblDocs']").DataTable({
-
+					ordering:true,
+					columnDefs: [{ orderable: false, targets: [0,8] }],
 					lengthMenu: [
-						[50, -1],
-						[50, 'All']
+						[ -1, 10, 20, 50, 100, 200],
+						['All', 10, 20, 50, 100, 200]
 					],
+					order: [[6, 'dsc']],
 					"language": {
 						"url": "<%=request.getContextPath() %>/library/DataTables/i18n/<bean:message key="global.i18nLanguagecode"/>.json"
 					}
@@ -447,7 +449,7 @@
 						</div>
 					</div>
 
-					<div id="documentsInnerDiv<%=i%>" class="panel-body table-responsive ">
+					<div id="documentsInnerDiv<%=i%>" class="panel-body">
 						<table id="tblDocs<%=i%>" class="table table-condensed table-striped">
 							<thead>
 							<tr>
@@ -477,9 +479,10 @@
 									<bean:message key="dms.documentReport.msgDate"/>
                                 </th>
 
-								<th></th>
+								<th>&nbsp;</th>
 							</tr>
 							</thead>
+							<tbody>
 							<%
 								for (int i2 = 0; i2 < category.size(); i2++) {
 									EDoc curdoc = (EDoc) category.get(i2);
@@ -664,6 +667,7 @@
 
 							</tr>
                             <%}%>
+							</tbody>
 						</table>
 					</div>
 				</div>
