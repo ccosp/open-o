@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -2469,20 +2470,20 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
             String lastSavedNoteString) throws Exception {
         ProgramManager programManager = (ProgramManager) SpringUtils.getBean(ProgramManager.class);
         AdmissionManager admissionManager = (AdmissionManager) SpringUtils.getBean(AdmissionManager.class);
-
+    
         Long old_note_id = note.getId(); // saved for use with annotation
-
+    
         boolean inCaisi = OscarProperties.getInstance().isCaisiLoaded();
-
+    
         String role = null;
         String team = null;
-
+    
         boolean newNote = false;
         if (note.getCreate_date() == null) {
             note.setCreate_date(now);
             newNote = true;
         }
-
+    
         try {
             role = String.valueOf(
                     (programManager.getProgramProvider(note.getProviderNo(), note.getProgram_no())).getRole().getId());
@@ -2494,7 +2495,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
          * note.setReporter_caisi_role(role); else note.setReporter_caisi_role("1");
          */
         note.setReporter_caisi_role(role);
-
+    
         try {
             Admission admission = admissionManager.getAdmission(note.getProgram_no(),
                     Integer.valueOf(note.getDemographic_no()));
@@ -2508,32 +2509,32 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
             team = "0";
         }
         note.setReporter_program_team(team);
-
+    
         /* save all issue changes for demographic */
         saveAndUpdateCaseIssues(issuelist);
         if (inCaisi)
             cpp.setOngoingConcerns(ongoing); // << Check on this one???
-
+    
         OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
-
+    
         String roleName = getRoleName(note.getProviderNo(), note.getProgram_no());
-
+    
         Appointment appointment = null;
-
+    
         try {
             appointment = appointmentDao.find(note.getAppointmentNo());
         } catch (Exception e) {
             logger.debug("Appointment number error", e);
         }
         logger.debug("note.getAppointmentNo() " + note.getAppointmentNo() + " --- " + appointment);
-
+    
         if (verify) {
             try {
                 if (note.getProviderNo() != null) {
                     String message = getSignature(note.getProviderNo(), userName, roleName, locale, SIGNATURE_VERIFY);
                     String n = note.getNote() + "\n" + message;
                     note.setNote(n);
-
+    
                     // only update appt if there is one
                     if (appointment != null) {
                         appointment.setStatus(updateApptStatus(appointment.getStatus(), "verify"));
@@ -2545,14 +2546,14 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 logger.error("Error while getting signature for verification: " + e.getMessage());
                 // Handle exception: either log it, return a default message, or rethrow as needed
             }
-
+    
         } else if (note.isSigned()) {
             try {
                 if (note.getProviderNo() != null) {
                     String message = getSignature(note.getProviderNo(), userName, roleName, locale, SIGNATURE_SIGNED);
                     String n = note.getNote() + "\n" + message;
                     note.setNote(n);
-        
+    
                     // only update appt if there is one
                     if (appointment != null) {
                         appointment.setStatus(updateApptStatus(appointment.getStatus(), "sign"));
@@ -2565,13 +2566,13 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 // Handle exception: either log it, return a default message, or rethrow as needed
             }
         }
-
+    
         if (appointment != null) {
             appointmentArchiveDao.archiveAppointment(appointment);
             appointment.setLastUpdateUser(note.getProviderNo());
             appointmentDao.merge(appointment);
         }
-
+    
         // PLACEHOLDER FOR DX CHECK
         /*
          * If an issue is checked, new , and certain - we want to check dx associations.
@@ -2591,7 +2592,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 }
             }
         }
-
+    
         /*
          * if provider is a doctor or nurse,get all major and resolved medical issue for
          * demograhhic and append them to CPP medical history
@@ -2604,43 +2605,43 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
             cpp.setUpdate_date(now);
             saveCPP(cpp, note.getProviderNo());
         }
-
+    
         int revision;
-
+    
         if (note.getRevision() != null) {
             revision = Integer.parseInt(note.getRevision());
             ++revision;
-        } else
+        } else {
             revision = 1;
-
+        }
+    
         note.setRevision(String.valueOf(revision));
-
+    
         /* save note including add signature */
         String savedStr = saveNote(cpp, note, note.getProviderNo(), userName, lastSavedNoteString, roleName);
         addNewNoteLink(note.getId());
-
+    
         try {
             this.deleteTmpSave(note.getProviderNo(), note.getDemographic_no(), note.getProgram_no());
         } catch (Exception e) {
             logger.warn("warn", e);
         }
-
+    
         if (annotationNote != null) {
-            // new annotation created and got it in session attribute
-
-            saveNoteSimple(annotationNote);
-            CaseManagementNoteLink cml = new CaseManagementNoteLink(CaseManagementNoteLink.CASEMGMTNOTE, note.getId(),
-                    annotationNote.getId());
+            // Create a new instance for the annotation note
+            CaseManagementNote newAnnotationNote = new CaseManagementNote();
+            newAnnotationNote.setExtend(new HashSet<>(annotationNote.getExtend()));
+            // Copy other necessary properties from annotationNote to newAnnotationNote
+            saveNoteSimple(newAnnotationNote);
+            CaseManagementNoteLink cml = new CaseManagementNoteLink(CaseManagementNoteLink.CASEMGMTNOTE, note.getId(),newAnnotationNote.getId());
             saveNoteLink(cml);
             LogAction.addLog(annotationNote.getDemographic_no(), LogConst.ANNOTATE, LogConst.CON_CME_NOTE,
                     String.valueOf(annotationNote.getId()), remoteAddr, annotationNote.getDemographic_no(),
                     annotationNote.getNote());
-
         }
-
+    
         if (old_note_id != null) {
             // Not a new note, look for old annotation
-
             CaseManagementNoteLink cml_anno = null;
             CaseManagementNoteLink cml_dump = null;
             List<CaseManagementNoteLink> cmll = getLinkByTableIdDesc(CaseManagementNoteLink.CASEMGMTNOTE, old_note_id);
@@ -2648,7 +2649,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 CaseManagementNote cmmn = getNote(link.getNoteId().toString());
                 if (cmmn == null)
                     continue;
-
+    
                 if (cmmn.getNote().startsWith("imported.cms4.2011.06")) {
                     if (cml_dump == null)
                         cml_dump = link;
@@ -2659,7 +2660,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 if (cml_anno != null && cml_dump != null)
                     break;
             }
-
+    
             if (cml_anno != null) {// old annotation exists - create new link
                 CaseManagementNoteLink cml_n = new CaseManagementNoteLink(CaseManagementNoteLink.CASEMGMTNOTE,
                         note.getId(), cml_anno.getNoteId());
@@ -2671,7 +2672,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
                 saveNoteLink(cml_n);
             }
         }
-
+    
         String logAction;
         if (newNote) {
             logAction = LogConst.ADD;
@@ -2680,10 +2681,10 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         }
         LogAction.addLog(user, logAction, LogConst.CON_CME_NOTE, "" + Long.valueOf(note.getId()).intValue(), remoteAddr,
                 note.getDemographic_no(), note.getAuditString());
-
+    
         return note;
     }
-
+   
     @Override
     public void setCPPMedicalHistory(CaseManagementCPP cpp, String providerNo, List accessRight) {
 
