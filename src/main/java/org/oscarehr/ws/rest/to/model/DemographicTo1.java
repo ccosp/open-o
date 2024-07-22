@@ -26,6 +26,7 @@ package org.oscarehr.ws.rest.to.model;
 //import net.sf.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -589,7 +590,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<DemographicExtTo1> getExtras() {
-		return extras;
+		return extras != null ? extras : new ArrayList<>();
 	}
 
 	public void setExtras(List<DemographicExtTo1> extras) {
@@ -597,7 +598,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<DemographicContactFewTo1> getDemoContacts() {
-		return demoContacts;
+		return demoContacts != null ? demoContacts : new ArrayList<>();
 	}
 
 	public void setDemoContacts(List<DemographicContactFewTo1> demoContacts) {
@@ -605,7 +606,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<DemographicContactFewTo1> getDemoContactPros() {
-		return demoContactPros;
+		return demoContactPros != null ? demoContactPros : new ArrayList<>();
 	}
 
 	public void setDemoContactPros(List<DemographicContactFewTo1> demoContactPros) {
@@ -613,7 +614,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<ProviderTo1> getDoctors() {
-		return doctors;
+		return doctors != null ? doctors : new ArrayList<>();
 	}
 	
 	public void setDoctors(List<ProviderTo1> doctors) {
@@ -621,7 +622,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<ProviderTo1> getNurses() {
-		return nurses;
+		return nurses != null ? nurses : new ArrayList<>();
 	}
 	
 	public void setNurses(List<ProviderTo1> nurses) {
@@ -629,7 +630,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<ProviderTo1> getMidwives() {
-		return midwives;
+		return midwives != null ? midwives : new ArrayList<>();
 	}
 	
 	public void setMidwives(List<ProviderTo1> midwives) {
@@ -637,7 +638,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<ProfessionalSpecialistTo1> getReferralDoctors() {
-		return referralDoctors;
+		return referralDoctors != null ? referralDoctors : new ArrayList<>();
 	}
 	
 	public void setReferralDoctors(List<ProfessionalSpecialistTo1> referralDoctors) {
@@ -645,7 +646,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<WaitingListNameTo1> getWaitingListNames() {
-		return waitingListNames;
+		return waitingListNames != null ? waitingListNames : new ArrayList<>();
 	}
 	
 	public void setWaitingListNames(List<WaitingListNameTo1> waitingListNames) {
@@ -653,7 +654,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<StatusValueTo1> getPatientStatusList() {
-		return patientStatusList;
+		return patientStatusList != null ? patientStatusList : new ArrayList<>();
 	}
 	
 	public void setPatientStatusList(List<StatusValueTo1> patientStatusList) {
@@ -661,7 +662,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<StatusValueTo1> getRosterStatusList() {
-		return rosterStatusList;
+		return rosterStatusList != null ? rosterStatusList : new ArrayList<>();
 	}
 	
 	public void setRosterStatusList(List<StatusValueTo1> rosterStatusList) {
@@ -741,7 +742,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<AllergyTo1> getAllergies() {
-		return allergies;
+		return allergies != null ? allergies : new ArrayList<>();
 	}
 
 	public void setAllergies(List<AllergyTo1> allergies) {
@@ -749,7 +750,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<MeasurementTo1> getMeasurements() {
-		return measurements;
+		return measurements != null ? measurements : new ArrayList<>();
 	}
 
 	public void setMeasurements(List<MeasurementTo1> measurements) {
@@ -757,7 +758,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<ConsultationRequestTo1> getConsultationRequests() {
-		return consultationRequests;
+		return consultationRequests != null ? consultationRequests : new ArrayList<>();
 	}
 
 	public void setConsultationRequests(List<ConsultationRequestTo1> consultationRequests) {
@@ -765,7 +766,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<ConsultationResponseTo1> getConsultationResponses() {
-		return consultationResponses;
+		return consultationResponses != null ? consultationResponses : new ArrayList<>();
 	}
 
 	public void setConsultationResponses(List<ConsultationResponseTo1> consultationResponses) {
@@ -773,7 +774,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<NoteTo1> getEncounterNotes() {
-		return encounterNotes;
+		return encounterNotes != null ? encounterNotes : new ArrayList<>();
 	}
 
 	public void setEncounterNotes(List<NoteTo1> encounterNotes) {
@@ -781,7 +782,7 @@ public class DemographicTo1 implements Serializable {
 	}
 	
 	public List<DocumentTo1> getDocuments() {
-		return documents;
+		return documents != null ? documents : new ArrayList<>();
 	}
 
 	public void setDocuments(List<DocumentTo1> documents) {
@@ -789,7 +790,7 @@ public class DemographicTo1 implements Serializable {
 	}
 
 	public List<String> getMedicationSummary() {
-		return medicationSummary;
+		return medicationSummary != null ? medicationSummary : new ArrayList<>();
 	}
 	public void setMedicationSummary(List<String> medicationSummary) {
 		this.medicationSummary = medicationSummary;
