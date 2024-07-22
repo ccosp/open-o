@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -542,15 +543,25 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
     }
 
     @Override
-    @Transactional (readOnly = false)
+    @Transactional(readOnly = false)
     public void saveNote(CaseManagementNote note) {
         if (note.getUuid() == null) {
             UUID uuid = UUID.randomUUID();
             note.setUuid(uuid.toString());
         }
         note.setUpdate_date(new Date());
-        this.getHibernateTemplate().save(note);
+
+        // Ensure collections are not shared
+        if (note.getIssues() != null) {
+            note.setIssues(new HashSet<>(note.getIssues()));
+        }
+        if (note.getExtend() != null) {
+            note.setExtend(new HashSet<>(note.getExtend()));
+        }
+
+        this.getHibernateTemplate().saveOrUpdate(note);
     }
+
 
     @Override
     @Transactional (readOnly = false)
