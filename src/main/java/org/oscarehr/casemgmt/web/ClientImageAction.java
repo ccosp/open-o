@@ -54,12 +54,11 @@ public class ClientImageAction extends DispatchAction {
 				ActionForm form,
 				HttpServletRequest request,
 				HttpServletResponse response) {
-				DynaActionForm imageForm = (DynaActionForm)form;
 				
-			ClientImageFormBean formBean = (ClientImageFormBean)imageForm.get("clientImage");		
+			ClientImageFormBean formBean = (ClientImageFormBean) form;		
 			HttpSession session = request.getSession(true);
-			String id=(String)(session.getAttribute("clientId"));    
-			
+			String id=(String)(session.getAttribute("clientId"));  
+
 			log.info("client image upload: id="  + id);
 
 			FormFile formFile = formBean.getImagefile();
@@ -81,6 +80,7 @@ public class ClientImageAction extends DispatchAction {
 			}catch(Exception e) {
 				log.error("Error", e);
 				//post error to page
+				return mapping.findForward("error");
 			}
 			
 			request.setAttribute("success",new Boolean(true));
