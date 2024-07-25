@@ -540,6 +540,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
     public void updateNote(CaseManagementNote note) {
         note.setUpdate_date(new Date());
         this.getHibernateTemplate().update(note);
+        this.getHibernateTemplate().clear();
     }
 
     @Override
@@ -550,6 +551,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
             note.setUuid(uuid.toString());
         }
         note.setUpdate_date(new Date());
+<<<<<<< HEAD
 
         // Ensure collections are not shared
         if (note.getIssues() != null) {
@@ -560,6 +562,10 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
         }
 
         this.getHibernateTemplate().saveOrUpdate(note);
+=======
+        this.getHibernateTemplate().save(note);
+        this.getHibernateTemplate().clear();
+>>>>>>> feat(fix): Implemented two statements to clear the session for when a user updates or saves a note
     }
 
 
