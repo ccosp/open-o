@@ -539,6 +539,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
     public void updateNote(CaseManagementNote note) {
         note.setUpdate_date(new Date());
         this.getHibernateTemplate().update(note);
+        this.getHibernateTemplate().clear();
     }
 
     @Override
@@ -550,6 +551,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
         }
         note.setUpdate_date(new Date());
         this.getHibernateTemplate().save(note);
+        this.getHibernateTemplate().clear();
     }
 
     @Override
