@@ -60,7 +60,7 @@ public class BillingPaymentTypeDaoTest extends DaoTestFixtures {
 		assertNotNull(entity.getId());
 	}
 
-	@Test //Skipping until issue is resolved
+	@Test
 	public void testFindAll() throws Exception {
 		
 		BillingPaymentType bPT1 = new BillingPaymentType();
