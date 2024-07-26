@@ -97,7 +97,7 @@
 	
 	<bean id="AllergyDao" class="org.oscarehr.common.dao.AllergyMergedDemographicDaoImpl" autowire="byName" />
 	<bean id="allergyDao" class="org.oscarehr.common.dao.AllergyMergedDemographicDaoImpl" autowire="byName" />
-	
+	<bean id="secRoleDao" class="org.oscarehr.common.dao.SecRoleDaoImpl" autowire="byName" />
 	<bean id="IssueDAO" class="org.oscarehr.casemgmt.dao.IssueDAOImpl" autowire="byName" />
 	<bean id="secroleDao" class="com.quatro.dao.security.SecroleDaoImpl" autowire="byName"/>
 	<bean id="RoleProgramAccessDAO" class="org.oscarehr.casemgmt.dao.RoleProgramAccessDAOImpl" autowire="byName" />
