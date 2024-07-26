@@ -81,7 +81,7 @@ public class ClientImageDAOImpl extends HibernateDaoSupport implements ClientIma
                 clientImage = results.get(0);
 
                 // add to cache if it's less than ... say 1 megs
-                if (clientImage.getImage_data().length < 1024000) {
+                if (clientImage.getImage_data() != null && clientImage.getImage_data().length < 1024000) {
                     dataCache.put(clientId, clientImage);
                     logger.debug("entry found in db, adding to dataCache : clientId=" + clientId);
                 }
