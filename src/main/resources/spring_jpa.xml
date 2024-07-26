@@ -108,6 +108,7 @@
     <context:exclude-filter type="regex" expression=".*\.EncounterFormDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.BillingPaymentTypeDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.BillingONPaymentDaoImpl$"/>
+    <context:exclude-filter type="regex" expression=".*\.SecRoleDaoImpl$"/>
 </context:component-scan>
 
 
