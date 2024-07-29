@@ -117,27 +117,17 @@ public class DemographicExtDaoTest extends DaoTestFixtures {
 		assertEquals(entity, foundEntity);
 	}
 
-	// demographicExt table has a UNIQUE KEY constraint `uk_demo_ext` on columns `demographic_no` and `key_val`
-	// This constraint ensures no duplicate entries for the same demographic number and key value
-	// Ignoring this test case because the UNIQUE KEY constraint prevents adding multiple entries with the same demographic number and key value
-	// @Ignore
-	// @Test
-	// public void testGetLatestDemographic() throws Exception {
-	// 	DemographicExt entity = new DemographicExt();
-	// 	EntityDataGenerator.generateTestDataForModelClass(entity);
-	// 	entity.setKey("Test");
-	// 	entity.setDemographicNo(20);
-	// 	entity.setDateCreated(new Date(111111));
-	// 	dao.persist(entity);
-	// 	DemographicExt newerEntity = new DemographicExt();
-	// 	EntityDataGenerator.generateTestDataForModelClass(newerEntity);
-	// 	newerEntity.setKey("Test");
-	// 	newerEntity.setDemographicNo(20);
-	// 	newerEntity.setDateCreated(new Date(2222222));
-	// 	dao.persist(newerEntity);
-	// 	DemographicExt foundEntity = dao.getLatestDemographicExt(20, "Test");
-	// 	assertEquals(newerEntity.getId(), foundEntity.getId());
-	// }
+	@Test
+	public void testGetLatestDemographic() throws Exception {
+		DemographicExt entity = new DemographicExt();
+		EntityDataGenerator.generateTestDataForModelClass(entity);
+		entity.setKey("Test");
+		entity.setDemographicNo(20);
+		entity.setDateCreated(new Date(111111));
+		dao.persist(entity);
+		DemographicExt foundEntity = dao.getLatestDemographicExt(20, "Test");
+		assertEquals(entity.getId(), foundEntity.getId());
+	}
 
 	@Test
 	public void testUpdateDemographicExt() throws Exception {
