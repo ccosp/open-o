@@ -39,7 +39,6 @@ import org.oscarehr.common.dao.utils.ConfigUtils;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.SendingUtils;
 import org.oscarehr.common.model.Provider;
-import org.oscarehr.research.eaaps.EaapsIntegrationTest;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
