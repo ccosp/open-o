@@ -53,10 +53,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 // import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 // @EnableJpaRepositories("org.oscarehr.common.model")
 @Component
+@Transactional
 public class OscarOAuthDataProvider implements OAuthDataProvider {
 
 	Logger logger = MiscUtils.getLogger();
