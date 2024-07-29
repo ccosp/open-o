@@ -86,7 +86,4 @@ import java.util.List;
 public interface ServiceRequestTokenDao extends AbstractDao<ServiceRequestToken>{
     List<ServiceRequestToken> findAll();
     ServiceRequestToken findByTokenId(String token);
-    void persist(ServiceRequestToken token);
-    void remove(ServiceRequestToken token);
-    ServiceRequestToken merge(ServiceRequestToken token);
 }

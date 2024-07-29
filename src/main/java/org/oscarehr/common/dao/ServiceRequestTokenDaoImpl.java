@@ -37,21 +37,6 @@ public class ServiceRequestTokenDaoImpl extends AbstractDaoImpl<ServiceRequestTo
     public ServiceRequestTokenDaoImpl() {
         super(ServiceRequestToken.class);
     }
-
-    @Override
-public void persist(ServiceRequestToken token) {
-    this.entityManager.persist(token);
-}
- 
-@Override
-public void remove(ServiceRequestToken token) {
-    this.entityManager.remove(token);
-}
- 
-@Override
-public ServiceRequestToken merge(ServiceRequestToken token) {
-    return this.entityManager.merge(token);
-}
  
     @Override
     public List<ServiceRequestToken> findAll() {
