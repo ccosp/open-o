@@ -288,7 +288,6 @@ public class SchemaUtils
 		{
 			Statement s=c.createStatement();
 			s.executeUpdate("use "+schema);
-			// Disable foreign key checks
         	s.executeUpdate("SET foreign_key_checks = 0");
 			
 			// Drop foreign key constraints associated with tableName_maventest
@@ -309,7 +308,6 @@ public class SchemaUtils
 			s.executeUpdate("insert into " + tableName + " select * from " + tableName + "_maventest");
             }
 			
-		// Re-enable foreign key checks
         s.executeUpdate("SET foreign_key_checks = 1");
 		s.close();
 		}
