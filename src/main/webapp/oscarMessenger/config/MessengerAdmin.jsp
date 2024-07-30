@@ -36,8 +36,9 @@
 
 <head>
 	<title><bean:message key="oscarMessenger.config.MessengerAdmin.title" /></title>
-	<link href="${pageContext.request.contextPath}/js/jquery_css/smoothness/jquery-ui-1.10.2.custom.min.css" rel="stylesheet" type="text/css"/>
+
 	<script type="text/javascript" src="${pageContext.request.contextPath}/library/jquery/jquery-ui-1.12.1.min.js" ></script>
+	<link href="${pageContext.request.contextPath}/library/jquery/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 	<style type="text/css">
 		summary{ cursor:pointer; }
 		.contact-group-buttons{
@@ -53,7 +54,7 @@
 			margin-bottom: 3px;
 		}
 		#remote-contacts summary {
-			padding 5px 10px;
+			padding: 5px 10px;
 			background-color: #fafafa;
 			background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
 			background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
@@ -88,61 +89,24 @@
 	
 	<script type="text/javascript">
 		var ctx = '${pageContext.request.contextPath}';
-	
-		$("input:checkbox").change(function(){
-			if(this.checked) 
-			{
-				addMember(this.value, 0);
-			}
-			else
-			{
-				removeMember(this.value, 0)
-			}
-		});
-		
-		$(".add-member-btn").click(function(){
-			var groupId = this.id;
-			groupId = groupId.replace("add-", '');
-			var memberId = $("#add-member-id-" + groupId).val(); 
-			if(memberId)
-			{
-				addMember(memberId, groupId)
-				$(".search-provider").val('');
-			}
-		});
-		
-		$("i.group-member").click(function(){
-			var memberId = this.id;
-			if(memberId)
-			{
-				removeMember(memberId, 0);
-				$(this).parent().parent().remove();
-			}
-		});
-		
-		$("#add-group-btn").click(function(){
-			var groupName = $("#new-group-name").val();
-			if(groupName){
-				createGroup(groupName);
-			}
-		});
-		
-		$(".delete-group-btn").click(function(){
-			var groupId = this.id;
-			if(groupId)
-			{
-				groupId = groupId.replace("delete-", '');
-				deleteGroup(groupId);
-			}
-		});
 
 		function addMember(memberId, groupId) {
 			$.post(ctx + "/oscarMessenger.do?method=add&member=" + memberId + "&group=" + groupId);
-			$('#group-' + groupId).load(ctx + '/oscarMessenger.do?method=fetch #group-' + groupId);
+			$('#group-member-list-' + groupId).load(ctx + '/oscarMessenger.do?method=fetch #group-member-list-' + groupId);
 		}
 		
 		function removeMember(memberId, groupId) {
-			$.post(ctx + "/oscarMessenger.do?method=remove&member=" + memberId + "&group=" + groupId);
+			console.log('member ' + memberId + " " + 'group ' + groupId);
+			if(memberId)
+			{
+				if(!groupId) {
+					groupId = 0;
+				}
+
+				$.post(ctx + "/oscarMessenger.do?method=remove&member=" + memberId + "&group=" + groupId).success(function(){
+					$('#' + memberId).parent().parent().remove();
+				});
+			}
 		}
 		
 		function createGroup(groupName) {
@@ -158,6 +122,55 @@
 		$(document).ready(function(){
 			// create the provider name array
 			var providers = new Array();
+
+
+			$("input:checkbox").on("change", function(){
+				if(this.checked)
+				{
+					addMember(this.value, 0);
+				}
+				else
+				{
+					removeMember(this.value, 0)
+				}
+			});
+
+			$(".add-member-btn").on("click", function(){
+				var groupId = this.id;
+				groupId = groupId.replace("add-", '');
+				var memberId = $("#add-member-id-" + groupId).val();
+				if(memberId)
+				{
+					addMember(memberId, groupId)
+					$(".search-provider").val('');
+				}
+			});
+
+			// $("i.group-member").on("click", function(){
+			// 	var memberId = this.id;
+			// 	if(memberId)
+			// 	{
+			// 		removeMember(memberId, 0);
+			// 		$(this).parent().parent().remove();
+			// 	}
+			// });
+
+			$("#add-group-btn").on("click", function(){
+				var groupName = $("#new-group-name").val();
+				if(groupName){
+					createGroup(groupName);
+				}
+			});
+
+			$(".delete-group-btn").on("click", function(){
+				var groupId = this.id;
+				if(groupId)
+				{
+					groupId = groupId.replace("delete-", '');
+					deleteGroup(groupId);
+				}
+			});
+
 			
 			$("span.provider-name").each(function(){
 				var provider = {value:this.id, label:$(this).text().trim()}
@@ -284,11 +297,11 @@
 			<div class="tab-content">
 				<c:forEach items="${ groups }" var="group" varStatus="count">					
 					<div class="tab-pane form-check ${ count.index eq 0 ? 'active' : '' }" id="group-${ group.key.id }">
-						<div class="group-member-list">
+						<div id="group-member-list-${ group.key.id }">
 							<c:forEach items="${ group.value }" var="member">
 								<div class="row-fluid contact-entry">																	
 									<label class="checkbox">								
-										<i class="icon-trash group-member"
+										<i class="icon-trash group-member" onclick="removeMember('${ member.id.compositeId }')"
 											title="Remove Contact" id="${ member.id.compositeId }" ></i>
 										<span class="provider-name" >
 											<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />
