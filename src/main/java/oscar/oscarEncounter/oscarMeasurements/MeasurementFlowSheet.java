@@ -34,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -211,8 +212,15 @@ public class MeasurementFlowSheet {
          //DO something
         	itemList = new ListOrderedMap();
         }
+
         log.debug("GETTING "+measurement+ " ITEMS IN THE LIST "+itemList.size());
         FlowSheetItem item = (FlowSheetItem) itemList.get(measurement);
+
+        if (item == null) {
+            log.warn("No item found for measurement: " + measurement);
+
+            return new HashMap<>(); // Return an empty map or handle it as needed
+        }
 
         return item.getAllFields();
     }
