@@ -91,7 +91,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
 		Query query = entityManager.createQuery(sqlCommand);
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
-		query.setParameter(1, providerNo + "%");
+		query.setParameter(0, providerNo + "%");
 		if(status != null)
 			query.setParameter("status", status);
 
