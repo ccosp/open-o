@@ -217,10 +217,10 @@ public class MeasurementFlowSheet {
         FlowSheetItem item = (FlowSheetItem) itemList.get(measurement);
 
         if (item == null) {
-        log.warn("No item found for measurement: " + measurement);
-        
-        return new HashMap<>(); // Return an empty map or handle it as needed
-    }
+            log.warn("No item found for measurement: " + measurement);
+
+            return new HashMap<>(); // Return an empty map or handle it as needed
+        }
 
         return item.getAllFields();
     }
