@@ -27,7 +27,7 @@ public class HRMSubClassDao extends AbstractDaoImpl<HRMSubClass> {
 	public List<HRMSubClass> findById(int id) {
 		String sql = "select x from " + this.modelClass.getName() + " x where x.id=?";
 		Query query = entityManager.createQuery(sql);
-		query.setParameter(1, id);
+		query.setParameter(0, id);
 		@SuppressWarnings("unchecked")
 		List<HRMSubClass> documents = query.getResultList();
 		return documents;
