@@ -91,20 +91,32 @@
 		var ctx = '${pageContext.request.contextPath}';
 
 		function addMember(memberId, groupId) {
-			$.post(ctx + "/oscarMessenger.do?method=add&member=" + memberId + "&group=" + groupId);
-			$('#group-member-list-' + groupId).load(ctx + '/oscarMessenger.do?method=fetch #group-member-list-' + groupId);
+			$.post(ctx + "/oscarMessenger.do?method=add&member=" + memberId + "&group=" + groupId).success(function(){
+				$('#group-member-list-' + groupId).load(ctx + '/oscarMessenger.do?method=fetch #group-member-list-' + groupId);
+				// check the appropriate checkbox in the member list display
+				$("div#addContacts input[type='checkbox'][value^='" + memberId + "']").prop( "checked", true );
+			});
 		}
 		
 		function removeMember(memberId, groupId) {
-			console.log('member ' + memberId + " " + 'group ' + groupId);
 			if(memberId)
 			{
-				if(!groupId) {
-					groupId = 0;
-				}
+				$.post(ctx + "/oscarMessenger.do?method=remove&member=" + memberId).success(function() {
+					// remove from groups view too.
+					$('div#manageGroups i[id^=' + memberId + ']').parent().parent().remove();
+				});
+			}
+		}
 
+		function removeGroupMember(memberId, groupId) {
+			if(memberId)
+			{
 				$.post(ctx + "/oscarMessenger.do?method=remove&member=" + memberId + "&group=" + groupId).success(function(){
-					$('#' + memberId).parent().parent().remove();
+					/*
+					 * Add the group id back into selector as it is used to make the id's unique.
+					 * Remove the selected value from the user interface
+					 */
+					$('#' + memberId + '-' + groupId).parent().parent().remove();
 				});
 			}
 		}
@@ -145,15 +157,6 @@
 					$(".search-provider").val('');
 				}
 			});
-
-			// $("i.group-member").on("click", function(){
-			// 	var memberId = this.id;
-			// 	if(memberId)
-			// 	{
-			// 		removeMember(memberId, 0);
-			// 		$(this).parent().parent().remove();
-			// 	}
-			// });
 
 			$("#add-group-btn").on("click", function(){
 				var groupName = $("#new-group-name").val();
@@ -236,7 +239,7 @@
 				<div class="tab-pane active" id="local-contacts" >
 					<c:forEach items="${ localContacts }" var="contact" varStatus="count">	
 						<div class="row-fluid contact-entry">
-							<label class="checkbox ${ count.index%2 == 0 ? 'even' : 'odd' }">
+							<label class="checkbox" >
 								<input type="checkbox" value="${ contact.id.compositeId }"
 									${ contact.member ? 'checked="checked"' : '' } />
 								<span id="${ contact.id.compositeId }" class="provider-name" >
@@ -301,8 +304,8 @@
 							<c:forEach items="${ group.value }" var="member">
 								<div class="row-fluid contact-entry">																	
 									<label class="checkbox">								
-										<i class="icon-trash group-member" onclick="removeMember('${ member.id.compositeId }')"
-											title="Remove Contact" id="${ member.id.compositeId }" ></i>
+										<i class="icon-trash group-member" onclick="removeGroupMember('${ member.id.compositeId }', '${ group.key.id }')"
+											title="Remove Contact" id="${ member.id.compositeId }-${ group.key.id }" ></i>
 										<span class="provider-name" >
 											<c:out value="${ member.lastName }" />, <c:out value="${ member.firstName }" />
 										</span>
