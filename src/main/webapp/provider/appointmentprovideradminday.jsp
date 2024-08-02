@@ -1814,9 +1814,9 @@
 																  nameBuilder.append(UtilMisc.toUpperLowerCase(demographic.getLastName()))
 																  .append(", ")
 																  .append(UtilMisc.toUpperLowerCase(demographic.getFirstName()));
-																  if(demographic.getPrefName() != null && ! demographic.getPrefName().isEmpty()) {
+																  if(demographic.getAlias() != null && ! demographic.getAlias().isEmpty()) {
                                                                       nameBuilder.append(" (")
-                                                                      .append(UtilMisc.toUpperLowerCase(demographic.getPrefName()))
+                                                                      .append(UtilMisc.toUpperLowerCase(demographic.getAlias()))
                                                                       .append(")");
 																  }
 																  if(demographic.getPronoun() != null && ! demographic.getPronoun().isEmpty()) {
