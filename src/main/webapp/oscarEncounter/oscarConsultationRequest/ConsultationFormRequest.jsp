@@ -1014,7 +1014,13 @@ function onSelectSpecialist(SelectedSpec)	{
 	<%if(requestId!=null && ! "null".equals( consultUtil.specialist ) ){ %>
 	form.phone.value = '<%=Encode.forHtmlAttribute(consultUtil.specPhone)%>';
 	form.fax.value = '<%=Encode.forHtmlAttribute(consultUtil.specFax)%>';
-	form.address.value = '<%=Encode.forHtmlAttribute(consultUtil.specAddr) %>';
+	
+	//specAddr can include line breaks
+	<% 
+		String formattedAddress = consultUtil.specAddr.replace("\n", "\\n").replace("\r", "\\n");
+		String safeSpecAddr = Encode.forHtmlAttribute(formattedAddress);
+	%>
+	form.address.value = '<%=safeSpecAddr%>';
 
 	//make sure this dislaimer is displayed
 	document.getElementById("consult-disclaimer").style.display='inline';
