@@ -210,7 +210,7 @@ if(!authed) {
 	function getFaxSchedularStatus() {
 		$.ajax({
 			url: "<%=request.getContextPath() %>/admin/ManageFax.do",
-			method: 'GET',
+			method: 'POST',
 			data: 'method=getFaxSchedularStatus',
 			success: function(data) {
 				$('#restartFaxSchedulerBtn').prop('disabled', data.isRunning);
@@ -223,7 +223,7 @@ if(!authed) {
 	function rebootFaxSchedular() {
 		$.ajax({
 			url: "<%=request.getContextPath() %>/admin/ManageFax.do",
-			method: 'GET',
+			method: 'POST',
 			data: 'method=restartFaxScheduler',
 			success: function(data) {
 				console.log("Fax scheduler restarted successfully");

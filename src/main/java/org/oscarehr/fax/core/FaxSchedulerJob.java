@@ -44,7 +44,7 @@ public class FaxSchedulerJob extends TimerTask {
      * By utilizing a static variable and associated static methods, it allows for checking the scheduler status without the need for creating instances of the FaxSchedulerJob class.
 	 * To check the scheduler status, one can simply invoke the static method 'isRunning()' using the class name, like so: FaxSchedulerJob.isRunning().
 	 */
-	private static Boolean isRunning = false;
+	private static boolean isRunning = false;
 
 	private static final String FAX_POLL_INTERVAL_KEY = "faxPollInterval";
 	private static Timer timer;
@@ -53,7 +53,6 @@ public class FaxSchedulerJob extends TimerTask {
 	@Override
 	public void run() {
 		try {
-			setRunning(true);
 			FaxImporter faxImporter = new FaxImporter();
 			faxImporter.poll();
 			
@@ -62,6 +61,8 @@ public class FaxSchedulerJob extends TimerTask {
 			
 			FaxStatusUpdater faxStatusUpdater = new FaxStatusUpdater();
 			faxStatusUpdater.updateStatus();
+
+			setRunning(true);
 		} catch (Exception e) {
 			/*
 			* Catching any unexpected exception thrown by these methods here and logging it.
