@@ -126,7 +126,7 @@ div#userSettings ul#userSettingsMenu li .glyphicon{
 #header-top-row {
 	width: 100%;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 }
 
 #header-top-row #left-column #branding-logo {

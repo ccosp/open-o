@@ -30,9 +30,11 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.FlowSheetCustomization,org.oscarehr.common.model.Validations"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 
 <%
   if(session.getValue("user") == null) response.sendRedirect("../logout.jsp");
@@ -92,13 +94,9 @@
   div.ImmSet li a:hover { text-decoration:none; color:red; }
   div.ImmSet li a:visited { text-decoration:none; color:blue;}
 
-
-  ////////
-  div.prevention {  background-color: #999999; }
   div.prevention fieldset {width:35em; font-weight:bold; }
   div.prevention legend {font-weight:bold; }
 
-  ////////
 </style>
 
 
@@ -335,7 +333,7 @@ clear: left;
             <fieldset>
                <legend><b>Master Date/Time</b></legend>
                <div style="float:left;margin-left:30px;">
-        		<label for="prevDate" class="fields" >Obs Date/Time: </label>
+        		<label for="prevDate<%=iDate%>" class="fields" >Obs Date/Time: </label>
 
 				<input type="text" name="value(date-<%=iDate%>)" id="prevDate<%=iDate%>" value="<%=prevDate%>" size="17" onchange="javascript:masterDateFill(this.value);">
 				<% if ( id == null ) { %>
@@ -354,6 +352,7 @@ clear: left;
             <!-- END of Master Calendar Input -->
 
                <html:form action="<%=saveAction%>" styleId="measurementForm" >
+               <input type="hidden" name="<csrf:tokenname/>" value="<csrf:tokenvalue/>"/>
 
                <input type="hidden" name="value(numType)" value="<%=measurements.length%>"/>
                <input type="hidden" name="value(groupName)" value=""/>
@@ -368,7 +367,7 @@ clear: left;
 
                 for (int i = 0; i < measurements.length; i++){
                     measurement = measurements[i];
-                    Map h2 = mFlowsheet.getMeasurementFlowSheetInfo(measurement);
+                    Map<String,String> h2 = mFlowsheet.getMeasurementFlowSheetInfo(measurement);
 
                 EctMeasurementTypesBean mtypeBean = mType.getMeasurementType(measurement);
                 Validations validations = validationsDao.find(Integer.parseInt(mtypeBean.getValidation()));
@@ -402,7 +401,7 @@ clear: left;
                            <input type="radio" name="<%= "value(inputMInstrc-" + ctr + ")" %>" value="<%=mtypeBean.getMeasuringInstrc()%>" checked/>
                          </div>
                          <div style="float:left;margin-left:30px;">
-                            <label for="prevDate" class="fields" >Obs Date/Time:</label>
+                            <label for="prevDate<%=ctr%>" class="fields" >Obs Date/Time:</label>
 
 							<input type="text" name="<%= "value(date-" + ctr + ")" %>" id="prevDate<%=ctr%>" value="<%=prevDate%>" size="17" >
 
@@ -411,9 +410,9 @@ clear: left;
 							<%}%>
 							<br />
 
-  						<label for="<%="value(inputValue-"+ctr+")"%>" class="fields"><%=h2.get("value_name")%>:</label>
+  						<label for="<%="value(inputValue-"+ctr+")"%>" class="fields"><%=Encode.forHtmlContent(h2.get("value_name"))%>:</label>
                             <% if ( validations!=null && validations.getRegularExp()!=null && (validations.getRegularExp().contains("|") || validations.getRegularExp().equals("Yes")) ){ %>
-                            <select  id="<%= "value(inputValue-" + ctr + ")" %>" name="<%= "value(inputValue-" + ctr + ")" %>" >
+                            <select  id="<%="value(inputValue-"+ctr+")"%>" name="<%= "value(inputValue-" + ctr + ")" %>" >
                                 <option value=""></option>
                                 <%	String[] opts = validations.getName().contains("/") ? validations.getName().split("/") : validations.getRegularExp().split("\\|");
                                 	for (String opt : opts) {%>
@@ -455,7 +454,7 @@ clear: left;
                <br/>
 
                <% if ( id != null ) { %>
-               <input type="submit" name="delete" value="Delete" id="deleteButton" disabled="false" />
+               <input type="submit" name="delete" value="Delete" id="deleteButton"  />
                <% }else{ %>
                <input type="button" value="Save" onClick="doSubmit();">
                <%}%>
@@ -474,6 +473,7 @@ clear: left;
 <script type="text/javascript">
     <% if ( id != null ) { %>
         Form.disable('measurementForm');
+        document.getElementsByName('<csrf:tokenname/>')[0].disabled = false;
         document.getElementById('deleteButton').disabled = false;
         document.getElementById('deleteCheck').disabled = false;
 

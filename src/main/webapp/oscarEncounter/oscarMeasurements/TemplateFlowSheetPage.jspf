@@ -542,7 +542,7 @@ div.recommendations ul{
     <!-- only show disease registry and prescriptions for flowsheets which aren't medical in nature -->
     <% if (mFlowsheet.isMedical()) {%>
     <div class="leftBox">
-        <h3>&nbsp;<bean:message key="oscarencounter.templateflowsheet.currentpatientdxlist" />  <a class="DoNotPrint"  href="#" onclick="toggle('dxFullListing'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a></h3>
+        <h3>&nbsp;<bean:message key="oscarencounter.templateflowsheet.currentpatientdxlist" />  <a class="DoNotPrint"  href="javascript:void(0)" onclick="toggle('dxFullListing'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a></h3>
         <div class="wrapper" id="dxFullListing"  >
             <ul>
             <%
@@ -580,7 +580,7 @@ div.recommendations ul{
 
     <security:oscarSec roleName="<%=roleName$%>" objectName="_rx" rights="r"  >
         <div class="leftBox">
-            <h3>&nbsp;<bean:message key="oscarencounter.templateflowsheet.currentpatientrxlist" />  <a class="DoNotPrint" href="#" onclick="toggle('rxFullListing'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a></h3>
+            <h3>&nbsp;<bean:message key="oscarencounter.templateflowsheet.currentpatientrxlist" />  <a class="DoNotPrint" href="javascript:void(0)" onclick="toggle('rxFullListing'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a></h3>
             <div class="wrapper" id="rxFullListing"  >
 
                 <%
@@ -615,7 +615,7 @@ div.recommendations ul{
 
 
          <div class="leftBox">
-            <h3>&nbsp;<bean:message key="oscarencounter.templateflowsheet.currentpatientallergylist" />  <a class="DoNotPrint" href="#" onclick="toggle('allergFullListing'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a></h3>
+            <h3>&nbsp;<bean:message key="oscarencounter.templateflowsheet.currentpatientallergylist" />  <a class="DoNotPrint" href="javascript:void(0)" onclick="toggle('allergFullListing'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a></h3>
             <div class="wrapper" id="allergFullListing"  >
 
                 <%
@@ -655,7 +655,7 @@ div.recommendations ul{
 <% if (warnings.size() > 0 || recomendations.size() > 0  || dsProblems) { %>
 <div class="recommendations">
     <span style="font-size:larger;"><%=flowSheet%> Recommendations</span>
-    <a href="#" onclick="toggle('recomList'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a>
+    <a href="javascript:void(0)" onclick="toggle('recomList'); return false;" style="font-size:x-small;" ><bean:message key="oscarencounter.templateflowsheet.showhide" /></a>
     <ul id="recomList" style="display:none;">
         <% for (String warn : warnings){ %>
         <li style="color: red;"><%=warn%></li>

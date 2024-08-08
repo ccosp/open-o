@@ -52,18 +52,11 @@
 <%
 boolean dsProblems = false;
 
-
-WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-
-FlowSheetCustomizationDao flowSheetCustomizationDao = (FlowSheetCustomizationDao) ctx.getBean("flowSheetCustomizationDao");
-FlowSheetDrugDao flowSheetDrugDao = (FlowSheetDrugDao) ctx.getBean("flowSheetDrugDao");
+FlowSheetCustomizationDao flowSheetCustomizationDao = SpringUtils.getBean(FlowSheetCustomizationDao.class);
+FlowSheetDrugDao flowSheetDrugDao = SpringUtils.getBean(FlowSheetDrugDao.class);
 
 List<FlowSheetCustomization> custList = flowSheetCustomizationDao.getFlowSheetCustomizations( temp,(String) session.getAttribute("user"),Integer.parseInt(demographic_no));
-
-////Start
 MeasurementTemplateFlowSheetConfig templateConfig = MeasurementTemplateFlowSheetConfig.getInstance();
-
-
 MeasurementFlowSheet mFlowsheet = templateConfig.getFlowSheet(temp,custList);
 
 MeasurementInfo mi = new MeasurementInfo(demographic_no);
@@ -788,7 +781,7 @@ String date = year+"-"+month+"-"+day;
 		<tr><th colspan="8"><oscar:nameage demographicNo="<%=demographic_no%>"/></th></tr>
 		<tr>
 
-			<td class="rowheader"><a class="header" href="#" onclick="popupPage('700', '1000', '<%=project%>/CaseManagementEntry.do?method=issuehistory&demographicNo=<%=demographic_no%>&issueIds=38'); return false;">Reminders</a></td>
+			<td class="rowheader"><a class="header" href="javascript:void(0)" onclick="popupPage('700', '1000', '<%=project%>/CaseManagementEntry.do?method=issuehistory&demographicNo=<%=demographic_no%>&issueIds=38'); return false;">Reminders</a></td>
 
 			<td width="650px"><%=remindersList%></td>
 			<td>
@@ -810,14 +803,14 @@ String date = year+"-"+month+"-"+day;
 
 		<tr>
 
-			<td class="rowheader"><a class="header" href="#" onclick="popupPage('700', '1000', '<%=project%>/oscarRx/showAllergy.do?demographicNo=<%=demographic_no%>'); return false;">Allergies</a></td>
+			<td class="rowheader"><a class="header" href="javascript:void(0)" onclick="popupPage('700', '1000', '<%=project%>/oscarRx/showAllergy.do?demographicNo=<%=demographic_no%>'); return false;">Allergies</a></td>
 
 			<td width="650px"><%=allergiesList%></td>
 		</tr>
 
 		<tr>
 
-			<td class="rowheader"><a class="header" href="#" onclick="popupPage('700', '1000', '<%=project%>/oscarRx/choosePatient.do?providerNo=<%=curUser_no%>&demographicNo=<%=demographic_no%>'); return false;">Medications</a></td>
+			<td class="rowheader"><a class="header" href="javascript:void(0)" onclick="popupPage('700', '1000', '<%=project%>/oscarRx/choosePatient.do?providerNo=<%=curUser_no%>&demographicNo=<%=demographic_no%>'); return false;">Medications</a></td>
 
 			<td width="650px"><%=medicationsList%></td>
 			<td>
@@ -1102,7 +1095,7 @@ String date = year+"-"+month+"-"+day;
     	}%>
 
     	<tr id="<%=header.getDisplayName()%>_update">
-    	<td><input style="font-size:12;" type="submit" name="submit" value="Add" /></td>
+    	<td><input type="submit" name="submit" value="Add" /></td>
     	<td></td>
     	<td></td>
     	<td></td>
@@ -1115,7 +1108,7 @@ String date = year+"-"+month+"-"+day;
 
 	<tr>
 	<th colspan="8" align="left">
-	<input style="margin-top: 0.2em; font-size:12;" type="submit" name="submit" value="Submit & Close" />
+	<input type="submit" name="submit" value="Submit & Close" />
 	</th>
 	</tr>
 
