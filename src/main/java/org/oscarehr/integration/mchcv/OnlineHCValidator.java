@@ -65,7 +65,7 @@ public class OnlineHCValidator implements HCValidator {
         config.setServiceId(properties.getProperty("hcv.service.id"));
 
         setBuilder(new EdtClientBuilder(config));
-        setExternalClientKeystoreFilename(properties.getProperty("mcedt.service.clientKeystore.properties"));
+        setExternalClientKeystoreFilename(properties.getProperty("hcv.service.clientKeystore.properties"));
         validation = builder.build(HCValidation.class);
     }
 
