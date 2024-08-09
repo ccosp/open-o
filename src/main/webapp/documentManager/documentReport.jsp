@@ -489,14 +489,21 @@
 									//content type (take everything following '/')
 									int slash = 0;
 									String contentType = "";
-									if (curdoc.getContentType() == null) {
-										contentType = "N/A";
+									if (curdoc.getContentType() == null || curdoc.getContentType().isEmpty()) {
+										contentType = "ukn";
 									} else if ((slash = curdoc.getContentType().indexOf('/')) != -1) {
 										contentType = curdoc.getContentType().substring(slash + 1);
 									} else {
 										contentType = curdoc.getContentType();
 									}
-									contentType = contentType.substring(0,3);
+									// remove punctuation
+									contentType = contentType.replaceAll("\\p{Punct}", "");
+
+									// truncate to save space
+									if(contentType.length() > 3) {
+										contentType = contentType.substring(0, 3);
+									}
+
 									String dStatus = "";
 									if ((curdoc.getStatus() + "").compareTo("H") == 0) {
                                         dStatus = "html";
