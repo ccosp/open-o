@@ -950,16 +950,12 @@
 			<artifactId>olis-service</artifactId>
 			<version>20111111</version>
 		</dependency>
-	        <dependency>
-                        <groupId>org.bouncycastle</groupId>
-                        <artifactId>bcmail-jdk15on</artifactId>
-                        <version>1.64</version>
-                </dependency>
-                <dependency>
-                        <groupId>org.bouncycastle</groupId>
-                        <artifactId>bcprov-jdk15on</artifactId>
-                        <version>1.70</version>
-                </dependency>
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk18on-->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk18on</artifactId>
+			<version>1.78.1</version>
+		</dependency>
 
 		<!-- AXIS2 (for OLIS) -->
 
@@ -1253,18 +1249,6 @@
 		<version>1.9.13</version>
 	</dependency>
 
-	<dependency>
-		<groupId>org.xhtmlrenderer</groupId>
-		<artifactId>flying-saucer-pdf</artifactId>
-		<version>9.1.22</version>
-		<exclusions>
-			<exclusion>
-				<groupId>org.bouncycastle</groupId>
-				<artifactId>bctsp-jdk14</artifactId>
-			</exclusion>
-		</exclusions>
-	</dependency>
-
 		<dependency>
 			<groupId>org.owasp.encoder</groupId>
 			<artifactId>encoder-jsp</artifactId>
@@ -1297,19 +1281,22 @@
 	    <version>1.8</version>
 	</dependency>
 
-	<dependency>
-	    <groupId>org.xhtmlrenderer</groupId>
-	    <artifactId>flying-saucer-core</artifactId>
-	    <version>9.1.22</version>
-	</dependency>
 
-	<dependency>
-	    <groupId>org.xhtmlrenderer</groupId>
-	    <artifactId>flying-saucer-pdf-openpdf</artifactId>
-	    <version>9.1.22</version>
-	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-core -->
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-core</artifactId>
+			<version>9.4.1</version>
+		</dependency>
 
-	<!-- Caisi Integrator -->
+		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf -->
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf</artifactId>
+			<version>9.4.1</version>
+		</dependency>
+
+		<!-- Caisi Integrator -->
 	<dependency>
 		<groupId>org.oscarehr.caisi_integrator</groupId>
 		<artifactId>integrator-objects</artifactId>
