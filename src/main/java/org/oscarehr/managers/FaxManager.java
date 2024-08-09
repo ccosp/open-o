@@ -237,6 +237,9 @@ package org.oscarehr.managers;
       */
       boolean resendFax(LoggedInInfo loggedInInfo, String jobId, String destination);
 
+     public void restartFaxScheduler(LoggedInInfo loggedInInfo);
+
+     public JSONObject getFaxSchedularStatus(LoggedInInfo loggedInInfo);
      /**
       * Check if fax services are enabled.
       */

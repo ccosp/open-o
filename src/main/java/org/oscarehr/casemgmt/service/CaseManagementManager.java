@@ -326,6 +326,8 @@ public interface CaseManagementManager {
 
     public String getDemoAge(String demoNo);
 
+    public String getDemoPhn(String demoNo);
+
     public String getDemoDOB(String demoNo);
 
     public String getCaisiRoleById(String id);

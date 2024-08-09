@@ -1,6 +1,7 @@
 package org.oscarehr.documentManager;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.oscarehr.common.dao.ConsultDocsDao;
 import org.oscarehr.common.dao.EFormDocsDao;
 import org.oscarehr.common.model.ConsultDocs;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
-import oscar.oscarEncounter.data.EctFormData.PatientForm;
 import oscar.oscarLab.ca.all.Hl7textResultsData;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 import oscar.oscarLab.ca.on.LabResultData;
@@ -117,17 +117,17 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 		List<AttachmentLabResultData> allLabsSortedByVersions = new ArrayList<>();
 
 		Map<String, LabResultData> labMap = new HashMap<>();
-		for (LabResultData lab : allLabs) { 
-			labMap.put(lab.getSegmentID(), lab); 
+		for (LabResultData lab : allLabs) {
+			labMap.put(lab.getSegmentID(), lab);
 		}
 
 		/*
 		 * Explaining this code with an example:
-		 * Let's assume the 'allLabs' variable contains these lab IDs [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]. 
-		 * Among these IDs, ID 2 is the latest version, and 3, 4, and 5 are older versions of that. 
-		 * Similarly, 6 is the latest version, and 1, 7, 8, and 9 are older versions of that. 
+		 * Let's assume the 'allLabs' variable contains these lab IDs [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].
+		 * Among these IDs, ID 2 is the latest version, and 3, 4, and 5 are older versions of that.
+		 * Similarly, 6 is the latest version, and 1, 7, 8, and 9 are older versions of that.
 		 * Lab ID 10 doesn't have any version.
-		 * 
+		 *
 		 * First, I iterate through the 'allLabs' using a for loop.
 		 */
 		for (LabResultData lab : allLabs) {
@@ -136,8 +136,8 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 			AttachmentLabResultData attachmentLabResultData = new AttachmentLabResultData(lab.getSegmentID(), getDisplayLabName(lab), lab.getDateObj());
 
 			/*
-			 * Then, if, for example, I pass lab ID 1, it will give all its related labs in the correct version order. 
-			 * By 'correct order,' I mean it will return this array [7, 9, 8, 1, 6]. 
+			 * Then, if, for example, I pass lab ID 1, it will give all its related labs in the correct version order.
+			 * By 'correct order,' I mean it will return this array [7, 9, 8, 1, 6].
 			 * This array will be in version order, where the first is the oldest and the last is the latest.
 			 */
 			String[] matchingLabIds = Hl7textResultsData.getMatchingLabs(lab.getSegmentID()).split(",");
@@ -223,6 +223,7 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 			ConcatPDF.concat(pdfDocumentList, outputStream);
 			path = nioFileManager.saveTempFile("combinedPDF_" + new Date().getTime(), outputStream);
+			flattenPDFFormFields(path);
 		} catch (IOException e) {
 			throw new PDFGenerationException("An error occurred while concatenating PDF.", e);
 		}
@@ -382,5 +383,15 @@ public class DocumentAttachmentManagerImpl implements DocumentAttachmentManager 
 		String discipline = labResultData.getDiscipline() != null ? labResultData.getDiscipline() : "";
 		String labTitle = !"".equals(label) ? label.substring(0, Math.min(label.length(), 40)) : discipline.substring(0, Math.min(discipline.length(), 40));
 		return StringUtils.isNullOrEmpty(labTitle) ? "UNLABELLED" : labTitle;
+	}
+
+	public void flattenPDFFormFields(Path pdfPath) throws PDFGenerationException {
+		try (PDDocument document = PDDocument.load(pdfPath.toFile())) {
+			PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
+			if (acroForm != null) { acroForm.flatten(); }
+			document.save(pdfPath.toString());
+		} catch (IOException e) {
+			throw new PDFGenerationException("Error while flattening the " + pdfPath.getFileName() + " file. " + e.getMessage(), e);
+		}
 	}
 }

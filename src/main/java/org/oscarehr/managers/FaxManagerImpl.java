@@ -50,6 +50,7 @@ import org.oscarehr.common.model.FaxJob;
 import org.oscarehr.common.model.FaxJob.STATUS;
 import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
+import org.oscarehr.fax.core.FaxSchedulerJob;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
@@ -86,6 +87,9 @@ public class FaxManagerImpl implements FaxManager{
 
 	@Autowired
 	private ClinicDAO clinicDAO;
+
+	@Autowired
+	private FaxSchedulerJob faxSchedulerJob;
 
 	private Logger logger = MiscUtils.getLogger();
 
@@ -742,6 +746,25 @@ public class FaxManagerImpl implements FaxManager{
 		}
 
 		return success;
+	}
+
+	public void restartFaxScheduler(LoggedInInfo loggedInInfo) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_admin.fax.restart", SecurityInfoManager.WRITE, null)) {
+			throw new RuntimeException("missing required security object (_admin.fax.restart)");
+		}
+		faxSchedulerJob.restartTask();
+	}
+
+	public JSONObject getFaxSchedularStatus(LoggedInInfo loggedInInfo) {
+		if (!securityInfoManager.hasPrivilege(loggedInInfo, "_admin.fax.restart", SecurityInfoManager.READ, null)) {
+			throw new RuntimeException("missing required security object (_admin.fax.restart)");
+		}
+		String status = "Uncaught Exception - connection is likely down";
+		if (FaxSchedulerJob.isRunning()) { status = "No uncaught exception - connection is likely up"; }
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("faxSchedularStatus", status);
+		jsonObject.put("isRunning", FaxSchedulerJob.isRunning());
+		return jsonObject;
 	}
 
 

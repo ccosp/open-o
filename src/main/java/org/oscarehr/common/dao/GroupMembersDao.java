@@ -28,14 +28,9 @@
 
 package org.oscarehr.common.dao;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.GroupMembers;
-import org.springframework.stereotype.Repository;
-
+import oscar.oscarMessenger.data.ContactIdentifier;
+import java.util.List;
 public interface GroupMembersDao extends AbstractDao<GroupMembers> {
 
 	public List<GroupMembers> findRemoteByGroupId(int groupId);
@@ -48,5 +43,9 @@ public interface GroupMembersDao extends AbstractDao<GroupMembers> {
 
 	public List<GroupMembers> findByProviderNumberAndFacilityId(String providerNo, Integer facilityId);
 
+	public List<GroupMembers> findGroupMember(String providerNo, int groupId);
+
 	public List<GroupMembers> findByFacilityId(Integer facilityId);
+
+	public GroupMembers findByIdentity(ContactIdentifier contactIdentifier);
 }
