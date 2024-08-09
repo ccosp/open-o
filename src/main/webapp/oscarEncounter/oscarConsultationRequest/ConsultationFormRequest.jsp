@@ -1012,9 +1012,9 @@ function onSelectSpecialist(SelectedSpec)	{
     
 	// load the text fields with phone fax and address for past consult review even if spec has been removed from service list
 	<%if(requestId!=null && ! "null".equals( consultUtil.specialist ) ){ %>
-	form.phone.value = '<%=Encode.forHtmlAttribute(consultUtil.specPhone)%>';
-	form.fax.value = '<%=Encode.forHtmlAttribute(consultUtil.specFax)%>';
-	form.address.value = '<%=Encode.forHtmlAttribute(consultUtil.specAddr) %>';
+	form.phone.value = '<%=Encode.forJavaScript(consultUtil.specPhone)%>';
+	form.fax.value = '<%=Encode.forJavaScript(consultUtil.specFax)%>';
+	form.address.value = '<%=Encode.forJavaScript(consultUtil.specAddr)%>';
 
 	//make sure this dislaimer is displayed
 	document.getElementById("consult-disclaimer").style.display='inline';
