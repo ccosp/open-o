@@ -582,8 +582,6 @@
 		</form-bean>
 
 		<form-bean name="quickBillingBC" type="oscar.oscarBilling.ca.bc.quickbilling.QuickBillingBCFormBean" ></form-bean>
-
-		<form-bean name="eaapsExportForm" type="org.oscarehr.research.eaaps.EaapsExportForm" />
 		
 		<form-bean name="mcedtResourceForm" type="org.oscarehr.integration.mcedt.ResourceForm" />
 		
@@ -722,17 +720,6 @@
                 scope="request">
         </action>
         <!-- End of Notification Mappings -->
-        
-        <!-- EAAPS Start -->
-        <action path="/eaaps/displayEctEaaps" scope="request" type="org.oscarehr.research.eaaps.EctDisplayEaapsAction" />
-        
-        <action path="/eaaps/export"
-                type="org.oscarehr.research.eaaps.EaapsExportAction"
-                name="eaapsExportForm"
-                input="/eaaps/index.jsp">
-                <forward name="status" path="/eaaps/status.jsp" />
-        </action>
-        <!-- EAAPS End -->
 
 	<action path="/study/ManageStudy" scope="request" parameter="method" type="org.oscarehr.study.ManageStudyAction">
 		<forward name="AddedToStudy" path="/admin/addStudy.jsp"></forward>

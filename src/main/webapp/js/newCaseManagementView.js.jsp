@@ -490,7 +490,6 @@ function navBarLoader() {
                   ctx + "/oscarEncounter/displayConsultation.do?hC=" + Colour.consultation,
                   ctx + "/oscarEncounter/displayHRM.do?hC=" + Colour.hrmDocuments,
                   <%--ctx + "/oscarEncounter/displayMyOscar.do?hC=",--%>
-                  <%--ctx + "/eaaps/displayEctEaaps.do?hC=",--%>
                   <%--ctx + "/oscarEncounter/displayEconsultation.do?hC=",--%>
                   <%--ctx + "/oscarEncounter/displayEHR.do?hC=",--%>
                   <%--ctx + "/oscarEncounter/displayQuestimed.do?hC=",--%>
