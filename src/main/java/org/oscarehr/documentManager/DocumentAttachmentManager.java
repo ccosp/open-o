@@ -1,31 +1,15 @@
 package org.oscarehr.documentManager;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.oscarehr.common.dao.ConsultDocsDao;
-import org.oscarehr.common.dao.EFormDocsDao;
-import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.EFormData;
-import org.oscarehr.common.model.EFormDocs;
-import org.oscarehr.hospitalReportManager.HRMUtil;
-import org.oscarehr.managers.*;
+import org.oscarehr.documentManager.data.AttachmentLabResultData;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.PDFGenerationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import oscar.eform.EFormUtil;
 import oscar.oscarEncounter.data.EctFormData;
-import oscar.oscarLab.ca.all.Hl7textResultsData;
-import oscar.oscarLab.ca.on.CommonLabResultData;
-import oscar.oscarLab.ca.on.LabResultData;
-import oscar.util.ConcatPDF;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -40,7 +24,7 @@ public interface DocumentAttachmentManager {
 	 * This method is responsible for lab version sorting and is intended for use in the attachment window (attachDocument.jsp).
 	 * In other parts of the application, developers should utilize CommonLabResultData.populateLabResultsData() to access all available lab data.
 	 */
-	public Pair<List<LabResultData>, String> getAllLabsSortedByVersions(LoggedInInfo loggedInInfo, String demographicNo);
+	public List<AttachmentLabResultData> getAllLabsSortedByVersions(LoggedInInfo loggedInInfo, String demographicNo);
 
 	/**
 	 * This method is intended for use in the attachment window (attachDocument.jsp) and is designed to retrieve a list of eForms except one.
@@ -85,6 +69,8 @@ public interface DocumentAttachmentManager {
 	public Integer saveEFormAsEDoc(HttpServletRequest request, HttpServletResponse response) throws PDFGenerationException;
 
 	public String convertPDFToBase64(Path renderedDocument) throws PDFGenerationException;
+
+	public void flattenPDFFormFields(Path pdfPath) throws PDFGenerationException;
 }
 
 	

@@ -27,13 +27,12 @@
 
 package org.oscarehr.common.dao;
 
+import org.springframework.stereotype.Repository;
+import org.oscarehr.common.model.GroupMembers;
+import oscar.oscarMessenger.data.ContactIdentifier;
+import javax.persistence.Query;
 import java.util.Collections;
 import java.util.List;
-
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.GroupMembers;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implements GroupMembersDao {
@@ -118,6 +117,19 @@ public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implement
     }
 
     @Override
+    public List<GroupMembers> findGroupMember(String providerNo, int groupId) {
+        Query query = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.providerNo LIKE ? AND x.groupId = ?");
+        query.setParameter(1, providerNo);
+        query.setParameter(2, groupId);
+        @SuppressWarnings("unchecked")
+        List<GroupMembers> results = query.getResultList();
+        if(results == null) {
+            results = Collections.emptyList();
+        }
+        return results;
+    }
+
+    @Override
     public List<GroupMembers> findByFacilityId(Integer facilityId) {
         Query query = entityManager.createQuery("SELECT x FROM GroupMembers x WHERE x.facilityId=?");
         query.setParameter(0, facilityId);
@@ -130,6 +142,16 @@ public class GroupMembersDaoImpl extends AbstractDaoImpl<GroupMembers> implement
         }
 
         return results;
+    }
+
+    @Override
+    public GroupMembers findByIdentity(ContactIdentifier contactIdentifier) {
+        Query query = entityManager.createQuery("SELECT x FROM GroupMembers x " +
+                "WHERE x.facilityId=? AND x.providerNo=? AND x.groupId=?");
+        query.setParameter(1, contactIdentifier.getFacilityId());
+        query.setParameter(2, contactIdentifier.getContactId());
+        query.setParameter(3, contactIdentifier.getGroupId());
+        return super.getSingleResultOrNull(query);
     }
 
 }
