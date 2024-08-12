@@ -2,7 +2,8 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
         "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-		
+	<import resource="classpath*:applicationContext*.xml"/>
+	<import resource="classpath*:spring_jpa.xml"/>
 	<bean name="/documentManager/inboxManage" class="org.oscarehr.documentManager.actions.DmsInboxManageAction">
 		<property name="providerInboxRoutingDAO" ref="providerInboxRoutingDAO" />
 		<property name="queueDocumentLinkDAO" ref="queueDocumentLinkDAO" />
