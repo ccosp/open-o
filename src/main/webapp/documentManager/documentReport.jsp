@@ -363,6 +363,7 @@
 
 		<jsp:include page="addDocument.jsp">
 			<jsp:param name="appointmentNo" value="<%=appointmentNo%>"/>
+			<jsp:param name="addDocument" value="${param.mode}" />
 		</jsp:include>
 
 

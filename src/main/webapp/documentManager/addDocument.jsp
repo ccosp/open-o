@@ -143,6 +143,9 @@
 		if('${ docerrors != null and not empty docerrors }' === 'true') {
 			showhide('addDocDiv', 'plusminusAddDocA');
 		}
+		if('${ param.mode eq "add"}' === 'true') {
+			showhide('addDocDiv', 'plusminusAddDocA');
+		}
 	}
 
 	function checkSel(sel) {
