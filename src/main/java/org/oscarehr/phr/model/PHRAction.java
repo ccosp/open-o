@@ -73,10 +73,8 @@ public class PHRAction {
 	private Date dateSent;
 	private String senderOscar;
 	private int senderType;
-	private Long senderMyOscarUserId;
 	private String receiverOscar;
 	private int receiverType;
-	private Long receiverMyOscarUserId;
 	private int actionType;
 	private String phrClassification;
 	private String oscarId;
@@ -168,15 +166,6 @@ public class PHRAction {
 		this.senderType = senderType;
 	}
 
-
-	public Long getSenderMyOscarUserId() {
-    	return (senderMyOscarUserId);
-    }
-
-	public void setSenderMyOscarUserId(Long senderMyOscarUserId) {
-    	this.senderMyOscarUserId = senderMyOscarUserId;
-    }
-
 	public String getReceiverOscar() {
 		return receiverOscar;
 	}
@@ -191,14 +180,6 @@ public class PHRAction {
 
 	public void setReceiverType(int receiverType) {
 		this.receiverType = receiverType;
-	}
-
-	public Long getReceiverMyOscarUserId() {
-		return (receiverMyOscarUserId);
-	}
-
-	public void setReceiverMyOscarUserId(Long receiverMyOscarUserId) {
-		this.receiverMyOscarUserId = receiverMyOscarUserId;
 	}
 
 	public int getActionType() {

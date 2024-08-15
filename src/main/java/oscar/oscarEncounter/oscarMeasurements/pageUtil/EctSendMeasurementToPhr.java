@@ -44,10 +44,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.indivo.IndivoException;
-import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
 import org.oscarehr.phr.model.PHRMeasurement;
 import org.oscarehr.phr.service.PHRService;
-import org.oscarehr.phr.util.MyOscarUtils;
 import org.oscarehr.util.MiscUtils;
 
 import oscar.oscarEncounter.data.EctProviderData;
@@ -75,15 +73,12 @@ public class EctSendMeasurementToPhr extends Action {
 	        
 	        EctProviderData.Provider provider = new EctProviderData().getProvider(providerNo);
 	        
-			MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(request.getSession());
-	        Long myOscarUserId = MyOscarUtils.getMyOscarUserIdFromOscarDemographicId(myOscarLoggedInInfo, demographicNo);
-	        
 	        EctMeasurementsDataBeanHandler hd = new EctMeasurementsDataBeanHandler(demographicNo);
 	        for (String measurementType: measurementTypeList) {
 	            List<EctMeasurementsDataBean> measurements =  EctMeasurementsDataBeanHandler.getMeasurementObjectByType(measurementType, demographicNo);
 	            for (EctMeasurementsDataBean measurement: measurements) {
 	                if (!phrService.isIndivoRegistered(measurementType, measurement.getId()+"")) {
-	                      PHRMeasurement phrMeasurement = new PHRMeasurement(provider, demographicNo, myOscarUserId, measurementType, measurement);
+	                      PHRMeasurement phrMeasurement = new PHRMeasurement(provider, demographicNo, measurementType, measurement);
 	                      phrService.sendAddDocument(phrMeasurement, measurement.getId() + "");
 	                }
 	                

@@ -48,23 +48,11 @@ public class PHRService {
 	protected PHRDocumentDAO phrDocumentDAO;
 	protected PHRActionDAO phrActionDAO;
 
-	public void sendAddMedication(EctProviderData.Provider prov, Integer demographicNo, Long demographicMyOscarUserId, RxPrescriptionData.Prescription drug) throws Exception {
-		logger.debug("sendAddMedication:" + prov + ", " + demographicNo + ", " + demographicMyOscarUserId + ", " + drug);
+	public void sendAddMedication(EctProviderData.Provider prov, Integer demographicNo, RxPrescriptionData.Prescription drug) throws Exception {
+		logger.debug("sendAddMedication:" + prov + ", " + demographicNo + ", " + drug);
 
-		PHRMedication medication = new PHRMedication(prov, demographicNo, demographicMyOscarUserId, drug);
+		PHRMedication medication = new PHRMedication(prov, demographicNo, drug);
 		PHRAction action = medication.getAction(PHRAction.ACTION_ADD, PHRAction.STATUS_SEND_PENDING);
-		action.setOscarId(drug.getDrugId() + "");
-		// write action to phr_actions table
-		phrActionDAO.save(action);
-	}
-
-	public void sendUpdateMedication(EctProviderData.Provider prov, Integer demographicNo, Long demographicMyOscarUserId, RxPrescriptionData.Prescription drug, String phrDrugIndex) throws Exception {
-		logger.debug("sendAddMedication:" + prov + ", " + demographicNo + ", " + demographicMyOscarUserId + ", " + drug + ", " + phrDrugIndex);
-
-		PHRMedication medication = new PHRMedication(prov, demographicNo, demographicMyOscarUserId, drug);
-		PHRAction action = medication.getAction(PHRAction.ACTION_UPDATE, PHRAction.STATUS_SEND_PENDING);
-		// set which phrIndex to update
-		action.setPhrIndex(phrDrugIndex);
 		action.setOscarId(drug.getDrugId() + "");
 		// write action to phr_actions table
 		phrActionDAO.save(action);
@@ -87,18 +75,6 @@ public class PHRService {
 		action.setPhrIndex(phrIndex);
 		action.setOscarId(oscarIndex);
 		// write action to phr_actions table
-		phrActionDAO.save(action);
-	}
-
-	public void sendAddMessage(String subject, String priorThreadMessage, String messageBody, ProviderData sender, Integer recipientOscarId, int recipientType, Long myOscarUserId) throws Exception {
-		sendAddMessage(subject, priorThreadMessage, messageBody, sender, recipientOscarId, recipientType, myOscarUserId, new ArrayList<String>());
-	}
-
-	public void sendAddMessage(String subject, String priorThreadMessage, String messageBody, ProviderData sender, Integer recipientOscarId, int recipientType, Long myOscarUserId, List<String> attachmentActionIds) throws Exception {
-		logger.debug("sendAddMessage:" + subject + ", " + priorThreadMessage + ", " + messageBody + ", " + sender + ", " + recipientOscarId + ", " + recipientType + ", " + myOscarUserId + ", " + attachmentActionIds);
-
-		PHRMessage message = new PHRMessage(subject, priorThreadMessage, messageBody, sender, recipientOscarId, recipientType, myOscarUserId, attachmentActionIds);
-		PHRAction action = message.getAction(PHRAction.ACTION_ADD, PHRAction.STATUS_SEND_PENDING);
 		phrActionDAO.save(action);
 	}
 

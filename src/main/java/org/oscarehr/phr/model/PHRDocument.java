@@ -73,10 +73,8 @@ public class PHRDocument implements Serializable {
 	private Date dateSent;
 	private String senderOscar;
 	private int senderType;
-	private Long senderMyOscarUserId;
 	private Integer receiverOscar;
 	private int receiverType;
-	private Long receiverMyOscarUserId;
 	private String docSubject;
 	private String docContent;
 	private int status;
@@ -96,10 +94,8 @@ public class PHRDocument implements Serializable {
 		action.setDocContent(this.getDocContent());
 		action.setReceiverOscar(""+this.getReceiverOscar());
 		action.setReceiverType(this.getReceiverType());
-		action.setReceiverMyOscarUserId(this.getReceiverMyOscarUserId());
 		action.setSenderOscar(this.getSenderOscar());
 		action.setSenderType(this.getSenderType());
-		action.setSenderMyOscarUserId(this.getSenderMyOscarUserId());
 		action.setPhrClassification(this.getPhrClassification());
 		action.setStatus(actionStatus);
 		return action;
@@ -113,11 +109,9 @@ public class PHRDocument implements Serializable {
 
 		action.setReceiverOscar(this.getSenderOscar());
 		action.setReceiverType(this.getSenderType());
-		action.setReceiverMyOscarUserId(this.getSenderMyOscarUserId());
 
 		action.setSenderOscar(""+this.getReceiverOscar());
 		action.setSenderType(this.getReceiverType());
-		action.setSenderMyOscarUserId(this.getReceiverMyOscarUserId());
 		action.setPhrClassification(this.getPhrClassification());
 		action.setPhrIndex(this.getPhrIndex());
 		action.setStatus(actionStatus);
@@ -197,14 +191,6 @@ public class PHRDocument implements Serializable {
 		this.senderType = senderType;
 	}
 
-	public Long getSenderMyOscarUserId() {
-		return (senderMyOscarUserId);
-	}
-
-	public void setSenderMyOscarUserId(Long senderMyOscarUserId) {
-		this.senderMyOscarUserId = senderMyOscarUserId;
-	}
-
 	public Integer getReceiverOscar() {
 		return receiverOscar;
 	}
@@ -219,14 +205,6 @@ public class PHRDocument implements Serializable {
 
 	public void setReceiverType(int receiverType) {
 		this.receiverType = receiverType;
-	}
-
-	public Long getReceiverMyOscarUserId() {
-		return (receiverMyOscarUserId);
-	}
-
-	public void setReceiverMyOscarUserId(Long receiverMyOscarUserId) {
-		this.receiverMyOscarUserId = receiverMyOscarUserId;
 	}
 
 	public String getDocSubject() {

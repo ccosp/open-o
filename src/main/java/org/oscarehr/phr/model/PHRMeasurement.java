@@ -72,7 +72,7 @@ public class PHRMeasurement extends PHRDocument{
     }
 
     //sending new meds to PHR
-    public PHRMeasurement(EctProviderData.Provider provider, Integer demographicNo, Long myOscarUserId, String dataType, EctMeasurementsDataBean measurement) throws JAXBException, IndivoException  {
+    public PHRMeasurement(EctProviderData.Provider provider, Integer demographicNo, String dataType, EctMeasurementsDataBean measurement) throws JAXBException, IndivoException  {
         //super();
         IndivoDocumentType document = getPhrMeasurementDocument(provider, measurement);
         JAXBContext docContext = JAXBContext.newInstance(IndivoDocumentType.class.getPackage().getName());
@@ -82,10 +82,8 @@ public class PHRMeasurement extends PHRDocument{
         this.setPhrClassification(dataType);
         this.setReceiverOscar(demographicNo);
         this.setReceiverType(PHRDocument.TYPE_DEMOGRAPHIC);
-        this.setReceiverMyOscarUserId(myOscarUserId);
         this.setSenderOscar(provider.getProviderNo());
         this.setSenderType(PHRDocument.TYPE_PROVIDER);
-        this.setSenderMyOscarUserId(Long.parseLong(provider.getIndivoId()));
         this.setSent(PHRDocument.STATUS_SEND_PENDING);
         this.setDocContent(docContentStr);
     }

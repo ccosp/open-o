@@ -91,7 +91,6 @@ public class RxSendToPhrAction extends Action {
 			MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(request.getSession());
 			DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
 			Demographic demographic = demographicManager.getDemographic(loggedInInfo, bean.getDemographicNo());
-			Long myOscarUserId = AccountManager.getUserId(myOscarLoggedInInfo, demographic.getMyOscarUserName());
 
 			RxPatientData.Patient patient = null;
 
@@ -115,7 +114,7 @@ public class RxSendToPhrAction extends Action {
 
 						if (!phrService.isIndivoRegistered(MedicalDataType.MEDICATION.name(), drug.getDrugId() + "")) {
 
-							phrService.sendAddMedication(prov, demographic.getDemographicNo(), myOscarUserId, drug);
+							phrService.sendAddMedication(prov, demographic.getDemographicNo(), drug);
 						}
 						// throw new Exception("Error: Cannot marshal the document");
 					} catch (Exception e) {

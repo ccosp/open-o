@@ -79,13 +79,13 @@ public class PHRMedication extends PHRDocument {
 		// super();
 	}
 
-	public PHRMedication(IndivoDocumentType doc, Integer demoId, Long receiverMyOscarUserId, String providerNo) throws Exception {
-		setReceiverInfo(demoId, receiverMyOscarUserId);
+	public PHRMedication(IndivoDocumentType doc, Integer demoId, String providerNo) throws Exception {
+		setReceiverInfo(demoId);
 		parseDocument(doc, providerNo);
 	}
 
-	public PHRMedication(MedicalDataTransfer4 medicalDataTransfer, Integer demoId, Long receiverMyOscarUserId, String providerNo) {
-		setReceiverInfo(demoId, receiverMyOscarUserId);
+	public PHRMedication(MedicalDataTransfer4 medicalDataTransfer, Integer demoId, String providerNo) {
+		setReceiverInfo(demoId);
 		parseDocument(medicalDataTransfer, providerNo);
 	}
 
@@ -100,9 +100,8 @@ public class PHRMedication extends PHRDocument {
 		drug = d;
 	}
 
-	private void setReceiverInfo(Integer demoId, Long receiverMyOscarUserId) {
+	private void setReceiverInfo(Integer demoId) {
 		this.setReceiverOscar(demoId);
-		this.setReceiverMyOscarUserId(receiverMyOscarUserId);
 	}
 
 	private void parseDocument(IndivoDocumentType document, String providerNo) throws Exception {
@@ -133,7 +132,6 @@ public class PHRMedication extends PHRDocument {
 		this.setReceiverType(PHRDocument.TYPE_DEMOGRAPHIC);
 		this.setSenderOscar(null);// outside provider's oscar id is not useful
 		this.setSenderType(PHRDocument.TYPE_PROVIDER);
-		this.setSenderMyOscarUserId(Long.parseLong(phr_id));
 		this.setSent(PHRDocument.STATUS_NOT_SET);// need to change
 		this.setDocContent(docContent);
 		this.setDateExchanged(new Date());
@@ -150,14 +148,13 @@ public class PHRMedication extends PHRDocument {
 		setReceiverType(TYPE_DEMOGRAPHIC);
 		setSenderOscar(null);// outside provider's oscar id is not useful
 		setSenderType(TYPE_PROVIDER);
-		setSenderMyOscarUserId(medicalDataTransfer.getObserverOfDataPersonId());
 		setSent(STATUS_NOT_SET);// need to change
 		setDocContent(medicalDataTransfer.getData());
 		setDateExchanged(new Date());
 	}
 
 	// sending new meds to PHR
-	public PHRMedication(EctProviderData.Provider prov, Integer demographicNo, Long receiverMyOscarUserId, RxPrescriptionData.Prescription drug) throws JAXBException, IndivoException {
+	public PHRMedication(EctProviderData.Provider prov, Integer demographicNo, RxPrescriptionData.Prescription drug) throws JAXBException, IndivoException {
 		// super();
 		IndivoDocumentType document = getPhrMedicationDocument(prov, drug);
 		JAXBContext docContext = JAXBContext.newInstance(IndivoDocumentType.class.getPackage().getName());
@@ -167,10 +164,8 @@ public class PHRMedication extends PHRDocument {
 		this.setPhrClassification(MedicalDataType.MEDICATION.name());
 		this.setReceiverOscar(demographicNo);
 		this.setReceiverType(PHRDocument.TYPE_DEMOGRAPHIC);
-		this.setReceiverMyOscarUserId(receiverMyOscarUserId);
 		this.setSenderOscar(prov.getProviderNo());
 		this.setSenderType(PHRDocument.TYPE_PROVIDER);
-		this.setSenderMyOscarUserId(Long.parseLong(prov.getIndivoId()));
 		this.setSent(PHRDocument.STATUS_SEND_PENDING);
 		this.setDocContent(docContentStr);
 	}

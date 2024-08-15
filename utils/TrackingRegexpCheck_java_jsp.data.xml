@@ -1172,7 +1172,6 @@
         <ViolationValue>/src/main/java/org/oscarehr/managers/InboxManager.java:import java.util.Vector;</ViolationValue>
         <ViolationValue>/src/main/java/org/oscarehr/managers/SecurityInfoManager.java:Vector v = OscarRoleObjectPrivilege.getPrivilegeProp("_demographic$"+demographicNo);</ViolationValue>
         <ViolationValue>/src/main/java/org/oscarehr/managers/SecurityInfoManager.java:import java.util.Vector;</ViolationValue>
-        <ViolationValue>/src/main/java/org/oscarehr/phr/model/PHRMessage.java://        Hashtable h = findOscarId(PHRDocument.TYPE_DEMOGRAPHIC,this.getSenderMyOscarUserId());</ViolationValue>
         <ViolationValue>/src/main/java/org/oscarehr/phr/model/PHRMessage.java:Hashtable result = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/org/oscarehr/phr/model/PHRMessage.java:Hashtable results = new Hashtable();</ViolationValue>
         <ViolationValue>/src/main/java/org/oscarehr/phr/model/PHRMessage.java:import java.util.Hashtable;</ViolationValue>

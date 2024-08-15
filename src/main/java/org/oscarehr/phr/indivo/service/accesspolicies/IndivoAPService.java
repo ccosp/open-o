@@ -87,7 +87,6 @@ public class IndivoAPService extends PHRService {
         //make a csv store permissionRecipientPhrId and newPolicy
         action.setDocContent(permissionRecipientPhrId + DOC_CONTENT_DELIMITER + newPolicy);
         //User receiving permissions is stored as senderPhr
-        action.setSenderMyOscarUserId(permissionRecipientPhrId);
         phrActionDAO.save(action);
     }
 
