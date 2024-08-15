@@ -193,6 +193,22 @@
     "integrity" : "sha512:52LSZKam5t5rMnXtXw8fN3i/ngUQp6vz1Wve+KNgYxHDh4nYcW9uX0lf8UeHvoZoWfGpeBGNXYeV+DP3Bj122A=="
   }, {
     "groupId" : "ca.uhn.hapi",
+    "artifactId" : "hapi-examples",
+    "version" : "1.0.1",
+    "scope" : "compile",
+    "type" : "jar",
+    "optional" : false,
+    "integrity" : "sha512:EOpPdoN2gnYnTgqNf3JkpHhOCwLpLOHMwacujvivApiTuSurXD2L77FXF9Ux3OXQWljhLZ8Fd1VCLiDUymjfcA=="
+  }, {
+    "groupId" : "ca.uhn.hapi",
+    "artifactId" : "hapi-structures-v21",
+    "version" : "1.0.1",
+    "scope" : "compile",
+    "type" : "jar",
+    "optional" : false,
+    "integrity" : "sha512:NCMpcJGrsvrshD64gZOzLnr029MEphePqjdIAO6PnNWjijsjnihjYw6CvstY/Vi7sAmQKTAjzH0KHIoI3SOtJA=="
+  }, {
+    "groupId" : "ca.uhn.hapi",
     "artifactId" : "hapi-structures-v22",
     "version" : "1.0.1",
     "scope" : "compile",
@@ -215,6 +231,22 @@
     "type" : "jar",
     "optional" : false,
     "integrity" : "sha512:ZB+6VTphE8XInCdGchvAuZaW+9r7et3pt9VUM4aIvd0HMrKUXbzS5Rbk6+8623Z/3TP3TncXz06bzF9gSQmrqg=="
+  }, {
+    "groupId" : "ca.uhn.hapi",
+    "artifactId" : "hapi-structures-v24",
+    "version" : "1.0.1",
+    "scope" : "compile",
+    "type" : "jar",
+    "optional" : false,
+    "integrity" : "sha512:MM19XuIm4Ud+yZPqJ7E/kJG1bUhOk6krph+k4wU3ha8POHO0IkaJGRKc1w+cLHxZxMTHXSSContBKpkZm/UdTg=="
+  }, {
+    "groupId" : "ca.uhn.hapi",
+    "artifactId" : "hapi-structures-v251",
+    "version" : "1.0.1",
+    "scope" : "compile",
+    "type" : "jar",
+    "optional" : false,
+    "integrity" : "sha512:jdT66E794blWOW0cO5wXdIuo3EeApMbwVDVfchCEKwOavwtpUlXtpm8knKgrA6UQq9y2THQj3qIa8NrIFOvB6Q=="
   }, {
     "groupId" : "ca.uhn.hapi",
     "artifactId" : "hapi-structures-v25",
