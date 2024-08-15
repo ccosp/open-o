@@ -1,0 +1,155 @@
+
+Document of Files with Positional Parameter Changes
+
+Command Used to Find All Files (With "Select x " on one line and two lines after having "setParameter"
+
+grep -rl 'select x from' . --include='*.java' | xargs awk '/select x from/ {getline; getline; if (/query.setParameter/) print FILENAME ":" FNR-2, $0}'
+
+
+
+All files that have the dashes have mapping added correctly and are ok in terms of the work that has been completed in mass scripting changes thus far
+
+./main/java/org/oscarehr/hospitalReportManager/dao/HRMCategoryDao.java:29               query.setParameter(1, id); -------------------------------------------------------- Changed
+./main/java/org/oscarehr/hospitalReportManager/dao/HRMCategoryDao.java:47               query.setParameter(1, subClassNameMnemonic); --------------------------------------
+./main/java/org/oscarehr/hospitalReportManager/dao/HRMCategoryDao.java:58                       query.setParameter(1, subClassNameMnemonic);-------------------------------
+./main/java/org/oscarehr/hospitalReportManager/dao/HRMCategoryDao.java:68               query.setParameter(1, q + "%"); ---------------------------------------------------
+
+./main/java/org/oscarehr/hospitalReportManager/dao/HRMSubClassDao.java:28               query.setParameter(1, id); --------------------------------------------------------
+./main/java/org/oscarehr/hospitalReportManager/dao/HRMSubClassDao.java:46               query.setParameter(1, sendingFacilityId); -----------------------------------------
+
+./main/java/org/oscarehr/PMmodule/dao/VacancyTemplateDaoImpl.java:73         query.setParameter(1, true); ---------------------------------------------------
+
+./main/java/org/oscarehr/PMmodule/dao/CriteriaTypeOptionDaoImpl.java:72                 query.setParameter(1, typeId);---------------------------------------
+
+./main/java/org/oscarehr/common/dao/MsgDemoMapDaoImpl.java:45         query.setParameter(1, demographicNo); --------------------------------
+./main/java/org/oscarehr/common/dao/MsgDemoMapDaoImpl.java:56         query.setParameter(1, messageId); ------------------------------------
+./main/java/org/oscarehr/common/dao/MsgDemoMapDaoImpl.java:103         query.setParameter("id", messageID); --------------------------------
+
+./main/java/org/oscarehr/common/dao/AppUserDaoImpl.java:45              query.setParameter(2,providerNo); ----------------------------------
+./main/java/org/oscarehr/common/dao/CdsClientFormDaoImpl.java:51         query.setParameter(1, facilityId); --------------------------------
+./main/java/org/oscarehr/common/dao/CdsClientFormDaoImpl.java:63         query.setParameter(1, facilityId);---------------------------------
+./main/java/org/oscarehr/common/dao/CdsClientFormDaoImpl.java:73         query.setParameter(1, facilityId);---------------------------------
+
+
+./main/java/org/oscarehr/common/dao/MeasurementDaoImpl.java:166         query.setParameter(1, appointmentNo); -------------------------------
+
+./main/java/org/oscarehr/common/dao/OcanStaffFormDataDaoImpl.java:42         query.setParameter(1, ocanStaffFormId); ------------------------
+./main/java/org/oscarehr/common/dao/OcanStaffFormDataDaoImpl.java:53         query.setParameter(1, ocanStaffFormId); ------------------------
+./main/java/org/oscarehr/common/dao/OcanStaffFormDataDaoImpl.java:68         query.setParameter(1, ocanStaffFormId); ------------------------
+./main/java/org/oscarehr/common/dao/OcanStaffFormDataDaoImpl.java:78         query.setParameter(1, ocanStaffFormId); ------------------------
+
+./main/java/org/oscarehr/common/dao/EFormValueDaoImpl.java:72           query.setParameter(2, varName); --------------------------------------
+
+./main/java/org/oscarehr/common/dao/OLISResultsDaoImpl.java:43          query.setParameter(1, queryType); ------------------------------------
+./main/java/org/oscarehr/common/dao/OLISResultsDaoImpl.java:57          query.setParameter(1, queryType); ------------------------------------
+
+./main/java/org/oscarehr/common/dao/IntegratorConsentDaoImpl.java:50         query.setParameter(2, demographicId); ---------------------------
+./main/java/org/oscarehr/common/dao/IntegratorConsentDaoImpl.java:59         query.setParameter(2, demographicId); ---------------------------
+
+./main/java/org/oscarehr/common/dao/DemographicPharmacyDaoImpl.java:64             query.setParameter(1, DemographicPharmacy.ACTIVE); --------
+
+./main/java/org/oscarehr/common/dao/PropertyDaoImpl.java:53             query.setParameter(1, name); -----------------------------------------
+./main/java/org/oscarehr/common/dao/PropertyDaoImpl.java:68             query.setParameter(1, name); -----------------------------------------
+./main/java/org/oscarehr/common/dao/PropertyDaoImpl.java:124            query.setParameter(1, name); -----------------------------------------
+
+./main/java/org/oscarehr/common/dao/DocumentDescriptionTemplateDaoImpl.java:49             query.setParameter(2, providerNo); ----------------
+
+./main/java/org/oscarehr/common/dao/HL7HandlerMSHMappingDaoImpl.java:29                 query.setParameter(1, facility); ---------------------
+
+./main/java/org/oscarehr/common/dao/FormeCARESDaoImpl.java:45         query.setParameter(1,createDate); ------------------------------
+./main/java/org/oscarehr/common/dao/FormeCARESDaoImpl.java:59         query.setParameter(1,false); -----------------------------------
+
+./main/java/org/oscarehr/common/dao/SentToPHRTrackingDaoImpl.java:43            query.setParameter(1, demographicNo); ----------------
+
+./main/java/org/oscarehr/common/dao/EFormDataDaoImpl.java:72         query.setParameter(1, demographicId); ---------------------------
+./main/java/org/oscarehr/common/dao/EFormDataDaoImpl.java:346         // query.setParameter(1,fid); ----------------------------------
+./main/java/org/oscarehr/common/dao/EFormDataDaoImpl.java:394         query.setParameter(1, fids); -----------------------------------
+
+./main/java/org/oscarehr/common/dao/PatientLabRoutingDaoImpl.java:77         query.setParameter(1, labType);--------------------------
+
+./main/java/org/oscarehr/common/dao/PreventionExtDaoImpl.java:57                query.setParameter(2, value); ------------------------
+./main/java/org/oscarehr/common/dao/PreventionExtDaoImpl.java:69                query.setParameter(2, key); --------------------------
+
+./main/java/org/oscarehr/common/dao/CaisiAccessTypeDaoImpl.java:53              query.setParameter(1, name); -------------------------
+
+./main/java/org/oscarehr/common/dao/Hl7TextInfoDaoImpl.java:146          query.setParameter(1, fon); ---------------------------------
+
+./main/java/org/oscarehr/common/dao/DemographicCustDaoImpl.java:47         query.setParameter(1, demographicNos);--------------------
+./main/java/org/oscarehr/common/dao/DemographicCustDaoImpl.java:59         query.setParameter(1, demographicNos);--------------------
+./main/java/org/oscarehr/common/dao/DemographicCustDaoImpl.java:71         query.setParameter(1, demographicNos); -------------------
+
+./main/java/org/oscarehr/common/dao/ProviderLabRoutingDaoImpl.java:120         query.setParameter(1, labType); ----------------------
+
+./main/java/org/oscarehr/common/dao/OcanClientFormDataDaoImpl.java:42         query.setParameter(1, ocanClientFormId); --------------
+./main/java/org/oscarehr/common/dao/OcanClientFormDataDaoImpl.java:53         query.setParameter(1, ocanClientFormId);---------------
+./main/java/org/oscarehr/common/dao/OcanClientFormDataDaoImpl.java:62         query.setParameter(1, ocanClientFormId);---------------
+
+./main/java/org/oscarehr/common/dao/CdsFormOptionDaoImpl.java:41         query.setParameter(1, formVersion); ------------------------
+./main/java/org/oscarehr/common/dao/CdsFormOptionDaoImpl.java:51         query.setParameter(1, formVersion); ------------------------
+
+./main/java/org/oscarehr/common/dao/BillingServiceDaoImpl.java:405              query.setParameter(1, val); -------------------------
+
+./main/java/org/oscarehr/common/dao/ConsentTypeDaoImpl.java:45         query.setParameter(1, type); ---------------------------------
+
+./main/java/org/oscarehr/common/dao/PrintResourceLogDaoImpl.java:43             query.setParameter(1, resourceId); ------------------
+
+./main/java/org/oscarehr/common/dao/PreventionDaoImpl.java:70           query.setParameter(2, dateTime); ------------------------------
+./main/java/org/oscarehr/common/dao/PreventionDaoImpl.java:82           query.setParameter(2, dateTime); ------------------------------
+./main/java/org/oscarehr/common/dao/PreventionDaoImpl.java:123          query.setParameter(2, dateTime); ------------------------------
+./main/java/org/oscarehr/common/dao/PreventionDaoImpl.java:146          query.setParameter(2, '0'); -----------------------------------
+./main/java/org/oscarehr/common/dao/PreventionDaoImpl.java:158          query.setParameter(2, startDate); -----------------------------
+./main/java/org/oscarehr/common/dao/PreventionDaoImpl.java:171          query.setParameter(2, demoNo); --------------------------------
+
+
+./main/java/org/oscarehr/common/dao/CtlDocumentDaoImpl.java:54         query.setParameter(1, module); ---------------------------------
+
+./main/java/org/oscarehr/common/dao/PartialDateDaoImpl.java:50          query.setParameter(1, tableName); -----------------------------
+
+./main/java/org/oscarehr/common/dao/OscarAppointmentDaoImpl.java:805         query.setParameter(2, demographicId); --------------------
+
+./main/java/org/oscarehr/common/dao/ProfessionalSpecialistDaoImpl.java:73               query.setParameter(1, "%"+firstName+"%"); -----
+
+./main/java/org/oscarehr/common/dao/OcanConnexOptionDaoImpl.java:42         query.setParameter(1, LHIN_code); ------------------------
+./main/java/org/oscarehr/common/dao/OcanConnexOptionDaoImpl.java:52         query.setParameter(1, LHIN_code); ------------------------
+./main/java/org/oscarehr/common/dao/OcanConnexOptionDaoImpl.java:63         query.setParameter(1, LHIN_code); ------------------------
+./main/java/org/oscarehr/common/dao/OcanConnexOptionDaoImpl.java:75         query.setParameter(1, connexOptionId);--------------------
+
+./main/java/org/oscarehr/common/dao/RemoteReferralDaoImpl.java:43       query.setParameter(1,facilityId); ---------------------
+
+./main/java/org/oscarehr/common/dao/EFormDocsDaoImpl.java:56            query.setParameter(1,fdid); ---------------------------
+
+./main/java/org/oscarehr/common/dao/OcanFormOptionDaoImpl.java:42               query.setParameter(1, formVersion); ----------- 
+./main/java/org/oscarehr/common/dao/OcanFormOptionDaoImpl.java:53               query.setParameter(1, formVersion); -----------
+
+./main/java/org/oscarehr/common/dao/ConsultDocsDaoImpl.java:46          query.setParameter(1,requestId); --------------
+./main/java/org/oscarehr/common/dao/ConsultDocsDaoImpl.java:57          query.setParameter(1,requestId); --------------
+./main/java/org/oscarehr/common/dao/ConsultDocsDaoImpl.java:70          query.setParameter(1,requestId); --------------
+
+./main/java/org/oscarehr/common/dao/MyGroupAccessRestrictionDaoImpl.java:65         query.setParameter(1, providerNo); -----------
+
+./main/java/org/oscarehr/common/dao/OcanStaffFormDaoImpl.java:394               query.setParameter(1, assessmentId); -------------
+
+./main/java/org/oscarehr/common/dao/ConsentDaoImpl.java:79         query.setParameter(1, demographic_no); --------------------
+
+./main/java/org/oscarehr/common/dao/MsgIntegratorDemoMapDaoImpl.java:52         query.setParameter(1, messageId); ------------
+
+./main/java/org/oscarehr/common/dao/MeasurementTypeDaoImpl.java:67         query.setParameter(1, type); ----------------------
+./main/java/org/oscarehr/common/dao/MeasurementTypeDaoImpl.java:76         query.setParameter(1, measuringInstruction); ------
+./main/java/org/oscarehr/common/dao/MeasurementTypeDaoImpl.java:86         query.setParameter(1, typeDisplayName); -----------
+./main/java/org/oscarehr/common/dao/MeasurementTypeDaoImpl.java:95         query.setParameter(1, type); ----------------------
+
+./main/java/org/oscarehr/olis/dao/OLISProviderPreferencesDao.java:29                    query.setParameter(1, id); ----------- Changed
+
+./main/java/org/oscarehr/billing/CA/ON/dao/BillingPercLimitDao.java:47          query.setParameter(1,serviceCode); ----------- 
+
+./main/java/org/oscarehr/eyeform/dao/EyeformSpecsHistoryDao.java:46             query.setParameter(1, demographicNo); ----------
+./main/java/org/oscarehr/eyeform/dao/EyeformSpecsHistoryDao.java:56             query.setParameter(1, demographicNo); ---------- Changed
+./main/java/org/oscarehr/eyeform/dao/EyeformSpecsHistoryDao.java:86             query.setParameter(1, appointmentNo); ----------
+./main/java/org/oscarehr/eyeform/dao/EyeformSpecsHistoryDao.java:96             query.setParameter(1, demographicNo); ---------- Changed
+      
+./main/java/org/oscarehr/eyeform/dao/EyeformConsultationReportDao.java:51               query.setParameter(1, demographicNo); -------
+
+./main/java/org/oscarehr/eyeform/dao/EyeformOcularProcedureDao.java:49          query.setParameter(1, demographicNo); --------
+./main/java/org/oscarehr/eyeform/dao/EyeformOcularProcedureDao.java:59          query.setParameter(1, demographicNo); -------- Changed
+./main/java/org/oscarehr/eyeform/dao/EyeformOcularProcedureDao.java:89          query.setParameter(1, appointmentNo); --------
+./main/java/org/oscarehr/eyeform/dao/EyeformOcularProcedureDao.java:99          query.setParameter(1, demographicNo); -------- Changed

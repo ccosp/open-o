@@ -1,0 +1,8 @@
+The files included in the OWASP Encoding records were files that had OWASP
+encoding added to their input fields.
+	- This was completed as a small first task to get used to the 
+	development environment and gain experience using BitBucket to
+	send a pull request to Magenta Health
+
+The files that had the OWASP encoding added to them are included in the word
+documents within this folder...
