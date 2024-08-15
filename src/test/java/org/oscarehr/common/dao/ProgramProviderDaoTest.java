@@ -41,7 +41,6 @@ public class ProgramProviderDaoTest extends DaoTestFixtures {
 		SchemaUtils.restoreTable("program_provider");
 	}
 
-    @Ignore
 	@Test
 	public void testUpdateProviderRoles() throws Exception {
 		ProgramProvider pp = new ProgramProvider();
@@ -50,6 +49,6 @@ public class ProgramProviderDaoTest extends DaoTestFixtures {
 		
 		dao.saveProgramProvider(pp);
 		
-		dao.updateProviderRoles(pp.getId(), 19999l);
+		dao.updateProviderRole(pp, 19999l);
 	}
 }
