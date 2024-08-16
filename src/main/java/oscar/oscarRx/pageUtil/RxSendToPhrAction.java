@@ -47,9 +47,6 @@ import org.apache.struts.action.ActionMapping;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.myoscar.client.ws_manager.AccountManager;
-import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
 import org.oscarehr.phr.service.PHRService;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -88,7 +85,6 @@ public class RxSendToPhrAction extends Action {
 		EctProviderData.Provider prov = new EctProviderData().getProvider(bean.getProviderNo());
 
 		try {
-			MyOscarLoggedInInfo myOscarLoggedInInfo=MyOscarLoggedInInfo.getLoggedInInfo(request.getSession());
 			DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
 			Demographic demographic = demographicManager.getDemographic(loggedInInfo, bean.getDemographicNo());
 
@@ -104,18 +100,11 @@ public class RxSendToPhrAction extends Action {
 				Prescription drug = prescribedDrugs[idx];
 				if (drug.isCurrent() == true && !drug.isArchived()) {
 					try {
-						// if updating removed because drugs are never edited, only represcribed
-						/*
-						 * if (phrService.isIndivoRegistered(PHRConstants.DOCTYPE_MEDICATION(), drug.getDrugId()+"")) { //if updating MiscUtils.getLogger().debug("running update"); String phrDrugIndex =
-						 * phrService.getPhrIndex(PHRConstants.DOCTYPE_MEDICATION(), drug.getDrugId()+""); phrService.sendUpdateMedication(prov, demoNo, patientMyOscarId, drug, phrDrugIndex); //drug.setIndivoIdx(newIndex); } else { //if adding
-						 */
-
 						// only add new drugs, no updating old drugs because they cannot be edited
 
-						if (!phrService.isIndivoRegistered(MedicalDataType.MEDICATION.name(), drug.getDrugId() + "")) {
 
-							phrService.sendAddMedication(prov, demographic.getDemographicNo(), drug);
-						}
+						phrService.sendAddMedication(prov, demographic.getDemographicNo(), drug);
+					
 						// throw new Exception("Error: Cannot marshal the document");
 					} catch (Exception e) {
 						MiscUtils.getLogger().error("Error", e);
