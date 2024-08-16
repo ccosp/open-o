@@ -1778,12 +1778,12 @@
     "integrity" : "sha512:lMuGYHdVlrKY25PhH9uyjSpYKxYfem1mfUGUb1nosRSqgOFcKMQYbwW0P0MrGsVV2EWthwMJYJICOCw/YGHjGQ=="
   }, {
     "groupId" : "org.apache.geronimo.specs",
-    "artifactId" : "geronimo-jpa_2.0_spec",
-    "version" : "1.1",
+    "artifactId" : "geronimo-jpa_2.1_spec",
+    "version" : "1.0-alpha-1",
     "scope" : "compile",
     "type" : "jar",
     "optional" : false,
-    "integrity" : "sha512:bPiwipAUQT5AzBOHTxHdGsIxvFo/IVxqKsj+Ueu2wCn2UpQb2AdlFgoZHFDcTr2Nnl7zZcudP8B16hmvMVZyPw=="
+    "integrity" : "sha512:8Y5QRBxQekjKsvjWrM+ZF4HBQD5atM8T0a5MAwIHdBFX1Q0JJx/MoN1M0Q14q2hPTLRVBZjgd2OZGpE7erztOg=="
   }, {
     "groupId" : "org.apache.geronimo.specs",
     "artifactId" : "geronimo-jta_1.1_spec",
@@ -1899,11 +1899,11 @@
   }, {
     "groupId" : "org.apache.openjpa",
     "artifactId" : "openjpa",
-    "version" : "2.4.2",
+    "version" : "3.0.0",
     "scope" : "compile",
     "type" : "jar",
     "optional" : false,
-    "integrity" : "sha512:yN2j5GtvrDiARUH+B98asAcybNaqcCidKqQQ779sijMsbFw4BayAqdxeLPjxl2apdTuBpMRqJy8ODRONplwSdw=="
+    "integrity" : "sha512:NnCD4I3wYLLvrdAJSoBfrToWy4p7+6+TOPMaZY48nsUWiuHo6tyrl8Dz7HUGNSHHEEbw4LBHRgR3dWBU5RNetg=="
   }, {
     "groupId" : "org.apache.pdfbox",
     "artifactId" : "fontbox",
@@ -2122,12 +2122,12 @@
     "integrity" : "sha512:z1O2gKJiGCOX8935cNpNMGK2k8herWwCBXGOBZqtdwlFCSPY9DfSY9n8LN4TYfjzT3r0Xq/vmHFiTfQJ1aDkog=="
   }, {
     "groupId" : "org.apache.xbean",
-    "artifactId" : "xbean-asm5-shaded",
-    "version" : "3.17",
+    "artifactId" : "xbean-asm6-shaded",
+    "version" : "4.8",
     "scope" : "compile",
     "type" : "jar",
     "optional" : false,
-    "integrity" : "sha512:LQEIFZku4G7qf8359SsWydv12ZkHBg4ynW7RiI3acZ12aUZ+4zpBDpl+g/776XHpftfJSocYui0LPLUm/1+8EQ=="
+    "integrity" : "sha512:BwgXlfr5mLJCX673/2xXl7ZYjl4S8qqSNTJGhxJSU30Bv2uxiq8UMG5anKxZ/hyJhDg083uB4q3jNvqXZ2mDYA=="
   }, {
     "groupId" : "org.apache.xmlbeans",
     "artifactId" : "xmlbeans",
