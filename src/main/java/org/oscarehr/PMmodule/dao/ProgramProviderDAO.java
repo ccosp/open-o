@@ -75,5 +75,5 @@ public interface ProgramProviderDAO {
 
     public List<Facility> getFacilitiesInProgramDomain(String providerNo);
 
-    public void updateProviderRoles(Long providerId, Long roleId);
+    public void updateProviderRole(ProgramProvider pp, Long roleId);
 }
