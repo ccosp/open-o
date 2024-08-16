@@ -89,7 +89,6 @@
 		<form-bean name="FrmXmlUploadForm" type="oscar.form.pageUtil.FrmXmlUploadForm" />
 		<form-bean name="FrmForm" type="oscar.form.FrmForm" />
 		<form-bean name="FrmFormForm" type="oscar.form.pageUtil.FrmFormForm" />
-		<form-bean name="EctMyOscarFilterForm" type="oscar.oscarEncounter.data.myoscar.EctMyOscarFilterForm"/>
 		<form-bean name="EctConsultationFormRequestForm" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestForm" />
 		<form-bean name="EctViewConsultationRequestsForm" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsForm" />
 		<form-bean name="EctViewRequestForm" type="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewRequestForm" />
@@ -320,9 +319,6 @@
 			<form-property name="clinicalConnectDisableCloseWindow" type="org.oscarehr.common.model.UserProperty" />
 			<form-property name="clinicalConnectDisableLogoutWarning" type="org.oscarehr.common.model.UserProperty" />
 			<form-property name="labMacroJSON" type="org.oscarehr.common.model.UserProperty" />
-		</form-bean>
-		<form-bean name="setMyOscarIdForm" type="org.apache.struts.action.DynaActionForm">
-			<form-property name="myOscarLoginId" type="java.lang.String" />
 		</form-bean>
 		<form-bean name="attachConsultation" type="org.apache.struts.action.DynaActionForm">
 			<form-property name="documents" type="java.lang.String[]" />
@@ -1316,9 +1312,6 @@
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ConsultationFormRequest.jsp" />
 		</action>
 		
-		<action path="/oscarEncounter/myoscar/measurements_*" name="EctMyOscarFilterForm" scope="request" type="oscar.oscarEncounter.data.myoscar.EctMyOscarFilterAction">
-			<forward name="success" path="/oscarEncounter/myoscar/{1}.jsp" />
-		</action>
 		
 		<action input="/oscarEncounter/oscarConsultationRequest/ConsultationFormRequest.jsp" path="/oscarEncounter/eRefer" scope="request" validate="false" parameter="method" type="oscar.oscarEncounter.oceanEReferal.pageUtil.EReferAction">
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ConsultationFormRequest.jsp"/>
@@ -1803,12 +1796,6 @@
 			<forward name="error"    path="/provider/setTicklerPreferences.jsp?error" />
         </action>        
 
-		<action input="/provider/providerIndivoIdSetter.jsp" name="setMyOscarIdForm" path="/setMyOscarId" scope="request" type="oscar.oscarProvider.pageUtil.ProEditMyOscarIdAction">
-			<forward name="success" path="/provider/providerIndivoIdSetter.jsp" />
-			<forward name="failure" path="/provider/providerIndivoIdSetter.jsp" />
-			<forward name="error" path="/provider/providerColourErr.jsp" />
-			<forward name="eject" path="/index.jsp" />
-		</action>
 
 		<action path="/provider/rxInteractionWarningLevel" type="org.oscarehr.provider.web.ProviderRxInteractionWarningLevelAction" parameter="method" scope="request">
 		</action>
@@ -2723,7 +2710,6 @@
 		<action path="/phr/UserManagement" name="FrmForm" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">
 			<forward name="registrationResult" path="/phr/indivo/RegisterIndivo.jsp" />
 			<forward name="msgIndex" path="/phr/PhrMessage.do?method=viewMessages" />
-			<forward name="registrationLetter" path="/admin/MyoscarConfiguration.jsp" />
 			<forward name="viewVerification" path="/phr/PHRVerification.jsp" />
 			<forward name="relationfragment" path="/phr/PatientRelationship.jsp"/>
 		</action>
