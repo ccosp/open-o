@@ -755,6 +755,7 @@ function updateResidentialProvinces(province) {
 </td></tr>
 <tr><td>
 <form method="post" id="adddemographic" name="adddemographic" action="demographicaddarecord.jsp" onsubmit="return aSubmit()">
+<form method="post" id="adddemographic" name="adddemographic" action="demographicaddarecord.jsp" onsubmit="return aSubmit()" autocomplete="off">
 <input type="hidden" name="fromAppt" value="<%=request.getParameter("fromAppt")%>">
 <input type="hidden" name="originalPage" value="<%=request.getParameter("originalPage")%>">
 <input type="hidden" name="bFirstDisp" value="<%=request.getParameter("bFirstDisp")%>">
