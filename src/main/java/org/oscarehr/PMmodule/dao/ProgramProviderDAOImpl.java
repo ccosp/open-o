@@ -337,9 +337,10 @@ public class ProgramProviderDAOImpl extends HibernateDaoSupport implements Progr
         return results;
     }
 
+    @Transactional
     @Override
-    public void updateProviderRoles(Long providerId, Long roleId) {
-        getHibernateTemplate().bulkUpdate("UPDATE ProgramProvider pp SET pp.RoleId = ? WHERE pp.Id = ?",
-                new Object[] { roleId, providerId });
+    public void updateProviderRole(ProgramProvider pp, Long roleId) {
+        pp.setRoleId(roleId);
+        getHibernateTemplate().update(pp);
     }
 }
