@@ -91,7 +91,8 @@ if(!authed) {
                         List<Hashtable> queues=queueDao.getQueues();
                         for(Hashtable qht:queues){
                         %>                            
-                                <li><%=(String)qht.get("queue")%></li>     
+                                <li><%= Encode.forHtml((String) qht.get("queue")) %></li>
+
                         <%}%>
                         </ol>
  

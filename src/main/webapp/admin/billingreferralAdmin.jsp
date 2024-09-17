@@ -143,11 +143,11 @@ function clearMe() {
 
 <nested:form action="/admin/ManageBillingReferral">
 	 <nested:hidden property="method" value="advancedSearch"/>
-	 <input type="text" name="nameQuery" id="nameQuery" placeholder="Name or ReferralId" value="<%=(name != null)?name:""%>">
+	 <input type="text" name="nameQuery" id="nameQuery" placeholder="Name or ReferralId" value="<%= Encode.forHtmlAttribute(name != null ? name : "") %>">
 	 &nbsp;
-	 <input type="text" name="specialtyQuery" id="specialtyQuery" placeholder="Specialty" value="<%=(specialty != null)?specialty:""%>">
+	 <input type="text" name="specialtyQuery" id="specialtyQuery" placeholder="Specialty" value="<%= Encode.forHtmlAttribute(specialty != null ? specialty : "") %>">
 	  &nbsp;
-	 <input type="text" name="addressQuery" id="addressQuery" placeholder="Address" value="<%=(addressQ != null)?addressQ:""%>">
+	 <input type="text" name="addressQuery" id="addressQuery" placeholder="Address" value="<%= Encode.forHtmlAttribute(addressQ != null ? addressQ : "") %>">
 	  &nbsp;
 	  Include hidden:
 	  <input type="checkbox" name="showHidden" id="showHidden" <%=(checked!=null&&checked)?" checked=\"checked\" ":"" %> />
