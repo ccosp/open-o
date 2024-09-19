@@ -12,7 +12,7 @@
         "redhat.fabric8-analytics",
         "vscjava.vscode-java-pack"
       ],
-      settings: {
+      "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
       }
     }
