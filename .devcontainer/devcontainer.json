@@ -2,23 +2,27 @@
 	"name": "Open-OSP EMR Dev",
 	"workspaceFolder": "/workspace",
 	"dockerComposeFile": "docker-compose.yml",
-	"service": "oscar",
+	"service": "open-o",
 	"shutdownAction": "stopCompose",
 	"customizations": {
 		"vscode": {
-		"extensions": [
-			"waderyan.gitblame",
-			"redhat.vscode-community-server-connector@0.25.7",
-			"redhat.fabric8-analytics",
-			"vscjava.vscode-java-pack"
-		],
-		"settings": {
-			"terminal.integrated.shell.linux": "/bin/bash"
-		}
+			"extensions": [
+				"waderyan.gitblame",
+				"redhat.vscode-community-server-connector@0.25.7",
+				"redhat.fabric8-analytics",
+				"vscjava.vscode-java-pack"
+			],
+			"settings": {
+				"terminal.integrated.shell.linux": "/bin/bash"
+			}
 		}
 	},
 	"mounts": [
-		"source=/run/host-services/ssh-auth.sock,target=/ssh-agent,type=bind"
+		{
+			"type": "bind",
+			"source": "${localEnv:SSH_AUTH_SOCK}",
+			"target": "/ssh-agent"
+		}
 	],
 	"remoteEnv": {
 		"SSH_AUTH_SOCK": "/ssh-agent"
