@@ -30,9 +30,6 @@ services:
     volumes:
       - mariadb-files:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: oscar
-      MYSQL_USER: root
       TZ: America/Toronto
       container: docker
     networks:
