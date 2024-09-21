@@ -31,8 +31,8 @@ services:
       - mariadb-files:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: drugref2
-      MYSQL_USER: open-o
+      MYSQL_DATABASE: oscar
+      MYSQL_USER: root
       TZ: America/Toronto
       container: docker
     networks:
