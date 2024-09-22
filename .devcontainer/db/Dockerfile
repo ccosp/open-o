@@ -15,14 +15,17 @@ RUN apt-get update && apt-get install -y dos2unix  \
 # Currently this needs the database configuration for post-scripts from the OpenOSP-EMR
 # repository it is building a database for; this build process could use fine tuning for
 # building older versions with different DB schema.  This works, but further work here is
-# a TODO.
+# something for later.
 
 COPY ./.devcontainer/db/scripts/populate_db.sh /docker-entrypoint-initdb.d/populate_db.sh
+RUN mkdir /scripts
+COPY ./.devcontainer/db/scripts/development.sql /scripts/development.sql
 COPY ./database /database
 COPY ./.devcontainer/development/config/shared/my.cnf /etc/mysql/my.cnf
 
 # Change permissions
-RUN chmod 644 /etc/mysql/my.cnf
+RUN chmod 744 /etc/mysql/my.cnf
+RUN chmod 755 /scripts
 
 # Converting script files using dos2unix (Required for Windows)
 RUN dos2unix /docker-entrypoint-initdb.d/populate_db.sh
