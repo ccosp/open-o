@@ -22,9 +22,9 @@ build_and_deploy() {
   # - If run_tests is true, it builds the project and runs tests.
   # - If run_tests is false, it skips tests during the build.
   if [ "$run_tests" = true ]; then
-    mvn clean package war:exploded
+    mvn clean -T 1C package war:exploded
   else
-    mvn clean -Dmaven.test.skip=true package war:exploded
+    mvn clean -Dmaven.test.skip=true -T 1C package war:exploded
   fi
 
   # Extract the version from the pom.xml file.
