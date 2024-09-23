@@ -261,6 +261,8 @@ public class EdtClientBuilder {
 		// keystore file is loaded via classpath loader
 		outProps.put(WSHandlerConstants.SIG_PROP_FILE, clientKeystore);
 		outProps.put(WSHandlerConstants.SIG_KEY_ID, "DirectReference");
+		outProps.put(WSHandlerConstants.STORE_BYTES_IN_ATTACHMENT, "0");
+		outProps.put(WSHandlerConstants.EXPAND_XOP_INCLUDE, "0");
 		return outProps;
 	}
 
