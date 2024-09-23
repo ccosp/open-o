@@ -4,17 +4,17 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
- * 
+ * of the License, or (at your option) any later version.
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ * <p>
  * This software was written for the
  * Department of Family Medicine
  * McMaster University
@@ -34,7 +34,7 @@ import oscar.OscarProperties;
 /**
  * Provides an abstract way to reference the the External Prescriber preferences specific to a
  * clinic/facility. These are usually used during batch operations.
- * 
+ *
  * FUTURE: org.oscarehr.oscarRx.erx should, in the future, support more than one
  * external prescription service , which may not necessarily need the same
  * facility preference object as the External Prescriber. When this support is added, this class
@@ -51,13 +51,13 @@ public class ERxFacilityPreferences {
     /**
      * Create an instance of an ERxFacilityPreferences object.
      */
-	
-	public static ERxFacilityPreferences getInstance()
+
+    public static ERxFacilityPreferences getInstance()
             throws MalformedURLException {
         // The object we will return
-    	
-    	//logger.info("ERxFacilityPref1");
-    	
+
+        //logger.info("ERxFacilityPref1");
+
         ERxFacilityPreferences answer = new ERxFacilityPreferences();
         //logger.info("ERxFacilityPref2");
         OscarProperties properties = OscarProperties.getInstance();
@@ -71,20 +71,20 @@ public class ERxFacilityPreferences {
         answer.setClientNumber(properties.getProperty("util.erx.clinic_facility_id"));
         answer.setIsTraining(Boolean.parseBoolean(properties.getProperty("util.erx.clinic_training_mode")));
         answer.setLocale(properties.getProperty("util.erx.clinic_locale"));
-        
+
         return answer;
     }
 
     /**
      * Get a unique transaction ID. According to the XSD/SOAP specification, an
      * integer is a signed number between (-2^32) and 2^31-1.
-     * 
+     *
      * Note: There's a possibility that the External Prescriber will choke on this after Tue, 19
      * January 2038 at 03:14:07 UTC.
-     * 
+     *
      * Note: Java will choke on this after Sun, 04 December 292,277,026,596 at
      * 15:30:08 UTC.
-     * 
+     *
      * @return A unique transaction ID between 0 and 2147483647.
      */
     public static long getNextTransactionId() {
@@ -133,7 +133,7 @@ public class ERxFacilityPreferences {
 
     /**
      * Create an instance of a ERxFacilityPreferences object.
-     * 
+     *
      * @param facilityId
      *            The unique facility identifier corresponding to this facility,
      *            provided by the External Prescriber.
@@ -154,8 +154,8 @@ public class ERxFacilityPreferences {
      *            The locale (language) that the facility uses.
      */
     public ERxFacilityPreferences(int facilityId, URL remoteURL,
-            String username, String password, String clientNumber,
-            boolean isTraining, String locale) {
+                                  String username, String password, String clientNumber,
+                                  boolean isTraining, String locale) {
         super();
         this.facilityId = facilityId;
         this.remoteURL = remoteURL;
@@ -169,7 +169,7 @@ public class ERxFacilityPreferences {
     /**
      * Returns the unique clinic number corresponding to this facility, provided
      * by the External Prescriber.
-     * 
+     *
      * @return The current value of clientNumber.
      */
     public String getClientNumber() {
@@ -179,7 +179,7 @@ public class ERxFacilityPreferences {
     /**
      * Returns the unique facility identifier corresponding to this facility,
      * provided by the External Prescriber.
-     * 
+     *
      * @return The current value of facilityId.
      */
     public int getFacilityId() {
@@ -188,7 +188,7 @@ public class ERxFacilityPreferences {
 
     /**
      * Returns the locale.
-     * 
+     *
      * @return The current value of locale.
      */
     public String getLocale() {
@@ -198,7 +198,7 @@ public class ERxFacilityPreferences {
     /**
      * Returns the facility's password, which will be used to connect to the web
      * service and is provided by the External Prescriber.
-     * 
+     *
      * @return The current value of password.
      */
     public String getPassword() {
@@ -207,7 +207,7 @@ public class ERxFacilityPreferences {
 
     /**
      * Returns the URL of the web service to connect to, provided by the External Prescriber.
-     * 
+     *
      * @return The current value of remoteURL.
      */
     public URL getRemoteURL() {
@@ -217,7 +217,7 @@ public class ERxFacilityPreferences {
     /**
      * Returns the facility's username, which will be used to connect to the web
      * service and is provided by the External Prescriber.
-     * 
+     *
      * @return The current value of username.
      */
     public String getUsername() {
@@ -226,7 +226,7 @@ public class ERxFacilityPreferences {
 
     /**
      * Returns whether or not the facility is in training mode.
-     * 
+     *
      * @return The current value of isTraining.
      */
     public boolean isIsTraining() {
@@ -236,7 +236,7 @@ public class ERxFacilityPreferences {
     /**
      * Changes the value of the unique clinic number corresponding to this
      * facility, provided by the External Prescriber.
-     * 
+     *
      * @param clientNumber
      *            The new clientNumber.
      */
@@ -247,7 +247,7 @@ public class ERxFacilityPreferences {
     /**
      * Changes the value of the unique facility identifier corresponding to this
      * facility, provided by the External Prescriber.
-     * 
+     *
      * @param facilityId
      *            The new facilityId.
      */
@@ -257,7 +257,7 @@ public class ERxFacilityPreferences {
 
     /**
      * Changes whether or not the facility is in training mode.
-     * 
+     *
      * @param isTraining
      *            The new value for isTraining.
      */
@@ -267,7 +267,7 @@ public class ERxFacilityPreferences {
 
     /**
      * Changes the value of locale.
-     * 
+     *
      * @param locale
      *            The new locale.
      */
@@ -278,7 +278,7 @@ public class ERxFacilityPreferences {
     /**
      * Changes the value of the facility's password, which will be used to
      * connect to the web service and is provided by the External Prescriber.
-     * 
+     *
      * @param password
      *            The new password.
      */
@@ -289,7 +289,7 @@ public class ERxFacilityPreferences {
     /**
      * Changes the value of the URL of the web service to connect to, provided
      * by the External Prescriber.
-     * 
+     *
      * @param remoteURL
      *            The new remoteURL.
      */
@@ -300,7 +300,7 @@ public class ERxFacilityPreferences {
     /**
      * Changes the value of the facility's username, which will be used to
      * connect to the web service and is provided by the External Prescriber.
-     * 
+     *
      * @param username
      *            The new username.
      */

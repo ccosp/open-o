@@ -25,16 +25,16 @@
 --%>
 
 <%@page import="java.util.HashMap"
-	errorPage="provider/errorpage.jsp"%>
+        errorPage="provider/errorpage.jsp" %>
 <%
-  if(session != null) {
-    Object user = session.getValue("patient");
-    if (user != null) {
-      HashMap hash=(HashMap)application.getAttribute("monitor");
-      session.invalidate();
-      request.getSession();
+    if (session != null) {
+        Object user = session.getValue("patient");
+        if (user != null) {
+            HashMap hash = (HashMap) application.getAttribute("monitor");
+            session.invalidate();
+            request.getSession();
+        }
     }
-  }
-  response.sendRedirect("../oscar_pts.html");
-  
+    response.sendRedirect("../oscar_pts.html");
+
 %>

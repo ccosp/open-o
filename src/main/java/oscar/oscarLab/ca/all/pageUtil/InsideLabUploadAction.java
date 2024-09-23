@@ -4,17 +4,17 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
- *
+ * of the License, or (at your option) any later version.
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for the
  * Department of Family Medicine
  * McMaster University
@@ -76,13 +76,17 @@ public class InsideLabUploadAction extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         ActionForward success = mapping.findForward("success");
-        if (!ServletFileUpload.isMultipartContent(request)) { return success; }
+        if (!ServletFileUpload.isMultipartContent(request)) {
+            return success;
+        }
 
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
         checkUserPrivilege(loggedInInfo);
 
         List<FileItem> fileItems = getFiles(request);
-        if (fileItems == null) { return success; }
+        if (fileItems == null) {
+            return success;
+        }
         Map<String, FileStatus> filesStatusMap = processFiles(loggedInInfo, request, fileItems);
         request.setAttribute("filesStatusMap", filesStatusMap);
 
@@ -137,8 +141,12 @@ public class InsideLabUploadAction extends Action {
     private String getFileType(HttpServletRequest request) {
         String fileType = request.getParameter("type");
         String otherFileType = request.getParameter("otherType");
-        if (fileType != null && !fileType.equals("OTHER")) { return fileType; }
-        if (otherFileType != null) { return otherFileType; }
+        if (fileType != null && !fileType.equals("OTHER")) {
+            return fileType;
+        }
+        if (otherFileType != null) {
+            return otherFileType;
+        }
 
         return null;
     }
@@ -160,7 +168,9 @@ public class InsideLabUploadAction extends Action {
         try (InputStream localFileInputStream = Files.newInputStream(path)) {
             String providerNumber = (String) request.getSession().getAttribute("user");
             checkFileUploadedSuccessfully = FileUploadCheck.addFile(fileName, localFileInputStream, providerNumber);
-            if (checkFileUploadedSuccessfully == FileUploadCheck.UNSUCCESSFUL_SAVE) { return FileStatus.EXISTS; }
+            if (checkFileUploadedSuccessfully == FileUploadCheck.UNSUCCESSFUL_SAVE) {
+                return FileStatus.EXISTS;
+            }
         } catch (IOException e) {
             MiscUtils.getLogger().error("Error occurred while processing " + fileName + " file", e);
             return FileStatus.FAILED;

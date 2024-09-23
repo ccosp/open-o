@@ -6,22 +6,22 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for the
  * Department of Family Medicine
  * McMaster University
  * Hamilton
  * Ontario, Canada
- *
+ * <p>
  * Modifications made by Magenta Health in 2024.
  */
 
@@ -52,7 +52,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds routing record containing reference to the demographic record with the
      * specified lab results reference number of {@link #HL7} lab type.
-     * 
+     *
      * LabId is also refereed to as Lab_no, and segmentId.
      */
     @Override
@@ -63,7 +63,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds routing record containing reference to the demographic record with the
      * specified lab type and lab results reference number.
-     * 
+     *
      * @param labType
      *                Type of the lab record to look up
      * @param labNo
@@ -117,7 +117,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
 
     /**
      * Finds unique test names for a patient
-     * 
+     *
      * @param demoId
      *                Demographic ID for the patient
      * @param labType
@@ -143,7 +143,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
 
     /**
      * Finds unique test names for a patient
-     * 
+     *
      * @param demoId
      *                Demographic ID for the patient
      * @param labType
@@ -168,7 +168,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
 
     /**
      * Finds unique test names for a patient
-     * 
+     *
      * @param demoNo
      *                Demographic ID for the patient
      * @param labType
@@ -196,7 +196,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
 
     /**
      * Finds lab routings for the specified demographic and lab type
-     * 
+     *
      * @param demoNo
      *                Demographic to find labs for
      * @param labType
@@ -215,7 +215,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
 
     /**
      * Finds all routings and tests for the specified demographic and lab
-     * 
+     *
      * @param demoNo
      *                Demographic to find tests for
      * @param labType
@@ -244,7 +244,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
 
     /**
      * Finds all routings and tests for the specified demographic and lab
-     * 
+     *
      * @param demoNo
      *                Demographic to find tests for
      * @param labType

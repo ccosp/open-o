@@ -1,21 +1,20 @@
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -42,9 +41,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -65,21 +64,21 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "c1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa",
-    "c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio",
-    "c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation",
-    "c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation",
-    "cComments",
-    "cActions",
-    "cByWhom",
-    "cReviewDate",
-    "cDiagnosticCategoriesCheckAllThatApply",
-    "cOtherIllnessInformationCheckAllThatApply"
+        "c1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa",
+        "c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio",
+        "c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation",
+        "c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation",
+        "cComments",
+        "cActions",
+        "cByWhom",
+        "cReviewDate",
+        "cDiagnosticCategoriesCheckAllThatApply",
+        "cOtherIllnessInformationCheckAllThatApply"
 })
 @XmlRootElement(name = "C8__Information_on_condition_and_treatment__Have_you_been_given_clear_information_about_your_med")
 public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed {
@@ -107,11 +106,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the c1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getC1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa() {
         return c1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa;
@@ -119,11 +118,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the c1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setC1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa(BigInteger value) {
         this.c1HasThePersonHadClearVerbalOrWrittenInformationAboutConditionAndTreatmentIfRa = value;
@@ -131,11 +130,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio() {
         return c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio;
@@ -143,11 +142,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio(BigInteger value) {
         this.c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInObtainingSuchInformatio = value;
@@ -155,11 +154,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation() {
         return c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation;
@@ -167,11 +166,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation(BigInteger value) {
         this.c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInObtainingSuchInformation = value;
@@ -179,11 +178,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getC3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation() {
         return c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation;
@@ -191,11 +190,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setC3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation(BigInteger value) {
         this.c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInObtainingSuchInformation = value;
@@ -203,11 +202,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the cComments property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link CComments }
-     *     
+     *
      */
     public CComments getCComments() {
         return cComments;
@@ -215,11 +214,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the cComments property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link CComments }
-     *     
+     *
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -227,11 +226,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the cActions property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCActions() {
         return cActions;
@@ -239,11 +238,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the cActions property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -251,11 +250,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the cByWhom property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCByWhom() {
         return cByWhom;
@@ -263,11 +262,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the cByWhom property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -275,11 +274,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the cReviewDate property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -287,11 +286,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the cReviewDate property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;
@@ -299,11 +298,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the cDiagnosticCategoriesCheckAllThatApply property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link CDiagnosticCategoriesCheckAllThatApply }
-     *     
+     *
      */
     public CDiagnosticCategoriesCheckAllThatApply getCDiagnosticCategoriesCheckAllThatApply() {
         return cDiagnosticCategoriesCheckAllThatApply;
@@ -311,11 +310,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the cDiagnosticCategoriesCheckAllThatApply property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link CDiagnosticCategoriesCheckAllThatApply }
-     *     
+     *
      */
     public void setCDiagnosticCategoriesCheckAllThatApply(CDiagnosticCategoriesCheckAllThatApply value) {
         this.cDiagnosticCategoriesCheckAllThatApply = value;
@@ -323,11 +322,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Gets the value of the cOtherIllnessInformationCheckAllThatApply property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link COtherIllnessInformationCheckAllThatApply }
-     *     
+     *
      */
     public COtherIllnessInformationCheckAllThatApply getCOtherIllnessInformationCheckAllThatApply() {
         return cOtherIllnessInformationCheckAllThatApply;
@@ -335,11 +334,11 @@ public class C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformatio
 
     /**
      * Sets the value of the cOtherIllnessInformationCheckAllThatApply property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link COtherIllnessInformationCheckAllThatApply }
-     *     
+     *
      */
     public void setCOtherIllnessInformationCheckAllThatApply(COtherIllnessInformationCheckAllThatApply value) {
         this.cOtherIllnessInformationCheckAllThatApply = value;

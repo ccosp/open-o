@@ -1,21 +1,20 @@
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -40,9 +39,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -72,30 +71,30 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "cApprovedHomesAndHomesForSpecialCare",
-    "cCorrectionalProbationFacility",
-    "cDomiciliaryHostel",
-    "cGeneralHospital",
-    "cPsychiatricHospital",
-    "cOtherSpecialtyHospital",
-    "cNoFixedAddress",
-    "cHostelShelter",
-    "cLongTermCareFacilityNursingHome",
-    "cMunicipalNonProfitHousing",
-    "cPrivateNonProfitHousing",
-    "cPrivateHouseAptSROwnedMarketRent",
-    "cPrivateHouseAptOtherSubsidized",
-    "cRoomingBoardingHouse",
-    "cSupportiveHousingCongregateLiving",
-    "cSupportiveHousingAssistedLiving",
-    "cOther",
-    "cUnknown",
-    "cClientDeclinedToAnswer"
+        "cApprovedHomesAndHomesForSpecialCare",
+        "cCorrectionalProbationFacility",
+        "cDomiciliaryHostel",
+        "cGeneralHospital",
+        "cPsychiatricHospital",
+        "cOtherSpecialtyHospital",
+        "cNoFixedAddress",
+        "cHostelShelter",
+        "cLongTermCareFacilityNursingHome",
+        "cMunicipalNonProfitHousing",
+        "cPrivateNonProfitHousing",
+        "cPrivateHouseAptSROwnedMarketRent",
+        "cPrivateHouseAptOtherSubsidized",
+        "cRoomingBoardingHouse",
+        "cSupportiveHousingCongregateLiving",
+        "cSupportiveHousingAssistedLiving",
+        "cOther",
+        "cUnknown",
+        "cClientDeclinedToAnswer"
 })
 @XmlRootElement(name = "CWhere_do_you_live___select_one_")
 public class CWhereDoYouLiveSelectOne {
@@ -141,11 +140,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cApprovedHomesAndHomesForSpecialCare property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCApprovedHomesAndHomesForSpecialCare() {
         return cApprovedHomesAndHomesForSpecialCare;
@@ -153,11 +152,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cApprovedHomesAndHomesForSpecialCare property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCApprovedHomesAndHomesForSpecialCare(String value) {
         this.cApprovedHomesAndHomesForSpecialCare = value;
@@ -165,11 +164,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cCorrectionalProbationFacility property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCCorrectionalProbationFacility() {
         return cCorrectionalProbationFacility;
@@ -177,11 +176,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cCorrectionalProbationFacility property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCCorrectionalProbationFacility(String value) {
         this.cCorrectionalProbationFacility = value;
@@ -189,11 +188,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cDomiciliaryHostel property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCDomiciliaryHostel() {
         return cDomiciliaryHostel;
@@ -201,11 +200,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cDomiciliaryHostel property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCDomiciliaryHostel(String value) {
         this.cDomiciliaryHostel = value;
@@ -213,11 +212,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cGeneralHospital property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCGeneralHospital() {
         return cGeneralHospital;
@@ -225,11 +224,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cGeneralHospital property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCGeneralHospital(String value) {
         this.cGeneralHospital = value;
@@ -237,11 +236,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cPsychiatricHospital property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCPsychiatricHospital() {
         return cPsychiatricHospital;
@@ -249,11 +248,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cPsychiatricHospital property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCPsychiatricHospital(String value) {
         this.cPsychiatricHospital = value;
@@ -261,11 +260,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cOtherSpecialtyHospital property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCOtherSpecialtyHospital() {
         return cOtherSpecialtyHospital;
@@ -273,11 +272,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cOtherSpecialtyHospital property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCOtherSpecialtyHospital(String value) {
         this.cOtherSpecialtyHospital = value;
@@ -285,11 +284,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cNoFixedAddress property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCNoFixedAddress() {
         return cNoFixedAddress;
@@ -297,11 +296,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cNoFixedAddress property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCNoFixedAddress(String value) {
         this.cNoFixedAddress = value;
@@ -309,11 +308,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cHostelShelter property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCHostelShelter() {
         return cHostelShelter;
@@ -321,11 +320,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cHostelShelter property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCHostelShelter(String value) {
         this.cHostelShelter = value;
@@ -333,11 +332,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cLongTermCareFacilityNursingHome property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCLongTermCareFacilityNursingHome() {
         return cLongTermCareFacilityNursingHome;
@@ -345,11 +344,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cLongTermCareFacilityNursingHome property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCLongTermCareFacilityNursingHome(String value) {
         this.cLongTermCareFacilityNursingHome = value;
@@ -357,11 +356,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cMunicipalNonProfitHousing property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCMunicipalNonProfitHousing() {
         return cMunicipalNonProfitHousing;
@@ -369,11 +368,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cMunicipalNonProfitHousing property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCMunicipalNonProfitHousing(String value) {
         this.cMunicipalNonProfitHousing = value;
@@ -381,11 +380,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cPrivateNonProfitHousing property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCPrivateNonProfitHousing() {
         return cPrivateNonProfitHousing;
@@ -393,11 +392,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cPrivateNonProfitHousing property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCPrivateNonProfitHousing(String value) {
         this.cPrivateNonProfitHousing = value;
@@ -405,11 +404,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cPrivateHouseAptSROwnedMarketRent property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCPrivateHouseAptSROwnedMarketRent() {
         return cPrivateHouseAptSROwnedMarketRent;
@@ -417,11 +416,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cPrivateHouseAptSROwnedMarketRent property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCPrivateHouseAptSROwnedMarketRent(String value) {
         this.cPrivateHouseAptSROwnedMarketRent = value;
@@ -429,11 +428,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cPrivateHouseAptOtherSubsidized property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCPrivateHouseAptOtherSubsidized() {
         return cPrivateHouseAptOtherSubsidized;
@@ -441,11 +440,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cPrivateHouseAptOtherSubsidized property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCPrivateHouseAptOtherSubsidized(String value) {
         this.cPrivateHouseAptOtherSubsidized = value;
@@ -453,11 +452,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cRoomingBoardingHouse property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCRoomingBoardingHouse() {
         return cRoomingBoardingHouse;
@@ -465,11 +464,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cRoomingBoardingHouse property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCRoomingBoardingHouse(String value) {
         this.cRoomingBoardingHouse = value;
@@ -477,11 +476,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cSupportiveHousingCongregateLiving property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCSupportiveHousingCongregateLiving() {
         return cSupportiveHousingCongregateLiving;
@@ -489,11 +488,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cSupportiveHousingCongregateLiving property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCSupportiveHousingCongregateLiving(String value) {
         this.cSupportiveHousingCongregateLiving = value;
@@ -501,11 +500,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cSupportiveHousingAssistedLiving property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCSupportiveHousingAssistedLiving() {
         return cSupportiveHousingAssistedLiving;
@@ -513,11 +512,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cSupportiveHousingAssistedLiving property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCSupportiveHousingAssistedLiving(String value) {
         this.cSupportiveHousingAssistedLiving = value;
@@ -525,11 +524,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cOther property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link COther }
-     *     
+     *
      */
     public COther getCOther() {
         return cOther;
@@ -537,11 +536,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cOther property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link COther }
-     *     
+     *
      */
     public void setCOther(COther value) {
         this.cOther = value;
@@ -549,11 +548,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cUnknown property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCUnknown() {
         return cUnknown;
@@ -561,11 +560,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cUnknown property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCUnknown(String value) {
         this.cUnknown = value;
@@ -573,11 +572,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Gets the value of the cClientDeclinedToAnswer property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCClientDeclinedToAnswer() {
         return cClientDeclinedToAnswer;
@@ -585,11 +584,11 @@ public class CWhereDoYouLiveSelectOne {
 
     /**
      * Sets the value of the cClientDeclinedToAnswer property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCClientDeclinedToAnswer(String value) {
         this.cClientDeclinedToAnswer = value;

@@ -1,26 +1,26 @@
 /**
  * Copyright (c) 2024. Magenta Health. All Rights Reserved.
- *
+ * <p>
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
- *
+ * <p>
  * Modifications made by Magenta Health in 2024.
  */
 package org.oscarehr.common.dao;
@@ -117,7 +117,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
      *         not merged to any other record
      */
     @SuppressWarnings("unchecked")
-    @NativeSql({ "demographic_merged" })
+    @NativeSql({"demographic_merged"})
     @Override
     public List<Integer> getMergedDemographics(Integer demographicNo) {
         // Please don't tell me anything about session handling - this hibernate stuff
@@ -215,7 +215,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         if (onlyActive) {
             q = "From Demographic d where d.ProviderNo = ? and d.PatientStatus = 'AC' ";
         }
-        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(q, new Object[] { providerNo });
+        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(q, new Object[]{providerNo});
         return rs;
     }
 
@@ -225,14 +225,14 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         if (onlyActive) {
             q = "Select d.DemographicNo From Demographic d where d.ProviderNo = ?  ";
         }
-        List<Integer> rs = (List<Integer>) getHibernateTemplate().find(q, new Object[] { providerNo });
+        List<Integer> rs = (List<Integer>) getHibernateTemplate().find(q, new Object[]{providerNo});
         return rs;
     }
 
     @Override
     public Demographic getDemographicByMyOscarUserName(String myOscarUserName) {
         String q = "From Demographic d where d.myOscarUserName = ? ";
-        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(q, new Object[] { myOscarUserName });
+        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(q, new Object[]{myOscarUserName});
         if (rs.size() > 0)
             return (rs.get(0));
         else
@@ -252,7 +252,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
                 + " order by d.LastName,d.FirstName";
 
         String status = "AC"; // only show active clients
-        List rs = getHibernateTemplate().find(q, new Object[] { status, new Integer(programId), dt, dt, defdt });
+        List rs = getHibernateTemplate().find(q, new Object[]{status, new Integer(programId), dt, dt, defdt});
 
         List clients = new ArrayList<Demographic>();
         Integer clientNo = 0;
@@ -339,7 +339,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         cal.set(Calendar.SECOND, 59);
         Date dt = cal.getTime();
 
-        List rs = getHibernateTemplate().find(q, new Object[] { demoNo, dt, dt, defdt });
+        List rs = getHibernateTemplate().find(q, new Object[]{demoNo, dt, dt, defdt});
         return rs;
     }
 
@@ -352,14 +352,14 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @Override
     public List getDemoProgram(Integer demoNo) {
         String q = "Select a.programId From Admission a Where a.clientId=?";
-        List rs = getHibernateTemplate().find(q, new Object[] { demoNo });
+        List rs = getHibernateTemplate().find(q, new Object[]{demoNo});
         return rs;
     }
 
     @Override
     public List getDemoProgramCurrent(Integer demoNo) {
         String q = "Select a.programId From Admission a Where a.clientId=? and a.admissionStatus='current'";
-        List rs = getHibernateTemplate().find(q, new Object[] { demoNo });
+        List rs = getHibernateTemplate().find(q, new Object[]{demoNo});
         return rs;
     }
 
@@ -399,9 +399,9 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         String[] lastfirst = searchStr.split(",");
         Object[] object = null;
         if (lastfirst.length > 1) {
-            object = new Object[] { lastfirst[0].trim() + "%", lastfirst[1].trim() + "%" };
+            object = new Object[]{lastfirst[0].trim() + "%", lastfirst[1].trim() + "%"};
         } else {
-            object = new Object[] { lastfirst[0].trim() + "%" };
+            object = new Object[]{lastfirst[0].trim() + "%"};
         }
         List list = getHibernateTemplate().find(hql, object);
         return list;
@@ -457,48 +457,48 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByName(String searchStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                     boolean outOfDomain) {
         return searchDemographicByNameAndStatus(searchStr, null, limit, offset, null, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByNameAndNotStatus(String searchStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                                 int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByNameAndStatus(searchStr, statuses, limit, offset, null, providerNo, outOfDomain,
                 true);
     }
 
     @Override
     public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                              int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByNameAndStatus(searchStr, statuses, limit, offset, null, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByName(String searchStr, int limit, int offset, String orderBy,
-            String providerNo, boolean outOfDomain) {
+                                                     String providerNo, boolean outOfDomain) {
         return searchDemographicByNameAndStatus(searchStr, null, limit, offset, orderBy, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByNameAndNotStatus(String searchStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                 int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByNameAndStatus(searchStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 true);
     }
 
     @Override
     public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                              int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByNameAndStatus(searchStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+                                                              int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
         return searchDemographicByNameAndStatus(searchStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 ignoreStatuses, true);
     }
@@ -506,8 +506,8 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchDemographicByNameAndStatus(String searchStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
-            boolean ignoreMerged) {
+                                                              int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
+                                                              boolean ignoreMerged) {
         List<Demographic> list = new ArrayList<Demographic>();
         String queryString = "From Demographic d where d.LastName like :lastName ";
 
@@ -558,7 +558,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchMergedDemographicByName(String searchStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                           boolean outOfDomain) {
         List<Demographic> list = new ArrayList<Demographic>();
         String queryString = "From Demographic d where d.LastName like :lastName and d.HeadRecord is not null ";
 
@@ -589,20 +589,20 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByDOB(String dobStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                    boolean outOfDomain) {
         return searchDemographicByDOBAndStatus(dobStr, null, limit, offset, null, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByDOBWithMerged(String dobStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                              boolean outOfDomain) {
         return searchDemographicByDOBAndStatus(dobStr, null, limit, offset, null, providerNo, outOfDomain, false,
                 false);
     }
 
     @Override
     public List<Demographic> getByHinAndGenderAndDobAndLastName(String hin, String gender, String dob,
-            String lastName) {
+                                                                String lastName) {
 
         List<Demographic> list = new ArrayList<Demographic>();
         String queryString = "FROM Demographic d WHERE d.Hin like :hin AND d.Sex = :gender AND d.YearOfBirth like :yearOfBirth AND d.MonthOfBirth like :monthOfBirth AND d.DateOfBirth like :dateOfBirth AND d.LastName = :lastName and d.PatientStatus != 'MERGED'";
@@ -629,38 +629,38 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByDOBAndNotStatus(String dobStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                                int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByDOBAndStatus(dobStr, statuses, limit, offset, null, providerNo, outOfDomain, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                             int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByDOBAndStatus(dobStr, statuses, limit, offset, null, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByDOB(String dobStr, int limit, int offset, String orderBy,
-            String providerNo, boolean outOfDomain) {
+                                                    String providerNo, boolean outOfDomain) {
         return searchDemographicByDOBAndStatus(dobStr, null, limit, offset, orderBy, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByDOBAndNotStatus(String dobStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByDOBAndStatus(dobStr, statuses, limit, offset, orderBy, providerNo, outOfDomain, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                             int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByDOBAndStatus(dobStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+                                                             int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
         return searchDemographicByDOBAndStatus(dobStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 ignoreStatuses, false);
     }
@@ -668,8 +668,8 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchDemographicByDOBAndStatus(String dobStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
-            boolean ignoreMerged) {
+                                                             int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
+                                                             boolean ignoreMerged) {
         List<Demographic> list = new ArrayList<Demographic>();
         String queryString = "From Demographic d where d.YearOfBirth like :yearOfBirth AND d.MonthOfBirth like :monthOfBirth AND d.DateOfBirth like :dateOfBirth ";
 
@@ -721,10 +721,10 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         return list;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public List<Demographic> searchMergedDemographicByDOB(String dobStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                          boolean outOfDomain) {
         List<Demographic> list = new ArrayList<Demographic>();
         String queryString = "From Demographic d where d.YearOfBirth like :yearOfBirth AND d.MonthOfBirth like :monthOfBirth AND d.DateOfBirth like :dateOfBirth and d.HeadRecord is not null ";
 
@@ -754,7 +754,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByPhone(String phoneStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                      boolean outOfDomain) {
         List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr, null, limit, offset, null,
                 providerNo, outOfDomain, false);
         demographics.addAll(searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty.demo_cell,
@@ -764,7 +764,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByPhoneAndNotStatus(String phoneStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                                  int offset, String providerNo, boolean outOfDomain) {
         List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr, statuses, limit, offset, null,
                 providerNo, outOfDomain, true);
         demographics
@@ -776,7 +776,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                               int offset, String providerNo, boolean outOfDomain) {
         List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr, statuses, limit, offset, null,
                 providerNo, outOfDomain, false);
         demographics.addAll(searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty.demo_cell,
@@ -786,7 +786,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByPhone(String phoneStr, int limit, int offset, String orderBy,
-            String providerNo, boolean outOfDomain) {
+                                                      String providerNo, boolean outOfDomain) {
         List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr, null, limit, offset, orderBy,
                 providerNo, outOfDomain, false);
         demographics.addAll(searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty.demo_cell,
@@ -796,7 +796,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByPhoneAndNotStatus(String phoneStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                  int offset, String orderBy, String providerNo, boolean outOfDomain) {
         List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr, statuses, limit, offset, orderBy,
                 providerNo, outOfDomain, true);
         demographics
@@ -807,7 +807,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                               int offset, String orderBy, String providerNo, boolean outOfDomain) {
         List<Demographic> demographics = searchDemographicByPhoneAndStatus(phoneStr, statuses, limit, offset, orderBy,
                 providerNo, outOfDomain, false);
         demographics.addAll(searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty.demo_cell,
@@ -817,7 +817,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+                                                               int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
         return searchDemographicByPhoneAndStatus(phoneStr, statuses, limit, offset, orderBy,
                 providerNo, outOfDomain, ignoreStatuses, true);
     }
@@ -825,8 +825,8 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchDemographicByPhoneAndStatus(String phoneStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
-            boolean ignoreMerged) {
+                                                               int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
+                                                               boolean ignoreMerged) {
         List<Demographic> list = new ArrayList<Demographic>();
         String queryString = "From Demographic d where (d.Phone like :phone OR d.Phone2 LIKE :phone)";
 
@@ -869,7 +869,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchMergedDemographicByPhone(String phoneStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                            boolean outOfDomain) {
         List<Demographic> list = new ArrayList<Demographic>();
 
         String queryString = "From Demographic d where d.Phone like :phone and d.HeadRecord is not null ";
@@ -913,44 +913,44 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByHIN(String hinStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                    boolean outOfDomain) {
         return searchDemographicByHINAndStatus(hinStr, null, limit, offset, null, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByHINAndNotStatus(String hinStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                                int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByHINAndStatus(hinStr, statuses, limit, offset, null, providerNo, outOfDomain, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                             int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByHINAndStatus(hinStr, statuses, limit, offset, null, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByHIN(String hinStr, int limit, int offset, String orderBy,
-            String providerNo, boolean outOfDomain) {
+                                                    String providerNo, boolean outOfDomain) {
         return searchDemographicByHINAndStatus(hinStr, null, limit, offset, orderBy, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByHINAndNotStatus(String hinStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByHINAndStatus(hinStr, statuses, limit, offset, orderBy, providerNo, outOfDomain, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                             int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByHINAndStatus(hinStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+                                                             int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
         return searchDemographicByHINAndStatus(hinStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 ignoreStatuses, true);
     }
@@ -958,8 +958,8 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchDemographicByHINAndStatus(String hinStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
-            boolean ignoreMerged) {
+                                                             int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
+                                                             boolean ignoreMerged) {
         List<Demographic> list = new ArrayList<Demographic>();
 
         String queryString = "From Demographic d where d.Hin like :hin ";
@@ -1181,7 +1181,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchMergedDemographicByHIN(String hinStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                          boolean outOfDomain) {
         List<Demographic> list = new ArrayList<Demographic>();
 
         String queryString = "From Demographic d where d.Hin like :hin and d.HeadRecord is not null ";
@@ -1204,49 +1204,49 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByAddress(String addressStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                        boolean outOfDomain) {
         return searchDemographicByAddressAndStatus(addressStr, null, limit, offset, null, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                                 int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByAddressAndStatus(addressStr, statuses, limit, offset, null, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByAddressAndNotStatus(String addressStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                                    int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByAddressAndStatus(addressStr, statuses, limit, offset, null, providerNo, outOfDomain,
                 true);
     }
 
     @Override
     public List<Demographic> searchDemographicByAddress(String addressStr, int limit, int offset, String orderBy,
-            String providerNo, boolean outOfDomain) {
+                                                        String providerNo, boolean outOfDomain) {
         return searchDemographicByAddressAndStatus(addressStr, null, limit, offset, orderBy, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                 int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByAddressAndStatus(addressStr, statuses, limit, offset, orderBy, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByAddressAndNotStatus(String addressStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                    int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByAddressAndStatus(addressStr, statuses, limit, offset, orderBy, providerNo,
                 outOfDomain, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+                                                                 int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
         return searchDemographicByAddressAndStatus(addressStr, statuses, limit, offset, orderBy,
                 providerNo, outOfDomain, ignoreStatuses, true);
     }
@@ -1254,8 +1254,8 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchDemographicByAddressAndStatus(String addressStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
-            boolean ignoreMerged) {
+                                                                 int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses,
+                                                                 boolean ignoreMerged) {
         List<Demographic> list = new ArrayList<Demographic>();
 
         String queryString = "From Demographic d where d.Address like :address ";
@@ -1298,67 +1298,67 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty key, String value,
-            int limit, int offset, String providerNo, boolean outOfDomain) {
+                                                                   int limit, int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, null, limit, offset, null, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLikeAndNotStatus(DemographicExt.DemographicProperty key,
-            String value, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
+                                                                               String value, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, statuses, limit, offset, null, providerNo,
                 outOfDomain, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key,
-            String value, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
+                                                                            String value, List<String> statuses, int limit, int offset, String providerNo, boolean outOfDomain) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, statuses, limit, offset, null, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLike(DemographicExt.DemographicProperty key, String value,
-            int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                   int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, null, limit, offset, orderBy, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLikeWithMerged(DemographicExt.DemographicProperty key,
-            String value, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                             String value, int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, null, limit, offset, orderBy, providerNo,
                 outOfDomain, false, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLikeAndNotStatus(DemographicExt.DemographicProperty key,
-            String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
-            boolean outOfDomain) {
+                                                                               String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
+                                                                               boolean outOfDomain) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, statuses, limit, offset, orderBy, providerNo,
                 outOfDomain, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key,
-            String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
-            boolean outOfDomain) {
+                                                                            String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
+                                                                            boolean outOfDomain) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, statuses, limit, offset, orderBy, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key,
-            String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
-            boolean outOfDomain, boolean ignoreStatuses) {
+                                                                            String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
+                                                                            boolean outOfDomain, boolean ignoreStatuses) {
         return searchDemographicByExtKeyAndValueLikeAndStatus(key, value, statuses, limit, offset, orderBy, providerNo,
                 outOfDomain, ignoreStatuses, true);
     }
 
     @Override
     public List<Demographic> searchDemographicByExtKeyAndValueLikeAndStatus(DemographicExt.DemographicProperty key,
-            String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
-            boolean outOfDomain, boolean ignoreStatuses, boolean ignoreMerged) {
+                                                                            String value, List<String> statuses, int limit, int offset, String orderBy, String providerNo,
+                                                                            boolean outOfDomain, boolean ignoreStatuses, boolean ignoreMerged) {
         List<Demographic> list = new ArrayList<Demographic>();
         String queryString = "SELECT {de.*} FROM demographic de "
                 + "INNER JOIN demographicExt dext ON (dext.demographic_no=de.demographic_no) "
@@ -1409,7 +1409,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> searchMergedDemographicByAddress(String addressStr, int limit, int offset,
-            String providerNo, boolean outOfDomain) {
+                                                              String providerNo, boolean outOfDomain) {
         List<Demographic> list = new ArrayList<Demographic>();
 
         String queryString = "From Demographic d where d.Address like :address and d.HeadRecord is not null ";
@@ -1433,41 +1433,41 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> findDemographicByChartNo(String chartNoStr, int limit, int offset, String providerNo,
-            boolean outOfDomain) {
+                                                      boolean outOfDomain) {
         return findDemographicByChartNoAndStatus(chartNoStr, null, limit, offset, null, providerNo, outOfDomain, false);
     }
 
     @Override
     public List<Demographic> findDemographicByChartNoAndStatus(String chartNoStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                               int offset, String providerNo, boolean outOfDomain) {
         return findDemographicByChartNoAndStatus(chartNoStr, statuses, limit, offset, null, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> findDemographicByChartNoAndNotStatus(String chartNoStr, List<String> statuses, int limit,
-            int offset, String providerNo, boolean outOfDomain) {
+                                                                  int offset, String providerNo, boolean outOfDomain) {
         return findDemographicByChartNoAndStatus(chartNoStr, statuses, limit, offset, null, providerNo, outOfDomain,
                 true);
     }
 
     @Override
     public List<Demographic> findDemographicByChartNo(String chartNoStr, int limit, int offset, String orderBy,
-            String providerNo, boolean outOfDomain) {
+                                                      String providerNo, boolean outOfDomain) {
         return findDemographicByChartNoAndStatus(chartNoStr, null, limit, offset, orderBy, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> findDemographicByChartNoAndStatus(String chartNoStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                               int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return findDemographicByChartNoAndStatus(chartNoStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 false);
     }
 
     @Override
     public List<Demographic> findDemographicByChartNoAndNotStatus(String chartNoStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                  int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return findDemographicByChartNoAndStatus(chartNoStr, statuses, limit, offset, orderBy, providerNo, outOfDomain,
                 true);
     }
@@ -1475,7 +1475,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> findDemographicByChartNoAndStatus(String chartNoStr, List<String> statuses, int limit,
-            int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+                                                               int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
 
         String queryString = "From Demographic d where d.ChartNo like :chartNo ";
 
@@ -1519,42 +1519,42 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> findDemographicByDemographicNo(String demographicNoStr, int limit, int offset,
-            String providerNo, boolean outOfDomain) {
+                                                            String providerNo, boolean outOfDomain) {
         return findDemographicByDemographicNoAndStatus(demographicNoStr, null, limit, offset, null, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> findDemographicByDemographicNoAndStatus(String demographicNoStr, List<String> statuses,
-            int limit, int offset, String providerNo, boolean outOfDomain) {
+                                                                     int limit, int offset, String providerNo, boolean outOfDomain) {
         return findDemographicByDemographicNoAndStatus(demographicNoStr, statuses, limit, offset, null, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> findDemographicByDemographicNoAndNotStatus(String demographicNoStr, List<String> statuses,
-            int limit, int offset, String providerNo, boolean outOfDomain) {
+                                                                        int limit, int offset, String providerNo, boolean outOfDomain) {
         return findDemographicByDemographicNoAndStatus(demographicNoStr, statuses, limit, offset, null, providerNo,
                 outOfDomain, true);
     }
 
     @Override
     public List<Demographic> findDemographicByDemographicNo(String demographicNoStr, int limit, int offset,
-            String orderBy, String providerNo, boolean outOfDomain) {
+                                                            String orderBy, String providerNo, boolean outOfDomain) {
         return findDemographicByDemographicNoAndStatus(demographicNoStr, null, limit, offset, orderBy, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> findDemographicByDemographicNoAndStatus(String demographicNoStr, List<String> statuses,
-            int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                     int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return findDemographicByDemographicNoAndStatus(demographicNoStr, statuses, limit, offset, orderBy, providerNo,
                 outOfDomain, false);
     }
 
     @Override
     public List<Demographic> findDemographicByDemographicNoAndNotStatus(String demographicNoStr, List<String> statuses,
-            int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
+                                                                        int limit, int offset, String orderBy, String providerNo, boolean outOfDomain) {
         return findDemographicByDemographicNoAndStatus(demographicNoStr, statuses, limit, offset, orderBy, providerNo,
                 outOfDomain, true);
     }
@@ -1562,7 +1562,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> findDemographicByDemographicNoAndStatus(String demographicNoStr, List<String> statuses,
-            int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
+                                                                     int limit, int offset, String orderBy, String providerNo, boolean outOfDomain, boolean ignoreStatuses) {
         String queryString = "From Demographic d where 1 = 1 ";
         Integer val = null;
         try {
@@ -1782,7 +1782,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     /**
      * Helper method.
-     * 
+     *
      * Not using 'clientExists' because it doesn't 'evict' the demographic, which
      * causes errors when 'saveOrUpdate' is called
      * and the demographic already exists in the Hibernate cache.
@@ -2313,7 +2313,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public List<Demographic> getClientsByChartNo(String chartNo) {
         String queryStr = " FROM Demographic d where d.ChartNo=?";
         @SuppressWarnings("unchecked")
-        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(queryStr, new Object[] { chartNo });
+        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(queryStr, new Object[]{chartNo});
 
         if (log.isDebugEnabled()) {
             log.debug("getClientsByChartNo: # of results=" + rs.size());
@@ -2326,7 +2326,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public List<Demographic> getClientsByHealthCard(String num, String type) {
         String queryStr = " FROM Demographic d where d.Hin=? and d.HcType=?";
         @SuppressWarnings("unchecked")
-        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(queryStr, new Object[] { num, type });
+        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(queryStr, new Object[]{num, type});
 
         if (log.isDebugEnabled()) {
             log.debug("getClientsByHealthCard: # of results=" + rs.size());
@@ -2343,7 +2343,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     // from DemographicData
     @Override
     public Demographic getDemographicByNamePhoneEmail(String firstName, String lastName, String hPhone, String wPhone,
-            String email) {
+                                                      String email) {
 
         List<String> params = new ArrayList<String>();
         StringBuilder whereClause = new StringBuilder();
@@ -2401,7 +2401,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public List<Demographic> searchByHealthCard(String hin) {
         String queryStr = " FROM Demographic d where d.Hin=?";
         @SuppressWarnings("unchecked")
-        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(queryStr, new Object[] { hin });
+        List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(queryStr, new Object[]{hin});
 
         return rs;
     }
@@ -2409,7 +2409,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> getDemographicWithLastFirstDOB(String lastname, String firstname, String year_of_birth,
-            String month_of_birth, String date_of_birth) {
+                                                            String month_of_birth, String date_of_birth) {
         List<String> params = new ArrayList<String>();
         String sql = "FROM Demographic " + " WHERE LastName like ? and FirstName like ?";
         params.add(lastname + "%");
@@ -2434,7 +2434,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @SuppressWarnings("unchecked")
     @Override
     public List<Demographic> getDemographicWithLastFirstDOBExact(String lastname, String firstname,
-            String year_of_birth, String month_of_birth, String date_of_birth) {
+                                                                 String year_of_birth, String month_of_birth, String date_of_birth) {
         List<String> params = new ArrayList<String>();
         String sql = "FROM Demographic " + " WHERE LastName = ? and FirstName = ?";
         params.add(lastname);
@@ -2460,14 +2460,14 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @Override
     public List<Demographic> getDemographicsByHealthNum(String hin) {
         return (List<Demographic>) this.getHibernateTemplate().find("from Demographic d where d.Hin=?",
-                new Object[] { hin });
+                new Object[]{hin});
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Integer> getActiveDemographicIds() {
         return (List<Integer>) this.getHibernateTemplate()
-                .find("select d.DemographicNo from Demographic d where d.PatientStatus=?", new Object[] { "AC" });
+                .find("select d.DemographicNo from Demographic d where d.PatientStatus=?", new Object[]{"AC"});
     }
 
     @SuppressWarnings("unchecked")
@@ -2480,7 +2480,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     @Override
     public List<Demographic> getDemographicWithGreaterThanYearOfBirth(int yearOfBirth) {
         return (List<Demographic>) this.getHibernateTemplate().find("from Demographic d where d.YearOfBirth > ?",
-                new Object[] { String.valueOf(yearOfBirth) });
+                new Object[]{String.valueOf(yearOfBirth)});
     }
 
     @SuppressWarnings("unchecked")
@@ -2619,7 +2619,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         }
 
         public DemographicCriterion(String healthNumber, String lastNamePrefix, String firstNamePrefix,
-                String birthYear, String birthMonth, String birthDay, String sex, String patientStatus) {
+                                    String birthYear, String birthMonth, String birthDay, String sex, String patientStatus) {
             super();
             this.healthNumber = healthNumber;
             this.lastNamePrefix = lastNamePrefix;
@@ -2633,11 +2633,11 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
         Object[] getAll(boolean includeHin) {
             if (includeHin) {
-                return new Object[] { healthNumber, lastNamePrefix + "%", firstNamePrefix + "%", birthYear, birthMonth,
-                        birthDay, sex.toUpperCase() + "%", patientStatus };
+                return new Object[]{healthNumber, lastNamePrefix + "%", firstNamePrefix + "%", birthYear, birthMonth,
+                        birthDay, sex.toUpperCase() + "%", patientStatus};
             } else {
-                return new Object[] { lastNamePrefix + "%", firstNamePrefix + "%", birthYear, birthMonth, birthDay,
-                        sex.toUpperCase() + "%", patientStatus };
+                return new Object[]{lastNamePrefix + "%", firstNamePrefix + "%", birthYear, birthMonth, birthDay,
+                        sex.toUpperCase() + "%", patientStatus};
             }
         }
 
@@ -2753,7 +2753,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         String queryStr = " FROM Demographic d where d.RosterStatus=? and d.PatientStatus = ?";
         @SuppressWarnings("unchecked")
         List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(queryStr,
-                new Object[] { rosterStatus, patientStatus });
+                new Object[]{rosterStatus, patientStatus});
 
         return rs;
     }
@@ -2784,7 +2784,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<DemographicSearchResult> searchPatients(LoggedInInfo loggedInInfo,
-            DemographicSearchRequest searchRequest, int startIndex, int itemsToReturn) {
+                                                        DemographicSearchRequest searchRequest, int startIndex, int itemsToReturn) {
         Map<String, Object> params = new HashMap<String, Object>();
 
         String demographicQuery = generateDemographicSearchQuery(loggedInInfo, searchRequest, params,
@@ -2816,7 +2816,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     }
 
     private String generateDemographicSearchQuery(LoggedInInfo loggedInInfo, DemographicSearchRequest searchRequest,
-            Map<String, Object> params, String select) {
+                                                  Map<String, Object> params, String select) {
         OscarProperties props = OscarProperties.getInstance();
         MatchingDemographicParameters matchingDemographicParameters = null;
 
@@ -3008,7 +3008,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     /**
      * This method war written for BORN Kid eConnect job to figure out which eforms
      * don't have an eform_value present
-     * 
+     *
      * This method will be refined a bit during QA
      */
     @Override

@@ -4,17 +4,17 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
- *
+ * of the License, or (at your option) any later version.
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for the
  * Department of Family Medicine
  * McMaster University
@@ -73,14 +73,14 @@ public class SecurityInfrastructureServlet extends Action {
 
     private static final Logger LOGGER = MiscUtils.getLogger();
     private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
-    
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    	if(!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_admin", "r", null)) {
-        	throw new SecurityException("missing required security object (_admin)");
+        if (!securityInfoManager.hasPrivilege(LoggedInInfo.getLoggedInInfoFromSession(request), "_admin", "r", null)) {
+            throw new SecurityException("missing required security object (_admin)");
         }
-    	
+
         String status = "error";
         //if this is an update request from the chain import page
         if (request.getMethod().equalsIgnoreCase("post")) {
@@ -116,7 +116,7 @@ public class SecurityInfrastructureServlet extends Action {
         return null;
     }
 
-    private String performImport(List<FileItem> files)  {
+    private String performImport(List<FileItem> files) {
         //import certificate
         String status = "";
         InputStream filecontent = null;
@@ -291,7 +291,7 @@ public class SecurityInfrastructureServlet extends Action {
 
             PublicKey publicKey = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(pubKey));
             PrivateKey privateKey = KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(privKey));
-            
+
             CertificateIdentifier principal = new CertificateIdentifier(CN, OU, O, L, S, C);
             PKCS10CertificationRequest request = SslUtility.generatePKCS10(publicKey, privateKey, principal);
             String csr = SslUtility.generateCSR(request);

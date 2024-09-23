@@ -5,16 +5,16 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for the
  * The Pharmacists Clinic
  * Faculty of Pharmaceutical Sciences
@@ -71,16 +71,16 @@ public class ConsultationAttach {
 
         boolean alreadyAttached;
         //add new documents to list and get ids of docs to keep attached
-        for(int i = 0; i < currentList.size(); ++i) {
+        for (int i = 0; i < currentList.size(); ++i) {
             alreadyAttached = false;
-            for(int j = 0; j < oldlist.size(); ++j) {
-                if( ((oldlist.get(j)).getDocumentNo()+"").equals(currentList.get(i)) ) {
+            for (int j = 0; j < oldlist.size(); ++j) {
+                if (((oldlist.get(j)).getDocumentNo() + "").equals(currentList.get(i))) {
                     alreadyAttached = true;
                     keeplist.add(oldlist.get(j));
                     break;
                 }
             }
-            if( !alreadyAttached ) {
+            if (!alreadyAttached) {
                 newlist.add(currentList.get(i));
             }
         }
@@ -90,7 +90,7 @@ public class ConsultationAttach {
             if (keeplist.contains(old)) {
                 continue;
             }
-            detach(loggedInInfo, old.getDocumentNo()+"", docType);
+            detach(loggedInInfo, old.getDocumentNo() + "", docType);
         }
 
         attach(loggedInInfo, newlist, docType);
@@ -108,7 +108,7 @@ public class ConsultationAttach {
     }
 
     protected void attach(LoggedInInfo loggedInInfo, List<String> docIdList, String docType) {
-        if(docIdList != null) {
+        if (docIdList != null) {
             for (String docId : docIdList) {
                 attach(loggedInInfo, docId, docType);
             }
@@ -117,7 +117,7 @@ public class ConsultationAttach {
 
     protected void detach(LoggedInInfo loggedInInfo, String docId, String docType) {
         List<ConsultDocs> consultDocs = consultDocsDao.findByRequestIdDocNoDocType(Integer.parseInt(getReqId()), Integer.parseInt(docId), docType);
-        if(consultDocs != null) {
+        if (consultDocs != null) {
             for (ConsultDocs consultDoc : consultDocs) {
                 consultDoc.setDeleted("Y");
                 consultDocsDao.merge(consultDoc);
@@ -126,7 +126,7 @@ public class ConsultationAttach {
     }
 
     protected void detach(LoggedInInfo loggedInInfo, List<String> docIdList, String docType) {
-        if(docIdList != null) {
+        if (docIdList != null) {
             for (String docId : docIdList) {
                 detach(loggedInInfo, docId, docType);
             }
@@ -134,11 +134,11 @@ public class ConsultationAttach {
     }
 
     protected String getDemoNo() {
-        if(this.demoNo == null) {
+        if (this.demoNo == null) {
             demoNo = "";
         }
 
-        if(demoNo.isEmpty()) {
+        if (demoNo.isEmpty()) {
             ConsultationRequest consultationRequest = consultationRequestDao.find(ConversionUtils.fromIntString(reqId));
             if (consultationRequest != null) {
                 demoNo = consultationRequest.getId() + "";

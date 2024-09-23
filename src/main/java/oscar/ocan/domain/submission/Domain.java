@@ -1,21 +1,20 @@
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -42,9 +41,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -122,48 +121,48 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "needRating",
-    "informalHelpRecvd",
-    "formalHelpRecvd",
-    "formalHelpNeed",
-    "residenceType",
-    "residenceSupport",
-    "livingArrangementType",
-    "employStatus",
-    "educationProgramStatus",
-    "riskUnemploymentList",
-    "medicalConditionList",
-    "physicalHealthConcern",
-    "concernAreaList",
-    "medicationList",
-    "sideEffects",
-    "dailyLivingAffected",
-    "sideEffectsDetailList",
-    "hospitalizedPastTwoYears",
-    "totalAdmissions",
-    "totalHospitalDays",
-    "communityTreatOrder",
-    "symptomList",
-    "diagnosticList",
-    "otherIllnessList",
-    "suicideAttempt",
-    "suicideThoughts",
-    "safetyConcernSelf",
-    "safetyToSelfRiskList",
-    "drinkAlcohol",
-    "stageOfChangeAlcohol",
-    "drugUseList",
-    "stageOfChangeDrugs",
-    "addictionTypeList",
-    "stageOfChangeAddictions",
-    "changedSocialPatterns",
-    "highestEducationLevel",
-    "sourceOfIncome"
+        "needRating",
+        "informalHelpRecvd",
+        "formalHelpRecvd",
+        "formalHelpNeed",
+        "residenceType",
+        "residenceSupport",
+        "livingArrangementType",
+        "employStatus",
+        "educationProgramStatus",
+        "riskUnemploymentList",
+        "medicalConditionList",
+        "physicalHealthConcern",
+        "concernAreaList",
+        "medicationList",
+        "sideEffects",
+        "dailyLivingAffected",
+        "sideEffectsDetailList",
+        "hospitalizedPastTwoYears",
+        "totalAdmissions",
+        "totalHospitalDays",
+        "communityTreatOrder",
+        "symptomList",
+        "diagnosticList",
+        "otherIllnessList",
+        "suicideAttempt",
+        "suicideThoughts",
+        "safetyConcernSelf",
+        "safetyToSelfRiskList",
+        "drinkAlcohol",
+        "stageOfChangeAlcohol",
+        "drugUseList",
+        "stageOfChangeDrugs",
+        "addictionTypeList",
+        "stageOfChangeAddictions",
+        "changedSocialPatterns",
+        "highestEducationLevel",
+        "sourceOfIncome"
 })
 @XmlRootElement(name = "domain")
 public class Domain {
@@ -210,11 +209,11 @@ public class Domain {
 
     /**
      * Gets the value of the needRating property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link NeedRating }
-     *     
+     *
      */
     public NeedRating getNeedRating() {
         return needRating;
@@ -222,11 +221,11 @@ public class Domain {
 
     /**
      * Sets the value of the needRating property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link NeedRating }
-     *     
+     *
      */
     public void setNeedRating(NeedRating value) {
         this.needRating = value;
@@ -234,11 +233,11 @@ public class Domain {
 
     /**
      * Gets the value of the informalHelpRecvd property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link InformalHelpRecvd }
-     *     
+     *
      */
     public InformalHelpRecvd getInformalHelpRecvd() {
         return informalHelpRecvd;
@@ -246,11 +245,11 @@ public class Domain {
 
     /**
      * Sets the value of the informalHelpRecvd property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link InformalHelpRecvd }
-     *     
+     *
      */
     public void setInformalHelpRecvd(InformalHelpRecvd value) {
         this.informalHelpRecvd = value;
@@ -258,11 +257,11 @@ public class Domain {
 
     /**
      * Gets the value of the formalHelpRecvd property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link FormalHelpRecvd }
-     *     
+     *
      */
     public FormalHelpRecvd getFormalHelpRecvd() {
         return formalHelpRecvd;
@@ -270,11 +269,11 @@ public class Domain {
 
     /**
      * Sets the value of the formalHelpRecvd property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link FormalHelpRecvd }
-     *     
+     *
      */
     public void setFormalHelpRecvd(FormalHelpRecvd value) {
         this.formalHelpRecvd = value;
@@ -282,11 +281,11 @@ public class Domain {
 
     /**
      * Gets the value of the formalHelpNeed property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link FormalHelpNeed }
-     *     
+     *
      */
     public FormalHelpNeed getFormalHelpNeed() {
         return formalHelpNeed;
@@ -294,11 +293,11 @@ public class Domain {
 
     /**
      * Sets the value of the formalHelpNeed property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link FormalHelpNeed }
-     *     
+     *
      */
     public void setFormalHelpNeed(FormalHelpNeed value) {
         this.formalHelpNeed = value;
@@ -306,11 +305,11 @@ public class Domain {
 
     /**
      * Gets the value of the residenceType property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getResidenceType() {
         return residenceType;
@@ -318,11 +317,11 @@ public class Domain {
 
     /**
      * Sets the value of the residenceType property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setResidenceType(String value) {
         this.residenceType = value;
@@ -330,11 +329,11 @@ public class Domain {
 
     /**
      * Gets the value of the residenceSupport property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getResidenceSupport() {
         return residenceSupport;
@@ -342,11 +341,11 @@ public class Domain {
 
     /**
      * Sets the value of the residenceSupport property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setResidenceSupport(String value) {
         this.residenceSupport = value;
@@ -354,11 +353,11 @@ public class Domain {
 
     /**
      * Gets the value of the livingArrangementType property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getLivingArrangementType() {
         return livingArrangementType;
@@ -366,11 +365,11 @@ public class Domain {
 
     /**
      * Sets the value of the livingArrangementType property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setLivingArrangementType(String value) {
         this.livingArrangementType = value;
@@ -378,11 +377,11 @@ public class Domain {
 
     /**
      * Gets the value of the employStatus property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getEmployStatus() {
         return employStatus;
@@ -390,11 +389,11 @@ public class Domain {
 
     /**
      * Sets the value of the employStatus property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setEmployStatus(String value) {
         this.employStatus = value;
@@ -402,11 +401,11 @@ public class Domain {
 
     /**
      * Gets the value of the educationProgramStatus property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getEducationProgramStatus() {
         return educationProgramStatus;
@@ -414,11 +413,11 @@ public class Domain {
 
     /**
      * Sets the value of the educationProgramStatus property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setEducationProgramStatus(String value) {
         this.educationProgramStatus = value;
@@ -426,11 +425,11 @@ public class Domain {
 
     /**
      * Gets the value of the riskUnemploymentList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link RiskUnemploymentList }
-     *     
+     *
      */
     public RiskUnemploymentList getRiskUnemploymentList() {
         return riskUnemploymentList;
@@ -438,11 +437,11 @@ public class Domain {
 
     /**
      * Sets the value of the riskUnemploymentList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link RiskUnemploymentList }
-     *     
+     *
      */
     public void setRiskUnemploymentList(RiskUnemploymentList value) {
         this.riskUnemploymentList = value;
@@ -450,11 +449,11 @@ public class Domain {
 
     /**
      * Gets the value of the medicalConditionList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link MedicalConditionList }
-     *     
+     *
      */
     public MedicalConditionList getMedicalConditionList() {
         return medicalConditionList;
@@ -462,11 +461,11 @@ public class Domain {
 
     /**
      * Sets the value of the medicalConditionList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link MedicalConditionList }
-     *     
+     *
      */
     public void setMedicalConditionList(MedicalConditionList value) {
         this.medicalConditionList = value;
@@ -474,11 +473,11 @@ public class Domain {
 
     /**
      * Gets the value of the physicalHealthConcern property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getPhysicalHealthConcern() {
         return physicalHealthConcern;
@@ -486,11 +485,11 @@ public class Domain {
 
     /**
      * Sets the value of the physicalHealthConcern property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setPhysicalHealthConcern(String value) {
         this.physicalHealthConcern = value;
@@ -498,11 +497,11 @@ public class Domain {
 
     /**
      * Gets the value of the concernAreaList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link ConcernAreaList }
-     *     
+     *
      */
     public ConcernAreaList getConcernAreaList() {
         return concernAreaList;
@@ -510,11 +509,11 @@ public class Domain {
 
     /**
      * Sets the value of the concernAreaList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link ConcernAreaList }
-     *     
+     *
      */
     public void setConcernAreaList(ConcernAreaList value) {
         this.concernAreaList = value;
@@ -522,11 +521,11 @@ public class Domain {
 
     /**
      * Gets the value of the medicationList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link MedicationList }
-     *     
+     *
      */
     public MedicationList getMedicationList() {
         return medicationList;
@@ -534,11 +533,11 @@ public class Domain {
 
     /**
      * Sets the value of the medicationList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link MedicationList }
-     *     
+     *
      */
     public void setMedicationList(MedicationList value) {
         this.medicationList = value;
@@ -546,11 +545,11 @@ public class Domain {
 
     /**
      * Gets the value of the sideEffects property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSideEffects() {
         return sideEffects;
@@ -558,11 +557,11 @@ public class Domain {
 
     /**
      * Sets the value of the sideEffects property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSideEffects(String value) {
         this.sideEffects = value;
@@ -570,11 +569,11 @@ public class Domain {
 
     /**
      * Gets the value of the dailyLivingAffected property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getDailyLivingAffected() {
         return dailyLivingAffected;
@@ -582,11 +581,11 @@ public class Domain {
 
     /**
      * Sets the value of the dailyLivingAffected property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setDailyLivingAffected(String value) {
         this.dailyLivingAffected = value;
@@ -594,11 +593,11 @@ public class Domain {
 
     /**
      * Gets the value of the sideEffectsDetailList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link SideEffectsDetailList }
-     *     
+     *
      */
     public SideEffectsDetailList getSideEffectsDetailList() {
         return sideEffectsDetailList;
@@ -606,11 +605,11 @@ public class Domain {
 
     /**
      * Sets the value of the sideEffectsDetailList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link SideEffectsDetailList }
-     *     
+     *
      */
     public void setSideEffectsDetailList(SideEffectsDetailList value) {
         this.sideEffectsDetailList = value;
@@ -618,11 +617,11 @@ public class Domain {
 
     /**
      * Gets the value of the hospitalizedPastTwoYears property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getHospitalizedPastTwoYears() {
         return hospitalizedPastTwoYears;
@@ -630,11 +629,11 @@ public class Domain {
 
     /**
      * Sets the value of the hospitalizedPastTwoYears property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setHospitalizedPastTwoYears(String value) {
         this.hospitalizedPastTwoYears = value;
@@ -642,11 +641,11 @@ public class Domain {
 
     /**
      * Gets the value of the totalAdmissions property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getTotalAdmissions() {
         return totalAdmissions;
@@ -654,11 +653,11 @@ public class Domain {
 
     /**
      * Sets the value of the totalAdmissions property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setTotalAdmissions(BigInteger value) {
         this.totalAdmissions = value;
@@ -666,11 +665,11 @@ public class Domain {
 
     /**
      * Gets the value of the totalHospitalDays property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getTotalHospitalDays() {
         return totalHospitalDays;
@@ -678,11 +677,11 @@ public class Domain {
 
     /**
      * Sets the value of the totalHospitalDays property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setTotalHospitalDays(BigInteger value) {
         this.totalHospitalDays = value;
@@ -690,11 +689,11 @@ public class Domain {
 
     /**
      * Gets the value of the communityTreatOrder property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCommunityTreatOrder() {
         return communityTreatOrder;
@@ -702,11 +701,11 @@ public class Domain {
 
     /**
      * Sets the value of the communityTreatOrder property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCommunityTreatOrder(String value) {
         this.communityTreatOrder = value;
@@ -714,11 +713,11 @@ public class Domain {
 
     /**
      * Gets the value of the symptomList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link SymptomList }
-     *     
+     *
      */
     public SymptomList getSymptomList() {
         return symptomList;
@@ -726,11 +725,11 @@ public class Domain {
 
     /**
      * Sets the value of the symptomList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link SymptomList }
-     *     
+     *
      */
     public void setSymptomList(SymptomList value) {
         this.symptomList = value;
@@ -738,11 +737,11 @@ public class Domain {
 
     /**
      * Gets the value of the diagnosticList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link DiagnosticList }
-     *     
+     *
      */
     public DiagnosticList getDiagnosticList() {
         return diagnosticList;
@@ -750,11 +749,11 @@ public class Domain {
 
     /**
      * Sets the value of the diagnosticList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link DiagnosticList }
-     *     
+     *
      */
     public void setDiagnosticList(DiagnosticList value) {
         this.diagnosticList = value;
@@ -762,11 +761,11 @@ public class Domain {
 
     /**
      * Gets the value of the otherIllnessList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link OtherIllnessList }
-     *     
+     *
      */
     public OtherIllnessList getOtherIllnessList() {
         return otherIllnessList;
@@ -774,11 +773,11 @@ public class Domain {
 
     /**
      * Sets the value of the otherIllnessList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link OtherIllnessList }
-     *     
+     *
      */
     public void setOtherIllnessList(OtherIllnessList value) {
         this.otherIllnessList = value;
@@ -786,11 +785,11 @@ public class Domain {
 
     /**
      * Gets the value of the suicideAttempt property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSuicideAttempt() {
         return suicideAttempt;
@@ -798,11 +797,11 @@ public class Domain {
 
     /**
      * Sets the value of the suicideAttempt property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSuicideAttempt(String value) {
         this.suicideAttempt = value;
@@ -810,11 +809,11 @@ public class Domain {
 
     /**
      * Gets the value of the suicideThoughts property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSuicideThoughts() {
         return suicideThoughts;
@@ -822,11 +821,11 @@ public class Domain {
 
     /**
      * Sets the value of the suicideThoughts property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSuicideThoughts(String value) {
         this.suicideThoughts = value;
@@ -834,11 +833,11 @@ public class Domain {
 
     /**
      * Gets the value of the safetyConcernSelf property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSafetyConcernSelf() {
         return safetyConcernSelf;
@@ -846,11 +845,11 @@ public class Domain {
 
     /**
      * Sets the value of the safetyConcernSelf property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSafetyConcernSelf(String value) {
         this.safetyConcernSelf = value;
@@ -858,11 +857,11 @@ public class Domain {
 
     /**
      * Gets the value of the safetyToSelfRiskList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link SafetyToSelfRiskList }
-     *     
+     *
      */
     public SafetyToSelfRiskList getSafetyToSelfRiskList() {
         return safetyToSelfRiskList;
@@ -870,11 +869,11 @@ public class Domain {
 
     /**
      * Sets the value of the safetyToSelfRiskList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link SafetyToSelfRiskList }
-     *     
+     *
      */
     public void setSafetyToSelfRiskList(SafetyToSelfRiskList value) {
         this.safetyToSelfRiskList = value;
@@ -882,11 +881,11 @@ public class Domain {
 
     /**
      * Gets the value of the drinkAlcohol property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link DrinkAlcohol }
-     *     
+     *
      */
     public DrinkAlcohol getDrinkAlcohol() {
         return drinkAlcohol;
@@ -894,11 +893,11 @@ public class Domain {
 
     /**
      * Sets the value of the drinkAlcohol property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link DrinkAlcohol }
-     *     
+     *
      */
     public void setDrinkAlcohol(DrinkAlcohol value) {
         this.drinkAlcohol = value;
@@ -906,11 +905,11 @@ public class Domain {
 
     /**
      * Gets the value of the stageOfChangeAlcohol property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getStageOfChangeAlcohol() {
         return stageOfChangeAlcohol;
@@ -918,11 +917,11 @@ public class Domain {
 
     /**
      * Sets the value of the stageOfChangeAlcohol property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setStageOfChangeAlcohol(String value) {
         this.stageOfChangeAlcohol = value;
@@ -930,11 +929,11 @@ public class Domain {
 
     /**
      * Gets the value of the drugUseList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link DrugUseList }
-     *     
+     *
      */
     public DrugUseList getDrugUseList() {
         return drugUseList;
@@ -942,11 +941,11 @@ public class Domain {
 
     /**
      * Sets the value of the drugUseList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link DrugUseList }
-     *     
+     *
      */
     public void setDrugUseList(DrugUseList value) {
         this.drugUseList = value;
@@ -954,11 +953,11 @@ public class Domain {
 
     /**
      * Gets the value of the stageOfChangeDrugs property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getStageOfChangeDrugs() {
         return stageOfChangeDrugs;
@@ -966,11 +965,11 @@ public class Domain {
 
     /**
      * Sets the value of the stageOfChangeDrugs property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setStageOfChangeDrugs(String value) {
         this.stageOfChangeDrugs = value;
@@ -978,11 +977,11 @@ public class Domain {
 
     /**
      * Gets the value of the addictionTypeList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link AddictionTypeList }
-     *     
+     *
      */
     public AddictionTypeList getAddictionTypeList() {
         return addictionTypeList;
@@ -990,11 +989,11 @@ public class Domain {
 
     /**
      * Sets the value of the addictionTypeList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link AddictionTypeList }
-     *     
+     *
      */
     public void setAddictionTypeList(AddictionTypeList value) {
         this.addictionTypeList = value;
@@ -1002,11 +1001,11 @@ public class Domain {
 
     /**
      * Gets the value of the stageOfChangeAddictions property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getStageOfChangeAddictions() {
         return stageOfChangeAddictions;
@@ -1014,11 +1013,11 @@ public class Domain {
 
     /**
      * Sets the value of the stageOfChangeAddictions property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setStageOfChangeAddictions(String value) {
         this.stageOfChangeAddictions = value;
@@ -1026,11 +1025,11 @@ public class Domain {
 
     /**
      * Gets the value of the changedSocialPatterns property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getChangedSocialPatterns() {
         return changedSocialPatterns;
@@ -1038,11 +1037,11 @@ public class Domain {
 
     /**
      * Sets the value of the changedSocialPatterns property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setChangedSocialPatterns(String value) {
         this.changedSocialPatterns = value;
@@ -1050,11 +1049,11 @@ public class Domain {
 
     /**
      * Gets the value of the highestEducationLevel property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getHighestEducationLevel() {
         return highestEducationLevel;
@@ -1062,11 +1061,11 @@ public class Domain {
 
     /**
      * Sets the value of the highestEducationLevel property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setHighestEducationLevel(String value) {
         this.highestEducationLevel = value;
@@ -1074,11 +1073,11 @@ public class Domain {
 
     /**
      * Gets the value of the sourceOfIncome property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSourceOfIncome() {
         return sourceOfIncome;
@@ -1086,11 +1085,11 @@ public class Domain {
 
     /**
      * Sets the value of the sourceOfIncome property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSourceOfIncome(String value) {
         this.sourceOfIncome = value;
@@ -1098,11 +1097,11 @@ public class Domain {
 
     /**
      * Gets the value of the name property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getName() {
         return name;
@@ -1110,11 +1109,11 @@ public class Domain {
 
     /**
      * Sets the value of the name property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setName(String value) {
         this.name = value;

@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -30,29 +30,29 @@ import javax.persistence.Table;
  */
 @Deprecated
 @Entity
-@Table(name="billingreferral")
-public class Billingreferral  extends AbstractModel<Integer> implements java.io.Serializable {
+@Table(name = "billingreferral")
+public class Billingreferral extends AbstractModel<Integer> implements java.io.Serializable {
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="billingreferral_no")
-     private Integer billingreferralNo;
-	@Column(name="referral_no")
-     private String referralNo;
-	@Column(name="last_name")
-     private String lastName;
-	@Column(name="first_name")
-     private String firstName;
-     private String specialty;
-     private String address1;
-     private String address2;
-     private String city;
-     private String province;
-     private String country;
-     private String postal;
-     private String phone;
-     private String fax;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "billingreferral_no")
+    private Integer billingreferralNo;
+    @Column(name = "referral_no")
+    private String referralNo;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "first_name")
+    private String firstName;
+    private String specialty;
+    private String address1;
+    private String address2;
+    private String city;
+    private String province;
+    private String country;
+    private String postal;
+    private String phone;
+    private String fax;
 
     public Billingreferral() {
     }
@@ -63,22 +63,22 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     }
 
     public Billingreferral(String referralNo, String lastName, String firstName, String specialty, String address1, String address2, String city, String province, String country, String postal, String phone, String fax) {
-       this.referralNo = referralNo;
-       this.lastName = lastName;
-       this.firstName = firstName;
-       this.specialty = specialty;
-       this.address1 = address1;
-       this.address2 = address2;
-       this.city = city;
-       this.province = province;
-       this.country = country;
-       this.postal = postal;
-       this.phone = phone;
-       this.fax = fax;
+        this.referralNo = referralNo;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.specialty = specialty;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.province = province;
+        this.country = country;
+        this.postal = postal;
+        this.phone = phone;
+        this.fax = fax;
     }
 
     public Integer getId() {
-    	return getBillingreferralNo();
+        return getBillingreferralNo();
     }
 
     public Integer getBillingreferralNo() {
@@ -88,6 +88,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setBillingreferralNo(Integer billingreferralNo) {
         this.billingreferralNo = billingreferralNo;
     }
+
     public String getReferralNo() {
         return this.referralNo;
     }
@@ -95,6 +96,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setReferralNo(String referralNo) {
         this.referralNo = referralNo;
     }
+
     public String getLastName() {
         return this.lastName;
     }
@@ -102,6 +104,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -109,6 +112,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     public String getSpecialty() {
         return this.specialty;
     }
@@ -116,6 +120,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
+
     public String getAddress1() {
         return this.address1;
     }
@@ -123,6 +128,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setAddress1(String address1) {
         this.address1 = address1;
     }
+
     public String getAddress2() {
         return this.address2;
     }
@@ -130,6 +136,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setAddress2(String address2) {
         this.address2 = address2;
     }
+
     public String getCity() {
         return this.city;
     }
@@ -137,6 +144,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setCity(String city) {
         this.city = city;
     }
+
     public String getProvince() {
         return this.province;
     }
@@ -144,6 +152,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setProvince(String province) {
         this.province = province;
     }
+
     public String getCountry() {
         return this.country;
     }
@@ -151,6 +160,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setCountry(String country) {
         this.country = country;
     }
+
     public String getPostal() {
         return this.postal;
     }
@@ -158,6 +168,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setPostal(String postal) {
         this.postal = postal;
     }
+
     public String getPhone() {
         return this.phone;
     }
@@ -165,6 +176,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public String getFax() {
         return this.fax;
     }
@@ -201,7 +213,7 @@ public class Billingreferral  extends AbstractModel<Integer> implements java.io.
 
 
     public String getFormattedName() {
-    	return getLastName() + "," + getFirstName();
+        return getLastName() + "," + getFirstName();
     }
 
 }

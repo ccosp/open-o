@@ -5,16 +5,16 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for the
  * Department of Family Medicine
  * McMaster University
@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -50,8 +51,8 @@ public final class WebUtils {
         logger.error("--- Dump Request Parameters Start for " + request.getRequestURI() + " Start ---");
         Enumeration e = request.getParameterNames();
 
-        while(e.hasMoreElements()) {
-            String key = (String)e.nextElement();
+        while (e.hasMoreElements()) {
+            String key = (String) e.nextElement();
             logger.error(key + '=' + request.getParameter(key));
         }
 
@@ -65,8 +66,8 @@ public final class WebUtils {
         boolean var3 = false;
 
         int x;
-        while((x = is.read()) != -1) {
-            sb.append((char)x);
+        while ((x = is.read()) != -1) {
+            sb.append((char) x);
         }
 
         logger.error(sb.toString());
@@ -85,8 +86,8 @@ public final class WebUtils {
             sb.append(getTagString("ul", style, styleClass, id, name, false));
             Iterator i$ = messages.iterator();
 
-            while(i$.hasNext()) {
-                String s = (String)i$.next();
+            while (i$.hasNext()) {
+                String s = (String) i$.next();
                 sb.append("<li>");
                 sb.append(s);
                 sb.append("</il>");
@@ -98,9 +99,8 @@ public final class WebUtils {
         return sb.toString();
     }
 
-    public static String popErrorAndInfoMessagesAsHtml(HttpSession session)
-    {
-        return(popErrorMessagesAsHtml(session)+popInfoMessagesAsHtml(session));
+    public static String popErrorAndInfoMessagesAsHtml(HttpSession session) {
+        return (popErrorMessagesAsHtml(session) + popInfoMessagesAsHtml(session));
     }
 
     public static String popErrorMessagesAsHtml(HttpSession session, String styleClass, String style, String id, String name) {
@@ -136,8 +136,8 @@ public final class WebUtils {
     }
 
     public static ArrayList<String> popMessages(HttpSession session, String type) {
-        synchronized(session) {
-            ArrayList<String> errors = (ArrayList)((ArrayList)session.getAttribute(type));
+        synchronized (session) {
+            ArrayList<String> errors = (ArrayList) ((ArrayList) session.getAttribute(type));
             session.removeAttribute(type);
             return errors;
         }
@@ -152,8 +152,8 @@ public final class WebUtils {
     }
 
     public static void addMessage(HttpSession session, String type, String message) {
-        synchronized(session) {
-            ArrayList<String> messages = (ArrayList)((ArrayList)session.getAttribute(type));
+        synchronized (session) {
+            ArrayList<String> messages = (ArrayList) ((ArrayList) session.getAttribute(type));
             if (messages == null) {
                 messages = new ArrayList();
                 session.setAttribute(type, messages);
@@ -167,8 +167,8 @@ public final class WebUtils {
         StringBuilder sb = new StringBuilder();
         Iterator i$ = map.entrySet().iterator();
 
-        while(i$.hasNext()) {
-            Entry<String, Object> entry = (Entry)i$.next();
+        while (i$.hasNext()) {
+            Entry<String, Object> entry = (Entry) i$.next();
             if (entry.getValue() != null) {
                 if (sb.length() == 0) {
                     sb.append('?');
@@ -176,7 +176,7 @@ public final class WebUtils {
                     sb.append('&');
                 }
 
-                sb.append((String)entry.getKey());
+                sb.append((String) entry.getKey());
                 sb.append('=');
                 sb.append(entry.getValue());
             }
@@ -255,8 +255,7 @@ public final class WebUtils {
         if (al != null && al.size() > 0) {
             sb.append("<ul style=\"color:red\">");
 
-            for (String s : al)
-            {
+            for (String s : al) {
                 sb.append("<li>");
                 sb.append(s);
                 sb.append("</il>");
@@ -265,7 +264,7 @@ public final class WebUtils {
             sb.append("</ul>");
         }
 
-        return(sb.toString());
+        return (sb.toString());
     }
 
     public static String popInfoMessagesAsHtml(HttpSession session) {
@@ -276,8 +275,7 @@ public final class WebUtils {
         if (al != null && al.size() > 0) {
             sb.append("<ul style=\"color:#009900\">");
 
-            for (String s : al)
-            {
+            for (String s : al) {
                 sb.append("<li>");
                 sb.append(s);
                 sb.append("</il>");
@@ -286,7 +284,7 @@ public final class WebUtils {
             sb.append("</ul>");
         }
 
-        return(sb.toString());
+        return (sb.toString());
     }
 
     public static String popErrorMessagesAsAlert(HttpSession session) {
@@ -298,27 +296,27 @@ public final class WebUtils {
             sb.append("<script type=\"text/javascript\">");
             sb.append("alert('");
 
-            for (String s : al)	sb.append(StringEscapeUtils.escapeJavaScript(s));
+            for (String s : al) sb.append(StringEscapeUtils.escapeJavaScript(s));
 
             sb.append("');");
             sb.append("</script>");
         }
 
-        return(sb.toString());
+        return (sb.toString());
     }
 
     /**
      * @return an arrayList of error message or null if no messages, the messages are then removed from the session upon return from this call.
      */
     public static ArrayList<String> popErrorMessages(HttpSession session) {
-        return(WebUtils.popMessages(session, WebUtils.ERROR_MESSAGE_SESSION_KEY));
+        return (WebUtils.popMessages(session, WebUtils.ERROR_MESSAGE_SESSION_KEY));
     }
 
     /**
      * @return an arrayList of error message or null if no messages, the messages are then removed from the session upon return from this call.
      */
     public static ArrayList<String> popInfoMessages(HttpSession session) {
-        return(WebUtils.popMessages(session, WebUtils.INFO_MESSAGE_SESSION_KEY));
+        return (WebUtils.popMessages(session, WebUtils.INFO_MESSAGE_SESSION_KEY));
     }
 
 }

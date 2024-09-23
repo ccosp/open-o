@@ -1,21 +1,20 @@
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -40,9 +39,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -56,14 +55,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "cGambling",
-    "cNicotine",
-    "cOther"
+        "cGambling",
+        "cNicotine",
+        "cOther"
 })
 @XmlRootElement(name = "CType_of_addiction__check_all_that_apply_")
 public class CTypeOfAddictionCheckAllThatApply {
@@ -77,11 +76,11 @@ public class CTypeOfAddictionCheckAllThatApply {
 
     /**
      * Gets the value of the cGambling property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCGambling() {
         return cGambling;
@@ -89,11 +88,11 @@ public class CTypeOfAddictionCheckAllThatApply {
 
     /**
      * Sets the value of the cGambling property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCGambling(String value) {
         this.cGambling = value;
@@ -101,11 +100,11 @@ public class CTypeOfAddictionCheckAllThatApply {
 
     /**
      * Gets the value of the cNicotine property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCNicotine() {
         return cNicotine;
@@ -113,11 +112,11 @@ public class CTypeOfAddictionCheckAllThatApply {
 
     /**
      * Sets the value of the cNicotine property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCNicotine(String value) {
         this.cNicotine = value;
@@ -125,11 +124,11 @@ public class CTypeOfAddictionCheckAllThatApply {
 
     /**
      * Gets the value of the cOther property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCOther() {
         return cOther;
@@ -137,11 +136,11 @@ public class CTypeOfAddictionCheckAllThatApply {
 
     /**
      * Sets the value of the cOther property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCOther(String value) {
         this.cOther = value;

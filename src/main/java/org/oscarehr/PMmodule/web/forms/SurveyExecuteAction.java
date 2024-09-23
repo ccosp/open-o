@@ -1,21 +1,20 @@
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -93,11 +92,11 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward forwardToClientManager(HttpServletRequest request, ActionMapping mapping, ActionForm form,
-            String clientId) {
+                                                String clientId) {
         /*
          * ActionForward forward = mapping.findForward("client_manager");
          * String path = forward.getPath();
-         * 
+         *
          * //return forward;
          * ActionForward af = new ActionForward(path + "&view.tab=Forms&id=" +
          * clientId);
@@ -113,7 +112,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+                                     HttpServletResponse response) {
         String clientId = request.getParameter("clientId");
 
         return forwardToClientManager(request, mapping, form, clientId);
@@ -142,7 +141,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward survey(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                                HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) af;
         String clientId = request.getParameter("clientId");
 
@@ -176,7 +175,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     private String survey_view(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                               HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) af;
         SurveyExecuteFormBean formBean = (SurveyExecuteFormBean) form.get("view");
         SurveyExecuteDataBean data = (SurveyExecuteDataBean) form.get("data");
@@ -273,7 +272,7 @@ public class SurveyExecuteAction extends DispatchAction {
                 org.oscarehr.surveymodel.SurveyDocument.Survey surveyModel = surveyManager
                         .getFormModel(String.valueOf(formBean.getId()));
                 List qids = SurveyModelManager.getAllQuestionIds(surveyModel);
-                for (Iterator iter = qids.iterator(); iter.hasNext();) {
+                for (Iterator iter = qids.iterator(); iter.hasNext(); ) {
                     String key = (String) iter.next();
                     String[] parsed = key.split("_");
                     String pageNumber = parsed[0];
@@ -286,7 +285,7 @@ public class SurveyExecuteAction extends DispatchAction {
                     dataItem.setQuestionId(Integer.parseInt(questionId));
                     // dataItem.setValue((String)data.getValue(key));//?????
                     Set data_tmp = tmpsave.getData();
-                    for (Iterator it = data_tmp.iterator(); it.hasNext();) {
+                    for (Iterator it = data_tmp.iterator(); it.hasNext(); ) {
                         CaisiFormDataTmpSave oneItem = (CaisiFormDataTmpSave) it.next();
                         if (key.equals(oneItem.getDataKey())) {
                             dataItem.setValue(oneItem.getValue());
@@ -300,7 +299,7 @@ public class SurveyExecuteAction extends DispatchAction {
         }
         if (instance != null) {
             log.debug("loading up existing data");
-            for (Iterator iter = instance.getData().iterator(); iter.hasNext();) {
+            for (Iterator iter = instance.getData().iterator(); iter.hasNext(); ) {
                 CaisiFormData dataItem = (CaisiFormData) iter.next();
                 String key = dataItem.getDataKey();
                 if (SurveyModelManager.isCheckbox(model.getSurvey(), key)) {
@@ -373,13 +372,13 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward refresh(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                                 HttpServletResponse response) {
         refresh_survey(mapping, af, request, response);
         return mapping.findForward("execute");
     }
 
     public void refresh_survey(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                               HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) af;
         SurveyExecuteFormBean formBean = (SurveyExecuteFormBean) form.get("view");
         SurveyExecuteDataBean data = (SurveyExecuteDataBean) form.get("data");
@@ -499,7 +498,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward save_survey(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                                     HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) af;
         SurveyExecuteFormBean formBean = (SurveyExecuteFormBean) form.get("view");
 
@@ -529,7 +528,7 @@ public class SurveyExecuteAction extends DispatchAction {
         /* fix the checkboxes */
         Map test = new HashMap();
 
-        for (Iterator iter = data.getValues().keySet().iterator(); iter.hasNext();) {
+        for (Iterator iter = data.getValues().keySet().iterator(); iter.hasNext(); ) {
             String key = (String) iter.next();
             if (key.startsWith("checkbox_")) {
                 // found a hidden element related to a checkbox
@@ -548,7 +547,7 @@ public class SurveyExecuteAction extends DispatchAction {
 
         /* convert the data form bean */
         List qids = SurveyModelManager.getAllQuestionIds(surveyModel);
-        for (Iterator iter = qids.iterator(); iter.hasNext();) {
+        for (Iterator iter = qids.iterator(); iter.hasNext(); ) {
             String key = (String) iter.next();
             // log.debug("key=" + key + ",value=" + (String)data.getValue(key));
             String[] parsed = key.split("_");
@@ -649,7 +648,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     private void populateWithCaisiObject(HttpServletRequest request, SurveyExecuteDataBean data, String key,
-            String caisiObject, String demographic_no) {
+                                         String caisiObject, String demographic_no) {
         log.debug("CaisObject=" + caisiObject);
 
         if (caisiObject.equals("Current Medications")) {
@@ -662,7 +661,7 @@ public class SurveyExecuteAction extends DispatchAction {
         } else if (caisiObject.equals("Current Issues")) {
             List issues = caseManagementManager.getIssues(Integer.parseInt(demographic_no), false);
             StringBuilder str = new StringBuilder();
-            for (Iterator iter = issues.iterator(); iter.hasNext();) {
+            for (Iterator iter = issues.iterator(); iter.hasNext(); ) {
                 CaseManagementIssue issue = (CaseManagementIssue) iter.next();
                 str.append(issue.getIssue().getDescription()).append("\r\n");
             }
@@ -670,7 +669,7 @@ public class SurveyExecuteAction extends DispatchAction {
         } else if (caisiObject.equals("Allergies")) {
             List allergies = caseManagementManager.getAllergies(demographic_no);
             StringBuilder str = new StringBuilder();
-            for (Iterator iter = allergies.iterator(); iter.hasNext();) {
+            for (Iterator iter = allergies.iterator(); iter.hasNext(); ) {
                 Allergy med = (Allergy) iter.next();
                 str.append(med.getDescription()).append(" ").append(med.getReaction()).append("\r\n");
             }
@@ -683,7 +682,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public void populateWithDataLink(SurveyExecuteDataBean data, String key, String dataLink, String demographic_no,
-            String format, boolean refresh, long admissionId) {
+                                     String format, boolean refresh, long admissionId) {
         // will make more dynamic in the future
         Demographic client = this.clientManager.getClientByDemographicNo(demographic_no);
 
@@ -717,7 +716,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public void saveDataLink(SurveyExecuteDataBean data, String key, String dataLink, long demographic_no,
-            String format) {
+                             String format) {
         Demographic client = this.clientManager.getClientByDemographicNo(String.valueOf(demographic_no));
 
         if (dataLink.equals("Demographic/FirstName")) {
@@ -745,7 +744,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward tmpsave_survey(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                                        HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) af;
         SurveyExecuteFormBean formBean = (SurveyExecuteFormBean) form.get("view");
 
@@ -788,7 +787,7 @@ public class SurveyExecuteAction extends DispatchAction {
         /* fix the checkboxes */
         Map test = new HashMap();
 
-        for (Iterator iter = data.getValues().keySet().iterator(); iter.hasNext();) {
+        for (Iterator iter = data.getValues().keySet().iterator(); iter.hasNext(); ) {
             String key = (String) iter.next();
             if (key.startsWith("checkbox_")) {
                 // found a hidden element related to a checkbox
@@ -808,7 +807,7 @@ public class SurveyExecuteAction extends DispatchAction {
         if (newForm) {
             /* convert the data form bean */
             List qids = SurveyModelManager.getAllQuestionIds(surveyModel);
-            for (Iterator iter = qids.iterator(); iter.hasNext();) {
+            for (Iterator iter = qids.iterator(); iter.hasNext(); ) {
                 String key = (String) iter.next();
                 // log.debug("key=" + key + ",value=" + (String)data.getValue(key));
                 String[] parsed = key.split("_");
@@ -827,7 +826,7 @@ public class SurveyExecuteAction extends DispatchAction {
         } else {
             instance.getData().clear();
             List tmpFormData = surveyManager.getTmpFormData(String.valueOf(instance.getId()));
-            for (Iterator it = tmpFormData.iterator(); it.hasNext();) {
+            for (Iterator it = tmpFormData.iterator(); it.hasNext(); ) {
                 CaisiFormDataTmpSave formData = (CaisiFormDataTmpSave) it.next();
                 formData.setValue((String) data.getValue(formData.getDataKey()));
                 instance.getData().add(formData);
@@ -889,7 +888,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward printPreview_survey(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                                             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) af;
         String clientId = request.getParameter("clientId");
@@ -905,7 +904,7 @@ public class SurveyExecuteAction extends DispatchAction {
     }
 
     public ActionForward printPreview_refresh(ActionMapping mapping, ActionForm af, HttpServletRequest request,
-            HttpServletResponse response) {
+                                              HttpServletResponse response) {
         refresh_survey(mapping, af, request, response);
         return mapping.findForward("printPreview");
     }
