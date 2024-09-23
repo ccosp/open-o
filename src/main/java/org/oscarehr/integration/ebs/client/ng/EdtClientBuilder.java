@@ -233,6 +233,9 @@ public class EdtClientBuilder {
 		inProps.put(WSHandlerConstants.ACTION, getCxfOutHandlerDirectives());
 		inProps.put(WSHandlerConstants.PW_CALLBACK_REF, newCallback());
 		inProps.put(WSHandlerConstants.DEC_PROP_FILE, clientKeystore);
+		inProps.put(WSHandlerConstants.ALLOW_RSA15_KEY_TRANSPORT_ALGORITHM, "true");
+		inProps.put(WSHandlerConstants.STORE_BYTES_IN_ATTACHMENT, "false");
+		inProps.put(WSHandlerConstants.EXPAND_XOP_INCLUDE, "false");
 		return inProps;
 	}
 
