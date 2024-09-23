@@ -20,5 +20,5 @@ public class PDFEncryptionUtil {
         } catch (IOException e) {
             throw new IOException("Failed to encrypt document", e);
         }
-    } 
+    }
 }

@@ -1,21 +1,20 @@
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -42,9 +41,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -67,23 +66,21 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "c1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed",
-    "c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH",
-    "c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm",
-    "c3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm",
-    "cComments",
-    "cActions",
-    "cByWhom",
-    "cReviewDate",
-    "cHaveYouAttemptedSuicideInThePastSelectOne",
-    "cDoYouCurrentlyHaveSuicidalThoughtsSelectOne",
-    "cDoYouHaveAnyConcernsFroYourOwnSafetySelectOne",
-    "cRisksSelectAllThatApply"
+        "c1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed",
+        "c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH",
+        "c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm",
+        "c3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm",
+        "cComments",
+        "cActions",
+        "cByWhom",
+        "cReviewDate",
+        "cHaveYouAttemptedSuicideInThePastSelectOne",
+        "cDoYouCurrentlyHaveSuicidalThoughtsSelectOne",
+        "cDoYouHaveAnyConcernsFroYourOwnSafetySelectOne",
+        "cRisksSelectAllThatApply"
 })
 @XmlRootElement(name = "C10__Safety_to_self__Do_you_ever_have_thoughts_of_harming_yourself__or_actually_harming_yourself")
 public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarmingYourself {
@@ -115,11 +112,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the c1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed() {
         return c1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed;
@@ -127,11 +122,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the c1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed(BigInteger value) {
         this.c1IsThePersonADangerToHimOrHerselfIfRated0Or9SkipQuestions23AndProceed = value;
@@ -139,11 +132,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH() {
         return c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH;
@@ -151,11 +142,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH(BigInteger value) {
         this.c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesToReduceTheRiskOfSelfH = value;
@@ -163,11 +152,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm() {
         return c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm;
@@ -175,11 +162,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm(BigInteger value) {
         this.c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesToReduceTheRiskOfSelfHarm = value;
@@ -187,11 +172,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm() {
         return c3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm;
@@ -199,11 +182,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm(BigInteger value) {
         this.c3BHowMuchHelpDoesThePersonNeedFromLocalServicesToReduceTheRiskOfSelfHarm = value;
@@ -211,11 +192,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cComments property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *     
+     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -223,11 +202,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cComments property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -235,11 +212,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cActions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -247,11 +222,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cActions property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -259,11 +232,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cByWhom property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -271,11 +242,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cByWhom property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -283,11 +252,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cReviewDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -295,11 +262,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cReviewDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;
@@ -307,11 +272,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cHaveYouAttemptedSuicideInThePastSelectOne property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CHaveYouAttemptedSuicideInThePastSelectOne }
-     *     
+     *
+     * @return possible object is
+     * {@link CHaveYouAttemptedSuicideInThePastSelectOne }
      */
     public CHaveYouAttemptedSuicideInThePastSelectOne getCHaveYouAttemptedSuicideInThePastSelectOne() {
         return cHaveYouAttemptedSuicideInThePastSelectOne;
@@ -319,11 +282,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cHaveYouAttemptedSuicideInThePastSelectOne property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CHaveYouAttemptedSuicideInThePastSelectOne }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link CHaveYouAttemptedSuicideInThePastSelectOne }
      */
     public void setCHaveYouAttemptedSuicideInThePastSelectOne(CHaveYouAttemptedSuicideInThePastSelectOne value) {
         this.cHaveYouAttemptedSuicideInThePastSelectOne = value;
@@ -331,11 +292,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cDoYouCurrentlyHaveSuicidalThoughtsSelectOne property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CDoYouCurrentlyHaveSuicidalThoughtsSelectOne }
-     *     
+     *
+     * @return possible object is
+     * {@link CDoYouCurrentlyHaveSuicidalThoughtsSelectOne }
      */
     public CDoYouCurrentlyHaveSuicidalThoughtsSelectOne getCDoYouCurrentlyHaveSuicidalThoughtsSelectOne() {
         return cDoYouCurrentlyHaveSuicidalThoughtsSelectOne;
@@ -343,11 +302,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cDoYouCurrentlyHaveSuicidalThoughtsSelectOne property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CDoYouCurrentlyHaveSuicidalThoughtsSelectOne }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link CDoYouCurrentlyHaveSuicidalThoughtsSelectOne }
      */
     public void setCDoYouCurrentlyHaveSuicidalThoughtsSelectOne(CDoYouCurrentlyHaveSuicidalThoughtsSelectOne value) {
         this.cDoYouCurrentlyHaveSuicidalThoughtsSelectOne = value;
@@ -355,11 +312,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cDoYouHaveAnyConcernsFroYourOwnSafetySelectOne property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CDoYouHaveAnyConcernsFroYourOwnSafetySelectOne }
-     *     
+     *
+     * @return possible object is
+     * {@link CDoYouHaveAnyConcernsFroYourOwnSafetySelectOne }
      */
     public CDoYouHaveAnyConcernsFroYourOwnSafetySelectOne getCDoYouHaveAnyConcernsFroYourOwnSafetySelectOne() {
         return cDoYouHaveAnyConcernsFroYourOwnSafetySelectOne;
@@ -367,11 +322,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cDoYouHaveAnyConcernsFroYourOwnSafetySelectOne property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CDoYouHaveAnyConcernsFroYourOwnSafetySelectOne }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link CDoYouHaveAnyConcernsFroYourOwnSafetySelectOne }
      */
     public void setCDoYouHaveAnyConcernsFroYourOwnSafetySelectOne(CDoYouHaveAnyConcernsFroYourOwnSafetySelectOne value) {
         this.cDoYouHaveAnyConcernsFroYourOwnSafetySelectOne = value;
@@ -379,11 +332,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Gets the value of the cRisksSelectAllThatApply property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CRisksSelectAllThatApply }
-     *     
+     *
+     * @return possible object is
+     * {@link CRisksSelectAllThatApply }
      */
     public CRisksSelectAllThatApply getCRisksSelectAllThatApply() {
         return cRisksSelectAllThatApply;
@@ -391,11 +342,9 @@ public class C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarm
 
     /**
      * Sets the value of the cRisksSelectAllThatApply property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CRisksSelectAllThatApply }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link CRisksSelectAllThatApply }
      */
     public void setCRisksSelectAllThatApply(CRisksSelectAllThatApply value) {
         this.cRisksSelectAllThatApply = value;

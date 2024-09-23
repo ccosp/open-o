@@ -1,26 +1,26 @@
 /**
  * Copyright (c) 2024. Magenta Health. All Rights Reserved.
- *
+ * <p>
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
- *
+ * <p>
  * Modifications made by Magenta Health in 2024.
  */
 
@@ -144,11 +144,9 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
 
     /**
      * Finds all eforms based on the status.
-     * 
-     * @param status
-     *               Status to be used when looking up forms.
-     * @return
-     *         Returns the list of all forms with the specified status.
+     *
+     * @param status Status to be used when looking up forms.
+     * @return Returns the list of all forms with the specified status.
      */
     @Override
     public List<EForm> findByStatus(boolean status) {
@@ -157,15 +155,12 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
 
     /**
      * Finds all eforms based on the status.
-     * 
-     * @param status
-     *                  Status to be used when looking up forms.
-     * @param sortOrder
-     *                  Order how records should be sorted. Providing no sort order
+     *
+     * @param status    Status to be used when looking up forms.
+     * @param sortOrder Order how records should be sorted. Providing no sort order
      *                  delegates to the default sorting order of the persistence
      *                  provider
-     * @return
-     *         Returns the list of all forms with the specified status.
+     * @return Returns the list of all forms with the specified status.
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -199,12 +194,10 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
 
     /**
      * Finds the largest identifier for the specified form name.
-     * 
-     * @param formName
-     *                 Form name to find the largest identifier for the form with
+     *
+     * @param formName Form name to find the largest identifier for the form with
      *                 the specified name and set as enabled (current)
-     * @return
-     *         Returns the largest identifier found.
+     * @return Returns the largest identifier found.
      */
     @Override
     public Integer findMaxIdForActiveForm(String formName) {
@@ -216,14 +209,11 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
 
     /**
      * Counts forms with the specified form name excluding the specified form ID.
-     * 
-     * @param formName
-     *                 Form name to be counted
-     * @param id
-     *                 ID of the form to exclude from the count results
-     * @return
-     *         Returns the number of all active forms with the forms with the
-     *         specified ID
+     *
+     * @param formName Form name to be counted
+     * @param id       ID of the form to exclude from the count results
+     * @return Returns the number of all active forms with the forms with the
+     * specified ID
      */
     @Override
     public Long countFormsOtherThanSpecified(String formName, Integer id) {
@@ -237,7 +227,7 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
 
     /**
      * get eform in group by group name
-     * 
+     *
      * @param groupName
      * @return list of EForms
      */

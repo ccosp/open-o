@@ -5,20 +5,20 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version. 
- *
+ * of the License, or (at your option) any later version.
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * Contributors:
- *     <Quatro Group Software Systems inc.>  <OSCAR Team>
- *
+ * <Quatro Group Software Systems inc.>  <OSCAR Team>
+ * <p>
  * Modifications made by Magenta Health in 2024.
  */
 
@@ -42,6 +42,7 @@ import org.springframework.stereotype.Repository;
 
 import com.quatro.model.security.Secuserrole;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * A data access object (DAO) providing persistence and search support for
  * Secuserrole entities. Transaction control of the save(), update() and
@@ -50,8 +51,8 @@ import org.springframework.transaction.annotation.Transactional;
  * transactions. Each of these methods provides additional information for how
  * to configure it for the desired type of transaction control.
  *
- * @see com.quatro.model.security.Secuserrole
  * @author MyEclipse Persistence Tools
+ * @see com.quatro.model.security.Secuserrole
  */
 @Transactional
 public class SecuserroleDaoImpl extends HibernateDaoSupport implements SecuserroleDao {
@@ -68,7 +69,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public void saveAll(List list) {
         logger.debug("saving ALL Secuserrole instances");
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             for (int i = 0; i < list.size(); i++) {
                 Secuserrole obj = (Secuserrole) list.get(i);
@@ -95,7 +97,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public void save(Secuserrole transientInstance) {
         logger.debug("saving Secuserrole instance");
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             transientInstance.setLastUpdateDate(new Date());
             session.saveOrUpdate(transientInstance);
@@ -123,7 +126,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public void delete(Secuserrole persistentInstance) {
         logger.debug("deleting Secuserrole instance");
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             session.delete(persistentInstance);
             logger.debug("delete successful");
@@ -180,7 +184,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public int update(Secuserrole instance) {
         logger.debug("Update Secuserrole instance");
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             String queryString = "update Secuserrole as model set model.activeyn ='" + instance.getActiveyn()
                     + "' , lastUpdateDate=now() "
@@ -202,7 +207,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public Secuserrole findById(java.lang.Integer id) {
         logger.debug("getting Secuserrole instance with id: " + id);
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             Secuserrole instance = (Secuserrole) session.get(
                     "com.quatro.model.security.Secuserrole", id);
@@ -219,11 +225,12 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     @Override
     public List findByExample(Secuserrole instance) {
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         logger.debug("finding Secuserrole instance by example");
         try {
             List results = session.createCriteria(
-                    "com.quatro.model.security.Secuserrole").add(
+                            "com.quatro.model.security.Secuserrole").add(
                             Example.create(instance))
                     .list();
             logger.debug("find by example successful, result size: "
@@ -243,7 +250,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
         logger.debug("finding Secuserrole instance with property: " + propertyName
                 + ", value: " + value);
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             String queryString = "from Secuserrole as model where model."
                     + propertyName + "= ?";
@@ -278,7 +286,7 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
          * (select codecsv from lst_orgcd where code = 'P200011') b
          * where b.codecsv like '%' || s.orgcd || ',%'
          * and not (s.orgcd like 'R%' or s.orgcd like 'O%')
-         * 
+         *
          */
         logger.debug("Find staff instance .");
         try {
@@ -347,7 +355,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     @Override
     public List findAll() {
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         logger.debug("finding all Secuserrole instances");
         try {
             String queryString = "from Secuserrole";
@@ -366,7 +375,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public Secuserrole merge(Secuserrole detachedInstance) {
         logger.debug("merging Secuserrole instance");
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             detachedInstance.setLastUpdateDate(new Date());
             Secuserrole result = (Secuserrole) session.merge(
@@ -386,7 +396,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public void attachDirty(Secuserrole instance) {
         logger.debug("attaching dirty Secuserrole instance");
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             instance.setLastUpdateDate(new Date());
             session.saveOrUpdate(instance);
@@ -404,7 +415,8 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
     public void attachClean(Secuserrole instance) {
         logger.debug("attaching clean Secuserrole instance");
         // Session session = getSession();
-        Session session = currentSession();;
+        Session session = currentSession();
+        ;
         try {
             session.lock(instance, LockMode.NONE);
             logger.debug("attach successful");

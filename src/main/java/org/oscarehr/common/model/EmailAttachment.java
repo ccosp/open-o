@@ -28,7 +28,8 @@ public class EmailAttachment extends AbstractModel<Integer> {
     @JoinColumn(name = "logId")
     private EmailLog emailLog;
 
-    public EmailAttachment() {}
+    public EmailAttachment() {
+    }
 
     public EmailAttachment(String fileName, String filePath, DocumentType documentType, int documentId) {
         this.fileName = fileName;

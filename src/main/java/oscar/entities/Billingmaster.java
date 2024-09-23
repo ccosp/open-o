@@ -5,16 +5,16 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for the
  * Department of Family Medicine
  * McMaster University
@@ -46,13 +46,12 @@ import oscar.util.UtilDateUtilities;
 
 /**
  * Encapsulates data from table billingmaster
- *
  */
 @Entity
 @Table(name = "billingmaster")
 @SqlResultSetMapping(name = "select_user_bill_report_wcb_mapping",
-	entities={
-		@EntityResult(entityClass=Billingmaster.class)
+        entities = {
+                @EntityResult(entityClass = Billingmaster.class)
 		/*
 		@EntityResult(entityClass=Demographic.class)
 	,fields={
@@ -63,7 +62,7 @@ import oscar.util.UtilDateUtilities;
 		,
 		@EntityResult(entityClass=TeleplanC12.class),
 */
-}
+        }
 )
 
 public class Billingmaster {
@@ -201,92 +200,92 @@ public class Billingmaster {
     /**
      * Full constructor
      *
-     * @param billingmasterNo int
-     * @param billingNo int
-     * @param createdate String
-     * @param billingstatus String
-     * @param demographicNo int
-     * @param appointmentNo int
-     * @param claimcode String
-     * @param datacenter String
-     * @param payeeNo String
-     * @param practitionerNo String
-     * @param phn String
-     * @param nameVerify String
-     * @param dependentNum String
-     * @param billingUnit String
-     * @param clarificationCode String
-     * @param anatomicalArea String
-     * @param afterHour String
-     * @param newProgram String
-     * @param billingCode String
-     * @param billAmount String
-     * @param paymentMode String
-     * @param serviceDate String
-     * @param serviceToDay String
-     * @param submissionCode String
+     * @param billingmasterNo        int
+     * @param billingNo              int
+     * @param createdate             String
+     * @param billingstatus          String
+     * @param demographicNo          int
+     * @param appointmentNo          int
+     * @param claimcode              String
+     * @param datacenter             String
+     * @param payeeNo                String
+     * @param practitionerNo         String
+     * @param phn                    String
+     * @param nameVerify             String
+     * @param dependentNum           String
+     * @param billingUnit            String
+     * @param clarificationCode      String
+     * @param anatomicalArea         String
+     * @param afterHour              String
+     * @param newProgram             String
+     * @param billingCode            String
+     * @param billAmount             String
+     * @param paymentMode            String
+     * @param serviceDate            String
+     * @param serviceToDay           String
+     * @param submissionCode         String
      * @param extendedSubmissionCode String
-     * @param dxCode1 String
-     * @param dxCode2 String
-     * @param dxCode3 String
-     * @param dxExpansion String
-     * @param serviceLocation String
-     * @param referralFlag1 String
-     * @param referralNo1 String
-     * @param referralFlag2 String
-     * @param referralNo2 String
-     * @param timeCall String
-     * @param serviceStartTime String
-     * @param serviceEndTime String
-     * @param birthDate String
-     * @param officeNumber String
-     * @param correspondenceCode String
-     * @param claimComment String
-     * @param mvaClaimCode String
-     * @param icbcClaimNo String
-     * @param originalClaim String
-     * @param facilityNo String
-     * @param facilitySubNo String
-     * @param fillerClaim String
-     * @param oinInsurerCode String
-     * @param oinRegistrationNo String
-     * @param oinBirthdate String
-     * @param oinFirstName String
-     * @param oinSecondName String
-     * @param oinSurname String
-     * @param oinSexCode String
-     * @param oinAddress String
-     * @param oinAddress2 String
-     * @param oinAddress3 String
-     * @param oinAddress4 String
-     * @param oinPostalcode String
+     * @param dxCode1                String
+     * @param dxCode2                String
+     * @param dxCode3                String
+     * @param dxExpansion            String
+     * @param serviceLocation        String
+     * @param referralFlag1          String
+     * @param referralNo1            String
+     * @param referralFlag2          String
+     * @param referralNo2            String
+     * @param timeCall               String
+     * @param serviceStartTime       String
+     * @param serviceEndTime         String
+     * @param birthDate              String
+     * @param officeNumber           String
+     * @param correspondenceCode     String
+     * @param claimComment           String
+     * @param mvaClaimCode           String
+     * @param icbcClaimNo            String
+     * @param originalClaim          String
+     * @param facilityNo             String
+     * @param facilitySubNo          String
+     * @param fillerClaim            String
+     * @param oinInsurerCode         String
+     * @param oinRegistrationNo      String
+     * @param oinBirthdate           String
+     * @param oinFirstName           String
+     * @param oinSecondName          String
+     * @param oinSurname             String
+     * @param oinSexCode             String
+     * @param oinAddress             String
+     * @param oinAddress2            String
+     * @param oinAddress3            String
+     * @param oinAddress4            String
+     * @param oinPostalcode          String
      */
     public Billingmaster(int billingmasterNo, int billingNo,
-            Date createdate, String billingstatus,
-            int demographicNo, int appointmentNo, String claimcode,
-            String datacenter, String payeeNo, String practitionerNo,
-            String phn, String nameVerify, String dependentNum,
-            String billingUnit, String clarificationCode,
-            String anatomicalArea, String afterHour,
-            String newProgram, String billingCode, String billAmount,
-            String paymentMode, String serviceDate,
-            String serviceToDay, String submissionCode,
-            String extendedSubmissionCode, String dxCode1,
-            String dxCode2, String dxCode3, String dxExpansion,
-            String serviceLocation, String referralFlag1,
-            String referralNo1, String referralFlag2,
-            String referralNo2, String timeCall,
-            String serviceStartTime, String serviceEndTime,
-            String birthDate, String officeNumber,
-            String correspondenceCode, String claimComment,
-            String mvaClaimCode, String icbcClaimNo,
-            String originalClaim, String facilityNo,
-            String facilitySubNo, String fillerClaim,
-            String oinInsurerCode, String oinRegistrationNo, String oinBirthdate, String oinFirstName,
-            String oinSecondName, String oinSurname,
-            String oinSexCode, String oinAddress, String oinAddress2,
-            String oinAddress3, String oinAddress4,
-            String oinPostalcode) {
+                         Date createdate, String billingstatus,
+                         int demographicNo, int appointmentNo, String claimcode,
+                         String datacenter, String payeeNo, String practitionerNo,
+                         String phn, String nameVerify, String dependentNum,
+                         String billingUnit, String clarificationCode,
+                         String anatomicalArea, String afterHour,
+                         String newProgram, String billingCode, String billAmount,
+                         String paymentMode, String serviceDate,
+                         String serviceToDay, String submissionCode,
+                         String extendedSubmissionCode, String dxCode1,
+                         String dxCode2, String dxCode3, String dxExpansion,
+                         String serviceLocation, String referralFlag1,
+                         String referralNo1, String referralFlag2,
+                         String referralNo2, String timeCall,
+                         String serviceStartTime, String serviceEndTime,
+                         String birthDate, String officeNumber,
+                         String correspondenceCode, String claimComment,
+                         String mvaClaimCode, String icbcClaimNo,
+                         String originalClaim, String facilityNo,
+                         String facilitySubNo, String fillerClaim,
+                         String oinInsurerCode, String oinRegistrationNo, String oinBirthdate, String oinFirstName,
+                         String oinSecondName, String oinSurname,
+                         String oinSexCode, String oinAddress, String oinAddress2,
+                         String oinAddress3, String oinAddress4,
+                         String oinPostalcode) {
         this.billingmasterNo = billingmasterNo;
         this.billingNo = billingNo;
         this.createdate = createdate;
@@ -350,6 +349,7 @@ public class Billingmaster {
 
     /**
      * Gets the billingmasterNo
+     *
      * @return int billingmasterNo
      */
     public int getBillingmasterNo() {
@@ -358,6 +358,7 @@ public class Billingmaster {
 
     /**
      * Gets the billingNo
+     *
      * @return int billingNo
      */
     public int getBillingNo() {
@@ -366,6 +367,7 @@ public class Billingmaster {
 
     /**
      * Gets the createdate
+     *
      * @return String createdate
      */
     public Date getCreatedate() {
@@ -374,6 +376,7 @@ public class Billingmaster {
 
     /**
      * Gets the billingstatus
+     *
      * @return String billingstatus
      */
     public String getBillingstatus() {
@@ -382,6 +385,7 @@ public class Billingmaster {
 
     /**
      * Gets the demographicNo
+     *
      * @return int demographicNo
      */
     public int getDemographicNo() {
@@ -390,6 +394,7 @@ public class Billingmaster {
 
     /**
      * Gets the appointmentNo
+     *
      * @return int appointmentNo
      */
     public int getAppointmentNo() {
@@ -398,6 +403,7 @@ public class Billingmaster {
 
     /**
      * Gets the claimcode
+     *
      * @return String claimcode
      */
     public String getClaimcode() {
@@ -406,6 +412,7 @@ public class Billingmaster {
 
     /**
      * Gets the datacenter
+     *
      * @return String datacenter
      */
     public String getDatacenter() {
@@ -414,6 +421,7 @@ public class Billingmaster {
 
     /**
      * Gets the payeeNo
+     *
      * @return String payeeNo
      */
     public String getPayeeNo() {
@@ -422,6 +430,7 @@ public class Billingmaster {
 
     /**
      * Gets the practitionerNo
+     *
      * @return String practitionerNo
      */
     public String getPractitionerNo() {
@@ -430,24 +439,26 @@ public class Billingmaster {
 
     /**
      * Gets the phn
+     *
      * @return String phn
      */
     public String getPhn() {
         return (phn != null ? phn : "");
     }
 
-    public void setNameVerify(String firstName, String lastName){
-        if (lastName.length() < 2){
-           lastName += "   ";
+    public void setNameVerify(String firstName, String lastName) {
+        if (lastName.length() < 2) {
+            lastName += "   ";
         }
-        if (firstName.length() < 1){
-           firstName += "   ";
+        if (firstName.length() < 1) {
+            firstName += "   ";
         }
         nameVerify = oscar.util.UtilMisc.mysqlEscape(firstName.substring(0, 1) + " " + lastName.substring(0, 2));
     }
 
     /**
      * Gets the nameVerify
+     *
      * @return String nameVerify
      */
     public String getNameVerify() {
@@ -456,6 +467,7 @@ public class Billingmaster {
 
     /**
      * Gets the dependentNum
+     *
      * @return String dependentNum
      */
     public String getDependentNum() {
@@ -464,6 +476,7 @@ public class Billingmaster {
 
     /**
      * Gets the billingUnit
+     *
      * @return String billingUnit
      */
     public String getBillingUnit() {
@@ -472,6 +485,7 @@ public class Billingmaster {
 
     /**
      * Gets the clarificationCode
+     *
      * @return String clarificationCode
      */
     public String getClarificationCode() {
@@ -480,6 +494,7 @@ public class Billingmaster {
 
     /**
      * Gets the anatomicalArea
+     *
      * @return String anatomicalArea
      */
     public String getAnatomicalArea() {
@@ -488,6 +503,7 @@ public class Billingmaster {
 
     /**
      * Gets the afterHour
+     *
      * @return String afterHour
      */
     public String getAfterHour() {
@@ -496,6 +512,7 @@ public class Billingmaster {
 
     /**
      * Gets the newProgram
+     *
      * @return String newProgram
      */
     public String getNewProgram() {
@@ -504,6 +521,7 @@ public class Billingmaster {
 
     /**
      * Gets the billingCode
+     *
      * @return String billingCode
      */
     public String getBillingCode() {
@@ -512,18 +530,20 @@ public class Billingmaster {
 
     /**
      * Gets the billAmount
+     *
      * @return String billAmount
      */
     public String getBillAmount() {
         return (billAmount != null ? billAmount : "");
     }
 
-    public double getBillAmountAsDouble(){
+    public double getBillAmountAsDouble() {
         return Double.parseDouble(getBillAmount());
     }
 
     /**
      * Gets the paymentMode
+     *
      * @return String paymentMode
      */
     public String getPaymentMode() {
@@ -532,17 +552,18 @@ public class Billingmaster {
 
     /**
      * Gets the serviceDate
+     *
      * @return String serviceDate
      */
     public String getServiceDate() {
         return (serviceDate != null ? serviceDate : "");
     }
 
-    public Date getServiceDateAsDate(){
+    public Date getServiceDateAsDate() {
         Date d = null;
-        try{
-           d = UtilDateUtilities.getDateFromString(serviceDate, "yyyyMMdd");
-        }catch(Exception e){
+        try {
+            d = UtilDateUtilities.getDateFromString(serviceDate, "yyyyMMdd");
+        } catch (Exception e) {
             MiscUtils.getLogger().error("Error", e);
         }
         return d;
@@ -550,6 +571,7 @@ public class Billingmaster {
 
     /**
      * Gets the serviceToDay
+     *
      * @return String serviceToDay
      */
     public String getServiceToDay() {
@@ -558,6 +580,7 @@ public class Billingmaster {
 
     /**
      * Gets the submissionCode
+     *
      * @return String submissionCode
      */
     public String getSubmissionCode() {
@@ -566,6 +589,7 @@ public class Billingmaster {
 
     /**
      * Gets the extendedSubmissionCode
+     *
      * @return String extendedSubmissionCode
      */
     public String getExtendedSubmissionCode() {
@@ -574,6 +598,7 @@ public class Billingmaster {
 
     /**
      * Gets the dxCode1
+     *
      * @return String dxCode1
      */
     public String getDxCode1() {
@@ -582,6 +607,7 @@ public class Billingmaster {
 
     /**
      * Gets the dxCode2
+     *
      * @return String dxCode2
      */
     public String getDxCode2() {
@@ -590,6 +616,7 @@ public class Billingmaster {
 
     /**
      * Gets the dxCode3
+     *
      * @return String dxCode3
      */
     public String getDxCode3() {
@@ -598,6 +625,7 @@ public class Billingmaster {
 
     /**
      * Gets the dxExpansion
+     *
      * @return String dxExpansion
      */
     public String getDxExpansion() {
@@ -606,6 +634,7 @@ public class Billingmaster {
 
     /**
      * Gets the serviceLocation
+     *
      * @return String serviceLocation
      */
     public String getServiceLocation() {
@@ -614,6 +643,7 @@ public class Billingmaster {
 
     /**
      * Gets the referralFlag1
+     *
      * @return String referralFlag1
      */
     public String getReferralFlag1() {
@@ -622,6 +652,7 @@ public class Billingmaster {
 
     /**
      * Gets the referralNo1
+     *
      * @return String referralNo1
      */
     public String getReferralNo1() {
@@ -630,6 +661,7 @@ public class Billingmaster {
 
     /**
      * Gets the referralFlag2
+     *
      * @return String referralFlag2
      */
     public String getReferralFlag2() {
@@ -638,6 +670,7 @@ public class Billingmaster {
 
     /**
      * Gets the referralNo2
+     *
      * @return String referralNo2
      */
     public String getReferralNo2() {
@@ -646,6 +679,7 @@ public class Billingmaster {
 
     /**
      * Gets the timeCall
+     *
      * @return String timeCall
      */
     public String getTimeCall() {
@@ -654,6 +688,7 @@ public class Billingmaster {
 
     /**
      * Gets the serviceStartTime
+     *
      * @return String serviceStartTime
      */
     public String getServiceStartTime() {
@@ -662,6 +697,7 @@ public class Billingmaster {
 
     /**
      * Gets the serviceEndTime
+     *
      * @return String serviceEndTime
      */
     public String getServiceEndTime() {
@@ -670,6 +706,7 @@ public class Billingmaster {
 
     /**
      * Gets the birthDate
+     *
      * @return String birthDate
      */
     public String getBirthDate() {
@@ -678,6 +715,7 @@ public class Billingmaster {
 
     /**
      * Gets the officeNumber
+     *
      * @return String officeNumber
      */
     public String getOfficeNumber() {
@@ -686,6 +724,7 @@ public class Billingmaster {
 
     /**
      * Gets the correspondenceCode
+     *
      * @return String correspondenceCode
      */
     public String getCorrespondenceCode() {
@@ -694,6 +733,7 @@ public class Billingmaster {
 
     /**
      * Gets the claimComment
+     *
      * @return String claimComment
      */
     public String getClaimComment() {
@@ -702,6 +742,7 @@ public class Billingmaster {
 
     /**
      * Gets the mvaClaimCode
+     *
      * @return String mvaClaimCode
      */
     public String getMvaClaimCode() {
@@ -710,6 +751,7 @@ public class Billingmaster {
 
     /**
      * Gets the icbcClaimNo
+     *
      * @return String icbcClaimNo
      */
     public String getIcbcClaimNo() {
@@ -718,6 +760,7 @@ public class Billingmaster {
 
     /**
      * Gets the originalClaim
+     *
      * @return String originalClaim
      */
     public String getOriginalClaim() {
@@ -726,6 +769,7 @@ public class Billingmaster {
 
     /**
      * Gets the facilityNo
+     *
      * @return String facilityNo
      */
     public String getFacilityNo() {
@@ -734,6 +778,7 @@ public class Billingmaster {
 
     /**
      * Gets the facilitySubNo
+     *
      * @return String facilitySubNo
      */
     public String getFacilitySubNo() {
@@ -742,6 +787,7 @@ public class Billingmaster {
 
     /**
      * Gets the fillerClaim
+     *
      * @return String fillerClaim
      */
     public String getFillerClaim() {
@@ -750,6 +796,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinInsurerCode
+     *
      * @return String oinInsurerCode
      */
     public String getOinInsurerCode() {
@@ -758,6 +805,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinRegistrationNo
+     *
      * @return String oinRegistrationNo
      */
     public String getOinRegistrationNo() {
@@ -766,6 +814,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinBirthdate
+     *
      * @return String oinBirthdate
      */
     public String getOinBirthdate() {
@@ -774,6 +823,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinFirstName
+     *
      * @return String oinFirstName
      */
     public String getOinFirstName() {
@@ -782,6 +832,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinSecondName
+     *
      * @return String oinSecondName
      */
     public String getOinSecondName() {
@@ -790,6 +841,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinSurname
+     *
      * @return String oinSurname
      */
     public String getOinSurname() {
@@ -798,6 +850,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinSexCode
+     *
      * @return String oinSexCode
      */
     public String getOinSexCode() {
@@ -806,6 +859,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinAddress
+     *
      * @return String oinAddress
      */
     public String getOinAddress() {
@@ -814,6 +868,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinAddress2
+     *
      * @return String oinAddress2
      */
     public String getOinAddress2() {
@@ -822,6 +877,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinAddress3
+     *
      * @return String oinAddress3
      */
     public String getOinAddress3() {
@@ -830,6 +886,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinAddress4
+     *
      * @return String oinAddress4
      */
     public String getOinAddress4() {
@@ -838,6 +895,7 @@ public class Billingmaster {
 
     /**
      * Gets the oinPostalcode
+     *
      * @return String oinPostalcode
      */
     public String getOinPostalcode() {
@@ -846,6 +904,7 @@ public class Billingmaster {
 
     /**
      * Sets the billingmasterNo
+     *
      * @param billingmasterNo int
      */
     public void setBillingmasterNo(int billingmasterNo) {
@@ -854,6 +913,7 @@ public class Billingmaster {
 
     /**
      * Sets the billingNo
+     *
      * @param billingNo int
      */
     public void setBillingNo(int billingNo) {
@@ -862,6 +922,7 @@ public class Billingmaster {
 
     /**
      * Sets the createdate
+     *
      * @param createdate String
      */
     public void setCreatedate(Date createdate) {
@@ -870,6 +931,7 @@ public class Billingmaster {
 
     /**
      * Sets the billingstatus
+     *
      * @param billingstatus String
      */
     public void setBillingstatus(String billingstatus) {
@@ -878,6 +940,7 @@ public class Billingmaster {
 
     /**
      * Sets the demographicNo
+     *
      * @param demographicNo int
      */
     public void setDemographicNo(int demographicNo) {
@@ -886,6 +949,7 @@ public class Billingmaster {
 
     /**
      * Sets the appointmentNo
+     *
      * @param appointmentNo int
      */
     public void setAppointmentNo(int appointmentNo) {
@@ -894,6 +958,7 @@ public class Billingmaster {
 
     /**
      * Sets the claimcode
+     *
      * @param claimcode String
      */
     public void setClaimcode(String claimcode) {
@@ -902,6 +967,7 @@ public class Billingmaster {
 
     /**
      * Sets the datacenter
+     *
      * @param datacenter String
      */
     public void setDatacenter(String datacenter) {
@@ -910,6 +976,7 @@ public class Billingmaster {
 
     /**
      * Sets the payeeNo
+     *
      * @param payeeNo String
      */
     public void setPayeeNo(String payeeNo) {
@@ -918,6 +985,7 @@ public class Billingmaster {
 
     /**
      * Sets the practitionerNo
+     *
      * @param practitionerNo String
      */
     public void setPractitionerNo(String practitionerNo) {
@@ -926,6 +994,7 @@ public class Billingmaster {
 
     /**
      * Sets the phn
+     *
      * @param phn String
      */
     public void setPhn(String phn) {
@@ -934,6 +1003,7 @@ public class Billingmaster {
 
     /**
      * Sets the nameVerify
+     *
      * @param nameVerify String
      */
     public void setNameVerify(String nameVerify) {
@@ -942,6 +1012,7 @@ public class Billingmaster {
 
     /**
      * Sets the dependentNum
+     *
      * @param dependentNum String
      */
     public void setDependentNum(String dependentNum) {
@@ -950,6 +1021,7 @@ public class Billingmaster {
 
     /**
      * Sets the billingUnit
+     *
      * @param billingUnit String
      */
     public void setBillingUnit(String billingUnit) {
@@ -958,6 +1030,7 @@ public class Billingmaster {
 
     /**
      * Sets the clarificationCode
+     *
      * @param clarificationCode String
      */
     public void setClarificationCode(String clarificationCode) {
@@ -966,6 +1039,7 @@ public class Billingmaster {
 
     /**
      * Sets the anatomicalArea
+     *
      * @param anatomicalArea String
      */
     public void setAnatomicalArea(String anatomicalArea) {
@@ -974,6 +1048,7 @@ public class Billingmaster {
 
     /**
      * Sets the afterHour
+     *
      * @param afterHour String
      */
     public void setAfterHour(String afterHour) {
@@ -982,6 +1057,7 @@ public class Billingmaster {
 
     /**
      * Sets the newProgram
+     *
      * @param newProgram String
      */
     public void setNewProgram(String newProgram) {
@@ -990,6 +1066,7 @@ public class Billingmaster {
 
     /**
      * Sets the billingCode
+     *
      * @param billingCode String
      */
     public void setBillingCode(String billingCode) {
@@ -998,6 +1075,7 @@ public class Billingmaster {
 
     /**
      * Sets the billAmount
+     *
      * @param billAmount String
      */
     public void setBillAmount(String billAmount) {
@@ -1006,6 +1084,7 @@ public class Billingmaster {
 
     /**
      * Sets the paymentMode
+     *
      * @param paymentMode String
      */
     public void setPaymentMode(String paymentMode) {
@@ -1014,6 +1093,7 @@ public class Billingmaster {
 
     /**
      * Sets the serviceDate
+     *
      * @param serviceDate String
      */
     public void setServiceDate(String serviceDate) {
@@ -1022,6 +1102,7 @@ public class Billingmaster {
 
     /**
      * Sets the serviceToDay
+     *
      * @param serviceToDay String
      */
     public void setServiceToDay(String serviceToDay) {
@@ -1030,6 +1111,7 @@ public class Billingmaster {
 
     /**
      * Sets the submissionCode
+     *
      * @param submissionCode String
      */
     public void setSubmissionCode(String submissionCode) {
@@ -1038,6 +1120,7 @@ public class Billingmaster {
 
     /**
      * Sets the extendedSubmissionCode
+     *
      * @param extendedSubmissionCode String
      */
     public void setExtendedSubmissionCode(String extendedSubmissionCode) {
@@ -1046,6 +1129,7 @@ public class Billingmaster {
 
     /**
      * Sets the dxCode1
+     *
      * @param dxCode1 String
      */
     public void setDxCode1(String dxCode1) {
@@ -1054,6 +1138,7 @@ public class Billingmaster {
 
     /**
      * Sets the dxCode2
+     *
      * @param dxCode2 String
      */
     public void setDxCode2(String dxCode2) {
@@ -1062,6 +1147,7 @@ public class Billingmaster {
 
     /**
      * Sets the dxCode3
+     *
      * @param dxCode3 String
      */
     public void setDxCode3(String dxCode3) {
@@ -1070,6 +1156,7 @@ public class Billingmaster {
 
     /**
      * Sets the dxExpansion
+     *
      * @param dxExpansion String
      */
     public void setDxExpansion(String dxExpansion) {
@@ -1078,6 +1165,7 @@ public class Billingmaster {
 
     /**
      * Sets the serviceLocation
+     *
      * @param serviceLocation String
      */
     public void setServiceLocation(String serviceLocation) {
@@ -1086,6 +1174,7 @@ public class Billingmaster {
 
     /**
      * Sets the referralFlag1
+     *
      * @param referralFlag1 String
      */
     public void setReferralFlag1(String referralFlag1) {
@@ -1094,6 +1183,7 @@ public class Billingmaster {
 
     /**
      * Sets the referralNo1
+     *
      * @param referralNo1 String
      */
     public void setReferralNo1(String referralNo1) {
@@ -1102,6 +1192,7 @@ public class Billingmaster {
 
     /**
      * Sets the referralFlag2
+     *
      * @param referralFlag2 String
      */
     public void setReferralFlag2(String referralFlag2) {
@@ -1110,6 +1201,7 @@ public class Billingmaster {
 
     /**
      * Sets the referralNo2
+     *
      * @param referralNo2 String
      */
     public void setReferralNo2(String referralNo2) {
@@ -1118,6 +1210,7 @@ public class Billingmaster {
 
     /**
      * Sets the timeCall
+     *
      * @param timeCall String
      */
     public void setTimeCall(String timeCall) {
@@ -1126,6 +1219,7 @@ public class Billingmaster {
 
     /**
      * Sets the serviceStartTime
+     *
      * @param serviceStartTime String
      */
     public void setServiceStartTime(String serviceStartTime) {
@@ -1134,6 +1228,7 @@ public class Billingmaster {
 
     /**
      * Sets the serviceEndTime
+     *
      * @param serviceEndTime String
      */
     public void setServiceEndTime(String serviceEndTime) {
@@ -1142,6 +1237,7 @@ public class Billingmaster {
 
     /**
      * Sets the birthDate
+     *
      * @param birthDate String
      */
     public void setBirthDate(String birthDate) {
@@ -1150,6 +1246,7 @@ public class Billingmaster {
 
     /**
      * Sets the officeNumber
+     *
      * @param officeNumber String
      */
     public void setOfficeNumber(String officeNumber) {
@@ -1158,6 +1255,7 @@ public class Billingmaster {
 
     /**
      * Sets the correspondenceCode
+     *
      * @param correspondenceCode String
      */
     public void setCorrespondenceCode(String correspondenceCode) {
@@ -1166,6 +1264,7 @@ public class Billingmaster {
 
     /**
      * Sets the claimComment
+     *
      * @param claimComment String
      */
     public void setClaimComment(String claimComment) {
@@ -1174,6 +1273,7 @@ public class Billingmaster {
 
     /**
      * Sets the mvaClaimCode
+     *
      * @param mvaClaimCode String
      */
     public void setMvaClaimCode(String mvaClaimCode) {
@@ -1182,6 +1282,7 @@ public class Billingmaster {
 
     /**
      * Sets the icbcClaimNo
+     *
      * @param icbcClaimNo String
      */
     public void setIcbcClaimNo(String icbcClaimNo) {
@@ -1190,6 +1291,7 @@ public class Billingmaster {
 
     /**
      * Sets the originalClaim
+     *
      * @param originalClaim String
      */
     public void setOriginalClaim(String originalClaim) {
@@ -1198,6 +1300,7 @@ public class Billingmaster {
 
     /**
      * Sets the facilityNo
+     *
      * @param facilityNo String
      */
     public void setFacilityNo(String facilityNo) {
@@ -1206,6 +1309,7 @@ public class Billingmaster {
 
     /**
      * Sets the facilitySubNo
+     *
      * @param facilitySubNo String
      */
     public void setFacilitySubNo(String facilitySubNo) {
@@ -1214,6 +1318,7 @@ public class Billingmaster {
 
     /**
      * Sets the fillerClaim
+     *
      * @param fillerClaim String
      */
     public void setFillerClaim(String fillerClaim) {
@@ -1222,6 +1327,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinInsurerCode
+     *
      * @param oinInsurerCode String
      */
     public void setOinInsurerCode(String oinInsurerCode) {
@@ -1230,6 +1336,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinRegistrationNo
+     *
      * @param oinRegistrationNo String
      */
     public void setOinRegistrationNo(String oinRegistrationNo) {
@@ -1238,6 +1345,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinBirthdate
+     *
      * @param oinBirthdate String
      */
     public void setOinBirthdate(String oinBirthdate) {
@@ -1246,6 +1354,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinFirstName
+     *
      * @param oinFirstName String
      */
     public void setOinFirstName(String oinFirstName) {
@@ -1254,6 +1363,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinSecondName
+     *
      * @param oinSecondName String
      */
     public void setOinSecondName(String oinSecondName) {
@@ -1262,6 +1372,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinSurname
+     *
      * @param oinSurname String
      */
     public void setOinSurname(String oinSurname) {
@@ -1270,6 +1381,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinSexCode
+     *
      * @param oinSexCode String
      */
     public void setOinSexCode(String oinSexCode) {
@@ -1278,6 +1390,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinAddress
+     *
      * @param oinAddress String
      */
     public void setOinAddress(String oinAddress) {
@@ -1286,6 +1399,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinAddress2
+     *
      * @param oinAddress2 String
      */
     public void setOinAddress2(String oinAddress2) {
@@ -1294,6 +1408,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinAddress3
+     *
      * @param oinAddress3 String
      */
     public void setOinAddress3(String oinAddress3) {
@@ -1302,6 +1417,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinAddress4
+     *
      * @param oinAddress4 String
      */
     public void setOinAddress4(String oinAddress4) {
@@ -1310,6 +1426,7 @@ public class Billingmaster {
 
     /**
      * Sets the oinPostalcode
+     *
      * @param oinPostalcode String
      */
     public void setOinPostalcode(String oinPostalcode) {
@@ -1355,13 +1472,13 @@ public class Billingmaster {
         return retval;
     }
 
-    
-    public Integer getWcbId() {
-		return wcbId;
-	}
 
-	public void setWcbId(Integer wcbId) {
-		this.wcbId = wcbId;
-	}
+    public Integer getWcbId() {
+        return wcbId;
+    }
+
+    public void setWcbId(Integer wcbId) {
+        this.wcbId = wcbId;
+    }
 
 }

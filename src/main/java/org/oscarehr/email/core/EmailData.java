@@ -26,7 +26,8 @@ public class EmailData {
     private String additionalParams;
     private List<EmailAttachment> attachments;
 
-    public EmailData() { }
+    public EmailData() {
+    }
 
     public String getSender() {
         return sender;
@@ -93,7 +94,9 @@ public class EmailData {
     }
 
     public void setIsEncrypted(String isEncrypted) {
-        if (isEncrypted == null) { isEncrypted = "false"; }
+        if (isEncrypted == null) {
+            isEncrypted = "false";
+        }
         this.isEncrypted = "true".equals(isEncrypted);
     }
 
@@ -106,7 +109,9 @@ public class EmailData {
     }
 
     public void setIsAttachmentEncrypted(String isAttachmentEncrypted) {
-        if (isAttachmentEncrypted == null) { isAttachmentEncrypted = "false"; }
+        if (isAttachmentEncrypted == null) {
+            isAttachmentEncrypted = "false";
+        }
         this.isAttachmentEncrypted = "true".equals(isAttachmentEncrypted);
     }
 
@@ -119,7 +124,9 @@ public class EmailData {
     }
 
     public void setChartDisplayOption(String chartDisplayOption) {
-        if (chartDisplayOption == null) { chartDisplayOption = "addFullNote"; }
+        if (chartDisplayOption == null) {
+            chartDisplayOption = "addFullNote";
+        }
         this.chartDisplayOption = "doNotAddAsNote".equalsIgnoreCase(chartDisplayOption) ? ChartDisplayOption.WITHOUT_NOTE : ChartDisplayOption.WITH_FULL_NOTE;
     }
 
@@ -132,7 +139,9 @@ public class EmailData {
     }
 
     public void setTransactionType(String transactionType) {
-        if (transactionType == null) { transactionType = "DIRECT"; }
+        if (transactionType == null) {
+            transactionType = "DIRECT";
+        }
         switch (transactionType.toUpperCase()) {
             case "EFORM":
                 this.transactionType = TransactionType.EFORM;

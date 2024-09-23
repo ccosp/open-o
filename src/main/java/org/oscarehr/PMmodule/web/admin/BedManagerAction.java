@@ -1,21 +1,20 @@
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -70,21 +69,25 @@ public class BedManagerAction extends DispatchAction {
     private FacilityDao facilityDao;
 
     private BedDemographicManager bedDemographicManager = SpringUtils.getBean(BedDemographicManager.class);
-    private RoomDemographicManager roomDemographicManager =SpringUtils.getBean(RoomDemographicManager.class);
-    
-    public void setFacilityDao(FacilityDao facilityDao) {
-		this.facilityDao = facilityDao;
-	}
+    private RoomDemographicManager roomDemographicManager = SpringUtils.getBean(RoomDemographicManager.class);
 
-	public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public void setFacilityDao(FacilityDao facilityDao) {
+        this.facilityDao = facilityDao;
+    }
+
+    public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         // dispatch to correct method based on which button was selected
         // Please don't make changes that causes addRoom and addBed button not working any more!
-        if ("".equals(request.getParameter("submit.saveRoom")) == false) return saveRooms(mapping, form, request, response);
+        if ("".equals(request.getParameter("submit.saveRoom")) == false)
+            return saveRooms(mapping, form, request, response);
         else if (request.getParameter("submit.deleteRoom") != null) return deleteRoom(mapping, form, request, response);
-        else if ("".equals(request.getParameter("submit.addRoom")) == false) return addRooms(mapping, form, request, response);
-        else if ("".equals(request.getParameter("submit.saveBed")) == false) return saveBeds(mapping, form, request, response);
+        else if ("".equals(request.getParameter("submit.addRoom")) == false)
+            return addRooms(mapping, form, request, response);
+        else if ("".equals(request.getParameter("submit.saveBed")) == false)
+            return saveBeds(mapping, form, request, response);
         else if (request.getParameter("submit.deleteBed") != null) return deleteBed(mapping, form, request, response);
-        else if ("".equals(request.getParameter("submit.addBed")) == false) return addBeds(mapping, form, request, response);
+        else if ("".equals(request.getParameter("submit.addBed")) == false)
+            return addBeds(mapping, form, request, response);
         else return manage(mapping, form, request, response);
     }
 
@@ -165,9 +168,7 @@ public class BedManagerAction extends DispatchAction {
         }
         try {
             roomManager.saveRooms(rooms);
-        }
-
-        catch (DuplicateRoomNameException e) {
+        } catch (DuplicateRoomNameException e) {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("room.duplicate.name.error", e.getMessage()));
             saveMessages(request, messages);
@@ -207,8 +208,7 @@ public class BedManagerAction extends DispatchAction {
             Room room = roomManager.getRoom(roomId);
             roomManager.deleteRoom(room);
 
-        }
-        catch (RoomHasActiveBedsException e) {
+        } catch (RoomHasActiveBedsException e) {
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("room.active.beds.error", e.getMessage()));
             saveMessages(request, messages);
         }
@@ -237,13 +237,11 @@ public class BedManagerAction extends DispatchAction {
             beds = bedManager.getBedsForUnfilledRooms(rooms, beds);
             bedManager.saveBeds(beds);
 
-        }
-        catch (BedReservedException e) {
+        } catch (BedReservedException e) {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("bed.reserved.error", e.getMessage()));
             saveMessages(request, messages);
-        }
-        catch (DuplicateBedNameException e) {
+        } catch (DuplicateBedNameException e) {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("bed.duplicate.name.error", e.getMessage()));
             saveMessages(request, messages);
@@ -271,8 +269,7 @@ public class BedManagerAction extends DispatchAction {
             Bed bed = bedManager.getBedForDelete(bedId);
             bedManager.deleteBed(bed);
 
-        }
-        catch (BedReservedException e) {
+        } catch (BedReservedException e) {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("bed.reserved.error", e.getMessage()));
             saveMessages(request, messages);
@@ -325,8 +322,7 @@ public class BedManagerAction extends DispatchAction {
         if (numBeds != null) {
             if (numBeds <= 0) {
                 numBeds = 0;
-            }
-            else if (numBeds + bedslines > occupancyOfRoom) {
+            } else if (numBeds + bedslines > occupancyOfRoom) {
                 numBeds = occupancyOfRoom - bedslines;
             }
         }
@@ -334,17 +330,16 @@ public class BedManagerAction extends DispatchAction {
         if (numBeds != null && numBeds > 0) {
             try {
                 bedManager.addBeds(facilityId, roomId, numBeds);
-            }
-            catch (BedReservedException e) {
+            } catch (BedReservedException e) {
                 ActionMessages messages = new ActionMessages();
                 messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("bed.reserved.error", e.getMessage()));
                 saveMessages(request, messages);
             }
         } else {
 
-	        	ActionMessages messages = new ActionMessages();
-	            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message", "The number of the beds in this room already reaches the maximum."));
-	            saveMessages(request, messages);
+            ActionMessages messages = new ActionMessages();
+            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message", "The number of the beds in this room already reaches the maximum."));
+            saveMessages(request, messages);
 
         }
 
@@ -360,11 +355,9 @@ public class BedManagerAction extends DispatchAction {
 
         if (roomStatus.intValue() == 1) {
             roomStatusBoolean = new Boolean(true);
-        }
-        else if (roomStatus.intValue() == 0) {
+        } else if (roomStatus.intValue() == 0) {
             roomStatusBoolean = new Boolean(false);
-        }
-        else {
+        } else {
             roomStatusBoolean = null;
         }
 
@@ -390,11 +383,9 @@ public class BedManagerAction extends DispatchAction {
 
         if (bedStatus.intValue() == 1) {
             bedStatusBoolean = new Boolean(true);
-        }
-        else if (bedStatus.intValue() == 0) {
+        } else if (bedStatus.intValue() == 0) {
             bedStatusBoolean = new Boolean(false);
-        }
-        else {
+        } else {
             bedStatusBoolean = null;
         }
 
