@@ -10,9 +10,9 @@
 package com.indivica.olis.parameters;
 
 /**
- * Destination Laboratory (Z05 Only - Deprecated in Z01) 
- * @author jen
+ * Destination Laboratory (Z05 Only - Deprecated in Z01)
  *
+ * @author jen
  */
 public class ZBR8 implements Parameter {
 

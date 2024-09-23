@@ -39,10 +39,9 @@ public class ProgramAccessRolesDaoImpl extends AbstractDaoImpl<ProgramAccessRole
     }
 
     /**
-     * Removes all instances of the model class handled by this DAO.  
+     * Removes all instances of the model class handled by this DAO.
      *
-     * @return
-     *        Returns the number of all instance removed by this DAO.
+     * @return Returns the number of all instance removed by this DAO.
      */
     @Override
     public int removeAll() {

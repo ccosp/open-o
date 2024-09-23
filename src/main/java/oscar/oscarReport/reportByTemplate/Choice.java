@@ -27,7 +27,6 @@
 package oscar.oscarReport.reportByTemplate;
 
 /**
- *
  * @author apavel (Paul)
  */
 

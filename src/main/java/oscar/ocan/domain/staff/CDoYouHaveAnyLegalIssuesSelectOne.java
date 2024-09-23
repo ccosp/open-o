@@ -57,8 +57,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -85,10 +83,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Gets the value of the cCivil property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCCivil() {
         return cCivil;
@@ -97,10 +93,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Sets the value of the cCivil property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCCivil(String value) {
         this.cCivil = value;
@@ -109,10 +103,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Gets the value of the cCriminal property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCCriminal() {
         return cCriminal;
@@ -121,10 +113,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Sets the value of the cCriminal property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCCriminal(String value) {
         this.cCriminal = value;
@@ -133,10 +123,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Gets the value of the cNone property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCNone() {
         return cNone;
@@ -145,10 +133,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Sets the value of the cNone property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCNone(String value) {
         this.cNone = value;
@@ -157,10 +143,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Gets the value of the cUnknown property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCUnknown() {
         return cUnknown;
@@ -169,10 +153,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Sets the value of the cUnknown property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCUnknown(String value) {
         this.cUnknown = value;
@@ -181,10 +163,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Gets the value of the cClientDeclinedToAnswer property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCClientDeclinedToAnswer() {
         return cClientDeclinedToAnswer;
@@ -193,10 +173,8 @@ public class CDoYouHaveAnyLegalIssuesSelectOne {
     /**
      * Sets the value of the cClientDeclinedToAnswer property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCClientDeclinedToAnswer(String value) {
         this.cClientDeclinedToAnswer = value;

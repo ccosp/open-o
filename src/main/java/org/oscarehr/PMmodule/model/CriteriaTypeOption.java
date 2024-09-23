@@ -69,11 +69,15 @@ public class CriteriaTypeOption extends AbstractModel<Integer> implements java.i
         this.id = id;
     }
 
-    /** default constructor */
+    /**
+     * default constructor
+     */
     public CriteriaTypeOption() {
     }
 
-    /** minimal constructor */
+    /**
+     * minimal constructor
+     */
     public CriteriaTypeOption(Integer criteriaTypeId,
                               Integer displayOrderNumber, String optionLabel) {
         this.criteriaTypeId = criteriaTypeId;
@@ -81,7 +85,9 @@ public class CriteriaTypeOption extends AbstractModel<Integer> implements java.i
         this.optionLabel = optionLabel;
     }
 
-    /** full constructor */
+    /**
+     * full constructor
+     */
     public CriteriaTypeOption(Integer criteriaTypeId,
                               Integer displayOrderNumber, String optionLabel, String optionValue,
                               Integer rangeStartValue, Integer rangeEndValue) {

@@ -37,7 +37,6 @@ import org.apache.struts.action.ActionForm;
 import org.oscarehr.util.MiscUtils;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class CheckSurveillanceForm extends ActionForm {
@@ -46,12 +45,15 @@ public class CheckSurveillanceForm extends ActionForm {
     String proceed = null;
     String demographicNo = null;
 
-    /** Creates a new instance of CheckSurveillanceForm */
+    /**
+     * Creates a new instance of CheckSurveillanceForm
+     */
     public CheckSurveillanceForm() {
     }
 
     /**
      * Getter for property proceed.
+     *
      * @return Value of property proceed.
      */
     public java.lang.String getProceed() {
@@ -60,6 +62,7 @@ public class CheckSurveillanceForm extends ActionForm {
 
     /**
      * Setter for property proceed.
+     *
      * @param proceed New value of property proceed.
      */
     public void setProceed(java.lang.String proceed) {
@@ -68,6 +71,7 @@ public class CheckSurveillanceForm extends ActionForm {
 
     /**
      * Getter for property demographicNo.
+     *
      * @return Value of property demographicNo.
      */
     public java.lang.String getDemographicNo() {
@@ -77,6 +81,7 @@ public class CheckSurveillanceForm extends ActionForm {
 
     /**
      * Setter for property demographicNo.
+     *
      * @param demographicNo New value of property demographicNo.
      */
     public void setDemographicNo(java.lang.String demographicNo) {

@@ -54,8 +54,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -73,10 +71,8 @@ public class COtherContact {
     /**
      * Gets the value of the cContactInformation property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCContactInformation() {
         return cContactInformation;
@@ -85,10 +81,8 @@ public class COtherContact {
     /**
      * Sets the value of the cContactInformation property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCContactInformation(String value) {
         this.cContactInformation = value;
@@ -97,10 +91,8 @@ public class COtherContact {
     /**
      * Gets the value of the cLastSeen property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCLastSeen() {
         return cLastSeen;
@@ -109,10 +101,8 @@ public class COtherContact {
     /**
      * Sets the value of the cLastSeen property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCLastSeen(String value) {
         this.cLastSeen = value;

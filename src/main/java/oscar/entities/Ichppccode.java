@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table ichppccode
- *
  */
 public class Ichppccode {
     private String _ichppccode;
@@ -42,9 +41,9 @@ public class Ichppccode {
     /**
      * Full constructor
      *
-     * @param _ichppccode String
+     * @param _ichppccode    String
      * @param diagnosticCode String
-     * @param description String
+     * @param description    String
      */
     public Ichppccode(String _ichppccode, String diagnosticCode,
                       String description) {
@@ -55,6 +54,7 @@ public class Ichppccode {
 
     /**
      * Gets the _ichppccode
+     *
      * @return String _ichppccode
      */
     public String get_ichppccode() {
@@ -63,6 +63,7 @@ public class Ichppccode {
 
     /**
      * Gets the diagnosticCode
+     *
      * @return String diagnosticCode
      */
     public String getDiagnosticCode() {
@@ -71,6 +72,7 @@ public class Ichppccode {
 
     /**
      * Gets the description
+     *
      * @return String description
      */
     public String getDescription() {
@@ -79,6 +81,7 @@ public class Ichppccode {
 
     /**
      * Sets the _ichppccode
+     *
      * @param _ichppccode String
      */
     public void set_ichppccode(String _ichppccode) {
@@ -87,6 +90,7 @@ public class Ichppccode {
 
     /**
      * Sets the diagnosticCode
+     *
      * @param diagnosticCode String
      */
     public void setDiagnosticCode(String diagnosticCode) {
@@ -95,6 +99,7 @@ public class Ichppccode {
 
     /**
      * Sets the description
+     *
      * @param description String
      */
     public void setDescription(String description) {

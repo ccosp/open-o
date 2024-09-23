@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Patient consent block-all indicator
- * @author jen
  *
+ * @author jen
  */
 public class ZPD3 implements Parameter {
 

@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Reporting Laboratory
- * @author jen
  *
+ * @author jen
  */
 public class ZBR4 implements Parameter {
 

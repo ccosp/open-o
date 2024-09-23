@@ -93,6 +93,7 @@ import oscar.OscarProperties;
 import oscar.util.SqlUtils;
 
 /**
+ *
  */
 @Transactional
 public class DemographicDaoImpl extends HibernateDaoSupport implements ApplicationEventPublisherAware, DemographicDao {
@@ -114,7 +115,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
      *
      * @param demographicNo Demographic ID to find merged records for
      * @return Returns the list of merged (child ids) or empty list if the record is
-     *         not merged to any other record
+     * not merged to any other record
      */
     @SuppressWarnings("unchecked")
     @NativeSql({"demographic_merged"})
@@ -1782,7 +1783,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     /**
      * Helper method.
-     *
+     * <p>
      * Not using 'clientExists' because it doesn't 'evict' the demographic, which
      * causes errors when 'saveOrUpdate' is called
      * and the demographic already exists in the Hibernate cache.
@@ -3008,7 +3009,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     /**
      * This method war written for BORN Kid eConnect job to figure out which eforms
      * don't have an eform_value present
-     *
+     * <p>
      * This method will be refined a bit during QA
      */
     @Override

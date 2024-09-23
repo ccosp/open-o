@@ -42,7 +42,6 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author mweston4
  */
 public class ApplyPractitionerPremiumAction extends DispatchAction {

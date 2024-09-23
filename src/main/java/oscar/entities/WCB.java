@@ -41,7 +41,6 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import oscar.util.StringUtils;
 
 /**
- *
  * @author jaygallagher
  */
 @Entity

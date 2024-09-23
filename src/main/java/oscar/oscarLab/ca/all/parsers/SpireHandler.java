@@ -254,7 +254,6 @@ class Lines {
 }
 
 /**
- *
  * @author j.chisholm
  */
 public class SpireHandler implements MessageHandler {
@@ -262,7 +261,9 @@ public class SpireHandler implements MessageHandler {
     ORU_R01 msg = null;
     Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
-    /** Creates a new instance of SpireHandler */
+    /**
+     * Creates a new instance of SpireHandler
+     */
     public SpireHandler() {
     }
 
@@ -281,7 +282,6 @@ public class SpireHandler implements MessageHandler {
      * Will make corrections to Spire HL7 labs (change event types with the appropriate HL7 Type, etc)
      *
      * @param message The HL7 message
-     *
      * @return The message with the Spire HL7 lab data corrected
      */
     private String fixMessage(String message) {
@@ -370,7 +370,7 @@ public class SpireHandler implements MessageHandler {
     }
 
     /**
-     *  Methods to get information about the Observation Request
+     * Methods to get information about the Observation Request
      */
     public int getOBRCount() {
         return (msg.getRESPONSE().getORDER_OBSERVATIONReps());
@@ -620,7 +620,7 @@ public class SpireHandler implements MessageHandler {
     }
 
     /**
-     *  Retrieve the possible segment headers from the OBX fields
+     * Retrieve the possible segment headers from the OBX fields
      */
     public ArrayList getHeaders() {
         int i;
@@ -655,7 +655,7 @@ public class SpireHandler implements MessageHandler {
     }
 
     /**
-     *  Methods to get information from observation notes
+     * Methods to get information from observation notes
      */
     public int getOBRCommentCount(int i) {
         /*try {
@@ -676,7 +676,7 @@ public class SpireHandler implements MessageHandler {
     }
 
     /**
-     *  Methods to get information from observation notes
+     * Methods to get information from observation notes
      */
     public int getOBXCommentCount(int i, int j) {
         int count = 0;
@@ -708,7 +708,7 @@ public class SpireHandler implements MessageHandler {
 
 
     /**
-     *  Methods to get information about the patient
+     * Methods to get information about the patient
      */
     public String getPatientName() {
         return (getFirstName() + " " + getLastName());

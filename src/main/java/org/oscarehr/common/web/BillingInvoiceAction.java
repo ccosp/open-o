@@ -48,7 +48,6 @@ import oscar.util.ConcatPDF;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author mweston4
  */
 public class BillingInvoiceAction extends DispatchAction {

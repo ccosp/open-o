@@ -74,7 +74,7 @@ public class GenericIntakeNodeDAOImpl extends HibernateDaoSupport implements Gen
     }
 
     /**
-     *Returns a list of Intake Nodes of type "intake".
+     * Returns a list of Intake Nodes of type "intake".
      */
     public List<IntakeNode> getIntakeNodes() {
         // List l =
@@ -88,7 +88,7 @@ public class GenericIntakeNodeDAOImpl extends HibernateDaoSupport implements Gen
     }
 
     /**
-     *Returns a list of Intake Nodes of type "intake".
+     * Returns a list of Intake Nodes of type "intake".
      */
     public List<IntakeNode> getPublishedIntakeNodesByName(String name) {
         // List l =

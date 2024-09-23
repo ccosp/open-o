@@ -42,7 +42,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarReport.data.DemographicSets;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class DemographicSetEditAction extends Action {

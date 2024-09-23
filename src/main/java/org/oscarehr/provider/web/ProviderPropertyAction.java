@@ -50,7 +50,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
- *
  * @author rjonasz
  */
 public class ProviderPropertyAction extends DispatchAction {
@@ -149,6 +148,7 @@ public class ProviderPropertyAction extends DispatchAction {
 
     /**
      * typically set from inside the JSP class providerupdatepreference.jsp
+     *
      * @param request
      */
     public static void updateOrCreateProviderProperties(HttpServletRequest request) {

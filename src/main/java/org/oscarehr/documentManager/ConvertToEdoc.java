@@ -57,7 +57,7 @@ import java.util.*;
 /**
  * A utility that converts HTML into a PDF and returns an Oscar eDoc object.
  * This is useful for converting Forms and eForms with well structured HTML into
- * PDF documents that can be attached to Consultation Requests, Faxes or transferred 
+ * PDF documents that can be attached to Consultation Requests, Faxes or transferred
  * to other file systems.
  * NOT ALL DOCUMENTS ARE CONVERTABLE. USE AT OWN RISK.
  */
@@ -141,24 +141,23 @@ public final class ConvertToEdoc {
      * database.
      * Example use:
      * public ActionForward eDocument(ActionMapping mapping, ActionForm form,
-     HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-     FormBean bpmh = (FormBean) form;
-
-     FormTransportContainer formTransportContainer = new FormTransportContainer(
-     response, request, mapping.findForward("success").getPath() );
-
-     formTransportContainer.setDemographicNo( bpmh.getDemographicNo() );
-     formTransportContainer.setProviderNo( bpmh.getProvider().getProviderNo() );
-     formTransportContainer.setSubject( "BPMH Form ID " + bpmh.getFormId() );
-     formTransportContainer.setFormName( "bpmh" );
-     formTransportContainer.setRealPath( getServlet().getServletContext().getRealPath( File.separator ) );
-
-     FormsManager#saveFormDataAsEDoc( LoggedInInfo.getLoggedInInfoFromSession(request), formTransportContainer );
-
-     return ActionForward;
-     }
-     *
+     * HttpServletRequest request, HttpServletResponse response) throws Exception {
+     * <p>
+     * FormBean bpmh = (FormBean) form;
+     * <p>
+     * FormTransportContainer formTransportContainer = new FormTransportContainer(
+     * response, request, mapping.findForward("success").getPath() );
+     * <p>
+     * formTransportContainer.setDemographicNo( bpmh.getDemographicNo() );
+     * formTransportContainer.setProviderNo( bpmh.getProvider().getProviderNo() );
+     * formTransportContainer.setSubject( "BPMH Form ID " + bpmh.getFormId() );
+     * formTransportContainer.setFormName( "bpmh" );
+     * formTransportContainer.setRealPath( getServlet().getServletContext().getRealPath( File.separator ) );
+     * <p>
+     * FormsManager#saveFormDataAsEDoc( LoggedInInfo.getLoggedInInfoFromSession(request), formTransportContainer );
+     * <p>
+     * return ActionForward;
+     * }
      */
     public synchronized static EDoc from(FormTransportContainer formTransportContainer) {
 
@@ -193,7 +192,6 @@ public final class ConvertToEdoc {
     }
 
     /**
-     *
      * Save the document as a temporary PDF. Does not save or return an eDoc entity.
      * This is a temporary file location. Ensure that the file is deleted after it's used.
      *
@@ -206,7 +204,6 @@ public final class ConvertToEdoc {
     }
 
     /**
-     *
      * Save the document as a temporary PDF. Does not save or return an eDoc entity.
      * This is a temporary file location. Ensure that the file is deleted after it's used.
      *
@@ -221,7 +218,6 @@ public final class ConvertToEdoc {
     }
 
     /**
-     *
      * Save the document as a temporary PDF. Does not save or return an eDoc entity.
      * This is a temporary file location. Ensure that the file is deleted after it's used.
      *
@@ -348,6 +344,7 @@ public final class ConvertToEdoc {
      * Clean and parse the HTML document string into a manageable DOM
      * with JSoup tools
      * Also validates all URL paths to resources.
+     *
      * @param documentString raw HTML string
      * @return org.jsoup.nodes.Document JSoup DOM
      */
@@ -398,7 +395,6 @@ public final class ConvertToEdoc {
      * The custom stylesheet will be retrieved from Oscar's images directory. Only the filename needs to be
      * given by the input tag. This method will build the filepath.
      * - Adds a head element to the document if one does not exist.
-     *
      */
     private static void addCss(Document document) {
         Element styleSheetElement = document.getElementById(CUSTOM_STYLESHEET_ID);
@@ -496,8 +492,9 @@ public final class ConvertToEdoc {
      * All resource links in the document must be absolute for the PDF
      * creator to work.
      * TODO filter out relative URI's and external URL's without a proper place holder so they can be removed
-     * @param nodeList jsoup Elements collection of potential resource links
-     * @param pathAttribute jsoup ElementAttribute to be translated to an absolute link
+     *
+     * @param nodeList           jsoup Elements collection of potential resource links
+     * @param pathAttribute      jsoup ElementAttribute to be translated to an absolute link
      * @param pathTranslationMap Map to collect translated URI's
      */
     private static void translatePaths(Elements nodeList, ElementAttribute pathAttribute, Map<List<String>, Element> pathTranslationMap) {
@@ -569,6 +566,7 @@ public final class ConvertToEdoc {
 
     /**
      * Convert a given URI into a file system absolute path.
+     *
      * @param uri URI input
      * @return String fully resolved absolute path
      */
@@ -636,6 +634,7 @@ public final class ConvertToEdoc {
      * Returns the first valid file link from a list of potential valid links.
      * Used in conjunction with as an overload method.
      * See use in methods: setParameterInjectedCss() and validateLinks
+     *
      * @param potentialLinks Collection of links to validate. A Collection is
      *                       as a wrapper for a single link ie: potentialLinks.get(0)
      * @return String a single valid link
@@ -656,6 +655,7 @@ public final class ConvertToEdoc {
     /**
      * Main link validation method
      * See overload above
+     *
      * @param potentialLink String link to validate
      * @return String valid link
      */
@@ -719,6 +719,7 @@ public final class ConvertToEdoc {
 
     /**
      * fetch the default EForm image directory in the host file system
+     *
      * @return String directory path
      */
     private static String getImageDirectory() {
@@ -727,6 +728,7 @@ public final class ConvertToEdoc {
 
     /**
      * Print a well-formed HTML Document object to String using Jtidy tools
+     *
      * @param document w3c DOM
      * @return String HTML output
      */

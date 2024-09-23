@@ -35,7 +35,6 @@ import oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandle
 import java.util.*;
 
 /**
- *
  * @author jay
  */
 public class MeasurementDSHelper {
@@ -48,7 +47,9 @@ public class MeasurementDSHelper {
     boolean problem = false;
     private boolean inRange = false;
 
-    /** Creates a new instance of MeasurementDSHelper */
+    /**
+     * Creates a new instance of MeasurementDSHelper
+     */
     public MeasurementDSHelper() {
     }
 

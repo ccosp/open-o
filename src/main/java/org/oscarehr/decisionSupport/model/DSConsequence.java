@@ -33,7 +33,6 @@ package org.oscarehr.decisionSupport.model;
 import java.util.List;
 
 /**
- *
  * @author apavel
  */
 public class DSConsequence {

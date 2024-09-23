@@ -32,7 +32,6 @@ import org.oscarehr.common.model.Site;
  * This class contains Appointment related presentation layer helper methods.
  *
  * @author Eugene Petruhin
- *
  */
 public class ApptUtil {
 

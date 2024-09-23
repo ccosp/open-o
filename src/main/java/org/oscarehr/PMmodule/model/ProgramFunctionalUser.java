@@ -58,9 +58,9 @@ public class ProgramFunctionalUser implements Serializable {
 
     /**
      * Return the unique identifier of this class
-     *
-     *  generator-class="native"
-     *  column="id"
+     * <p>
+     * generator-class="native"
+     * column="id"
      */
     public Long getId() {
         return _id;
@@ -68,6 +68,7 @@ public class ProgramFunctionalUser implements Serializable {
 
     /**
      * Set the unique identifier of this class
+     *
      * @param _id the new ID
      */
     public void setId(Long _id) {
@@ -84,6 +85,7 @@ public class ProgramFunctionalUser implements Serializable {
 
     /**
      * Set the value related to the column: program_id
+     *
      * @param _programId the program_id value
      */
     public void setProgramId(Long _programId) {
@@ -99,6 +101,7 @@ public class ProgramFunctionalUser implements Serializable {
 
     /**
      * Set the value related to the column: user_type_id
+     *
      * @param _userTypeId the user_type_id value
      */
     public void setUserTypeId(long _userTypeId) {
@@ -114,6 +117,7 @@ public class ProgramFunctionalUser implements Serializable {
 
     /**
      * Set the value related to the column: provider_no
+     *
      * @param _providerNo the provider_no value
      */
     public void setProviderNo(Long _providerNo) {
@@ -121,8 +125,7 @@ public class ProgramFunctionalUser implements Serializable {
     }
 
     /**
-     *
-     *  column=user_type_id
+     * column=user_type_id
      */
     public FunctionalUserType getUserType() {
         return this._userType;
@@ -130,6 +133,7 @@ public class ProgramFunctionalUser implements Serializable {
 
     /**
      * Set the value related to the column: user_type_id
+     *
      * @param _userType the user_type_id value
      */
     public void setUserType(FunctionalUserType _userType) {
@@ -137,8 +141,7 @@ public class ProgramFunctionalUser implements Serializable {
     }
 
     /**
-     *
-     *  column=provider_no
+     * column=provider_no
      */
     public Provider getProvider() {
         return this._provider;
@@ -146,6 +149,7 @@ public class ProgramFunctionalUser implements Serializable {
 
     /**
      * Set the value related to the column: provider_no
+     *
      * @param _provider the provider_no value
      */
     public void setProvider(Provider _provider) {

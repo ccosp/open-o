@@ -38,7 +38,6 @@ import org.oscarehr.common.model.AbstractModel;
 
 /**
  * @author AnooshTech
- *
  */
 @Entity
 @Table(name = "vacancy_client_match")

@@ -55,9 +55,9 @@ public class ProgramAccess implements Serializable {
 
     /**
      * Return the unique identifier of this class
-     *
-     *  generator-class="native"
-     *  column="id"
+     * <p>
+     * generator-class="native"
+     * column="id"
      */
     public Long getId() {
         return _id;
@@ -65,6 +65,7 @@ public class ProgramAccess implements Serializable {
 
     /**
      * Set the unique identifier of this class
+     *
      * @param _id the new ID
      */
     public void setId(Long _id) {
@@ -81,6 +82,7 @@ public class ProgramAccess implements Serializable {
 
     /**
      * Set the value related to the column: program_id
+     *
      * @param _programId the program_id value
      */
     public void setProgramId(Long _programId) {
@@ -96,6 +98,7 @@ public class ProgramAccess implements Serializable {
 
     /**
      * Set the value related to the column: access_type_id
+     *
      * @param _accessTypeId the access_type_id value
      */
     public void setAccessTypeId(String _accessTypeId) {
@@ -111,6 +114,7 @@ public class ProgramAccess implements Serializable {
 
     /**
      * Set the value related to the column: all_roles
+     *
      * @param _allRoles the all_roles value
      */
     public void setAllRoles(boolean _allRoles) {
@@ -118,8 +122,7 @@ public class ProgramAccess implements Serializable {
     }
 
     /**
-     *
-     *  column=access_type_id
+     * column=access_type_id
      */
     public AccessType getAccessType() {
         return this._accessType;
@@ -127,6 +130,7 @@ public class ProgramAccess implements Serializable {
 
     /**
      * Set the value related to the column: access_type_id
+     *
      * @param _accessType the access_type_id value
      */
     public void setAccessType(AccessType _accessType) {
@@ -142,6 +146,7 @@ public class ProgramAccess implements Serializable {
 
     /**
      * Set the value related to the column: roles
+     *
      * @param _roles the roles value
      */
     public void setRoles(java.util.Set _roles) {

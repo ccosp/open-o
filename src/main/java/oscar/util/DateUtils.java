@@ -145,6 +145,7 @@ public final class DateUtils {
 
     /**
      * sets hours/minutes/seconds/milliseconds to 0
+     *
      * @deprecated use apache commons DateUtils.truncate()
      */
     public static void zeroTimeFields(Calendar cal) {
@@ -606,7 +607,7 @@ public final class DateUtils {
     }
 
     /**
-     *Gets the difference between two dates, in days. Takes two dates represented in milliseconds and returns the difference in days
+     * Gets the difference between two dates, in days. Takes two dates represented in milliseconds and returns the difference in days
      */
     public static long getDifDays(Date greater, Date lesser) {
         long timeInMillis = greater.getTime() - lesser.getTime();
@@ -681,7 +682,7 @@ public final class DateUtils {
 
     /**
      * date2-date1
-     *
+     * <p>
      * if either are null, it returns null.
      */
     public static Integer yearDifference(Date date1, Date date2) {
@@ -698,7 +699,7 @@ public final class DateUtils {
 
     /**
      * date2-date1
-     *
+     * <p>
      * if either are null, it returns null.
      */
     public static Integer yearDifference(Calendar date1, Calendar date2) {
@@ -722,7 +723,7 @@ public final class DateUtils {
 
     /**
      * date2-date1
-     *
+     * <p>
      * if either are null, it returns null.
      */
     public static Integer calculateDayDifference(Calendar date1, Calendar date2) {
@@ -743,7 +744,7 @@ public final class DateUtils {
 
     /**
      * date2-date1
-     *
+     * <p>
      * if either are null, it returns null.
      */
     public static Integer calculateDayDifference(Date date1, Date date2) {

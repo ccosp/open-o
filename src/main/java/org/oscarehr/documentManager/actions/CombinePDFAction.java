@@ -48,7 +48,6 @@ import oscar.util.ConcatPDF;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author jay
  */
 public class CombinePDFAction extends Action {
@@ -96,7 +95,9 @@ public class CombinePDFAction extends Action {
         return mapping.findForward("success");
     }
 
-    /** Creates a new instance of CombinePDFAction */
+    /**
+     * Creates a new instance of CombinePDFAction
+     */
     public CombinePDFAction() {
     }
 

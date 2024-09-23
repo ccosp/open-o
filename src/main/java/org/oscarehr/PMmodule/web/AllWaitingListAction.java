@@ -32,7 +32,6 @@ import org.apache.struts.actions.DispatchAction;
 
 /**
  * @author AnooshTech
- *
  */
 public class AllWaitingListAction extends DispatchAction {
     @Override

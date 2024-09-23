@@ -50,7 +50,6 @@ import oscar.util.UtilDateUtilities;
 import ca.uhn.hl7v2.HL7Exception;
 
 /**
- *
  * @author wrighd
  */
 public class MDSHandler implements MessageHandler {
@@ -61,7 +60,9 @@ public class MDSHandler implements MessageHandler {
     HashMap<String, String> headerMaps = new HashMap<String, String>();
     Logger logger = org.oscarehr.util.MiscUtils.getLogger();
 
-    /** Creates a new instance of CMLHandler */
+    /**
+     * Creates a new instance of CMLHandler
+     */
     public MDSHandler() {
     }
 
@@ -161,7 +162,7 @@ public class MDSHandler implements MessageHandler {
     }
 
     /**
-     *  Methods to get information about the Observation Request
+     * Methods to get information about the Observation Request
      */
     public int getOBRCount() {
         if (obrGroups != null) {
@@ -352,7 +353,7 @@ public class MDSHandler implements MessageHandler {
 
 
     /**
-     *  Retrieve the possible segment headers from the OBX fields
+     * Retrieve the possible segment headers from the OBX fields
      */
     public ArrayList<String> getHeaders() {
         ArrayList<String> headers = new ArrayList<String>();
@@ -404,7 +405,7 @@ public class MDSHandler implements MessageHandler {
     }
 
     /**
-     *  Methods to get information from observation notes
+     * Methods to get information from observation notes
      */
     public int getOBRCommentCount(int i) {
         // not needed comments will only follow OBX segments
@@ -417,7 +418,7 @@ public class MDSHandler implements MessageHandler {
     }
 
     /**
-     *  Methods to get information from observation notes
+     * Methods to get information from observation notes
      */
     public int getOBXCommentCount(int i, int j) {
         try {
@@ -528,7 +529,7 @@ public class MDSHandler implements MessageHandler {
 
 
     /**
-     *  Methods to get information about the patient
+     * Methods to get information about the patient
      */
     public String getPatientName() {
         return (getFirstName() + " " + getLastName());
@@ -769,7 +770,7 @@ public class MDSHandler implements MessageHandler {
     }
 
     /**
-     *  Methods specific to the MDSHandler
+     * Methods specific to the MDSHandler
      */
     public String getFormType() {
         String retVal = "";

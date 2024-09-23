@@ -33,11 +33,14 @@ import org.apache.struts.actions.DispatchAction;
 
 /**
  * Toggles variable for displaying reason on appointment page
+ *
  * @author rjonasz
  */
 public class DisplayPersonalInfoAppointmentAction extends DispatchAction {
 
-    /** Creates a new instance of DisplayPersonalInfoAppointmentAction */
+    /**
+     * Creates a new instance of DisplayPersonalInfoAppointmentAction
+     */
     public DisplayPersonalInfoAppointmentAction() {
     }
 

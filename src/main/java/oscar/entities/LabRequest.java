@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table labRequest
- *
  */
 public class LabRequest {
     private int id;
@@ -41,7 +40,7 @@ public class LabRequest {
     /**
      * Full constructor
      *
-     * @param id int
+     * @param id       int
      * @param hl7ObrId int
      */
     public LabRequest(int id, int hl7ObrId) {
@@ -51,6 +50,7 @@ public class LabRequest {
 
     /**
      * Gets the id
+     *
      * @return int id
      */
     public int getId() {
@@ -59,6 +59,7 @@ public class LabRequest {
 
     /**
      * Gets the hl7ObrId
+     *
      * @return int hl7ObrId
      */
     public int getHl7ObrId() {
@@ -67,6 +68,7 @@ public class LabRequest {
 
     /**
      * Sets the id
+     *
      * @param id int
      */
     public void setId(int id) {
@@ -75,6 +77,7 @@ public class LabRequest {
 
     /**
      * Sets the hl7ObrId
+     *
      * @param hl7ObrId int
      */
     public void setHl7ObrId(int hl7ObrId) {

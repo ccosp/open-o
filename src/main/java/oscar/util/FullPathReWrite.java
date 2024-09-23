@@ -57,7 +57,7 @@ public class FullPathReWrite extends TagSupport {
     /**
      * Process the start of this tag.
      *
-     * @exception JspException if a JSP exception has occurred
+     * @throws JspException if a JSP exception has occurred
      */
     public int doStartTag() throws JspException {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
@@ -82,6 +82,7 @@ public class FullPathReWrite extends TagSupport {
 
     /**
      * Returns the server.
+     *
      * @return String
      */
     public String getServer() {
@@ -90,6 +91,7 @@ public class FullPathReWrite extends TagSupport {
 
     /**
      * Sets the server.
+     *
      * @param server The server to set
      */
     public void setServer(String server) {

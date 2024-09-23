@@ -38,11 +38,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
- *
- *
  * Uses
- *    to annotate prescriptions, notes, scanned documents
- *
+ * to annotate prescriptions, notes, scanned documents
  *
  * @author jaygallagher
  */

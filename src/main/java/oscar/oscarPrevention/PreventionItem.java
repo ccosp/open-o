@@ -32,7 +32,6 @@ import org.oscarehr.common.model.Prevention;
 import oscar.util.ConversionUtils;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class PreventionItem {
@@ -106,8 +105,7 @@ public class PreventionItem {
     /**
      * Setter for property datePreformed.
      *
-     * @param datePreformed
-     *            New value of property datePreformed.
+     * @param datePreformed New value of property datePreformed.
      */
     public void setDatePreformed(java.util.Date datePreformed) {
         this.datePreformed = datePreformed;
@@ -125,8 +123,7 @@ public class PreventionItem {
     /**
      * Setter for property next_date.
      *
-     * @param nextDate
-     *            New value of property next_date.
+     * @param nextDate New value of property next_date.
      */
     public void setNextDate(java.util.Date nextDate) {
         this.nextDate = nextDate;

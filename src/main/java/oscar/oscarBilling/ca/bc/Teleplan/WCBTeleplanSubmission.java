@@ -41,7 +41,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
  * @author jaygallagher
  */
 public class WCBTeleplanSubmission {

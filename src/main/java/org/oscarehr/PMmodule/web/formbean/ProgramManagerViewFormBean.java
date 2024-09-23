@@ -58,8 +58,7 @@ public class ProgramManagerViewFormBean extends ActionForm {
     }
 
     /**
-     * @param tab
-     *            The tab to set.
+     * @param tab The tab to set.
      */
     public void setTab(String tab) {
         this.tab = tab;
@@ -87,8 +86,7 @@ public class ProgramManagerViewFormBean extends ActionForm {
     }
 
     /**
-     * @param clientId
-     *            The clientId to set.
+     * @param clientId The clientId to set.
      */
     public void setClientId(String clientId) {
         this.clientId = clientId;

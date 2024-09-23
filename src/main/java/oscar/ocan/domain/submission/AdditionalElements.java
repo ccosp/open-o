@@ -60,8 +60,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -95,10 +93,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the clientHopesForFuture property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getClientHopesForFuture() {
         return clientHopesForFuture;
@@ -107,10 +103,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the clientHopesForFuture property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setClientHopesForFuture(String value) {
         this.clientHopesForFuture = value;
@@ -119,10 +113,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the clientNeedToGetThere property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getClientNeedToGetThere() {
         return clientNeedToGetThere;
@@ -131,10 +123,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the clientNeedToGetThere property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setClientNeedToGetThere(String value) {
         this.clientNeedToGetThere = value;
@@ -143,10 +133,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the clientViewMentalHealth property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getClientViewMentalHealth() {
         return clientViewMentalHealth;
@@ -155,10 +143,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the clientViewMentalHealth property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setClientViewMentalHealth(String value) {
         this.clientViewMentalHealth = value;
@@ -167,10 +153,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the clientSpiritualityImportance property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getClientSpiritualityImportance() {
         return clientSpiritualityImportance;
@@ -179,10 +163,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the clientSpiritualityImportance property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setClientSpiritualityImportance(String value) {
         this.clientSpiritualityImportance = value;
@@ -191,10 +173,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the clientCultureHeritageImportance property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getClientCultureHeritageImportance() {
         return clientCultureHeritageImportance;
@@ -203,10 +183,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the clientCultureHeritageImportance property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setClientCultureHeritageImportance(String value) {
         this.clientCultureHeritageImportance = value;
@@ -215,10 +193,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the presentingIssueList property.
      *
-     * @return
-     *     possible object is
-     *     {@link PresentingIssueList }
-     *
+     * @return possible object is
+     * {@link PresentingIssueList }
      */
     public PresentingIssueList getPresentingIssueList() {
         return presentingIssueList;
@@ -227,10 +203,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the presentingIssueList property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link PresentingIssueList }
-     *
+     * @param value allowed object is
+     *              {@link PresentingIssueList }
      */
     public void setPresentingIssueList(PresentingIssueList value) {
         this.presentingIssueList = value;
@@ -239,10 +213,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the actionList property.
      *
-     * @return
-     *     possible object is
-     *     {@link ActionList }
-     *
+     * @return possible object is
+     * {@link ActionList }
      */
     public ActionList getActionList() {
         return actionList;
@@ -251,10 +223,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the actionList property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link ActionList }
-     *
+     * @param value allowed object is
+     *              {@link ActionList }
      */
     public void setActionList(ActionList value) {
         this.actionList = value;
@@ -263,10 +233,8 @@ public class AdditionalElements {
     /**
      * Gets the value of the referralList property.
      *
-     * @return
-     *     possible object is
-     *     {@link ReferralList }
-     *
+     * @return possible object is
+     * {@link ReferralList }
      */
     public ReferralList getReferralList() {
         return referralList;
@@ -275,10 +243,8 @@ public class AdditionalElements {
     /**
      * Sets the value of the referralList property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link ReferralList }
-     *
+     * @param value allowed object is
+     *              {@link ReferralList }
      */
     public void setReferralList(ReferralList value) {
         this.referralList = value;

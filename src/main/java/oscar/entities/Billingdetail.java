@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table billingdetail
- *
  */
 public class Billingdetail {
     /**
@@ -51,15 +50,15 @@ public class Billingdetail {
     /**
      * Full constructor
      *
-     * @param billingDtNo int
-     * @param billingNo int
-     * @param serviceCode String
-     * @param serviceDesc String
-     * @param billingAmount String
-     * @param diagnosticCode String
+     * @param billingDtNo     int
+     * @param billingNo       int
+     * @param serviceCode     String
+     * @param serviceDesc     String
+     * @param billingAmount   String
+     * @param diagnosticCode  String
      * @param appointmentDate String
-     * @param status String
-     * @param billingunit String
+     * @param status          String
+     * @param billingunit     String
      */
     public Billingdetail(int billingDtNo, int billingNo, String serviceCode,
                          String serviceDesc, String billingAmount,
@@ -78,6 +77,7 @@ public class Billingdetail {
 
     /**
      * Gets the billingDtNo
+     *
      * @return int billingDtNo
      */
     public int getBillingDtNo() {
@@ -86,6 +86,7 @@ public class Billingdetail {
 
     /**
      * Gets the billingNo
+     *
      * @return int billingNo
      */
     public int getBillingNo() {
@@ -94,6 +95,7 @@ public class Billingdetail {
 
     /**
      * Gets the serviceCode
+     *
      * @return String serviceCode
      */
     public String getServiceCode() {
@@ -102,6 +104,7 @@ public class Billingdetail {
 
     /**
      * Gets the serviceDesc
+     *
      * @return String serviceDesc
      */
     public String getServiceDesc() {
@@ -110,6 +113,7 @@ public class Billingdetail {
 
     /**
      * Gets the billingAmount
+     *
      * @return String billingAmount
      */
     public String getBillingAmount() {
@@ -118,6 +122,7 @@ public class Billingdetail {
 
     /**
      * Gets the diagnosticCode
+     *
      * @return String diagnosticCode
      */
     public String getDiagnosticCode() {
@@ -126,6 +131,7 @@ public class Billingdetail {
 
     /**
      * Gets the appointmentDate
+     *
      * @return String appointmentDate
      */
     public String getAppointmentDate() {
@@ -134,6 +140,7 @@ public class Billingdetail {
 
     /**
      * Gets the status
+     *
      * @return String status
      */
     public String getStatus() {
@@ -142,6 +149,7 @@ public class Billingdetail {
 
     /**
      * Gets the billingunit
+     *
      * @return String billingunit
      */
     public String getBillingunit() {
@@ -150,6 +158,7 @@ public class Billingdetail {
 
     /**
      * Sets the billingDtNo
+     *
      * @param billingDtNo int
      */
     public void setBillingDtNo(int billingDtNo) {
@@ -158,6 +167,7 @@ public class Billingdetail {
 
     /**
      * Sets the billingNo
+     *
      * @param billingNo int
      */
     public void setBillingNo(int billingNo) {
@@ -166,6 +176,7 @@ public class Billingdetail {
 
     /**
      * Sets the serviceCode
+     *
      * @param serviceCode String
      */
     public void setServiceCode(String serviceCode) {
@@ -174,6 +185,7 @@ public class Billingdetail {
 
     /**
      * Sets the serviceDesc
+     *
      * @param serviceDesc String
      */
     public void setServiceDesc(String serviceDesc) {
@@ -182,6 +194,7 @@ public class Billingdetail {
 
     /**
      * Sets the billingAmount
+     *
      * @param billingAmount String
      */
     public void setBillingAmount(String billingAmount) {
@@ -190,6 +203,7 @@ public class Billingdetail {
 
     /**
      * Sets the diagnosticCode
+     *
      * @param diagnosticCode String
      */
     public void setDiagnosticCode(String diagnosticCode) {
@@ -198,6 +212,7 @@ public class Billingdetail {
 
     /**
      * Sets the appointmentDate
+     *
      * @param appointmentDate String
      */
     public void setAppointmentDate(String appointmentDate) {
@@ -206,6 +221,7 @@ public class Billingdetail {
 
     /**
      * Sets the status
+     *
      * @param status String
      */
     public void setStatus(String status) {
@@ -214,6 +230,7 @@ public class Billingdetail {
 
     /**
      * Sets the billingunit
+     *
      * @param billingunit String
      */
     public void setBillingunit(String billingunit) {

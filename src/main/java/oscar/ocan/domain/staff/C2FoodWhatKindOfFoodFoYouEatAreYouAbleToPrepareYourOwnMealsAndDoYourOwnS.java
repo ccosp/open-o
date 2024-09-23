@@ -62,8 +62,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -99,10 +97,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the c1DoesThePersonHaveDifficultyGettingEnoughToEatIfRated0Or9GoToTheNextDoma property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1DoesThePersonHaveDifficultyGettingEnoughToEatIfRated0Or9GoToTheNextDoma() {
         return c1DoesThePersonHaveDifficultyGettingEnoughToEatIfRated0Or9GoToTheNextDoma;
@@ -111,10 +107,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the c1DoesThePersonHaveDifficultyGettingEnoughToEatIfRated0Or9GoToTheNextDoma property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1DoesThePersonHaveDifficultyGettingEnoughToEatIfRated0Or9GoToTheNextDoma(BigInteger value) {
         this.c1DoesThePersonHaveDifficultyGettingEnoughToEatIfRated0Or9GoToTheNextDoma = value;
@@ -123,10 +117,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the c2HowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromFriendsOrRelatives property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromFriendsOrRelatives() {
         return c2HowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromFriendsOrRelatives;
@@ -135,10 +127,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the c2HowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromFriendsOrRelatives property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromFriendsOrRelatives(BigInteger value) {
         this.c2HowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromFriendsOrRelatives = value;
@@ -147,10 +137,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices() {
         return c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices;
@@ -159,10 +147,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices(BigInteger value) {
         this.c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices = value;
@@ -171,10 +157,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices() {
         return c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices;
@@ -183,10 +167,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices(BigInteger value) {
         this.c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices = value;
@@ -195,10 +177,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the cComments property.
      *
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -207,10 +187,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the cComments property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -219,10 +197,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the cActions property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -231,10 +207,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the cActions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -243,10 +217,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the cByWhom property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -255,10 +227,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the cByWhom property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -267,10 +237,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Gets the value of the cReviewDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -279,10 +247,8 @@ public class C2FoodWhatKindOfFoodFoYouEatAreYouAbleToPrepareYourOwnMealsAndDoYou
     /**
      * Sets the value of the cReviewDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;

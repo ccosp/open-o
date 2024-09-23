@@ -41,7 +41,6 @@ import javax.persistence.Table;
 import org.apache.commons.lang.StringUtils;
 
 /**
- *
  * @author jackson
  */
 @Entity

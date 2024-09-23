@@ -34,7 +34,6 @@ import org.oscarehr.util.MiscUtils;
 import oscar.OscarProperties;
 
 /**
- *
  * @author jackson
  */
 public class Colour {

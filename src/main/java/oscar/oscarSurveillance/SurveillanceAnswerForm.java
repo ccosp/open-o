@@ -34,7 +34,6 @@ package oscar.oscarSurveillance;
 import org.apache.struts.action.ActionForm;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class SurveillanceAnswerForm extends ActionForm {
@@ -46,12 +45,15 @@ public class SurveillanceAnswerForm extends ActionForm {
     String surveyId = null;
     String currentSurveyNum = null;
 
-    /** Creates a new instance of SurveillanceAnswerForm */
+    /**
+     * Creates a new instance of SurveillanceAnswerForm
+     */
     public SurveillanceAnswerForm() {
     }
 
     /**
      * Getter for property answer.
+     *
      * @return Value of property answer.
      */
     public java.lang.String getAnswer() {
@@ -60,6 +62,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Setter for property answer.
+     *
      * @param answer New value of property answer.
      */
     public void setAnswer(java.lang.String answer) {
@@ -68,6 +71,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Getter for property proceed.
+     *
      * @return Value of property proceed.
      */
     public java.lang.String getProceed() {
@@ -76,6 +80,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Setter for property proceed.
+     *
      * @param proceed New value of property proceed.
      */
     public void setProceed(java.lang.String proceed) {
@@ -84,6 +89,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Getter for property demographic_no.
+     *
      * @return Value of property demographic_no.
      */
     public java.lang.String getDemographicNo() {
@@ -92,6 +98,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Setter for property demographic_no.
+     *
      * @param demographicNo New value of property demographic_no.
      */
     public void setDemographicNo(java.lang.String demographicNo) {
@@ -100,6 +107,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Getter for property surveyId.
+     *
      * @return Value of property surveyId.
      */
     public java.lang.String getSurveyId() {
@@ -108,6 +116,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Setter for property surveyId.
+     *
      * @param surveyId New value of property surveyId.
      */
     public void setSurveyId(java.lang.String surveyId) {
@@ -116,6 +125,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Getter for property currentSurveyNum.
+     *
      * @return Value of property currentSurveyNum.
      */
     public java.lang.String getCurrentSurveyNum() {
@@ -124,6 +134,7 @@ public class SurveillanceAnswerForm extends ActionForm {
 
     /**
      * Setter for property currentSurveyNum.
+     *
      * @param currentSurveyNum New value of property currentSurveyNum.
      */
     public void setCurrentSurveyNum(java.lang.String currentSurveyNum) {

@@ -39,7 +39,6 @@ import javax.servlet.http.HttpSession;
 import oscar.OscarProperties;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class GenericDownload extends HttpServlet {

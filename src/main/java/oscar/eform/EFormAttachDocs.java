@@ -37,7 +37,6 @@ import org.oscarehr.documentManager.EDocUtil;
 import oscar.util.ConversionUtils;
 
 /**
- *
  * Handles logic of attaching documents to a specified consultation
  */
 public class EFormAttachDocs {
@@ -47,7 +46,9 @@ public class EFormAttachDocs {
     private String providerNo;
     private ArrayList<String> docs; //document ids
 
-    /** Creates a new instance of ConsultationAttachDocs */
+    /**
+     * Creates a new instance of ConsultationAttachDocs
+     */
     public EFormAttachDocs(String req) {
         reqId = req;
         demoNo = "";
@@ -55,7 +56,6 @@ public class EFormAttachDocs {
     }
 
     /**
-     *
      * @param prov
      * @param demo
      * @param req

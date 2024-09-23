@@ -14,8 +14,8 @@ import java.util.Date;
 
 /**
  * Patient Identifier
- * @author jen
  *
+ * @author jen
  */
 public class PID3 implements Parameter {
 

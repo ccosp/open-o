@@ -117,6 +117,7 @@ public final class LoginCheckLogin {
 
     /**
      * Authenticates based on an SSO Key
+     *
      * @param ssoKey - The ssoKey to be matched to a provider
      * @return String array of the provider information
      */

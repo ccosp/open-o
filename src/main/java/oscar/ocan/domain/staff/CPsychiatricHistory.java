@@ -60,8 +60,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -85,10 +83,8 @@ public class CPsychiatricHistory {
     /**
      * Gets the value of the cAdditionalInformation property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCAdditionalInformation() {
         return cAdditionalInformation;
@@ -97,10 +93,8 @@ public class CPsychiatricHistory {
     /**
      * Sets the value of the cAdditionalInformation property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCAdditionalInformation(String value) {
         this.cAdditionalInformation = value;
@@ -109,10 +103,8 @@ public class CPsychiatricHistory {
     /**
      * Gets the value of the cHaveYouBeenHospitalizedDueToYourMentalHealthDuringThePastTwoYears property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCHaveYouBeenHospitalizedDueToYourMentalHealthDuringThePastTwoYears() {
         return cHaveYouBeenHospitalizedDueToYourMentalHealthDuringThePastTwoYears;
@@ -121,10 +113,8 @@ public class CPsychiatricHistory {
     /**
      * Sets the value of the cHaveYouBeenHospitalizedDueToYourMentalHealthDuringThePastTwoYears property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCHaveYouBeenHospitalizedDueToYourMentalHealthDuringThePastTwoYears(String value) {
         this.cHaveYouBeenHospitalizedDueToYourMentalHealthDuringThePastTwoYears = value;
@@ -133,10 +123,8 @@ public class CPsychiatricHistory {
     /**
      * Gets the value of the cIfYesTotalNumberOfAdmissionLastTwoYears property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getCIfYesTotalNumberOfAdmissionLastTwoYears() {
         return cIfYesTotalNumberOfAdmissionLastTwoYears;
@@ -145,10 +133,8 @@ public class CPsychiatricHistory {
     /**
      * Sets the value of the cIfYesTotalNumberOfAdmissionLastTwoYears property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setCIfYesTotalNumberOfAdmissionLastTwoYears(BigInteger value) {
         this.cIfYesTotalNumberOfAdmissionLastTwoYears = value;
@@ -157,10 +143,8 @@ public class CPsychiatricHistory {
     /**
      * Gets the value of the cIfYesTotalNumberOfHospitalizationDaysLastTwoYears property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getCIfYesTotalNumberOfHospitalizationDaysLastTwoYears() {
         return cIfYesTotalNumberOfHospitalizationDaysLastTwoYears;
@@ -169,10 +153,8 @@ public class CPsychiatricHistory {
     /**
      * Sets the value of the cIfYesTotalNumberOfHospitalizationDaysLastTwoYears property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setCIfYesTotalNumberOfHospitalizationDaysLastTwoYears(BigInteger value) {
         this.cIfYesTotalNumberOfHospitalizationDaysLastTwoYears = value;

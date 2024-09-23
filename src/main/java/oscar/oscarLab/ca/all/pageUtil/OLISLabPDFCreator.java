@@ -83,7 +83,9 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
 
     private Logger logger = MiscUtils.getLogger();
 
-    /** Creates a new instance of LabPDFCreator */
+    /**
+     * Creates a new instance of LabPDFCreator
+     */
     public OLISLabPDFCreator(HttpServletRequest request, OutputStream os) {
         this(os, request, request.getParameter("segmentID") != null ? request.getParameter("segmentID") : (String) request.getAttribute("segmentID"));
     }
@@ -1256,6 +1258,7 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
     /**
      * Takes a string of docNames, specifically the one returned from handler.getCCDocNames()
      * Converts the string into a phrase containing all doc names
+     *
      * @param docNames
      * @return ccDocNames
      */
@@ -1280,8 +1283,9 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
     }
 
     /**
-     * Takes a doctor name string and turns it into a phrase that contains the doctor 
+     * Takes a doctor name string and turns it into a phrase that contains the doctor
      * name in normal font, and then their MD number in the smaller font
+     *
      * @param doctorName
      * @return doctorPhrase
      */

@@ -58,7 +58,6 @@ import org.xml.sax.SAXException;
 import oscar.util.ConversionUtils;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class Survey {
@@ -91,7 +90,9 @@ public class Survey {
     public static String DOESNOTMEETCRITERIA = "C";
     Random random = null;
 
-    /** Creates a new instance of Survey */
+    /**
+     * Creates a new instance of Survey
+     */
     public Survey() {
         initRandom();
     }
@@ -274,6 +275,7 @@ public class Survey {
 
     /**
      * Getter for property surveyTitle.
+     *
      * @return Value of property surveyTitle.
      */
     public java.lang.String getSurveyTitle() {
@@ -282,6 +284,7 @@ public class Survey {
 
     /**
      * Setter for property surveyTitle.
+     *
      * @param surveyTitle New value of property surveyTitle.
      */
     public void setSurveyTitle(java.lang.String surveyTitle) {
@@ -290,6 +293,7 @@ public class Survey {
 
     /**
      * Getter for property surveyQuestion.
+     *
      * @return Value of property surveyQuestion.
      */
     public java.lang.String getSurveyQuestion() {
@@ -298,6 +302,7 @@ public class Survey {
 
     /**
      * Setter for property surveyQuestion.
+     *
      * @param surveyQuestion New value of property surveyQuestion.
      */
     public void setSurveyQuestion(java.lang.String surveyQuestion) {
@@ -306,6 +311,7 @@ public class Survey {
 
     /**
      * Getter for property surveyId.
+     *
      * @return Value of property surveyId.
      */
     public java.lang.String getSurveyId() {
@@ -314,6 +320,7 @@ public class Survey {
 
     /**
      * Setter for property surveyId.
+     *
      * @param surveyId New value of property surveyId.
      */
     public void setSurveyId(java.lang.String surveyId) {
@@ -359,6 +366,7 @@ public class Survey {
 
     /**
      * Getter for property period.
+     *
      * @return Value of property period.
      */
     public int getPeriod() {
@@ -367,6 +375,7 @@ public class Survey {
 
     /**
      * Setter for property period.
+     *
      * @param period New value of property period.
      */
     public void setPeriod(int period) {
@@ -375,6 +384,7 @@ public class Survey {
 
     /**
      * Getter for property randomness.
+     *
      * @return Value of property randomness.
      */
     public int getRandomness() {
@@ -383,6 +393,7 @@ public class Survey {
 
     /**
      * Setter for property randomness.
+     *
      * @param randomness New value of property randomness.
      */
     public void setRandomness(int randomness) {
@@ -497,6 +508,7 @@ public class Survey {
 
     /**
      * Getter for property exportString.
+     *
      * @return Value of property exportString.
      */
     public java.lang.String getExportString() {
@@ -505,6 +517,7 @@ public class Survey {
 
     /**
      * Setter for property exportString.
+     *
      * @param exportString New value of property exportString.
      */
     public void setExportString(java.lang.String exportString) {
@@ -513,6 +526,7 @@ public class Survey {
 
     /**
      * Getter for property exportQuery.
+     *
      * @return Value of property exportQuery.
      */
     public java.lang.String getExportQuery() {
@@ -521,6 +535,7 @@ public class Survey {
 
     /**
      * Setter for property exportQuery.
+     *
      * @param exportQuery New value of property exportQuery.
      */
     public void setExportQuery(java.lang.String exportQuery) {

@@ -89,7 +89,6 @@ public class EFormLoader {
     }
 
     /**
-     *
      * @return list of names from database
      */
     public List<String> getNames() {

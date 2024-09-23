@@ -45,8 +45,8 @@ import oscar.util.OscarRoleObjectPrivilege;
 
 /**
  * Utilities for traceability
- * @author oscar
  *
+ * @author oscar
  */
 public class GenerateTraceabilityUtil {
     private GenerateTraceabilityUtil() {

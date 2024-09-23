@@ -28,7 +28,6 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author Toby
  */
 public class ProviderBillCenter {

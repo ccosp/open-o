@@ -86,9 +86,9 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Return the unique identifier of this class
-     *
-     *  generator-class="native"
-     *  column="id"
+     * <p>
+     * generator-class="native"
+     * column="id"
      */
     public Long getId() {
         return _id;
@@ -96,6 +96,7 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Set the unique identifier of this class
+     *
      * @param _id the new ID
      */
     public void setId(Long _id) {
@@ -112,6 +113,7 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Set the value related to the column: program_id
+     *
      * @param _programId the program_id value
      */
     public void setProgramId(Long _programId) {
@@ -127,6 +129,7 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Set the value related to the column: provider_no
+     *
      * @param _providerNo the provider_no value
      */
     public void setProviderNo(String _providerNo) {
@@ -142,6 +145,7 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Set the value related to the column: role_id
+     *
      * @param _roleId the role_id value
      */
     public void setRoleId(Long _roleId) {
@@ -149,8 +153,7 @@ public class ProgramProvider implements Serializable {
     }
 
     /**
-     *
-     *  column=role_id
+     * column=role_id
      */
     public Secrole getRole() {
         return this._role;
@@ -158,6 +161,7 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Set the value related to the column: role_id
+     *
      * @param _role the role_id value
      */
     public void setRole(Secrole _role) {
@@ -165,8 +169,7 @@ public class ProgramProvider implements Serializable {
     }
 
     /**
-     *
-     *  column=provider_no
+     * column=provider_no
      */
     public Provider getProvider() {
         return this._provider;
@@ -174,6 +177,7 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Set the value related to the column: provider_no
+     *
      * @param _provider the provider_no value
      */
     public void setProvider(Provider _provider) {
@@ -189,6 +193,7 @@ public class ProgramProvider implements Serializable {
 
     /**
      * Set the value related to the column: teams
+     *
      * @param _teams the teams value
      */
     public void setTeams(java.util.Set<org.oscarehr.PMmodule.model.ProgramTeam> _teams) {

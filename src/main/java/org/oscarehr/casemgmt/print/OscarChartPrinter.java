@@ -79,7 +79,6 @@ import oscar.oscarDemographic.data.DemographicRelationship;
  * This will create a PDF + assemble e-forms,documents,labs into a package
  *
  * @author Marc Dumontier
- *
  */
 public class OscarChartPrinter {
 

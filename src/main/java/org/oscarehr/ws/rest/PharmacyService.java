@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Defines service contract for create/read/update/delete operations on pharmacies.
- *
+ * <p>
  * TODO: switch DAOs to PharmacyManager
  */
 @Path("/pharmacies/")
@@ -58,12 +58,9 @@ public class PharmacyService extends AbstractServiceImpl {
      * <p/>
      * In case limit or offset parameters are set to null or zero, the entire result set is returned.
      *
-     * @param offset
-     * 		First record in the entire result set to be returned
-     * @param limit
-     * 		Maximum total number of records that should be returned
-     * @return
-     *        Returns all pharmacy records available on the system
+     * @param offset First record in the entire result set to be returned
+     * @param limit  Maximum total number of records that should be returned
+     * @return Returns all pharmacy records available on the system
      */
     @GET
     @Path("/")
@@ -76,10 +73,8 @@ public class PharmacyService extends AbstractServiceImpl {
     /**
      * Finds pharmacy with the specified id.
      *
-     * @param id
-     * 		Id of the pharmacy to be found
-     * @return
-     *        Returns the pharmacy or null if it can not be found
+     * @param id Id of the pharmacy to be found
+     * @return Returns the pharmacy or null if it can not be found
      */
     @GET
     @Path("/{pharmacyId}")
@@ -90,10 +85,8 @@ public class PharmacyService extends AbstractServiceImpl {
     /**
      * Adds pharmacy to the system
      *
-     * @param pharmacyInfo
-     * 		Pharmacy info to be added
-     * @return
-     *        Returns the added pharmacy info
+     * @param pharmacyInfo Pharmacy info to be added
+     * @return Returns the added pharmacy info
      */
     @POST
     @Path("/")
@@ -104,10 +97,8 @@ public class PharmacyService extends AbstractServiceImpl {
     /**
      * Updates pharmacy on the system
      *
-     * @param pharmacyInfo
-     * 		Pharmacy info to be updated
-     * @return
-     *        Returns the updated pharmacy info
+     * @param pharmacyInfo Pharmacy info to be updated
+     * @return Returns the updated pharmacy info
      */
     @PUT
     @Path("/")
@@ -118,10 +109,8 @@ public class PharmacyService extends AbstractServiceImpl {
     /**
      * Deletes pharmacy from the system
      *
-     * @param id
-     * 		ID of the pharmacy to be deleted
-     * @return
-     *        Returns the deleted pharmacy info
+     * @param id ID of the pharmacy to be deleted
+     * @return Returns the deleted pharmacy info
      */
     @DELETE
     @Path("/{pharmacyId}")

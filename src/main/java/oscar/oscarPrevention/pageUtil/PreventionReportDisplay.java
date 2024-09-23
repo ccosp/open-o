@@ -28,7 +28,6 @@ package oscar.oscarPrevention.pageUtil;
 import java.util.Date;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class PreventionReportDisplay implements Comparable {

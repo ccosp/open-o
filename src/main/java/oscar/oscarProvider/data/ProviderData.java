@@ -45,10 +45,8 @@ import org.oscarehr.util.SpringUtils;
 import oscar.util.ConversionUtils;
 
 /**
- *
  * @author Jay Gallagher
  * Used to access data in provider table
- *
  * @deprecated use {@link org.oscarehr.common.model.ProviderData} instead
  */
 public class ProviderData {
@@ -115,7 +113,9 @@ public class ProviderData {
     String lastUpdateDate;
     String signed_confidentiality;
 
-    /** Creates a new instance of ProviderData */
+    /**
+     * Creates a new instance of ProviderData
+     */
     public ProviderData() {
     }
 
@@ -217,6 +217,7 @@ public class ProviderData {
 
     /**
      * Getter for property provider_no.
+     *
      * @return Value of property provider_no.
      */
     public java.lang.String getProviderNo() {
@@ -225,6 +226,7 @@ public class ProviderData {
 
     /**
      * Setter for property provider_no.
+     *
      * @param provider_no New value of property provider_no.
      */
     public void setProviderNo(java.lang.String provider_no) {
@@ -233,6 +235,7 @@ public class ProviderData {
 
     /**
      * Getter for property last_name.
+     *
      * @return Value of property last_name.
      */
     public java.lang.String getLast_name() {
@@ -241,6 +244,7 @@ public class ProviderData {
 
     /**
      * Setter for property last_name.
+     *
      * @param last_name New value of property last_name.
      */
     public void setLast_name(java.lang.String last_name) {
@@ -249,6 +253,7 @@ public class ProviderData {
 
     /**
      * Getter for property first_name.
+     *
      * @return Value of property first_name.
      */
     public java.lang.String getFirst_name() {
@@ -257,6 +262,7 @@ public class ProviderData {
 
     /**
      * Setter for property first_name.
+     *
      * @param first_name New value of property first_name.
      */
     public void setFirst_name(java.lang.String first_name) {
@@ -265,6 +271,7 @@ public class ProviderData {
 
     /**
      * Getter for property provider_type.
+     *
      * @return Value of property provider_type.
      */
     public java.lang.String getProvider_type() {
@@ -273,6 +280,7 @@ public class ProviderData {
 
     /**
      * Setter for property provider_type.
+     *
      * @param provider_type New value of property provider_type.
      */
     public void setProvider_type(java.lang.String provider_type) {
@@ -281,6 +289,7 @@ public class ProviderData {
 
     /**
      * Getter for property specialty.
+     *
      * @return Value of property specialty.
      */
     public java.lang.String getSpecialty() {
@@ -289,6 +298,7 @@ public class ProviderData {
 
     /**
      * Setter for property specialty.
+     *
      * @param specialty New value of property specialty.
      */
     public void setSpecialty(java.lang.String specialty) {
@@ -297,6 +307,7 @@ public class ProviderData {
 
     /**
      * Getter for property team.
+     *
      * @return Value of property team.
      */
     public java.lang.String getTeam() {
@@ -305,6 +316,7 @@ public class ProviderData {
 
     /**
      * Setter for property team.
+     *
      * @param team New value of property team.
      */
     public void setTeam(java.lang.String team) {
@@ -313,6 +325,7 @@ public class ProviderData {
 
     /**
      * Getter for property sex.
+     *
      * @return Value of property sex.
      */
     public java.lang.String getSex() {
@@ -321,6 +334,7 @@ public class ProviderData {
 
     /**
      * Setter for property sex.
+     *
      * @param sex New value of property sex.
      */
     public void setSex(java.lang.String sex) {
@@ -329,6 +343,7 @@ public class ProviderData {
 
     /**
      * Getter for property dob.
+     *
      * @return Value of property dob.
      */
     public java.lang.String getDob() {
@@ -337,6 +352,7 @@ public class ProviderData {
 
     /**
      * Setter for property dob.
+     *
      * @param dob New value of property dob.
      */
     public void setDob(java.lang.String dob) {
@@ -345,6 +361,7 @@ public class ProviderData {
 
     /**
      * Getter for property address.
+     *
      * @return Value of property address.
      */
     public java.lang.String getAddress() {
@@ -353,6 +370,7 @@ public class ProviderData {
 
     /**
      * Setter for property address.
+     *
      * @param address New value of property address.
      */
     public void setAddress(java.lang.String address) {
@@ -361,6 +379,7 @@ public class ProviderData {
 
     /**
      * Getter for property phone.
+     *
      * @return Value of property phone.
      */
     public java.lang.String getPhone() {
@@ -369,6 +388,7 @@ public class ProviderData {
 
     /**
      * Setter for property phone.
+     *
      * @param phone New value of property phone.
      */
     public void setPhone(java.lang.String phone) {
@@ -377,6 +397,7 @@ public class ProviderData {
 
     /**
      * Getter for property work_phone.
+     *
      * @return Value of property work_phone.
      */
     public java.lang.String getWork_phone() {
@@ -385,6 +406,7 @@ public class ProviderData {
 
     /**
      * Setter for property work_phone.
+     *
      * @param work_phone New value of property work_phone.
      */
     public void setWork_phone(java.lang.String work_phone) {
@@ -393,6 +415,7 @@ public class ProviderData {
 
     /**
      * Getter for property ohip_no.
+     *
      * @return Value of property ohip_no.
      */
     public java.lang.String getOhip_no() {
@@ -401,6 +424,7 @@ public class ProviderData {
 
     /**
      * Setter for property ohip_no.
+     *
      * @param ohip_no New value of property ohip_no.
      */
     public void setOhip_no(java.lang.String ohip_no) {
@@ -409,6 +433,7 @@ public class ProviderData {
 
     /**
      * Getter for property rma_no.
+     *
      * @return Value of property rma_no.
      */
     public java.lang.String getRma_no() {
@@ -417,6 +442,7 @@ public class ProviderData {
 
     /**
      * Setter for property rma_no.
+     *
      * @param rma_no New value of property rma_no.
      */
     public void setRma_no(java.lang.String rma_no) {
@@ -425,6 +451,7 @@ public class ProviderData {
 
     /**
      * Getter for property billing_no.
+     *
      * @return Value of property billing_no.
      */
     public java.lang.String getBilling_no() {
@@ -433,6 +460,7 @@ public class ProviderData {
 
     /**
      * Setter for property billing_no.
+     *
      * @param billing_no New value of property billing_no.
      */
     public void setBilling_no(java.lang.String billing_no) {
@@ -441,6 +469,7 @@ public class ProviderData {
 
     /**
      * Getter for property hso_no.
+     *
      * @return Value of property hso_no.
      */
     public java.lang.String getHso_no() {
@@ -449,6 +478,7 @@ public class ProviderData {
 
     /**
      * Setter for property hso_no.
+     *
      * @param hso_no New value of property hso_no.
      */
     public void setHso_no(java.lang.String hso_no) {
@@ -457,6 +487,7 @@ public class ProviderData {
 
     /**
      * Getter for property status.
+     *
      * @return Value of property status.
      */
     public java.lang.String getStatus() {
@@ -465,6 +496,7 @@ public class ProviderData {
 
     /**
      * Setter for property status.
+     *
      * @param status New value of property status.
      */
     public void setStatus(java.lang.String status) {
@@ -473,6 +505,7 @@ public class ProviderData {
 
     /**
      * Getter for property comments.
+     *
      * @return Value of property comments.
      */
     public java.lang.String getComments() {
@@ -481,6 +514,7 @@ public class ProviderData {
 
     /**
      * Setter for property comments.
+     *
      * @param comments New value of property comments.
      */
     public void setComments(java.lang.String comments) {
@@ -489,6 +523,7 @@ public class ProviderData {
 
     /**
      * Getter for property provider_activity.
+     *
      * @return Value of property provider_activity.
      */
     public java.lang.String getProvider_activity() {
@@ -497,6 +532,7 @@ public class ProviderData {
 
     /**
      * Setter for property provider_activity.
+     *
      * @param provider_activity New value of property provider_activity.
      */
     public void setProvider_activity(java.lang.String provider_activity) {

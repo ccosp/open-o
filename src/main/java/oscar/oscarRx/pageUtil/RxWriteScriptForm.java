@@ -370,33 +370,37 @@ public final class RxWriteScriptForm extends ActionForm {
 
     }
 
-    /** Getter for property atcCode.
-     * @return Value of property atcCode.
+    /**
+     * Getter for property atcCode.
      *
+     * @return Value of property atcCode.
      */
     public java.lang.String getAtcCode() {
         return atcCode;
     }
 
-    /** Setter for property atcCode.
-     * @param atcCode New value of property atcCode.
+    /**
+     * Setter for property atcCode.
      *
+     * @param atcCode New value of property atcCode.
      */
     public void setAtcCode(java.lang.String atcCode) {
         this.atcCode = atcCode;
     }
 
-    /** Getter for property regionalIdentifier.
-     * @return Value of property regionalIdentifier.
+    /**
+     * Getter for property regionalIdentifier.
      *
+     * @return Value of property regionalIdentifier.
      */
     public java.lang.String getRegionalIdentifier() {
         return regionalIdentifier;
     }
 
-    /** Setter for property regionalIdentifier.
-     * @param regionalIdentifier New value of property regionalIdentifier.
+    /**
+     * Setter for property regionalIdentifier.
      *
+     * @param regionalIdentifier New value of property regionalIdentifier.
      */
     public void setRegionalIdentifier(java.lang.String regionalIdentifier) {
         this.regionalIdentifier = regionalIdentifier;
@@ -404,6 +408,7 @@ public final class RxWriteScriptForm extends ActionForm {
 
     /**
      * Getter for property method.
+     *
      * @return Value of property method.
      */
     public java.lang.String getMethod() {
@@ -412,6 +417,7 @@ public final class RxWriteScriptForm extends ActionForm {
 
     /**
      * Setter for property method.
+     *
      * @param method New value of property method.
      */
     public void setMethod(java.lang.String method) {
@@ -420,6 +426,7 @@ public final class RxWriteScriptForm extends ActionForm {
 
     /**
      * Getter for property unit.
+     *
      * @return Value of property unit.
      */
     public java.lang.String getUnit() {
@@ -428,6 +435,7 @@ public final class RxWriteScriptForm extends ActionForm {
 
     /**
      * Setter for property unit.
+     *
      * @param unit New value of property unit.
      */
     public void setUnit(java.lang.String unit) {
@@ -444,6 +452,7 @@ public final class RxWriteScriptForm extends ActionForm {
 
     /**
      * Getter for property route.
+     *
      * @return Value of property route.
      */
     public java.lang.String getRoute() {
@@ -452,6 +461,7 @@ public final class RxWriteScriptForm extends ActionForm {
 
     /**
      * Setter for property route.
+     *
      * @param route New value of property route.
      */
     public void setRoute(java.lang.String route) {

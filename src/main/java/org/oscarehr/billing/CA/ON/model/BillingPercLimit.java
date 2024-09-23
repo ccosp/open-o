@@ -37,7 +37,6 @@ import javax.persistence.TemporalType;
 import org.oscarehr.common.model.AbstractModel;
 
 /**
- *
  * @author rjonasz
  */
 @Entity

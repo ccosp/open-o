@@ -140,8 +140,9 @@ public class BillingViewBean {
 
     /**
      * Updates the paymentMethod of the specified bill with the supplied paymentMethod code and payee number
+     *
      * @param billingNo String - The uid of the bill to be updated
-     * @param payeeNo String - The payee number
+     * @param payeeNo   String - The payee number
      */
     public void updateBill(String billingNo, String payeeNo) {
         BillingmasterDAO dao = SpringUtils.getBean(BillingmasterDAO.class);
@@ -500,6 +501,7 @@ public class BillingViewBean {
 
     /**
      * Getter for property billingMasterNo.
+     *
      * @return Value of property billingMasterNo.
      */
     public java.lang.String getBillingMasterNo() {
@@ -508,6 +510,7 @@ public class BillingViewBean {
 
     /**
      * Setter for property billingMasterNo.
+     *
      * @param billingMasterNo New value of property billingMasterNo.
      */
     public void setBillingMasterNo(java.lang.String billingMasterNo) {
@@ -516,6 +519,7 @@ public class BillingViewBean {
 
     /**
      * Getter for property billingNo.
+     *
      * @return Value of property billingNo.
      */
     public java.lang.String getBillingNo() {
@@ -544,6 +548,7 @@ public class BillingViewBean {
 
     /**
      * Setter for property billingNo.
+     *
      * @param billingNo New value of property billingNo.
      */
     public void setBillingNo(java.lang.String billingNo) {

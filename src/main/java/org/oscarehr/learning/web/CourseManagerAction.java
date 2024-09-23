@@ -62,7 +62,6 @@ import org.oscarehr.util.SpringUtils;
  * TODO: Error handling, and access checks.
  *
  * @author marc
- *
  */
 public class CourseManagerAction extends DispatchAction {
 

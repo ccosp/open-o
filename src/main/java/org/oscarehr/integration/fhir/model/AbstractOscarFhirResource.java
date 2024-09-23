@@ -47,7 +47,6 @@ public abstract class AbstractOscarFhirResource<FHIR extends org.hl7.fhir.dstu3.
 
     /**
      * Map attributes from an Oscar resource into a FHIR Resource.
-     *
      */
     protected abstract void mapAttributes(FHIR fhirResource);
 

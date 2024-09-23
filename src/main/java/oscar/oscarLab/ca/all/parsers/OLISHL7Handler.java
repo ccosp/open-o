@@ -99,7 +99,9 @@ public class OLISHL7Handler implements MessageHandler {
 
     private ArrayList<String> headers = null;
 
-    /** Creates a new instance of OLISHL7Handler */
+    /**
+     * Creates a new instance of OLISHL7Handler
+     */
     public OLISHL7Handler() {
         super();
     }

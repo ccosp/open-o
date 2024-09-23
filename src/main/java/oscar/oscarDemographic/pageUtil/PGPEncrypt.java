@@ -36,7 +36,6 @@ import oscar.OscarProperties;
 import oscar.util.StringUtils;
 
 /**
- *
  * @author Ronnie Cheng
  */
 public class PGPEncrypt {

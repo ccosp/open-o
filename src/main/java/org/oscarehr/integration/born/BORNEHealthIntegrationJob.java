@@ -61,11 +61,10 @@ import org.oscarehr.util.SpringUtils;
 
 /**
  * OscarRunnable compliant job which sends AR (antenatal record), Rourke 18m, NDDS, and 18m well being summary.
- *
+ * <p>
  * Uses the OSCAR Jobs framework...Provider/Security injected by framework.
  *
  * @author Marc Dumontier
- *
  */
 public class BORNEHealthIntegrationJob implements OscarRunnable {
 
@@ -213,6 +212,7 @@ public class BORNEHealthIntegrationJob implements OscarRunnable {
 
     /**
      * TODO: Load this from somewhere.
+     *
      * @return
      */
     private BornHialProperties getBornHialProperties() {

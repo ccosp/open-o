@@ -124,6 +124,7 @@ public final class RxAddAllergyForm extends ActionForm {
 
     /**
      * Getter for property ageOfOnset.
+     *
      * @return Value of property ageOfOnset.
      */
     public java.lang.String getAgeOfOnset() {
@@ -132,6 +133,7 @@ public final class RxAddAllergyForm extends ActionForm {
 
     /**
      * Setter for property ageOfOnset.
+     *
      * @param ageOfOnset New value of property ageOfOnset.
      */
     public void setAgeOfOnset(java.lang.String ageOfOnset) {
@@ -140,6 +142,7 @@ public final class RxAddAllergyForm extends ActionForm {
 
     /**
      * Getter for property severityOfReaction.
+     *
      * @return Value of property severityOfReaction.
      */
     public java.lang.String getSeverityOfReaction() {
@@ -148,6 +151,7 @@ public final class RxAddAllergyForm extends ActionForm {
 
     /**
      * Setter for property severityOfReaction.
+     *
      * @param severityOfReaction New value of property severityOfReaction.
      */
     public void setSeverityOfReaction(java.lang.String severityOfReaction) {
@@ -156,6 +160,7 @@ public final class RxAddAllergyForm extends ActionForm {
 
     /**
      * Getter for property onSetOfReaction.
+     *
      * @return Value of property onSetOfReaction.
      */
     public java.lang.String getOnSetOfReaction() {
@@ -164,6 +169,7 @@ public final class RxAddAllergyForm extends ActionForm {
 
     /**
      * Setter for property onSetOfReaction.
+     *
      * @param onSetOfReaction New value of property onSetOfReaction.
      */
     public void setOnSetOfReaction(java.lang.String onSetOfReaction) {

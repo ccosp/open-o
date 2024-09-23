@@ -24,7 +24,6 @@
 package oscar.oscarReport.reportByTemplate;
 
 /**
- *
  * @author rjonasz
  */
 public class ReportFactory {
@@ -35,7 +34,9 @@ public class ReportFactory {
     public static final String INR = "inr";
     public static final String CONTINUITY = "continuity";
 
-    /** Creates a new instance of ReportFactory */
+    /**
+     * Creates a new instance of ReportFactory
+     */
     public ReportFactory() {
     }
 

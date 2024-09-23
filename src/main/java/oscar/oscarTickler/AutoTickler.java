@@ -27,7 +27,6 @@ package oscar.oscarTickler;
 
 
 /**
- *
  * @author Jay Gallagher
  */
 

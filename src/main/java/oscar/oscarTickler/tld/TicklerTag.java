@@ -41,7 +41,6 @@ import java.util.Map;
 
 
 /**
- *
  * @author Jay Gallagher
  */
 public class TicklerTag extends TagSupport {

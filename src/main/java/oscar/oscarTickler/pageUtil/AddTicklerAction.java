@@ -41,7 +41,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarTickler.TicklerData;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class AddTicklerAction extends Action {

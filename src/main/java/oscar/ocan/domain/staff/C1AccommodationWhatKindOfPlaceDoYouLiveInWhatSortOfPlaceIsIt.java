@@ -65,8 +65,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -111,10 +109,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the c1DoesThePersonLackACurrentPlaceToStayIfRated0Or9SkipQuestions23AndPro property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1DoesThePersonLackACurrentPlaceToStayIfRated0Or9SkipQuestions23AndPro() {
         return c1DoesThePersonLackACurrentPlaceToStayIfRated0Or9SkipQuestions23AndPro;
@@ -123,10 +119,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the c1DoesThePersonLackACurrentPlaceToStayIfRated0Or9SkipQuestions23AndPro property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1DoesThePersonLackACurrentPlaceToStayIfRated0Or9SkipQuestions23AndPro(BigInteger value) {
         this.c1DoesThePersonLackACurrentPlaceToStayIfRated0Or9SkipQuestions23AndPro = value;
@@ -135,10 +129,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the c2HowMuchHelpWithAccommodationDoesThePersonReceiveFromFriendsOrRelatives property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpWithAccommodationDoesThePersonReceiveFromFriendsOrRelatives() {
         return c2HowMuchHelpWithAccommodationDoesThePersonReceiveFromFriendsOrRelatives;
@@ -147,10 +139,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the c2HowMuchHelpWithAccommodationDoesThePersonReceiveFromFriendsOrRelatives property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpWithAccommodationDoesThePersonReceiveFromFriendsOrRelatives(BigInteger value) {
         this.c2HowMuchHelpWithAccommodationDoesThePersonReceiveFromFriendsOrRelatives = value;
@@ -159,10 +149,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices() {
         return c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices;
@@ -171,10 +159,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices(BigInteger value) {
         this.c3AHowMuchHelpWithGettingEnoughToEatDoesThePersonReceiveFromLocalServices = value;
@@ -183,10 +169,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices() {
         return c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices;
@@ -195,10 +179,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices(BigInteger value) {
         this.c3BHowMuchHelpWithGettingEnoughToEatDoesThePersonNeedFromLocalServices = value;
@@ -207,10 +189,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the cComments property.
      *
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -219,10 +199,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the cComments property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -231,10 +209,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the cActions property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -243,10 +219,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the cActions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -255,10 +229,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the cByWhom property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -267,10 +239,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the cByWhom property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -279,10 +249,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the cReviewDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -291,10 +259,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the cReviewDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;
@@ -303,10 +269,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the cWhereDoYouLiveSelectOne property.
      *
-     * @return
-     *     possible object is
-     *     {@link CWhereDoYouLiveSelectOne }
-     *
+     * @return possible object is
+     * {@link CWhereDoYouLiveSelectOne }
      */
     public CWhereDoYouLiveSelectOne getCWhereDoYouLiveSelectOne() {
         return cWhereDoYouLiveSelectOne;
@@ -315,10 +279,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the cWhereDoYouLiveSelectOne property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CWhereDoYouLiveSelectOne }
-     *
+     * @param value allowed object is
+     *              {@link CWhereDoYouLiveSelectOne }
      */
     public void setCWhereDoYouLiveSelectOne(CWhereDoYouLiveSelectOne value) {
         this.cWhereDoYouLiveSelectOne = value;
@@ -327,10 +289,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the cDoYouReceiveAnySupportSelectOne property.
      *
-     * @return
-     *     possible object is
-     *     {@link CDoYouReceiveAnySupportSelectOne }
-     *
+     * @return possible object is
+     * {@link CDoYouReceiveAnySupportSelectOne }
      */
     public CDoYouReceiveAnySupportSelectOne getCDoYouReceiveAnySupportSelectOne() {
         return cDoYouReceiveAnySupportSelectOne;
@@ -339,10 +299,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the cDoYouReceiveAnySupportSelectOne property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CDoYouReceiveAnySupportSelectOne }
-     *
+     * @param value allowed object is
+     *              {@link CDoYouReceiveAnySupportSelectOne }
      */
     public void setCDoYouReceiveAnySupportSelectOne(CDoYouReceiveAnySupportSelectOne value) {
         this.cDoYouReceiveAnySupportSelectOne = value;
@@ -351,10 +309,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Gets the value of the cDoYouLiveWithAnyoneSelectOne property.
      *
-     * @return
-     *     possible object is
-     *     {@link CDoYouLiveWithAnyoneSelectOne }
-     *
+     * @return possible object is
+     * {@link CDoYouLiveWithAnyoneSelectOne }
      */
     public CDoYouLiveWithAnyoneSelectOne getCDoYouLiveWithAnyoneSelectOne() {
         return cDoYouLiveWithAnyoneSelectOne;
@@ -363,10 +319,8 @@ public class C1AccommodationWhatKindOfPlaceDoYouLiveInWhatSortOfPlaceIsIt {
     /**
      * Sets the value of the cDoYouLiveWithAnyoneSelectOne property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CDoYouLiveWithAnyoneSelectOne }
-     *
+     * @param value allowed object is
+     *              {@link CDoYouLiveWithAnyoneSelectOne }
      */
     public void setCDoYouLiveWithAnyoneSelectOne(CDoYouLiveWithAnyoneSelectOne value) {
         this.cDoYouLiveWithAnyoneSelectOne = value;

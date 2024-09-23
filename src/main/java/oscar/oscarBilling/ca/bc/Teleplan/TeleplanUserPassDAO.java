@@ -34,7 +34,8 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *  Deals with storing the teleplan sequence #
+ * Deals with storing the teleplan sequence #
+ *
  * @author jay
  */
 public class TeleplanUserPassDAO {

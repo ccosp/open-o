@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Test Result Code
- * @author jen
  *
+ * @author jen
  */
 public class OBX3 implements Parameter {
 

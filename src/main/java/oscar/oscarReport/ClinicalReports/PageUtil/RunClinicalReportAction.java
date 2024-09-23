@@ -54,7 +54,9 @@ public class RunClinicalReportAction extends Action {
 
     private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
-    /** Creates a new instance of RunClinicalReportAction */
+    /**
+     * Creates a new instance of RunClinicalReportAction
+     */
     public RunClinicalReportAction() {
     }
 

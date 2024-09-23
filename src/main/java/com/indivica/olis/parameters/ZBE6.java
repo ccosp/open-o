@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Exclude Performing Laboratory
- * @author jen
  *
+ * @author jen
  */
 public class ZBE6 implements Parameter {
 

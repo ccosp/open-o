@@ -44,7 +44,6 @@ import org.oscarehr.util.SpringUtils;
 
 
 /**
- *
  * @author Paul
  */
 public class IfDocumentPreviouslySent extends TagSupport {

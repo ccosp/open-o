@@ -44,7 +44,6 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- *
  * @author apavel
  */
 public abstract class DSService {

@@ -39,9 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
 
 /**
- *
  * @author JZhang
- *
  */
 
 public interface SecProviderDao {

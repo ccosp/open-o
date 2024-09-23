@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 
 /**
  * Converts between domain Drug object and transfer Drug objects.
- *
+ * <p>
  * This class represents the transformation between a the SQL schema
  * and the data model that is presented to a client.
  */
@@ -259,7 +259,6 @@ public class DrugConverterImpl extends AbstractConverter<Drug, DrugTo1> implemen
      *
      * @param t a transfer object to populated.
      * @param d a drug object to use as a reference.
-     *
      * @return true if populated successfully, false otherwise.
      */
     protected Boolean populateTo1Strength(DrugTo1 t, Drug d) {
@@ -306,7 +305,6 @@ public class DrugConverterImpl extends AbstractConverter<Drug, DrugTo1> implemen
      *
      * @param d the drug to populate
      * @param t the transfer object to use as a reference.
-     *
      * @return true if successful, false otherwise.
      */
     protected boolean populateDrugStrength(Drug d, DrugTo1 t) {

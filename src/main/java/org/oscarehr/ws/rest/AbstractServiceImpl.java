@@ -60,7 +60,6 @@ public abstract class AbstractServiceImpl {
     }
 
     /**
-     *
      * Get the UI resource bundle for locale specific messages
      *
      * @return
@@ -72,8 +71,7 @@ public abstract class AbstractServiceImpl {
     /**
      * Gets current provider.
      *
-     * @return
-     *        Returns the provider authenticated for the current request processing.
+     * @return Returns the provider authenticated for the current request processing.
      */
     protected Provider getCurrentProvider() {
         LoggedInInfo loggedInInfo = getLoggedInInfo();
@@ -83,11 +81,8 @@ public abstract class AbstractServiceImpl {
     /**
      * Gets the login information associated with the current request.
      *
-     * @return
-     *        Returns the login information
-     *
-     * @throws IllegalStateException
-     * 		IllegalStateException is thrown in case authentication info is not available
+     * @return Returns the login information
+     * @throws IllegalStateException IllegalStateException is thrown in case authentication info is not available
      */
     protected LoggedInInfo getLoggedInInfo() {
 

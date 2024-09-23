@@ -63,7 +63,6 @@ import oscar.oscarProvider.data.ProviderData;
 import oscar.oscarProvider.data.ProviderMyOscarIdData;
 
 /**
- *
  * @author jay
  */
 public class PHRMessage extends PHRDocument implements Serializable {
@@ -83,7 +82,9 @@ public class PHRMessage extends PHRDocument implements Serializable {
 
     private MessageType msg = null;
 
-    /** Creates a new instance of PHRMessage */
+    /**
+     * Creates a new instance of PHRMessage
+     */
     public PHRMessage() {
         super();
     }
@@ -183,12 +184,12 @@ public class PHRMessage extends PHRDocument implements Serializable {
 
 
     /**
-     *Don't want to be able to add multiple statuses
+     * Don't want to be able to add multiple statuses
      * ie READ + READ != REPLIED
-     *
+     * <p>
      * logic
      * if result has status and status < 0 the if it should go
-     *   or
+     * or
      * if result does not have status and status > 0 it should go
      */
     public void addStatus(int status) {

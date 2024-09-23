@@ -61,6 +61,7 @@ public final class SSOUtility {
     /**
      * Build the base redirect url from the given context path.
      * Do not add parameters to this path. It is used only for validation
+     *
      * @return URIBuilder
      */
     public static URIBuilder getRedirectUrl(String context) throws URISyntaxException {
@@ -79,6 +80,7 @@ public final class SSOUtility {
     /**
      * Get SSO presets from Oscar.properties
      * Values are mapped directly to standard OneLogin SAML properties settings
+     *
      * @return Map of preset values
      */
     public static Map<SSO_SETTING, String> getSSOPresetsFromOscarProperties() {

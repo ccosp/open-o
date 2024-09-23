@@ -73,7 +73,9 @@ public class ExcellerisOntarioHandler implements MessageHandler {
 
     public static enum OBX_DATA_TYPES {NM, ST, CE, TX, FT} // Numeric, String, Coded Element, Text, String
 
-    /** Creates a new instance */
+    /**
+     * Creates a new instance
+     */
     public ExcellerisOntarioHandler() {
     }
 
@@ -701,7 +703,7 @@ X = deleted (available on request; not always preceded by non-X OBRs in an earli
 
 
     /**
-     *  Retrieve the possible segment headers from the OBX fields
+     * Retrieve the possible segment headers from the OBX fields
      */
     public ArrayList<String> getHeaders() {
         int i;
@@ -829,7 +831,6 @@ X = deleted (available on request; not always preceded by non-X OBRs in an earli
     /**
      * If the first OBX segment is presenting a textual report and the lab type is
      * not in the unstructured (PATH or ITS) lab types.
-     *
      */
     public boolean isReportData() {
         return (OBX_DATA_TYPES.TX.name().equals(getOBXValueType(0, 0))

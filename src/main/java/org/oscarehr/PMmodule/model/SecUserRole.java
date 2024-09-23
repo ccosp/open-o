@@ -67,6 +67,7 @@ public class SecUserRole implements Serializable {
 
     /**
      * Set the value related to the column: role_name
+     *
      * @param _roleName the role_name value
      */
     public void setRoleName(String _roleName) {
@@ -80,6 +81,7 @@ public class SecUserRole implements Serializable {
 
     /**
      * Set the value related to the column: activeyn
+     *
      * @param _active the active value
      */
     public void setActive(boolean _active) {
@@ -93,6 +95,7 @@ public class SecUserRole implements Serializable {
 
     /**
      * Set the value related to the column: provider_no
+     *
      * @param _providerNo the provider_no value
      */
     public void setProviderNo(String _providerNo) {

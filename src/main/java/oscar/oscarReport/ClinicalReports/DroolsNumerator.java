@@ -41,7 +41,6 @@ import oscar.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
 import oscar.oscarEncounter.oscarMeasurements.util.MeasurementDSHelper;
 
 /**
- *
  * @author jay
  */
 public class DroolsNumerator implements Numerator {
@@ -51,7 +50,9 @@ public class DroolsNumerator implements Numerator {
     String[] outputfields = null;
     Hashtable outputValues = null;
 
-    /** Creates a new instance of DroolsNumerator */
+    /**
+     * Creates a new instance of DroolsNumerator
+     */
     public DroolsNumerator() {
     }
 

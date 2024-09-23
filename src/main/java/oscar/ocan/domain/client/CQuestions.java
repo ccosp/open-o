@@ -77,8 +77,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -165,10 +163,8 @@ public class CQuestions {
     /**
      * Gets the value of the c1AccommodationWhatKindOfPlaceDoYouLiveIn property.
      *
-     * @return
-     *     possible object is
-     *     {@link C1AccommodationWhatKindOfPlaceDoYouLiveIn }
-     *
+     * @return possible object is
+     * {@link C1AccommodationWhatKindOfPlaceDoYouLiveIn }
      */
     public C1AccommodationWhatKindOfPlaceDoYouLiveIn getC1AccommodationWhatKindOfPlaceDoYouLiveIn() {
         return c1AccommodationWhatKindOfPlaceDoYouLiveIn;
@@ -177,10 +173,8 @@ public class CQuestions {
     /**
      * Sets the value of the c1AccommodationWhatKindOfPlaceDoYouLiveIn property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C1AccommodationWhatKindOfPlaceDoYouLiveIn }
-     *
+     * @param value allowed object is
+     *              {@link C1AccommodationWhatKindOfPlaceDoYouLiveIn }
      */
     public void setC1AccommodationWhatKindOfPlaceDoYouLiveIn(C1AccommodationWhatKindOfPlaceDoYouLiveIn value) {
         this.c1AccommodationWhatKindOfPlaceDoYouLiveIn = value;
@@ -189,10 +183,8 @@ public class CQuestions {
     /**
      * Gets the value of the c2FoodDoYouGetEnoughToEat property.
      *
-     * @return
-     *     possible object is
-     *     {@link C2FoodDoYouGetEnoughToEat }
-     *
+     * @return possible object is
+     * {@link C2FoodDoYouGetEnoughToEat }
      */
     public C2FoodDoYouGetEnoughToEat getC2FoodDoYouGetEnoughToEat() {
         return c2FoodDoYouGetEnoughToEat;
@@ -201,10 +193,8 @@ public class CQuestions {
     /**
      * Sets the value of the c2FoodDoYouGetEnoughToEat property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C2FoodDoYouGetEnoughToEat }
-     *
+     * @param value allowed object is
+     *              {@link C2FoodDoYouGetEnoughToEat }
      */
     public void setC2FoodDoYouGetEnoughToEat(C2FoodDoYouGetEnoughToEat value) {
         this.c2FoodDoYouGetEnoughToEat = value;
@@ -213,10 +203,8 @@ public class CQuestions {
     /**
      * Gets the value of the c3LookingAfterTheHomeAreYouAbleToLookAfterYourHome property.
      *
-     * @return
-     *     possible object is
-     *     {@link C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome }
-     *
+     * @return possible object is
+     * {@link C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome }
      */
     public C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome getC3LookingAfterTheHomeAreYouAbleToLookAfterYourHome() {
         return c3LookingAfterTheHomeAreYouAbleToLookAfterYourHome;
@@ -225,10 +213,8 @@ public class CQuestions {
     /**
      * Sets the value of the c3LookingAfterTheHomeAreYouAbleToLookAfterYourHome property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome }
-     *
+     * @param value allowed object is
+     *              {@link C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome }
      */
     public void setC3LookingAfterTheHomeAreYouAbleToLookAfterYourHome(C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome value) {
         this.c3LookingAfterTheHomeAreYouAbleToLookAfterYourHome = value;
@@ -237,10 +223,8 @@ public class CQuestions {
     /**
      * Gets the value of the c4SelfCareDoYouHaveProblemsKeepingCleanAndTidy property.
      *
-     * @return
-     *     possible object is
-     *     {@link C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy }
-     *
+     * @return possible object is
+     * {@link C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy }
      */
     public C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy getC4SelfCareDoYouHaveProblemsKeepingCleanAndTidy() {
         return c4SelfCareDoYouHaveProblemsKeepingCleanAndTidy;
@@ -249,10 +233,8 @@ public class CQuestions {
     /**
      * Sets the value of the c4SelfCareDoYouHaveProblemsKeepingCleanAndTidy property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy }
-     *
+     * @param value allowed object is
+     *              {@link C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy }
      */
     public void setC4SelfCareDoYouHaveProblemsKeepingCleanAndTidy(C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy value) {
         this.c4SelfCareDoYouHaveProblemsKeepingCleanAndTidy = value;
@@ -261,10 +243,8 @@ public class CQuestions {
     /**
      * Gets the value of the c5DaytimeActivitiesHowDoYouSpendYourDay property.
      *
-     * @return
-     *     possible object is
-     *     {@link C5DaytimeActivitiesHowDoYouSpendYourDay }
-     *
+     * @return possible object is
+     * {@link C5DaytimeActivitiesHowDoYouSpendYourDay }
      */
     public C5DaytimeActivitiesHowDoYouSpendYourDay getC5DaytimeActivitiesHowDoYouSpendYourDay() {
         return c5DaytimeActivitiesHowDoYouSpendYourDay;
@@ -273,10 +253,8 @@ public class CQuestions {
     /**
      * Sets the value of the c5DaytimeActivitiesHowDoYouSpendYourDay property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C5DaytimeActivitiesHowDoYouSpendYourDay }
-     *
+     * @param value allowed object is
+     *              {@link C5DaytimeActivitiesHowDoYouSpendYourDay }
      */
     public void setC5DaytimeActivitiesHowDoYouSpendYourDay(C5DaytimeActivitiesHowDoYouSpendYourDay value) {
         this.c5DaytimeActivitiesHowDoYouSpendYourDay = value;
@@ -285,10 +263,8 @@ public class CQuestions {
     /**
      * Gets the value of the c6PhysicalHealthHowWellDoYouFeelPhysically property.
      *
-     * @return
-     *     possible object is
-     *     {@link C6PhysicalHealthHowWellDoYouFeelPhysically }
-     *
+     * @return possible object is
+     * {@link C6PhysicalHealthHowWellDoYouFeelPhysically }
      */
     public C6PhysicalHealthHowWellDoYouFeelPhysically getC6PhysicalHealthHowWellDoYouFeelPhysically() {
         return c6PhysicalHealthHowWellDoYouFeelPhysically;
@@ -297,10 +273,8 @@ public class CQuestions {
     /**
      * Sets the value of the c6PhysicalHealthHowWellDoYouFeelPhysically property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C6PhysicalHealthHowWellDoYouFeelPhysically }
-     *
+     * @param value allowed object is
+     *              {@link C6PhysicalHealthHowWellDoYouFeelPhysically }
      */
     public void setC6PhysicalHealthHowWellDoYouFeelPhysically(C6PhysicalHealthHowWellDoYouFeelPhysically value) {
         this.c6PhysicalHealthHowWellDoYouFeelPhysically = value;
@@ -309,10 +283,8 @@ public class CQuestions {
     /**
      * Gets the value of the c7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts property.
      *
-     * @return
-     *     possible object is
-     *     {@link C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts }
-     *
+     * @return possible object is
+     * {@link C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts }
      */
     public C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts getC7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts() {
         return c7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts;
@@ -321,10 +293,8 @@ public class CQuestions {
     /**
      * Sets the value of the c7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts }
-     *
+     * @param value allowed object is
+     *              {@link C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts }
      */
     public void setC7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts(C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts value) {
         this.c7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts = value;
@@ -333,10 +303,8 @@ public class CQuestions {
     /**
      * Gets the value of the c8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed property.
      *
-     * @return
-     *     possible object is
-     *     {@link C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed }
-     *
+     * @return possible object is
+     * {@link C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed }
      */
     public C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed getC8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed() {
         return c8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed;
@@ -345,10 +313,8 @@ public class CQuestions {
     /**
      * Sets the value of the c8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed }
-     *
+     * @param value allowed object is
+     *              {@link C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed }
      */
     public void setC8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed(C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed value) {
         this.c8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed = value;
@@ -357,10 +323,8 @@ public class CQuestions {
     /**
      * Gets the value of the c9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow property.
      *
-     * @return
-     *     possible object is
-     *     {@link C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow }
-     *
+     * @return possible object is
+     * {@link C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow }
      */
     public C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow getC9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow() {
         return c9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow;
@@ -369,10 +333,8 @@ public class CQuestions {
     /**
      * Sets the value of the c9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow }
-     *
+     * @param value allowed object is
+     *              {@link C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow }
      */
     public void setC9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow(C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow value) {
         this.c9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow = value;
@@ -381,10 +343,8 @@ public class CQuestions {
     /**
      * Gets the value of the c10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself property.
      *
-     * @return
-     *     possible object is
-     *     {@link C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself }
-     *
+     * @return possible object is
+     * {@link C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself }
      */
     public C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself getC10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself() {
         return c10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself;
@@ -393,10 +353,8 @@ public class CQuestions {
     /**
      * Sets the value of the c10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself }
-     *
+     * @param value allowed object is
+     *              {@link C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself }
      */
     public void setC10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself(C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself value) {
         this.c10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself = value;
@@ -405,10 +363,8 @@ public class CQuestions {
     /**
      * Gets the value of the c11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety property.
      *
-     * @return
-     *     possible object is
-     *     {@link C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety }
-     *
+     * @return possible object is
+     * {@link C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety }
      */
     public C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety getC11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety() {
         return c11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety;
@@ -417,10 +373,8 @@ public class CQuestions {
     /**
      * Sets the value of the c11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety }
-     *
+     * @param value allowed object is
+     *              {@link C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety }
      */
     public void setC11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety(C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety value) {
         this.c11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety = value;
@@ -429,10 +383,8 @@ public class CQuestions {
     /**
      * Gets the value of the c12AlcoholDoesDrinkingCauseYouAnyProblems property.
      *
-     * @return
-     *     possible object is
-     *     {@link C12AlcoholDoesDrinkingCauseYouAnyProblems }
-     *
+     * @return possible object is
+     * {@link C12AlcoholDoesDrinkingCauseYouAnyProblems }
      */
     public C12AlcoholDoesDrinkingCauseYouAnyProblems getC12AlcoholDoesDrinkingCauseYouAnyProblems() {
         return c12AlcoholDoesDrinkingCauseYouAnyProblems;
@@ -441,10 +393,8 @@ public class CQuestions {
     /**
      * Sets the value of the c12AlcoholDoesDrinkingCauseYouAnyProblems property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C12AlcoholDoesDrinkingCauseYouAnyProblems }
-     *
+     * @param value allowed object is
+     *              {@link C12AlcoholDoesDrinkingCauseYouAnyProblems }
      */
     public void setC12AlcoholDoesDrinkingCauseYouAnyProblems(C12AlcoholDoesDrinkingCauseYouAnyProblems value) {
         this.c12AlcoholDoesDrinkingCauseYouAnyProblems = value;
@@ -453,10 +403,8 @@ public class CQuestions {
     /**
      * Gets the value of the c13DrugsDoYouTakeAnyDrugsThatArenTPrescribed property.
      *
-     * @return
-     *     possible object is
-     *     {@link C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed }
-     *
+     * @return possible object is
+     * {@link C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed }
      */
     public C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed getC13DrugsDoYouTakeAnyDrugsThatArenTPrescribed() {
         return c13DrugsDoYouTakeAnyDrugsThatArenTPrescribed;
@@ -465,10 +413,8 @@ public class CQuestions {
     /**
      * Sets the value of the c13DrugsDoYouTakeAnyDrugsThatArenTPrescribed property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed }
-     *
+     * @param value allowed object is
+     *              {@link C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed }
      */
     public void setC13DrugsDoYouTakeAnyDrugsThatArenTPrescribed(C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed value) {
         this.c13DrugsDoYouTakeAnyDrugsThatArenTPrescribed = value;
@@ -477,10 +423,8 @@ public class CQuestions {
     /**
      * Gets the value of the cOtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling property.
      *
-     * @return
-     *     possible object is
-     *     {@link COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling }
-     *
+     * @return possible object is
+     * {@link COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling }
      */
     public COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling getCOtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling() {
         return cOtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling;
@@ -489,10 +433,8 @@ public class CQuestions {
     /**
      * Sets the value of the cOtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling }
-     *
+     * @param value allowed object is
+     *              {@link COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling }
      */
     public void setCOtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling(COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling value) {
         this.cOtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling = value;
@@ -501,10 +443,8 @@ public class CQuestions {
     /**
      * Gets the value of the c15CompanyAreYouHappyWithYourSocialLife property.
      *
-     * @return
-     *     possible object is
-     *     {@link C15CompanyAreYouHappyWithYourSocialLife }
-     *
+     * @return possible object is
+     * {@link C15CompanyAreYouHappyWithYourSocialLife }
      */
     public C15CompanyAreYouHappyWithYourSocialLife getC15CompanyAreYouHappyWithYourSocialLife() {
         return c15CompanyAreYouHappyWithYourSocialLife;
@@ -513,10 +453,8 @@ public class CQuestions {
     /**
      * Sets the value of the c15CompanyAreYouHappyWithYourSocialLife property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C15CompanyAreYouHappyWithYourSocialLife }
-     *
+     * @param value allowed object is
+     *              {@link C15CompanyAreYouHappyWithYourSocialLife }
      */
     public void setC15CompanyAreYouHappyWithYourSocialLife(C15CompanyAreYouHappyWithYourSocialLife value) {
         this.c15CompanyAreYouHappyWithYourSocialLife = value;
@@ -525,10 +463,8 @@ public class CQuestions {
     /**
      * Gets the value of the c16IntimateRelationshipsDoYouHaveAPartner property.
      *
-     * @return
-     *     possible object is
-     *     {@link C16IntimateRelationshipsDoYouHaveAPartner }
-     *
+     * @return possible object is
+     * {@link C16IntimateRelationshipsDoYouHaveAPartner }
      */
     public C16IntimateRelationshipsDoYouHaveAPartner getC16IntimateRelationshipsDoYouHaveAPartner() {
         return c16IntimateRelationshipsDoYouHaveAPartner;
@@ -537,10 +473,8 @@ public class CQuestions {
     /**
      * Sets the value of the c16IntimateRelationshipsDoYouHaveAPartner property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C16IntimateRelationshipsDoYouHaveAPartner }
-     *
+     * @param value allowed object is
+     *              {@link C16IntimateRelationshipsDoYouHaveAPartner }
      */
     public void setC16IntimateRelationshipsDoYouHaveAPartner(C16IntimateRelationshipsDoYouHaveAPartner value) {
         this.c16IntimateRelationshipsDoYouHaveAPartner = value;
@@ -549,10 +483,8 @@ public class CQuestions {
     /**
      * Gets the value of the c17SexualExpressionHowIsYouSexLife property.
      *
-     * @return
-     *     possible object is
-     *     {@link C17SexualExpressionHowIsYouSexLife }
-     *
+     * @return possible object is
+     * {@link C17SexualExpressionHowIsYouSexLife }
      */
     public C17SexualExpressionHowIsYouSexLife getC17SexualExpressionHowIsYouSexLife() {
         return c17SexualExpressionHowIsYouSexLife;
@@ -561,10 +493,8 @@ public class CQuestions {
     /**
      * Sets the value of the c17SexualExpressionHowIsYouSexLife property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C17SexualExpressionHowIsYouSexLife }
-     *
+     * @param value allowed object is
+     *              {@link C17SexualExpressionHowIsYouSexLife }
      */
     public void setC17SexualExpressionHowIsYouSexLife(C17SexualExpressionHowIsYouSexLife value) {
         this.c17SexualExpressionHowIsYouSexLife = value;
@@ -573,10 +503,8 @@ public class CQuestions {
     /**
      * Gets the value of the c18ChildCareDoYouHaveAnyChildrenUnder18 property.
      *
-     * @return
-     *     possible object is
-     *     {@link C18ChildCareDoYouHaveAnyChildrenUnder18 }
-     *
+     * @return possible object is
+     * {@link C18ChildCareDoYouHaveAnyChildrenUnder18 }
      */
     public C18ChildCareDoYouHaveAnyChildrenUnder18 getC18ChildCareDoYouHaveAnyChildrenUnder18() {
         return c18ChildCareDoYouHaveAnyChildrenUnder18;
@@ -585,10 +513,8 @@ public class CQuestions {
     /**
      * Sets the value of the c18ChildCareDoYouHaveAnyChildrenUnder18 property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C18ChildCareDoYouHaveAnyChildrenUnder18 }
-     *
+     * @param value allowed object is
+     *              {@link C18ChildCareDoYouHaveAnyChildrenUnder18 }
      */
     public void setC18ChildCareDoYouHaveAnyChildrenUnder18(C18ChildCareDoYouHaveAnyChildrenUnder18 value) {
         this.c18ChildCareDoYouHaveAnyChildrenUnder18 = value;
@@ -597,10 +523,8 @@ public class CQuestions {
     /**
      * Gets the value of the c19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder property.
      *
-     * @return
-     *     possible object is
-     *     {@link C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder }
-     *
+     * @return possible object is
+     * {@link C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder }
      */
     public C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder getC19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder() {
         return c19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder;
@@ -609,10 +533,8 @@ public class CQuestions {
     /**
      * Sets the value of the c19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder }
-     *
+     * @param value allowed object is
+     *              {@link C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder }
      */
     public void setC19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder(C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder value) {
         this.c19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder = value;
@@ -621,10 +543,8 @@ public class CQuestions {
     /**
      * Gets the value of the c20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish property.
      *
-     * @return
-     *     possible object is
-     *     {@link C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish }
-     *
+     * @return possible object is
+     * {@link C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish }
      */
     public C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish getC20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish() {
         return c20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish;
@@ -633,10 +553,8 @@ public class CQuestions {
     /**
      * Sets the value of the c20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish }
-     *
+     * @param value allowed object is
+     *              {@link C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish }
      */
     public void setC20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish(C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish value) {
         this.c20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish = value;
@@ -645,10 +563,8 @@ public class CQuestions {
     /**
      * Gets the value of the c21TelephoneDoYouKnowHowToUseATelephone property.
      *
-     * @return
-     *     possible object is
-     *     {@link C21TelephoneDoYouKnowHowToUseATelephone }
-     *
+     * @return possible object is
+     * {@link C21TelephoneDoYouKnowHowToUseATelephone }
      */
     public C21TelephoneDoYouKnowHowToUseATelephone getC21TelephoneDoYouKnowHowToUseATelephone() {
         return c21TelephoneDoYouKnowHowToUseATelephone;
@@ -657,10 +573,8 @@ public class CQuestions {
     /**
      * Sets the value of the c21TelephoneDoYouKnowHowToUseATelephone property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C21TelephoneDoYouKnowHowToUseATelephone }
-     *
+     * @param value allowed object is
+     *              {@link C21TelephoneDoYouKnowHowToUseATelephone }
      */
     public void setC21TelephoneDoYouKnowHowToUseATelephone(C21TelephoneDoYouKnowHowToUseATelephone value) {
         this.c21TelephoneDoYouKnowHowToUseATelephone = value;
@@ -669,10 +583,8 @@ public class CQuestions {
     /**
      * Gets the value of the c22TransportHowDoYouFindUsingTheBusStreetcarOrTrain property.
      *
-     * @return
-     *     possible object is
-     *     {@link C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain }
-     *
+     * @return possible object is
+     * {@link C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain }
      */
     public C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain getC22TransportHowDoYouFindUsingTheBusStreetcarOrTrain() {
         return c22TransportHowDoYouFindUsingTheBusStreetcarOrTrain;
@@ -681,10 +593,8 @@ public class CQuestions {
     /**
      * Sets the value of the c22TransportHowDoYouFindUsingTheBusStreetcarOrTrain property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain }
-     *
+     * @param value allowed object is
+     *              {@link C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain }
      */
     public void setC22TransportHowDoYouFindUsingTheBusStreetcarOrTrain(C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain value) {
         this.c22TransportHowDoYouFindUsingTheBusStreetcarOrTrain = value;
@@ -693,10 +603,8 @@ public class CQuestions {
     /**
      * Gets the value of the c23MoneyHowDoYouFindBudgetingYourMoney property.
      *
-     * @return
-     *     possible object is
-     *     {@link C23MoneyHowDoYouFindBudgetingYourMoney }
-     *
+     * @return possible object is
+     * {@link C23MoneyHowDoYouFindBudgetingYourMoney }
      */
     public C23MoneyHowDoYouFindBudgetingYourMoney getC23MoneyHowDoYouFindBudgetingYourMoney() {
         return c23MoneyHowDoYouFindBudgetingYourMoney;
@@ -705,10 +613,8 @@ public class CQuestions {
     /**
      * Sets the value of the c23MoneyHowDoYouFindBudgetingYourMoney property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C23MoneyHowDoYouFindBudgetingYourMoney }
-     *
+     * @param value allowed object is
+     *              {@link C23MoneyHowDoYouFindBudgetingYourMoney }
      */
     public void setC23MoneyHowDoYouFindBudgetingYourMoney(C23MoneyHowDoYouFindBudgetingYourMoney value) {
         this.c23MoneyHowDoYouFindBudgetingYourMoney = value;
@@ -717,10 +623,8 @@ public class CQuestions {
     /**
      * Gets the value of the c24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo property.
      *
-     * @return
-     *     possible object is
-     *     {@link C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo }
-     *
+     * @return possible object is
+     * {@link C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo }
      */
     public C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo getC24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo() {
         return c24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo;
@@ -729,10 +633,8 @@ public class CQuestions {
     /**
      * Sets the value of the c24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo }
-     *
+     * @param value allowed object is
+     *              {@link C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo }
      */
     public void setC24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo(C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo value) {
         this.c24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo = value;
@@ -741,10 +643,8 @@ public class CQuestions {
     /**
      * Gets the value of the cPleaseWriteAFewSentencesToAnswerTheFollowingQuestions property.
      *
-     * @return
-     *     possible object is
-     *     {@link CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions }
-     *
+     * @return possible object is
+     * {@link CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions }
      */
     public CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions getCPleaseWriteAFewSentencesToAnswerTheFollowingQuestions() {
         return cPleaseWriteAFewSentencesToAnswerTheFollowingQuestions;
@@ -753,10 +653,8 @@ public class CQuestions {
     /**
      * Sets the value of the cPleaseWriteAFewSentencesToAnswerTheFollowingQuestions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions }
-     *
+     * @param value allowed object is
+     *              {@link CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions }
      */
     public void setCPleaseWriteAFewSentencesToAnswerTheFollowingQuestions(CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions value) {
         this.cPleaseWriteAFewSentencesToAnswerTheFollowingQuestions = value;

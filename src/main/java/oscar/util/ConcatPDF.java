@@ -40,6 +40,7 @@ package oscar.util;
 
 /**
  * This class demonstrates copying a PDF file using iText.
+ *
  * @author Mark Thompson
  */
 

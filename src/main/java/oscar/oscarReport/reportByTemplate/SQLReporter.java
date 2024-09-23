@@ -41,12 +41,13 @@ import com.Ostermiller.util.CSVPrinter;
 
 
 /**
- *
  * @author rjonasz
  */
 public class SQLReporter implements Reporter {
 
-    /** Creates a new instance of SQLReporter */
+    /**
+     * Creates a new instance of SQLReporter
+     */
     public SQLReporter() {
     }
 

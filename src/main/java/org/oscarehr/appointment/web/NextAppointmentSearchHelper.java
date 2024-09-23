@@ -57,7 +57,7 @@ public class NextAppointmentSearchHelper {
 
     /**
      * Search against schedule for next appointment.
-     *
+     * <p>
      * This implementation searches day by day until searchBean.numberOfResults is realized or MAX_DAYS_TO_SEARCH is reached
      *
      * @param searchBean
@@ -133,7 +133,7 @@ public class NextAppointmentSearchHelper {
 
     /**
      * Search by provider and day.
-     *
+     * <p>
      * 1) load up schedule
      * 2) see what slots are available
      * 3) for each slot, check to see if it's already booked

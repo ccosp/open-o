@@ -741,6 +741,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Getter for property status.
+     *
      * @return Value of property status.
      */
     public java.lang.String getStatus() {
@@ -749,6 +750,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Setter for property status.
+     *
      * @param status New value of property status.
      */
     public void setStatus(java.lang.String status) {
@@ -757,6 +759,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Getter for property formNeeded.
+     *
      * @return Value of property formNeeded.
      */
     public java.lang.String getFormNeeded() {
@@ -765,6 +768,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Setter for property formNeeded.
+     *
      * @param formNeeded New value of property formNeeded.
      */
     public void setFormNeeded(java.lang.String formNeeded) {
@@ -773,6 +777,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Getter for property providerNo.
+     *
      * @return Value of property providerNo.
      */
     public java.lang.String getProviderNo() {
@@ -781,6 +786,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Setter for property providerNo.
+     *
      * @param providerNo New value of property providerNo.
      */
     public void setProviderNo(java.lang.String providerNo) {
@@ -789,6 +795,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Getter for property w_payeeno.
+     *
      * @return Value of property w_payeeno.
      */
     public java.lang.String getW_payeeno() {
@@ -797,6 +804,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Setter for property w_payeeno.
+     *
      * @param w_payeeno New value of property w_payeeno.
      */
     public void setW_payeeno(java.lang.String w_payeeno) {
@@ -807,6 +815,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Getter for property w_pracno.
+     *
      * @return Value of property w_pracno.
      */
     public java.lang.String getW_pracno() {
@@ -829,6 +838,7 @@ public class TeleplanCorrectionFormWCB
 
     /**
      * Setter for property w_pracno.
+     *
      * @param w_pracno New value of property w_pracno.
      */
     public void setW_pracno(java.lang.String w_pracno) {

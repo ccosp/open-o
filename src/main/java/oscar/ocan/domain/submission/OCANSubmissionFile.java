@@ -81,8 +81,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -119,8 +117,6 @@ public class OCANSubmissionFile {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link OCANSubmissionRecord }
-     *
-     *
      */
     public List<OCANSubmissionRecord> getOCANSubmissionRecord() {
         if (ocanSubmissionRecord == null) {
@@ -132,10 +128,8 @@ public class OCANSubmissionFile {
     /**
      * Gets the value of the version property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getVersion() {
         return version;
@@ -144,10 +138,8 @@ public class OCANSubmissionFile {
     /**
      * Sets the value of the version property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setVersion(String value) {
         this.version = value;
@@ -156,10 +148,8 @@ public class OCANSubmissionFile {
     /**
      * Gets the value of the id property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getID() {
         return id;
@@ -168,10 +158,8 @@ public class OCANSubmissionFile {
     /**
      * Sets the value of the id property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setID(String value) {
         this.id = value;
@@ -180,10 +168,8 @@ public class OCANSubmissionFile {
     /**
      * Gets the value of the timestamp property.
      *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getTimestamp() {
         return timestamp;
@@ -192,10 +178,8 @@ public class OCANSubmissionFile {
     /**
      * Sets the value of the timestamp property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setTimestamp(XMLGregorianCalendar value) {
         this.timestamp = value;

@@ -67,7 +67,6 @@ import oscar.oscarRx.data.RxPrescriptionData;
 import oscar.oscarRx.data.RxPrescriptionData.Prescription;
 
 /**
- *
  * @author apavel
  */
 public class DSDemographicAccess {

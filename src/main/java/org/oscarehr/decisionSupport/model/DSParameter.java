@@ -24,7 +24,6 @@
 package org.oscarehr.decisionSupport.model;
 
 /**
- *
  * @author rjonasz
  */
 public class DSParameter {

@@ -45,7 +45,6 @@ import oscar.log.LogAction;
 import oscar.log.LogConst;
 
 /**
- *
  * @author rjonasz
  */
 public class LoginAgreementAction extends DispatchAction {

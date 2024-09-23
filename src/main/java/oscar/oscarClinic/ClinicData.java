@@ -39,7 +39,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
- *
  * @author Oscar
  */
 public class ClinicData {
@@ -61,7 +60,9 @@ public class ClinicData {
 
 
      */
-    /** Creates a new instance of clinicData */
+    /**
+     * Creates a new instance of clinicData
+     */
 
     String clinic_no = null;
     String clinic_name = null;

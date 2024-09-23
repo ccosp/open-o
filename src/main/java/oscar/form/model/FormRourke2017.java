@@ -1919,6 +1919,7 @@ public class FormRourke2017 extends AbstractModel<Integer> implements Serializab
 
     /**
      * Sets the booleanValueMap using values taken from the provided Properties object
+     *
      * @param properties
      */
     public void createBooleanValueMapFromFormProperties(Properties properties) {

@@ -62,8 +62,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -105,10 +103,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cMarijuana property.
      *
-     * @return
-     *     possible object is
-     *     {@link CMarijuana }
-     *
+     * @return possible object is
+     * {@link CMarijuana }
      */
     public CMarijuana getCMarijuana() {
         return cMarijuana;
@@ -117,10 +113,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cMarijuana property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CMarijuana }
-     *
+     * @param value allowed object is
+     *              {@link CMarijuana }
      */
     public void setCMarijuana(CMarijuana value) {
         this.cMarijuana = value;
@@ -129,10 +123,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cCocaineCrack property.
      *
-     * @return
-     *     possible object is
-     *     {@link CCocaineCrack }
-     *
+     * @return possible object is
+     * {@link CCocaineCrack }
      */
     public CCocaineCrack getCCocaineCrack() {
         return cCocaineCrack;
@@ -141,10 +133,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cCocaineCrack property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CCocaineCrack }
-     *
+     * @param value allowed object is
+     *              {@link CCocaineCrack }
      */
     public void setCCocaineCrack(CCocaineCrack value) {
         this.cCocaineCrack = value;
@@ -153,10 +143,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cHallucinogensEGLSDPCP property.
      *
-     * @return
-     *     possible object is
-     *     {@link CHallucinogensEGLSDPCP }
-     *
+     * @return possible object is
+     * {@link CHallucinogensEGLSDPCP }
      */
     public CHallucinogensEGLSDPCP getCHallucinogensEGLSDPCP() {
         return cHallucinogensEGLSDPCP;
@@ -165,10 +153,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cHallucinogensEGLSDPCP property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CHallucinogensEGLSDPCP }
-     *
+     * @param value allowed object is
+     *              {@link CHallucinogensEGLSDPCP }
      */
     public void setCHallucinogensEGLSDPCP(CHallucinogensEGLSDPCP value) {
         this.cHallucinogensEGLSDPCP = value;
@@ -177,10 +163,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cStimulantsEGAmphetamines property.
      *
-     * @return
-     *     possible object is
-     *     {@link CStimulantsEGAmphetamines }
-     *
+     * @return possible object is
+     * {@link CStimulantsEGAmphetamines }
      */
     public CStimulantsEGAmphetamines getCStimulantsEGAmphetamines() {
         return cStimulantsEGAmphetamines;
@@ -189,10 +173,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cStimulantsEGAmphetamines property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CStimulantsEGAmphetamines }
-     *
+     * @param value allowed object is
+     *              {@link CStimulantsEGAmphetamines }
      */
     public void setCStimulantsEGAmphetamines(CStimulantsEGAmphetamines value) {
         this.cStimulantsEGAmphetamines = value;
@@ -201,10 +183,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cOpiatesEGHeroin property.
      *
-     * @return
-     *     possible object is
-     *     {@link COpiatesEGHeroin }
-     *
+     * @return possible object is
+     * {@link COpiatesEGHeroin }
      */
     public COpiatesEGHeroin getCOpiatesEGHeroin() {
         return cOpiatesEGHeroin;
@@ -213,10 +193,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cOpiatesEGHeroin property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link COpiatesEGHeroin }
-     *
+     * @param value allowed object is
+     *              {@link COpiatesEGHeroin }
      */
     public void setCOpiatesEGHeroin(COpiatesEGHeroin value) {
         this.cOpiatesEGHeroin = value;
@@ -225,10 +203,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cSedativesNotPrescribedOrNotTakenAsPrescribedEGValium property.
      *
-     * @return
-     *     possible object is
-     *     {@link CSedativesNotPrescribedOrNotTakenAsPrescribedEGValium }
-     *
+     * @return possible object is
+     * {@link CSedativesNotPrescribedOrNotTakenAsPrescribedEGValium }
      */
     public CSedativesNotPrescribedOrNotTakenAsPrescribedEGValium getCSedativesNotPrescribedOrNotTakenAsPrescribedEGValium() {
         return cSedativesNotPrescribedOrNotTakenAsPrescribedEGValium;
@@ -237,10 +213,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cSedativesNotPrescribedOrNotTakenAsPrescribedEGValium property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CSedativesNotPrescribedOrNotTakenAsPrescribedEGValium }
-     *
+     * @param value allowed object is
+     *              {@link CSedativesNotPrescribedOrNotTakenAsPrescribedEGValium }
      */
     public void setCSedativesNotPrescribedOrNotTakenAsPrescribedEGValium(CSedativesNotPrescribedOrNotTakenAsPrescribedEGValium value) {
         this.cSedativesNotPrescribedOrNotTakenAsPrescribedEGValium = value;
@@ -249,10 +223,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cOverTheCounter property.
      *
-     * @return
-     *     possible object is
-     *     {@link COverTheCounter }
-     *
+     * @return possible object is
+     * {@link COverTheCounter }
      */
     public COverTheCounter getCOverTheCounter() {
         return cOverTheCounter;
@@ -261,10 +233,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cOverTheCounter property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link COverTheCounter }
-     *
+     * @param value allowed object is
+     *              {@link COverTheCounter }
      */
     public void setCOverTheCounter(COverTheCounter value) {
         this.cOverTheCounter = value;
@@ -273,10 +243,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cSolvents property.
      *
-     * @return
-     *     possible object is
-     *     {@link CSolvents }
-     *
+     * @return possible object is
+     * {@link CSolvents }
      */
     public CSolvents getCSolvents() {
         return cSolvents;
@@ -285,10 +253,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cSolvents property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CSolvents }
-     *
+     * @param value allowed object is
+     *              {@link CSolvents }
      */
     public void setCSolvents(CSolvents value) {
         this.cSolvents = value;
@@ -297,10 +263,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cOther property.
      *
-     * @return
-     *     possible object is
-     *     {@link COther }
-     *
+     * @return possible object is
+     * {@link COther }
      */
     public COther getCOther() {
         return cOther;
@@ -309,10 +273,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cOther property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link COther }
-     *
+     * @param value allowed object is
+     *              {@link COther }
      */
     public void setCOther(COther value) {
         this.cOther = value;
@@ -321,10 +283,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Gets the value of the cHasTheSubstanceBeenInjected property.
      *
-     * @return
-     *     possible object is
-     *     {@link CHasTheSubstanceBeenInjected }
-     *
+     * @return possible object is
+     * {@link CHasTheSubstanceBeenInjected }
      */
     public CHasTheSubstanceBeenInjected getCHasTheSubstanceBeenInjected() {
         return cHasTheSubstanceBeenInjected;
@@ -333,10 +293,8 @@ public class CWhichOfTheFollowingDrugsHaveYouUsedCheckAllThatApply {
     /**
      * Sets the value of the cHasTheSubstanceBeenInjected property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CHasTheSubstanceBeenInjected }
-     *
+     * @param value allowed object is
+     *              {@link CHasTheSubstanceBeenInjected }
      */
     public void setCHasTheSubstanceBeenInjected(CHasTheSubstanceBeenInjected value) {
         this.cHasTheSubstanceBeenInjected = value;

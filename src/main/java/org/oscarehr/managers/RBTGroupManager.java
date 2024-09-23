@@ -46,10 +46,9 @@ public class RBTGroupManager {
 
     /**
      * Removes all templates in a given template group and deletes the group from the database.
-     * @param loggedInInfo
-     * 		User current login information and credentials
-     * @param name
-     * 		Group name to be deleted
+     *
+     * @param loggedInInfo User current login information and credentials
+     * @param name         Group name to be deleted
      */
     public void delTemplateGroup(LoggedInInfo loggedInInfo, String name) {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_admin", SecurityInfoManager.WRITE, null)) {
@@ -60,12 +59,10 @@ public class RBTGroupManager {
 
     /**
      * Adds a template to an existing template group by linking the template id to a group name and persists the relationship to the database.
-     * @param loggedInInfo
-     * 		User current login information and credentials
-     * @param groupName
-     * 		Name of the template group to add the template to
-     * @param tid
-     * 		Template id of the group to be added
+     *
+     * @param loggedInInfo User current login information and credentials
+     * @param groupName    Name of the template group to add the template to
+     * @param tid          Template id of the group to be added
      */
     public void addTemplateToGroup(LoggedInInfo loggedInInfo, String groupName, int tid) {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_admin", SecurityInfoManager.WRITE, null)) {
@@ -83,12 +80,10 @@ public class RBTGroupManager {
 
     /**
      * Removes a template from an existing template group relationship
-     * @param loggedInInfo
-     * 		User current login information and credentials
-     * @param groupName
-     * 		Name of the template group from which to delete the template
-     * @param tid
-     * 		Template id of the template to delete from the group
+     *
+     * @param loggedInInfo User current login information and credentials
+     * @param groupName    Name of the template group from which to delete the template
+     * @param tid          Template id of the template to delete from the group
      */
     public void remTemplateFromGroup(LoggedInInfo loggedInInfo, String groupName, int tid) {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_admin", SecurityInfoManager.WRITE, null)) {
@@ -100,8 +95,8 @@ public class RBTGroupManager {
 
     /**
      * Returns a list of template groups from the database
-     * @param loggedInInfo
-     * 		User current login information and credentials
+     *
+     * @param loggedInInfo User current login information and credentials
      */
     public List<String> getTemplateGroups(LoggedInInfo loggedInInfo) {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_admin", SecurityInfoManager.READ, null)) {
@@ -113,10 +108,9 @@ public class RBTGroupManager {
 
     /**
      * Returns a list of templates in a given template group
-     * @param loggedInInfo
-     * 		User current login information and credentials
-     * @param groupName
-     * 		Name of the group to retrieve
+     *
+     * @param loggedInInfo User current login information and credentials
+     * @param groupName    Name of the group to retrieve
      */
     public List<RBTGroup> getGroup(LoggedInInfo loggedInInfo, String groupName) {
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_admin", SecurityInfoManager.READ, null)) {

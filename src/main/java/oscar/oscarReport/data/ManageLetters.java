@@ -46,7 +46,6 @@ import org.apache.logging.log4j.Logger;
 import oscar.OscarDocumentCreator;
 
 /**
- *
  * @author jay
  */
 

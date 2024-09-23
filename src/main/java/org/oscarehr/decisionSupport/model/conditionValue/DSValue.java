@@ -41,7 +41,6 @@ import org.oscarehr.decisionSupport.model.DecisionSupportException;
 import org.oscarehr.util.MiscUtils;
 
 /**
- *
  * @author apavel
  */
 public abstract class DSValue {

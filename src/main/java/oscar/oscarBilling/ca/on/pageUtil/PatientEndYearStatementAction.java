@@ -53,7 +53,6 @@ import oscar.OscarAction;
 import oscar.OscarDocumentCreator;
 
 /**
- *
  * @author Eugene Katyukhin
  */
 public class PatientEndYearStatementAction extends OscarAction {

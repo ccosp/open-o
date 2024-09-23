@@ -39,6 +39,7 @@ public class WaitListService {
 
     /**
      * Lists out top matches for vacancy
+     *
      * @param q
      */
     public List<MatchBO> listTopMatches(TopMatchesQuery q) {
@@ -47,6 +48,7 @@ public class WaitListService {
 
     /**
      * Returns display details for vacancy
+     *
      * @param q
      * @return VacancyDisplayBO
      */
@@ -56,6 +58,7 @@ public class WaitListService {
 
     /**
      * Lists vacancies for specific agency program
+     *
      * @param p
      */
     public List<VacancyDisplayBO> listVacanciesForWaitListProgram(ProgramQuery p) {
@@ -68,6 +71,7 @@ public class WaitListService {
 
     /**
      * Lists vacancies for specific agency program
+     *
      * @param p
      */
     public List<VacancyDisplayBO> listVacanciesForAgencyProgram(ProgramQuery p) {
@@ -76,6 +80,7 @@ public class WaitListService {
 
     /**
      * Lists existing records of contact attempts in regards to vacancies
+     *
      * @param client
      */
     public List<ClientWLEntryBO> listActiveContactAttempts(ClientQuery client) {
@@ -84,6 +89,7 @@ public class WaitListService {
 
     /**
      * Record a contact attempt for a specific client and vacancy
+     *
      * @param contact
      */
     public void recordContactAttempt(MatchParam contact) {
@@ -103,6 +109,7 @@ public class WaitListService {
 
     /**
      * Record that contact was made for a specific client and vacancy
+     *
      * @param contact
      */
     public void recordClientContact(MatchParam contact) {
@@ -123,6 +130,7 @@ public class WaitListService {
 
     /**
      * Records that the match was forwarded to the partner agency
+     *
      * @param param
      */
     public void recordMatchWasForwarded(MatchParam param) {
@@ -132,6 +140,7 @@ public class WaitListService {
     /**
      * Record the outcome of a referral for a client and vacancy.
      * This will also close the vacancy, if the vacancy is not of status ONGOING.
+     *
      * @param outcome
      */
     public void recordReferralOutcome(ReferralOutcomeBO outcome) {

@@ -52,7 +52,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.log.LogAction;
 
 /**
- *
  * @author wrighd
  */
 public class DemographicMerged {

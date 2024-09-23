@@ -57,8 +57,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -85,10 +83,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Gets the value of the cWhatAreYourHopesForTheFuture property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCWhatAreYourHopesForTheFuture() {
         return cWhatAreYourHopesForTheFuture;
@@ -97,10 +93,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Sets the value of the cWhatAreYourHopesForTheFuture property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCWhatAreYourHopesForTheFuture(String value) {
         this.cWhatAreYourHopesForTheFuture = value;
@@ -109,10 +103,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Gets the value of the cWhatDoYouThinkYouNeedInOrderToGetThere property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCWhatDoYouThinkYouNeedInOrderToGetThere() {
         return cWhatDoYouThinkYouNeedInOrderToGetThere;
@@ -121,10 +113,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Sets the value of the cWhatDoYouThinkYouNeedInOrderToGetThere property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCWhatDoYouThinkYouNeedInOrderToGetThere(String value) {
         this.cWhatDoYouThinkYouNeedInOrderToGetThere = value;
@@ -133,10 +123,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Gets the value of the cHowDoYouViewYourMentalHealth property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCHowDoYouViewYourMentalHealth() {
         return cHowDoYouViewYourMentalHealth;
@@ -145,10 +133,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Sets the value of the cHowDoYouViewYourMentalHealth property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCHowDoYouViewYourMentalHealth(String value) {
         this.cHowDoYouViewYourMentalHealth = value;
@@ -157,10 +143,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Gets the value of the cIsSpiritualityAnImportantPartOfYourLife property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCIsSpiritualityAnImportantPartOfYourLife() {
         return cIsSpiritualityAnImportantPartOfYourLife;
@@ -169,10 +153,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Sets the value of the cIsSpiritualityAnImportantPartOfYourLife property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCIsSpiritualityAnImportantPartOfYourLife(String value) {
         this.cIsSpiritualityAnImportantPartOfYourLife = value;
@@ -181,10 +163,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Gets the value of the cIsCultureHeritageAnImportantPartOfYourLife property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCIsCultureHeritageAnImportantPartOfYourLife() {
         return cIsCultureHeritageAnImportantPartOfYourLife;
@@ -193,10 +173,8 @@ public class CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions {
     /**
      * Sets the value of the cIsCultureHeritageAnImportantPartOfYourLife property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCIsCultureHeritageAnImportantPartOfYourLife(String value) {
         this.cIsCultureHeritageAnImportantPartOfYourLife = value;

@@ -104,7 +104,7 @@ import oscar.oscarWaitingList.util.WLWaitingListUtil;
 
 
 /**
- * Defines a service contract for main operations on demographic. 
+ * Defines a service contract for main operations on demographic.
  */
 @Path("/demographics")
 @Component("demographicService")
@@ -193,12 +193,9 @@ public class DemographicService extends AbstractServiceImpl {
      * <p/>
      * In case limit or offset parameters are set to null or zero, the entire result set is returned.
      *
-     * @param offset
-     * 		First record in the entire result set to be returned
-     * @param limit
-     * 		Maximum total number of records that should be returned
-     * @return
-     *        Returns all demographics.
+     * @param offset First record in the entire result set to be returned
+     * @param limit  Maximum total number of records that should be returned
+     * @return Returns all demographics.
      */
     @GET
     public OscarSearchResponse<DemographicTo1> getAllDemographics(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
@@ -225,10 +222,8 @@ public class DemographicService extends AbstractServiceImpl {
     /**
      * Gets detailed demographic data.
      *
-     * @param id
-     * 		Id of the demographic to get data for
-     * @return
-     *        Returns data for the demographic provided
+     * @param id Id of the demographic to get data for
+     * @return Returns data for the demographic provided
      */
     @GET
     @Path("/{dataId}")
@@ -418,14 +413,11 @@ public class DemographicService extends AbstractServiceImpl {
     /**
      * Gets basic demographic data.
      *
-     * @param id
-     * 		Id of the demographic to get data for
-     * @param includes
-     * 		An array of strings that include additional information in the returned data
-     * 		Possible includes are:
-     * 			- contacts = includes the DemographicContacts in the results
-     * @return
-     *        Returns data for the demographic provided
+     * @param id       Id of the demographic to get data for
+     * @param includes An array of strings that include additional information in the returned data
+     *                 Possible includes are:
+     *                 - contacts = includes the DemographicContacts in the results
+     * @return Returns data for the demographic provided
      */
     @GET
     @Path("/basic/{dataId}")
@@ -547,10 +539,8 @@ public class DemographicService extends AbstractServiceImpl {
     /**
      * Saves demographic information.
      *
-     * @param data
-     * 		Detailed demographic data to be saved
-     * @return
-     *        Returns the saved demographic data
+     * @param data Detailed demographic data to be saved
+     * @return Returns the saved demographic data
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -564,10 +554,8 @@ public class DemographicService extends AbstractServiceImpl {
     /**
      * Updates demographic information.
      *
-     * @param data
-     * 		Detailed demographic data to be updated
-     * @return
-     *        Returns the updated demographic data
+     * @param data Detailed demographic data to be updated
+     * @return Returns the updated demographic data
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -601,10 +589,8 @@ public class DemographicService extends AbstractServiceImpl {
     /**
      * Deletes demographic information.
      *
-     * @param id
-     * 		Id of the demographic data to be deleted
-     * @return
-     *        Returns the deleted demographic data
+     * @param id Id of the demographic data to be deleted
+     * @return Returns the deleted demographic data
      */
     @DELETE
     @Path("/{dataId}")
@@ -621,13 +607,11 @@ public class DemographicService extends AbstractServiceImpl {
 
     /**
      * Search demographics - used by navigation of OSCAR webapp
-     *
+     * <p>
      * Currently supports LastName[,FirstName] and address searches.
      *
-     * @param id
-     * 		Id of the demographic to get data for
-     * @return
-     *        Returns data for the demographic provided
+     * @param id Id of the demographic to get data for
+     * @return Returns data for the demographic provided
      */
     @GET
     @Path("/quickSearch")

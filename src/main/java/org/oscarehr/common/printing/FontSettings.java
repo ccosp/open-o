@@ -55,8 +55,7 @@ public class FontSettings {
     /**
      * Creates the specified font encapsulated by this instance
      *
-     * @return
-     *        Returns new base font instance
+     * @return Returns new base font instance
      */
     public BaseFont createFont() {
         try {

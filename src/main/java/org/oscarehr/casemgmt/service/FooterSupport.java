@@ -44,13 +44,9 @@ public class FooterSupport extends PdfPageEventHelper {
     /**
      * Sets font info that this instance should use
      *
-     * @param fontName
-     * 		Name of the font
-     * @param encoding
-     * 		Text encoding
-     * @param isEmbedded
-     * 		Boolean flag indicating if font is embedded
-     *
+     * @param fontName   Name of the font
+     * @param encoding   Text encoding
+     * @param isEmbedded Boolean flag indicating if font is embedded
      * @see BaseFont
      */
     public void setFont(String fontName, String encoding, boolean isEmbedded) {
@@ -64,8 +60,7 @@ public class FooterSupport extends PdfPageEventHelper {
     /**
      * Gets offset of the text from bottom of the document.
      *
-     * @return
-     *        Returns the offset
+     * @return Returns the offset
      */
     public int getBaseOffset() {
         return baseOffset;

@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table immunizations
- *
  */
 public class Immunizations {
     /**
@@ -48,12 +47,12 @@ public class Immunizations {
     /**
      * Full constructor
      *
-     * @param id int
-     * @param demographicNo int
-     * @param providerNo String
+     * @param id             int
+     * @param demographicNo  int
+     * @param providerNo     String
      * @param _immunizations String
-     * @param saveDate String
-     * @param archived short
+     * @param saveDate       String
+     * @param archived       short
      */
     public Immunizations(int id, int demographicNo, String providerNo,
                          String _immunizations, String saveDate,
@@ -68,6 +67,7 @@ public class Immunizations {
 
     /**
      * Gets the id
+     *
      * @return int id
      */
     public int getId() {
@@ -76,6 +76,7 @@ public class Immunizations {
 
     /**
      * Gets the demographicNo
+     *
      * @return int demographicNo
      */
     public int getDemographicNo() {
@@ -84,6 +85,7 @@ public class Immunizations {
 
     /**
      * Gets the providerNo
+     *
      * @return String providerNo
      */
     public String getProviderNo() {
@@ -92,6 +94,7 @@ public class Immunizations {
 
     /**
      * Gets the _immunizations
+     *
      * @return String _immunizations
      */
     public String get_immunizations() {
@@ -100,6 +103,7 @@ public class Immunizations {
 
     /**
      * Gets the saveDate
+     *
      * @return String saveDate
      */
     public String getSaveDate() {
@@ -108,6 +112,7 @@ public class Immunizations {
 
     /**
      * Gets the archived
+     *
      * @return short archived
      */
     public short getArchived() {
@@ -116,6 +121,7 @@ public class Immunizations {
 
     /**
      * Sets the id
+     *
      * @param id int
      */
     public void setId(int id) {
@@ -124,6 +130,7 @@ public class Immunizations {
 
     /**
      * Sets the demographicNo
+     *
      * @param demographicNo int
      */
     public void setDemographicNo(int demographicNo) {
@@ -132,6 +139,7 @@ public class Immunizations {
 
     /**
      * Sets the providerNo
+     *
      * @param providerNo String
      */
     public void setProviderNo(String providerNo) {
@@ -140,6 +148,7 @@ public class Immunizations {
 
     /**
      * Sets the _immunizations
+     *
      * @param _immunizations String
      */
     public void set_immunizations(String _immunizations) {
@@ -148,6 +157,7 @@ public class Immunizations {
 
     /**
      * Sets the saveDate
+     *
      * @param saveDate String
      */
     public void setSaveDate(String saveDate) {
@@ -156,6 +166,7 @@ public class Immunizations {
 
     /**
      * Sets the archived
+     *
      * @param archived short
      */
     public void setArchived(short archived) {

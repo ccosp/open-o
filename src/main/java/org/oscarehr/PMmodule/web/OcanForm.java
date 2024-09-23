@@ -228,7 +228,7 @@ public class OcanForm {
 
     /**
      * input is ""/M/F/T/O
-     *
+     * <p>
      * returns M/F/OTH/UNK/CDA
      */
     public static String convertGender(String oscarGender) {

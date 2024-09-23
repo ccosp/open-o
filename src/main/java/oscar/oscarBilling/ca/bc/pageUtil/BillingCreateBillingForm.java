@@ -69,6 +69,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_provider() {
@@ -76,7 +77,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_provider(String xml_provider) {
         this.xml_provider = xml_provider;
@@ -84,6 +85,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_location() {
@@ -91,7 +93,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_location(String xml_location) {
         this.xml_location = xml_location;
@@ -99,6 +101,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_billtype() {
@@ -107,7 +110,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_billtype(String xml_billtype) {
         _log.debug(this.hashCode());
@@ -116,6 +119,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_appointment_date() {
@@ -123,7 +127,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_appointment_date(String xml_appointment_date) {
         this.xml_appointment_date = xml_appointment_date;
@@ -131,6 +135,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_visittype() {
@@ -138,7 +143,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_visittype(String xml_visittype) {
         this.xml_visittype = xml_visittype;
@@ -146,6 +151,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_vdate() {
@@ -153,7 +159,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_vdate(String xml_vdate) {
         this.xml_vdate = xml_vdate;
@@ -161,6 +167,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_refer1() {
@@ -168,7 +175,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_refer1(String xml_refer1) {
         this.xml_refer1 = xml_refer1;
@@ -176,6 +183,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_refer2() {
@@ -183,7 +191,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_refer2(String xml_refer2) {
         this.xml_refer2 = xml_refer2;
@@ -191,6 +199,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getRefertype1() {
@@ -198,7 +207,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setRefertype1(String refertype1) {
         this.refertype1 = refertype1;
@@ -206,6 +215,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getRefertype2() {
@@ -213,7 +223,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setRefertype2(String refertype2) {
         this.refertype2 = refertype2;
@@ -221,6 +231,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_other1() {
@@ -228,7 +239,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_other1(String xml_other1) {
         this.xml_other1 = xml_other1;
@@ -236,6 +247,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_other2() {
@@ -243,7 +255,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_other2(String xml_other2) {
         this.xml_other2 = xml_other2;
@@ -251,6 +263,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_other3() {
@@ -258,7 +271,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_other3(String xml_other3) {
         this.xml_other3 = xml_other3;
@@ -266,6 +279,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_other1_unit() {
@@ -273,7 +287,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_other1_unit(String xml_other1_unit) {
         this.xml_other1_unit = xml_other1_unit;
@@ -281,6 +295,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_other2_unit() {
@@ -288,7 +303,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_other2_unit(String xml_other2_unit) {
         this.xml_other2_unit = xml_other2_unit;
@@ -296,6 +311,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_other3_unit() {
@@ -303,7 +319,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_other3_unit(String xml_other3_unit) {
         this.xml_other3_unit = xml_other3_unit;
@@ -311,6 +327,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_diagnostic_detail1() {
@@ -318,7 +335,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_diagnostic_detail1(String xml_diagnostic_detail1) {
         this.xml_diagnostic_detail1 = xml_diagnostic_detail1;
@@ -326,6 +343,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_diagnostic_detail2() {
@@ -333,7 +351,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_diagnostic_detail2(String xml_diagnostic_detail2) {
         this.xml_diagnostic_detail2 = xml_diagnostic_detail2;
@@ -341,6 +359,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The get method for the message String
+     *
      * @return String, this is the text of the message
      */
     public String getXml_diagnostic_detail3() {
@@ -348,7 +367,7 @@ public final class BillingCreateBillingForm extends ActionForm {
     }
 
     /**
-     *The set method for the message String
+     * The set method for the message String
      */
     public void setXml_diagnostic_detail3(String xml_diagnostic_detail3) {
         this.xml_diagnostic_detail3 = xml_diagnostic_detail3;
@@ -356,6 +375,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * An Array of Strings thats contains provider numbers
+     *
      * @return String[], the provider numbers that this message will be set to
      */
     public String[] getService() {
@@ -367,6 +387,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * The set method for an Array of Strings that contains services
+     *
      * @param service
      */
     public void setService(String[] service) {
@@ -375,6 +396,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Used to reset everything to a null value
+     *
      * @param mapping
      * @param request
      */
@@ -388,6 +410,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property xml_encounter.
+     *
      * @return Value of property xml_encounter.
      */
     public java.lang.String getXml_encounter() {
@@ -396,6 +419,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property xml_encounter.
+     *
      * @param xml_encounter New value of property xml_encounter.
      */
     public void setXml_encounter(java.lang.String xml_encounter) {
@@ -404,6 +428,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property notes.
+     *
      * @return Value of property notes.
      */
     public java.lang.String getNotes() {
@@ -412,6 +437,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property notes.
+     *
      * @param notes New value of property notes.
      */
     public void setNotes(java.lang.String notes) {
@@ -420,6 +446,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property icbc_claim_no.
+     *
      * @return Value of property icbc_claim_no.
      */
     public java.lang.String getIcbc_claim_no() {
@@ -428,6 +455,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property icbc_claim_no.
+     *
      * @param icbc_claim_no New value of property icbc_claim_no.
      */
     public void setIcbc_claim_no(java.lang.String icbc_claim_no) {
@@ -436,6 +464,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property correspondenceCode.
+     *
      * @return Value of property correspondenceCode.
      */
     public java.lang.String getCorrespondenceCode() {
@@ -444,6 +473,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property correspondenceCode.
+     *
      * @param correspondenceCode New value of property correspondenceCode.
      */
     public void setCorrespondenceCode(java.lang.String correspondenceCode) {
@@ -452,6 +482,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property dependent.
+     *
      * @return Value of property dependent.
      */
     public java.lang.String getDependent() {
@@ -460,6 +491,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property dependent.
+     *
      * @param dependent New value of property dependent.
      */
     public void setDependent(java.lang.String dependent) {
@@ -468,6 +500,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property afterHours.
+     *
      * @return Value of property afterHours.
      */
     public java.lang.String getAfterHours() {
@@ -476,6 +509,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property afterHours.
+     *
      * @param afterHours New value of property afterHours.
      */
     public void setAfterHours(java.lang.String afterHours) {
@@ -484,6 +518,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property timeCall.
+     *
      * @return Value of property timeCall.
      */
     public java.lang.String getTimeCall() {
@@ -492,6 +527,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property timeCall.
+     *
      * @param timeCall New value of property timeCall.
      */
     public void setTimeCall(java.lang.String timeCall) {
@@ -500,6 +536,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property submissionCode.
+     *
      * @return Value of property submissionCode.
      */
     public java.lang.String getSubmissionCode() {
@@ -508,6 +545,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property submissionCode.
+     *
      * @param submissionCode New value of property submissionCode.
      */
     public void setSubmissionCode(java.lang.String submissionCode) {
@@ -516,6 +554,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property service_to_date.
+     *
      * @return Value of property service_to_date.
      */
     public java.lang.String getService_to_date() {
@@ -524,6 +563,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property service_to_date.
+     *
      * @param service_to_date New value of property service_to_date.
      */
     public void setService_to_date(java.lang.String service_to_date) {
@@ -532,6 +572,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property shortClaimNote.
+     *
      * @return Value of property shortClaimNote.
      */
     public java.lang.String getShortClaimNote() {
@@ -540,6 +581,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property shortClaimNote.
+     *
      * @param shortClaimNote New value of property shortClaimNote.
      */
     public void setShortClaimNote(java.lang.String shortClaimNote) {
@@ -548,6 +590,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property messageNotes.
+     *
      * @return Value of property messageNotes.
      */
     public java.lang.String getMessageNotes() {
@@ -556,6 +599,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property messageNotes.
+     *
      * @param messageNotes New value of property messageNotes.
      */
     public void setMessageNotes(java.lang.String messageNotes) {
@@ -564,6 +608,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property mva_claim_code.
+     *
      * @return Value of property mva_claim_code.
      */
     public java.lang.String getMva_claim_code() {
@@ -572,6 +617,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property mva_claim_code.
+     *
      * @param mva_claim_code New value of property mva_claim_code.
      */
     public void setMva_claim_code(java.lang.String mva_claim_code) {
@@ -580,6 +626,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property facilityNum.
+     *
      * @return Value of property facilityNum.
      */
     public java.lang.String getFacilityNum() {
@@ -588,6 +635,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property facilityNum.
+     *
      * @param facilityNum New value of property facilityNum.
      */
     public void setFacilityNum(java.lang.String facilityNum) {
@@ -596,6 +644,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Getter for property facilitySubNum.
+     *
      * @return Value of property facilitySubNum.
      */
     public java.lang.String getFacilitySubNum() {
@@ -628,6 +677,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Setter for property facilitySubNum.
+     *
      * @param facilitySubNum New value of property facilitySubNum.
      */
     public void setFacilitySubNum(java.lang.String facilitySubNum) {
@@ -660,6 +710,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
     /**
      * Set the form parameters with the values of the ServiceCodesAssociation
+     *
      * @param assoc ServiceCodeAssociation
      */
     public void setServiceCodeAssociation(ServiceCodeAssociation assoc) {

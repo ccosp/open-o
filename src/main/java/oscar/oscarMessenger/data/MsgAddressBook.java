@@ -42,6 +42,7 @@ import org.w3c.dom.NodeList;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * <p>Company: </p>
+ *
  * @author unascribed
  * @version 1.0
  */
@@ -68,6 +69,7 @@ public class MsgAddressBook {
     /**
      * This function gets the xml document from the database.
      * It also sets the current location data member string for this location.
+     *
      * @return String xml string for this location
      */
     public String myAddressBook() {
@@ -88,6 +90,7 @@ public class MsgAddressBook {
 
     /**
      * This funtion create 3 vectors with the xml address books, location ids and descriptions of the ids
+     *
      * @return Vector the address book vector is returned.
      */
     public java.util.Vector remoteAddressBooks() {
@@ -109,7 +112,6 @@ public class MsgAddressBook {
 
 
     /**
-     *
      * @param node
      * @param out
      * @param depth

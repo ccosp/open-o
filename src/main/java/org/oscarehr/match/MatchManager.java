@@ -32,7 +32,6 @@ import org.oscarehr.util.SpringUtils;
 
 /**
  * @author AnooshTech
- *
  */
 public class MatchManager implements IMatchManager {
 

@@ -59,8 +59,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -73,10 +71,8 @@ public class ClientID {
     /**
      * Gets the value of the orgClientID property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getOrgClientID() {
         return orgClientID;
@@ -85,10 +81,8 @@ public class ClientID {
     /**
      * Sets the value of the orgClientID property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setOrgClientID(String value) {
         this.orgClientID = value;

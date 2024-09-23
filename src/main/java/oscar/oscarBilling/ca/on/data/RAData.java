@@ -37,12 +37,13 @@ import org.oscarehr.util.SpringUtils;
 import oscar.util.ConversionUtils;
 
 /**
- *
  * @author jay
  */
 public class RAData {
 
-    /** Creates a new instance of RAData */
+    /**
+     * Creates a new instance of RAData
+     */
     public RAData() {
     }
 

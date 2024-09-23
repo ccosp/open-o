@@ -26,7 +26,6 @@
 package oscar.oscarRx.util;
 
 /**
- *
  * @author jaygallagher
  */
 public class LimitedUseCode {

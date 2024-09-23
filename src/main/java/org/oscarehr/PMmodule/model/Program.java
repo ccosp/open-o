@@ -282,8 +282,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: numOfMembers
      *
-     * @param numOfMembers
-     *            the numOfMembers value
+     * @param numOfMembers the numOfMembers value
      */
     public void setNumOfMembers(Integer numOfMembers) {
         this.numOfMembers = numOfMembers;
@@ -299,8 +298,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: queueSize
      *
-     * @param queueSize
-     *            the queueSize value
+     * @param queueSize the queueSize value
      */
     public void setQueueSize(Integer queueSize) {
         this.queueSize = queueSize;
@@ -324,8 +322,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: type
      *
-     * @param type
-     *            the type value
+     * @param type the type value
      */
     public void setType(String type) {
         this.type = type;
@@ -349,8 +346,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: address
      *
-     * @param address
-     *            the address value
+     * @param address the address value
      */
     public void setAddress(String address) {
         this.address = address;
@@ -366,8 +362,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: phone
      *
-     * @param phone
-     *            the phone value
+     * @param phone the phone value
      */
     public void setPhone(String phone) {
         this.phone = phone;
@@ -383,8 +378,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: fax
      *
-     * @param fax
-     *            the fax value
+     * @param fax the fax value
      */
     public void setFax(String fax) {
         this.fax = fax;
@@ -400,8 +394,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: url
      *
-     * @param url
-     *            the url value
+     * @param url the url value
      */
     public void setUrl(String url) {
         this.url = url;
@@ -417,8 +410,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: email
      *
-     * @param email
-     *            the email value
+     * @param email the email value
      */
     public void setEmail(String email) {
         this.email = email;
@@ -442,8 +434,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: location
      *
-     * @param location
-     *            the location value
+     * @param location the location value
      */
     public void setLocation(String location) {
         this.location = location;
@@ -463,8 +454,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: name
      *
-     * @param name
-     *            the name value
+     * @param name the name value
      */
     public void setName(String name) {
         this.name = name;
@@ -504,8 +494,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: hic
      *
-     * @param hic
-     *            the hic value
+     * @param hic the hic value
      */
     public void setHic(boolean hic) {
         this.hic = hic;
@@ -518,8 +507,7 @@ public class Program implements Serializable {
     /**
      * Set the value related to the column: program_status
      *
-     * @param programStatus
-     *            the program_status value
+     * @param programStatus the program_status value
      */
     public void setProgramStatus(String programStatus) {
         this.programStatus = programStatus;

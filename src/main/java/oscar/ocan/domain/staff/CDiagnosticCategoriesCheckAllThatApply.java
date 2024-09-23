@@ -68,8 +68,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -129,10 +127,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cAdjustmentDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCAdjustmentDisorders() {
         return cAdjustmentDisorders;
@@ -141,10 +137,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cAdjustmentDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCAdjustmentDisorders(String value) {
         this.cAdjustmentDisorders = value;
@@ -153,10 +147,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cAnxietyDisorder property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCAnxietyDisorder() {
         return cAnxietyDisorder;
@@ -165,10 +157,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cAnxietyDisorder property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCAnxietyDisorder(String value) {
         this.cAnxietyDisorder = value;
@@ -177,10 +167,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cDeliriumDementiaAndAmnesticAndCognitiveDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCDeliriumDementiaAndAmnesticAndCognitiveDisorders() {
         return cDeliriumDementiaAndAmnesticAndCognitiveDisorders;
@@ -189,10 +177,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cDeliriumDementiaAndAmnesticAndCognitiveDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCDeliriumDementiaAndAmnesticAndCognitiveDisorders(String value) {
         this.cDeliriumDementiaAndAmnesticAndCognitiveDisorders = value;
@@ -201,10 +187,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cDisorderOfChildhoodAdolescence property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCDisorderOfChildhoodAdolescence() {
         return cDisorderOfChildhoodAdolescence;
@@ -213,10 +197,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cDisorderOfChildhoodAdolescence property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCDisorderOfChildhoodAdolescence(String value) {
         this.cDisorderOfChildhoodAdolescence = value;
@@ -225,10 +207,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cDissociativeDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCDissociativeDisorders() {
         return cDissociativeDisorders;
@@ -237,10 +217,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cDissociativeDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCDissociativeDisorders(String value) {
         this.cDissociativeDisorders = value;
@@ -249,10 +227,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cEatingDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCEatingDisorders() {
         return cEatingDisorders;
@@ -261,10 +237,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cEatingDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCEatingDisorders(String value) {
         this.cEatingDisorders = value;
@@ -273,10 +247,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cFactitiousDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCFactitiousDisorders() {
         return cFactitiousDisorders;
@@ -285,10 +257,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cFactitiousDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCFactitiousDisorders(String value) {
         this.cFactitiousDisorders = value;
@@ -297,10 +267,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cImpulseControlDisordersNotElsewhereClassified property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCImpulseControlDisordersNotElsewhereClassified() {
         return cImpulseControlDisordersNotElsewhereClassified;
@@ -309,10 +277,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cImpulseControlDisordersNotElsewhereClassified property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCImpulseControlDisordersNotElsewhereClassified(String value) {
         this.cImpulseControlDisordersNotElsewhereClassified = value;
@@ -321,10 +287,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cMentalDisordersDueToGeneralMedicalConditions property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCMentalDisordersDueToGeneralMedicalConditions() {
         return cMentalDisordersDueToGeneralMedicalConditions;
@@ -333,10 +297,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cMentalDisordersDueToGeneralMedicalConditions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCMentalDisordersDueToGeneralMedicalConditions(String value) {
         this.cMentalDisordersDueToGeneralMedicalConditions = value;
@@ -345,10 +307,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cMoodDisorder property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCMoodDisorder() {
         return cMoodDisorder;
@@ -357,10 +317,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cMoodDisorder property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCMoodDisorder(String value) {
         this.cMoodDisorder = value;
@@ -369,10 +327,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cPersonalityDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCPersonalityDisorders() {
         return cPersonalityDisorders;
@@ -381,10 +337,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cPersonalityDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCPersonalityDisorders(String value) {
         this.cPersonalityDisorders = value;
@@ -393,10 +347,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cSchizopherniaAndOtherPsychoticDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSchizopherniaAndOtherPsychoticDisorders() {
         return cSchizopherniaAndOtherPsychoticDisorders;
@@ -405,10 +357,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cSchizopherniaAndOtherPsychoticDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSchizopherniaAndOtherPsychoticDisorders(String value) {
         this.cSchizopherniaAndOtherPsychoticDisorders = value;
@@ -417,10 +367,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cSexualAndGenderIdentityDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSexualAndGenderIdentityDisorders() {
         return cSexualAndGenderIdentityDisorders;
@@ -429,10 +377,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cSexualAndGenderIdentityDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSexualAndGenderIdentityDisorders(String value) {
         this.cSexualAndGenderIdentityDisorders = value;
@@ -441,10 +387,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cSleepDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSleepDisorders() {
         return cSleepDisorders;
@@ -453,10 +397,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cSleepDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSleepDisorders(String value) {
         this.cSleepDisorders = value;
@@ -465,10 +407,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cSomatoformDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSomatoformDisorders() {
         return cSomatoformDisorders;
@@ -477,10 +417,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cSomatoformDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSomatoformDisorders(String value) {
         this.cSomatoformDisorders = value;
@@ -489,10 +427,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Gets the value of the cSubstanceRelatedDisorders property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSubstanceRelatedDisorders() {
         return cSubstanceRelatedDisorders;
@@ -501,10 +437,8 @@ public class CDiagnosticCategoriesCheckAllThatApply {
     /**
      * Sets the value of the cSubstanceRelatedDisorders property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSubstanceRelatedDisorders(String value) {
         this.cSubstanceRelatedDisorders = value;

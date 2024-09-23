@@ -44,13 +44,14 @@ import oscar.OscarProperties;
 import oscar.oscarLab.ca.bc.PathNet.HL7.Message;
 
 /**
- *
  * @author root
  */
 public class PathNetController {
     private static Logger logger = MiscUtils.getLogger();
 
-    /** Creates a new instance of PathNetController */
+    /**
+     * Creates a new instance of PathNetController
+     */
     public PathNetController() {
     }
 

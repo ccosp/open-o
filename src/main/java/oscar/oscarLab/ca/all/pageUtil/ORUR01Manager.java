@@ -14,7 +14,6 @@ package oscar.oscarLab.ca.all.pageUtil;
 
 /**
  * @author dritan
- *
  */
 public class ORUR01Manager {
 
@@ -45,8 +44,7 @@ public class ORUR01Manager {
     /**
      * Removes the dots between the version number and returns the pure integer representation of the version
      *
-     * @param version
-     *            the string representation of the lab version, usually 2.5
+     * @param version the string representation of the lab version, usually 2.5
      * @return the integer representation of the version, without the decimal
      */
     public static int getVersion(String version) {

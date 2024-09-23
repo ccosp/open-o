@@ -48,7 +48,6 @@ import java.util.Date;
 import org.oscarehr.common.model.Provider;
 
 /**
- *
  * @author mweston4
  */
 @Repository

@@ -50,7 +50,6 @@ import oscar.oscarPrevention.PreventionData;
 
 
 /**
- *
  * @author rjonasz
  * @Deprecated use oscarehr/managers/PreventionManager
  */

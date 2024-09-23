@@ -61,8 +61,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -101,10 +99,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cNoFormalSchooling property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCNoFormalSchooling() {
         return cNoFormalSchooling;
@@ -113,10 +109,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cNoFormalSchooling property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCNoFormalSchooling(String value) {
         this.cNoFormalSchooling = value;
@@ -125,10 +119,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cSomeElementaryJuniorHighSchool property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSomeElementaryJuniorHighSchool() {
         return cSomeElementaryJuniorHighSchool;
@@ -137,10 +129,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cSomeElementaryJuniorHighSchool property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSomeElementaryJuniorHighSchool(String value) {
         this.cSomeElementaryJuniorHighSchool = value;
@@ -149,10 +139,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cElementaryJuniorHighSchool property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCElementaryJuniorHighSchool() {
         return cElementaryJuniorHighSchool;
@@ -161,10 +149,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cElementaryJuniorHighSchool property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCElementaryJuniorHighSchool(String value) {
         this.cElementaryJuniorHighSchool = value;
@@ -173,10 +159,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cSomeSecondaryHighSchool property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSomeSecondaryHighSchool() {
         return cSomeSecondaryHighSchool;
@@ -185,10 +169,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cSomeSecondaryHighSchool property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSomeSecondaryHighSchool(String value) {
         this.cSomeSecondaryHighSchool = value;
@@ -197,10 +179,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cSecondaryHighSchool property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSecondaryHighSchool() {
         return cSecondaryHighSchool;
@@ -209,10 +189,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cSecondaryHighSchool property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSecondaryHighSchool(String value) {
         this.cSecondaryHighSchool = value;
@@ -221,10 +199,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cSomeCollegeUniversity property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSomeCollegeUniversity() {
         return cSomeCollegeUniversity;
@@ -233,10 +209,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cSomeCollegeUniversity property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSomeCollegeUniversity(String value) {
         this.cSomeCollegeUniversity = value;
@@ -245,10 +219,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cCollegeUniversity property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCCollegeUniversity() {
         return cCollegeUniversity;
@@ -257,10 +229,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cCollegeUniversity property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCCollegeUniversity(String value) {
         this.cCollegeUniversity = value;
@@ -269,10 +239,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cUnknown property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCUnknown() {
         return cUnknown;
@@ -281,10 +249,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cUnknown property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCUnknown(String value) {
         this.cUnknown = value;
@@ -293,10 +259,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Gets the value of the cClientDeclinedToAnswer property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCClientDeclinedToAnswer() {
         return cClientDeclinedToAnswer;
@@ -305,10 +269,8 @@ public class CWhatIsYourHighestLevelOfEducationSelectOne {
     /**
      * Sets the value of the cClientDeclinedToAnswer property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCClientDeclinedToAnswer(String value) {
         this.cClientDeclinedToAnswer = value;

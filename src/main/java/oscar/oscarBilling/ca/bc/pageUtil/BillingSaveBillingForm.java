@@ -36,6 +36,7 @@ public final class BillingSaveBillingForm extends ActionForm {
 
     /**
      * Used to reset everything to a null value
+     *
      * @param mapping
      * @param request
      */
@@ -48,6 +49,7 @@ public final class BillingSaveBillingForm extends ActionForm {
 
     /**
      * Getter for property submit.
+     *
      * @return Value of property submit.
      */
     public java.lang.String getSubmit() {
@@ -56,6 +58,7 @@ public final class BillingSaveBillingForm extends ActionForm {
 
     /**
      * Setter for property submit.
+     *
      * @param submit New value of property submit.
      */
     public void setSubmit(java.lang.String submit) {

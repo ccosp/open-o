@@ -33,7 +33,6 @@ import org.oscarehr.common.model.DemographicQueryFavourite;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author McMaster
  */
 @SuppressWarnings("rawtypes")
@@ -46,8 +45,10 @@ public class RptSearchData {
     private DemographicQueryFavouritesDao demographicQueryFavouritesDao = SpringUtils.getBean(DemographicQueryFavouritesDao.class);
 
     /**
-     *This function runs through the demographic table and retrieves all the roster types currently being used
-     * @return ArrayList  of roster status types in the demographic table*/
+     * This function runs through the demographic table and retrieves all the roster types currently being used
+     *
+     * @return ArrayList  of roster status types in the demographic table
+     */
 
     public ArrayList<String> getRosterTypes() {
         ArrayList<String> retval = new ArrayList<String>();

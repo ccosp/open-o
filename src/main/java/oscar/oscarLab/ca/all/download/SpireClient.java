@@ -39,7 +39,6 @@ import com.jcraft.jsch.Session;
 
 /**
  *
- *
  */
 public class SpireClient extends TimerTask {
     private ChannelSftp spireSFTPChannel;

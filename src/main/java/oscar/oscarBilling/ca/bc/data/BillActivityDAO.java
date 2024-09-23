@@ -39,8 +39,6 @@ import oscar.entities.Billactivity;
 import oscar.util.ConversionUtils;
 
 /**
- *
- *
  * @author jay
  */
 public class BillActivityDAO {

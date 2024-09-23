@@ -29,7 +29,6 @@ import org.apache.struts.action.ActionForm;
 import org.oscarehr.util.MiscUtils;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class DemographicSetEditForm extends ActionForm {
@@ -41,6 +40,7 @@ public class DemographicSetEditForm extends ActionForm {
 
     /**
      * Getter for property patientSet.
+     *
      * @return Value of property patientSet.
      */
     public java.lang.String getPatientSet() {
@@ -49,6 +49,7 @@ public class DemographicSetEditForm extends ActionForm {
 
     /**
      * Setter for property patientSet.
+     *
      * @param patientSet New value of property patientSet.
      */
     public void setPatientSet(java.lang.String patientSet) {

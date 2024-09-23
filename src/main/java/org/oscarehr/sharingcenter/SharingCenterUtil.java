@@ -1105,10 +1105,10 @@ public class SharingCenterUtil {
      * Creates a document from an OntarioMD's CDS Export document.
      *
      * @param demographicId The demographic id.
-     * @param authorId The author id.
+     * @param authorId      The author id.
      * @param authenticator The authenticator.
-     * @param domain The domain to send the document to.
-     * @param documents A list of documents.
+     * @param domain        The domain to send the document to.
+     * @param documents     A list of documents.
      * @return Returns a list of document meta data.
      */
     public static List<DocumentMetaData> createDocumentsFromCDSExport(int demographicId, int authorId, int authenticator, AffinityDomainDataObject domain, String[] documents, String[] policies) {
@@ -1195,10 +1195,10 @@ public class SharingCenterUtil {
      * Creates a document from an xPHR export.
      *
      * @param demographicId The demographic id.
-     * @param authorId The author id.
+     * @param authorId      The author id.
      * @param authenticator The authenticator.
-     * @param domain The domain to send the document to.
-     * @param documents A list of documents.
+     * @param domain        The domain to send the document to.
+     * @param documents     A list of documents.
      * @return Returns a list of document meta data.
      */
     public static List<DocumentMetaData> createDocumentsFromXPHR(int demographicId, int authorId, int authenticator, AffinityDomainDataObject domain, String[] documents, String[] policies) {
@@ -1304,10 +1304,10 @@ public class SharingCenterUtil {
      * Create a document from a NEXJ export.
      *
      * @param demographicId The demographic id.
-     * @param authorId The author id.
+     * @param authorId      The author id.
      * @param authenticator The authenticator.
-     * @param domain The domain to send the document to.
-     * @param documents A list of documents.
+     * @param domain        The domain to send the document to.
+     * @param documents     A list of documents.
      * @return Returns a list of document meta data.
      */
     public static List<DocumentMetaData> createDocumentsFromNEXJ(int demographicId, int authorId, int authenticator, AffinityDomainDataObject domain, String[] documents, String[] policies) {

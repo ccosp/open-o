@@ -84,7 +84,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
 
     /**
      * Find a patient in the database.
-     *
+     * <p>
      * This method uses the internal ids and matches based on (in order) MRN, Temporary MRN, Health Card.
      *
      * @param internalIds
@@ -291,7 +291,6 @@ public class PhsStarHandler extends BasePhsStarHandler {
     }
 
     /**
-     *
      * @param demographicNo
      * @throws HL7Exception
      */
@@ -585,6 +584,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
      * PRA - Practitioner Detail
      * ZST - <unknown>
      * ZRA - <unknown>
+     *
      * @throws HL7Exception
      */
     public void handleStaffMasterFile() throws HL7Exception {
@@ -701,9 +701,8 @@ public class PhsStarHandler extends BasePhsStarHandler {
 
     /**
      * This method is the entry point.
-     *
+     * <p>
      * Logic to choose which message type we have, and to handle it.
-     *
      */
     public void init(String hl7Body) throws HL7Exception {
         Parser p = new GenericParser();

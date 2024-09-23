@@ -68,7 +68,6 @@ import cds.ReportsDocument.Reports.ReportReviewed;
 import cds.ReportsDocument.Reports.SourceAuthorPhysician;
 
 /**
- *
  * @author ronnie
  */
 public class HRMCreateFile {

@@ -54,12 +54,10 @@ public enum PrescriptionTimeUnit {
      * Convert a string (passed in a response) to it's corresponding
      * PrescriptionTimeUnit.
      *
-     * @param toParse
-     *            The string to convert.
+     * @param toParse The string to convert.
      * @return The PrescriptionTimeUnit corresponding to the given string.
-     * @throws IllegalArgumentException
-     *             Throws an IllegalArgumentException if the string doesn't
-     *             match a known PrescriptionTimeUnit.
+     * @throws IllegalArgumentException Throws an IllegalArgumentException if the string doesn't
+     *                                  match a known PrescriptionTimeUnit.
      */
     public static PrescriptionTimeUnit parseString(String toParse)
             throws IllegalArgumentException {
@@ -88,9 +86,8 @@ public enum PrescriptionTimeUnit {
     /**
      * Construct a PrescriptionTimeUnit.
      *
-     * @param prescriptionTimeUnitId
-     *            An integer value which must be passed in a request or parsed
-     *            in a response.
+     * @param prescriptionTimeUnitId An integer value which must be passed in a request or parsed
+     *                               in a response.
      */
     PrescriptionTimeUnit(int prescriptionTimeUnitId) {
         this.prescriptionTimeUnitId = prescriptionTimeUnitId;
@@ -101,7 +98,7 @@ public enum PrescriptionTimeUnit {
      * request.
      *
      * @return A string representing this value, suitable for sending in a
-     *         request.
+     * request.
      */
     public String getString() {
         return Integer.toString(this.prescriptionTimeUnitId);

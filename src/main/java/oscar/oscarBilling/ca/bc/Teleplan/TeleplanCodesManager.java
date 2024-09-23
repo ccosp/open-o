@@ -37,12 +37,13 @@ import org.oscarehr.util.MiscUtils;
 
 
 /**
- *
  * @author jay
  */
 public class TeleplanCodesManager {
 
-    /** Creates a new instance of TeleplanCodesManager */
+    /**
+     * Creates a new instance of TeleplanCodesManager
+     */
     public TeleplanCodesManager() {
     }
 

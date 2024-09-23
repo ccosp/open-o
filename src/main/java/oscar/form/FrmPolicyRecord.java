@@ -30,7 +30,6 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.util.LoggedInInfo;
 
 /**
- *
  * @author kimleanhoffman
  */
 public class FrmPolicyRecord extends FrmRecord {

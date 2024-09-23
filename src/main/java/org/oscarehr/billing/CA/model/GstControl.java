@@ -35,7 +35,6 @@ import javax.persistence.Table;
 import org.oscarehr.common.model.AbstractModel;
 
 /**
- *
  * @author rjonasz
  */
 @Entity

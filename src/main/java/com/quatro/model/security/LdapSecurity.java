@@ -35,7 +35,6 @@ import oscar.login.jaas.OscarCallbackHandler;
 
 /**
  * Security class for integration with LDAP.
- *
  */
 public class LdapSecurity extends Security {
 
@@ -54,8 +53,7 @@ public class LdapSecurity extends Security {
     /**
      * Clones this instance as a {@link Security} class.
      *
-     * @return
-     *        Returns a deep copy of this instance as {@link Security}.
+     * @return Returns a deep copy of this instance as {@link Security}.
      */
     public Security toSecurity() {
         return new Security(this);
@@ -64,11 +62,8 @@ public class LdapSecurity extends Security {
     /**
      * Checks password and {@link #getUserName()} agains LDAP database.
      *
-     * @return
-     *        Returns trues if password validation agains the AD is successful and false otherwise
-     *
+     * @return Returns trues if password validation agains the AD is successful and false otherwise
      * @see org.oscarehr.common.model.Security#checkPassword(java.lang.String)
-     *
      */
     @Override
     public boolean checkPassword(String inputedPassword) {

@@ -34,7 +34,6 @@ package oscar.oscarRx.pageUtil;
 import org.apache.struts.action.ActionForm;
 
 /**
- *
  * @author Jay Gallagher
  */
 public final class RxManagePharmacyForm extends ActionForm {
@@ -53,12 +52,15 @@ public final class RxManagePharmacyForm extends ActionForm {
     String serviceLocationIdentifier = null;
     String notes = null;
 
-    /** Creates a new instance of RxManagePharmacyForm */
+    /**
+     * Creates a new instance of RxManagePharmacyForm
+     */
     public RxManagePharmacyForm() {
     }
 
     /**
      * Getter for property pharmacyAction.
+     *
      * @return Value of property pharmacyAction.
      */
     public java.lang.String getPharmacyAction() {
@@ -67,6 +69,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property pharmacyAction.
+     *
      * @param pharmacyAction New value of property pharmacyAction.
      */
     public void setPharmacyAction(java.lang.String pharmacyAction) {
@@ -75,6 +78,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property ID.
+     *
      * @return Value of property ID.
      */
     public java.lang.String getID() {
@@ -83,6 +87,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property ID.
+     *
      * @param ID New value of property ID.
      */
     public void setID(java.lang.String ID) {
@@ -91,6 +96,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property name.
+     *
      * @return Value of property name.
      */
     public java.lang.String getName() {
@@ -99,6 +105,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property name.
+     *
      * @param name New value of property name.
      */
     public void setName(java.lang.String name) {
@@ -107,6 +114,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property address.
+     *
      * @return Value of property address.
      */
     public java.lang.String getAddress() {
@@ -115,6 +123,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property address.
+     *
      * @param address New value of property address.
      */
     public void setAddress(java.lang.String address) {
@@ -123,6 +132,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property city.
+     *
      * @return Value of property city.
      */
     public java.lang.String getCity() {
@@ -131,6 +141,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property city.
+     *
      * @param city New value of property city.
      */
     public void setCity(java.lang.String city) {
@@ -139,6 +150,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property province.
+     *
      * @return Value of property province.
      */
     public java.lang.String getProvince() {
@@ -147,6 +159,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property province.
+     *
      * @param province New value of property province.
      */
     public void setProvince(java.lang.String province) {
@@ -155,6 +168,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property postalCode.
+     *
      * @return Value of property postalCode.
      */
     public java.lang.String getPostalCode() {
@@ -163,6 +177,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property postalCode.
+     *
      * @param postalCode New value of property postalCode.
      */
     public void setPostalCode(java.lang.String postalCode) {
@@ -171,6 +186,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property phone1.
+     *
      * @return Value of property phone1.
      */
     public java.lang.String getPhone1() {
@@ -179,6 +195,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property phone1.
+     *
      * @param phone1 New value of property phone1.
      */
     public void setPhone1(java.lang.String phone1) {
@@ -187,6 +204,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property phone2.
+     *
      * @return Value of property phone2.
      */
     public java.lang.String getPhone2() {
@@ -195,6 +213,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property phone2.
+     *
      * @param phone2 New value of property phone2.
      */
     public void setPhone2(java.lang.String phone2) {
@@ -203,6 +222,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property fax.
+     *
      * @return Value of property fax.
      */
     public java.lang.String getFax() {
@@ -211,6 +231,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property fax.
+     *
      * @param fax New value of property fax.
      */
     public void setFax(java.lang.String fax) {
@@ -219,6 +240,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property email.
+     *
      * @return Value of property email.
      */
     public java.lang.String getEmail() {
@@ -227,6 +249,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property email.
+     *
      * @param email New value of property email.
      */
     public void setEmail(java.lang.String email) {
@@ -236,6 +259,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for service location identifier.
+     *
      * @return Value of service location identifier.
      */
     public java.lang.String getServiceLocationIdentifier() {
@@ -244,6 +268,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for Service Location Identifier
+     *
      * @param serviceLocationIdentifier New value
      */
     public void setServiceLocationIdentifier(java.lang.String serviceLocationIdentifier) {
@@ -252,6 +277,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Getter for property notes.
+     *
      * @return Value of property notes.
      */
     public java.lang.String getNotes() {
@@ -260,6 +286,7 @@ public final class RxManagePharmacyForm extends ActionForm {
 
     /**
      * Setter for property notes.
+     *
      * @param notes New value of property notes.
      */
     public void setNotes(java.lang.String notes) {

@@ -58,7 +58,6 @@ import oscar.oscarReport.pageUtil.RptDemographicReportForm;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class PreventionReportAction extends Action {

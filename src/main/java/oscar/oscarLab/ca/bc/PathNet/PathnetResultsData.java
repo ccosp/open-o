@@ -44,7 +44,6 @@ import java.sql.Timestamp;
 import java.util.*;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class PathnetResultsData {

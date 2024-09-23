@@ -40,7 +40,6 @@ import org.springframework.stereotype.Repository;
 import oscar.oscarLab.ca.on.CommonLabResultData;
 
 /**
- *
  * @author jay gallagher
  */
 public interface ProviderInboxRoutingDao extends AbstractDao<ProviderInboxItem> {

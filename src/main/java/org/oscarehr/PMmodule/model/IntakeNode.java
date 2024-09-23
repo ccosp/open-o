@@ -240,8 +240,8 @@ public class IntakeNode implements Serializable {
 
     /**
      * Return the unique identifier of this class
-     *
-     *  generator-class="native" column="intake_node_id"
+     * <p>
+     * generator-class="native" column="intake_node_id"
      */
     public Integer getId() {
         return id;
@@ -250,8 +250,7 @@ public class IntakeNode implements Serializable {
     /**
      * Set the unique identifier of this class
      *
-     * @param id
-     *            the new ID
+     * @param id the new ID
      */
     public void setId(Integer id) {
         this.id = id;
@@ -268,8 +267,7 @@ public class IntakeNode implements Serializable {
     /**
      * Set the value related to the column: intake_node_template_id
      *
-     * @param nodeTemplate
-     *            the intake_node_template_id value
+     * @param nodeTemplate the intake_node_template_id value
      */
     public void setNodeTemplate(IntakeNodeTemplate nodeTemplate) {
         this.nodeTemplate = nodeTemplate;
@@ -285,8 +283,7 @@ public class IntakeNode implements Serializable {
     /**
      * Set the value related to the column: intake_node_label_id
      *
-     * @param label
-     *            the intake_node_label_id value
+     * @param label the intake_node_label_id value
      */
     public void setLabel(IntakeNodeLabel label) {
         this.label = label;
@@ -302,8 +299,7 @@ public class IntakeNode implements Serializable {
     /**
      * Set the value related to the column: parent_intake_node_id
      *
-     * @param parent
-     *            the parent_intake_node_id value
+     * @param parent the parent_intake_node_id value
      */
     public void setParent(IntakeNode parent) {
         this.parent = parent;
@@ -319,8 +315,7 @@ public class IntakeNode implements Serializable {
     /**
      * Set the value related to the column: children
      *
-     * @param children
-     *            the children value
+     * @param children the children value
      */
     public void setChildren(List<IntakeNode> children) {
         this.children = children;
@@ -336,8 +331,7 @@ public class IntakeNode implements Serializable {
     /**
      * Set the value related to the column: intakes
      *
-     * @param intakes
-     *            the intakes value
+     * @param intakes the intakes value
      */
     public void setIntakes(Set<Intake> intakes) {
         this.intakes = intakes;
@@ -359,8 +353,7 @@ public class IntakeNode implements Serializable {
     /**
      * Set the value related to the column: answers
      *
-     * @param answers
-     *            the answers value
+     * @param answers the answers value
      */
     public void setAnswers(Set<IntakeAnswer> answers) {
         this.answers = answers;

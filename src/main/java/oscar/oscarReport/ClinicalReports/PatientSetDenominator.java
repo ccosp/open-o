@@ -30,7 +30,6 @@ import java.util.List;
 import oscar.oscarReport.data.DemographicSets;
 
 /**
- *
  * @author rjonasz
  */
 public class PatientSetDenominator implements Denominator {
@@ -39,7 +38,9 @@ public class PatientSetDenominator implements Denominator {
     private String name = null;
     private Hashtable replaceableValues = null;
 
-    /** Creates a new instance of PatientSetDenominator */
+    /**
+     * Creates a new instance of PatientSetDenominator
+     */
     public PatientSetDenominator() {
         replaceKeys = new String[1];
         replaceKeys[0] = "patientSet";

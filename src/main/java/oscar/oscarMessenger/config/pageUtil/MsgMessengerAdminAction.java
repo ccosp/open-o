@@ -124,8 +124,7 @@ public class MsgMessengerAdminAction extends DispatchAction {
     }
 
     /**
-     * @deprecated
-     * Use remove method
+     * @deprecated Use remove method
      */
     @Deprecated
     @SuppressWarnings("unused")

@@ -49,6 +49,7 @@ import oscar.OscarProperties;
 
 /**
  * Parses xml file, creating DosingRecomendation Objects storing them in a hashtable with the ATC code as the key
+ *
  * @author jay
  */
 public class LimitedUseLookup {
@@ -58,7 +59,9 @@ public class LimitedUseLookup {
     static Hashtable<String, ArrayList<LimitedUseCode>> luLookup = new Hashtable<String, ArrayList<LimitedUseCode>>();
     static boolean loaded = false;
 
-    /** Creates a new instance of RenalDosingFactory */
+    /**
+     * Creates a new instance of RenalDosingFactory
+     */
     protected LimitedUseLookup() {
     }
 

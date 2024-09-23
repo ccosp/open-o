@@ -319,6 +319,7 @@ public class FaxImporter {
     /**
      * Put an entry in Provider Lab Routing that will cause the unclaimed lab indicator
      * to light up next to the inbox.
+     *
      * @return
      */
     private void providerRouting(ProviderLabRoutingModel providerLabRouting) {

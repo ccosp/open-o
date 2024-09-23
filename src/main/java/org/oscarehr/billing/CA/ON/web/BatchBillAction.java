@@ -47,7 +47,6 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author rjonasz
  */
 public class BatchBillAction extends DispatchAction {

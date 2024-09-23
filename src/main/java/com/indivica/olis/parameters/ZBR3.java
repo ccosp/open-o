@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Specimen Collector
- * @author jen
  *
+ * @author jen
  */
 public class ZBR3 implements Parameter {
 

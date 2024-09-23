@@ -70,8 +70,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -116,10 +114,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the c1DoesThePersonHaveAnyPsychoticSymptoms property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1DoesThePersonHaveAnyPsychoticSymptoms() {
         return c1DoesThePersonHaveAnyPsychoticSymptoms;
@@ -128,10 +124,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the c1DoesThePersonHaveAnyPsychoticSymptoms property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1DoesThePersonHaveAnyPsychoticSymptoms(BigInteger value) {
         this.c1DoesThePersonHaveAnyPsychoticSymptoms = value;
@@ -140,10 +134,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesForThesePsychoticSymptoms property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesForThesePsychoticSymptoms() {
         return c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesForThesePsychoticSymptoms;
@@ -152,10 +144,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesForThesePsychoticSymptoms property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesForThesePsychoticSymptoms(BigInteger value) {
         this.c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesForThesePsychoticSymptoms = value;
@@ -164,10 +154,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesForThesePsychoticSymptoms property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesForThesePsychoticSymptoms() {
         return c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesForThesePsychoticSymptoms;
@@ -176,10 +164,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesForThesePsychoticSymptoms property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesForThesePsychoticSymptoms(BigInteger value) {
         this.c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesForThesePsychoticSymptoms = value;
@@ -188,10 +174,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesForThesePsychoticSymptoms property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpDoesThePersonNeedFromLocalServicesForThesePsychoticSymptoms() {
         return c3BHowMuchHelpDoesThePersonNeedFromLocalServicesForThesePsychoticSymptoms;
@@ -200,10 +184,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesForThesePsychoticSymptoms property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpDoesThePersonNeedFromLocalServicesForThesePsychoticSymptoms(BigInteger value) {
         this.c3BHowMuchHelpDoesThePersonNeedFromLocalServicesForThesePsychoticSymptoms = value;
@@ -212,10 +194,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the cComments property.
      *
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -224,10 +204,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the cComments property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -236,10 +214,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the cActions property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -248,10 +224,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the cActions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -260,10 +234,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the cByWhom property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -272,10 +244,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the cByWhom property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -284,10 +254,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the cReviewDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -296,10 +264,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the cReviewDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;
@@ -325,8 +291,6 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
      * Objects of the following type(s) are allowed in the list
      * {@link CPsychiatricHistory }
      * {@link CCommunityTreatmentOrder }
-     *
-     *
      */
     public List<Object> getCCommunityTreatmentOrderOrCPsychiatricHistory() {
         if (cCommunityTreatmentOrderOrCPsychiatricHistory == null) {
@@ -338,10 +302,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Gets the value of the cSymptomChecklist property.
      *
-     * @return
-     *     possible object is
-     *     {@link CSymptomChecklist }
-     *
+     * @return possible object is
+     * {@link CSymptomChecklist }
      */
     public CSymptomChecklist getCSymptomChecklist() {
         return cSymptomChecklist;
@@ -350,10 +312,8 @@ public class C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThought
     /**
      * Sets the value of the cSymptomChecklist property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CSymptomChecklist }
-     *
+     * @param value allowed object is
+     *              {@link CSymptomChecklist }
      */
     public void setCSymptomChecklist(CSymptomChecklist value) {
         this.cSymptomChecklist = value;

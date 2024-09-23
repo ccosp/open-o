@@ -91,6 +91,7 @@ import oscar.OscarProperties;
 import oscar.util.SqlUtils;
 
 /**
+ *
  */
 public interface DemographicDao {
 

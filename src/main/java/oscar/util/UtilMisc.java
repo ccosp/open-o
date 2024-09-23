@@ -68,8 +68,7 @@ public class UtilMisc {
      * For eformGenerator to Edit-Html window
      * This method is used to generate html symbols
      * eg. change '&lt' to  '<'
-     *            '&gt' to '>'
-     *
+     * '&gt' to '>'
      */
     public static String rhtmlEscape(String S) {
         if (null == S) return S;
@@ -279,6 +278,7 @@ public class UtilMisc {
     /**
      * This method attempts to parse the provided String to a double value
      * If the value is non-numeric a value of 0.0 is returned.
+     *
      * @param value String
      * @return double
      */
@@ -365,6 +365,7 @@ public class UtilMisc {
      **/
     /**
      * Returns an int array with the specified number of elements in
+     *
      * @param length int
      * @return int[]
      */
@@ -379,6 +380,7 @@ public class UtilMisc {
     /**
      * This method attempts to parse the provided String to an int value
      * If the value is non-numeric a value of 0 is returned.
+     *
      * @param value String
      * @return int
      */
@@ -397,6 +399,7 @@ public class UtilMisc {
 
     /**
      * Returns the provided double value rounded up to 2 decimal places
+     *
      * @param value double
      * @return double
      */

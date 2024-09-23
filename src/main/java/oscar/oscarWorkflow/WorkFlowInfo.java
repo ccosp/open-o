@@ -33,7 +33,6 @@ import org.oscarehr.util.MiscUtils;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author jay
  */
 public class WorkFlowInfo {
@@ -46,7 +45,9 @@ public class WorkFlowInfo {
     private String currentState = null;
     private String colour = null;
 
-    /** Creates a new instance of WorkFlowInfo */
+    /**
+     * Creates a new instance of WorkFlowInfo
+     */
     public WorkFlowInfo() {
     }
 

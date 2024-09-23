@@ -30,7 +30,6 @@ import java.util.Hashtable;
 import org.oscarehr.util.LoggedInInfo;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class DemographicNameAgeString {
@@ -41,6 +40,7 @@ public class DemographicNameAgeString {
 
     /**
      * Used to obtain an instance of DemographicNameAgeString
+     *
      * @return Returns instance of DemographicNameAgeString
      */
     public static DemographicNameAgeString getInstance() {
@@ -53,11 +53,11 @@ public class DemographicNameAgeString {
 
     /**
      * Used to get a String containing Name Age Sex ie "Gallagher, Jay M 25 years"
-     *
+     * <p>
      * Value is buffered in a hashtable so that it is only retrieved from the database once.
+     *
      * @param demoNo Demographic Number
      * @return returns a String containing name age sex ie "Last, First M 2 weeks"
-     *
      */
     public String getNameAgeString(LoggedInInfo loggedInInfo, Integer demoNo) {
 
@@ -81,6 +81,7 @@ public class DemographicNameAgeString {
 
     /**
      * Removes demographic number from hashtable. Used if you update the demographic information
+     *
      * @param demoNo Demoraphic Number
      */
     public static void resetDemographic(String demoNo) {
@@ -95,12 +96,13 @@ public class DemographicNameAgeString {
 
     /**
      * Used to get a Hashtable containing  lastName, firstName, sex, age
+     *
      * @param demoNo Demographic Number
      * @return Hashtable with these fields:
-     *   "lastName"
-     *   "firstName"
-     *   "sex"
-     *   "age"
+     * "lastName"
+     * "firstName"
+     * "sex"
+     * "age"
      */
     public Hashtable getNameAgeSexHashtable(LoggedInInfo loggedInInfo, String demoNo) {
         Hashtable h = null;

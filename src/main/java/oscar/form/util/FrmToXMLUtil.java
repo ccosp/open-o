@@ -58,12 +58,13 @@ import oscar.util.UtilDateUtilities;
  */
 
 /**
- *
  * @author Jay Gallagher
  */
 public class FrmToXMLUtil {
 
-    /** Creates a new instance of ToCDR */
+    /**
+     * Creates a new instance of ToCDR
+     */
     public FrmToXMLUtil() {
     }
 

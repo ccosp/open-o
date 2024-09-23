@@ -36,12 +36,14 @@ public interface ProviderManagerTickler {
 
     /**
      * Get all providers in the system
+     *
      * @return a List of Provider objects
      */
     public List getProviders();
 
     /**
      * Find a specific provider
+     *
      * @param provider_no
      * @return The provider
      */

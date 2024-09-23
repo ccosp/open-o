@@ -223,7 +223,6 @@ public class DataUtils {
 
     /**
      * A SAX handler for parsing test data
-     *
      */
     private static class LoadingHandler extends DefaultHandler {
 
@@ -268,7 +267,6 @@ public class DataUtils {
 
     /**
      * Enumeration of the supported types of entities
-     *
      */
     private enum EntityKind {
         DEMO, PROVIDER;
@@ -276,7 +274,6 @@ public class DataUtils {
 
     /**
      * Interface to add test data entities
-     *
      */
     private interface EntityManager {
 
@@ -287,7 +284,6 @@ public class DataUtils {
 
     /**
      * Implementing an interface to add test data entities
-     *
      */
     private static class EntityManagerImpl implements EntityManager {
 

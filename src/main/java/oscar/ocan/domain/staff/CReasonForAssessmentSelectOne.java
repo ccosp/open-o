@@ -57,8 +57,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -85,10 +83,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Gets the value of the cInitialAssessment property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCInitialAssessment() {
         return cInitialAssessment;
@@ -97,10 +93,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Sets the value of the cInitialAssessment property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCInitialAssessment(String value) {
         this.cInitialAssessment = value;
@@ -109,10 +103,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Gets the value of the cReassessmentAt6Months property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReassessmentAt6Months() {
         return cReassessmentAt6Months;
@@ -121,10 +113,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Sets the value of the cReassessmentAt6Months property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReassessmentAt6Months(String value) {
         this.cReassessmentAt6Months = value;
@@ -133,10 +123,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Gets the value of the cPriorToDischarge property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCPriorToDischarge() {
         return cPriorToDischarge;
@@ -145,10 +133,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Sets the value of the cPriorToDischarge property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCPriorToDischarge(String value) {
         this.cPriorToDischarge = value;
@@ -157,10 +143,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Gets the value of the cOtherSignificantChangeClientRequest property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCOtherSignificantChangeClientRequest() {
         return cOtherSignificantChangeClientRequest;
@@ -169,10 +153,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Sets the value of the cOtherSignificantChangeClientRequest property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCOtherSignificantChangeClientRequest(String value) {
         this.cOtherSignificantChangeClientRequest = value;
@@ -181,10 +163,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Gets the value of the cSpecifyOther property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSpecifyOther() {
         return cSpecifyOther;
@@ -193,10 +173,8 @@ public class CReasonForAssessmentSelectOne {
     /**
      * Sets the value of the cSpecifyOther property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSpecifyOther(String value) {
         this.cSpecifyOther = value;

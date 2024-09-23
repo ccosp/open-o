@@ -29,7 +29,9 @@ public class Tag {
     private String tagId;
     private String tagName;
 
-    /** Creates a new instance of Tag */
+    /**
+     * Creates a new instance of Tag
+     */
     public Tag() {
     }
 

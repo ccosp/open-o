@@ -267,7 +267,9 @@ public final class EDocUtil {
         ctldoctypedao.changeDocType(docType, module, status);
     }
 
-    /** new method to let the user add a new DocumentType into the database */
+    /**
+     * new method to let the user add a new DocumentType into the database
+     */
     public static void addDocTypeSQL(String docType, String module) {
         ctldoctypedao.addDocType(docType, module);
     }
@@ -1190,12 +1192,9 @@ public final class EDocUtil {
     /**
      * Reads content of the specified file with.
      *
-     * @param fileName
-     * 		Name of the file to use for saving the content
-     * @return
-     *        Returns the content of the file
-     * @throws IOException
-     * 		IOException is thrown in case file can not be read
+     * @param fileName Name of the file to use for saving the content
+     * @return Returns the content of the file
+     * @throws IOException IOException is thrown in case file can not be read
      */
     public static byte[] readContent(String fileName) throws IOException {
         InputStream is = null;
@@ -1215,12 +1214,9 @@ public final class EDocUtil {
      * Saves content to the OSCAR document directory as a file with the specified name.
      * File with the same name will be overwritten.
      *
-     * @param fileName
-     * 		Name of the file to use for saving the content
-     * @param content
-     * 		Content to be saved into the file
-     * @throws IOException
-     * 		IOException is thrown in case of any save errors
+     * @param fileName Name of the file to use for saving the content
+     * @param content  Content to be saved into the file
+     * @throws IOException IOException is thrown in case of any save errors
      */
     public static void writeDocContent(String fileName, byte[] content) throws IOException {
         String docDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
@@ -1231,10 +1227,8 @@ public final class EDocUtil {
     /**
      * Resolves file name for the specified OSCAR file into the absolute path on the file system.
      *
-     * @param fileName
-     * 		OSCAR file name.
-     * @return
-     *        Returns the absolute path on the file system.
+     * @param fileName OSCAR file name.
+     * @return Returns the absolute path on the file system.
      */
     public static String resovePath(String fileName) {
         Path filePath = Paths.get(fileName);
@@ -1272,9 +1266,9 @@ public final class EDocUtil {
     /**
      * Get the number of pages in a PDF file.
      * This is handy when the number of pages in a PDF document is unknown.
-     *
+     * <p>
      * Returns 0 on error.
-     *
+     * <p>
      * PDF only! Other file types will return 0
      *
      * @param fileName

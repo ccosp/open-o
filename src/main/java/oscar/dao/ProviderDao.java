@@ -33,7 +33,6 @@ import org.springframework.jdbc.core.RowMapper;
  * queries and row mappers.
  *
  * @author Eugene Petruhin
- *
  */
 public class ProviderDao extends OscarSuperDao {
 

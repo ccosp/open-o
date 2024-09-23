@@ -32,7 +32,6 @@ import java.util.Calendar;
 import org.apache.struts.action.ActionForm;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class PreventionReportForm extends ActionForm {
@@ -43,6 +42,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Getter for property setName.
+     *
      * @return Value of property setName.
      */
     public java.lang.String getSetName() {
@@ -51,6 +51,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Setter for property setName.
+     *
      * @param setName New value of property setName.
      */
     public void setSetName(java.lang.String setName) {
@@ -59,6 +60,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Getter for property prevention.
+     *
      * @return Value of property prevention.
      */
     public java.lang.String getPrevention() {
@@ -67,6 +69,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Setter for property prevention.
+     *
      * @param prevention New value of property prevention.
      */
     public void setPrevention(java.lang.String prevention) {
@@ -75,6 +78,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Getter for property patientSet.
+     *
      * @return Value of property patientSet.
      */
     public java.lang.String getPatientSet() {
@@ -83,6 +87,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Setter for property patientSet.
+     *
      * @param patientSet New value of property patientSet.
      */
     public void setPatientSet(java.lang.String patientSet) {
@@ -91,6 +96,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Getter for property asofDate.
+     *
      * @return Value of property asofDate.
      */
     public java.lang.String getAsofDate() {
@@ -104,6 +110,7 @@ public class PreventionReportForm extends ActionForm {
 
     /**
      * Setter for property asofDate.
+     *
      * @param asofDate New value of property asofDate.
      */
     public void setAsofDate(java.lang.String asofDate) {

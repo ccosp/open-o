@@ -43,7 +43,6 @@ import org.jdom.input.SAXBuilder;
 import oscar.OscarProperties;
 
 /**
- *
  * @author jaygallagher
  */
 public class OntarioMD {

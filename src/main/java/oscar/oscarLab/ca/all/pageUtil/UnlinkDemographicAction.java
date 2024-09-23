@@ -48,7 +48,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author mweston4
  */
 public class UnlinkDemographicAction extends JSONAction {

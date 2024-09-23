@@ -52,7 +52,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds routing record containing reference to the demographic record with the
      * specified lab results reference number of {@link #HL7} lab type.
-     *
+     * <p>
      * LabId is also refereed to as Lab_no, and segmentId.
      */
     @Override
@@ -64,13 +64,10 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
      * Finds routing record containing reference to the demographic record with the
      * specified lab type and lab results reference number.
      *
-     * @param labType
-     *                Type of the lab record to look up
-     * @param labNo
-     *                Number of the lab record to look up
-     * @return
-     *         Returns the container pointing to the demographics or null of no
-     *         matching container is found.
+     * @param labType Type of the lab record to look up
+     * @param labNo   Number of the lab record to look up
+     * @return Returns the container pointing to the demographics or null of no
+     * matching container is found.
      */
     @Override
     public PatientLabRouting findDemographics(String labType, Integer labNo) {
@@ -118,13 +115,10 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds unique test names for a patient
      *
-     * @param demoId
-     *                Demographic ID for the patient
-     * @param labType
-     *                Lab type to find test for
-     * @return
-     *         Returns a list of triples containing lab type, observation identifier
-     *         and observation result status
+     * @param demoId  Demographic ID for the patient
+     * @param labType Lab type to find test for
+     * @return Returns a list of triples containing lab type, observation identifier
+     * and observation result status
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -144,13 +138,10 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds unique test names for a patient
      *
-     * @param demoId
-     *                Demographic ID for the patient
-     * @param labType
-     *                Lab type to find test for
-     * @return
-     *         Returns a list of triples containing {@link MdsOBX}, {@link MdsMSH},
-     *         {@link PatientLabRouting}
+     * @param demoId  Demographic ID for the patient
+     * @param labType Lab type to find test for
+     * @return Returns a list of triples containing {@link MdsOBX}, {@link MdsMSH},
+     * {@link PatientLabRouting}
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -169,13 +160,10 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds unique test names for a patient
      *
-     * @param demoNo
-     *                Demographic ID for the patient
-     * @param labType
-     *                Lab type to find test for
-     * @return
-     *         Returns a list of pairs containing lab type and observation
-     *         identifier
+     * @param demoNo  Demographic ID for the patient
+     * @param labType Lab type to find test for
+     * @return Returns a list of pairs containing lab type and observation
+     * identifier
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -197,12 +185,9 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds lab routings for the specified demographic and lab type
      *
-     * @param demoNo
-     *                Demographic to find labs for
-     * @param labType
-     *                Type of the lab to get routings for
-     * @return
-     *         Returns the routings found.
+     * @param demoNo  Demographic to find labs for
+     * @param labType Type of the lab to get routings for
+     * @return Returns the routings found.
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -216,13 +201,10 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds all routings and tests for the specified demographic and lab
      *
-     * @param demoNo
-     *                Demographic to find tests for
-     * @param labType
-     *                Lab type to find tests for
-     * @return
-     *         Returns a list of triples containing {@link PatientLabRouting},
-     *         {@link LabTestResults}, {@link LabPatientPhysicianInfo}
+     * @param demoNo  Demographic to find tests for
+     * @param labType Lab type to find tests for
+     * @return Returns a list of triples containing {@link PatientLabRouting},
+     * {@link LabTestResults}, {@link LabPatientPhysicianInfo}
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -245,13 +227,10 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
     /**
      * Finds all routings and tests for the specified demographic and lab
      *
-     * @param demoNo
-     *                Demographic to find tests for
-     * @param labType
-     *                Lab type to find tests for
-     * @return
-     *         Returns a list of triples containing {@link PatientLabRouting},
-     *         {@link LabTestResults}, {@link LabPatientPhysicianInfo}
+     * @param demoNo  Demographic to find tests for
+     * @param labType Lab type to find tests for
+     * @return Returns a list of triples containing {@link PatientLabRouting},
+     * {@link LabTestResults}, {@link LabPatientPhysicianInfo}
      */
     @SuppressWarnings("unchecked")
     @Override

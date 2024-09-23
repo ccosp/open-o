@@ -42,7 +42,6 @@ import oscar.util.UtilDateUtilities;
 
 /**
  *
- *
  */
 public abstract class FrmRecord {
 

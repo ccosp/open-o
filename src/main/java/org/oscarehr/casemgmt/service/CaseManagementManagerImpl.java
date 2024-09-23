@@ -322,9 +322,8 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     }
 
     /**
-     * @deprecated
-     *             Use authenticated method getNotes( LoggedInInfo loggedInInfo,
-     *             String demographic_no, String[] issues, UserProperty prop)
+     * @deprecated Use authenticated method getNotes( LoggedInInfo loggedInInfo,
+     * String demographic_no, String[] issues, UserProperty prop)
      */
     @Deprecated
     @Override
@@ -362,9 +361,8 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     }
 
     /**
-     * @deprecated
-     *             Use the authenticated method: getNotes(LoggedInInfo loggedInInfo,
-     *             String demographic_no, String[] issues)
+     * @deprecated Use the authenticated method: getNotes(LoggedInInfo loggedInInfo,
+     * String demographic_no, String[] issues)
      */
     @Deprecated
     @Override
@@ -389,9 +387,8 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     }
 
     /**
-     * @deprecated
-     *             Use the authenticated method: getNotes(LoggedInInfo loggedInInfo,
-     *             String demographic_no, String[] issues)
+     * @deprecated Use the authenticated method: getNotes(LoggedInInfo loggedInInfo,
+     * String demographic_no, String[] issues)
      */
     @Deprecated
     @Override
@@ -411,10 +408,9 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     }
 
     /**
-     * @deprecated
-     *             Use the authenticated method: getActiveNotes(LoggedInInfo
-     *             loggedInInfo, String demographic_no, String[] issues)
-     *             Return only those notes with archived set to zero
+     * @deprecated Use the authenticated method: getActiveNotes(LoggedInInfo
+     * loggedInInfo, String demographic_no, String[] issues)
+     * Return only those notes with archived set to zero
      */
     @Deprecated
     @Override
@@ -1028,7 +1024,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
      * @param issid  the desired issue ID to find
      * @param demoNo the desired demographic ID to find issues for
      * @return true if some note for this demographic is attached to this issue,
-     *         false otherwise
+     * false otherwise
      */
     @Override
     public boolean haveIssue(Long issid, String demoNo) {

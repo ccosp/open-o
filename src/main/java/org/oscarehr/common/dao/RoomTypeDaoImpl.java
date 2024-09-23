@@ -47,8 +47,7 @@ public class RoomTypeDaoImpl extends AbstractDaoImpl<RoomType> implements RoomTy
     /**
      * Does room type with id exist
      *
-     * @param roomTypeId
-     *            id
+     * @param roomTypeId id
      * @return true if room type exists
      */
     @Override
@@ -65,8 +64,7 @@ public class RoomTypeDaoImpl extends AbstractDaoImpl<RoomType> implements RoomTy
     /**
      * Get room type by id
      *
-     * @param roomTypeId
-     *            id
+     * @param roomTypeId id
      * @return room type
      */
     @Override
@@ -79,7 +77,6 @@ public class RoomTypeDaoImpl extends AbstractDaoImpl<RoomType> implements RoomTy
 
     /**
      * Get room types
-     *
      */
     @SuppressWarnings("unchecked")
     @Override

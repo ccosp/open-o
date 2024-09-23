@@ -30,7 +30,6 @@ import java.util.List;
  * Represents different document types.
  *
  * @author oscar
- *
  */
 public enum DocumentType {
 

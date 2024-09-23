@@ -53,7 +53,6 @@ import oscar.oscarMessenger.data.MessengerSystemMessage;
 
 
 /**
- *
  * @author rjonasz
  */
 public class OscarMsgReviewSender implements OscarRunnable {

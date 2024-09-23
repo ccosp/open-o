@@ -26,12 +26,13 @@
 package oscar.oscarPrevention.reports;
 
 /**
- *
  * @author jay
  */
 public class PreventionReportFactory {
 
-    /** Creates a new instance of PreventionReportFactory */
+    /**
+     * Creates a new instance of PreventionReportFactory
+     */
     public PreventionReportFactory() {
     }
 

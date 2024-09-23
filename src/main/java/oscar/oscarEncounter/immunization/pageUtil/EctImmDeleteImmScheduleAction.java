@@ -46,7 +46,6 @@ import oscar.oscarEncounter.immunization.data.EctImmImmunizationData;
 import oscar.util.UtilXML;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class EctImmDeleteImmScheduleAction extends Action {
@@ -54,8 +53,7 @@ public class EctImmDeleteImmScheduleAction extends Action {
     private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
     /**
-
-     Creates a new instance of EctImmDeleteImmScheduleAction
+     * Creates a new instance of EctImmDeleteImmScheduleAction
      */
     public EctImmDeleteImmScheduleAction() {
     }

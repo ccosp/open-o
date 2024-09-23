@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Ordering Practitioner
- * @author jen
  *
+ * @author jen
  */
 public class OBR16 implements Parameter {
 

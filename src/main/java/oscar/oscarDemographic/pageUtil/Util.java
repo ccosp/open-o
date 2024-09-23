@@ -64,7 +64,6 @@ import oscar.util.StringUtils;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author Ronnie
  */
 public class Util {

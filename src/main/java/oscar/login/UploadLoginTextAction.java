@@ -48,7 +48,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarLab.ca.bc.PathNet.pageUtil.LabUploadForm;
 
 /**
- *
  * @author rjonasz
  */
 public class UploadLoginTextAction extends Action {

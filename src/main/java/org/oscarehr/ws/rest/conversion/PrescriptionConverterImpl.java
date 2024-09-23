@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Converts between domain Drug object and transfer Drug objects.
- *
+ * <p>
  * This class represents the transformation between a the SQL schema
  * and the data model that is presented to a client.
  */
@@ -51,9 +51,7 @@ public class PrescriptionConverterImpl extends AbstractConverter<Prescription, P
      *
      * @param loggedInInfo information regarding the current logged in user.
      * @param t            the transfer object to copy the data from
-     *
      * @return a Prescription domain object representing this data.
-     *
      * @throws ConversionException if conversion did not complete properly.
      */
     @Override
@@ -86,9 +84,7 @@ public class PrescriptionConverterImpl extends AbstractConverter<Prescription, P
      *
      * @param loggedInInfo information for the logged in user (unused).
      * @param p            the Prescription domain object to convert from.
-     *
      * @return a serializable transfer object that represents the Drug object
-     *
      * @throws ConversionException if the conversion fails.
      */
     @Override

@@ -57,8 +57,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -90,8 +88,6 @@ public class ConcernAreaList {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link String }
-     *
-     *
      */
     public List<String> getConcernArea() {
         if (concernArea == null) {
@@ -103,10 +99,8 @@ public class ConcernAreaList {
     /**
      * Gets the value of the otherConcernArea property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getOtherConcernArea() {
         return otherConcernArea;
@@ -115,10 +109,8 @@ public class ConcernAreaList {
     /**
      * Sets the value of the otherConcernArea property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setOtherConcernArea(String value) {
         this.otherConcernArea = value;

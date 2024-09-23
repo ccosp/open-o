@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table hl7_message
- *
  */
 public class Hl7Message {
     /**
@@ -46,8 +45,8 @@ public class Hl7Message {
      * Full constructor
      *
      * @param messageId int
-     * @param dateTime String
-     * @param notes String
+     * @param dateTime  String
+     * @param notes     String
      */
     public Hl7Message(int messageId, String dateTime, String notes) {
         this.messageId = messageId;
@@ -57,6 +56,7 @@ public class Hl7Message {
 
     /**
      * Gets the messageId
+     *
      * @return int messageId
      */
     public int getMessageId() {
@@ -65,6 +65,7 @@ public class Hl7Message {
 
     /**
      * Gets the dateTime
+     *
      * @return String dateTime
      */
     public String getDateTime() {
@@ -73,6 +74,7 @@ public class Hl7Message {
 
     /**
      * Gets the notes
+     *
      * @return String notes
      */
     public String getNotes() {
@@ -81,6 +83,7 @@ public class Hl7Message {
 
     /**
      * Sets the messageId
+     *
      * @param messageId int
      */
     public void setMessageId(int messageId) {
@@ -89,6 +92,7 @@ public class Hl7Message {
 
     /**
      * Sets the dateTime
+     *
      * @param dateTime String
      */
     public void setDateTime(String dateTime) {
@@ -97,6 +101,7 @@ public class Hl7Message {
 
     /**
      * Sets the notes
+     *
      * @param notes String
      */
     public void setNotes(String notes) {

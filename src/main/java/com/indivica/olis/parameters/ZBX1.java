@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Retrieve All Test Results
- * @author jen
  *
+ * @author jen
  */
 public class ZBX1 implements Parameter {
 

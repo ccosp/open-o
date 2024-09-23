@@ -41,7 +41,6 @@ import oscar.form.study.hsfo2.pageUtil.ConvertUtil;
 
 /**
  * Class used by the HSFO Study
- *
  */
 public class HSFODAO {
     //private static org.apache.logging.log4j.Logger logger = MiscUtils.getLogger();
@@ -50,7 +49,9 @@ public class HSFODAO {
     private static Hsfo2PatientDao patientDao = (Hsfo2PatientDao) SpringUtils.getBean(Hsfo2PatientDao.class);
     private static MeasurementDao measurementDao = (MeasurementDao) SpringUtils.getBean(MeasurementDao.class);
 
-    /** Creates a new instance of HSFODAO */
+    /**
+     * Creates a new instance of HSFODAO
+     */
     public HSFODAO() {
     }
 
@@ -151,7 +152,6 @@ public class HSFODAO {
     /**
      * check if this record is the first record for this patient in the hsfo system. it for both create new form or
      * history
-     *
      */
     public boolean isFirstRecord(String ID) {
         if (patientDao.getHsfoPatientByPatientId(ID) == null)
@@ -233,7 +233,6 @@ public class HSFODAO {
     }
 
     /**
-     *
      * @param patientId
      * @param visitRecordId
      */

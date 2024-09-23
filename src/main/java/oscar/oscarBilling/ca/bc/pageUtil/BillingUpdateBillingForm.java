@@ -34,7 +34,6 @@ package oscar.oscarBilling.ca.bc.pageUtil;
 import org.apache.struts.action.ActionForm;
 
 /**
- *
  * @author root
  */
 public class BillingUpdateBillingForm extends ActionForm {
@@ -45,12 +44,15 @@ public class BillingUpdateBillingForm extends ActionForm {
     String billingNo = null;
     private String billPatient;
 
-    /** Creates a new instance of BillingUpdateBillingForm */
+    /**
+     * Creates a new instance of BillingUpdateBillingForm
+     */
     public BillingUpdateBillingForm() {
     }
 
     /**
      * Getter for property status.
+     *
      * @return Value of property status.
      */
     public java.lang.String getStatus() {
@@ -59,6 +61,7 @@ public class BillingUpdateBillingForm extends ActionForm {
 
     /**
      * Setter for property status.
+     *
      * @param status New value of property status.
      */
     public void setStatus(java.lang.String status) {
@@ -67,6 +70,7 @@ public class BillingUpdateBillingForm extends ActionForm {
 
     /**
      * Getter for property messageNotes.
+     *
      * @return Value of property messageNotes.
      */
     public java.lang.String getMessageNotes() {
@@ -75,6 +79,7 @@ public class BillingUpdateBillingForm extends ActionForm {
 
     /**
      * Setter for property messageNotes.
+     *
      * @param messageNotes New value of property messageNotes.
      */
     public void setMessageNotes(java.lang.String messageNotes) {
@@ -83,6 +88,7 @@ public class BillingUpdateBillingForm extends ActionForm {
 
     /**
      * Getter for property billingMasterNo.
+     *
      * @return Value of property billingMasterNo.
      */
     public java.lang.String getBillingMasterNo() {
@@ -91,6 +97,7 @@ public class BillingUpdateBillingForm extends ActionForm {
 
     /**
      * Setter for property billingMasterNo.
+     *
      * @param billingMasterNo New value of property billingMasterNo.
      */
     public void setBillingMasterNo(java.lang.String billingMasterNo) {
@@ -99,6 +106,7 @@ public class BillingUpdateBillingForm extends ActionForm {
 
     /**
      * Getter for property billingNo.
+     *
      * @return Value of property billingNo.
      */
     public java.lang.String getBillingNo() {
@@ -111,6 +119,7 @@ public class BillingUpdateBillingForm extends ActionForm {
 
     /**
      * Setter for property billingNo.
+     *
      * @param billingNo New value of property billingNo.
      */
     public void setBillingNo(java.lang.String billingNo) {

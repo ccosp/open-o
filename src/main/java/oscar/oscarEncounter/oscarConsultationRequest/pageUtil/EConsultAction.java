@@ -59,7 +59,7 @@ public class EConsultAction extends DispatchAction {
 
     /**
      * Builds a proper eConsult frontend redirect link
-     *
+     * <p>
      * ie: /?{oneIdEmail}&{delegateOneIdEmail}#!/{task}?{parameter}
      */
     public ActionForward frontend(ActionMapping mapping, ActionForm form,
@@ -163,7 +163,7 @@ public class EConsultAction extends DispatchAction {
 
     /**
      * Adds the proper user name line for both the user and user delegate.
-     *
+     * <p>
      * ie: ?{oneIdEmail}&{delegateOneIdEmail}#!/
      */
     private void setLoginId(StringBuilder stringBuilder, HttpServletRequest request) {

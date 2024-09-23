@@ -106,7 +106,9 @@ public final class Cds4ReportUIBean {
         }
     }
 
-    /** key=admissionId, value=admission */
+    /**
+     * key=admissionId, value=admission
+     */
     private HashMap<Integer, Admission> admissionMap = null;
     private SingleMultiAdmissions singleMultiAdmissions = null;
     private FunctionalCentre functionalCentre = null;

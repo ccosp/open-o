@@ -56,8 +56,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -81,10 +79,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Gets the value of the cIssuedCTO property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCIssuedCTO() {
         return cIssuedCTO;
@@ -93,10 +89,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Sets the value of the cIssuedCTO property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCIssuedCTO(String value) {
         this.cIssuedCTO = value;
@@ -105,10 +99,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Gets the value of the cNoCTO property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCNoCTO() {
         return cNoCTO;
@@ -117,10 +109,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Sets the value of the cNoCTO property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCNoCTO(String value) {
         this.cNoCTO = value;
@@ -129,10 +119,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Gets the value of the cUnknown property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCUnknown() {
         return cUnknown;
@@ -141,10 +129,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Sets the value of the cUnknown property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCUnknown(String value) {
         this.cUnknown = value;
@@ -153,10 +139,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Gets the value of the cClientDeclinedToAnswer property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCClientDeclinedToAnswer() {
         return cClientDeclinedToAnswer;
@@ -165,10 +149,8 @@ public class CCommunityTreatmentOrder {
     /**
      * Sets the value of the cClientDeclinedToAnswer property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCClientDeclinedToAnswer(String value) {
         this.cClientDeclinedToAnswer = value;

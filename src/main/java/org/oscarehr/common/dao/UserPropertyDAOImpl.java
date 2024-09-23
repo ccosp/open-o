@@ -37,13 +37,14 @@ import org.oscarehr.common.model.UserProperty;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author rjonasz
  */
 @Repository
 public class UserPropertyDAOImpl extends AbstractDaoImpl<UserProperty> implements UserPropertyDAO {
 
-    /** Creates a new instance of UserPropertyDAO */
+    /**
+     * Creates a new instance of UserPropertyDAO
+     */
     public UserPropertyDAOImpl() {
         super(UserProperty.class);
     }

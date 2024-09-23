@@ -26,7 +26,6 @@ package oscar.oscarReport.reportByTemplate;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
  * @author rjonasz
  */
 public interface Reporter {

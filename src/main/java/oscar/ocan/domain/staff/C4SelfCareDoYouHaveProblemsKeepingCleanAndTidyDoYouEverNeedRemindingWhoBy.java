@@ -62,8 +62,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -99,10 +97,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the c1DoesThePersonHaveDifficultyWitSelfCareIfRated0Or9GoToTheNextDomain property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1DoesThePersonHaveDifficultyWitSelfCareIfRated0Or9GoToTheNextDomain() {
         return c1DoesThePersonHaveDifficultyWitSelfCareIfRated0Or9GoToTheNextDomain;
@@ -111,10 +107,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the c1DoesThePersonHaveDifficultyWitSelfCareIfRated0Or9GoToTheNextDomain property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1DoesThePersonHaveDifficultyWitSelfCareIfRated0Or9GoToTheNextDomain(BigInteger value) {
         this.c1DoesThePersonHaveDifficultyWitSelfCareIfRated0Or9GoToTheNextDomain = value;
@@ -123,10 +117,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the c2HowMuchHelpWithSelfCareDoesThePersonReceiveFromFriendsOrRelatives property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpWithSelfCareDoesThePersonReceiveFromFriendsOrRelatives() {
         return c2HowMuchHelpWithSelfCareDoesThePersonReceiveFromFriendsOrRelatives;
@@ -135,10 +127,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the c2HowMuchHelpWithSelfCareDoesThePersonReceiveFromFriendsOrRelatives property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpWithSelfCareDoesThePersonReceiveFromFriendsOrRelatives(BigInteger value) {
         this.c2HowMuchHelpWithSelfCareDoesThePersonReceiveFromFriendsOrRelatives = value;
@@ -147,10 +137,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the c3AHowMuchHelpWithSelfCareDoesThePersonReceiveFromLocalServices property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpWithSelfCareDoesThePersonReceiveFromLocalServices() {
         return c3AHowMuchHelpWithSelfCareDoesThePersonReceiveFromLocalServices;
@@ -159,10 +147,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the c3AHowMuchHelpWithSelfCareDoesThePersonReceiveFromLocalServices property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpWithSelfCareDoesThePersonReceiveFromLocalServices(BigInteger value) {
         this.c3AHowMuchHelpWithSelfCareDoesThePersonReceiveFromLocalServices = value;
@@ -171,10 +157,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the c3BHowMuchHelpWithSelfCareFoesThePersonNeedFromLocalServices property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpWithSelfCareFoesThePersonNeedFromLocalServices() {
         return c3BHowMuchHelpWithSelfCareFoesThePersonNeedFromLocalServices;
@@ -183,10 +167,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the c3BHowMuchHelpWithSelfCareFoesThePersonNeedFromLocalServices property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpWithSelfCareFoesThePersonNeedFromLocalServices(BigInteger value) {
         this.c3BHowMuchHelpWithSelfCareFoesThePersonNeedFromLocalServices = value;
@@ -195,10 +177,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the cComments property.
      *
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -207,10 +187,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the cComments property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -219,10 +197,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the cActions property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -231,10 +207,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the cActions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -243,10 +217,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the cByWhom property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -255,10 +227,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the cByWhom property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -267,10 +237,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Gets the value of the cReviewDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -279,10 +247,8 @@ public class C4SelfCareDoYouHaveProblemsKeepingCleanAndTidyDoYouEverNeedRemindin
     /**
      * Sets the value of the cReviewDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;

@@ -90,8 +90,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -123,10 +121,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the organizationRecord property.
      *
-     * @return
-     *     possible object is
-     *     {@link OrganizationRecord }
-     *
+     * @return possible object is
+     * {@link OrganizationRecord }
      */
     public OrganizationRecord getOrganizationRecord() {
         return organizationRecord;
@@ -135,10 +131,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the organizationRecord property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link OrganizationRecord }
-     *
+     * @param value allowed object is
+     *              {@link OrganizationRecord }
      */
     public void setOrganizationRecord(OrganizationRecord value) {
         this.organizationRecord = value;
@@ -147,10 +141,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the clientRecord property.
      *
-     * @return
-     *     possible object is
-     *     {@link ClientRecord }
-     *
+     * @return possible object is
+     * {@link ClientRecord }
      */
     public ClientRecord getClientRecord() {
         return clientRecord;
@@ -159,10 +151,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the clientRecord property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link ClientRecord }
-     *
+     * @param value allowed object is
+     *              {@link ClientRecord }
      */
     public void setClientRecord(ClientRecord value) {
         this.clientRecord = value;
@@ -171,10 +161,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the ocanDomains property.
      *
-     * @return
-     *     possible object is
-     *     {@link OCANDomains }
-     *
+     * @return possible object is
+     * {@link OCANDomains }
      */
     public OCANDomains getOCANDomains() {
         return ocanDomains;
@@ -183,10 +171,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the ocanDomains property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link OCANDomains }
-     *
+     * @param value allowed object is
+     *              {@link OCANDomains }
      */
     public void setOCANDomains(OCANDomains value) {
         this.ocanDomains = value;
@@ -195,10 +181,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the additionalElements property.
      *
-     * @return
-     *     possible object is
-     *     {@link AdditionalElements }
-     *
+     * @return possible object is
+     * {@link AdditionalElements }
      */
     public AdditionalElements getAdditionalElements() {
         return additionalElements;
@@ -207,10 +191,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the additionalElements property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link AdditionalElements }
-     *
+     * @param value allowed object is
+     *              {@link AdditionalElements }
      */
     public void setAdditionalElements(AdditionalElements value) {
         this.additionalElements = value;
@@ -219,10 +201,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the startDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getStartDate() {
         return startDate;
@@ -231,10 +211,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the startDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setStartDate(XMLGregorianCalendar value) {
         this.startDate = value;
@@ -243,10 +221,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the completionDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getCompletionDate() {
         return completionDate;
@@ -255,10 +231,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the completionDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setCompletionDate(XMLGregorianCalendar value) {
         this.completionDate = value;
@@ -267,10 +241,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the assessmentID property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getAssessmentID() {
         return assessmentID;
@@ -279,10 +251,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the assessmentID property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setAssessmentID(String value) {
         this.assessmentID = value;
@@ -291,10 +261,8 @@ public class OCANSubmissionRecord {
     /**
      * Gets the value of the assessmentStatus property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getAssessmentStatus() {
         return assessmentStatus;
@@ -303,10 +271,8 @@ public class OCANSubmissionRecord {
     /**
      * Sets the value of the assessmentStatus property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setAssessmentStatus(String value) {
         this.assessmentStatus = value;

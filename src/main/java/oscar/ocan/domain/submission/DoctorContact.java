@@ -73,8 +73,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -89,10 +87,8 @@ public class DoctorContact {
     /**
      * Gets the value of the doctor property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getDoctor() {
         return doctor;
@@ -101,10 +97,8 @@ public class DoctorContact {
     /**
      * Sets the value of the doctor property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setDoctor(String value) {
         this.doctor = value;
@@ -113,10 +107,8 @@ public class DoctorContact {
     /**
      * Gets the value of the lastSeen property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getLastSeen() {
         return lastSeen;
@@ -125,10 +117,8 @@ public class DoctorContact {
     /**
      * Sets the value of the lastSeen property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setLastSeen(String value) {
         this.lastSeen = value;

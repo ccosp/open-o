@@ -86,6 +86,7 @@ public class AssociateCodesActionForm
 
     /**
      * Set the form parameters with the values of the ServiceCodesAssociation
+     *
      * @param assoc ServiceCodeAssociation
      */
     public void setServiceCodeAssociation(ServiceCodeAssociation assoc) {

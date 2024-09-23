@@ -30,7 +30,6 @@ import org.oscarehr.common.model.OtherId;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author Ronnie Cheng
  */
 public class OtherIdManager {

@@ -347,7 +347,7 @@ public class JdbcBillingCreateBillingFile {
 
     /**
      * isRMB
-     *
+     * <p>
      * Identifies if this is a reciprocal medical billing invoice or not
      *
      * @return true if RMB, false otherwise

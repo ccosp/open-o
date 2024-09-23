@@ -48,7 +48,6 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 
 /**
- *
  * @author jay
  */
 public class GeneratePatientSpreadSheetListAction extends Action {
@@ -95,7 +94,9 @@ public class GeneratePatientSpreadSheetListAction extends Action {
         return null;
     }
 
-    /** Creates a new instance of GenerateEnvelopesAction */
+    /**
+     * Creates a new instance of GenerateEnvelopesAction
+     */
     public GeneratePatientSpreadSheetListAction() {
     }
 

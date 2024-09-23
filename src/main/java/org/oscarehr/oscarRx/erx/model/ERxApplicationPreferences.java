@@ -79,16 +79,12 @@ public class ERxApplicationPreferences {
     /**
      * Create an instance of an ERxApplicationPreferences object.
      *
-     * @param isERxEnabled
-     *            Whether or not the OSCAR ERx component is enabled. NOTE THIS
-     *            DOES NOT DEACTIVATE THE COMPONENT, it just sets the value in
-     *            this instance of this object.
-     * @param softwareName
-     *            The name of the software.
-     * @param softwareVendor
-     *            The name of the organization that produced the software.
-     * @param softwareVersion
-     *            The version of the software.
+     * @param isERxEnabled    Whether or not the OSCAR ERx component is enabled. NOTE THIS
+     *                        DOES NOT DEACTIVATE THE COMPONENT, it just sets the value in
+     *                        this instance of this object.
+     * @param softwareName    The name of the software.
+     * @param softwareVendor  The name of the organization that produced the software.
+     * @param softwareVersion The version of the software.
      */
     public ERxApplicationPreferences(boolean isERxEnabled, String softwareName,
                                      String softwareVendor, String softwareVersion) {
@@ -137,12 +133,11 @@ public class ERxApplicationPreferences {
 
     /**
      * Changes whether or not the OSCAR ERx component is enabled.
-     *
+     * <p>
      * NOTE THIS DOES NOT DEACTIVATE THE COMPONENT, it just sets the value in
      * this instance of this object.
      *
-     * @param isERxEnabled
-     *            The new isERxEnabled.
+     * @param isERxEnabled The new isERxEnabled.
      */
     public void setERxEnabled(boolean isERxEnabled) {
         this.isERxEnabled = isERxEnabled;
@@ -151,8 +146,7 @@ public class ERxApplicationPreferences {
     /**
      * Changes the value of the name of the software.
      *
-     * @param softwareName
-     *            The new softwareName.
+     * @param softwareName The new softwareName.
      */
     public void setSoftwareName(String softwareName) {
         this.softwareName = softwareName;
@@ -162,8 +156,7 @@ public class ERxApplicationPreferences {
      * Changes the value of the name of the organization that produced the
      * software.
      *
-     * @param vendor
-     *            The new vendor.
+     * @param vendor The new vendor.
      */
     public void setVendor(String vendor) {
         this.vendor = vendor;
@@ -172,8 +165,7 @@ public class ERxApplicationPreferences {
     /**
      * Changes the value of the version of the software.
      *
-     * @param version
-     *            The new version.
+     * @param version The new version.
      */
     public void setVersion(String version) {
         this.version = version;

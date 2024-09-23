@@ -33,7 +33,9 @@ public class LabMeasurements {
     private Measurements measure;
     private List<MeasurementsExt> exts;
 
-    /** Creates a new instance of Measurements */
+    /**
+     * Creates a new instance of Measurements
+     */
     public LabMeasurements() {
     }
 

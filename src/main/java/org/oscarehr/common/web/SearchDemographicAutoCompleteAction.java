@@ -56,7 +56,6 @@ import oscar.oscarRx.data.RxProviderData;
 import oscar.oscarRx.data.RxProviderData.Provider;
 
 /**
- *
  * @author jaygallagher
  */
 public class SearchDemographicAutoCompleteAction extends Action {

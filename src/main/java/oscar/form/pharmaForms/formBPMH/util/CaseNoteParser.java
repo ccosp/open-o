@@ -46,6 +46,7 @@ public class CaseNoteParser {
 
     /**
      * preset key = "familyphysician"
+     *
      * @param note
      * @return
      */
@@ -55,6 +56,7 @@ public class CaseNoteParser {
 
     /**
      * preset phone number key = P
+     *
      * @param note
      * @return
      */
@@ -64,6 +66,7 @@ public class CaseNoteParser {
 
     /**
      * preset fax number key = k
+     *
      * @param note
      * @return
      */
@@ -78,7 +81,7 @@ public class CaseNoteParser {
      * This is a very simple method and could use expansion.
      *
      * @param note text
-     * @param key relationship to value desired.
+     * @param key  relationship to value desired.
      * @return
      */
     public static String getValue(String note, final String key) {

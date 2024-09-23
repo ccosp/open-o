@@ -81,7 +81,6 @@ import cdshrm.TransactionInformationDocument.TransactionInformation;
 import oscar.OscarProperties;
 
 /**
- *
  * @author ronnie
  */
 public class CreateHRMFile {

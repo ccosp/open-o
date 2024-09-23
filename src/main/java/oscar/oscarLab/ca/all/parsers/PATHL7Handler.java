@@ -61,7 +61,6 @@ import oscar.util.UtilDateUtilities;
 
 
 /**
- *
  * @author wrighd
  */
 public class PATHL7Handler implements MessageHandler {
@@ -677,7 +676,7 @@ public class PATHL7Handler implements MessageHandler {
 
 
     /**
-     *  Retrieve the possible segment headers from the OBX fields
+     * Retrieve the possible segment headers from the OBX fields
      */
     public ArrayList<String> getHeaders() {
         int i;
@@ -766,6 +765,7 @@ public class PATHL7Handler implements MessageHandler {
 
     /**
      * Format HL7 datetime into ISO standard date.
+     *
      * @param plain date string
      * @return ISO standard
      */
@@ -854,7 +854,6 @@ public class PATHL7Handler implements MessageHandler {
     /**
      * If the first OBX segment is presenting a textual report and the lab type is
      * not in the unstructured (PATH or ITS) lab types.
-     *
      */
     public boolean isReportData() {
         boolean result = true;

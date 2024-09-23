@@ -59,8 +59,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -87,10 +85,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Gets the value of the cPrecontemplation property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCPrecontemplation() {
         return cPrecontemplation;
@@ -99,10 +95,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Sets the value of the cPrecontemplation property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCPrecontemplation(String value) {
         this.cPrecontemplation = value;
@@ -111,10 +105,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Gets the value of the cContemplation property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCContemplation() {
         return cContemplation;
@@ -123,10 +115,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Sets the value of the cContemplation property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCContemplation(String value) {
         this.cContemplation = value;
@@ -135,10 +125,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Gets the value of the cAction property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCAction() {
         return cAction;
@@ -147,10 +135,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Sets the value of the cAction property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCAction(String value) {
         this.cAction = value;
@@ -159,10 +145,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Gets the value of the cMaintenance property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCMaintenance() {
         return cMaintenance;
@@ -171,10 +155,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Sets the value of the cMaintenance property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCMaintenance(String value) {
         this.cMaintenance = value;
@@ -183,10 +165,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Gets the value of the cRelapsePrevention property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCRelapsePrevention() {
         return cRelapsePrevention;
@@ -195,10 +175,8 @@ public class CIndicateTheStageOfChangeClientIsAtOptionalSelectOne {
     /**
      * Sets the value of the cRelapsePrevention property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCRelapsePrevention(String value) {
         this.cRelapsePrevention = value;

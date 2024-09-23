@@ -38,7 +38,6 @@ import org.apache.struts.action.ActionMapping;
 import oscar.oscarReport.data.DemographicSets;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class RptCreateDemographicSetAction extends Action {

@@ -41,7 +41,6 @@ import org.oscarehr.decisionSupport.service.DSService;
 import org.oscarehr.util.LoggedInInfo;
 
 /**
- *
  * @author apavel
  */
 public class TestActionW extends Action {

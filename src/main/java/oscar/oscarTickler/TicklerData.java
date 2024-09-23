@@ -40,7 +40,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.util.ConversionUtils;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class TicklerData {

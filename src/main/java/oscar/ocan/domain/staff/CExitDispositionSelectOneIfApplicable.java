@@ -58,8 +58,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -89,10 +87,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Gets the value of the cCompletionWithoutReferral property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCCompletionWithoutReferral() {
         return cCompletionWithoutReferral;
@@ -101,10 +97,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Sets the value of the cCompletionWithoutReferral property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCCompletionWithoutReferral(String value) {
         this.cCompletionWithoutReferral = value;
@@ -113,10 +107,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Gets the value of the cCompletionWithReferral property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCCompletionWithReferral() {
         return cCompletionWithReferral;
@@ -125,10 +117,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Sets the value of the cCompletionWithReferral property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCCompletionWithReferral(String value) {
         this.cCompletionWithReferral = value;
@@ -137,10 +127,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Gets the value of the cSuicides property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSuicides() {
         return cSuicides;
@@ -149,10 +137,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Sets the value of the cSuicides property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSuicides(String value) {
         this.cSuicides = value;
@@ -161,10 +147,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Gets the value of the cDeath property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCDeath() {
         return cDeath;
@@ -173,10 +157,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Sets the value of the cDeath property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCDeath(String value) {
         this.cDeath = value;
@@ -185,10 +167,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Gets the value of the cRelocation property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCRelocation() {
         return cRelocation;
@@ -197,10 +177,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Sets the value of the cRelocation property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCRelocation(String value) {
         this.cRelocation = value;
@@ -209,10 +187,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Gets the value of the cWithdrawal property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCWithdrawal() {
         return cWithdrawal;
@@ -221,10 +197,8 @@ public class CExitDispositionSelectOneIfApplicable {
     /**
      * Sets the value of the cWithdrawal property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCWithdrawal(String value) {
         this.cWithdrawal = value;

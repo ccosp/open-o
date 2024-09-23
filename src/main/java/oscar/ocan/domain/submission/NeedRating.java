@@ -73,8 +73,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -88,7 +86,6 @@ public class NeedRating {
 
     /**
      * Gets the value of the staff property.
-     *
      */
     public byte getStaff() {
         return staff;
@@ -96,7 +93,6 @@ public class NeedRating {
 
     /**
      * Sets the value of the staff property.
-     *
      */
     public void setStaff(byte value) {
         this.staff = value;
@@ -104,7 +100,6 @@ public class NeedRating {
 
     /**
      * Gets the value of the client property.
-     *
      */
     public byte getClient() {
         return client;
@@ -112,7 +107,6 @@ public class NeedRating {
 
     /**
      * Sets the value of the client property.
-     *
      */
     public void setClient(byte value) {
         this.client = value;

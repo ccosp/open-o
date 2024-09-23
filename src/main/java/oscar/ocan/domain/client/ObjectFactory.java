@@ -37,18 +37,17 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the oscar.ocan.domain.client package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains factory methods for each
+ * Java content interface and Java element interface
+ * generated in the oscar.ocan.domain.client package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- *
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -68,14 +67,12 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: oscar.ocan.domain.client
-     *
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link C6PhysicalHealthHowWellDoYouFeelPhysically }
-     *
      */
     public C6PhysicalHealthHowWellDoYouFeelPhysically createC6PhysicalHealthHowWellDoYouFeelPhysically() {
         return new C6PhysicalHealthHowWellDoYouFeelPhysically();
@@ -83,7 +80,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey }
-     *
      */
     public CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey createCPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey() {
         return new CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey();
@@ -91,7 +87,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C12AlcoholDoesDrinkingCauseYouAnyProblems }
-     *
      */
     public C12AlcoholDoesDrinkingCauseYouAnyProblems createC12AlcoholDoesDrinkingCauseYouAnyProblems() {
         return new C12AlcoholDoesDrinkingCauseYouAnyProblems();
@@ -99,7 +94,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C23MoneyHowDoYouFindBudgetingYourMoney }
-     *
      */
     public C23MoneyHowDoYouFindBudgetingYourMoney createC23MoneyHowDoYouFindBudgetingYourMoney() {
         return new C23MoneyHowDoYouFindBudgetingYourMoney();
@@ -107,7 +101,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts }
-     *
      */
     public C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts createC7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts() {
         return new C7PsychoticSymptomsDoYouEverHearVoicesOrHaveProblemsWithYourThoughts();
@@ -115,7 +108,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C17SexualExpressionHowIsYouSexLife }
-     *
      */
     public C17SexualExpressionHowIsYouSexLife createC17SexualExpressionHowIsYouSexLife() {
         return new C17SexualExpressionHowIsYouSexLife();
@@ -123,7 +115,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven }
-     *
      */
     public CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven createCUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven() {
         return new CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven();
@@ -131,7 +122,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CInstructions }
-     *
      */
     public CInstructions createCInstructions() {
         return new CInstructions();
@@ -139,7 +129,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo }
-     *
      */
     public C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo createC24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo() {
         return new C24BenefitsAreYouGettingAllTheMoneyYouAreEntitledTo();
@@ -147,7 +136,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C2FoodDoYouGetEnoughToEat }
-     *
      */
     public C2FoodDoYouGetEnoughToEat createC2FoodDoYouGetEnoughToEat() {
         return new C2FoodDoYouGetEnoughToEat();
@@ -155,7 +143,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow }
-     *
      */
     public C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow createC9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow() {
         return new C9PsychologicalDistressHaveYouRecentlyFeltVerySadOrLow();
@@ -163,7 +150,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C16IntimateRelationshipsDoYouHaveAPartner }
-     *
      */
     public C16IntimateRelationshipsDoYouHaveAPartner createC16IntimateRelationshipsDoYouHaveAPartner() {
         return new C16IntimateRelationshipsDoYouHaveAPartner();
@@ -171,7 +157,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish }
-     *
      */
     public C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish createC20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish() {
         return new C20BasicEducationAnyDifficultyInReadingWritingOrUnderstandingEnglish();
@@ -179,7 +164,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling }
-     *
      */
     public COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling createCOtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling() {
         return new COtherAddictionsDoYouHaveAnyOtherAddictionsSuchAsGambling();
@@ -187,7 +171,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed }
-     *
      */
     public C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed createC13DrugsDoYouTakeAnyDrugsThatArenTPrescribed() {
         return new C13DrugsDoYouTakeAnyDrugsThatArenTPrescribed();
@@ -195,7 +178,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C1AccommodationWhatKindOfPlaceDoYouLiveIn }
-     *
      */
     public C1AccommodationWhatKindOfPlaceDoYouLiveIn createC1AccommodationWhatKindOfPlaceDoYouLiveIn() {
         return new C1AccommodationWhatKindOfPlaceDoYouLiveIn();
@@ -203,7 +185,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CNoNeedThisAreaIsNotASeriousProblemForMeAtAll }
-     *
      */
     public CNoNeedThisAreaIsNotASeriousProblemForMeAtAll createCNoNeedThisAreaIsNotASeriousProblemForMeAtAll() {
         return new CNoNeedThisAreaIsNotASeriousProblemForMeAtAll();
@@ -211,7 +192,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CQuestions }
-     *
      */
     public CQuestions createCQuestions() {
         return new CQuestions();
@@ -219,7 +199,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CWhenYouHaveCompletedThisAssessmentYourWorkerWillHaveAConversationWithYouAboutYo }
-     *
      */
     public CWhenYouHaveCompletedThisAssessmentYourWorkerWillHaveAConversationWithYouAboutYo createCWhenYouHaveCompletedThisAssessmentYourWorkerWillHaveAConversationWithYouAboutYo() {
         return new CWhenYouHaveCompletedThisAssessmentYourWorkerWillHaveAConversationWithYouAboutYo();
@@ -227,7 +206,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link OCANClientSelfAssessment }
-     *
      */
     public OCANClientSelfAssessment createOCANClientSelfAssessment() {
         return new OCANClientSelfAssessment();
@@ -235,7 +213,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link AnswerGroup }
-     *
      */
     public AnswerGroup createAnswerGroup() {
         return new AnswerGroup();
@@ -243,7 +220,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder }
-     *
      */
     public C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder createC19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder() {
         return new C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder();
@@ -251,7 +227,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven }
-     *
      */
     public CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven createCMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven() {
         return new CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven();
@@ -259,7 +234,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C18ChildCareDoYouHaveAnyChildrenUnder18 }
-     *
      */
     public C18ChildCareDoYouHaveAnyChildrenUnder18 createC18ChildCareDoYouHaveAnyChildrenUnder18() {
         return new C18ChildCareDoYouHaveAnyChildrenUnder18();
@@ -267,7 +241,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C5DaytimeActivitiesHowDoYouSpendYourDay }
-     *
      */
     public C5DaytimeActivitiesHowDoYouSpendYourDay createC5DaytimeActivitiesHowDoYouSpendYourDay() {
         return new C5DaytimeActivitiesHowDoYouSpendYourDay();
@@ -275,7 +248,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself }
-     *
      */
     public C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself createC10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself() {
         return new C10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourself();
@@ -283,7 +255,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome }
-     *
      */
     public C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome createC3LookingAfterTheHomeAreYouAbleToLookAfterYourHome() {
         return new C3LookingAfterTheHomeAreYouAbleToLookAfterYourHome();
@@ -291,7 +262,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed }
-     *
      */
     public C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed createC8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed() {
         return new C8InformationOnConditionAndTreatmentHaveYouBeenGivenClearInformationAboutYourMed();
@@ -299,7 +269,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C21TelephoneDoYouKnowHowToUseATelephone }
-     *
      */
     public C21TelephoneDoYouKnowHowToUseATelephone createC21TelephoneDoYouKnowHowToUseATelephone() {
         return new C21TelephoneDoYouKnowHowToUseATelephone();
@@ -307,7 +276,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C15CompanyAreYouHappyWithYourSocialLife }
-     *
      */
     public C15CompanyAreYouHappyWithYourSocialLife createC15CompanyAreYouHappyWithYourSocialLife() {
         return new C15CompanyAreYouHappyWithYourSocialLife();
@@ -315,7 +283,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy }
-     *
      */
     public C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy createC4SelfCareDoYouHaveProblemsKeepingCleanAndTidy() {
         return new C4SelfCareDoYouHaveProblemsKeepingCleanAndTidy();
@@ -323,7 +290,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety }
-     *
      */
     public C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety createC11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety() {
         return new C11SafetyToOthersDoYouThinkYouCouldBeADangerToOtherPeopleSSafety();
@@ -331,7 +297,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain }
-     *
      */
     public C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain createC22TransportHowDoYouFindUsingTheBusStreetcarOrTrain() {
         return new C22TransportHowDoYouFindUsingTheBusStreetcarOrTrain();
@@ -339,7 +304,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions }
-     *
      */
     public CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions createCPleaseWriteAFewSentencesToAnswerTheFollowingQuestions() {
         return new CPleaseWriteAFewSentencesToAnswerTheFollowingQuestions();
@@ -347,7 +311,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CMet_Need")
     public JAXBElement<String> createCMetNeed(String value) {
@@ -356,7 +319,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CComments__")
     public JAXBElement<String> createCComments(String value) {
@@ -365,7 +327,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CEnd_Date__")
     public JAXBElement<String> createCEndDate(String value) {
@@ -374,7 +335,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CIs_spirituality_an_important_part_of_your_life_")
     public JAXBElement<String> createCIsSpiritualityAnImportantPartOfYourLife(String value) {
@@ -383,7 +343,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CWhat_do_you_think_you_need_in_order_to_get_there_")
     public JAXBElement<String> createCWhatDoYouThinkYouNeedInOrderToGetThere(String value) {
@@ -392,7 +351,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CWhat_are_your_hopes_for_the_future_")
     public JAXBElement<String> createCWhatAreYourHopesForTheFuture(String value) {
@@ -401,7 +359,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CIs_culture__heritage__an_important_part_of_your_life_")
     public JAXBElement<String> createCIsCultureHeritageAnImportantPartOfYourLife(String value) {
@@ -410,7 +367,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CHow_do_you_view_your_mental_health_")
     public JAXBElement<String> createCHowDoYouViewYourMentalHealth(String value) {
@@ -419,7 +375,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CStart_Date__")
     public JAXBElement<String> createCStartDate(String value) {
@@ -428,7 +383,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CUnmet_Need")
     public JAXBElement<String> createCUnmetNeed(String value) {
@@ -437,7 +391,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CI_don_t_want_to_answer")
     public JAXBElement<String> createCIDonTWantToAnswer(String value) {
@@ -446,7 +399,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "", name = "CNo_Need")
     public JAXBElement<String> createCNoNeed(String value) {

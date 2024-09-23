@@ -29,7 +29,6 @@ import java.util.Date;
 
 /**
  * Class used by the HSFO Study
- *
  */
 public class VisitData {
 
@@ -134,7 +133,9 @@ public class VisitData {
     boolean locked;
 
 
-    /** Creates a new instance of VisitData */
+    /**
+     * Creates a new instance of VisitData
+     */
     public VisitData() {
     }
 

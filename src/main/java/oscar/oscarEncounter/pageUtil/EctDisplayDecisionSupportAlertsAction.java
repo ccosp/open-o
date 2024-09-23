@@ -59,7 +59,6 @@ import oscar.util.OscarRoleObjectPrivilege;
 import oscar.util.StringUtils;
 
 /**
- *
  * @author apavel
  */
 public class EctDisplayDecisionSupportAlertsAction extends EctDisplayAction {

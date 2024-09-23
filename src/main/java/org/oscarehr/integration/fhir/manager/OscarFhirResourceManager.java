@@ -55,7 +55,6 @@ import oscar.log.LogAction;
 public class OscarFhirResourceManager {
 
     /**
-     *
      * @param configurationManager
      * @param demographicNo
      * @return List<org.oscarehr.integration.fhir.model.Immunization < Prevention> >
@@ -89,7 +88,6 @@ public class OscarFhirResourceManager {
     }
 
     /**
-     *
      * @param configurationManager
      * @param preventionId
      * @return org.oscarehr.integration.fhir.model.Immunization<Prevention>
@@ -109,7 +107,6 @@ public class OscarFhirResourceManager {
     }
 
     /**
-     *
      * @param configurationManager
      * @param demographic_no
      * @return org.oscarehr.integration.fhir.model.Patient
@@ -129,7 +126,6 @@ public class OscarFhirResourceManager {
     }
 
     /**
-     *
      * @param configurationManager
      * @param hcn
      * @param hcnType
@@ -180,7 +176,6 @@ public class OscarFhirResourceManager {
     }
 
     /**
-     *
      * @param configurationManager
      * @param providerNo
      * @return org.oscarehr.integration.fhir.model.PerformingPractitioner
@@ -200,7 +195,6 @@ public class OscarFhirResourceManager {
     }
 
     /**
-     *
      * @param configurationManager
      * @param providerNo
      * @return org.oscarehr.integration.fhir.model.Practitioner
@@ -257,7 +251,6 @@ public class OscarFhirResourceManager {
     }
 
     /**
-     *
      * @param configurationManager
      * @param demographicNo
      * @return org.hl7.fhir.dstu3.model.Organization

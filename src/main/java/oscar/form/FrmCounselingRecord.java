@@ -36,7 +36,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author kimleanhoffman
  */
 

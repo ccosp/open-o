@@ -31,7 +31,6 @@
 package org.oscarehr.decisionSupport.model;
 
 /**
- *
  * @author apavel
  */
 public class DecisionSupportException extends Exception {

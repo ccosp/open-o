@@ -57,8 +57,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -85,10 +83,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Gets the value of the cAbuseNeglect property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCAbuseNeglect() {
         return cAbuseNeglect;
@@ -97,10 +93,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Sets the value of the cAbuseNeglect property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCAbuseNeglect(String value) {
         this.cAbuseNeglect = value;
@@ -109,10 +103,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Gets the value of the cAccidentalSelfHarm property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCAccidentalSelfHarm() {
         return cAccidentalSelfHarm;
@@ -121,10 +113,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Sets the value of the cAccidentalSelfHarm property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCAccidentalSelfHarm(String value) {
         this.cAccidentalSelfHarm = value;
@@ -133,10 +123,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Gets the value of the cDeliberateSelfHarm property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCDeliberateSelfHarm() {
         return cDeliberateSelfHarm;
@@ -145,10 +133,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Sets the value of the cDeliberateSelfHarm property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCDeliberateSelfHarm(String value) {
         this.cDeliberateSelfHarm = value;
@@ -157,10 +143,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Gets the value of the cExploitationRisk property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCExploitationRisk() {
         return cExploitationRisk;
@@ -169,10 +153,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Sets the value of the cExploitationRisk property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCExploitationRisk(String value) {
         this.cExploitationRisk = value;
@@ -181,10 +163,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Gets the value of the cOther property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCOther() {
         return cOther;
@@ -193,10 +173,8 @@ public class CRisksSelectAllThatApply {
     /**
      * Sets the value of the cOther property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCOther(String value) {
         this.cOther = value;

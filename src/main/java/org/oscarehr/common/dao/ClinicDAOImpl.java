@@ -35,7 +35,6 @@ import org.oscarehr.common.model.Clinic;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author Jason Gallagher
  */
 @Repository

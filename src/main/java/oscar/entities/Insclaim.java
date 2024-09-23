@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table insclaim
- *
  */
 public class Insclaim {
     private String insclaimno;
@@ -73,36 +72,36 @@ public class Insclaim {
      *
      * @param insclaimno String
      * @param insclaimnm String
-     * @param ptrecid String
-     * @param insurer String
-     * @param rank String
-     * @param rcploc String
-     * @param pppayee int
-     * @param idnum String
-     * @param claimnum String
-     * @param code String
+     * @param ptrecid    String
+     * @param insurer    String
+     * @param rank       String
+     * @param rcploc     String
+     * @param pppayee    int
+     * @param idnum      String
+     * @param claimnum   String
+     * @param code       String
      * @param indefinite int
-     * @param resetdate String
-     * @param termStart String
-     * @param termEnd String
-     * @param percent double
-     * @param deductI double
-     * @param vchargeI double
-     * @param deductT double
-     * @param maxDI double
-     * @param maxDTerm double
-     * @param maxITerm int
-     * @param prevInv int
-     * @param invCount int
-     * @param dolCount double
-     * @param dedCount double
-     * @param mdno String
-     * @param refmdno String
-     * @param backupins String
+     * @param resetdate  String
+     * @param termStart  String
+     * @param termEnd    String
+     * @param percent    double
+     * @param deductI    double
+     * @param vchargeI   double
+     * @param deductT    double
+     * @param maxDI      double
+     * @param maxDTerm   double
+     * @param maxITerm   int
+     * @param prevInv    int
+     * @param invCount   int
+     * @param dolCount   double
+     * @param dedCount   double
+     * @param mdno       String
+     * @param refmdno    String
+     * @param backupins  String
      * @param injurydate String
      * @param injuryarea String
-     * @param injurypos String
-     * @param injurynat String
+     * @param injurypos  String
+     * @param injurynat  String
      */
     public Insclaim(String insclaimno, String insclaimnm, String ptrecid,
                     String insurer, String rank, String rcploc, int pppayee,
@@ -152,6 +151,7 @@ public class Insclaim {
 
     /**
      * Gets the insclaimno
+     *
      * @return String insclaimno
      */
     public String getInsclaimno() {
@@ -160,6 +160,7 @@ public class Insclaim {
 
     /**
      * Gets the insclaimnm
+     *
      * @return String insclaimnm
      */
     public String getInsclaimnm() {
@@ -168,6 +169,7 @@ public class Insclaim {
 
     /**
      * Gets the ptrecid
+     *
      * @return String ptrecid
      */
     public String getPtrecid() {
@@ -176,6 +178,7 @@ public class Insclaim {
 
     /**
      * Gets the insurer
+     *
      * @return String insurer
      */
     public String getInsurer() {
@@ -184,6 +187,7 @@ public class Insclaim {
 
     /**
      * Gets the rank
+     *
      * @return String rank
      */
     public String getRank() {
@@ -192,6 +196,7 @@ public class Insclaim {
 
     /**
      * Gets the rcploc
+     *
      * @return String rcploc
      */
     public String getRcploc() {
@@ -200,6 +205,7 @@ public class Insclaim {
 
     /**
      * Gets the pppayee
+     *
      * @return int pppayee
      */
     public int getPppayee() {
@@ -208,6 +214,7 @@ public class Insclaim {
 
     /**
      * Gets the idnum
+     *
      * @return String idnum
      */
     public String getIdnum() {
@@ -216,6 +223,7 @@ public class Insclaim {
 
     /**
      * Gets the claimnum
+     *
      * @return String claimnum
      */
     public String getClaimnum() {
@@ -224,6 +232,7 @@ public class Insclaim {
 
     /**
      * Gets the code
+     *
      * @return String code
      */
     public String getCode() {
@@ -232,6 +241,7 @@ public class Insclaim {
 
     /**
      * Gets the indefinite
+     *
      * @return int indefinite
      */
     public int getIndefinite() {
@@ -240,6 +250,7 @@ public class Insclaim {
 
     /**
      * Gets the resetdate
+     *
      * @return String resetdate
      */
     public String getResetdate() {
@@ -248,6 +259,7 @@ public class Insclaim {
 
     /**
      * Gets the termStart
+     *
      * @return String termStart
      */
     public String getTermStart() {
@@ -256,6 +268,7 @@ public class Insclaim {
 
     /**
      * Gets the termEnd
+     *
      * @return String termEnd
      */
     public String getTermEnd() {
@@ -264,6 +277,7 @@ public class Insclaim {
 
     /**
      * Gets the percent
+     *
      * @return double percent
      */
     public double getPercent() {
@@ -272,6 +286,7 @@ public class Insclaim {
 
     /**
      * Gets the deductI
+     *
      * @return double deductI
      */
     public double getDeductI() {
@@ -280,6 +295,7 @@ public class Insclaim {
 
     /**
      * Gets the vchargeI
+     *
      * @return double vchargeI
      */
     public double getVchargeI() {
@@ -288,6 +304,7 @@ public class Insclaim {
 
     /**
      * Gets the deductT
+     *
      * @return double deductT
      */
     public double getDeductT() {
@@ -296,6 +313,7 @@ public class Insclaim {
 
     /**
      * Gets the maxDI
+     *
      * @return double maxDI
      */
     public double getMaxDI() {
@@ -304,6 +322,7 @@ public class Insclaim {
 
     /**
      * Gets the maxDTerm
+     *
      * @return double maxDTerm
      */
     public double getMaxDTerm() {
@@ -312,6 +331,7 @@ public class Insclaim {
 
     /**
      * Gets the maxITerm
+     *
      * @return int maxITerm
      */
     public int getMaxITerm() {
@@ -320,6 +340,7 @@ public class Insclaim {
 
     /**
      * Gets the prevInv
+     *
      * @return int prevInv
      */
     public int getPrevInv() {
@@ -328,6 +349,7 @@ public class Insclaim {
 
     /**
      * Gets the invCount
+     *
      * @return int invCount
      */
     public int getInvCount() {
@@ -336,6 +358,7 @@ public class Insclaim {
 
     /**
      * Gets the dolCount
+     *
      * @return double dolCount
      */
     public double getDolCount() {
@@ -344,6 +367,7 @@ public class Insclaim {
 
     /**
      * Gets the dedCount
+     *
      * @return double dedCount
      */
     public double getDedCount() {
@@ -352,6 +376,7 @@ public class Insclaim {
 
     /**
      * Gets the mdno
+     *
      * @return String mdno
      */
     public String getMdno() {
@@ -360,6 +385,7 @@ public class Insclaim {
 
     /**
      * Gets the refmdno
+     *
      * @return String refmdno
      */
     public String getRefmdno() {
@@ -368,6 +394,7 @@ public class Insclaim {
 
     /**
      * Gets the backupins
+     *
      * @return String backupins
      */
     public String getBackupins() {
@@ -376,6 +403,7 @@ public class Insclaim {
 
     /**
      * Gets the injurydate
+     *
      * @return String injurydate
      */
     public String getInjurydate() {
@@ -384,6 +412,7 @@ public class Insclaim {
 
     /**
      * Gets the injuryarea
+     *
      * @return String injuryarea
      */
     public String getInjuryarea() {
@@ -392,6 +421,7 @@ public class Insclaim {
 
     /**
      * Gets the injurypos
+     *
      * @return String injurypos
      */
     public String getInjurypos() {
@@ -400,6 +430,7 @@ public class Insclaim {
 
     /**
      * Gets the injurynat
+     *
      * @return String injurynat
      */
     public String getInjurynat() {
@@ -408,6 +439,7 @@ public class Insclaim {
 
     /**
      * Sets the insclaimno
+     *
      * @param insclaimno String
      */
     public void setInsclaimno(String insclaimno) {
@@ -416,6 +448,7 @@ public class Insclaim {
 
     /**
      * Sets the insclaimnm
+     *
      * @param insclaimnm String
      */
     public void setInsclaimnm(String insclaimnm) {
@@ -424,6 +457,7 @@ public class Insclaim {
 
     /**
      * Sets the ptrecid
+     *
      * @param ptrecid String
      */
     public void setPtrecid(String ptrecid) {
@@ -432,6 +466,7 @@ public class Insclaim {
 
     /**
      * Sets the insurer
+     *
      * @param insurer String
      */
     public void setInsurer(String insurer) {
@@ -440,6 +475,7 @@ public class Insclaim {
 
     /**
      * Sets the rank
+     *
      * @param rank String
      */
     public void setRank(String rank) {
@@ -448,6 +484,7 @@ public class Insclaim {
 
     /**
      * Sets the rcploc
+     *
      * @param rcploc String
      */
     public void setRcploc(String rcploc) {
@@ -456,6 +493,7 @@ public class Insclaim {
 
     /**
      * Sets the pppayee
+     *
      * @param pppayee int
      */
     public void setPppayee(int pppayee) {
@@ -464,6 +502,7 @@ public class Insclaim {
 
     /**
      * Sets the idnum
+     *
      * @param idnum String
      */
     public void setIdnum(String idnum) {
@@ -472,6 +511,7 @@ public class Insclaim {
 
     /**
      * Sets the claimnum
+     *
      * @param claimnum String
      */
     public void setClaimnum(String claimnum) {
@@ -480,6 +520,7 @@ public class Insclaim {
 
     /**
      * Sets the code
+     *
      * @param code String
      */
     public void setCode(String code) {
@@ -488,6 +529,7 @@ public class Insclaim {
 
     /**
      * Sets the indefinite
+     *
      * @param indefinite int
      */
     public void setIndefinite(int indefinite) {
@@ -496,6 +538,7 @@ public class Insclaim {
 
     /**
      * Sets the resetdate
+     *
      * @param resetdate String
      */
     public void setResetdate(String resetdate) {
@@ -504,6 +547,7 @@ public class Insclaim {
 
     /**
      * Sets the termStart
+     *
      * @param termStart String
      */
     public void setTermStart(String termStart) {
@@ -512,6 +556,7 @@ public class Insclaim {
 
     /**
      * Sets the termEnd
+     *
      * @param termEnd String
      */
     public void setTermEnd(String termEnd) {
@@ -520,6 +565,7 @@ public class Insclaim {
 
     /**
      * Sets the percent
+     *
      * @param percent double
      */
     public void setPercent(double percent) {
@@ -528,6 +574,7 @@ public class Insclaim {
 
     /**
      * Sets the deductI
+     *
      * @param deductI double
      */
     public void setDeductI(double deductI) {
@@ -536,6 +583,7 @@ public class Insclaim {
 
     /**
      * Sets the vchargeI
+     *
      * @param vchargeI double
      */
     public void setVchargeI(double vchargeI) {
@@ -544,6 +592,7 @@ public class Insclaim {
 
     /**
      * Sets the deductT
+     *
      * @param deductT double
      */
     public void setDeductT(double deductT) {
@@ -552,6 +601,7 @@ public class Insclaim {
 
     /**
      * Sets the maxDI
+     *
      * @param maxDI double
      */
     public void setMaxDI(double maxDI) {
@@ -560,6 +610,7 @@ public class Insclaim {
 
     /**
      * Sets the maxDTerm
+     *
      * @param maxDTerm double
      */
     public void setMaxDTerm(double maxDTerm) {
@@ -568,6 +619,7 @@ public class Insclaim {
 
     /**
      * Sets the maxITerm
+     *
      * @param maxITerm int
      */
     public void setMaxITerm(int maxITerm) {
@@ -576,6 +628,7 @@ public class Insclaim {
 
     /**
      * Sets the prevInv
+     *
      * @param prevInv int
      */
     public void setPrevInv(int prevInv) {
@@ -584,6 +637,7 @@ public class Insclaim {
 
     /**
      * Sets the invCount
+     *
      * @param invCount int
      */
     public void setInvCount(int invCount) {
@@ -592,6 +646,7 @@ public class Insclaim {
 
     /**
      * Sets the dolCount
+     *
      * @param dolCount double
      */
     public void setDolCount(double dolCount) {
@@ -600,6 +655,7 @@ public class Insclaim {
 
     /**
      * Sets the dedCount
+     *
      * @param dedCount double
      */
     public void setDedCount(double dedCount) {
@@ -608,6 +664,7 @@ public class Insclaim {
 
     /**
      * Sets the mdno
+     *
      * @param mdno String
      */
     public void setMdno(String mdno) {
@@ -616,6 +673,7 @@ public class Insclaim {
 
     /**
      * Sets the refmdno
+     *
      * @param refmdno String
      */
     public void setRefmdno(String refmdno) {
@@ -624,6 +682,7 @@ public class Insclaim {
 
     /**
      * Sets the backupins
+     *
      * @param backupins String
      */
     public void setBackupins(String backupins) {
@@ -632,6 +691,7 @@ public class Insclaim {
 
     /**
      * Sets the injurydate
+     *
      * @param injurydate String
      */
     public void setInjurydate(String injurydate) {
@@ -640,6 +700,7 @@ public class Insclaim {
 
     /**
      * Sets the injuryarea
+     *
      * @param injuryarea String
      */
     public void setInjuryarea(String injuryarea) {
@@ -648,6 +709,7 @@ public class Insclaim {
 
     /**
      * Sets the injurypos
+     *
      * @param injurypos String
      */
     public void setInjurypos(String injurypos) {
@@ -656,6 +718,7 @@ public class Insclaim {
 
     /**
      * Sets the injurynat
+     *
      * @param injurynat String
      */
     public void setInjurynat(String injurynat) {

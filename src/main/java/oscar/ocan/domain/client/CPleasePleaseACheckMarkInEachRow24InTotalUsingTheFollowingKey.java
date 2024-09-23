@@ -55,8 +55,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -77,10 +75,8 @@ public class CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey {
     /**
      * Gets the value of the cNoNeedThisAreaIsNotASeriousProblemForMeAtAll property.
      *
-     * @return
-     *     possible object is
-     *     {@link CNoNeedThisAreaIsNotASeriousProblemForMeAtAll }
-     *
+     * @return possible object is
+     * {@link CNoNeedThisAreaIsNotASeriousProblemForMeAtAll }
      */
     public CNoNeedThisAreaIsNotASeriousProblemForMeAtAll getCNoNeedThisAreaIsNotASeriousProblemForMeAtAll() {
         return cNoNeedThisAreaIsNotASeriousProblemForMeAtAll;
@@ -89,10 +85,8 @@ public class CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey {
     /**
      * Sets the value of the cNoNeedThisAreaIsNotASeriousProblemForMeAtAll property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CNoNeedThisAreaIsNotASeriousProblemForMeAtAll }
-     *
+     * @param value allowed object is
+     *              {@link CNoNeedThisAreaIsNotASeriousProblemForMeAtAll }
      */
     public void setCNoNeedThisAreaIsNotASeriousProblemForMeAtAll(CNoNeedThisAreaIsNotASeriousProblemForMeAtAll value) {
         this.cNoNeedThisAreaIsNotASeriousProblemForMeAtAll = value;
@@ -101,10 +95,8 @@ public class CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey {
     /**
      * Gets the value of the cMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven property.
      *
-     * @return
-     *     possible object is
-     *     {@link CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven }
-     *
+     * @return possible object is
+     * {@link CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven }
      */
     public CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven getCMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven() {
         return cMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven;
@@ -113,10 +105,8 @@ public class CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey {
     /**
      * Sets the value of the cMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven }
-     *
+     * @param value allowed object is
+     *              {@link CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven }
      */
     public void setCMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven(CMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven value) {
         this.cMetNeedThisAreaIsNotASeriousProblemForMeBecauseOfTheHelpIAmGiven = value;
@@ -125,10 +115,8 @@ public class CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey {
     /**
      * Gets the value of the cUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven property.
      *
-     * @return
-     *     possible object is
-     *     {@link CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven }
-     *
+     * @return possible object is
+     * {@link CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven }
      */
     public CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven getCUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven() {
         return cUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven;
@@ -137,10 +125,8 @@ public class CPleasePleaseACheckMarkInEachRow24InTotalUsingTheFollowingKey {
     /**
      * Sets the value of the cUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven }
-     *
+     * @param value allowed object is
+     *              {@link CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven }
      */
     public void setCUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven(CUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven value) {
         this.cUnmetNeedThisAreaRemainsASeriousProblemForMeDespiteAnyHelpThatIAmGiven = value;

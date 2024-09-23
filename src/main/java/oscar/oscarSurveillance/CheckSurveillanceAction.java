@@ -49,13 +49,14 @@ import org.oscarehr.util.MiscUtils;
 
 
 /**
- *
  * @author Jay Gallagher
  */
 public class CheckSurveillanceAction extends Action {
     private static Logger log = MiscUtils.getLogger();
 
-    /** Creates a new instance of checkSurveillanceAction */
+    /**
+     * Creates a new instance of checkSurveillanceAction
+     */
     public CheckSurveillanceAction() {
     }
 

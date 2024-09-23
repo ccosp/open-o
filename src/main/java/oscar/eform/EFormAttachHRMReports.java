@@ -38,7 +38,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 
 /**
- *
  * @author rjonasz
  */
 public class EFormAttachHRMReports {
@@ -53,7 +52,9 @@ public class EFormAttachHRMReports {
     private String consultationId;
     private ArrayList<String> hrmReports;
 
-    /** Creates a new instance of ConsultationAttachLabs */
+    /**
+     * Creates a new instance of ConsultationAttachLabs
+     */
     public EFormAttachHRMReports(String providerNumberToAttach, String demographicNumberToAttach, String consultationIdToAttach, String[] hrmReportsToAttach) {
         providerNumber = providerNumberToAttach;
         demographicNumber = demographicNumberToAttach;

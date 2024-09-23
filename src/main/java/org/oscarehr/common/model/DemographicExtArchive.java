@@ -88,6 +88,7 @@ public class DemographicExtArchive extends AbstractModel<Integer> implements Ser
 
     /**
      * Set the value related to the column: demographic_no
+     *
      * @param demographicNo the demographic_no value
      */
     public void setDemographicNo(Integer demographicNo) {
@@ -103,6 +104,7 @@ public class DemographicExtArchive extends AbstractModel<Integer> implements Ser
 
     /**
      * Set the value related to the column: provider_no
+     *
      * @param providerNo the provider_no value
      */
     public void setProviderNo(String providerNo) {
@@ -118,6 +120,7 @@ public class DemographicExtArchive extends AbstractModel<Integer> implements Ser
 
     /**
      * Set the value related to the column: key_val
+     *
      * @param key the key_val value
      */
     public void setKey(String key) {
@@ -133,6 +136,7 @@ public class DemographicExtArchive extends AbstractModel<Integer> implements Ser
 
     /**
      * Set the value related to the column: value
+     *
      * @param value the value value
      */
     public void setValue(String value) {
@@ -148,6 +152,7 @@ public class DemographicExtArchive extends AbstractModel<Integer> implements Ser
 
     /**
      * Set the value related to the column: date_time
+     *
      * @param dateCreated the date_time value
      */
     public void setDateCreated(java.util.Date dateCreated) {
@@ -163,6 +168,7 @@ public class DemographicExtArchive extends AbstractModel<Integer> implements Ser
 
     /**
      * Set the value related to the column: hidden
+     *
      * @param hidden the hidden value
      */
     public void setHidden(boolean hidden) {

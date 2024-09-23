@@ -48,6 +48,7 @@ import java.util.List;
 
 /**
  * Manages Surveys currently loaded
+ *
  * @author Jay Gallagher
  */
 public class SurveillanceMaster {
@@ -61,6 +62,7 @@ public class SurveillanceMaster {
 
     /**
      * Return boolean value whether the initSurvey method has been called to configure the SurveillanceMaster
+     *
      * @return true if initSurvey has been called false if it hasn't
      */
     public static boolean isLoaded() {
@@ -80,6 +82,7 @@ public class SurveillanceMaster {
 
     /**
      * used to get an Instance of SurveillanceMaster
+     *
      * @return Instance of SurveillanceMaster
      */
     public static SurveillanceMaster getInstance() {
@@ -91,6 +94,7 @@ public class SurveillanceMaster {
 
     /**
      * Used to get the Survey Class for a SurveyId
+     *
      * @param surveyId id of the survey
      * @return survey with id of surveyId
      */
@@ -98,7 +102,9 @@ public class SurveillanceMaster {
         return (Survey) surveyTable.get(surveyId);
     }
 
-    /** Creates a new instance of SurveillanceMaster */
+    /**
+     * Creates a new instance of SurveillanceMaster
+     */
     protected SurveillanceMaster() {
         log.debug("SurveillanceMaster Initialized");
 
@@ -106,6 +112,7 @@ public class SurveillanceMaster {
 
     /**
      * Get all survey classes currently loaded
+     *
      * @return Collection of Survey Classes
      */
     public ArrayList<Survey> getCurrentSurveys() {
@@ -121,6 +128,7 @@ public class SurveillanceMaster {
 
     /**
      * Add a survey to the list of currently run surveys
+     *
      * @param s Survey
      */
     public static void addSurvey(Survey s) {
@@ -134,6 +142,7 @@ public class SurveillanceMaster {
 
     /**
      * Find the number of surveys currently loaded
+     *
      * @return number of surveys loaded
      */
     public static int numSurveys() {
@@ -158,6 +167,7 @@ public class SurveillanceMaster {
 
     /**
      * Find if any surveys are available
+     *
      * @return true if there are surveys loaded false if none
      */
     public static boolean surveysEmpty() {
@@ -171,24 +181,24 @@ public class SurveillanceMaster {
     /**
      * Load surveys from the survey config file.  Name of the file is define in the oscar.properties file.
      * the Key is: surveillance_config_file
-     *
+     * <p>
      * XML format ex
-     <PRE>
-
-     <surveillance-config>
-     <survey surveyTitle="Flu Survey 2004 / 2005 survey" randomness="10" period="1" surveyId="flu04">
-     <surveyQuestion>Does the patient have sore throat, arthralgia, myalgia, or prostration which could be due to influenza virus.</surveyQuestion>
-     <provider>999998</provider>
-     <provider>999999</provider>
-     <answer status="D" value="">Ask Later</answer>
-     <answer status="A" value="Y">Yes</answer>
-     <answer status="A" value="N">No</answer>
-     <answer status="A" value="R">Don't Ask Again</answer>
-     </survey>
-     </surveillance-config>
-     *     </PRE>
+     * <PRE>
+     * <p>
+     * <surveillance-config>
+     * <survey surveyTitle="Flu Survey 2004 / 2005 survey" randomness="10" period="1" surveyId="flu04">
+     * <surveyQuestion>Does the patient have sore throat, arthralgia, myalgia, or prostration which could be due to influenza virus.</surveyQuestion>
+     * <provider>999998</provider>
+     * <provider>999999</provider>
+     * <answer status="D" value="">Ask Later</answer>
+     * <answer status="A" value="Y">Yes</answer>
+     * <answer status="A" value="N">No</answer>
+     * <answer status="A" value="R">Don't Ask Again</answer>
+     * </survey>
+     * </surveillance-config>
+     * </PRE>
      * More than one survey element can be defined
-     *
+     * <p>
      * surveyTitle.....Title of the survey, This will display at the top of the page.
      * randomness......The random sample to be selected ie 10 = 1 in 10
      * period..........The number of days not include this patient in the survey once they have been asked.
@@ -196,8 +206,8 @@ public class SurveillanceMaster {
      * surveyQuestion..Question of the survey,  This will display under the title of the survey on the page.
      * provider........One element for each provider paticipating in the survey. Provider will not be include in the survey if they are not defined.
      * answer..........Possible answer of the survey. Each element with display on the page as a button
-     *   status.......Status of the question when answered. A = answered , D = deffered, When a question is deffered it will be asked again without effecting the random sample.
-     *   value........Short form of the question answer.  Used to run queries on results.
+     * status.......Status of the question when answered. A = answered , D = deffered, When a question is deffered it will be asked again without effecting the random sample.
+     * value........Short form of the question answer.  Used to run queries on results.
      */
     public static void initSurvey() {
 

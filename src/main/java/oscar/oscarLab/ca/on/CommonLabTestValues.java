@@ -54,7 +54,6 @@ import oscar.util.ConversionUtils;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class CommonLabTestValues {
@@ -212,10 +211,10 @@ public class CommonLabTestValues {
     }
 
     /**
-     *  Returns hashtables with the following characteristics
-     *  //first field is lab_no,
-     *  //second field is result
-     *  //third field is observation date
+     * Returns hashtables with the following characteristics
+     * //first field is lab_no,
+     * //second field is result
+     * //third field is observation date
      */
     public static ArrayList<Hashtable<String, Serializable>> findValuesByLoinc(String demographicNo, String loincCode) {
         ArrayList<Hashtable<String, Serializable>> labList = new ArrayList<Hashtable<String, Serializable>>();
@@ -264,7 +263,8 @@ public class CommonLabTestValues {
         return labList;
     }
 
-    /**Returns hashtable with the following characteristics
+    /**
+     * Returns hashtable with the following characteristics
      * //first field is testName,
      * //second field is abn : abnormal or normal, A or N
      * //third field is result
@@ -513,7 +513,8 @@ public class CommonLabTestValues {
         return id.substring(carrotIndex + 1);
     }
 
-    /**Returns hashtable with the following characteristics
+    /**
+     * Returns hashtable with the following characteristics
      * //first field is testName,
      * //second field is abn : abnormal or normal, A or N
      * //third field is result

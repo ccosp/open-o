@@ -64,7 +64,6 @@ import oscar.oscarBilling.ca.on.data.JdbcBilling3rdPartImpl;
 
 
 /**
- *
  * @author rjonasz
  */
 public class BillingONPaymentsAction extends DispatchAction {

@@ -52,7 +52,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig;
 
 /**
- *
  * @author wrighd
  */
 public class EctAddMeasurementMapAction extends Action {
@@ -61,7 +60,9 @@ public class EctAddMeasurementMapAction extends Action {
     private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
 
-    /** Creates a new instance of EctEditMeasurementMapAction */
+    /**
+     * Creates a new instance of EctEditMeasurementMapAction
+     */
     public EctAddMeasurementMapAction() {
     }
 

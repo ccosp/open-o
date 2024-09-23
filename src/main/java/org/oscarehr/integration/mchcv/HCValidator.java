@@ -36,13 +36,15 @@ public interface HCValidator {
 
     /**
      * Validates swipe card of demographics
+     *
      * @param healthCardNumber number of health card
-     * @param versionCode version code
+     * @param versionCode      version code
      */
     HCValidationResult validate(String healthCardNumber, String versionCode);
 
     /**
      * Validate a single HIN based and a specific service fee code.
+     *
      * @param healthCardNumber
      * @param versionCode
      * @param serviceCode
@@ -52,8 +54,9 @@ public interface HCValidator {
 
     /**
      * Validates a batch of HIN
+     *
      * @param requests list of HcvRequest objects
-     * @param local local
+     * @param local    local
      */
     HcvResults validate(Requests requests, String local) throws Faultexception;
 
@@ -64,6 +67,7 @@ public interface HCValidator {
 
     /**
      * Create an object that contains a single HCValidation result.
+     *
      * @param results
      * @param index
      */

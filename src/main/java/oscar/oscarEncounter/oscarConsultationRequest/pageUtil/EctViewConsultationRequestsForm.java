@@ -54,6 +54,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Getter for property startDate.
+     *
      * @return Value of property startDate.
      */
     public java.lang.String getStartDate() {
@@ -62,6 +63,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Setter for property startDate.
+     *
      * @param startDate New value of property startDate.
      */
     public void setStartDate(java.lang.String startDate) {
@@ -70,6 +72,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Getter for property endDate.
+     *
      * @return Value of property endDate.
      */
     public java.lang.String getEndDate() {
@@ -78,6 +81,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Setter for property endDate.
+     *
      * @param endDate New value of property endDate.
      */
     public void setEndDate(java.lang.String endDate) {
@@ -86,6 +90,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Getter for property includeCompleted.
+     *
      * @return Value of property includeCompleted.
      */
     public java.lang.String getIncludeCompleted() {
@@ -94,6 +99,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Setter for property includeCompleted.
+     *
      * @param includeCompleted New value of property includeCompleted.
      */
     public void setIncludeCompleted(java.lang.String includeCompleted) {
@@ -102,6 +108,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Getter for property orderby.
+     *
      * @return Value of property orderby.
      */
     public java.lang.String getOrderby() {
@@ -110,6 +117,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Setter for property orderby.
+     *
      * @param orderby New value of property orderby.
      */
     public void setOrderby(java.lang.String orderby) {
@@ -118,6 +126,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Getter for property desc.
+     *
      * @return Value of property desc.
      */
     public java.lang.String getDesc() {
@@ -126,6 +135,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Setter for property desc.
+     *
      * @param desc New value of property desc.
      */
     public void setDesc(java.lang.String desc) {
@@ -134,6 +144,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Getter for property searchDate.
+     *
      * @return Value of property searchDate.
      */
     public java.lang.String getSearchDate() {
@@ -145,6 +156,7 @@ public final class EctViewConsultationRequestsForm extends ActionForm {
 
     /**
      * Setter for property searchDate.
+     *
      * @param searchDate New value of property searchDate.
      */
     public void setSearchDate(java.lang.String searchDate) {

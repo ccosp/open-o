@@ -85,8 +85,8 @@ public class IntakeAnswerElement implements Comparable<IntakeAnswerElement>, Ser
 
     /**
      * Return the unique identifier of this class
-     *
-     *  generator-class="native" column="intake_answer_element_id"
+     * <p>
+     * generator-class="native" column="intake_answer_element_id"
      */
     public Integer getId() {
         return id;
@@ -95,8 +95,7 @@ public class IntakeAnswerElement implements Comparable<IntakeAnswerElement>, Ser
     /**
      * Set the unique identifier of this class
      *
-     * @param id
-     *            the new ID
+     * @param id the new ID
      */
     public void setId(Integer id) {
         this.id = id;
@@ -113,8 +112,7 @@ public class IntakeAnswerElement implements Comparable<IntakeAnswerElement>, Ser
     /**
      * Set the value related to the column: dflt
      *
-     * @param m_default
-     *            the dflt value
+     * @param m_default the dflt value
      */
     public void setDefault(boolean m_default) {
         this.m_default = m_default;
@@ -130,8 +128,7 @@ public class IntakeAnswerElement implements Comparable<IntakeAnswerElement>, Ser
     /**
      * Set the value related to the column: element
      *
-     * @param element
-     *            the element value
+     * @param element the element value
      */
     public void setElement(String element) {
         this.element = element;
@@ -155,8 +152,7 @@ public class IntakeAnswerElement implements Comparable<IntakeAnswerElement>, Ser
     /**
      * Set the value related to the column: intake_node_template_id
      *
-     * @param nodeTemplate
-     *            the intake_node_template_id value
+     * @param nodeTemplate the intake_node_template_id value
      */
     public void setNodeTemplate(IntakeNodeTemplate nodeTemplate) {
         this.nodeTemplate = nodeTemplate;
@@ -172,8 +168,7 @@ public class IntakeAnswerElement implements Comparable<IntakeAnswerElement>, Ser
     /**
      * Set the value related to the column: intake_answer_validation_id
      *
-     * @param validation
-     *            the intake_answer_validation_id value
+     * @param validation the intake_answer_validation_id value
      */
     public void setValidation(IntakeAnswerValidation validation) {
         this.validation = validation;

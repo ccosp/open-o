@@ -49,7 +49,6 @@ import oscar.oscarBilling.ca.bc.data.BillingmasterDAO;
 import oscar.oscarProvider.data.ProviderData;
 
 /**
- *
  * @author jay
  */
 public class TeleplanFileWriter {
@@ -72,7 +71,9 @@ public class TeleplanFileWriter {
 
     public CheckBillingData checkData = new CheckBillingData();
 
-    /** Creates a new instance of TeleplanFileWriter */
+    /**
+     * Creates a new instance of TeleplanFileWriter
+     */
     public TeleplanFileWriter() {
         mspFileStr = new StringBuilder();
         mspHtmlStr = new StringBuilder();

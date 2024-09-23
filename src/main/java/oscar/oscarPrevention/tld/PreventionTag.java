@@ -41,7 +41,6 @@ import oscar.oscarPrevention.PreventionData;
 
 
 /**
- *
  * @author Jay Gallagher
  */
 public class PreventionTag extends TagSupport {

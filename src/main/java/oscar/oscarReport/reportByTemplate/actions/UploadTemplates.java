@@ -51,7 +51,6 @@ import org.oscarehr.util.MiscUtils;
 import oscar.oscarReport.reportByTemplate.ReportManager;
 
 /**
- *
  * @author apavel (Paul)
  */
 public class UploadTemplates extends Action {

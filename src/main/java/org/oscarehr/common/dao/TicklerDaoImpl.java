@@ -222,13 +222,11 @@ public class TicklerDaoImpl extends AbstractDaoImpl<Tickler> implements TicklerD
 
 
     /**
-     * @Deprecated
-     *
-     * Get Ticklers.
-     *
-     * Warning..this will limit you to TicklerDao.MAX_LIST_RETURN_SIZE
      * @param filter
      * @return
+     * @Deprecated Get Ticklers.
+     * <p>
+     * Warning..this will limit you to TicklerDao.MAX_LIST_RETURN_SIZE
      */
     @Override
     public List<Tickler> getTicklers(CustomFilter filter) {
@@ -254,6 +252,7 @@ public class TicklerDaoImpl extends AbstractDaoImpl<Tickler> implements TicklerD
 
     /**
      * selectQuery is in the form of "SELECT t"
+     *
      * @param selectQuery
      * @param paramList
      * @param filter

@@ -35,6 +35,7 @@ import org.oscarehr.util.MiscUtils;
 
 /**
  * Flowsheet recommendation class
+ *
  * @author jaygallagher
  */
 public class Recommendation {

@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Placer Group Number
- * @author jen
  *
+ * @author jen
  */
 public class ORC4 implements Parameter {
 

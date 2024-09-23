@@ -30,7 +30,6 @@
 package oscar.service;
 
 /**
- *
  * @author mweston4
  */
 public interface MessageMailer {

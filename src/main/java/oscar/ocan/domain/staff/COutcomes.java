@@ -61,8 +61,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -101,10 +99,8 @@ public class COutcomes {
     /**
      * Gets the value of the cChargesWithdrawn property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCChargesWithdrawn() {
         return cChargesWithdrawn;
@@ -113,10 +109,8 @@ public class COutcomes {
     /**
      * Sets the value of the cChargesWithdrawn property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCChargesWithdrawn(String value) {
         this.cChargesWithdrawn = value;
@@ -125,10 +119,8 @@ public class COutcomes {
     /**
      * Gets the value of the cStayOfProceedings property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCStayOfProceedings() {
         return cStayOfProceedings;
@@ -137,10 +129,8 @@ public class COutcomes {
     /**
      * Sets the value of the cStayOfProceedings property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCStayOfProceedings(String value) {
         this.cStayOfProceedings = value;
@@ -149,10 +139,8 @@ public class COutcomes {
     /**
      * Gets the value of the cAwaitingSentence property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCAwaitingSentence() {
         return cAwaitingSentence;
@@ -161,10 +149,8 @@ public class COutcomes {
     /**
      * Sets the value of the cAwaitingSentence property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCAwaitingSentence(String value) {
         this.cAwaitingSentence = value;
@@ -173,10 +159,8 @@ public class COutcomes {
     /**
      * Gets the value of the cncr property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCNCR() {
         return cncr;
@@ -185,10 +169,8 @@ public class COutcomes {
     /**
      * Sets the value of the cncr property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCNCR(String value) {
         this.cncr = value;
@@ -197,10 +179,8 @@ public class COutcomes {
     /**
      * Gets the value of the cConditionalDischarge property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCConditionalDischarge() {
         return cConditionalDischarge;
@@ -209,10 +189,8 @@ public class COutcomes {
     /**
      * Sets the value of the cConditionalDischarge property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCConditionalDischarge(String value) {
         this.cConditionalDischarge = value;
@@ -221,10 +199,8 @@ public class COutcomes {
     /**
      * Gets the value of the cConditionalSentence property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCConditionalSentence() {
         return cConditionalSentence;
@@ -233,10 +209,8 @@ public class COutcomes {
     /**
      * Sets the value of the cConditionalSentence property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCConditionalSentence(String value) {
         this.cConditionalSentence = value;
@@ -245,10 +219,8 @@ public class COutcomes {
     /**
      * Gets the value of the cRestrainingOrder property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCRestrainingOrder() {
         return cRestrainingOrder;
@@ -257,10 +229,8 @@ public class COutcomes {
     /**
      * Sets the value of the cRestrainingOrder property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCRestrainingOrder(String value) {
         this.cRestrainingOrder = value;
@@ -269,10 +239,8 @@ public class COutcomes {
     /**
      * Gets the value of the cPeaceBond property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCPeaceBond() {
         return cPeaceBond;
@@ -281,10 +249,8 @@ public class COutcomes {
     /**
      * Sets the value of the cPeaceBond property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCPeaceBond(String value) {
         this.cPeaceBond = value;
@@ -293,10 +259,8 @@ public class COutcomes {
     /**
      * Gets the value of the cSuspendedSentence property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSuspendedSentence() {
         return cSuspendedSentence;
@@ -305,10 +269,8 @@ public class COutcomes {
     /**
      * Sets the value of the cSuspendedSentence property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSuspendedSentence(String value) {
         this.cSuspendedSentence = value;

@@ -60,12 +60,12 @@ public interface ResourceAttributeFilterInterface {
 
     /**
      * The OptionalFHIRAttribute optional selector works inversely in this situation. ie:
-     *
+     * <p>
      * parameter = providerNo
      * - default = true
      * - optional = true
      * - mandatory = false
-     *
+     * <p>
      * practitionerNo = false : this value is mandatory
      * practitionerNo = true : this value is not mandatory
      * empty : this value is not mandatory

@@ -227,9 +227,7 @@ public class PrescriptionManagerImpl implements PrescriptionManager {
      * @param info          regarding the current user/session.
      * @param drugs         that are associated with this prescription.
      * @param demographicNo the demographic this prescription is for.
-     *
      * @return the Prescription object that was created.
-     *
      * @throws AccessDeniedException if the user is not allowed to write
      *                               to the demographic's record.
      */
@@ -265,7 +263,6 @@ public class PrescriptionManagerImpl implements PrescriptionManager {
      * @param info  represents the logged in user
      * @param demo  the current demographic
      * @param drugs a list of drugs to add to the prescription textView
-     *
      * @return a string for the text view
      */
     private String getPrescriptionTextView(LoggedInInfo info, Integer demo, List<Drug> drugs) {

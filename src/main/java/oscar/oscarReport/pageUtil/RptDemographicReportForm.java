@@ -374,6 +374,7 @@ public final class RptDemographicReportForm extends ActionForm {
 
     /**
      * Getter for property asofDate.
+     *
      * @return Value of property asofDate.
      */
     public java.lang.String getAsofDate() {
@@ -382,6 +383,7 @@ public final class RptDemographicReportForm extends ActionForm {
 
     /**
      * Setter for property asofDate.
+     *
      * @param asofDate New value of property asofDate.
      */
     public void setAsofDate(java.lang.String asofDate) {

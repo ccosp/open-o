@@ -41,7 +41,6 @@ import javax.persistence.FetchType;
 import java.util.List;
 
 /**
- *
  * @author rjonasz
  */
 @Entity

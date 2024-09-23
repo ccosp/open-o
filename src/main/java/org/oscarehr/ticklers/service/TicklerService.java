@@ -42,6 +42,7 @@ public class TicklerService {
 
     /**
      * Use to get ticklers count for pagination display
+     *
      * @param paginationQuery
      * @return
      */
@@ -51,6 +52,7 @@ public class TicklerService {
 
     /**
      * List ticklers
+     *
      * @param paginationQuery
      * @return
      */

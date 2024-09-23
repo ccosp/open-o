@@ -33,7 +33,6 @@ import org.oscarehr.util.LoggedInInfo;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author kimleanhoffman
  */
 

@@ -65,8 +65,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -98,8 +96,6 @@ public class DrugUseList {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DrugUse }
-     *
-     *
      */
     public List<DrugUse> getDrugUse() {
         if (drugUse == null) {
@@ -111,10 +107,8 @@ public class DrugUseList {
     /**
      * Gets the value of the injected property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getInjected() {
         return injected;
@@ -123,10 +117,8 @@ public class DrugUseList {
     /**
      * Sets the value of the injected property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setInjected(String value) {
         this.injected = value;

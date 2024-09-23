@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table hl7_obx
- *
  */
 public class Hl7Obx {
     /**
@@ -63,27 +62,27 @@ public class Hl7Obx {
     /**
      * Full constructor
      *
-     * @param obxId int
-     * @param obrId int
-     * @param setId String
-     * @param valueType String
-     * @param observationIdentifier String
-     * @param loincNum String
-     * @param observationSubId String
-     * @param observationResults String
-     * @param units String
-     * @param referenceRange String
-     * @param abnormalFlags String
-     * @param probability String
-     * @param natureOfAbnormalTest String
+     * @param obxId                   int
+     * @param obrId                   int
+     * @param setId                   String
+     * @param valueType               String
+     * @param observationIdentifier   String
+     * @param loincNum                String
+     * @param observationSubId        String
+     * @param observationResults      String
+     * @param units                   String
+     * @param referenceRange          String
+     * @param abnormalFlags           String
+     * @param probability             String
+     * @param natureOfAbnormalTest    String
      * @param observationResultStatus String
-     * @param dateLastNormalValue String
+     * @param dateLastNormalValue     String
      * @param userDefinedAccessChecks String
-     * @param observationDateTime String
-     * @param producerId String
-     * @param responsibleObserver String
-     * @param observationMethod String
-     * @param note String
+     * @param observationDateTime     String
+     * @param producerId              String
+     * @param responsibleObserver     String
+     * @param observationMethod       String
+     * @param note                    String
      */
     public Hl7Obx(int obxId, int obrId, String setId, String valueType,
                   String observationIdentifier, String loincNum,
@@ -119,6 +118,7 @@ public class Hl7Obx {
 
     /**
      * Gets the obxId
+     *
      * @return int obxId
      */
     public int getObxId() {
@@ -127,6 +127,7 @@ public class Hl7Obx {
 
     /**
      * Gets the obrId
+     *
      * @return int obrId
      */
     public int getObrId() {
@@ -135,6 +136,7 @@ public class Hl7Obx {
 
     /**
      * Gets the setId
+     *
      * @return String setId
      */
     public String getSetId() {
@@ -143,6 +145,7 @@ public class Hl7Obx {
 
     /**
      * Gets the valueType
+     *
      * @return String valueType
      */
     public String getValueType() {
@@ -151,6 +154,7 @@ public class Hl7Obx {
 
     /**
      * Gets the observationIdentifier
+     *
      * @return String observationIdentifier
      */
     public String getObservationIdentifier() {
@@ -159,6 +163,7 @@ public class Hl7Obx {
 
     /**
      * Gets the loincNum
+     *
      * @return String loincNum
      */
     public String getLoincNum() {
@@ -167,6 +172,7 @@ public class Hl7Obx {
 
     /**
      * Gets the observationSubId
+     *
      * @return String observationSubId
      */
     public String getObservationSubId() {
@@ -175,6 +181,7 @@ public class Hl7Obx {
 
     /**
      * Gets the observationResults
+     *
      * @return String observationResults
      */
     public String getObservationResults() {
@@ -183,6 +190,7 @@ public class Hl7Obx {
 
     /**
      * Gets the units
+     *
      * @return String units
      */
     public String getUnits() {
@@ -191,6 +199,7 @@ public class Hl7Obx {
 
     /**
      * Gets the referenceRange
+     *
      * @return String referenceRange
      */
     public String getReferenceRange() {
@@ -199,6 +208,7 @@ public class Hl7Obx {
 
     /**
      * Gets the abnormalFlags
+     *
      * @return String abnormalFlags
      */
     public String getAbnormalFlags() {
@@ -207,6 +217,7 @@ public class Hl7Obx {
 
     /**
      * Gets the probability
+     *
      * @return String probability
      */
     public String getProbability() {
@@ -215,6 +226,7 @@ public class Hl7Obx {
 
     /**
      * Gets the natureOfAbnormalTest
+     *
      * @return String natureOfAbnormalTest
      */
     public String getNatureOfAbnormalTest() {
@@ -223,6 +235,7 @@ public class Hl7Obx {
 
     /**
      * Gets the observationResultStatus
+     *
      * @return String observationResultStatus
      */
     public String getObservationResultStatus() {
@@ -231,6 +244,7 @@ public class Hl7Obx {
 
     /**
      * Gets the dateLastNormalValue
+     *
      * @return String dateLastNormalValue
      */
     public String getDateLastNormalValue() {
@@ -239,6 +253,7 @@ public class Hl7Obx {
 
     /**
      * Gets the userDefinedAccessChecks
+     *
      * @return String userDefinedAccessChecks
      */
     public String getUserDefinedAccessChecks() {
@@ -247,6 +262,7 @@ public class Hl7Obx {
 
     /**
      * Gets the observationDateTime
+     *
      * @return String observationDateTime
      */
     public String getObservationDateTime() {
@@ -255,6 +271,7 @@ public class Hl7Obx {
 
     /**
      * Gets the producerId
+     *
      * @return String producerId
      */
     public String getProducerId() {
@@ -263,6 +280,7 @@ public class Hl7Obx {
 
     /**
      * Gets the responsibleObserver
+     *
      * @return String responsibleObserver
      */
     public String getResponsibleObserver() {
@@ -271,6 +289,7 @@ public class Hl7Obx {
 
     /**
      * Gets the observationMethod
+     *
      * @return String observationMethod
      */
     public String getObservationMethod() {
@@ -279,6 +298,7 @@ public class Hl7Obx {
 
     /**
      * Gets the note
+     *
      * @return String note
      */
     public String getNote() {
@@ -287,6 +307,7 @@ public class Hl7Obx {
 
     /**
      * Sets the obxId
+     *
      * @param obxId int
      */
     public void setObxId(int obxId) {
@@ -295,6 +316,7 @@ public class Hl7Obx {
 
     /**
      * Sets the obrId
+     *
      * @param obrId int
      */
     public void setObrId(int obrId) {
@@ -303,6 +325,7 @@ public class Hl7Obx {
 
     /**
      * Sets the setId
+     *
      * @param setId String
      */
     public void setSetId(String setId) {
@@ -311,6 +334,7 @@ public class Hl7Obx {
 
     /**
      * Sets the valueType
+     *
      * @param valueType String
      */
     public void setValueType(String valueType) {
@@ -319,6 +343,7 @@ public class Hl7Obx {
 
     /**
      * Sets the observationIdentifier
+     *
      * @param observationIdentifier String
      */
     public void setObservationIdentifier(String observationIdentifier) {
@@ -327,6 +352,7 @@ public class Hl7Obx {
 
     /**
      * Sets the loincNum
+     *
      * @param loincNum String
      */
     public void setLoincNum(String loincNum) {
@@ -335,6 +361,7 @@ public class Hl7Obx {
 
     /**
      * Sets the observationSubId
+     *
      * @param observationSubId String
      */
     public void setObservationSubId(String observationSubId) {
@@ -343,6 +370,7 @@ public class Hl7Obx {
 
     /**
      * Sets the observationResults
+     *
      * @param observationResults String
      */
     public void setObservationResults(String observationResults) {
@@ -351,6 +379,7 @@ public class Hl7Obx {
 
     /**
      * Sets the units
+     *
      * @param units String
      */
     public void setUnits(String units) {
@@ -359,6 +388,7 @@ public class Hl7Obx {
 
     /**
      * Sets the referenceRange
+     *
      * @param referenceRange String
      */
     public void setReferenceRange(String referenceRange) {
@@ -367,6 +397,7 @@ public class Hl7Obx {
 
     /**
      * Sets the abnormalFlags
+     *
      * @param abnormalFlags String
      */
     public void setAbnormalFlags(String abnormalFlags) {
@@ -375,6 +406,7 @@ public class Hl7Obx {
 
     /**
      * Sets the probability
+     *
      * @param probability String
      */
     public void setProbability(String probability) {
@@ -383,6 +415,7 @@ public class Hl7Obx {
 
     /**
      * Sets the natureOfAbnormalTest
+     *
      * @param natureOfAbnormalTest String
      */
     public void setNatureOfAbnormalTest(String natureOfAbnormalTest) {
@@ -391,6 +424,7 @@ public class Hl7Obx {
 
     /**
      * Sets the observationResultStatus
+     *
      * @param observationResultStatus String
      */
     public void setObservationResultStatus(String observationResultStatus) {
@@ -399,6 +433,7 @@ public class Hl7Obx {
 
     /**
      * Sets the dateLastNormalValue
+     *
      * @param dateLastNormalValue String
      */
     public void setDateLastNormalValue(String dateLastNormalValue) {
@@ -407,6 +442,7 @@ public class Hl7Obx {
 
     /**
      * Sets the userDefinedAccessChecks
+     *
      * @param userDefinedAccessChecks String
      */
     public void setUserDefinedAccessChecks(String userDefinedAccessChecks) {
@@ -415,6 +451,7 @@ public class Hl7Obx {
 
     /**
      * Sets the observationDateTime
+     *
      * @param observationDateTime String
      */
     public void setObservationDateTime(String observationDateTime) {
@@ -423,6 +460,7 @@ public class Hl7Obx {
 
     /**
      * Sets the producerId
+     *
      * @param producerId String
      */
     public void setProducerId(String producerId) {
@@ -431,6 +469,7 @@ public class Hl7Obx {
 
     /**
      * Sets the responsibleObserver
+     *
      * @param responsibleObserver String
      */
     public void setResponsibleObserver(String responsibleObserver) {
@@ -439,6 +478,7 @@ public class Hl7Obx {
 
     /**
      * Sets the observationMethod
+     *
      * @param observationMethod String
      */
     public void setObservationMethod(String observationMethod) {
@@ -447,6 +487,7 @@ public class Hl7Obx {
 
     /**
      * Sets the note
+     *
      * @param note String
      */
     public void setNote(String note) {

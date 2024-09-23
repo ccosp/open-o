@@ -56,7 +56,9 @@ import oscar.util.UtilDateUtilities;
  */
 public class ManageHSFOAction extends Action {
 
-    /** Creates a new instance of ManageHSFOAction */
+    /**
+     * Creates a new instance of ManageHSFOAction
+     */
     public ManageHSFOAction() {
     }
 

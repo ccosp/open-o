@@ -58,8 +58,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -89,10 +87,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Gets the value of the cCanadianCitizen property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCCanadianCitizen() {
         return cCanadianCitizen;
@@ -101,10 +97,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Sets the value of the cCanadianCitizen property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCCanadianCitizen(String value) {
         this.cCanadianCitizen = value;
@@ -113,10 +107,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Gets the value of the cPermanentResident property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCPermanentResident() {
         return cPermanentResident;
@@ -125,10 +117,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Sets the value of the cPermanentResident property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCPermanentResident(String value) {
         this.cPermanentResident = value;
@@ -137,10 +127,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Gets the value of the cTemporaryResident property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCTemporaryResident() {
         return cTemporaryResident;
@@ -149,10 +137,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Sets the value of the cTemporaryResident property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCTemporaryResident(String value) {
         this.cTemporaryResident = value;
@@ -161,10 +147,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Gets the value of the cRefugee property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCRefugee() {
         return cRefugee;
@@ -173,10 +157,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Sets the value of the cRefugee property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCRefugee(String value) {
         this.cRefugee = value;
@@ -185,10 +167,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Gets the value of the cUnknown property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCUnknown() {
         return cUnknown;
@@ -197,10 +177,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Sets the value of the cUnknown property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCUnknown(String value) {
         this.cUnknown = value;
@@ -209,10 +187,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Gets the value of the cClientDeclinedToAnswer property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCClientDeclinedToAnswer() {
         return cClientDeclinedToAnswer;
@@ -221,10 +197,8 @@ public class CCitizenshipStatusSelectOne {
     /**
      * Sets the value of the cClientDeclinedToAnswer property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCClientDeclinedToAnswer(String value) {
         this.cClientDeclinedToAnswer = value;

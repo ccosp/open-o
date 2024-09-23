@@ -59,8 +59,6 @@ public class ClinicalFactor {
 
     /**
      * Set the value of factorTypeId
-     *
-     *
      */
     private void setFactorTypeId(int value) {
         factorTypeId = value;
@@ -77,8 +75,6 @@ public class ClinicalFactor {
 
     /**
      * Set the value of factorName
-     *
-     *
      */
     private void setFactorName(String value) {
         factorName = value;
@@ -95,8 +91,6 @@ public class ClinicalFactor {
 
     /**
      * Set the value of factorDesc
-     *
-     *
      */
     private void setFactorDesc(String value) {
         factorDesc = value;
@@ -113,8 +107,6 @@ public class ClinicalFactor {
 
     /**
      * Set the value of startDate
-     *
-     *
      */
     private void setStartDate(String value) {
         startDate = value;
@@ -131,8 +123,6 @@ public class ClinicalFactor {
 
     /**
      * Set the value of endDate
-     *
-     *
      */
     private void setEndDate(String value) {
         endDate = value;
@@ -149,8 +139,6 @@ public class ClinicalFactor {
 
     /**
      * Set the value of clinicalNote
-     *
-     *
      */
     private void setClinicalNote(String value) {
         clinicalNote = value;

@@ -48,7 +48,6 @@ import org.indivo.xml.phr.demographics.DemographicsType;
 import oscar.util.UtilDateUtilities;
 
 /**
- *
  * @author apavel
  */
 public class IndivoUtil {

@@ -37,6 +37,7 @@ import oscar.oscarDB.DBHandler;
 
 /**
  * This is for straight SQLDenominators  not sure if it should return a more specialised list
+ *
  * @author jay
  */
 public class SQLDenominator implements Denominator {
@@ -49,7 +50,9 @@ public class SQLDenominator implements Denominator {
     Hashtable replaceableValues = null;
 
 
-    /** Creates a new instance of SQLDenominator */
+    /**
+     * Creates a new instance of SQLDenominator
+     */
     public SQLDenominator() {
     }
 

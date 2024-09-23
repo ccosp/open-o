@@ -50,8 +50,7 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
     /**
      * Does room with id exist
      *
-     * @param roomId
-     *               id
+     * @param roomId id
      * @return true if room exists
      */
     @Override
@@ -71,8 +70,7 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
     /**
      * Get room by id
      *
-     * @param roomId
-     *               id
+     * @param roomId id
      * @return room
      */
     @Override
@@ -86,8 +84,7 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
     /**
      * Get rooms
      *
-     * @param active
-     *               filter
+     * @param active filter
      * @return list of rooms
      */
     @SuppressWarnings("unchecked")
@@ -186,8 +183,7 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
     /**
      * Save room
      *
-     * @param room
-     *             room to save
+     * @param room room to save
      */
     @Deprecated
     @Override

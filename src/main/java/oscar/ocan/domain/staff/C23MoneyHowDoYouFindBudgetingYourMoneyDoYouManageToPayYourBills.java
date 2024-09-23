@@ -63,8 +63,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -103,10 +101,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the c1DoesThePersonHaveProblemsBudgetingHisOrHerMoneyIfRated0Or9SkipQuestions2 property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1DoesThePersonHaveProblemsBudgetingHisOrHerMoneyIfRated0Or9SkipQuestions2() {
         return c1DoesThePersonHaveProblemsBudgetingHisOrHerMoneyIfRated0Or9SkipQuestions2;
@@ -115,10 +111,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the c1DoesThePersonHaveProblemsBudgetingHisOrHerMoneyIfRated0Or9SkipQuestions2 property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1DoesThePersonHaveProblemsBudgetingHisOrHerMoneyIfRated0Or9SkipQuestions2(BigInteger value) {
         this.c1DoesThePersonHaveProblemsBudgetingHisOrHerMoneyIfRated0Or9SkipQuestions2 = value;
@@ -127,10 +121,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInManagingHisOrHerMoney property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInManagingHisOrHerMoney() {
         return c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInManagingHisOrHerMoney;
@@ -139,10 +131,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInManagingHisOrHerMoney property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInManagingHisOrHerMoney(BigInteger value) {
         this.c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInManagingHisOrHerMoney = value;
@@ -151,10 +141,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInManagingHisOrHerMoney property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInManagingHisOrHerMoney() {
         return c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInManagingHisOrHerMoney;
@@ -163,10 +151,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInManagingHisOrHerMoney property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInManagingHisOrHerMoney(BigInteger value) {
         this.c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInManagingHisOrHerMoney = value;
@@ -175,10 +161,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInManagingHisOrHerMoney property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpDoesThePersonNeedFromLocalServicesInManagingHisOrHerMoney() {
         return c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInManagingHisOrHerMoney;
@@ -187,10 +171,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInManagingHisOrHerMoney property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpDoesThePersonNeedFromLocalServicesInManagingHisOrHerMoney(BigInteger value) {
         this.c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInManagingHisOrHerMoney = value;
@@ -199,10 +181,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the cComments property.
      *
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -211,10 +191,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the cComments property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -223,10 +201,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the cActions property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -235,10 +211,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the cActions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -247,10 +221,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the cByWhom property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -259,10 +231,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the cByWhom property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -271,10 +241,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the cReviewDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -283,10 +251,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the cReviewDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;
@@ -295,10 +261,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Gets the value of the cWhatIsYourPrimarySourceOfIncomeSelectOne property.
      *
-     * @return
-     *     possible object is
-     *     {@link CWhatIsYourPrimarySourceOfIncomeSelectOne }
-     *
+     * @return possible object is
+     * {@link CWhatIsYourPrimarySourceOfIncomeSelectOne }
      */
     public CWhatIsYourPrimarySourceOfIncomeSelectOne getCWhatIsYourPrimarySourceOfIncomeSelectOne() {
         return cWhatIsYourPrimarySourceOfIncomeSelectOne;
@@ -307,10 +271,8 @@ public class C23MoneyHowDoYouFindBudgetingYourMoneyDoYouManageToPayYourBills {
     /**
      * Sets the value of the cWhatIsYourPrimarySourceOfIncomeSelectOne property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CWhatIsYourPrimarySourceOfIncomeSelectOne }
-     *
+     * @param value allowed object is
+     *              {@link CWhatIsYourPrimarySourceOfIncomeSelectOne }
      */
     public void setCWhatIsYourPrimarySourceOfIncomeSelectOne(CWhatIsYourPrimarySourceOfIncomeSelectOne value) {
         this.cWhatIsYourPrimarySourceOfIncomeSelectOne = value;

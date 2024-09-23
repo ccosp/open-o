@@ -91,7 +91,6 @@ public class EctAddMeasurementStyleSheetAction extends Action {
     }
 
     /**
-     *
      * Save a Jakarta FormFile to a preconfigured place.
      *
      * @param file
@@ -140,11 +139,9 @@ public class EctAddMeasurementStyleSheetAction extends Action {
     }
 
     /**
-     *
      * Write to database
      *
      * @param fileName - the filename to store
-     *
      */
     private void write2Database(String fileName) {
         MeasurementCSSLocation m = new MeasurementCSSLocation();

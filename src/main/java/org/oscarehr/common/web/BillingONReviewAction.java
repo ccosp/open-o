@@ -46,7 +46,6 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author mweston4
  */
 public class BillingONReviewAction extends DispatchAction {

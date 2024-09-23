@@ -39,7 +39,6 @@ import java.util.Hashtable;
 import org.oscarehr.util.LoggedInInfo;
 
 /**
- *
  * @author jay
  */
 public interface Numerator {

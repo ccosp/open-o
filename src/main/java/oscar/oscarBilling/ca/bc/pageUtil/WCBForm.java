@@ -831,8 +831,8 @@ public final class WCBForm
 
     /**
      * Getter for property formNeeded.
+     *
      * @return Value of property formNeeded.
-
      */
 
     public java.lang.String getFormNeeded() {
@@ -888,8 +888,8 @@ public final class WCBForm
 
     /**
      * Setter for property formNeeded.
+     *
      * @param formNeeded New value of property formNeeded.
-
      */
 
     public void setFormNeeded(java.lang.String formNeeded) {

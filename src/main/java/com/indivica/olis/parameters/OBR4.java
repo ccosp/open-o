@@ -11,8 +11,8 @@ package com.indivica.olis.parameters;
 
 /**
  * Test Request Code
- * @author jen
  *
+ * @author jen
  */
 public class OBR4 implements Parameter {
 

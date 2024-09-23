@@ -35,6 +35,7 @@ public final class BillingSaveBillingForm extends ActionForm {
 
     /**
      * Used to reset everything to a null value
+     *
      * @param mapping
      * @param request
      */

@@ -57,8 +57,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -85,10 +83,8 @@ public class AnswerGroup {
     /**
      * Gets the value of the cNoNeed property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCNoNeed() {
         return cNoNeed;
@@ -97,10 +93,8 @@ public class AnswerGroup {
     /**
      * Sets the value of the cNoNeed property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCNoNeed(String value) {
         this.cNoNeed = value;
@@ -109,10 +103,8 @@ public class AnswerGroup {
     /**
      * Gets the value of the cMetNeed property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCMetNeed() {
         return cMetNeed;
@@ -121,10 +113,8 @@ public class AnswerGroup {
     /**
      * Sets the value of the cMetNeed property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCMetNeed(String value) {
         this.cMetNeed = value;
@@ -133,10 +123,8 @@ public class AnswerGroup {
     /**
      * Gets the value of the cUnmetNeed property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCUnmetNeed() {
         return cUnmetNeed;
@@ -145,10 +133,8 @@ public class AnswerGroup {
     /**
      * Sets the value of the cUnmetNeed property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCUnmetNeed(String value) {
         this.cUnmetNeed = value;
@@ -157,10 +143,8 @@ public class AnswerGroup {
     /**
      * Gets the value of the ciDonTWantToAnswer property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCIDonTWantToAnswer() {
         return ciDonTWantToAnswer;
@@ -169,10 +153,8 @@ public class AnswerGroup {
     /**
      * Sets the value of the ciDonTWantToAnswer property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCIDonTWantToAnswer(String value) {
         this.ciDonTWantToAnswer = value;
@@ -181,10 +163,8 @@ public class AnswerGroup {
     /**
      * Gets the value of the cComments property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCComments() {
         return cComments;
@@ -193,10 +173,8 @@ public class AnswerGroup {
     /**
      * Sets the value of the cComments property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCComments(String value) {
         this.cComments = value;

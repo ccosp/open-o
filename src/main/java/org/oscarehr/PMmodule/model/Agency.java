@@ -140,8 +140,7 @@ public class Agency implements Serializable {
     /**
      * Set the unique identifier of this class
      *
-     * @param id
-     *            the new ID
+     * @param id the new ID
      */
     public void setId(Long id) {
         this.id = id;
@@ -158,8 +157,7 @@ public class Agency implements Serializable {
     /**
      * Set the value related to the column: intake_quick
      *
-     * @param intakeQuick
-     *            the intake_quick value
+     * @param intakeQuick the intake_quick value
      */
     public void setIntakeQuick(Integer intakeQuick) {
         this.intakeQuick = intakeQuick;
@@ -175,8 +173,7 @@ public class Agency implements Serializable {
     /**
      * Set the value related to the column: intake_quick_state
      *
-     * @param intakeQuickState
-     *            the intake_quick_state value
+     * @param intakeQuickState the intake_quick_state value
      */
     public void setIntakeQuickState(String intakeQuickState) {
         this.intakeQuickState = intakeQuickState;
@@ -192,8 +189,7 @@ public class Agency implements Serializable {
     /**
      * Set the value related to the column: intake_indepth
      *
-     * @param intakeIndepth
-     *            the intake_indepth value
+     * @param intakeIndepth the intake_indepth value
      */
     public void setIntakeIndepth(Integer intakeIndepth) {
         this.intakeIndepth = intakeIndepth;
@@ -209,8 +205,7 @@ public class Agency implements Serializable {
     /**
      * Set the value related to the column: intake_indepth_state
      *
-     * @param intakeIndepthState
-     *            the intake_indepth_state value
+     * @param intakeIndepthState the intake_indepth_state value
      */
     public void setIntakeIndepthState(String intakeIndepthState) {
         this.intakeIndepthState = intakeIndepthState;

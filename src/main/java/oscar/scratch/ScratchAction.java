@@ -41,7 +41,6 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author jay
  */
 public class ScratchAction extends DispatchAction {

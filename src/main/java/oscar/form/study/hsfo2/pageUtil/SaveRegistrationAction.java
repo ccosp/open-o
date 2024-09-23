@@ -45,7 +45,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.form.study.hsfo2.HSFODAO;
 
 /**
- *
  * Class used to save data from the HSFO Study form
  */
 public class SaveRegistrationAction extends DispatchAction {
@@ -75,7 +74,9 @@ public class SaveRegistrationAction extends DispatchAction {
         }
     }
 
-    /** Creates a new instance of SaveRegistrationAction */
+    /**
+     * Creates a new instance of SaveRegistrationAction
+     */
     public SaveRegistrationAction() {
     }
 
@@ -92,7 +93,6 @@ public class SaveRegistrationAction extends DispatchAction {
     }
 
     /**
-     *
      * @param request
      * @param parameterName
      * @param value

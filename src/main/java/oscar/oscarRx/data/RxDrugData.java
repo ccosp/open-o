@@ -41,6 +41,7 @@ public class RxDrugData {
 
     /**
      * Suggest Alias description here.
+     *
      * @param alias
      * @param aliasComment
      * @param id
@@ -55,8 +56,7 @@ public class RxDrugData {
 
 
     /**
-     *  Full Drug Monograph.
-     *
+     * Full Drug Monograph.
      */
     public class DrugMonograph {
 
@@ -300,7 +300,6 @@ public class RxDrugData {
 
     /**
      * Minimum Drug Data
-     *
      */
     public class MinDrug {
 
@@ -346,7 +345,6 @@ public class RxDrugData {
 
     /**
      * Assign DrugSearch data.
-     *
      */
     public class DrugSearch {
 
@@ -517,6 +515,7 @@ public class RxDrugData {
     /**
      * Get drug list by partial search string.
      * All drugs, All classes, All activity
+     *
      * @param searchStr
      * @return
      */
@@ -540,6 +539,7 @@ public class RxDrugData {
     /**
      * Get drug list by partial search string Version 2.
      * All drugs, All classes, All activity
+     *
      * @param searchStr
      * @return
      */
@@ -562,6 +562,7 @@ public class RxDrugData {
 
     /**
      * Get all drugs by search string and specific route.
+     *
      * @param searchStr
      * @param searchRoute
      * @return
@@ -585,6 +586,7 @@ public class RxDrugData {
 
     /**
      * Get all drugs that contain specific Element (partial)
+     *
      * @param searchStr
      * @return
      */
@@ -606,6 +608,7 @@ public class RxDrugData {
 
     /**
      * Get drug with DrugRef ID key
+     *
      * @param pKey
      * @return
      * @throws Exception
@@ -618,6 +621,7 @@ public class RxDrugData {
 
     /**
      * Get drug with DrugRef ID key. Version 2
+     *
      * @param pKey
      * @return
      * @throws Exception
@@ -629,6 +633,7 @@ public class RxDrugData {
 
     /**
      * Get the drug package data by a Regional DIN number.
+     *
      * @param DIN
      * @return
      * @throws Exception
@@ -645,6 +650,7 @@ public class RxDrugData {
 
     /**
      * Get the drug form (packaging) with DrugRef ID.
+     *
      * @param pKey
      * @return
      * @throws Exception
@@ -659,6 +665,7 @@ public class RxDrugData {
      * Get drug Generic Name with DrugRef ID.
      * Be careful. A Generic Drug will not have a accurate
      * Generic Name.
+     *
      * @param pKey
      * @return
      * @throws Exception
@@ -673,6 +680,7 @@ public class RxDrugData {
     /**
      * Get drug Generic Name with DrugRef ID.
      * Overload method.
+     *
      * @param pKey
      * @return
      * @throws Exception
@@ -683,6 +691,7 @@ public class RxDrugData {
 
     /**
      * Get the drug form (packaging) with Drug Code??.
+     *
      * @param drugCode
      * @return
      */
@@ -701,6 +710,7 @@ public class RxDrugData {
 
     /**
      * Get list of drug components from official drug code.
+     *
      * @param drugCode
      * @return ArrayList
      */
@@ -719,6 +729,7 @@ public class RxDrugData {
 
     /**
      * Get ??
+     *
      * @return ArrayList
      */
     @Deprecated
@@ -736,6 +747,7 @@ public class RxDrugData {
 
     /**
      * Get a list of available Routes from official drug code.
+     *
      * @param drugCode
      * @return ArrayList
      */
@@ -754,6 +766,7 @@ public class RxDrugData {
 
     /**
      * Get a list of drug strengths from official drug code.
+     *
      * @param drugCode
      * @return Hashtable
      */
@@ -787,6 +800,7 @@ public class RxDrugData {
 
     /**
      * Get a list of drug Strengths with the Official Drug code.
+     *
      * @param drugCode
      * @return Hashtable
      */
@@ -818,6 +832,7 @@ public class RxDrugData {
     /**
      * Get Allergy Warnings by drug ATC code and a list of the patients
      * Allergy codes.
+     *
      * @param atcCode
      * @param allerg
      * @return Allergy[]
@@ -883,6 +898,7 @@ public class RxDrugData {
 
     /**
      * Get a list of Interactions from a list of ATC Codes.
+     *
      * @param atcCodes
      * @return
      * @throws Exception

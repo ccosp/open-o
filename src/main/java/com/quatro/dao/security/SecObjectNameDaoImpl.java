@@ -32,7 +32,6 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import com.quatro.model.security.Secobjectname;
 
 /**
- *
  * @author jackson
  */
 public class SecObjectNameDaoImpl extends HibernateDaoSupport implements SecObjectNameDao {

@@ -46,9 +46,7 @@ import oscar.oscarMessenger.data.MsgDisplayMessage;
 import oscar.util.ConversionUtils;
 
 /**
- * @deprecated
- * Use org.oscarehr.managers.MessagingManager and JPA model.
- *
+ * @deprecated Use org.oscarehr.managers.MessagingManager and JPA model.
  */
 @Deprecated
 public class MsgDisplayMessagesBean implements java.io.Serializable {
@@ -135,6 +133,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 
     /**
      * Used to set message ids to be viewed on the DisplayMessages.jsp
+     *
      * @param messageid Vector, Contains all the messageids to be displayed
      */
     public void setMessageid(Vector<String> messageid) {
@@ -144,6 +143,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
     /**
      * calls getMessageIDS and getInfo which are used to fill the Vectors
      * with the Message headers for the current provider No
+     *
      * @return Vector, Contains the messageids for use on the DisplayMessage.jsp
      */
     public Vector<String> getMessageid() {
@@ -168,6 +168,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 
     /**
      * Used to set the Status vector. either read, new, del
+     *
      * @param status Vector, Strings either read , new or del
      */
     public void setStatus(Vector<String> status) {
@@ -177,6 +178,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
     /**
      * Will check to see if the status has already been set, if not it will intialize the
      * Vectors of this Bean with getMessageIDs and get Info
+     *
      * @return Vector Strings either read, new or del
      */
     public Vector<String> getStatus() {
@@ -194,6 +196,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
     /**
      * Will check to see if the date has already been set, if not it will intialize the
      * Vectors of this Bean with getMessageIDs and get Info
+     *
      * @return Vector Strings either read, new or del
      */
     public Vector<String> getDate() {
@@ -206,6 +209,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 
     /**
      * used to set the sentby Vector
+     *
      * @param sentby Vector contains Strings of who sent the message
      */
     public void setSentby(Vector<String> sentby) {
@@ -215,6 +219,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
     /**
      * Will check to see if the sentby has already been set, if not it will intialize the
      * Vectors of this Bean with getMessageIDs and get Info
+     *
      * @return Vector Strings either read, new or del
      */
     public Vector<String> getSentby() {
@@ -227,6 +232,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 
     /**
      * used to set the subject Vector of the messages
+     *
      * @param subject Vector, contains Strings of subjects
      */
     public void setSubject(Vector<String> subject) {
@@ -236,6 +242,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
     /**
      * Will check to see if the subject has already been set, if not it will intialize the
      * Vectors of this Bean with getMessageIDs and get Info
+     *
      * @return Vector Strings either read, new or del
      */
     public Vector<String> getSubject() {
@@ -248,6 +255,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 
     /**
      * Used to set the providerNo that will determine what this bean will fill itself with
+     *
      * @param providerNo String, provider No
      */
     public void setProviderNo(String providerNo) {
@@ -257,6 +265,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
 
     /**
      * gets the current provider No
+     *
      * @return the provider no
      */
     public String getProviderNo() {
@@ -700,6 +709,7 @@ public class MsgDisplayMessagesBean implements java.io.Serializable {
     /**
      * A temporary helper method to last the life of this deprecated class.
      * Formats a database formatted date string into an Oscar formatted date string.
+     *
      * @throws ParseException
      */
     private String formatDate(String thedate) throws ParseException {

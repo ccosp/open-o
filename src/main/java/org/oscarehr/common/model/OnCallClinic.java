@@ -31,7 +31,6 @@ import javax.persistence.Id;
 
 /**
  * Entity implementation class for Entity: OnCallClinic
- *
  */
 @Entity
 @Table(name = "onCallClinicDates")

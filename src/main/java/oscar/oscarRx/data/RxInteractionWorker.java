@@ -31,7 +31,6 @@ import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class RxInteractionWorker extends Thread {

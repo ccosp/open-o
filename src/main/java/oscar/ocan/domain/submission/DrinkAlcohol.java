@@ -71,8 +71,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -87,10 +85,8 @@ public class DrinkAlcohol {
     /**
      * Gets the value of the quantity property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getQuantity() {
         return quantity;
@@ -99,10 +95,8 @@ public class DrinkAlcohol {
     /**
      * Sets the value of the quantity property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setQuantity(BigInteger value) {
         this.quantity = value;
@@ -111,10 +105,8 @@ public class DrinkAlcohol {
     /**
      * Gets the value of the frequency property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getFrequency() {
         return frequency;
@@ -123,10 +115,8 @@ public class DrinkAlcohol {
     /**
      * Sets the value of the frequency property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setFrequency(String value) {
         this.frequency = value;

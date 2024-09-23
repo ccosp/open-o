@@ -37,7 +37,6 @@ import org.oscarehr.common.model.ConsultationServices;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author rjonasz
  */
 @Repository

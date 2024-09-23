@@ -43,7 +43,6 @@ import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.util.SpringUtils;
 
 /**
- *
  * @author Toby
  */
 

@@ -33,7 +33,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * @deprecated 2013-04-28 use org.oscarehr.util.DateUtils instead 
+ * @deprecated 2013-04-28 use org.oscarehr.util.DateUtils instead
  */
 public class UtilDateUtilities {
 
@@ -96,7 +96,8 @@ public class UtilDateUtilities {
 
     /**
      * This returns the Patients Age string at a point in time.  IE. How old the patient will be right now or how old will they be on march.31 of this year.
-     * @param DOB Demographics Date of birth
+     *
+     * @param DOB         Demographics Date of birth
      * @param pointInTime The date you would like to calculate there age at.
      * @return age string ( ie 2 months, 4 years .etc )
      */
@@ -178,7 +179,8 @@ public class UtilDateUtilities {
 
     /**
      * For Parsing Dates.
-     * @param dateStr The date string to be parsed
+     *
+     * @param dateStr     The date string to be parsed
      * @param datePattern The date pattern to use to parse the date string
      * @return Date object. If date was unable to be parsed the object will be null
      */
@@ -199,8 +201,9 @@ public class UtilDateUtilities {
 
     /**
      * Gets the number of months between two date objects
+     *
      * @param dStart Start Date
-     * @param dEnd End Date
+     * @param dEnd   End Date
      * @return the number of months
      */
     public static int getNumMonths(Date dStart, Date dEnd) {
@@ -222,8 +225,9 @@ public class UtilDateUtilities {
 
     /**
      * Gets the number of years between two date objects
+     *
      * @param dStart Start Date
-     * @param dEnd End Date
+     * @param dEnd   End Date
      * @return Number of year between
      */
     public static int getNumYears(Date dStart, Date dEnd) {
@@ -252,8 +256,9 @@ public class UtilDateUtilities {
 
     /**
      * Gets the number of months between two Calendar objects
+     *
      * @param dStart start date
-     * @param dEnd end date
+     * @param dEnd   end date
      * @return number of months between
      */
     public static int getNumMonths(Calendar dStart, Calendar dEnd) {

@@ -32,9 +32,7 @@ import javax.persistence.Transient;
 import javax.persistence.Column;
 
 /**
- *
  * @author rjonasz
- *
  */
 @Entity
 @Table(name = "view")
@@ -53,7 +51,9 @@ public class View extends AbstractModel<Integer> {
     @Column(nullable = true)
     private String providerNo = null;
 
-    /** Creates a new instance of View */
+    /**
+     * Creates a new instance of View
+     */
     public View() {
     }
 

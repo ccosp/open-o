@@ -67,7 +67,7 @@ public class HCValidationResult {
 
     /**
      * A two character representation of the validation response code for given health number and/or version code
-     * Response code is mandatory field and is returned for each validation request submitted. 
+     * Response code is mandatory field and is returned for each validation request submitted.
      */
     public String getResponseCode() {
         return responseCode;
@@ -78,8 +78,8 @@ public class HCValidationResult {
     }
 
     /**
-     * A description for the validation response code for given health number and/or version code. 
-     * Response description is optional field and can be returned for each validation request submitted. 
+     * A description for the validation response code for given health number and/or version code.
+     * Response description is optional field and can be returned for each validation request submitted.
      */
     public String getResponseDescription() {
         return responseDescription;
@@ -90,8 +90,8 @@ public class HCValidationResult {
     }
 
     /**
-     * The action required of the caller for the returned response code. 
-     * Response action is optional field and can be returned for each validation request submitted. 
+     * The action required of the caller for the returned response code.
+     * Response action is optional field and can be returned for each validation request submitted.
      */
     public String getResponseAction() {
         return responseAction;
@@ -102,9 +102,9 @@ public class HCValidationResult {
     }
 
     /**
-     * MOHLTC stores this value as upper case characters.  
-     * A maximum of 20 characters are kept on card.  
-     * No accents or other diacritic marks are stored or returned. 
+     * MOHLTC stores this value as upper case characters.
+     * A maximum of 20 characters are kept on card.
+     * No accents or other diacritic marks are stored or returned.
      */
     public String getFirstName() {
         return firstName;
@@ -123,8 +123,8 @@ public class HCValidationResult {
     }
 
     /**
-     * MOHLTC stores this value as upper case characters.  
-     * A maximum of 30 characters are kept on card.  
+     * MOHLTC stores this value as upper case characters.
+     * A maximum of 30 characters are kept on card.
      * No accents or other diacritic marks are stored or returned.
      */
     public String getLastName() {
@@ -136,7 +136,7 @@ public class HCValidationResult {
     }
 
     /**
-     * The card holder’s date of birth. 
+     * The card holder’s date of birth.
      */
     public String getBirthDate() {
         return birthDate;
@@ -147,7 +147,7 @@ public class HCValidationResult {
     }
 
     /**
-     * The gender is returned as either an M or F, for male or female respectively. 
+     * The gender is returned as either an M or F, for male or female respectively.
      */
     public String getGender() {
         return gender;

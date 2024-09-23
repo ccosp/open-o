@@ -109,7 +109,6 @@ public class SsoAuthenticationManager implements Serializable {
     }
 
     /**
-     *
      * @return Map of attributes for use in new login session
      */
     public Map<String, Object> checkSSOLogin(Auth auth) {
@@ -168,7 +167,7 @@ public class SsoAuthenticationManager implements Serializable {
      * Validate the user and then return valid session data.
      * Null data if user does not authenticate.
      *
-     * @param sessionData new or existing hashmap
+     * @param sessionData         new or existing hashmap
      * @param providerInformation data of the provider profile
      * @return session data or NULL
      */
@@ -207,6 +206,7 @@ public class SsoAuthenticationManager implements Serializable {
 
     /**
      * Check authentication by plain text credentials
+     *
      * @param authenticationParams [username, password, pin, ip]
      * @return
      */
@@ -229,6 +229,7 @@ public class SsoAuthenticationManager implements Serializable {
 
     /**
      * Check login credentials specific to SSO by the SSO NameId parameter.
+     *
      * @param nameId
      * @return
      */

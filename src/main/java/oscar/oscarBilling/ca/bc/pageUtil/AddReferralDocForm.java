@@ -28,7 +28,6 @@ package oscar.oscarBilling.ca.bc.pageUtil;
 import org.apache.struts.action.ActionForm;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class AddReferralDocForm extends ActionForm {
@@ -51,6 +50,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property referral_no.
+     *
      * @return Value of property referral_no.
      */
     public java.lang.String getReferral_no() {
@@ -59,6 +59,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property referral_no.
+     *
      * @param referral_no New value of property referral_no.
      */
     public void setReferral_no(java.lang.String referral_no) {
@@ -67,6 +68,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property last_name.
+     *
      * @return Value of property last_name.
      */
     public java.lang.String getLast_name() {
@@ -75,6 +77,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property last_name.
+     *
      * @param last_name New value of property last_name.
      */
     public void setLast_name(java.lang.String last_name) {
@@ -83,6 +86,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property first_name.
+     *
      * @return Value of property first_name.
      */
     public java.lang.String getFirst_name() {
@@ -91,6 +95,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property first_name.
+     *
      * @param first_name New value of property first_name.
      */
     public void setFirst_name(java.lang.String first_name) {
@@ -99,6 +104,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property specialty.
+     *
      * @return Value of property specialty.
      */
     public java.lang.String getSpecialty() {
@@ -107,6 +113,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property specialty.
+     *
      * @param specialty New value of property specialty.
      */
     public void setSpecialty(java.lang.String specialty) {
@@ -115,6 +122,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property address1.
+     *
      * @return Value of property address1.
      */
     public java.lang.String getAddress1() {
@@ -123,6 +131,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property address1.
+     *
      * @param address1 New value of property address1.
      */
     public void setAddress1(java.lang.String address1) {
@@ -131,6 +140,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property address2.
+     *
      * @return Value of property address2.
      */
     public java.lang.String getAddress2() {
@@ -139,6 +149,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property address2.
+     *
      * @param address2 New value of property address2.
      */
     public void setAddress2(java.lang.String address2) {
@@ -147,6 +158,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property city.
+     *
      * @return Value of property city.
      */
     public java.lang.String getCity() {
@@ -155,6 +167,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property city.
+     *
      * @param city New value of property city.
      */
     public void setCity(java.lang.String city) {
@@ -163,6 +176,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property province.
+     *
      * @return Value of property province.
      */
     public java.lang.String getProvince() {
@@ -171,6 +185,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property province.
+     *
      * @param province New value of property province.
      */
     public void setProvince(java.lang.String province) {
@@ -179,6 +194,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property postal.
+     *
      * @return Value of property postal.
      */
     public java.lang.String getPostal() {
@@ -187,6 +203,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property postal.
+     *
      * @param postal New value of property postal.
      */
     public void setPostal(java.lang.String postal) {
@@ -195,6 +212,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property phone.
+     *
      * @return Value of property phone.
      */
     public java.lang.String getPhone() {
@@ -203,6 +221,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property phone.
+     *
      * @param phone New value of property phone.
      */
     public void setPhone(java.lang.String phone) {
@@ -211,6 +230,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Getter for property fax.
+     *
      * @return Value of property fax.
      */
     public java.lang.String getFax() {
@@ -219,6 +239,7 @@ public class AddReferralDocForm extends ActionForm {
 
     /**
      * Setter for property fax.
+     *
      * @param fax New value of property fax.
      */
     public void setFax(java.lang.String fax) {

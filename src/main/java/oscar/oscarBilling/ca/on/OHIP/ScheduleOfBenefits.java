@@ -42,7 +42,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarBilling.ca.on.data.BillingCodeData;
 
 /**
- *
  * @author Jay Gallagher
  */
 public class ScheduleOfBenefits {

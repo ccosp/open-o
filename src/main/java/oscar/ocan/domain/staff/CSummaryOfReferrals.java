@@ -62,8 +62,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -104,8 +102,6 @@ public class CSummaryOfReferrals {
      * {@link JAXBElement }{@code <}{@link String }{@code >}
      * {@link JAXBElement }{@code <}{@link String }{@code >}
      * {@link JAXBElement }{@code <}{@link String }{@code >}
-     *
-     *
      */
     public List<JAXBElement<String>> getCSpecifyOrCActualReferralOrCOptimalReferral() {
         if (cSpecifyOrCActualReferralOrCOptimalReferral == null) {

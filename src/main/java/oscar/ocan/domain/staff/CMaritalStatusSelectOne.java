@@ -60,8 +60,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -97,10 +95,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cSingle property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSingle() {
         return cSingle;
@@ -109,10 +105,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cSingle property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSingle(String value) {
         this.cSingle = value;
@@ -121,10 +115,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cMarriedOrInCommonLawRelationship property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCMarriedOrInCommonLawRelationship() {
         return cMarriedOrInCommonLawRelationship;
@@ -133,10 +125,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cMarriedOrInCommonLawRelationship property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCMarriedOrInCommonLawRelationship(String value) {
         this.cMarriedOrInCommonLawRelationship = value;
@@ -145,10 +135,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cPartnerOfSignificantOther property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCPartnerOfSignificantOther() {
         return cPartnerOfSignificantOther;
@@ -157,10 +145,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cPartnerOfSignificantOther property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCPartnerOfSignificantOther(String value) {
         this.cPartnerOfSignificantOther = value;
@@ -169,10 +155,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cWiddowed property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCWiddowed() {
         return cWiddowed;
@@ -181,10 +165,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cWiddowed property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCWiddowed(String value) {
         this.cWiddowed = value;
@@ -193,10 +175,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cSeparated property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCSeparated() {
         return cSeparated;
@@ -205,10 +185,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cSeparated property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCSeparated(String value) {
         this.cSeparated = value;
@@ -217,10 +195,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cDivorced property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCDivorced() {
         return cDivorced;
@@ -229,10 +205,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cDivorced property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCDivorced(String value) {
         this.cDivorced = value;
@@ -241,10 +215,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cUnknown property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCUnknown() {
         return cUnknown;
@@ -253,10 +225,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cUnknown property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCUnknown(String value) {
         this.cUnknown = value;
@@ -265,10 +235,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Gets the value of the cClientDeclinedToAnswer property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCClientDeclinedToAnswer() {
         return cClientDeclinedToAnswer;
@@ -277,10 +245,8 @@ public class CMaritalStatusSelectOne {
     /**
      * Sets the value of the cClientDeclinedToAnswer property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCClientDeclinedToAnswer(String value) {
         this.cClientDeclinedToAnswer = value;

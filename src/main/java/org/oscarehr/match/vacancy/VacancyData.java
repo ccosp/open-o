@@ -30,7 +30,6 @@ import java.util.Map;
 
 /**
  * @author AnooshTech
- *
  */
 public class VacancyData {
     private int vacancy_id;

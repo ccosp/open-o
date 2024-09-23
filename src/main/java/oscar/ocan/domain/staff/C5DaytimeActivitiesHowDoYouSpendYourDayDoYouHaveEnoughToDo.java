@@ -65,8 +65,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -111,10 +109,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the c1DoesThePersonHaveDifficultyWithRegularAppropriateDaytimeActivitiesIfRated0Or property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1DoesThePersonHaveDifficultyWithRegularAppropriateDaytimeActivitiesIfRated0Or() {
         return c1DoesThePersonHaveDifficultyWithRegularAppropriateDaytimeActivitiesIfRated0Or;
@@ -123,10 +119,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the c1DoesThePersonHaveDifficultyWithRegularAppropriateDaytimeActivitiesIfRated0Or property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1DoesThePersonHaveDifficultyWithRegularAppropriateDaytimeActivitiesIfRated0Or(BigInteger value) {
         this.c1DoesThePersonHaveDifficultyWithRegularAppropriateDaytimeActivitiesIfRated0Or = value;
@@ -135,10 +129,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInFindingAndKeepingRegul property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInFindingAndKeepingRegul() {
         return c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInFindingAndKeepingRegul;
@@ -147,10 +139,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInFindingAndKeepingRegul property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInFindingAndKeepingRegul(BigInteger value) {
         this.c2HowMuchHelpDoesThePersonReceiveFromFriendsOrRelativesInFindingAndKeepingRegul = value;
@@ -159,10 +149,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInFindingAndKeepingRegularAn property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInFindingAndKeepingRegularAn() {
         return c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInFindingAndKeepingRegularAn;
@@ -171,10 +159,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInFindingAndKeepingRegularAn property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInFindingAndKeepingRegularAn(BigInteger value) {
         this.c3AHowMuchHelpDoesThePersonReceiveFromLocalServicesInFindingAndKeepingRegularAn = value;
@@ -183,10 +169,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInFindingAndKeepingRegularAndA property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpDoesThePersonNeedFromLocalServicesInFindingAndKeepingRegularAndA() {
         return c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInFindingAndKeepingRegularAndA;
@@ -195,10 +179,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInFindingAndKeepingRegularAndA property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpDoesThePersonNeedFromLocalServicesInFindingAndKeepingRegularAndA(BigInteger value) {
         this.c3BHowMuchHelpDoesThePersonNeedFromLocalServicesInFindingAndKeepingRegularAndA = value;
@@ -207,10 +189,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the cComments property.
      *
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -219,10 +199,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the cComments property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -231,10 +209,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the cActions property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -243,10 +219,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the cActions property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -255,10 +229,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the cByWhom property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -267,10 +239,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the cByWhom property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -279,10 +249,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the cReviewDate property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -291,10 +259,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the cReviewDate property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;
@@ -303,10 +269,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the cWhatIsYourCurrentEmploymentStatusSelectOne property.
      *
-     * @return
-     *     possible object is
-     *     {@link CWhatIsYourCurrentEmploymentStatusSelectOne }
-     *
+     * @return possible object is
+     * {@link CWhatIsYourCurrentEmploymentStatusSelectOne }
      */
     public CWhatIsYourCurrentEmploymentStatusSelectOne getCWhatIsYourCurrentEmploymentStatusSelectOne() {
         return cWhatIsYourCurrentEmploymentStatusSelectOne;
@@ -315,10 +279,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the cWhatIsYourCurrentEmploymentStatusSelectOne property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CWhatIsYourCurrentEmploymentStatusSelectOne }
-     *
+     * @param value allowed object is
+     *              {@link CWhatIsYourCurrentEmploymentStatusSelectOne }
      */
     public void setCWhatIsYourCurrentEmploymentStatusSelectOne(CWhatIsYourCurrentEmploymentStatusSelectOne value) {
         this.cWhatIsYourCurrentEmploymentStatusSelectOne = value;
@@ -327,10 +289,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the cAreYouCurrentlyInSchoolSelectOne property.
      *
-     * @return
-     *     possible object is
-     *     {@link CAreYouCurrentlyInSchoolSelectOne }
-     *
+     * @return possible object is
+     * {@link CAreYouCurrentlyInSchoolSelectOne }
      */
     public CAreYouCurrentlyInSchoolSelectOne getCAreYouCurrentlyInSchoolSelectOne() {
         return cAreYouCurrentlyInSchoolSelectOne;
@@ -339,10 +299,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the cAreYouCurrentlyInSchoolSelectOne property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CAreYouCurrentlyInSchoolSelectOne }
-     *
+     * @param value allowed object is
+     *              {@link CAreYouCurrentlyInSchoolSelectOne }
      */
     public void setCAreYouCurrentlyInSchoolSelectOne(CAreYouCurrentlyInSchoolSelectOne value) {
         this.cAreYouCurrentlyInSchoolSelectOne = value;
@@ -351,10 +309,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Gets the value of the cAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply property.
      *
-     * @return
-     *     possible object is
-     *     {@link CAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply }
-     *
+     * @return possible object is
+     * {@link CAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply }
      */
     public CAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply getCAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply() {
         return cAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply;
@@ -363,10 +319,8 @@ public class C5DaytimeActivitiesHowDoYouSpendYourDayDoYouHaveEnoughToDo {
     /**
      * Sets the value of the cAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link CAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply }
-     *
+     * @param value allowed object is
+     *              {@link CAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply }
      */
     public void setCAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply(CAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply value) {
         this.cAreYouAtRiskOfUnemploymentOrDisrupedEducationCheckAllThatApply = value;

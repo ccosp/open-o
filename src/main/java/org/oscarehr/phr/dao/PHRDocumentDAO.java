@@ -30,7 +30,6 @@ import java.util.List;
 import org.oscarehr.phr.model.PHRDocument;
 
 /**
- *
  * @author jay
  */
 public interface PHRDocumentDAO {

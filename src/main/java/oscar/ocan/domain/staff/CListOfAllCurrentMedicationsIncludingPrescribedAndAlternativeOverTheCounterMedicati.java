@@ -69,8 +69,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -97,10 +95,8 @@ public class CListOfAllCurrentMedicationsIncludingPrescribedAndAlternativeOverTh
     /**
      * Gets the value of the c1Medication property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getC1Medication() {
         return c1Medication;
@@ -109,10 +105,8 @@ public class CListOfAllCurrentMedicationsIncludingPrescribedAndAlternativeOverTh
     /**
      * Sets the value of the c1Medication property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setC1Medication(String value) {
         this.c1Medication = value;
@@ -144,8 +138,6 @@ public class CListOfAllCurrentMedicationsIncludingPrescribedAndAlternativeOverTh
      * {@link JAXBElement }{@code <}{@link String }{@code >}
      * {@link JAXBElement }{@code <}{@link String }{@code >}
      * {@link JAXBElement }{@code <}{@link String }{@code >}
-     *
-     *
      */
     public List<JAXBElement<String>> getC2MedicationOrC3MedicationOrC4Medication() {
         if (c2MedicationOrC3MedicationOrC4Medication == null) {

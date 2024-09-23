@@ -36,7 +36,6 @@ import oscar.Misc;
 import oscar.util.SqlUtils;
 
 /**
- *
  * @author root
  */
 public final class BillingCodeData implements Comparable {
@@ -72,7 +71,9 @@ public final class BillingCodeData implements Comparable {
     String region; //| region                | varchar(5)  | YES  |     | NULL    |                |
     String anaesthesia; // | anaesthesia
 
-    /** Creates a new instance of BillingCodeData */
+    /**
+     * Creates a new instance of BillingCodeData
+     */
     public BillingCodeData() {
     }
 
@@ -96,6 +97,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Removes a private billing code from database
+     *
      * @param codeId String - The service code to be removed
      * @return boolean
      */
@@ -159,7 +161,8 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Finds private service codes by code id
-     * @param code String - the service code
+     *
+     * @param code  String - the service code
      * @param order int - the sort order: 1 = descending otherwise the order is ascending
      * @return ArrayList - list of codes
      */
@@ -174,6 +177,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property billingserviceNo.
+     *
      * @return Value of property billingserviceNo.
      */
     public java.lang.String getBillingserviceNo() {
@@ -182,6 +186,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property billingserviceNo.
+     *
      * @param billingserviceNo New value of property billingserviceNo.
      */
     public void setBillingserviceNo(java.lang.String billingserviceNo) {
@@ -190,6 +195,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property serviceCompositecode.
+     *
      * @return Value of property serviceCompositecode.
      */
     public java.lang.String getServiceCompositecode() {
@@ -198,6 +204,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property serviceCompositecode.
+     *
      * @param serviceCompositecode New value of property serviceCompositecode.
      */
     public void setServiceCompositecode(java.lang.String serviceCompositecode) {
@@ -206,6 +213,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property serviceCode.
+     *
      * @return Value of property serviceCode.
      */
     public java.lang.String getServiceCode() {
@@ -214,6 +222,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property serviceCode.
+     *
      * @param serviceCode New value of property serviceCode.
      */
     public void setServiceCode(java.lang.String serviceCode) {
@@ -222,6 +231,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property description.
+     *
      * @return Value of property description.
      */
     public java.lang.String getDescription() {
@@ -230,6 +240,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property description.
+     *
      * @param description New value of property description.
      */
     public void setDescription(java.lang.String description) {
@@ -238,6 +249,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property value.
+     *
      * @return Value of property value.
      */
     public java.lang.String getValue() {
@@ -246,6 +258,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property value.
+     *
      * @param value New value of property value.
      */
     public void setValue(java.lang.String value) {
@@ -254,6 +267,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property percentage.
+     *
      * @return Value of property percentage.
      */
     public java.lang.String getPercentage() {
@@ -262,6 +276,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property percentage.
+     *
      * @param percentage New value of property percentage.
      */
     public void setPercentage(java.lang.String percentage) {
@@ -270,6 +285,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property billingserviceDate.
+     *
      * @return Value of property billingserviceDate.
      */
     public java.lang.String getBillingserviceDate() {
@@ -278,6 +294,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property billingserviceDate.
+     *
      * @param billingserviceDate New value of property billingserviceDate.
      */
     public void setBillingserviceDate(java.lang.String billingserviceDate) {
@@ -286,6 +303,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property specialty.
+     *
      * @return Value of property specialty.
      */
     public java.lang.String getSpecialty() {
@@ -294,6 +312,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property specialty.
+     *
      * @param specialty New value of property specialty.
      */
     public void setSpecialty(java.lang.String specialty) {
@@ -302,6 +321,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property region.
+     *
      * @return Value of property region.
      */
     public java.lang.String getRegion() {
@@ -310,6 +330,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property region.
+     *
      * @param region New value of property region.
      */
     public void setRegion(java.lang.String region) {
@@ -318,6 +339,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Getter for property anaesthesia.
+     *
      * @return Value of property anaesthesia.
      */
     public java.lang.String getAnaesthesia() {
@@ -326,6 +348,7 @@ public final class BillingCodeData implements Comparable {
 
     /**
      * Setter for property anaesthesia.
+     *
      * @param anaesthesia New value of property anaesthesia.
      */
     public void setAnaesthesia(java.lang.String anaesthesia) {

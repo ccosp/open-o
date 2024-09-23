@@ -160,7 +160,7 @@ public abstract class AbstractQueryHandler extends HibernateDaoSupport {
 
     /**
      * Build a final query string with all the place-holders filled in.
-     *
+     * <p>
      * Not Thread Safe
      */
     protected final String buildQuery(final String query) {

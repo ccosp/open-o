@@ -28,7 +28,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table loincCodes
- *
  */
 public class LoincCodes {
     private String loincNum;
@@ -102,67 +101,67 @@ public class LoincCodes {
     /**
      * Full constructor
      *
-     * @param loincNum String
-     * @param component String
-     * @param property String
-     * @param timeAspct String
-     * @param system String
-     * @param scaleTyp String
-     * @param methodTyp String
-     * @param relatNms String
-     * @param _class String
-     * @param source String
-     * @param euclideCd String
-     * @param astmCd String
-     * @param iupacCd String
-     * @param dtLastCh String
-     * @param chngReas String
-     * @param chngType String
-     * @param comments String
-     * @param answerlist String
-     * @param status String
-     * @param mapTo String
-     * @param scope String
-     * @param snowmedCd String
-     * @param vaCd String
-     * @param metpathCd String
-     * @param hcfaCd String
-     * @param cdcCd String
-     * @param normRange String
-     * @param exUsUnits String
-     * @param ipccUnits String
-     * @param gpiCd String
-     * @param reference String
-     * @param exactCmpSy String
-     * @param molarMass String
-     * @param iupcAnltCd String
-     * @param classtype String
-     * @param formula String
-     * @param multumCd String
-     * @param deedsCd String
-     * @param cscqFrnchNm String
-     * @param cscqGrmnNm String
-     * @param spnshNm String
-     * @param cscqItlnNm String
-     * @param species String
-     * @param exmplAnswers String
-     * @param acssym String
-     * @param moleid String
-     * @param baseName String
-     * @param _final String
-     * @param geneId String
-     * @param naaccrId String
-     * @param codeTable String
-     * @param setRoot String
-     * @param panelElements String
-     * @param relatedNames2 String
+     * @param loincNum        String
+     * @param component       String
+     * @param property        String
+     * @param timeAspct       String
+     * @param system          String
+     * @param scaleTyp        String
+     * @param methodTyp       String
+     * @param relatNms        String
+     * @param _class          String
+     * @param source          String
+     * @param euclideCd       String
+     * @param astmCd          String
+     * @param iupacCd         String
+     * @param dtLastCh        String
+     * @param chngReas        String
+     * @param chngType        String
+     * @param comments        String
+     * @param answerlist      String
+     * @param status          String
+     * @param mapTo           String
+     * @param scope           String
+     * @param snowmedCd       String
+     * @param vaCd            String
+     * @param metpathCd       String
+     * @param hcfaCd          String
+     * @param cdcCd           String
+     * @param normRange       String
+     * @param exUsUnits       String
+     * @param ipccUnits       String
+     * @param gpiCd           String
+     * @param reference       String
+     * @param exactCmpSy      String
+     * @param molarMass       String
+     * @param iupcAnltCd      String
+     * @param classtype       String
+     * @param formula         String
+     * @param multumCd        String
+     * @param deedsCd         String
+     * @param cscqFrnchNm     String
+     * @param cscqGrmnNm      String
+     * @param spnshNm         String
+     * @param cscqItlnNm      String
+     * @param species         String
+     * @param exmplAnswers    String
+     * @param acssym          String
+     * @param moleid          String
+     * @param baseName        String
+     * @param _final          String
+     * @param geneId          String
+     * @param naaccrId        String
+     * @param codeTable       String
+     * @param setRoot         String
+     * @param panelElements   String
+     * @param relatedNames2   String
      * @param surveyQuestText String
-     * @param surveyQuestSrc String
-     * @param unitsRequired String
-     * @param shortname String
-     * @param commonTests String
-     * @param usEuProperty String
-     * @param orderObs String
+     * @param surveyQuestSrc  String
+     * @param unitsRequired   String
+     * @param shortname       String
+     * @param commonTests     String
+     * @param usEuProperty    String
+     * @param orderObs        String
      */
     public LoincCodes(String loincNum, String component, String property,
                       String timeAspct, String system, String scaleTyp,
@@ -250,6 +249,7 @@ public class LoincCodes {
 
     /**
      * Gets the loincNum
+     *
      * @return String loincNum
      */
     public String getLoincNum() {
@@ -258,6 +258,7 @@ public class LoincCodes {
 
     /**
      * Gets the component
+     *
      * @return String component
      */
     public String getComponent() {
@@ -266,6 +267,7 @@ public class LoincCodes {
 
     /**
      * Gets the property
+     *
      * @return String property
      */
     public String getProperty() {
@@ -274,6 +276,7 @@ public class LoincCodes {
 
     /**
      * Gets the timeAspct
+     *
      * @return String timeAspct
      */
     public String getTimeAspct() {
@@ -282,6 +285,7 @@ public class LoincCodes {
 
     /**
      * Gets the system
+     *
      * @return String system
      */
     public String getSystem() {
@@ -290,6 +294,7 @@ public class LoincCodes {
 
     /**
      * Gets the scaleTyp
+     *
      * @return String scaleTyp
      */
     public String getScaleTyp() {
@@ -298,6 +303,7 @@ public class LoincCodes {
 
     /**
      * Gets the methodTyp
+     *
      * @return String methodTyp
      */
     public String getMethodTyp() {
@@ -306,6 +312,7 @@ public class LoincCodes {
 
     /**
      * Gets the relatNms
+     *
      * @return String relatNms
      */
     public String getRelatNms() {
@@ -314,6 +321,7 @@ public class LoincCodes {
 
     /**
      * Gets the _class
+     *
      * @return String _class
      */
     public String get_class() {
@@ -322,6 +330,7 @@ public class LoincCodes {
 
     /**
      * Gets the source
+     *
      * @return String source
      */
     public String getSource() {
@@ -330,6 +339,7 @@ public class LoincCodes {
 
     /**
      * Gets the euclideCd
+     *
      * @return String euclideCd
      */
     public String getEuclideCd() {
@@ -338,6 +348,7 @@ public class LoincCodes {
 
     /**
      * Gets the astmCd
+     *
      * @return String astmCd
      */
     public String getAstmCd() {
@@ -346,6 +357,7 @@ public class LoincCodes {
 
     /**
      * Gets the iupacCd
+     *
      * @return String iupacCd
      */
     public String getIupacCd() {
@@ -354,6 +366,7 @@ public class LoincCodes {
 
     /**
      * Gets the dtLastCh
+     *
      * @return String dtLastCh
      */
     public String getDtLastCh() {
@@ -362,6 +375,7 @@ public class LoincCodes {
 
     /**
      * Gets the chngReas
+     *
      * @return String chngReas
      */
     public String getChngReas() {
@@ -370,6 +384,7 @@ public class LoincCodes {
 
     /**
      * Gets the chngType
+     *
      * @return String chngType
      */
     public String getChngType() {
@@ -378,6 +393,7 @@ public class LoincCodes {
 
     /**
      * Gets the comments
+     *
      * @return String comments
      */
     public String getComments() {
@@ -386,6 +402,7 @@ public class LoincCodes {
 
     /**
      * Gets the answerlist
+     *
      * @return String answerlist
      */
     public String getAnswerlist() {
@@ -394,6 +411,7 @@ public class LoincCodes {
 
     /**
      * Gets the status
+     *
      * @return String status
      */
     public String getStatus() {
@@ -402,6 +420,7 @@ public class LoincCodes {
 
     /**
      * Gets the mapTo
+     *
      * @return String mapTo
      */
     public String getMapTo() {
@@ -410,6 +429,7 @@ public class LoincCodes {
 
     /**
      * Gets the scope
+     *
      * @return String scope
      */
     public String getScope() {
@@ -418,6 +438,7 @@ public class LoincCodes {
 
     /**
      * Gets the snowmedCd
+     *
      * @return String snowmedCd
      */
     public String getSnowmedCd() {
@@ -426,6 +447,7 @@ public class LoincCodes {
 
     /**
      * Gets the vaCd
+     *
      * @return String vaCd
      */
     public String getVaCd() {
@@ -434,6 +456,7 @@ public class LoincCodes {
 
     /**
      * Gets the metpathCd
+     *
      * @return String metpathCd
      */
     public String getMetpathCd() {
@@ -442,6 +465,7 @@ public class LoincCodes {
 
     /**
      * Gets the hcfaCd
+     *
      * @return String hcfaCd
      */
     public String getHcfaCd() {
@@ -450,6 +474,7 @@ public class LoincCodes {
 
     /**
      * Gets the cdcCd
+     *
      * @return String cdcCd
      */
     public String getCdcCd() {
@@ -458,6 +483,7 @@ public class LoincCodes {
 
     /**
      * Gets the normRange
+     *
      * @return String normRange
      */
     public String getNormRange() {
@@ -466,6 +492,7 @@ public class LoincCodes {
 
     /**
      * Gets the exUsUnits
+     *
      * @return String exUsUnits
      */
     public String getExUsUnits() {
@@ -474,6 +501,7 @@ public class LoincCodes {
 
     /**
      * Gets the ipccUnits
+     *
      * @return String ipccUnits
      */
     public String getIpccUnits() {
@@ -482,6 +510,7 @@ public class LoincCodes {
 
     /**
      * Gets the gpiCd
+     *
      * @return String gpiCd
      */
     public String getGpiCd() {
@@ -490,6 +519,7 @@ public class LoincCodes {
 
     /**
      * Gets the reference
+     *
      * @return String reference
      */
     public String getReference() {
@@ -498,6 +528,7 @@ public class LoincCodes {
 
     /**
      * Gets the exactCmpSy
+     *
      * @return String exactCmpSy
      */
     public String getExactCmpSy() {
@@ -506,6 +537,7 @@ public class LoincCodes {
 
     /**
      * Gets the molarMass
+     *
      * @return String molarMass
      */
     public String getMolarMass() {
@@ -514,6 +546,7 @@ public class LoincCodes {
 
     /**
      * Gets the iupcAnltCd
+     *
      * @return String iupcAnltCd
      */
     public String getIupcAnltCd() {
@@ -522,6 +555,7 @@ public class LoincCodes {
 
     /**
      * Gets the classtype
+     *
      * @return String classtype
      */
     public String getClasstype() {
@@ -530,6 +564,7 @@ public class LoincCodes {
 
     /**
      * Gets the formula
+     *
      * @return String formula
      */
     public String getFormula() {
@@ -538,6 +573,7 @@ public class LoincCodes {
 
     /**
      * Gets the multumCd
+     *
      * @return String multumCd
      */
     public String getMultumCd() {
@@ -546,6 +582,7 @@ public class LoincCodes {
 
     /**
      * Gets the deedsCd
+     *
      * @return String deedsCd
      */
     public String getDeedsCd() {
@@ -554,6 +591,7 @@ public class LoincCodes {
 
     /**
      * Gets the cscqFrnchNm
+     *
      * @return String cscqFrnchNm
      */
     public String getCscqFrnchNm() {
@@ -562,6 +600,7 @@ public class LoincCodes {
 
     /**
      * Gets the cscqGrmnNm
+     *
      * @return String cscqGrmnNm
      */
     public String getCscqGrmnNm() {
@@ -570,6 +609,7 @@ public class LoincCodes {
 
     /**
      * Gets the spnshNm
+     *
      * @return String spnshNm
      */
     public String getSpnshNm() {
@@ -578,6 +618,7 @@ public class LoincCodes {
 
     /**
      * Gets the cscqItlnNm
+     *
      * @return String cscqItlnNm
      */
     public String getCscqItlnNm() {
@@ -586,6 +627,7 @@ public class LoincCodes {
 
     /**
      * Gets the species
+     *
      * @return String species
      */
     public String getSpecies() {
@@ -594,6 +636,7 @@ public class LoincCodes {
 
     /**
      * Gets the exmplAnswers
+     *
      * @return String exmplAnswers
      */
     public String getExmplAnswers() {
@@ -602,6 +645,7 @@ public class LoincCodes {
 
     /**
      * Gets the acssym
+     *
      * @return String acssym
      */
     public String getAcssym() {
@@ -610,6 +654,7 @@ public class LoincCodes {
 
     /**
      * Gets the moleid
+     *
      * @return String moleid
      */
     public String getMoleid() {
@@ -618,6 +663,7 @@ public class LoincCodes {
 
     /**
      * Gets the baseName
+     *
      * @return String baseName
      */
     public String getBaseName() {
@@ -626,6 +672,7 @@ public class LoincCodes {
 
     /**
      * Gets the _final
+     *
      * @return String _final
      */
     public String get_final() {
@@ -634,6 +681,7 @@ public class LoincCodes {
 
     /**
      * Gets the geneId
+     *
      * @return String geneId
      */
     public String getGeneId() {
@@ -642,6 +690,7 @@ public class LoincCodes {
 
     /**
      * Gets the naaccrId
+     *
      * @return String naaccrId
      */
     public String getNaaccrId() {
@@ -650,6 +699,7 @@ public class LoincCodes {
 
     /**
      * Gets the codeTable
+     *
      * @return String codeTable
      */
     public String getCodeTable() {
@@ -658,6 +708,7 @@ public class LoincCodes {
 
     /**
      * Gets the setRoot
+     *
      * @return String setRoot
      */
     public String getSetRoot() {
@@ -666,6 +717,7 @@ public class LoincCodes {
 
     /**
      * Gets the panelElements
+     *
      * @return String panelElements
      */
     public String getPanelElements() {
@@ -674,6 +726,7 @@ public class LoincCodes {
 
     /**
      * Gets the relatedNames2
+     *
      * @return String relatedNames2
      */
     public String getRelatedNames2() {
@@ -682,6 +735,7 @@ public class LoincCodes {
 
     /**
      * Gets the surveyQuestText
+     *
      * @return String surveyQuestText
      */
     public String getSurveyQuestText() {
@@ -690,6 +744,7 @@ public class LoincCodes {
 
     /**
      * Gets the surveyQuestSrc
+     *
      * @return String surveyQuestSrc
      */
     public String getSurveyQuestSrc() {
@@ -698,6 +753,7 @@ public class LoincCodes {
 
     /**
      * Gets the unitsRequired
+     *
      * @return String unitsRequired
      */
     public String getUnitsRequired() {
@@ -706,6 +762,7 @@ public class LoincCodes {
 
     /**
      * Gets the shortname
+     *
      * @return String shortname
      */
     public String getShortname() {
@@ -714,6 +771,7 @@ public class LoincCodes {
 
     /**
      * Gets the commonTests
+     *
      * @return String commonTests
      */
     public String getCommonTests() {
@@ -722,6 +780,7 @@ public class LoincCodes {
 
     /**
      * Gets the usEuProperty
+     *
      * @return String usEuProperty
      */
     public String getUsEuProperty() {
@@ -730,6 +789,7 @@ public class LoincCodes {
 
     /**
      * Gets the orderObs
+     *
      * @return String orderObs
      */
     public String getOrderObs() {
@@ -738,6 +798,7 @@ public class LoincCodes {
 
     /**
      * Sets the loincNum
+     *
      * @param loincNum String
      */
     public void setLoincNum(String loincNum) {
@@ -746,6 +807,7 @@ public class LoincCodes {
 
     /**
      * Sets the component
+     *
      * @param component String
      */
     public void setComponent(String component) {
@@ -754,6 +816,7 @@ public class LoincCodes {
 
     /**
      * Sets the property
+     *
      * @param property String
      */
     public void setProperty(String property) {
@@ -762,6 +825,7 @@ public class LoincCodes {
 
     /**
      * Sets the timeAspct
+     *
      * @param timeAspct String
      */
     public void setTimeAspct(String timeAspct) {
@@ -770,6 +834,7 @@ public class LoincCodes {
 
     /**
      * Sets the system
+     *
      * @param system String
      */
     public void setSystem(String system) {
@@ -778,6 +843,7 @@ public class LoincCodes {
 
     /**
      * Sets the scaleTyp
+     *
      * @param scaleTyp String
      */
     public void setScaleTyp(String scaleTyp) {
@@ -786,6 +852,7 @@ public class LoincCodes {
 
     /**
      * Sets the methodTyp
+     *
      * @param methodTyp String
      */
     public void setMethodTyp(String methodTyp) {
@@ -794,6 +861,7 @@ public class LoincCodes {
 
     /**
      * Sets the relatNms
+     *
      * @param relatNms String
      */
     public void setRelatNms(String relatNms) {
@@ -802,6 +870,7 @@ public class LoincCodes {
 
     /**
      * Sets the _class
+     *
      * @param _class String
      */
     public void set_class(String _class) {
@@ -810,6 +879,7 @@ public class LoincCodes {
 
     /**
      * Sets the source
+     *
      * @param source String
      */
     public void setSource(String source) {
@@ -818,6 +888,7 @@ public class LoincCodes {
 
     /**
      * Sets the euclideCd
+     *
      * @param euclideCd String
      */
     public void setEuclideCd(String euclideCd) {
@@ -826,6 +897,7 @@ public class LoincCodes {
 
     /**
      * Sets the astmCd
+     *
      * @param astmCd String
      */
     public void setAstmCd(String astmCd) {
@@ -834,6 +906,7 @@ public class LoincCodes {
 
     /**
      * Sets the iupacCd
+     *
      * @param iupacCd String
      */
     public void setIupacCd(String iupacCd) {
@@ -842,6 +915,7 @@ public class LoincCodes {
 
     /**
      * Sets the dtLastCh
+     *
      * @param dtLastCh String
      */
     public void setDtLastCh(String dtLastCh) {
@@ -850,6 +924,7 @@ public class LoincCodes {
 
     /**
      * Sets the chngReas
+     *
      * @param chngReas String
      */
     public void setChngReas(String chngReas) {
@@ -858,6 +933,7 @@ public class LoincCodes {
 
     /**
      * Sets the chngType
+     *
      * @param chngType String
      */
     public void setChngType(String chngType) {
@@ -866,6 +942,7 @@ public class LoincCodes {
 
     /**
      * Sets the comments
+     *
      * @param comments String
      */
     public void setComments(String comments) {
@@ -874,6 +951,7 @@ public class LoincCodes {
 
     /**
      * Sets the answerlist
+     *
      * @param answerlist String
      */
     public void setAnswerlist(String answerlist) {
@@ -882,6 +960,7 @@ public class LoincCodes {
 
     /**
      * Sets the status
+     *
      * @param status String
      */
     public void setStatus(String status) {
@@ -890,6 +969,7 @@ public class LoincCodes {
 
     /**
      * Sets the mapTo
+     *
      * @param mapTo String
      */
     public void setMapTo(String mapTo) {
@@ -898,6 +978,7 @@ public class LoincCodes {
 
     /**
      * Sets the scope
+     *
      * @param scope String
      */
     public void setScope(String scope) {
@@ -906,6 +987,7 @@ public class LoincCodes {
 
     /**
      * Sets the snowmedCd
+     *
      * @param snowmedCd String
      */
     public void setSnowmedCd(String snowmedCd) {
@@ -914,6 +996,7 @@ public class LoincCodes {
 
     /**
      * Sets the vaCd
+     *
      * @param vaCd String
      */
     public void setVaCd(String vaCd) {
@@ -922,6 +1005,7 @@ public class LoincCodes {
 
     /**
      * Sets the metpathCd
+     *
      * @param metpathCd String
      */
     public void setMetpathCd(String metpathCd) {
@@ -930,6 +1014,7 @@ public class LoincCodes {
 
     /**
      * Sets the hcfaCd
+     *
      * @param hcfaCd String
      */
     public void setHcfaCd(String hcfaCd) {
@@ -938,6 +1023,7 @@ public class LoincCodes {
 
     /**
      * Sets the cdcCd
+     *
      * @param cdcCd String
      */
     public void setCdcCd(String cdcCd) {
@@ -946,6 +1032,7 @@ public class LoincCodes {
 
     /**
      * Sets the normRange
+     *
      * @param normRange String
      */
     public void setNormRange(String normRange) {
@@ -954,6 +1041,7 @@ public class LoincCodes {
 
     /**
      * Sets the exUsUnits
+     *
      * @param exUsUnits String
      */
     public void setExUsUnits(String exUsUnits) {
@@ -962,6 +1050,7 @@ public class LoincCodes {
 
     /**
      * Sets the ipccUnits
+     *
      * @param ipccUnits String
      */
     public void setIpccUnits(String ipccUnits) {
@@ -970,6 +1059,7 @@ public class LoincCodes {
 
     /**
      * Sets the gpiCd
+     *
      * @param gpiCd String
      */
     public void setGpiCd(String gpiCd) {
@@ -978,6 +1068,7 @@ public class LoincCodes {
 
     /**
      * Sets the reference
+     *
      * @param reference String
      */
     public void setReference(String reference) {
@@ -986,6 +1077,7 @@ public class LoincCodes {
 
     /**
      * Sets the exactCmpSy
+     *
      * @param exactCmpSy String
      */
     public void setExactCmpSy(String exactCmpSy) {
@@ -994,6 +1086,7 @@ public class LoincCodes {
 
     /**
      * Sets the molarMass
+     *
      * @param molarMass String
      */
     public void setMolarMass(String molarMass) {
@@ -1002,6 +1095,7 @@ public class LoincCodes {
 
     /**
      * Sets the iupcAnltCd
+     *
      * @param iupcAnltCd String
      */
     public void setIupcAnltCd(String iupcAnltCd) {
@@ -1010,6 +1104,7 @@ public class LoincCodes {
 
     /**
      * Sets the classtype
+     *
      * @param classtype String
      */
     public void setClasstype(String classtype) {
@@ -1018,6 +1113,7 @@ public class LoincCodes {
 
     /**
      * Sets the formula
+     *
      * @param formula String
      */
     public void setFormula(String formula) {
@@ -1026,6 +1122,7 @@ public class LoincCodes {
 
     /**
      * Sets the multumCd
+     *
      * @param multumCd String
      */
     public void setMultumCd(String multumCd) {
@@ -1034,6 +1131,7 @@ public class LoincCodes {
 
     /**
      * Sets the deedsCd
+     *
      * @param deedsCd String
      */
     public void setDeedsCd(String deedsCd) {
@@ -1042,6 +1140,7 @@ public class LoincCodes {
 
     /**
      * Sets the cscqFrnchNm
+     *
      * @param cscqFrnchNm String
      */
     public void setCscqFrnchNm(String cscqFrnchNm) {
@@ -1050,6 +1149,7 @@ public class LoincCodes {
 
     /**
      * Sets the cscqGrmnNm
+     *
      * @param cscqGrmnNm String
      */
     public void setCscqGrmnNm(String cscqGrmnNm) {
@@ -1058,6 +1158,7 @@ public class LoincCodes {
 
     /**
      * Sets the spnshNm
+     *
      * @param spnshNm String
      */
     public void setSpnshNm(String spnshNm) {
@@ -1066,6 +1167,7 @@ public class LoincCodes {
 
     /**
      * Sets the cscqItlnNm
+     *
      * @param cscqItlnNm String
      */
     public void setCscqItlnNm(String cscqItlnNm) {
@@ -1074,6 +1176,7 @@ public class LoincCodes {
 
     /**
      * Sets the species
+     *
      * @param species String
      */
     public void setSpecies(String species) {
@@ -1082,6 +1185,7 @@ public class LoincCodes {
 
     /**
      * Sets the exmplAnswers
+     *
      * @param exmplAnswers String
      */
     public void setExmplAnswers(String exmplAnswers) {
@@ -1090,6 +1194,7 @@ public class LoincCodes {
 
     /**
      * Sets the acssym
+     *
      * @param acssym String
      */
     public void setAcssym(String acssym) {
@@ -1098,6 +1203,7 @@ public class LoincCodes {
 
     /**
      * Sets the moleid
+     *
      * @param moleid String
      */
     public void setMoleid(String moleid) {
@@ -1106,6 +1212,7 @@ public class LoincCodes {
 
     /**
      * Sets the baseName
+     *
      * @param baseName String
      */
     public void setBaseName(String baseName) {
@@ -1114,6 +1221,7 @@ public class LoincCodes {
 
     /**
      * Sets the _final
+     *
      * @param _final String
      */
     public void set_final(String _final) {
@@ -1122,6 +1230,7 @@ public class LoincCodes {
 
     /**
      * Sets the geneId
+     *
      * @param geneId String
      */
     public void setGeneId(String geneId) {
@@ -1130,6 +1239,7 @@ public class LoincCodes {
 
     /**
      * Sets the naaccrId
+     *
      * @param naaccrId String
      */
     public void setNaaccrId(String naaccrId) {
@@ -1138,6 +1248,7 @@ public class LoincCodes {
 
     /**
      * Sets the codeTable
+     *
      * @param codeTable String
      */
     public void setCodeTable(String codeTable) {
@@ -1146,6 +1257,7 @@ public class LoincCodes {
 
     /**
      * Sets the setRoot
+     *
      * @param setRoot String
      */
     public void setSetRoot(String setRoot) {
@@ -1154,6 +1266,7 @@ public class LoincCodes {
 
     /**
      * Sets the panelElements
+     *
      * @param panelElements String
      */
     public void setPanelElements(String panelElements) {
@@ -1162,6 +1275,7 @@ public class LoincCodes {
 
     /**
      * Sets the relatedNames2
+     *
      * @param relatedNames2 String
      */
     public void setRelatedNames2(String relatedNames2) {
@@ -1170,6 +1284,7 @@ public class LoincCodes {
 
     /**
      * Sets the surveyQuestText
+     *
      * @param surveyQuestText String
      */
     public void setSurveyQuestText(String surveyQuestText) {
@@ -1178,6 +1293,7 @@ public class LoincCodes {
 
     /**
      * Sets the surveyQuestSrc
+     *
      * @param surveyQuestSrc String
      */
     public void setSurveyQuestSrc(String surveyQuestSrc) {
@@ -1186,6 +1302,7 @@ public class LoincCodes {
 
     /**
      * Sets the unitsRequired
+     *
      * @param unitsRequired String
      */
     public void setUnitsRequired(String unitsRequired) {
@@ -1194,6 +1311,7 @@ public class LoincCodes {
 
     /**
      * Sets the shortname
+     *
      * @param shortname String
      */
     public void setShortname(String shortname) {
@@ -1202,6 +1320,7 @@ public class LoincCodes {
 
     /**
      * Sets the commonTests
+     *
      * @param commonTests String
      */
     public void setCommonTests(String commonTests) {
@@ -1210,6 +1329,7 @@ public class LoincCodes {
 
     /**
      * Sets the usEuProperty
+     *
      * @param usEuProperty String
      */
     public void setUsEuProperty(String usEuProperty) {
@@ -1218,6 +1338,7 @@ public class LoincCodes {
 
     /**
      * Sets the orderObs
+     *
      * @param orderObs String
      */
     public void setOrderObs(String orderObs) {

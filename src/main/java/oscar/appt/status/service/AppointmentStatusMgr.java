@@ -28,7 +28,6 @@ import java.util.List;
 import org.oscarehr.common.model.AppointmentStatus;
 
 /**
- *
  * @author toby
  */
 public interface AppointmentStatusMgr {

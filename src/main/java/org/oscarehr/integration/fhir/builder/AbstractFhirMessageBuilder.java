@@ -69,6 +69,7 @@ public abstract class AbstractFhirMessageBuilder<T extends BaseResource> {
     /**
      * Constructor to add a MessageHeader to the message using the Sender and Destination
      * information
+     *
      * @throws Exception
      */
     protected AbstractFhirMessageBuilder(Sender sender, Destination destination) {

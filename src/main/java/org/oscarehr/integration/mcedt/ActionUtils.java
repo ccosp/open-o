@@ -45,7 +45,6 @@ import ca.ontario.health.edt.UploadData;
 
 /**
  * Defines utility methods for action classes.
- *
  */
 class ActionUtils {
 

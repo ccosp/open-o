@@ -46,7 +46,6 @@ import oscar.util.DateUtils;
 import oscar.util.StringUtils;
 
 /**
- *
  * retrieves info to display Disease entries for demographic
  */
 public class EctDisplayDxAction extends EctDisplayAction {

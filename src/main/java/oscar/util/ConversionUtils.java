@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Yet another conversion utility class for bridging JPA entity to legacy schema mismatch. 
+ * Yet another conversion utility class for bridging JPA entity to legacy schema mismatch.
  */
 public class ConversionUtils {
 
@@ -65,10 +65,8 @@ public class ConversionUtils {
     /**
      * Converts the provided string representing time into a date object. Time must match the {@link #DEFAULT_TIME_PATTERN}.
      *
-     * @param timeString
-     * 		Time string to be parsed
-     * @return
-     *        Returns the parsed string
+     * @param timeString Time string to be parsed
+     * @return Returns the parsed string
      */
     public static Date fromTimeString(String timeString) {
         return fromDateString(timeString, DEFAULT_TIME_PATTERN);
@@ -85,10 +83,8 @@ public class ConversionUtils {
     /**
      * Converts the provided date representing time into a date object. Time must match the {@link #DEFAULT_DATE_PATTERN}.
      *
-     * @param dateString
-     * 		Date string to be parsed
-     * @return
-     *        Returns the parsed string
+     * @param dateString Date string to be parsed
+     * @return Returns the parsed string
      */
     public static Date fromDateString(String dateString) {
         return fromDateString(dateString, DEFAULT_DATE_PATTERN);
@@ -105,12 +101,9 @@ public class ConversionUtils {
     /**
      * Parses the date string using the specified format pattern
      *
-     * @param dateString
-     * 		Date string to be parsed
-     * @param formatPattern
-     * 		Format pattern to use for parsing
-     * @return
-     *        Returns the parsed date or null if the date can't be parsed
+     * @param dateString    Date string to be parsed
+     * @param formatPattern Format pattern to use for parsing
+     * @return Returns the parsed date or null if the date can't be parsed
      */
     public static Date fromDateString(String dateString, String formatPattern) {
         if (dateString == null || "".equals(dateString.trim())) return null;
@@ -126,13 +119,10 @@ public class ConversionUtils {
     /**
      * Formats date instance using the provided date format pattern
      *
-     * @param date
-     * 		Date to be formatted
-     * @param formatPattern
-     * 		Format pattern to apply
-     * @return
-     *        Returns the formatted date as a string, or an empty string for
-     * 		null date parameter.
+     * @param date          Date to be formatted
+     * @param formatPattern Format pattern to apply
+     * @return Returns the formatted date as a string, or an empty string for
+     * null date parameter.
      */
     public static String toDateString(Date date, String formatPattern) {
         if (date == null) {
@@ -146,10 +136,8 @@ public class ConversionUtils {
     /**
      * Formats the date instance into a string keeping only the time of the day and excluding the remaining info.
      *
-     * @param time
-     * 		Date to be formatted using {@link #DEFAULT_TIME_PATTERN}
-     * @return
-     *        Returns the formatted string
+     * @param time Date to be formatted using {@link #DEFAULT_TIME_PATTERN}
+     * @return Returns the formatted string
      */
     public static String toTimeString(Date time) {
         return toDateString(time, DEFAULT_TIME_PATTERN);
@@ -158,10 +146,8 @@ public class ConversionUtils {
     /**
      * Formats the date instance into a string keeping only the date.
      *
-     * @param date
-     * 		Date to be formatted using {@link #DEFAULT_DATE_PATTERN}
-     * @return
-     *        Returns the formatted string
+     * @param date Date to be formatted using {@link #DEFAULT_DATE_PATTERN}
+     * @return Returns the formatted string
      */
     public static String toDateString(Date date) {
         return toDateString(date, DEFAULT_DATE_PATTERN);
@@ -169,6 +155,7 @@ public class ConversionUtils {
 
     /**
      * Java SQL Timestamp to Java util date string
+     *
      * @param timestamp java.sql.Timestamp
      * @return String given java.sql.Timestamp in string format
      */
@@ -181,10 +168,8 @@ public class ConversionUtils {
     /**
      * Parses the specified string as a Long instance.
      *
-     * @param longString
-     * 		String to be parsed as long
-     * @return
-     *        Returns the parsed long
+     * @param longString String to be parsed as long
+     * @return Returns the parsed long
      */
     public static Long fromLongString(String longString) {
         if (longString == null || longString.trim().isEmpty()) {
@@ -200,10 +185,8 @@ public class ConversionUtils {
     /**
      * Parses the specified string as an Integer instance.
      *
-     * @param obj
-     * 		String to be parsed as integer
-     * @return
-     *        Returns the parsed integer
+     * @param obj String to be parsed as integer
+     * @return Returns the parsed integer
      */
     public static Integer fromIntString(Object obj) {
         String intString = (obj == null) ? null : obj.toString();
@@ -220,10 +203,8 @@ public class ConversionUtils {
     /**
      * Formats the specified integer as string
      *
-     * @param integer
-     * 		Integer to format as a string.
-     * @return
-     *        Returns the formatted string, or 0 for null parameter value.
+     * @param integer Integer to format as a string.
+     * @return Returns the formatted string, or 0 for null parameter value.
      */
     public static String toIntString(Integer integer) {
         if (integer == null) {
@@ -235,10 +216,8 @@ public class ConversionUtils {
     /**
      * Formats the specified boolean as string
      *
-     * @param b
-     * 		Boolean to format as a string.
-     * @return
-     *        Returns 0 for false or null instance or "1" otherwise.
+     * @param b Boolean to format as a string.
+     * @return Returns 0 for false or null instance or "1" otherwise.
      */
     public static String toBoolString(Boolean b) {
         if (b == null || b == Boolean.FALSE) {
@@ -250,10 +229,8 @@ public class ConversionUtils {
     /**
      * Parses the specified string as boolean.
      *
-     * @param str
-     * 		String to be parsed
-     * @return
-     *        Returns false for empty, null or 0 or true otherwise.
+     * @param str String to be parsed
+     * @return Returns false for empty, null or 0 or true otherwise.
      */
     public static boolean fromBoolString(String str) {
         if (str == null || str.trim().isEmpty() || ZERO_STRING.equals(str)) {
@@ -265,10 +242,8 @@ public class ConversionUtils {
     /**
      * Parses the specified string as an Double instance.
      *
-     * @param str
-     * 		String to be parsed as double
-     * @return
-     *        Returns the parsed double
+     * @param str String to be parsed as double
+     * @return Returns the parsed double
      */
     public static Double fromDoubleString(String str) {
         if (str == null || str.trim().isEmpty()) {
@@ -285,10 +260,8 @@ public class ConversionUtils {
     /**
      * Formats the specified double as string
      *
-     * @param d
-     * 		Double to format as a string.
-     * @return
-     *        Returns the formatted string, or 0 for null value.
+     * @param d Double to format as a string.
+     * @return Returns the formatted string, or 0 for null value.
      */
     public static String toDoubleString(Double d) {
         if (d == null) {
@@ -300,10 +273,8 @@ public class ConversionUtils {
     /**
      * Gets number of days since day 0 for the specified time stamp
      *
-     * @param timestamp
-     * 		Time stamp to get day count for
-     * @return
-     *        Returns the day count
+     * @param timestamp Time stamp to get day count for
+     * @return Returns the day count
      */
     public static int toDays(Date timestamp) {
         return toDays(timestamp.getTime());
@@ -312,10 +283,8 @@ public class ConversionUtils {
     /**
      * Gets number of days since day 0 for the specified time stamp
      *
-     * @param timestamp
-     * 		Time stamp to get day count for
-     * @return
-     *        Returns the day count
+     * @param timestamp Time stamp to get day count for
+     * @return Returns the day count
      */
     public static int toDays(long timestamp) {
         return (int) (timestamp / MS_IN_DAY);

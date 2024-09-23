@@ -26,7 +26,6 @@ package oscar.entities;
 
 /**
  * Encapsulates data from table billcenter
- *
  */
 public class Billcenter {
     private String billcenterCode;
@@ -51,6 +50,7 @@ public class Billcenter {
 
     /**
      * Gets the billcenterCode
+     *
      * @return String billcenterCode
      */
     public String getBillcenterCode() {
@@ -59,6 +59,7 @@ public class Billcenter {
 
     /**
      * Gets the billcenterDesc
+     *
      * @return String billcenterDesc
      */
     public String getBillcenterDesc() {
@@ -67,6 +68,7 @@ public class Billcenter {
 
     /**
      * Sets the billcenterCode
+     *
      * @param billcenterCode String
      */
     public void setBillcenterCode(String billcenterCode) {
@@ -75,6 +77,7 @@ public class Billcenter {
 
     /**
      * Sets the billcenterDesc
+     *
      * @param billcenterDesc String
      */
     public void setBillcenterDesc(String billcenterDesc) {

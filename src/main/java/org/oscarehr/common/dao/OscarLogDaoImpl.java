@@ -181,7 +181,6 @@ public class OscarLogDaoImpl extends AbstractDaoImpl<OscarLog> implements OscarL
     }
 
     /**
-     *
      * @param providerNo
      * @param startPosition
      * @param itemsToReturn
@@ -205,7 +204,6 @@ public class OscarLogDaoImpl extends AbstractDaoImpl<OscarLog> implements OscarL
     }
 
     /**
-     *
      * @param providerNo
      * @param startPosition
      * @param itemsToReturn

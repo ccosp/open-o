@@ -42,7 +42,9 @@ public class ICLHandler extends DefaultGenericHandler implements MessageHandler 
     Logger logger = org.oscarehr.util.MiscUtils.getLogger();
     ORU_R01 msg = null;
 
-    /** Creates a new instance of ICLHandler */
+    /**
+     * Creates a new instance of ICLHandler
+     */
     public ICLHandler() {
     }
 
@@ -518,7 +520,7 @@ public class ICLHandler extends DefaultGenericHandler implements MessageHandler 
 
 
     /**
-     *  Retrieve the possible segment headers from the OBX fields
+     * Retrieve the possible segment headers from the OBX fields
      */
     public ArrayList<String> getHeaders() {
         int i;

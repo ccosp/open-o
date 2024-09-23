@@ -53,7 +53,7 @@ public class SufficientContiguousTimeFilter implements AvailableTimeSlotFilter {
 
 
     /**
-     * @param index is the entry in allowedTimesFilteredByExistingAppointments we are checking
+     * @param index                                      is the entry in allowedTimesFilteredByExistingAppointments we are checking
      * @param duration
      * @param allowedTimesFilteredByExistingAppointments
      * @return
