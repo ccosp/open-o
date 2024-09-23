@@ -26,10 +26,13 @@ import org.apache.xml.security.utils.resolver.ResourceResolver;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.oscarehr.common.dao.utils.ConfigUtils;
 import org.oscarehr.integration.ebs.client.ng.EdtClientBuilder;
 import org.oscarehr.integration.ebs.client.ng.EdtClientBuilderConfig;
 import org.oscarehr.integration.mcedt.mailbox.CidPrefixResourceResolver;
 import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.SpringUtils;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ca.ontario.health.edt.Detail;
 import ca.ontario.health.edt.DetailData;
@@ -119,6 +122,18 @@ public abstract class EDTBaseTest {
     public static void setUpBeforeClass() {
         Init.init();
         ResourceResolver.register(CidPrefixResourceResolver.class, true);
+        if(SpringUtils.getBeanFactory() == null) {
+            oscar.OscarProperties p = oscar.OscarProperties.getInstance();
+            p.setProperty("db_name", ConfigUtils.getProperty("db_schema") + ConfigUtils.getProperty("db_schema_properties"));
+            p.setProperty("db_username", ConfigUtils.getProperty("db_user"));
+            p.setProperty("db_password", ConfigUtils.getProperty("db_password"));
+            p.setProperty("db_uri", ConfigUtils.getProperty("db_url_prefix"));
+            p.setProperty("db_driver", ConfigUtils.getProperty("db_driver"));
+            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+            context.setConfigLocations(new String[]{"/applicationContext.xml","/applicationContextBORN.xml"});
+            context.refresh();
+            SpringUtils.setBeanFactory(context);
+        }
     }
 
     @Before
