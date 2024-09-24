@@ -41,10 +41,6 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import net.sf.json.JSONObject;
-import oscar.oscarSurveillance.ProcessSurveyFile;
-
-
-//import oscar.oscarSurveillance.ProcessSurveyFile;
 
 public class FTPSJob implements OscarRunnable {
 
@@ -74,7 +70,6 @@ public class FTPSJob implements OscarRunnable {
         String password = json.getString("password");
         String filePrefix = json.optString("prefix", "");
         logger.debug("calling proccess for id : " + surveyId);
-        ProcessSurveyFile.processSurveyFile(surveyId); //Run file generator
 
         //Check if there is anything to send
         List<SurveillanceData> listToSend = surveillanceDataDao.findUnSentBySurveyId(surveyId);
