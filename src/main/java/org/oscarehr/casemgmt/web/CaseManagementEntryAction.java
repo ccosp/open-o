@@ -2890,15 +2890,8 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
         MacroDao macroDao = (MacroDao) SpringUtils.getBean(MacroDao.class);
         Macro macro = macroDao.find(Integer.parseInt(request.getParameter("macro.id")));
         logger.debug("loaded macro " + macro.getLabel());
-		/*
-		boolean cppFromMeasurements = false;
-		String cpp = request.getParameter("cpp");
-		if (cpp != null && cpp.equals("measurements")) {
-			cppFromMeasurements = true;
-		}
-		*/
-        cform.setCaseNote_note(cform.getCaseNote_note() + "\n" + macro.getImpression());
 
+        cform.setCaseNote_note(cform.getCaseNote_note() + "\n" + macro.getImpression());
         ActionForward fwd = saveAndExit(mapping, form, request, response);
 
         if (fwd.getName().equals("windowClose")) {

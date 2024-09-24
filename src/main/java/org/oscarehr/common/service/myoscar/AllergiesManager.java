@@ -24,21 +24,13 @@
 
 
 package org.oscarehr.common.service.myoscar;
-
-import java.util.Date;
-import java.util.List;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.AllergyDao;
 import org.oscarehr.common.dao.SentToPHRTrackingDao;
 import org.oscarehr.common.model.Allergy;
-import org.oscarehr.common.model.SentToPHRTracking;
 import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
 import org.oscarehr.myoscar_server.ws.MedicalDataTransfer4;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -51,35 +43,6 @@ public final class AllergiesManager {
     private static final String OSCAR_ALLERGIES_DATA_TYPE = "ALLERGY";
     private static final SentToPHRTrackingDao sentToPHRTrackingDao = (SentToPHRTrackingDao) SpringUtils.getBean(SentToPHRTrackingDao.class);
 
-    public static void sendAllergiesToMyOscar(LoggedInInfo loggedInInfo, MyOscarLoggedInInfo myOscarLoggedInInfo, Integer demographicId) throws ClassCastException {
-        // get last synced info
-
-        // get the items for the person which are changed since last sync
-        // for each item
-        // send the item or update it
-
-        Date startSyncTime = new Date();
-        SentToPHRTracking sentToPHRTracking = MyOscarMedicalDataManagerUtils.getExistingOrCreateInitialSentToPHRTracking(demographicId, OSCAR_ALLERGIES_DATA_TYPE, MyOscarLoggedInInfo.getMyOscarServerBaseUrl());
-        logger.debug("sendAllergiesToMyOscar : demographicId=" + demographicId + ", lastSyncTime=" + sentToPHRTracking.getSentDatetime());
-
-        AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean(AllergyDao.class);
-        List<Allergy> changedAllergies = allergyDao.findByDemographicIdUpdatedAfterDate(demographicId, sentToPHRTracking.getSentDatetime());
-        for (Allergy allergy : changedAllergies) {
-            logger.debug("sendAllergiesToMyOscar : allergyId=" + allergy.getId());
-
-            try {
-                MedicalDataTransfer4 medicalDataTransfer = toMedicalDataTransfer(loggedInInfo, myOscarLoggedInInfo, allergy);
-
-                // don't ask me why but allergies are currently changeable in oscar, therefore, they're never completed.
-                MyOscarMedicalDataManagerUtils.addMedicalData(loggedInInfo.getLoggedInProviderNo(), myOscarLoggedInInfo, medicalDataTransfer, OSCAR_ALLERGIES_DATA_TYPE, allergy.getId(), false, true);
-            } catch (Exception e) {
-                logger.error("Unexpected error", e);
-            }
-        }
-
-        sentToPHRTracking.setSentDatetime(startSyncTime);
-        sentToPHRTrackingDao.merge(sentToPHRTracking);
-    }
 
     public static Document toXml(Allergy allergy) throws ParserConfigurationException {
         Document doc = XmlUtils.newDocument("Allergy");
