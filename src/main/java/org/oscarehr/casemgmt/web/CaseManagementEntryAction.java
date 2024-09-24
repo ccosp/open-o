@@ -55,7 +55,6 @@ import oscar.log.LogConst;
 import oscar.oscarBilling.ca.on.pageUtil.BillingSavePrep;
 import oscar.oscarEncounter.data.EctProgram;
 import oscar.oscarEncounter.pageUtil.EctSessionBean;
-import oscar.oscarSurveillance.SurveillanceMaster;
 import oscar.util.UtilDateUtilities;
 
 import javax.servlet.http.HttpServletRequest;
@@ -2013,16 +2012,6 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
         }
 
         String chain = request.getParameter("chain");
-
-        SurveillanceMaster.getInstance();
-        if (!SurveillanceMaster.surveysEmpty()) {
-            request.setAttribute("demoNo", demoNo);
-            if (chain != null && !chain.equals("")) {
-                request.setAttribute("proceedURL", chain);
-            }
-            logger.debug("sending to surveillance");
-            return mapping.findForward("surveillance");
-        }
 
         if (chain != null && !chain.equals("")) {
             ActionForward fwd = new ActionForward();
