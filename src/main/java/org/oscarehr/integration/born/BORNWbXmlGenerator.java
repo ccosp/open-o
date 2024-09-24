@@ -1165,7 +1165,7 @@ public class BORNWbXmlGenerator {
         }
 
         String nddsNotAttained = getRourkeStrValue("nddsNotAttained");
-        if (nddsNotAttained != null && nddsNotAttained.length() > 0) {
+        if (nddsNotAttained != null && !nddsNotAttained.isEmpty()) {
             for (String item : nddsNotAttained.split(",")) {
                 String val = item.length() == 1 ? "0" + item : item;
                 try {

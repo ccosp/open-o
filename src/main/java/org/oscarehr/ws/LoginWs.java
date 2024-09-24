@@ -67,7 +67,7 @@ public class LoginWs extends AbstractWs {
         List<Security> securities = securityDao.findByUserName(userName);
         Security security = null;
 
-        if (securities.size() > 0) security = securities.get(0);
+        if (!securities.isEmpty()) security = securities.get(0);
 
         if (WsUtils.checkAuthenticationAndSetLoggedInInfo(getHttpServletRequest(), security, password)) {
             LoginResultTransfer result = new LoginResultTransfer();
@@ -94,7 +94,7 @@ public class LoginWs extends AbstractWs {
         List<Security> securities = securityDao.findByUserName(userName);
         Security security = null;
 
-        if (securities.size() > 0) security = securities.get(0);
+        if (!securities.isEmpty()) security = securities.get(0);
 
         if (WsUtils.checkAuthenticationAndSetLoggedInInfo(getHttpServletRequest(), security, password)) {
             LoginResultTransfer2 result = new LoginResultTransfer2();

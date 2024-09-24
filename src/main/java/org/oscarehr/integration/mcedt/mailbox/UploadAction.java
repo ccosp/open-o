@@ -88,7 +88,7 @@ public class UploadAction extends DispatchAction {
             FileUtils.mkDir(sent);
 
         try {
-            if (files != null && files.size() > 0) {
+            if (files != null && !files.isEmpty()) {
                 for (File file : files) {
                     ActionUtils.moveFileToDirectory(file, sent, false, true);
                 }
@@ -233,7 +233,7 @@ public class UploadAction extends DispatchAction {
                         failUploads.add(edtResponse.getDescription() + ": " + edtResponse.getResult().getMsg());
                     }
                 }
-                if (ids.size() > 0) {
+                if (!ids.isEmpty()) {
 
                     try {
                         result = delegate.submit(ids);
@@ -257,14 +257,14 @@ public class UploadAction extends DispatchAction {
             ActionMessages messages = new ActionMessages();
             // we don't need to find out if upload is successful, we rather get info about submit status of that file
             //if ( successUploads!=null && successUploads.size()>0 ) messages = ActionUtils.addMoreMessage(messages, "uploadAction.upload.success", McedtMessageCreator.stringListToString(successUploads));
-            if (successSubmits != null && successSubmits.size() > 0)
+            if (successSubmits != null && !successSubmits.isEmpty())
                 messages = ActionUtils.addMoreMessage(messages, "uploadAction.submit.success", McedtMessageCreator.stringListToString(successSubmits));
             saveMessages(request, messages);
 
             ActionMessages errors = new ActionMessages();
-            if (failUploads != null && failUploads.size() > 0)
+            if (failUploads != null && !failUploads.isEmpty())
                 errors = ActionUtils.addMoreMessage(errors, "uploadAction.upload.failure", McedtMessageCreator.stringListToString(failUploads));
-            if (failSubmits != null && failSubmits.size() > 0)
+            if (failSubmits != null && !failSubmits.isEmpty())
                 errors = ActionUtils.addMoreMessage(errors, "uploadAction.submit.failure", McedtMessageCreator.stringListToString(failSubmits));
             saveErrors(request, errors);
 

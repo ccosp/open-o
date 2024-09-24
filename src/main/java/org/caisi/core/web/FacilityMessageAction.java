@@ -88,7 +88,7 @@ public class FacilityMessageAction extends DispatchAction {
                 msg.setProgramName("N/A");
             }
         }
-        if (activeMessages != null && activeMessages.size() > 0)
+        if (activeMessages != null && !activeMessages.isEmpty())
             request.setAttribute("ActiveFacilityMessages", activeMessages);
         return mapping.findForward("list");
     }
@@ -157,7 +157,7 @@ public class FacilityMessageAction extends DispatchAction {
             programId = pp.getProgramId().intValue();
         }
         List<FacilityMessage> messages = facilityMessageDao.getMessagesByFacilityIdOrNullAndProgramIdOrNull(facilityId, programId);
-        if (messages != null && messages.size() > 0) {
+        if (messages != null && !messages.isEmpty()) {
             request.setAttribute("FacilityMessages", messages);
         }
         return mapping.findForward("view");

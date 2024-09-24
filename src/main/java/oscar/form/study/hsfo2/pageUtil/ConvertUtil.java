@@ -29,7 +29,7 @@ import java.util.Date;
 
 public class ConvertUtil {
     public static int toInt(String sValue) {
-        if (sValue == null || sValue.length() == 0)
+        if (sValue == null || sValue.isEmpty())
             return 0;
         try {
             return Integer.parseInt(sValue);
@@ -39,7 +39,7 @@ public class ConvertUtil {
     }
 
     public static Integer toInteger(String sValue) {
-        if (sValue == null || sValue.length() == 0)
+        if (sValue == null || sValue.isEmpty())
             return null;
         try {
             return Integer.parseInt(sValue);
@@ -49,7 +49,7 @@ public class ConvertUtil {
     }
 
     public static double toDouble(String sValue) {
-        if (sValue == null || sValue.length() == 0)
+        if (sValue == null || sValue.isEmpty())
             return 0;
         try {
             return Double.parseDouble(sValue);
@@ -72,13 +72,13 @@ public class ConvertUtil {
     }
 
     public static String toUpperCase(String str) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.isEmpty())
             return str;
         return str.toUpperCase();
     }
 
     public static String toLowerCase(String str) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.isEmpty())
             return str;
         return str.toLowerCase();
     }

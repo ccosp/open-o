@@ -58,7 +58,7 @@ public class RxPrescriptionData {
     public static String getFullOutLine(String special) {
         String ret = "";
         if (special != null) {
-            if (special.length() > 0) {
+            if (!special.isEmpty()) {
                 int i;
                 String[] arr = special.split("\n");
                 for (i = 0; i < arr.length; i++) {
@@ -432,7 +432,7 @@ public class RxPrescriptionData {
         for (int i = 0; i < p.length; i++) {
             if (p[i].isCurrent()) {
                 if (!result.contains(p[i].getRegionalIdentifier())) {
-                    if (p[i].getRegionalIdentifier() != null && p[i].getRegionalIdentifier().trim().length() != 0) {
+                    if (p[i].getRegionalIdentifier() != null && !p[i].getRegionalIdentifier().trim().isEmpty()) {
                         result.add(p[i].getRegionalIdentifier());
                     }
                 }
@@ -474,7 +474,7 @@ public class RxPrescriptionData {
                 IndivoDocs iDoc = iDao.findByOscarDocNo(drug.getId());
                 if (iDoc != null) {
                     p.setIndivoIdx(iDoc.getIndivoDocIdx());
-                    if (p.getIndivoIdx() != null && p.getIndivoIdx().length() > 0) p.setRegisterIndivo();
+                    if (p.getIndivoIdx() != null && !p.getIndivoIdx().isEmpty()) p.setRegisterIndivo();
                 }
 
                 p.setPosition(drug.getPosition());
@@ -1060,7 +1060,7 @@ public class RxPrescriptionData {
                 //          p("this.getRxDate()",this.getRxDate().toString());
                 cal.setTime(this.getRxDate());
 
-                if (this.getDuration() != null && this.getDuration().length() > 0) {
+                if (this.getDuration() != null && !this.getDuration().isEmpty()) {
                     if (Integer.parseInt(this.getDuration()) > 0) {
                         int i = Integer.parseInt(this.getDuration());
                         //      p("i",Integer.toString(i));
@@ -1199,7 +1199,7 @@ public class RxPrescriptionData {
         }
 
         public void setQuantity(String RHS) {
-            if (RHS == null || RHS.equals("null") || RHS.length() < 1) {
+            if (RHS == null || RHS.equals("null") || RHS.isEmpty()) {
                 this.quantity = "0";
             } else {
                 this.quantity = RHS;
@@ -1402,7 +1402,7 @@ public class RxPrescriptionData {
             String s = this.getSpecial();
 
             if (s != null) {
-                if (s.length() > 0) {
+                if (!s.isEmpty()) {
                     ret = "<br>";
 
                     int i;
@@ -1498,7 +1498,7 @@ public class RxPrescriptionData {
                 }
 
                 try {
-                    if (this.getDuration() != null && this.getDuration().trim().length() == 0) {
+                    if (this.getDuration() != null && this.getDuration().trim().isEmpty()) {
                         this.setDuration("0");
                     }
                     if (this.getDuration() != null && !this.getDuration().equalsIgnoreCase("null") && Integer.parseInt(this.getDuration()) > 1) {
@@ -1606,7 +1606,7 @@ public class RxPrescriptionData {
 
             String dates_reprinted = p.getDatesReprinted();
             String now = DateUtils.format("yyyy-MM-dd HH:mm:ss", new Date());
-            if (dates_reprinted != null && dates_reprinted.length() > 0) {
+            if (dates_reprinted != null && !dates_reprinted.isEmpty()) {
                 dates_reprinted += "," + now + ";" + providerNo;
             } else {
                 dates_reprinted = now + ";" + providerNo;

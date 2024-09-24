@@ -276,7 +276,7 @@ public class DrugConverterImpl extends AbstractConverter<Drug, DrugTo1> implemen
             List<DrugSearchTo1> matchedDrugs = this.drugLookUpManager.search(d.getBrandName());
             DrugSearchTo1 details = null;
 
-            if (matchedDrugs.size() >= 1) {
+            if (!matchedDrugs.isEmpty()) {
 
                 // get the details for the drug in question
                 details = this.drugLookUpManager.details(matchedDrugs.get(0).getId().toString());

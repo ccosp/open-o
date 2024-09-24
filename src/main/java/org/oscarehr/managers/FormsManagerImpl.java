@@ -99,7 +99,7 @@ public class FormsManagerImpl implements FormsManager {
     public List<EForm> findByStatus(LoggedInInfo loggedInInfo, boolean status, EFormSortOrder sortOrder) {
         List<EForm> results = eformDao.findByStatus(status, sortOrder);
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = EForm.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "FormsManager.findByStatus", "ids returned=" + resultIds);
         }
@@ -116,7 +116,7 @@ public class FormsManagerImpl implements FormsManager {
     @Override
     public List<EForm> getEfromInGroupByGroupName(LoggedInInfo loggedInInfo, String groupName) {
         List<EForm> results = eformDao.getEfromInGroupByGroupName(groupName);
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = EForm.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "FormsManager.getEfromInGroupByGroupName",
                     "ids returned=" + resultIds);
@@ -133,7 +133,7 @@ public class FormsManagerImpl implements FormsManager {
     @Override
     public List<EFormData> findByDemographicId(LoggedInInfo loggedInInfo, Integer demographicId) {
         List<EFormData> results = eFormDataDao.findByDemographicId(demographicId);
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = EForm.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "FormsManager.findByDemographicId", "ids returned=" + resultIds);
         }

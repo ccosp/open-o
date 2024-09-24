@@ -84,7 +84,7 @@ public class MammogramReport implements PreventionReport {
                 prd.numMonths = "------";
                 prd.color = "grey";
                 inList++;
-            } else if (noFutureItems.size() == 0) {// no info
+            } else if (noFutureItems.isEmpty()) {// no info
                 prd.rank = 1;
                 prd.lastDate = "------";
                 prd.state = "No Info";
@@ -310,7 +310,7 @@ public class MammogramReport implements PreventionReport {
                 Collection<EctMeasurementsDataBean> followupData = measurementDataHandler.getMeasurementsDataVector();
                 //NO Contact
 
-                if (followupData.size() == 0) {
+                if (followupData.isEmpty()) {
                     prd.nextSuggestedProcedure = this.LETTER1;
                     return this.LETTER1;
                 } else { //There has been contact
@@ -391,7 +391,7 @@ public class MammogramReport implements PreventionReport {
                 log.debug("getting followup data for " + prd.demographicNo);
                 Collection<EctMeasurementsDataBean> followupData = measurementDataHandler.getMeasurementsDataVector();
 
-                if (followupData.size() > 0) {
+                if (!followupData.isEmpty()) {
                     EctMeasurementsDataBean measurementData = followupData.iterator().next();
                     prd.lastFollowup = measurementData.getDateObservedAsDate();
                     prd.lastFollupProcedure = measurementData.getDataField();
@@ -409,7 +409,7 @@ public class MammogramReport implements PreventionReport {
                 log.debug("getting followup data for " + prd.demographicNo);
                 Collection<EctMeasurementsDataBean> followupData = measurementDataHandler.getMeasurementsDataVector();
 
-                if (followupData.size() > 0) {
+                if (!followupData.isEmpty()) {
                     EctMeasurementsDataBean measurementData = followupData.iterator().next();
                     prd.lastFollowup = measurementData.getDateObservedAsDate();
                     prd.lastFollupProcedure = measurementData.getDataField();

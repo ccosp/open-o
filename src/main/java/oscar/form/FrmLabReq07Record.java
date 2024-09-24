@@ -220,10 +220,10 @@ public class FrmLabReq07Record extends FrmRecord {
 
         //lab_req_override=true
         OscarProperties oscarProps = OscarProperties.getInstance();
-        if (oscarProps.getProperty("lab_req_provider", "").length() > 0) {
+        if (!oscarProps.getProperty("lab_req_provider", "").isEmpty()) {
             props.setProperty("reqProvName", oscarProps.getProperty("lab_req_provider"));
         }
-        if (oscarProps.getProperty("lab_req_billing_no", "").length() > 0) {
+        if (!oscarProps.getProperty("lab_req_billing_no", "").isEmpty()) {
             props.setProperty("practitionerNo", oscarProps.getProperty("lab_req_billing_no"));
         }
 
@@ -234,7 +234,7 @@ public class FrmLabReq07Record extends FrmRecord {
                 DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, facility);
                 List<DemographicTransfer> directLinks = demographicWs.getDirectlyLinkedDemographicsByDemographicId(localDemographicId);
 
-                if (directLinks.size() > 0) {
+                if (!directLinks.isEmpty()) {
                     props.setProperty("copy2clinician", "checked");
                     DemographicTransfer demographicTransfer = directLinks.get(0);
 

@@ -142,7 +142,7 @@ public class WLWaitingListNameUtil {
         }
 
         List<WaitingList> wls = dao.findByWaitingListId(Integer.parseInt(wlNameId));
-        if (wls.size() > 0)
+        if (!wls.isEmpty())
             return true;
 
 
@@ -150,7 +150,7 @@ public class WLWaitingListNameUtil {
     }
 
     static private boolean isWaitingListNameExist(List<WaitingListName> wlns) {
-        if (wlns.size() > 0)
+        if (!wlns.isEmpty())
             return true;
         return false;
     }

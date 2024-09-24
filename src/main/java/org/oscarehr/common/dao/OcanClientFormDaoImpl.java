@@ -100,7 +100,7 @@ public class OcanClientFormDaoImpl extends AbstractDaoImpl<OcanClientForm> imple
         @SuppressWarnings("unchecked")
         List<OcanClientForm> results = query.getResultList();
 
-        return (results.size() > 0 ? results.get(0) : null);
+        return (!results.isEmpty() ? results.get(0) : null);
 
     }
 }

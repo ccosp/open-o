@@ -173,7 +173,7 @@ public class AddPreventionAction extends Action {
 
         String dose = request.getParameter("dose");
         String doseUnit = request.getParameter("doseUnit");
-        if (doseUnit != null && doseUnit.length() > 0) {
+        if (doseUnit != null && !doseUnit.isEmpty()) {
             dose = (dose + " " + doseUnit).trim();
         }
         addHashtoArray(extraData, dose, "dose");
@@ -210,7 +210,7 @@ public class AddPreventionAction extends Action {
         //let's do some validation
         List<String> valid = validate(preventionType, demographic_no, id, delete, action, submitToDhir, given, prevDate, providerNo, nextDate, neverWarn,
                 snomedId, refused, extraData, lotItem, dose, doseUnit);
-        if (valid != null && valid.size() > 0) {
+        if (valid != null && !valid.isEmpty()) {
             request.setAttribute("errors", valid);
             return mapping.findForward("form");
         }

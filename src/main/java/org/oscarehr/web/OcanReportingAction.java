@@ -102,7 +102,7 @@ public class OcanReportingAction extends DispatchAction {
 
         List<LabelValueBean> results = new ArrayList<LabelValueBean>();
 
-        if (staffForms.size() == 0) {
+        if (staffForms.isEmpty()) {
             MiscUtils.getLogger().info("No OCAN Assessments found for this client: " + strClientId);
             JSONArray jsonArray = JSONArray.fromObject(results);
             response.getWriter().print(jsonArray);

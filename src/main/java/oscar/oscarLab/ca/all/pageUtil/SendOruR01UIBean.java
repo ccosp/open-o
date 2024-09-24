@@ -120,7 +120,7 @@ public final class SendOruR01UIBean {
             sb.append(caseManagementNote.getNote());
 
             List<CaseManagementIssue> caseManagementIssues = caseManagementIssueNotesDao.getNoteIssues(caseManagementNote.getId().intValue());
-            if (caseManagementIssues.size() > 0) {
+            if (!caseManagementIssues.isEmpty()) {
                 sb.append("\n---------- Attached Issues ---------");
                 for (CaseManagementIssue caseManagementIssue : caseManagementIssues) {
                     sb.append('\n');

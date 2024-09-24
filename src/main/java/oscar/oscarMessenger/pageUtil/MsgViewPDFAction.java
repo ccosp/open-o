@@ -66,7 +66,7 @@ public class MsgViewPDFAction extends Action {
             String id = frm.getFile_id();
             int fileID = Integer.parseInt(id);
 
-            if (pdfAttachment != null && pdfAttachment.length() != 0) {
+            if (pdfAttachment != null && !pdfAttachment.isEmpty()) {
                 Vector attVector = Doc2PDF.getXMLTagValue(pdfAttachment, "CONTENT");
                 String pdfFile = (String) attVector.elementAt(fileID);
                 Doc2PDF.PrintPDFFromBin(response, pdfFile);

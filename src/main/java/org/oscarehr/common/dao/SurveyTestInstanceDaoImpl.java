@@ -49,7 +49,7 @@ public class SurveyTestInstanceDaoImpl extends AbstractDaoImpl<SurveyTestInstanc
         @SuppressWarnings("unchecked")
         List<SurveyTestInstance> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

@@ -111,7 +111,7 @@ public class SubmitLabByFormAction extends DispatchAction {
             if (id != null) {
                 logger.info("test #" + x);
                 String otherId = request.getParameter("test_" + x + ".id");
-                if (otherId.length() == 0 || otherId.equals("0")) {
+                if (otherId.isEmpty() || otherId.equals("0")) {
                     continue;
                 }
 
@@ -218,7 +218,7 @@ public class SubmitLabByFormAction extends DispatchAction {
     private String generateOBR(Lab lab) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         StringBuilder ccString = new StringBuilder();
-        if (lab.getCc().length() > 0) {
+        if (!lab.getCc().isEmpty()) {
             String[] ccs = lab.getCc().split(";");
             for (int x = 0; x < ccs.length; x++) {
                 String[] idName = ccs[x].split(",");
@@ -243,11 +243,11 @@ public class SubmitLabByFormAction extends DispatchAction {
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String refRange = test.getRefRangeLow() + " - " + test.getRefRangeHigh();
-        if (test.getRefRangeText().length() > 0) {
+        if (!test.getRefRangeText().isEmpty()) {
             refRange = test.getRefRangeText();
         }
         sb.append("OBX|1|" + test.getCodeType() + "|" + test.getCode() + "^" + test.getDescription() + "|GENERAL|" + test.getCodeValue() + "|" + test.getCodeUnit() + "|" + refRange + "|" + test.getFlag() + "|||" + test.getStat() + "||" + test.getBlocked() + "|" + sdf.format(test.getDate()));
-        if (test.getNotes().length() > 0) {
+        if (!test.getNotes().isEmpty()) {
             sb.append("\n");
             sb.append("NTE|1|L|NOTE: " + test.getNotes());
         }

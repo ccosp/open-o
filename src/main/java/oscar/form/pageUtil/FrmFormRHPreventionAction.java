@@ -130,7 +130,7 @@ public class FrmFormRHPreventionAction extends Action {
         Date endDate = UtilDateUtilities.StringToDate(dateToParse);
 
         //Currently open work flows ?
-        if (currentWorkFlows != null && currentWorkFlows.size() > 0) {
+        if (currentWorkFlows != null && !currentWorkFlows.isEmpty()) {
             MiscUtils.getLogger().debug("size of current workflows " + currentWorkFlows.size());
             request.setAttribute("currentWorkFlow", currentWorkFlows.get(0));
             Hashtable h = (Hashtable) currentWorkFlows.get(0);

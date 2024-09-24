@@ -227,8 +227,8 @@ public class ONAREnhancedFormToXML {
     void populateInitialLaboratoryInvestigations(InitialLaboratoryInvestigations initialLaboratoryInvestigations) {
         initialLaboratoryInvestigations.setHbResult(props.getProperty("pg1_labHb", ""));
         initialLaboratoryInvestigations.setHivResult(InitialLaboratoryInvestigations.HivResult.Enum.forString(props.getProperty("pg1_labHIV")));
-        initialLaboratoryInvestigations.setHivCounsel(props.getProperty("pg1_labHIVCounsel", "").length() > 0 ? true : false);
-        if (props.getProperty("pg1_labMCV", "").length() > 0)
+        initialLaboratoryInvestigations.setHivCounsel(!props.getProperty("pg1_labHIVCounsel", "").isEmpty() ? true : false);
+        if (!props.getProperty("pg1_labMCV", "").isEmpty())
             initialLaboratoryInvestigations.setMcvResult(Float.parseFloat(props.getProperty("pg1_labMCV", "0")));
         else {
             initialLaboratoryInvestigations.setMcvResult(0f);
@@ -237,7 +237,7 @@ public class ONAREnhancedFormToXML {
         initialLaboratoryInvestigations.setRhResult(InitialLaboratoryInvestigations.RhResult.Enum.forString(props.getProperty("pg1_labRh")));
         initialLaboratoryInvestigations.setPapResult(props.getProperty("pg1_labLastPap", ""));
         try {
-            if (props.getProperty("pg1_labLastPapDate", "").length() > 0) {
+            if (!props.getProperty("pg1_labLastPapDate", "").isEmpty()) {
                 initialLaboratoryInvestigations.setLastPapDate(this.createDate(dateFormatter.parse(props.getProperty("pg1_labLastPapDate"))));
             } else {
                 initialLaboratoryInvestigations.setLastPapDate(null);
@@ -268,7 +268,7 @@ public class ONAREnhancedFormToXML {
         prenatalGeneticScreening.setMSSIPSFTS(props.getProperty("pg1_geneticA", ""));
         prenatalGeneticScreening.setEDBCVS(props.getProperty("pg1_geneticB", ""));
         prenatalGeneticScreening.setMSAFP(props.getProperty("pg1_geneticC", ""));
-        prenatalGeneticScreening.setDeclined(props.getProperty("pg1_geneticD", "").length() > 0 ? true : false);
+        prenatalGeneticScreening.setDeclined(!props.getProperty("pg1_geneticD", "").isEmpty() ? true : false);
         CustomLab cl1 = prenatalGeneticScreening.addNewCustomLab1();
         cl1.setLabel(props.getProperty("pg1_labCustom3Label", ""));
         cl1.setResult(props.getProperty("pg1_labCustom3Result", ""));
@@ -306,8 +306,8 @@ public class ONAREnhancedFormToXML {
 
     YesNoNullType getYesNoNullType(String yes, String no) {
         YesNoNullType result = YesNoNullType.Factory.newInstance();
-        boolean a = props.getProperty(yes, "").length() > 0 ? true : false;
-        boolean b = props.getProperty(no, "").length() > 0 ? true : false;
+        boolean a = !props.getProperty(yes, "").isEmpty() ? true : false;
+        boolean b = !props.getProperty(no, "").isEmpty() ? true : false;
 
         if (a) {
             result.setYes(true);
@@ -397,8 +397,8 @@ public class ONAREnhancedFormToXML {
     NormalAbnormalNullType getNormalAbnormalNullType(String normal, String abn) {
         NormalAbnormalNullType result = NormalAbnormalNullType.Factory.newInstance();
 
-        boolean n = props.getProperty(normal, "").length() > 0 ? true : false;
-        boolean a = props.getProperty(abn, "").length() > 0 ? true : false;
+        boolean n = !props.getProperty(normal, "").isEmpty() ? true : false;
+        boolean a = !props.getProperty(abn, "").isEmpty() ? true : false;
 
         if (n) {
             result.setNormal(true);
@@ -411,15 +411,15 @@ public class ONAREnhancedFormToXML {
     }
 
     void populatePhysicalExamination(PhysicalExaminationType physicalExamination) {
-        if (props.getProperty("pg1_ht", "").length() > 0)
+        if (!props.getProperty("pg1_ht", "").isEmpty())
             physicalExamination.setHeight(Float.valueOf(props.getProperty("pg1_ht")));
         else
             physicalExamination.setNilHeight();
-        if (props.getProperty("pg1_wt", "").length() > 0)
+        if (!props.getProperty("pg1_wt", "").isEmpty())
             physicalExamination.setWeight(Float.valueOf(props.getProperty("pg1_wt")));
         else
             physicalExamination.setNilWeight();
-        if (props.getProperty("c_bmi", "").length() > 0)
+        if (!props.getProperty("c_bmi", "").isEmpty())
             physicalExamination.setBmi(Float.valueOf(props.getProperty("c_bmi")));
         else
             physicalExamination.setNilBmi();
@@ -447,10 +447,10 @@ public class ONAREnhancedFormToXML {
             int n = x + 1;
 
             //skip empty line
-            if (props.getProperty("pg1_year" + n, "").length() == 0 && props.getProperty("pg1_sex" + n, "").length() == 0 && props.getProperty("pg1_oh_gest" + n, "").length() == 0
-                    && props.getProperty("pg1_weight" + n, "").length() == 0 && props.getProperty("pg1_length" + n, "").length() == 0 && props.getProperty("pg1_place" + n, "").length() == 0
-                    && props.getProperty("pg1_svb" + n, "").length() == 0 && props.getProperty("pg1_cs" + n, "").length() == 0 && props.getProperty("pg1_ass" + n, "").length() == 0 &&
-                    props.getProperty("pg1_oh_comments" + n, "").length() == 0) {
+            if (props.getProperty("pg1_year" + n, "").isEmpty() && props.getProperty("pg1_sex" + n, "").isEmpty() && props.getProperty("pg1_oh_gest" + n, "").isEmpty()
+                    && props.getProperty("pg1_weight" + n, "").isEmpty() && props.getProperty("pg1_length" + n, "").isEmpty() && props.getProperty("pg1_place" + n, "").isEmpty()
+                    && props.getProperty("pg1_svb" + n, "").isEmpty() && props.getProperty("pg1_cs" + n, "").isEmpty() && props.getProperty("pg1_ass" + n, "").isEmpty() &&
+                    props.getProperty("pg1_oh_comments" + n, "").isEmpty()) {
                 continue;
             }
 
@@ -459,17 +459,17 @@ public class ONAREnhancedFormToXML {
             }
 
             ObstetricalHistoryItemList item1 = obstetricalHistory.addNewObsList();
-            item1.setYear(props.getProperty("pg1_year" + n, "0").length() > 0 ? Integer.parseInt(props.getProperty("pg1_year" + n, "0")) : 0);
+            item1.setYear(!props.getProperty("pg1_year" + n, "0").isEmpty() ? Integer.parseInt(props.getProperty("pg1_year" + n, "0")) : 0);
             item1.setSex(ObstetricalHistoryItemList.Sex.Enum.forString(props.getProperty("pg1_sex" + n).toUpperCase()));
-            item1.setGestAge(props.getProperty("pg1_oh_gest" + n, "0").length() > 0 ? Integer.parseInt(props.getProperty("pg1_oh_gest" + n, "0")) : 0);
+            item1.setGestAge(!props.getProperty("pg1_oh_gest" + n, "0").isEmpty() ? Integer.parseInt(props.getProperty("pg1_oh_gest" + n, "0")) : 0);
             item1.setBirthWeight(props.getProperty("pg1_weight" + n, ""));
-            item1.setLengthOfLabour(props.getProperty("pg1_length" + n, "0").length() > 0 ? Float.parseFloat(props.getProperty("pg1_length" + n, "0")) : 0);
+            item1.setLengthOfLabour(!props.getProperty("pg1_length" + n, "0").isEmpty() ? Float.parseFloat(props.getProperty("pg1_length" + n, "0")) : 0);
             item1.setPlaceOfBirth(props.getProperty("pg1_place" + n, "") != null ? props.getProperty("pg1_place" + n, "") : "");
-            if (props.getProperty("pg1_svb" + n, "").length() > 0)
+            if (!props.getProperty("pg1_svb" + n, "").isEmpty())
                 item1.setTypeOfDelivery(ObstetricalHistoryItemList.TypeOfDelivery.SVAG);
-            else if (props.getProperty("pg1_cs" + n, "").length() > 0)
+            else if (!props.getProperty("pg1_cs" + n, "").isEmpty())
                 item1.setTypeOfDelivery(ObstetricalHistoryItemList.TypeOfDelivery.CS);
-            else if (props.getProperty("pg1_ass" + n, "").length() > 0)
+            else if (!props.getProperty("pg1_ass" + n, "").isEmpty())
                 item1.setTypeOfDelivery(ObstetricalHistoryItemList.TypeOfDelivery.AVAG);
             else
                 item1.setTypeOfDelivery(ObstetricalHistoryItemList.TypeOfDelivery.UN);
@@ -487,7 +487,7 @@ public class ONAREnhancedFormToXML {
     void populatePregnancyHistory(PregnancyHistory pregnancyHistory) {
 
         //TODO:null?
-        if (props.getProperty("pg1_menLMP", "").length() > 0) {
+        if (!props.getProperty("pg1_menLMP", "").isEmpty()) {
             try {
                 pregnancyHistory.setLMP(createDate(dateFormatter.parse(props.getProperty("pg1_menLMP"))));
             } catch (ParseException e) {
@@ -499,7 +499,7 @@ public class ONAREnhancedFormToXML {
         pregnancyHistory.setMenCycle(props.getProperty("pg1_menCycle", ""));
         pregnancyHistory.setMenCycleRegular(getYesNoNullType("pg1_menReg", "pg1_menRegN"));
         pregnancyHistory.setContraceptiveType(props.getProperty("pg1_contracep", ""));
-        if (props.getProperty("pg1_lastUsed", "").length() > 0) {
+        if (!props.getProperty("pg1_lastUsed", "").isEmpty()) {
             try {
                 pregnancyHistory.setContraceptiveLastUsed(createDate(dateFormatter.parse(props.getProperty("pg1_lastUsed"))));
             } catch (ParseException e) {
@@ -507,7 +507,7 @@ public class ONAREnhancedFormToXML {
         } else {
             pregnancyHistory.setContraceptiveLastUsed(null);
         }
-        if (props.getProperty("pg1_menEDB", "").length() > 0) {
+        if (!props.getProperty("pg1_menEDB", "").isEmpty()) {
             try {
                 pregnancyHistory.setMenstrualEDB(createDate(dateFormatter.parse(props.getProperty("pg1_menEDB"))));
             } catch (ParseException e) {
@@ -515,7 +515,7 @@ public class ONAREnhancedFormToXML {
         } else {
             pregnancyHistory.setMenstrualEDB(null);
         }
-        if (props.getProperty("c_finalEDB", "").length() > 0) {
+        if (!props.getProperty("c_finalEDB", "").isEmpty()) {
             try {
                 pregnancyHistory.setFinalEDB(createDate(dateFormatter.parse(props.getProperty("c_finalEDB"))));
             } catch (ParseException e) {
@@ -524,27 +524,27 @@ public class ONAREnhancedFormToXML {
             pregnancyHistory.setFinalEDB(null);
         }
         DatingMethods datingMethods = pregnancyHistory.addNewDatingMethods();
-        datingMethods.setDates(props.getProperty("pg1_edbByDate", "").length() > 0 ? true : false);
-        datingMethods.setT1US(props.getProperty("pg1_edbByT1", "").length() > 0 ? true : false);
-        datingMethods.setT2US(props.getProperty("pg1_edbByT2", "").length() > 0 ? true : false);
-        datingMethods.setArt(props.getProperty("pg1_edbByART", "").length() > 0 ? true : false);
-        if (props.getProperty("c_gravida", "").length() > 0)
+        datingMethods.setDates(!props.getProperty("pg1_edbByDate", "").isEmpty() ? true : false);
+        datingMethods.setT1US(!props.getProperty("pg1_edbByT1", "").isEmpty() ? true : false);
+        datingMethods.setT2US(!props.getProperty("pg1_edbByT2", "").isEmpty() ? true : false);
+        datingMethods.setArt(!props.getProperty("pg1_edbByART", "").isEmpty() ? true : false);
+        if (!props.getProperty("c_gravida", "").isEmpty())
             pregnancyHistory.setGravida(Integer.parseInt(props.getProperty("c_gravida", "")));
         else
             pregnancyHistory.setGravida(999);
-        if (props.getProperty("c_term", "").length() > 0)
+        if (!props.getProperty("c_term", "").isEmpty())
             pregnancyHistory.setTerm(Integer.parseInt(props.getProperty("c_term", "")));
         else
             pregnancyHistory.setTerm(999);
-        if (props.getProperty("c_prem", "").length() > 0)
+        if (!props.getProperty("c_prem", "").isEmpty())
             pregnancyHistory.setPremature(Integer.parseInt(props.getProperty("c_prem", "")));
         else
             pregnancyHistory.setPremature(999);
-        if (props.getProperty("c_abort", "").length() > 0)
+        if (!props.getProperty("c_abort", "").isEmpty())
             pregnancyHistory.setAbortuses(Integer.parseInt(props.getProperty("c_abort", "")));
         else
             pregnancyHistory.setAbortuses(999);
-        if (props.getProperty("c_living", "").length() > 0)
+        if (!props.getProperty("c_living", "").isEmpty())
             pregnancyHistory.setLiving(Integer.parseInt(props.getProperty("c_living", "")));
         else
             pregnancyHistory.setLiving(999);
@@ -558,16 +558,16 @@ public class ONAREnhancedFormToXML {
     }
 
     private void getBirthAttendants(BirthAttendants birthAttendants) {
-        birthAttendants.setOBS(props.getProperty("pg1_baObs", "").length() > 0 ? true : false);
-        birthAttendants.setFP(props.getProperty("pg1_baFP", "").length() > 0 ? true : false);
-        birthAttendants.setMidwife(props.getProperty("pg1_baMidwife", "").length() > 0 ? true : false);
+        birthAttendants.setOBS(!props.getProperty("pg1_baObs", "").isEmpty() ? true : false);
+        birthAttendants.setFP(!props.getProperty("pg1_baFP", "").isEmpty() ? true : false);
+        birthAttendants.setMidwife(!props.getProperty("pg1_baMidwife", "").isEmpty() ? true : false);
         birthAttendants.setOther(props.getProperty("c_ba", ""));
     }
 
     private void getNewbornCare(NewbornCare newbornCare) {
-        newbornCare.setPed(props.getProperty("pg1_ncPed", "").length() > 0 ? true : false);
-        newbornCare.setFP(props.getProperty("pg1_ncFP", "").length() > 0 ? true : false);
-        newbornCare.setMidwife(props.getProperty("pg1_ncMidwife", "").length() > 0 ? true : false);
+        newbornCare.setPed(!props.getProperty("pg1_ncPed", "").isEmpty() ? true : false);
+        newbornCare.setFP(!props.getProperty("pg1_ncFP", "").isEmpty() ? true : false);
+        newbornCare.setMidwife(!props.getProperty("pg1_ncMidwife", "").isEmpty() ? true : false);
         newbornCare.setOther(props.getProperty("c_nc", ""));
     }
 
@@ -578,7 +578,7 @@ public class ONAREnhancedFormToXML {
         occ.setValue(PartnerInformation.Occupation.Value.OTHER);
         occ.setOther(props.getProperty("pg1_partnerOccupation", ""));
         partnerInformation.setOccupation(occ);
-        partnerInformation.setAge(props.getProperty("pg1_partnerAge", "").length() > 0 ? Integer.parseInt(props.getProperty("pg1_partnerAge", "")) : 0);
+        partnerInformation.setAge(!props.getProperty("pg1_partnerAge", "").isEmpty() ? Integer.parseInt(props.getProperty("pg1_partnerAge", "")) : 0);
         partnerInformation.setEducationLevel(PartnerInformation.EducationLevel.Enum.forString(props.getProperty("pg1_partnerEduLevel")));
     }
 
@@ -642,13 +642,13 @@ public class ONAREnhancedFormToXML {
         patientInformation.setHomePhone(props.getProperty("pg1_homePhone", "").replaceAll("\\-", ""));
         patientInformation.setWorkPhone(props.getProperty("pg1_workPhone", "").replaceAll("\\-", ""));
         patientInformation.setLanguage(PatientInformation.Language.Enum.forString(props.getProperty("pg1_language")));
-        if (props.getProperty("pg1_dateOfBirth", "").length() > 0) {
+        if (!props.getProperty("pg1_dateOfBirth", "").isEmpty()) {
             try {
                 patientInformation.setDob(createDate(dateFormatter.parse(props.getProperty("pg1_dateOfBirth"))));
             } catch (ParseException e) {
             }
         }
-        patientInformation.setAge(props.getProperty("pg1_age", "").length() > 0 ? Integer.parseInt(props.getProperty("pg1_age")) : 0);
+        patientInformation.setAge(!props.getProperty("pg1_age", "").isEmpty() ? Integer.parseInt(props.getProperty("pg1_age")) : 0);
         PatientInformation.Occupation occ = patientInformation.addNewOccupation();
         occ.setValue(PatientInformation.Occupation.Value.OTHER);
         occ.setOther(props.getProperty("pg1_occupation", ""));
@@ -689,13 +689,13 @@ public class ONAREnhancedFormToXML {
 
     void populateAr2(AR2 ar2) {
         String rfLengthStr = props.getProperty("rf_num", "0");
-        if (rfLengthStr.length() == 0) {
+        if (rfLengthStr.isEmpty()) {
             rfLengthStr = "0";
         }
         int rfLength = Integer.parseInt(rfLengthStr);
         for (int x = 0; x < rfLength; x++) {
             int y = x + 1;
-            if (props.getProperty("c_riskFactors" + y, "").length() == 0 && props.getProperty("c_planManage" + y, "").length() == 0) {
+            if (props.getProperty("c_riskFactors" + y, "").isEmpty() && props.getProperty("c_planManage" + y, "").isEmpty()) {
                 continue;
             }
             RiskFactorItemType riskFactorItem = ar2.addNewRiskFactorList();
@@ -707,19 +707,19 @@ public class ONAREnhancedFormToXML {
         populateRecommendedImmunoprophylaxis(recommendedImmunoprophylaxis);
 
         String svLengthStr = props.getProperty("sv_num", "0");
-        if (svLengthStr.length() == 0) {
+        if (svLengthStr.isEmpty()) {
             svLengthStr = "0";
         }
         int svLength = Integer.parseInt(svLengthStr);
         for (int x = 0; x < svLength; x++) {
             int y = x + 1;
-            if (props.getProperty("pg2_year" + y, "").length() == 0 && props.getProperty("pg2_gest" + y, "").length() == 0 && props.getProperty("pg2_wt" + y, "").length() == 0
-                    && props.getProperty("pg2_BP" + y, "").length() == 0 && props.getProperty("pg2_urinePr" + y, "").length() == 0/* && props.getProperty("pg2_urineGl"+y,"").length()==0*/
-                    && props.getProperty("pg2_presn1" + y, "").length() == 0 && props.getProperty("pg2_FHR" + y, "").length() == 0 && props.getProperty("pg2_comments" + y, "").length() == 0) {
+            if (props.getProperty("pg2_year" + y, "").isEmpty() && props.getProperty("pg2_gest" + y, "").isEmpty() && props.getProperty("pg2_wt" + y, "").isEmpty()
+                    && props.getProperty("pg2_BP" + y, "").isEmpty() && props.getProperty("pg2_urinePr" + y, "").isEmpty()/* && props.getProperty("pg2_urineGl"+y,"").length()==0*/
+                    && props.getProperty("pg2_presn1" + y, "").isEmpty() && props.getProperty("pg2_FHR" + y, "").isEmpty() && props.getProperty("pg2_comments" + y, "").isEmpty()) {
                 continue;
             }
             SubsequentVisitItemType visit = ar2.addNewSubsequentVisitList();
-            if (props.getProperty("pg2_date" + y, "").length() > 0) {
+            if (!props.getProperty("pg2_date" + y, "").isEmpty()) {
                 try {
                     visit.setDate(createDate(dateFormatter.parse((props.getProperty("pg2_date" + y)))));
                 } catch (ParseException e) {
@@ -728,7 +728,7 @@ public class ONAREnhancedFormToXML {
                 visit.setDate(null);
             }
             visit.setGa(props.getProperty("pg2_gest" + y, ""));
-            visit.setWeight(props.getProperty("pg2_wt" + y, "").length() > 0 ? Float.parseFloat(props.getProperty("pg2_wt" + y, "")) : 0);
+            visit.setWeight(!props.getProperty("pg2_wt" + y, "").isEmpty() ? Float.parseFloat(props.getProperty("pg2_wt" + y, "")) : 0);
             visit.setBp(props.getProperty("pg2_BP" + y, ""));
             visit.setUrinePR(props.getProperty("pg2_urinePr" + y, ""));
             /*visit.setUrineGI(props.getProperty("pg2_urineGl"+y, ""));*/
@@ -741,17 +741,17 @@ public class ONAREnhancedFormToXML {
 
 
         String usLengthStr = props.getProperty("us_num", "0");
-        if (usLengthStr.length() == 0) {
+        if (usLengthStr.isEmpty()) {
             usLengthStr = "0";
         }
         int usLength = Integer.parseInt(usLengthStr);
         for (int x = 0; x < usLength; x++) {
             int y = x + 1;
-            if (props.getProperty("ar2_uDate" + y).length() == 0 && props.getProperty("ar2_uGA" + y).length() == 0 && props.getProperty("ar2_uResults" + y).length() == 0) {
+            if (props.getProperty("ar2_uDate" + y).isEmpty() && props.getProperty("ar2_uGA" + y).isEmpty() && props.getProperty("ar2_uResults" + y).isEmpty()) {
                 continue;
             }
             UltrasoundType ultrasound = ar2.addNewUltrasound();
-            if (props.getProperty("ar2_uDate" + y).length() > 0) {
+            if (!props.getProperty("ar2_uDate" + y).isEmpty()) {
                 try {
                     ultrasound.setDate(createDate(dateFormatter.parse(props.getProperty("ar2_uDate" + y))));
                 } catch (ParseException e) {
@@ -774,8 +774,8 @@ public class ONAREnhancedFormToXML {
     }
 
     void populateRecommendedImmunoprophylaxis(RecommendedImmunoprophylaxisType recommendedImmunoprophylaxis) {
-        recommendedImmunoprophylaxis.setRhNegative(props.getProperty("ar2_rhNeg", "").length() > 0 ? true : false);
-        if (props.getProperty("ar2_rhIG", "").length() > 0) {
+        recommendedImmunoprophylaxis.setRhNegative(!props.getProperty("ar2_rhNeg", "").isEmpty() ? true : false);
+        if (!props.getProperty("ar2_rhIG", "").isEmpty()) {
             try {
                 recommendedImmunoprophylaxis.setRhIgGiven(this.createDate(dateFormatter.parse(props.getProperty("ar2_rhIG"))));
             } catch (ParseException e) {
@@ -783,9 +783,9 @@ public class ONAREnhancedFormToXML {
         } else {
             recommendedImmunoprophylaxis.setRhIgGiven(null);
         }
-        recommendedImmunoprophylaxis.setRubella(props.getProperty("ar2_rubella", "").length() > 0 ? true : false);
-        recommendedImmunoprophylaxis.setNewbornHepIG(props.getProperty("ar2_hepBIG", "").length() > 0 ? true : false);
-        recommendedImmunoprophylaxis.setHepBVaccine(props.getProperty("ar2_hepBVac", "").length() > 0 ? true : false);
+        recommendedImmunoprophylaxis.setRubella(!props.getProperty("ar2_rubella", "").isEmpty() ? true : false);
+        recommendedImmunoprophylaxis.setNewbornHepIG(!props.getProperty("ar2_hepBIG", "").isEmpty() ? true : false);
+        recommendedImmunoprophylaxis.setHepBVaccine(!props.getProperty("ar2_hepBVac", "").isEmpty() ? true : false);
     }
 
     void populateAdditionalLabInvestigations(AdditionalLabInvestigationsType additionalLabInvestigations) {
@@ -815,7 +815,7 @@ public class ONAREnhancedFormToXML {
 
     void setSignaturesAR1(SignatureType signatures) {
         signatures.setSignature(props.getProperty("pg1_signature", ""));
-        if (props.getProperty("pg1_formDate", "").length() > 0) {
+        if (!props.getProperty("pg1_formDate", "").isEmpty()) {
             try {
                 signatures.setDate(createDate(dateFormatter.parse((props.getProperty("pg1_formDate")))));
             } catch (ParseException e) {
@@ -824,9 +824,9 @@ public class ONAREnhancedFormToXML {
             //signatures.setDate(null);
         }
 
-        if (props.getProperty("pg1_signature2", "").length() > 0) {
+        if (!props.getProperty("pg1_signature2", "").isEmpty()) {
             signatures.setSignature2(props.getProperty("pg1_signature2", ""));
-            if (props.getProperty("pg1_formDate2", "").length() > 0) {
+            if (!props.getProperty("pg1_formDate2", "").isEmpty()) {
                 try {
                     signatures.setDate2(createDate(dateFormatter.parse((props.getProperty("pg1_formDate2")))));
                 } catch (ParseException e) {
@@ -839,7 +839,7 @@ public class ONAREnhancedFormToXML {
 
     void setSignatures(SignatureType signatures) {
         signatures.setSignature(props.getProperty("pg2_signature", ""));
-        if (props.getProperty("pg2_formDate", "").length() > 0) {
+        if (!props.getProperty("pg2_formDate", "").isEmpty()) {
             try {
                 signatures.setDate(createDate(dateFormatter.parse((props.getProperty("pg2_formDate")))));
             } catch (ParseException e) {
@@ -848,9 +848,9 @@ public class ONAREnhancedFormToXML {
             //signatures.setDate(null);
         }
 
-        if (props.getProperty("pg2_signature2", "").length() > 0) {
+        if (!props.getProperty("pg2_signature2", "").isEmpty()) {
             signatures.setSignature2(props.getProperty("pg2_signature2", ""));
-            if (props.getProperty("pg2_formDate2", "").length() > 0) {
+            if (!props.getProperty("pg2_formDate2", "").isEmpty()) {
                 try {
                     signatures.setDate2(createDate(dateFormatter.parse((props.getProperty("pg2_formDate2")))));
                 } catch (ParseException e) {
@@ -863,26 +863,26 @@ public class ONAREnhancedFormToXML {
     }
 
     void popuplateDiscussionTopics(DiscussionTopicsType discussionTopics) {
-        discussionTopics.setExercise(props.getProperty("ar2_exercise", "").length() > 0 ? true : false);
-        discussionTopics.setWorkPlan(props.getProperty("ar2_workPlan", "").length() > 0 ? true : false);
-        discussionTopics.setIntercourse(props.getProperty("ar2_intercourse", "").length() > 0 ? true : false);
-        discussionTopics.setTravel(props.getProperty("ar2_travel", "").length() > 0 ? true : false);
-        discussionTopics.setPrenatalClasses(props.getProperty("ar2_prenatal", "").length() > 0 ? true : false);
-        discussionTopics.setBirthPlan(props.getProperty("ar2_birth", "").length() > 0 ? true : false);
-        discussionTopics.setOnCallProviders(props.getProperty("ar2_onCall", "").length() > 0 ? true : false);
-        discussionTopics.setPretermLabour(props.getProperty("ar2_preterm", "").length() > 0 ? true : false);
-        discussionTopics.setPROM(props.getProperty("ar2_prom", "").length() > 0 ? true : false);
-        discussionTopics.setAPH(props.getProperty("ar2_aph", "").length() > 0 ? true : false);
-        discussionTopics.setFetalMovement(props.getProperty("ar2_fetal", "").length() > 0 ? true : false);
-        discussionTopics.setAdmissionTiming(props.getProperty("ar2_admission", "").length() > 0 ? true : false);
-        discussionTopics.setPainManagement(props.getProperty("ar2_pain", "").length() > 0 ? true : false);
-        discussionTopics.setLabourSupport(props.getProperty("ar2_labour", "").length() > 0 ? true : false);
-        discussionTopics.setBreastFeeding(props.getProperty("ar2_breast", "").length() > 0 ? true : false);
-        discussionTopics.setCircumcision(props.getProperty("ar2_circumcision", "").length() > 0 ? true : false);
-        discussionTopics.setDischargePlanning(props.getProperty("ar2_dischargePlan", "").length() > 0 ? true : false);
-        discussionTopics.setDepression(props.getProperty("ar2_depression", "").length() > 0 ? true : false);
-        discussionTopics.setContraception(props.getProperty("ar2_contraception", "").length() > 0 ? true : false);
-        discussionTopics.setCarSeatSafety(props.getProperty("ar2_car", "").length() > 0 ? true : false);
-        discussionTopics.setPostpartumCare(props.getProperty("ar2_postpartumCare", "").length() > 0 ? true : false);
+        discussionTopics.setExercise(!props.getProperty("ar2_exercise", "").isEmpty() ? true : false);
+        discussionTopics.setWorkPlan(!props.getProperty("ar2_workPlan", "").isEmpty() ? true : false);
+        discussionTopics.setIntercourse(!props.getProperty("ar2_intercourse", "").isEmpty() ? true : false);
+        discussionTopics.setTravel(!props.getProperty("ar2_travel", "").isEmpty() ? true : false);
+        discussionTopics.setPrenatalClasses(!props.getProperty("ar2_prenatal", "").isEmpty() ? true : false);
+        discussionTopics.setBirthPlan(!props.getProperty("ar2_birth", "").isEmpty() ? true : false);
+        discussionTopics.setOnCallProviders(!props.getProperty("ar2_onCall", "").isEmpty() ? true : false);
+        discussionTopics.setPretermLabour(!props.getProperty("ar2_preterm", "").isEmpty() ? true : false);
+        discussionTopics.setPROM(!props.getProperty("ar2_prom", "").isEmpty() ? true : false);
+        discussionTopics.setAPH(!props.getProperty("ar2_aph", "").isEmpty() ? true : false);
+        discussionTopics.setFetalMovement(!props.getProperty("ar2_fetal", "").isEmpty() ? true : false);
+        discussionTopics.setAdmissionTiming(!props.getProperty("ar2_admission", "").isEmpty() ? true : false);
+        discussionTopics.setPainManagement(!props.getProperty("ar2_pain", "").isEmpty() ? true : false);
+        discussionTopics.setLabourSupport(!props.getProperty("ar2_labour", "").isEmpty() ? true : false);
+        discussionTopics.setBreastFeeding(!props.getProperty("ar2_breast", "").isEmpty() ? true : false);
+        discussionTopics.setCircumcision(!props.getProperty("ar2_circumcision", "").isEmpty() ? true : false);
+        discussionTopics.setDischargePlanning(!props.getProperty("ar2_dischargePlan", "").isEmpty() ? true : false);
+        discussionTopics.setDepression(!props.getProperty("ar2_depression", "").isEmpty() ? true : false);
+        discussionTopics.setContraception(!props.getProperty("ar2_contraception", "").isEmpty() ? true : false);
+        discussionTopics.setCarSeatSafety(!props.getProperty("ar2_car", "").isEmpty() ? true : false);
+        discussionTopics.setPostpartumCare(!props.getProperty("ar2_postpartumCare", "").isEmpty() ? true : false);
     }
 }

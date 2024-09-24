@@ -181,7 +181,7 @@ public class ProgramFunctionalUserDAOImpl extends HibernateDaoSupport implements
             // releaseSession(session);
             session.close();
         }
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             result = (Long) results.get(0);
         }
 

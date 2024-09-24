@@ -64,7 +64,7 @@ public class PreferenceManagerImpl implements PreferenceManager {
         if (isCustomSummaryEnabled(loggedInInfo)) {
             List<Property> results = providerManager.getProviderProperties(loggedInInfo, loggedInInfo.getLoggedInProviderNo(), item);
 
-            if (results.size() > 0) {
+            if (!results.isEmpty()) {
                 String value = null;
 
                 for (Property result : results) {
@@ -188,7 +188,7 @@ public class PreferenceManagerImpl implements PreferenceManager {
     public boolean isCustomSummaryEnabled(LoggedInInfo loggedInInfo) {
         List<Property> results = providerManager.getProviderProperties(loggedInInfo, loggedInInfo.getLoggedInProviderNo(), CUSTOM_SUMMARY_ENABLE);
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String value = null;
 
             for (Property result : results) {
@@ -206,7 +206,7 @@ public class PreferenceManagerImpl implements PreferenceManager {
     private boolean isCustomCppItemOn(LoggedInInfo loggedInInfo, String propertyName) {
         List<Property> results = providerManager.getProviderProperties(loggedInInfo, loggedInInfo.getLoggedInProviderNo(), propertyName);
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String value = null;
 
             for (Property result : results) {
@@ -225,7 +225,7 @@ public class PreferenceManagerImpl implements PreferenceManager {
 
         String value = null;
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
 
             for (Property result : results) {
                 value = result.getValue();

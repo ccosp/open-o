@@ -556,7 +556,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
         if (providerList.size() > 1) {
             logger.warn("Found more than 1 provider with practitionerNo=" + practitionerNo);
         }
-        if (providerList.size() > 0)
+        if (!providerList.isEmpty())
             return providerList.get(0);
 
         return null;
@@ -586,7 +586,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
         if (providerList.size() > 1) {
             logger.warn("Found more than 1 provider with practitionerNo=" + practitionerNo);
         }
-        if (providerList.size() > 0)
+        if (!providerList.isEmpty())
             return providerList.get(0);
 
         return null;
@@ -740,7 +740,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
         String sqlCommand = "select x from Provider x";
         if (searchString != null) {
             if (searchString.indexOf(",") != -1 && searchString.split(",").length > 1
-                    && searchString.split(",")[1].length() > 0) {
+                    && !searchString.split(",")[1].isEmpty()) {
                 sqlCommand = sqlCommand + " where x.LastName like :ln AND x.FirstName like :fn";
             } else {
                 sqlCommand = sqlCommand + " where x.LastName like :ln";
@@ -755,7 +755,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
             if (searchString != null) {
                 q.setParameter("ln", "%" + searchString.split(",")[0] + "%");
                 if (searchString.indexOf(",") != -1 && searchString.split(",").length > 1
-                        && searchString.split(",")[1].length() > 0) {
+                        && !searchString.split(",")[1].isEmpty()) {
                     q.setParameter("fn", "%" + searchString.split(",")[1] + "%");
 
                 }
@@ -774,7 +774,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
     public List<Provider> search(String term, boolean active, int startIndex, int itemsToReturn) {
         String sqlCommand = "select x from Provider x WHERE x.Status = :status ";
 
-        if (term != null && term.length() > 0) {
+        if (term != null && !term.isEmpty()) {
             sqlCommand += "AND (x.LastName like :term  OR x.FirstName like :term) ";
         }
 
@@ -786,7 +786,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
             Query q = session.createQuery(sqlCommand);
 
             q.setString("status", active ? "1" : "0");
-            if (term != null && term.length() > 0) {
+            if (term != null && !term.isEmpty()) {
                 q.setString("term", term + "%");
             }
 

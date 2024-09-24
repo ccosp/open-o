@@ -690,7 +690,7 @@ X = deleted (available on request; not always preceded by non-X OBRs in an earli
             s.append(field.getValue());
             for (int x = 0; x < field.getExtraComponents().numComponents(); x++) {
                 if (field.getExtraComponents().getComponent(x).getData() != null && field.getExtraComponents().getComponent(x).getData().toString() != null &&
-                        field.getExtraComponents().getComponent(x).getData().toString().length() > 0 && !"null".equals(field.getExtraComponents().getComponent(x).getData().toString())) {
+                        !field.getExtraComponents().getComponent(x).getData().toString().isEmpty() && !"null".equals(field.getExtraComponents().getComponent(x).getData().toString())) {
                     s.append(" " + field.getExtraComponents().getComponent(x).getData());
                 }
             }

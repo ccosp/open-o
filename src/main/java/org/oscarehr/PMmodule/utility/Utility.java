@@ -425,7 +425,7 @@ public class Utility {
                                 keyName.length());
                         keyValue = request.getParameter(keyName);
                     }
-                    if (!keyValue.equals("") && keyNameSuffix.length() > 0) // ie.
+                    if (!keyValue.equals("") && !keyNameSuffix.isEmpty()) // ie.
                     // checked
                     // checkboxes
                     {
@@ -473,7 +473,7 @@ public class Utility {
             compareToken = (String) duplStrList.get(i);
 
             for (int j = i + 1; j < duplStrList.size(); j++) {
-                if (compareToken.length() > 0
+                if (!compareToken.isEmpty()
                         && compareToken.equalsIgnoreCase((String) duplStrList
                         .get(j))) {
                     duplStrList.set(j, "");

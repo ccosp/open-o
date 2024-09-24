@@ -109,7 +109,7 @@ public class EctDisplayPregnancyAction extends EctDisplayAction {
                 codes.add("16356006");
                 codes.add("34801009");
                 List<Episode> existingCurEpisodes = episodeDao.findCurrentByCodeTypeAndCodes(Integer.parseInt(bean.demographicNo), "SnomedCore", codes);
-                if (existingCurEpisodes.size() > 0) {
+                if (!existingCurEpisodes.isEmpty()) {
                     Episode episode = existingCurEpisodes.get(0);
                     NavBarDisplayDAO.Item item = NavBarDisplayDAO.Item();
                     String itemHeader = StringUtils.maxLenString(episode.getDescription(), MAX_LEN_TITLE, CROP_LEN_TITLE, ELLIPSES);

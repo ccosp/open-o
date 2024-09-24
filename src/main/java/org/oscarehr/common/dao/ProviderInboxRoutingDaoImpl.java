@@ -78,7 +78,7 @@ public class ProviderInboxRoutingDaoImpl extends AbstractDaoImpl<ProviderInboxIt
         @SuppressWarnings("unchecked")
         List<ProviderInboxItem> results = query.getResultList();
 
-        return (results.size() > 0);
+        return (!results.isEmpty());
     }
 
     @Override

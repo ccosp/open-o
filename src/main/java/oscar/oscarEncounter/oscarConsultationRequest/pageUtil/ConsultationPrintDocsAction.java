@@ -68,7 +68,7 @@ public class ConsultationPrintDocsAction extends Action {
             alist.add(path + docs[i]);
 
 
-        if (alist.size() > 0) {
+        if (!alist.isEmpty()) {
             response.setContentType("application/pdf");  //octet-stream
             response.setHeader("Content-Disposition", "attachment; filename=\"combinedPDF-" + UtilDateUtilities.getToday("yyyy-mm-dd.hh.mm.ss") + ".pdf\"");
             try {

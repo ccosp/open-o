@@ -84,7 +84,7 @@ public class PatientData {
             this.healthNumber = healthNumber;
             // this.patientLocation = patientLocation;
             this.patientLocation = "";
-            if (dOB.length() > 0) {
+            if (!dOB.isEmpty()) {
                 patientAge = now.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
                 if (now.get(Calendar.MONTH) < cal.get(Calendar.MONTH)) {
                     patientAge--;

@@ -66,11 +66,11 @@ public final class EctImmCreateImmunizationSetInitForm extends ActionForm {
 
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if (setName == null || setName.length() == 0)
+        if (setName == null || setName.isEmpty())
             errors.add("setName", new ActionMessage("Error.setName.missing"));
-        if (numRows == null || numRows.length() == 0)
+        if (numRows == null || numRows.isEmpty())
             errors.add("numRows", new ActionMessage("Error.numRows.missing"));
-        if (numCols == null || numCols.length() == 0)
+        if (numCols == null || numCols.isEmpty())
             errors.add("numCols", new ActionMessage("Error.numCols.missing"));
         if (errors.isEmpty()) {
             try {

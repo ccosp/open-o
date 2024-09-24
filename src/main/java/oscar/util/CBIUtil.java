@@ -172,7 +172,7 @@ public class CBIUtil {
         Admission admission = admissionDao.getAdmission(ocanStaffForm.getAdmissionId());
         //set functional center id
         if (admission.getProgram() != null && admission.getProgram().getFunctionalCentreId() != null &&
-                admission.getProgram().getFunctionalCentreId().trim().length() > 0)
+                !admission.getProgram().getFunctionalCentreId().trim().isEmpty())
             cbiDataItem.setFcId(Integer.parseInt(admission.getProgram().getFunctionalCentreId().replaceAll("[\\t ]+", "")));
 
         cbiDataItem.setClientId(ocanStaffForm.getClientId() + "");
@@ -192,7 +192,7 @@ public class CBIUtil {
             cbiDataItem.setFcDischargeDate(asXMLGregorianCalendar(formatter.format(ocanStaffForm.getDischargeDate())));
         }
 
-        if (ocanStaffForm.getHcNumber() != null && ocanStaffForm.getHcNumber().trim().length() > 0)
+        if (ocanStaffForm.getHcNumber() != null && !ocanStaffForm.getHcNumber().trim().isEmpty())
             cbiDataItem.setHealthCardNo(Long.parseLong(ocanStaffForm.getHcNumber()));
 
         cbiDataItem.setFirstname(ocanStaffForm.getFirstName());
@@ -200,11 +200,11 @@ public class CBIUtil {
         cbiDataItem.setLastnameCurrent(ocanStaffForm.getLastName());
 
         //set dob
-        if (ocanStaffForm.getDateOfBirth() != null && ocanStaffForm.getDateOfBirth().trim().length() > 0) {
+        if (ocanStaffForm.getDateOfBirth() != null && !ocanStaffForm.getDateOfBirth().trim().isEmpty()) {
             cbiDataItem.setDateOfBirth(asXMLGregorianCalendar(ocanStaffForm.getDateOfBirth()));
         }
 
-        if (ocanStaffForm.getEstimatedAge() != null && ocanStaffForm.getEstimatedAge().trim().length() > 0)
+        if (ocanStaffForm.getEstimatedAge() != null && !ocanStaffForm.getEstimatedAge().trim().isEmpty())
             cbiDataItem.setAge(Integer.valueOf(ocanStaffForm.getEstimatedAge()));
 
         cbiDataItem.setGender(ocanStaffForm.getGender());
@@ -215,7 +215,7 @@ public class CBIUtil {
         cbiDataItem.setPhone(ocanStaffForm.getPhoneNumber());
 
         OcanStaffFormDataDao ocanStaffFormDataDao = (OcanStaffFormDataDao) SpringUtils.getBean(OcanStaffFormDataDao.class);
-        cbiDataItem.setLhinOfResidence(ocanStaffFormDataDao.findByQuestion(ocanStaffForm.getId(), "service_recipient_lhin").size() > 0 ? ocanStaffFormDataDao.findByQuestion(ocanStaffForm.getId(), "service_recipient_lhin").get(0).getAnswer() : "");
+        cbiDataItem.setLhinOfResidence(!ocanStaffFormDataDao.findByQuestion(ocanStaffForm.getId(), "service_recipient_lhin").isEmpty() ? ocanStaffFormDataDao.findByQuestion(ocanStaffForm.getId(), "service_recipient_lhin").get(0).getAnswer() : "");
 
         cbiDataItem.setAction("I");
         return cbiDataItem;
@@ -311,7 +311,7 @@ public class CBIUtil {
             for (Program program : programList) {
                 // only consider those program whose function center id is not
                 // null
-                if (program.getFunctionalCentreId() != null && program.getFunctionalCentreId().trim().length() > 0) {
+                if (program.getFunctionalCentreId() != null && !program.getFunctionalCentreId().trim().isEmpty()) {
                     // get admission made in this program
                     tempAdmissionList = admissionDao.getCurrentAdmissionsByProgramId(program.getId());
                     admissionList.addAll(tempAdmissionList);
@@ -385,7 +385,7 @@ public class CBIUtil {
 
         OcanStaffFormDao ocanStaffFormDao = (OcanStaffFormDao) SpringUtils.getBean(OcanStaffFormDao.class);
         List<OcanStaffForm> ocanStaffFormList = ocanStaffFormDao.findBySubmissionId(facilityId, submissionId);
-        if (ocanStaffFormList != null && ocanStaffFormList.size() > 0) {
+        if (ocanStaffFormList != null && !ocanStaffFormList.isEmpty()) {
             ocanStaffForm = ocanStaffFormList.get(0);
         }
 
@@ -410,12 +410,12 @@ public class CBIUtil {
 
 
             List<Integer> facilityIds = providerDao.getFacilityIds(providerNo);
-            if (facilityIds == null || facilityIds.size() == 0) {
+            if (facilityIds == null || facilityIds.isEmpty()) {
                 // if provider not associated with facility then get the 1st one
                 // from facility table
                 FacilityDao facilityDao = (FacilityDao) SpringUtils.getBean(FacilityDao.class);
                 List<Facility> facilities = facilityDao.findAll(true);
-                if (facilities != null && facilities.size() >= 1) {
+                if (facilities != null && !facilities.isEmpty()) {
                     Facility fac = facilities.get(0);
                     facilityId = fac.getId();
                 }

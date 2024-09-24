@@ -71,7 +71,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 
 
         List<BillingService> list = query.getResultList();
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
     public List<BillingService> findBillingCodesByCode(String code, String region) {
@@ -152,7 +152,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 
 
         List<BillingService> list = query.getResultList();
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             return "----";
         }
         return list.get(0).getDescription();
@@ -184,7 +184,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 
 
         List<BillingService> list = query.getResultList();
-        if (list == null || list.size() < 1) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
 
@@ -250,7 +250,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 
         List<BillingService> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             BillingService bs = results.get(0);
             return new Object[]{bs.getValue(), bs.getGstFlag()};
         } else
@@ -266,7 +266,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
 
         List<BillingService> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0).getPercentage();
         } else {
             return null;
@@ -416,7 +416,7 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
         String retval = null;
 
         List<BillingService> billingServices = query.getResultList();
-        if (billingServices.size() > 0) {
+        if (!billingServices.isEmpty()) {
             BillingService b = billingServices.get(0);
             retval = b.getDescription();
 

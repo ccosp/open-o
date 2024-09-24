@@ -402,7 +402,7 @@ public class EFormDataDaoImpl extends AbstractDaoImpl<EFormData> implements EFor
 
     @Override
     public List<EFormData> findByFdids(List<Integer> ids) {
-        if (ids.size() == 0)
+        if (ids.isEmpty())
             return new ArrayList<EFormData>();
 
         Query query = entityManager
@@ -503,7 +503,7 @@ public class EFormDataDaoImpl extends AbstractDaoImpl<EFormData> implements EFor
         }
 
         // get list of _eform.???? permissions the caller has
-        if (eformPerms != null && eformPerms.size() > 0) {
+        if (eformPerms != null && !eformPerms.isEmpty()) {
             sb.append(" AND (e.roleType in (:perms) OR e.roleType IS NULL OR e.roleType = '' OR e.roleType = 'null')");
         }
 
@@ -526,7 +526,7 @@ public class EFormDataDaoImpl extends AbstractDaoImpl<EFormData> implements EFor
         if (status != null) {
             query.setParameter("status", status);
         }
-        if (eformPerms != null && eformPerms.size() > 0) {
+        if (eformPerms != null && !eformPerms.isEmpty()) {
             query.setParameter("perms", eformPerms);
         }
         query.setFirstResult(offset);
@@ -549,7 +549,7 @@ public class EFormDataDaoImpl extends AbstractDaoImpl<EFormData> implements EFor
                 return (results.get(0).intValue());
             }
             return null;
-        } else if (results.size() == 0)
+        } else if (results.isEmpty())
             return (null);
 
         return null;

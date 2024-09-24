@@ -100,7 +100,7 @@ public class EctDisplayPreventionAction extends EctDisplayAction {
             List<CachedDemographicPrevention> integratedPreventions = null;
             List<CachedDemographicPrevention> remotePreventions = PreventionData.getRemotePreventions(loggedInInfo, demographicNumber);
 
-            if (remotePreventions.size() > 0) {
+            if (!remotePreventions.isEmpty()) {
                 integratedPreventions = new ArrayList<CachedDemographicPrevention>();
                 integratedPreventions.addAll(remotePreventions);
             }
@@ -117,7 +117,7 @@ public class EctDisplayPreventionAction extends EctDisplayAction {
 
                 boolean show = pdc.display(loggedInInfo, h, bean.demographicNo, alist.size());
                 if (show) {
-                    if (alist.size() > 0) {
+                    if (!alist.isEmpty()) {
                         Map<String, Object> hdata = alist.get(alist.size() - 1);
                         Map<String, String> hExt = PreventionData.getPreventionKeyValues((String) hdata.get("id"));
                         result = hExt.get("result");

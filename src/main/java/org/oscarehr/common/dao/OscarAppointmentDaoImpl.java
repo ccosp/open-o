@@ -899,7 +899,7 @@ public class OscarAppointmentDaoImpl extends AbstractDaoImpl<Appointment> implem
                 getJoin4LatestDemographicExtValue("wPhoneExt", 4) +
                 "WHERE a.provider_no IN (:providers) AND a.appointment_date >= :startDate AND a.appointment_date <= :endDate";
         Query query = entityManager.createNativeQuery(sql);
-        query.setParameter("providers", providerNos != null && providerNos.size() > 0 ? providerNos : Arrays.asList());
+        query.setParameter("providers", providerNos != null && !providerNos.isEmpty() ? providerNos : Arrays.asList());
         query.setParameter("startDate", sDate == null ? new Date(Long.MIN_VALUE) : sDate);
         query.setParameter("endDate", eDate == null ? new Date(Long.MAX_VALUE) : eDate);
         return query.getResultList();

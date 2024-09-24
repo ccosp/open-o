@@ -530,7 +530,7 @@ public class Util {
             codeFormatted += "." + code.substring(0, 3);
             code = code.substring(3);
         }
-        if (code.length() > 0) codeFormatted += "." + code;
+        if (!code.isEmpty()) codeFormatted += "." + code;
 
         return codeFormatted;
     }

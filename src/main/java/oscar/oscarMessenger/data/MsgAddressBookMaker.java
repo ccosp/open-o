@@ -70,7 +70,7 @@ public class MsgAddressBookMaker {
     // Recursive function to get the children in a group
     private Element getChildren(Document doc, int groupId, String desc) {
         Element group = doc.createElement("group");
-        if (desc.length() > 0) {
+        if (!desc.isEmpty()) {
             group.setAttribute("id", String.valueOf(groupId));
             group.setAttribute("desc", desc);
         }

@@ -1273,7 +1273,7 @@ public class SharingCenterUtil {
 
             // if there were previous submissions, perform a document replace
             List<ExportedDocument> exported = exportedDocumentDao.findByTypeForPatientInDomain(domain.getId(), demographicId, DocumentType.XPHR.name());
-            if (exported.size() >= 1) {
+            if (!exported.isEmpty()) {
                 DocumentRelationship replace = new DocumentRelationship(exported.get(0).getDocumentUUID(), DocumentRelationshipType.RPLC);
                 document.setRelationship(replace);
             }
@@ -1382,7 +1382,7 @@ public class SharingCenterUtil {
 
             // if there were previous submissions, perform a document replace
             List<ExportedDocument> exported = exportedDocumentDao.findByTypeForPatientInDomain(domain.getId(), demographicId, DocumentType.NEXJ.name());
-            if (exported.size() >= 1) {
+            if (!exported.isEmpty()) {
                 DocumentRelationship replace = new DocumentRelationship(exported.get(0).getDocumentUUID(), DocumentRelationshipType.RPLC);
                 document.setRelationship(replace);
             }

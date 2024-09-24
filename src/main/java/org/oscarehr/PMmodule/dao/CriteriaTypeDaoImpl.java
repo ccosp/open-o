@@ -58,7 +58,7 @@ public class CriteriaTypeDaoImpl extends AbstractDaoImpl<CriteriaType> implement
         @SuppressWarnings("unchecked")
         List<CriteriaType> results = query.getResultList();
 
-        if (results.size() > 0)
+        if (!results.isEmpty())
             return results.get(0);
 
         return null;

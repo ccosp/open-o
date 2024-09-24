@@ -38,7 +38,7 @@ public class PotentialMatchBO {
 
     Integer getIntField(String field) {
         String d = getData().get(field);
-        if (d != null && d.trim().length() > 0) {
+        if (d != null && !d.trim().isEmpty()) {
             return Integer.getInteger(d);
         } else {
             return null;

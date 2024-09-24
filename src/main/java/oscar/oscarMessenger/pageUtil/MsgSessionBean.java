@@ -186,7 +186,7 @@ public class MsgSessionBean implements java.io.Serializable {
     }
 
     public boolean isValid() {
-        if (this.providerNo != null && this.providerNo.length() > 0) {
+        if (this.providerNo != null && !this.providerNo.isEmpty()) {
             return true;
         }
         return false;

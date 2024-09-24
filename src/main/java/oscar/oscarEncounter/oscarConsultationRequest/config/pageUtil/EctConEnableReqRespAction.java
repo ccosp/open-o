@@ -65,9 +65,9 @@ public class EctConEnableReqRespAction extends Action {
         Property consultResponseEnabled = new Property(manager.CON_RESPONSE_ENABLED);
 
         List<Property> results = propertyDao.findByName(manager.CON_REQUEST_ENABLED);
-        if (results.size() > 0) consultRequestEnabled = results.get(0);
+        if (!results.isEmpty()) consultRequestEnabled = results.get(0);
         results = propertyDao.findByName(manager.CON_RESPONSE_ENABLED);
-        if (results.size() > 0) consultResponseEnabled = results.get(0);
+        if (!results.isEmpty()) consultResponseEnabled = results.get(0);
 
         consultRequestEnabled.setValue(eRRForm.isConsultRequestEnabled() ? manager.ENABLED_YES : null);
         consultResponseEnabled.setValue(eRRForm.isConsultResponseEnabled() ? manager.ENABLED_YES : null);

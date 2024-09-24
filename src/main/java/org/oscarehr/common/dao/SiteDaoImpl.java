@@ -160,7 +160,7 @@ public class SiteDaoImpl extends AbstractDaoImpl<Site> implements SiteDao {
         @SuppressWarnings("unchecked")
         List<Site> rs = query.getResultList();
 
-        if (rs.size() > 0)
+        if (!rs.isEmpty())
             return rs.get(0);
         else
             return null;
@@ -253,7 +253,7 @@ public class SiteDaoImpl extends AbstractDaoImpl<Site> implements SiteDao {
 
         @SuppressWarnings("unchecked")
         List<String> list = query.getResultList();
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             return list.get(0);
         }
 

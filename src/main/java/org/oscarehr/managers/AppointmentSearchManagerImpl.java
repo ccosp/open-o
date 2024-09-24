@@ -156,7 +156,7 @@ public class AppointmentSearchManagerImpl implements AppointmentSearchManager {
                         AvailableTimeSlotFilter filterClassInstance = filterClass.newInstance();
                         providerAppointments = filterClassInstance.filterAvailableTimeSlots(config, mrp, provider.getProviderNo(), appointmentTypeId, dayWorkSchedule, providerAppointments, calDayToSearch, className.getParams());
                         /// keep? or change ? recordFilterForSearchedProvider(doc,searchedProviderRecord,dayWorkScheduleTransfer,filterClassInstance.getClass().getSimpleName() , providerAppointments);
-                        if (providerAppointments.size() == 0) {
+                        if (providerAppointments.isEmpty()) {
                             break;
                         }
                     }

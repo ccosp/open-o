@@ -51,7 +51,7 @@ public class DefaultIssueDaoImpl extends AbstractDaoImpl<DefaultIssue> implement
         Query query = entityManager.createQuery("select x from DefaultIssue x order by x.assignedtime desc");
         query.setMaxResults(1);
         List<DefaultIssue> issueList = query.getResultList();
-        if (issueList == null || issueList.size() == 0) {
+        if (issueList == null || issueList.isEmpty()) {
             return null;
         }
         return issueList.get(0);
@@ -76,14 +76,14 @@ public class DefaultIssueDaoImpl extends AbstractDaoImpl<DefaultIssue> implement
         Query query = entityManager.createQuery("select x.issueIds from DefaultIssue x order by x.assignedtime");
         query.setMaxResults(1);
         List<String> issueIdsList = query.getResultList();
-        if (issueIdsList.size() == 0) {
+        if (issueIdsList.isEmpty()) {
             return new String[0];
         }
         Set<String> issueIdsSet = new HashSet<String>();
         for (String ids : issueIdsList) {
             String[] idsArr = ids.split(",");
             for (String id : idsArr) {
-                if (id.length() > 0) {
+                if (!id.isEmpty()) {
                     issueIdsSet.add(id);
                 }
             }

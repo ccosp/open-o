@@ -88,7 +88,7 @@ public class DrugProductManagerImpl implements DrugProductManager {
         List<DrugProduct> results = drugProductDao.findAll(offset, limit);
 
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = DrugProduct.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "DrugProductManager.getAllDrugProducts", "ids returned=" + resultIds);
         }
@@ -101,7 +101,7 @@ public class DrugProductManagerImpl implements DrugProductManager {
         List<DrugProduct> results = drugProductDao.findByName(offset, limit, productName);
 
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = DrugProduct.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "DrugProductManager.getAllDrugProductsByName", "ids returned=" + resultIds);
         }
@@ -114,7 +114,7 @@ public class DrugProductManagerImpl implements DrugProductManager {
         List<DrugProduct> results = drugProductDao.findByNameAndLot(offset, limit, productName, lotNumber, location, availableOnly);
 
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = DrugProduct.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "DrugProductManager.getAllDrugProductsByName", "ids returned=" + resultIds);
         }
@@ -137,7 +137,7 @@ public class DrugProductManagerImpl implements DrugProductManager {
         List<DrugProduct> results = drugProductDao.findAll(offset, limit);
 
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = DrugProduct.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "DrugProductManager.getAllDrugProducts", "ids returned=" + resultIds);
         }
@@ -150,7 +150,7 @@ public class DrugProductManagerImpl implements DrugProductManager {
         List<String> results = drugProductDao.findUniqueDrugProductNames();
 
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             LogAction.addLogSynchronous(loggedInInfo, "DrugProductManager.getUniqueDrugProductNames", "");
         }
 
@@ -165,7 +165,7 @@ public class DrugProductManagerImpl implements DrugProductManager {
         List<String> results = drugProductDao.findUniqueDrugProductLotsByName(productName);
 
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             LogAction.addLogSynchronous(loggedInInfo, "DrugProductManager.getUniqueDrugProductNames", "");
         }
 

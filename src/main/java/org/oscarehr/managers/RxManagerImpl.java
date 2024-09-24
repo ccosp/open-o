@@ -426,7 +426,7 @@ public class RxManagerImpl implements RxManager {
     public PrescriptionDrugs prescribe(LoggedInInfo info, List<Drug> drugs, Integer demoNo) {
 
         // sanity check on inputs
-        if (info == null || drugs == null || drugs.size() < 1 || demoNo < 0) {
+        if (info == null || drugs == null || drugs.isEmpty() || demoNo < 0) {
             logger.error("Sanity Check Failed");
             return null;
         }

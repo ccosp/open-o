@@ -112,7 +112,7 @@ public class ReportingService extends AbstractServiceImpl {
 
         PatientListApptBean response = new PatientListApptBean();
 
-        if (json.containsKey("name") && json.getString("name").length() > 0) {
+        if (json.containsKey("name") && !json.getString("name").isEmpty()) {
 
             for (DemographicSets demographicSet : demographicSetsManager.getByName(getLoggedInInfo(), json.getString("name"))) {
                 PatientListApptItemBean item = new PatientListApptItemBean();

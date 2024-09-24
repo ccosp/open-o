@@ -294,7 +294,7 @@ public class DefaultNoteService implements NoteService {
         // we now have the slice we want to return
         ArrayList<NoteDisplay> notesToDisplay = new ArrayList<NoteDisplay>();
 
-        if (slice.size() > 0) {
+        if (!slice.isEmpty()) {
             // figure out what we need to retrieve
             List<Long> localNoteIds = new ArrayList<Long>();
             List<CachedDemographicNoteCompositePk> remoteNoteIds = new ArrayList<CachedDemographicNoteCompositePk>();
@@ -319,7 +319,7 @@ public class DefaultNoteService implements NoteService {
             intTime = System.currentTimeMillis();
 
             List<CachedDemographicNote> remoteNotes = new ArrayList<CachedDemographicNote>();
-            if (remoteNoteIds != null && remoteNoteIds.size() > 0) {
+            if (remoteNoteIds != null && !remoteNoteIds.isEmpty()) {
                 try {
                     remoteNotes = CaisiIntegratorManager.getLinkedNotes(loggedInInfo, remoteNoteIds);
                 } catch (MalformedURLException e) {
@@ -590,7 +590,7 @@ public class DefaultNoteService implements NoteService {
             for (EChartNoteEntry e : notes) {
                 List<CaseManagementIssue> issues = cmeIssueNotesDao
                         .getNoteIssues((Integer.valueOf(e.getId().toString())));
-                if (issues.size() == 0) {
+                if (issues.isEmpty()) {
                     filteredNotes.add(e);
                 }
             }

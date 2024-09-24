@@ -49,7 +49,7 @@ public class OscarAnnotationDaoImpl extends AbstractDaoImpl<OscarAnnotation> imp
         query.setParameter(2, tableId);
         @SuppressWarnings("unchecked")
         List<OscarAnnotation> codeList = query.getResultList();
-        if (codeList.size() > 0) {
+        if (!codeList.isEmpty()) {
             return codeList.get(0);
         }
         return null;

@@ -55,7 +55,7 @@ public class SurveyDaoImpl extends AbstractDaoImpl<Survey> implements SurveyDao 
         @SuppressWarnings("unchecked")
         List<Survey> results = q.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

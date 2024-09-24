@@ -82,7 +82,7 @@ public class AppointmentManagerImpl implements AppointmentManager {
         result.addAll(nonDeleted);
 
         //--- log action ---
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
 
             LogAction.addLogSynchronous(loggedInInfo, "AppointmentManager.getAppointmentHistoryWithDeleted", "ids returned=" + ids);
         }
@@ -113,7 +113,7 @@ public class AppointmentManagerImpl implements AppointmentManager {
         }
 
         //--- log action ---
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
 
             LogAction.addLogSynchronous(loggedInInfo, "AppointmentManager.getAppointmentHistoryWithDeleted", "ids returned=" + ids);
         }
@@ -300,7 +300,7 @@ public class AppointmentManagerImpl implements AppointmentManager {
 
         List<Appointment> results = appointmentDao.findByDateRangeAndProvider(startDate, endDate, providerNo);
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             LogAction.addLogSynchronous(loggedInInfo, "AppointmentManager.findMonthlyAppointments", "");
         }
 

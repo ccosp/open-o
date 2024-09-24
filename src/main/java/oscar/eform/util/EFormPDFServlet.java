@@ -421,7 +421,7 @@ public class EFormPDFServlet extends HttpServlet {
         if (req.getParameter("multiple") != null)
             totalPages = Integer.parseInt(req.getParameter("multiple"));
         String currentUser = loggedInInfo.getLoggedInProvider().getFormattedName();
-        String pg = suffix.length() == 0 || suffix.equals("0") ? "0" : suffix;
+        String pg = suffix.isEmpty() || suffix.equals("0") ? "0" : suffix;
         String currentPage = String.valueOf(Integer.parseInt(pg) + 1);
 
         props.setProperty("total_pages", String.valueOf(totalPages));

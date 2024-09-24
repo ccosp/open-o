@@ -454,14 +454,14 @@ public class Provider {
     public String getInitials() {
         String firstInit = "";
         String lastInit = "";
-        if (this.firstName != null && this.firstName.length() > 0) {
+        if (this.firstName != null && !this.firstName.isEmpty()) {
             if (this.firstName.length() > 1) {
                 firstInit = firstName.substring(0, 1);
             } else {
                 firstInit = firstName;
             }
         }
-        if (this.lastName != null && this.lastName.length() > 0) {
+        if (this.lastName != null && !this.lastName.isEmpty()) {
             if (this.lastName.length() > 1) {
                 lastInit = lastName.substring(0, 1);
             } else {

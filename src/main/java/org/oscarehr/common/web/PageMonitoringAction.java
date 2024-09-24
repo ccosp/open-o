@@ -96,7 +96,7 @@ public class PageMonitoringAction extends DispatchAction {
                 existing = pageMonitorDao.findByPage(pageName, pageId);
             }
 
-            if (existing != null && existing.size() > 0) {
+            if (existing != null && !existing.isEmpty()) {
                 for (PageMonitor pm : existing) {
 
                     if (!request.getSession().getId().equals(pm.getSession()) && pm.isLocked()) {
@@ -180,7 +180,7 @@ public class PageMonitoringAction extends DispatchAction {
         String startTime = pageIdElements[2];
         String endTime = pageIdElements[3];
 
-        if (existingParsed.size() > 0) {
+        if (!existingParsed.isEmpty()) {
             for (PageMonitor pm : existingParsed) {
 
                 String[] existingPageIdElements = pm.getPageId().split("\\|");

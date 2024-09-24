@@ -531,7 +531,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
         List<ProviderCommunicationTransfer> providerCommunicationList = messengerIntegratorManager
                 .getIntegratedMessages(systemLoggedInInfo, cachedFacilities, MessageList.STATUS_NEW);
-        if (providerCommunicationList.size() > 0) {
+        if (!providerCommunicationList.isEmpty()) {
             out.writeUnshared(providerCommunicationList);
         }
     }
@@ -615,12 +615,12 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
             cachedPrograms.add(cachedProgram);
         }
 
-        if (cachedPrograms.size() > 0) {
+        if (!cachedPrograms.isEmpty()) {
             out.writeUnshared(cachedPrograms);
         }
 
         List<Integer> allProgramIds = programDao.getRecordsByFacilityId(facility.getId());
-        if (allProgramIds.size() > 0) {
+        if (!allProgramIds.isEmpty()) {
             out.writeUnshared(new ProgramDeleteIdWrapper(allProgramIds));
         }
     }
@@ -672,7 +672,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
         }
 
-        if (providerTransfers.size() > 0) {
+        if (!providerTransfers.isEmpty()) {
             out.writeUnshared(providerTransfers);
         }
     }
@@ -1138,7 +1138,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         List<CaseManagementIssue> caseManagementIssues = caseManagementIssueDAO
                 .getIssuesByDemographicSince(demographicId.toString(), lastDataUpdated);
         StringBuilder sentIds = new StringBuilder();
-        if (caseManagementIssues.size() == 0)
+        if (caseManagementIssues.isEmpty())
             return;
 
         for (CaseManagementIssue caseManagementIssue : caseManagementIssues) {
@@ -1221,7 +1221,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         List<Admission> admissions = admissionDao.getAdmissionsByFacilitySince(demographicId, facility.getId(),
                 lastDataUpdated);
         StringBuilder sentIds = new StringBuilder();
-        if (admissions.size() == 0)
+        if (admissions.isEmpty())
             return;
         ArrayList<CachedAdmission> cachedAdmissions = new ArrayList<CachedAdmission>();
 
@@ -1458,7 +1458,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
         StringBuilder sentIds = new StringBuilder();
 
-        if (results.size() == 0)
+        if (results.isEmpty())
             return;
 
         for (LabIdAndType labIdAndType : results) {
@@ -1510,7 +1510,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
         StringBuilder sentIds = new StringBuilder();
 
-        if (results.size() == 0)
+        if (results.isEmpty())
             return;
 
         for (LabIdAndType labIdAndType : results) {
@@ -1591,7 +1591,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
     private void pushLabReq2007(ObjectOutputStream out, Date lastDataUpdated, Facility facility, Integer demographicId)
             throws SQLException, IOException, ParseException {
         List<Properties> records = FrmLabReq07Record.getPrintRecordsSince(demographicId, lastDataUpdated);
-        if (records.size() == 0)
+        if (records.isEmpty())
             return;
 
         StringBuilder sentIds = new StringBuilder();
@@ -1647,7 +1647,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         for (CaseManagementNote localNote : localNotes) {
             try {
                 // if it's locked or if it's not in this facility ignore it.
-                if (localNote.isLocked() || (localNote.getProgram_no() != null && localNote.getProgram_no().length() > 0
+                if (localNote.isLocked() || (localNote.getProgram_no() != null && !localNote.getProgram_no().isEmpty()
                         && !programIds.contains(Integer.parseInt(localNote.getProgram_no()))))
                     continue;
 
@@ -1711,7 +1711,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         note.setCachedDemographicNoteCompositePk(pk);
 
         note.setCaisiDemographicId(Integer.parseInt(localNote.getDemographic_no()));
-        if (localNote.getProgram_no() != null && localNote.getProgram_no().length() > 0) {
+        if (localNote.getProgram_no() != null && !localNote.getProgram_no().isEmpty()) {
             note.setCaisiProgramId(Integer.parseInt(localNote.getProgram_no()));
         }
         note.setEncounterType(localNote.getEncounter_type());
@@ -1765,7 +1765,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         StringBuilder sentIds = new StringBuilder();
 
         List<Drug> drugs = drugDao.findByDemographicIdUpdatedAfterDate(demographicId, lastDataUpdated);
-        if (drugs == null || drugs.size() == 0)
+        if (drugs == null || drugs.isEmpty())
             return;
 
         if (drugs != null) {
@@ -1836,7 +1836,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
         AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean(AllergyDao.class);
         List<Allergy> allergies = allergyDao.findByDemographicIdUpdatedAfterDate(demographicId, lastDataUpdated);
-        if (allergies.size() == 0)
+        if (allergies.isEmpty())
             return;
         ArrayList<CachedDemographicAllergy> cachedAllergies = new ArrayList<CachedDemographicAllergy>();
 
@@ -1882,7 +1882,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
             sentIds.append("," + allergy.getAllergyId());
         }
 
-        if (cachedAllergies.size() > 0) {
+        if (!cachedAllergies.isEmpty()) {
             out.writeUnshared(cachedAllergies);
         }
 
@@ -1899,7 +1899,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         }
 
         List<Appointment> appointments = appointmentDao.getAllByDemographicNoSince(demographicId, lastDataUpdated);
-        if (appointments.size() == 0)
+        if (appointments.isEmpty())
             return;
 
         StringBuilder sentIds = new StringBuilder();
@@ -1946,7 +1946,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         }
 
         List<Dxresearch> dxresearchs = dxresearchDao.getByDemographicNoSince(demographicId, lastDataUpdated);
-        if (dxresearchs.size() == 0)
+        if (dxresearchs.isEmpty())
             return;
 
         StringBuilder sentIds = new StringBuilder();
@@ -1991,7 +1991,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         // the header being updated..so i'll just leave this
         // as a note.
 
-        if (billingCh1s.size() == 0)
+        if (billingCh1s.isEmpty())
             return;
 
         ArrayList<CachedBillingOnItem> cachedBillingOnItems = new ArrayList<CachedBillingOnItem>();
@@ -2032,7 +2032,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
         }
 
         List<EFormData> eformDatas = eFormDataDao.findByDemographicIdSinceLastDate(demographicId, lastDataUpdated);
-        if (eformDatas.size() == 0)
+        if (eformDatas.isEmpty())
             return;
 
         StringBuilder sentIds = new StringBuilder();
@@ -2068,7 +2068,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
             fdids.add(eformData.getId());
         }
 
-        if (cachedEformDatas.size() > 0) {
+        if (!cachedEformDatas.isEmpty()) {
             out.writeUnshared(cachedEformDatas);
         }
 
@@ -2079,7 +2079,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
             List<EFormValue> eFormValues = eFormValueDao.findByFormDataIdList(fdids);
             ArrayList<CachedEformValue> cachedEformValues = new ArrayList<CachedEformValue>();
 
-            if (eFormValues.size() == 0)
+            if (eFormValues.isEmpty())
                 return;
 
             i = 0;
@@ -2104,7 +2104,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
             }
 
-            if (cachedEformValues.size() > 0) {
+            if (!cachedEformValues.isEmpty()) {
                 out.writeUnshared(cachedEformValues);
             }
         }
@@ -2121,7 +2121,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
 
         List<Measurement> measurements = measurementDao.findByDemographicIdUpdatedAfterDate(demographicId,
                 lastDataUpdated);
-        if (measurements.size() == 0)
+        if (measurements.isEmpty())
             return;
 
         StringBuilder sentIds = new StringBuilder();

@@ -83,7 +83,7 @@ public class PatientEndYearStatementAction extends OscarAction {
 
             if (request.getParameter("search") != null) {
                 List<Demographic> demographicList = new ArrayList<Demographic>();
-                if (statement.getDemographicNoParam() != null && statement.getDemographicNoParam().length() > 0) {
+                if (statement.getDemographicNoParam() != null && !statement.getDemographicNoParam().isEmpty()) {
                     Demographic d = demographicManager.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), statement.getDemographicNoParam());
                     if (d != null) {
                         demographicList.add(d);
@@ -92,7 +92,7 @@ public class PatientEndYearStatementAction extends OscarAction {
                     demographicList = demographicManager.searchDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), statement.getLastNameParam() + "," + statement.getFirstNameParam());
 
                 }
-                if (demographicList == null || demographicList.size() == 0) {
+                if (demographicList == null || demographicList.isEmpty()) {
                     errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.billingReport.invalidPatientName"));
                     saveErrors(request, errors);
                     _logger.error("Failed to find patient name: " + statement.getFirstNameParam() + "," + statement.getLastNameParam());
@@ -217,7 +217,7 @@ public class PatientEndYearStatementAction extends OscarAction {
             request.getSession().setAttribute("summary", null);
 
             List<Demographic> demographicList = new ArrayList<Demographic>();
-            if (request.getParameter("demographic_no") != null && request.getParameter("demographic_no").length() > 0) {
+            if (request.getParameter("demographic_no") != null && !request.getParameter("demographic_no").isEmpty()) {
                 Demographic d = demographicManager.getDemographic(loggedInInfo, request.getParameter("demographic_no"));
                 if (d != null) {
                     demographicList.add(d);
@@ -227,7 +227,7 @@ public class PatientEndYearStatementAction extends OscarAction {
 
             }
 
-            if (demographicList == null || demographicList.size() == 0) {
+            if (demographicList == null || demographicList.isEmpty()) {
                 errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.billingReport.invalidPatientName"));
                 saveErrors(request, errors);
                 _logger.error("Failed to find patient name: " + statement.getFirstNameParam() + "," + statement.getLastNameParam());

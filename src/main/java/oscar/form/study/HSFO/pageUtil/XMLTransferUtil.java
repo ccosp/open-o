@@ -249,7 +249,7 @@ public class XMLTransferUtil {
 
     public VisitData getSignedVisit(String patientId) {
         List pList = hdao.nullSafeRetrVisitRecord(patientId);
-        if (pList == null || pList.size() == 0)
+        if (pList == null || pList.isEmpty())
             return null;
         VisitData vs = (VisitData) pList.get(0);
         Date vd = vs.getFormEdited();
@@ -462,7 +462,7 @@ public class XMLTransferUtil {
 
     public void addAllPatientVisit(SitePatient patient, String patientId) {
         List pList = hdao.nullSafeRetrVisitRecord(patientId);
-        if (pList == null || pList.size() == 0)
+        if (pList == null || pList.isEmpty())
             return;
         for (int i = 0; i < pList.size(); i++) {
             VisitData vsd = (VisitData) pList.get(i);
@@ -1341,7 +1341,7 @@ public class XMLTransferUtil {
                     if (pdata != null && pdata.getPatient_Id() != null)
                         addPatientToSite(loggedInInfo, site, pdata);
                 }
-            if (patientIdList == null || patientIdList.size() == 0)
+            if (patientIdList == null || patientIdList.isEmpty())
                 doc = null;
         } else {
             PatientData pdata = getDemographic(demographicNo.toString());

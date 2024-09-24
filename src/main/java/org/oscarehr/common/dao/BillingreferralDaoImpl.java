@@ -81,7 +81,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
         @SuppressWarnings("unchecked")
         List<Billingreferral> cList = query.getResultList();
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList;
         } else {
             return null;
@@ -98,7 +98,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
         @SuppressWarnings("unchecked")
         List<Billingreferral> cList = query.getResultList();
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList;
         } else {
             return null;
@@ -114,7 +114,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
         @SuppressWarnings("unchecked")
         List<Billingreferral> cList = query.getResultList();
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList;
         } else {
             return null;
@@ -131,7 +131,7 @@ public class BillingreferralDaoImpl extends AbstractDaoImpl<Billingreferral> imp
         @SuppressWarnings("unchecked")
         List<Billingreferral> cList = query.getResultList();
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList;
         } else {
             return null;

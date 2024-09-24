@@ -81,7 +81,7 @@ public class OcanSubmissionTask extends TimerTask {
 
                 List<Map<String, String>> intakes = genericIntakeManager.getIntakeListforOcan(after);
 
-                if (intakes == null || intakes.size() == 0) {
+                if (intakes == null || intakes.isEmpty()) {
                     logger.warn("getIntakeListforOcan() returned null or empty list - no data for submission.");
                     return;
                 }

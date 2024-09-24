@@ -56,7 +56,7 @@ public class CdsClientFormDaoImpl extends AbstractDaoImpl<CdsClientForm> impleme
         if (signed != null) query.setParameter(3, signed);
         @SuppressWarnings("unchecked")
         List<CdsClientForm> results = query.getResultList();
-        if (results.size() > 0) return (results.get(0));
+        if (!results.isEmpty()) return (results.get(0));
         else return (null);
     }
 

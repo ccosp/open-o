@@ -450,7 +450,7 @@ public class Billingmaster {
         if (lastName.length() < 2) {
             lastName += "   ";
         }
-        if (firstName.length() < 1) {
+        if (firstName.isEmpty()) {
             firstName += "   ";
         }
         nameVerify = oscar.util.UtilMisc.mysqlEscape(firstName.substring(0, 1) + " " + lastName.substring(0, 2));

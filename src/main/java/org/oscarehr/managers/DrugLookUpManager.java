@@ -216,7 +216,7 @@ public class DrugLookUpManager implements DrugLookUp {
             //
             // This solution is not ideal, drugref seems to do some weird things....
 
-            if (t.getComponents().size() >= 1) {
+            if (!t.getComponents().isEmpty()) {
                 t.setGenericName(t.getComponents().get(0).getName());
             } else {
                 t.setGenericName(t.getName());

@@ -267,7 +267,7 @@ public class XMLTransferUtil {
 
     public Hsfo2Visit getSignedVisit(String patientId, String startDate, String endDate) {
         List pList = hdao.nullSafeRetrVisitRecord(patientId, startDate, endDate);
-        if (pList == null || pList.size() == 0)
+        if (pList == null || pList.isEmpty())
             return null;
         Hsfo2Visit vs = (Hsfo2Visit) pList.get(0);
         Date vd = vs.getFormEdited();
@@ -778,7 +778,7 @@ public class XMLTransferUtil {
 
     public void addAllPatientVisit(SitePatient patient, String patientId, String startDate, String endDate) {
         List pList = hdao.nullSafeRetrVisitRecord(patientId, startDate, endDate);
-        if (pList == null || pList.size() == 0)
+        if (pList == null || pList.isEmpty())
             return;
         for (int i = 0; i < pList.size(); i++) {
             Hsfo2Visit vsd = (Hsfo2Visit) pList.get(i);
@@ -789,7 +789,7 @@ public class XMLTransferUtil {
 
     public void addAllPatientVisitFinalSection(SitePatient patient, String patientId, String startDateStr, String endDateStr, Calendar startDate, Calendar endDate, Calendar visitDateValue, XmlCalendar visitDate, XmlCalendar when, String who) {
         List pList = hdao.nullSafeRetrVisitRecord(patientId, startDateStr, endDateStr);
-        if (pList == null || pList.size() == 0)
+        if (pList == null || pList.isEmpty())
             return;
         for (int i = 0; i < pList.size(); i++) {
             Hsfo2Visit vsd = (Hsfo2Visit) pList.get(i);
@@ -800,7 +800,7 @@ public class XMLTransferUtil {
         String visitDateStr = String.valueOf(visitDateValue.get(Calendar.YEAR)) + "-" + String.valueOf(visitDateValue.get(Calendar.MONTH) + 1) + "-" + String.valueOf(visitDateValue.get(Calendar.DATE));
 
         List pList2 = hdao.getLabWorkInDateRange(patientId, startDateStr, endDateStr, visitDateStr);
-        if (pList2 == null || pList2.size() == 0)
+        if (pList2 == null || pList2.isEmpty())
             return;
 
         //Only get the latest one
@@ -1940,7 +1940,7 @@ public class XMLTransferUtil {
                         addPatientToSite(site, pdata, null, dataBeginDate, dataEndDate); // FIXME: add parameter for first visit data
                     }
                 }
-            if (patientIdList == null || patientIdList.size() == 0)
+            if (patientIdList == null || patientIdList.isEmpty())
                 doc = null;
         } else {
             Hsfo2Patient pdata = getDemographic(demographicNo.toString());

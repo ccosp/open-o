@@ -72,7 +72,7 @@ public class AppointmentTypeAction extends OscarAction {
             formBean = new AppointmentTypeForm();
         } else {
             if (sOper.equals("save")) {
-                if (formBean.getName() == null || formBean.getName().length() == 0 || formBean.getName().length() > 50) {
+                if (formBean.getName() == null || formBean.getName().isEmpty() || formBean.getName().length() > 50) {
                     errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("appointment.type.name.error"));
                     saveErrors(request, errors);
                     return mapping.findForward("failure");

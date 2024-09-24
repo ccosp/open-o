@@ -80,7 +80,7 @@ public class DispensaryAction extends DispatchAction {
         }
 
         Drug drug = null;
-        if (id != null && id.length() > 0) {
+        if (id != null && !id.isEmpty()) {
             drug = drugDao.find(Integer.parseInt(id));
             if (drug != null) {
                 Demographic demographic = demographicDao.getDemographicById(drug.getDemographicId());

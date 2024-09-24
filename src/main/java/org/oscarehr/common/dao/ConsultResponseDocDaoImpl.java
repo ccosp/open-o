@@ -49,7 +49,7 @@ public class ConsultResponseDocDaoImpl extends AbstractDaoImpl<ConsultResponseDo
         query.setParameter(2, docType);
 
         List<ConsultResponseDoc> results = query.getResultList();
-        if (results != null && results.size() > 0) return results.get(0);
+        if (results != null && !results.isEmpty()) return results.get(0);
         else return null;
     }
 

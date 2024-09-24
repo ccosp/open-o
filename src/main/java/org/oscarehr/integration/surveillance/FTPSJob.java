@@ -79,7 +79,7 @@ public class FTPSJob implements OscarRunnable {
         //Check if there is anything to send
         List<SurveillanceData> listToSend = surveillanceDataDao.findUnSentBySurveyId(surveyId);
         logger.debug("data files to send?  : " + listToSend.size());
-        if (listToSend.size() > 0) {
+        if (!listToSend.isEmpty()) {
             try {
                 //Login to FTPS server
                 String protocol = "SSL";    // SSL/TLS

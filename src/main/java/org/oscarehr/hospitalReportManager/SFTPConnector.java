@@ -726,7 +726,7 @@ public class SFTPConnector {
             }
         }
 
-        if (sendToProviderList.size() == 0) {
+        if (sendToProviderList.isEmpty()) {
             String providerNoTemp = "999998";
             if (!doNotSentMsgForOuttage.contains(providerNoTemp)) {
                 sendToProviderList.add(providerNoTemp);
@@ -734,7 +734,7 @@ public class SFTPConnector {
         }
 
         // no one wants to hear about the problem
-        if (sendToProviderList.size() == 0) {
+        if (sendToProviderList.isEmpty()) {
             return;
         }
 

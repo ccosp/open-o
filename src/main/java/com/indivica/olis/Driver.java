@@ -417,7 +417,7 @@ public class Driver {
         }
 
         // no one wants to hear about the problem
-        if (sendToProviderList.size() == 0) return;
+        if (sendToProviderList.isEmpty()) return;
 
         String message = "OSCAR attempted to perform a fetch of OLIS data at " + new Date() + " but there was an error during the task.\n\nSee below for the error message:\n" + errorMsg;
 

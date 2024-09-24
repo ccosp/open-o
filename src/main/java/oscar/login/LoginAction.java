@@ -501,7 +501,7 @@ public final class LoginAction extends DispatchAction {
                 }
             } else {
                 List<Facility> facilities = facilityDao.findAll(true);
-                if (facilities != null && facilities.size() >= 1) {
+                if (facilities != null && !facilities.isEmpty()) {
                     Facility fac = facilities.get(0);
                     int first_id = fac.getId();
                     providerDao.addProviderToFacility(providerNo, first_id);
@@ -672,7 +672,7 @@ public final class LoginAction extends DispatchAction {
         SecurityDao securityDao = (SecurityDao) SpringUtils.getBean(SecurityDao.class);
         List<Security> results = securityDao.findByUserName(username);
         Security security = null;
-        if (results.size() > 0)
+        if (!results.isEmpty())
             security = results.get(0);
 
         if (security == null) {

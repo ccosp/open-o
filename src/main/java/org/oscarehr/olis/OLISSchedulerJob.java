@@ -46,10 +46,10 @@ public class OLISSchedulerJob extends TimerTask {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMddHHmmssZ");
             Date startDate = null, endDate = null;
             try {
-                if (olisPrefs.getStartTime() != null && olisPrefs.getStartTime().trim().length() > 0)
+                if (olisPrefs.getStartTime() != null && !olisPrefs.getStartTime().trim().isEmpty())
                     startDate = dateFormatter.parse(olisPrefs.getStartTime());
 
-                if (olisPrefs.getEndTime() != null && olisPrefs.getEndTime().trim().length() > 0)
+                if (olisPrefs.getEndTime() != null && !olisPrefs.getEndTime().trim().isEmpty())
                     endDate = dateFormatter.parse(olisPrefs.getEndTime());
             } catch (ParseException e) {
                 logger.error("Error", e);

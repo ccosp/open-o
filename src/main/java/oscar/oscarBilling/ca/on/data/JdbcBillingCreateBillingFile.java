@@ -372,7 +372,7 @@ public class JdbcBillingCreateBillingFile {
             errorPartMsg += "Header1: HIN is invalid!<br>";
         }
 
-        if (errorPartMsg.length() > 0)
+        if (!errorPartMsg.isEmpty())
             errorMsg += ch1Obj.getId() + " - " + errorPartMsg;
     }
 
@@ -389,14 +389,14 @@ public class JdbcBillingCreateBillingFile {
 
     private String printErrorPartMsg() {
         String ret = "";
-        ret = errorPartMsg.length() > 0 ? ("\n<tr bgcolor='yellow'><td colspan='11'><font color='red'>" + errorPartMsg + "</font></td></tr>") : "";
+        ret = !errorPartMsg.isEmpty() ? ("\n<tr bgcolor='yellow'><td colspan='11'><font color='red'>" + errorPartMsg + "</font></td></tr>") : "";
         errorPartMsg = "";
         return ret;
     }
 
     private String printSiteErrorPartMsg() {
         String ret = "";
-        ret = errorPartMsg.length() > 0 ? ("\n<tr bgcolor='yellow'><td colspan='9'><font color='red'>" + errorPartMsg + "</font></td></tr>") : "";
+        ret = !errorPartMsg.isEmpty() ? ("\n<tr bgcolor='yellow'><td colspan='9'><font color='red'>" + errorPartMsg + "</font></td></tr>") : "";
         errorPartMsg = "";
         return ret;
     }

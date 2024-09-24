@@ -748,7 +748,7 @@ public class SpireHandler implements MessageHandler {
     public String getSex() {
         String sex = getString(msg.getRESPONSE().getPATIENT().getPID().getSex().getValue());
 
-        if (sex.length() > 0)
+        if (!sex.isEmpty())
             sex = sex.substring(0, 1);
 
         return sex;

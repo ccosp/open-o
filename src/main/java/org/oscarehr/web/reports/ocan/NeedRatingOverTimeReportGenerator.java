@@ -126,12 +126,12 @@ public class NeedRatingOverTimeReportGenerator {
         summaryBeanList.addAll(this.summaryOfNeedsBeanList);
 
         while (true) {
-            if (summaryBeanList.size() == 0) {
+            if (summaryBeanList.isEmpty()) {
                 break;
             }
             List<OcanNeedRatingOverTimeSummaryOfNeedsBean> currentBeanList = new ArrayList<OcanNeedRatingOverTimeSummaryOfNeedsBean>();
             for (int x = 0; x < 3; x++) {
-                if (summaryBeanList.size() == 0) {
+                if (summaryBeanList.isEmpty()) {
                     break;
                 }
                 currentBeanList.add(summaryBeanList.remove(0));
@@ -166,7 +166,7 @@ public class NeedRatingOverTimeReportGenerator {
             d.add(summaryOfNeedsTable);
             d.add(Chunk.NEWLINE);
 
-            if (summaryBeanList.size() == 0) {
+            if (summaryBeanList.isEmpty()) {
                 break;
             }
             loopNo++;
@@ -182,12 +182,12 @@ public class NeedRatingOverTimeReportGenerator {
         breakdownBeanList.addAll(this.needBreakdownListByOCAN);
         OcanNeedRatingOverTimeNeedBreakdownBean lastBreakDownBean = null;
         while (true) {
-            if (breakdownBeanList.size() == 0) {
+            if (breakdownBeanList.isEmpty()) {
                 break;
             }
             List<OcanNeedRatingOverTimeNeedBreakdownBean> currentBeanList = new ArrayList<OcanNeedRatingOverTimeNeedBreakdownBean>();
             for (int x = 0; x < 3; x++) {
-                if (breakdownBeanList.size() == 0) {
+                if (breakdownBeanList.isEmpty()) {
                     break;
                 }
                 currentBeanList.add(breakdownBeanList.remove(0));
@@ -238,7 +238,7 @@ public class NeedRatingOverTimeReportGenerator {
             d.add(summaryOfNeedsTable);
             d.add(Chunk.NEWLINE);
 
-            if (breakdownBeanList.size() == 0) {
+            if (breakdownBeanList.isEmpty()) {
                 break;
             }
             if (currentBeanList.size() == 3) {
@@ -273,7 +273,7 @@ public class NeedRatingOverTimeReportGenerator {
         c2 = new PdfPCell();
         c2.setBorder(0);
         summaryOfNeedsTable.addCell(c2);
-        if (currentBeanList.size() > 0) {
+        if (!currentBeanList.isEmpty()) {
             c2 = new PdfPCell();
             c2.setColspan(2);
             c2.setBackgroundColor(BaseColor.BLUE);
@@ -309,7 +309,7 @@ public class NeedRatingOverTimeReportGenerator {
         c2.setBorder(0);
         summaryOfNeedsTable.addCell(c2);
 
-        if (currentBeanList.size() > 0) {
+        if (!currentBeanList.isEmpty()) {
             c2 = new PdfPCell();
             c2.setBackgroundColor(BaseColor.BLUE);
             c2.setPhrase(new Phrase("Consumer", f));
@@ -369,7 +369,7 @@ public class NeedRatingOverTimeReportGenerator {
             summaryOfNeedsTable.addCell(c2);
         }
 
-        if (currentBeanList.size() > 0) {
+        if (!currentBeanList.isEmpty()) {
             c2 = new PdfPCell();
             c2.setColspan(2);
             c2.setBackgroundColor(BaseColor.BLUE);
@@ -413,7 +413,7 @@ public class NeedRatingOverTimeReportGenerator {
             summaryOfNeedsTable.addCell(c2);
         }
 
-        if (currentBeanList.size() > 0) {
+        if (!currentBeanList.isEmpty()) {
             c2 = new PdfPCell();
             c2.setBackgroundColor(BaseColor.BLUE);
             c2.setPhrase(new Phrase("Consumer", f));
@@ -465,7 +465,7 @@ public class NeedRatingOverTimeReportGenerator {
         c2.setPhrase(new Phrase(needType, new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.WHITE)));
         summaryOfNeedsTable.addCell(c2);
 
-        if (currentBeanList.size() > 0) {
+        if (!currentBeanList.isEmpty()) {
             c2 = new PdfPCell();
             c2.setBackgroundColor(BaseColor.GREEN);
             c2.setPhrase(new Phrase(String.valueOf(currentBeanList.get(0).getConsumerNeedMap().get(needTypeKey)), new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD)));
@@ -535,7 +535,7 @@ public class NeedRatingOverTimeReportGenerator {
             summaryOfNeedsTable.addCell(c2);
         }
 
-        if (ocans.size() > 0) {
+        if (!ocans.isEmpty()) {
             c2 = new PdfPCell();
             c2.setBackgroundColor(BaseColor.GREEN);
             c2.setPhrase(new Phrase(ocans.get(0).getNeeds().get(rowNum).getConsumerNeed(), new Font(Font.FontFamily.HELVETICA, 14, (ocans.get(0).getNeeds().get(rowNum).getConsumerNeed().equals("Unmet Need") ? Font.BOLD : Font.NORMAL), (ocans.get(0).getNeeds().get(rowNum).getConsumerNeed().equals("Unmet Need") ? BaseColor.RED : BaseColor.BLACK))));

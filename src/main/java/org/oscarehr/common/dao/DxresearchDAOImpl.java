@@ -95,7 +95,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
             }
         }
 
-        if (rList != null && rList.size() > 0) {
+        if (rList != null && !rList.isEmpty()) {
             return rList;
         } else {
             return null;
@@ -109,7 +109,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
         String HQL = "";
 
         Query query = null;
-        if (listItems != null && listItems.size() > 0) {
+        if (listItems != null && !listItems.isEmpty()) {
             Iterator<dxCodeSearchBean> ite = listItems.listIterator();
             HQL = "SELECT dxres FROM Dxresearch dxres";
 
@@ -135,7 +135,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 
         dList = query.getResultList();
 
-        if (dList != null && dList.size() > 0) {
+        if (dList != null && !dList.isEmpty()) {
             return getPatientRegisted(dList, doctorList);
         } else {
             return null;
@@ -148,7 +148,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
         List<dxCodeSearchBean> listItems = searchItems;
         String HQL = "";
         Query query = null;
-        if (listItems != null && listItems.size() > 0) {
+        if (listItems != null && !listItems.isEmpty()) {
             Iterator<dxCodeSearchBean> ite = listItems.listIterator();
             HQL = "SELECT dxres FROM Dxresearch dxres";
 
@@ -174,7 +174,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
 
         dList = query.getResultList();
 
-        if (dList != null && dList.size() > 0) {
+        if (dList != null && !dList.isEmpty()) {
             //Iterator i = dList.listIterator();
             //while (i.hasNext())
 
@@ -204,7 +204,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
         String HQL = "";
 
         Query query = null;
-        if (listItems != null && listItems.size() > 0) {
+        if (listItems != null && !listItems.isEmpty()) {
             Iterator<dxCodeSearchBean> ite = listItems.listIterator();
             HQL = "SELECT dxres FROM Dxresearch dxres WHERE (";
 
@@ -217,7 +217,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
                     HQL += " OR ";
                 }
             }
-            if (listItems.size() > 0)
+            if (!listItems.isEmpty())
                 HQL += ") AND ";
 
             HQL += "dxres.status= '" + status + "' ORDER BY dxres.demographicNo asc, dxres.updateDate asc";
@@ -229,7 +229,7 @@ public class DxresearchDAOImpl extends AbstractDaoImpl<Dxresearch> implements Dx
         dList = query.getResultList();
 
 
-        if (dList != null && dList.size() > 0) {
+        if (dList != null && !dList.isEmpty()) {
             //Iterator i = dList.listIterator();
             //while (i.hasNext())
 

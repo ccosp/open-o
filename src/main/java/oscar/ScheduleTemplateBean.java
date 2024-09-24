@@ -42,7 +42,7 @@ public class ScheduleTemplateBean {
         name = name1;
         summary = summary1;
         timecode = timecode1;
-        step = timecode1.length() > 0 ? 24 * 60 / timecode1.length() : 0;
+        step = !timecode1.isEmpty() ? 24 * 60 / timecode1.length() : 0;
     }
 
     public void setProviderNo(String provider_no1) {

@@ -36,10 +36,10 @@ public class RxUtil {
 
     public static String trimSpecial(Drug rx) {
         String special = rx.getSpecial();
-        if (special == null || special.trim().length() == 0) return "";
+        if (special == null || special.trim().isEmpty()) return "";
 
         //if rx has special instruction, remove it from special
-        if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && rx.getSpecialInstruction().trim().length() > 0) {
+        if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && !rx.getSpecialInstruction().trim().isEmpty()) {
             special = special.replace(rx.getSpecialInstruction(), "");
         }
 

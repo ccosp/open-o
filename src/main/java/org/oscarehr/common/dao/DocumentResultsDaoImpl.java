@@ -60,7 +60,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
                 Query query = entityManager.createQuery(sql);
                 @SuppressWarnings("unchecked")
                 List<ProviderInboxItem> r = query.getResultList();
-                if (r != null && r.size() > 0) {
+                if (r != null && !r.isEmpty()) {
                     ProviderInboxItem pii = r.get(r.size() - 1);
                     String pns = pii.getProviderNo();
                     if (pns.equals("000000"))//takes care of case when a provider number is 000000
@@ -91,7 +91,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
                 Query query = entityManager.createQuery(sql);
                 @SuppressWarnings("unchecked")
                 List<ProviderInboxItem> r = query.getResultList();
-                if (r != null && r.size() > 0) {
+                if (r != null && !r.isEmpty()) {
                     return true;
                 } else
                     return false;

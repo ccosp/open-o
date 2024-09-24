@@ -130,7 +130,7 @@ public class MeasurementHL7UploaderAction extends DispatchActionSupport {
             // get demographic no from hcn
             DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
             List<Demographic> demos = demographicManager.getActiveDemosByHealthCardNo(loggedInInfo, hcn, hcnType);
-            if (demos == null || demos.size() == 0)
+            if (demos == null || demos.isEmpty())
                 throw new RuntimeException("There is no active patient with the supplied health card number: " + hcn + " " + hcnType);
 
             // try to get consult doctor's providerID

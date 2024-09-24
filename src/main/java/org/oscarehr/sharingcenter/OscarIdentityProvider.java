@@ -55,11 +55,11 @@ public class OscarIdentityProvider implements IIdentityProvider {
 
     @Override
     public boolean isUserInRole(String roleName) {
-        if (providerId == null || providerId.length() == 0) {
+        if (providerId == null || providerId.isEmpty()) {
             throw new IllegalArgumentException("Invalid provider id.");
         }
 
-        if (roleName == null || roleName.length() == 0) {
+        if (roleName == null || roleName.isEmpty()) {
             throw new IllegalArgumentException("Invalid role name specified.");
         }
 

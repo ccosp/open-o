@@ -126,21 +126,21 @@ public class DmsInboxManageAction extends DispatchAction {
         ArrayList<EDoc> docPreview = new ArrayList<EDoc>();
         ArrayList<LabResultData> labPreview = new ArrayList<LabResultData>();
 
-        if (docs.length() == 0) {
+        if (docs.isEmpty()) {
             // do nothing
         } else {
             String[] did = docs.split(",");
             List<String> didList = new ArrayList<String>();
             for (int i = 0; i < did.length; i++) {
-                if (did[i].length() > 0) {
+                if (!did[i].isEmpty()) {
                     didList.add(did[i]);
                 }
             }
-            if (didList.size() > 0) docPreview = EDocUtil.listDocsPreviewInbox(didList);
+            if (!didList.isEmpty()) docPreview = EDocUtil.listDocsPreviewInbox(didList);
 
         }
 
-        if (labs.length() == 0) {
+        if (labs.isEmpty()) {
             // do nothing
         } else {
             String[] labids = labs.split(",");
@@ -149,7 +149,7 @@ public class DmsInboxManageAction extends DispatchAction {
                 if (labids.length > 0) ls.add(labids[i]);
             }
 
-            if (ls.size() > 0) labPreview = Hl7textResultsData.getNotAckLabsFromLabNos(ls);
+            if (!ls.isEmpty()) labPreview = Hl7textResultsData.getNotAckLabsFromLabNos(ls);
         }
 
         request.setAttribute("docPreview", docPreview);
@@ -332,7 +332,7 @@ public class DmsInboxManageAction extends DispatchAction {
         String roleName = "";
         List<SecUserRole> roles = secUserRoleDao.getUserRoles(searchProviderNo);
         for (SecUserRole r : roles) {
-            if (roleName.length() == 0) {
+            if (roleName.isEmpty()) {
                 roleName = r.getRoleName();
 
             } else {
@@ -598,7 +598,7 @@ public class DmsInboxManageAction extends DispatchAction {
         try {
             String qn = request.getParameter("newQueueName");
             qn = qn.trim();
-            if (qn != null && qn.length() > 0) {
+            if (qn != null && !qn.isEmpty()) {
                 QueueDao queueDao = (QueueDao) SpringUtils.getBean(QueueDao.class);
                 success = queueDao.addNewQueue(qn);
                 addQueueSecObjectName(qn, queueDao.getLastId());
@@ -626,7 +626,7 @@ public class DmsInboxManageAction extends DispatchAction {
             logger.debug("DocId:" + docId);
             if (docId != null) {
                 docId = docId.trim();
-                if (docId.length() > 0) {
+                if (!docId.isEmpty()) {
                     EDoc doc = EDocUtil.getDoc(docId);
                     demoId = doc.getModuleId();
 
@@ -664,7 +664,7 @@ public class DmsInboxManageAction extends DispatchAction {
             String qn = request.getParameter("labid");
             if (qn != null) {
                 qn = qn.trim();
-                if (qn.length() > 0) {
+                if (!qn.isEmpty()) {
                     CommonLabResultData c = new CommonLabResultData();
                     demoId = c.getDemographicNo(qn, "HL7");
                     success = (demoId != null && !"0".equals(demoId));
@@ -771,7 +771,7 @@ public class DmsInboxManageAction extends DispatchAction {
 
             }
             List<ProviderInboxItem> providers = providerInboxRoutingDAO.getProvidersWithRoutingForDocument("DOC", docid);
-            if (providers.size() > 0) {
+            if (!providers.isEmpty()) {
                 ProviderInboxItem pii = providers.get(0);
                 docStatus.put(docid, pii.getStatus());
             }

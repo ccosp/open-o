@@ -193,7 +193,7 @@ public class GenericIntakeSearchAction extends DispatchAction {
             return mapping.findForward(FORWARD_SEARCH_FORM);
         }
 
-        if (!localMatches.isEmpty() || (remoteMatches != null && remoteMatches.size() > 0)) {
+        if (!localMatches.isEmpty() || (remoteMatches != null && !remoteMatches.isEmpty())) {
             return mapping.findForward(FORWARD_SEARCH_FORM);
         } else {
             return createLocal(mapping, form, request, response);

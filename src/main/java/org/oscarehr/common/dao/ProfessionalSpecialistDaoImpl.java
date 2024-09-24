@@ -76,7 +76,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
         @SuppressWarnings("unchecked")
         List<ProfessionalSpecialist> cList = query.getResultList();
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList;
         }
 
@@ -96,7 +96,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
         @SuppressWarnings("unchecked")
         List<ProfessionalSpecialist> cList = query.getResultList();
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList;
         }
 
@@ -117,7 +117,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
         @SuppressWarnings("unchecked")
         List<ProfessionalSpecialist> cList = query.getResultList();
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList;
         }
 
@@ -129,7 +129,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
     public ProfessionalSpecialist getByReferralNo(String referralNo) {
         List<ProfessionalSpecialist> cList = findByReferralNo(referralNo);
 
-        if (cList != null && cList.size() > 0) {
+        if (cList != null && !cList.isEmpty()) {
             return cList.get(0);
         }
 
@@ -139,7 +139,7 @@ public class ProfessionalSpecialistDaoImpl extends AbstractDaoImpl<ProfessionalS
 
     @Override
     public boolean hasRemoteCapableProfessionalSpecialists() {
-        return (findByEDataUrlNotNull().size() > 0);
+        return (!findByEDataUrlNotNull().isEmpty());
     }
 
     @Override

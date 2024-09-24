@@ -274,11 +274,11 @@ public class AddEditDocumentAction extends DispatchAction {
 
         Hashtable errors = new Hashtable();
         try {
-            if ((fm.getDocDesc().length() == 0) || (fm.getDocDesc().equals("Enter Title"))) {
+            if ((fm.getDocDesc().isEmpty()) || (fm.getDocDesc().equals("Enter Title"))) {
                 errors.put("descmissing", "dms.error.descriptionInvalid");
                 throw new Exception();
             }
-            if (fm.getDocType().length() == 0) {
+            if (fm.getDocType().isEmpty()) {
                 errors.put("typemissing", "dms.error.typeMissing");
                 throw new Exception();
             }
@@ -320,7 +320,7 @@ public class AddEditDocumentAction extends DispatchAction {
             newDoc.setRestrictToProgram("on".equals(restrictToProgramStr));
 
             // if the document was added in the context of an appointment
-            if (fm.getAppointmentNo() != null && fm.getAppointmentNo().length() > 0) {
+            if (fm.getAppointmentNo() != null && !fm.getAppointmentNo().isEmpty()) {
                 newDoc.setAppointmentNo(Integer.parseInt(fm.getAppointmentNo()));
             }
 
@@ -412,11 +412,11 @@ public class AddEditDocumentAction extends DispatchAction {
         }
 
         try {
-            if (fm.getDocDesc().length() == 0) {
+            if (fm.getDocDesc().isEmpty()) {
                 errors.put("descmissing", "dms.error.descriptionInvalid");
                 throw new Exception();
             }
-            if (fm.getDocType().length() == 0) {
+            if (fm.getDocType().isEmpty()) {
                 errors.put("typemissing", "dms.error.typeMissing");
                 throw new Exception();
             }
@@ -454,7 +454,7 @@ public class AddEditDocumentAction extends DispatchAction {
 
 
             fileName = newDoc.getFileName();
-            if (docFile.getFileSize() != 0 && fileName.length() != 0) {
+            if (docFile.getFileSize() != 0 && !fileName.isEmpty()) {
                 // save local file
                 writeLocalFile(docFile, fileName);
                 newDoc.setContentType(docFile.getContentType());
@@ -464,7 +464,7 @@ public class AddEditDocumentAction extends DispatchAction {
                     newDoc.setNumberOfPages(numberOfPages);
                 }
                 // ---
-            } else if (docFile.getFileName().length() != 0) {
+            } else if (!docFile.getFileName().isEmpty()) {
                 errors.put("uploaderror", "dms.error.uploadError");
                 throw new FileNotFoundException();
             }
@@ -560,6 +560,6 @@ public class AddEditDocumentAction extends DispatchAction {
 
 
     private boolean filled(String s) {
-        return (s != null && s.trim().length() > 0);
+        return (s != null && !s.trim().isEmpty());
     }
 }

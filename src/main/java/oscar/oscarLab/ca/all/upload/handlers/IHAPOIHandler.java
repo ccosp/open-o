@@ -75,7 +75,7 @@ public class IHAPOIHandler implements MessageHandler {
             hl7BodyMap = parse(is);
             Iterator<String> keySetIterator = null;
 
-            if (hl7BodyMap != null && hl7BodyMap.size() > 0) {
+            if (hl7BodyMap != null && !hl7BodyMap.isEmpty()) {
                 keySetIterator = hl7BodyMap.keySet().iterator();
             }
 
@@ -133,7 +133,7 @@ public class IHAPOIHandler implements MessageHandler {
         String hl7Body = new String(bytes, StandardCharsets.UTF_8).trim();
         Map<String, String> hl7BodyMap = null;
 
-        if (hl7Body != null && hl7Body.length() > 0) {
+        if (hl7Body != null && !hl7Body.isEmpty()) {
 
             if (hl7Body.startsWith(XML_PATTERN)) {
                 bais = new ByteArrayInputStream(bytes);

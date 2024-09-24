@@ -94,7 +94,7 @@ public class WaitListService {
      */
     public void recordContactAttempt(MatchParam contact) {
         List<VacancyClientMatch> vs = vacancyClientMatchDao.findByClientIdAndVacancyId(contact.getClientID(), contact.getVacancyID());
-        if (vs.size() > 0) {
+        if (!vs.isEmpty()) {
             for (VacancyClientMatch v : vs) {
                 v.setContactAttempts(v.getContactAttempts() + 1);
                 vacancyClientMatchDao.merge(v);
@@ -114,7 +114,7 @@ public class WaitListService {
      */
     public void recordClientContact(MatchParam contact) {
         List<VacancyClientMatch> vs = vacancyClientMatchDao.findByClientIdAndVacancyId(contact.getClientID(), contact.getVacancyID());
-        if (vs.size() > 0) {
+        if (!vs.isEmpty()) {
             for (VacancyClientMatch v : vs) {
                 v.setLast_contact_date(contact.getContactDateTime());
                 vacancyClientMatchDao.merge(v);

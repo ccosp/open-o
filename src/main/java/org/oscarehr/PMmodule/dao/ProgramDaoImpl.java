@@ -369,7 +369,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
         Session session = currentSession();
         Criteria criteria = session.createCriteria(Program.class);
 
-        if (program.getName() != null && program.getName().length() > 0) {
+        if (program.getName() != null && !program.getName().isEmpty()) {
             String programName = StringEscapeUtils.escapeSql(program.getName());
             String sql = "";
             sql = "((LEFT(SOUNDEX(name),4) = LEFT(SOUNDEX('" + programName + "'),4))" + " " + "OR (name like '" + "%"
@@ -377,7 +377,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             criteria.add(Restrictions.sqlRestriction(sql));
         }
 
-        if (program.getType() != null && program.getType().length() > 0) {
+        if (program.getType() != null && !program.getType().isEmpty()) {
             criteria.add(Expression.eq("type", program.getType()));
         }
 
@@ -387,7 +387,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
 
         criteria.add(Expression.eq("programStatus", Program.PROGRAM_STATUS_ACTIVE));
 
-        if (program.getManOrWoman() != null && program.getManOrWoman().length() > 0) {
+        if (program.getManOrWoman() != null && !program.getManOrWoman().isEmpty()) {
             criteria.add(Expression.eq("manOrWoman", program.getManOrWoman()));
         }
 
@@ -407,7 +407,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             criteria.add(Expression.eq("alcohol", true));
         }
 
-        if (program.getAbstinenceSupport() != null && program.getAbstinenceSupport().length() > 0) {
+        if (program.getAbstinenceSupport() != null && !program.getAbstinenceSupport().isEmpty()) {
             criteria.add(Expression.eq("abstinenceSupport", program.getAbstinenceSupport()));
         }
 
@@ -453,7 +453,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
         Session session = currentSession();
         Criteria criteria = session.createCriteria(Program.class);
 
-        if (program.getName() != null && program.getName().length() > 0) {
+        if (program.getName() != null && !program.getName().isEmpty()) {
             String programName = StringEscapeUtils.escapeSql(program.getName());
             String sql = "";
             if (isOracle) {
@@ -467,7 +467,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             }
         }
 
-        if (program.getType() != null && program.getType().length() > 0) {
+        if (program.getType() != null && !program.getType().isEmpty()) {
             criteria.add(Expression.eq("type", program.getType()));
         }
 
@@ -478,7 +478,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
 
         criteria.add(Expression.eq("programStatus", Program.PROGRAM_STATUS_ACTIVE));
 
-        if (program.getManOrWoman() != null && program.getManOrWoman().length() > 0) {
+        if (program.getManOrWoman() != null && !program.getManOrWoman().isEmpty()) {
             criteria.add(Expression.eq("manOrWoman", program.getManOrWoman()));
         }
 
@@ -498,7 +498,7 @@ public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {
             criteria.add(Expression.eq("alcohol", true));
         }
 
-        if (program.getAbstinenceSupport() != null && program.getAbstinenceSupport().length() > 0) {
+        if (program.getAbstinenceSupport() != null && !program.getAbstinenceSupport().isEmpty()) {
             criteria.add(Expression.eq("abstinenceSupport", program.getAbstinenceSupport()));
         }
 

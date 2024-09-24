@@ -64,7 +64,7 @@ public class TransferHSFOXmlAction extends Action {
             DemographicData demoData = new DemographicData();
             String internalId = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demoNo.toString()).getProviderNo();
 
-            if (internalId == null || internalId.length() == 0) {
+            if (internalId == null || internalId.isEmpty()) {
                 request.setAttribute("HSFOmessage", "Unable to upload. Please go to the master page, and assign a internal doctor to this patient.");
                 return mapping.findForward("HSFORE");
             }

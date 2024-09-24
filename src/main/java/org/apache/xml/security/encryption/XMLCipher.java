@@ -3159,7 +3159,7 @@ public class XMLCipher {
              * @param type
              */
             public void setType(String type) {
-                if (type == null || type.length() == 0) {
+                if (type == null || type.isEmpty()) {
                     this.type = null;
                 } else {
                     URI tmpType = null;
@@ -3198,7 +3198,7 @@ public class XMLCipher {
              * @param encoding
              */
             public void setEncoding(String encoding) {
-                if (encoding == null || encoding.length() == 0) {
+                if (encoding == null || encoding.isEmpty()) {
                     this.encoding = null;
                 } else {
                     URI tmpEncoding = null;
@@ -3512,7 +3512,7 @@ public class XMLCipher {
              * {@inheritDoc}
              */
             public void setTarget(String target) {
-                if (target == null || target.length() == 0) {
+                if (target == null || target.isEmpty()) {
                     this.target = null;
                 } else if (target.startsWith("#")) {
                     /*

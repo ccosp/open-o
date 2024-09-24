@@ -51,7 +51,7 @@ public class SecurityTokenDaoImpl extends AbstractDaoImpl<SecurityToken> impleme
         @SuppressWarnings("unchecked")
         List<SecurityToken> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

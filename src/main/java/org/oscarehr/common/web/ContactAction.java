@@ -140,7 +140,7 @@ public class ContactAction extends DispatchAction {
         request.setAttribute("procontacts", pdcs);
         request.setAttribute("procontact_num", pdcs.size());
 
-        if (request.getParameter("demographic_no") != null && request.getParameter("demographic_no").length() > 0)
+        if (request.getParameter("demographic_no") != null && !request.getParameter("demographic_no").isEmpty())
             request.setAttribute("demographic_no", request.getParameter("demographic_no"));
 
         return mapping.findForward("manage");
@@ -172,7 +172,7 @@ public class ContactAction extends DispatchAction {
             if (demographicContactId != null) {
 
                 String contactId = request.getParameter("contact_" + x + ".contactId");
-                if (contactId.length() == 0 || contactId.equals("0")) {
+                if (contactId.isEmpty() || contactId.equals("0")) {
                     continue;
                 }
 
@@ -208,7 +208,7 @@ public class ContactAction extends DispatchAction {
                 if (demographicContact.getType() == 1) {
 
                     //check if it exists
-                    if ((demographicContactDao.find(Integer.parseInt(contactId), demographicNo)).size() == 0) {
+                    if ((demographicContactDao.find(Integer.parseInt(contactId), demographicNo)).isEmpty()) {
 
                         if (demographicContactIdInt > 0) {
                             demographicContact = demographicContactDao.find(demographicContactIdInt);
@@ -248,7 +248,7 @@ public class ContactAction extends DispatchAction {
             if (demographicContactId != null) {
 
                 String contactId = request.getParameter("procontact_" + x + ".contactId");
-                if (contactId.length() == 0 || contactId.equals("0")) {
+                if (contactId.isEmpty() || contactId.equals("0")) {
                     continue;
                 }
 
@@ -549,7 +549,7 @@ public class ContactAction extends DispatchAction {
         Contact contact = (Contact) dform.get("contact");
         String id = request.getParameter("contact.id");
 
-        if (id != null && id.length() > 0 && !"0".equals(id)) {
+        if (id != null && !id.isEmpty() && !"0".equals(id)) {
             Contact savedContact = contactDao.find(Integer.parseInt(id));
             if (savedContact != null) {
                 BeanUtils.copyProperties(contact, savedContact, new String[]{"id"});

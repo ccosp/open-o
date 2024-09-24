@@ -256,7 +256,7 @@ public class SurveyExecuteAction extends DispatchAction {
             // instance = surveyManager.getLatestForm(surveyId, clientId);
             List tmpInstances = surveyManager.getTmpForms(formInstanceId, surveyId, clientId,
                     String.valueOf(getUserId(request)));
-            if (tmpInstances.size() == 0 || tmpInstances == null) {
+            if (tmpInstances.isEmpty() || tmpInstances == null) {
                 instance = surveyManager.getCurrentFormById(formInstanceId);
             } else {
                 CaisiFormInstanceTmpSave tmpsave = (CaisiFormInstanceTmpSave) tmpInstances.get(0);
@@ -327,7 +327,7 @@ public class SurveyExecuteAction extends DispatchAction {
                     int questionNum2 = 0;
                     for (Question question : container.getSection().getQuestionArray()) {
                         questionNum2++;
-                        if (question.getCaisiObject() != null && question.getCaisiObject().length() > 0) {
+                        if (question.getCaisiObject() != null && !question.getCaisiObject().isEmpty()) {
                             String caisiObject = question.getCaisiObject();
                             log.debug("FOUND CAISI-OBJECT: " + pageNum + "_" + sectionNum + "_" + questionNum2 + " "
                                     + caisiObject);
@@ -335,7 +335,7 @@ public class SurveyExecuteAction extends DispatchAction {
                                     caisiObject, clientId);
                         }
 
-                        if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                        if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                             // load data
                             String format = null;
                             if (question.getType().isSetDate()) {
@@ -348,14 +348,14 @@ public class SurveyExecuteAction extends DispatchAction {
                 } else if (container.isSetQuestion()) {
                     Question question = container.getQuestion();
                     questionNum++;
-                    if (question.getCaisiObject() != null && question.getCaisiObject().length() > 0) {
+                    if (question.getCaisiObject() != null && !question.getCaisiObject().isEmpty()) {
                         String caisiObject = question.getCaisiObject();
                         log.debug("FOUND CAISI-OBJECT: " + pageNum + "_" + 0 + "_" + questionNum + " " + caisiObject);
                         populateWithCaisiObject(request, data, pageNum + "_" + 0 + "_" + questionNum, caisiObject,
                                 clientId);
                     }
 
-                    if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                    if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                         String format = null;
                         if (question.getType().isSetDate()) {
                             format = question.getType().getDate().toString();
@@ -408,7 +408,7 @@ public class SurveyExecuteAction extends DispatchAction {
                     int questionNum2 = 0;
                     for (Question question : container.getSection().getQuestionArray()) {
                         questionNum2++;
-                        if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                        if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                             // load data
                             String format = null;
                             if (question.getType().isSetDate()) {
@@ -422,7 +422,7 @@ public class SurveyExecuteAction extends DispatchAction {
                 } else if (container.isSetQuestion()) {
                     Question question = container.getQuestion();
                     questionNum++;
-                    if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                    if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                         String format = null;
                         if (question.getType().isSetDate()) {
                             format = question.getType().getDate().toString();
@@ -437,7 +437,7 @@ public class SurveyExecuteAction extends DispatchAction {
 
         if (survey.getIntroduction() != null && !survey.getIntroduction().getIncludeOnFirstPage()) {
             pageNames.add("Introduction");
-            if (formBean.getTab() == null || formBean.getTab().length() == 0) {
+            if (formBean.getTab() == null || formBean.getTab().isEmpty()) {
                 // default first page
                 request.setAttribute("introduction", survey.getIntroduction());
                 request.setAttribute("currentTab", "Introduction");
@@ -452,7 +452,7 @@ public class SurveyExecuteAction extends DispatchAction {
             }
         } else {
             // default first page is page1
-            if (formBean.getTab() == null || formBean.getTab().length() == 0) {
+            if (formBean.getTab() == null || formBean.getTab().isEmpty()) {
                 formBean.setTab(pages[0].getDescription());
                 request.setAttribute("currentTab", pages[0].getDescription());
 
@@ -578,7 +578,7 @@ public class SurveyExecuteAction extends DispatchAction {
                     int questionNum2 = 0;
                     for (Question question : container.getSection().getQuestionArray()) {
                         questionNum2++;
-                        if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                        if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                             // load data
                             String format = null;
                             if (question.getType().isSetDate()) {
@@ -591,7 +591,7 @@ public class SurveyExecuteAction extends DispatchAction {
                 } else if (container.isSetQuestion()) {
                     Question question = container.getQuestion();
                     questionNum++;
-                    if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                    if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                         String format = null;
                         if (question.getType().isSetDate()) {
                             format = question.getType().getDate().toString();
@@ -769,7 +769,7 @@ public class SurveyExecuteAction extends DispatchAction {
         boolean newForm;
         List tmpInstanceForms = surveyManager.getTmpForms(formInstanceId, String.valueOf(formBean.getId()),
                 String.valueOf(formBean.getClientId()), String.valueOf(getUserId(request)));
-        if (tmpInstanceForms.size() == 0 || tmpInstanceForms == null) {
+        if (tmpInstanceForms.isEmpty() || tmpInstanceForms == null) {
             newForm = true;
             instance.setInstanceId(Integer.valueOf(formInstanceId));
             instance.setClientId((int) formBean.getClientId());
@@ -847,7 +847,7 @@ public class SurveyExecuteAction extends DispatchAction {
                     int questionNum2 = 0;
                     for (Question question : container.getSection().getQuestionArray()) {
                         questionNum2++;
-                        if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                        if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                             // load data
                             String format = null;
                             if (question.getType().isSetDate()) {
@@ -860,7 +860,7 @@ public class SurveyExecuteAction extends DispatchAction {
                 } else if (container.isSetQuestion()) {
                     Question question = container.getQuestion();
                     questionNum++;
-                    if (question.getDataLink() != null && question.getDataLink().length() > 0) {
+                    if (question.getDataLink() != null && !question.getDataLink().isEmpty()) {
                         String format = null;
                         if (question.getType().isSetDate()) {
                             format = question.getType().getDate().toString();

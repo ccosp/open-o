@@ -92,7 +92,7 @@ public class EctDisplayDiagramAction extends EctDisplayAction {
 
             StringBuilder title = new StringBuilder();
             title.append(formName);
-            if (formSubject != null && formSubject.length() > 0) {
+            if (formSubject != null && !formSubject.isEmpty()) {
                 title.append(" - ");
                 title.append(formSubject);
             }

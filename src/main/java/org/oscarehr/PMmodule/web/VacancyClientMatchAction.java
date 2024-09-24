@@ -81,12 +81,12 @@ public class VacancyClientMatchAction extends DispatchAction {
 
     private List<String> getCriteriaList(String criteriaSummary) {
         List<String> criteriaList = new ArrayList<String>();
-        if (criteriaSummary != null && criteriaSummary.length() > 0) {
+        if (criteriaSummary != null && !criteriaSummary.isEmpty()) {
             criteriaSummary = criteriaSummary.replaceAll(" AND ", "\n");
             StringTokenizer st = new StringTokenizer(criteriaSummary, "\n");
             while (st.hasMoreTokens()) {
                 String token = st.nextToken();
-                if (token != null && token.trim().length() > 0) {
+                if (token != null && !token.trim().isEmpty()) {
                     criteriaList.add(token.trim());
                 }
             }

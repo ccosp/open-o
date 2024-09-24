@@ -503,7 +503,7 @@ public class OcanReportUIBean implements CallbackHandler {
             try {
                 String user = OscarProperties.getInstance().getProperty("ocan.iar.user");
                 String url = OscarProperties.getInstance().getProperty("ocan.iar.url");
-                if (url == null || url.length() == 0) {
+                if (url == null || url.isEmpty()) {
                     //validation environment
                     url = "https://iarvt.ccim.on.ca/iarws-2.0/services/SubmissionService";
                 }
@@ -844,14 +844,14 @@ public class OcanReportUIBean implements CallbackHandler {
 
             ocanDomains.setHospitalizedPastTwoYears(HospitalizedPastTwoYears.Enum.forString(getStaffAnswer("hospitalized_mental_illness", ocanStaffFormData)));
             String totalAdmissions = getStaffAnswer("hospitalized_mental_illness_admissions", ocanStaffFormData);
-            if (totalAdmissions != null && totalAdmissions.length() > 0) {
+            if (totalAdmissions != null && !totalAdmissions.isEmpty()) {
                 ocanDomains.setTotalAdmissions(new BigInteger(totalAdmissions));
             } else {
                 ocanDomains.setTotalAdmissions(new BigInteger("0"));
             }
 
             String totalHospitalDays = getStaffAnswer("hospitalized_mental_illness_days", ocanStaffFormData);
-            if (totalHospitalDays != null && totalHospitalDays.length() > 0) {
+            if (totalHospitalDays != null && !totalHospitalDays.isEmpty()) {
                 ocanDomains.setTotalHospitalDays(new BigInteger(totalHospitalDays));
             } else {
                 ocanDomains.setTotalHospitalDays(new BigInteger("0"));
@@ -945,13 +945,13 @@ public class OcanReportUIBean implements CallbackHandler {
             case 7:
                 domain.setHospitalizedPastTwoYears(HospitalizedPastTwoYears.Enum.forString(getStaffAnswer("hospitalized_mental_illness", ocanStaffFormData)));
                 String totalAdmissions = getStaffAnswer("hospitalized_mental_illness_admissions", ocanStaffFormData);
-                if (totalAdmissions != null && totalAdmissions.length() > 0) {
+                if (totalAdmissions != null && !totalAdmissions.isEmpty()) {
                     domain.setTotalAdmissions(new BigInteger(totalAdmissions));
                 } else {
                     domain.setTotalAdmissions(new BigInteger("0"));
                 }
                 String totalHospitalDays = getStaffAnswer("hospitalized_mental_illness_days", ocanStaffFormData);
-                if (totalHospitalDays != null && totalHospitalDays.length() > 0) {
+                if (totalHospitalDays != null && !totalHospitalDays.isEmpty()) {
                     domain.setTotalHospitalDays(new BigInteger(totalHospitalDays));
                 } else {
                     domain.setTotalHospitalDays(new BigInteger("0"));
@@ -1058,7 +1058,7 @@ public class OcanReportUIBean implements CallbackHandler {
             needRating.setStaff(Byte.valueOf(staffAnswer));
             if (getStaffAnswer("consumerSelfAxCompleted", ocanStaffFormData).equals("TRUE")) {
                 String clientAnswer = getStaffAnswer("client_" + domainNumber + "_1", ocanStaffFormData);
-                if (clientAnswer.length() > 0) {
+                if (!clientAnswer.isEmpty()) {
                     needRating.setClient(Byte.valueOf(clientAnswer));
                 } else {
                     needRating.setClient((byte) -1);
@@ -1068,7 +1068,7 @@ public class OcanReportUIBean implements CallbackHandler {
             }
         } else if ("SELF".equals(ocanType)) {
             String clientAnswer = getStaffAnswer("client_" + domainNumber + "_1", ocanStaffFormData);
-            if (clientAnswer.length() > 0) {
+            if (!clientAnswer.isEmpty()) {
                 needRating.setClient(Byte.valueOf(clientAnswer));
             } else {
                 needRating.setClient((byte) -1);
@@ -1165,7 +1165,7 @@ public class OcanReportUIBean implements CallbackHandler {
             mc_list.add(MedicalCondition.Enum.forString(itr.next()));
         }
         //medicalConditionList.setMedicalConditionArray(answers.toArray(new String[answers.size()]));
-        if (answers.size() > 0) {
+        if (!answers.isEmpty()) {
             medicalConditionList.setMedicalConditionArray(mc_list.toArray(new MedicalCondition.Enum[answers.size()]));
         }
         medicalConditionList.setAutismDetail(getStaffAnswer("6_medical_conditions_autism", ocanStaffFormData));
@@ -1185,7 +1185,7 @@ public class OcanReportUIBean implements CallbackHandler {
         while (itr.hasNext()) {
             alist.add(ConcernArea.Enum.forString(itr.next()));
         }
-        if (answers.size() > 0)
+        if (!answers.isEmpty())
             concernAreaList.setConcernAreaArray(alist.toArray(new ConcernArea.Enum[answers.size()]));
         concernAreaList.setOtherConcernArea(getStaffAnswer("6_physical_health_details_other", ocanStaffFormData));
         return concernAreaList;
@@ -1356,7 +1356,7 @@ public class OcanReportUIBean implements CallbackHandler {
     public static DrinkAlcohol getDrinkAlcohol(List<OcanStaffFormData> ocanStaffFormData) {
         DrinkAlcohol drinkAlcohol = DrinkAlcohol.Factory.newInstance();
         String quantity = getStaffAnswer("num_drinks", ocanStaffFormData);
-        if (quantity != null && quantity.length() > 0) {
+        if (quantity != null && !quantity.isEmpty()) {
             drinkAlcohol.setQuantity(new BigInteger(quantity));
         }
         drinkAlcohol.setFrequency(DrinkAlcohol.Frequency.Enum.forString(getStaffAnswer("frequency_alcohol", ocanStaffFormData)));
@@ -1373,10 +1373,10 @@ public class OcanReportUIBean implements CallbackHandler {
             String mnth = getStaffAnswer(drug.concat("_freq_6months"), ocanStaffFormData);
             String ever = getStaffAnswer(drug.concat("_freq_ever"), ocanStaffFormData);
             DrugUse drugUse = DrugUse.Factory.newInstance();
-            if (mnth.length() > 0 || ever.length() > 0) {
+            if (!mnth.isEmpty() || !ever.isEmpty()) {
                 //we have a winner
                 drugUse.setName(DrugUse.Name.Enum.forString(drug));
-                if (mnth.length() > 0) {
+                if (!mnth.isEmpty()) {
                     drugUse.setFrequency(DrugUse.Frequency.Enum.forString(mnth));
                 } else {
                     drugUse.setFrequency(DrugUse.Frequency.Enum.forString(ever));
@@ -1387,9 +1387,9 @@ public class OcanReportUIBean implements CallbackHandler {
             drugs.add(drugUse);
         }
 
-        if (getStaffAnswer("drug_injection_freq_6months", ocanStaffFormData).length() > 0) {
+        if (!getStaffAnswer("drug_injection_freq_6months", ocanStaffFormData).isEmpty()) {
             drugUseList.setInjected(DrugUseList.Injected.Enum.forString(getStaffAnswer("drug_injection_freq_6months", ocanStaffFormData)));
-        } else if (getStaffAnswer("drug_injection_freq_ever", ocanStaffFormData).length() > 0) {
+        } else if (!getStaffAnswer("drug_injection_freq_ever", ocanStaffFormData).isEmpty()) {
             drugUseList.setInjected(DrugUseList.Injected.Enum.forString(getStaffAnswer("drug_injection_freq_ever", ocanStaffFormData)));
         } else {
             drugUseList.setInjected(DrugUseList.Injected.Enum.forString(""));
@@ -1633,7 +1633,7 @@ public class OcanReportUIBean implements CallbackHandler {
 
         if ("FULL".equals(ocanType)) {
             List<String> immigrationExpAnswers = getMultipleStaffAnswer("immigration_issues", ocanStaffFormData);
-            if (immigrationExpAnswers.size() > 0) {
+            if (!immigrationExpAnswers.isEmpty()) {
                 ImmigExpList immigExpList = ImmigExpList.Factory.newInstance();
                 List<ImmigExpList.Value.Enum> immigExpListEnum = new ArrayList<ImmigExpList.Value.Enum>();
                 for (String answer : immigrationExpAnswers) {
@@ -1650,7 +1650,7 @@ public class OcanReportUIBean implements CallbackHandler {
             clientRecord.setImmigExpFreeText(getStaffAnswer("immigration_experience", ocanStaffFormData));
 
             List<String> discriminationExpAnswers = getMultipleStaffAnswer("discrimination", ocanStaffFormData);
-            if (discriminationExpAnswers.size() > 0) {
+            if (!discriminationExpAnswers.isEmpty()) {
                 DiscrimExpList discrimExpList = null;
                 for (String answer : discriminationExpAnswers) {
                     if (discrimExpList == null) {
@@ -2043,10 +2043,10 @@ public class OcanReportUIBean implements CallbackHandler {
         TimeLivedInCanada timeLivedInCanada = TimeLivedInCanada.Factory.newInstance();
         String years = getStaffAnswer("years_in_canada", ocanStaffFormData);
         String months = getStaffAnswer("months_in_canada", ocanStaffFormData);
-        if (years != null && years.length() > 0) {
+        if (years != null && !years.isEmpty()) {
             timeLivedInCanada.setYears(new BigInteger(years));
         }
-        if (months != null && months.length() > 0) {
+        if (months != null && !months.isEmpty()) {
             timeLivedInCanada.setMonths(new BigInteger(months));
 
         }

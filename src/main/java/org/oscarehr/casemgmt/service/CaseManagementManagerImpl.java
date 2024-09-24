@@ -990,7 +990,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
             CaseManagementNote note = itr.next();
             added = false;
             Set<CaseManagementIssue> se = note.getIssues();
-            if (se == null || se.size() == 0) {
+            if (se == null || se.isEmpty()) {
                 Iterator<CaseManagementIssue> isit = se.iterator();
                 while (isit.hasNext()) {
                     CaseManagementIssue iss = isit.next();
@@ -1048,7 +1048,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         if (level < 1 || level > 4)
             return false;
         List pcrList = secRoleDao.findAllNames();
-        if (pcrList.size() == 0)
+        if (pcrList.isEmpty())
             return false;
         Iterator itr = pcrList.iterator();
         while (itr.hasNext()) {
@@ -1174,7 +1174,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
             Long pid = new Long(program_id);
             ppList = programProviderDao.getProgramProviderByProviderProgramId(providerNo, pid);
         }
-        if (ppList != null && ppList.size() > 0)
+        if (ppList != null && !ppList.isEmpty())
             rt = ((ProgramProvider) ppList.get(0)).getRole().getRoleName();
         return rt;
     }
@@ -2237,7 +2237,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     }
 
     private boolean filled(String s) {
-        return (s != null && s.trim().length() > 0);
+        return (s != null && !s.trim().isEmpty());
     }
 
     @Override
@@ -2292,7 +2292,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         // notes = caseManagementMgr.getNotes(demono);
         // notes = manageLockedNotes(notes, false, this.getUnlockedNotesMap(request));
 
-        if (programId == null || programId.length() == 0) {
+        if (programId == null || programId.isEmpty()) {
             programId = "0";
         }
 
@@ -2372,7 +2372,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
         for (CaseManagementNote note : cmnList) {
             noteIdList.add(note.getId());
         }
-        if (noteIdList.size() > 0) {
+        if (!noteIdList.isEmpty()) {
             Collections.sort(noteIdList);
             firstNoteId = noteIdList.get(0);
             lastNoteId = noteIdList.get(noteIdList.size() - 1);

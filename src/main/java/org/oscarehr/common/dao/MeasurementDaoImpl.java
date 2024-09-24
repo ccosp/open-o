@@ -142,7 +142,7 @@ public class MeasurementDaoImpl extends AbstractDaoImpl<Measurement> implements 
     @Override
     public Measurement findLatestByDemographicNoAndType(int demographicNo, String type) {
         List<Measurement> ms = findByDemographicNoAndType(demographicNo, type);
-        if (ms.size() == 0)
+        if (ms.isEmpty())
             return null;
         Collections.sort(ms, Measurement.DateObservedComparator);
         return ms.get(ms.size() - 1);
@@ -186,7 +186,7 @@ public class MeasurementDaoImpl extends AbstractDaoImpl<Measurement> implements 
     @Override
     public Measurement findLatestByAppointmentNoAndType(int appointmentNo, String type) {
         List<Measurement> ms = findByAppointmentNoAndType(appointmentNo, type);
-        if (ms.size() == 0)
+        if (ms.isEmpty())
             return null;
         Collections.sort(ms, Measurement.DateObservedComparator);
         return ms.get(ms.size() - 1);

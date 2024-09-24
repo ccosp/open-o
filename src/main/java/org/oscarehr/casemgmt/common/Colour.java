@@ -42,7 +42,7 @@ public class Colour {
         Colour c = null;
         try {
             String colourClass = OscarProperties.getInstance().getProperty("ColourClass", "org.oscarehr.casemgmt.common.Colour");
-            if (colourClass.length() > 0) {
+            if (!colourClass.isEmpty()) {
                 c = (Colour) Class.forName(colourClass).newInstance();
             }
         } catch (Exception e) {

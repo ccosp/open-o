@@ -653,7 +653,7 @@ public class BillingCorrectionPrep {
                             .getAllByItemId(Integer.parseInt(oldObj.getId()));
 
                     // update item_payments
-                    if (billOnItemPaymentList != null && billOnItemPaymentList.size() > 0) {
+                    if (billOnItemPaymentList != null && !billOnItemPaymentList.isEmpty()) {
                         for (BillingOnItemPayment billOnItemPayment : billOnItemPaymentList) {
                             billOnItemPayment.setBillingOnItemId(newBillItem.getId());
                             billOnItemPaymentDao.merge(billOnItemPayment);
@@ -799,7 +799,7 @@ public class BillingCorrectionPrep {
     private String getFee(String fee, String unit, String codeName,
                           String billReferenceDate) {
         String ret = fee;
-        if (fee.length() == 0 || fee.equals(" ")) {
+        if (fee.isEmpty() || fee.equals(" ")) {
             JdbcBillingReviewImpl dbObj = new JdbcBillingReviewImpl();
             fee = dbObj.getCodeFee(codeName, billReferenceDate);
             // calculate fee

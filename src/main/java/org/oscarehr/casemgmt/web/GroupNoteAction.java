@@ -58,7 +58,7 @@ public class GroupNoteAction {
 
 
         List<GroupNoteLink> currentLinks = groupNoteDao.findLinksByNoteId(Integer.parseInt(cform.getNoteId()));
-        if (currentLinks.size() > 0) {
+        if (!currentLinks.isEmpty()) {
             for (GroupNoteLink link : currentLinks) {
                 if (link.isAnonymous()) {
                     Demographic d = demographicDao.getDemographic(String.valueOf(link.getDemographicNo()));

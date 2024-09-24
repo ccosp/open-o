@@ -78,7 +78,7 @@ public class CaseManagementIssueDAOImpl extends HibernateDaoSupport implements C
         List<Issue> result = (List<Issue>) getHibernateTemplate().find(
                 "select issue from CaseManagementIssue cmi where cmi.id = ?",
                 new Object[]{Long.valueOf(cmnIssueId)});
-        if (result.size() > 0)
+        if (!result.isEmpty())
             return result.get(0);
         return null;
     }

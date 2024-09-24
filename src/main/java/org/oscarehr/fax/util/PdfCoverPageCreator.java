@@ -202,7 +202,7 @@ public class PdfCoverPageCreator {
 
         // add the address details
         Phrase addressPhrase = new Phrase("", LETTERHEAD);
-        if (sender.getAddress() != null && sender.getAddress().length() > 0) {
+        if (sender.getAddress() != null && !sender.getAddress().isEmpty()) {
             addressPhrase.add(String.format("%s", sender.getAddress()));
         }
 
@@ -211,7 +211,7 @@ public class PdfCoverPageCreator {
 
         // add the telecom info
         Phrase telecomPhonePhrase = new Phrase("", LETTERHEAD);
-        if (sender.getPhone() != null && sender.getPhone().trim().length() > 0) {
+        if (sender.getPhone() != null && !sender.getPhone().trim().isEmpty()) {
             telecomPhonePhrase.add(String.format("Phone: %s", sender.getPhone()));
         }
 
@@ -219,7 +219,7 @@ public class PdfCoverPageCreator {
         infoTable.addCell(cell);
 
         Phrase telecomFaxPhrase = new Phrase("", LETTERHEAD);
-        if (sender.getFax() != null && sender.getFax().trim().length() > 0) {
+        if (sender.getFax() != null && !sender.getFax().trim().isEmpty()) {
             telecomFaxPhrase.add(String.format("Fax: %s", sender.getFax()));
         }
 

@@ -108,7 +108,7 @@ public class ManageLinkedClients {
         // we're only dealing with 1 hnr entry even if there's multiple because there should
         // only be 1, a minor issue about some of this code not being atomic makes multiple
         // entries theoretically possible though in reality it should never happen.
-        if (currentLinks.size() > 0) {
+        if (!currentLinks.isEmpty()) {
             org.oscarehr.hnr.ws.Client hnrClient = CaisiIntegratorManager.getHnrClient(loggedInInfo, facility, currentLinks.get(0).getRemoteLinkId());
 
             // can be null if client revoked consent or locked data, link still exists but no records are returned.

@@ -85,7 +85,7 @@ public class Matcher {
     public List<VacancyClientMatch> listVacancyMatchesForClient(int clientId) {
         List<VacancyClientMatch> vacancyClientMatches = new ArrayList<VacancyClientMatch>();
         ClientData clientData = waitlistDao.getClientData(clientId);
-        if (clientData.getClientData().size() == 0) return vacancyClientMatches;
+        if (clientData.getClientData().isEmpty()) return vacancyClientMatches;
         List<VacancyData> vacancyDataList = loadAllVacancies();
         for (VacancyData vData : vacancyDataList) {
             VacancyClientMatch vcMatch = match(clientData, vData);

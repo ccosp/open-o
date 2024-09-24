@@ -307,7 +307,7 @@ public class DrugrefUtil {
         myDrugrefId = OscarProperties.getInstance().getProperty("mydrugref_id");
 
         //override with user pref
-        if (prop != null && prop.getValue().length() > 0) {
+        if (prop != null && !prop.getValue().isEmpty()) {
             myDrugrefId = prop.getValue();
         }
 
@@ -345,7 +345,7 @@ public class DrugrefUtil {
             try {
                 List v = rxMyDrugrefInfoAction.getMyDrugrefInfo(loggedInInfo, command, codes, provider, myDrugrefId);
 
-                if (v != null && v.size() > 0) {
+                if (v != null && !v.isEmpty()) {
                     convertMyDrugrefDS(v, mr, locale, returnList, dsPrefs);
                     logger.error("size after mydrugref " + returnList.size());
                 }
@@ -482,7 +482,7 @@ public class DrugrefUtil {
         myDrugrefId = OscarProperties.getInstance().getProperty("mydrugref_id");
 
         //override with user pref
-        if (prop != null && prop.getValue().length() > 0) {
+        if (prop != null && !prop.getValue().isEmpty()) {
             myDrugrefId = prop.getValue();
         }
 
@@ -520,7 +520,7 @@ public class DrugrefUtil {
             try {
                 List v = rxMyDrugrefInfoAction.getMyDrugrefInfo(loggedInInfo, command, codes, provider, myDrugrefId);
 
-                if (v != null && v.size() > 0) {
+                if (v != null && !v.isEmpty()) {
                     all.addAll(v);
                 }
 
@@ -578,7 +578,7 @@ public class DrugrefUtil {
         MiscUtils.getLogger().debug("currentIdWarnings is  " + currentIdWarnings);
         //set session attribute hiddenResources if it was null
 
-        if (dsPrefs != null && dsPrefs.size() > 0) {
+        if (dsPrefs != null && !dsPrefs.isEmpty()) {
             Map<String, String> hiddenR = new HashMap<String, String>();
 
             Enumeration em = dsPrefs.keys();
@@ -633,7 +633,7 @@ public class DrugrefUtil {
 
         UserProperty uprop = propDAO.getProp(loggedInInfo.getLoggedInProviderNo(), "rxInteractionWarningLevel");
         if (uprop != null) {
-            if (uprop.getValue() != null && uprop.getValue().length() > 0) {
+            if (uprop.getValue() != null && !uprop.getValue().isEmpty()) {
                 int providerLevel = Integer.parseInt(uprop.getValue());
                 MiscUtils.getLogger().debug("providerLevel=" + providerLevel);
                 if (providerLevel > 0)
@@ -643,7 +643,7 @@ public class DrugrefUtil {
 
         DemographicExt demoWarn = demographicExtDao.getLatestDemographicExt(demographicNo, "rxInteractionWarningLevel");
         if (demoWarn != null) {
-            if (demoWarn.getValue() != null && demoWarn.getValue().length() > 0) {
+            if (demoWarn.getValue() != null && !demoWarn.getValue().isEmpty()) {
                 int demoLevel = Integer.valueOf(demoWarn.getValue());
                 MiscUtils.getLogger().debug("demoLevel=" + demoLevel);
                 if (demoLevel > 0)

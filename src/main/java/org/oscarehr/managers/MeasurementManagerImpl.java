@@ -91,7 +91,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
     @Override
     public List<Measurement> getMeasurementByType(LoggedInInfo loggedInInfo, Integer id, List<String> types) {
         List<Measurement> results = measurementDao.findByType(id, types);
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             LogAction.addLogSynchronous(loggedInInfo, "MeasurementManager.getMeasurementByType", "id=" + id);
         }
         return results;
@@ -104,7 +104,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
         ConsentType consentType = patientConsentManager.getProviderSpecificConsent(loggedInInfo);
         if (patientConsentManager.hasPatientConsented(demographicId, consentType)) {
             results = measurementDao.findByDemographicLastUpdateAfterDate(demographicId, updateAfter);
-            if (results.size() > 0) {
+            if (!results.isEmpty()) {
                 LogAction.addLogSynchronous(loggedInInfo, "MeasurementManager.getMeasurementByDemographicIdAfter",
                         "demographicId=" + demographicId + " updateAfter=" + updateAfter);
             }
@@ -121,7 +121,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
         }
 
         List<Measurement> results = measurementDao.findLatestByDemographicObservedAfterDate(demographicId, observedDate);
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             LogAction.addLogSynchronous(loggedInInfo, "MeasurementManager.getMeasurementByDemographicIdAfter", "demographicId=" + demographicId + " updateAfter=" + observedDate);
         }
         return results;
@@ -202,7 +202,7 @@ public class MeasurementManagerImpl implements MeasurementManager {
                 .getBean(MeasurementGroupStyleDao.class);
         List<MeasurementGroupStyle> results = measurementGroupStyleDao.findByGroupName(groupName);
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             for (MeasurementGroupStyle result : results) {
                 id = result.getId().toString();
             }

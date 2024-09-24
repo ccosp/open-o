@@ -75,7 +75,7 @@ public class TransferHSFOXmlAction extends Action {
             DemographicData demoData = new DemographicData();
             String internalId = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demoNo.toString()).getProviderNo();
 
-            if (internalId == null || internalId.length() == 0) {
+            if (internalId == null || internalId.isEmpty()) {
                 message.add("");
                 message.add("Unable to upload. Please go to the master page, and assign a internal doctor to this patient.");
                 request.setAttribute("HSFOmessage", message.get(1));
@@ -87,7 +87,7 @@ public class TransferHSFOXmlAction extends Action {
             message.add("Patient(s) data not found in the database.");
         } else {
             message = tfutil.validateDoc(doc);
-            if (message.size() != 0) {
+            if (!message.isEmpty()) {
                 // set error message;
                 request.setAttribute("HSFOmessage", message.get(0));
                 return mapping.findForward("HSFORE");

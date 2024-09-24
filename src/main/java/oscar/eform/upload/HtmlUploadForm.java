@@ -96,7 +96,7 @@ public class HtmlUploadForm extends ActionForm {
 
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if ((formName == null) || (formName.length() == 0)) {
+        if ((formName == null) || (formName.isEmpty())) {
             errors.add("form", new ActionMessage("eform.errors.file_name.missing"));
         }
         if (formHtml.getFileSize() == 0) {

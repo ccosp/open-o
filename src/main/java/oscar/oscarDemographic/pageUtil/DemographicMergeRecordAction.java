@@ -89,7 +89,7 @@ public class DemographicMergeRecordAction extends Action {
 
             }
 
-        } else if (action.equals("unmerge") && records.size() > 0) {
+        } else if (action.equals("unmerge") && !records.isEmpty()) {
             outcome = "successUnMerge";
             for (int i = 0; i < records.size(); i++) {
                 String demographic_no = records.get(i);

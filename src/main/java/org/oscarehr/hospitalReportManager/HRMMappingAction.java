@@ -37,7 +37,7 @@ public class HRMMappingAction extends DispatchAction {
         }
 
         try {
-            if (request.getParameter("deleteMappingId") != null && request.getParameter("deleteMappingId").trim().length() > 0) {
+            if (request.getParameter("deleteMappingId") != null && !request.getParameter("deleteMappingId").trim().isEmpty()) {
                 hrmSubClassDao.remove(Integer.parseInt(request.getParameter("deleteMappingId")));
                 return mapping.findForward("success");
             }

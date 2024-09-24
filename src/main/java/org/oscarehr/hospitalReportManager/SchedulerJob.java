@@ -40,7 +40,7 @@ public class SchedulerJob extends TimerTask {
             Integer intervalTime = 1800000;
 
             try {
-                if (hrmInterval != null && hrmInterval.getValue() != null && hrmInterval.getValue().trim().length() > 0) {
+                if (hrmInterval != null && hrmInterval.getValue() != null && !hrmInterval.getValue().trim().isEmpty()) {
                     intervalTime = Integer.parseInt(hrmInterval.getValue()) * 60000;
                 }
             } catch (Exception e) {

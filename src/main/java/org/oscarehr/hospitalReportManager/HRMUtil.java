@@ -95,13 +95,13 @@ public class HRMUtil {
             List<HRMDocumentSubClass> subClassList = hrmDocumentSubClassDao.getSubClassesByDocumentId(hrmDocument.getId());
             if (hrmReport.getFirstReportClass().equalsIgnoreCase("Diagnostic Imaging Report") || hrmReport.getFirstReportClass().equalsIgnoreCase("Cardio Respiratory Report")) {
                 //Get first sub class to display on eChart
-                if (subClassList != null && subClassList.size() > 0) {
+                if (subClassList != null && !subClassList.isEmpty()) {
                     HRMDocumentSubClass firstSubClass = subClassList.get(0);
                     hrmSubClass = hrmSubClassDao.findApplicableSubClassMapping(hrmReport.getFirstReportClass(), firstSubClass.getSubClass(), firstSubClass.getSubClassMnemonic(), hrmReport.getSendingFacilityId());
                     dispSubClass = hrmSubClass != null ? hrmSubClass.getSubClassDescription() : "";
                 }
 
-                if (StringUtils.isNullOrEmpty(dispSubClass) && hrmReport.getAccompanyingSubclassList().size() > 0) {
+                if (StringUtils.isNullOrEmpty(dispSubClass) && !hrmReport.getAccompanyingSubclassList().isEmpty()) {
                     // if sub class doesn't exist, display the accompanying subclass
                     dispSubClass = hrmReport.getFirstAccompanyingSubClass();
                 }
@@ -293,13 +293,13 @@ public class HRMUtil {
         List<HRMDocumentSubClass> subClassList = new ArrayList<>(hrmDocument.getAccompanyingSubClasses());
         if (hrmReport.getFirstReportClass().equalsIgnoreCase("Diagnostic Imaging Report") || hrmReport.getFirstReportClass().equalsIgnoreCase("Cardio Respiratory Report")) {
             //Get first sub class to display on eChart
-            if (subClassList != null && subClassList.size() > 0) {
+            if (subClassList != null && !subClassList.isEmpty()) {
                 HRMDocumentSubClass firstSubClass = subClassList.get(0);
                 hrmSubClass = hrmSubClassDao.findApplicableSubClassMapping(hrmReport.getFirstReportClass(), firstSubClass.getSubClass(), firstSubClass.getSubClassMnemonic(), hrmReport.getSendingFacilityId());
                 dispSubClass = hrmSubClass != null ? hrmSubClass.getSubClassDescription() : "";
             }
 
-            if (StringUtils.isNullOrEmpty(dispSubClass) && hrmReport.getAccompanyingSubclassList().size() > 0) {
+            if (StringUtils.isNullOrEmpty(dispSubClass) && !hrmReport.getAccompanyingSubclassList().isEmpty()) {
                 // if sub class doesn't exist, display the accompanying subclass
                 dispSubClass = hrmReport.getFirstAccompanyingSubClass();
             }

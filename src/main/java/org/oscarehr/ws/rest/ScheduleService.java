@@ -448,8 +448,8 @@ public class ScheduleService extends AbstractServiceImpl {
     public AppointmentExtResponse listAppointmentsByPeriodProvider(@PathParam(value = "sDate") String sDateStr,
                                                                    @PathParam(value = "eDate") String eDateStr,
                                                                    @PathParam(value = "providers") String providers) {
-        if (sDateStr == null || sDateStr.length() == 0
-                || eDateStr == null || sDateStr.length() == 0
+        if (sDateStr == null || sDateStr.isEmpty()
+                || eDateStr == null || sDateStr.isEmpty()
                 || providers == null)
             throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Required path parameter is missing").build());
 
@@ -466,7 +466,7 @@ public class ScheduleService extends AbstractServiceImpl {
             List<Object[]> items = scheduleManager.listAppointmentsByPeriodProvider(getLoggedInInfo(), sDate, eDate, providers);
 
             AppointmentExtResponse response = new AppointmentExtResponse();
-            if (items != null && items.size() > 0) {
+            if (items != null && !items.isEmpty()) {
                 if (response.getContent() == null) response.setContent(new ArrayList<AppointmentExtTo>());
                 for (Object[] obj : items) {
                     Integer appointmentNo = (Integer) obj[0];
@@ -522,7 +522,7 @@ public class ScheduleService extends AbstractServiceImpl {
             List<Object[]> items = scheduleManager.listProviderAppointmentCounts(getLoggedInInfo(), sDateStr, eDateStr);
 
             ProviderApptsCountResponse response = new ProviderApptsCountResponse();
-            if (items != null && items.size() > 0) {
+            if (items != null && !items.isEmpty()) {
                 if (response.getContent() == null) response.setContent(new ArrayList<ProviderApptsCountTo>());
                 for (Object[] obj : items) {
                     String providerNo = (String) obj[0];
@@ -556,7 +556,7 @@ public class ScheduleService extends AbstractServiceImpl {
      * @return
      */
     public ProviderPeriodAppsResponse listProviderApptsForPeriod(@PathParam("providerNo") String providerNo, @PathParam("sDate") String sDateStr, @PathParam("eDate") String eDateStr) {
-        if (providerNo == null || providerNo.length() == 0 || sDateStr == null || eDateStr == null)
+        if (providerNo == null || providerNo.isEmpty() || sDateStr == null || eDateStr == null)
             throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Required path parameter is miossing").build());
 
         try {
@@ -572,7 +572,7 @@ public class ScheduleService extends AbstractServiceImpl {
             List<Appointment> appts = scheduleManager.getAppointmentsForDateRangeAndProvider(getLoggedInInfo(), sDate, eDate, providerNo);
 
             ProviderPeriodAppsResponse response = new ProviderPeriodAppsResponse();
-            if (appts != null && appts.size() > 0) {
+            if (appts != null && !appts.isEmpty()) {
                 response.setContent(new ArrayList<ProviderPeriodAppsTo>());
                 for (Appointment appt : appts) {
                     ProviderPeriodAppsTo to = new ProviderPeriodAppsTo(appt);

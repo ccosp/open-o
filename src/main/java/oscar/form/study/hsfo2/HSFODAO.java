@@ -107,7 +107,7 @@ public class HSFODAO {
 
     public boolean hasLockedVisit(String demographic_no) {
         List<Hsfo2Visit> visits = visitDao.getLockedVisitByDemographicNo(demographic_no);
-        if (visits.size() > 0)
+        if (!visits.isEmpty())
             return true;
         else
             return false;

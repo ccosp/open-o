@@ -57,7 +57,7 @@ public class ClinicDAOImpl extends AbstractDaoImpl<Clinic> implements ClinicDAO 
         Query query = entityManager.createQuery("select c from Clinic c");
         @SuppressWarnings("unchecked")
         List<Clinic> codeList = query.getResultList();
-        if (codeList.size() > 0) {
+        if (!codeList.isEmpty()) {
             return codeList.get(0);
         }
         return null;

@@ -791,7 +791,7 @@ public class GDMLHandler implements MessageHandler {
 
         // if there have been no labs added to the database yet just return this
         // lab
-        if (ret.size() == 0)
+        if (ret.isEmpty())
             ret.add(hl7Body);
         return ret;
     }
@@ -826,7 +826,7 @@ public class GDMLHandler implements MessageHandler {
 
         // if there have been no labs added to the database yet just return this
         // lab
-        if (ret.size() == 0)
+        if (ret.isEmpty())
             ret.add(hl7Body);
         return ret;
     }

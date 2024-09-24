@@ -81,7 +81,7 @@ public class LookupDaoImpl extends HibernateDaoSupport implements LookupDao {
             return null;
         List lst = LoadCodeList(tableId, false, code, "");
         LookupCodeValue lkv = null;
-        if (lst.size() > 0) {
+        if (!lst.isEmpty()) {
             lkv = (LookupCodeValue) lst.get(0);
         }
         return lkv;

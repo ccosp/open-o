@@ -44,11 +44,11 @@ public class AddDocumentTypeAction extends DispatchAction {
 
         boolean doctypeadded = false;
 
-        if (fm.getDocType().length() == 0) {
+        if (fm.getDocType().isEmpty()) {
             errors.put("typemissing", "dms.error.typeMissing");
             request.setAttribute("doctypeerrors", errors);
             return mapping.findForward("failed");
-        } else if (fm.getFunction().length() == 0) {
+        } else if (fm.getFunction().isEmpty()) {
             errors.put("modulemissing", "dms.error.moduleMissing");
             request.setAttribute("doctypeerrors", errors);
             return mapping.findForward("failed");

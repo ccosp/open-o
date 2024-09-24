@@ -70,7 +70,7 @@ public class MyGroupAccessRestrictionDaoImpl extends AbstractDaoImpl<MyGroupAcce
         @SuppressWarnings("unchecked")
         List<MyGroupAccessRestriction> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
 

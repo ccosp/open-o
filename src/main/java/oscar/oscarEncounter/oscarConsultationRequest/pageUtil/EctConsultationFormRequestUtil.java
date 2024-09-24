@@ -393,7 +393,7 @@ public class EctConsultationFormRequestUtil {
     }
 
     public String getSpecailistsName(String id) {
-        if (id == null || id.trim().length() == 0) {
+        if (id == null || id.trim().isEmpty()) {
             return "-1";
         }
 
@@ -442,7 +442,7 @@ public class EctConsultationFormRequestUtil {
     }
 
     public String getProviderTeam(String id) {
-        if (id == null || id.length() == 0)
+        if (id == null || id.isEmpty())
             return "";
         ProviderDao dao = SpringUtils.getBean(ProviderDao.class);
         Provider p = dao.getProvider(id);
@@ -453,7 +453,7 @@ public class EctConsultationFormRequestUtil {
     }
 
     public String getProviderName(String id) {
-        if (id == null || id.length() == 0)
+        if (id == null || id.isEmpty())
             return "";
 
         ProviderDao dao = SpringUtils.getBean(ProviderDao.class);

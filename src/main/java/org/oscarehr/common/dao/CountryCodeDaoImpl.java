@@ -63,7 +63,7 @@ public class CountryCodeDaoImpl extends AbstractDaoImpl<CountryCode> implements 
         query.setParameter(0, countryCode);
         @SuppressWarnings("unchecked")
         List<CountryCode> codeList = query.getResultList();
-        if (codeList.size() > 0) {
+        if (!codeList.isEmpty()) {
             return codeList.get(0);
         }
         return null;
@@ -77,7 +77,7 @@ public class CountryCodeDaoImpl extends AbstractDaoImpl<CountryCode> implements 
         List<CountryCode> codeList = query.getResultList();
 
         CountryCode code = null;
-        if (codeList != null && codeList.size() > 0) {
+        if (codeList != null && !codeList.isEmpty()) {
             code = codeList.get(0);
         }
         return code;

@@ -219,7 +219,7 @@ public class FlowSheetCustomAction extends DispatchAction {
                         }
                         targetCount++;
                     }
-                    if (conds.size() > 0) {
+                    if (!conds.isEmpty()) {
                         rec.setRecommendationCondition(conds);
                         recommendations.add(rec);
                     }
@@ -266,7 +266,7 @@ public class FlowSheetCustomAction extends DispatchAction {
                         }
                         targetCount++;
                     }
-                    if (conds.size() > 0) {
+                    if (!conds.isEmpty()) {
                         tcolour.setTargetConditions(conds);
                         targets.add(tcolour);
                     }

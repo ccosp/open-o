@@ -238,7 +238,7 @@ public class DocumentDaoImpl extends AbstractDaoImpl<Document> implements Docume
         query.setParameter(0, id);
 
         List<Demographic> rs = query.getResultList();
-        if (rs.size() > 0)
+        if (!rs.isEmpty())
             d = rs.get(0);
         return d;
     }
@@ -312,7 +312,7 @@ public class DocumentDaoImpl extends AbstractDaoImpl<Document> implements Docume
                 "WHERE c.id.documentNo = d.id AND c.id.module = :module");
         params.put("module", module);
 
-        boolean isShowingAllDocuments = docType == null || docType.equals("all") || docType.length() == 0;
+        boolean isShowingAllDocuments = docType == null || docType.equals("all") || docType.isEmpty();
 
         if (includePublic) {
             if (isShowingAllDocuments) {

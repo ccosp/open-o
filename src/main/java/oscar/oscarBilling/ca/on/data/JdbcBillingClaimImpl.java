@@ -112,7 +112,7 @@ public class JdbcBillingClaimImpl {
         b.setPayee(val.payee);
         b.setRefNum(val.ref_num);
         b.setFaciltyNum(val.facilty_num);
-        if (val.admission_date.length() > 0)
+        if (!val.admission_date.isEmpty())
             try {
                 b.setAdmissionDate(dateformatter.parse(val.admission_date));
             } catch (ParseException e) {/*empty*/}
@@ -133,11 +133,11 @@ public class JdbcBillingClaimImpl {
         b.setDemographicName(StringEscapeUtils.escapeSql(val.demographic_name));
         b.setSex(val.sex);
         b.setProvince(val.province);
-        if (val.billing_date.length() > 0)
+        if (!val.billing_date.isEmpty())
             try {
                 b.setBillingDate(dateformatter.parse(val.billing_date));
             } catch (ParseException e) {/*empty*/}
-        if (val.billing_time.length() > 0)
+        if (!val.billing_time.isEmpty())
             try {
                 b.setBillingTime(timeFormatter.parse(val.billing_time));
             } catch (ParseException e) {
@@ -181,7 +181,7 @@ public class JdbcBillingClaimImpl {
             b.setServiceCode(val.service_code);
             b.setFee(val.fee);
             b.setServiceCount(val.ser_num);
-            if (val.service_date.length() > 0)
+            if (!val.service_date.isEmpty())
                 try {
                     b.setServiceDate(dateformatter.parse(val.service_date));
                 } catch (ParseException e) {/*empty*/}
@@ -230,7 +230,7 @@ public class JdbcBillingClaimImpl {
     }
 
     private void addCreate3rdInvoiceTrans(BillingClaimHeader1Data billHeader, List<BillingItemData> billItemList, BillingONPayment billOnPayment) {
-        if (billItemList.size() < 1) {
+        if (billItemList.isEmpty()) {
             return;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -295,7 +295,7 @@ public class JdbcBillingClaimImpl {
     }
 
     public void addCreateOhipInvoiceTrans(BillingClaimHeader1Data billHeader, List<BillingItemData> billItemList) {
-        if (billItemList.size() < 1) {
+        if (billItemList.isEmpty()) {
             return;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

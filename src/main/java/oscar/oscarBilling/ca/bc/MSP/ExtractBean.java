@@ -580,7 +580,7 @@ public class ExtractBean extends Object implements Serializable {
     public boolean isMSPInsurer(Billingmaster bm) {
         boolean retval = true;
         String insurer = bm.getOinInsurerCode();
-        if (insurer != null && (insurer.trim().length() > 0)) {
+        if (insurer != null && (!insurer.trim().isEmpty())) {
             retval = false;
         }
         return retval;

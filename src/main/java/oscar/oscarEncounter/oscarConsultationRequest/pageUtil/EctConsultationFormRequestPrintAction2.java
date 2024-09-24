@@ -205,7 +205,7 @@ public class EctConsultationFormRequestPrintAction2 extends Action {
                 alist.add(Files.newInputStream(attachedForm));
             }
 
-            if (alist.size() > 0) {
+            if (!alist.isEmpty()) {
 
                 bos = new ByteOutputStream();
                 ConcatPDF.concat(alist, bos);

@@ -127,7 +127,7 @@ public class OscarMsgReviewSender implements OscarRunnable {
                 }
 
                 providerNosList.remove(property.getProviderNo());
-                if (residentOscarMsgList.size() > 0) {
+                if (!residentOscarMsgList.isEmpty()) {
 
                     List<Integer> attachDemographic = new ArrayList<Integer>();
                     for (ResidentOscarMsg res : residentOscarMsgList) {
@@ -151,7 +151,7 @@ public class OscarMsgReviewSender implements OscarRunnable {
             }
         }
 
-        if (currentHour.equals(defaultHour) && currentMinute.equals(defaultMin) && providerNosList.size() > 0) {
+        if (currentHour.equals(defaultHour) && currentMinute.equals(defaultMin) && !providerNosList.isEmpty()) {
             for (String providerNo : providerNosList) {
                 String userProp = propertyDao.getStringValue(providerNo, UserProperty.OSCAR_MSG_RECVD);
 
@@ -166,7 +166,7 @@ public class OscarMsgReviewSender implements OscarRunnable {
                         }
                         ++idx;
                     }
-                    if (residentOscarMsgList.size() > 0) {
+                    if (!residentOscarMsgList.isEmpty()) {
 
                         List<Integer> attachDemographic = new ArrayList<Integer>();
                         for (ResidentOscarMsg res : residentOscarMsgList) {

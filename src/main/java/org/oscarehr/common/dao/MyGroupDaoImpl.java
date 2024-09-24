@@ -57,7 +57,7 @@ public class MyGroupDaoImpl extends AbstractDaoImpl<MyGroup> implements MyGroupD
         @SuppressWarnings("unchecked")
         List<String> dList = query.getResultList();
 
-        if (dList != null && dList.size() > 0) {
+        if (dList != null && !dList.isEmpty()) {
             return dList;
         } else {
             return null;

@@ -338,7 +338,7 @@ public final class RptDemographicReportForm extends ActionForm {
 
     public boolean validateYear(String str) {
         boolean retval = false;
-        if (str != null && str.length() > 0) {
+        if (str != null && !str.isEmpty()) {
             str = str.trim();
             MiscUtils.getLogger().debug("Start Year = " + str + "< len = " + str.length());
             try {

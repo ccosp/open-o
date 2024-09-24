@@ -70,16 +70,16 @@ public class HtmlEditAction extends Action {
             HashMap<String, String> errors = new HashMap<String, String>();
             EFormBase updatedform = new EFormBase(fid, formName, formSubject, formFileName, formHtml, showLatestFormOnly, patientIndependent, roleType); //property container (bean)
             //validation...
-            if ((formName == null) || (formName.length() == 0)) {
+            if ((formName == null) || (formName.isEmpty())) {
                 errors.put("formNameMissing", "eform.errors.form_name.missing.regular");
             }
-            if ((fid.length() > 0) && (EFormUtil.formExistsInDBn(formName, fid) > 0)) {
+            if ((!fid.isEmpty()) && (EFormUtil.formExistsInDBn(formName, fid) > 0)) {
                 errors.put("formNameExists", "eform.errors.form_name.exists.regular");
             }
-            if ((fid.length() == 0) && (errors.size() == 0)) {
+            if ((fid.isEmpty()) && (errors.isEmpty())) {
                 fid = EFormUtil.saveEForm(formName, formSubject, formFileName, formHtml, showLatestFormOnly, patientIndependent, roleType);
                 request.setAttribute("success", "true");
-            } else if (errors.size() == 0) {
+            } else if (errors.isEmpty()) {
                 EFormUtil.updateEForm(updatedform);
                 request.setAttribute("success", "true");
             }
@@ -106,7 +106,7 @@ public class HtmlEditAction extends Action {
         curht.put("patientIndependent", patientIndependent);
         curht.put("roleType", roleType);
 
-        if (fid.length() == 0) {
+        if (fid.isEmpty()) {
             curht.put("formDate", "--");
             curht.put("formTime", "--");
         } else {

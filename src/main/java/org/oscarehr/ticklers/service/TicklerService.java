@@ -61,7 +61,7 @@ public class TicklerService {
 
         List<Tickler> results = TicklerDao.getTicklers(query);
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = Tickler.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "TicklerService.getTicklers", "ids returned=" + resultIds);
         }

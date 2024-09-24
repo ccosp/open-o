@@ -142,7 +142,7 @@ public final class BillingCodeData implements Comparable {
         List list = billingServiceDao.findBillingCodesByCode(code, BillingServiceDao.BC, date, 1);
 
         //List list = codeSearch("select * from billingservice where service_code like '" +code + "'" );
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return (BillingService) list.get(0);
@@ -153,7 +153,7 @@ public final class BillingCodeData implements Comparable {
     public BillingService getBillingCodeByCode(String code) {
         List list = billingServiceDao.findBillingCodesByCode(code, "BC");
         //List list = codeSearch("select * from billingservice where service_code like '" +code + "'" );
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return (BillingService) list.get(0);

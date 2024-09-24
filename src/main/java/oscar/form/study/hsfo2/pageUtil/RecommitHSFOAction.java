@@ -246,7 +246,7 @@ public class RecommitHSFOAction extends DispatchActionSupport {
     }
 
     public static Calendar toCalendar(String sDate, String datePattern) {
-        if (sDate == null || sDate.length() == 0) {
+        if (sDate == null || sDate.isEmpty()) {
             return null;
         }
 
@@ -286,7 +286,7 @@ public class RecommitHSFOAction extends DispatchActionSupport {
         }
 
         List message = tfutil.validateDoc(doc);
-        if (message.size() != 0) {
+        if (!message.isEmpty()) {
             memoMsg.append(message.get(0).toString());
             return false;
         }

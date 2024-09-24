@@ -49,7 +49,7 @@ public class JsonUtil {
         jsonArray.clear();
 
         Iterator<?> it = null;
-        if (pojoList.size() > 0) {
+        if (!pojoList.isEmpty()) {
 
             it = pojoList.iterator();
             while (it.hasNext()) {

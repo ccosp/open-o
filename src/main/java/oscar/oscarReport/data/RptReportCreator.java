@@ -55,7 +55,7 @@ public final class RptReportCreator {
         while (rs.next()) {
             String caption = DBHelp.getString(rs, "caption");
             ret.append((ret.length() < 8 ? " " : ", ") + DBHelp.getString(rs, "table_name") + "." + DBHelp.getString(rs, "name"));
-            if (caption != null && caption.length() > 0) {
+            if (caption != null && !caption.isEmpty()) {
                 ret.append(" as '" + StringEscapeUtils.escapeSql(DBHelp.getString(rs, "caption")) + "'");
             }
         }

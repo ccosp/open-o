@@ -177,7 +177,7 @@ public final class MeasurementsManager {
             try {
                 List<MeasurementType> measurementTypes = measurementTypeDao.findByType(measurement.getType());
                 MeasurementType measurementType = null;
-                if (measurementTypes.size() > 0) measurementType = measurementTypes.get(0);
+                if (!measurementTypes.isEmpty()) measurementType = measurementTypes.get(0);
 
                 if (measurementType == null) {
                     logger.warn("Missing measurement type, item not send, type=" + measurement.getType());
@@ -212,7 +212,7 @@ public final class MeasurementsManager {
         for (Measurement measurement : newMeasurements) {
             List<MeasurementType> measurementTypes = measurementTypeDao.findByType(measurement.getType());
             MeasurementType measurementType = null;
-            if (measurementTypes.size() > 0) measurementType = measurementTypes.get(0);
+            if (!measurementTypes.isEmpty()) measurementType = measurementTypes.get(0);
 
             if (measurementType == null) {
                 logger.warn("Missing measurement type, item not send, type=" + measurement.getType());

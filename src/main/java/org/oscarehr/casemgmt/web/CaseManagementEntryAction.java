@@ -267,7 +267,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
             } else {
                 note.setEncounter_type(encType);
             }
-            if (bean.encType != null && bean.encType.length() > 0) {
+            if (bean.encType != null && !bean.encType.isEmpty()) {
                 note.setEncounter_type(bean.encType);
             }
 
@@ -422,7 +422,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
         session.setAttribute(frmName, cform);
 
         ActionForward fwd, finalFwd = null;
-        if (chain != null && chain.length() > 0) {
+        if (chain != null && !chain.isEmpty()) {
             session.setAttribute("passwordEnabled", passwd);
             fwd = mapping.findForward(chain);
         } else {
@@ -475,7 +475,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
         } else {
             note.setEncounter_type(encType);
         }
-        if (bean.encType != null && bean.encType.length() > 0) {
+        if (bean.encType != null && !bean.encType.isEmpty()) {
             note.setEncounter_type(bean.encType);
         }
         return note;
@@ -622,7 +622,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
             note.setDemographic_no(demographicNo);
 
             CaseManagementIssue cIssue;
-            if (issueAlphaCode != null && issueAlphaCode.length() > 0)
+            if (issueAlphaCode != null && !issueAlphaCode.isEmpty())
                 cIssue = this.caseManagementMgr.getIssueByIssueCode(demographicNo, issueAlphaCode);
             else cIssue = this.caseManagementMgr.getIssueById(demographicNo, issueCode);
 
@@ -631,7 +631,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
             if (cIssue == null) {
                 Issue issue;
-                if (issueAlphaCode != null && issueAlphaCode.length() > 0)
+                if (issueAlphaCode != null && !issueAlphaCode.isEmpty())
                     issue = this.caseManagementMgr.getIssueByCode(issueAlphaCode);
                 else issue = this.caseManagementMgr.getIssue(issueCode);
 
@@ -865,7 +865,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
             team = "0";
         }
         note.setReporter_program_team(team);
-        if (appointmentNo != null && appointmentNo.length() > 0) {
+        if (appointmentNo != null && !appointmentNo.isEmpty()) {
             try {
                 note.setAppointmentNo(Integer.parseInt(appointmentNo));
             } catch (NumberFormatException e) {
@@ -978,7 +978,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
         List<Issue> cppIssue = caseManagementMgr.getIssueInfoByCode(providerNo, cppStrIssue);
         List<CaseManagementNote> curCPPNotes = new ArrayList<CaseManagementNote>();
-        if (cppIssue.size() > 0) {
+        if (!cppIssue.isEmpty()) {
             String[] strIssueId = {String.valueOf(cppIssue.get(0).getId())};
             curCPPNotes = this.caseManagementMgr.getActiveNotes(demo, strIssueId);
         }
@@ -1361,7 +1361,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
         // update password
         String passwd = cform.getCaseNote().getPassword();
-        if (passwd != null && passwd.trim().length() > 0) {
+        if (passwd != null && !passwd.trim().isEmpty()) {
             note.setPassword(passwd);
             note.setLocked(true);
         }
@@ -1389,7 +1389,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
             String noteProgramNo = request.getParameter("_note_program_no");
             String noteRoleId = request.getParameter("_note_role_id");
 
-            if (noteProgramNo != null && noteRoleId != null && noteProgramNo.trim().length() > 0 && noteRoleId.trim().length() > 0) {
+            if (noteProgramNo != null && noteRoleId != null && !noteProgramNo.trim().isEmpty() && !noteRoleId.trim().isEmpty()) {
                 if (noteProgramNo.equalsIgnoreCase("-2") || noteRoleId.equalsIgnoreCase("-2")) {
                     throw new Exception("Patient is not admitted to any programs user has access to. [roleId=-2, programNo=-2]");
                 } else if (!noteProgramNo.equalsIgnoreCase("-1") && !noteRoleId.equalsIgnoreCase("-1")) {
@@ -1401,7 +1401,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
             }
         }
 
-        if (sessionBean.appointmentNo != null && sessionBean.appointmentNo.length() > 0) {
+        if (sessionBean.appointmentNo != null && !sessionBean.appointmentNo.isEmpty()) {
             note.setAppointmentNo(Integer.parseInt(sessionBean.appointmentNo));
         }
 
@@ -2746,7 +2746,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
         }
 
-        if (note == null || note.length() == 0) {
+        if (note == null || note.isEmpty()) {
             return null;
         }
 
@@ -2808,7 +2808,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
         ResourceBundle props = ResourceBundle.getBundle("oscarResources", request.getLocale());
 
-        if (ids.length() > 0) noteIds = ids.split(",");
+        if (!ids.isEmpty()) noteIds = ids.split(",");
         else noteIds = (String[]) Array.newInstance(String.class, 0);
 
         out.println("<!DOCTYPE html><html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>");
@@ -2867,7 +2867,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
         boolean printAllNotes = "ALL_NOTES".equals(ids);
         String[] noteIds;
-        if (ids.length() > 0) {
+        if (!ids.isEmpty()) {
             noteIds = ids.split(",");
         } else {
             noteIds = new String[]{};
@@ -2975,7 +2975,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
                 OscarAppointmentDao apptDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
 
                 Appointment appt = null;
-                if (cform.getAppointmentNo() != null && cform.getAppointmentNo().length() > 0 && !cform.getAppointmentDate().equals("0")) {
+                if (cform.getAppointmentNo() != null && !cform.getAppointmentNo().isEmpty() && !cform.getAppointmentDate().equals("0")) {
                     appt = apptDao.find(Integer.parseInt(cform.getAppointmentNo()));
                 }
 
@@ -3185,7 +3185,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
     protected String convertDateFmt(String strOldDate, HttpServletRequest request) {
         String strNewDate = new String();
-        if (strOldDate != null && strOldDate.length() > 0) {
+        if (strOldDate != null && !strOldDate.isEmpty()) {
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd", request.getLocale());
             try {
 
@@ -3275,7 +3275,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
     }
 
     boolean filled(String s) {
-        return (s != null && s.length() > 0);
+        return (s != null && !s.isEmpty());
     }
 
     public boolean haveIssue(Long issid, List allNotes) {
@@ -3302,11 +3302,11 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
         String[] dateParts = dateValue.split("-");
         if (dateParts.length == 2 && NumberUtils.isDigits(dateParts[0]) && NumberUtils.isDigits(dateParts[1])) {
-            if (dateParts[0].length() == 4 && dateParts[1].length() >= 1 && dateParts[1].length() <= 2)
+            if (dateParts[0].length() == 4 && !dateParts[1].isEmpty() && dateParts[1].length() <= 2)
                 return PartialDate.YEARMONTH;
         }
         if (dateParts.length == 3 && NumberUtils.isDigits(dateParts[0]) && NumberUtils.isDigits(dateParts[1]) && NumberUtils.isDigits(dateParts[2])) {
-            if (dateParts[0].length() == 4 && dateParts[1].length() >= 1 && dateParts[1].length() <= 2 && dateParts[2].length() >= 1 && dateParts[2].length() <= 2)
+            if (dateParts[0].length() == 4 && !dateParts[1].isEmpty() && dateParts[1].length() <= 2 && !dateParts[2].isEmpty() && dateParts[2].length() <= 2)
                 return ""; // full date
         }
         return null;
@@ -3355,7 +3355,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
         String history = strNote;
         String uuid = null;
 
-        if (noteId != null && noteId.length() > 0 && !noteId.equals("0")) {
+        if (noteId != null && !noteId.isEmpty() && !noteId.equals("0")) {
             CaseManagementNote existingNote = this.caseManagementNoteDao.getNote(Long.valueOf(noteId));
 
             revision = String.valueOf(Integer.valueOf(existingNote.getRevision()).intValue() + 1);
@@ -3473,7 +3473,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
         ProviderDefaultProgramDao defaultProgramDao = (ProviderDefaultProgramDao) SpringUtils.getBean(ProviderDefaultProgramDao.class);
         boolean programSet = false;
 
-        if (note.getProgram_no() != null && note.getProgram_no().length() > 0 && !"null".equals(note.getProgram_no())) {
+        if (note.getProgram_no() != null && !note.getProgram_no().isEmpty() && !"null".equals(note.getProgram_no())) {
             ProgramProvider pp = programProviderDao.getProgramProvider(note.getProviderNo(), Long.valueOf(note.getProgram_no()));
             if (pp != null) {
                 note.setReporter_caisi_role(String.valueOf(pp.getRoleId()));

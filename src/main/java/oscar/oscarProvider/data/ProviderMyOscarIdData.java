@@ -51,7 +51,7 @@ public final class ProviderMyOscarIdData {
     public static String getMyOscarId(String providerNo) {
 
         List<Property> props = dao.findByNameAndProvider(PROPERTY_KEY, providerNo);
-        if (props.size() > 0) {
+        if (!props.isEmpty()) {
             return props.get(0).getValue();
         }
 
@@ -67,7 +67,7 @@ public final class ProviderMyOscarIdData {
 
         List<Property> props = dao.findByNameAndProvider(PROPERTY_KEY, providerId);
         Property p = new Property();
-        if (props.size() > 0) {
+        if (!props.isEmpty()) {
             p = props.get(0);
             p.setValue(id);
             dao.merge(p);
@@ -82,7 +82,7 @@ public final class ProviderMyOscarIdData {
     }
 
     public static boolean idIsSet(String providerId) {
-        return getMyOscarId(providerId).length() > 0;
+        return !getMyOscarId(providerId).isEmpty();
 
     }
 

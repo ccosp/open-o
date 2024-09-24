@@ -326,12 +326,12 @@ public class SecuserroleDaoImpl extends HibernateDaoSupport implements Secuserro
             String fname = staffForm.getFirstName();
             String lname = staffForm.getLastName();
 
-            if (fname != null && fname.length() > 0) {
+            if (fname != null && !fname.isEmpty()) {
                 fname = StringEscapeUtils.escapeSql(fname);
                 fname = fname.toLowerCase();
                 queryString = queryString + AND + "lower(a.providerFName) like '%" + fname + "%'";
             }
-            if (lname != null && lname.length() > 0) {
+            if (lname != null && !lname.isEmpty()) {
                 lname = StringEscapeUtils.escapeSql(lname);
                 lname = lname.toLowerCase();
                 queryString = queryString + AND + "lower(a.providerLName) like '%" + lname + "%'";

@@ -171,10 +171,10 @@ public final class EctConAddSpecialistForm extends ActionForm {
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if (fName == null || fName.length() == 0) errors.add("fName", new ActionMessage("Errors.Firstname"));
-        if (lName == null || lName.length() == 0) errors.add("lName", new ActionMessage("Errors.Lastname"));
-        if (phone == null || phone.length() == 0) errors.add("phone", new ActionMessage("Errors.Phone"));
-        if (address == null || address.length() == 0) errors.add("address", new ActionMessage("Errors.Address"));
+        if (fName == null || fName.isEmpty()) errors.add("fName", new ActionMessage("Errors.Firstname"));
+        if (lName == null || lName.isEmpty()) errors.add("lName", new ActionMessage("Errors.Lastname"));
+        if (phone == null || phone.isEmpty()) errors.add("phone", new ActionMessage("Errors.Phone"));
+        if (address == null || address.isEmpty()) errors.add("address", new ActionMessage("Errors.Address"));
         if (!errors.isEmpty() && whichType == 2) request.setAttribute("upd", "getterUpdating");
         return errors;
     }

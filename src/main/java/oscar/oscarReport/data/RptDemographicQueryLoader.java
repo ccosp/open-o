@@ -76,43 +76,43 @@ public class RptDemographicQueryLoader {
         }
 
 
-        if (mSelect != null && mSelect.length() != 0) {
+        if (mSelect != null && !mSelect.isEmpty()) {
             String[] t = fromXMLtoArray(mSelect);
             dRF.setSelect(t);
         }
-        if (mAge != null && mAge.length() != 0) {
+        if (mAge != null && !mAge.isEmpty()) {
             dRF.setAge(mAge);
         }
-        if (mStartYear != null && mStartYear.length() != 0) {
+        if (mStartYear != null && !mStartYear.isEmpty()) {
             dRF.setStartYear(mStartYear);
         }
-        if (mEndYear != null && mEndYear.length() != 0) {
+        if (mEndYear != null && !mEndYear.isEmpty()) {
             dRF.setEndYear(mEndYear);
         }
-        if (mFirstName != null && mFirstName.length() != 0) {
+        if (mFirstName != null && !mFirstName.isEmpty()) {
             dRF.setFirstName(mFirstName);
         }
-        if (mLastName != null && mLastName.length() != 0) {
+        if (mLastName != null && !mLastName.isEmpty()) {
             dRF.setLastName(mLastName);
         }
 
 
-        if (mRosterStatus != null && mRosterStatus.length() != 0) {
+        if (mRosterStatus != null && !mRosterStatus.isEmpty()) {
             String[] t = fromXMLtoArray(mRosterStatus);
             dRF.setRosterStatus(t);
         }
-        if (mSex != null && mSex.length() != 0) {
+        if (mSex != null && !mSex.isEmpty()) {
             dRF.setSex(mSex);
         }
-        if (mRosterStatus != null && mRosterStatus.length() != 0) {
+        if (mRosterStatus != null && !mRosterStatus.isEmpty()) {
             String[] t = fromXMLtoArray(mRosterStatus);
             dRF.setRosterStatus(t);
         }
-        if (mProviderNo != null && mProviderNo.length() != 0) {
+        if (mProviderNo != null && !mProviderNo.isEmpty()) {
             String[] t = fromXMLtoArray(mProviderNo);
             dRF.setProviderNo(t);
         }
-        if (mPatientStatus != null && mPatientStatus.length() != 0) {
+        if (mPatientStatus != null && !mPatientStatus.isEmpty()) {
             String[] t = fromXMLtoArray(mPatientStatus);
             dRF.setPatientStatus(t);
         }

@@ -242,7 +242,7 @@ public class MessagingManagerImpl implements MessagingManager {
         if (messageList != null) {
             for (MessageList message : messageList) {
                 List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, (int) message.getMessage());
-                if (msgDemoMap != null && msgDemoMap.size() > 0) {
+                if (msgDemoMap != null && !msgDemoMap.isEmpty()) {
                     count++;
                 }
             }

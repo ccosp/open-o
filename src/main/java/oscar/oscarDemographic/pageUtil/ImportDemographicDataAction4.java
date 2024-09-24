@@ -318,7 +318,7 @@ public class ImportDemographicDataAction4 extends Action {
         logger.debug("import to course id " + frm.getCourseId() + " using timeshift value " + frm.getTimeshiftInDays());
         List<Provider> students = new ArrayList<Provider>();
         int courseId = 0;
-        if (frm.getCourseId() != null && frm.getCourseId().length() > 0) {
+        if (frm.getCourseId() != null && !frm.getCourseId().isEmpty()) {
             courseId = Integer.parseInt(frm.getCourseId());
             if (courseId > 0) {
                 logger.info("need to apply this import to a learning environment");
@@ -654,7 +654,7 @@ public class ImportDemographicDataAction4 extends Action {
         ArrayList<Demographic> demodup = null;
         if (StringUtils.filled(hin)) demodup = dd.getDemographicWithHIN(loggedInInfo, hin);
         else demodup = dd.getDemographicWithLastFirstDOB(loggedInInfo, lastName, firstName, birthDate);
-        if (demodup.size() == 0) {
+        if (demodup.isEmpty()) {
             logger.info("patient to add contact to not found");
             return null;
         }
@@ -953,7 +953,7 @@ public class ImportDemographicDataAction4 extends Action {
         ArrayList<Demographic> demodup = null;
         if (StringUtils.filled(hin)) demodup = dd.getDemographicWithHIN(loggedInInfo, hin);
         else demodup = dd.getDemographicWithLastFirstDOB(loggedInInfo, lastName, firstName, birthDate);
-        if (demodup.size() > 0) {
+        if (!demodup.isEmpty()) {
             err_data.clear();
             err_demo.add("Error! Patient " + patientName + " already exist! Not imported.");
             return packMsgs(err_demo, err_data, err_summ, err_othe, err_note, warnings);

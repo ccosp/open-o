@@ -99,7 +99,7 @@ public class EChartPrintAction extends DispatchAction {
         printer.setNewPage(true);
 
         List<Allergy> allergies = allergyDao.findAllergies(demographic.getDemographicNo());
-        if (allergies.size() > 0) {
+        if (!allergies.isEmpty()) {
             printer.printAllergies(allergies);
         }
         printer.printRx(String.valueOf(demographic.getDemographicNo()));
@@ -116,7 +116,7 @@ public class EChartPrintAction extends DispatchAction {
 
         List<CaseManagementNote> notes = this.caseManagementNoteDao.getMostRecentNotes(demographic.getDemographicNo());
         notes = filterOutCpp(notes);
-        if (notes.size() > 0)
+        if (!notes.isEmpty())
             printer.printNotes(notes, true);
 
         printer.finish();
@@ -148,7 +148,7 @@ public class EChartPrintAction extends DispatchAction {
         Collection<CaseManagementNote> notes = null;
         notes = caseManagementNoteDao.findNotesByDemographicAndIssueCode(demographicNo, new String[]{issueCode});
 
-        if (notes.size() > 0) {
+        if (!notes.isEmpty()) {
             printer.printCPPItem(header, notes);
             printer.printBlankLine();
         }

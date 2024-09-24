@@ -67,7 +67,7 @@ public class IssueDAOImpl extends HibernateDaoSupport implements IssueDAO {
     public Issue findIssueByCode(String code) {
         List<Issue> list = (List<Issue>) this.getHibernateTemplate().find("from Issue i where i.code = ?",
                 new Object[]{code});
-        if (list.size() > 0)
+        if (!list.isEmpty())
             return list.get(0);
 
         return null;
@@ -77,7 +77,7 @@ public class IssueDAOImpl extends HibernateDaoSupport implements IssueDAO {
     public Issue findIssueByTypeAndCode(String type, String code) {
         List<Issue> list = (List<Issue>) this.getHibernateTemplate().find("from Issue i where i.type=? and i.code = ?",
                 new Object[]{type, code});
-        if (list.size() > 0)
+        if (!list.isEmpty())
             return list.get(0);
 
         return null;
@@ -105,7 +105,7 @@ public class IssueDAOImpl extends HibernateDaoSupport implements IssueDAO {
 
     @Override
     public List<Long> getIssueCodeListByRoles(List<Secrole> roles) {
-        if (roles.size() == 0) {
+        if (roles.isEmpty()) {
             return new ArrayList<Long>();
         }
 
@@ -126,7 +126,7 @@ public class IssueDAOImpl extends HibernateDaoSupport implements IssueDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Issue> search(String search, List<Secrole> roles, final int startIndex, final int numToReturn) {
-        if (roles.size() == 0) {
+        if (roles.isEmpty()) {
             return new ArrayList<Issue>();
         }
 
@@ -163,7 +163,7 @@ public class IssueDAOImpl extends HibernateDaoSupport implements IssueDAO {
     @SuppressWarnings("unchecked")
     @Override
     public Integer searchCount(String search, List<Secrole> roles) {
-        if (roles.size() == 0) {
+        if (roles.isEmpty()) {
             return 0;
         }
 
@@ -184,7 +184,7 @@ public class IssueDAOImpl extends HibernateDaoSupport implements IssueDAO {
         List<Long> result = (List<Long>) this.getHibernateTemplate().find(sql,
                 new Object[]{search, search, roleList});
 
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
             return result.get(0).intValue();
         }
 

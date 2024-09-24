@@ -159,6 +159,6 @@ public class ImportExportMeasurements {
     }
 
     private static boolean filled(String s) {
-        return (s != null && s.trim().length() > 0);
+        return (s != null && !s.trim().isEmpty());
     }
 }

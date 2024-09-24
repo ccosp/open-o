@@ -114,7 +114,7 @@ public class MSPReconcile {
     private String createCorrectionsString(String[] exp) {
         String retval = "";
         for (int i = 0; i < exp.length; i++) {
-            if (exp[i].length() != 0) {
+            if (!exp[i].isEmpty()) {
                 retval += exp[i] + " ";
             }
         }
@@ -308,7 +308,7 @@ public class MSPReconcile {
             exp[6] = t.getExp7();
 
             for (int i = 0; i < exp.length; i++) {
-                if (exp[i].length() != 0) {
+                if (!exp[i].isEmpty()) {
                     retval.add(seq + "&nbsp;&nbsp;" + exp[i] + "&nbsp;&nbsp;" + p.getProperty(exp[i], ""));
                 }
             }
@@ -337,7 +337,7 @@ public class MSPReconcile {
             exp[5] = t.getExp6();
             exp[6] = t.getExp7();
             for (int i = 0; i < exp.length; i++) {
-                if (exp[i].length() != 0) {
+                if (!exp[i].isEmpty()) {
                     retval.add(seq + "&nbsp;&nbsp;" + exp[i] + "&nbsp;&nbsp;" + p.getProperty(exp[i], ""));
                 }
             }

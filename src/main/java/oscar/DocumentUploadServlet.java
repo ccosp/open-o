@@ -53,7 +53,7 @@ public class DocumentUploadServlet extends HttpServlet {
         String inboxFolder = OscarProperties.getInstance().getProperty("ONEDT_INBOX");
         String archiveFolder = OscarProperties.getInstance().getProperty("ONEDT_ARCHIVE");
 
-        if (forwardTo == null || forwardTo.length() < 1)
+        if (forwardTo == null || forwardTo.isEmpty())
             return;
 
         String providedFilename = request.getParameter("filename");

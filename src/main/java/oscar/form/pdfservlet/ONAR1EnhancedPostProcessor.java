@@ -693,16 +693,16 @@ public class ONAR1EnhancedPostProcessor implements FrmPDFPostValueProcessor {
         String ethnicM = p.getProperty("pg1_ethnicBgMother", "");
         String ethnicF = p.getProperty("pg1_ethnicBgFather", "");
         String ethnic = "";
-        if (ethnicM.length() > 0 && ethnicF.length() > 0) {
+        if (!ethnicM.isEmpty() && !ethnicF.isEmpty()) {
             ethnic = ethnicM + " / " + ethnicF;
         }
-        if (ethnicM.length() > 0 && ethnicF.length() == 0) {
+        if (!ethnicM.isEmpty() && ethnicF.isEmpty()) {
             ethnic = ethnicM + " / " + "Unknown";
         }
-        if (ethnicM.length() == 0 && ethnicF.length() > 0) {
+        if (ethnicM.isEmpty() && !ethnicF.isEmpty()) {
             ethnic = "Unknown" + " / " + ethnicF;
         }
-        if (ethnicM.length() == 0 && ethnicF.length() == 0) {
+        if (ethnicM.isEmpty() && ethnicF.isEmpty()) {
             ethnic = "";
         }
 

@@ -71,7 +71,7 @@ public class HRMDownloadFileAction extends DownloadAction {
 
         List<Integer> ids = hrmDocumentDao.findByHash(hash);
 
-        if (ids == null || ids.size() == 0) {
+        if (ids == null || ids.isEmpty()) {
             throw new Exception("no documents found for hash - " + hash);
         }
 

@@ -809,7 +809,7 @@ public class HRMAction extends DispatchAction {
                             displaySubClass = subClassName;
                         }
                     }
-                    data1.put("class_subclass", className + (displaySubClass.length() > 0 ? ":" + displaySubClass : ""));
+                    data1.put("class_subclass", className + (!displaySubClass.isEmpty() ? ":" + displaySubClass : ""));
                 }
                 if (!StringUtils.isEmpty(d.getClassName()) && !d.getAccompanyingSubClasses().isEmpty()) {
                     for (HRMDocumentSubClass sc : d.getAccompanyingSubClasses()) {

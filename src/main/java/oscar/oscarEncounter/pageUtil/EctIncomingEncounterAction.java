@@ -174,7 +174,7 @@ public class EctIncomingEncounterAction extends Action {
 
             bean.curProviderNo = request.getParameter("curProviderNo");
             Provider provider = loggedInInfo.getLoggedInProvider();
-            if (bean.curProviderNo == null || bean.curProviderNo.trim().length() == 0)
+            if (bean.curProviderNo == null || bean.curProviderNo.trim().isEmpty())
                 bean.curProviderNo = provider.getProviderNo();
             bean.reason = request.getParameter("reason");
             bean.encType = request.getParameter("encType");

@@ -327,7 +327,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
 
         List<BillingONItem> billingClaims = q.getResultList();
 
-        if (billingClaims.size() > 0) {
+        if (!billingClaims.isEmpty()) {
             hasBeenBilled = true;
         }
 
@@ -347,7 +347,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         List<BillingONItem> billingClaims = q.getResultList();
         int numDays = -1;
 
-        if (billingClaims.size() > 0) {
+        if (!billingClaims.isEmpty()) {
             BillingONItem i = billingClaims.get(0);
             Calendar billdate = Calendar.getInstance();
             billdate.setTime(i.getServiceDate());
@@ -374,7 +374,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         List<BillingONItem> billingClaims = q.getResultList();
         int numDays = -1;
 
-        if (billingClaims.size() > 0) {
+        if (!billingClaims.isEmpty()) {
             BillingONItem i = billingClaims.get(0);
             Calendar billDate = Calendar.getInstance();
             billDate.setTime(i.getServiceDate());
@@ -501,7 +501,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
 
         List<BillingONCHeader1> results = query.getResultList();
         BillingONCHeader1 result = null;
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             result = results.get(0);
         }
         return result;

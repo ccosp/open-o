@@ -55,9 +55,9 @@ public class BedCheckTimeDaoImpl extends AbstractDaoImpl<BedCheckTime> implement
         @SuppressWarnings("unchecked")
         List<BedCheckTime> bedCheckTimes = query.getResultList();
 
-        log.debug("bedCheckTimeExists: " + (bedCheckTimes.size() > 0));
+        log.debug("bedCheckTimeExists: " + (!bedCheckTimes.isEmpty()));
 
-        return bedCheckTimes.size() > 0;
+        return !bedCheckTimes.isEmpty();
     }
 
     @Deprecated

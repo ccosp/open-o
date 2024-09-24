@@ -304,7 +304,7 @@ public class SplitDocumentAction extends DispatchAction {
                 errors.add(ioeClose.getMessage());
                 MiscUtils.getLogger().error("Error", ioeClose);
             }
-            if (errors.size() > 0) {
+            if (!errors.isEmpty()) {
                 for (String errorMessage : errors) {
                     MiscUtils.getLogger().error(errorMessage);
                 }

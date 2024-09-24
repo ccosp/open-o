@@ -74,7 +74,7 @@ public class PMMFilter implements Filter {
         setProviderManager();
 
         String oscarUser = (String) session.getAttribute("user");
-        if (oscarUser == null || oscarUser.length() == 0) {
+        if (oscarUser == null || oscarUser.isEmpty()) {
             logger.info("Not logged in!");
             chain.doFilter(baseRequest, baseResponse);
 

@@ -63,12 +63,12 @@ public class HealthCardSearchAction extends DispatchAction {
                 hashMap.put("phone", d.getPhone());
 
                 String address = "";
-                if (d.getAddress() != null && d.getAddress().trim().length() > 0)
+                if (d.getAddress() != null && !d.getAddress().trim().isEmpty())
                     address += d.getAddress().trim() + "\n";
-                if (d.getCity() != null && d.getCity().trim().length() > 0)
+                if (d.getCity() != null && !d.getCity().trim().isEmpty())
                     address += d.getCity().trim();
-                if (d.getProvince() != null && d.getProvince().trim().length() > 0)
-                    address += (d.getCity() != null && d.getCity().trim().length() > 0 ? ", " : "") + d.getProvince().trim();
+                if (d.getProvince() != null && !d.getProvince().trim().isEmpty())
+                    address += (d.getCity() != null && !d.getCity().trim().isEmpty() ? ", " : "") + d.getProvince().trim();
 
                 hashMap.put("address", address);
             }

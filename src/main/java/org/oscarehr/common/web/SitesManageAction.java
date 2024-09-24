@@ -76,7 +76,7 @@ public class SitesManageAction extends DispatchAction {
             this.saveErrors(request, errors);
         }
 
-        if (this.getErrors(request).size() > 0)
+        if (!this.getErrors(request).isEmpty())
             return mapping.findForward("details");
 
 

@@ -178,7 +178,7 @@ public class SurveyTestAction extends DispatchAction {
 
         if (survey.getIntroduction() != null && !survey.getIntroduction().getIncludeOnFirstPage()) {
             pageNames.add("Introduction");
-            if (formBean.getTab() == null || formBean.getTab().length() == 0) {
+            if (formBean.getTab() == null || formBean.getTab().isEmpty()) {
                 //default first page
                 request.setAttribute("introduction", survey.getIntroduction());
                 request.setAttribute("currentTab", "Introduction");
@@ -193,7 +193,7 @@ public class SurveyTestAction extends DispatchAction {
             }
         } else {
             //default first page is page1
-            if (formBean.getTab() == null || formBean.getTab().length() == 0) {
+            if (formBean.getTab() == null || formBean.getTab().isEmpty()) {
                 formBean.setTab(pages[0].getDescription());
                 request.setAttribute("currentTab", pages[0].getDescription());
 

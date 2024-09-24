@@ -277,7 +277,7 @@ public class MethadoneBillingBCHandler {
 
         // diagnostic codes.
         List<DiagnosticCode> diagnosticCodes = diagnosticCodeDao.getByDxCode(dxCode);
-        if (diagnosticCodes.size() > 0) {
+        if (!diagnosticCodes.isEmpty()) {
             bean.setDx1(dxCode);
         } else {
             bean.setDx1("");

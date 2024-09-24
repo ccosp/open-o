@@ -80,7 +80,7 @@ public class ProgramService extends AbstractServiceImpl {
                 current = pp;
             } else {
                 List<ProgramProvider> ppList = programManager.getProgramDomain(getLoggedInInfo(), getLoggedInInfo().getLoggedInProviderNo());
-                if (ppList.size() > 0) {
+                if (!ppList.isEmpty()) {
                     current = ppList.get(0);
                 }
             }

@@ -221,7 +221,7 @@ public class HL7A04Data {
 
         // Make sure input is properly formatted
         for (int i = 0; i < demoData.length; i++)
-            demoData[i] = (demoData[i] == null || demoData[i].trim().length() == 0 ? " " : demoData[i]);
+            demoData[i] = (demoData[i] == null || demoData[i].trim().isEmpty() ? " " : demoData[i]);
 
         // get current timestamp
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddkkmmss.SSSZ");
@@ -341,7 +341,7 @@ public class HL7A04Data {
 
             if (this.programs != null) {
                 String programId = "";
-                if (this.programs.size() > 0) {
+                if (!this.programs.isEmpty()) {
                     Integer pId = (Integer) this.programs.get(0);
                     if (pId != null) {
                         programId = pId.toString();

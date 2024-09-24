@@ -52,6 +52,6 @@ public class ReadLabDaoImpl extends AbstractDaoImpl<ReadLab> implements ReadLabD
 
         @SuppressWarnings("unchecked")
         List<ReadLab> results = query.getResultList();
-        return (results.size() > 0) ? results.get(0) : null;
+        return (!results.isEmpty()) ? results.get(0) : null;
     }
 }

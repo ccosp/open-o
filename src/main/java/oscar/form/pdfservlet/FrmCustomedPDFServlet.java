@@ -322,7 +322,7 @@ public class FrmCustomedPDFServlet extends HttpServlet {
         public void renderPage(PdfWriter writer, Document document) {
             Rectangle page = document.getPageSize();
             float height = page.getHeight();
-            boolean showPatientDOB = (this.patientDOB != null && this.patientDOB.length() > 0);
+            boolean showPatientDOB = (this.patientDOB != null && !this.patientDOB.isEmpty());
             PdfContentByte cb = writer.getDirectContent();
             String newline = System.getProperty("line.separator");
 
@@ -430,7 +430,7 @@ public class FrmCustomedPDFServlet extends HttpServlet {
                 }
                 patientHeading.append(newline).append(this.patientAddress).append(newline).append(this.patientCityPostal).append(newline).append(this.patientPhone);
 
-                if (patientHIN != null && patientHIN.trim().length() > 0) {
+                if (patientHIN != null && !patientHIN.trim().isEmpty()) {
                     patientHeading.append(newline).append(geti18nTagValue(locale, "oscar.oscarRx.hin")).append(" ").append(patientHIN);
                 }
 

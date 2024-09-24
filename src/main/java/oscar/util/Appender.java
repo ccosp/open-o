@@ -131,7 +131,7 @@ public class Appender {
     }
 
     private boolean isSet(String string) {
-        return string != null && string.length() > 0;
+        return string != null && !string.isEmpty();
     }
 
     @Override

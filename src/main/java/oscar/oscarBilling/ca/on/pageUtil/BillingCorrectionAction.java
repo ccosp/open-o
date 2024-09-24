@@ -410,7 +410,7 @@ public class BillingCorrectionAction extends DispatchAction {
 
         for (int i = 0; i < BillingDataHlp.FIELD_MAX_SERVICE_NUM; i++) {
             String serviceCodeId = request.getParameter("servicecode" + i);
-            if ((serviceCodeId != null) && (serviceCodeId.length() > 0)) { // == 5
+            if ((serviceCodeId != null) && (!serviceCodeId.isEmpty())) { // == 5
 
                 String itemStatus = "O";
                 if (request.getParameter("itemStatus" + i) != null)

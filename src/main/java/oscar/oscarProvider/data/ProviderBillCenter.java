@@ -43,7 +43,7 @@ public class ProviderBillCenter {
     public boolean hasBillCenter(String provider_no) {
         boolean retval = false;
         org.oscarehr.common.model.ProviderBillCenter pbc = dao.find(provider_no);
-        if (pbc != null && pbc.getBillCenterCode() != null && pbc.getBillCenterCode().length() > 0) {
+        if (pbc != null && pbc.getBillCenterCode() != null && !pbc.getBillCenterCode().isEmpty()) {
             retval = true;
         }
         return retval;

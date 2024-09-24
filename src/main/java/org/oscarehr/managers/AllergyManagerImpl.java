@@ -66,7 +66,7 @@ public class AllergyManagerImpl implements AllergyManager {
         List<Allergy> results = allergyDao.findActiveAllergiesOrderByDescription(demographicNo);
 
         // --- log action ---
-        if (results != null && results.size() > 0) {
+        if (results != null && !results.isEmpty()) {
             LogAction.addLogSynchronous(loggedInInfo, "AllergyManager.getActiveAllergies",
                     "demographicNo=" + demographicNo);
         }

@@ -153,7 +153,7 @@ public final class EDocUtil {
     private static CtlDocumentDao ctlDocumentDao = (CtlDocumentDao) SpringUtils.getBean(CtlDocumentDao.class);
 
     public static String getProviderName(String providerNo) {
-        if (providerNo == null || providerNo.length() == 0) {
+        if (providerNo == null || providerNo.isEmpty()) {
             return "";
         }
         Provider p = providerDao.getProvider(providerNo);
@@ -164,7 +164,7 @@ public final class EDocUtil {
     }
 
     public static String getDemographicName(LoggedInInfo loggedInInfo, String demographicNo) {
-        if (demographicNo == null || demographicNo.length() == 0) {
+        if (demographicNo == null || demographicNo.isEmpty()) {
             return "";
         }
         Demographic d = demographicManager.getDemographic(loggedInInfo, demographicNo);
@@ -175,7 +175,7 @@ public final class EDocUtil {
     }
 
     public static Provider getProvider(String providerNo) {
-        if (providerNo == null || providerNo.length() == 0) {
+        if (providerNo == null || providerNo.isEmpty()) {
             return null;
         }
         return providerDao.getProvider(providerNo);
@@ -335,7 +335,7 @@ public final class EDocUtil {
                 doc.setUpdatedatetime(newDocument.getDateTimeStampAsDate());
                 doc.setObservationdate(MyDateFormat.getSysDate(newDocument.getObservationDate()));
             }
-            if (newDocument.getFileName().length() > 0) {
+            if (!newDocument.getFileName().isEmpty()) {
                 doc.setDocfilename(newDocument.getFileName());
                 doc.setContenttype(newDocument.getContentType());
                 doc.setContentdatetime(newDocument.getContentDateTime());
@@ -795,7 +795,7 @@ public final class EDocUtil {
             IndivoDocs id = iDao.findByOscarDocNo(d.getDocumentNo(), "document");
             if (id != null) {
                 currentdoc.setIndivoIdx(id.getIndivoDocIdx());
-                if (currentdoc.getIndivoIdx().length() > 0) {
+                if (!currentdoc.getIndivoIdx().isEmpty()) {
                     currentdoc.registerIndivo();
                 }
             }
@@ -1095,7 +1095,7 @@ public final class EDocUtil {
 
         // this will get used as a marker for an integrated result.
         eDoc.setSource(remoteDocument.getSource() == null ? "integrator" : remoteDocument.getSource());
-        eDoc.setStatus(remoteDocument.getStatus() != null && remoteDocument.getStatus().length() > 0 ? remoteDocument.getStatus().charAt(0) : ' ');
+        eDoc.setStatus(remoteDocument.getStatus() != null && !remoteDocument.getStatus().isEmpty() ? remoteDocument.getStatus().charAt(0) : ' ');
         eDoc.setType(remoteDocument.getContentType());
 
         return (eDoc);
@@ -1166,7 +1166,7 @@ public final class EDocUtil {
         Long tableId = 0L;
         String note = "";
 
-        if (docId != null && docId.trim().length() > 0) {
+        if (docId != null && !docId.trim().isEmpty()) {
             tableId = Long.valueOf(docId);
         }
 

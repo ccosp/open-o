@@ -637,15 +637,15 @@ public class WCB {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi");
         }
 
-        if ((w_noi != null && w_noi.length() > 0) && !StringUtils.isNumeric(w_noi)) {
+        if ((w_noi != null && !w_noi.isEmpty()) && !StringUtils.isNumeric(w_noi)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
         }
 
-        if ((w_feeitem != null && w_feeitem.length() > 0) && !StringUtils.isNumeric(w_feeitem)) {
+        if ((w_feeitem != null && !w_feeitem.isEmpty()) && !StringUtils.isNumeric(w_feeitem)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_feeitem.numeric");
         }
 
-        if ((w_extrafeeitem != null && w_extrafeeitem.length() > 0) && !StringUtils.isNumeric(w_extrafeeitem)) {
+        if ((w_extrafeeitem != null && !w_extrafeeitem.isEmpty()) && !StringUtils.isNumeric(w_extrafeeitem)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_extrafeeitem.numeric");
         }
 
@@ -653,7 +653,7 @@ public class WCB {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_icd9.numeric");
         }
 
-        if ((w_bp != null && w_bp.length() > 0) && !StringUtils.isNumeric(w_bp)) {
+        if ((w_bp != null && !w_bp.isEmpty()) && !StringUtils.isNumeric(w_bp)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
         }
 
@@ -772,10 +772,10 @@ public class WCB {
         checkNullOrBlankValue(w_doi, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_doi");
         checkNullOrBlankValue(w_noi, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_noi");
 
-        if ((w_noi != null && w_noi.length() > 0) && !StringUtils.isNumeric(w_noi)) {
+        if ((w_noi != null && !w_noi.isEmpty()) && !StringUtils.isNumeric(w_noi)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
         }
-        if ((w_bp != null && w_bp.length() > 0) && !StringUtils.isNumeric(w_bp)) {
+        if ((w_bp != null && !w_bp.isEmpty()) && !StringUtils.isNumeric(w_bp)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
         }
 
@@ -872,10 +872,10 @@ public class WCB {
         checkNullOrBlankValue(w_noi, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_noi");
 
 
-        if ((w_noi != null && w_noi.length() > 0) && !StringUtils.isNumeric(w_noi)) {
+        if ((w_noi != null && !w_noi.isEmpty()) && !StringUtils.isNumeric(w_noi)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
         }
-        if ((w_bp != null && w_bp.length() > 0) && !StringUtils.isNumeric(w_bp)) {
+        if ((w_bp != null && !w_bp.isEmpty()) && !StringUtils.isNumeric(w_bp)) {
             errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
         }
 

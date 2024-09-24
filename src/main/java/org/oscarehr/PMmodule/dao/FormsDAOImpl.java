@@ -61,7 +61,7 @@ public class FormsDAOImpl extends HibernateDaoSupport implements FormsDAO {
             className = className.substring(className.lastIndexOf(".") + 1);
         }
         List results = this.getHibernateTemplate().find("from " + className + " f where f.DemographicNo=" + clientId);
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             result = results.get(0);
         }
 

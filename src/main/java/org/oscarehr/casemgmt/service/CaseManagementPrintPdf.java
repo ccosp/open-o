@@ -261,7 +261,7 @@ public class CaseManagementPrintPdf {
                 document.add(p);
             }
         }
-        if (preventions.size() == 0) {
+        if (preventions.isEmpty()) {
             curFont = normal;
             phrase = new Phrase(LEADING, "", curFont);
             phrase.add("No preventions found");
@@ -315,7 +315,7 @@ public class CaseManagementPrintPdf {
 
         if (cpp != null) {
             List<CaseManagementNote> notes = cpp;
-            if (notes != null && notes.size() > 0) {
+            if (notes != null && !notes.isEmpty()) {
                 p = new Paragraph();
                 p.setAlignment(Paragraph.ALIGN_LEFT);
                 phrase = new Phrase(LEADING, "\nOther Meds\n", obsfont); //TODO:Needs to be i18n

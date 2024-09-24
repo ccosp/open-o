@@ -66,7 +66,7 @@ public class ClientManagerImpl implements ClientManager {
     }
 
     public Demographic getClientByDemographicNo(String demographicNo) {
-        if (demographicNo == null || demographicNo.length() == 0) {
+        if (demographicNo == null || demographicNo.isEmpty()) {
             return null;
         }
         return dao.getClientByDemographicNo(Integer.valueOf(demographicNo));
@@ -179,7 +179,7 @@ public class ClientManagerImpl implements ClientManager {
     public boolean isClientFamilyHead(Integer clientId) {
 
         List<JointAdmission> dependentList = getDependents(Integer.valueOf(clientId.toString()));
-        if (dependentList != null && dependentList.size() > 0) {
+        if (dependentList != null && !dependentList.isEmpty()) {
             return true;
         }
         return false;
@@ -309,6 +309,6 @@ public class ClientManagerImpl implements ClientManager {
 
     public boolean checkHealthCardExists(String hin, String hcType) {
         List<Demographic> results = this.dao.searchByHealthCard(hin, hcType);
-        return (results.size() > 0) ? true : false;
+        return (!results.isEmpty()) ? true : false;
     }
 }

@@ -120,7 +120,7 @@ public class BillingReProcessBillAction extends Action {
             if (demographicLastName.length() < 2) {
                 demographicLastName += "   ";
             }
-            if (demographicFirstName.length() < 1) {
+            if (demographicFirstName.isEmpty()) {
                 demographicFirstName += "   ";
             }
 
@@ -346,7 +346,7 @@ public class BillingReProcessBillAction extends Action {
             billingmaster.setOinPostalcode(oinPostalcode);
             try {
                 String wcbId = request.getParameter("WCBid");
-                if (wcbId != null && wcbId.length() > 0) {
+                if (wcbId != null && !wcbId.isEmpty()) {
                     billingmaster.setWcbId(Integer.parseInt(wcbId));
                 }
             } catch (Exception e) {

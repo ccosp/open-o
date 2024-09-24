@@ -431,7 +431,7 @@ public class RxWebService extends AbstractServiceImpl {
         PrescriptionResponse resp = new PrescriptionResponse();
 
         // sanity check for input parameters
-        if (drugTransferObjects == null || demographicNo < 0 || drugTransferObjects.size() < 1) {
+        if (drugTransferObjects == null || demographicNo < 0 || drugTransferObjects.isEmpty()) {
             resp.setSuccess(false);
             resp.setMessage("Invalid parameters passed to prescribe");
             return resp;

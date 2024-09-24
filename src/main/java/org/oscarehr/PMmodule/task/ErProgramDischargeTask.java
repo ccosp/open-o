@@ -95,7 +95,7 @@ public class ErProgramDischargeTask extends TimerTask {
                 programDomain = providerManager.getProgramDomain(provider.getProviderNo());
 
                 ProgramProvider programProvider = null;
-                if (programDomain.size() > 0) {
+                if (!programDomain.isEmpty()) {
                     programProvider = (ProgramProvider) programDomain.get(0);
                 }
                 if (programProvider != null) {

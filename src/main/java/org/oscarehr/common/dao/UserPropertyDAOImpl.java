@@ -118,7 +118,7 @@ public class UserPropertyDAOImpl extends AbstractDaoImpl<UserProperty> implement
 
         @SuppressWarnings("unchecked")
         List<UserProperty> list = query.getResultList();
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             UserProperty prop = list.get(0);
             return prop;
         } else
@@ -131,7 +131,7 @@ public class UserPropertyDAOImpl extends AbstractDaoImpl<UserProperty> implement
 
         @SuppressWarnings("unchecked")
         List<UserProperty> list = query.getResultList();
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             UserProperty prop = list.get(0);
             return prop;
         } else

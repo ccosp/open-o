@@ -731,8 +731,8 @@ public class MDSHandler implements MessageHandler {
             int x = 0;
             do {
                 tmp = getFullDocName("/.PV1-9(" + x + ")-");
-                if (tmp.length() > 0) {
-                    if (docs.length() > 0) {
+                if (!tmp.isEmpty()) {
+                    if (!docs.isEmpty()) {
                         docs = docs + ", " + tmp;
                     } else {
                         docs = tmp;

@@ -67,7 +67,7 @@ public class MethadoneBillingBCSaveAction extends Action {
         ActionMessages messages = new ActionMessages();
 
 
-        if (methadoneBillingBCFormBean.getServiceDate() == null || methadoneBillingBCFormBean.getServiceDate().length() == 0) {
+        if (methadoneBillingBCFormBean.getServiceDate() == null || methadoneBillingBCFormBean.getServiceDate().isEmpty()) {
             messages.add("serviceDate", new ActionMessage("quickBillingBC.blankServiceDate"));
             this.addErrors(request, messages);
 

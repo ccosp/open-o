@@ -690,7 +690,7 @@ public class DemographicService extends AbstractServiceImpl {
 
         List<DemographicSearchResult> results = new ArrayList<DemographicSearchResult>();
 
-        if (json.getString("term").length() >= 1) {
+        if (!json.getString("term").isEmpty()) {
 
             int count = demographicManager.searchPatientsCount(getLoggedInInfo(), req);
 
@@ -717,7 +717,7 @@ public class DemographicService extends AbstractServiceImpl {
 
         List<DemographicSearchResult> results = new ArrayList<DemographicSearchResult>();
 
-        if (json.getString("term").length() >= 1) {
+        if (!json.getString("term").isEmpty()) {
 
             MatchingDemographicParameters matches = CaisiIntegratorManager.getMatchingDemographicParameters(getLoggedInInfo(), convertFromJSON(json));
             List<MatchingDemographicTransferScore> integratorSearchResults = null;

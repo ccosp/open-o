@@ -98,7 +98,7 @@ public class EctAddMeasuringInstructionAction extends Action {
                 return (new ActionForward(mapping.getInput()));
 
             List<MeasurementType> mts = dao.findByMeasuringInstructionAndTypeDisplayName(measuringInstrc, typeDisplayName);
-            if (mts.size() > 0) {
+            if (!mts.isEmpty()) {
                 errors.add(measuringInstrc,
                         new ActionMessage("error.oscarEncounter.Measurements.duplicateTypeName"));
                 saveErrors(request, errors);
@@ -106,7 +106,7 @@ public class EctAddMeasuringInstructionAction extends Action {
             }
 
             mts = dao.findByTypeDisplayName(typeDisplayName);
-            if (mts.size() > 0) {
+            if (!mts.isEmpty()) {
                 MeasurementType mt = mts.get(0);
                 String type = mt.getType();
                 String typeDesc = mt.getTypeDescription();

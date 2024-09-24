@@ -193,7 +193,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
             }
         }
 
-        if (this.getPrimaryPractitionerId() != null && this.getPrimaryPractitionerId().length() > 0) {
+        if (this.getPrimaryPractitionerId() != null && !this.getPrimaryPractitionerId().isEmpty()) {
             demo.setFamilyDoctor("<rdohip>" + getPrimaryPractitionerId() + "</rdohip><rd>" + this.getPrimaryPractitionerLastName() + ", " + this.getPrimaryPractitionerFirstName() + "</rd>");
         }
         //save
@@ -247,7 +247,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
         demo.setSex(getSex());
 
         //TODO: will this overwrite other values? should probably parse the XML and add if missing
-        if (this.getPrimaryPractitionerId() != null && this.getPrimaryPractitionerId().length() > 0) {
+        if (this.getPrimaryPractitionerId() != null && !this.getPrimaryPractitionerId().isEmpty()) {
             demo.setFamilyDoctor("<rdohip>" + getPrimaryPractitionerId() + "</rdohip><rd>" + this.getPrimaryPractitionerLastName() + ", " + this.getPrimaryPractitionerFirstName() + "</rd>");
         }
 
@@ -682,7 +682,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
 
     public void updatePrimaryPhysician(int demographicNo) {
         String attendingId = this.getAttendingId();
-        if (attendingId.length() > 0) {
+        if (!attendingId.isEmpty()) {
             OtherId otherId = OtherIdManager.searchTable(OtherIdManager.PROVIDER, "STAR", attendingId);
             if (otherId != null) {
                 String providerNo = otherId.getTableId();
@@ -1120,7 +1120,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
     public String getAttendingId() {
         try {
             String var = this.extractOrEmpty("/PV1-7-1");
-            if (var != null && var.length() > 0) {
+            if (var != null && !var.isEmpty()) {
                 return var;
             }
         } catch (Exception e) {/*swallow exception*/}
@@ -1226,7 +1226,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
         logger.info("patientType=" + patientType);
         logger.info("location=" + location);
 
-        if (service.length() == 0 || patientType.length() == 0 || location.length() == 0) {
+        if (service.isEmpty() || patientType.isEmpty() || location.isEmpty()) {
             logger.warn("Did not have all information to determine program - " + service + "," + patientType + "," + location);
             return null;
         }
@@ -1292,7 +1292,7 @@ public class PhsStarHandler extends BasePhsStarHandler {
     public String getValueAndTryGroup(String path, String group) {
         try {
             String var = this.extractOrEmpty(path);
-            if (var != null && var.length() > 0) {
+            if (var != null && !var.isEmpty()) {
                 return var;
             }
         } catch (Exception e) {/*swallow exception*/}

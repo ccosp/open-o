@@ -82,7 +82,7 @@ public final class WebUtils {
     public static String renderMessagesAsHtml(HttpSession session, String messageKey, String styleClass, String style, String id, String name) {
         ArrayList<String> messages = popMessages(session, messageKey);
         StringBuilder sb = new StringBuilder();
-        if (messages != null && messages.size() > 0) {
+        if (messages != null && !messages.isEmpty()) {
             sb.append(getTagString("ul", style, styleClass, id, name, false));
             Iterator i$ = messages.iterator();
 
@@ -252,7 +252,7 @@ public final class WebUtils {
 
         StringBuilder sb = new StringBuilder();
 
-        if (al != null && al.size() > 0) {
+        if (al != null && !al.isEmpty()) {
             sb.append("<ul style=\"color:red\">");
 
             for (String s : al) {
@@ -272,7 +272,7 @@ public final class WebUtils {
 
         StringBuilder sb = new StringBuilder();
 
-        if (al != null && al.size() > 0) {
+        if (al != null && !al.isEmpty()) {
             sb.append("<ul style=\"color:#009900\">");
 
             for (String s : al) {
@@ -292,7 +292,7 @@ public final class WebUtils {
 
         StringBuilder sb = new StringBuilder();
 
-        if (al != null && al.size() > 0) {
+        if (al != null && !al.isEmpty()) {
             sb.append("<script type=\"text/javascript\">");
             sb.append("alert('");
 

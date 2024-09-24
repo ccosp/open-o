@@ -52,42 +52,42 @@ public class MigrateProfessionalContactsHelper {
             ps.setEmailAddress(pc.getEmail());
             ps.setFaxNumber(pc.getFax());
             ps.setLastUpdated(new Date());
-            ps.setPhoneNumber(pc.getWorkPhone() + ((pc.getWorkPhoneExtension().length() > 0) ? " " + pc.getWorkPhoneExtension() : ""));
+            ps.setPhoneNumber(pc.getWorkPhone() + ((!pc.getWorkPhoneExtension().isEmpty()) ? " " + pc.getWorkPhoneExtension() : ""));
             ps.setReferralNo(pc.getCpso());
             ps.setSpecialtyType(pc.getSpecialty());
 
             StringBuilder annot = new StringBuilder();
-            if (pc.getResidencePhone() != null && pc.getResidencePhone().length() > 0) {
+            if (pc.getResidencePhone() != null && !pc.getResidencePhone().isEmpty()) {
                 annot.append("Res Phone: " + pc.getResidencePhone() + "\n");
             }
-            if (pc.getCellPhone() != null && pc.getCellPhone().length() > 0) {
+            if (pc.getCellPhone() != null && !pc.getCellPhone().isEmpty()) {
                 annot.append("Cell Phone:" + pc.getCellPhone() + "\n");
             }
-            if (pc.getSystemId() != null && pc.getSystemId().length() > 0) {
+            if (pc.getSystemId() != null && !pc.getSystemId().isEmpty()) {
                 annot.append("System Id:" + pc.getSystemId() + "\n");
             }
-            if (pc.getNote() != null && pc.getNote().length() > 0) {
+            if (pc.getNote() != null && !pc.getNote().isEmpty()) {
                 annot.append("Note:" + pc.getNote() + "\n");
             }
             ps.setAnnotation(annot.toString());
 
             StringBuilder address = new StringBuilder();
             address.append(pc.getAddress() + "\n");
-            if (pc.getAddress2() != null && pc.getAddress2().length() > 0) {
+            if (pc.getAddress2() != null && !pc.getAddress2().isEmpty()) {
                 address.append(pc.getAddress2() + "\n");
             }
-            if (pc.getCity() != null && pc.getCity().length() > 0) {
+            if (pc.getCity() != null && !pc.getCity().isEmpty()) {
                 address.append(pc.getCity());
             }
-            if (pc.getProvince() != null && pc.getProvince().length() > 0) {
+            if (pc.getProvince() != null && !pc.getProvince().isEmpty()) {
                 address.append("," + pc.getProvince() + "\n");
             } else {
                 address.append("\n");
             }
-            if (pc.getCountry() != null && pc.getCountry().length() > 0) {
+            if (pc.getCountry() != null && !pc.getCountry().isEmpty()) {
                 address.append(pc.getCountry() + "\n");
             }
-            if (pc.getPostal() != null && pc.getPostal().length() > 0) {
+            if (pc.getPostal() != null && !pc.getPostal().isEmpty()) {
                 address.append(pc.getPostal() + "\n");
             }
             ps.setStreetAddress(address.toString());

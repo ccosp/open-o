@@ -116,7 +116,7 @@ public class PharmacyInfoDaoImpl extends AbstractDaoImpl<PharmacyInfo> implement
         query.setParameter(0, recordID);
         @SuppressWarnings("unchecked")
         List<PharmacyInfo> results = query.getResultList();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

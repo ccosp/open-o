@@ -75,7 +75,7 @@ public class RptFormQuery {
             subQuery += ",demographic ";
         }
         // test for vecVarValue
-        if ((getQueryWhere(vecVarValue).length() > 0) || (reportCreator.getWhereJoinClause(tableName, bDemo).length() > 0)) {
+        if ((!getQueryWhere(vecVarValue).isEmpty()) || (!reportCreator.getWhereJoinClause(tableName, bDemo).isEmpty())) {
             subQuery += " where " + getQueryWhere(vecVarValue) + reportCreator.getWhereJoinClause(tableName, bDemo);
         }
         subQuery += " group by " + tableName + ".demographic_no," + tableName + ".formCreated ";
@@ -89,7 +89,7 @@ public class RptFormQuery {
         String rltSubQuery = reportCreator.getRltSubQuery(subQuery);
 
         reportSql += " where " + tableName + ".ID in (" + rltSubQuery + ")";
-        if (reportCreator.getWhereJoinClause(tableName, bDemo).length() > 0) {
+        if (!reportCreator.getWhereJoinClause(tableName, bDemo).isEmpty()) {
             reportSql += " and " + reportCreator.getWhereJoinClause(tableName, bDemo);
         }
         return reportSql;
@@ -141,7 +141,7 @@ public class RptFormQuery {
 
     public String getQueryWhere(Vector vecVarValue) {
         String ret = "";
-        if (vecVarValue.size() > 0) {
+        if (!vecVarValue.isEmpty()) {
             ret = (String) vecVarValue.get(0);
         }
         for (int i = 1; i < vecVarValue.size(); i++) {

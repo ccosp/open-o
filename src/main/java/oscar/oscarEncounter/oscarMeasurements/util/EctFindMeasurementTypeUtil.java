@@ -109,7 +109,7 @@ public class EctFindMeasurementTypeUtil {
 
     static public boolean measurementTypeIsFound(EctMeasurementTypesBean mt, String formName) {
         boolean verdict = true;
-        if (dao.findByTypeAndMeasuringInstruction(mt.getType(), mt.getMeasuringInstrc()).size() == 0) {
+        if (dao.findByTypeAndMeasuringInstruction(mt.getType(), mt.getMeasuringInstrc()).isEmpty()) {
             verdict = false;
         }
 
@@ -118,7 +118,7 @@ public class EctFindMeasurementTypeUtil {
 
     static public boolean measurementTypeKeyIsFound(EctMeasurementTypesBean mt) {
         boolean verdict = true;
-        if (dao.findByType(mt.getType()).size() == 0) {
+        if (dao.findByType(mt.getType()).isEmpty()) {
             verdict = false;
         }
 
@@ -130,7 +130,7 @@ public class EctFindMeasurementTypeUtil {
 
         //Find validation if not found add validation
         Vector validations = mt.getValidationRules();
-        if (validations.size() > 0) {
+        if (!validations.isEmpty()) {
             EctValidationsBean validation = (EctValidationsBean) validations.elementAt(0);
             EctValidationsBeanHandler vHd = new EctValidationsBeanHandler();
             int validationId = vHd.findValidation(validation);

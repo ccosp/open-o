@@ -463,7 +463,7 @@ public class GenericIntakeEditAction extends DispatchAction {
             if (client.getDemographicNo() == null) {
                 String hin = client.getHin();
                 String hcType = client.getHcType();
-                if (hin.length() > 0 && clientManager.checkHealthCardExists(hin, hcType)) {
+                if (!hin.isEmpty() && clientManager.checkHealthCardExists(hin, hcType)) {
                     ActionMessages messages = new ActionMessages();
                     messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("hin.duplicate"));
                     saveErrors(request, messages);
@@ -498,7 +498,7 @@ public class GenericIntakeEditAction extends DispatchAction {
                         if (programManager.isBedProgram(selectedBedProgramId.toString())) {
                             intakeLocationId = selectedBedProgramId;
                         } else {
-                            if (formBean.getProgramInDomainId() != null && formBean.getProgramInDomainId().trim().length() > 0)
+                            if (formBean.getProgramInDomainId() != null && !formBean.getProgramInDomainId().trim().isEmpty())
                                 intakeLocationId = Integer.valueOf(formBean.getProgramInDomainId());
                         }
                     }
@@ -999,7 +999,7 @@ public class GenericIntakeEditAction extends DispatchAction {
         if (clientsJadm != null && clientsJadm.getHeadClientId() != null) {
             isFamilyDependent = true;
         }
-        if (dependentList != null && dependentList.size() > 0) {
+        if (dependentList != null && !dependentList.isEmpty()) {
             isFamilyHead = true;
         }
         if (dependentList != null) {

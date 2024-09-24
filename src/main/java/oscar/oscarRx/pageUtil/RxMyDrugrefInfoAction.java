@@ -148,7 +148,7 @@ public final class RxMyDrugrefInfoAction extends DispatchAction {
             myDrugrefId = OscarProperties.getInstance().getProperty("mydrugref_id");
 
             //override with user pref
-            if (prop != null && prop.getValue().length() > 0) {
+            if (prop != null && !prop.getValue().isEmpty()) {
                 myDrugrefId = prop.getValue();
             }
 
@@ -190,7 +190,7 @@ public final class RxMyDrugrefInfoAction extends DispatchAction {
                 try {
                     Vector v = getMyDrugrefInfo(loggedInInfo, command, codes, provider, myDrugrefId);
 
-                    if (v != null && v.size() > 0) {
+                    if (v != null && !v.isEmpty()) {
                         all.addAll(v);
                     }
 
@@ -230,7 +230,7 @@ public final class RxMyDrugrefInfoAction extends DispatchAction {
 
             UserProperty uprop = propDAO.getProp(loggedInInfo.getLoggedInProviderNo(), "rxInteractionWarningLevel");
             if (uprop != null) {
-                if (uprop.getValue() != null && uprop.getValue().length() > 0) {
+                if (uprop.getValue() != null && !uprop.getValue().isEmpty()) {
                     int providerLevel = Integer.parseInt(uprop.getValue());
                     MiscUtils.getLogger().debug("providerLevel=" + providerLevel);
                     if (providerLevel > 0)
@@ -244,7 +244,7 @@ public final class RxMyDrugrefInfoAction extends DispatchAction {
 
             DemographicExt demoWarn = demographicExtDao.getLatestDemographicExt(bean.getDemographicNo(), "rxInteractionWarningLevel");
             if (demoWarn != null) {
-                if (demoWarn.getValue() != null && demoWarn.getValue().length() > 0) {
+                if (demoWarn.getValue() != null && !demoWarn.getValue().isEmpty()) {
                     int demoLevel = Integer.valueOf(demoWarn.getValue());
                     MiscUtils.getLogger().debug("demoLevel=" + demoLevel);
                     if (demoLevel > 0)
@@ -320,7 +320,7 @@ public final class RxMyDrugrefInfoAction extends DispatchAction {
             }
             MiscUtils.getLogger().debug("currentIdWarnings is  " + currentIdWarnings);
             //set session attribute hiddenResources if it was null
-            if (dsPrefs != null && dsPrefs.size() > 0) {
+            if (dsPrefs != null && !dsPrefs.isEmpty()) {
                 Hashtable hiddenR = new Hashtable();
                 Enumeration em = dsPrefs.keys();
                 while (em.hasMoreElements()) {
@@ -510,7 +510,7 @@ public final class RxMyDrugrefInfoAction extends DispatchAction {
                     String requestURI = "/ws/api/" + procedureName;
 
                     String requestURIWithParams = null;
-                    if (params != null && !params.isEmpty() && params.size() > 0) {
+                    if (params != null && !params.isEmpty() && !params.isEmpty()) {
                         requestURIWithParams = requestURI + "?";
                         for (int i = 0; i < params.size(); i++) {
                             if (procedureName.contains("guidelines")) {

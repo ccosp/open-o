@@ -52,7 +52,7 @@ public class ConsultationRequestExtDaoImpl extends AbstractDaoImpl<ConsultationR
         query.setParameter(1, new Integer(requestId));
         query.setParameter(2, key);
         List<String> results = query.getResultList();
-        if (results.size() > 0)
+        if (!results.isEmpty())
             return results.get(0);
         return null;
     }

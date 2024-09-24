@@ -96,7 +96,7 @@ public class MsgCreateMessageAction extends Action {
 
 
         subject.trim();
-        if (subject.length() == 0) {
+        if (subject.isEmpty()) {
             subject = "none";
         }
 

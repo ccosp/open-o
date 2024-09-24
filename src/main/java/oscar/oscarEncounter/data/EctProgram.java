@@ -61,7 +61,7 @@ public class EctProgram {
         }
         if (!defaultInList) defaultprogramId = 0;
         int OriprogramId = 0;
-        if (programBean.size() > 0)
+        if (!programBean.isEmpty())
             OriprogramId = new Integer(((LabelValueBean) programBean.get(0)).getValue()).intValue();
         int programId = 0;
         if (defaultprogramId != 0 && OriprogramId != 0) programId = defaultprogramId;

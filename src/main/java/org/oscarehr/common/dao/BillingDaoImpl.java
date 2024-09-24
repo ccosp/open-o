@@ -82,7 +82,7 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
     @Override
     public List<Billing> findSet(List<String> list) {
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             return new ArrayList<Billing>();
         }
         Query query = entityManager.createQuery("SELECT b FROM  Billing b  where b.id in (:billingNumbers)");
@@ -444,7 +444,7 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
         List<Billing> results = q.getResultList();
 
-        if (results.size() > 0)
+        if (!results.isEmpty())
             return results.get(0).getId();
 
         return null;
@@ -458,7 +458,7 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
         List<Billing> results = q.getResultList();
 
-        if (results.size() > 0)
+        if (!results.isEmpty())
             return results.get(0).getId();
 
         return null;

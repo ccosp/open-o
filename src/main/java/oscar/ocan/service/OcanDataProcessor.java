@@ -459,7 +459,7 @@ public class OcanDataProcessor {
         } else if ("T".equals(staff.getCDoYouHaveAnyIssuesWithYourImmigrationExperienceCheckAllThatApply().getCExperienceWithOtherTrauma())) {
             iel.getValue().add("7");
         } else if (null != staff.getCDoYouHaveAnyIssuesWithYourImmigrationExperienceCheckAllThatApply().getCOther() &&
-                staff.getCDoYouHaveAnyIssuesWithYourImmigrationExperienceCheckAllThatApply().getCOther().length() > 0) {
+                !staff.getCDoYouHaveAnyIssuesWithYourImmigrationExperienceCheckAllThatApply().getCOther().isEmpty()) {
             iel.getValue().add("8");
             iel.setOtherImmigExp(staff.getCDoYouHaveAnyIssuesWithYourImmigrationExperienceCheckAllThatApply().getCOther());
         } else if ("T".equals(staff.getCDoYouHaveAnyIssuesWithYourImmigrationExperienceCheckAllThatApply().getCUnknown())) {
@@ -489,7 +489,7 @@ public class OcanDataProcessor {
         } else if ("T".equals(staff.getCExperienceOfDiscriminationCheckAllThatApply().getCSexualOrientation())) {
             del.getValue().add("365956009");
         } else if (null != staff.getCExperienceOfDiscriminationCheckAllThatApply().getCOther() &&
-                staff.getCExperienceOfDiscriminationCheckAllThatApply().getCOther().length() > 0) {
+                !staff.getCExperienceOfDiscriminationCheckAllThatApply().getCOther().isEmpty()) {
             del.getValue().add("410515003");
             del.setOtherDiscrimExp(staff.getCExperienceOfDiscriminationCheckAllThatApply().getCOther());
         } else if ("T".equals(staff.getCExperienceOfDiscriminationCheckAllThatApply().getCUnknown())) {
@@ -1424,7 +1424,7 @@ public class OcanDataProcessor {
             ssrl.getSafetyToSelfRisk().add("417430008");
         }
         if (staff.getC10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarmingYourself().getCRisksSelectAllThatApply().getCOther() != null &&
-                staff.getC10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarmingYourself().getCRisksSelectAllThatApply().getCOther().length() > 0) {
+                !staff.getC10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarmingYourself().getCRisksSelectAllThatApply().getCOther().isEmpty()) {
             ssrl.getSafetyToSelfRisk().add("410515003");
             ssrl.setOtherSafetyToSelfRisk(staff.getC10SafetyToSelfDoYouEverHaveThoughtsOfHarmingYourselfOrActuallyHarmingYourself().getCRisksSelectAllThatApply().getCOther());
         }
@@ -1658,7 +1658,7 @@ public class OcanDataProcessor {
         } else if ("T".equals(staff.getC14OtherAddictionsDoYouHaveAnAddictionIsYourAddictionAProblem().getCTypeOfAddictionCheckAllThatApply().getCNicotine())) {
             atl.getAddictionType().add("56294008");
         } else if (staff.getC14OtherAddictionsDoYouHaveAnAddictionIsYourAddictionAProblem().getCTypeOfAddictionCheckAllThatApply().getCOther() != null &&
-                staff.getC14OtherAddictionsDoYouHaveAnAddictionIsYourAddictionAProblem().getCTypeOfAddictionCheckAllThatApply().getCOther().length() > 0) {
+                !staff.getC14OtherAddictionsDoYouHaveAnAddictionIsYourAddictionAProblem().getCTypeOfAddictionCheckAllThatApply().getCOther().isEmpty()) {
             atl.getAddictionType().add("410515003");
             atl.setOtherAddictionType(staff.getC14OtherAddictionsDoYouHaveAnAddictionIsYourAddictionAProblem().getCTypeOfAddictionCheckAllThatApply().getCOther());
         }

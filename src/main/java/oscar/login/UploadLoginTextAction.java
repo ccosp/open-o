@@ -108,7 +108,7 @@ public class UploadLoginTextAction extends Action {
 
 
         try {
-            if (importFile.getFileName().length() > 0) {
+            if (!importFile.getFileName().isEmpty()) {
                 fis = importFile.getInputStream();
                 String savePath = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/OSCARloginText.txt";
                 fos = new FileOutputStream(savePath);

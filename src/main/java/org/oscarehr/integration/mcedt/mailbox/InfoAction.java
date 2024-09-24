@@ -166,7 +166,7 @@ public class InfoAction extends DispatchAction {
                         //}
                     }
 
-                    if (resourceList.size() > 0) {
+                    if (!resourceList.isEmpty()) {
                         //Collections.sort(resourceList, DetailDataCustom.ResourceIdComparator);
                         request.getSession().setAttribute("resourceListDL", resourceList);
                     }

@@ -80,7 +80,7 @@ public class MeasurementDSHelper {
         log.debug("demo " + this.demographic_no + " type " + measurementType);
         EctMeasurementsDataBeanHandler mdbh = new EctMeasurementsDataBeanHandler(Integer.valueOf(this.demographic_no), measurementType);
         Collection col = mdbh.getMeasurementsDataVector();
-        if (col.size() > 0) {
+        if (!col.isEmpty()) {
             this.mdb = (EctMeasurementsDataBean) col.iterator().next();
             setM = true;
         }
@@ -120,7 +120,7 @@ public class MeasurementDSHelper {
 
             }
         }
-        if (col2.size() > 0) {
+        if (!col2.isEmpty()) {
             this.mdb = col2.iterator().next();
             setM = true;
         }

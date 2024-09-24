@@ -370,9 +370,9 @@ public class ConsultationManagerImpl implements ConsultationManager {
         Property consultResponseEnabled = new Property(CON_RESPONSE_ENABLED);
 
         List<Property> results = propertyDao.findByName(CON_REQUEST_ENABLED);
-        if (results.size() > 0) consultRequestEnabled = results.get(0);
+        if (!results.isEmpty()) consultRequestEnabled = results.get(0);
         results = propertyDao.findByName(CON_RESPONSE_ENABLED);
-        if (results.size() > 0) consultResponseEnabled = results.get(0);
+        if (!results.isEmpty()) consultResponseEnabled = results.get(0);
 
         consultRequestEnabled.setValue(conRequest ? ENABLED_YES : null);
         consultResponseEnabled.setValue(conResponse ? ENABLED_YES : null);
@@ -391,14 +391,14 @@ public class ConsultationManagerImpl implements ConsultationManager {
     @Override
     public boolean isConsultRequestEnabled() {
         List<Property> results = propertyDao.findByName(CON_REQUEST_ENABLED);
-        if (results.size() > 0 && ENABLED_YES.equals(results.get(0).getValue())) return true;
+        if (!results.isEmpty() && ENABLED_YES.equals(results.get(0).getValue())) return true;
         return false;
     }
 
     @Override
     public boolean isConsultResponseEnabled() {
         List<Property> results = propertyDao.findByName(CON_RESPONSE_ENABLED);
-        if (results.size() > 0 && ENABLED_YES.equals(results.get(0).getValue())) return true;
+        if (!results.isEmpty() && ENABLED_YES.equals(results.get(0).getValue())) return true;
         return false;
     }
 

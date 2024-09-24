@@ -104,7 +104,7 @@ public class NextAppointmentSearchHelper {
 
         Calendar c = Calendar.getInstance();
         c.setTime(day);
-        if (searchBean.getDayOfWeek().length() > 0) {
+        if (!searchBean.getDayOfWeek().isEmpty()) {
             if (searchBean.getDayOfWeek().equals("daily")) {
                 if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                     return results;
@@ -198,7 +198,7 @@ public class NextAppointmentSearchHelper {
                 //logger.info("currently at position " + x + " which is hour " + hour + " and min " + min);
                 if (slot != '_') {
                     //filter by code
-                    if (searchBean.getCode().length() > 0) {
+                    if (!searchBean.getCode().isEmpty()) {
                         if (slot != searchBean.getCode().charAt(0)) {
                             logger.debug("skipping because code doesn't match, slot=" + slot + ",code=" + searchBean.getCode().charAt(0) + ".");
                             continue;
@@ -207,7 +207,7 @@ public class NextAppointmentSearchHelper {
 
                     //TODO: is there a default appt length somewhere?
                     int duration = 15;
-                    if (searchBean.getCode().length() > 0) {
+                    if (!searchBean.getCode().isEmpty()) {
                         //load the template code
                         ScheduleTemplateCode stc = scheduleTemplateCodeDao.getByCode(searchBean.getCode().charAt(0));
                         if (stc == null) {
@@ -215,7 +215,7 @@ public class NextAppointmentSearchHelper {
                             continue;
                         }
                         //check the duration
-                        if (stc.getDuration() != null && stc.getDuration().length() > 0) {
+                        if (stc.getDuration() != null && !stc.getDuration().isEmpty()) {
                             duration = Integer.parseInt(stc.getDuration());
                         }
                     }

@@ -82,7 +82,7 @@ public class OscarTrackingBasicDataSource extends BasicDataSource {
 
     public static void releaseThreadConnections() {
         HashSet<Connection> threadConnections = connections.get();
-        if (threadConnections != null && threadConnections.size() > 0) {
+        if (threadConnections != null && !threadConnections.isEmpty()) {
 
             threadConnections = new HashSet<Connection>(threadConnections);
             for (Connection c : threadConnections) {

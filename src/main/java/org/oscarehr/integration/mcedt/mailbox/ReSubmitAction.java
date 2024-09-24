@@ -63,7 +63,7 @@ public class ReSubmitAction extends Action {
 
             ResourceResult result = null;
             EDTDelegate delegate = DelegateFactory.getEDTDelegateInstance(serviceId);
-            if (resourceIds.size() > 0) result = delegate.submit(resourceIds);
+            if (!resourceIds.isEmpty()) result = delegate.submit(resourceIds);
             for (ResponseResult edtResponse : result.getResponse()) {
                 if (edtResponse.getResult().getCode().equals("IEDTS0001")) {
                     saveMessages(request, ActionUtils.addMessage("uploadAction.submit.success", McedtMessageCreator.resourceResultToString(result)));

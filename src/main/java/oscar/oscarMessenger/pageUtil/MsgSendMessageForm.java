@@ -93,7 +93,7 @@ public final class MsgSendMessageForm extends ActionForm {
 
         ActionErrors errors = new ActionErrors();
 
-        if (message == null || message.length() == 0) {   //index.heading
+        if (message == null || message.isEmpty()) {   //index.heading
 
             //             errors.add("message32",new ActionError("error.message.missing"));
             //errors.add("message32",new ActionError("index.heading"));

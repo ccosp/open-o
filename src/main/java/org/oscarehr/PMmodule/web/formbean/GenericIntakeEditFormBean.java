@@ -401,7 +401,7 @@ public class GenericIntakeEditFormBean extends ActionForm {
     private Integer convertToInteger(String source) {
         Integer result = null;
 
-        if (source != null && source.length() > 0) {
+        if (source != null && !source.isEmpty()) {
             result = Integer.valueOf(source);
         }
 

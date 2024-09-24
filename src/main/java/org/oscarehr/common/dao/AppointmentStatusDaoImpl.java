@@ -61,7 +61,7 @@ public class AppointmentStatusDaoImpl extends AbstractDaoImpl<AppointmentStatus>
 
     @Override
     public AppointmentStatus findByStatus(String status) {
-        if (status == null || status.length() == 0) {
+        if (status == null || status.isEmpty()) {
             return null;
         }
 
@@ -72,7 +72,7 @@ public class AppointmentStatusDaoImpl extends AbstractDaoImpl<AppointmentStatus>
         List<AppointmentStatus> results = q.getResultList();
 
         for (AppointmentStatus r : results) {
-            if (r.getStatus() != null && r.getStatus().length() > 0 && r.getStatus().charAt(0) == status.charAt(0)) {
+            if (r.getStatus() != null && !r.getStatus().isEmpty() && r.getStatus().charAt(0) == status.charAt(0)) {
                 return r;
             }
         }

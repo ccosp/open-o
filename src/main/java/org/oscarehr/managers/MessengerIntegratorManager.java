@@ -234,11 +234,11 @@ public class MessengerIntegratorManager {
         jsonString.put(JSON_KEY.from.name(), messageTbl.getSentBy());
         jsonString.put(JSON_KEY.copyto.name(), messageTbl.getSentTo());
 
-        if (msgDemoMap != null && !msgDemoMap.isEmpty() && msgDemoMap.size() > 0) {
+        if (msgDemoMap != null && !msgDemoMap.isEmpty() && !msgDemoMap.isEmpty()) {
             jsonString.put(JSON_KEY.demographic.name(), createAttachedDemographicObject(loggedInInfo, msgDemoMap, destinationFacilityId));
         }
 
-        if (unlinkedDemoMap != null && !unlinkedDemoMap.isEmpty() && unlinkedDemoMap.size() > 0) {
+        if (unlinkedDemoMap != null && !unlinkedDemoMap.isEmpty() && !unlinkedDemoMap.isEmpty()) {
             jsonString.put(JSON_KEY.demographic.name(), createAttachedDemographicObject(unlinkedDemoMap));
         }
 

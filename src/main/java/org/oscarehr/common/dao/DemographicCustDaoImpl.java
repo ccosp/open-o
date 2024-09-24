@@ -98,7 +98,7 @@ public class DemographicCustDaoImpl extends AbstractDaoImpl<DemographicCust> imp
 
         @SuppressWarnings("unchecked")
         List<Integer> results = query.getResultList();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;
@@ -113,7 +113,7 @@ public class DemographicCustDaoImpl extends AbstractDaoImpl<DemographicCust> imp
 
         @SuppressWarnings("unchecked")
         List<Integer> results = query.getResultList();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;
@@ -128,7 +128,7 @@ public class DemographicCustDaoImpl extends AbstractDaoImpl<DemographicCust> imp
 
         @SuppressWarnings("unchecked")
         List<Integer> results = query.getResultList();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

@@ -64,7 +64,7 @@ public class ImageUploadForm extends ActionForm {
             errors.add("image", new ActionMessage("eform.uploadimages.imageAlreadyExists", image.getFileName()));
         }
 
-        if (errors.size() == 0) {
+        if (errors.isEmpty()) {
             request.setAttribute("status", "success");
         }
 

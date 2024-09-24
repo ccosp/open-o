@@ -68,7 +68,7 @@ public class ManageHnrClient {
         // only be 1, a minor issue about some of this code not being atomic makes multiple
         // entries theoretically possible though in reality it should never happen.
         List<ClientLink> temp = clientLinkDao.findByFacilityIdClientIdType(loggedInInfo.getCurrentFacility().getId(), demographicId, true, ClientLink.Type.HNR);
-        if (temp.size() > 0) clientLink = temp.get(0);
+        if (!temp.isEmpty()) clientLink = temp.get(0);
 
         if (loggedInInfo.getCurrentFacility().isEnableHealthNumberRegistry() && loggedInInfo.getCurrentFacility().isIntegratorEnabled() && clientLink != null) {
             try {

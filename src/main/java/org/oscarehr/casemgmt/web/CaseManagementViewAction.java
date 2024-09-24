@@ -267,7 +267,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 
         String programId = (String) request.getSession().getAttribute("case_program_id");
 
-        if (programId == null || programId.length() == 0) {
+        if (programId == null || programId.isEmpty()) {
             programId = "0";
         }
 
@@ -442,7 +442,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 
         //1. try from Properties
         String customCmeJs = OscarProperties.getInstance().getProperty("cme_js");
-        if (customCmeJs == null || customCmeJs.length() == 0) {
+        if (customCmeJs == null || customCmeJs.isEmpty()) {
             request.setAttribute("cme_js", "default");
         } else {
             request.setAttribute("cme_js", customCmeJs);
@@ -687,7 +687,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         logger.debug("Apply sorting to notes");
         startTime = System.currentTimeMillis();
         String noteSort = caseForm.getNote_sort();
-        if (noteSort != null && noteSort.length() > 0) {
+        if (noteSort != null && !noteSort.isEmpty()) {
             notesToDisplay = sortNotes(notesToDisplay, noteSort);
         } else {
             oscar.OscarProperties p = oscar.OscarProperties.getInstance();
@@ -906,7 +906,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         for (Iterator<CaseManagementNote> iter = notes.listIterator(); iter.hasNext(); ) {
             CaseManagementNote note = iter.next();
             List<CaseManagementIssue> issues = cmeIssueNotesDao.getNoteIssues((Integer.valueOf(note.getId().toString())));
-            if (issues.size() == 0 && none) {
+            if (issues.isEmpty() && none) {
                 filteredNotes.add(note);
             } else {
                 for (CaseManagementIssue issue : issues) {
@@ -1050,7 +1050,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 
     private boolean hasIssueToBeDisplayed(CachedDemographicNote cachedDemographicNote, List<Issue> issueCodesToDisplay) {
         // no issue selected means display all
-        if (issueCodesToDisplay == null || issueCodesToDisplay.size() == 0) return (true);
+        if (issueCodesToDisplay == null || issueCodesToDisplay.isEmpty()) return (true);
 
         for (NoteIssue noteIssue : cachedDemographicNote.getIssues()) {
             for (Issue issue : issueCodesToDisplay) {
@@ -1339,7 +1339,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 
         String programId = (String) request.getSession().getAttribute("case_program_id");
 
-        if (programId == null || programId.length() == 0) {
+        if (programId == null || programId.isEmpty()) {
             programId = "0";
         }
 
@@ -1358,7 +1358,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         ArrayList<String> issueCodes = new ArrayList<String>(Arrays.asList(codes));
         addRemoteNotes(loggedInInfo, remoteNotes, Integer.parseInt(demoNo), issues, programId);
 
-        if (remoteNotes.size() > 0) {
+        if (!remoteNotes.isEmpty()) {
             request.setAttribute("remoteNotes", remoteNotes);
         }
 
@@ -1566,7 +1566,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         int followUpNo = macro.getFollowupNo();
         String followUpUnit = macro.getFollowupUnit();
         String followUpDr = macro.getFollowupDoctorId();
-        if (followUpDr.length() > 0) {
+        if (!followUpDr.isEmpty()) {
             EyeformFollowUp f = new EyeformFollowUp();
             f.setAppointmentNo(Integer.parseInt(request.getParameter("appointmentNo")));
             f.setDate(new Date());
@@ -1656,7 +1656,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         ArrayList<NoteDisplay> filteredNotes = new ArrayList<NoteDisplay>();
 
         // no list, or empty list, or list of no providers
-        if (providerName == null || providerName.length == 0 || providerName[0].length() == 0) return (notes);
+        if (providerName == null || providerName.length == 0 || providerName[0].isEmpty()) return (notes);
 
         for (NoteDisplay note : notes) {
             String tempName = note.getProviderName();
@@ -1773,7 +1773,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         Collection<CaseManagementNote> notes = caseManagementMgr.getActiveNotes(demographicNo, new String[]{String.valueOf(issueId)});
         List<CaseManagementNote> filteredNotes = new ArrayList<CaseManagementNote>();
 
-        if (notes.size() == 0) {
+        if (notes.isEmpty()) {
             return null;
         }
         if (filterByAppointment) {
@@ -1782,7 +1782,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
                     filteredNotes.add(note);
                 }
             }
-            if (filteredNotes.size() == 0) {
+            if (filteredNotes.isEmpty()) {
                 return null;
             }
         } else {
@@ -1942,7 +1942,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 
         // viewCurrentIssuesTab_newCmeNotesOpt(request, caseForm, demoNo, programId);
         NoteSelectionCriteria criteria = new NoteSelectionCriteria();
-        if (request.getParameter("numToReturn") != null && request.getParameter("numToReturn").length() > 0) {
+        if (request.getParameter("numToReturn") != null && !request.getParameter("numToReturn").isEmpty()) {
             criteria.setMaxResults(ConversionUtils.fromIntString(request.getParameter("numToReturn")));
         }
 
@@ -1954,7 +1954,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         criteria.setDemographicId(ConversionUtils.fromIntString(demoNo));
         criteria.setUserRole((String) request.getSession().getAttribute("userrole"));
         criteria.setUserName((String) request.getSession().getAttribute("user"));
-        if (request.getParameter("note_sort") != null && request.getParameter("note_sort").length() > 0) {
+        if (request.getParameter("note_sort") != null && !request.getParameter("note_sort").isEmpty()) {
             criteria.setNoteSort(request.getParameter("note_sort"));
         }
         if (programId != null && !programId.trim().isEmpty()) {

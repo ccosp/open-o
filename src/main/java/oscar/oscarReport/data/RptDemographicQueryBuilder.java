@@ -293,7 +293,7 @@ public class RptDemographicQueryBuilder {
             }
         }
 
-        if (lastName != null && lastName.length() != 0) {
+        if (lastName != null && !lastName.isEmpty()) {
             MiscUtils.getLogger().debug("last name = " + lastName + "<size = " + lastName.length());
             whereClause();
             firstClause();
@@ -303,7 +303,7 @@ public class RptDemographicQueryBuilder {
             stringBuffer.append(" ) ");
         }
 
-        if (firstName != null && firstName.length() != 0) {
+        if (firstName != null && !firstName.isEmpty()) {
             whereClause();
             firstClause();
             theFirstFlag = 1;
@@ -360,13 +360,13 @@ public class RptDemographicQueryBuilder {
             stringBuffer.append(")");
         }
 
-        if (orderBy != null && orderBy.length() != 0) {
+        if (orderBy != null && !orderBy.isEmpty()) {
             if (!orderBy.equals("0")) {
                 stringBuffer.append(" order by " + demoCols.getColumnName(orderBy) + " ");
             }
         }
 
-        if (limit != null && limit.length() != 0) {
+        if (limit != null && !limit.isEmpty()) {
             if (!limit.equals("0")) {
                 try {
                     Integer.parseInt(limit);

@@ -60,7 +60,7 @@ public class DemographicContactCreator {
 
     private static List<DemographicContact> fillContactNames(List<DemographicContact> demographicContacts) {
 
-        if (demographicContacts == null || demographicContacts.size() < 1) {
+        if (demographicContacts == null || demographicContacts.isEmpty()) {
             return demographicContacts;
         }
 

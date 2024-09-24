@@ -67,7 +67,7 @@ public class ManageHnrClientAction {
 
             // it might be 0 if some one unlinked the client at the same time you are
             // looking at this screen.
-            if (clientLinks.size() > 0) {
+            if (!clientLinks.isEmpty()) {
                 ClientLink clientLink = clientLinks.get(0);
                 org.oscarehr.hnr.ws.Client hnrClient = CaisiIntegratorManager.getHnrClient(loggedInInfo,
                         loggedInInfo.getCurrentFacility(), clientLink.getRemoteLinkId());
@@ -147,7 +147,7 @@ public class ManageHnrClientAction {
             ClientLink clientLink = null;
 
             // try to retrieve existing linked client to update
-            if (clientLinks.size() >= 1) {
+            if (!clientLinks.isEmpty()) {
                 clientLink = clientLinks.get(0);
                 hnrClient = CaisiIntegratorManager.getHnrClient(loggedInInfo, loggedInInfo.getCurrentFacility(),
                         clientLink.getRemoteLinkId());

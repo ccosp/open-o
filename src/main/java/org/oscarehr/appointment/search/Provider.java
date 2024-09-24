@@ -115,7 +115,7 @@ public class Provider {
                 providerMember.role = XmlUtils.getAttributeValue(memberNode, "role");
                 List<Node> memberApptNodes = XmlUtils.getChildNodes(memberNode, "allowed_appointment");
 
-                if (XmlUtils.getChildNodesTextContents(memberNode, "filter") != null && XmlUtils.getChildNodesTextContents(memberNode, "filter").size() > 0) {
+                if (XmlUtils.getChildNodesTextContents(memberNode, "filter") != null && !XmlUtils.getChildNodesTextContents(memberNode, "filter").isEmpty()) {
                     providerMember.filters = getFilterArray(memberNode);
                 } else {
                     providerMember.filters = getFilterArray(node);
@@ -175,7 +175,7 @@ public class Provider {
             int count = 0;
             for (String s : tempSplit) {
                 s = StringUtils.trimToNull(s);
-                if (s != null && s.length() > 0) {
+                if (s != null && !s.isEmpty()) {
                     allowableTimeCodes[count] = s.charAt(0);
                     count++;
                 }

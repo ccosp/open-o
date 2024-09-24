@@ -95,7 +95,7 @@ public class MeasurementMapConfig {
     }
 
     public String getLoincCodeByIdentCode(String identifier) {
-        if (identifier != null && identifier.trim().length() > 0) {
+        if (identifier != null && !identifier.trim().isEmpty()) {
 
             for (MeasurementMap map : measurementMapDao.getMapsByIdent(identifier)) {
                 return map.getLoincCode();
@@ -222,7 +222,7 @@ public class MeasurementMapConfig {
      */
     public boolean checkLoincMapping(String loinc, String type) {
         List<MeasurementMap> maps = measurementMapDao.findByLoincCodeAndLabType(loinc, type);
-        return maps.size() > 0;
+        return !maps.isEmpty();
     }
 
     private String getString(String input) {

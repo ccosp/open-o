@@ -97,7 +97,7 @@ public final class ConformanceTestHelper {
 
             logger.debug("found linked demographics size:" + directLinks.size());
 
-            if (directLinks.size() > 0) {
+            if (!directLinks.isEmpty()) {
                 DemographicTransfer demographicTransfer = directLinks.get(0);
 
                 logger.debug("remoteDemographic:" + ReflectionToStringBuilder.toString(demographicTransfer));
@@ -124,7 +124,7 @@ public final class ConformanceTestHelper {
 
             logger.debug("found linked demographics size:" + directLinks.size());
 
-            if (directLinks.size() > 0) {
+            if (!directLinks.isEmpty()) {
                 DemographicTransfer demographicTransfer = directLinks.get(0);
 
                 logger.debug("remoteDemographic:" + ReflectionToStringBuilder.toString(demographicTransfer));

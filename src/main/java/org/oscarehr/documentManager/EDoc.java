@@ -210,7 +210,7 @@ public class EDoc extends TagObject implements Comparable<EDoc> {
         this.dateTimeStamp = EDocUtil.getDmsDateTime();
         this.setDateTimeStampAsDate(EDocUtil.getDmsDateTimeAsDate());
         this.setContentDateTime(EDocUtil.getDmsDateTimeAsDate());
-        if (fileName.length() != 0) {
+        if (!fileName.isEmpty()) {
             String filenamePrefix = UtilDateUtilities.DateToString(new Date(), "yyyyMMdd") + UtilDateUtilities.DateToString(new Date(), "HHmmss");
             this.fileName = filenamePrefix + fileName;
         }
@@ -445,7 +445,7 @@ public class EDoc extends TagObject implements Comparable<EDoc> {
     // docPublic = "checked" for the edoc to be public
     public void setDocPublic(String docPublic) {
         if (docPublic.equalsIgnoreCase("checked")) this.docPublic = "1";
-        else if (docPublic == null || docPublic.length() == 0) this.docPublic = "0";
+        else if (docPublic == null || docPublic.isEmpty()) this.docPublic = "0";
         else this.docPublic = docPublic;
     }
 
@@ -456,7 +456,7 @@ public class EDoc extends TagObject implements Comparable<EDoc> {
 
     public void setAbnormal(String abnormal) {
         if (abnormal.equalsIgnoreCase("checked")) this.abnormal = "1";
-        else if (abnormal == null || abnormal.length() == 0) this.abnormal = "0";
+        else if (abnormal == null || abnormal.isEmpty()) this.abnormal = "0";
         else this.abnormal = abnormal;
     }
 

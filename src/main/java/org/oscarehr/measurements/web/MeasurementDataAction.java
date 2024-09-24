@@ -66,7 +66,7 @@ public class MeasurementDataAction extends DispatchAction {
         String typeStr = request.getParameter("types");
         String appointmentNo = request.getParameter("appointmentNo");
         int apptNo = 0;
-        if (appointmentNo != null && appointmentNo.length() > 0 && !appointmentNo.equalsIgnoreCase("null")) {
+        if (appointmentNo != null && !appointmentNo.isEmpty() && !appointmentNo.equalsIgnoreCase("null")) {
             apptNo = Integer.parseInt(appointmentNo);
         }
 
@@ -96,7 +96,7 @@ public class MeasurementDataAction extends DispatchAction {
                 freshMap.put(tmp[x], true);
             }
         }
-        if (typeStr == null || typeStr.length() == 0) {
+        if (typeStr == null || typeStr.isEmpty()) {
             //error
         }
         String[] types = typeStr.split(",");
@@ -321,7 +321,7 @@ public class MeasurementDataAction extends DispatchAction {
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date start = null;
         Date end = null;
-        if (null != searchDate && searchDate.length() > 0) {
+        if (null != searchDate && !searchDate.isEmpty()) {
             if (searchDate.indexOf("-") > -1) {
                 start = sdf.parse(searchDate + " 00:00:00");
                 end = sdf.parse(searchDate + " 23:59:59");
@@ -333,7 +333,7 @@ public class MeasurementDataAction extends DispatchAction {
         }
         for (int i = 0; i < type_list.length; i++) {
             List<Measurement> m = measurementDao.findMeasurementByTypeAndDate(Integer.parseInt(demoNo), type_list[i], start, end);
-            if (m.size() > 0) {
+            if (!m.isEmpty()) {
                 json.put(type_list[i], m.get(0).getDataField());
             } else {
                 json.put(type_list[i], "");

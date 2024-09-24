@@ -210,24 +210,24 @@ public class DrugDaoImpl extends AbstractDaoImpl<Drug> implements DrugDao {
                                                                 String customName, String brandName, String atc) {
         // build sql string
         String sqlCommand = "";
-        if (atc != null && !atc.equalsIgnoreCase("null") && atc.trim().length() != 0)
+        if (atc != null && !atc.equalsIgnoreCase("null") && !atc.trim().isEmpty())
             sqlCommand = "select x from Drug x where x.demographicId=?1 and x.atc=?2 order by x.rxDate desc, x.id desc";
         else if (regionalIdentifier != null && !regionalIdentifier.equalsIgnoreCase("null")
-                && regionalIdentifier.trim().length() != 0)
+                && !regionalIdentifier.trim().isEmpty())
             sqlCommand = "select x from Drug x where x.demographicId=?1 and x.regionalIdentifier=?2 order by x.rxDate desc, x.id desc";
-        else if (customName != null && !customName.equalsIgnoreCase("null") && customName.trim().length() != 0)
+        else if (customName != null && !customName.equalsIgnoreCase("null") && !customName.trim().isEmpty())
             sqlCommand = "select x from Drug x where x.demographicId=?1 and x.customName=?2 order by x.rxDate desc, x.id desc";
         else
             sqlCommand = "select x from Drug x where x.demographicId=?1 and x.brandName=?2 order by x.rxDate desc, x.id desc";
         // set parameters
         Query query = entityManager.createQuery(sqlCommand);
         query.setParameter(1, demographicId);
-        if (atc != null && !atc.equalsIgnoreCase("null") && atc.trim().length() != 0)
+        if (atc != null && !atc.equalsIgnoreCase("null") && !atc.trim().isEmpty())
             query.setParameter(2, atc);
         else if (regionalIdentifier != null && !regionalIdentifier.equalsIgnoreCase("null")
-                && regionalIdentifier.trim().length() != 0)
+                && !regionalIdentifier.trim().isEmpty())
             query.setParameter(2, regionalIdentifier);
-        else if (customName != null && !customName.equalsIgnoreCase("null") && customName.trim().length() != 0)
+        else if (customName != null && !customName.equalsIgnoreCase("null") && !customName.trim().isEmpty())
             query.setParameter(2, customName);
         else
             query.setParameter(2, brandName);

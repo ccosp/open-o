@@ -163,7 +163,7 @@ public class ManageTeleplanAction extends DispatchAction {
             String desc = dxProp.getProperty(code);
 
             List<DiagnosticCode> dxList = bDx.getByDxCode(code);
-            if (dxList == null || dxList.size() == 0) { //New Code
+            if (dxList == null || dxList.isEmpty()) { //New Code
                 DiagnosticCode dxCode = new DiagnosticCode();
                 log.debug("Adding new code " + code + " desc : " + desc);
                 dxCode.setDiagnosticCode(code);

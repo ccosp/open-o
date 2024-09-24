@@ -77,7 +77,7 @@ public final class OscarSpringContextLoader extends ContextLoaderListener {
         if (modules != null) {
             modules = modules.trim();
 
-            if (modules.length() > 0) {
+            if (!modules.isEmpty()) {
                 moduleList = modules.split(",");
             }
         }

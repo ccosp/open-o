@@ -109,7 +109,7 @@ public class PrescriptionManagerImpl implements PrescriptionManager {
         List<Drug> results = drugDao.findByScriptNo(scriptNo, archived);
 
         // --- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = Drug.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "PrescriptionManager.getDrugsByScriptNo",
                     "drug ids returned=" + resultIds);
@@ -191,7 +191,7 @@ public class PrescriptionManagerImpl implements PrescriptionManager {
             }
         }
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = Drug.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "PrescriptionManager.getUniquePrescriptionsByPatient",
                     "drug ids returned=" + resultIds);
@@ -413,7 +413,7 @@ public class PrescriptionManagerImpl implements PrescriptionManager {
         } else {
             String dates_reprinted = prescription.getDatesReprinted();
             String now = DateUtils.format("yyyy-MM-dd HH:mm:ss", new Date());
-            if (dates_reprinted != null && dates_reprinted.length() > 0) {
+            if (dates_reprinted != null && !dates_reprinted.isEmpty()) {
                 dates_reprinted += "," + now + ";" + providerNo;
             } else {
                 dates_reprinted = now + ";" + providerNo;

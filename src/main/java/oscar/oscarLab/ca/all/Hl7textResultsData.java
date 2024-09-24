@@ -178,7 +178,7 @@ public class Hl7textResultsData {
                 String blocked = h.isTestResultBlocked(i, j) ? "BLOCKED" : null;
                 String comments = "";
                 for (int l = 0; l < h.getOBXCommentCount(i, j); l++) {
-                    comments += comments.length() > 0 ? "\n" + h.getOBXComment(i, j, l) : h.getOBXComment(i, j, l);
+                    comments += !comments.isEmpty() ? "\n" + h.getOBXComment(i, j, l) : h.getOBXComment(i, j, l);
                 }
 
                 String measType = "";
@@ -299,7 +299,7 @@ public class Hl7textResultsData {
                     me.setVal(observationDate);
                     measurementsExts.add(me);
 
-                    if (olis_status != null && olis_status.length() > 0) {
+                    if (olis_status != null && !olis_status.isEmpty()) {
                         me = new MeasurementsExt();
                         me.setMeasurementId(mId);
                         me.setKeyVal("olis_status");
@@ -307,7 +307,7 @@ public class Hl7textResultsData {
                         measurementsExts.add(me);
                     }
 
-                    if (unit != null && unit.length() > 0) {
+                    if (unit != null && !unit.isEmpty()) {
                         me = new MeasurementsExt();
                         me.setMeasurementId(mId);
                         me.setKeyVal("unit");
@@ -315,7 +315,7 @@ public class Hl7textResultsData {
                         measurementsExts.add(me);
                     }
 
-                    if (refRange[0].length() > 0) {
+                    if (!refRange[0].isEmpty()) {
                         me = new MeasurementsExt();
                         me.setMeasurementId(mId);
                         me.setKeyVal("range");
@@ -324,14 +324,14 @@ public class Hl7textResultsData {
                     } else {
 
 
-                        if (refRange[1].length() > 0) {
+                        if (!refRange[1].isEmpty()) {
                             me = new MeasurementsExt();
                             me.setMeasurementId(mId);
                             me.setKeyVal("minimum");
                             me.setVal(refRange[1]);
                             measurementsExts.add(me);
                         }
-                        if (refRange[2].length() > 0) {
+                        if (!refRange[2].isEmpty()) {
                             me = new MeasurementsExt();
                             me.setMeasurementId(mId);
                             me.setKeyVal("maximum");
@@ -378,7 +378,7 @@ public class Hl7textResultsData {
 
         //nothing but itself was found, but we have a special case for glucose tolerance tests
         //they come in with different accessions but same filler order no.
-        if (self != null && ret.length() > 0 && ret.substring(1).indexOf(",") == -1) {
+        if (self != null && !ret.isEmpty() && ret.substring(1).indexOf(",") == -1) {
             ret = "";
             for (Hl7TextInfo info : hl7TxtInfoDao.findByFillerOrderNumber(self.getFillerOrderNum())) {
                 ret = ret + "," + info.getLabNumber();
@@ -864,7 +864,7 @@ public class Hl7textResultsData {
         String[] refRange = {"", "", ""};
         String numeric = "-. 0123456789";
         boolean textual = false;
-        if (refRangeTxt == null || refRangeTxt.length() == 0) return refRange;
+        if (refRangeTxt == null || refRangeTxt.isEmpty()) return refRange;
 
         for (int i = 0; i < refRangeTxt.length(); i++) {
             if (!numeric.contains(refRangeTxt.subSequence(i, i + 1))) {

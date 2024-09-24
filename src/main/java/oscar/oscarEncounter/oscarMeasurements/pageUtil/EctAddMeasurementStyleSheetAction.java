@@ -102,7 +102,7 @@ public class EctAddMeasurementStyleSheetAction extends Action {
         try {
 
             List<MeasurementCSSLocation> locs = dao.findByLocation(file.getFileName());
-            if (locs.size() > 0)
+            if (!locs.isEmpty())
                 return false;
 
 

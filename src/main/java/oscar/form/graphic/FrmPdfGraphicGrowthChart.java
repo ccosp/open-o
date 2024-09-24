@@ -74,7 +74,7 @@ public final class FrmPdfGraphicGrowthChart extends FrmPdfGraphic {
 
     private boolean isDigit(String str) {
         boolean ret = true;
-        if (str == null || str.length() == 0)
+        if (str == null || str.isEmpty())
             return false;
 
         int N = str.length();
@@ -93,7 +93,7 @@ public final class FrmPdfGraphicGrowthChart extends FrmPdfGraphic {
 
     private boolean isDigitNum(String str) {
         boolean ret = true;
-        if (str == null || str.length() == 0)
+        if (str == null || str.isEmpty())
             return false;
 
         String[] sb = str.split("[0-9.]");

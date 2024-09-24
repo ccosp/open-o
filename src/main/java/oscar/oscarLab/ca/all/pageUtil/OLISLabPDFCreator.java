@@ -901,7 +901,7 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
             cell.setPhrase(new Phrase(handler.getOrderingFacilityName(), font));
             rInfoTable.addCell(cell);
 
-            if (address != null && address.size() > 0) {
+            if (address != null && !address.isEmpty()) {
                 cell.setPhrase(new Phrase("Address: ", boldFont));
                 rInfoTable.addCell(cell);
                 cell.setPhrase(new Phrase(getFullAddress(handler.getOrderingFacilityAddress()), font));
@@ -915,7 +915,7 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
         rInfoTable.addCell(cell);
 
         address = handler.getOrderingProviderAddress();
-        if (address != null && address.size() > 0) {
+        if (address != null && !address.isEmpty()) {
             cell.setPhrase(new Phrase("Address: ", boldFont));
             rInfoTable.addCell(cell);
             fullAddress = getFullAddress(handler.getOrderingProviderAddress());
@@ -959,7 +959,7 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
             rInfoTable.addCell(cell);
             //Creates the format for the address and adds it
             address = handler.getPerformingFacilityAddress();
-            if (address != null && address.size() > 0) {
+            if (address != null && !address.isEmpty()) {
                 cell.setPhrase(new Phrase("Address: ", boldFont));
                 rInfoTable.addCell(cell);
                 fullAddress = getFullAddress(address);
@@ -978,7 +978,7 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
 
             //Creates the format for the address and adds it
             address = handler.getReportingFacilityAddress();
-            if (address != null && address.size() > 0) {
+            if (address != null && !address.isEmpty()) {
                 cell.setPhrase(new Phrase("Address: ", boldFont));
                 rInfoTable.addCell(cell);
 
@@ -1116,7 +1116,7 @@ public class OLISLabPDFCreator extends PdfPageEventHelper {
     }
 
     public boolean stringIsNullOrEmpty(String s) {
-        return s == null || s.trim().length() == 0;
+        return s == null || s.trim().isEmpty();
     }
 
     public String getFullAddress(HashMap<String, String> address) {

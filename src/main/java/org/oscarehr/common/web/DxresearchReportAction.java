@@ -96,7 +96,7 @@ public class DxresearchReportAction extends DispatchAction {
         List codeSearch = (List) request.getSession().getAttribute("codeSearch");
         List patientInfo = dxresearchdao.patientRegistedAll(codeSearch, providerNoList);
         request.getSession().setAttribute("listview", patientInfo);
-        if (patientInfo == null || patientInfo.size() == 0) {
+        if (patientInfo == null || patientInfo.isEmpty()) {
             request.getSession().setAttribute("Counter", 0);
         } else
             request.getSession().setAttribute("Counter", patientInfo.size());
@@ -155,7 +155,7 @@ public class DxresearchReportAction extends DispatchAction {
         List codeSearch = (List) request.getSession().getAttribute("codeSearch");
         List patientInfo = dxresearchdao.patientRegistedDistincted(codeSearch, providerNoList);
         request.getSession().setAttribute("listview", patientInfo);
-        if (patientInfo == null || patientInfo.size() == 0) {
+        if (patientInfo == null || patientInfo.isEmpty()) {
             request.getSession().setAttribute("Counter", 0);
         } else
             request.getSession().setAttribute("Counter", patientInfo.size());
@@ -187,7 +187,7 @@ public class DxresearchReportAction extends DispatchAction {
         List codeSearch = (List) request.getSession().getAttribute("codeSearch");
         List patientInfo = dxresearchdao.patientRegistedDeleted(codeSearch, providerNoList);
         request.getSession().setAttribute("listview", patientInfo);
-        if (patientInfo == null || patientInfo.size() == 0) {
+        if (patientInfo == null || patientInfo.isEmpty()) {
             request.getSession().setAttribute("Counter", 0);
         } else
             request.getSession().setAttribute("Counter", patientInfo.size());
@@ -209,7 +209,7 @@ public class DxresearchReportAction extends DispatchAction {
         List codeSearch = (List) request.getSession().getAttribute("codeSearch");
         List patientInfo = dxresearchdao.patientRegistedActive(codeSearch, providerNoList);
         request.getSession().setAttribute("listview", patientInfo);
-        if (patientInfo == null || patientInfo.size() == 0) {
+        if (patientInfo == null || patientInfo.isEmpty()) {
             request.getSession().setAttribute("Counter", 0);
         } else
             request.getSession().setAttribute("Counter", patientInfo.size());
@@ -231,7 +231,7 @@ public class DxresearchReportAction extends DispatchAction {
         List codeSearch = (List) request.getSession().getAttribute("codeSearch");
         List patientInfo = dxresearchdao.patientRegistedResolve(codeSearch, providerNoList);
         request.getSession().setAttribute("listview", patientInfo);
-        if (patientInfo == null || patientInfo.size() == 0) {
+        if (patientInfo == null || patientInfo.isEmpty()) {
             request.getSession().setAttribute("Counter", 0);
         } else
             request.getSession().setAttribute("Counter", patientInfo.size());
@@ -297,7 +297,7 @@ public class DxresearchReportAction extends DispatchAction {
 
         List existcodeSearch = null;
 
-        if (request.getSession().getAttribute("codeSearch") != null && ((List) (request.getSession().getAttribute("codeSearch"))).size() > 0) {
+        if (request.getSession().getAttribute("codeSearch") != null && !((List) (request.getSession().getAttribute("codeSearch"))).isEmpty()) {
             existcodeSearch = (List) (request.getSession().getAttribute("codeSearch"));
             existcodeSearch.clear();
         }

@@ -117,7 +117,7 @@ public class OLISPoller {
                     break;
                 }
                 List<String> resultsList = olisPoller.parsePollResults(response);
-                if (resultsList.size() == 0) {
+                if (resultsList.isEmpty()) {
                     continue;
                 }
                 olisPoller.importResults(loggedInInfo, resultsList);
@@ -171,7 +171,7 @@ public class OLISPoller {
                 return;
             }
             List<String> resultsList = olisPoller.parsePollResults(response);
-            if (resultsList.size() == 0) {
+            if (resultsList.isEmpty()) {
                 return;
             }
             olisPoller.importResults(loggedInInfo, resultsList);

@@ -121,7 +121,7 @@ public class InboxManagerImpl implements InboxManager {
         String roleName = "";
         List<SecUserRole> roles = secUserRoleDao.getUserRoles(searchProviderNo);
         for (SecUserRole r : roles) {
-            if (roleName.length() == 0) {
+            if (roleName.isEmpty()) {
                 roleName = r.getRoleName();
 
             } else {

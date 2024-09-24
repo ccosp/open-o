@@ -471,7 +471,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
 
                     log.debug(" meas " + item_type + "  size " + rs.size());
 
-                    if (rs.size() > 0) {
+                    if (!rs.isEmpty()) {
                         item.setTargetColour(rs);
                     }
 
@@ -493,7 +493,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
         public int numSibling = -1;
 
         public Node getFirstChild() {
-            if (children != null && children.size() > 0) {
+            if (children != null && !children.isEmpty()) {
                 numSibling = 0;
                 return children.get(numSibling);
             }
@@ -562,7 +562,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
                 d.setTopHTMLFileName(root.getAttribute("top_HTML").getValue());
             }
 
-            if (root.getAttribute("ds_rules") != null && root.getAttribute("ds_rules").getValue().length() > 0) {
+            if (root.getAttribute("ds_rules") != null && !root.getAttribute("ds_rules").getValue().isEmpty()) {
                 d.loadRuleBase(root.getAttribute("ds_rules").getValue());
             }
             if (root.getAttribute("dxcode_triggers") != null) {
@@ -769,7 +769,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
 
     public MeasurementFlowSheet getFlowSheet(String flowsheetName, List<FlowSheetCustomization> list) {
         log.debug("IN CUSTOMIZED FLOWSHEET ");
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             log.debug("IN CUSTOMIZED FLOWSHEET " + list.size());
             try {
                 MeasurementFlowSheet personalizedFlowsheet = makeNewFlowsheet(getFlowSheet(flowsheetName));
@@ -778,7 +778,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
                     if (FlowSheetCustomization.ADD.equals(cust.getAction())) {
                         log.debug(" CUST ADDING");
                         FlowSheetItem item = getItemFromString(cust.getPayload());
-                        if (item.getTargetColour() != null && item.getTargetColour().size() > 0) {
+                        if (item.getTargetColour() != null && !item.getTargetColour().isEmpty()) {
                             RuleBase rb = personalizedFlowsheet.loadMeasuremntRuleBase(item.getTargetColour());
                             item.setRuleBase(rb);
                         }
@@ -786,7 +786,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
                     } else if (FlowSheetCustomization.UPDATE.equals(cust.getAction())) {
                         log.debug(" CUST UPDATING");
                         FlowSheetItem item = getItemFromString(cust.getPayload());
-                        if (item.getTargetColour() != null && item.getTargetColour().size() > 0) {
+                        if (item.getTargetColour() != null && !item.getTargetColour().isEmpty()) {
                             RuleBase rb = personalizedFlowsheet.loadMeasuremntRuleBase(item.getTargetColour());
                             item.setRuleBase(rb);
                         }
@@ -945,7 +945,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
 
             log.debug(" meas " + h.get("measurement_type") + "  size " + rs.size());
 
-            if (rs.size() > 0) {
+            if (!rs.isEmpty()) {
                 item.setTargetColour(rs);
 
             }

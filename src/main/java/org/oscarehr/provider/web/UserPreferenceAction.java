@@ -549,7 +549,7 @@ public class UserPreferenceAction extends DispatchAction {
         ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
         List<String> teams = providerDao.getUniqueTeams();
         for (String team : teams) {
-            if (team.length() > 0) {
+            if (!team.isEmpty()) {
                 results.add(new LabelValueBean(team, team));
             }
         }

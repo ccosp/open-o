@@ -200,7 +200,7 @@ public class AppointmentMainBean {
         } else {
             sqlQuery = dbSQL.getDef(dboperation, "");
             //works with only one " like ?"
-            if (aKeyword.length() < 1) {
+            if (aKeyword.isEmpty()) {
                 int iIndex1 = sqlQuery.indexOf("like");
                 if (iIndex1 > 0) {
                     String str1 = sqlQuery.substring(0, iIndex1 - 1).trim();

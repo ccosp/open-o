@@ -174,7 +174,7 @@ public class EFormUtil {
     public static ArrayList<HashMap<String, ? extends Object>> listEForms(String sortBy, String deleted, String userRoles) {
         ArrayList<HashMap<String, ? extends Object>> results = new ArrayList<HashMap<String, ? extends Object>>();
         ArrayList<HashMap<String, ? extends Object>> eForms = listEForms(sortBy, deleted);
-        if (eForms.size() > 0) {
+        if (!eForms.isEmpty()) {
             for (int i = 0; i < eForms.size(); i++) {
                 HashMap<String, ? extends Object> curForm = eForms.get(i);
                 // filter eform by role type
@@ -1457,11 +1457,11 @@ public class EFormUtil {
 
         String content = contents.get(0).trim();
 
-        while (content.length() > 0 && Character.isWhitespace(content.charAt(0))) {
+        while (!content.isEmpty() && Character.isWhitespace(content.charAt(0))) {
             content = content.substring(1);
             content = content.trim();
         }
-        while (content.length() > 0 && Character.isWhitespace(content.charAt(content.length() - 1))) {
+        while (!content.isEmpty() && Character.isWhitespace(content.charAt(content.length() - 1))) {
             content = content.substring(0, content.length() - 1);
             content = content.trim();
         }

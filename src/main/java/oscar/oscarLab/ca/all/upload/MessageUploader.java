@@ -140,7 +140,7 @@ public final class MessageUploader {
                 if (chartNo != null) {
                     //let's get the hin
                     List<Demographic> clients = demographicManager.getDemosByChartNo(loggedInInfo, chartNo);
-                    if (clients != null && clients.size() > 0) {
+                    if (clients != null && !clients.isEmpty()) {
                         hin = clients.get(0).getHin();
                     }
                 }
@@ -188,7 +188,7 @@ public final class MessageUploader {
         ArrayList<String> disciplineArray = h.getHeaders();
         String next = "";
 
-        if (disciplineArray != null && disciplineArray.size() > 0) {
+        if (disciplineArray != null && !disciplineArray.isEmpty()) {
             next = disciplineArray.get(0);
         }
 
@@ -223,7 +223,7 @@ public final class MessageUploader {
 
         if (isTDIS) {
             List<Hl7TextInfo> matchingTdisLab = hl7TextInfoDao.searchByFillerOrderNumber(fillerOrderNum, sendingFacility);
-            if (matchingTdisLab.size() > 0) {
+            if (!matchingTdisLab.isEmpty()) {
 
                 hl7TextMessageDao.updateIfFillerOrderNumberMatches(new String(Base64.encodeBase64(hl7Body.getBytes(MiscUtils.DEFAULT_UTF8_ENCODING)), MiscUtils.DEFAULT_UTF8_ENCODING), fileId, matchingTdisLab.get(0).getLabNumber());
 
@@ -328,7 +328,7 @@ public final class MessageUploader {
                 List<Provider> provList = providerDao.getProviderLikeFirstLastName("%" + firstLastName[0] + "%", firstLastName[firstLastName.length - 1]);
                 if (provList != null) {
                     int provIndex = findProviderWithShortestFirstName(provList);
-                    if (provIndex != -1 && provList.size() >= 1 && !provList.get(provIndex).getProviderNo().equals("0")) {
+                    if (provIndex != -1 && !provList.isEmpty() && !provList.get(provIndex).getProviderNo().equals("0")) {
                         docNums.add(provList.get(provIndex).getProviderNo());
                         //logger.debug("ADDED1: " + provList.get(provIndex).getProviderNo());
                     } else {
@@ -382,7 +382,7 @@ public final class MessageUploader {
         String sqlOrderByLength = "";
         String sqlSearchOn = "ohip_no";
 
-        if (search_on != null && search_on.length() > 0) {
+        if (search_on != null && !search_on.isEmpty()) {
             sqlSearchOn = search_on;
         }
 
@@ -418,7 +418,7 @@ public final class MessageUploader {
                     pstmt.close();
 
                     String otherIdMatchKey = OscarProperties.getInstance().getProperty("lab.other_id_matching", "");
-                    if (otherIdMatchKey.length() > 0) {
+                    if (!otherIdMatchKey.isEmpty()) {
                         OtherId otherId = OtherIdManager.searchTable(OtherIdManager.PROVIDER, otherIdMatchKey, (String) docNums.get(i));
                         if (otherId != null) {
                             providerNums.add(otherId.getTableId());
@@ -431,7 +431,7 @@ public final class MessageUploader {
 
 
         ProviderLabRouting routing = new ProviderLabRouting();
-        if (providerNums.size() > 0) {
+        if (!providerNums.isEmpty()) {
             for (String provider_no : providerNums) {
                 routing.route(labId, provider_no, conn, "HL7");
             }

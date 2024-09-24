@@ -294,11 +294,11 @@ public class ExtractBean implements Serializable {
     }
 
     private void checkHeader2() {
-        if (hcHin.length() == 0 || hcHin.length() > 12)
+        if (hcHin.isEmpty() || hcHin.length() > 12)
             errorPartMsg += "Header2: Reg. No. wrong!<br>";
-        if (hcLast.length() == 0)
+        if (hcLast.isEmpty())
             errorPartMsg += "Header2: Patient's Lastname wrong!<br>";
-        if (hcFirst.length() == 0)
+        if (hcFirst.isEmpty())
             errorPartMsg += "Header2: Patient's Firstname wrong!<br>";
         if (!(demoSex.equals("1") || demoSex.equals("2")))
             errorPartMsg += "Header2: Patient's Sex Code wrong! (1 or 2)<br>";
@@ -324,7 +324,7 @@ public class ExtractBean implements Serializable {
 
     private String printErrorPartMsg() {
         String ret = "";
-        ret = errorPartMsg.length() > 0 ? ("\n<tr bgcolor='yellow'><td colspan='8'><font color='red'>" + errorPartMsg + "</font></td></tr>")
+        ret = !errorPartMsg.isEmpty() ? ("\n<tr bgcolor='yellow'><td colspan='8'><font color='red'>" + errorPartMsg + "</font></td></tr>")
                 : "";
         errorPartMsg = "";
         return ret;

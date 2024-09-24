@@ -148,7 +148,7 @@ public class ManageDocumentAction extends DispatchAction {
         //Check to see if we have to route document to patient
         PatientLabRoutingDao patientLabRoutingDao = SpringUtils.getBean(PatientLabRoutingDao.class);
         List<PatientLabRouting> patientLabRoutingList = patientLabRoutingDao.findByLabNoAndLabType(Integer.parseInt(documentId), docType);
-        if (patientLabRoutingList == null || patientLabRoutingList.size() == 0) {
+        if (patientLabRoutingList == null || patientLabRoutingList.isEmpty()) {
             PatientLabRouting patientLabRouting = new PatientLabRouting();
             patientLabRouting.setDemographicNo(Integer.parseInt(demog));
             patientLabRouting.setLabNo(Integer.parseInt(documentId));
@@ -848,7 +848,7 @@ public class ManageDocumentAction extends DispatchAction {
         Locale locale = request.getLocale();
 
         String annotation = "", acknowledgement = "", tickler = "";
-        if (doc_no != null && doc_no.length() > 0) {
+        if (doc_no != null && !doc_no.isEmpty()) {
             annotation = EDocUtil.getHtmlAnnotation(doc_no);
             acknowledgement = EDocUtil.getHtmlAcknowledgement(locale, doc_no);
             if (acknowledgement == null) {
@@ -860,13 +860,13 @@ public class ManageDocumentAction extends DispatchAction {
         out.println("<!DOCTYPE html><html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>");
 
         if (viewAnnotationAcknowledgementTicklerFlag) {
-            if (annotation.length() > 0) {
+            if (!annotation.isEmpty()) {
                 out.println(annotation);
             }
-            if (tickler.length() > 0) {
+            if (!tickler.isEmpty()) {
                 out.println(tickler + "<br>");
             }
-            if (acknowledgement.length() > 0) {
+            if (!acknowledgement.isEmpty()) {
                 out.println(acknowledgement + "<br>");
             }
         }

@@ -138,8 +138,8 @@ public class ProductDispensingService extends AbstractServiceImpl {
                                                   @QueryParam("availableOnly") boolean availableOnly) {
         List<DrugProduct> results = null;
 
-        int count = drugProductManager.getAllDrugProductsByNameAndLotCount(getLoggedInInfo(), limitByName, limitByLot, (limitByLocation != null && limitByLocation.length() > 0) ? Integer.valueOf(limitByLocation) : null, availableOnly);
-        results = drugProductManager.getAllDrugProductsByNameAndLot(getLoggedInInfo(), offset, limit, limitByName, limitByLot, (limitByLocation != null && limitByLocation.length() > 0) ? Integer.valueOf(limitByLocation) : null, availableOnly);
+        int count = drugProductManager.getAllDrugProductsByNameAndLotCount(getLoggedInInfo(), limitByName, limitByLot, (limitByLocation != null && !limitByLocation.isEmpty()) ? Integer.valueOf(limitByLocation) : null, availableOnly);
+        results = drugProductManager.getAllDrugProductsByNameAndLot(getLoggedInInfo(), offset, limit, limitByName, limitByLot, (limitByLocation != null && !limitByLocation.isEmpty()) ? Integer.valueOf(limitByLocation) : null, availableOnly);
 
         DrugProductResponse response = new DrugProductResponse();
         for (DrugProduct result : results) {

@@ -101,7 +101,7 @@ public class FrmStudyXMLClientSend {
         //initial
         aStudy.init(args[0], args[1]);
         aStudy.getStudyContent();
-        if (aStudy.studyContent.size() == 0) {
+        if (aStudy.studyContent.isEmpty()) {
             return;
         }
 

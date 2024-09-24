@@ -73,7 +73,7 @@ public class CombinePDFAction extends Action {
                 filePath = Paths.get(path, filename);
                 alist.add(filePath.toAbsolutePath().toString());
             }
-            if (alist.size() > 0) {
+            if (!alist.isEmpty()) {
                 response.setContentType("application/pdf");  //octet-stream
                 if (ContentDisposition != null && ContentDisposition.equals("inline")) {
                     response.setHeader("Transfer-Encoding", "chunked");

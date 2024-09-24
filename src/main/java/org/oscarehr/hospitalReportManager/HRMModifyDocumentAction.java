@@ -96,7 +96,7 @@ public class HRMModifyDocumentAction extends DispatchAction {
             } else {
                 // This is a parent document so we need to find and disassociate all the children documents (if any)
                 List<HRMDocument> documentChildren = hrmDocumentDao.getAllChildrenOf(document.getId());
-                if (documentChildren != null && documentChildren.size() > 0) {
+                if (documentChildren != null && !documentChildren.isEmpty()) {
                     // If there's children, choose the first child (which has the earliest id) and mark its parent as null
                     HRMDocument newParentDoc = documentChildren.get(0);
                     newParentDoc.setParentReport(null);

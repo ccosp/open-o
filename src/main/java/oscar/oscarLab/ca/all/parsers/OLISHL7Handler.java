@@ -714,7 +714,7 @@ public class OLISHL7Handler implements MessageHandler {
     }
 
     private boolean stringIsNotNullOrEmpty(String value) {
-        return value != null && value.trim().length() > 0;
+        return value != null && !value.trim().isEmpty();
     }
 
     public ArrayList<HashMap<String, String>> getOrderingProviderPhones() {
@@ -814,7 +814,7 @@ public class OLISHL7Handler implements MessageHandler {
 
     public String getLastUpdateInOLIS() {
         String date = getLastUpdateInOLISUnformated();
-        if (date.length() > 0) return formatDateTime(date);
+        if (!date.isEmpty()) return formatDateTime(date);
         return "";
     }
 
@@ -1523,7 +1523,7 @@ public class OLISHL7Handler implements MessageHandler {
                 ident = getString(Terser.get(zbrSeg, 3, 0, 1, 1));
                 id = getString(Terser.get(zbrSeg, 3, 0, 6, 2));
             }
-            if (id != null && id.trim().length() > 0) {
+            if (id != null && !id.trim().isEmpty()) {
                 id = id.substring(id.indexOf(":") + 1);
             }
             return ident + " (" + id + ")";
@@ -1679,7 +1679,7 @@ public class OLISHL7Handler implements MessageHandler {
     public String getOBXObservationDate(int i, int j) {
         try {
             String date = getOBXField(i, j, 14, 0, 1);
-            if (date == null || date.trim().length() == 0) {
+            if (date == null || date.trim().isEmpty()) {
                 return "";
             }
             return formatDateTime(date);
@@ -2348,7 +2348,7 @@ public class OLISHL7Handler implements MessageHandler {
     public String getHomePhone() {
         try {
             String ext = getString(terser.get("/.PID-13-8"));
-            return (getString(terser.get("/.PID-13-6")) + "-" + getString(terser.get("/.PID-13-7")) + " " + (ext != null && ext.length() > 0 ? "x" : "") + ext);
+            return (getString(terser.get("/.PID-13-6")) + "-" + getString(terser.get("/.PID-13-7")) + " " + (ext != null && !ext.isEmpty() ? "x" : "") + ext);
         } catch (Exception e) {
             return ("");
         }
@@ -2358,7 +2358,7 @@ public class OLISHL7Handler implements MessageHandler {
     public String getWorkPhone() {
         try {
             String ext = getString(terser.get("/.PID-14-8"));
-            return (getString(terser.get("/.PID-14-6")) + "-" + getString(terser.get("/.PID-14-7")) + " " + (ext != null && ext.length() > 0 ? "x" : "") + ext);
+            return (getString(terser.get("/.PID-14-6")) + "-" + getString(terser.get("/.PID-14-7")) + " " + (ext != null && !ext.isEmpty() ? "x" : "") + ext);
         } catch (Exception e) {
             return ("");
         }

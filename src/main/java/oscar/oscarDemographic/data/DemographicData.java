@@ -353,18 +353,18 @@ public class DemographicData {
         demographic.setVer(ver);
         demographic.setRosterStatus(roster_status);
         demographic.setRosterEnrolledTo(rosterEnrolledTo);
-        if (roster_date != null && roster_date.length() > 0) {
+        if (roster_date != null && !roster_date.isEmpty()) {
             demographic.setRosterDate(formatter.parse(roster_date));
         }
-        if (roster_termination_date != null && roster_termination_date.length() > 0) {
+        if (roster_termination_date != null && !roster_termination_date.isEmpty()) {
             demographic.setRosterTerminationDate(formatter.parse(roster_termination_date));
         }
         demographic.setRosterTerminationReason(roster_termination_reason);
         demographic.setPatientStatus(patient_status);
-        if (patient_status_date != null && patient_status_date.length() > 0) {
+        if (patient_status_date != null && !patient_status_date.isEmpty()) {
             demographic.setPatientStatusDate(formatter.parse(patient_status_date));
         }
-        if (date_joined != null && date_joined.length() > 0) {
+        if (date_joined != null && !date_joined.isEmpty()) {
             demographic.setDateJoined(formatter.parse(date_joined));
         }
         demographic.setChartNo(chart_no);
@@ -372,15 +372,15 @@ public class DemographicData {
         demographic.setSpokenLanguage(spoken_lang);
         demographic.setProviderNo(provider_no);
         demographic.setSex(sex);
-        if (end_date != null && end_date.length() > 0) {
+        if (end_date != null && !end_date.isEmpty()) {
             demographic.setEndDate(formatter.parse(end_date));
         }
-        if (eff_date != null && eff_date.length() > 0) {
+        if (eff_date != null && !eff_date.isEmpty()) {
             demographic.setEffDate(formatter.parse(eff_date));
         }
         demographic.setPcnIndicator(pcn_indicator);
         demographic.setHcType(hc_type);
-        if (hc_renew_date != null && hc_renew_date.length() > 0) {
+        if (hc_renew_date != null && !hc_renew_date.isEmpty()) {
             demographic.setHcRenewDate(formatter.parse(hc_renew_date));
         }
         demographic.setFamilyDoctor(family_doctor);
@@ -406,10 +406,10 @@ public class DemographicData {
             demos = getDemographicWithHIN(loggedInInfo, hin);
         }
 
-        if (demos.size() == 0) { // Unique HIN
+        if (demos.isEmpty()) { // Unique HIN
             demos = null;
             demos = getDemographicWithLastFirstDOB(loggedInInfo, last_name, first_name, year_of_birth, month_of_birth, date_of_birth);
-            if (demos.size() != 0) {
+            if (!demos.isEmpty()) {
                 duplicateRecord = true;
                 ret.addWarning("Patient " + last_name + ", " + first_name + " DOB (" + year_of_birth + "-" + month_of_birth + "-" + date_of_birth + ") exists in database. Record not added");
             }

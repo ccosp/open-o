@@ -58,7 +58,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
         query.setParameter(0, ohipNumber);
 
         results = query.getResultList();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         // If we get here, there were no results
@@ -76,7 +76,7 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderData> implement
         @SuppressWarnings("unchecked")
         List<ProviderData> results = query.getResultList();
 
-        if (results.size() > 0) return results.get(0);
+        if (!results.isEmpty()) return results.get(0);
         return null;
     }
 

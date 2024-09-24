@@ -75,7 +75,7 @@ public class CaisiFormInstanceDaoImpl extends AbstractDaoImpl<CaisiFormInstance>
         query.setParameter(1, clientId);
         @SuppressWarnings("unchecked")
         List<CaisiFormInstance> result = query.getResultList();
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
             return result.get(0);
         }
         return null;

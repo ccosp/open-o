@@ -85,7 +85,7 @@ public class ProgramAccessDAOImpl extends HibernateDaoSupport implements Program
         List results = this.getHibernateTemplate().find(
                 "from ProgramAccess pa where pa.ProgramId = ? and pa.AccessTypeId = ?",
                 new Object[]{programId, accessTypeIdString});
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             result = (ProgramAccess) results.get(0);
         }
 

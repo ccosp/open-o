@@ -68,7 +68,7 @@ public class SecroleDaoImpl extends HibernateDaoSupport implements SecroleDao {
         }
 
         List lst = this.getHibernateTemplate().find("from Secrole r where r.roleName='" + roleName + "'");
-        if (lst != null && lst.size() > 0)
+        if (lst != null && !lst.isEmpty())
             result = (Secrole) lst.get(0);
 
         logger.debug("getRoleByName: roleName=" + roleName + ",found=" + (result != null));

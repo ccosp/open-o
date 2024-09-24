@@ -89,7 +89,7 @@ public class FrmGraphicAR {
     public String getWt(String weight) {
         weight = weight.trim();
         String ret = "";
-        if (weight.length() == 0) return "-1";
+        if (weight.isEmpty()) return "-1";
 
         int N = weight.length();
         StringBuilder sb = new StringBuilder(N);
@@ -99,7 +99,7 @@ public class FrmGraphicAR {
             else if (c >= '0' && c <= '9') sb.append(c);
             else break;
         }
-        ret = sb.toString().length() > 0 ? sb.toString() : "-1";
+        ret = !sb.toString().isEmpty() ? sb.toString() : "-1";
 
         return ret;
     }

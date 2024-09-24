@@ -58,7 +58,7 @@ public class ReportElementTag extends TagSupport {
 
         String answerArray[] = null;
 
-        if (getAnswerProps() != null && getAnswerProps().length() > 0) {
+        if (getAnswerProps() != null && !getAnswerProps().isEmpty()) {
             Properties p = new Properties();
             try {
                 p.load(getClass().getClassLoader().getResourceAsStream("streethealth_report.properties"));
@@ -82,7 +82,7 @@ public class ReportElementTag extends TagSupport {
         int idx = 0;
         for (String answer : answerArray) {
             try {
-                if (idx == 0 && num.length() > 0) {
+                if (idx == 0 && !num.isEmpty()) {
                     out.print("\"" + num + "\"");
                 } else {
                     out.print("\"\"");
@@ -131,7 +131,7 @@ public class ReportElementTag extends TagSupport {
 
         String answerArray[] = null;
 
-        if (getAnswerProps() != null && getAnswerProps().length() > 0) {
+        if (getAnswerProps() != null && !getAnswerProps().isEmpty()) {
             Properties p = new Properties();
             try {
                 p.load(getClass().getClassLoader().getResourceAsStream("streethealth_report.properties"));
@@ -156,7 +156,7 @@ public class ReportElementTag extends TagSupport {
         for (String answer : answerArray) {
             try {
                 out.println("<tr>");
-                if (idx == 0 && num.length() > 0) {
+                if (idx == 0 && !num.isEmpty()) {
                     out.println("<td>" + num + "</td>");
                 } else {
                     out.println("<td></td>");

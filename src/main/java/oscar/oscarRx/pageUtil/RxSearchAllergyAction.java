@@ -184,7 +184,7 @@ public final class RxSearchAllergyAction extends Action {
 
         if (itemsFound && includeClasses) {
 
-            if (classVec.size() > 0) {
+            if (!classVec.isEmpty()) {
                 Vector classVec2 = drugRef.list_drug_class(classVec);
 
 

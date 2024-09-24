@@ -193,19 +193,19 @@ public class WcbSb {
         }
 
         if (this.w_reporttype != null && this.w_reporttype.equals("F")) {
-            if (this.w_empname != null && this.w_empname.trim().length() == 0) {
+            if (this.w_empname != null && this.w_empname.trim().isEmpty()) {
                 m.append(": Employer's name can not be empty ");
             }
 
-            if (this.w_opaddress != null && this.w_opaddress.trim().length() == 0) {
+            if (this.w_opaddress != null && this.w_opaddress.trim().isEmpty()) {
                 m.append(": Employer's Operation Address can not be empty ");
             }
 
-            if (this.w_opcity != null && this.w_opcity.trim().length() == 0) {
+            if (this.w_opcity != null && this.w_opcity.trim().isEmpty()) {
                 m.append(": Employer's Operation City can not be empty ");
             }
 
-            if (this.w_empphone != null && this.w_empphone.trim().length() == 0) {
+            if (this.w_empphone != null && this.w_empphone.trim().isEmpty()) {
                 m.append(": Employer's Phone # can not be empty ");
             }
         }

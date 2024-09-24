@@ -106,11 +106,11 @@ public class SummaryOfActionsAndCommentsReportGenerator {
         List<SummaryOfActionsAndCommentsDomainBean> unknownCategory = reportBean.getUnknown();
 
         PdfPTable unmetTable = null;
-        if (unMetCategory.size() > 0) {
+        if (!unMetCategory.isEmpty()) {
             unmetTable = createNeedHeader("Unmet Needs");
         }
         for (SummaryOfActionsAndCommentsDomainBean domain : unMetCategory) {
-            if (domain.getOcanBeans().size() > 0) {
+            if (!domain.getOcanBeans().isEmpty()) {
                 createDomainHeader(unmetTable, domain.getDomainName());
                 for (SummaryOfActionsAndCommentsOCANBean ocanBean : domain.getOcanBeans()) {
                     createOcanEntry(unmetTable, ocanBean);
@@ -123,11 +123,11 @@ public class SummaryOfActionsAndCommentsReportGenerator {
         }
 
         PdfPTable metTable = null;
-        if (metCategory.size() > 0) {
+        if (!metCategory.isEmpty()) {
             metTable = createNeedHeader("Met Needs");
         }
         for (SummaryOfActionsAndCommentsDomainBean domain : metCategory) {
-            if (domain.getOcanBeans().size() > 0) {
+            if (!domain.getOcanBeans().isEmpty()) {
                 createDomainHeader(metTable, domain.getDomainName());
                 for (SummaryOfActionsAndCommentsOCANBean ocanBean : domain.getOcanBeans()) {
                     createOcanEntry(metTable, ocanBean);
@@ -140,11 +140,11 @@ public class SummaryOfActionsAndCommentsReportGenerator {
         }
 
         PdfPTable noTable = null;
-        if (noCategory.size() > 0) {
+        if (!noCategory.isEmpty()) {
             noTable = createNeedHeader("No Needs");
         }
         for (SummaryOfActionsAndCommentsDomainBean domain : noCategory) {
-            if (domain.getOcanBeans().size() > 0) {
+            if (!domain.getOcanBeans().isEmpty()) {
                 createDomainHeader(noTable, domain.getDomainName());
                 for (SummaryOfActionsAndCommentsOCANBean ocanBean : domain.getOcanBeans()) {
                     createOcanEntry(noTable, ocanBean);
@@ -158,11 +158,11 @@ public class SummaryOfActionsAndCommentsReportGenerator {
 
 
         PdfPTable unknownTable = null;
-        if (unknownCategory.size() > 0) {
+        if (!unknownCategory.isEmpty()) {
             unknownTable = createNeedHeader("Unknown");
         }
         for (SummaryOfActionsAndCommentsDomainBean domain : unknownCategory) {
-            if (domain.getOcanBeans().size() > 0) {
+            if (!domain.getOcanBeans().isEmpty()) {
                 createDomainHeader(unknownTable, domain.getDomainName());
                 for (SummaryOfActionsAndCommentsOCANBean ocanBean : domain.getOcanBeans()) {
                     createOcanEntry(unknownTable, ocanBean);

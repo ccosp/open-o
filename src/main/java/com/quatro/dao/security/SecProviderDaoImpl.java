@@ -98,7 +98,7 @@ public class SecProviderDaoImpl extends HibernateDaoSupport implements SecProvid
         try {
             String sql = "from SecProvider where id=? and status=?";
             List lst = this.getHibernateTemplate().find(sql, new Object[]{id, status});
-            if (lst.size() == 0)
+            if (lst.isEmpty())
                 return null;
             else
                 return (SecProvider) lst.get(0);

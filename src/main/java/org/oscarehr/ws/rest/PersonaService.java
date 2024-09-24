@@ -189,7 +189,7 @@ public class PersonaService extends AbstractServiceImpl {
             ProgramProviderTo1 ppTo = ppConverter.getAsTransferObject(getLoggedInInfo(), pp);
             result.setCurrentProgram(ppTo);
         } else {
-            if (result.getProgramDomain() != null && result.getProgramDomain().size() > 0) {
+            if (result.getProgramDomain() != null && !result.getProgramDomain().isEmpty()) {
                 result.setCurrentProgram(result.getProgramDomain().get(0));
             }
         }

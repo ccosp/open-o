@@ -55,7 +55,7 @@ public class FaxClientLogDaoImpl extends AbstractDaoImpl<FaxClientLog> implement
     @SuppressWarnings("unchecked")
     @Override
     public List<FaxClientLog> findClientLogbyFaxIds(List<Integer> faxIds) {
-        if (faxIds == null || faxIds.size() == 0) {
+        if (faxIds == null || faxIds.isEmpty()) {
             return Collections.emptyList();
         }
 

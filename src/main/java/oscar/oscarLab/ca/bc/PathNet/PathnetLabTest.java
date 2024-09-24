@@ -378,7 +378,7 @@ public class PathnetLabTest {
             if (headerResults == null) {
                 headerResults = new ArrayList<String>();
             }
-            if (headerResults.size() > 0) {
+            if (!headerResults.isEmpty()) {
                 String h = headerResults.get((headerResults.size() - 1));
 
                 if (h.equals(s.replaceAll("\\\\\\.br\\\\", "<br/>"))) {

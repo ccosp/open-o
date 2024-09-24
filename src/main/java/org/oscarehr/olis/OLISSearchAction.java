@@ -142,9 +142,9 @@ public class OLISSearchAction extends DispatchAction {
 
 
                 try {
-                    if (startTimePeriod != null && startTimePeriod.trim().length() > 0) {
+                    if (startTimePeriod != null && !startTimePeriod.trim().isEmpty()) {
                         Date startTime = DateUtils.parseDate(startTimePeriod, dateFormat);
-                        if (endTimePeriod != null && endTimePeriod.trim().length() > 0) {
+                        if (endTimePeriod != null && !endTimePeriod.trim().isEmpty()) {
                             Date endTime = changeToEndOfDay(DateUtils.parseDate(endTimePeriod, dateFormat));
 
                             List<Date> dateList = new LinkedList<Date>();
@@ -171,9 +171,9 @@ public class OLISSearchAction extends DispatchAction {
                 String observationEndTimePeriod = request.getParameter("observationEndTimePeriod");
 
                 try {
-                    if (observationStartTimePeriod != null && observationStartTimePeriod.trim().length() > 0) {
+                    if (observationStartTimePeriod != null && !observationStartTimePeriod.trim().isEmpty()) {
                         Date observationStartTime = DateUtils.parseDate(observationStartTimePeriod, dateFormat);
-                        if (observationEndTimePeriod != null && observationEndTimePeriod.trim().length() > 0) {
+                        if (observationEndTimePeriod != null && !observationEndTimePeriod.trim().isEmpty()) {
                             Date observationEndTime = changeToEndOfDay(DateUtils.parseDate(observationEndTimePeriod, dateFormat));
 
                             List<Date> dateList = new LinkedList<Date>();
@@ -200,7 +200,7 @@ public class OLISSearchAction extends DispatchAction {
                 String quantityLimit = request.getParameter("quantityLimit");
 
                 try {
-                    if (quantityLimitedQuery != null && quantityLimitedQuery.trim().length() > 0) {
+                    if (quantityLimitedQuery != null && !quantityLimitedQuery.trim().isEmpty()) {
                         // Checked
                         ((Z01Query) query).setQuantityLimitedRequest(new QRD7(Integer.parseInt(quantityLimit)));
                     }
@@ -211,49 +211,49 @@ public class OLISSearchAction extends DispatchAction {
 
                 String blockedInformationConsent = request.getParameter("blockedInformationConsent");
 
-                if (blockedInformationConsent != null && blockedInformationConsent.trim().length() > 0) {
+                if (blockedInformationConsent != null && !blockedInformationConsent.trim().isEmpty()) {
                     ((Z01Query) query).setConsentToViewBlockedInformation(new ZPD1(blockedInformationConsent));
                 }
 
 
                 String consentBlockAllIndicator = request.getParameter("consentBlockAllIndicator");
 
-                if (consentBlockAllIndicator != null && consentBlockAllIndicator.trim().length() > 0) {
+                if (consentBlockAllIndicator != null && !consentBlockAllIndicator.trim().isEmpty()) {
                     ((Z01Query) query).setPatientConsentBlockAllIndicator(new ZPD3("Y"));
                 }
 
 
                 String specimenCollector = request.getParameter("specimenCollector");
 
-                if (specimenCollector != null && specimenCollector.trim().length() > 0) {
+                if (specimenCollector != null && !specimenCollector.trim().isEmpty()) {
                     ((Z01Query) query).setSpecimenCollector(new ZBR3(specimenCollector, "ISO"));
                 }
 
 
                 String performingLaboratory = request.getParameter("performingLaboratory");
 
-                if (performingLaboratory != null && performingLaboratory.trim().length() > 0) {
+                if (performingLaboratory != null && !performingLaboratory.trim().isEmpty()) {
                     ((Z01Query) query).setPerformingLaboratory(new ZBR6(performingLaboratory, "ISO"));
                 }
 
 
                 String excludePerformingLaboratory = request.getParameter("excludePerformingLaboratory");
 
-                if (excludePerformingLaboratory != null && excludePerformingLaboratory.trim().length() > 0) {
+                if (excludePerformingLaboratory != null && !excludePerformingLaboratory.trim().isEmpty()) {
                     ((Z01Query) query).setExcludePerformingLaboratory(new ZBE6(excludePerformingLaboratory, "ISO"));
                 }
 
 
                 String reportingLaboratory = request.getParameter("reportingLaboratory");
 
-                if (reportingLaboratory != null && reportingLaboratory.trim().length() > 0) {
+                if (reportingLaboratory != null && !reportingLaboratory.trim().isEmpty()) {
                     ((Z01Query) query).setReportingLaboratory(new ZBR4(reportingLaboratory, "ISO"));
                 }
 
 
                 String excludeReportingLaboratory = request.getParameter("excludeReportingLaboratory");
 
-                if (excludeReportingLaboratory != null && excludeReportingLaboratory.trim().length() > 0) {
+                if (excludeReportingLaboratory != null && !excludeReportingLaboratory.trim().isEmpty()) {
                     ((Z01Query) query).setExcludeReportingLaboratory(new ZBE4(excludeReportingLaboratory, "ISO"));
                 }
 
@@ -262,7 +262,7 @@ public class OLISSearchAction extends DispatchAction {
                 String demographicNo = request.getParameter("demographic");
                 query.setDemographicNo(demographicNo);
                 try {
-                    if (demographicNo != null && demographicNo.trim().length() > 0) {
+                    if (demographicNo != null && !demographicNo.trim().isEmpty()) {
                         Demographic demo = demographicDao.getDemographic(demographicNo);
 
                         PID3 pid3 = new PID3(demo.getHin(), null, null, "JHN", demo.getHcType(), "HL70347", demo.getSex(), null);
@@ -279,7 +279,7 @@ public class OLISSearchAction extends DispatchAction {
                 String requestingHicProviderNo = request.getParameter("requestingHic");
 
                 try {
-                    if (requestingHicProviderNo != null && requestingHicProviderNo.trim().length() > 0) {
+                    if (requestingHicProviderNo != null && !requestingHicProviderNo.trim().isEmpty()) {
                         Provider provider = providerDao.getProvider(requestingHicProviderNo);
 
                         ZRP1 zrp1 = new ZRP1(provider.getPractitionerNo(), userPropertyDAO.getStringValue(provider.getProviderNo(), UserProperty.OFFICIAL_OLIS_IDTYPE), "ON", "HL70347",
@@ -298,7 +298,7 @@ public class OLISSearchAction extends DispatchAction {
                 String orderingPractitionerProviderNo = request.getParameter("orderingPractitioner");
 
                 try {
-                    if (orderingPractitionerProviderNo != null && orderingPractitionerProviderNo.trim().length() > 0) {
+                    if (orderingPractitionerProviderNo != null && !orderingPractitionerProviderNo.trim().isEmpty()) {
                         OBR16 obr16 = new OBR16(orderingPractitionerProviderNo, "MDL", "ON", "HL70347");
 
                         ((Z01Query) query).setOrderingPractitioner(obr16);
@@ -311,7 +311,7 @@ public class OLISSearchAction extends DispatchAction {
                 String copiedToPractitionerProviderNo = request.getParameter("copiedToPractitioner");
 
                 try {
-                    if (copiedToPractitionerProviderNo != null && copiedToPractitionerProviderNo.trim().length() > 0) {
+                    if (copiedToPractitionerProviderNo != null && !copiedToPractitionerProviderNo.trim().isEmpty()) {
                         OBR28 obr28 = new OBR28(copiedToPractitionerProviderNo, "MDL", "ON", "HL70347");
 
                         ((Z01Query) query).setCopiedToPractitioner(obr28);
@@ -324,7 +324,7 @@ public class OLISSearchAction extends DispatchAction {
                 String attendingPractitionerProviderNo = request.getParameter("attendingPractitioner");
 
                 try {
-                    if (attendingPractitionerProviderNo != null && attendingPractitionerProviderNo.trim().length() > 0) {
+                    if (attendingPractitionerProviderNo != null && !attendingPractitionerProviderNo.trim().isEmpty()) {
                         PV17 pv17 = new PV17(attendingPractitionerProviderNo, "MDL", "ON", "HL70347");
 
                         ((Z01Query) query).setAttendingPractitioner(pv17);
@@ -337,7 +337,7 @@ public class OLISSearchAction extends DispatchAction {
                 String admittingPractitionerProviderNo = request.getParameter("admittingPractitioner");
 
                 try {
-                    if (admittingPractitionerProviderNo != null && admittingPractitionerProviderNo.trim().length() > 0) {
+                    if (admittingPractitionerProviderNo != null && !admittingPractitionerProviderNo.trim().isEmpty()) {
                         PV117 pv117 = new PV117(admittingPractitionerProviderNo, "MDL", "ON", "HL70347");
 
                         ((Z01Query) query).setAdmittingPractitioner(pv117);
@@ -401,7 +401,7 @@ public class OLISSearchAction extends DispatchAction {
                 String retrieveAllResults = request.getParameter("retrieveAllResults");
 
                 try {
-                    if (retrieveAllResults != null && retrieveAllResults.trim().length() > 0) {
+                    if (retrieveAllResults != null && !retrieveAllResults.trim().isEmpty()) {
                         // Checked
                         ((Z02Query) query).setRetrieveAllTestResults(new ZBX1("*"));
                     }
@@ -412,14 +412,14 @@ public class OLISSearchAction extends DispatchAction {
 
                 String blockedInformationConsent = request.getParameter("blockedInformationConsent");
 
-                if (blockedInformationConsent != null && blockedInformationConsent.trim().length() > 0) {
+                if (blockedInformationConsent != null && !blockedInformationConsent.trim().isEmpty()) {
                     ((Z02Query) query).setConsentToViewBlockedInformation(new ZPD1(blockedInformationConsent));
                 }
 
 
                 String consentBlockAllIndicator = request.getParameter("consentBlockAllIndicator");
 
-                if (consentBlockAllIndicator != null && consentBlockAllIndicator.trim().length() > 0) {
+                if (consentBlockAllIndicator != null && !consentBlockAllIndicator.trim().isEmpty()) {
                     ((Z02Query) query).setPatientConsentBlockAllIndicator(new ZPD3("Y"));
                 }
 
@@ -428,7 +428,7 @@ public class OLISSearchAction extends DispatchAction {
                 String requestingHicProviderNo = request.getParameter("requestingHic");
 
                 try {
-                    if (requestingHicProviderNo != null && requestingHicProviderNo.trim().length() > 0) {
+                    if (requestingHicProviderNo != null && !requestingHicProviderNo.trim().isEmpty()) {
                         Provider provider = providerDao.getProvider(requestingHicProviderNo);
 
                         ZRP1 zrp1 = new ZRP1(provider.getPractitionerNo(), "MDL", "ON", "HL70347",
@@ -448,7 +448,7 @@ public class OLISSearchAction extends DispatchAction {
                 query.setDemographicNo(demographicNo);
 
                 try {
-                    if (demographicNo != null && demographicNo.trim().length() > 0) {
+                    if (demographicNo != null && !demographicNo.trim().isEmpty()) {
                         Demographic demo = demographicDao.getDemographic(demographicNo);
 
                         PID3 pid3 = new PID3(demo.getHin(), null, null, "JHN", demo.getHcType(), "HL70347", demo.getSex(), null);
@@ -492,9 +492,9 @@ public class OLISSearchAction extends DispatchAction {
                 String endTimePeriod = request.getParameter("endTimePeriod");
 
                 try {
-                    if (startTimePeriod != null && startTimePeriod.trim().length() > 0) {
+                    if (startTimePeriod != null && !startTimePeriod.trim().isEmpty()) {
                         Date startTime = DateUtils.parseDate(startTimePeriod, dateFormat);
-                        if (endTimePeriod != null && endTimePeriod.trim().length() > 0) {
+                        if (endTimePeriod != null && !endTimePeriod.trim().isEmpty()) {
                             Date endTime = changeToEndOfDay(DateUtils.parseDate(endTimePeriod, dateFormat));
 
                             List<Date> dateList = new LinkedList<Date>();
@@ -521,7 +521,7 @@ public class OLISSearchAction extends DispatchAction {
                 String quantityLimit = request.getParameter("quantityLimit");
 
                 try {
-                    if (quantityLimitedQuery != null && quantityLimitedQuery.trim().length() > 0) {
+                    if (quantityLimitedQuery != null && !quantityLimitedQuery.trim().isEmpty()) {
                         // Checked
                         ((Z04Query) query).setQuantityLimitedRequest(new QRD7(Integer.parseInt(quantityLimit)));
                     }
@@ -534,7 +534,7 @@ public class OLISSearchAction extends DispatchAction {
                 String requestingHicProviderNo = request.getParameter("requestingHic");
 
                 try {
-                    if (requestingHicProviderNo != null && requestingHicProviderNo.trim().length() > 0) {
+                    if (requestingHicProviderNo != null && !requestingHicProviderNo.trim().isEmpty()) {
                         Provider provider = providerDao.getProvider(requestingHicProviderNo);
 
                         ZRP1 zrp1 = new ZRP1(provider.getPractitionerNo(), "MDL", "ON", "HL70347",
@@ -575,9 +575,9 @@ public class OLISSearchAction extends DispatchAction {
                 String endTimePeriod = request.getParameter("endTimePeriod");
 
                 try {
-                    if (startTimePeriod != null && startTimePeriod.trim().length() > 0) {
+                    if (startTimePeriod != null && !startTimePeriod.trim().isEmpty()) {
                         Date startTime = DateUtils.parseDate(startTimePeriod, dateFormat);
-                        if (endTimePeriod != null && endTimePeriod.trim().length() > 0) {
+                        if (endTimePeriod != null && !endTimePeriod.trim().isEmpty()) {
                             Date endTime = changeToEndOfDay(DateUtils.parseDate(endTimePeriod, dateFormat));
 
                             List<Date> dateList = new LinkedList<Date>();
@@ -604,7 +604,7 @@ public class OLISSearchAction extends DispatchAction {
                 String quantityLimit = request.getParameter("quantityLimit");
 
                 try {
-                    if (quantityLimitedQuery != null && quantityLimitedQuery.trim().length() > 0) {
+                    if (quantityLimitedQuery != null && !quantityLimitedQuery.trim().isEmpty()) {
                         // Checked
                         ((Z05Query) query).setQuantityLimitedRequest(new QRD7(Integer.parseInt(quantityLimit)));
                     }
@@ -615,7 +615,7 @@ public class OLISSearchAction extends DispatchAction {
 
                 String destinationLaboratory = request.getParameter("destinationLaboratory");
 
-                if (destinationLaboratory != null && destinationLaboratory.trim().length() > 0) {
+                if (destinationLaboratory != null && !destinationLaboratory.trim().isEmpty()) {
                     ((Z05Query) query).setDestinationLaboratory(new ZBR8(destinationLaboratory, "ISO"));
                 }
 
@@ -627,9 +627,9 @@ public class OLISSearchAction extends DispatchAction {
                 String endTimePeriod = request.getParameter("endTimePeriod");
 
                 try {
-                    if (startTimePeriod != null && startTimePeriod.trim().length() > 0) {
+                    if (startTimePeriod != null && !startTimePeriod.trim().isEmpty()) {
                         Date startTime = DateUtils.parseDate(startTimePeriod, dateFormat);
-                        if (endTimePeriod != null && endTimePeriod.trim().length() > 0) {
+                        if (endTimePeriod != null && !endTimePeriod.trim().isEmpty()) {
                             Date endTime = changeToEndOfDay(DateUtils.parseDate(endTimePeriod, dateFormat));
 
                             List<Date> dateList = new LinkedList<Date>();
@@ -656,7 +656,7 @@ public class OLISSearchAction extends DispatchAction {
                 String quantityLimit = request.getParameter("quantityLimit");
 
                 try {
-                    if (quantityLimitedQuery != null && quantityLimitedQuery.trim().length() > 0) {
+                    if (quantityLimitedQuery != null && !quantityLimitedQuery.trim().isEmpty()) {
                         // Checked
                         ((Z06Query) query).setQuantityLimitedRequest(new QRD7(Integer.parseInt(quantityLimit)));
                     }
@@ -667,7 +667,7 @@ public class OLISSearchAction extends DispatchAction {
 
                 String orderingFacility = request.getParameter("orderingFacility");
 
-                if (orderingFacility != null && orderingFacility.trim().length() > 0) {
+                if (orderingFacility != null && !orderingFacility.trim().isEmpty()) {
                     ((Z06Query) query).setOrderingFacilityId(new ORC21(orderingFacility, "^ISO"));
                 }
 
@@ -679,9 +679,9 @@ public class OLISSearchAction extends DispatchAction {
                 String endTimePeriod = request.getParameter("endTimePeriod");
 
                 try {
-                    if (startTimePeriod != null && startTimePeriod.trim().length() > 0) {
+                    if (startTimePeriod != null && !startTimePeriod.trim().isEmpty()) {
                         Date startTime = DateUtils.parseDate(startTimePeriod, dateFormat);
-                        if (endTimePeriod != null && endTimePeriod.trim().length() > 0) {
+                        if (endTimePeriod != null && !endTimePeriod.trim().isEmpty()) {
                             Date endTime = changeToEndOfDay(DateUtils.parseDate(endTimePeriod, dateFormat));
 
                             List<Date> dateList = new LinkedList<Date>();
@@ -708,7 +708,7 @@ public class OLISSearchAction extends DispatchAction {
                 String quantityLimit = request.getParameter("quantityLimit");
 
                 try {
-                    if (quantityLimitedQuery != null && quantityLimitedQuery.trim().length() > 0) {
+                    if (quantityLimitedQuery != null && !quantityLimitedQuery.trim().isEmpty()) {
                         // Checked
                         ((Z07Query) query).setQuantityLimitedRequest(new QRD7(Integer.parseInt(quantityLimit)));
                     }
@@ -723,9 +723,9 @@ public class OLISSearchAction extends DispatchAction {
                 String endTimePeriod = request.getParameter("endTimePeriod");
 
                 try {
-                    if (startTimePeriod != null && startTimePeriod.trim().length() > 0) {
+                    if (startTimePeriod != null && !startTimePeriod.trim().isEmpty()) {
                         Date startTime = DateUtils.parseDate(startTimePeriod, dateFormat);
-                        if (endTimePeriod != null && endTimePeriod.trim().length() > 0) {
+                        if (endTimePeriod != null && !endTimePeriod.trim().isEmpty()) {
                             Date endTime = changeToEndOfDay(DateUtils.parseDate(endTimePeriod, dateFormat));
 
                             List<Date> dateList = new LinkedList<Date>();
@@ -752,7 +752,7 @@ public class OLISSearchAction extends DispatchAction {
                 String quantityLimit = request.getParameter("quantityLimit");
 
                 try {
-                    if (quantityLimitedQuery != null && quantityLimitedQuery.trim().length() > 0) {
+                    if (quantityLimitedQuery != null && !quantityLimitedQuery.trim().isEmpty()) {
                         // Checked
                         ((Z08Query) query).setQuantityLimitedRequest(new QRD7(Integer.parseInt(quantityLimit)));
                     }
@@ -767,28 +767,28 @@ public class OLISSearchAction extends DispatchAction {
 
                 String firstName = request.getParameter("z50firstName");
 
-                if (firstName != null && firstName.trim().length() > 0) {
+                if (firstName != null && !firstName.trim().isEmpty()) {
                     ((Z50Query) query).setFirstName(new PID52(firstName));
                 }
 
 
                 String lastName = request.getParameter("z50lastName");
 
-                if (lastName != null && lastName.trim().length() > 0) {
+                if (lastName != null && !lastName.trim().isEmpty()) {
                     ((Z50Query) query).setLastName(new PID51(lastName));
                 }
 
 
                 String sex = request.getParameter("z50sex");
 
-                if (sex != null && sex.trim().length() > 0) {
+                if (sex != null && !sex.trim().isEmpty()) {
                     ((Z50Query) query).setSex(new PID8(sex));
                 }
 
 
                 String dateOfBirth = request.getParameter("z50dateOfBirth");
                 try {
-                    if (dateOfBirth != null && dateOfBirth.trim().length() > 0) {
+                    if (dateOfBirth != null && !dateOfBirth.trim().isEmpty()) {
                         PID7 pid7 = new PID7();
                         pid7.setValue(DateUtils.parseDate(dateOfBirth, dateFormat));
                         ((Z50Query) query).setDateOfBirth(pid7);

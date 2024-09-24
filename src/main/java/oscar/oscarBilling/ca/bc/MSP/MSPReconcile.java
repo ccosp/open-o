@@ -312,7 +312,7 @@ public class MSPReconcile {
     private String createCorrectionsString(String[] exp) {
         String retval = "";
         for (int i = 0; i < exp.length; i++) {
-            if (exp[i].length() != 0) {
+            if (!exp[i].isEmpty()) {
                 retval += exp[i] + " ";
             }
         }
@@ -714,7 +714,7 @@ public class MSPReconcile {
             String seq = t.getDataSeq();
 
             for (int i = 0; i < exp.length; i++) {
-                if (exp[i].length() != 0) {
+                if (!exp[i].isEmpty()) {
                     retval.add(seq + "&nbsp;&nbsp;" + exp[i] + "&nbsp;&nbsp;" + p.getProperty(exp[i], ""));
                 }
             }
@@ -785,7 +785,7 @@ public class MSPReconcile {
             String seq = s.getDataSeq();
 
             for (int i = 0; i < exp.length; i++) {
-                if (exp[i].length() != 0) {
+                if (!exp[i].isEmpty()) {
                     retval.add(seq + "&nbsp;&nbsp;" + exp[i] + "&nbsp;&nbsp;" + p.getProperty(exp[i], ""));
                 }
             }
@@ -830,7 +830,7 @@ public class MSPReconcile {
     public void saveOrUpdateBillRecipient(BillRecipient recip) {
         List<BillRecipients> bs = billRecipientDao.findByBillingNo(Integer.parseInt(recip.getBillingNo()));
         boolean existingBill = false;
-        if (bs.size() > 0) existingBill = true;
+        if (!bs.isEmpty()) existingBill = true;
 
         if (existingBill) {
             for (BillRecipients b : bs) {

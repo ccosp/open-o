@@ -52,12 +52,12 @@ public class AuditLogPurgeAction extends DispatchAction {
 
 
         String dt = request.getParameter("dateBegin");
-        if (dt == null || dt.length() == 0) {
+        if (dt == null || dt.isEmpty()) {
             request.setAttribute("msg", "No date parameter was sent to the server!");
         }
 
         Date endDateToPurge = null;
-        if (dt != null && dt.length() > 0) {
+        if (dt != null && !dt.isEmpty()) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 endDateToPurge = formatter.parse(dt);

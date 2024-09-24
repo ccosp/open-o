@@ -97,7 +97,7 @@ public final class BillingAction extends Action {
                     frm.setXml_billtype("WCB");
 
                     List l = (List) request.getAttribute("billingcodes");
-                    if (l != null && l.size() > 0) {
+                    if (l != null && !l.isEmpty()) {
                         frm.setXml_other1("" + l.get(0));
                         if (l.size() > 1) {
                             frm.setXml_other2("" + l.get(1));

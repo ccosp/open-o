@@ -154,16 +154,16 @@ public class RecommitDAO {
             PatientData pd = hsfoDao.retrievePatientRecord(pid);
             Demographic demo = demoData.getDemographic(loggedInInfo, pid);
             String internalId = demo.getProviderNo();
-            if (internalId == null || internalId.length() == 0) {
+            if (internalId == null || internalId.isEmpty()) {
                 return demo.getLastName() + "," + demo.getFirstName();
             }
             pd.setBirthDate(DemographicData.getDOBObj(demo));
             pd.setSex(demo.getSex().toLowerCase());
             if (demo.getLastName() != null
-                    && demo.getLastName().trim().length() > 0)
+                    && !demo.getLastName().trim().isEmpty())
                 pd.setLName(demo.getLastName());
             if (demo.getFirstName() != null
-                    && demo.getFirstName().trim().length() > 0)
+                    && !demo.getFirstName().trim().isEmpty())
                 pd.setFName(demo.getFirstName());
 
             String pcode = demo.getPostal().trim();
@@ -183,7 +183,7 @@ public class RecommitDAO {
             String pid = (String) itr.next();
             Demographic demo = demoData.getDemographic(loggedInInfo, pid);
             String internalId = demo.getProviderNo();
-            if (internalId == null || internalId.length() == 0) {
+            if (internalId == null || internalId.isEmpty()) {
                 return demo.getLastName() + "," + demo.getFirstName();
             }
 

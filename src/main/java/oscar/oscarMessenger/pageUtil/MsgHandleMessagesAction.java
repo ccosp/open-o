@@ -75,7 +75,7 @@ public class MsgHandleMessagesAction extends Action {
          * Check the current demographic map and replace the incoming demographicNo attribute
          */
         List<MsgDemoMap> msgDemoMap = messengerDemographicManager.getAttachedDemographicList(loggedInInfo, Integer.parseInt(messageNo));
-        if (msgDemoMap != null && msgDemoMap.size() > 0) {
+        if (msgDemoMap != null && !msgDemoMap.isEmpty()) {
             demographicNo = msgDemoMap.get(0).getDemographic_no() + "";
         }
 

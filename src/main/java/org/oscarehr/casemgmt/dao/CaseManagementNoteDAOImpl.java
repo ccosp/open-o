@@ -141,7 +141,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
 
     @Override
     public List<CaseManagementNote> getNotes(List<Long> ids) {
-        if (ids.size() == 0)
+        if (ids.isEmpty())
             return new ArrayList<CaseManagementNote>();
         @SuppressWarnings("unchecked")
         List<CaseManagementNote> notes = (List<CaseManagementNote>) this.getHibernateTemplate()
@@ -589,12 +589,12 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
 
             Date startDate;
             Date endDate;
-            if (searchBean.getSearchStartDate().length() > 0) {
+            if (!searchBean.getSearchStartDate().isEmpty()) {
                 startDate = formatter.parse(searchBean.getSearchStartDate());
             } else {
                 startDate = formatter.parse("1970-01-01");
             }
-            if (searchBean.getSearchEndDate().length() > 0) {
+            if (!searchBean.getSearchEndDate().isEmpty()) {
                 endDate = formatter.parse(searchBean.getSearchEndDate());
             } else {
                 endDate = new Date();
@@ -629,7 +629,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
             SQLQuery query = session.createSQLQuery("select * from casemgmt_issue_notes where id=" + issid.longValue());
             List results = query.list();
             // log.info("haveIssue - DAO - # of results = " + results.size());
-            if (results.size() > 0)
+            if (!results.isEmpty())
                 return true;
             return false;
         } finally {
@@ -647,7 +647,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
                             + demographicId + " and issue.code='" + issueCode + "'");
             List results = query.list();
             // log.info("haveIssue - DAO - # of results = " + results.size());
-            if (results.size() > 0)
+            if (!results.isEmpty())
                 return true;
             return false;
         } finally {

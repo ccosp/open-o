@@ -189,7 +189,7 @@ public final class LoginCheckLoginBean {
         SecurityDao securityDao = (SecurityDao) SpringUtils.getBean(SecurityDao.class);
         List<Security> results = securityDao.findByUserName(username);
         Security security = null;
-        if (results.size() > 0) security = results.get(0);
+        if (!results.isEmpty()) security = results.get(0);
 
         if (security == null) {
             return null;
@@ -227,7 +227,7 @@ public final class LoginCheckLoginBean {
         List<Security> securityResults = securityDao.findByOneIdKey(ssoKey);
         Security securityRecord = null;
 
-        if (securityResults != null && securityResults.size() > 0) {
+        if (securityResults != null && !securityResults.isEmpty()) {
             securityRecord = securityResults.get(0);
         }
 

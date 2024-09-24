@@ -128,7 +128,7 @@ public class DrilldownQueryHandler extends AbstractQueryHandler {
             headingArray = new String[headings.size()];
             headings.toArray(headingArray);
 
-        } else if (queryResult != null && queryResult.size() > 0) {
+        } else if (queryResult != null && !queryResult.isEmpty()) {
 
             Map<String, ?> firstRow = (Map<String, ?>) queryResult.get(0);
             Set<String> keySet = firstRow.keySet();

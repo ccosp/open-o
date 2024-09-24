@@ -68,7 +68,7 @@ public class EctConAddSpecialistAction extends Action {
         {
             professionalSpecialist = new ProfessionalSpecialist();
             populateFields(professionalSpecialist, addSpecailistForm);
-            if (professionalSpecialist.getReferralNo() != null && professionalSpecialist.getReferralNo().length() > 0) {
+            if (professionalSpecialist.getReferralNo() != null && !professionalSpecialist.getReferralNo().isEmpty()) {
                 if (referralNoValid(professionalSpecialist.getReferralNo())) {
                     if (referralNoInUse(professionalSpecialist.getReferralNo())) {
                         request.setAttribute("refnoinuse", true);
@@ -87,7 +87,7 @@ public class EctConAddSpecialistAction extends Action {
             Integer specId = Integer.parseInt(addSpecailistForm.getSpecId());
             professionalSpecialist = professionalSpecialistDao.find(specId);
             populateFields(professionalSpecialist, addSpecailistForm);
-            if (professionalSpecialist.getReferralNo() != null && professionalSpecialist.getReferralNo().length() > 0) {
+            if (professionalSpecialist.getReferralNo() != null && !professionalSpecialist.getReferralNo().isEmpty()) {
                 if (referralNoValid(professionalSpecialist.getReferralNo())) {
                     if (referralNoInUse(professionalSpecialist.getReferralNo(), specId)) {
                         request.setAttribute("refnoinuse", true);

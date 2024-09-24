@@ -234,7 +234,7 @@ public class CihiExportAction extends DispatchAction {
             frm.set("vendorSoftwareVer", properties.getProperty("version", ""));
             frm.set("installDate", properties.getProperty("buildDateTime", ""));
 
-            if (dataExportList.size() > 0) {
+            if (!dataExportList.isEmpty()) {
                 DataExport dataExport = dataExportList.get(dataExportList.size() - 1);
                 frm.set("contactLName", dataExport.getContactLName());
                 frm.set("contactFName", dataExport.getContactFName());
@@ -505,7 +505,7 @@ public class CihiExportAction extends DispatchAction {
             }
 
             Set<CaseManagementIssue> noteIssueList = caseManagementNote.getIssues();
-            if (noteIssueList != null && noteIssueList.size() > 0) {
+            if (noteIssueList != null && !noteIssueList.isEmpty()) {
                 Iterator<CaseManagementIssue> i = noteIssueList.iterator();
                 CaseManagementIssue cIssue;
                 FamilyHistory familyHistory = patientRecord.addNewFamilyHistory();
@@ -579,7 +579,7 @@ public class CihiExportAction extends DispatchAction {
             }
 
             Set<CaseManagementIssue> noteIssueList = caseManagementNote.getIssues();
-            if (noteIssueList != null && noteIssueList.size() > 0) {
+            if (noteIssueList != null && !noteIssueList.isEmpty()) {
                 Iterator<CaseManagementIssue> i = noteIssueList.iterator();
                 CaseManagementIssue cIssue;
                 ProblemList problemList = patientRecord.addNewProblemList();
@@ -831,7 +831,7 @@ public class CihiExportAction extends DispatchAction {
             if (procedure == null && problemlist == null) continue;
 
             Set<CaseManagementIssue> noteIssueList = caseManagementNote.getIssues();
-            if (noteIssueList != null && noteIssueList.size() > 0) {
+            if (noteIssueList != null && !noteIssueList.isEmpty()) {
                 Iterator<CaseManagementIssue> i = noteIssueList.iterator();
                 CaseManagementIssue cIssue;
 

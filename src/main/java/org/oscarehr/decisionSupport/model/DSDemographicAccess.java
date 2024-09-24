@@ -558,7 +558,7 @@ public class DSDemographicAccess {
     public boolean noteContains(DSValue searchValue) {
         CaseManagementNoteDAO dao = (CaseManagementNoteDAO) SpringUtils.getBean(CaseManagementNoteDAO.class);
         List<CaseManagementNote> notes = dao.searchDemographicNotes(demographicNo, "%" + searchValue.getValue() + "%");
-        if (notes != null && notes.size() > 0) return true;
+        if (notes != null && !notes.isEmpty()) return true;
         else return false;
     }
 
@@ -626,7 +626,7 @@ public class DSDemographicAccess {
             }
 
             ArrayList<String> warnings = mi.getWarnings();
-            if (warnings.size() == 0) {
+            if (warnings.isEmpty()) {
                 retval = true;
             }
 

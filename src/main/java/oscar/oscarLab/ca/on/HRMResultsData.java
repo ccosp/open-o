@@ -110,7 +110,7 @@ public class HRMResultsData {
 
             hrmReport.setHrmDocumentId(id);
 
-            if (hrmDocResultsDemographic.size() > 0) {
+            if (!hrmDocResultsDemographic.isEmpty()) {
                 Demographic demographic = demographicManager.getDemographic(loggedInInfo, hrmDocResultsDemographic.get(0).getDemographicNo());
                 if (demographic != null) {
                     lbData.patientName = demographic.getLastName() + "," + demographic.getFirstName();

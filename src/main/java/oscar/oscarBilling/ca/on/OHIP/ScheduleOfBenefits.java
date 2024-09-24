@@ -199,7 +199,7 @@ public class ScheduleOfBenefits {
     }
 
     private boolean isEmptyDescription(String desc) {
-        return desc == null || desc.trim().length() == 0 || desc.trim().equals("----");
+        return desc == null || desc.trim().isEmpty() || desc.trim().equals("----");
     }
 
     BigDecimal getBD(String s) {

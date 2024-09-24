@@ -103,7 +103,7 @@ public class SystemMessageAction extends DispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         List<SystemMessage> messages = systemMessageDao.findAll();
-        if (messages.size() > 0) {
+        if (!messages.isEmpty()) {
             request.setAttribute("messages", messages);
         }
         return mapping.findForward("view");

@@ -225,7 +225,7 @@ public class EctDisplayMeasurementsAction extends EctDisplayAction {
             }
 
             //if there are none, we tell user
-            if (bean.measurementGroupNames.size() == 0) {
+            if (bean.measurementGroupNames.isEmpty()) {
                 Dao.addPopUpUrl("");
                 Dao.addPopUpText("None");
             }
@@ -253,7 +253,7 @@ public class EctDisplayMeasurementsAction extends EctDisplayAction {
                     EctMeasurementsDataBeanHandler.addRemoteMeasurements(loggedInInfo, measures, data.getType(), demo);
                 }
 
-                if (measures.size() > 0) {
+                if (!measures.isEmpty()) {
                     NavBarDisplayDAO.Item item = NavBarDisplayDAO.Item();
                     data = (oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean) measures.get(0);
                     Date date = data.getDateObservedAsDate();

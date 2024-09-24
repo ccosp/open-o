@@ -538,7 +538,7 @@ public final class RxWriteScriptAction extends DispatchAction {
                 brandName = text;
             }
 
-            if (drugComponents != null && drugComponents.size() > 0) {
+            if (drugComponents != null && !drugComponents.isEmpty()) {
 
                 StringBuilder stringBuilder = new StringBuilder();
                 int count = 0;
@@ -586,7 +586,7 @@ public final class RxWriteScriptAction extends DispatchAction {
             if (oral) {
                 rx.setRoute("ORAL");
             } else {
-                if (dmono.route.size() > 0) {
+                if (!dmono.route.isEmpty()) {
                     rx.setRoute((String) dmono.route.get(0));
                 }
             }
@@ -779,7 +779,7 @@ public final class RxWriteScriptAction extends DispatchAction {
     public ActionForward iterateStash(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) request.getSession().getAttribute("RxSessionBean");
         List<RxPrescriptionData.Prescription> listP = Arrays.asList(bean.getStash());
-        if (listP.size() == 0) {
+        if (listP.isEmpty()) {
             return null;
         } else {
             request.setAttribute("listRxDrugs", listP);
@@ -798,7 +798,7 @@ public final class RxWriteScriptAction extends DispatchAction {
         String specialInstruction = request.getParameter("specialInstruction");
         oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) request.getSession().getAttribute("RxSessionBean");
         RxPrescriptionData.Prescription rx = bean.getStashItem2(Integer.parseInt(randomId));
-        if (specialInstruction.trim().length() > 0 && !specialInstruction.trim().equalsIgnoreCase("Enter Special Instruction")) {
+        if (!specialInstruction.trim().isEmpty() && !specialInstruction.trim().equalsIgnoreCase("Enter Special Instruction")) {
             rx.setSpecialInstruction(specialInstruction.trim());
         } else {
             rx.setSpecialInstruction(null);
@@ -1081,30 +1081,30 @@ public final class RxWriteScriptAction extends DispatchAction {
                         rx.setUnitName(null);
                         rx.setRepeat(0);
                         special = rx.getCustomName() + newline + rx.getSpecial();
-                        if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && rx.getSpecialInstruction().trim().length() > 0)
+                        if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && !rx.getSpecialInstruction().trim().isEmpty())
                             special += newline + rx.getSpecialInstruction();
                     } else if (rx.isCustom()) {// custom drug
                         if (rx.getUnitName() == null) {
                             special = rx.getCustomName() + newline + rx.getSpecial();
-                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && rx.getSpecialInstruction().trim().length() > 0)
+                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && !rx.getSpecialInstruction().trim().isEmpty())
                                 special += newline + rx.getSpecialInstruction();
                             special += newline + "Qty:" + rx.getQuantity() + " Repeats:" + "" + rx.getRepeat();
                         } else {
                             special = rx.getCustomName() + newline + rx.getSpecial();
-                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && rx.getSpecialInstruction().trim().length() > 0)
+                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && !rx.getSpecialInstruction().trim().isEmpty())
                                 special += newline + rx.getSpecialInstruction();
                             special += newline + "Qty:" + rx.getQuantity() + " " + rx.getUnitName() + " Repeats:" + "" + rx.getRepeat();
                         }
                     } else {// non-custom drug
                         if (rx.getUnitName() == null) {
                             special = rx.getBrandName() + newline + rx.getSpecial();
-                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && rx.getSpecialInstruction().trim().length() > 0)
+                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && !rx.getSpecialInstruction().trim().isEmpty())
                                 special += newline + rx.getSpecialInstruction();
 
                             special += newline + "Qty:" + rx.getQuantity() + " Repeats:" + "" + rx.getRepeat();
                         } else {
                             special = rx.getBrandName() + newline + rx.getSpecial();
-                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && rx.getSpecialInstruction().trim().length() > 0)
+                            if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && !rx.getSpecialInstruction().trim().isEmpty())
                                 special += newline + rx.getSpecialInstruction();
                             special += newline + "Qty:" + rx.getQuantity() + " " + rx.getUnitName() + " Repeats:" + "" + rx.getRepeat();
                         }

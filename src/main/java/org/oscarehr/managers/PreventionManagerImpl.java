@@ -137,7 +137,7 @@ public class PreventionManagerImpl implements Serializable, PreventionManager {
     @Override
     public boolean isHidePrevItemExist() {
         List<Property> props = propertyDao.findByName(HIDE_PREVENTION_ITEM);
-        if (props.size() > 0) {
+        if (!props.isEmpty()) {
             return true;
         }
         return false;
@@ -307,7 +307,7 @@ public class PreventionManagerImpl implements Serializable, PreventionManager {
         if (preventionStopSigns.contains("false")) {
             return false;
         }
-        if (preventionStopSigns.size() == 0) {
+        if (preventionStopSigns.isEmpty()) {
             return true;
         }
         return false;
@@ -315,7 +315,7 @@ public class PreventionManagerImpl implements Serializable, PreventionManager {
 
     @Override
     public boolean isCreated() {
-        return getPreventionStopSigns().size() > 0;
+        return !getPreventionStopSigns().isEmpty();
     }
 
     /**

@@ -185,7 +185,7 @@ public class ProgramManagerViewAction extends DispatchAction {
         request.setAttribute("ageConflict", ageConflict);
 
         if (formBean.getTab() == null || formBean.getTab().equals("")) {
-            if (queue != null && queue.size() > 0) {
+            if (queue != null && !queue.isEmpty()) {
                 formBean.setTab("Queue");
             } else {
                 formBean.setTab("General");
@@ -629,7 +629,7 @@ public class ProgramManagerViewAction extends DispatchAction {
         //TODO: WL notification
         ClientReferralDAO clientReferralDao = SpringUtils.getBean(ClientReferralDAO.class);
         Facility facility = loggedInInfo.getCurrentFacility();
-        if (facility.getAssignRejectedVacancyApplicant() != null && facility.getAssignRejectedVacancyApplicant().length() > 0) {
+        if (facility.getAssignRejectedVacancyApplicant() != null && !facility.getAssignRejectedVacancyApplicant().isEmpty()) {
             Integer vacancyId = null;
             if (queue != null) {
                 ClientReferral referral = clientReferralDao.getClientReferral(queue.getReferralId());

@@ -53,7 +53,7 @@ public class CodeSearchService extends Action {
 
         AbstractCodeSystemDao dao = (AbstractCodeSystemDao) SpringUtils.getBean(WordUtils.uncapitalize(codingSystem) + "Dao");
 
-        if (request.getParameter("term") != null && request.getParameter("term").length() > 0) {
+        if (request.getParameter("term") != null && !request.getParameter("term").isEmpty()) {
             List<AbstractCodeSystemModel> r = dao.searchCode(request.getParameter("term"));
             for (AbstractCodeSystemModel result : r) {
                 results.add(new LabelValueBean(result.getDescription(), result.getCode()));

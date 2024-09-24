@@ -108,7 +108,7 @@ public class MEDITECHHandler implements MessageHandler {
         String hl7Body = getString(is).trim();
         List<String> hl7BodyList = null;
 
-        if (hl7Body != null && hl7Body.length() > 0) {
+        if (hl7Body != null && !hl7Body.isEmpty()) {
 
             pattern = Pattern.compile(XML, Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
             matcher = pattern.matcher(hl7Body);

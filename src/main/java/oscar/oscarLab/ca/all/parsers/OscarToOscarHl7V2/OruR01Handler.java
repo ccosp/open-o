@@ -107,7 +107,7 @@ public final class OruR01Handler extends ChainnedMessageAdapter<ORU_R01> {
             ORU_R01_ORDER_OBSERVATION orderObservation = getOrderObservation();
             for (int i = 0; i < orderObservation.getNTEReps(); i++) {
                 NTE nte = orderObservation.getNTE(i);
-                if (nte.getCommentType().getText().getValue() != null && nte.getCommentType().getText().getValue().length() > 0) {
+                if (nte.getCommentType().getText().getValue() != null && !nte.getCommentType().getText().getValue().isEmpty()) {
                     return ("ORU_R01:" + nte.getCommentType().getText().getValue());
                 }
             }

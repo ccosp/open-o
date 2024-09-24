@@ -123,7 +123,7 @@ public class AddDemographicRelationshipAction extends Action {
 
         CtlRelationshipsDao ctlRelationshipsDao = SpringUtils.getBean(CtlRelationshipsDao.class);
         CtlRelationships cr = ctlRelationshipsDao.findByValue(relation);
-        if (cr != null && ((cr.getMaleInverse() != null && cr.getMaleInverse().length() > 0) || (cr.getFemaleInverse() != null && cr.getFemaleInverse().length() > 0))) {
+        if (cr != null && ((cr.getMaleInverse() != null && !cr.getMaleInverse().isEmpty()) || (cr.getFemaleInverse() != null && !cr.getFemaleInverse().isEmpty()))) {
             //need sex of the relation
             Demographic d = demographicManager.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), origDemo);
             if (d != null && d.getSex().equalsIgnoreCase("M")) {

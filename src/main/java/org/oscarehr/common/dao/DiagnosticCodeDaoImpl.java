@@ -143,7 +143,7 @@ public class DiagnosticCodeDaoImpl extends AbstractDaoImpl<DiagnosticCode> imple
     @Override
     public DiagnosticCode findByCode(String code) {
         List<DiagnosticCode> diagnosticCodeList = getByDxCode(code);
-        if (diagnosticCodeList != null && diagnosticCodeList.size() > 0) {
+        if (diagnosticCodeList != null && !diagnosticCodeList.isEmpty()) {
             return diagnosticCodeList.get(0);
         }
         return null;

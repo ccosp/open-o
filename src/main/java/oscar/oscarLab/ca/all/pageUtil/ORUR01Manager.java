@@ -50,7 +50,7 @@ public class ORUR01Manager {
     public static int getVersion(String version) {
 
         String v2 = version.replaceAll("(\\n)*\\.(\\n)*", "");
-        if (v2.length() > 0)
+        if (!v2.isEmpty())
             return Integer.parseInt(v2);
         return 0;
     }

@@ -312,7 +312,7 @@ public class EForm extends EFormBase {
     }
 
     private void generateInputCode() {
-        if (updateFields.size() > 0) {
+        if (!updateFields.isEmpty()) {
 
             StringBuilder html = new StringBuilder(this.formHtml);
             int formEndLoc = StringBuilderUtils.indexOfIgnoreCase(html, "</form>", 0);

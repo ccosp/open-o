@@ -131,7 +131,7 @@ public class PregnancyAction extends DispatchAction {
         codes.add("16356006");
         codes.add("34801009");
         List<Episode> existingEpisodes = episodeDao.findCurrentByCodeTypeAndCodes(demographicNo, "SnomedCore", codes);
-        if (existingEpisodes.size() > 0) {
+        if (!existingEpisodes.isEmpty()) {
             request.setAttribute("error", "There is already a pregnancy in progress. Please close the existing one before creating a new one.");
             return mapping.findForward("success");
         }
@@ -333,11 +333,11 @@ public class PregnancyAction extends DispatchAction {
             if (drug.isArchived() || drug.isDeleted() || drug.isDiscontinued() || drug.isExpired()) {
                 continue;
             }
-            if (drug.getBrandName() != null && drug.getBrandName().length() > 0) {
+            if (drug.getBrandName() != null && !drug.getBrandName().isEmpty()) {
                 if (output.length() > 0)
                     output.append(",");
                 output.append(drug.getBrandName());
-            } else if (drug.getCustomName() != null && drug.getCustomName().length() > 0) {
+            } else if (drug.getCustomName() != null && !drug.getCustomName().isEmpty()) {
                 if (output.length() > 0)
                     output.append(",");
                 output.append(drug.getCustomName());
@@ -485,11 +485,11 @@ public class PregnancyAction extends DispatchAction {
 
         MeasurementDao md = SpringUtils.getBean(MeasurementDao.class);
         List<Measurement> m = md.findByType(Integer.parseInt(demographicNo), "HEMO");
-        if (m.size() > 0) {
+        if (!m.isEmpty()) {
             json.add(m.get(0));
         }
         m = md.findByType(Integer.parseInt(demographicNo), "MCV");
-        if (m.size() > 0) {
+        if (!m.isEmpty()) {
             json.add(m.get(0));
         }
 
@@ -662,7 +662,7 @@ Repeat antibody screen
         codes.add("16356006");
         codes.add("34801009");
         List<Episode> existingEpisodes = episodeDao.findCurrentByCodeTypeAndCodes(demographicNo, "SnomedCore", codes);
-        if (existingEpisodes.size() > 0) {
+        if (!existingEpisodes.isEmpty()) {
             request.setAttribute("warning", "There is already a pregnancy in progress. Migration will use this episode, and copy data over the current form");
         }
 
@@ -707,7 +707,7 @@ Repeat antibody screen
         codes.add("16356006");
         codes.add("34801009");
         List<Episode> existingEpisodes = episodeDao.findCurrentByCodeTypeAndCodes(demographicNo, "SnomedCore", codes);
-        if (existingEpisodes.size() == 0) {
+        if (existingEpisodes.isEmpty()) {
             //create the pregnancy episode
             AbstractCodeSystemDao dao = (AbstractCodeSystemDao) SpringUtils.getBean(WordUtils.uncapitalize("SnomedCore") + "Dao");
             AbstractCodeSystemModel mod = dao.findByCode("72892002");
@@ -765,43 +765,43 @@ Repeat antibody screen
             newProps.setProperty((String) key, val);
         }
 
-        if (p.getProperty("pg1_msMarried", "").length() > 0) {
+        if (!p.getProperty("pg1_msMarried", "").isEmpty()) {
             newProps.setProperty("pg1_maritalStatus", "M");
         }
-        if (p.getProperty("pg1_msCommonLaw", "").length() > 0) {
+        if (!p.getProperty("pg1_msCommonLaw", "").isEmpty()) {
             newProps.setProperty("pg1_maritalStatus", "CL");
         }
-        if (p.getProperty("pg1_msSingle", "").length() > 0) {
+        if (!p.getProperty("pg1_msSingle", "").isEmpty()) {
             newProps.setProperty("pg1_maritalStatus", "S");
         }
 
-        if (p.getProperty("pg1_naDietRes", "").length() > 0) {
+        if (!p.getProperty("pg1_naDietRes", "").isEmpty()) {
             newProps.setProperty("pg1_naDiet", "on");
         }
-        if (p.getProperty("pg1_naDietBal", "").length() > 0) {
+        if (!p.getProperty("pg1_naDietBal", "").isEmpty()) {
             newProps.setProperty("pg1_naDietN", "on");
         }
-        if (p.getProperty("pg1_pExOther", "").length() > 0) {
+        if (!p.getProperty("pg1_pExOther", "").isEmpty()) {
             newProps.setProperty("pg1_pExOtherDesc", p.getProperty("pg1_pExOther", ""));
         }
 
-        if (p.getProperty("pg1_pExOtherN", "").length() > 0) {
+        if (!p.getProperty("pg1_pExOtherN", "").isEmpty()) {
             newProps.setProperty("pg1_pExOther", "on");
         }
-        if (p.getProperty("pg1_pExOtherA", "").length() > 0) {
+        if (!p.getProperty("pg1_pExOtherA", "").isEmpty()) {
             newProps.setProperty("pg1_pExOtherA", "on");
         }
-        if (p.getProperty("pg1_geneticD", "").length() > 0) {
+        if (!p.getProperty("pg1_geneticD", "").isEmpty()) {
             newProps.setProperty("pg1_geneticD", "checked/checked");
         }
 
         int obxNum = 0;
         for (int x = 0; x < 6; x++) {
             int n = x + 1;
-            if (p.getProperty("pg1_year" + n, "").length() > 0 || p.getProperty("pg1_sex" + n, "").length() > 0 || p.getProperty("pg1_oh_gest" + n, "").length() > 0
-                    || p.getProperty("pg1_weight" + n, "").length() > 0 || p.getProperty("pg1_length" + n, "").length() > 0 || p.getProperty("pg1_place" + n, "").length() > 0
-                    || p.getProperty("pg1_svb" + n, "").length() > 0 || p.getProperty("pg1_cs" + n, "").length() > 0 || p.getProperty("pg1_ass" + n, "").length() > 0 ||
-                    p.getProperty("pg1_oh_comments" + n, "").length() > 0) {
+            if (!p.getProperty("pg1_year" + n, "").isEmpty() || !p.getProperty("pg1_sex" + n, "").isEmpty() || !p.getProperty("pg1_oh_gest" + n, "").isEmpty()
+                    || !p.getProperty("pg1_weight" + n, "").isEmpty() || !p.getProperty("pg1_length" + n, "").isEmpty() || !p.getProperty("pg1_place" + n, "").isEmpty()
+                    || !p.getProperty("pg1_svb" + n, "").isEmpty() || !p.getProperty("pg1_cs" + n, "").isEmpty() || !p.getProperty("pg1_ass" + n, "").isEmpty() ||
+                    !p.getProperty("pg1_oh_comments" + n, "").isEmpty()) {
                 obxNum = n;
             }
         }
@@ -810,7 +810,7 @@ Repeat antibody screen
         int rfNum = 0;
         for (int x = 0; x < 7; x++) {
             int n = x + 1;
-            if (p.getProperty("c_riskFactors" + n, "").length() > 0 || p.getProperty("c_planManage" + n, "").length() > 0) {
+            if (!p.getProperty("c_riskFactors" + n, "").isEmpty() || !p.getProperty("c_planManage" + n, "").isEmpty()) {
                 rfNum = n;
             }
         }
@@ -819,26 +819,26 @@ Repeat antibody screen
         int svNum = 0;
         for (int x = 0; x < 18; x++) {
             int n = x + 1;
-            if (p.getProperty("pg2_year" + n, "").length() > 0 || p.getProperty("pg2_gest" + n, "").length() > 0 || p.getProperty("pg2_wt" + n, "").length() > 0
-                    || p.getProperty("pg2_BP" + n, "").length() > 0 || p.getProperty("pg2_urinePr" + n, "").length() > 0 /*|| p.getProperty("pg2_urineGl"+n,"").length()>0*/
-                    || p.getProperty("pg2_presn1" + n, "").length() > 0 || p.getProperty("pg2_FHR" + n, "").length() > 0 || p.getProperty("pg2_comments" + n, "").length() > 0) {
+            if (!p.getProperty("pg2_year" + n, "").isEmpty() || !p.getProperty("pg2_gest" + n, "").isEmpty() || !p.getProperty("pg2_wt" + n, "").isEmpty()
+                    || !p.getProperty("pg2_BP" + n, "").isEmpty() || !p.getProperty("pg2_urinePr" + n, "").isEmpty() /*|| p.getProperty("pg2_urineGl"+n,"").length()>0*/
+                    || !p.getProperty("pg2_presn1" + n, "").isEmpty() || !p.getProperty("pg2_FHR" + n, "").isEmpty() || !p.getProperty("pg2_comments" + n, "").isEmpty()) {
                 svNum = n;
             }
         }
         for (int x = 0; x < 18; x++) {
             int n = x + 19;
-            if (p.getProperty("pg3_year" + n, "").length() > 0 || p.getProperty("pg3_gest" + n, "").length() > 0 || p.getProperty("pg3_wt" + n, "").length() > 0
-                    || p.getProperty("pg3_BP" + n, "").length() > 0 || p.getProperty("pg3_urinePr" + n, "").length() > 0 /*|| p.getProperty("pg3_urineGl"+n,"").length()>0*/
-                    || p.getProperty("pg3_presn1" + n, "").length() > 0 || p.getProperty("pg3_FHR" + n, "").length() > 0 || p.getProperty("pg3_comments" + n, "").length() > 0) {
+            if (!p.getProperty("pg3_year" + n, "").isEmpty() || !p.getProperty("pg3_gest" + n, "").isEmpty() || !p.getProperty("pg3_wt" + n, "").isEmpty()
+                    || !p.getProperty("pg3_BP" + n, "").isEmpty() || !p.getProperty("pg3_urinePr" + n, "").isEmpty() /*|| p.getProperty("pg3_urineGl"+n,"").length()>0*/
+                    || !p.getProperty("pg3_presn1" + n, "").isEmpty() || !p.getProperty("pg3_FHR" + n, "").isEmpty() || !p.getProperty("pg3_comments" + n, "").isEmpty()) {
                 svNum = n;
             }
         }
 
         for (int x = 0; x < 18; x++) {
             int n = x + 37;
-            if (p.getProperty("pg4_year" + n, "").length() > 0 || p.getProperty("pg4_gest" + n, "").length() > 0 || p.getProperty("pg4_wt" + n, "").length() > 0
-                    || p.getProperty("pg4_BP" + n, "").length() > 0 || p.getProperty("pg4_urinePr" + n, "").length() > 0 /*|| p.getProperty("pg4_urineGl"+n,"").length()>0*/
-                    || p.getProperty("pg4_presn1" + n, "").length() > 0 || p.getProperty("pg4_FHR" + n, "").length() > 0 || p.getProperty("pg4_comments" + n, "").length() > 0) {
+            if (!p.getProperty("pg4_year" + n, "").isEmpty() || !p.getProperty("pg4_gest" + n, "").isEmpty() || !p.getProperty("pg4_wt" + n, "").isEmpty()
+                    || !p.getProperty("pg4_BP" + n, "").isEmpty() || !p.getProperty("pg4_urinePr" + n, "").isEmpty() /*|| p.getProperty("pg4_urineGl"+n,"").length()>0*/
+                    || !p.getProperty("pg4_presn1" + n, "").isEmpty() || !p.getProperty("pg4_FHR" + n, "").isEmpty() || !p.getProperty("pg4_comments" + n, "").isEmpty()) {
                 svNum = n;
             }
         }
@@ -848,7 +848,7 @@ Repeat antibody screen
         int usNum = 0;
         for (int x = 0; x < 4; x++) {
             int n = x + 1;
-            if (p.getProperty("ar2_uDate" + n, "").length() > 0 || p.getProperty("ar2_uGA" + n, "").length() > 0 || p.getProperty("ar2_uResults" + n, "").length() > 0) {
+            if (!p.getProperty("ar2_uDate" + n, "").isEmpty() || !p.getProperty("ar2_uGA" + n, "").isEmpty() || !p.getProperty("ar2_uResults" + n, "").isEmpty()) {
                 usNum = n;
             }
         }

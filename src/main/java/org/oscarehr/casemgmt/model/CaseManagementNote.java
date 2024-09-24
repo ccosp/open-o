@@ -479,7 +479,7 @@ public class CaseManagementNote extends BaseObject {
             status = "Unsigned";
         }
 
-        if (getPassword() != null && getPassword().length() > 0) {
+        if (getPassword() != null && !getPassword().isEmpty()) {
             // locked note - can be temporarily unlocked
             if (locked) {
                 status += "/Locked";

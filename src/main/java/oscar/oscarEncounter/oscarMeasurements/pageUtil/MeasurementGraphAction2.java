@@ -647,7 +647,7 @@ public class MeasurementGraphAction2 extends Action {
         plot.setRenderer(renderer);
 
 
-        if (dataItems != null && dataItems.size() > 0) {
+        if (dataItems != null && !dataItems.isEmpty()) {
             OHLCDataItem[] ohlc = dataItems.toArray(new OHLCDataItem[dataItems.size()]);
             XYDataset referenceRangeDataset = new DefaultOHLCDataset("Normal Reference Range", ohlc);
             plot.setDataset(1, referenceRangeDataset);
@@ -791,7 +791,7 @@ public class MeasurementGraphAction2 extends Action {
         plot.setRenderer(renderer);
 
 
-        if (dataItems != null && dataItems.size() > 0) {
+        if (dataItems != null && !dataItems.isEmpty()) {
             OHLCDataItem[] ohlc = dataItems.toArray(new OHLCDataItem[dataItems.size()]);
             XYDataset referenceRangeDataset = new DefaultOHLCDataset("Normal Reference Range", ohlc);
             plot.setDataset(1, referenceRangeDataset);
@@ -925,7 +925,7 @@ public class MeasurementGraphAction2 extends Action {
         plot.setRenderer(renderer);
 
 
-        if (dataItems != null && dataItems.size() > 0) {
+        if (dataItems != null && !dataItems.isEmpty()) {
             OHLCDataItem[] ohlc = dataItems.toArray(new OHLCDataItem[dataItems.size()]);
             XYDataset referenceRangeDataset = new DefaultOHLCDataset("Reference Range", ohlc);
             plot.setRenderer(1, setAxisAndDataSet(1, plot, plot.getRangeAxis(), referenceRangeDataset, Color.GREEN, new HighLowRenderer()));

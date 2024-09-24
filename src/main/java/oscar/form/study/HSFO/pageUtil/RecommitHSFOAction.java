@@ -202,7 +202,7 @@ public class RecommitHSFOAction extends DispatchActionSupport {
                         message.add("Patient(s) data not found in the database.");
                     }
                     message = tfutil.validateDoc(doc);
-                    if (message.size() != 0) {
+                    if (!message.isEmpty()) {
                         rs.setMemo(message.get(0));
                         rDao.updateLastSchedule(rs);
                         return;

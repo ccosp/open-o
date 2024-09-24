@@ -78,7 +78,7 @@ public class MessagingConverter extends AbstractConverter<MessageList, MessageTo
         d.setMessage(msg.getMessage());
         d.setSubject(msg.getSubject());
 
-        if (demos != null && demos.size() > 0) {
+        if (demos != null && !demos.isEmpty()) {
             Integer demographicNo = demos.get(0).getDemographic_no();
             if (demographicNo != null) {
                 Demographic demographic = demographicDao.getDemographicById(demographicNo);

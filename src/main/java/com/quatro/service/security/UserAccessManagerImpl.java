@@ -42,7 +42,7 @@ public class UserAccessManagerImpl implements UserAccessManager {
 
         Hashtable functionList = new Hashtable();
         List list = _dao.GetUserAccessList(providerNo, shelterId);
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             int startIdx = 0;
             List orgList = getAccessListForFunction(list, startIdx);
             UserAccessValue uav = (UserAccessValue) list.get(startIdx);
@@ -59,7 +59,7 @@ public class UserAccessManagerImpl implements UserAccessManager {
         secManager.setUserFunctionAccessList(functionList);
         List orgs = _dao.GetUserOrgAccessList(providerNo, shelterId);
         String orgRoot = OscarProperties.getInstance().getProperty("ORGROOT");
-        if (orgs.size() > 0 && orgRoot != null && orgRoot.equals(orgs.get(0))) {
+        if (!orgs.isEmpty() && orgRoot != null && orgRoot.equals(orgs.get(0))) {
             orgs.clear();
         }
         secManager.setUserOrgAccessList(orgs);

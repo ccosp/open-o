@@ -78,7 +78,7 @@ public class DemographicContactFewConverter {
 
     private boolean isPreferredPhone(String phone) {
         if (phone != null) {
-            if (phone.length() > 0) {
+            if (!phone.isEmpty()) {
                 if (phone.charAt(phone.length() - 1) == '*') return true;
             }
         }

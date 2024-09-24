@@ -127,7 +127,7 @@ public class TeleplanCorrectionFormWCB
     public TeleplanCorrectionFormWCB(List<Object[]> results) {
         super();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             Object[] result = results.get(0);
 
             this.demographicNumber = String.valueOf(result[0]);

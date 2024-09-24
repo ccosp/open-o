@@ -109,19 +109,19 @@ public class WCBTeleplanSubmission {
         }
 
         if (wcb.getW_reporttype() != null && wcb.getW_reporttype().equals("F")) {
-            if (wcb.getW_empname() != null && wcb.getW_empname().trim().length() == 0) {
+            if (wcb.getW_empname() != null && wcb.getW_empname().trim().isEmpty()) {
                 m.append(": Employer's name can not be empty ");
             }
 
-            if (wcb.getW_opaddress() != null && wcb.getW_opaddress().trim().length() == 0) {
+            if (wcb.getW_opaddress() != null && wcb.getW_opaddress().trim().isEmpty()) {
                 m.append(": Employer's Operation Address can not be empty ");
             }
 
-            if (wcb.getW_opcity() != null && wcb.getW_opcity().trim().length() == 0) {
+            if (wcb.getW_opcity() != null && wcb.getW_opcity().trim().isEmpty()) {
                 m.append(": Employer's Operation City can not be empty ");
             }
 
-            if (wcb.getW_empphone() != null && wcb.getW_empphone().trim().length() == 0) {
+            if (wcb.getW_empphone() != null && wcb.getW_empphone().trim().isEmpty()) {
                 m.append(": Employer's Phone # can not be empty ");
             }
         }

@@ -88,11 +88,11 @@ public final class MiscUtils {
         String configLocation = System.getProperty("log4j.override.configuration");
         if (configLocation != null) {
             if (contextPath != null) {
-                if (contextPath.length() > 0 && contextPath.charAt(0) == '/') {
+                if (!contextPath.isEmpty() && contextPath.charAt(0) == '/') {
                     contextPath = contextPath.substring(1);
                 }
 
-                if (contextPath.length() > 0 && contextPath.charAt(contextPath.length() - 1) == '/') {
+                if (!contextPath.isEmpty() && contextPath.charAt(contextPath.length() - 1) == '/') {
                     contextPath = contextPath.substring(0, contextPath.length() - 2);
                 }
             }

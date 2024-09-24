@@ -68,7 +68,7 @@ public class OcanStaffFormDaoImpl extends AbstractDaoImpl<OcanStaffForm> impleme
 
         //return getSingleResultOrNull(query);
         List<Object[]> results = query.getResultList();
-        if (results.size() > 0)
+        if (!results.isEmpty())
             return results.get(0);
         return null;
     }
@@ -101,7 +101,7 @@ public class OcanStaffFormDaoImpl extends AbstractDaoImpl<OcanStaffForm> impleme
         query.setParameter(4, "RA");
 
         List<Object[]> results = query.getResultList();
-        if (results.size() > 0)
+        if (!results.isEmpty())
             return results.get(0);
         return null;
     }
@@ -341,7 +341,7 @@ public class OcanStaffFormDaoImpl extends AbstractDaoImpl<OcanStaffForm> impleme
         // but the submission ID is 0.
         List<OcanStaffForm> list1 = new ArrayList<OcanStaffForm>();
         for (OcanStaffForm form : list) {
-            if (findSubmittedOcanFormsByAssessmentId(form.getAssessmentId()).size() > 0) {
+            if (!findSubmittedOcanFormsByAssessmentId(form.getAssessmentId()).isEmpty()) {
                 continue;
             } else {
                 list1.add(form);
@@ -378,7 +378,7 @@ public class OcanStaffFormDaoImpl extends AbstractDaoImpl<OcanStaffForm> impleme
         // but the submission ID is 0.
         List<OcanStaffForm> list1 = new ArrayList<OcanStaffForm>();
         for (OcanStaffForm form : list) {
-            if (findSubmittedOcanFormsByAssessmentId(form.getAssessmentId()).size() > 0) {
+            if (!findSubmittedOcanFormsByAssessmentId(form.getAssessmentId()).isEmpty()) {
                 continue;
             } else {
                 list1.add(form);

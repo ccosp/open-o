@@ -92,7 +92,7 @@ public final class RxReasonAction extends DispatchAction {
         }
 
         List<Icd9> list = icd9Dao.getIcd9Code(code);
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             request.setAttribute("message", mResources.getMessage("SelectReason.error.codeValid"));
             return (mapping.findForward("success"));
         }

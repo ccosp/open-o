@@ -42,14 +42,14 @@ public class BillingStatusPrep {
         JdbcBillingReviewImpl bObj = new JdbcBillingReviewImpl();
 
         billTypes = billTypes == null || billTypes.length == 0 ? null : billTypes;
-        statusType = statusType == null || statusType.length() == 0 || statusType.equals(ANY_STATUS_TYPE) ? null : statusType;
-        providerNo = providerNo == null || providerNo.length() == 0 || providerNo.equals(ANY_PROVIDER) ? null : providerNo;
-        startDate = startDate == null || startDate.length() == 0 ? null : startDate;
-        endDate = endDate == null || endDate.length() == 0 ? null : endDate;
-        demoNo = demoNo == null || demoNo.length() == 0 ? null : demoNo;
-        visitLocation = visitLocation == null || visitLocation.length() == 0 || visitLocation.equals(ANY_VISIT_LOCATION) ? null : visitLocation;
-        paymentStartDate = paymentStartDate == null || paymentStartDate.length() == 0 ? null : paymentStartDate;
-        paymentEndDate = paymentEndDate == null || paymentEndDate.length() == 0 ? null : paymentEndDate;
+        statusType = statusType == null || statusType.isEmpty() || statusType.equals(ANY_STATUS_TYPE) ? null : statusType;
+        providerNo = providerNo == null || providerNo.isEmpty() || providerNo.equals(ANY_PROVIDER) ? null : providerNo;
+        startDate = startDate == null || startDate.isEmpty() ? null : startDate;
+        endDate = endDate == null || endDate.isEmpty() ? null : endDate;
+        demoNo = demoNo == null || demoNo.isEmpty() ? null : demoNo;
+        visitLocation = visitLocation == null || visitLocation.isEmpty() || visitLocation.equals(ANY_VISIT_LOCATION) ? null : visitLocation;
+        paymentStartDate = paymentStartDate == null || paymentStartDate.isEmpty() ? null : paymentStartDate;
+        paymentEndDate = paymentEndDate == null || paymentEndDate.isEmpty() ? null : paymentEndDate;
 
         return bObj.getBill(billTypes, statusType, providerNo, startDate, endDate, demoNo, visitLocation, paymentStartDate, paymentEndDate);
     }
@@ -65,22 +65,22 @@ public class BillingStatusPrep {
                                                              String paymentStartDate, String paymentEndDate, String claimNo) {
         JdbcBillingReviewImpl bObj = new JdbcBillingReviewImpl();
         billType = billType == null || billType.length == 0 ? null : billType;
-        statusType = statusType == null || statusType.length() == 0 || statusType.equals(ANY_STATUS_TYPE) ? null : statusType;
-        providerNo = providerNo == null || providerNo.length() == 0 || providerNo.equals(ANY_PROVIDER) ? null : providerNo;
-        startDate = startDate == null || startDate.length() == 0 ? null : startDate;
-        endDate = endDate == null || endDate.length() == 0 ? null : endDate;
-        demoNo = demoNo == null || demoNo.length() == 0 ? null : demoNo;
+        statusType = statusType == null || statusType.isEmpty() || statusType.equals(ANY_STATUS_TYPE) ? null : statusType;
+        providerNo = providerNo == null || providerNo.isEmpty() || providerNo.equals(ANY_PROVIDER) ? null : providerNo;
+        startDate = startDate == null || startDate.isEmpty() ? null : startDate;
+        endDate = endDate == null || endDate.isEmpty() ? null : endDate;
+        demoNo = demoNo == null || demoNo.isEmpty() ? null : demoNo;
         dx = dx == null || dx.length() < 2 ? null : dx;
         visitType = visitType == null || visitType.length() < 2 ? null : visitType;
-        serviceCodeParams = serviceCodeParams == null || serviceCodeParams.length() == 0 || serviceCodeParams.equals(ANY_SERVICE_CODE) ? null :
+        serviceCodeParams = serviceCodeParams == null || serviceCodeParams.isEmpty() || serviceCodeParams.equals(ANY_SERVICE_CODE) ? null :
                 serviceCodeParams.toUpperCase();
-        billingForm = billingForm == null || billingForm.length() == 0 || billingForm.equals(ANY_BILLING_FORM) ? null : billingForm;
-        visitLocation = visitLocation == null || visitLocation.length() == 0 || visitLocation.equals(ANY_VISIT_LOCATION) ? null : visitLocation;
+        billingForm = billingForm == null || billingForm.isEmpty() || billingForm.equals(ANY_BILLING_FORM) ? null : billingForm;
+        visitLocation = visitLocation == null || visitLocation.isEmpty() || visitLocation.equals(ANY_VISIT_LOCATION) ? null : visitLocation;
 
-        paymentStartDate = paymentStartDate == null || paymentStartDate.length() == 0 ? null : paymentStartDate;
-        paymentEndDate = paymentEndDate == null || paymentEndDate.length() == 0 ? null : paymentEndDate;
+        paymentStartDate = paymentStartDate == null || paymentStartDate.isEmpty() ? null : paymentStartDate;
+        paymentEndDate = paymentEndDate == null || paymentEndDate.isEmpty() ? null : paymentEndDate;
 
-        claimNo = claimNo == null || claimNo.length() == 0 ? null : claimNo;
+        claimNo = claimNo == null || claimNo.isEmpty() ? null : claimNo;
 
         List<String> serviceCodeList = bObj.mergeServiceCodes(serviceCodeParams, billingForm);
         List<BillingClaimHeader1Data> retval = bObj.getBillWithSorting(billType, statusType, providerNo, startDate, endDate, demoNo, serviceCodeList, dx, visitType, visitLocation, sortName, sortOrder, paymentStartDate, paymentEndDate, claimNo);

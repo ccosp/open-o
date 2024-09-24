@@ -131,7 +131,7 @@ public class LimitedUseLookup {
                     @SuppressWarnings("unchecked")
                     List<Element> lccNoteList = pcgGroup.getChildren("lccNote");
 
-                    if (lccNoteList.size() > 0) {
+                    if (!lccNoteList.isEmpty()) {
                         ArrayList<LimitedUseCode> luList = new ArrayList<LimitedUseCode>();
                         for (Element lccNo : lccNoteList) {
                             luList.add(makeLUNote(lccNo));

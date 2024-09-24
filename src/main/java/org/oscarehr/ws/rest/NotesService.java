@@ -288,7 +288,7 @@ public class NotesService extends AbstractServiceImpl {
 
 		}		
 		*/
-        if (noteStr == null || noteStr.length() == 0) {
+        if (noteStr == null || noteStr.isEmpty()) {
             return null;
         }
 
@@ -1190,7 +1190,7 @@ public class NotesService extends AbstractServiceImpl {
             } else {
                 note.setEncounter_type(encType);
             }
-            if (bean.encType != null && bean.encType.length() > 0) {
+            if (bean.encType != null && !bean.encType.isEmpty()) {
                 note.setEncounter_type(bean.encType);
             }
 
@@ -1649,7 +1649,7 @@ public class NotesService extends AbstractServiceImpl {
             cmn.setProgram_no(String.valueOf(pp.getProgramId()));
         } else {
             List<ProgramProvider> ppList = programManager2.getProgramDomain(getLoggedInInfo(), getLoggedInInfo().getLoggedInProviderNo());
-            if (ppList != null && ppList.size() > 0) {
+            if (ppList != null && !ppList.isEmpty()) {
                 cmn.setProgram_no(String.valueOf(ppList.get(0).getProgramId()));
             }
 
@@ -1719,7 +1719,7 @@ public class NotesService extends AbstractServiceImpl {
 
         String term = json.getString("term");
 
-        if (json.getString("term").length() >= 1) {
+        if (!json.getString("term").isEmpty()) {
 
             ProgramProvider pp = programManager2.getCurrentProgramInDomain(getLoggedInInfo(), getLoggedInInfo().getLoggedInProviderNo());
 

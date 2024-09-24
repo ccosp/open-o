@@ -57,7 +57,7 @@ public class CaisiAccessTypeDaoImpl extends AbstractDaoImpl<CaisiAccessType> imp
         @SuppressWarnings("unchecked")
         List<CaisiAccessType> results = query.getResultList();
 
-        if (results.size() == 0) {
+        if (results.isEmpty()) {
             return null;
         }
 

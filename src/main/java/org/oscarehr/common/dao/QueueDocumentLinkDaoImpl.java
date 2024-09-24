@@ -96,7 +96,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
         @SuppressWarnings("unchecked")
         List<QueueDocumentLink> queues = query.getResultList();
 
-        return (queues.size() > 0);
+        return (!queues.isEmpty());
     }
 
     @Override
@@ -104,7 +104,7 @@ public class QueueDocumentLinkDaoImpl extends AbstractDaoImpl<QueueDocumentLink>
         if (docId == null) return false;
 
         List<QueueDocumentLink> qs = getQueueFromDocument(docId);
-        if (qs.size() > 0) {
+        if (!qs.isEmpty()) {
             QueueDocumentLink q = qs.get(0);
             if (q.getStatus() != null && !q.getStatus().equals("I")) {
                 q.setStatus("I");

@@ -49,7 +49,7 @@ public class ProviderData {
     public static String beautifyProviderName(String name) {
         String[] subStrings;
 
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             try {
                 subStrings = name.split("\\^");
                 if (subStrings.length >= 18) {

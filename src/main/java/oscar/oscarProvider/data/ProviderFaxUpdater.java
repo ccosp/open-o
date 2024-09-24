@@ -77,7 +77,7 @@ public class ProviderFaxUpdater {
 
         Property p = new Property();
         List<Property> props = dao.findByNameAndProvider(faxColName, provider);
-        if (props.size() > 0) {
+        if (!props.isEmpty()) {
             for (Property pp : props) {
                 pp.setValue(fax);
                 dao.merge(pp);

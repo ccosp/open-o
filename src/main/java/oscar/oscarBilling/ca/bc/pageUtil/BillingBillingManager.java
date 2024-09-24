@@ -339,7 +339,7 @@ public class BillingBillingManager implements Serializable {
                 bss = dao.findByServiceCode(service_code);
             }
 
-            if (bss.size() > 0) {
+            if (!bss.isEmpty()) {
                 BillingService bs = bss.get(0);
                 this.description = bs.getDescription();
                 this.price = Double.parseDouble(bs.getValue());

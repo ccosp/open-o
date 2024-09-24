@@ -284,7 +284,7 @@ public class RxUtil {
                 String qNum = qStr.substring(m1.start(), m1.end());
                 //get the quantity unit
                 String qUnit = qStr.replace(qNum, "").trim();
-                if (qUnit != null && qUnit.length() > 0) {
+                if (qUnit != null && !qUnit.isEmpty()) {
                     return qUnit;
                 }
             }
@@ -316,7 +316,7 @@ public class RxUtil {
                 String foundStr = (qStr.substring(m.start(), m.end())).trim();
                 qStr = qStr.replace(foundStr, "");
                 qStr = qStr.trim();
-                if (qStr.length() == 0) {
+                if (qStr.isEmpty()) {
                     isMitte = true;
                     break;
                 }
@@ -386,7 +386,7 @@ public class RxUtil {
                 qtyD = Double.parseDouble(qNum);
                 //get the quantity unit
                 String qUnit = qStr.replace(qNum, "").trim();
-                if (qUnit != null && qUnit.length() > 0) {
+                if (qUnit != null && !qUnit.isEmpty()) {
                     rx.setUnitName(qUnit);
                     return null; //if a quantity unit is specified, can't calculate duration.
                 } else {
@@ -897,7 +897,7 @@ public class RxUtil {
 
         MiscUtils.getLogger().debug("in instrucParser,unitName=" + rx.getUnitName());
         boolean isUnitNameUsed = true;
-        if (rx.getUnitName() == null || rx.getUnitName().trim().length() == 0) isUnitNameUsed = false;
+        if (rx.getUnitName() == null || rx.getUnitName().trim().isEmpty()) isUnitNameUsed = false;
         else if (rx.getUnitName().equalsIgnoreCase("null")) isUnitNameUsed = false;
         else isUnitNameUsed = true;
         MiscUtils.getLogger().debug("isUnitNameUsed=" + isUnitNameUsed);
@@ -911,7 +911,7 @@ public class RxUtil {
         //no, leave quantity intact.
         //--start new code
         rx.setQuantity(rx.getQuantity().trim());
-        if (duration.equals("0") || duration.length() == 0 || duration == null) {//if duration is not specified, find duration based on quantity
+        if (duration.equals("0") || duration.isEmpty() || duration == null) {//if duration is not specified, find duration based on quantity
             rx.setDurationSpecifiedByUser(false);
             if (!isUnitNameUsed && rx.getQuantity() != null && !rx.getQuantity().equalsIgnoreCase("null") && !rx.getQuantity().equals("") && !durationUnit.equals("") && !frequency.equals("") && !takeMax.equals("0")) {
                 quantity = Integer.parseInt(rx.getQuantity());
@@ -987,7 +987,7 @@ public class RxUtil {
         if (m1.find()) {
             String numStr = s.substring(m1.start(), m1.end());
             String restStr = s.replace(numStr, "").trim();
-            if (restStr != null && restStr.length() > 0) retBool = false;
+            if (restStr != null && !restStr.isEmpty()) retBool = false;
             else retBool = true;
         } else retBool = false;
 
@@ -996,10 +996,10 @@ public class RxUtil {
 
     public static String trimSpecial(RxPrescriptionData.Prescription rx) {
         String special = rx.getSpecial();
-        if (special == null || special.trim().length() == 0) return "";
+        if (special == null || special.trim().isEmpty()) return "";
 
         //if rx has special instruction, remove it from special
-        if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && rx.getSpecialInstruction().trim().length() > 0) {
+        if (rx.getSpecialInstruction() != null && !rx.getSpecialInstruction().equalsIgnoreCase("null") && !rx.getSpecialInstruction().trim().isEmpty()) {
             special = special.replace(rx.getSpecialInstruction(), "");
         }
 
@@ -1120,7 +1120,7 @@ public class RxUtil {
             rx.setQuantity(qNum);
             //get the quantity unit
             String qUnit = qStr.replace(qNum, "").trim();
-            if (qUnit != null && qUnit.length() > 0) {
+            if (qUnit != null && !qUnit.isEmpty()) {
                 MiscUtils.getLogger().debug("changing unitName in setResultSpecialQuantityRepeat ");
                 rx.setUnitName(qUnit);
             }
@@ -1163,22 +1163,22 @@ public class RxUtil {
         List<HashMap<String, String>> retList = new ArrayList<HashMap<String, String>>();
         if (rx.isCustom()) {
             String cn = rx.getCustomName();
-            if (cn != null && cn.trim().length() > 0) retList = getCustomNamePrevInstructions(cn);
+            if (cn != null && !cn.trim().isEmpty()) retList = getCustomNamePrevInstructions(cn);
         } else {
             String din = rx.getRegionalIdentifier();
-            if (din != null && din.trim().length() > 0) {
+            if (din != null && !din.trim().isEmpty()) {
                 retList = getDinPrevInstructions(din);
-                if (retList.size() == 0) {
+                if (retList.isEmpty()) {
                     retList = getBNPrevInstructions(rx.getBrandName());
                     //if(retList.size()==0)
                     //retList=getGNPrevInstructions(rx.getGenericName());
                 }
             } else {
                 String bn = rx.getBrandName();
-                if (bn != null && bn.trim().length() > 0) retList = getBNPrevInstructions(bn);
+                if (bn != null && !bn.trim().isEmpty()) retList = getBNPrevInstructions(bn);
             }
         }
-        if (retList.size() > 0) retList = trimMedHistoryList(rx, retList);
+        if (!retList.isEmpty()) retList = trimMedHistoryList(rx, retList);
         return retList;
     }
 
@@ -1187,12 +1187,12 @@ public class RxUtil {
         String customName = rx.getCustomName();
         String bn = rx.getBrandName();
         List<HashMap<String, String>> retList = new ArrayList<HashMap<String, String>>();
-        if (l.size() > 0 || rx != null) {
+        if (!l.isEmpty() || rx != null) {
             try {
                 for (HashMap<String, String> hm : l) {
                     String ins = hm.get("instruction");
                     String specIns = hm.get("special_instruction");
-                    if (ins != null && ins.length() > 0) {
+                    if (ins != null && !ins.isEmpty()) {
                         if (customName != null && !customName.equalsIgnoreCase("null"))
                             ins = ins.replace(customName, "");
                         if (bn != null && !bn.equalsIgnoreCase("null")) ins = ins.replace(bn, "");
@@ -1218,7 +1218,7 @@ public class RxUtil {
     private static List<HashMap<String, String>> commonUniqueMedHistory(List<HashMap<String, String>> l) {
         MiscUtils.getLogger().debug("in commonUniqueMedHistory l=" + l);
 
-        if (l != null && l.size() > 0) {
+        if (l != null && !l.isEmpty()) {
             HashMap<HashMap, Integer> elementCount = new HashMap<HashMap, Integer>();
             List<HashMap<String, String>> retList = new ArrayList<HashMap<String, String>>();
             for (HashMap<String, String> hm : l) {
@@ -1485,7 +1485,7 @@ public class RxUtil {
             try {
                 Vector v = getMyDrugrefInfo(command, acd, myDrugrefId);
                 MiscUtils.getLogger().debug("2v in for loop: " + v);
-                if (v != null && v.size() > 0) {
+                if (v != null && !v.isEmpty()) {
                     allInteractions.addAll(v);
                 }
                 MiscUtils.getLogger().debug("3after all.addAll(v): " + allInteractions);
@@ -1519,7 +1519,7 @@ public class RxUtil {
                 } else {
                     sigStr = "unknown";
                 }
-                if (interactingAtc != null && interactingDrugName != null && rxItem.getAtcCode().equals(interactingAtc) && effectStr != null && effectStr.length() > 0 && !effectStr.equalsIgnoreCase("N") && !effectStr.equals(" ")) {
+                if (interactingAtc != null && interactingDrugName != null && rxItem.getAtcCode().equals(interactingAtc) && effectStr != null && !effectStr.isEmpty() && !effectStr.equalsIgnoreCase("N") && !effectStr.equals(" ")) {
                     MiscUtils.getLogger().debug("interactingDrugName=" + interactingDrugName);
                     RxPrescriptionData.Prescription rrx = findRxFromDrugNameOrGN(rxs, interactingDrugName);
 

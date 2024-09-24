@@ -179,10 +179,10 @@ public class MsgGenerate {
         sql += " FROM " + cfgTable.getAttribute("sqlFrom")
                 + " WHERE " + cfgTable.getAttribute("sqlLink")
                 + " = '" + this.demographicNo + "'";
-        if (cfgTable.getAttribute("sqlWhere").length() > 0) {
+        if (!cfgTable.getAttribute("sqlWhere").isEmpty()) {
             sql += " AND " + cfgTable.getAttribute("sqlWhere");
         }
-        if (cfgTable.getAttribute("sqlOrder").length() > 0) {
+        if (!cfgTable.getAttribute("sqlOrder").isEmpty()) {
             sql += " ORDER BY " + cfgTable.getAttribute("sqlOrder");
         }
 

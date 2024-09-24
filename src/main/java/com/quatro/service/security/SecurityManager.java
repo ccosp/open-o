@@ -63,7 +63,7 @@ public class SecurityManager {
         }
         List<Secobjprivilege> priv = secobjprivilegeDao.getByObjectNameAndRoles(objectName, rl);
 
-        if (priv.size() == 0) {
+        if (priv.isEmpty()) {
             return true;
         }
         for (Secobjprivilege p : priv) {
@@ -90,10 +90,10 @@ public class SecurityManager {
         }
         List<Secobjprivilege> priv = secobjprivilegeDao.getByObjectNameAndRoles(objectName, rl);
 
-        if (!required && priv.size() == 0) {
+        if (!required && priv.isEmpty()) {
             return true;
         }
-        if (required && priv.size() == 0) {
+        if (required && priv.isEmpty()) {
             return false;
         }
         for (Secobjprivilege p : priv) {
@@ -116,7 +116,7 @@ public class SecurityManager {
         }
         List<Secobjprivilege> priv = secobjprivilegeDao.getByObjectNameAndRoles(objectName, rl);
 
-        if (priv.size() == 0) {
+        if (priv.isEmpty()) {
             return true;
         }
         for (Secobjprivilege p : priv) {

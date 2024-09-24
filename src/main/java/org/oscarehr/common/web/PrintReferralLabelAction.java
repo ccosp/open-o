@@ -91,7 +91,7 @@ public class PrintReferralLabelAction extends OscarAction {
             if ("true".equals(request.getParameter("useCheckList"))) {
                 idList = "";
                 List<ProfessionalSpecialist> checkedSpecs = (List<ProfessionalSpecialist>) request.getSession().getAttribute("billingReferralAdminCheckList");
-                if (checkedSpecs != null && checkedSpecs.size() > 0) {
+                if (checkedSpecs != null && !checkedSpecs.isEmpty()) {
                     for (ProfessionalSpecialist ps : checkedSpecs) {
                         idList += ("," + ps.getId());
                     }

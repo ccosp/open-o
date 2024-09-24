@@ -241,7 +241,7 @@ public class ReportManager {
                 if (templateDescription == null) return "Error: Attribute 'description' missing in <report> tag";
 
                 String querysql = StringEscapeUtils.escapeSql(report.getChildText("query"));
-                if (querysql == null || querysql.length() == 0)
+                if (querysql == null || querysql.isEmpty())
                     return "Error: The sql query is missing in <report> tag";
                 XMLOutputter reportout = new XMLOutputter();
                 String reportXML = reportout.outputString(report).trim();
@@ -313,7 +313,7 @@ public class ReportManager {
                 }
                 //reading sql
                 String querysql = report.getChildText("query");
-                if (type.equalsIgnoreCase(ReportFactory.SQL_TYPE) && (querysql == null || querysql.length() == 0))
+                if (type.equalsIgnoreCase(ReportFactory.SQL_TYPE) && (querysql == null || querysql.isEmpty()))
                     return "Error: The sql query is missing in <report> tag";
                 //reading active switch
                 String active = report.getAttributeValue("active");

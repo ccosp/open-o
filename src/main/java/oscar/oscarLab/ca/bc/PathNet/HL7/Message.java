@@ -177,7 +177,7 @@ public class Message {
                     /////
 
                     ProviderLabRouting routing = new ProviderLabRouting();
-                    if (listOfProviderNo.size() > 0) { // provider found in database
+                    if (!listOfProviderNo.isEmpty()) { // provider found in database
                         for (int p = 0; p < listOfProviderNo.size(); p++) {
                             String prov = listOfProviderNo.get(p);
 

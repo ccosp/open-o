@@ -165,7 +165,7 @@ public class OcanForm {
 
         //get admission info
         List<Admission> admissions = admissionDao.getAdmissionsByProgramAndClient(clientId, programId);
-        if (admissions.size() > 0) {
+        if (!admissions.isEmpty()) {
             Admission ad = admissions.get(0);
             ocanStaffForm.setAdmissionId(ad.getId().intValue());
             ocanStaffForm.setServiceInitDate(ad.getAdmissionDate());
@@ -175,7 +175,7 @@ public class OcanForm {
             //Find referral date
             ClientReferralDAO clientReferralDao = (ClientReferralDAO) SpringUtils.getBean(ClientReferralDAO.class);
             List<ClientReferral> referrals = clientReferralDao.getActiveReferralsByClientAndProgram(Long.valueOf(clientId.longValue()), Long.valueOf(programId.longValue()));
-            if (referrals.size() > 0) {
+            if (!referrals.isEmpty()) {
                 ClientReferral ref = referrals.get(0);
                 if (ref.getReferralDate() != null)
                     ocanStaffForm.setReferralDate(ref.getReferralDate());
@@ -312,12 +312,12 @@ public class OcanForm {
         String value = "", className = "";
         if (!clientForm) {
             List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
-            if (existingAnswers.size() > 0) {
+            if (!existingAnswers.isEmpty()) {
                 value = existingAnswers.get(0).getAnswer();
             }
         } else {
             List<OcanStaffFormData> existingAnswers = getClientAnswers(ocanStaffFormId, question, prepopulationLevel);
-            if (existingAnswers.size() > 0) {
+            if (!existingAnswers.isEmpty()) {
                 value = existingAnswers.get(0).getAnswer();
             }
         }
@@ -334,7 +334,7 @@ public class OcanForm {
     public static String renderAsDate(Integer ocanStaffFormId, String question, boolean required, String defaultValue, int prepopulationLevel, boolean clientForm) {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
         String value = "", className = "";
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             value = existingAnswers.get(0).getAnswer();
         }
         if (value.equals("")) {
@@ -353,7 +353,7 @@ public class OcanForm {
     public static String renderAsEstimatedAge(Integer ocanStaffFormId, String question, boolean required, String dob, int prepopulationLevel) {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
         String value = "", className = "";
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             value = existingAnswers.get(0).getAnswer();
         }
         if (value.equals("")) {
@@ -437,7 +437,7 @@ public class OcanForm {
         List<OcanStaffFormData> existingStaffAnswers = null;
         existingStaffAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
         String actualOrgName = null;
-        if (existingStaffAnswers != null && existingStaffAnswers.size() > 0) {
+        if (existingStaffAnswers != null && !existingStaffAnswers.isEmpty()) {
             actualOrgName = existingStaffAnswers.get(0).getAnswer();
 
         }
@@ -602,7 +602,7 @@ public class OcanForm {
     public static String renderAsSelectOptions(Integer ocanStaffFormId, String question, List<OcanFormOption> options, String defaultValue, int prepopulationLevel, boolean readonly) {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
         boolean useDefaultValue = false;
-        if (existingAnswers.size() == 0) {
+        if (existingAnswers.isEmpty()) {
             useDefaultValue = true;
         }
         StringBuilder sb = new StringBuilder();
@@ -640,12 +640,12 @@ public class OcanForm {
 
         if (!clientForm) {
             existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
-            if (existingAnswers.size() > 0) {
+            if (!existingAnswers.isEmpty()) {
                 sb.append(existingAnswers.get(0).getAnswer());
             }
         } else {
             existingClientAnswers = getClientAnswers(ocanStaffFormId, question, prepopulationLevel);
-            if (existingClientAnswers.size() > 0) {
+            if (!existingClientAnswers.isEmpty()) {
                 sb.append(existingClientAnswers.get(0).getAnswer());
             }
         }
@@ -661,7 +661,7 @@ public class OcanForm {
         StringBuilder sb = new StringBuilder();
 
         sb.append("<textarea maxlength=\"512\" name=\"" + question + "\" id=\"" + question + "\" rows=\"" + rows + "\" cols=\"" + cols + "\" readonly=\"readonly\" onfocus=\"this.blur()\">");
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             sb.append(existingAnswers.get(0).getAnswer());
         }
         sb.append("</textarea>");
@@ -676,7 +676,7 @@ public class OcanForm {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
 
         String value = "";
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             value = existingAnswers.get(0).getAnswer();
         }
         StringBuilder sb = new StringBuilder();
@@ -698,7 +698,7 @@ public class OcanForm {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
 
         String value = "";
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             value = existingAnswers.get(0).getAnswer();
         }
         StringBuilder sb = new StringBuilder();
@@ -712,7 +712,7 @@ public class OcanForm {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
 
         String value = "";
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             value = existingAnswers.get(0).getAnswer();
         } else {
             value = defaultValue;
@@ -728,7 +728,7 @@ public class OcanForm {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
 
         String value = "";
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             value = existingAnswers.get(0).getAnswer();
         }
         if (value == null || "".equals(value)) {
@@ -824,7 +824,7 @@ public class OcanForm {
         List<OcanStaffFormData> existingAnswers = getStaffAnswers(ocanStaffFormId, question, prepopulationLevel);
 
         String value = "";
-        if (existingAnswers.size() > 0) {
+        if (!existingAnswers.isEmpty()) {
             value = existingAnswers.get(0).getAnswer();
         }
         StringBuilder sb = new StringBuilder();
@@ -925,8 +925,8 @@ public class OcanForm {
             List<OcanStaffFormData> freqMnthAnswer = getStaffAnswers(ocanStaffFormId, value + "_freq_6months", prepopulationLevel);
             List<OcanStaffFormData> freqEverAnswer = getStaffAnswers(ocanStaffFormId, value + "_freq_ever", prepopulationLevel);
 
-            String checked2 = ((freqMnthAnswer.size() > 0) ? "checked=\"checked\"" : "");
-            String checked3 = ((freqEverAnswer.size() > 0) ? "checked=\"checked\"" : "");
+            String checked2 = ((!freqMnthAnswer.isEmpty()) ? "checked=\"checked\"" : "");
+            String checked3 = ((!freqEverAnswer.isEmpty()) ? "checked=\"checked\"" : "");
 			/*
 			List<OcanStaffFormData> freqAnswer = getStaffAnswers(ocanStaffFormId, value+"_DrugUseFreq", prepopulationLevel);
 			Iterator it = freqAnswer.iterator();
@@ -963,8 +963,8 @@ public class OcanForm {
         List<OcanStaffFormData> freqMnthAnswer = getStaffAnswers(ocanStaffFormId, "drug_injection_freq_6months", prepopulationLevel);
         List<OcanStaffFormData> freqEverAnswer = getStaffAnswers(ocanStaffFormId, "drug_injection_freq_ever", prepopulationLevel);
 
-        String checked2 = ((freqMnthAnswer.size() > 0) ? "checked=\"checked\"" : "");
-        String checked3 = ((freqEverAnswer.size() > 0) ? "checked=\"checked\"" : "");
+        String checked2 = ((!freqMnthAnswer.isEmpty()) ? "checked=\"checked\"" : "");
+        String checked3 = ((!freqEverAnswer.isEmpty()) ? "checked=\"checked\"" : "");
 
         sb.append("<tr><td>Has the substance been injected?</td><td><input type=\"checkbox\" " + checked2 + " id=\"drug_injection_freq_6months\" name=\"drug_injection_freq_6months\" value=\"5\" /></td><td><input type=\"checkbox\" " + checked3 + " id=\"drug_injection_freq_ever\" name=\"drug_injection_freq_ever\" value=\"6\" /></td></tr>");
 

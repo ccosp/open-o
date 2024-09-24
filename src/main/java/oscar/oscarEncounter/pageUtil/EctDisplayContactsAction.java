@@ -141,8 +141,8 @@ public class EctDisplayContactsAction extends EctDisplayAction {
                 NavBarDisplayDAO.Item item = NavBarDisplayDAO.Item();
                 //48.45
                 String itemHeader = StringUtils.maxLenString(name, 20, 17, ELLIPSES) +
-                        ((specialty != null && specialty.length() > 0) ? StringUtils.maxLenString("  " + specialty, 14, 11, ELLIPSES) : "") +
-                        ((workPhone != null && workPhone.length() > 0) ? StringUtils.maxLenString("  " + workPhone, 17, 14, ELLIPSES) : "");
+                        ((specialty != null && !specialty.isEmpty()) ? StringUtils.maxLenString("  " + specialty, 14, 11, ELLIPSES) : "") +
+                        ((workPhone != null && !workPhone.isEmpty()) ? StringUtils.maxLenString("  " + workPhone, 17, 14, ELLIPSES) : "");
                 item.setTitle((contact.isConsentToContact() ? "" : "*") + itemHeader);
                 String consent = contact.isConsentToContact() ? "Ok to contact" : "Do not contact";
                 item.setLinkTitle(name + " " + specialty + " " + workPhone + " " + consent);

@@ -782,9 +782,9 @@ public class DemographicManagerImpl implements DemographicManager {
 
         Demographic result = demographicDao.getDemographicById(demographicNo);
         String workPhone = result.getPhone2();
-        if (workPhone != null && workPhone.length() > 0) {
+        if (workPhone != null && !workPhone.isEmpty()) {
             String value = demographicExtDao.getValueForDemoKey(demographicNo, "wPhoneExt");
-            if (value != null && value.length() > 0) {
+            if (value != null && !value.isEmpty()) {
                 workPhone += "x" + value;
             }
         }

@@ -165,7 +165,7 @@ public class LookupCodeEditAction extends DispatchAction {
                 //errMsg += "Active Clients detected in the " + tableDef.getDescription();
             }
         }
-        if (messages.size() > 0) {
+        if (!messages.isEmpty()) {
             saveMessages(request, messages);
             return mapping.findForward("edit");
         }

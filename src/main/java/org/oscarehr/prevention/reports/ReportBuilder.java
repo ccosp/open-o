@@ -124,7 +124,7 @@ public class ReportBuilder {
 
 
         List<DemographicContact> substituteDecisionMakers = demographicManager.findSDMByDemographicNo(loggedInInfo, item.getDemographicNo());
-        if (substituteDecisionMakers.size() > 0) {
+        if (!substituteDecisionMakers.isEmpty()) {
             DemographicContact dc = substituteDecisionMakers.get(0);
             Demographic demoSDM = demographicManager.getDemographic(loggedInInfo, dc.getContactId());
             if (demoSDM != null) {
@@ -266,7 +266,7 @@ public class ReportBuilder {
             }
             logger.info("number of items for patient " + demographicNo + " = " + noFutureItem.size() + "/" + prev.size());
 
-            if (noFutureItem.size() > 0) {
+            if (!noFutureItem.isEmpty()) {
                 noPreventionsFound = false;
                 if (preventionSearchConfig.getDateCalcType() == PreventionSearchConfigTo1.ASOFDATE) {  //PAP MAM FOBT FLU etc style
                     //PAP prevention within 42 Months prior to March 31st
@@ -491,7 +491,7 @@ public class ReportBuilder {
                 Collection<EctMeasurementsDataBean> followupData = measurementDataHandler.getMeasurementsDataCollection();
                 //NO Contact
                 logger.debug("number of follow up " + followupData.size());
-                if (followupData.size() == 0) {
+                if (followupData.isEmpty()) {
                     item.setNextSuggestedProcedure(this.LETTER1);
                     return this.LETTER1;
                 } else { //There has been contact
@@ -569,7 +569,7 @@ public class ReportBuilder {
                 EctMeasurementsDataBeanHandler measurementDataHandler = new EctMeasurementsDataBeanHandler(item.getDemographicNo(), measurementType);
                 logger.debug("getting followup data for " + item.getDemographicNo());
                 Collection followupData = measurementDataHandler.getMeasurementsDataCollection();
-                if (followupData.size() > 0) {
+                if (!followupData.isEmpty()) {
                     EctMeasurementsDataBean measurementData = (EctMeasurementsDataBean) followupData.iterator().next();
                     item.setLastFollowup(measurementData.getDateObservedAsDate());
                     item.setLastFollupProcedure(measurementData.getDataField());
@@ -585,7 +585,7 @@ public class ReportBuilder {
                 logger.debug("getting followup data for " + item.getDemographicNo());
                 Collection followupData = measurementDataHandler.getMeasurementsDataCollection();
 
-                if (followupData.size() > 0) {
+                if (!followupData.isEmpty()) {
                     EctMeasurementsDataBean measurementData = (EctMeasurementsDataBean) followupData.iterator().next();
                     item.setLastFollowup(measurementData.getDateObservedAsDate());
                     item.setLastFollupProcedure(measurementData.getDataField());

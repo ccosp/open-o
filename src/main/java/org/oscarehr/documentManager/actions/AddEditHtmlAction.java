@@ -73,7 +73,7 @@ public class AddEditHtmlAction extends Action {
         if (!EDocUtil.getDoctypes(fm.getFunction()).contains(fm.getDocType())) {
             EDocUtil.addDocTypeSQL(fm.getDocType(), fm.getFunction());
         }
-        if ((fm.getDocDesc().length() == 0) || (fm.getDocDesc().equals("Enter Title"))) {
+        if ((fm.getDocDesc().isEmpty()) || (fm.getDocDesc().equals("Enter Title"))) {
             errors.put("descmissing", "dms.error.descriptionInvalid");
             request.setAttribute("linkhtmlerrors", errors);
             request.setAttribute("completedForm", fm);
@@ -82,7 +82,7 @@ public class AddEditHtmlAction extends Action {
             request.setAttribute("editDocumentNo", fm.getMode());
             return mapping.findForward("failed");
         }
-        if (fm.getDocType().length() == 0) {
+        if (fm.getDocType().isEmpty()) {
             errors.put("typemissing", "dms.error.typeMissing");
             request.setAttribute("linkhtmlerrors", errors);
             request.setAttribute("completedForm", fm);
@@ -91,7 +91,7 @@ public class AddEditHtmlAction extends Action {
             request.setAttribute("editDocumentNo", fm.getMode());
             return mapping.findForward("failed");
         }
-        if (fm.getHtml().length() == 0) {
+        if (fm.getHtml().isEmpty()) {
             errors.put("urlmissing", "dms.error.htmlMissing");
             request.setAttribute("linkhtmlerrors", errors);
             request.setAttribute("completedForm", fm);
@@ -177,6 +177,6 @@ public class AddEditHtmlAction extends Action {
     }
 
     private boolean filled(String s) {
-        return (s != null && s.trim().length() > 0);
+        return (s != null && !s.trim().isEmpty());
     }
 }

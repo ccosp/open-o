@@ -82,7 +82,7 @@ public class AppManagerImpl implements AppManager {
         }
 
         //--- log action ---
-        if (returningAppList != null && returningAppList.size() > 0) {
+        if (returningAppList != null && !returningAppList.isEmpty()) {
             String resultIds = AppDefinition.getIdsAsStringList(appList);
             LogAction.addLogSynchronous(loggedInInfo, "AppManager.getAppDefinitions", "ids returned=" + resultIds);
         }

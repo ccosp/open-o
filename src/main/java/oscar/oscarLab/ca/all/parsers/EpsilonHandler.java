@@ -55,7 +55,7 @@ public class EpsilonHandler extends CMLHandler implements MessageHandler {
             int tmp = index + 1;
             String tmph = hl7Body.substring(0, tmp);
             index = hl7Body.indexOf('|', index + 1);
-            if (hl7Body.substring(tmp, index).trim().length() == 0)
+            if (hl7Body.substring(tmp, index).trim().isEmpty())
                 hl7Body = tmph + "2.3" + hl7Body.substring(index);
         }
         Parser p = new PipeParser();
@@ -131,7 +131,7 @@ public class EpsilonHandler extends CMLHandler implements MessageHandler {
             if (msg.getRESPONSE().getORDER_OBSERVATION(0).getOBR()
                     .getFillerOrderNumber().getEntityIdentifier().getValue() != null) {
                 accessionNum = accessionNum
-                        + (accessionNum != null && accessionNum.trim().length() > 0 ? ", " : "")
+                        + (accessionNum != null && !accessionNum.trim().isEmpty() ? ", " : "")
                         + getString(msg.getRESPONSE().getORDER_OBSERVATION(0)
                         .getOBR().getFillerOrderNumber()
                         .getEntityIdentifier().getValue());

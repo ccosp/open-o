@@ -67,7 +67,7 @@ public class DocumentMgtUploadServlet extends HttpServlet {
         forwardTo = ap.getProperty("DOC_FORWARD");
         foldername = ap.getProperty("DOCUMENT_DIR");
 
-        if (forwardTo == null || forwardTo.length() < 1) return;
+        if (forwardTo == null || forwardTo.isEmpty()) return;
 
 
         //		 Create a new file upload handler

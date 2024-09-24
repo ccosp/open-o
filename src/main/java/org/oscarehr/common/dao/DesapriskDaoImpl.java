@@ -53,7 +53,7 @@ public class DesapriskDaoImpl extends AbstractDaoImpl<Desaprisk> implements Desa
         @SuppressWarnings("unchecked")
         List<Desaprisk> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

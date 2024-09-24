@@ -44,7 +44,7 @@ public class FacilityManagerImpl implements FacilityManager {
 
     public Facility getDefaultFacility(LoggedInInfo loggedInInfo) {
         List<Facility> results = facilityDao.findAll(true);
-        if (results.size() == 0) {
+        if (results.isEmpty()) {
             return (null);
         } else {
 

@@ -57,7 +57,7 @@ public class ClinicManageAction extends DispatchAction {
         DynaActionForm frm = (DynaActionForm) form;
         Clinic clinic = (Clinic) frm.get("clinic");
         //weird hack, but not sure why struts isn't filling in the id.
-        if (request.getParameter("clinic.id") != null && request.getParameter("clinic.id").length() > 0 && clinic.getId() == null) {
+        if (request.getParameter("clinic.id") != null && !request.getParameter("clinic.id").isEmpty() && clinic.getId() == null) {
             clinic.setId(Integer.parseInt(request.getParameter("clinic.id")));
         }
         clinicDAO.save(clinic);

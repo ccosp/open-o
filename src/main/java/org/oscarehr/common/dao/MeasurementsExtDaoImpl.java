@@ -99,7 +99,7 @@ public class MeasurementsExtDaoImpl extends AbstractDaoImpl<MeasurementsExt> imp
         @SuppressWarnings("unchecked")
         List<MeasurementsExt> rs = q.getResultList();
 
-        if (rs.size() > 0) return rs.get(0).getMeasurementId();
+        if (!rs.isEmpty()) return rs.get(0).getMeasurementId();
         return null;
     }
 

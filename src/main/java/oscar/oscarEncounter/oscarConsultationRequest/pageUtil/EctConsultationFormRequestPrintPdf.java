@@ -172,7 +172,7 @@ public class EctConsultationFormRequestPrintPdf {
 
 
     private float addDynamicPositionedText(String name, String text, float dynamicHeight, EctConsultationFormRequestUtil reqForm) throws DocumentException {
-        if (text != null && text.length() > 0) {
+        if (text != null && !text.isEmpty()) {
             Font boldFont = new Font(bf, FONTSIZE, Font.BOLD);
             Font font = new Font(bf, FONTSIZE, Font.NORMAL);
             float lineCount = (name.length() + text.length()) / 100;

@@ -401,7 +401,7 @@ public class TeleplanFileWriter {
 
     private String getHinForHTML(Billingmaster bm) {
         String hin = bm.getPhn();
-        if (bm.getOinInsurerCode() != null && (bm.getOinInsurerCode().trim().length() > 0)) {
+        if (bm.getOinInsurerCode() != null && (!bm.getOinInsurerCode().trim().isEmpty())) {
             hin = bm.getOinRegistrationNo();
         }
         return hin;

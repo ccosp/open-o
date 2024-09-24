@@ -283,7 +283,7 @@ public class SurveyManagerAction extends AbstractSurveyAction {
             // do nothing
         } else {
 
-            if (pageName == null || pageName.length() == 0) {
+            if (pageName == null || pageName.isEmpty()) {
                 pageName = "1";
             }
 

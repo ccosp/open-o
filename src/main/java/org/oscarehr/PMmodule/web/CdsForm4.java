@@ -87,7 +87,7 @@ public class CdsForm4 {
 
         if (admission == null) {
             admissions = admissionDao.getAdmissionsByFacility(clientId, facilityId);
-            if (admissions.size() > 0) admission = admissions.get(0);
+            if (!admissions.isEmpty()) admission = admissions.get(0);
         }
 
         if (admission != null) {
@@ -351,7 +351,7 @@ public class CdsForm4 {
         List<CdsClientFormData> answers = getAnswers(cdsClientFormId, question);
         String result = null;
 
-        if (answers.size() > 0) result = answers.get(0).getAnswer();
+        if (!answers.isEmpty()) result = answers.get(0).getAnswer();
 
         return (result);
     }

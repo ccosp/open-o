@@ -47,10 +47,10 @@ public final class LoginForm extends ActionForm {
         if (propname != null && !propname.endsWith(".properties")) {
             propname += ".properties";
         }
-        if (username == null || username.length() == 0 || username.length() > 15 ||
-                password == null || password.length() == 0 || password.length() > 10 ||
+        if (username == null || username.isEmpty() || username.length() > 15 ||
+                password == null || password.isEmpty() || password.length() > 10 ||
                 (pin != null && pin.length() > 6) ||
-                propname == null || propname.length() == 0 || propname.length() > 50) {
+                propname == null || propname.isEmpty() || propname.length() > 50) {
             //err.add(ActionErrors.GLOBAL_ERROR, new ActionError("failed", "") );
 //      reset();
         }

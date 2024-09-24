@@ -221,10 +221,10 @@ public class HRMReportParser {
         HRMDocumentDao hrmDocumentDao = (HRMDocumentDao) SpringUtils.getBean(HRMDocumentDao.class);
         List<Integer> exactMatchList = hrmDocumentDao.findByHash(noMessageIdHash);
 
-        if (exactMatchList == null || exactMatchList.size() == 0) {
+        if (exactMatchList == null || exactMatchList.isEmpty()) {
             List<HRMDocument> sameReportDifferentRecipientReportList = hrmDocumentDao.findByNoTransactionInfoHash(noTransactionInfoHash);
 
-            if (sameReportDifferentRecipientReportList != null && sameReportDifferentRecipientReportList.size() > 0) {
+            if (sameReportDifferentRecipientReportList != null && !sameReportDifferentRecipientReportList.isEmpty()) {
                 logger.info("Same Report Different Recipient, for file:" + report.getFileLocation());
                 HRMReportParser.routeReportToProvider(sameReportDifferentRecipientReportList.get(0), report);
             } else {
@@ -250,7 +250,7 @@ public class HRMReportParser {
 
                 HRMReportParser.routeReportToSubClass(report, document.getId());
             }
-        } else if (exactMatchList != null && exactMatchList.size() > 0) {
+        } else if (exactMatchList != null && !exactMatchList.isEmpty()) {
             // We've seen this one before.  Increment the counter on how many times we've seen it before
             //TODO: do we need to save more info about when we saw the duplicates!
             logger.debug("We've seen this report before. Increment the counter on how many times we've seen it before, for file:" + report.getFileLocation());
@@ -277,7 +277,7 @@ public class HRMReportParser {
 
         List<Demographic> matchingDemographicListByHin = demographicDao.searchDemographicByHIN(report.getHCN());
 
-        if (matchingDemographicListByHin.size() > 0) {
+        if (!matchingDemographicListByHin.isEmpty()) {
             if (OscarProperties.getInstance().isPropertyActive("omd_hrm_demo_matching_criteria")) {
                 for (Demographic d : matchingDemographicListByHin) {
                     if (report.getGender().equalsIgnoreCase(d.getSex())
@@ -327,7 +327,7 @@ public class HRMReportParser {
         // Check #1: Identify if this is a report that we received before, but was sent to the wrong demographic.
         // we set the parent on those other reports to this one. this way we can display the other versions when viewing.
         List<Integer> parentReportList = hrmDocumentDao.findAllWithSameNoDemographicInfoHash(mergedDocument.getReportLessDemographicInfoHash());
-        if (parentReportList != null && parentReportList.size() > 0) {
+        if (parentReportList != null && !parentReportList.isEmpty()) {
             for (Integer id : parentReportList) {
                 if (id != null && id.intValue() != mergedDocument.getId().intValue()) {
                     mergedDocument.setParentReport(id);
@@ -513,7 +513,7 @@ public class HRMReportParser {
                 }
                 //get and add alt providers
                 List<DemographicCust> demographicCust = demographicCustDao.findAllByDemographicNumber(demographic.getDemographicNo());
-                if (demographicCust.size() > 0) {
+                if (!demographicCust.isEmpty()) {
                     ArrayList<String> residentIds = new ArrayList<String>();
                     residentIds.add(demographicCust.get(0).getMidwife());
                     residentIds.add(demographicCust.get(0).getNurse());
@@ -534,7 +534,7 @@ public class HRMReportParser {
 
             List<HRMDocumentToProvider> existingHRMDocumentToProviders = hrmDocumentToProviderDao.findByHrmDocumentIdAndProviderNoList(reportId, p.getProviderNo());
 
-            if (existingHRMDocumentToProviders == null || existingHRMDocumentToProviders.size() == 0) {
+            if (existingHRMDocumentToProviders == null || existingHRMDocumentToProviders.isEmpty()) {
                 HRMDocumentToProvider providerRouting = new HRMDocumentToProvider();
                 providerRouting.setHrmDocumentId(reportId);
 
@@ -570,7 +570,7 @@ public class HRMReportParser {
             }
         }
 
-        return sendToProviderList.size() > 0;
+        return !sendToProviderList.isEmpty();
 
     }
 

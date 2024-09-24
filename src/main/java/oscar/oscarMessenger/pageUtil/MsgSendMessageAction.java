@@ -69,7 +69,7 @@ public class MsgSendMessageAction extends Action {
         ActionForward actionForward = new ActionForward(mapping.getInput());
         actionForward.setName(mapping.getInput());
 
-        if (subject.length() == 0) {
+        if (subject.isEmpty()) {
             subject = "none";
         }
 

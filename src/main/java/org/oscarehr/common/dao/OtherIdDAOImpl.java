@@ -64,7 +64,7 @@ public class OtherIdDAOImpl extends AbstractDaoImpl<OtherId> implements OtherIdD
         @SuppressWarnings("unchecked")
         List<OtherId> otherIdList = query.getResultList();
 
-        return otherIdList.size() > 0 ? otherIdList.get(0) : null;
+        return !otherIdList.isEmpty() ? otherIdList.get(0) : null;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class OtherIdDAOImpl extends AbstractDaoImpl<OtherId> implements OtherIdD
         @SuppressWarnings("unchecked")
         List<OtherId> otherIdList = query.getResultList();
 
-        return otherIdList.size() > 0 ? otherIdList.get(0) : null;
+        return !otherIdList.isEmpty() ? otherIdList.get(0) : null;
     }
 
     @Override

@@ -194,7 +194,7 @@ public class MeasurementInfo {
         int numMonths = -1;
         ArrayList list = getMeasurementData(measurement);
         Hashtable h = null;
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             //h = (Hashtable) list.get(0);
             EctMeasurementsDataBean mdata = (EctMeasurementsDataBean) list.get(0);
             Date date = mdata.getDateObservedAsDate();
@@ -215,7 +215,7 @@ public class MeasurementInfo {
         int numMonths = -1;
         ArrayList list = getMeasurementData(measurement);
 
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
 
             EctMeasurementsDataBean mdata = (EctMeasurementsDataBean) list.get(0);
             Date date = mdata.getDateObservedAsDate();
@@ -238,7 +238,7 @@ public class MeasurementInfo {
         int value = -1; //TODO not sure how to handle a non int value.
         ArrayList list = getMeasurementData(measurement);
         Hashtable h = null;
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             EctMeasurementsDataBean mdata = (EctMeasurementsDataBean) list.get(0);
             try {
                 value = Integer.parseInt(mdata.getDataField());
@@ -255,7 +255,7 @@ public class MeasurementInfo {
         String str = "";
         ArrayList list = getMeasurementData(measurement);
         Hashtable h = null;
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             EctMeasurementsDataBean mdata = (EctMeasurementsDataBean) list.get(0);
             try {
                 str = mdata.getDataField();

@@ -86,7 +86,7 @@ public class DownloadAction extends DispatchAction {
                     result = getResourceList(request, resourceForm, delegate, serviceId, result);
                 }
                 List<DetailDataCustom> resourceList = resourceForm.getData();
-                if (resourceList.size() > 0) {
+                if (!resourceList.isEmpty()) {
                     //ActionUtils.setDetails(request, result);
                     //Collections.sort(resourceList, DetailDataCustom.ResourceIdComparator);
                     //setting the first element to downloading to view on the jsp
@@ -124,7 +124,7 @@ public class DownloadAction extends DispatchAction {
             result = delegate.list(resourceType, ResourceStatus.DOWNLOADABLE, form.getPageNoAsBigInt());
 
             List<DetailDataCustom> resourceList = form.getData();
-            if (resourceList == null || resourceList.size() < 1) resourceList = new ArrayList<DetailDataCustom>();
+            if (resourceList == null || resourceList.isEmpty()) resourceList = new ArrayList<DetailDataCustom>();
 
             if (result != null && result.getData() != null && result.getResultSize() != null) {
                 /*filtering the list to contain only the files that have not been downloaded*/
@@ -152,7 +152,7 @@ public class DownloadAction extends DispatchAction {
                         resourceList.add(detailDataK);
                     }
                 }
-                if (resourceList.size() > 0) {
+                if (!resourceList.isEmpty()) {
                     //ActionUtils.setDetails(request, result);
                     Collections.sort(resourceList, DetailDataCustom.ResourceIdComparator);
                     form.setData(resourceList);
@@ -287,7 +287,7 @@ public class DownloadAction extends DispatchAction {
 
             List<String> lastId = FileUtils.readLines(document);
 
-            if (lastId.size() > 0 && StringUtils.isNumeric(lastId.get(0))) {
+            if (!lastId.isEmpty() && StringUtils.isNumeric(lastId.get(0))) {
                 resourceID = lastId.get(0);
             }
         } catch (Exception e) {
@@ -416,7 +416,7 @@ public class DownloadAction extends DispatchAction {
 
                     }
 
-                    if (resourceList.size() > 0) {
+                    if (!resourceList.isEmpty()) {
                         //Collections.sort(resourceList, DetailDataCustom.ResourceIdComparator);
                         request.getSession().setAttribute("resourceListDL", resourceList);
                     }

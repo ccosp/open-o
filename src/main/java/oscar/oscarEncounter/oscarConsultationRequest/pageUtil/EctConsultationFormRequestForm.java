@@ -377,7 +377,7 @@ public final class EctConsultationFormRequestForm extends ActionForm {
             this.patientWillBook = "0";
         }
 
-        if (service == null || service.length() == 0) {
+        if (service == null || service.isEmpty()) {
 
             errors.add("service", new ActionMessage("Errors.service.null"));
 

@@ -131,7 +131,7 @@ public class JdbcBillingRAImpl {
 
                     // judge if it is empty in table radt
                     int radtNum = 0;
-                    if (raNo != null && raNo.length() > 0) {
+                    if (raNo != null && !raNo.isEmpty()) {
                         // can't make sure the record has only one result here
                         radtNum = raDetailDao.findByRaHeaderNo(Integer.parseInt(raNo)).size();
 

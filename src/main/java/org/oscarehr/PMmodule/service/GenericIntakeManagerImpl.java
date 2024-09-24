@@ -591,7 +591,7 @@ public class GenericIntakeManagerImpl implements GenericIntakeManager {
         List<Integer> nodeIds = genericIntakeDAO
                 .getIntakeNodesIdByClientId(clientId, 1);
         List<IntakeNode> nodeList = new ArrayList<IntakeNode>();
-        if (nodeIds.size() > 0) {
+        if (!nodeIds.isEmpty()) {
             for (Integer i : nodeIds) {
                 nodeList.add(getIntakeNode(i));
             }
@@ -864,7 +864,7 @@ public class GenericIntakeManagerImpl implements GenericIntakeManager {
 
 
     public List<IntakeNodeJavascript> getIntakeNodeJavascriptLocation(String questionId) {
-        if (questionId != null && questionId.length() > 0) {
+        if (questionId != null && !questionId.isEmpty()) {
             return this.genericIntakeNodeDAO.getIntakeNodeJavascriptLocation(questionId);
         }
         return null;

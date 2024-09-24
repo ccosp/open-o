@@ -59,7 +59,7 @@ public class OLISUploadSimulationDataAction extends DispatchAction {
                 }
             }
 
-            if (simulationData != null && simulationData.length() > 0) {
+            if (simulationData != null && !simulationData.isEmpty()) {
                 if (simulationError) {
                     Driver.readResponseFromXML(LoggedInInfo.getLoggedInInfoFromSession(request), request, simulationData);
                     simulationData = (String) request.getAttribute("olisResponseContent");

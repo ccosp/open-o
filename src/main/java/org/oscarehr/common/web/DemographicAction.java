@@ -261,7 +261,7 @@ public class DemographicAction extends JSONAction {
 
         JSONObject result = new JSONObject();
         result.put("hasDuplicates", false);
-        if (duplicateList.size() > 0) {
+        if (!duplicateList.isEmpty()) {
             result.put("hasDuplicates", true);
         }
 

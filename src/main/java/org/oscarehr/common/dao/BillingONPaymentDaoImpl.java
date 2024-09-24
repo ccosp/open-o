@@ -170,7 +170,7 @@ public class BillingONPaymentDaoImpl extends AbstractDaoImpl<BillingONPayment> i
         Query query = entityManager.createQuery("select bp.paymentType from BillingPaymentType bp where bp.id = ?1");
         query.setParameter(1, paymentTypeId);
         List<String> types = query.getResultList();
-        if (types != null && types.size() > 0)
+        if (types != null && !types.isEmpty())
             return types.get(0);
         else
             return null;

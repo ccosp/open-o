@@ -59,14 +59,14 @@ public class DefaultEncounterIssueAction extends DispatchAction {
             return mapping.findForward("list");
         }
         List<DefaultIssue> issueList = issueDao.findAll();
-        if (issueList != null && issueList.size() > 0) {
+        if (issueList != null && !issueList.isEmpty()) {
             request.setAttribute("issueList", (issueList != null) ? issueList : new ArrayList<DefaultIssue>());
         }
         return mapping.findForward("list");
     }
 
     private boolean saveDefaultIssuesToDb(String providerNo, String issueIds) {
-        if (issueIds == null || issueIds.length() == 0) {
+        if (issueIds == null || issueIds.isEmpty()) {
             return false;
         }
         DefaultIssueDao issueDao = SpringUtils.getBean(DefaultIssueDao.class);
@@ -96,7 +96,7 @@ public class DefaultEncounterIssueAction extends DispatchAction {
 
     public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         String issueNames = request.getParameter("issueNames");
-        if (issueNames == null || issueNames.length() == 0) {
+        if (issueNames == null || issueNames.isEmpty()) {
             return mapping.findForward("list");
         }
         IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
@@ -108,7 +108,7 @@ public class DefaultEncounterIssueAction extends DispatchAction {
         String[] issueNamesArr = issueNames.split(",");
         for (String issueName : issueNamesArr) {
             List<Issue> issueList = issueDao.findIssueBySearch(issueName.trim());
-            if (issueList == null || issueList.size() == 0) {
+            if (issueList == null || issueList.isEmpty()) {
                 continue;
             }
             for (Issue issue : issueList) {
@@ -116,7 +116,7 @@ public class DefaultEncounterIssueAction extends DispatchAction {
             }
         }
 
-        if (issueIdSet.size() == 0) {
+        if (issueIdSet.isEmpty()) {
             return mapping.findForward("list");
         }
 
@@ -167,7 +167,7 @@ public class DefaultEncounterIssueAction extends DispatchAction {
 
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         String issueNames = request.getParameter("issueNames");
-        if (issueNames == null || issueNames.length() == 0) {
+        if (issueNames == null || issueNames.isEmpty()) {
             return mapping.findForward("list");
         }
         IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
@@ -180,7 +180,7 @@ public class DefaultEncounterIssueAction extends DispatchAction {
         StringBuilder idSb = new StringBuilder();
         for (String issueName : issueNamesArr) {
             List<Issue> issueList = issueDao.findIssueBySearch(issueName.trim());
-            if (issueList == null || issueList.size() == 0) {
+            if (issueList == null || issueList.isEmpty()) {
                 continue;
             }
             for (Issue issue : issueList) {
@@ -189,7 +189,7 @@ public class DefaultEncounterIssueAction extends DispatchAction {
             }
         }
 
-        if (issueIdSet.size() == 0) {
+        if (issueIdSet.isEmpty()) {
             return list(mapping, form, request, response);
         }
 

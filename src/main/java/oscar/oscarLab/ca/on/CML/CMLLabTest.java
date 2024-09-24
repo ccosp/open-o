@@ -193,7 +193,7 @@ public class CMLLabTest {
 
         if (alist.size() == 1) {
             dis = alist.get(0); //Only one item
-        } else if (alist.size() != 0) {
+        } else if (!alist.isEmpty()) {
             int lenAvail = 20 - (alist.size() - 1);
             if (lenAvail > count) {
                 StringBuilder s = new StringBuilder();

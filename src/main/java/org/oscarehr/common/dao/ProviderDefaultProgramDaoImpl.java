@@ -59,7 +59,7 @@ public class ProviderDefaultProgramDaoImpl extends AbstractDaoImpl<ProviderDefau
     public void setDefaultProgram(String providerNo, int programId) {
         List<ProviderDefaultProgram> rs = getProgramByProviderNo(providerNo);
         ProviderDefaultProgram pdp = null;
-        if (rs.size() == 0) {
+        if (rs.isEmpty()) {
             pdp = new ProviderDefaultProgram();
             pdp.setProviderNo(providerNo);
             pdp.setSign(false);

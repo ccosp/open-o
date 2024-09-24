@@ -188,7 +188,7 @@ public class EctDisplayAction extends Action {
                         String remainingCmds = params.replaceAll(regex, "").trim();
 
                         //Are there more commmands to forward to or do we print what we have?
-                        if (remainingCmds.length() > 0) {
+                        if (!remainingCmds.isEmpty()) {
                             request.setAttribute("cmd", remainingCmds);
                             int pos = remainingCmds.indexOf(' ');
                             if (pos > -1) forward = remainingCmds.substring(0, pos);

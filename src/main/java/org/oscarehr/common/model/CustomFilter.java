@@ -287,7 +287,7 @@ public class CustomFilter extends AbstractModel<Integer> {
 
     /* have to do this */
     public void setStartDateWeb(String data) {
-        if (data == null || data.length() == 0) {
+        if (data == null || data.isEmpty()) {
             data = "1900-01-01";
         }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -307,7 +307,7 @@ public class CustomFilter extends AbstractModel<Integer> {
     }
 
     public void setEndDateWeb(String data) {
-        if (data == null || data.length() == 0) {
+        if (data == null || data.isEmpty()) {
             data = "8888-12-31";
         }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -327,7 +327,7 @@ public class CustomFilter extends AbstractModel<Integer> {
     }
 
     public String getAssignee() {
-        if (getAssignees().size() > 0) {
+        if (!getAssignees().isEmpty()) {
             Provider p = getAssignees().iterator().next();
             return p.getProviderNo();
         }
@@ -342,7 +342,7 @@ public class CustomFilter extends AbstractModel<Integer> {
     }
 
     public String getProvider() {
-        if (getProviders().size() > 0) {
+        if (!getProviders().isEmpty()) {
             Provider p = getProviders().iterator().next();
             return p.getProviderNo();
         }

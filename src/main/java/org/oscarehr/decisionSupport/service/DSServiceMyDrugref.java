@@ -162,7 +162,7 @@ public class DSServiceMyDrugref extends DSService {
     private List<DSGuideline> fetchGuidelines(LoggedInInfo loggedInInfo, List<String> uuids) {
         RxMyDrugrefInfoAction myDrugrefAction = new RxMyDrugrefInfoAction();
         Vector params = new Vector();
-        if (uuids.size() > 0) {
+        if (!uuids.isEmpty()) {
             for (int i = 0; i < uuids.size(); i++) {
                 params.add(uuids.get(i));
             }

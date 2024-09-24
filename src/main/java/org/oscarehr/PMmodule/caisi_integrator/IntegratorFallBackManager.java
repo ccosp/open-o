@@ -86,7 +86,7 @@ public class IntegratorFallBackManager {
                 List<CachedDemographicNote> linkedNotes = Collections.unmodifiableList(demographicWs.getLinkedCachedDemographicNotes(demographicNo));
                 MiscUtils.getLogger().info("Saving remote copy for " + demographicNo + "  linkedNotes : " + linkedNotes.size());
 
-                if (linkedNotes.size() == 0) {
+                if (linkedNotes.isEmpty()) {
                     return;
                 }
                 CachedDemographicNote[] array = linkedNotes.toArray(new CachedDemographicNote[linkedNotes.size()]);
@@ -116,7 +116,7 @@ public class IntegratorFallBackManager {
                 DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
                 remoteForms = demographicWs.getLinkedCachedDemographicForms(demographicNo, table);
                 MiscUtils.getLogger().debug("Saving remote forms for " + demographicNo + "  forms : " + remoteForms.size() + " table " + table);
-                if (remoteForms.size() == 0) {
+                if (remoteForms.isEmpty()) {
                     continue;
                 }
 
@@ -167,7 +167,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteIssues = demographicWs.getLinkedCachedDemographicIssuesByDemographicId(demographicNo);
             MiscUtils.getLogger().debug("Saving remoteIssues for " + demographicNo + "  issues : " + remoteIssues.size());
-            if (remoteIssues.size() == 0) {
+            if (remoteIssues.isEmpty()) {
                 return;
             }
 
@@ -218,7 +218,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteItems = demographicWs.getLinkedCachedDemographicPreventionsByDemographicId(demographicNo);
             MiscUtils.getLogger().debug("Saving remote Preventions for " + demographicNo + "  issues : " + remoteItems.size());
-            if (remoteItems.size() == 0) {
+            if (remoteItems.isEmpty()) {
                 return;
             }
 
@@ -268,7 +268,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteItems = demographicWs.getLinkedCachedDemographicDrugsByDemographicId(demographicNo);
             MiscUtils.getLogger().debug("Saving remote Drugs for " + demographicNo + "  issues : " + remoteItems.size());
-            if (remoteItems.size() == 0) {
+            if (remoteItems.isEmpty()) {
                 return;
             }
 
@@ -316,7 +316,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteItems = demographicWs.getLinkedCachedAdmissionsByDemographicId(demographicNo);
             MiscUtils.getLogger().debug("Saving remote Admissions for " + demographicNo + "  issues : " + remoteItems.size());
-            if (remoteItems.size() == 0) {
+            if (remoteItems.isEmpty()) {
                 return;
             }
 
@@ -365,7 +365,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteItems = demographicWs.getLinkedCachedAppointments(demographicNo);
             MiscUtils.getLogger().debug("Saving remote CachedAppointment for " + demographicNo + "  issues : " + remoteItems.size());
-            if (remoteItems.size() == 0) {
+            if (remoteItems.isEmpty()) {
                 return;
             }
 
@@ -415,7 +415,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteItems = demographicWs.getLinkedCachedDemographicAllergies(demographicNo);
             MiscUtils.getLogger().debug("Saving remote CachedDemographicAllergy for " + demographicNo + "  issues : " + remoteItems.size());
-            if (remoteItems.size() == 0) {
+            if (remoteItems.isEmpty()) {
                 return;
             }
 
@@ -465,7 +465,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteItems = demographicWs.getLinkedCachedDemographicDocuments(demographicNo);
             MiscUtils.getLogger().debug("Saving remote CachedDemographicAllergy for " + demographicNo + "  issues : " + remoteItems.size());
-            if (remoteItems.size() == 0) {
+            if (remoteItems.isEmpty()) {
                 return;
             }
 
@@ -564,7 +564,7 @@ public class IntegratorFallBackManager {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             remoteItems = demographicWs.getLinkedCachedDemographicLabResults(demographicNo);
             MiscUtils.getLogger().debug("Saving remote CachedDemographicLabResult for " + demographicNo + "  issues : " + remoteItems.size());
-            if (remoteItems.size() == 0) {
+            if (remoteItems.isEmpty()) {
                 return;
             }
 

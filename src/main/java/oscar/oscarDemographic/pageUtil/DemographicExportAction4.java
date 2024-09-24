@@ -526,7 +526,7 @@ public class DemographicExportAction4 extends Action {
                             enList.add(en);
                         }
 
-                        if (enList.size() > 0) {
+                        if (!enList.isEmpty()) {
                             DemographicsDocument.Demographics.Enrolment demoEnrolment = demo.addNewEnrolment();
                             for (int x = 0; x < enList.size(); x++) {
                                 EnrolmentHistory ehx = demoEnrolment.addNewEnrolmentHistory();
@@ -684,7 +684,7 @@ public class DemographicExportAction4 extends Action {
                         PharmacyInfoDao pharmacyInfoDao = SpringUtils.getBean(PharmacyInfoDao.class);
 
                         List<DemographicPharmacy> dpList = demographicPharmacyDao.findByDemographicId(demographic.getDemographicNo());
-                        if (dpList.size() > 0) {
+                        if (!dpList.isEmpty()) {
                             DemographicPharmacy dp = dpList.get(0);
                             PharmacyInfo pi = pharmacyInfoDao.find(dp.getPharmacyId());
                             if (pi != null) {
@@ -1589,7 +1589,7 @@ public class DemographicExportAction4 extends Action {
 
                                 DrugReasonDao drugReasonDao = (DrugReasonDao) SpringUtils.getBean(DrugReasonDao.class);
                                 List<DrugReason> drugReasons = drugReasonDao.getReasonsForDrugID(arr[p].getDrugId(), true);
-                                if (drugReasons.size() > 0 && StringUtils.filled(drugReasons.get(0).getCode()))
+                                if (!drugReasons.isEmpty() && StringUtils.filled(drugReasons.get(0).getCode()))
                                     medi.setProblemCode(drugReasons.get(0).getCode());
 
                                 if (StringUtils.filled(arr[p].getDosage())) {
@@ -2298,7 +2298,7 @@ public class DemographicExportAction4 extends Action {
                             //CARE ELEMENTS
                             List<Measurements> measList = ImportExportMeasurements.getMeasurements(demoNo);
                             CareElements careElm = null;
-                            if (measList.size() > 0) careElm = patientRec.addNewCareElements();
+                            if (!measList.isEmpty()) careElm = patientRec.addNewCareElements();
                             for (Measurements meas : measList) {
                                 if (meas.getType().equals("HT")) { //Height in cm
                                     cdsDt.Height height = careElm.addNewHeight();
@@ -2778,7 +2778,7 @@ public class DemographicExportAction4 extends Action {
         }
         out.write("Number of errors				   : ");
         out.write(String.valueOf(exportError.size()));
-        if (exportError.size() > 0) out.write(" (See ExportEvent.log for detail)");
+        if (!exportError.isEmpty()) out.write(" (See ExportEvent.log for detail)");
         out.newLine();
         out.write("Patient ID range				   : ");
         out.write(getIDInExportFilename(fs.get(0).getName()));
@@ -2872,7 +2872,7 @@ public class DemographicExportAction4 extends Action {
         out.newLine();
 
         //write any error that has occurred
-        if (exportError.size() > 0) {
+        if (!exportError.isEmpty()) {
             out.write(exportError.get(0));
             out.newLine();
             for (int j = 1; j < exportError.size(); j++) {

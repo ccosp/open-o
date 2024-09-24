@@ -133,7 +133,7 @@ public class BillingSpecPrep {
         List tL;
         for (int idx = 0; idx < codes.length; idx++) {
             tL = tObj.getBillingCodeAttr(codes[idx].trim());
-            total = (tL != null && tL.size() > 0) ? (String) tL.get(2) : "0.0";
+            total = (tL != null && !tL.isEmpty()) ? (String) tL.get(2) : "0.0";
             runningTotal += Double.parseDouble(total);
         }
 

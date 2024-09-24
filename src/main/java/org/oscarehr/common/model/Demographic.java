@@ -181,7 +181,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
         demographic.setHcType(DEFAULT_HEATH_CARD_TYPE);
         demographic.setPatientStatus(DEFAULT_PATIENT_STATUS);
         demographic.setPatientStatusDate(new Date());
-        demographic.setSex(gender == null || gender.length() == 0 ? DEFAULT_SEX : gender.substring(0, 1).toUpperCase());
+        demographic.setSex(gender == null || gender.isEmpty() ? DEFAULT_SEX : gender.substring(0, 1).toUpperCase());
         demographic.setDateJoined(new Date());
         demographic.setEndDate(DateTimeFormatUtils.getDateFromString(DEFAULT_FUTURE_DATE));
 
@@ -1531,7 +1531,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
         sb.append(Encode.forHtml(getDemographicNo() + ""));
         sb.append("&displaymode=edit&dboperation=search_detail' target='_blank'>");
 
-        if (getTitle() != null && getTitle().length() > 0) {
+        if (getTitle() != null && !getTitle().isEmpty()) {
             sb.append(getTitle() + " ");
         }
 
@@ -1584,7 +1584,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
         sb.append("</div>");
 
         //--> Insurance number
-        if (getHin() != null && getHin().length() > 0) {
+        if (getHin() != null && !getHin().isEmpty()) {
             sb.append("<div id='patient-hin'>");
             sb.append("<div class='label'>");
             sb.append("hin");
@@ -1732,7 +1732,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
         //name: <b>LAST, FIRST</b><br/>
         sb.append("<b>").append(Encode.forHtml(getLastName().toUpperCase())).append("</b>").append(",");
         sb.append(getFirstName());
-        if (getTitle() != null && getTitle().length() > 0) {
+        if (getTitle() != null && !getTitle().isEmpty()) {
             sb.append(" ").append("(").append(getTitle()).append(")");
         }
         sb.append("<br/>");
@@ -1740,7 +1740,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
         sb.append("Born ").append("<b>").append(getFormattedDob()).append("</b>");
 
         // hin: <br/>HC <b>HIN VER (TYPE)</b>
-        if (getHin() != null && getHin().length() > 0) {
+        if (getHin() != null && !getHin().isEmpty()) {
             sb.append("<br/>");
             sb.append("HC ")
                     .append("<b>")
@@ -1750,7 +1750,7 @@ public class Demographic extends AbstractModel<Integer> implements Serializable 
         }
 
         // chart number: <br/> Chart No <b>CHART_NO</b>
-        if (getChartNo() != null && getChartNo().length() > 0) {
+        if (getChartNo() != null && !getChartNo().isEmpty()) {
             sb.append("<br/>");
             sb.append("Chart No ").append("<b>").append(getChartNo()).append("</b>");
         }

@@ -1043,7 +1043,7 @@ public final class Cds4ReportUIBean {
         if (cdsForms != null) {
             for (CdsClientForm form : cdsForms) {
                 List<CdsClientFormData> results = cdsClientFormDataDao.findByQuestion(form.getId(), "refused21");
-                if (results.size() > 0 && "on".equals(results.get(0).getAnswer())) totalCount++;
+                if (!results.isEmpty() && "on".equals(results.get(0).getAnswer())) totalCount++;
             }
         }
 

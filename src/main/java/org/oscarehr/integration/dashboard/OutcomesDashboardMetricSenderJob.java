@@ -96,7 +96,7 @@ public class OutcomesDashboardMetricSenderJob implements OscarRunnable {
         for (Provider p : pList) {
 
             List<Property> tmp = providerManager.getProviderProperties(x, p.getProviderNo(), UserProperty.DASHBOARD_SHARE);
-            if (tmp.size() > 0) {
+            if (!tmp.isEmpty()) {
                 String val = tmp.get(0).getValue();
                 if ("true".equals(val)) {
                     logger.info("Adding provider " + p.getFormattedName() + " to the shared list");

@@ -67,7 +67,7 @@ public class MsgProceedAction extends Action {
 
         RemoteAttachmentsDao dao = SpringUtils.getBean(RemoteAttachmentsDao.class);
         List<RemoteAttachments> rs = dao.findByDemoNoAndMessageId(ConversionUtils.fromIntString(demoId), ConversionUtils.fromIntString(id));
-        if (rs.size() > 0) {
+        if (!rs.isEmpty()) {
             request.setAttribute("confMessage", "1");
         } else {
             RemoteAttachments ra = new RemoteAttachments();

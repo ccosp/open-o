@@ -79,7 +79,7 @@ public class RoomDemographicManagerImpl implements RoomDemographicManager {
         List<RoomDemographic> roomDemographicList = null;
         roomDemographicList = roomDemographicDao.getRoomDemographicByRoom(roomId);
 
-        if (roomDemographicList != null && roomDemographicList.size() > 0) {
+        if (roomDemographicList != null && !roomDemographicList.isEmpty()) {
             //Demographic demographic = demographicDao.getClientByDemographicNo(roomDemographicList.get(0).getId().getDemographicNo());
             //roomDemographicList.get(0).setDemographic(demographic);
         }

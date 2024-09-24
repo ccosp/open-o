@@ -445,7 +445,7 @@ public class EctSessionBean implements java.io.Serializable {
     }
 
     public boolean isValid() {
-        return demographicNo.length() > 0 && providerNo != null && providerNo.length() > 0;
+        return !demographicNo.isEmpty() && providerNo != null && !providerNo.isEmpty();
     }
 
     public String getPatientLastName() {

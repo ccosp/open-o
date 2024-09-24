@@ -121,7 +121,7 @@ public class WriteNewMeasurements {
             String sql;
             if (measuringInst == null || measuringInst.equals("")) {
                 List<MeasurementType> tmp = measurementTypeDao.findByType(type);
-                if (tmp.size() > 0) {
+                if (!tmp.isEmpty()) {
                     measuringInst = tmp.get(0).getMeasuringInstruction();
                     curmeasure.put("measuringInstruction", measuringInst);
                 } else {

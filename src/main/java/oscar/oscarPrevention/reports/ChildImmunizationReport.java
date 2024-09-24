@@ -140,7 +140,7 @@ public class ChildImmunizationReport implements PreventionReport {
                 prd.state = "No Info";
                 prd.numMonths = "------";
                 prd.color = "Magenta";
-            } else if ((prevs1.size() > 0 && ineligible(prevs1.get(prevs1.size() - 1))) || (prevs2.size() > 0 && ineligible(prevs2.get(prevs2.size() - 1))) || (prevs4.size() > 0 && ineligible(prevs4.get(prevs4.size() - 1)))) {
+            } else if ((!prevs1.isEmpty() && ineligible(prevs1.get(prevs1.size() - 1))) || (!prevs2.isEmpty() && ineligible(prevs2.get(prevs2.size() - 1))) || (!prevs4.isEmpty() && ineligible(prevs4.get(prevs4.size() - 1)))) {
                 prd.rank = 5;
                 prd.lastDate = "------";
                 prd.state = "Ineligible";
@@ -155,7 +155,7 @@ public class ChildImmunizationReport implements PreventionReport {
                 Date lastDate = null;
                 String prevDateStr = "";
 
-                if (prevs1.size() > 0) {
+                if (!prevs1.isEmpty()) {
                     Map<String, Object> hDtap = prevs1.get(prevs1.size() - 1);
                     if (hDtap.get("refused") != null && ((String) hDtap.get("refused")).equals("1")) {
                         refused = true;
@@ -168,7 +168,7 @@ public class ChildImmunizationReport implements PreventionReport {
                     }
                 }
 
-                if (prevs4.size() > 0) {
+                if (!prevs4.isEmpty()) {
                     Map<String, Object> hMMR = prevs4.get(0);  //Changed to get first MMR value instead of last value
                     if (hMMR.get("refused") != null && ((String) hMMR.get("refused")).equals("1")) {
                         refused = true;
@@ -313,7 +313,7 @@ public class ChildImmunizationReport implements PreventionReport {
 
                 Collection followupData = measurementDataHandler.getMeasurementsDataVector();
                 //NO Contact
-                if (followupData.size() == 0) {
+                if (followupData.isEmpty()) {
                     prd.nextSuggestedProcedure = this.LETTER1;
                     return this.LETTER1;
                 } else { //There has been contact
@@ -408,7 +408,7 @@ public class ChildImmunizationReport implements PreventionReport {
                 log.debug("2getting followup data for " + prd.demographicNo);
                 Collection followupData = measurementDataHandler.getMeasurementsDataVector();
 
-                if (followupData.size() > 0) {
+                if (!followupData.isEmpty()) {
                     EctMeasurementsDataBean measurementData = (EctMeasurementsDataBean) followupData.iterator().next();
                     prd.lastFollowup = measurementData.getDateObservedAsDate();
                     prd.lastFollupProcedure = measurementData.getDataField();

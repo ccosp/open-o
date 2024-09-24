@@ -66,7 +66,7 @@ public class DrugReasonDaoImpl extends AbstractDaoImpl<DrugReason> implements Dr
 
         @SuppressWarnings("unchecked")
         List<DrugReason> results = query.getResultList();
-        if (results != null && results.size() > 0) {
+        if (results != null && !results.isEmpty()) {
             hasReason = true;
         }
         return hasReason;

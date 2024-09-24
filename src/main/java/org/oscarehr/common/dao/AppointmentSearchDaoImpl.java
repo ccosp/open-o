@@ -73,7 +73,7 @@ public class AppointmentSearchDaoImpl extends AbstractDaoImpl<AppointmentSearch>
 
     @Override
     public AppointmentSearch findForProvider(String providerNo) {
-        if (providerNo == null || providerNo.length() == 0) {
+        if (providerNo == null || providerNo.isEmpty()) {
             return null;
         }
 

@@ -412,7 +412,7 @@ public class SurveillanceService extends AbstractServiceImpl {
                     if (uuid != null) {
                         // Look if uuid is active
                         List<ResourceStorage> resList = resourceStorageDao.findByUUID(uuid);
-                        if (resList.size() > 0) {
+                        if (!resList.isEmpty()) {
                             jobject.put("resourceId", resList.get(0).getId());
 
                             Date referenceDate = getReferenceDate(rule.getString("updatedAt"));

@@ -142,7 +142,7 @@ public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements Secob
                     + "'";
 
             List lst = getHibernateTemplate().find(queryString);
-            if (lst.size() > 0 && lst.get(0) != null)
+            if (!lst.isEmpty() && lst.get(0) != null)
                 return lst.get(0).toString();
             else
                 return "";
@@ -159,7 +159,7 @@ public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements Secob
                     + "'";
 
             List lst = getHibernateTemplate().find(queryString);
-            if (lst.size() > 0 && lst.get(0) != null)
+            if (!lst.isEmpty() && lst.get(0) != null)
                 return lst.get(0).toString();
             else
                 return "";

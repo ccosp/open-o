@@ -147,7 +147,7 @@ public class BaseCaseManagementViewAction extends DispatchAction {
             CaseManagementNote inote = itr.next();
 
             // check note access here.
-            if (inote.getProgram_no() == null || inote.getProgram_no().length() == 0) {
+            if (inote.getProgram_no() == null || inote.getProgram_no().isEmpty()) {
                 //didn't save this data at this time - older note
                 rtNotes.add(inote);
             } else {

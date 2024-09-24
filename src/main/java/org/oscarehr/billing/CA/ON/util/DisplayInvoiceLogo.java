@@ -140,7 +140,7 @@ public class DisplayInvoiceLogo extends DownloadAction {
             return fileName;
         }
         List<org.oscarehr.common.model.Document> docList = docDao.findByDoctype(logoDocType);
-        if (docList == null || docList.size() < 1) {
+        if (docList == null || docList.isEmpty()) {
             MiscUtils.getLogger().info("Can't get document according to doctype: " + logoDocType);
             return fileName;
         }

@@ -254,7 +254,7 @@ public class JdbcBillingPageUtil {
             providerNo = f.getProviderNo();
 
             Provider p = providerDao.getProvider(providerNo);
-            if (p != null && p.getStatus().equals("1") && p.getOhipNo().length() > 0) {
+            if (p != null && p.getStatus().equals("1") && !p.getOhipNo().isEmpty()) {
                 String specialty_code;
                 String billinggroup_no;
                 billinggroup_no = getXMLStringWithDefault(p.getComments(), "xml_p_billinggroup_no", "0000");

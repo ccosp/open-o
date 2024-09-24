@@ -318,11 +318,11 @@ public class BpmhFormHandler {
 
             logger.debug("Found " + appointmentList.size() + " appointments for this patient.");
 
-            if ((appointmentList != null) && (appointmentList.size() > 0)) {
+            if ((appointmentList != null) && (!appointmentList.isEmpty())) {
                 lastAppointment = appointmentList.get(0);
             }
 
-            if (providerList != null && providerList.size() > 0) {
+            if (providerList != null && !providerList.isEmpty()) {
                 provider = providerList.get(0);
             }
 
@@ -414,7 +414,7 @@ public class BpmhFormHandler {
 
                 demographicCustList = getDemographicCustDao().findAllByDemographicNumber(demographicNo);
 
-                if ((demographicCustList != null) && (demographicCustList.size() > 0)) {
+                if ((demographicCustList != null) && (!demographicCustList.isEmpty())) {
                     parseMe = (demographicCustList.get(0)).getNotes();
                 }
 
@@ -469,7 +469,7 @@ public class BpmhFormHandler {
                 logger.debug("DRUG: " + drugItem.getGenericName());
             }
 
-            if ((drugList != null) && (drugList.size() > 0)) {
+            if ((drugList != null) && (!drugList.isEmpty())) {
 
                 bpmhDrugBeans = getBpmhFormBean().getDrugs();
                 drugFetch = new RxDrugData();
@@ -592,7 +592,7 @@ public class BpmhFormHandler {
         StringBuilder stringBuilder = new StringBuilder("");
         List<DrugReason> drugReasonList = getDrugReasonDao().getReasonsForDrugID(drugId, true);
 
-        if ((drugReasonList != null) && (drugReasonList.size() > 0)) {
+        if ((drugReasonList != null) && (!drugReasonList.isEmpty())) {
 
             for (DrugReason drugReason : drugReasonList) {
 
@@ -631,7 +631,7 @@ public class BpmhFormHandler {
             allergyList = getAllergyDao().findActiveAllergies(demographicNo);
         }
 
-        if ((allergyList != null) && (allergyList.size() > 0)) {
+        if ((allergyList != null) && (!allergyList.isEmpty())) {
             getBpmhFormBean().setAllergies(allergyList);
         }
 

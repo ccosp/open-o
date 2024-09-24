@@ -671,12 +671,12 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         StringBuilder queryStr = new StringBuilder();
         queryStr.append("select a from Admission a  where 1=1 ");
 
-        if (searchBean.getProviderNo() != null && searchBean.getProviderNo().length() > 0) {
+        if (searchBean.getProviderNo() != null && !searchBean.getProviderNo().isEmpty()) {
             queryStr.append("and a.providerNo = ? ");
             params.add(searchBean.getProviderNo());
         }
 
-        if (searchBean.getAdmissionStatus() != null && searchBean.getAdmissionStatus().length() > 0) {
+        if (searchBean.getAdmissionStatus() != null && !searchBean.getAdmissionStatus().isEmpty()) {
             queryStr.append(" and a.admissionStatus = ? ");
             params.add(searchBean.getAdmissionStatus());
         }

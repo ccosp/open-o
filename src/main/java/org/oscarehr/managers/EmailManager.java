@@ -225,7 +225,7 @@ public class EmailManager {
             emailData.setIsAttachmentEncrypted(false);
             emailData.setPassword("");
             emailData.setPasswordClue("");
-        } else if (StringUtils.isNullOrEmpty(emailData.getEncryptedMessage()) && emailData.getAttachments().size() > 0 && !emailData.getIsAttachmentEncrypted()) {
+        } else if (StringUtils.isNullOrEmpty(emailData.getEncryptedMessage()) && !emailData.getAttachments().isEmpty() && !emailData.getIsAttachmentEncrypted()) {
             emailData.setIsEncrypted(false);
             emailData.setIsAttachmentEncrypted(false);
             emailData.setPassword("");

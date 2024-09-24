@@ -52,7 +52,7 @@ public abstract class Node {
     protected abstract String getInsertSql(int parent);
 
     protected Date convertTSToDate(String input) {
-        if (input.length() == 0) {
+        if (input.isEmpty()) {
             return null;
         }
         SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");

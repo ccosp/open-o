@@ -454,7 +454,7 @@ public class PdfRecordPrinter {
 
         if (cpp != null) {
             List<CaseManagementNote> notes = cpp;
-            if (notes != null && notes.size() > 0) {
+            if (notes != null && !notes.isEmpty()) {
                 p = new Paragraph();
                 p.setAlignment(Paragraph.ALIGN_LEFT);
                 phrase = new Phrase(LEADING, "\nOther Meds\n", obsfont); //TODO:Needs to be i18n
@@ -1194,7 +1194,7 @@ public class PdfRecordPrinter {
     public void printPhotos(String contextPath, List<org.oscarehr.common.model.Document> photos) throws DocumentException {
         writer.setStrictImageSequence(true);
 
-        if (photos.size() > 0) {
+        if (!photos.isEmpty()) {
             Font obsfont = new Font(getBaseFont(), FONTSIZE, Font.UNDERLINE);
             Paragraph p = new Paragraph();
             p.setAlignment(Paragraph.ALIGN_LEFT);
@@ -1233,7 +1233,7 @@ public class PdfRecordPrinter {
 
         EFormValueDao eFormValueDao = (EFormValueDao) SpringUtils.getBean(EFormValueDao.class);
 
-        if (diagrams.size() > 0) {
+        if (!diagrams.isEmpty()) {
             Font obsfont = new Font(getBaseFont(), FONTSIZE, Font.UNDERLINE);
             Paragraph p = new Paragraph();
             p.setAlignment(Paragraph.ALIGN_LEFT);
@@ -1291,7 +1291,7 @@ public class PdfRecordPrinter {
     private String getRefName(Demographic d) {
         String referral = d.getFamilyDoctor();
 
-        if (referral == null || referral.length() == 0)
+        if (referral == null || referral.isEmpty())
             return new String();
 
         int start = referral.indexOf("<rd>");

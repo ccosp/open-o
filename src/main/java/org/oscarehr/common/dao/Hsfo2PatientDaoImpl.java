@@ -44,7 +44,7 @@ public class Hsfo2PatientDaoImpl extends AbstractDaoImpl<Hsfo2Patient> implement
         Query query = entityManager.createQuery(sqlCommand);
         query.setParameter(0, patientId);
         List<Hsfo2Patient> results = query.getResultList();
-        if (results != null && results.size() > 0)
+        if (results != null && !results.isEmpty())
             return results.get(0);
         else
             return null;

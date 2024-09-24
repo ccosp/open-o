@@ -353,7 +353,7 @@ public class FormUpdateAction extends Action {
                 MeasurementDao measurementDao = (MeasurementDao) SpringUtils.getBean(MeasurementDao.class);
                 List<Measurement> measurements = measurementDao.findMatching(measurement);
 
-                if (measurements.size() == 0) {
+                if (measurements.isEmpty()) {
                     //Write to the Database if all input values are valid
                     measurementDao.persist(measurement);
                 }

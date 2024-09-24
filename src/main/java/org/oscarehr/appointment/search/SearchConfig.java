@@ -270,7 +270,7 @@ public class SearchConfig {
             }
         }
 
-        if (clinic.getFilter() != null && clinic.getFilter().size() > 0) {
+        if (clinic.getFilter() != null && !clinic.getFilter().isEmpty()) {
             Element filters = doc.createElement("filters");
             for (FilterDefinition fd : clinic.filters) {
                 Element filter = doc.createElement("filter");
@@ -309,7 +309,7 @@ public class SearchConfig {
                     allowedProvider.appendChild(filter);
                 }
 
-                if (p.getTeamMembers() != null && p.getTeamMembers().size() > 0) {
+                if (p.getTeamMembers() != null && !p.getTeamMembers().isEmpty()) {
                     Element team = doc.createElement("team");
                     for (Provider m : p.getTeamMembers()) {
                         Element teamProvider = doc.createElement("member");
@@ -384,7 +384,7 @@ public class SearchConfig {
             Integer duration = Integer.parseInt(XmlUtils.getAttributeValue(apptCodeNode, "duration"));
             String s = XmlUtils.getAttributeValue(apptCodeNode, "code");
             s = StringUtils.trimToNull(s);
-            if (s != null && s.length() > 0) {
+            if (s != null && !s.isEmpty()) {
                 returnClinic.appointmentCodeDurations.put(s.charAt(0), duration);
                 String openAccessStr = XmlUtils.getAttributeValue(apptCodeNode, "openaccess");
                 if (openAccessStr != null && "true".equals(openAccessStr)) {
@@ -506,7 +506,7 @@ public class SearchConfig {
 		}
 		*/
 
-        if (clinicTransfer.getOpenAccessList() != null && clinicTransfer.getOpenAccessList().size() > 0) {
+        if (clinicTransfer.getOpenAccessList() != null && !clinicTransfer.getOpenAccessList().isEmpty()) {
             FilterDefinition fd = new FilterDefinition();
             fd.setFilterClassName("org.oscarehr.appointment.search.filters.OpenAccessFilter");
             returnClinic.filters.add(fd);
@@ -685,7 +685,7 @@ public class SearchConfig {
         timeslot.setAvailableApptTime(cal);
         timeslot.setProviderNo(providerId);
         timeslot.setAppointmentType(appointmentTypeId);
-        if (combined[3].length() > 0) {
+        if (!combined[3].isEmpty()) {
             Character code = combined[3].charAt(0);
             timeslot.setCode(code);
         }

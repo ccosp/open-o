@@ -237,11 +237,11 @@ public class RptDownloadCSVServlet extends HttpServlet {
 
 
                 if (!name.equals("ga") && !name.equals("b_primiparous"))
-                    sARSelect += (sARSelect.length() < 1 ? "" : ",") + ARTYPE + "." + name;
+                    sARSelect += (sARSelect.isEmpty() ? "" : ",") + ARTYPE + "." + name;
             }
             if (propSpecSelect.containsKey(name)) {
                 bSpecSelect = true;
-                sSpecSelect += (sSpecSelect.length() < 1 ? "" : ",") + "demographicExt." + name;
+                sSpecSelect += (sSpecSelect.isEmpty() ? "" : ",") + "demographicExt." + name;
             }
 
             if (name.startsWith(VALUE)) {
@@ -257,17 +257,17 @@ public class RptDownloadCSVServlet extends HttpServlet {
 //         get seq. select string
         for (int i = 0; i < vecSeqDemoSelect.size(); i++) {
             if (propTempDemoSelect.getProperty((String) vecSeqDemoSelect.get(i)) != null) {
-                sDemoSelect += (sDemoSelect.length() < 1 ? "" : ",") + "demographic." + vecSeqDemoSelect.get(i);
+                sDemoSelect += (sDemoSelect.isEmpty() ? "" : ",") + "demographic." + vecSeqDemoSelect.get(i);
             }
         }
         for (int i = 0; i < vecSeqARSelect.size(); i++) {
             if (propTempARSelect.getProperty((String) vecSeqARSelect.get(i)) != null) {
-                sARSelect += (sARSelect.length() < 1 ? "" : ",") + ARTYPE + "." + vecSeqARSelect.get(i);
+                sARSelect += (sARSelect.isEmpty() ? "" : ",") + ARTYPE + "." + vecSeqARSelect.get(i);
             }
         }
         for (int i = 0; i < vecSeqSpecSelect.size(); i++) {
             if (propTempSpecSelect.getProperty((String) vecSeqSpecSelect.get(i)) != null) {
-                sSpecSelect += (sSpecSelect.length() < 1 ? "" : ",") + "demographicExt." + vecSeqSpecSelect.get(i);
+                sSpecSelect += (sSpecSelect.isEmpty() ? "" : ",") + "demographicExt." + vecSeqSpecSelect.get(i);
             }
         }
 
@@ -299,11 +299,11 @@ public class RptDownloadCSVServlet extends HttpServlet {
             String strFilter = RptReportCreator.getWhereValueClause(tempVal, vecVarValue);
             if (strFilter.indexOf("demographic.") >= 0) {
                 bDemoFilter = true;
-                sDemoFilter += (sDemoFilter.length() < 1 ? "" : " and ") + strFilter;
+                sDemoFilter += (sDemoFilter.isEmpty() ? "" : " and ") + strFilter;
             }
             if (strFilter.indexOf("demographicExt.") >= 0) {
                 bSpecFilter = true;
-                sSpecFilter += (sSpecFilter.length() < 1 ? "" : " and ") + strFilter;
+                sSpecFilter += (sSpecFilter.isEmpty() ? "" : " and ") + strFilter;
             }
             if (strFilter.indexOf(ARTYPE + ".") >= 0) {
                 bARFilter = true;
@@ -312,13 +312,13 @@ public class RptDownloadCSVServlet extends HttpServlet {
                     ResultSet rs = DBHelp.searchDBRecord("select distinct demographic_no from formBCBirthSumMo");
                     String sBirthSumNo = "";
                     while (rs.next()) {
-                        sBirthSumNo += (sBirthSumNo.length() > 0 ? "," : "") + rs.getInt("demographic_no");
+                        sBirthSumNo += (!sBirthSumNo.isEmpty() ? "," : "") + rs.getInt("demographic_no");
                     }
-                    sBirthSumNo = sBirthSumNo.length() > 0 ? sBirthSumNo : "0";
+                    sBirthSumNo = !sBirthSumNo.isEmpty() ? sBirthSumNo : "0";
                     strFilter = " " + ARTYPE + ".demographic_no in (" + sBirthSumNo + ")";
                 }
 
-                sARFilter += (sARFilter.length() < 1 ? "" : " and ") + strFilter;
+                sARFilter += (sARFilter.isEmpty() ? "" : " and ") + strFilter;
             }
             MiscUtils.getLogger().debug(i + tempVal + " tempVal: " + vecVarValue);
             MiscUtils.getLogger().debug(i + strFilter);
@@ -365,7 +365,7 @@ public class RptDownloadCSVServlet extends HttpServlet {
                 String strDemoNo = "";
                 for (int j = 0; j < vecFieldValue.size(); j++) {
                     Properties prop = (Properties) vecFieldValue.get(j);
-                    strDemoNo += (strDemoNo.length() < 1 ? "" : ",") + prop.getProperty("demographic_no");
+                    strDemoNo += (strDemoNo.isEmpty() ? "" : ",") + prop.getProperty("demographic_no");
                 }
                 temp = sSpecSelect.replaceAll("demographicExt.", "").split(",");
                 for (int i = 0; i < temp.length; i++) {
@@ -384,16 +384,16 @@ public class RptDownloadCSVServlet extends HttpServlet {
                 // get demoNo
                 String sql = null;
                 ResultSet rs = null;
-                String sTempEle = sSpecFilter.length() > 0 ? (" and " + sSpecFilter) : "";
+                String sTempEle = !sSpecFilter.isEmpty() ? (" and " + sSpecFilter) : "";
                 String subQuery = "select distinct(demographic.demographic_no) from demographicExt, demographic where demographic.demographic_no=demographicExt.demographic_no ";
                 subQuery += " and " + sDemoFilter + sTempEle + "  ";
                 MiscUtils.getLogger().debug(" demographic and demographicExt subQuery: " + subQuery);
                 String subFormDemoNo = "";
                 rs = DBHelp.searchDBRecord(subQuery);
                 while (rs.next()) {
-                    subFormDemoNo += (subFormDemoNo.length() > 0 ? "," : "") + rs.getInt("demographic.demographic_no");
+                    subFormDemoNo += (!subFormDemoNo.isEmpty() ? "," : "") + rs.getInt("demographic.demographic_no");
                 }
-                subFormDemoNo = subFormDemoNo.length() > 0 ? subFormDemoNo : "0";
+                subFormDemoNo = !subFormDemoNo.isEmpty() ? subFormDemoNo : "0";
                 // get value for spec
                 String[] temp = sSpecSelect.replaceAll("demographicExt.", "").split(",");
                 for (int i = 0; i < temp.length; i++) {
@@ -437,18 +437,18 @@ public class RptDownloadCSVServlet extends HttpServlet {
 
 
         if ((bDemoSelect && bARSelect && !bSpecSelect && !bSpecFilter) || (!bSpecSelect && bARFilter && !bSpecFilter)) {
-            String sTempEle = sARFilter.length() > 0 ? (" and " + sARFilter) : "";
+            String sTempEle = !sARFilter.isEmpty() ? (" and " + sARFilter) : "";
             String subQuery = "select max(ID) from " + ARTYPE + ", demographic where demographic.demographic_no=" + ARTYPE + ".demographic_no ";
             subQuery += " and " + sDemoFilter + sTempEle + " group by " + ARTYPE + ".demographic_no," + ARTYPE + ".formCreated ";
             MiscUtils.getLogger().debug(" demographic and " + ARTYPE + " subQuery: " + subQuery);
             String subFormId = "";
             ResultSet rs = DBHelp.searchDBRecord(subQuery);
             while (rs.next()) {
-                subFormId += (subFormId.length() > 0 ? "," : "") + rs.getInt("max(ID)");
+                subFormId += (!subFormId.isEmpty() ? "," : "") + rs.getInt("max(ID)");
             }
 
-            sTempEle = sARSelect.length() > 0 ? ("," + sARSelect) : "";
-            subFormId = subFormId.length() > 0 ? subFormId : "0";
+            sTempEle = !sARSelect.isEmpty() ? ("," + sARSelect) : "";
+            subFormId = !subFormId.isEmpty() ? subFormId : "0";
             String sql = "select demographic.demographic_no," + sDemoSelect + sTempEle + " from demographic," + ARTYPE + " where ";
             sql += " " + ARTYPE + ".ID in (" + subFormId + ") and demographic.demographic_no=" + ARTYPE + ".demographic_no " + ORDER_BY;
             MiscUtils.getLogger().debug(" demographic and " + ARTYPE + ": " + sql);
@@ -476,18 +476,18 @@ public class RptDownloadCSVServlet extends HttpServlet {
         if ((bDemoSelect && bARSelect && bSpecSelect) || (bARFilter && bSpecFilter)) {
             if (bDemoSelect && bARSelect && bSpecSelect && !bSpecFilter) {
                 vecFieldName.add("demographic_no");
-                String sTempEle = sARFilter.length() > 0 ? (" and " + sARFilter) : "";
+                String sTempEle = !sARFilter.isEmpty() ? (" and " + sARFilter) : "";
                 String subQuery = "select max(ID) from " + ARTYPE + ", demographic where demographic.demographic_no=" + ARTYPE + ".demographic_no ";
                 subQuery += " and " + sDemoFilter + sTempEle + " group by " + ARTYPE + ".demographic_no," + ARTYPE + ".formCreated ";
                 MiscUtils.getLogger().debug(" demographic and " + ARTYPE + " subQuery: " + subQuery);
                 String subFormId = "";
                 ResultSet rs = DBHelp.searchDBRecord(subQuery);
                 while (rs.next()) {
-                    subFormId += (subFormId.length() > 0 ? "," : "") + rs.getInt("max(ID)");
+                    subFormId += (!subFormId.isEmpty() ? "," : "") + rs.getInt("max(ID)");
                 }
 
-                sTempEle = sARSelect.length() > 0 ? ("," + sARSelect) : "";
-                subFormId = subFormId.length() > 0 ? subFormId : "0";
+                sTempEle = !sARSelect.isEmpty() ? ("," + sARSelect) : "";
+                subFormId = !subFormId.isEmpty() ? subFormId : "0";
                 String sql = "select demographic.demographic_no," + sDemoSelect + sTempEle + " from demographic," + ARTYPE + " where ";
                 sql += " " + ARTYPE + ".ID in (" + subFormId + ") and demographic.demographic_no=" + ARTYPE + ".demographic_no " + ORDER_BY;
                 MiscUtils.getLogger().debug(" demographic and " + ARTYPE + ": " + sql);
@@ -513,7 +513,7 @@ public class RptDownloadCSVServlet extends HttpServlet {
                 String strDemoNo = "";
                 for (int j = 0; j < vecFieldValue.size(); j++) {
                     Properties prop = (Properties) vecFieldValue.get(j);
-                    strDemoNo += (strDemoNo.length() < 1 ? "" : ",") + prop.getProperty("demographic_no");
+                    strDemoNo += (strDemoNo.isEmpty() ? "" : ",") + prop.getProperty("demographic_no");
                 }
                 temp = sSpecSelect.replaceAll("demographicExt.", "").split(",");
                 for (int i = 0; i < temp.length; i++) {
@@ -534,14 +534,14 @@ public class RptDownloadCSVServlet extends HttpServlet {
                 // get demoNo
                 String sql = null;
                 ResultSet rs = null;
-                String sTempEle = sSpecFilter.length() > 0 ? (" and " + sSpecFilter) : "";
+                String sTempEle = !sSpecFilter.isEmpty() ? (" and " + sSpecFilter) : "";
                 String subQuery = "select distinct(demographic.demographic_no) from demographicExt, demographic where demographic.demographic_no=demographicExt.demographic_no ";
                 subQuery += " and " + sDemoFilter + sTempEle + "  ";
                 MiscUtils.getLogger().debug(" demographic and demographicExt subQuery: " + subQuery);
                 String subFormDemoNo = "";
                 rs = DBHelp.searchDBRecord(subQuery);
                 while (rs.next()) {
-                    subFormDemoNo += (subFormDemoNo.length() > 0 ? "," : "") + rs.getInt("demographic.demographic_no");
+                    subFormDemoNo += (!subFormDemoNo.isEmpty() ? "," : "") + rs.getInt("demographic.demographic_no");
                 }
                 // get value for spec
                 String[] temp = sSpecSelect.replaceAll("demographicExt.", "").split(",");
@@ -556,19 +556,19 @@ public class RptDownloadCSVServlet extends HttpServlet {
                 }
 
                 // formAR second
-                sTempEle = sARFilter.length() > 0 ? (" and " + sARFilter) : "";
+                sTempEle = !sARFilter.isEmpty() ? (" and " + sARFilter) : "";
                 subQuery = "select max(ID) from " + ARTYPE + ", demographic where demographic.demographic_no=" + ARTYPE + ".demographic_no ";
                 subQuery += " and " + sDemoFilter + sTempEle + " group by " + ARTYPE + ".demographic_no," + ARTYPE + ".formCreated ";
                 MiscUtils.getLogger().debug(" demographic and " + ARTYPE + " subQuery: " + subQuery);
                 String subFormId = "";
                 rs = DBHelp.searchDBRecord(subQuery);
                 while (rs.next()) {
-                    subFormId += (subFormId.length() > 0 ? "," : "") + rs.getInt("max(ID)");
+                    subFormId += (!subFormId.isEmpty() ? "," : "") + rs.getInt("max(ID)");
                 }
 
                 // total
-                sTempEle = sARSelect.length() > 0 ? ("," + sARSelect) : "";
-                subFormId = subFormId.length() > 0 ? subFormId : "0";
+                sTempEle = !sARSelect.isEmpty() ? ("," + sARSelect) : "";
+                subFormId = !subFormId.isEmpty() ? subFormId : "0";
                 sql = "select demographic.demographic_no," + sDemoSelect + sTempEle + " from demographic," + ARTYPE + " where ";
                 sql += " demographic.demographic_no in (" + subFormDemoNo + ") and ";
                 sql += " " + ARTYPE + ".ID in (" + subFormId + ") and demographic.demographic_no=" + ARTYPE + ".demographic_no " + ORDER_BY;

@@ -60,7 +60,7 @@ public class EFormReportToolConverter extends AbstractConverter<EFormReportTool,
         EFormReportTool d = new EFormReportTool();
         BeanUtils.copyProperties(t, d);
 
-        if (t.getExpiryDateString() != null && t.getExpiryDateString().length() > 0) {
+        if (t.getExpiryDateString() != null && !t.getExpiryDateString().isEmpty()) {
             try {
                 d.setExpiryDate(dateFormatter.parse(t.getExpiryDateString()));
             } catch (ParseException e) {

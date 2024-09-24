@@ -53,10 +53,10 @@ public class CustomInterfaceTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             customJs = name;
         }
-        if (customJs == null || customJs.length() == 0) {
+        if (customJs == null || customJs.isEmpty()) {
             customJs = "default";
         }
 
@@ -76,11 +76,11 @@ public class CustomInterfaceTag extends TagSupport {
             }
         }
 
-        if (customJs != null && customJs.length() > 0) {
+        if (customJs != null && !customJs.isEmpty()) {
             JspWriter out = super.pageContext.getOut();
             String contextPath = this.pageContext.getServletContext().getContextPath();
             try {
-                if (getSection() != null && getSection().length() > 0) {
+                if (getSection() != null && !getSection().isEmpty()) {
                     boolean hide_ConReport = props.isPropertyActive("hide_ConReport_link");
                     boolean cardswipe = props.getBooleanProperty("cardswipe", "false");
                     String customTag = "";

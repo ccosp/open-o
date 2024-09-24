@@ -125,7 +125,7 @@ public class EctDisplayDecisionSupportAlertsAction extends EctDisplayAction {
                 if (!notify) {
                     //there's no active ones, but let's look at the latest one
                     List<Dxresearch> drs = dxResearchDao.find(Integer.parseInt(bean.demographicNo), "OscarCode", "CKDSCREEN");
-                    if (drs.size() > 0) {
+                    if (!drs.isEmpty()) {
                         Dxresearch dr = drs.get(0);
                         Calendar aYearAgo = Calendar.getInstance();
                         aYearAgo.add(Calendar.MONTH, -12);

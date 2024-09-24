@@ -68,7 +68,7 @@ public class RemoteIntegratedDataCopyDaoImpl extends AbstractDaoImpl<RemoteInteg
         @SuppressWarnings("unchecked")
         List<RemoteIntegratedDataCopy> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;
@@ -84,7 +84,7 @@ public class RemoteIntegratedDataCopyDaoImpl extends AbstractDaoImpl<RemoteInteg
         @SuppressWarnings("unchecked")
         List<RemoteIntegratedDataCopy> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;
@@ -103,7 +103,7 @@ public class RemoteIntegratedDataCopyDaoImpl extends AbstractDaoImpl<RemoteInteg
         @SuppressWarnings("unchecked")
         List<RemoteIntegratedDataCopy> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

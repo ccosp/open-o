@@ -103,7 +103,7 @@ public class MsgViewMessageAction extends Action {
 
                 CachedFacility remoteFacility = null;
 
-                if (unlinkedDemographics != null && unlinkedDemographics.size() > 0) {
+                if (unlinkedDemographics != null && !unlinkedDemographics.isEmpty()) {
                     remoteFacility = CaisiIntegratorManager.getRemoteFacility(loggedInInfo, loggedInInfo.getCurrentFacility(), unlinkedDemographics.get(0).getIntegratorFacilityId());
                 }
 

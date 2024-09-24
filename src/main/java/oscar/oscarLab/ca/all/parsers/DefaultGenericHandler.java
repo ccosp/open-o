@@ -90,7 +90,7 @@ public class DefaultGenericHandler implements MessageHandler {
             StringBuilder filteredHl7Body = new StringBuilder();
             while (stringTokenizer.hasMoreTokens()) {
                 String segment = stringTokenizer.nextToken();
-                if (segment.length() > 0) {
+                if (!segment.isEmpty()) {
 
                     // remove whitespace so that it won't be counted.
                     if (Character.isWhitespace(segment.charAt(0))) {

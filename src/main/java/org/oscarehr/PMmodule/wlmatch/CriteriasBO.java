@@ -44,7 +44,7 @@ public class CriteriasBO {
     public String getSummary() {
         String out = "";
         for (CriteriaBO crit : crits) {
-            if (crit.value != null && crit.value.length() > 0) {
+            if (crit.value != null && !crit.value.isEmpty()) {
                 out += " AND " + (crit.field + "='" + crit.value + "'");
             } else if (crit.rangeStart != null) {
                 out += (crit.field + " is between " + crit.rangeStart + " and " + crit.rangeEnd);

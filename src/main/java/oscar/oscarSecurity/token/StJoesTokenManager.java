@@ -73,7 +73,7 @@ public class StJoesTokenManager extends SecurityTokenManager {
 
         String storedKey = OscarProperties.getInstance().getProperty("security.token.key");
 
-        if (key == null || storedKey == null || key.length() == 0 || storedKey.length() == 0) {
+        if (key == null || storedKey == null || key.isEmpty() || storedKey.isEmpty()) {
             response.getWriter().println("ERROR: no valid keys found");
             return;
         }
@@ -147,7 +147,7 @@ public class StJoesTokenManager extends SecurityTokenManager {
         //be nice if this was in a common class.
         Integer facilityId = null;
         List<Integer> facilityIds = providerDao.getFacilityIds(st.getProviderNo());
-        if (facilityIds.size() == 0) {
+        if (facilityIds.isEmpty()) {
             List<Facility> facility = facilityDao.findAll(null);
             facilityId = facility.get(0).getId();
         } else {

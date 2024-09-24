@@ -452,7 +452,7 @@ public class ClientManagerAction extends DispatchAction {
 
             } else {
                 String vacancyId = request.getParameter("vacancyId");
-                if (vacancyId == null || vacancyId.trim().length() == 0) {
+                if (vacancyId == null || vacancyId.trim().isEmpty()) {
                     referral.setSelectVacancy("none");
                 } else {
                     Vacancy v = null;
@@ -840,7 +840,7 @@ public class ClientManagerAction extends DispatchAction {
         List<JointAdmission> dependentList = clientManager.getDependents(new Integer(demographicNo));
         JointAdmission clientsJadm = clientManager.getJointAdmission(new Integer(demographicNo));
 
-        if (dependentList != null && dependentList.size() > 0) {
+        if (dependentList != null && !dependentList.isEmpty()) {
             // condition met then demographicNo must be familyHead
             familySize = dependentList.size() + 1;
             isFamilyHead = true;
@@ -1318,7 +1318,7 @@ public class ClientManagerAction extends DispatchAction {
         request.getSession().setAttribute("er_consent_map", consentMap);
 
         List<?> programDomain = providerManager.getProgramDomain(loggedInInfo.getLoggedInProviderNo());
-        if (programDomain.size() > 0) {
+        if (!programDomain.isEmpty()) {
             boolean doAdmit = true;
             boolean doRefer = true;
             ProgramProvider program = (ProgramProvider) programDomain.get(0);
@@ -1420,11 +1420,11 @@ public class ClientManagerAction extends DispatchAction {
 
         OscarLogDao logDao = SpringUtils.getBean(OscarLogDao.class);
         List<OscarLog> logs = logDao.findByActionAndData("update_referral_date", referralId);
-        if (logs.size() > 0)
+        if (!logs.isEmpty())
             request.setAttribute("referral_date_updates", logs);
 
         logs = logDao.findByActionAndData("update_completion_date", referralId);
-        if (logs.size() > 0)
+        if (!logs.isEmpty())
             request.setAttribute("completion_date_updates", logs);
 
 
@@ -1445,11 +1445,11 @@ public class ClientManagerAction extends DispatchAction {
 
         OscarLogDao logDao = SpringUtils.getBean(OscarLogDao.class);
         List<OscarLog> logs = logDao.findByActionAndData("update_admission_date", admissionId);
-        if (logs.size() > 0)
+        if (!logs.isEmpty())
             request.setAttribute("admission_date_updates", logs);
 
         logs = logDao.findByActionAndData("update_discharge_date", admissionId);
-        if (logs.size() > 0)
+        if (!logs.isEmpty())
             request.setAttribute("discharge_date_updates", logs);
 
 
@@ -1539,7 +1539,7 @@ public class ClientManagerAction extends DispatchAction {
         // tab override - from survey module
         String tabOverride = (String) request.getAttribute("tab.override");
 
-        if (tabOverride != null && tabOverride.length() > 0) {
+        if (tabOverride != null && !tabOverride.isEmpty()) {
             tabBean.setTab(tabOverride);
         }
 
@@ -1924,7 +1924,7 @@ public class ClientManagerAction extends DispatchAction {
             request.setAttribute("groupName", headClientDemo.getFormattedName() + " Group");
         }
 
-        if (relList != null && relList.size() > 0) {
+        if (relList != null && !relList.isEmpty()) {
             for (Map<String, Object> h : relList) {
                 String demographic = (String) h.get("demographicNo");
                 Integer demoLong = new Integer(demographic);
@@ -1941,7 +1941,7 @@ public class ClientManagerAction extends DispatchAction {
                     h.put("jointAdmission", "dependent");
                 }
                 // Can this person be added to my depended List
-                if (clientsJadm == null && demoJadm == null && clientManager.getDependents(demoLong).size() == 0) {
+                if (clientsJadm == null && demoJadm == null && clientManager.getDependents(demoLong).isEmpty()) {
                     // yes if - i am not dependent on anyone
                     // - this person is not dependent on someone
                     // - this person is not a head of a family already
@@ -2011,7 +2011,7 @@ public class ClientManagerAction extends DispatchAction {
             String vacancyName = clientReferral.getSelectVacancy();
             if (vacancyName != null) {
                 List<Vacancy> vlist = vacancyDao.getVacanciesByName(vacancyName); //assume vacancyName is unique.
-                if (vlist.size() > 0) {
+                if (!vlist.isEmpty()) {
                     Integer vacancyTemplateId = vlist.get(0).getTemplateId();
                     clientReferral.setVacancyTemplateName(vacancyTemplateDao.getVacancyTemplate(vacancyTemplateId).getName());
                 }

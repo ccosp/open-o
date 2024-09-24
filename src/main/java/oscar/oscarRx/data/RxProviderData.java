@@ -85,18 +85,18 @@ public class RxProviderData {
                 firstName = "Dr. " + firstName;
             }
 
-            if (p.getWorkPhone() != null && p.getWorkPhone().length() > 0) {
+            if (p.getWorkPhone() != null && !p.getWorkPhone().isEmpty()) {
                 clinicPhone = p.getWorkPhone();
             }
 
-            if (p.getComments() != null && p.getComments().length() > 0) {
+            if (p.getComments() != null && !p.getComments().isEmpty()) {
                 String pFax = SxmlMisc.getXmlContent(p.getComments(), "xml_p_fax");
-                if (pFax != null && pFax.length() > 0) {
+                if (pFax != null && !pFax.isEmpty()) {
                     clinicFax = pFax;
                 }
             }
 
-            if (p.getAddress() != null && p.getAddress().length() > 0) {
+            if (p.getAddress() != null && !p.getAddress().isEmpty()) {
                 clinicAddress = p.getAddress();
                 useFullAddress = false;
             }
@@ -105,17 +105,17 @@ public class RxProviderData {
             UserProperty prop = null;
 
             prop = userPropertyDao.getProp(providerNo, "faxnumber");
-            if (prop != null && prop.getValue() != null && prop.getValue().length() > 0) {
+            if (prop != null && prop.getValue() != null && !prop.getValue().isEmpty()) {
                 clinicFax = prop.getValue();
             }
 
             prop = userPropertyDao.getProp(providerNo, "rxPhone");
-            if (prop != null && prop.getValue() != null && prop.getValue().length() > 0) {
+            if (prop != null && prop.getValue() != null && !prop.getValue().isEmpty()) {
                 clinicPhone = prop.getValue();
             }
 
             prop = userPropertyDao.getProp(providerNo, "rxAddress");
-            if (prop != null && prop.getValue() != null && prop.getValue().length() > 0) {
+            if (prop != null && prop.getValue() != null && !prop.getValue().isEmpty()) {
                 //we're going to override with the preference address
                 clinicAddress = prop.getValue();
                 clinicCity = readProperty(providerNo, "rxCity");

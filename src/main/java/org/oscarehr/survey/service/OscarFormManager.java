@@ -355,7 +355,7 @@ public class OscarFormManager {
 
     public String getSingleAnswer(Integer instanceId, Integer page, Integer section, Integer question) {
         List<CaisiFormData> result = caisiFormDataDao.find(instanceId, page, section, question);
-        if (result != null && result.size() > 0) {
+        if (result != null && !result.isEmpty()) {
             return result.get(0).getValue();
         }
         return null;
@@ -364,7 +364,7 @@ public class OscarFormManager {
     public String[] getMultipleAnswers(Integer instanceId, Integer page, Integer section, Integer question) {
         List<String> results = new ArrayList<String>();
         List<CaisiFormData> result = caisiFormDataDao.find(instanceId, page, section, question);
-        if (result != null && result.size() > 0) {
+        if (result != null && !result.isEmpty()) {
             for (CaisiFormData tmp : result) {
                 String val = tmp.getValue();
                 if (val != null) {

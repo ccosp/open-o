@@ -223,7 +223,7 @@ public class Drug extends AbstractModel<Integer> implements Serializable {
         this.archivedDate = drug.getArchivedDate();
         this.genericName = drug.getGenericName();
         this.atc = drug.getAtcCode();
-        if (drug.getScript_no() == null || drug.getScript_no().trim().length() == 0) this.scriptNo = null;
+        if (drug.getScript_no() == null || drug.getScript_no().trim().isEmpty()) this.scriptNo = null;
         else this.scriptNo = Integer.parseInt(drug.getScript_no());
         this.regionalIdentifier = drug.getRegionalIdentifier();
         this.unit = drug.getUnit();
@@ -718,7 +718,7 @@ public class Drug extends AbstractModel<Integer> implements Serializable {
     }
 
     public boolean isExternal() {// test if prescription is external
-        if (outsideProviderName == null || outsideProviderName.trim().length() == 0 || outsideProviderOhip == null || outsideProviderOhip.trim().length() == 0)
+        if (outsideProviderName == null || outsideProviderName.trim().isEmpty() || outsideProviderOhip == null || outsideProviderOhip.trim().isEmpty())
             return false;
         else return true;
     }
@@ -829,7 +829,7 @@ public class Drug extends AbstractModel<Integer> implements Serializable {
     public static String getFullOutLine(String special) {
         String ret = "";
         if (special != null) {
-            if (special.length() > 0) {
+            if (!special.isEmpty()) {
                 int i;
                 String[] arr = special.split("\n");
                 for (i = 0; i < arr.length; i++) {

@@ -54,7 +54,7 @@ public class BillingPaymentTypeDaoImpl extends AbstractDaoImpl<BillingPaymentTyp
         @SuppressWarnings("unchecked")
         List<Integer> results = query.getResultList();
         if (results.size() == 1) return (results.get(0));
-        else if (results.size() == 0) return (null);
+        else if (results.isEmpty()) return (null);
 
         return null;
     }

@@ -145,7 +145,7 @@ public class ONAREnhancedBornConnector {
                     String pg2Signature = rs.getString("pg2_signature");
                     int episodeId = rs.getInt("episodeId");
                     String postalCode = rs.getString("c_postal");
-                    if (postalCode == null || postalCode.length() == 0) {
+                    if (postalCode == null || postalCode.isEmpty()) {
                         continue;
                     }
                     //rs.getString("c_finalEDB");
@@ -265,7 +265,7 @@ public class ONAREnhancedBornConnector {
                     String providerNo = rs.getString("provider_no");
                     Date formEdited = rs.getDate("formEdited");
 
-                    if (postalCode == null || postalCode.length() == 0) {
+                    if (postalCode == null || postalCode.isEmpty()) {
                         continue;
                     }
                     if (!sent) {
@@ -321,7 +321,7 @@ public class ONAREnhancedBornConnector {
                     String providerNo = rs.getString("provider_no");
                     Date formEdited = rs.getDate("formEdited");
 
-                    if (postalCode == null || postalCode.length() == 0) {
+                    if (postalCode == null || postalCode.isEmpty()) {
                         continue;
                     }
                     if (!sent) {

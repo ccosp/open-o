@@ -121,7 +121,7 @@ public final class DateTimeFormatUtils {
 
     private static final Date parse(String s, DateFormat format) {
         try {
-            return (s != null && s.length() > 0) ? format.parse(s) : null;
+            return (s != null && !s.isEmpty()) ? format.parse(s) : null;
         } catch (ParseException e) {
             log.error("Error", e);
             throw new IllegalStateException(e);

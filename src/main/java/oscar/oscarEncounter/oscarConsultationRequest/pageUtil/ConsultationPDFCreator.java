@@ -431,7 +431,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 
         // add the address details
         Phrase addressPhrase = new Phrase("");
-        if (reqFrm.letterheadAddress != null && reqFrm.letterheadAddress.trim().length() > 0) {
+        if (reqFrm.letterheadAddress != null && !reqFrm.letterheadAddress.trim().isEmpty()) {
             addressPhrase.add(reqFrm.getLetterheadAddress());
         } else {
             addressPhrase.add(clinic.getClinicAddress());
@@ -446,13 +446,13 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 
         // add the telecom info
         Phrase telecomPhrase = new Phrase("");
-        if (reqFrm.letterheadPhone != null && reqFrm.letterheadPhone.trim().length() > 0) {
+        if (reqFrm.letterheadPhone != null && !reqFrm.letterheadPhone.trim().isEmpty()) {
             telecomPhrase.add(String.format("Phone: %s", reqFrm.getLetterheadPhone()));
         } else {
             telecomPhrase.add(String.format("Phone: %s", clinic.getClinicPhone()));
         }
 
-        if (reqFrm.letterheadFax != null && reqFrm.letterheadFax.trim().length() > 0) {
+        if (reqFrm.letterheadFax != null && !reqFrm.letterheadFax.trim().isEmpty()) {
             telecomPhrase.add(String.format(" Fax: %s", reqFrm.getLetterheadFax()));
         } else {
             telecomPhrase.add(String.format(" Fax: %s", clinic.getClinicFax()));

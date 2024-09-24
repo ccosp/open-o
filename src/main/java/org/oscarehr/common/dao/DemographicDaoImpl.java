@@ -138,7 +138,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public Demographic getDemographic(String demographic_no) {
-        if (demographic_no == null || demographic_no.length() == 0) {
+        if (demographic_no == null || demographic_no.isEmpty()) {
             return null;
         }
         int dNo = 0;
@@ -199,7 +199,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         String q = "FROM Demographic d WHERE d.DemographicNo = ?";
         List rs = getHibernateTemplate().find(q, demographic_id);
 
-        if (rs.size() == 0)
+        if (rs.isEmpty())
             return null;
         else
             return (Demographic) rs.get(0);
@@ -234,7 +234,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
     public Demographic getDemographicByMyOscarUserName(String myOscarUserName) {
         String q = "From Demographic d where d.myOscarUserName = ? ";
         List<Demographic> rs = (List<Demographic>) getHibernateTemplate().find(q, new Object[]{myOscarUserName});
-        if (rs.size() > 0)
+        if (!rs.isEmpty())
             return (rs.get(0));
         else
             return (null);
@@ -418,32 +418,32 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         String fn = "";
         String where = "";
         try {
-            if (searchString != null && searchString.length() > 0) {
+            if (searchString != null && !searchString.isEmpty()) {
                 String[] sh = searchString.split(",");
                 if (sh.length > 1) {
-                    if (sh[0] != null && sh[0].trim().length() > 0) {
+                    if (sh[0] != null && !sh[0].trim().isEmpty()) {
                         where = " x.LastName like :ln ";
                         ln = sh[0].trim();
                     }
-                    if (sh[1] != null && sh[1].trim().length() > 0) {
-                        if (where.length() > 0)
+                    if (sh[1] != null && !sh[1].trim().isEmpty()) {
+                        if (!where.isEmpty())
                             where = where + " and ";
                         where = where + " x.FirstName like :fn ";
                         fn = sh[1].trim();
                     }
                 } else {
-                    if (sh[0] != null && sh[0].trim().length() > 0) {
+                    if (sh[0] != null && !sh[0].trim().isEmpty()) {
                         where = " x.LastName like :ln ";
                         ln = sh[0].trim();
                     }
                 }
-                if (where.length() > 0)
+                if (!where.isEmpty())
                     sqlCommand = sqlCommand + " where " + where;
             }
             Query q = session.createQuery(sqlCommand);
-            if (ln.length() > 0)
+            if (!ln.isEmpty())
                 q.setParameter("ln", ln + "%");
-            if (fn.length() > 0)
+            if (!fn.isEmpty())
                 q.setParameter("fn", fn + "%");
             q.setFirstResult(startIndex);
             q.setMaxResults(itemsToReturn);
@@ -1859,13 +1859,13 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
         List<Demographic> results = null;
 
-        if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+        if (bean.getFirstName() != null && !bean.getFirstName().isEmpty()) {
             firstName = bean.getFirstName();
             // firstName = StringEscapeUtils.escapeSql(firstName);
             firstNameL = firstName + "%";
         }
 
-        if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+        if (bean.getLastName() != null && !bean.getLastName().isEmpty()) {
             lastName = bean.getLastName();
             // lastName = StringEscapeUtils.escapeSql(lastName);
             lastNameL = lastName + "%";
@@ -1888,7 +1888,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             return results;
         }
 
-        if (firstName.length() > 0) {
+        if (!firstName.isEmpty()) {
             // sql = "(LEFT(SOUNDEX(first_name),4) = LEFT(SOUNDEX('" + firstName + "'),4))";
             // sql2 = "(LEFT(SOUNDEX(alias),4) = LEFT(SOUNDEX('" + firstName + "'),4))";
             // condFirstName = Restrictions.or(Restrictions.ilike("FirstName", firstNameL),
@@ -1898,7 +1898,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             criteria.add(Restrictions.or(Restrictions.or(Restrictions.ilike("LastName", firstNameL),
                     Restrictions.ilike("Alias", firstNameL)), Restrictions.ilike("FirstName", firstNameL)));
         }
-        if (lastName.length() > 0) {
+        if (!lastName.isEmpty()) {
             // sql = "(LEFT(SOUNDEX(last_name),4) = LEFT(SOUNDEX('" + lastName + "'),4))";
             // sql2 = "(LEFT(SOUNDEX(alias),4) = LEFT(SOUNDEX('" + lastName + "'),4))";
             // condLastName = Restrictions.or(Restrictions.ilike("LastName", lastNameL),
@@ -1924,25 +1924,25 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
          * criteria.add(Restrictions.or(condLastName,condAlias2));
          * }
          */
-        if (bean.getDob() != null && bean.getDob().length() > 0) {
+        if (bean.getDob() != null && !bean.getDob().isEmpty()) {
             criteria.add(Expression.eq("DateOfBirth", MyDateFormat.getCalendar(bean.getDob())));
         }
 
-        if (bean.getHealthCardNumber() != null && bean.getHealthCardNumber().length() > 0) {
+        if (bean.getHealthCardNumber() != null && !bean.getHealthCardNumber().isEmpty()) {
             criteria.add(Expression.eq("Hin", bean.getHealthCardNumber()));
         }
 
-        if (bean.getHealthCardVersion() != null && bean.getHealthCardVersion().length() > 0) {
+        if (bean.getHealthCardVersion() != null && !bean.getHealthCardVersion().isEmpty()) {
             criteria.add(Expression.eq("Ver", bean.getHealthCardVersion()));
         }
 
-        if (bean.getBedProgramId() != null && bean.getBedProgramId().length() > 0) {
+        if (bean.getBedProgramId() != null && !bean.getBedProgramId().isEmpty()) {
             bedProgramId = bean.getBedProgramId();
             sql = " demographic_no in (select decode(dm.merged_to,null,i.client_id,dm.merged_to) from intake i,demographic_merged dm where i.client_id=dm.demographic_no(+) and i.program_id in ("
                     + bedProgramId + "))";
             criteria.add(Restrictions.sqlRestriction(sql));
         }
-        if (bean.getAssignedToProviderNo() != null && bean.getAssignedToProviderNo().length() > 0) {
+        if (bean.getAssignedToProviderNo() != null && !bean.getAssignedToProviderNo().isEmpty()) {
             assignedToProviderNo = bean.getAssignedToProviderNo();
             sql = " demographic_no in (select decode(dm.merged_to,null,a.client_id,dm.merged_to) from admission a,demographic_merged dm where a.client_id=dm.demographic_no(+)and a.primaryWorker='"
                     + assignedToProviderNo + "')";
@@ -1995,13 +1995,13 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         @SuppressWarnings("unchecked")
         List<Demographic> results = null;
 
-        if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+        if (bean.getFirstName() != null && !bean.getFirstName().isEmpty()) {
             firstName = bean.getFirstName();
             firstName = StringEscapeUtils.escapeSql(firstName);
             firstNameL = "%" + firstName + "%";
         }
 
-        if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+        if (bean.getLastName() != null && !bean.getLastName().isEmpty()) {
             lastName = bean.getLastName();
             lastName = StringEscapeUtils.escapeSql(lastName);
             lastNameL = "%" + lastName + "%";
@@ -2025,7 +2025,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         LogicalExpression condFirstName = null;
         LogicalExpression condLastName = null;
 
-        if (firstName.length() > 0) {
+        if (!firstName.isEmpty()) {
             sql = "(LEFT(SOUNDEX(first_name),2) = LEFT(SOUNDEX('" + firstName + "'),2))";
             sql2 = "(LEFT(SOUNDEX(alias),2) = LEFT(SOUNDEX('" + firstName + "'),2))";
             condFirstName = Restrictions.or(Restrictions.ilike("FirstName", firstNameL),
@@ -2033,52 +2033,52 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
             condAlias1 = Restrictions.or(Restrictions.ilike("Alias", firstNameL), Restrictions.sqlRestriction(sql2));
 
         }
-        if (lastName.length() > 0) {
+        if (!lastName.isEmpty()) {
             sql = "(LEFT(SOUNDEX(last_name),2) = LEFT(SOUNDEX('" + lastName + "'),2))";
             sql2 = "(LEFT(SOUNDEX(alias),2) = LEFT(SOUNDEX('" + lastName + "'),2))";
             condLastName = Restrictions.or(Restrictions.ilike("LastName", lastNameL), Restrictions.sqlRestriction(sql));
             condAlias2 = Restrictions.or(Restrictions.ilike("Alias", lastNameL), Restrictions.sqlRestriction(sql2));
         }
 
-        if (bean.getChartNo() != null && bean.getChartNo().length() > 0) {
+        if (bean.getChartNo() != null && !bean.getChartNo().isEmpty()) {
             criteria.add(Expression.like("ChartNo", "%" + bean.getChartNo() + "%"));
         }
 
         if (!bean.isSearchUsingSoundex()) {
 
-            if (firstName.length() > 0) {
+            if (!firstName.isEmpty()) {
                 criteria.add(Restrictions.or(Restrictions.ilike("FirstName", firstNameL),
                         Restrictions.ilike("Alias", firstNameL)));
             }
-            if (lastName.length() > 0) {
+            if (!lastName.isEmpty()) {
                 criteria.add(Restrictions.or(Restrictions.ilike("LastName", lastNameL),
                         Restrictions.ilike("Alias", lastNameL)));
             }
         } else { // soundex variation
 
-            if (firstName.length() > 0) {
+            if (!firstName.isEmpty()) {
                 criteria.add(Restrictions.or(condFirstName, condAlias1));
             }
-            if (lastName.length() > 0) {
+            if (!lastName.isEmpty()) {
                 criteria.add(Restrictions.or(condLastName, condAlias2));
             }
         }
 
-        if (bean.getDob() != null && bean.getDob().length() > 0) {
+        if (bean.getDob() != null && !bean.getDob().isEmpty()) {
             criteria.add(Expression.eq("YearOfBirth", bean.getYearOfBirth()));
             criteria.add(Expression.eq("MonthOfBirth", bean.getMonthOfBirth()));
             criteria.add(Expression.eq("DateOfBirth", bean.getDayOfBirth()));
         }
 
-        if (bean.getHealthCardNumber() != null && bean.getHealthCardNumber().length() > 0) {
+        if (bean.getHealthCardNumber() != null && !bean.getHealthCardNumber().isEmpty()) {
             criteria.add(Expression.eq("Hin", bean.getHealthCardNumber()));
         }
 
-        if (bean.getHealthCardVersion() != null && bean.getHealthCardVersion().length() > 0) {
+        if (bean.getHealthCardVersion() != null && !bean.getHealthCardVersion().isEmpty()) {
             criteria.add(Expression.eq("Ver", bean.getHealthCardVersion()));
         }
 
-        if (bean.getChartNo() != null && bean.getChartNo().length() > 0) {
+        if (bean.getChartNo() != null && !bean.getChartNo().isEmpty()) {
             criteria.add(Expression.like("ChartNo", "%" + bean.getChartNo() + "%"));
         }
 
@@ -2118,11 +2118,11 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
                 subq.add(Restrictions.in("programId", pIdi));
             }
 
-            if (bean.getDateFrom() != null && bean.getDateFrom().length() > 0) {
+            if (bean.getDateFrom() != null && !bean.getDateFrom().isEmpty()) {
                 Date dt = MyDateFormat.getSysDate(bean.getDateFrom().trim());
                 subq.add(Restrictions.ge("admissionDate", dt));
             }
-            if (bean.getDateTo() != null && bean.getDateTo().length() > 0) {
+            if (bean.getDateTo() != null && !bean.getDateTo().isEmpty()) {
                 Date dt1 = MyDateFormat.getSysDate(bean.getDateTo().trim());
                 subq.add(Restrictions.le("admissionDate", dt1));
             }
@@ -2349,33 +2349,33 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
         List<String> params = new ArrayList<String>();
         StringBuilder whereClause = new StringBuilder();
 
-        if (firstName.trim().length() > 0) {
+        if (!firstName.trim().isEmpty()) {
             whereClause.append("FirstName=?");
             params.add(firstName.trim());
         }
-        if (lastName.trim().length() > 0) {
-            if (params.size() > 0) {
+        if (!lastName.trim().isEmpty()) {
+            if (!params.isEmpty()) {
                 whereClause.append(" AND ");
             }
             whereClause.append("LastName=?");
             params.add(lastName.trim());
         }
-        if (hPhone.trim().length() > 0) {
-            if (params.size() > 0) {
+        if (!hPhone.trim().isEmpty()) {
+            if (!params.isEmpty()) {
                 whereClause.append(" AND ");
             }
             whereClause.append("Phone=?");
             params.add(hPhone.trim());
         }
-        if (wPhone.trim().length() > 0) {
-            if (params.size() > 0) {
+        if (!wPhone.trim().isEmpty()) {
+            if (!params.isEmpty()) {
                 whereClause.append(" AND ");
             }
             whereClause.append("Phone2=?");
             params.add(wPhone.trim());
         }
-        if (email.trim().length() > 0) {
-            if (params.size() > 0) {
+        if (!email.trim().isEmpty()) {
+            if (!params.isEmpty()) {
                 whereClause.append(" AND ");
             }
             whereClause.append("Email=?");
@@ -2955,7 +2955,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
     @Override
     public List<Demographic> getDemographics(List<Integer> demographicIds) {
-        if (demographicIds.size() == 0)
+        if (demographicIds.isEmpty())
             return (new ArrayList<Demographic>());
         if (demographicIds.size() > MAX_SELECT_SIZE)
             throw (new IllegalArgumentException("please chunk your requests to max : " + MAX_SELECT_SIZE));

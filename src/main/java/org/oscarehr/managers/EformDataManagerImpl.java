@@ -192,7 +192,7 @@ public class EformDataManagerImpl implements EformDataManager {
 
         List<Map<String, Object>> results = eFormDataDao.findByDemographicIdCurrentNoData(demographicId, Boolean.TRUE);
 
-        if (results != null && results.size() > 0) {
+        if (results != null && !results.isEmpty()) {
             LogAction.addLogSynchronous(loggedInInfo, "FormsManager.findCurrentByDemographicIdNoData", "demo" + demographicId);
         }
 

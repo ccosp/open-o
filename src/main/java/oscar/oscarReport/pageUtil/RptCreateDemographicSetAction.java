@@ -60,7 +60,7 @@ public class RptCreateDemographicSetAction extends Action {
             list.add(request.getParameter("demoNo" + i));
         }
 
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             DemographicSets demoSet = new DemographicSets();
             demoSet.addDemographicSet(setName, list);
         }

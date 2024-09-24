@@ -61,7 +61,7 @@ public class UserDSMessagePrefsDaoImpl extends AbstractDaoImpl<UserDSMessagePref
         query.setParameter(1, name);
 
         List<UserDSMessagePrefs> list = query.getResultList();
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             UserDSMessagePrefs prop = list.get(0);
             return prop;
         } else return null;
@@ -77,7 +77,7 @@ public class UserDSMessagePrefsDaoImpl extends AbstractDaoImpl<UserDSMessagePref
 
         List<UserDSMessagePrefs> list = query.getResultList();
         logger.debug("dsmessage list size " + list.size() + " for providerNo " + providerNo + " and resource Type " + name);
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             for (UserDSMessagePrefs pref : list) {
                 retHash.put(pref.getResourceType() + pref.getResourceId(), pref.getResourceUpdatedDate().getTime());
             }
@@ -106,7 +106,7 @@ public class UserDSMessagePrefsDaoImpl extends AbstractDaoImpl<UserDSMessagePref
         List<UserDSMessagePrefs> list = query.getResultList();
 
         UserDSMessagePrefs pref = new UserDSMessagePrefs();
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             pref = list.get(0);
         }
         return pref;

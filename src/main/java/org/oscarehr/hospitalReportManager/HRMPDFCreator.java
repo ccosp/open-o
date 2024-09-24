@@ -69,7 +69,7 @@ public class HRMPDFCreator extends PdfPageEventHelper {
             List<HRMDocument> hrmDocuments = hrmDocumentDao.findById(hrmId);
 
             //If the list is not null and it has items in it
-            if (hrmDocuments != null && hrmDocuments.size() > 0) {
+            if (hrmDocuments != null && !hrmDocuments.isEmpty()) {
                 hrmDocument = hrmDocuments.get(0);
 
                 logger.info("Parsing the HRM Document into a report for printing");
@@ -117,7 +117,7 @@ public class HRMPDFCreator extends PdfPageEventHelper {
                 HRMProviderConfidentialityStatementDao hrmProviderConfidentialityStatementDao = SpringUtils.getBean(HRMProviderConfidentialityStatementDao.class);
                 String confidentialityStatement = hrmProviderConfidentialityStatementDao.getConfidentialityStatementForProvider(loggedInInfo.getLoggedInProviderNo());
                 PdfPTable confidentialityStatementTable = null;
-                if (confidentialityStatement != null && confidentialityStatement.trim().length() > 0) {
+                if (confidentialityStatement != null && !confidentialityStatement.trim().isEmpty()) {
                     BaseFont baseFont = BaseFont.createFont(BaseFont.COURIER, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                     Font font = new Font(baseFont, 10, Font.NORMAL);
                     Font italicFont = new Font(baseFont, 10, Font.ITALIC);
@@ -251,7 +251,7 @@ public class HRMPDFCreator extends PdfPageEventHelper {
         //Add confidentiality statement to PDF
         HRMProviderConfidentialityStatementDao hrmProviderConfidentialityStatementDao = SpringUtils.getBean(HRMProviderConfidentialityStatementDao.class);
         String confidentialityStatement = hrmProviderConfidentialityStatementDao.getConfidentialityStatementForProvider(loggedInInfo.getLoggedInProviderNo());
-        if (confidentialityStatement != null && confidentialityStatement.trim().length() > 0) {
+        if (confidentialityStatement != null && !confidentialityStatement.trim().isEmpty()) {
             mainPage.addCell(separator);
             cell.setPhrase(new Phrase("Confidentiality Statement:", italicFont));
             mainPage.addCell(cell);

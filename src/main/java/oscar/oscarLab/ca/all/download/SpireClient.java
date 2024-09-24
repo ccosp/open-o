@@ -66,7 +66,7 @@ public class SpireClient extends TimerTask {
 
             String saveDir = p.getSpireDownloadDir();
 
-            if (files.size() == 0) {
+            if (files.isEmpty()) {
                 logger.info("No files found.");
             } else {
                 for (int i = 0; i < files.size() && i < 25; i++) {

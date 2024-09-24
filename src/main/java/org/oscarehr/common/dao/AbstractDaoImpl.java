@@ -236,7 +236,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
         List<T> results = query.getResultList();
         if (results.size() == 1)
             return (results.get(0));
-        else if (results.size() == 0)
+        else if (results.isEmpty())
             return (null);
             // this should never happen if we set max results to 1 :)
         else
@@ -251,7 +251,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
         List<Long> results = query.getResultList();
         if (results.size() == 1)
             return (results.get(0));
-        else if (results.size() == 0)
+        else if (results.isEmpty())
             return (null);
             // this should never happen if we set max results to 1 :)
         else
@@ -269,7 +269,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
 
         String tableName = modelClass.getSimpleName();
         javax.persistence.Table t = modelClass.getAnnotation(javax.persistence.Table.class);
-        if (t != null && t.name() != null && t.name().length() > 0) {
+        if (t != null && t.name() != null && !t.name().isEmpty()) {
             tableName = t.name();
         }
 

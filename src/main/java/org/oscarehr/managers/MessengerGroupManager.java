@@ -128,7 +128,7 @@ public class MessengerGroupManager {
             for (CachedFacility remoteFacility : remoteFacilities) {
                 groupMembers = groupMembersDao.findByFacilityId(remoteFacility.getIntegratorFacilityId());
                 List<MsgProviderData> remoteMemberDataList = getMemberData(loggedInInfo, groupMembers);
-                if (remoteMemberDataList.size() > 0) {
+                if (!remoteMemberDataList.isEmpty()) {
                     Collections.sort(remoteMemberDataList, new SortLastName());
                     remoteMembers.put(remoteFacility.getName(), remoteMemberDataList);
                 }
@@ -165,7 +165,7 @@ public class MessengerGroupManager {
             hashMap.put(localMember.getProviderNo(), localMember);
         }
 
-        if (hashMap != null && hashMap.size() > 0) {
+        if (hashMap != null && !hashMap.isEmpty()) {
             localMembers.clear();
             localMembers.addAll(hashMap.values());
         }

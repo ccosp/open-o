@@ -65,7 +65,7 @@ public class ConsultationService {
 
         List<ConsultationRequest> results = consultationDao.listConsultationRequests(query);
         //--- log action ---
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             String resultIds = ConsultationRequest.getIdsAsStringList(results);
             LogAction.addLogSynchronous(loggedInInfo, "ConsultationService.listConsultationRequests", "ids returned=" + resultIds);
         }

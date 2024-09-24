@@ -193,7 +193,7 @@ public class BillingCreateBillingAction extends Action {
                 if (formNeeded) {
                     MiscUtils.getLogger().debug("Setting form needed 1");
                     errs = wcbForm.verifyEverythingOnForm();
-                    if (errs != null && errs.size() > 0) {
+                    if (errs != null && !errs.isEmpty()) {
                         request.setAttribute("WCBcode", sc);
                         request.setAttribute("WCBFormNeeds", errs);
                         return mapping.getInputForward();
@@ -202,7 +202,7 @@ public class BillingCreateBillingAction extends Action {
                     errs = wcbForm.verifyFormNotNeeded();
                 }
             }
-            if (errs != null && errs.size() > 0) {
+            if (errs != null && !errs.isEmpty()) {
                 MiscUtils.getLogger().debug("Setting form needed 2");
                 request.setAttribute("WCBFormNeeds", errs);
                 return mapping.getInputForward();

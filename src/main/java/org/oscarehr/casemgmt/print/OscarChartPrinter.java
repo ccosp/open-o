@@ -369,7 +369,7 @@ public class OscarChartPrinter {
         //alerts & notes
         if (demographicCust != null) {
             phrase.add("Alerts: " + demographicCust.getAlert() + "\n");
-            if (demographicCust.getNotes().length() > 0) {
+            if (!demographicCust.getNotes().isEmpty()) {
                 phrase.add("Notes: " + SxmlMisc.getXmlContent(demographicCust.getNotes(), "unotes") + "\n");
             }
         }
@@ -403,14 +403,14 @@ public class OscarChartPrinter {
     }
 
     private String getReferralDoctor(String field) {
-        if (field != null && field.length() > 0) {
+        if (field != null && !field.isEmpty()) {
             return SxmlMisc.getXmlContent(field, "rd");
         }
         return "";
     }
 
     private String getProviderName(String providerNo) {
-        if (providerNo == null || providerNo.length() == 0) {
+        if (providerNo == null || providerNo.isEmpty()) {
             return "";
         }
         Provider p = providerDao.getProvider(providerNo);
@@ -610,7 +610,7 @@ public class OscarChartPrinter {
     public void printPreventions() throws DocumentException {
         List<Prevention> preventions = preventionDao.findNotDeletedByDemographicId(demographic.getDemographicNo());
 
-        if (preventions.size() == 0) {
+        if (preventions.isEmpty()) {
             return;
         }
 
@@ -641,7 +641,7 @@ public class OscarChartPrinter {
         filter.setDemographicNo(String.valueOf(demographic.getDemographicNo()));
         List<Tickler> ticklers = ticklerManager.getTicklers(loggedInInfo, filter);
 
-        if (ticklers.size() == 0) {
+        if (ticklers.isEmpty()) {
             return;
         }
 
@@ -690,7 +690,7 @@ public class OscarChartPrinter {
 
         List<Dxresearch> dxs = dxDao.getDxResearchItemsByPatient(demographic.getDemographicNo());
 
-        if (dxs.size() == 0) {
+        if (dxs.isEmpty()) {
             return;
         }
         Paragraph p = new Paragraph();
@@ -736,7 +736,7 @@ public class OscarChartPrinter {
 
         List<Admission> admissions = admissionDao.getCurrentAdmissions(demographic.getDemographicNo());
 
-        if (admissions.size() == 0) {
+        if (admissions.isEmpty()) {
             return;
         }
         Paragraph p = new Paragraph();
@@ -775,7 +775,7 @@ public class OscarChartPrinter {
         List<Admission> admissions = admissionDao.getAdmissions(demographic.getDemographicNo());
         admissions = filterOutCurrentAdmissions(admissions);
 
-        if (admissions.size() == 0) {
+        if (admissions.isEmpty()) {
             return;
         }
         Paragraph p = new Paragraph();

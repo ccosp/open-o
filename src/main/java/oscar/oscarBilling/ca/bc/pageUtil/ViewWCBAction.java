@@ -83,7 +83,7 @@ public class ViewWCBAction extends Action {
                 frm.setW_fname(demographic.getFirstName());
                 frm.setW_lname(demographic.getLastName());
                 frm.setW_gender(demographic.getSex());
-                if (demographic.getPhone() != null && demographic.getPhone().length() > 0) {
+                if (demographic.getPhone() != null && !demographic.getPhone().isEmpty()) {
                     frm.setW_phone(Misc.phoneNumber(demographic.getPhone().replaceAll("-", "")));
                     frm.setW_area(Misc.areaCode(demographic.getPhone()));
                 }

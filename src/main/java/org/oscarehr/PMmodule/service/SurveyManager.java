@@ -103,7 +103,7 @@ public class SurveyManager implements CustomReportDataSource {
 
     public void deleteTmpsave(String instanceId, String formId, String clientId, String providerId) {
         List tmpInstances = getTmpForms(instanceId, formId, clientId, providerId);
-        if (tmpInstances.size() > 0 && tmpInstances != null) {
+        if (!tmpInstances.isEmpty() && tmpInstances != null) {
             CaisiFormInstanceTmpSave tmpInstance = (CaisiFormInstanceTmpSave) tmpInstances.get(0);
             /*
              * for(Iterator iter=tmpInstance.getData().iterator();iter.hasNext();) {

@@ -131,7 +131,7 @@ public class RourkeExportAction extends DispatchAction {
             frm.set("vendorSoftwareVer", properties.getProperty("version", ""));
             frm.set("installDate", properties.getProperty("buildDateTime", ""));
 
-            if (dataExportList.size() > 0) {
+            if (!dataExportList.isEmpty()) {
                 DataExport dataExport = dataExportList.get(dataExportList.size() - 1);
                 frm.set("contactLName", dataExport.getContactLName());
                 frm.set("contactFName", dataExport.getContactFName());

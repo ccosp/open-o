@@ -56,7 +56,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
         q.setParameter(0, demographicNo);
         @SuppressWarnings("unchecked")
         List<EChart> results = q.getResultList();
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;
@@ -70,7 +70,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
         @SuppressWarnings("unchecked")
         List<EChart> list = q.getResultList();
         EChart oldec;
-        if (list.size() != 0) oldec = list.get(list.size() - 1);
+        if (!list.isEmpty()) oldec = list.get(list.size() - 1);
         else {
             oldec = new EChart();
             oldec.setEncounter("");
@@ -138,7 +138,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
         q.setParameter(0, new Integer(demoNo));
         List<EChart> list = q.getResultList();
         EChart oldec;
-        if (list.size() != 0) oldec = list.get(list.size() - 1);
+        if (!list.isEmpty()) oldec = list.get(list.size() - 1);
         else {
             return;
         }
@@ -157,7 +157,7 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
         List<EChart> list = q.getResultList();
 
         EChart ec;
-        if (list.size() != 0)
+        if (!list.isEmpty())
             ec = list.get(list.size() - 1);
         else {
             ec = new EChart();

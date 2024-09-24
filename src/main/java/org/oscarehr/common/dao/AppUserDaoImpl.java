@@ -46,7 +46,7 @@ public class AppUserDaoImpl extends AbstractDaoImpl<AppUser> implements AppUserD
         query.setParameter(1, appId);
         query.setParameter(2, providerNo);
         List<AppUser> list = query.getResultList();
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
 

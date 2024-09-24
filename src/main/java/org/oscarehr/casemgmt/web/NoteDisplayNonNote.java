@@ -131,14 +131,14 @@ public class NoteDisplayNonNote implements NoteDisplay {
         }
 
         String pname, creator;
-        if (h1.getProviderNo() != null && h1.getProviderNo().length() > 0) {
+        if (h1.getProviderNo() != null && !h1.getProviderNo().isEmpty()) {
             provider = providerDao.getProvider(h1.getProviderNo());
             pname = provider == null ? "Not Set" : provider.getFormattedName();
         } else {
             pname = "Not Set";
         }
 
-        if (h1.getCreator() != null && h1.getCreator().length() > 0) {
+        if (h1.getCreator() != null && !h1.getCreator().isEmpty()) {
             provider = providerDao.getProvider(h1.getCreator());
             creator = provider == null ? "Not Set" : provider.getFormattedName();
         } else {

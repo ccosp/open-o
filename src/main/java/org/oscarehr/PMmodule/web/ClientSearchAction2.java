@@ -88,16 +88,16 @@ public class ClientSearchAction2 extends DispatchAction {
         Program[] allBedProgramsInArr = programManager.getBedPrograms();
 
         String noteId = request.getParameter("noteId");
-        if (noteId == null || noteId.trim().length() == 0 || noteId.trim().equalsIgnoreCase("null") || noteId.trim().substring(0, 1).equalsIgnoreCase("0")) {
+        if (noteId == null || noteId.trim().isEmpty() || noteId.trim().equalsIgnoreCase("null") || noteId.trim().substring(0, 1).equalsIgnoreCase("0")) {
             String demographicNo = request.getParameter("demographicNo");
-            if (demographicNo == null || demographicNo.trim().length() == 0) {
+            if (demographicNo == null || demographicNo.trim().isEmpty()) {
                 //don't do anything?
             } else {
                 List<CaseManagementNote> notes = caseManagementNoteDao.getNotesByDemographic(demographicNo);
-                if (notes != null && notes.size() > 0) noteId = notes.get(notes.size() - 1).getId() + "";
+                if (notes != null && !notes.isEmpty()) noteId = notes.get(notes.size() - 1).getId() + "";
             }
         }
-        if (noteId == null || noteId.trim().length() == 0) {
+        if (noteId == null || noteId.trim().isEmpty()) {
             //don't do anything?
         } else {
             request.getSession().setAttribute("noteId", noteId);

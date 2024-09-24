@@ -174,7 +174,7 @@ public class OscarJobService extends AbstractServiceImpl {
             result = job;
         }
 
-        if (job.getCronExpression() != null && job.getCronExpression().length() > 0) {
+        if (job.getCronExpression() != null && !job.getCronExpression().isEmpty()) {
             try {
                 OscarJobUtils.scheduleJob(job);
             } catch (Exception e) {

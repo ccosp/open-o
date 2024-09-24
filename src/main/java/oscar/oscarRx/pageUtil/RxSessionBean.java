@@ -305,7 +305,7 @@ public class RxSessionBean implements java.io.Serializable {
     public boolean isValid() {
         if (this.demographicNo > 0
                 && this.providerNo != null
-                && this.providerNo.length() > 0) {
+                && !this.providerNo.isEmpty()) {
             return true;
         }
         return false;

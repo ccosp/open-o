@@ -104,7 +104,7 @@ public class CaseManagementPrint {
             }
         }
 
-        if (loggedInInfo.getCurrentFacility().isIntegratorEnabled() && remoteNoteUUIDs.size() > 0) {
+        if (loggedInInfo.getCurrentFacility().isIntegratorEnabled() && !remoteNoteUUIDs.isEmpty()) {
             DemographicWs demographicWs = CaisiIntegratorManager.getDemographicWs(loggedInInfo, loggedInInfo.getCurrentFacility());
             List<CachedDemographicNote> remoteNotes = demographicWs.getLinkedCachedDemographicNotes(Integer.parseInt(demono));
             for (CachedDemographicNote remoteNote : remoteNotes) {
@@ -359,7 +359,7 @@ public class CaseManagementPrint {
         criteria.setDemographicId(ConversionUtils.fromIntString(demoNo));
         criteria.setUserRole((String) request.getSession().getAttribute("userrole"));
         criteria.setUserName((String) request.getSession().getAttribute("user"));
-        if (request.getParameter("note_sort") != null && request.getParameter("note_sort").length() > 0) {
+        if (request.getParameter("note_sort") != null && !request.getParameter("note_sort").isEmpty()) {
             criteria.setNoteSort(request.getParameter("note_sort"));
         }
         if (programId != null && !programId.trim().isEmpty()) {
@@ -418,7 +418,7 @@ public class CaseManagementPrint {
         criteria.setDemographicId(ConversionUtils.fromIntString(demoNo));
         criteria.setUserRole((String) request.getSession().getAttribute("userrole"));
         criteria.setUserName((String) request.getSession().getAttribute("user"));
-        if (request.getParameter("note_sort") != null && request.getParameter("note_sort").length() > 0) {
+        if (request.getParameter("note_sort") != null && !request.getParameter("note_sort").isEmpty()) {
             criteria.setNoteSort(request.getParameter("note_sort"));
         }
         if (programId != null && !programId.trim().isEmpty()) {
@@ -501,7 +501,7 @@ public class CaseManagementPrint {
 
     protected String convertDateFmt(String strOldDate, HttpServletRequest request) {
         String strNewDate = new String();
-        if (strOldDate != null && strOldDate.length() > 0) {
+        if (strOldDate != null && !strOldDate.isEmpty()) {
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd", request.getLocale());
             try {
 

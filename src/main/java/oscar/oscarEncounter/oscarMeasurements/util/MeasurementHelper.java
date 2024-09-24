@@ -37,6 +37,6 @@ public class MeasurementHelper {
         MeasurementInfo mi = new MeasurementInfo(demographic_no);
         List<String> measurements = mFlowsheet.getMeasurementList();
         mi.getMeasurements(measurements);
-        return mFlowsheet.getMessages(mi).getWarnings().size() != 0;
+        return !mFlowsheet.getMessages(mi).getWarnings().isEmpty();
     }
 }

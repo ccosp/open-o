@@ -83,11 +83,11 @@ public final class WLEditWaitingListNameAction extends Action {
 
 
             try {
-                if (actionChosen != null && actionChosen.length() > 0 &&
-                        providerNo != null && providerNo.length() > 0) {
+                if (actionChosen != null && !actionChosen.isEmpty() &&
+                        providerNo != null && !providerNo.isEmpty()) {
 
                     if (actionChosen.equalsIgnoreCase("create")) {
-                        if (wlNewName != null && wlNewName.length() > 0) {
+                        if (wlNewName != null && !wlNewName.isEmpty()) {
                             try {
                                 WLWaitingListNameUtil.createWaitingListName(wlNewName, groupNo, providerNo);
                                 successCode = 1;
@@ -104,8 +104,8 @@ public final class WLEditWaitingListNameAction extends Action {
                             }
                         }
                     } else if (actionChosen.equalsIgnoreCase("change")) {
-                        if (selectedWL != null && selectedWL.length() > 0 &&
-                                wlNewName != null && wlNewName.length() > 0) {
+                        if (selectedWL != null && !selectedWL.isEmpty() &&
+                                wlNewName != null && !wlNewName.isEmpty()) {
                             try {
                                 WLWaitingListNameUtil.updateWaitingListName(selectedWL, wlNewName, groupNo, providerNo);
                                 successCode = 2;
@@ -122,7 +122,7 @@ public final class WLEditWaitingListNameAction extends Action {
                             }
                         }
                     } else if (actionChosen.equalsIgnoreCase("remove")) {
-                        if (selectedWL2 != null && selectedWL2.length() > 0) {
+                        if (selectedWL2 != null && !selectedWL2.isEmpty()) {
                             MiscUtils.getLogger().debug("WLEditWaitingListNameAction/execute(): selectedWL2 = " + selectedWL2);
                             try {
                                 WLWaitingListNameUtil.removeFromWaitingListName(selectedWL2, groupNo);

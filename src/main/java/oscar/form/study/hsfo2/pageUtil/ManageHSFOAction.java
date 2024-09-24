@@ -155,7 +155,7 @@ public class ManageHSFOAction extends Action {
             //stay in regist form and treat as history
             isRegistForm = true;
             isHistoryForm = true;
-            if (patientHistory.size() > 0)
+            if (!patientHistory.isEmpty())
                 formHsfo2Visit = (Hsfo2Visit) patientHistory.get(patientHistory.size() - 1);
         }
 
@@ -455,7 +455,7 @@ public class ManageHSFOAction extends Action {
     public void generateGraphs(HttpServletRequest request,
                                HttpServletResponse response,
                                Map<GraphDesc, TimeSeries> graphDescSeriesMap) {
-        if (graphDescSeriesMap == null || graphDescSeriesMap.size() == 0)
+        if (graphDescSeriesMap == null || graphDescSeriesMap.isEmpty())
             return;
 
         OscarProperties props = OscarProperties.getInstance();

@@ -99,7 +99,7 @@ public class BillingmasterDAO {
         Query query = entityManager.createQuery("select b from Billingmaster b where b.billingmasterNo = (:billingmasterNo)");
         query.setParameter("billingmasterNo", billingmasterNo);
         List<Billingmaster> list = query.getResultList();
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             return list.get(0);
         }
         MiscUtils.getLogger().info("Unable to retrieve a billingmaster record with billingmasterNo = " + billingmasterNo);
@@ -157,7 +157,7 @@ public class BillingmasterDAO {
     }
 
     public int markListAsBilled(List<String> list) { //TODO: Should be set form CONST var
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             return 0;
         }
         Query query = entityManager.createQuery("UPDATE Billingmaster b set b.billingstatus = 'B' where b.billingmasterNo in (:billingNumbers)");

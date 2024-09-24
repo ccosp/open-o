@@ -73,7 +73,7 @@ public class DocumentTeleplanReportUploadServlet extends HttpServlet {
         foldername = ap.getProperty("DOCUMENT_DIR");
 
         //
-        if (forwardTo == null || forwardTo.length() < 1) return;
+        if (forwardTo == null || forwardTo.isEmpty()) return;
 
 
         //		 Create a new file upload handler

@@ -231,7 +231,7 @@ public final class Misc {
     }
 
     public static String[] stringSplit(String S) { // delim==S[0]
-        if (S == null || S.length() == 0) return new String[0];
+        if (S == null || S.isEmpty()) return new String[0];
         char delim = S.charAt(0);
         Vector V = new Vector();
         StringSplitter SS = new StringSplitter(S, delim, 1);
@@ -244,7 +244,7 @@ public final class Misc {
         // S="xjoexSchmoexagex42xcommentsxxIQx42"
         // becomes joe="Schmoe",age="42",comments="",IQ="42"
         Hashtable H = new Hashtable(1);
-        if (S == null || S.length() == 0) return H;
+        if (S == null || S.isEmpty()) return H;
         char delim = S.charAt(0);
         StringSplitter SS = new StringSplitter(S, delim, 1);
         while (SS.hasMoreTokens()) {

@@ -393,7 +393,7 @@ public class MessengerDemographicManagerImpl implements MessengerDemographicMana
 
         // try a fuzzy match next
         List<Demographic> fuzzyMatches = demographicManager.findFuzzyMatchToDemographic(loggedInInfo, remoteDemographic);
-        if (fuzzyMatches != null && fuzzyMatches.size() > 0) {
+        if (fuzzyMatches != null && !fuzzyMatches.isEmpty()) {
             // return the fuzzy matches for the user to select from
             return fuzzyMatches;
         }

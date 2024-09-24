@@ -266,7 +266,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
 
         @SuppressWarnings("unchecked")
         List<Object[]> rows = query.getResultList();
-        if (rows.size() == 0)
+        if (rows.isEmpty())
             return null;
         Object[] cols = rows.get(0);
         if (cols != null) {
@@ -294,7 +294,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
 
         @SuppressWarnings("unchecked")
         List<Object[]> rows = query.getResultList();
-        if (rows.size() > 0) {
+        if (!rows.isEmpty()) {
             Object[] result = rows.get(0);
             if (result != null) {
                 bo.setRejectedCount(((BigInteger) result[0]).intValue());
@@ -315,7 +315,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
 
         @SuppressWarnings("unchecked")
         List<Integer> rows = query.getResultList();
-        if (rows.size() == 0)
+        if (rows.isEmpty())
             return null;
         Integer result = rows.get(0);
 
@@ -525,7 +525,7 @@ public class WaitlistDaoImpl implements WaitlistDao {
 
         @SuppressWarnings("unchecked")
         List<Object[]> rows = query.getResultList();
-        if (rows.size() == 0)
+        if (rows.isEmpty())
             return clientData;
         for (Object[] cols : rows) {
             Integer demographicId = (Integer) cols[0];

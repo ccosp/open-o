@@ -441,7 +441,7 @@ public class ProgramManagerAction extends DispatchAction {
         Program program = (Program) programForm.get("program");
         ProgramTeam team = (ProgramTeam) programForm.get("team");
 
-        if (programManager.getAllProvidersInTeam(program.getId(), team.getId()).size() > 0 || programManager.getAllClientsInTeam(program.getId(), team.getId()).size() > 0) {
+        if (!programManager.getAllProvidersInTeam(program.getId(), team.getId()).isEmpty() || !programManager.getAllClientsInTeam(program.getId(), team.getId()).isEmpty()) {
 
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("program.team.not_empty", program.getName()));
@@ -606,7 +606,7 @@ public class ProgramManagerAction extends DispatchAction {
 
         String teamId = request.getParameter("teamId");
 
-        if (teamId != null && teamId.length() > 0) {
+        if (teamId != null && !teamId.isEmpty()) {
             long team_id = Long.valueOf(teamId);
 
             for (Object o : pp.getTeams()) {
@@ -736,7 +736,7 @@ public class ProgramManagerAction extends DispatchAction {
             if (!("External".equals(request.getParameter("program.type")))) {
                 // Admission ad = admissionManager.getAdmission(Long.valueOf(request.getParameter("id")));
                 List admissions = admissionManager.getCurrentAdmissionsByProgramId(String.valueOf(program.getId()));
-                if (admissions.size() > 0) {
+                if (!admissions.isEmpty()) {
                     ActionMessages messages = new ActionMessages();
                     messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("program.client_in_the_program", program.getName()));
                     saveMessages(request, messages);
@@ -899,7 +899,7 @@ public class ProgramManagerAction extends DispatchAction {
             VacancyTemplateManager.saveVacancy(vacancy);
 
             Facility f = loggedInInfo.getCurrentFacility();
-            if (f.getAssignNewVacancyTicklerProvider() != null && f.getAssignNewVacancyTicklerProvider().length() > 0
+            if (f.getAssignNewVacancyTicklerProvider() != null && !f.getAssignNewVacancyTicklerProvider().isEmpty()
                     && f.getAssignNewVacancyTicklerDemographic() != null && f.getAssignNewVacancyTicklerDemographic() > 0) {
                 createWaitlistNotificationTickler(loggedInInfo, f, vacancy, loggedInInfo.getLoggedInProviderNo());
             }
@@ -914,7 +914,7 @@ public class ProgramManagerAction extends DispatchAction {
             VacancyTemplateManager.saveVacancy(vacancy);
 
             Facility f = loggedInInfo.getCurrentFacility();
-            if (f.getAssignNewVacancyTicklerProvider() != null && f.getAssignNewVacancyTicklerProvider().length() > 0
+            if (f.getAssignNewVacancyTicklerProvider() != null && !f.getAssignNewVacancyTicklerProvider().isEmpty()
                     && f.getAssignNewVacancyTicklerDemographic() != null && f.getAssignNewVacancyTicklerDemographic() > 0) {
                 createWaitlistNotificationTickler(loggedInInfo, f, vacancy, loggedInInfo.getLoggedInProviderNo());
             }
@@ -1371,7 +1371,7 @@ public class ProgramManagerAction extends DispatchAction {
         Program program = (Program) programForm.get("program");
         ProgramClientStatus status = (ProgramClientStatus) programForm.get("client_status");
 
-        if (programManager.getAllClientsInStatus(program.getId(), status.getId()).size() > 0) {
+        if (!programManager.getAllClientsInStatus(program.getId(), status.getId()).isEmpty()) {
 
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("program.status.not_empty", program.getName()));
@@ -1545,7 +1545,7 @@ public class ProgramManagerAction extends DispatchAction {
             vacancyDao.merge(vacancy);
 
             Facility f = loggedInInfo.getCurrentFacility();
-            if (status.equals("Withdrawn") && f.getVacancyWithdrawnTicklerProvider() != null && f.getVacancyWithdrawnTicklerProvider().length() > 0
+            if (status.equals("Withdrawn") && f.getVacancyWithdrawnTicklerProvider() != null && !f.getVacancyWithdrawnTicklerProvider().isEmpty()
                     && f.getVacancyWithdrawnTicklerDemographic() != null && f.getVacancyWithdrawnTicklerDemographic() > 0) {
                 createWaitlistWithdrawnNotificationTickler(loggedInInfo, f, vacancy, loggedInInfo.getLoggedInProviderNo());
             }

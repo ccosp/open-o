@@ -49,7 +49,7 @@ public class DSGuidelineDaoImpl extends AbstractDaoImpl<DSGuideline> implements 
         @SuppressWarnings("unchecked")
         List<DSGuideline> list = query.getResultList();
 
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
 

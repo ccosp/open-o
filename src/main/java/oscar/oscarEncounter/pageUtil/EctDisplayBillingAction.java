@@ -85,7 +85,7 @@ public class EctDisplayBillingAction extends EctDisplayAction {
             Dao.setRightURL(url);
             Dao.setRightHeadingID(cmd);  //no menu so set div id to unique id for this action
 
-            if (appointmentNo != null && appointmentNo.length() > 0) {
+            if (appointmentNo != null && !appointmentNo.isEmpty()) {
                 OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
                 Demographic d = demographicManager.getDemographic(loggedInInfo, Integer.parseInt(bean.demographicNo));
                 Appointment appt = appointmentDao.find(Integer.parseInt(appointmentNo));

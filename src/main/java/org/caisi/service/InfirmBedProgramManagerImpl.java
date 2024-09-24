@@ -124,7 +124,7 @@ public class InfirmBedProgramManagerImpl implements InfirmBedProgramManager {
         ArrayList<LabelValueBean> pList = new ArrayList<LabelValueBean>();
         while (iter.hasNext()) {
             Program p = iter.next();
-            if (p != null && p.getId() != null && p.getName() != null && p.getName().length() > 0) {
+            if (p != null && p.getId() != null && p.getName() != null && !p.getName().isEmpty()) {
                 pList.add(new LabelValueBean(p.getName(), p.getId().toString()));
             }
         }

@@ -77,7 +77,7 @@ public class ClientImageDAOImpl extends HibernateDaoSupport implements ClientIma
             @SuppressWarnings("unchecked")
             List<ClientImage> results = (List<ClientImage>) getHibernateTemplate()
                     .find("from ClientImage i where i.demographic_no=? order by update_date desc", clientId);
-            if (results.size() > 0) {
+            if (!results.isEmpty()) {
                 clientImage = results.get(0);
 
                 // add to cache if it's less than ... say 1 megs

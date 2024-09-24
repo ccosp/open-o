@@ -84,7 +84,7 @@ public final class PatientEndYearStatementForm extends ActionForm {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date res = null;
         try {
-            if (fromDateParam != null && fromDateParam.length() > 0) res = df.parse(fromDateParam);
+            if (fromDateParam != null && !fromDateParam.isEmpty()) res = df.parse(fromDateParam);
         } catch (ParseException ex) {
             logger.error("Can't parse date: " + fromDateParam);
             return null;
@@ -104,7 +104,7 @@ public final class PatientEndYearStatementForm extends ActionForm {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date res = null;
         try {
-            if (toDateParam != null && toDateParam.length() > 0) res = df.parse(toDateParam);
+            if (toDateParam != null && !toDateParam.isEmpty()) res = df.parse(toDateParam);
         } catch (ParseException ex) {
             logger.error("Can't parse date: " + toDateParam);
             return null;
@@ -116,13 +116,13 @@ public final class PatientEndYearStatementForm extends ActionForm {
         ActionErrors errors = new ActionErrors();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         if (request.getParameter("search") != null) {
-            if ((this.firstNameParam == null || this.firstNameParam.length() == 0) &&
-                    (this.lastNameParam == null || this.lastNameParam.length() == 0)) {
+            if ((this.firstNameParam == null || this.firstNameParam.isEmpty()) &&
+                    (this.lastNameParam == null || this.lastNameParam.isEmpty())) {
                 errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("errors.billingReport.noPatient"));
             }
             try {
-                if (fromDateParam != null && fromDateParam.length() > 0) df.parse(fromDateParam);
-                if (toDateParam != null && toDateParam.length() > 0) df.parse(toDateParam);
+                if (fromDateParam != null && !fromDateParam.isEmpty()) df.parse(fromDateParam);
+                if (toDateParam != null && !toDateParam.isEmpty()) df.parse(toDateParam);
             } catch (ParseException ex) {
                 errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("errors.billingReport.invalidDateFormat"));
             }

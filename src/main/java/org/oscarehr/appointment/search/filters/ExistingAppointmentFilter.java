@@ -63,7 +63,7 @@ public class ExistingAppointmentFilter implements AvailableTimeSlotFilter {
 
         }
 
-        if (allowedTimesFilteredByExistingAppointments.size() == 0) {
+        if (allowedTimesFilteredByExistingAppointments.isEmpty()) {
             //BookingLearningManager.recommendDayToBeSkipped(clinic, providerId, date, appointmentTypeId, this.getClass().getName());
         }
 

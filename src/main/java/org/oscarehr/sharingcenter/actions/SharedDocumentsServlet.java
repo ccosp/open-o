@@ -80,7 +80,7 @@ public class SharedDocumentsServlet extends Action {
         } else {
             // No selected affinity domain, use the first shared network found.
             if (request.getParameter("selectedAffinityDomain") == null) {
-                if (model.getSharedAffinityDomains().size() > 0) {
+                if (!model.getSharedAffinityDomains().isEmpty()) {
                     selectedAffinityDomain = model.getSharedAffinityDomains().get(0);
                 }
             } else {

@@ -60,7 +60,7 @@ public class RemoveClinicalReportFromHistoryAction extends Action {
         if (arrList != null && nid != -1) {
             arrList.remove(Integer.parseInt(id));
         }
-        if (arrList != null && arrList.size() == 0) {
+        if (arrList != null && arrList.isEmpty()) {
             request.getSession().removeAttribute("ClinicalReports");
         }
         //request.getSession().setAttribute("ClinicalReports",arrList);

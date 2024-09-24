@@ -126,7 +126,7 @@ public final class WLSetupDisplayWaitingListAction extends Action {
                 }
             }
         } else if ((update == null || update.equals("")) && remove == null) {
-            if (waitingListId != null && waitingListId.length() > 0) {
+            if (waitingListId != null && !waitingListId.isEmpty()) {
                 WLWaitingListUtil.rePositionWaitingList(waitingListId);
             }
         }//end of if( !update.equalsIgnoreCase("Y") ) -- could be remove also ???
@@ -154,7 +154,7 @@ public final class WLSetupDisplayWaitingListAction extends Action {
         String nbPatients = "";
         String today = "";
 
-        if (waitingListId != null && waitingListId.length() > 0) {
+        if (waitingListId != null && !waitingListId.isEmpty()) {
             hd = new WLWaitingListBeanHandler(waitingListId);
         } else {
             //even though waitingListId is null, still need to create hd for hd.getWaitingListArrayList()
@@ -171,7 +171,7 @@ public final class WLSetupDisplayWaitingListAction extends Action {
         if (groupNo != null) {
             phd.setThisGroupProviderVector(groupNo);
             allProviders = phd.getThisGroupProviderVector();
-            if (allProviders.size() == 0 && groupNo.equals(".default")) {
+            if (allProviders.isEmpty() && groupNo.equals(".default")) {
                 Provider p = loggedInInfo.getLoggedInProvider();
                 ProviderNameBean pNameBean = new ProviderNameBean(p.getFormattedName(), p.getProviderNo());
                 allProviders.add(pNameBean);

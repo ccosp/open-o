@@ -711,7 +711,7 @@ public class DashboardManagerImpl implements DashboardManager {
 
         String clinicIdentifier = OscarProperties.getInstance().getProperty("shared_outcomes_dashboard_clinic_id");
 
-        if (clinicIdentifier == null || clinicIdentifier.length() == 0 || clinicIdentifier.length() > 42) {
+        if (clinicIdentifier == null || clinicIdentifier.isEmpty() || clinicIdentifier.length() > 42) {
             clinicIdentifier = oClinic.getClinicName();
         }
 

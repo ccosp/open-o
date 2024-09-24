@@ -131,7 +131,7 @@ public class PartialDateDaoImpl extends AbstractDaoImpl<PartialDate> implements 
 
         String[] dateParts = dateValue.split("-");
         if (dateParts.length == 2 && NumberUtils.isDigits(dateParts[0]) && NumberUtils.isDigits(dateParts[1])) {
-            if (dateParts[0].length() == 4 && dateParts[1].length() >= 1 && dateParts[1].length() <= 2)
+            if (dateParts[0].length() == 4 && !dateParts[1].isEmpty() && dateParts[1].length() <= 2)
                 return PartialDate.YEARMONTH;
         }
         return null;

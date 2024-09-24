@@ -53,7 +53,7 @@ public class DesAnnualReviewPlanDaoImpl extends AbstractDaoImpl<DesAnnualReviewP
         @SuppressWarnings("unchecked")
         List<DesAnnualReviewPlan> results = query.getResultList();
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             return results.get(0);
         }
         return null;

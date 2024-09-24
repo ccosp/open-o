@@ -251,7 +251,7 @@ public class StaffManagerAction extends DispatchAction {
 
         existingPP = programManager.getProgramProvider(provider.getProviderNo(), String.valueOf(pp.getProgramId()));
         String teamId = request.getParameter("teamId");
-        if (existingPP != null && teamId != null && teamId.length() > 0) {
+        if (existingPP != null && teamId != null && !teamId.isEmpty()) {
             long team_id = Long.valueOf(teamId);
             for (Iterator iter = existingPP.getTeams().iterator(); iter.hasNext(); ) {
                 ProgramTeam temp = (ProgramTeam) iter.next();

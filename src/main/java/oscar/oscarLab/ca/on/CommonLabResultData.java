@@ -514,7 +514,7 @@ public class CommonLabResultData {
                 if (OscarProperties.getInstance().isPropertyActive("queens_resident_tagging")) {
                     DemographicCustDao demographicCustDao = SpringUtils.getBean(DemographicCustDao.class);
                     List<DemographicCust> demographicCust = demographicCustDao.findAllByDemographicNumber(Integer.parseInt(demographicNo));
-                    if (demographicCust.size() > 0) {
+                    if (!demographicCust.isEmpty()) {
                         ArrayList<String> residentIds = new ArrayList<String>();
                         residentIds.add(demographicCust.get(0).getMidwife());
                         residentIds.add(demographicCust.get(0).getNurse());
@@ -696,7 +696,7 @@ public class CommonLabResultData {
         try {
             HRMDocumentToDemographicDao hrmDocumentToDemographicDao = (HRMDocumentToDemographicDao) SpringUtils.getBean(HRMDocumentToDemographicDao.class);
             List<HRMDocumentToDemographic> docToDemo = hrmDocumentToDemographicDao.findByHrmDocumentId(Integer.parseInt(labId));
-            if (docToDemo != null && docToDemo.size() > 0) {
+            if (docToDemo != null && !docToDemo.isEmpty()) {
                 ret = true;
             }
         } catch (Exception e) {

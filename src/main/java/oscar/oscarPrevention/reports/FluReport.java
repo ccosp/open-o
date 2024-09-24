@@ -110,7 +110,7 @@ public class FluReport implements PreventionReport {
                 prd.numMonths = "------";
                 prd.color = "grey";
                 inList++;
-            } else if (noFutureItems.size() == 0) {// no info
+            } else if (noFutureItems.isEmpty()) {// no info
                 prd.rank = 1;
                 prd.lastDate = "------";
                 prd.state = "No Info";
@@ -234,7 +234,7 @@ public class FluReport implements PreventionReport {
                 log.debug("getting FLUF data for " + prd.demographicNo);
                 Collection<EctMeasurementsDataBean> fluFollowupData = measurementData.getMeasurementsDataVector();
 
-                if (fluFollowupData.size() > 0) {
+                if (!fluFollowupData.isEmpty()) {
                     EctMeasurementsDataBean fluData = fluFollowupData.iterator().next();
                     log.debug("fluData " + fluData.getDataField());
                     log.debug("lastFollowup " + fluData.getDateObservedAsDate() + " last procedure " + fluData.getDateObservedAsDate());
@@ -397,7 +397,7 @@ public class FluReport implements PreventionReport {
                 Collection<EctMeasurementsDataBean> fluFollowupData = measurementData.getMeasurementsDataVector();
                 //NO Contact
 
-                if (fluFollowupData.size() == 0) {
+                if (fluFollowupData.isEmpty()) {
                     prd.nextSuggestedProcedure = this.LETTER1;
                     return this.LETTER1;
                 } else { //There has been contact
@@ -434,7 +434,7 @@ public class FluReport implements PreventionReport {
                 log.debug("getting FLUF data for " + prd.demographicNo);
                 Collection<EctMeasurementsDataBean> fluFollowupData = measurementData.getMeasurementsDataVector();
 
-                if (fluFollowupData.size() > 0) {
+                if (!fluFollowupData.isEmpty()) {
                     EctMeasurementsDataBean fluData = fluFollowupData.iterator().next();
                     log.debug("fluData " + fluData.getDataField());
                     log.debug("lastFollowup " + fluData.getDateObservedAsDate() + " last procedure " + fluData.getDateObservedAsDate());
@@ -451,7 +451,7 @@ public class FluReport implements PreventionReport {
                 log.debug("getting followup data for " + prd.demographicNo);
                 Collection<EctMeasurementsDataBean> followupData = measurementDataHandler.getMeasurementsDataVector();
 
-                if (followupData.size() > 0) {
+                if (!followupData.isEmpty()) {
                     EctMeasurementsDataBean measurementData = followupData.iterator().next();
                     prd.lastFollowup = measurementData.getDateObservedAsDate();
                     prd.lastFollupProcedure = measurementData.getDataField();
