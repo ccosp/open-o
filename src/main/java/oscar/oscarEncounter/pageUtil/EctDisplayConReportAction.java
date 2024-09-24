@@ -81,25 +81,6 @@ public class EctDisplayConReportAction extends EctDisplayAction {
             Dao.setRightURL(url);
             Dao.setRightHeadingID(cmd); //no menu so set div id to unique id for this action
 
-            EyeformConsultationReportDao crDao = (EyeformConsultationReportDao) SpringUtils.getBean(EyeformConsultationReportDao.class);
-
-            List<EyeformConsultationReport> crs = crDao.getByDemographic(Integer.parseInt(bean.demographicNo));
-            for (EyeformConsultationReport cr : crs) {
-                NavBarDisplayDAO.Item item = NavBarDisplayDAO.Item();
-                item.setDate(cr.getDate());
-
-                ProfessionalSpecialist specialist = professionalSpecialistDao.find(cr.getReferralId());
-                String title = specialist.getFormattedName() + " - " + cr.getStatus();
-                String itemHeader = StringUtils.maxLenString(title, MAX_LEN_TITLE, CROP_LEN_TITLE, ELLIPSES);
-                item.setLinkTitle(itemHeader);
-                item.setTitle(itemHeader);
-                int hash = Math.abs(winName.hashCode());
-                url = "popupPage(700,1000,'" + hash + "','" + request.getContextPath() + "/eyeform/Eyeform.do?method=prepareConReport&conReportNo=" + cr.getId() + "&demographicNo=" + bean.demographicNo + "&cpp=" + cpp + "'); return false;";
-                item.setURL(url);
-                Dao.addItem(item);
-            }
-            // Dao.sortItems(NavBarDisplayDAO.DATESORT);
-
         } catch (Exception e) {
             MiscUtils.getLogger().error("Error", e);
             return false;

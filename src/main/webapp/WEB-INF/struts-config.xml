@@ -1220,8 +1220,6 @@
 		<action path="/oscarEncounter/displayTickler" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplayTicklerAction"></action>
 		<action path="/oscarEncounter/displayDisease" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplayDxAction"></action>
 		<action path="/oscarEncounter/displayPrevention" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplayPreventionAction"></action>
-		<action path="/oscarEncounter/displayOcularProcedure" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplayOcularProcedureAction"></action>
-		<action path="/oscarEncounter/displaySpecsHistory" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplaySpecsHistoryAction"></action>
 		<action path="/oscarEncounter/displayMacro" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplayMacroAction"></action>
 		<action path="/oscarEncounter/displayAppointmentHistory" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplayAppointmentHistoryAction"></action>
 		<action path="/oscarEncounter/displayConReport" scope="request" type="oscar.oscarEncounter.pageUtil.EctDisplayConReportAction"></action>

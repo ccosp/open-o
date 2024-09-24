@@ -51,13 +51,6 @@ import org.oscarehr.casemgmt.service.NoteService;
 import org.oscarehr.casemgmt.web.formbeans.CaseManagementViewFormBean;
 import org.oscarehr.common.dao.*;
 import org.oscarehr.common.model.*;
-import org.oscarehr.eyeform.EyeformInit;
-import org.oscarehr.eyeform.dao.EyeformFollowUpDao;
-import org.oscarehr.eyeform.dao.EyeformTestBookDao;
-import org.oscarehr.eyeform.dao.MacroDao;
-import org.oscarehr.eyeform.model.EyeformFollowUp;
-import org.oscarehr.eyeform.model.EyeformTestBook;
-import org.oscarehr.eyeform.model.Macro;
 import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.provider.web.CppPreferencesUIBean;
 import org.oscarehr.util.LoggedInInfo;
@@ -96,11 +89,6 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
     private BillingONCHeader1Dao billingONCHeader1Dao = (BillingONCHeader1Dao) SpringUtils.getBean(BillingONCHeader1Dao.class);
     private NoteService noteService = SpringUtils.getBean(NoteService.class);
     private TicklerManager ticklerManager = SpringUtils.getBean(TicklerManager.class);
-
-    static {
-        //temporary..need something generic;
-        EyeformInit.init();
-    }
 
     public ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         CaseManagementViewFormBean caseForm = (CaseManagementViewFormBean) form;
