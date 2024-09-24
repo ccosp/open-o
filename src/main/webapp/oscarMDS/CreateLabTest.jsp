@@ -24,96 +24,113 @@
 
 --%>
 
-<%@ taglib uri="/WEB-INF/security.tld" prefix="security"%>
+<%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
-      String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-	  boolean authed=true;
+    String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+    boolean authed = true;
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_lab" rights="w" reverse="<%=true%>">
-	<%authed=false; %>
-	<%response.sendRedirect("../securityError.jsp?type=_lab");%>
+    <%authed = false; %>
+    <%response.sendRedirect("../securityError.jsp?type=_lab");%>
 </security:oscarSec>
 <%
-if(!authed) {
-	return;
-}
+    if (!authed) {
+        return;
+    }
 %>
 
 
-<%@ include file="/taglibs.jsp"%>
-<%@page import="org.oscarehr.util.SpringUtils"%>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao"%>
-<%@page import="org.oscarehr.common.model.DemographicContact"%>
+<%@ include file="/taglibs.jsp" %>
+<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="org.oscarehr.common.model.DemographicContact" %>
 <%
-	String id = request.getParameter("id");
+    String id = request.getParameter("id");
 %>
 
 <div id="test_<%=id%>">
-					<input type="hidden" name="test_<%=id%>.id" id="test_<%=id%>.id" value="<%=id%>"/>
-								
-					<fieldset>            	
-                <legend>Test Information</legend>
+    <input type="hidden" name="test_<%=id%>.id" id="test_<%=id%>.id" value="<%=id%>"/>
 
-                <table border="0">
-					<tr>
-						<td><label>Date:</label><input type="text" name="test_<%=id%>.valDate" id="test_<%=id%>.valDate" size="14"/><img src="<%=request.getContextPath()%>/images/cal.gif" id="test_<%=id%>.valDate_cal" /></td>
-						<td><label>Flag:</label>
-                 		<select name="test_<%=id%>.flag" id="test_<%=id%>.flag">
-                        	<option value="">None</option>
-                            <option value="A">Abnormal</option>
-                            <option value="N">Normal</option>
-                        </select>
-                     </td>
-                     <td><label>Status:</label>
- 						<select name="test_<%=id%>.stat" id="test_<%=id%>.stat">
-                    		<option value="F">Final</option>
-                   			<option value="P">Partial</option>
-                        </select>
-                    </td>                
-                 		</tr>
-                 
-                	<tr>
-                		
-                		<td><label>Code Type:</label>
-                			<select name="test_<%=id%>.codeType" id="test_<%=id%>.codeType">
-                            	<option value="ST">ST</option>
-                                <option value="FT">FT</option>
-                            </select>
-                        </td>
-                  	<td><label>Code:</label><input type="text" name="test_<%=id%>.code" size="10" id="test_<%=id%>.code"/></td>
-                  	<td><label>Name:</label><input type="text" name="test_<%=id%>.lab_test_name" size="15" id="test_<%=id%>.lab_test_name"/></td>
-                 	<td colspan="2"><label>Description:</label><input type="text" name="test_<%=id%>.test_descr" size="40" id="test_<%=id%>.test_descr"/></td>
-                 	
-                  </tr>
-                 
-                 
-                 <tr>
-                 	<td><label>Value:</label><input type="text" name="test_<%=id%>.codeVal" size="10" id="test_<%=id%>.codeVal"/></td>
-                 	<td><label>Unit:</label><input type="text" name="test_<%=id%>.codeUnit" size="10" id="test_<%=id%>.codeUnit"/></td>
-                 	
-                 	<td><label>refRange (low):</label><input type="text" name="test_<%=id%>.refRangeLow" id="test_<%=id%>.refRangeLow" size="5"/></td>
-                 	<td><label>refRange (high):</label><input type="text" name="test_<%=id%>.refRangeHigh" id="test_<%=id%>.refRangeHigh" size="5"/></td>
-                 	<td><label>refRange (text):</label><input type="text" name="test_<%=id%>.refRangeText" id="test_<%=id%>.refRangeText" size="5"/></td>
-                 </tr>                
-                 
- 			     <tr>
- 			     	<td><label>Lab Notes:</label></td><td colspan="2"><textarea name="test_<%=id%>.labnotes" id="test_<%=id%>.labnotes" rows="5" cols="30"></textarea></td>
- 			     	<td colspan="2">
- 			     		<label>Blocked Test Result:</label>
- 			     		<select name="test_<%=id%>.blocked" id="test_<%=id%>.blocked">
- 			     			<option value="">No</option>
- 			     			<option value="BLOCKED">Yes</option>
- 			     		</select>
- 			     	</td>
- 			     </tr>
-                                 
-                </table>
-                
-                <a href="#" onclick="deleteTest(<%=id%>); return false;">[Delete]</a>
-										
-		       </fieldset>
-		       <script>
-			       Calendar.setup({ inputField : "test_<%=id%>.valDate", ifFormat : "%Y-%m-%d %H:%m", showsTime :true, button : "test_<%=id%>.valDate_cal" });
+    <fieldset>
+        <legend>Test Information</legend>
 
-		       </script>
+        <table border="0">
+            <tr>
+                <td><label>Date:</label><input type="text" name="test_<%=id%>.valDate" id="test_<%=id%>.valDate"
+                                               size="14"/><img src="<%=request.getContextPath()%>/images/cal.gif"
+                                                               id="test_<%=id%>.valDate_cal"/></td>
+                <td><label>Flag:</label>
+                    <select name="test_<%=id%>.flag" id="test_<%=id%>.flag">
+                        <option value="">None</option>
+                        <option value="A">Abnormal</option>
+                        <option value="N">Normal</option>
+                    </select>
+                </td>
+                <td><label>Status:</label>
+                    <select name="test_<%=id%>.stat" id="test_<%=id%>.stat">
+                        <option value="F">Final</option>
+                        <option value="P">Partial</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+
+                <td><label>Code Type:</label>
+                    <select name="test_<%=id%>.codeType" id="test_<%=id%>.codeType">
+                        <option value="ST">ST</option>
+                        <option value="FT">FT</option>
+                    </select>
+                </td>
+                <td><label>Code:</label><input type="text" name="test_<%=id%>.code" size="10" id="test_<%=id%>.code"/>
+                </td>
+                <td><label>Name:</label><input type="text" name="test_<%=id%>.lab_test_name" size="15"
+                                               id="test_<%=id%>.lab_test_name"/></td>
+                <td colspan="2"><label>Description:</label><input type="text" name="test_<%=id%>.test_descr" size="40"
+                                                                  id="test_<%=id%>.test_descr"/></td>
+
+            </tr>
+
+
+            <tr>
+                <td><label>Value:</label><input type="text" name="test_<%=id%>.codeVal" size="10"
+                                                id="test_<%=id%>.codeVal"/></td>
+                <td><label>Unit:</label><input type="text" name="test_<%=id%>.codeUnit" size="10"
+                                               id="test_<%=id%>.codeUnit"/></td>
+
+                <td><label>refRange (low):</label><input type="text" name="test_<%=id%>.refRangeLow"
+                                                         id="test_<%=id%>.refRangeLow" size="5"/></td>
+                <td><label>refRange (high):</label><input type="text" name="test_<%=id%>.refRangeHigh"
+                                                          id="test_<%=id%>.refRangeHigh" size="5"/></td>
+                <td><label>refRange (text):</label><input type="text" name="test_<%=id%>.refRangeText"
+                                                          id="test_<%=id%>.refRangeText" size="5"/></td>
+            </tr>
+
+            <tr>
+                <td><label>Lab Notes:</label></td>
+                <td colspan="2"><textarea name="test_<%=id%>.labnotes" id="test_<%=id%>.labnotes" rows="5"
+                                          cols="30"></textarea></td>
+                <td colspan="2">
+                    <label>Blocked Test Result:</label>
+                    <select name="test_<%=id%>.blocked" id="test_<%=id%>.blocked">
+                        <option value="">No</option>
+                        <option value="BLOCKED">Yes</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+
+        <a href="#" onclick="deleteTest(<%=id%>); return false;">[Delete]</a>
+
+    </fieldset>
+    <script>
+        Calendar.setup({
+            inputField: "test_<%=id%>.valDate",
+            ifFormat: "%Y-%m-%d %H:%m",
+            showsTime: true,
+            button: "test_<%=id%>.valDate_cal"
+        });
+
+    </script>
 </div>

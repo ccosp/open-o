@@ -6,16 +6,16 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for the
  * Department of Family Medicine
  * McMaster University
@@ -37,13 +37,15 @@ public interface HCValidator {
 
     /**
      * Validates swipe card of demographics
+     *
      * @param healthCardNumber number of health card
-     * @param versionCode version code
+     * @param versionCode      version code
      */
     HCValidationResult validate(String healthCardNumber, String versionCode);
 
     /**
      * Validate a single HIN based and a specific service fee code.
+     *
      * @param healthCardNumber
      * @param versionCode
      * @param serviceCode
@@ -53,8 +55,9 @@ public interface HCValidator {
 
     /**
      * Validates a batch of HIN
+     *
      * @param requests list of HcvRequest objects
-     * @param local local
+     * @param local    local
      */
     HcvResults validate(Requests requests, String local) throws Faultexception;
 
@@ -65,6 +68,7 @@ public interface HCValidator {
 
     /**
      * Create an object that contains a single HCValidation result.
+     *
      * @param results
      * @param index
      */
@@ -72,7 +76,7 @@ public interface HCValidator {
         HCValidationResult result = new HCValidationResult();
         Person person = results.getResults().get(index);
         result.setAuditUID(results.getAuditUID());
-        if(person != null) {
+        if (person != null) {
             result.setResponseCode(person.getResponseCode());
             result.setResponseDescription(person.getResponseDescription());
             result.setResponseAction(person.getResponseAction());

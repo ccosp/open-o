@@ -1,22 +1,21 @@
 //CHECKSTYLE:OFF
 /**
- *
  * Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
  * This software is published under the GPL GNU General Public License.
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ * <p>
  * This software was written for
  * Centre for Research on Inner City Health, St. Michael's Hospital,
  * Toronto, Ontario, Canada
@@ -43,9 +42,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -64,19 +63,17 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "c1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe",
-    "c2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe",
-    "c3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic",
-    "c3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices",
-    "cComments",
-    "cActions",
-    "cByWhom",
-    "cReviewDate"
+        "c1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe",
+        "c2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe",
+        "c3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic",
+        "c3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices",
+        "cComments",
+        "cActions",
+        "cByWhom",
+        "cReviewDate"
 })
 @XmlRootElement(name = "C19__Other_dependents__Do_you_have_any_dependents_other_than_children_under_18__such_as_an_elder")
 public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18SuchAsAnElder {
@@ -100,11 +97,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the c1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe() {
         return c1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe;
@@ -112,11 +107,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the c1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe(BigInteger value) {
         this.c1DoesThePersonHaveDifficultyLookingAfterOtherDependentsIfRates0Or9GoToThe = value;
@@ -124,11 +117,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the c2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe() {
         return c2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe;
@@ -136,11 +127,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the c2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe(BigInteger value) {
         this.c2HowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromFriendsOrRe = value;
@@ -148,11 +137,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the c3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic() {
         return c3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic;
@@ -160,11 +147,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the c3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic(BigInteger value) {
         this.c3AHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonReceiveFromLocalServic = value;
@@ -172,11 +157,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the c3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getC3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices() {
         return c3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices;
@@ -184,11 +167,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the c3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setC3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices(BigInteger value) {
         this.c3BHowMuchHelpWithLookingAfterOtherDependentsDoesThePersonNeedFromLocalServices = value;
@@ -196,11 +177,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the cComments property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CComments }
-     *     
+     *
+     * @return possible object is
+     * {@link CComments }
      */
     public CComments getCComments() {
         return cComments;
@@ -208,11 +187,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the cComments property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CComments }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link CComments }
      */
     public void setCComments(CComments value) {
         this.cComments = value;
@@ -220,11 +197,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the cActions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCActions() {
         return cActions;
@@ -232,11 +207,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the cActions property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCActions(String value) {
         this.cActions = value;
@@ -244,11 +217,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the cByWhom property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCByWhom() {
         return cByWhom;
@@ -256,11 +227,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the cByWhom property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCByWhom(String value) {
         this.cByWhom = value;
@@ -268,11 +237,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Gets the value of the cReviewDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCReviewDate() {
         return cReviewDate;
@@ -280,11 +247,9 @@ public class C19OtherDependentsDoYouHaveAnyDependentsOtherThanChildrenUnder18Suc
 
     /**
      * Sets the value of the cReviewDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCReviewDate(String value) {
         this.cReviewDate = value;
