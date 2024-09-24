@@ -27,13 +27,9 @@
 
 package org.oscarehr.common.dao;
 
-import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.DemographicContact;
-import org.springframework.stereotype.Repository;
 
 public interface DemographicContactDao extends AbstractDao<DemographicContact> {
 

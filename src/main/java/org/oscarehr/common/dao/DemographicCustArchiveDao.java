@@ -29,7 +29,6 @@ package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.DemographicCust;
 import org.oscarehr.common.model.DemographicCustArchive;
-import org.springframework.stereotype.Repository;
 
 public interface DemographicCustArchiveDao extends AbstractDao<DemographicCustArchive> {
 

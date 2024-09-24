@@ -755,7 +755,7 @@ public class TDISHandler implements MessageHandler {
                 return hin;
             } //return first instance that is not null
         } catch (HL7Exception e) {
-            logger.error("ERROR getting the health number for HL7 lab report patient: " + e.toString());
+            logger.error("ERROR getting the health number for HL7 lab report patient: " + e);
         }
 
         return "";

@@ -29,8 +29,6 @@ package org.oscarehr.common.dao;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.Allergy;
 
 public interface AllergyDao extends AbstractDao<Allergy> {

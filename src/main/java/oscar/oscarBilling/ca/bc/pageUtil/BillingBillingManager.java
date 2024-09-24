@@ -305,7 +305,7 @@ public class BillingBillingManager implements Serializable {
             BigDecimal bdFee = new BigDecimal(price).setScale(2,
                     //BigDecimal.ROUND_HALF_UP);
                     RoundingMode.HALF_UP);
-            MiscUtils.getLogger().debug("price" + price + " fee" + bdFee.toString());
+            MiscUtils.getLogger().debug("price" + price + " fee" + bdFee);
             return bdFee.toString();
         }
 

@@ -26,9 +26,6 @@
 
 package org.oscarehr.PMmodule.dao;
 
-import org.oscarehr.common.dao.SecObjPrivilegeDao;
-import org.oscarehr.util.SpringUtils;
-
 public interface SurveySecurityDao {
 
     // switch the quatro security manager when available

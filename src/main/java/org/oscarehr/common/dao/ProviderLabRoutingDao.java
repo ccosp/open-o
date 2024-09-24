@@ -14,13 +14,7 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
-import org.oscarehr.common.NativeSql;
-import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface ProviderLabRoutingDao extends AbstractDao<ProviderLabRoutingModel> {
     public static final String UNCLAIMED_PROVIDER = "0";

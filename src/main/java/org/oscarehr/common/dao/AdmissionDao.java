@@ -26,20 +26,12 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 
-import javax.persistence.Query;
-
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.model.AdmissionSearchBean;
 import org.oscarehr.common.model.Admission;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.stereotype.Repository;
 
 public interface AdmissionDao extends AbstractDao<Admission> {
 

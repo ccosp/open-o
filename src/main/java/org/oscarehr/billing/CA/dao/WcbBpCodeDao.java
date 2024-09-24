@@ -28,11 +28,8 @@ package org.oscarehr.billing.CA.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.billing.CA.BC.model.WcbBpCode;
 import org.oscarehr.common.dao.AbstractDao;
-import org.springframework.stereotype.Repository;
 
 public interface WcbBpCodeDao extends AbstractDao<WcbBpCode> {
 

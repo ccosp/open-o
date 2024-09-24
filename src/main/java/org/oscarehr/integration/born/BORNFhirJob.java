@@ -547,7 +547,7 @@ public class BORNFhirJob implements OscarRunnable {
             FileUtils.mkDir(path);
         }
 
-        logger.info("This is an early version..output can be found at " + path.toString());
+        logger.info("This is an early version..output can be found at " + path);
 
         XmlOptions opts = new XmlOptions();
         opts.setSavePrettyPrint();
@@ -585,7 +585,7 @@ public class BORNFhirJob implements OscarRunnable {
 
             ///////////////////////
 
-            logger.info("This is an early version..output can be found at " + path.toString());
+            logger.info("This is an early version..output can be found at " + path);
 
             XmlOptions opts = new XmlOptions();
             opts.setSavePrettyPrint();

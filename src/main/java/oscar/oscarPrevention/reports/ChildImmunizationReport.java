@@ -339,7 +339,7 @@ public class ChildImmunizationReport implements PreventionReport {
                         if (index == 0) {
                             log.debug("fluData " + measurementData.getDataField());
                             log.debug("lastFollowup " + measurementData.getDateObservedAsDate() + " last procedure " + measurementData.getDateObservedAsDate());
-                            log.debug("toString: " + measurementData.toString());
+                            log.debug("toString: " + measurementData);
                             prd.lastFollowup = observationDate;
                             prd.lastFollupProcedure = measurementData.getDataField();
 

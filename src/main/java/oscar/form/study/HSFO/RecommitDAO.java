@@ -81,9 +81,9 @@ public class RecommitDAO {
 
 
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while getting the latest record from the hsfo_xml_recommit table : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while getting the latest record from the hsfo_xml_recommit table : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while getting the latest record from the hsfo_xml_recommit table : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while getting the latest record from the hsfo_xml_recommit table : " + ne);
         } finally {
             if (rs != null)
                 try {

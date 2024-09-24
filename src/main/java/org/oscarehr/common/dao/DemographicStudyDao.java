@@ -27,7 +27,6 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.DemographicStudy;
-import org.oscarehr.common.model.DemographicStudyPK;
 
 import java.util.List;
 

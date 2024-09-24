@@ -27,15 +27,8 @@
 package org.oscarehr.common.dao;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.Query;
-
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.utility.DateTimeFormatUtils;
 import org.oscarehr.common.model.BedDemographicHistorical;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.stereotype.Repository;
 
 public interface BedDemographicHistoricalDao extends AbstractDao<BedDemographicHistorical> {
 

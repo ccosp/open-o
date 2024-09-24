@@ -27,7 +27,6 @@ package org.oscarehr.common.dao;
 
 import java.util.Date;
 
-import org.apache.commons.lang.math.NumberUtils;
 import org.oscarehr.common.model.PartialDate;
 
 public interface PartialDateDao extends AbstractDao<PartialDate> {

@@ -30,25 +30,7 @@ package oscar.oscarPrevention;
 
 //import java.io.ByteArrayInputStream;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
-
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Logger;
-import org.drools.RuleBase;
-import org.drools.WorkingMemory;
-import org.drools.io.RuleBaseLoader;
-import org.oscarehr.common.dao.ResourceStorageDao;
-import org.oscarehr.common.model.ResourceStorage;
-import org.oscarehr.decisionSupport.prevention.DSPreventionDrools;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import oscar.OscarProperties;
 
 /**
  * @author Jay Gallagher

@@ -104,7 +104,7 @@ public class LabUploadAction extends Action {
                         outcome = "success";
                     } catch (Exception ex) {
                         //success = false; //<- for future when transactional
-                        _logger.error("Error - oscar.PathNet.Contorller - Message: " + ex.getMessage() + " = " + ex.toString(), ex);
+                        _logger.error("Error - oscar.PathNet.Contorller - Message: " + ex.getMessage() + " = " + ex, ex);
                         outcome = "exception";
                     }
                     //connection.Acknowledge(success);

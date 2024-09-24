@@ -28,7 +28,6 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.ProviderStudy;
-import org.oscarehr.common.model.ProviderStudyPK;
 
 public interface ProviderStudyDao extends AbstractDao<ProviderStudy> {
     int removeByDemographicNo(Integer providerNo);

@@ -363,7 +363,7 @@ public class MEDVUEHandler implements MessageHandler {
                 }
 
                 if (!concatComment.equals("")) {
-                    newComment += "<br/>" + concatComment.toString();
+                    newComment += "<br/>" + concatComment;
                 } else {
                     newComment += "<br/>" + splitComment[l].toString();
                 }
@@ -455,7 +455,7 @@ public class MEDVUEHandler implements MessageHandler {
             return hnumber;
 
         } catch (HL7Exception e) {
-            logger.error("ERROR getting the health number for HL7 lab report patient: " + e.toString());
+            logger.error("ERROR getting the health number for HL7 lab report patient: " + e);
         }
 
         return "";

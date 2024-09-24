@@ -158,7 +158,7 @@ public class EmeraldHL7A04TransportTask extends TimerTask {
                 logger.info("Warning: " + numErrors + " error(s) occured during transmission.");
             }
         } catch (Exception e) {
-            logger.error("ERROR while sending HL7 A04 file: " + e.toString(), e);
+            logger.error("ERROR while sending HL7 A04 file: " + e, e);
         }
     }
 

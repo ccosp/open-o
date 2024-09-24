@@ -573,7 +573,7 @@ public class CBIUtil {
                     if (outboundProperty)
                         requestResponseStr = "-------------------- cbi request xml -----------------------";
 
-                    logger.debug(requestResponseStr + " : " + bout.toString());
+                    logger.debug(requestResponseStr + " : " + bout);
                 } catch (Exception e) {
                     logger.error("error while printing soap message");
                 }

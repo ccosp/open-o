@@ -30,10 +30,7 @@ package org.oscarehr.common.dao;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.DemographicCust;
-import org.springframework.stereotype.Repository;
 
 public interface DemographicCustDao extends AbstractDao<DemographicCust> {
 

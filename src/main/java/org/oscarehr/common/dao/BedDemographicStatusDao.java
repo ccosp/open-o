@@ -26,14 +26,7 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.BedDemographicStatus;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.stereotype.Repository;
 
 public interface BedDemographicStatusDao extends AbstractDao<BedDemographicStatus> {
 

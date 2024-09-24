@@ -349,7 +349,7 @@ public class PatientLabRoutingDaoImpl extends AbstractDaoImpl<PatientLabRouting>
             sb.append("'" + StringEscapeUtils.escapeSql(t) + "'");
         }
 
-        String query = "select x from " + modelClass.getName() + " x where x.labNo=? and x.labType in (" + sb.toString()
+        String query = "select x from " + modelClass.getName() + " x where x.labNo=? and x.labType in (" + sb
                 + ")";
         Query q = entityManager.createQuery(query);
 

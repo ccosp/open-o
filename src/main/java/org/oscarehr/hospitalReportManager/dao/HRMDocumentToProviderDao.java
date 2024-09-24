@@ -78,7 +78,7 @@ public class HRMDocumentToProviderDao extends AbstractDaoImpl<HRMDocumentToProvi
             }
         }
 
-        String sql = "select x from " + this.modelClass.getName() + " x, HRMDocument h" + hrmToDemographicTableName + " where x.hrmDocumentId=h.id AND x.providerNo like ?" + hrmToDemographicJoinAndSearchSql.toString();
+        String sql = "select x from " + this.modelClass.getName() + " x, HRMDocument h" + hrmToDemographicTableName + " where x.hrmDocumentId=h.id AND x.providerNo like ?" + hrmToDemographicJoinAndSearchSql;
         if (newestDate != null)
             sql += dateSearchType.equals("receivedCreated") ? " and h.timeReceived <= :newest" : " and h.reportDate <= :newest";
         if (oldestDate != null)

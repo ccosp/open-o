@@ -48,7 +48,6 @@ import org.oscarehr.PMmodule.model.Vacancy;
 import org.oscarehr.PMmodule.model.VacancyTemplate;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface VacancyTemplateManager {
     static VacancyTemplateDao vacancyTemplateDAO = SpringUtils.getBean(VacancyTemplateDao.class);

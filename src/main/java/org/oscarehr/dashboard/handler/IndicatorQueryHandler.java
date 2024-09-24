@@ -31,7 +31,6 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.dashboard.display.beans.GraphPlot;
-import org.oscarehr.managers.DashboardManager;
 import org.oscarehr.managers.DashboardManagerImpl;
 import org.oscarehr.util.MiscUtils;
 

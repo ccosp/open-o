@@ -26,31 +26,15 @@
  */
 package org.oscarehr.PMmodule.dao;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
-import org.oscarehr.PMmodule.model.Vacancy;
-import org.oscarehr.PMmodule.service.VacancyTemplateManager;
-import org.oscarehr.PMmodule.wlmatch.CriteriaBO;
 import org.oscarehr.PMmodule.wlmatch.CriteriasBO;
 import org.oscarehr.PMmodule.wlmatch.MatchBO;
 import org.oscarehr.PMmodule.wlmatch.VacancyDisplayBO;
 import org.oscarehr.common.model.EFormData;
 import org.oscarehr.match.client.ClientData;
 import org.oscarehr.match.vacancy.VacancyData;
-import org.oscarehr.match.vacancy.VacancyTemplateData;
-import org.springframework.stereotype.Repository;
 
 public interface WaitlistDao {
 

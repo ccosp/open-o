@@ -29,7 +29,6 @@ package org.oscarehr.casemgmt.dao;
 import java.util.List;
 
 import org.oscarehr.PMmodule.model.DefaultRoleAccess;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 public interface RoleProgramAccessDAO {
 

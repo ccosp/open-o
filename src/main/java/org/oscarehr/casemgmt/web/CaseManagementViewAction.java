@@ -1550,7 +1550,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 
         //billing
 
-        response.getWriter().println(sb.toString());
+        response.getWriter().println(sb);
 
         return null;
     }

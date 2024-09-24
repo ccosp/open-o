@@ -25,7 +25,6 @@ package org.oscarehr.util.persistence;
 
 import java.sql.Types;
 
-import org.hibernate.Hibernate;
 import org.hibernate.dialect.MySQL5Dialect;
 import org.hibernate.type.StandardBasicTypes;
 

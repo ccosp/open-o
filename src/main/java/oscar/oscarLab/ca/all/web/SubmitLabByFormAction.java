@@ -230,7 +230,7 @@ public class SubmitLabByFormAction extends DispatchAction {
                 ccString.append(idName.length > 2 ? idName[2] : "");
             }
         }
-        return "OBR|1|||UR^General Lab^L1^GENERAL LAB||" + sdf.format(lab.getLabReqDate()) + "|" + sdf.format(lab.getTests().get(0).getDate()) + "|||||||" + sdf.format(lab.getLabReqDate()) + "||" + lab.getBillingNo() + "^" + lab.getProviderLastName() + "^" + lab.getProviderFirstName() + "||||||" + sdf.format(lab.getTests().get(0).getDate()) + "||LAB|F|||" + ccString.toString();
+        return "OBR|1|||UR^General Lab^L1^GENERAL LAB||" + sdf.format(lab.getLabReqDate()) + "|" + sdf.format(lab.getTests().get(0).getDate()) + "|||||||" + sdf.format(lab.getLabReqDate()) + "||" + lab.getBillingNo() + "^" + lab.getProviderLastName() + "^" + lab.getProviderFirstName() + "||||||" + sdf.format(lab.getTests().get(0).getDate()) + "||LAB|F|||" + ccString;
     }
 
     /**

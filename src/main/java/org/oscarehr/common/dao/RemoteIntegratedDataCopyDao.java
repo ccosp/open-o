@@ -28,8 +28,6 @@ package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.RemoteIntegratedDataCopy;
 
-import java.util.List;
-
 public interface RemoteIntegratedDataCopyDao extends AbstractDao<RemoteIntegratedDataCopy> {
     void archiveDataCopyExceptThisOne(RemoteIntegratedDataCopy remoteIntegratedDataCopy);
 

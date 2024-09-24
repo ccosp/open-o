@@ -29,9 +29,6 @@ package org.oscarehr.common.dao;
 import java.util.List;
 
 import org.oscarehr.common.model.LookupListItem;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.Query;
 
 public interface LookupListItemDao extends AbstractDao<LookupListItem> {
 

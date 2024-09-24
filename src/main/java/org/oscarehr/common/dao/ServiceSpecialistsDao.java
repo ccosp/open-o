@@ -28,7 +28,6 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.common.model.ServiceSpecialists;
 
 public interface ServiceSpecialistsDao extends AbstractDao<ServiceSpecialists> {

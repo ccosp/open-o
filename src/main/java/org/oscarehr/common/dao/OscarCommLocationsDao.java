@@ -29,11 +29,7 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
-import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.OscarCommLocations;
-import org.springframework.stereotype.Repository;
 
 public interface OscarCommLocationsDao extends AbstractDao<OscarCommLocations> {
 

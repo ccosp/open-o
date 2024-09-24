@@ -22,7 +22,6 @@
 
 package org.oscarehr.util;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.util.*;
 
@@ -37,7 +36,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.boot.spi.SessionFactoryOptions;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.spi.FilterDefinition;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;
@@ -45,7 +43,6 @@ import org.hibernate.stat.Statistics;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.service.ServiceRegistry;
 
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;

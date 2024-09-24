@@ -104,7 +104,7 @@ public class ConsultationAction extends Action {
         try {
             if (null != jsonObject) {
                 out = response.getWriter();
-                response.getWriter().print(jsonObject.toString());
+                response.getWriter().print(jsonObject);
             }
         } catch (IOException e1) {
 

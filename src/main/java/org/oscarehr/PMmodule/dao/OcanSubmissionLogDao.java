@@ -29,13 +29,9 @@ package org.oscarehr.PMmodule.dao;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.PMmodule.model.OcanSubmissionLog;
 import org.oscarehr.PMmodule.model.OcanSubmissionRecordLog;
-import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.oscarehr.common.dao.AbstractDao;
-import org.springframework.stereotype.Repository;
 
 public interface OcanSubmissionLogDao extends AbstractDao<OcanSubmissionLog> {
 

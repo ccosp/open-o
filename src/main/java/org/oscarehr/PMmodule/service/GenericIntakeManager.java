@@ -27,41 +27,25 @@
 package org.oscarehr.PMmodule.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.GenericIntakeDAO;
 import org.oscarehr.PMmodule.dao.GenericIntakeDAOImpl;
 import org.oscarehr.PMmodule.dao.GenericIntakeNodeDAO;
 import org.oscarehr.PMmodule.dao.ProgramDao;
-import org.oscarehr.PMmodule.model.Agency;
 import org.oscarehr.PMmodule.model.Intake;
-import org.oscarehr.PMmodule.model.IntakeAnswer;
 import org.oscarehr.PMmodule.model.IntakeAnswerElement;
 import org.oscarehr.PMmodule.model.IntakeNode;
 import org.oscarehr.PMmodule.model.IntakeNodeJavascript;
 import org.oscarehr.PMmodule.model.IntakeNodeLabel;
 import org.oscarehr.PMmodule.model.IntakeNodeTemplate;
 import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.PMmodule.web.adapter.IntakeNodeHtmlAdapter;
-import org.oscarehr.PMmodule.web.adapter.ocan.OcanXmlAdapterFactory;
 import org.oscarehr.common.dao.AdmissionDao;
-import org.oscarehr.common.model.Admission;
 import org.oscarehr.common.model.ReportStatistic;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface GenericIntakeManager {
     public void setGenericIntakeNodeDAO(

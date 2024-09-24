@@ -25,13 +25,8 @@ package org.oscarehr.threads;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProgramDao;
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.managers.WaitListManager;
 import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
 
 import oscar.OscarProperties;
 

@@ -257,7 +257,7 @@ public abstract class AbstractQueryHandler extends HibernateDaoSupport {
         select.deleteCharAt(select.length() - 1);
         select.append(" ");
 
-        logger.debug("Replacing current select statement with " + select.toString());
+        logger.debug("Replacing current select statement with " + select);
 
         from = queryString.indexOf("FROM");
 
@@ -275,7 +275,7 @@ public abstract class AbstractQueryHandler extends HibernateDaoSupport {
 
         // remove the current select statement
         queryString = queryString.substring(from, queryString.length());
-        queryString = select.toString() + queryString;
+        queryString = select + queryString;
 
         logger.debug("Final query with columns " + queryString);
 

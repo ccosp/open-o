@@ -327,7 +327,7 @@ public class ClinicaidCommunication {
 
             return m.group(1);
         } catch (Exception e) {
-            return output + e.toString();
+            return output + e;
         } finally {
             if (uc != null) {
                 uc.disconnect();

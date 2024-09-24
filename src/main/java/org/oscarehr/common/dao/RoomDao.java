@@ -26,15 +26,7 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.Room;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.stereotype.Repository;
 
 public interface RoomDao extends AbstractDao<Room> {
 

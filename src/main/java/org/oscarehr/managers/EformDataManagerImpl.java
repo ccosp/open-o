@@ -50,7 +50,6 @@ import oscar.eform.EFormUtil;
 import oscar.eform.data.EForm;
 import oscar.log.LogAction;
 import oscar.oscarEncounter.data.EctFormData;
-import oscar.util.StringUtils;
 
 @Service
 public class EformDataManagerImpl implements EformDataManager {
@@ -169,7 +168,7 @@ public class EformDataManagerImpl implements EformDataManager {
         }
 
         if (Files.isReadable(path)) {
-            LogAction.addLogSynchronous(loggedInInfo, "EformDataManager.saveEformDataAsPDF", "Document saved at " + path.toString());
+            LogAction.addLogSynchronous(loggedInInfo, "EformDataManager.saveEformDataAsPDF", "Document saved at " + path);
         } else {
             LogAction.addLogSynchronous(loggedInInfo, "EformDataManager.saveEformDataAsPDF", "Document failed to save for eform id " + fdid);
         }

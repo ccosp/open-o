@@ -208,7 +208,7 @@ public class OscarAppointmentDaoImpl extends AbstractDaoImpl<Appointment> implem
             sb.append(p.getId());
         }
         String sql = "select a.demographicNo FROM Appointment a WHERE a.updateDateTime > ? and program_id in ("
-                + sb.toString() + ") ORDER BY a.id";
+                + sb + ") ORDER BY a.id";
         Query query = entityManager.createQuery(sql);
         query.setParameter(1, lastUpdateDate);
 
@@ -880,7 +880,7 @@ public class OscarAppointmentDaoImpl extends AbstractDaoImpl<Appointment> implem
         }
         idClean.deleteCharAt(idClean.length() - 1);
         Query q = entityManager
-                .createQuery("update Appointment set status=?1 where id in (" + idClean.toString() + ")");
+                .createQuery("update Appointment set status=?1 where id in (" + idClean + ")");
         q.setParameter(1, status);
         return q.executeUpdate();
     }

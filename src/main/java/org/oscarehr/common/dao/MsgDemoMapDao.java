@@ -28,10 +28,7 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.MsgDemoMap;
-import org.springframework.stereotype.Repository;
 
 public interface MsgDemoMapDao extends AbstractDao<MsgDemoMap> {
 

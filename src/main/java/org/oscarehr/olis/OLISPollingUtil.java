@@ -312,8 +312,8 @@ public class OLISPollingUtil {
     public static String parseAndImportResponse(LoggedInInfo loggedInInfo, String response) throws Exception {
         String timeStampForNextStartDate = null;
         UUID uuid = UUID.randomUUID();
-        String originalFile = "olis_" + uuid.toString() + ".response";
-        String hl7Filename = "olis_" + uuid.toString() + ".hl7";
+        String originalFile = "olis_" + uuid + ".response";
+        String hl7Filename = "olis_" + uuid + ".hl7";
         //write full response to disk, this will make diagnosing issues easier
         Utilities.saveFile(new ByteArrayInputStream(response.getBytes("UTF-8")), originalFile);
 

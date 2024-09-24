@@ -25,8 +25,6 @@
  */
 package org.oscarehr.PMmodule.service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
@@ -53,7 +51,6 @@ import org.oscarehr.PMmodule.model.ProgramSignature;
 import org.oscarehr.PMmodule.model.ProgramTeam;
 import org.oscarehr.PMmodule.model.VacancyTemplate;
 import org.oscarehr.util.LoggedInInfo;
-import oscar.OscarProperties;
 
 public interface ProgramManager {
 

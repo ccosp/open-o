@@ -2474,7 +2474,7 @@ public class CaisiIntegratorUpdateTask extends TimerTask {
                                           final Set<Path> documentPaths) {
 
         Path destination = Paths.get(parentDir, parentFile + COMPRESSED_DOCUMENTS_APPENDAGE + ".zipTemp");
-        logger.info("creating document zip file " + destination.toAbsolutePath().toString());
+        logger.info("creating document zip file " + destination.toAbsolutePath());
         ZipOutputStream out = null;
         String checksum = null;
 

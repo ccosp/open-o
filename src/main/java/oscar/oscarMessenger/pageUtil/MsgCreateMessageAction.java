@@ -34,7 +34,6 @@ import org.apache.struts.util.MessageResources;
 import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.OscarMsgType;
 import org.oscarehr.common.model.UserProperty;
-import org.oscarehr.managers.MessagingManager;
 import org.oscarehr.managers.MessagingManagerImpl;
 import org.oscarehr.managers.MessengerDemographicManager;
 import org.oscarehr.managers.SecurityInfoManager;

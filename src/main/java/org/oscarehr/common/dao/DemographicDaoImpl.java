@@ -2102,7 +2102,7 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
             String[] pIds = {};
             pIds = programIds.toString().split(",");
-            logger.info("programIds is " + programIds.toString());
+            logger.info("programIds is " + programIds);
 
             if (programIds.length() == 0) {
                 logger.info("provider not staff in any program, ie. can't see ANYONE.");

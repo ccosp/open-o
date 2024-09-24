@@ -45,7 +45,6 @@ import org.oscarehr.common.dao.MeasurementMapDao;
 import org.oscarehr.common.dao.MeasurementsDeletedDao;
 import org.oscarehr.common.dao.MeasurementsExtDao;
 import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.ConsultResponseDoc;
 import org.oscarehr.common.model.EFormDocs;

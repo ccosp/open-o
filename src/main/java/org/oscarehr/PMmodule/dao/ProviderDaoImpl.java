@@ -35,7 +35,6 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -356,7 +355,7 @@ public class ProviderDaoImpl extends HibernateDaoSupport implements ProviderDao 
             sql = "FROM  Provider p where p.Status='1'" +
                     " and p.ProviderNo in (select sr.providerNo from Secuserrole sr " +
                     " where sr.orgcd in (select o.code from LstOrgcd o, Secuserrole srb " +
-                    " where o.codecsv like '%S" + shelterId.toString()
+                    " where o.codecsv like '%S" + shelterId
                     + ",%' and o.codecsv like '%' || srb.orgcd || ',%' and srb.providerNo =?))" +
                     " ORDER BY p.LastName";
 

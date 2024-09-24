@@ -34,7 +34,6 @@ import org.oscarehr.util.SpringUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
-import oscar.OscarProperties;
 
 import oscar.form.study.hsfo2.pageUtil.RecommitHSFOAction.ResubmitJob;
 

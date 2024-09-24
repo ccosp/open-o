@@ -168,7 +168,7 @@ public class BORNWBCSDJob implements OscarRunnable {
 
             ///////////////////////
 
-            logger.info("This is an early version..output can be found at " + path.toString());
+            logger.info("This is an early version..output can be found at " + path);
 
             XmlOptions opts = new XmlOptions();
             opts.setSavePrettyPrint();

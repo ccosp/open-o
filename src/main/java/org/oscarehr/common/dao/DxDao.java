@@ -27,7 +27,6 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.DxAssociation;
 
 public interface DxDao extends AbstractDao<DxAssociation> {

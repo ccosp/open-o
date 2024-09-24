@@ -26,27 +26,14 @@
  */
 package org.oscarehr.managers;
 
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
-import org.oscarehr.caisi_integrator.ws.DemographicWs;
-import org.oscarehr.common.dao.MsgDemoMapDao;
-import org.oscarehr.common.dao.MsgIntegratorDemoMapDao;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.MsgDemoMap;
 import org.oscarehr.common.model.MsgIntegratorDemoMap;
-import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 public interface MessengerDemographicManager {
 

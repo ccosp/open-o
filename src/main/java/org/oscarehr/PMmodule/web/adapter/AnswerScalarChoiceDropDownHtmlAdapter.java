@@ -50,7 +50,7 @@ public class AnswerScalarChoiceDropDownHtmlAdapter extends
         indent(preBuilder)
                 .append("<tr><td id=\"td_" + getId() + "\">");
         if (getRepeating()) {
-            indent(preBuilder).append("<script type=\"text/javascript\">$('document').ready(function(){$('#repeat_add_" + getId() + "').click(function(e){e.preventDefault();$('#td_" + getId() + "').parent().parent().append('" + sb.toString() + "');});});</script>");
+            indent(preBuilder).append("<script type=\"text/javascript\">$('document').ready(function(){$('#repeat_add_" + getId() + "').click(function(e){e.preventDefault();$('#td_" + getId() + "').parent().parent().append('" + sb + "');});});</script>");
             indent(preBuilder).append("<a href=\"#\" class=\"repeat_add\" id=\"repeat_add_" + getId() + "\">+</a>&nbsp;");
         }
 
@@ -83,7 +83,7 @@ public class AnswerScalarChoiceDropDownHtmlAdapter extends
                         append("</td>").
                         append(this.createSelect(getId(), value)).
                         append("</tr>");
-                preBuilder.append(sb2.toString());
+                preBuilder.append(sb2);
             }
         }
 

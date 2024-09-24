@@ -187,7 +187,7 @@ public class HL7A04Data {
             out.write(this.message);
             out.close();
         } catch (IOException e) {
-            logger.error("ERROR while saving HL7 A04 file: " + e.toString());
+            logger.error("ERROR while saving HL7 A04 file: " + e);
             return false;
         }
 
@@ -228,7 +228,7 @@ public class HL7A04Data {
         String currentTimestamp = formatter.format(new Date());
 
         // generate file name
-        this.fileName = currentTimestamp.toString() + ".txt";
+        this.fileName = currentTimestamp + ".txt";
 
         // get current date/time
         formatter = new SimpleDateFormat("yyyyMMddkkmmss");

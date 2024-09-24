@@ -39,7 +39,6 @@ import org.oscarehr.billing.CA.BC.model.Hl7Message;
 import org.oscarehr.billing.CA.BC.model.Hl7Obr;
 import org.oscarehr.billing.CA.BC.model.Hl7Pid;
 import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.dao.DemographicDaoImpl;
 import org.oscarehr.common.dao.PatientLabRoutingDao;
 import org.oscarehr.common.dao.ProviderLabRoutingDao;
 import org.oscarehr.common.model.Demographic;

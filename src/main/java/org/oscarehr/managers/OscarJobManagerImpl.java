@@ -27,7 +27,6 @@
 package org.oscarehr.managers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.oscarehr.common.dao.AbstractDaoImpl;

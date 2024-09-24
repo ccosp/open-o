@@ -27,9 +27,7 @@
 package org.oscarehr.common.dao;
 
 import java.util.List;
-import javax.persistence.Query;
 
-import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.AppointmentType;
 
 public interface AppointmentTypeDao extends AbstractDao<AppointmentType> {

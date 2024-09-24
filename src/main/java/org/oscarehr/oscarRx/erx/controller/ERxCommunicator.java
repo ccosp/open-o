@@ -458,7 +458,7 @@ public class ERxCommunicator {
         // Write the request to a string so we can output it
         try {
             message.writeTo(stream);
-            answer.append(stream.toString());
+            answer.append(stream);
         } catch (Exception e) {
             answer.append("[Unable to convert SOAPMessage "
                     + message.toString() + " to string]");

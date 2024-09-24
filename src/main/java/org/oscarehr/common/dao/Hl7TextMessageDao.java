@@ -30,10 +30,7 @@ package org.oscarehr.common.dao;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.Hl7TextMessage;
-import org.springframework.stereotype.Repository;
 
 public interface Hl7TextMessageDao extends AbstractDao<Hl7TextMessage> {
 

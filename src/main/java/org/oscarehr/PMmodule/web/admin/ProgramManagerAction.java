@@ -73,7 +73,6 @@ import org.oscarehr.PMmodule.service.ProgramManager;
 import org.oscarehr.PMmodule.service.ProgramQueueManager;
 import org.oscarehr.PMmodule.service.ProviderManager;
 import org.oscarehr.PMmodule.service.VacancyTemplateManager;
-import org.oscarehr.PMmodule.service.VacancyTemplateManagerImpl;
 import org.oscarehr.PMmodule.utility.ProgramAccessCache;
 import org.oscarehr.caisi_integrator.ws.CachedProvider;
 import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
@@ -1560,7 +1559,7 @@ public class ProgramManagerAction extends DispatchAction {
         obj.put("error", error);
 
         try {
-            response.getWriter().print(obj.toString());
+            response.getWriter().print(obj);
         } catch (IOException e) {
             MiscUtils.getLogger().warn("error writing json", e);
         }

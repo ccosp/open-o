@@ -29,11 +29,8 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.common.model.DemographicExtArchive;
-import org.springframework.stereotype.Repository;
 
 public interface DemographicExtArchiveDao extends AbstractDao<DemographicExtArchive> {
 

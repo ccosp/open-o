@@ -115,7 +115,7 @@ public class SpireClient extends TimerTask {
 
 
         } catch (Exception e) {
-            logger.error("Error: " + e.toString());
+            logger.error("Error: " + e);
         } finally {
             disconnect();
         }

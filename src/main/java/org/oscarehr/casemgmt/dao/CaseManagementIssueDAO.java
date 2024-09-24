@@ -26,19 +26,13 @@
 
 package org.oscarehr.casemgmt.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.caisi_integrator.ws.CodeType;
 import org.oscarehr.caisi_integrator.ws.FacilityIdDemographicIssueCompositePk;
 import org.oscarehr.casemgmt.model.CaseManagementIssue;
 import org.oscarehr.casemgmt.model.Issue;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 public interface CaseManagementIssueDAO {
 

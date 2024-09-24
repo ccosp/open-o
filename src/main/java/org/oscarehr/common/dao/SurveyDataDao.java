@@ -26,7 +26,6 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.oscarehr.common.model.SurveyData;

@@ -192,9 +192,9 @@ public class FluReport implements PreventionReport {
                     }
                 }
                 //outcomes
-                log.debug("due Date " + dueDate.toString() + " cutoffDate " + cutoffDate.toString() + " prevDate " + prevDate.toString());
-                log.debug("due Date  (" + dueDate.toString() + " ) After Prev (" + prevDate.toString() + " ) " + dueDate.after(prevDate));
-                log.debug("cutoff Date  (" + cutoffDate.toString() + " ) before Prev (" + prevDate.toString() + " ) " + cutoffDate.before(prevDate));
+                log.debug("due Date " + dueDate + " cutoffDate " + cutoffDate + " prevDate " + prevDate.toString());
+                log.debug("due Date  (" + dueDate + " ) After Prev (" + prevDate + " ) " + dueDate.after(prevDate));
+                log.debug("cutoff Date  (" + cutoffDate + " ) before Prev (" + prevDate + " ) " + cutoffDate.before(prevDate));
                 if (!refused && dueDate.after(prevDate) && cutoffDate.before(prevDate)) { // overdue
                     prd.rank = 2;
                     prd.lastDate = prevDateStr;
@@ -239,7 +239,7 @@ public class FluReport implements PreventionReport {
                     log.debug("fluData " + fluData.getDataField());
                     log.debug("lastFollowup " + fluData.getDateObservedAsDate() + " last procedure " + fluData.getDateObservedAsDate());
 
-                    log.debug("toString: " + fluData.toString());
+                    log.debug("toString: " + fluData);
                     prd.lastFollowup = fluData.getDateObservedAsDate();
                     prd.lastFollupProcedure = fluData.getDataField();
                 }
@@ -405,7 +405,7 @@ public class FluReport implements PreventionReport {
                     log.debug("fluData " + fluData.getDataField());
                     log.debug("lastFollowup " + fluData.getDateObservedAsDate() + " last procedure " + fluData.getDateObservedAsDate());
                     log.debug("CUTTOFF DATE : " + cuttoffDate);
-                    log.debug("toString: " + fluData.toString());
+                    log.debug("toString: " + fluData);
                     prd.lastFollowup = fluData.getDateObservedAsDate();
                     prd.lastFollupProcedure = fluData.getDataField();
                     if (fluData.getDateObservedAsDate().before(cuttoffDate)) {
@@ -439,7 +439,7 @@ public class FluReport implements PreventionReport {
                     log.debug("fluData " + fluData.getDataField());
                     log.debug("lastFollowup " + fluData.getDateObservedAsDate() + " last procedure " + fluData.getDateObservedAsDate());
                     log.debug("CUTTOFF DATE : " + cuttoffDate);
-                    log.debug("toString: " + fluData.toString());
+                    log.debug("toString: " + fluData);
                     prd.lastFollowup = fluData.getDateObservedAsDate();
                     prd.lastFollupProcedure = fluData.getDataField();
                 }

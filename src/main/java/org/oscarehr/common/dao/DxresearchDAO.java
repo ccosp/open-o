@@ -20,9 +20,6 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.Date;
-import java.util.List;
-
 import org.oscarehr.common.model.DxRegistedPTInfo;
 import org.oscarehr.common.model.Dxresearch;
 import oscar.oscarResearch.oscarDxResearch.bean.dxCodeSearchBean;

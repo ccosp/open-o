@@ -41,7 +41,6 @@ import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.BillingONCHeader1Dao;
 import org.oscarehr.common.dao.BillingONExtDao;
 import org.oscarehr.common.dao.BillingONPaymentDao;
-import org.oscarehr.common.dao.BillingONPaymentDaoImpl;
 import org.oscarehr.common.dao.BillingONRepoDao;
 import org.oscarehr.common.dao.BillingPaymentTypeDao;
 import org.oscarehr.common.dao.BillingServiceDao;

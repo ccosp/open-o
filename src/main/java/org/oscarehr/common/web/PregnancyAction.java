@@ -61,7 +61,6 @@ import org.oscarehr.common.dao.EFormGroupDao;
 import org.oscarehr.common.dao.EpisodeDao;
 import org.oscarehr.common.dao.MeasurementDao;
 import org.oscarehr.common.dao.PregnancyFormsDao;
-import org.oscarehr.common.dao.PregnancyFormsDaoImpl;
 import org.oscarehr.common.dao.PrintResourceLogDao;
 import org.oscarehr.common.model.AbstractCodeSystemModel;
 import org.oscarehr.common.model.Allergy;
@@ -493,7 +492,7 @@ public class PregnancyAction extends DispatchAction {
             json.add(m.get(0));
         }
 
-        response.getWriter().print(json.toString());
+        response.getWriter().print(json);
 
         return null;
     }

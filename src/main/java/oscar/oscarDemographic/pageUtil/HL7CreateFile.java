@@ -102,7 +102,7 @@ public class HL7CreateFile {
                     nteSegment.append("NTE|" + noteNum + "|L|" + noteParts[n]).append("\n");
                 }
 
-                nte.append(nteSegment.toString());
+                nte.append(nteSegment);
             }
         }
 
@@ -218,7 +218,7 @@ public class HL7CreateFile {
                     zmcSegment.append("ZMC|" + zmcNo + "." + (n + 1) + "|" + lab.getLabTestCode() + "||" + noteParts.length + "|Y|" + noteParts[n]).append("\n");
                 }
 
-                zmc.append(zmcSegment.toString());
+                zmc.append(zmcSegment);
             }
         }
 

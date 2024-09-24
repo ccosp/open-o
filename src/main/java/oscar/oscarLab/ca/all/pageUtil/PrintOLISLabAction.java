@@ -29,8 +29,6 @@ import org.oscarehr.util.SpringUtils;
 import oscar.oscarLab.ca.all.parsers.Factory;
 import oscar.oscarLab.ca.all.parsers.MessageHandler;
 
-import com.lowagie.text.DocumentException;
-
 public class PrintOLISLabAction extends Action {
 
     private static final Logger logger = MiscUtils.getLogger();

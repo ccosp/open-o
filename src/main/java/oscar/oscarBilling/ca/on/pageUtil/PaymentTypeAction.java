@@ -173,7 +173,7 @@ public class PaymentTypeAction extends DispatchAction {
         servletResponse.setCharacterEncoding("utf-8");
         servletResponse.setContentType("html/text");
         try {
-            servletResponse.getWriter().print(ret.toString());
+            servletResponse.getWriter().print(ret);
             servletResponse.getWriter().flush();
             servletResponse.getWriter().close();
         } catch (Exception e) {

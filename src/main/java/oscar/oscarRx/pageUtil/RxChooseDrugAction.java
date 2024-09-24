@@ -120,7 +120,7 @@ public final class RxChooseDrugAction extends Action {
 
                 MiscUtils.getLogger().debug("In here --=-=--=-_--==" + compString + "\n\n\n\n");
                 if (compString != null) {
-                    MiscUtils.getLogger().debug("In here --=-=--=-_--==" + compString.toString());
+                    MiscUtils.getLogger().debug("In here --=-=--=-_--==" + compString);
                     rx.setGenericName(compString.toString());
                 } else {
                     rx.setGenericName(genName);

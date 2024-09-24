@@ -103,10 +103,10 @@ public class PDFHandler implements MessageHandler {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.info("An unexpected error has occurred:" + e.toString(), e);
+            logger.info("An unexpected error has occurred:" + e, e);
             return null;
         } catch (Exception e) {
-            logger.info("An unexpected error has occurred:" + e.toString(), e);
+            logger.info("An unexpected error has occurred:" + e, e);
             return null;
         } finally {
             try {
@@ -114,7 +114,7 @@ public class PDFHandler implements MessageHandler {
                     fis.close();
                 }
             } catch (IOException e1) {
-                logger.info("An unexpected error has occurred:" + e1.toString(), e1);
+                logger.info("An unexpected error has occurred:" + e1, e1);
                 return null;
             }
         }

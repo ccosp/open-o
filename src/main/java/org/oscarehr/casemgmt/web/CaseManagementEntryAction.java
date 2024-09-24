@@ -916,7 +916,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
                 issueNames.append(cIssue.getIssue().getDescription() + "\n");
             }
 
-            strNote += "\n" + new SimpleDateFormat("dd-MMM-yyyy", request.getLocale()).format(new Date()) + " " + props.getString("oscarEncounter.removedIssue.Msg") + ":\n" + issueNames.toString();
+            strNote += "\n" + new SimpleDateFormat("dd-MMM-yyyy", request.getLocale()).format(new Date()) + " " + props.getString("oscarEncounter.removedIssue.Msg") + ":\n" + issueNames;
             note.setNote(strNote);
             removed = true;
         } else {
@@ -941,7 +941,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
             // if we have removed an issue add it to message body
             if (issueNames.length() > 0) {
-                strNote += "\n" + new SimpleDateFormat("dd-MMM-yyyy", request.getLocale()).format(new Date()) + " " + props.getString("oscarEncounter.removedIssue.Msg") + ":\n" + issueNames.toString();
+                strNote += "\n" + new SimpleDateFormat("dd-MMM-yyyy", request.getLocale()).format(new Date()) + " " + props.getString("oscarEncounter.removedIssue.Msg") + ":\n" + issueNames;
                 note.setNote(strNote);
             }
 
@@ -2016,7 +2016,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
                     + "&apptProvider_no=" + apptProvider
                     + "&appointment_date=" + date
                     + "&start_time=" + start_time
-                    + "&bNewForm=1" + dxCodes.toString();
+                    + "&bNewForm=1" + dxCodes;
             logger.debug("BILLING URL " + url);
             ActionForward forward = new ActionForward();
             forward.setPath(url);

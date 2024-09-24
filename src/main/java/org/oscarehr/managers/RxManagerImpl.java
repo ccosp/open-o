@@ -42,9 +42,6 @@ import org.springframework.stereotype.Service;
 import oscar.log.LogAction;
 import oscar.oscarDemographic.data.RxInformation;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;

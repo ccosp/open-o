@@ -193,7 +193,7 @@ public class EForm extends EFormBase {
         action.append("\"");
 
         String method = "method=\"POST\"";
-        html.insert(index, " " + action.toString() + " " + name + method);
+        html.insert(index, " " + action + " " + name + method);
         this.formHtml = html.toString();
     }
 

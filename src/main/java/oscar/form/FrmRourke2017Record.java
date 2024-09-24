@@ -445,7 +445,7 @@ public class FrmRourke2017Record extends FrmRecord implements JasperReportPdfPri
             exporter.exportReport();
 
         } catch (URISyntaxException e) {
-            logger.error("Could not get URI of the rourke2017 pages for " + pagesToPrint.toString(), e);
+            logger.error("Could not get URI of the rourke2017 pages for " + pagesToPrint, e);
         } catch (NumberFormatException e) {
             logger.error("Could not parse formId for " + 0);
         } catch (JRException e) {

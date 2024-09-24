@@ -29,8 +29,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.oscarehr.common.dao.ServiceRequestTokenDaoImpl;
-
 import org.apache.cxf.rs.security.oauth.data.AccessToken;
 import org.apache.cxf.rs.security.oauth.data.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth.data.AuthorizationInput;
@@ -51,9 +49,7 @@ import org.oscarehr.common.model.ServiceClient;
 import org.oscarehr.common.model.ServiceRequestToken;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 // import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 

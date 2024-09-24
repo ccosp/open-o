@@ -28,18 +28,7 @@ package org.oscarehr.managers;
 
 import java.util.List;
 
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.BedDemographicDao;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.dao.RoomDao;
-import org.oscarehr.common.dao.RoomDemographicDao;
-import org.oscarehr.common.model.BedDemographic;
-import org.oscarehr.common.model.Room;
 import org.oscarehr.common.model.RoomDemographic;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 public interface RoomDemographicManager {
 

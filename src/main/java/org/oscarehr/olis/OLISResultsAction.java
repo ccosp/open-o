@@ -88,12 +88,12 @@ public class OLISResultsAction extends DispatchAction {
 
             Query query = (Query) request.getSession().getAttribute("olisResponseQuery");
 
-            File tempFile = new File(System.getProperty("java.io.tmpdir") + "/olis_" + uuid.toString() + ".response");
+            File tempFile = new File(System.getProperty("java.io.tmpdir") + "/olis_" + uuid + ".response");
             FileUtils.writeStringToFile(tempFile, olisResultString);
 
 
             @SuppressWarnings("unchecked")
-            ArrayList<String> messages = Utilities.separateMessages(System.getProperty("java.io.tmpdir") + "/olis_" + uuid.toString() + ".response");
+            ArrayList<String> messages = Utilities.separateMessages(System.getProperty("java.io.tmpdir") + "/olis_" + uuid + ".response");
 
             List<String> resultList = new LinkedList<String>();
 
@@ -105,7 +105,7 @@ public class OLISResultsAction extends DispatchAction {
                     }
                     String resultUuid = UUID.randomUUID().toString();
 
-                    tempFile = new File(System.getProperty("java.io.tmpdir") + "/olis_" + resultUuid.toString() + ".response");
+                    tempFile = new File(System.getProperty("java.io.tmpdir") + "/olis_" + resultUuid + ".response");
                     FileUtils.writeStringToFile(tempFile, message);
 
 

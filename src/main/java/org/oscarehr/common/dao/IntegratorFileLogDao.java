@@ -26,13 +26,9 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.IntegratorFileLog;
-import org.springframework.stereotype.Repository;
 
 public interface IntegratorFileLogDao extends AbstractDao<IntegratorFileLog> {
 

@@ -159,7 +159,7 @@ public class CaseManagementIssueDAOImpl extends HibernateDaoSupport implements C
         }
         List<Integer> results = (List<Integer>) this.getHibernateTemplate().find(
                 "select distinct cmi.demographic_no from CaseManagementIssue cmi where cmi.update_date > ? and program_id in ("
-                        + sb.toString() + ")",
+                        + sb + ")",
                 new Object[]{date});
 
         return results;

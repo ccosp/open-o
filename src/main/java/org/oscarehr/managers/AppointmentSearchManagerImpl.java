@@ -27,7 +27,6 @@
 package org.oscarehr.managers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,7 +51,6 @@ import org.oscarehr.util.LoggedInInfo;
 //import org.oscarehr.oscar_clinic_component.manager.BookingLearningManager;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.XmlUtils;
-import org.oscarehr.ws.transfer_objects.CalendarScheduleCodePairTransfer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

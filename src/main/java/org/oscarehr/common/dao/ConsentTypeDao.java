@@ -26,13 +26,9 @@
  */
 package org.oscarehr.common.dao;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.ConsentType;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Collections;
 
 public interface ConsentTypeDao extends AbstractDao<ConsentType> {
 

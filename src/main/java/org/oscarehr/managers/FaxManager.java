@@ -27,41 +27,21 @@
 
 package org.oscarehr.managers;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.DynaActionForm;
-import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.dao.FaxClientLogDao;
 import org.oscarehr.common.dao.FaxConfigDao;
-import org.oscarehr.common.dao.FaxJobDao;
-import org.oscarehr.common.model.Clinic;
-import org.oscarehr.common.model.FaxClientLog;
 import org.oscarehr.common.model.FaxConfig;
 import org.oscarehr.common.model.FaxJob;
-import org.oscarehr.common.model.FaxJob.STATUS;
 import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
-import oscar.OscarProperties;
-import org.oscarehr.documentManager.EDocUtil;
 import oscar.form.util.FormTransportContainer;
-import oscar.log.LogAction;
-import oscar.util.ConcatPDF;
 
 public interface FaxManager {
 

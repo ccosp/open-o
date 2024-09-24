@@ -42,7 +42,6 @@ import javax.persistence.Query;
 
 import org.oscarehr.PMmodule.model.Vacancy;
 import org.oscarehr.PMmodule.service.VacancyTemplateManager;
-import org.oscarehr.PMmodule.service.VacancyTemplateManagerImpl;
 import org.oscarehr.PMmodule.wlmatch.CriteriaBO;
 import org.oscarehr.PMmodule.wlmatch.CriteriasBO;
 import org.oscarehr.PMmodule.wlmatch.MatchBO;

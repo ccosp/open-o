@@ -71,7 +71,6 @@ import org.oscarehr.common.hl7.v2.oscar_to_oscar.OruR01;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.OruR01.ObservationData;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.RefI12;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.SendingUtils;
-import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Clinic;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.ConsultResponseDoc;

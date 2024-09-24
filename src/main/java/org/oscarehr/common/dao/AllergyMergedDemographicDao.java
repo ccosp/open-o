@@ -29,9 +29,7 @@ package org.oscarehr.common.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.merge.MergedDemographicTemplate;
 import org.oscarehr.common.model.Allergy;
-import org.springframework.stereotype.Repository;
 
 public interface AllergyMergedDemographicDao extends AbstractDao<Allergy> {
 

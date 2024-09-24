@@ -340,7 +340,7 @@ public class DemographicManagerImpl implements DemographicManager {
         if (result != null) {
             for (DemographicContact item : result) {
                 LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.getDemographicContacts",
-                        "id=" + item.getId() + "(" + id.toString() + ")");
+                        "id=" + item.getId() + "(" + id + ")");
             }
         }
         return result;
@@ -356,7 +356,7 @@ public class DemographicManagerImpl implements DemographicManager {
         if (result != null) {
             for (DemographicContact item : result) {
                 LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.getDemographicContacts",
-                        "id=" + item.getId() + "(" + id.toString() + ")");
+                        "id=" + item.getId() + "(" + id + ")");
             }
         }
         return result;
@@ -489,7 +489,7 @@ public class DemographicManagerImpl implements DemographicManager {
         if (demographic.getExtras() != null) {
             for (DemographicExt ext : demographic.getExtras()) {
                 LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.updateDemographic ext",
-                        "id=" + ext.getId() + "(" + ext.toString() + ")");
+                        "id=" + ext.getId() + "(" + ext + ")");
                 updateExtension(loggedInInfo, ext);
             }
         }
@@ -565,7 +565,7 @@ public class DemographicManagerImpl implements DemographicManager {
         if (demographic.getExtras() != null) {
             for (DemographicExt ext : demographic.getExtras()) {
                 LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.addDemographic ext",
-                        "id=" + ext.getId() + "(" + ext.toString() + ")");
+                        "id=" + ext.getId() + "(" + ext + ")");
                 updateExtension(loggedInInfo, ext);
             }
         }
@@ -628,7 +628,7 @@ public class DemographicManagerImpl implements DemographicManager {
 
         for (DemographicExt ext : getDemographicExts(loggedInInfo, demographic.getDemographicNo())) {
             LogAction.addLogSynchronous(loggedInInfo, "DemographicManager.deleteDemographic ext",
-                    "id=" + ext.getId() + "(" + ext.toString() + ")");
+                    "id=" + ext.getId() + "(" + ext + ")");
             deleteExtension(loggedInInfo, ext);
         }
 

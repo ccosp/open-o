@@ -123,7 +123,7 @@ public class Doc2PDF {
             return (process.waitFor());
         } catch (Exception e) {
             // An error occurred - send it to stderr for the web server...
-            logger.error(e.toString() + " caught while running:\n\n");
+            logger.error(e + " caught while running:\n\n");
             logger.error("    " + command + "\n");
             logger.error("", e);
             return (1);

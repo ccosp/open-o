@@ -28,10 +28,7 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.CVCMedicationLotNumber;
-import org.springframework.stereotype.Repository;
 
 public interface CVCMedicationLotNumberDao extends AbstractDao<CVCMedicationLotNumber> {
 

@@ -29,10 +29,7 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.CtlBillingService;
-import org.springframework.stereotype.Repository;
 
 public interface CtlBillingServiceDao {
     public static final String DEFAULT_STATUS = "A";

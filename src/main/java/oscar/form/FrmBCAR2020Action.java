@@ -40,7 +40,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.dao.DemographicDao;
 import org.oscarehr.common.dao.PrintResourceLogDao;
-import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.PrintResourceLog;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
@@ -265,7 +264,7 @@ public class FrmBCAR2020Action extends DispatchAction {
                 exporter.exportReport();
 
             } catch (URISyntaxException e) {
-                logger.error("Could not get URI of the BCAR2020 pages for " + pagesToPrint.toString(), e);
+                logger.error("Could not get URI of the BCAR2020 pages for " + pagesToPrint, e);
             }
         } catch (NumberFormatException e) {
             logger.error("Could not parse formId for " + formId);

@@ -27,12 +27,9 @@
 
 package org.oscarehr.ws.rest.conversion;
 
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.Prescription;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.rest.to.model.PrescriptionTo1;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

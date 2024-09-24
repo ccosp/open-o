@@ -238,7 +238,7 @@ public class BillingONPaymentsAction extends DispatchAction {
             response.setCharacterEncoding("utf-8");
             response.setContentType("html/text");
             try {
-                response.getWriter().print(ret.toString());
+                response.getWriter().print(ret);
                 response.getWriter().flush();
                 response.getWriter().close();
             } catch (Exception e) {
@@ -396,7 +396,7 @@ public class BillingONPaymentsAction extends DispatchAction {
         response.setCharacterEncoding("utf-8");
         response.setContentType("html/text");
         try {
-            response.getWriter().print(ret.toString());
+            response.getWriter().print(ret);
             response.getWriter().flush();
             response.getWriter().close();
         } catch (Exception e) {
@@ -494,7 +494,7 @@ public class BillingONPaymentsAction extends DispatchAction {
         response.setCharacterEncoding("utf-8");
         response.setContentType("html/text");
         try {
-            response.getWriter().print(payDetail.toString());
+            response.getWriter().print(payDetail);
             response.getWriter().flush();
             response.getWriter().close();
         } catch (Exception e) {

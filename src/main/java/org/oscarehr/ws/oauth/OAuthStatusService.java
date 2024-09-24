@@ -69,7 +69,7 @@ public class OAuthStatusService extends AbstractServiceImpl {
             return obj.toString();
 
         } catch (Exception e) {
-            return "Sorry, there was an error building your resposne: " + e.toString();
+            return "Sorry, there was an error building your resposne: " + e;
         }
     }
 

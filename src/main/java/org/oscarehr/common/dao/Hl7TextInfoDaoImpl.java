@@ -273,7 +273,7 @@ public class Hl7TextInfoDaoImpl extends AbstractDaoImpl<Hl7TextInfo> implements 
             stringBuilder.append("'" + labId + "'");
         }
 
-        String sql = "SELECT x FROM " + modelClass.getName() + " x WHERE x.labNumber IN (" + stringBuilder.toString() + ") ORDER BY x.labNumber DESC";
+        String sql = "SELECT x FROM " + modelClass.getName() + " x WHERE x.labNumber IN (" + stringBuilder + ") ORDER BY x.labNumber DESC";
         Query query = entityManager.createQuery(sql);
         List<Hl7TextInfo> resultList = query.getResultList();
         if (resultList == null) {

@@ -26,13 +26,9 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.oscarehr.common.model.CVCImmunization;
-import org.springframework.stereotype.Repository;
 
 public interface CVCImmunizationDao extends AbstractDao<CVCImmunization> {
 

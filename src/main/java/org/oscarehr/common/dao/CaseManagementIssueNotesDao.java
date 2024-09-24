@@ -29,14 +29,6 @@ import java.util.List;
 
 import org.oscarehr.casemgmt.model.CaseManagementIssue;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
-import org.oscarehr.casemgmt.model.CaseManagementIssue;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 public interface CaseManagementIssueNotesDao {
 
     public List<CaseManagementIssue> getNoteIssues(Integer noteId);

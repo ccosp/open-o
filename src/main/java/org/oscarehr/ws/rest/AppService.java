@@ -129,7 +129,7 @@ public class AppService extends AbstractServiceImpl {
             connection.setUseCaches(false);
             connection.setDoInput(true);
             connection.setDoOutput(true);
-            logger.info("k2a json " + clinicName.toString());
+            logger.info("k2a json " + clinicName);
             //Send request
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
             wr.writeBytes(clinicName.toString());

@@ -26,28 +26,9 @@
  */
 package org.oscarehr.managers;
 
-import java.util.Date;
-
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProgramDao;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.common.dao.BedDao;
-import org.oscarehr.common.dao.BedDemographicDao;
-import org.oscarehr.common.dao.BedDemographicHistoricalDao;
-import org.oscarehr.common.dao.BedDemographicStatusDao;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.dao.RoomDao;
-import org.oscarehr.common.model.Bed;
 import org.oscarehr.common.model.BedDemographic;
 import org.oscarehr.common.model.BedDemographicHistorical;
-import org.oscarehr.common.model.BedDemographicHistoricalPK;
 import org.oscarehr.common.model.BedDemographicStatus;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Room;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 public interface BedDemographicManager {
     /**

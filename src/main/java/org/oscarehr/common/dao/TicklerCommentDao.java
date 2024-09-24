@@ -27,7 +27,6 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.TicklerComment;
-import org.springframework.stereotype.Repository;
 
 public interface TicklerCommentDao extends AbstractDao<TicklerComment> {
 

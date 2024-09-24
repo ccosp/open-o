@@ -45,8 +45,6 @@ import org.oscarehr.common.model.Billing;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import oscar.Misc;
 import oscar.MyDateFormat;
@@ -266,7 +264,7 @@ public class BillingReProcessBillAction extends Action {
                     }
                 }
             } else {
-                throw new RuntimeException("BILLING BC - " + new java.util.Date().toString() + " - billingmaster_no " + billingmasterNo + " doesnt't seem to have a type");
+                throw new RuntimeException("BILLING BC - " + new java.util.Date() + " - billingmaster_no " + billingmasterNo + " doesnt't seem to have a type");
             }
 
             //Multiply the bill amount by the units - Fixes bug where wrong amount being sent to MSP

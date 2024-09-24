@@ -24,9 +24,7 @@
 package org.oscarehr.hospitalReportManager;
 
 
-import com.itextpdf.text.Element;
 import com.itextpdf.text.*;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.EFormData;

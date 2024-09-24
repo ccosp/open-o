@@ -118,7 +118,7 @@ public class MammogramReport implements PreventionReport {
                 cal2.add(Calendar.MONTH, -6);
                 Date cutoffDate2 = cal2.getTime();
 
-                log.debug("cut 1 " + cutoffDate.toString() + " cut 2 " + cutoffDate2.toString());
+                log.debug("cut 1 " + cutoffDate + " cut 2 " + cutoffDate2);
 
                 // if prevDate is less than as of date and greater than 2 years prior
                 Calendar bonusEl = Calendar.getInstance();
@@ -148,9 +148,9 @@ public class MammogramReport implements PreventionReport {
 
 
                 //outcomes
-                log.debug("due Date " + dueDate.toString() + " cutoffDate " + cutoffDate.toString() + " prevDate " + prevDate.toString());
-                log.debug("due Date  (" + dueDate.toString() + " ) After Prev (" + prevDate.toString() + " ) " + dueDate.after(prevDate));
-                log.debug("cutoff Date  (" + cutoffDate.toString() + " ) before Prev (" + prevDate.toString() + " ) " + cutoffDate.before(prevDate));
+                log.debug("due Date " + dueDate + " cutoffDate " + cutoffDate + " prevDate " + prevDate.toString());
+                log.debug("due Date  (" + dueDate + " ) After Prev (" + prevDate + " ) " + dueDate.after(prevDate));
+                log.debug("cutoff Date  (" + cutoffDate + " ) before Prev (" + prevDate + " ) " + cutoffDate.before(prevDate));
                 if (!refused && dueDate.after(prevDate) && cutoffDate.before(prevDate)) { // overdue
                     prd.rank = 2;
                     prd.lastDate = prevDateStr;
@@ -337,7 +337,7 @@ public class MammogramReport implements PreventionReport {
                         if (index == 0) {
                             log.debug("fluData " + measurementData.getDataField());
                             log.debug("lastFollowup " + measurementData.getDateObservedAsDate() + " last procedure " + measurementData.getDateObservedAsDate());
-                            log.debug("toString: " + measurementData.toString());
+                            log.debug("toString: " + measurementData);
                             prd.lastFollowup = observationDate;
                             prd.lastFollupProcedure = measurementData.getDataField();
 

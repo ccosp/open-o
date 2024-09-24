@@ -26,7 +26,6 @@ package org.oscarehr.PMmodule.service;
 
 import org.oscarehr.PMmodule.dao.HealthSafetyDao;
 import org.oscarehr.PMmodule.model.HealthSafety;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface HealthSafetyManager {
     public HealthSafetyDao getHealthSafetyDao();

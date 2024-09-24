@@ -41,8 +41,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import com.itextpdf.text.pdf.draw.LineSeparator;
-import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 
 import net.sf.jasperreports.engine.JRException;
@@ -64,7 +62,6 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.web.PrescriptionQrCodeUIBean;
 
-import org.owasp.encoder.Encode;
 import oscar.OscarProperties;
 import oscar.log.LogAction;
 import oscar.log.LogConst;

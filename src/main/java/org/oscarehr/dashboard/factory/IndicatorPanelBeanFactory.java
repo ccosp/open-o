@@ -32,7 +32,6 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.dashboard.display.beans.IndicatorBean;
 import org.oscarehr.dashboard.display.beans.IndicatorPanelBean;
 import org.oscarehr.dashboard.handler.IndicatorTemplateXML;
-import org.oscarehr.managers.DashboardManager;
 import org.oscarehr.managers.DashboardManagerImpl;
 import org.oscarehr.util.MiscUtils;
 

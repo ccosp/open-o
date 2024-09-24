@@ -487,7 +487,7 @@ public class ManageHSFOAction extends Action {
 
                 request.setAttribute("graphFile." + graphDesc.getFileName(), request.getContextPath() + "/" + graphDirPath + "/" + fileName);
             } catch (IOException e) {
-                logger.error("Problem in creating chart: " + e.toString());
+                logger.error("Problem in creating chart: " + e);
             }
 
         }

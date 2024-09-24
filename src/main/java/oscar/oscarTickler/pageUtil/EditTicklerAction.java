@@ -24,9 +24,7 @@
 
 package oscar.oscarTickler.pageUtil;
 
-import java.io.IOException;
 import java.util.Date;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +48,6 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
 import oscar.util.DateUtils;
 
 public class EditTicklerAction extends DispatchAction {

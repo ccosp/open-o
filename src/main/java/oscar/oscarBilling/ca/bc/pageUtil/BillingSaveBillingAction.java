@@ -195,8 +195,8 @@ public class BillingSaveBillingAction extends Action {
                 log.debug("String " + s);
                 stb.append("billing_no=" + s + "&");
             }
-            log.debug("FULL STRING " + stb.toString());
-            af = new ActionForward("/billing/CA/BC/billingView.do?" + stb.toString() + "receipt=yes");
+            log.debug("FULL STRING " + stb);
+            af = new ActionForward("/billing/CA/BC/billingView.do?" + stb + "receipt=yes");
             af.setRedirect(true);
         }
         return af; //(mapping.findForward("success"));

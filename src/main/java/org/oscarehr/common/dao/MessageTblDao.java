@@ -26,14 +26,10 @@
  */
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Query;
 
 import org.oscarehr.common.model.MessageTbl;
 import org.oscarehr.common.model.MsgDemoMap;
-import org.springframework.stereotype.Repository;
 
 public interface MessageTblDao extends AbstractDao<MessageTbl> {
 

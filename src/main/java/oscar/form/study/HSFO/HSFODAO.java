@@ -102,10 +102,10 @@ public class HSFODAO {
             st.executeUpdate();
             st.clearParameters();
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se);
             MiscUtils.getLogger().error("Error", se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne);
             MiscUtils.getLogger().error("Error", ne);
         } finally {
             if (st != null)
@@ -192,9 +192,9 @@ public class HSFODAO {
             st.executeUpdate();
             st.clearParameters();
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne);
         } finally {
 
             if (st != null)
@@ -220,9 +220,9 @@ public class HSFODAO {
             st = connect.prepareStatement(sqlstatement);
             st.executeUpdate();
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne);
         } finally {
 
             if (st != null)
@@ -254,9 +254,9 @@ public class HSFODAO {
                 i++;
             }
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne);
         } finally {
             if (rs != null)
                 try {
@@ -304,9 +304,9 @@ public class HSFODAO {
                 hasLockedVisit = true;
             }
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne);
         } finally {
             if (rs != null)
                 try {
@@ -491,10 +491,10 @@ public class HSFODAO {
             //st.close();
         } catch (SQLException se) {
             MiscUtils.getLogger().error("Error", se);
-            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while inserting into the database : " + se);
         } catch (Exception ne) {
             MiscUtils.getLogger().error("Error", ne);
-            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while inserting into the database : " + ne);
         } finally {
 
             if (st != null)
@@ -650,9 +650,9 @@ public class HSFODAO {
             //result.close();
             //sql.close();
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
         } finally {
             if (result != null)
                 try {
@@ -696,9 +696,9 @@ public class HSFODAO {
 //           result.close();
 //           sql.close();
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
         } finally {
             if (result != null)
                 try {
@@ -840,9 +840,9 @@ public class HSFODAO {
 //            query.close();
 //
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
         } finally {
             if (rs != null)
                 try {
@@ -883,9 +883,9 @@ public class HSFODAO {
                     MiscUtils.getLogger().debug("Max timestamp:" + result.getString("Max"));
                 }
             } catch (SQLException se) {
-                MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+                MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
             } catch (Exception ne) {
-                MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+                MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
             }
 
             String query2 = "SELECT DISTINCT * FROM form_hsfo_Visit WHERE ID='" + timestamp + "'";
@@ -990,9 +990,9 @@ public class HSFODAO {
                     visitData.setLocked(result.getBoolean("Locked"));
                 }
             } catch (SQLException se) {
-                MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+                MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
             } catch (Exception ne) {
-                MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+                MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
             }
         } finally {
 
@@ -1156,9 +1156,9 @@ public class HSFODAO {
 
             }
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
         } finally {
 
             if (sql != null)
@@ -1192,9 +1192,9 @@ public class HSFODAO {
 //            result.close();
 //            sql.close();
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
         } finally {
             if (result != null)
                 try {
@@ -1387,9 +1387,9 @@ public class HSFODAO {
 //            result.close();
 //            sql.close();
         } catch (SQLException se) {
-            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se.toString());
+            MiscUtils.getLogger().debug("SQL Error while retreiving from the database : " + se);
         } catch (Exception ne) {
-            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne.toString());
+            MiscUtils.getLogger().debug("Other Error while retreiving to the database : " + ne);
         } finally {
             if (result != null)
                 try {

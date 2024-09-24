@@ -28,13 +28,8 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
-import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.model.RoomDemographic;
 import org.oscarehr.common.model.RoomDemographicPK;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.stereotype.Repository;
 
 public interface RoomDemographicDao extends AbstractDao<RoomDemographic> {
 

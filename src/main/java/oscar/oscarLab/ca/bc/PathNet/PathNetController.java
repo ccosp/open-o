@@ -113,7 +113,7 @@ public class PathNetController {
                     }
                 } catch (Exception ex) {
                     //success = false; //<- for future when transactional
-                    logger.error("Error - oscar.PathNet.Contorller - Message: " + ex.getMessage() + " = " + ex.toString());
+                    logger.error("Error - oscar.PathNet.Contorller - Message: " + ex.getMessage() + " = " + ex);
                 }
                 connection.Acknowledge(success);
             }

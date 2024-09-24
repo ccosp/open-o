@@ -30,7 +30,6 @@ package org.oscarehr.common.dao;
 import java.util.List;
 import javax.persistence.Query;
 
-import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.StudyData;
 import org.springframework.stereotype.Repository;
 

@@ -31,8 +31,6 @@ import org.oscarehr.common.model.CasemgmtNoteLock;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import java.util.Enumeration;
-
 public class OscarSessionListener implements HttpSessionListener {
 
     @Override

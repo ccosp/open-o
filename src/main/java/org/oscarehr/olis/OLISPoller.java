@@ -197,11 +197,11 @@ public class OLISPoller {
         try {
             UUID uuid = UUID.randomUUID();
 
-            File tempFile = new File(System.getProperty("java.io.tmpdir") + "/olis_" + uuid.toString() + ".response");
+            File tempFile = new File(System.getProperty("java.io.tmpdir") + "/olis_" + uuid + ".response");
             FileUtils.writeStringToFile(tempFile, response);
 
             @SuppressWarnings("unchecked")
-            ArrayList<String> messages = Utilities.separateMessages(System.getProperty("java.io.tmpdir") + "/olis_" + uuid.toString() + ".response");
+            ArrayList<String> messages = Utilities.separateMessages(System.getProperty("java.io.tmpdir") + "/olis_" + uuid + ".response");
 
             List<String> resultList = new LinkedList<String>();
 

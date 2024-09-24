@@ -1693,7 +1693,7 @@ public class SharingCenterUtil {
             retVal = out.toByteArray();
 
         } catch (IOException e) {
-            MiscUtils.getLogger().error("Unable to download file from url: " + url.toString(), e);
+            MiscUtils.getLogger().error("Unable to download file from url: " + url, e);
         } finally {
             IOUtils.closeQuietly(out);
             IOUtils.closeQuietly(in);
