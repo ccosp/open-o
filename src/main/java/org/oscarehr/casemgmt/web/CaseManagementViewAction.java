@@ -1506,6 +1506,92 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
 
     }
 
+    public ActionForward run_macro_script(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        MacroDao macroDao = (MacroDao) SpringUtils.getBean(MacroDao.class);
+        Macro macro = macroDao.find(Integer.parseInt(request.getParameter("id")));
+        logger.info("loaded macro " + macro.getLabel());
+        StringBuilder sb = new StringBuilder();
+
+        //impression text
+        sb.append("var noteTa = document.getElementById('caseNote_note" + request.getParameter("noteId") + "');");
+        sb.append("var noteTaVal = noteTa.value;");
+        sb.append("noteTaVal = noteTaVal + '" + macro.getImpression() + "';");
+        sb.append("noteTa.value = noteTaVal;");
+
+        //checkboxes
+        if (macro.getDischargeFlag().equals("dischargeFlag")) {
+            sb.append("jQuery(\"#ack1\").attr(\"checked\",true);");
+        }
+        if (macro.getStatFlag().equals("statFlag")) {
+            sb.append("jQuery(\"#ack2\").attr(\"checked\",true);");
+        }
+        if (macro.getOptFlag().equals("optFlag")) {
+            sb.append("jQuery(\"#ack3\").attr(\"checked\",true);");
+        }
+
+        //send tickler
+        if (macro.getTicklerRecipient().length() > 0) {
+            sb.append("saveNoteAndSendTickler();");
+        } else {
+            sb.append("saveEyeformNote();");
+        }
+
+        //billing
+
+        response.getWriter().println(sb);
+
+        return null;
+    }
+
+    public ActionForward run_macro(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
+
+        MacroDao macroDao = (MacroDao) SpringUtils.getBean(MacroDao.class);
+        Macro macro = macroDao.find(Integer.parseInt(request.getParameter("id")));
+        logger.info("loaded macro " + macro.getLabel());
+
+        //follow up - need to add it, then force a reload
+        int followUpNo = macro.getFollowupNo();
+        String followUpUnit = macro.getFollowupUnit();
+        String followUpDr = macro.getFollowupDoctorId();
+        if (!followUpDr.isEmpty()) {
+            EyeformFollowUp f = new EyeformFollowUp();
+            f.setAppointmentNo(Integer.parseInt(request.getParameter("appointmentNo")));
+            f.setDate(new Date());
+            f.setDemographicNo(Integer.parseInt(request.getParameter("demographicNo")));
+            f.setProvider(loggedInInfo.getLoggedInProvider());
+            f.setTimeframe(followUpUnit);
+            f.setTimespan(followUpNo);
+            f.setType("followup");
+            f.setUrgency("routine");
+            f.setFollowupProvider(followUpDr);
+            EyeformFollowUpDao dao = SpringUtils.getBean(EyeformFollowUpDao.class);
+            dao.save(f);
+        }
+
+        //tests
+        EyeformTestBookDao testDao = SpringUtils.getBean(EyeformTestBookDao.class);
+        String[] tests = macro.getTestRecords().split("\n");
+        for (String test : tests) {
+            String[] parts = test.trim().split("\\|");
+            if (parts.length == 4) {
+                EyeformTestBook rec = new EyeformTestBook();
+                rec.setAppointmentNo(Integer.parseInt(request.getParameter("appointmentNo")));
+                rec.setComment(parts[3]);
+                rec.setDate(new Date());
+                rec.setDemographicNo(Integer.parseInt(request.getParameter("demographicNo")));
+                rec.setEye(parts[1]);
+                rec.setProvider(loggedInInfo.getLoggedInProviderNo());
+                //rec.setStatus(null);
+                rec.setTestname(parts[0]);
+                rec.setUrgency(parts[2]);
+                testDao.save(rec);
+            }
+        }
+
+        return null;
+    }
+
     protected Map<Long, Boolean> getUnlockedNotesMap(HttpServletRequest request) {
         @SuppressWarnings("unchecked")
         Map<Long, Boolean> map = (Map<Long, Boolean>) request.getSession().getAttribute("unlockedNoteMap");

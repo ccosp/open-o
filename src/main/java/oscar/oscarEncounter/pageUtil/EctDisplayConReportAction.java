@@ -22,15 +22,26 @@
  * Ontario, Canada
  */
 
+
 package oscar.oscarEncounter.pageUtil;
+
+
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.util.MessageResources;
 import org.oscarehr.common.dao.ProfessionalSpecialistDao;
 import org.oscarehr.common.model.Demographic;
+import org.oscarehr.common.model.ProfessionalSpecialist;
+import org.oscarehr.eyeform.dao.EyeformConsultationReportDao;
+import org.oscarehr.eyeform.model.EyeformConsultationReport;
 import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
+
+import oscar.util.StringUtils;
 
 public class EctDisplayConReportAction extends EctDisplayAction {
     private static final String cmd = "conReport";
