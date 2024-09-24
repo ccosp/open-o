@@ -97,5 +97,5 @@ public class PatientCheckedInListener implements ApplicationListener<Appointment
             DbConnectionFilter.releaseAllThreadDbResources();
         }
 
-    }//End of onOscarEvent
+    }
 }

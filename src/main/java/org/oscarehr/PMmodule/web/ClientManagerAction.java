@@ -1001,7 +1001,7 @@ public class ClientManagerAction extends DispatchAction {
                                         }
                                     }
                                 }
-                            }// end for loop
+                            }
                             roomOccupancy = bedReservedInRoom.length - numberOfFamilyMembersAssignedRoomBed;
                         }
 
@@ -1086,7 +1086,7 @@ public class ClientManagerAction extends DispatchAction {
 
                             }// end of if( clientId != null )
 
-                        }// end for loop
+                        }
 
                     } else {// if(roomCapacity - roomOccupancy - familySize < 0 )
                         String occupancy = "0";
@@ -1128,7 +1128,7 @@ public class ClientManagerAction extends DispatchAction {
                     // if only select room without bed, delete previous selected bedId in 'bed_demographic' table
                     roomDemographicManager.cleanUpBedTables(roomDemographic);
                 }
-            }// end of isIndependentClient
+            }
 
         }// end of isFamilyHead || isIndependentClient
 

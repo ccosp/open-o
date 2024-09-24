@@ -191,9 +191,9 @@ public class ThirdApptTimeReporter implements Reporter {
                         unbooked = 0;
                     }
 
-                } //end for
+                }
 
-            } //end while
+            }
 
             if (schedDate != null) {
                 // TODO refactor to use ConversionUtils when commit makes it thorugh

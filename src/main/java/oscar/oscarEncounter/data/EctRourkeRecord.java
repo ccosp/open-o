@@ -242,9 +242,9 @@ public class EctRourkeRecord {
                     if (value != null) {
                         props.setProperty(name, value);
                     }
-                }//end for
+                }
 
-            }//end if
+            }
             rs.close();
         }
         return props;

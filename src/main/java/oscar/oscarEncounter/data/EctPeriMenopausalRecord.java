@@ -100,13 +100,13 @@ public class EctPeriMenopausalRecord {
                         if (value != null) {
                             props.setProperty(name, value);
                         }
-                    }//end for
-                }//end if
+                    }
+                }
                 rs.close();
             } catch (SQLException ee) {
                 logger.error("Unexpected error", ee);
             }
-        }//end else
+        }
         return props;
     }
 

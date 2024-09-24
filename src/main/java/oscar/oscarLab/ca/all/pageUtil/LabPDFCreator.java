@@ -742,7 +742,7 @@ public class LabPDFCreator extends PdfPageEventHelper {
                                     table.addCell(cell);
                                     cell.setPhrase(new Phrase(handler.getOBXUnits(j, k), lineFont));
                                     table.addCell(cell);
-                                }// end of isLongText
+                                }
 
                                 cell.setPhrase(new Phrase(handler.getTimeStamp(j, k), lineFont));
                                 table.addCell(cell);

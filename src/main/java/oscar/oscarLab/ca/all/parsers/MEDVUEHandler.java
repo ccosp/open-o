@@ -87,7 +87,7 @@ public class MEDVUEHandler implements MessageHandler {
 				headers.add(header);
 			}*/
 
-        } //end lab iteration
+        }
 
     }
 

@@ -961,7 +961,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
                 }
                 issueSet.add(cIssue);
 
-            } // end for
+            }
 
             CheckBoxBean[] newCheckBox = new CheckBoxBean[caseIssueList.size()];
             newCheckBox = caseIssueList.toArray(newCheckBox);

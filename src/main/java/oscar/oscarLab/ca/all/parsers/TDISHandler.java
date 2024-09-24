@@ -158,7 +158,7 @@ public class TDISHandler implements MessageHandler {
                     }
                 }
             }
-        } //end lab iteration
+        }
 
     }
 

@@ -228,7 +228,7 @@ public class FrmRourke2020Record extends FrmRecord implements JasperReportPdfPri
 
                     props.setProperty("c_Age", age);
 
-                }//end if
+                }
 
                 //now we add measurements from formGrowth0_36 form
 

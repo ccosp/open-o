@@ -131,7 +131,7 @@ public class DocumentTeleplanReportUploadServlet extends HttpServlet {
                 bfbo = bfbo ? false : true;
                 for (int i = 0; i < BUFFER; i++) data[i] = 0;
                 continue;
-            } //end period
+            }
 
             if (benddata) {
                 benddata = false;
@@ -142,7 +142,7 @@ public class DocumentTeleplanReportUploadServlet extends HttpServlet {
                 dest.write(data, 0, count);
                 for (int i = 0; i < BUFFER; i++) data[i] = 0;
             }
-        } //end while
+        }
         //dest.flush();
         dest.close();
         sis.close();

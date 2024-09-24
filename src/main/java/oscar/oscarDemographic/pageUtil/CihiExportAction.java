@@ -1043,7 +1043,7 @@ public class CihiExportAction extends DispatchAction {
                 MiscUtils.getLogger().error("Cannot write .xml file(s) to export directory " + tmpDir + ".\nPlease check directory permissions.", e);
             }
             ++idx;
-        } //end for
+        }
 
         //Zip export files
         String zipName = "omd_cihi_export-" + UtilDateUtilities.getToday("yyyy-MM-dd.HH.mm.ss") + ".zip";

@@ -130,5 +130,5 @@ public class EFormAttachDocs {
         for (int i = 0; i < newlist.size(); ++i)
             EDocUtil.attachDocEForm(providerNo, newlist.get(i), reqId);
 
-    } //end attach
+    }
 }

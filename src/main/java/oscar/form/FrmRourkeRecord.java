@@ -147,9 +147,9 @@ public class FrmRourkeRecord extends FrmRecord {
                         if (value != null) {
                             props.setProperty(name, value);
                         }
-                    }//end for
+                    }
 
-                }//end if
+                }
                 rs.close();
             } catch (SQLException e) {
 

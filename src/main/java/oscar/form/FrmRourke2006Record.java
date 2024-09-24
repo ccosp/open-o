@@ -160,9 +160,9 @@ public class FrmRourke2006Record extends FrmRecord {
                         if (value != null) {
                             props.setProperty(name, value);
                         }
-                    }//end for
+                    }
 
-                }//end if
+                }
                 rs.close();
             } catch (SQLException e) {
                 MiscUtils.getLogger().error("Error", e);

@@ -158,7 +158,7 @@ public class JdbcBillingRAImpl {
 
                         raNo = h.getId().toString();
                     }
-                } // ends with "1"
+                }
 
                 if (headerCount.compareTo("4") == 0) {
                     claimno = nextline.substring(3, 14);

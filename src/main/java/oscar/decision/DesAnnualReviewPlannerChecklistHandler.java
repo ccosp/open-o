@@ -156,9 +156,9 @@ public class DesAnnualReviewPlannerChecklistHandler extends DefaultHandler {
                 results += "<a href=# onClick=\"popupPage(400,500,'";
                 for (int i = 0; i < atts.getLength(); i++) {
                     results += atts.getValue(i) + "');return false;\">";
-                } //end for
-            } //end if
-        }//end if
+                }
+            }
+        }
 
     }
 

@@ -396,5 +396,5 @@ public class SpireLabTest {
     private boolean filled(String s) {
         return !(s == null || s.trim().equals(""));
     }
-}//end
+}
 
