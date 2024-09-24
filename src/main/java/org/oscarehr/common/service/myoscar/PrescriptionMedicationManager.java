@@ -40,10 +40,7 @@ import org.oscarehr.common.dao.PrescriptionDao;
 import org.oscarehr.common.dao.SentToPHRTrackingDao;
 import org.oscarehr.common.model.Drug;
 import org.oscarehr.common.model.Prescription;
-import org.oscarehr.common.model.SentToPHRTracking;
-import org.oscarehr.myoscar.commons.MedicalDataRelationshipType;
 import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
 import org.oscarehr.myoscar_server.ws.MedicalDataTransfer4;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -59,87 +56,7 @@ public final class PrescriptionMedicationManager {
     private static final String OSCAR_MEDICATION_DATA_TYPE = "MEDICATION";
     private static final SentToPHRTrackingDao sentToPHRTrackingDao = (SentToPHRTrackingDao) SpringUtils.getBean(SentToPHRTrackingDao.class);
 
-    public static void sendPrescriptionsMedicationsToMyOscar(LoggedInInfo loggedInInfo, MyOscarLoggedInInfo myOscarLoggedInInfo, Integer demographicId) throws ClassCastException {
-        // get last synced prescription info
 
-        // get the medications for the person which are changed since last sync
-        // for each medication
-        // send the medication or update it
-        // keep the resultId in map for later relationship linking to prescription i.e. the drugs in the prescription
-        //
-        // get the persons prescriptions that are changed after last sync
-        // for each prescription
-        // send the prescription or update it
-        // if it was a new prescription, add relationlinks from the previous medications sent results map.
-
-        Date startSyncTime = new Date();
-        SentToPHRTracking sentToPHRTracking = MyOscarMedicalDataManagerUtils.getExistingOrCreateInitialSentToPHRTracking(demographicId, OSCAR_PRESCRIPTION_DATA_TYPE, MyOscarLoggedInInfo.getMyOscarServerBaseUrl());
-        logger.debug("sendPrescriptionsMedicationsToMyOscar : demographicId=" + demographicId + ", lastSyncTime=" + sentToPHRTracking.getSentDatetime());
-
-        HashMap<Drug, Long> remoteMedicationIdMap = sendMedicationsToMyOscar(loggedInInfo, myOscarLoggedInInfo, demographicId, sentToPHRTracking);
-        sendPrescriptionsToMyOscar(loggedInInfo, myOscarLoggedInInfo, demographicId, sentToPHRTracking, remoteMedicationIdMap);
-
-        sentToPHRTracking.setSentDatetime(startSyncTime);
-        sentToPHRTrackingDao.merge(sentToPHRTracking);
-    }
-
-
-    private static void sendPrescriptionsToMyOscar(LoggedInInfo loggedInInfo, MyOscarLoggedInInfo myOscarLoggedInInfo, Integer demographicId, SentToPHRTracking sentToPHRTracking, HashMap<Drug, Long> remoteMedicationIdMap) {
-        PrescriptionDao prescriptionDao = (PrescriptionDao) SpringUtils.getBean(PrescriptionDao.class);
-        List<Prescription> changedPrescriptions = prescriptionDao.findByDemographicIdUpdatedAfterDate(demographicId, sentToPHRTracking.getSentDatetime());
-        for (Prescription prescription : changedPrescriptions) {
-            logger.debug("sendPrescriptionsMedicationsToMyOscar : prescriptionId=" + prescription.getId());
-
-            try {
-                MedicalDataTransfer4 medicalDataTransfer = toMedicalDataTransfer(loggedInInfo, myOscarLoggedInInfo, prescription);
-                Long remotePrescriptionId = MyOscarMedicalDataManagerUtils.addMedicalData(loggedInInfo.getLoggedInProviderNo(), myOscarLoggedInInfo, medicalDataTransfer, OSCAR_PRESCRIPTION_DATA_TYPE, prescription.getId(), true, true);
-                linkPrescriptionToMedications(myOscarLoggedInInfo, prescription, medicalDataTransfer.getOwningPersonId(), remotePrescriptionId, remoteMedicationIdMap);
-            } catch (Exception e) {
-                logger.error("Error", e);
-            }
-        }
-    }
-
-    private static void linkPrescriptionToMedications(MyOscarLoggedInInfo myOscarLoggedInInfo, Prescription prescription, Long ownerId, Long remotePrescriptionId, HashMap<Drug, Long> remoteMedicationIdMap) {
-        for (Entry<Drug, Long> entry : remoteMedicationIdMap.entrySet()) {
-            if (prescription.getId().equals(entry.getKey().getScriptNo())) {
-                try {
-                    MyOscarMedicalDataManagerUtils.addMedicalDataRelationship(myOscarLoggedInInfo, ownerId, remotePrescriptionId, entry.getValue(), MedicalDataRelationshipType.PRESCRIPTION_MEDICATION.name());
-                } catch (Exception e) {
-                    logger.error("Error", e);
-                }
-            }
-        }
-    }
-
-    private static HashMap<Drug, Long> sendMedicationsToMyOscar(LoggedInInfo loggedInInfo, MyOscarLoggedInInfo myOscarLoggedInInfo, Integer demographicId, SentToPHRTracking sentToPHRTracking) {
-        DrugDao drugDao = (DrugDao) SpringUtils.getBean(DrugDao.class);
-        List<Drug> changedMedications = drugDao.findByDemographicIdUpdatedAfterDate(demographicId, sentToPHRTracking.getSentDatetime());
-        HashMap<Drug, Long> remoteIdMap = new HashMap<Drug, Long>();
-        for (Drug drug : changedMedications) {
-            logger.debug("sendPrescriptionsMedicationsToMyOscar : drugId=" + drug.getId());
-
-            try {
-                MedicalDataTransfer4 medicalDataTransfer = toMedicalDataTransfer(loggedInInfo, myOscarLoggedInInfo, drug);
-                Long remoteMedicationId = null;
-
-                // something really odd going on here, we're allowed to update prescriptions/medications? not sure why, we're also not tracking it locally and relying on an error from the server???
-                try {
-                    remoteMedicationId = MyOscarMedicalDataManagerUtils.addMedicalData(loggedInInfo.getLoggedInProviderNo(), myOscarLoggedInInfo, medicalDataTransfer, OSCAR_MEDICATION_DATA_TYPE, drug.getId(), false, true);
-                } catch (Exception e) {
-                    MyOscarMedicalDataManagerUtils.updateMedicalData(loggedInInfo.getLoggedInProviderNo(), myOscarLoggedInInfo, medicalDataTransfer, OSCAR_MEDICATION_DATA_TYPE, drug.getId());
-                    remoteMedicationId = medicalDataTransfer.getId();
-                }
-
-                remoteIdMap.put(drug, remoteMedicationId);
-            } catch (Exception e) {
-                logger.error("Error", e);
-            }
-
-        }
-
-        return (remoteIdMap);
-    }
 
     private static Document toXml(Prescription prescription) throws ParserConfigurationException {
         Document doc = XmlUtils.newDocument("Prescription");

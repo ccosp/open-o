@@ -177,19 +177,6 @@
 	</bean>
 
 	<!-- Indivo -->
-
-	<bean name="/phr/PhrMessage" class="org.oscarehr.phr.web.PHRMessageAction" scope="prototype"/> 
-	<bean name="/oscarRx/SendToPhr" class="oscar.oscarRx.pageUtil.RxSendToPhrAction" scope="prototype"/>
-	<bean name="/oscarEncounter/oscarMeasurements/SendToPhr" class="oscar.oscarEncounter.oscarMeasurements.pageUtil.EctSendMeasurementToPhr" scope="prototype"/>
-		
-	<bean name="/documentManager/SendDocToPhr" class="org.oscarehr.documentManager.actions.SendDocToPhrAction" scope="prototype" />
-	<bean name="/phr/Login" class="org.oscarehr.phr.web.PHRLoginAction" scope="prototype" />
-	<bean name="/phr/Logout" class="org.oscarehr.phr.web.PHRLogoutAction" scope="prototype" />
-
-	<bean name="/phr/UserManagement" class="org.oscarehr.phr.web.PHRUserManagementAction" scope="prototype"/>
-		
-	<bean name="/SendToPhr" class="org.oscarehr.phr.web.PHRGenericSendToPhrAction" scope="prototype"/>
-		
 	<bean name="/testAction" class="org.oscarehr.decisionSupport.web.TestActionW" scope="prototype">
 		<property name="dsService" ref="dsService" />
 	</bean>
