@@ -26,19 +26,17 @@
 
 package com.quatro.dao.security;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.quatro.model.security.Secobjprivilege;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
+import org.oscarehr.util.MiscUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import com.quatro.dao.security.SecobjprivilegeDao;
-import com.quatro.model.security.Secobjprivilege;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements SecobjprivilegeDao {
 

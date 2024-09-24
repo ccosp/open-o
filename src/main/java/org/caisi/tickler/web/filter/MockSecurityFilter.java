@@ -22,7 +22,8 @@
 
 package org.caisi.tickler.web.filter;
 
-import java.io.IOException;
+import org.apache.logging.log4j.Logger;
+import org.oscarehr.util.MiscUtils;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -32,9 +33,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import java.io.IOException;
 
 public class MockSecurityFilter implements Filter {
 

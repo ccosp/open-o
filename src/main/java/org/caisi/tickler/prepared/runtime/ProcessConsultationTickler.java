@@ -22,13 +22,6 @@
 
 package org.caisi.tickler.prepared.runtime;
 
-import java.io.File;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -44,6 +37,12 @@ import org.oscarehr.common.model.Tickler;
 import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.Date;
+import java.util.List;
 
 public class ProcessConsultationTickler extends AbstractPreparedTickler implements PreparedTickler {
 

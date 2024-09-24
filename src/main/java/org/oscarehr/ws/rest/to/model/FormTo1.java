@@ -23,10 +23,9 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class FormTo1 implements Serializable {

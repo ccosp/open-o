@@ -23,15 +23,14 @@
  */
 package com.quatro.service.security;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
-import oscar.OscarProperties;
-
 import com.quatro.dao.security.UserAccessDao;
 import com.quatro.model.security.UserAccessValue;
 import com.quatro.service.LookupManager;
+import oscar.OscarProperties;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 public class UserAccessManagerImpl implements UserAccessManager {
     private UserAccessDao _dao = null;

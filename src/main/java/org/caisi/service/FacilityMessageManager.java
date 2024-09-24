@@ -25,9 +25,9 @@
  */
 package org.caisi.service;
 
-import java.util.List;
-
 import org.oscarehr.common.model.FacilityMessage;
+
+import java.util.List;
 
 public interface FacilityMessageManager {
     FacilityMessage getMessage(String messageId);

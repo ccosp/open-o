@@ -20,19 +20,17 @@
  */
 package com.quatro.web.lookup;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.quatro.model.LookupCodeValue;
+import com.quatro.service.LookupManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import com.quatro.model.LookupCodeValue;
-import com.quatro.service.LookupManager;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class LookupTableListAction extends DispatchAction {
     private LookupManager lookupManager = null;

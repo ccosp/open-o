@@ -20,9 +20,8 @@
  */
 package com.quatro.model;
 
-import org.caisi.model.BaseObject;
-
 import com.quatro.common.KeyConstants;
+import org.caisi.model.BaseObject;
 
 public class FieldDefValue extends BaseObject {
     private String tableId;

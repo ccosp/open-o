@@ -25,8 +25,6 @@ package com.quatro.dao.security;
 
 import java.util.List;
 
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-
 public interface UserAccessDao {
     public List GetUserAccessList(String providerNo, Integer shelterId);
 

@@ -9,9 +9,6 @@
 
 package com.indivica.olis.queries;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.indivica.olis.parameters.OBR16;
 import com.indivica.olis.parameters.OBR22;
 import com.indivica.olis.parameters.OBR25;
@@ -33,6 +30,9 @@ import com.indivica.olis.parameters.ZBR6;
 import com.indivica.olis.parameters.ZPD1;
 import com.indivica.olis.parameters.ZPD3;
 import com.indivica.olis.parameters.ZRP1;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Z01 - Retrieve Laboratory Information for Patient

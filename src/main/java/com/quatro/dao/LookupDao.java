@@ -24,35 +24,14 @@
 
 package com.quatro.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.hibernate.Session;
+import com.quatro.model.LookupCodeValue;
+import com.quatro.model.LookupTableDefValue;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.common.model.Facility;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import oscar.MyDateFormat;
-import oscar.OscarProperties;
-import oscar.oscarDB.DBPreparedHandler;
-import oscar.oscarDB.DBPreparedHandlerParam;
-
-import com.quatro.common.KeyConstants;
-import com.quatro.model.FieldDefValue;
-import com.quatro.model.LookupCodeValue;
-import com.quatro.model.LookupTableDefValue;
-import com.quatro.model.LstOrgcd;
-import com.quatro.model.security.SecProvider;
-import com.quatro.util.Utility;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.hibernate.SessionFactory;
+import java.sql.SQLException;
+import java.util.List;
 
 public interface LookupDao {
 

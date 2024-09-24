@@ -20,11 +20,10 @@
  */
 package com.quatro.web.lookup;
 
-import java.util.List;
-
+import com.quatro.model.LookupTableDefValue;
 import org.apache.struts.action.ActionForm;
 
-import com.quatro.model.LookupTableDefValue;
+import java.util.List;
 
 public class LookupListForm extends ActionForm {
     List lookups;

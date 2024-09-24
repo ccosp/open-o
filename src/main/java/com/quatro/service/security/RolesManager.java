@@ -25,10 +25,10 @@
  */
 package com.quatro.service.security;
 
-import java.util.List;
-
 import com.quatro.model.security.Secobjprivilege;
 import com.quatro.model.security.Secrole;
+
+import java.util.List;
 
 public interface RolesManager {
 

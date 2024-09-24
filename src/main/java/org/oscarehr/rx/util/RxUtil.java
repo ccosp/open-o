@@ -23,18 +23,14 @@
  */
 package org.oscarehr.rx.util;
 
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
+import org.oscarehr.common.model.Drug;
+import org.oscarehr.util.MiscUtils;
+import oscar.OscarProperties;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.oscarehr.common.model.Drug;
-import org.oscarehr.util.MiscUtils;
-
-import oscar.OscarProperties;
 
 public class RxUtil {
 

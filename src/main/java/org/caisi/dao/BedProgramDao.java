@@ -28,14 +28,6 @@ package org.caisi.dao;
 
 import java.util.List;
 
-import org.hibernate.Hibernate;
-import org.hibernate.SQLQuery;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-import org.hibernate.type.StandardBasicTypes;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
-
 public interface BedProgramDao {
 
 

@@ -23,12 +23,11 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.quatro.model.LookupCodeValue;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.quatro.model.LookupCodeValue;
+import java.io.Serializable;
+import java.util.Date;
 
 @XmlRootElement
 public class ProgramTo1 implements Serializable {

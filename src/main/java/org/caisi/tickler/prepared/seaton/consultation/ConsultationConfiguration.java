@@ -22,9 +22,9 @@
 
 package org.caisi.tickler.prepared.seaton.consultation;
 
-import java.io.FileReader;
-
 import org.apache.commons.betwixt.io.BeanReader;
+
+import java.io.FileReader;
 
 public class ConsultationConfiguration {
     String filename;

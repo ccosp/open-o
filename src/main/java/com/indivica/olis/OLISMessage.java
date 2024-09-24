@@ -9,13 +9,12 @@
 
 package com.indivica.olis;
 
-import org.oscarehr.common.model.Provider;
-
 import com.indivica.olis.queries.Query;
 import com.indivica.olis.segments.DSCSegment;
 import com.indivica.olis.segments.MSHSegment;
 import com.indivica.olis.segments.SPRSegment;
 import com.indivica.olis.segments.ZSHSegment;
+import org.oscarehr.common.model.Provider;
 
 public class OLISMessage {
 

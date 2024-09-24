@@ -20,6 +20,9 @@
  */
 package com.quatro.util;
 
+import org.oscarehr.PMmodule.model.FieldDefinition;
+import org.oscarehr.util.MiscUtils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
@@ -27,9 +30,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import org.oscarehr.PMmodule.model.FieldDefinition;
-import org.oscarehr.util.MiscUtils;
 
 public class Utility {
     public static boolean IsEmpty(String pStr) {

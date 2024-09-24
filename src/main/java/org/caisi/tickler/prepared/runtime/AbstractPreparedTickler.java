@@ -22,11 +22,11 @@
 
 package org.caisi.tickler.prepared.runtime;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import org.caisi.tickler.prepared.PreparedTickler;
 import org.oscarehr.util.MiscUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public abstract class AbstractPreparedTickler implements PreparedTickler {
 

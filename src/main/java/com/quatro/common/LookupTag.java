@@ -29,13 +29,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.struts.taglib.html.*;
 */
 
-import javax.servlet.jsp.JspException;
-
 import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.taglib.html.BaseInputTag;
 import org.oscarehr.util.MiscUtils;
-
 import oscar.Misc;
+
+import javax.servlet.jsp.JspException;
 
 public class LookupTag extends BaseInputTag {
     //	private String name=null;

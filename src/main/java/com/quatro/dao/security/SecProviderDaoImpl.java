@@ -24,8 +24,7 @@
 
 package com.quatro.dao.security;
 
-import java.util.List;
-
+import com.quatro.model.security.SecProvider;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
@@ -34,7 +33,7 @@ import org.hibernate.criterion.Example;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.quatro.model.security.SecProvider;
+import java.util.List;
 
 /**
  * @author JZhang

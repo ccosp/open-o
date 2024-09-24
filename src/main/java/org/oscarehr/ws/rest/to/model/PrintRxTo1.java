@@ -23,9 +23,9 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
-import java.util.List;
-
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
+import java.util.List;
 
 public class PrintRxTo1 {
     private Integer demographic;

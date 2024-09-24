@@ -23,17 +23,16 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.oscarehr.casemgmt.model.CaseManagementIssue;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.oscarehr.casemgmt.model.CaseManagementIssue;
 
 @XmlRootElement(name = "encounterNote")
 public class NoteTo1 implements Serializable {

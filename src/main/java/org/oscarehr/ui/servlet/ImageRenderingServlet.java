@@ -32,14 +32,24 @@ import org.oscarehr.casemgmt.dao.ClientImageDAO;
 import org.oscarehr.common.dao.DigitalSignatureDao;
 import org.oscarehr.common.model.DigitalSignature;
 import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.*;
+import org.oscarehr.util.DigitalSignatureUtils;
+import org.oscarehr.util.LoggedInInfo;
+import org.oscarehr.util.MiscUtils;
+import org.oscarehr.util.SessionConstants;
+import org.oscarehr.util.SpringUtils;
 import oscar.OscarProperties;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketException;
 
 /**

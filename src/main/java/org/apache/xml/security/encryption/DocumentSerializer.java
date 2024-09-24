@@ -1,15 +1,6 @@
 package org.apache.xml.security.encryption;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.commons.codec.binary.Base64;
-import org.apache.xml.security.c14n.InvalidCanonicalizerException;
 import org.apache.xml.security.utils.XMLUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
@@ -17,6 +8,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * Converts <code>String</code>s into <code>Node</code>s and visa versa.

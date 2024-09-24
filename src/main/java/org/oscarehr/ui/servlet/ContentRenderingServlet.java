@@ -22,24 +22,22 @@
 
 package org.oscarehr.ui.servlet;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.SocketException;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import ca.uhn.hl7v2.HL7Exception;
+import ca.uhn.hl7v2.parser.EncodingNotSupportedException;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.web.PrescriptionQrCodeUIBean;
-
 import oscar.log.LogAction;
 import oscar.oscarLab.ca.all.pageUtil.ViewOruR01UIBean;
-import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.parser.EncodingNotSupportedException;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.SocketException;
 
 /**
  * This servlet requires a parameter called "source" which should signify where to get the image from.

@@ -23,21 +23,19 @@
  */
 package com.quatro.web.admin;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.jsp.PageContext;
-
 import org.oscarehr.common.dao.SecurityDao;
 import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-
 import oscar.MyDateFormat;
 import oscar.log.LogAction;
 import oscar.log.LogConst;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.jsp.PageContext;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 
 /**

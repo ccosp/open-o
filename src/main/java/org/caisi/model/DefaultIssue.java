@@ -22,7 +22,7 @@
 
 package org.caisi.model;
 
-import java.util.Date;
+import org.oscarehr.common.model.AbstractModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,8 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.oscarehr.common.model.AbstractModel;
+import java.util.Date;
 
 @Entity
 @Table(name = "default_issue")

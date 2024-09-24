@@ -23,9 +23,8 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement(name = "inbox")
 public class InboxTo1 implements Serializable {

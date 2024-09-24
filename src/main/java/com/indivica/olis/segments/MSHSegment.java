@@ -8,13 +8,12 @@
  */
 package com.indivica.olis.segments;
 
+import com.indivica.olis.queries.QueryType;
+import oscar.OscarProperties;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-
-import oscar.OscarProperties;
-
-import com.indivica.olis.queries.QueryType;
 
 public class MSHSegment implements Segment {
 

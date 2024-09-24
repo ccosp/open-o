@@ -23,11 +23,10 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "menu")
 public class MenuTo1 implements Serializable {

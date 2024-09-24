@@ -9,9 +9,9 @@
 
 package com.indivica.olis.queries;
 
-import java.util.Date;
-
 import com.indivica.olis.parameters.ZPD1;
+
+import java.util.Date;
 
 public abstract class Query implements Cloneable {
 

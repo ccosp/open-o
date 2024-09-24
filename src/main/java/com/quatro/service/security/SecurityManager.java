@@ -20,17 +20,15 @@
  */
 package com.quatro.service.security;
 
+import com.quatro.dao.security.SecobjprivilegeDao;
+import com.quatro.model.security.Secobjprivilege;
+import org.oscarehr.util.SpringUtils;
+import oscar.util.OscarRoleObjectPrivilege;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
-
-import org.oscarehr.util.SpringUtils;
-
-import oscar.util.OscarRoleObjectPrivilege;
-
-import com.quatro.dao.security.SecobjprivilegeDao;
-import com.quatro.model.security.Secobjprivilege;
 
 public class SecurityManager {
     public static final String ACCESS_NONE = "o";

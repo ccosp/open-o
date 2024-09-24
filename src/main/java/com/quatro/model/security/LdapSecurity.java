@@ -23,15 +23,13 @@
  */
 package com.quatro.model.security;
 
-import java.util.Date;
+import org.oscarehr.common.model.Security;
+import oscar.login.jaas.LoginModuleFactory;
+import oscar.login.jaas.OscarCallbackHandler;
 
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
-
-import org.oscarehr.common.model.Security;
-
-import oscar.login.jaas.LoginModuleFactory;
-import oscar.login.jaas.OscarCallbackHandler;
+import java.util.Date;
 
 /**
  * Security class for integration with LDAP.

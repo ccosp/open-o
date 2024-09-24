@@ -20,16 +20,14 @@
  */
 package com.quatro.common;
 
-import java.util.Calendar;
-
-import javax.servlet.jsp.JspException;
-
 import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.taglib.html.BaseInputTag;
 import org.apache.struts.taglib.html.TextTag;
 import org.oscarehr.util.MiscUtils;
-
 import oscar.Misc;
+
+import javax.servlet.jsp.JspException;
+import java.util.Calendar;
 
 public class DatePickerTag extends BaseInputTag {
     private TextTag dtTextTag = new TextTag();

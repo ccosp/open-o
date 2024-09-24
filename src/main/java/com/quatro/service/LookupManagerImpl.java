@@ -23,13 +23,12 @@
  */
 package com.quatro.service;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import com.quatro.dao.LookupDao;
 import com.quatro.model.LookupCodeValue;
 import com.quatro.model.LookupTableDefValue;
-import com.quatro.service.LookupManager;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public class LookupManagerImpl implements LookupManager {
     private LookupDao lookupDao = null;

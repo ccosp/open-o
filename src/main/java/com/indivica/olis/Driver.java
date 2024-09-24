@@ -9,35 +9,15 @@
 
 package com.indivica.olis;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.StringReader;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.security.Security;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.SchemaFactory;
-
+import ca.ssha._2005.hial.ArrayOfError;
+import ca.ssha._2005.hial.ArrayOfString;
+import ca.ssha._2005.hial.Response;
+import ca.ssha.www._2005.hial.OLISStub;
+import ca.ssha.www._2005.hial.OLISStub.HIALRequest;
+import ca.ssha.www._2005.hial.OLISStub.HIALRequestSignedRequest;
+import ca.ssha.www._2005.hial.OLISStub.OLISRequest;
+import ca.ssha.www._2005.hial.OLISStub.OLISRequestResponse;
+import com.indivica.olis.queries.Query;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
@@ -67,19 +47,36 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.xml.sax.InputSource;
-
-import com.indivica.olis.queries.Query;
-
-import ca.ssha._2005.hial.ArrayOfError;
-import ca.ssha._2005.hial.ArrayOfString;
-import ca.ssha._2005.hial.Response;
-import ca.ssha.www._2005.hial.OLISStub;
-import ca.ssha.www._2005.hial.OLISStub.HIALRequest;
-import ca.ssha.www._2005.hial.OLISStub.HIALRequestSignedRequest;
-import ca.ssha.www._2005.hial.OLISStub.OLISRequest;
-import ca.ssha.www._2005.hial.OLISStub.OLISRequestResponse;
 import oscar.OscarProperties;
 import oscar.oscarMessenger.data.MsgProviderData;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.SchemaFactory;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.StringReader;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.Security;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Driver {
 

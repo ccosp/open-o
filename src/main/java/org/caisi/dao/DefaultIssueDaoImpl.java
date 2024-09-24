@@ -26,14 +26,13 @@
 
 package org.caisi.dao;
 
+import org.caisi.model.DefaultIssue;
+import org.oscarehr.common.dao.AbstractDaoImpl;
+
+import javax.persistence.Query;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.persistence.Query;
-
-import org.caisi.model.DefaultIssue;
-import org.oscarehr.common.dao.AbstractDaoImpl;
 
 public class DefaultIssueDaoImpl extends AbstractDaoImpl<DefaultIssue> implements DefaultIssueDao {
 

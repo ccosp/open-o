@@ -9,10 +9,10 @@
 
 package com.indivica.olis.segments;
 
-import java.util.Random;
-
 import com.indivica.olis.queries.Query;
 import com.indivica.olis.queries.QueryType;
+
+import java.util.Random;
 
 public class SPRSegment implements Segment {
 

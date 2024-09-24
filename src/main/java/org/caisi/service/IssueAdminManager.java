@@ -22,13 +22,13 @@
 
 package org.caisi.service;
 
-import java.util.List;
-
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.casemgmt.dao.IssueDAO;
 import org.oscarehr.casemgmt.model.Issue;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public class IssueAdminManager {
     private static Logger log = MiscUtils.getLogger();

@@ -23,9 +23,9 @@
  */
 package org.oscarehr.ws.rest.to.model;
 
-import java.io.Serializable;
-
 import org.oscarehr.util.Age;
+
+import java.io.Serializable;
 
 public class AgeTo1 implements Serializable {
 

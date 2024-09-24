@@ -24,23 +24,10 @@
 
 package com.quatro.dao.security;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.logging.log4j.Logger;
-import org.hibernate.LockMode;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Example;
-import org.oscarehr.PMmodule.web.formbean.StaffForm;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.quatro.model.security.Secuserrole;
+import org.oscarehr.PMmodule.web.formbean.StaffForm;
+
+import java.util.List;
 
 /**
  * A data access object (DAO) providing persistence and search support for

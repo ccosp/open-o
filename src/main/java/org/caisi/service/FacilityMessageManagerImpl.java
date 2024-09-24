@@ -25,12 +25,12 @@
  */
 package org.caisi.service;
 
-import java.util.List;
-
 import org.oscarehr.common.dao.FacilityMessageDao;
 import org.oscarehr.common.model.FacilityMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional
 public class FacilityMessageManagerImpl implements FacilityMessageManager {

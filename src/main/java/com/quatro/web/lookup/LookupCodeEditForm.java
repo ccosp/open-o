@@ -20,9 +20,9 @@
  */
 package com.quatro.web.lookup;
 
-import java.util.List;
-
 import org.apache.struts.action.ActionForm;
+
+import java.util.List;
 
 public class LookupCodeEditForm extends ActionForm {
     List codeFields;

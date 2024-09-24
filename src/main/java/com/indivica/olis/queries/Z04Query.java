@@ -9,15 +9,15 @@
 
 package com.indivica.olis.queries;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.indivica.olis.parameters.OBR22;
 import com.indivica.olis.parameters.OBR4;
 import com.indivica.olis.parameters.OBX3;
 import com.indivica.olis.parameters.QRD7;
 import com.indivica.olis.parameters.ZPD1;
 import com.indivica.olis.parameters.ZRP1;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Z04 - Retrieve Laboratory Information Updates for Practitioner

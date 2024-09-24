@@ -23,9 +23,9 @@
  */
 package com.quatro.dao.security;
 
-import java.util.List;
-
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+
+import java.util.List;
 
 public class UserAccessDaoImpl extends HibernateDaoSupport implements UserAccessDao {
 

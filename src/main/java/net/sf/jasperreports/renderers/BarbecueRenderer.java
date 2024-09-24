@@ -34,11 +34,11 @@
  */
 package net.sf.jasperreports.renderers;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import net.sf.jasperreports.engine.JRAbstractSvgRenderer;
 import net.sourceforge.barbecue.Barcode;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 
 /**
