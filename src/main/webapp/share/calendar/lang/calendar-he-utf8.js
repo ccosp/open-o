@@ -84,9 +84,9 @@ Calendar._TT["ABOUT"] =
     "מופץ תחת זיכיון ה GNU LGPL.  עיין ב http://gnu.org/licenses/lgpl.html לפרטים נוספים." +
     "\n\n" +
     בחירת
-תאריך:\
+\u05ea\u05d0\u05e8\u05d9\u05db:
 n
-" +
++
 "- השתמש בכפתורים \xab, \xbb לבחירת שנה\n" +
 "- השתמש בכפתורים " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " לבחירת חודש\n" +
 "- החזק העכבר לחוץ מעל הכפתורים המוזכרים לעיל לבחירה מהירה יותר.";
