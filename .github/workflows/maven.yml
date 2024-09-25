@@ -10,21 +10,28 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
+      - magenta-master
+      - develop/alpaca
+      - develop/bullfrog
   pull_request:
-    branches: [ "master" ]
-
+    branches:
+      - master
+      - magenta-master
+      - develop/alpaca
+      - develop/bullfrog
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build with Maven OpenJDK 11
+      - name: Build with OpenJDK 1.8
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'temurin' 
           cache: maven
-      - run: mvn -B package --file pom.xml -DskipTests=true
+      - run: mvn clean -Dmaven.test.skip=true -T 1C package war:exploded
 
   
