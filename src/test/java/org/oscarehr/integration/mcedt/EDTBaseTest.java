@@ -133,16 +133,23 @@ public abstract class EDTBaseTest {
     public static void setUpBeforeClass() {
         Init.init();
         ResourceResolver.register(CidPrefixResourceResolver.class, true);
+        // Check if the Spring context (bean factory) has been initialized yet
+        // Set up the context if it's null
         if(SpringUtils.getBeanFactory() == null) {
             oscar.OscarProperties p = oscar.OscarProperties.getInstance();
+            // Set the properties
             p.setProperty("db_name", ConfigUtils.getProperty("db_schema") + ConfigUtils.getProperty("db_schema_properties"));
             p.setProperty("db_username", ConfigUtils.getProperty("db_user"));
             p.setProperty("db_password", ConfigUtils.getProperty("db_password"));
             p.setProperty("db_uri", ConfigUtils.getProperty("db_url_prefix"));
             p.setProperty("db_driver", ConfigUtils.getProperty("db_driver"));
+            // Load the Spring application context to initialize beans and other components
+            // It loads the configurations defined in the specified XML files
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
-            context.setConfigLocations(new String[]{"/applicationContext.xml","/applicationContextBORN.xml"});
+            // Set the configuration files for the application context
+            context.setConfigLocations(new String[]{"/applicationContext.xml"});
             context.refresh();
+            // Set the application context in the Spring utility class, so it can be accessed throughout the application
             SpringUtils.setBeanFactory(context);
         }
     }

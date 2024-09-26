@@ -19,4 +19,5 @@ public class AttachmentCleanupInterceptor extends
 	public void handleMessage(Message message) throws Fault {
 		AttachmentCachingInterceptor.clear();
 	}
+	
 }
