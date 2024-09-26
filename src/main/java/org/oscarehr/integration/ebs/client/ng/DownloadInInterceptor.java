@@ -2,12 +2,8 @@ package org.oscarehr.integration.ebs.client.ng;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
-
-import javax.xml.soap.SOAPMessage;
 
 import org.apache.cxf.attachment.LazyAttachmentCollection;
-import org.apache.cxf.binding.xml.interceptor.XMLMessageInInterceptor;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Attachment;
@@ -36,12 +32,9 @@ public class DownloadInInterceptor extends AbstractPhaseInterceptor<Message> {
 			}
 		}
 		
-		
 		for(Map.Entry<String, Object> entry : message.entrySet()) {
 			System.out.println(entry.getKey() + " - " + entry.getValue());
 		}
-		
-		// SOAPMessage soapMessage = (SOAPMessage) message;
 	}
 
 }

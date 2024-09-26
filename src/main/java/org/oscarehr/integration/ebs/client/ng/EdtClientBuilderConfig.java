@@ -5,23 +5,15 @@ import java.util.UUID;
 public class EdtClientBuilderConfig {
 
 	private String userNameTokenUser;
-
 	private String userNameTokenPassword;
-
 	private String keystoreUser;
-
 	private String keystorePassword;
-
 	private String serviceUrl;
-
 	private String conformanceKey;
-
 	private String auditId;
-
 	private String serviceId;
 
 	private boolean loggingRequired;
-
 	private boolean mtomEnabled;
 	
 	public EdtClientBuilderConfig() {
@@ -107,4 +99,5 @@ public class EdtClientBuilderConfig {
 	public void setMtomEnabled(boolean mtomEnabled) {
 		this.mtomEnabled = mtomEnabled;
 	}
+	
 }

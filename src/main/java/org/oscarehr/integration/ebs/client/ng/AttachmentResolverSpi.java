@@ -25,7 +25,6 @@ import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 public class AttachmentResolverSpi extends ResourceResolverSpi {
 	
 	private static final String SUPPORTED_URI_PREFIX = "cid:urn";
-
 	private static final String ATTACHMENT_PREFIX = "cid:";
 
 	private static Logger logger = Logger.getLogger(AttachmentResolverSpi.class);
@@ -58,7 +57,7 @@ public class AttachmentResolverSpi extends ResourceResolverSpi {
 		
 		if (attachment == null) {
 			logger.error("Unable to resolve attachment for " + resourceId);
-			
+
 			throw new ResourceResolverException(context.uriToResolve, context.attr.getName(), context.baseUri);
 		}
 		

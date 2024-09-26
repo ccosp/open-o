@@ -32,8 +32,7 @@ public class ClientPasswordCallback implements CallbackHandler {
 				switch (pc.getUsage()) {
 				case WSPasswordCallback.USERNAME_TOKEN:
 					// for some reason, CXF uses the same username for both
-					// the keystore and the username token - we need to override
-					// it to make it work
+					// the keystore and the username token - we need to override it to make it work
 					pc.setIdentifier(username);
 					pc.setPassword(password);
 					break;
@@ -49,4 +48,5 @@ public class ClientPasswordCallback implements CallbackHandler {
 			}
 		}
 	}
+	
 }
