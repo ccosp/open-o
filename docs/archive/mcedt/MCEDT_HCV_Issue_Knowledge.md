@@ -10,6 +10,15 @@ To resolve this error, we had to update the "ebs-client" library to make it comp
 
 The updated ebs-client classes are located in pacakge "org.oscarehr.integration.ebs.client.ng" (file path: src/main/java/org/oscarehr/integration/ebs/client/ng).
 
+# XOP References Issue
+
+MCEDT does not accept SOAP requests containing XOP references. We added the following two properties in "WSS4JOutInterceptor" to fix the issue:
+
+"outProps.put(WSHandlerConstants.STORE_BYTES_IN_ATTACHMENT, "0");"
+"outProps.put(WSHandlerConstants.EXPAND_XOP_INCLUDE, "0");"
+
+These two properties ensure that the signature and attachment are included directly in the outgoing message without XOP reference.
+
 # Header Parsing Error
 
 The error "org.apache.cxf.binding.soap.SoapFault: An error was discovered processing the wsse:Security header" threw when getting list on both Sent and Download pages, which was caused due to the algorithm RSA1.5 being unsupported by the "WSS4J 2.2.0" because of its security risk (WSS4J 2.2.0 is the default version in CXF 3.2.0, we can't manually downgrade or upgrade it to another version).
@@ -18,7 +27,7 @@ We had to insert a line of code into the EDTClientBuilder.java (one of the class
 
 "inProps.put(WSHandlerConstants.ALLOW_RSA15_KEY_TRANSPORT_ALGORITHM, "true");"
 
-This enabled the use of this RSA 1.5 algorithm in the current WSS4J version, and the header parsing error was resolved. 
+This enabled the use of the RSA 1.5 algorithm in the current WSS4J version, and the header parsing error was resolved. 
 
 # Signature Invalid Error
 
@@ -30,7 +39,7 @@ We had to insert two lines of code into the EDTClientBuilder.java, newWSSInInter
 
 "inProps.put(WSHandlerConstants.EXPAND_XOP_INCLUDE, "false");"
 
-After setting the "STORE_BYTES_IN_ATTACHMENT" and "EXPAND_XOP_INCLUDE" to false, the binary data is forced to be included inline in the SOAP message (STORE_BYTES_IN_ATTACHMENT, "false"), ensuring no issues arise from processing attachments. By setting EXPAND_XOP_INCLUDE to false, we avoided looking for XOP references in the response. The error was resolved after changing the setting.
+After setting the "STORE_BYTES_IN_ATTACHMENT" and "EXPAND_XOP_INCLUDE" to false, the binary data is forced to be included inline in the SOAP message (STORE_BYTES_IN_ATTACHMENT, "false"), ensuring no issues arise from processing attachments. By setting "EXPAND_XOP_INCLUDE" to false, we avoided looking for XOP references in the response. The error was resolved after changing the setting.
 
 The default setting of the two properties is false. However, the setting has been switched to true due to other configurations (likely when MTOM is enabled, the setting changed to true automatically). In this case, we had to configure the properties to "false".
 
@@ -42,8 +51,10 @@ The error "NullPointerException" was caused by "SpringUtils.getBean", which led 
 
 After we fixed the error, most of the test cases passed.
 
-There are 7 test cases running failed and throwing "NumberFormatException" error, and we are not going to fix them at this point. 
+There are 7 test cases running failed and throwing "NumberFormatException" error since we used "List<BigInteger>" as the parameter type, but the ID attempts to be passed with string type. Therefore, due to the current implementation of the dependency, we are not catching the exact error "Rejected By Policy." This has been confirmed with the MOH MCEDT Conformance Testing team, who stated that "catching exceptions isn't possible is fine here", and we are not going to fix them at this point.
 
 ## HCV Tests
 
-There are 18 test cases skipped, and we are not going to enable them to run at this point. 
+There are 18 test cases skipped since they requested the online test environment (the annotation "@Ignore("Valid only for online validation")" was added to the 18 test cases).
+
+The context is that the test cases were written to match what was supposed to happen according to the conformance certification, but in REAL-LIFE, that's not what actually is happening. Therefore, the tests that were written to be failed, and we will not enable them to run at this point. 
