@@ -15,6 +15,19 @@ import org.apache.xml.security.transforms.TransformSpi;
 import org.apache.xml.security.transforms.TransformationException;
 import org.xml.sax.SAXException;
 
+/**
+ * This class implements a custom transformation for handling attachment ciphertext in XML signatures.
+ * It extends the {@link TransformSpi} class from the Apache XML Security library.
+ * 
+ * <p/>
+ * 
+ * This transformation is part of the OASIS WSS (Web Services Security) SwA (SOAP with Attachments) 
+ * Profile 1.1 and is used to process attachments in a secure manner.</p>
+ * 
+ * <p/>
+ * 
+ * The transformation URI is {@link #TRANSFORM_ATTACHMENT_CIPHERTEXT}.
+ */
 public class TransformAttachmentCiphertext extends TransformSpi {
 
 	public static final String TRANSFORM_ATTACHMENT_CIPHERTEXT = 
