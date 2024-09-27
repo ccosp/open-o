@@ -68,10 +68,10 @@ import ca.ontario.health.ebs.idp.IdpHeader;
  * <p/>
  * 
  * The service requester must sign all headers and the body using a certificate
- * issued by an issuer approved by MHLTC. The signature will require: Key
+ * issued by an issuer approved by MHLTC. The signature must meet the following requirements:
  * Identifier Type
- * - Binary Security Token, Direct Reference Signature Canonicalization
- * 
+ * - Key Identifier Type: Binary Security Token, Direct Reference Signature
+ * - Signature Canonicalization: Inclusive Canonicalization
  */
 public class EdtClientBuilder {
 
@@ -119,25 +119,47 @@ public class EdtClientBuilder {
 		}
 	}
 
+	/**
+	 * Initializes the EdtClientBuilder and registers the attachment resolver.
+	 */
 	public EdtClientBuilder() {
 		registerAttachmentResolver();
 	}
 
+	/**
+	 * Initializes the EdtClientBuilder with the specified configuration.
+	 * 
+	 * @param config the configuration to be used by this builder
+	 */
 	public EdtClientBuilder(EdtClientBuilderConfig config) {
 		this();
 		setConfig(config);
 	}
 
+	/**
+	 * Retrieves the current configuration for this client builder.
+	 * 
+	 * @return the configuration being used by this client builder
+	 */
 	public EdtClientBuilderConfig getConfig() {
 		return config;
 	}
 
+	/**
+	 * Sets the configuration for this client builder.
+	 * 
+	 * @param config the configuration to set
+	 */
 	public void setConfig(EdtClientBuilderConfig config) {
 		this.config = config;
 	}
 
 	/**
 	 * Initializes service client for carrying out the request operation.
+	 * 
+	 * @param clientClass the class of the service client to be built
+     * @return an instance of the service client
+     * @param <T> the type of the service client
 	 */
 	public <T> T build(Class<T> clientClass) {
 		T result = newDelegate(clientClass);
@@ -175,6 +197,13 @@ public class EdtClientBuilder {
 		return result;
 	}
 
+	/**
+	 * Creates a new delegate instance of the specified client class.
+	 * 
+	 * @param clientClass the class of the client to create
+	 * @return a new instance of the client
+	 * @param <T> the type of the client class
+	 */
 	@SuppressWarnings("unchecked")
 	protected <T> T newDelegate(Class<T> clientClass) {
 		JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
@@ -183,6 +212,12 @@ public class EdtClientBuilder {
 		return (T) factory.create();
 	}
 
+	/**
+	 * Configures the header list to be included in the SOAP request.
+	 * 
+	 * @param bindingProvider the binding provider to configure
+	 * @throws Exception if an error occurs during configuration
+	 */
 	protected void configureHeaderList(BindingProvider bindingProvider) throws Exception {
 		SOAPFactory sf = SOAPFactory.newInstance();
 		// initializes custom IDP header
@@ -207,6 +242,11 @@ public class EdtClientBuilder {
 		bindingProvider.getRequestContext().put(Header.HEADER_LIST, headersList);
 	}
 
+	/**
+	 * Configures the inbound interceptors for the client.
+	 * 
+	 * @param client the client to configure
+	 */
 	protected void configureInInterceptor(Client client) {
 		if (getConfig().isLoggingRequired()) {
 			client.getEndpoint().getInInterceptors().add(new LoggingInInterceptor());
@@ -219,6 +259,11 @@ public class EdtClientBuilder {
 		client.getEndpoint().getInInterceptors().add(new AttachmentCleanupInterceptor());
 	}
 
+	/**
+	 * Creates a new configuration for the inbound WSS4J interceptor.
+	 * 
+	 * @return a map of properties for configuring the inbound interceptor
+	 */
 	protected Map<String, Object> newWSSInInterceptorConfiguration() {
 		Map<String, Object> inProps = new HashMap<String, Object>();
 		inProps.put(WSHandlerConstants.ACTION, getCxfOutHandlerDirectives());
@@ -230,6 +275,11 @@ public class EdtClientBuilder {
 		return inProps;
 	}
 
+	/**
+	 * Configures the outbound interceptors for the client.
+	 * 
+	 * @param client the client to configure
+	 */
 	protected void configureOutInterceptor(Client client) {
 		if (getConfig().isLoggingRequired()) {
 			client.getEndpoint().getOutInterceptors().add(new LoggingOutInterceptor());
@@ -241,6 +291,11 @@ public class EdtClientBuilder {
 		client.getEndpoint().getOutInterceptors().add(wssOut);
 	}
 
+	/**
+	 * Creates a new configuration for the outbound WSS4J interceptor.
+	 * 
+	 * @return a map of properties for configuring the outbound interceptor
+	 */
 	protected Map<String, Object> newWSSOutInterceptorConfiguration() {
 		Map<String, Object> outProps = new HashMap<String, Object>();
 		outProps.put(WSHandlerConstants.MUST_UNDERSTAND, "1");
@@ -258,28 +313,56 @@ public class EdtClientBuilder {
 		return outProps;
 	}
 
+	/**
+	 * Returns the CXF directives for the outbound handler configuration, including
+	 * additional encryption directives.
+	 * 
+	 * @return a string of directives for the outbound handler, including encryption
+	 */
 	protected String getCxfOutHandlerDirectives() {
 		return getCxfOutHandlerDriectives() // same as for In handler
 				+ " " + WSHandlerConstants.ENCRYPT; // plus decryption
 	}
 
+	/**
+	 * Returns the CXF directives for the outbound handler configuration, specifying 
+	 * the required security actions such as username token, timestamp, and signature.
+	 * 
+	 * @return a string of directives for the outbound handler
+	 */
 	protected String getCxfOutHandlerDriectives() {
 		return WSHandlerConstants.USERNAME_TOKEN + " " + // Tells CXF to add user name token
 				WSHandlerConstants.TIMESTAMP + " " + // and timestamp element
 				WSHandlerConstants.SIGNATURE; // and finally sing the content
 	}
 
+	/**
+	 * Creates a new callback for client password handling.
+	 * 
+	 * @return a new ClientPasswordCallback instance
+	 */
 	protected ClientPasswordCallback newCallback() {
 		return new ClientPasswordCallback(getConfig().getUserNameTokenUser(), getConfig().getUserNameTokenPassword(),
 				getConfig().getKeystoreUser(), getConfig().getKeystorePassword());
 	}
 
+	/**
+	 * Creates an IDP header with the specified user MUID.
+	 * 
+	 * @param userMuid the user MUID to include in the header
+	 * @return a new IdpHeader instance
+	 */
 	protected IdpHeader createIdpHeader(String userMuid) {
 		IdpHeader idpHeader = new IdpHeader();
 		idpHeader.setServiceUserMUID(userMuid);
 		return idpHeader;
 	}
 
+	/**
+	 * Configures SSL settings for the specified HTTP conduit.
+	 * 
+	 * @param httpConduit the HTTP conduit to configure
+	 */
 	public static void configureSsl(HTTPConduit httpConduit) {
 		TLSClientParameters tslClientParameters = httpConduit
 				.getTlsClientParameters();
@@ -294,10 +377,18 @@ public class EdtClientBuilder {
 		httpConduit.setTlsClientParameters(tslClientParameters);
 	}
 
+	/**
+	 * Sets the client keystore filename to the specified file in the classpath.
+	 * 
+	 * @param fileInClassPath the filename of the keystore in the classpath
+	 */
 	public static void setClientKeystoreFilename(String fileInClassPath) {
 		clientKeystore = fileInClassPath;
 	}
 
+	/**
+	 * Trust manager that accepts all certificates.
+	 */
 	public static class TrustAllManager implements X509TrustManager {
 		@Override
 		public X509Certificate[] getAcceptedIssuers() {
