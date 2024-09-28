@@ -44,7 +44,7 @@ import org.apache.struts.actions.DispatchAction;
 import ca.openosp.openo.PMmodule.dao.SecUserRoleDao;
 import ca.openosp.openo.PMmodule.model.SecUserRole;
 import ca.openosp.openo.PMmodule.utility.UtilDateUtilities;
-import org.oscarehr.common.dao.*;
+import ca.openosp.openo.common.dao.*;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.model.ProviderInboxItem;
 import ca.openosp.openo.common.model.Queue;

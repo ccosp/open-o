@@ -41,7 +41,7 @@ import org.apache.velocity.tools.ConversionUtils;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import ca.openosp.openo.billing.CA.BC.dao.BillingStatusTypesDao;
 import ca.openosp.openo.billing.CA.BC.model.BillingStatusTypes;
-import org.oscarehr.common.dao.*;
+import ca.openosp.openo.common.dao.*;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.entities.BillingStatusType;

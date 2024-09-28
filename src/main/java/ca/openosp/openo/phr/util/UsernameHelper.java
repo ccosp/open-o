@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.oscarehr.myoscar.client.ws_manager.AccountManager;
-import org.oscarehr.myoscar.client.ws_manager.MyOscarLoggedInInfoInterface;
-import org.oscarehr.myoscar_server.ws.MinimalPersonTransfer2;
+import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
+import ca.openosp.openo.myoscar.client.ws_manager.MyOscarLoggedInInfoInterface;
+import ca.openosp.openo.myoscar_server.ws.MinimalPersonTransfer2;
 
 public class UsernameHelper {
 

@@ -51,9 +51,9 @@ import ca.openosp.openo.survey.service.SurveyTestManager;
 import ca.openosp.openo.survey.service.UserManager;
 import ca.openosp.openo.survey.web.formbean.SurveyExecuteDataBean;
 import ca.openosp.openo.survey.web.formbean.SurveyExecuteFormBean;
-import org.oscarehr.surveymodel.Page;
-import org.oscarehr.surveymodel.SurveyDocument;
-import org.oscarehr.surveymodel.SurveyDocument.Survey;
+import ca.openosp.openo.surveymodel.Page;
+import ca.openosp.openo.surveymodel.SurveyDocument;
+import ca.openosp.openo.surveymodel.SurveyDocument.Survey;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 

@@ -43,7 +43,7 @@ import ca.openosp.openo.PMmodule.model.ProgramAccess;
 import ca.openosp.openo.PMmodule.model.ProgramProvider;
 import ca.openosp.openo.PMmodule.service.AdmissionManager;
 import ca.openosp.openo.PMmodule.service.ProgramManager;
-import org.oscarehr.caisi_integrator.ws.CachedDemographicNote;
+import ca.openosp.openo.caisi_integrator.ws.CachedDemographicNote;
 import ca.openosp.openo.casemgmt.common.EChartNoteEntry;
 import ca.openosp.openo.casemgmt.dao.CaseManagementCPPDAO;
 import ca.openosp.openo.casemgmt.dao.CaseManagementIssueDAO;

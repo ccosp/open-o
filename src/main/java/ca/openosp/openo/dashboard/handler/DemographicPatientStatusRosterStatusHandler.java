@@ -36,11 +36,11 @@ import net.sf.json.JSONArray;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.dao.DemographicDao;
 import ca.openosp.openo.common.dao.DemographicArchiveDao;
-//import org.oscarehr.common.model.DemographicArchive; 
+//import ca.openosp.openo.common.model.DemographicArchive; 
 import ca.openosp.openo.common.dao.DemographicExtDao;
 import ca.openosp.openo.common.dao.DemographicExtArchiveDao;
-//import org.oscarehr.common.model.DemographicExt; 
-//import org.oscarehr.common.model.DemographicExtArchive; 
+//import ca.openosp.openo.common.model.DemographicExt; 
+//import ca.openosp.openo.common.model.DemographicExtArchive; 
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 public class DemographicPatientStatusRosterStatusHandler {

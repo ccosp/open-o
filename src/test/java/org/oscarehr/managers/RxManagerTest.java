@@ -31,12 +31,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.DrugDao;
-import org.oscarehr.common.dao.DrugDaoImpl;
-import org.oscarehr.common.exception.AccessDeniedException;
-import org.oscarehr.common.model.AbstractModel;
-import org.oscarehr.common.model.Drug;
-import org.oscarehr.common.model.Prescription;
+import ca.openosp.openo.common.dao.DrugDao;
+import ca.openosp.openo.common.dao.DrugDaoImpl;
+import ca.openosp.openo.common.exception.AccessDeniedException;
+import ca.openosp.openo.common.model.AbstractModel;
+import ca.openosp.openo.common.model.Drug;
+import ca.openosp.openo.common.model.Prescription;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import java.util.ArrayList;

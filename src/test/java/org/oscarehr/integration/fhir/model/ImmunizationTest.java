@@ -33,7 +33,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.oscarehr.common.model.Prevention;
+import ca.openosp.openo.common.model.Prevention;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class ImmunizationTest {

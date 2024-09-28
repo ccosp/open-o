@@ -36,7 +36,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
-import org.oscarehr.caisi_integrator.ws.CachedDemographicAllergy;
+import ca.openosp.openo.caisi_integrator.ws.CachedDemographicAllergy;
 import ca.openosp.openo.common.dao.AllergyDao;
 import ca.openosp.openo.common.dao.DiseasesDao;
 import ca.openosp.openo.common.dao.PartialDateDao;

@@ -27,9 +27,9 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Ignore;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.ProviderFacility;
-import org.oscarehr.common.model.ProviderFacilityPK;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.ProviderFacility;
+import ca.openosp.openo.common.model.ProviderFacilityPK;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class ProviderFacilityDaoTest {

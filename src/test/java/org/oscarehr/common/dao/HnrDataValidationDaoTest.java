@@ -28,12 +28,12 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.common.model.HnrDataValidation;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.common.model.HnrDataValidation;
+import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class HnrDataValidationDaoTest extends DaoTestFixtures {

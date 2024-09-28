@@ -38,7 +38,7 @@ import ca.openosp.openo.billing.CA.BC.model.Hl7Orc;
 import ca.openosp.openo.billing.CA.BC.model.Hl7Pid;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.billing.CA.BC.dao.*;
+import ca.openosp.openo.billing.CA.BC.dao.*;
 import ca.openosp.openo.common.dao.ConsultDocsDao;
 import ca.openosp.openo.common.dao.ConsultResponseDocDao;
 import ca.openosp.openo.common.dao.EFormDocsDao;

@@ -25,7 +25,7 @@ package org.oscarehr.common.dao;
 
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class CdsFormOptionDaoTest {

@@ -32,11 +32,11 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.BillingONExt;
-import org.oscarehr.common.model.BillingONPayment;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.BillingONExt;
+import ca.openosp.openo.common.model.BillingONPayment;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class BillingONExtDaoTest extends DaoTestFixtures {

@@ -36,7 +36,7 @@ import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.model.Measurement;
 import ca.openosp.openo.common.service.myoscar.MeasurementsManager;
 import ca.openosp.openo.managers.DemographicManager;
-import org.oscarehr.myoscar.commons.MedicalDataType;
+import ca.openosp.openo.myoscar.commons.MedicalDataType;
 import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

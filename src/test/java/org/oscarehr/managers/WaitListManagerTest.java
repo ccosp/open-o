@@ -37,7 +37,7 @@ import org.apache.velocity.VelocityContext;
 import org.junit.Test;
 import ca.openosp.openo.PMmodule.model.Program;
 import ca.openosp.openo.PMmodule.model.Vacancy;
-import org.oscarehr.common.model.Demographic;
+import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.managers.WaitListManager.AdmissionDemographicPair;
 import ca.openosp.openo.ehrutil.VelocityUtils;
 

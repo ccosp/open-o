@@ -28,10 +28,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.CustomFilter;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.CustomFilter;
+import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 

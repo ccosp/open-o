@@ -56,7 +56,7 @@ import ca.openosp.openo.ws.rest.conversion.ConversionException;
 import ca.openosp.openo.ws.rest.conversion.DrugConverter;
 import ca.openosp.openo.ws.rest.conversion.FavoriteConverter;
 import ca.openosp.openo.ws.rest.conversion.PrescriptionConverter;
-import org.oscarehr.ws.rest.to.*;
+import ca.openosp.openo.ws.rest.to.*;
 import ca.openosp.openo.ws.rest.to.model.DrugTo1;
 import ca.openosp.openo.ws.rest.to.model.FavoriteTo1;
 import ca.openosp.openo.ws.rest.to.model.PrescriptionTo1;

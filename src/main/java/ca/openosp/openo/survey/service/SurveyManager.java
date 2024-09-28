@@ -28,7 +28,7 @@ import java.util.List;
 
 import ca.openosp.openo.common.dao.SurveyDao;
 import ca.openosp.openo.common.model.Survey;
-import org.oscarehr.surveymodel.SurveyDocument;
+import ca.openosp.openo.surveymodel.SurveyDocument;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

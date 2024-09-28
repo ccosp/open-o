@@ -24,7 +24,7 @@
  */
 package ca.openosp.openo.myOscar.utils;
 
-import org.oscarehr.myoscar_server.myoscar_server_client_stubs2.SystemInfoWs;
+import ca.openosp.openo.myoscar_server.myoscar_server_client_stubs2.SystemInfoWs;
 
 public final class SystemInfoManager {
     public static Integer getDataModelVersion(String serverBaseUrl) {

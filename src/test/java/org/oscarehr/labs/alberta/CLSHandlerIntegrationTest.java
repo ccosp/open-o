@@ -25,8 +25,8 @@ package org.oscarehr.labs.alberta;
 
 import static org.junit.Assert.assertEquals;
 
-import org.oscarehr.common.hl7.v2.oscar_to_oscar.SendingUtils;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.hl7.v2.oscar_to_oscar.SendingUtils;
+import ca.openosp.openo.common.model.Provider;
 
 //Ignored and Commented as skipping CLS module as of now.
 // @Ignore

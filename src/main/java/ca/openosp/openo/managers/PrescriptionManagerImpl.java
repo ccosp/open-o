@@ -31,7 +31,7 @@ import ca.openosp.openo.oscarRx.util.RxUtil;
 import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
-import org.oscarehr.caisi_integrator.ws.CachedDemographicDrug;
+import ca.openosp.openo.caisi_integrator.ws.CachedDemographicDrug;
 import ca.openosp.openo.common.dao.DrugDao;
 import ca.openosp.openo.common.dao.PrescriptionDao;
 import ca.openosp.openo.common.exception.AccessDeniedException;

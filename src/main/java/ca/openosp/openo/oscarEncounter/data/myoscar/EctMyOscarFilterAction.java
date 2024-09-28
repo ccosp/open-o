@@ -38,7 +38,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import ca.openosp.openo.common.model.Measurement;
 import ca.openosp.openo.common.service.myoscar.MeasurementsManager;
-import org.oscarehr.myoscar.commons.MedicalDataType;
+import ca.openosp.openo.myoscar.commons.MedicalDataType;
 import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.DateRange;
 

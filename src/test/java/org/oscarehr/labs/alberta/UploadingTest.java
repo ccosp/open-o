@@ -32,9 +32,9 @@ import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.hl7.v2.oscar_to_oscar.SendingUtils;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.hl7.v2.oscar_to_oscar.SendingUtils;
 
 public class UploadingTest extends DaoTestFixtures {
 

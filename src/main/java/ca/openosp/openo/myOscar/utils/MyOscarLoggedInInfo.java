@@ -29,10 +29,10 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
-import org.oscarehr.myoscar.client.ws_manager.AccountManager;
-import org.oscarehr.myoscar.client.ws_manager.MyOscarLoggedInInfoInterface;
-import org.oscarehr.myoscar_server.ws.NotAuthorisedException_Exception;
-import org.oscarehr.myoscar_server.ws.PersonTransfer3;
+import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
+import ca.openosp.openo.myoscar.client.ws_manager.MyOscarLoggedInInfoInterface;
+import ca.openosp.openo.myoscar_server.ws.NotAuthorisedException_Exception;
+import ca.openosp.openo.myoscar_server.ws.PersonTransfer3;
 
 import ca.openosp.openo.OscarProperties;
 

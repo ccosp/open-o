@@ -46,7 +46,7 @@ import ca.openosp.openo.common.model.ProfessionalContact;
 import ca.openosp.openo.common.model.ProfessionalSpecialist;
 import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.*;
+import ca.openosp.openo.common.dao.*;
 import ca.openosp.openo.common.model.DemographicExt.DemographicProperty;
 import ca.openosp.openo.fax.core.FaxRecipient;
 import ca.openosp.openo.managers.DemographicManager;

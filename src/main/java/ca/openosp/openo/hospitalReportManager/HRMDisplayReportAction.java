@@ -20,8 +20,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.hospitalReportManager.dao.*;
-import org.oscarehr.hospitalReportManager.model.*;
+import ca.openosp.openo.hospitalReportManager.dao.*;
+import ca.openosp.openo.hospitalReportManager.model.*;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 

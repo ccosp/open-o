@@ -30,8 +30,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.CtlDocType;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.CtlDocType;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class CtlDocTypeDaoTest extends DaoTestFixtures {

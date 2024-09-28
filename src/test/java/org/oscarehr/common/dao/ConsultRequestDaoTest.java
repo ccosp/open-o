@@ -32,12 +32,12 @@ import java.util.List;
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.ConsultationRequest;
-import org.oscarehr.common.model.ConsultationServices;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.consultations.ConsultationRequestSearchFilter;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.ConsultationRequest;
+import ca.openosp.openo.common.model.ConsultationServices;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.consultations.ConsultationRequestSearchFilter;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class ConsultRequestDaoTest extends DaoTestFixtures {

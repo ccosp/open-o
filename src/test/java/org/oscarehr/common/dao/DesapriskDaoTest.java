@@ -31,9 +31,9 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.Desaprisk;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.Desaprisk;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class DesapriskDaoTest extends DaoTestFixtures {

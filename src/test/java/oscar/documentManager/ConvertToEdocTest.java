@@ -28,7 +28,7 @@ package oscar.documentManager;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.oscarehr.common.model.EFormData;
+import ca.openosp.openo.common.model.EFormData;
 import documentManager.ConvertToEdoc;
 
 

@@ -65,7 +65,7 @@ import org.hibernate.criterion.Restrictions;
 import ca.openosp.openo.PMmodule.model.ProgramProvider;
 import ca.openosp.openo.PMmodule.web.formbean.ClientListsReportFormBean;
 import ca.openosp.openo.PMmodule.web.formbean.ClientSearchFormBean;
-import org.oscarehr.caisi_integrator.ws.MatchingDemographicParameters;
+import ca.openosp.openo.caisi_integrator.ws.MatchingDemographicParameters;
 import ca.openosp.openo.common.DemographicSearchResultTransformer;
 import ca.openosp.openo.common.Gender;
 import ca.openosp.openo.common.NativeSql;

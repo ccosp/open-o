@@ -72,7 +72,7 @@ import ca.openosp.openo.ws.rest.to.model.PatientListConfigTo1;
 import ca.openosp.openo.ws.rest.to.model.ProgramProviderTo1;
 import ca.openosp.openo.ws.rest.util.ClinicalConnectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.oscarehr.myoscar.client.ws_manager.MessageManager;
+import ca.openosp.openo.myoscar.client.ws_manager.MessageManager;
 import ca.openosp.openo.phr.util.MyOscarUtils;
 
 

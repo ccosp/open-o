@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.junit.Test;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
 
 import ca.openosp.openo.util.Textualizer;
 

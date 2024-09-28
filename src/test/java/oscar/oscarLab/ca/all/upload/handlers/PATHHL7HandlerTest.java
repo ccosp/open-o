@@ -43,7 +43,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.runners.Parameterized;
-import org.oscarehr.common.dao.utils.AuthUtils;
+import ca.openosp.openo.common.dao.utils.AuthUtils;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.oscarLab.ca.all.parsers.PATHL7Handler;

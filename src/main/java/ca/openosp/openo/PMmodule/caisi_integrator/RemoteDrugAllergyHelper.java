@@ -31,9 +31,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.caisi_integrator.ws.CachedDemographicAllergy;
-import org.oscarehr.caisi_integrator.ws.CachedDemographicDrug;
-import org.oscarehr.caisi_integrator.ws.DemographicWs;
+import ca.openosp.openo.caisi_integrator.ws.CachedDemographicAllergy;
+import ca.openosp.openo.caisi_integrator.ws.CachedDemographicDrug;
+import ca.openosp.openo.caisi_integrator.ws.DemographicWs;
 import ca.openosp.openo.common.model.Allergy;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

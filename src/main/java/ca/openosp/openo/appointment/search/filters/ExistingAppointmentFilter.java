@@ -36,11 +36,11 @@ import ca.openosp.openo.appointment.search.SearchConfig;
 import ca.openosp.openo.appointment.search.TimeSlot;
 import ca.openosp.openo.common.model.Appointment;
 import ca.openosp.openo.managers.DayWorkSchedule;
-//import org.oscarehr.ca.openosp.openo.ws.manager.ScheduleManager;
-//import org.oscarehr.ca.openosp.openo.ws.utils.OscarServerWebServicesManager;
+//import ca.openosp.openo.ca.openosp.openo.ws.manager.ScheduleManager;
+//import ca.openosp.openo.ca.openosp.openo.ws.utils.OscarServerWebServicesManager;
 import ca.openosp.openo.managers.ScheduleManager;
 
-//import org.oscarehr.ws.AppointmentTransfer;
+//import ca.openosp.openo.ws.AppointmentTransfer;
 
 //import ca.openosp.openo.ws.ScheduleWs;
 

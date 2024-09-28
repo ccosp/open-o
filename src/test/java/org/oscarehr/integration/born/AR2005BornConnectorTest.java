@@ -52,8 +52,8 @@ import static org.junit.Assert.assertEquals;
 import ca.openosp.openo.integration.born.AR2005BornConnector;
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 
 public class AR2005BornConnectorTest extends DaoTestFixtures {
 

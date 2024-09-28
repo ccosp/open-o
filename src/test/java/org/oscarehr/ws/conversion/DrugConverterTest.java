@@ -27,7 +27,7 @@ package org.oscarehr.ws.conversion;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.model.Drug;
+import ca.openosp.openo.common.model.Drug;
 import ca.openosp.openo.managers.DrugLookUpManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ws.rest.conversion.DrugConverterImpl;

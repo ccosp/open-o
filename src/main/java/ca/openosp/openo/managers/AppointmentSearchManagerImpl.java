@@ -49,7 +49,7 @@ import ca.openosp.openo.appointment.search.FilterDefinition;
 import ca.openosp.openo.appointment.search.Provider;
 import ca.openosp.openo.appointment.search.filters.AvailableTimeSlotFilter;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
-//import org.oscarehr.oscar_clinic_component.manager.BookingLearningManager;
+//import ca.openosp.openo.oscar_clinic_component.manager.BookingLearningManager;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.XmlUtils;
 

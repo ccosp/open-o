@@ -35,13 +35,13 @@ import org.junit.Test;
 import ca.openosp.openo.PMmodule.dao.ProgramDao;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import ca.openosp.openo.PMmodule.model.Program;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Tickler;
-import org.oscarehr.common.model.TicklerComment;
-import org.oscarehr.common.model.TicklerUpdate;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Tickler;
+import ca.openosp.openo.common.model.TicklerComment;
+import ca.openosp.openo.common.model.TicklerUpdate;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class TicklerDaoTest extends DaoTestFixtures {

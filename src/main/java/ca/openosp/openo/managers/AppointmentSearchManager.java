@@ -36,7 +36,7 @@ import ca.openosp.openo.appointment.search.SearchConfig;
 import ca.openosp.openo.appointment.search.TimeSlot;
 import ca.openosp.openo.appointment.search.AppointmentType;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
-//import org.oscarehr.oscar_clinic_component.manager.BookingLearningManager;
+//import ca.openosp.openo.oscar_clinic_component.manager.BookingLearningManager;
 import ca.openosp.openo.ws.transfer_objects.CalendarScheduleCodePairTransfer;
 
 public interface AppointmentSearchManager {

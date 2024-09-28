@@ -27,7 +27,7 @@ package ca.openosp.openo.oscarEncounter.data.myoscar;
 import java.util.Date;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.myoscar.commons.MedicalDataType;
+import ca.openosp.openo.myoscar.commons.MedicalDataType;
 import ca.openosp.openo.ehrutil.DateRange;
 
 import ca.openosp.openo.util.ConversionUtils;

@@ -45,7 +45,7 @@ import ca.openosp.openo.util.StringUtils;
 import ca.openosp.openo.util.UtilMisc;
 import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
-import org.oscarehr.billing.CA.BC.dao.*;
+import ca.openosp.openo.billing.CA.BC.dao.*;
 import ca.openosp.openo.common.dao.BillingDao;
 import ca.openosp.openo.common.dao.BillingPaymentTypeDao;
 import ca.openosp.openo.common.model.Billing;

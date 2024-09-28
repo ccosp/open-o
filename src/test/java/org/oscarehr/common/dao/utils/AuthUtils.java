@@ -27,9 +27,9 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Security;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Security;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.util.ConversionUtils;

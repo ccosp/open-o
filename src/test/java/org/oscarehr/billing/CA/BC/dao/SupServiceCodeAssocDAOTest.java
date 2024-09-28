@@ -32,9 +32,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.billing.CA.BC.model.BillingTrayFee;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarBilling.ca.bc.data.SupServiceCodeAssocDAO;

@@ -73,7 +73,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import ca.openosp.openo.common.OtherIdManager;
-import org.oscarehr.common.dao.*;
+import ca.openosp.openo.common.dao.*;
 import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.olis.dao.OLISSystemPreferencesDao;
 import ca.openosp.openo.olis.model.OLISSystemPreferences;

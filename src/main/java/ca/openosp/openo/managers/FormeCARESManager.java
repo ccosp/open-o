@@ -56,7 +56,7 @@ import ca.openosp.openo.common.dao.DrugDao;
 import ca.openosp.openo.common.dao.DxresearchDAO;
 import ca.openosp.openo.common.dao.FormeCARESDao;
 import ca.openosp.openo.managers.constants.Constants;
-import org.oscarehr.ehrutil.*;
+import ca.openosp.openo.ehrutil.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ca.openosp.openo.oscarEncounter.data.EctProgram;

@@ -61,7 +61,7 @@ import ca.openosp.openo.common.dao.UserPropertyDAO;
 import ca.openosp.openo.common.model.Security;
 import ca.openosp.openo.managers.AppManager;
 import ca.openosp.openo.managers.SsoAuthenticationManager;
-import org.oscarehr.ehrutil.*;
+import ca.openosp.openo.ehrutil.*;
 
 import net.sf.json.JSONObject;
 import ca.openosp.openo.OscarProperties;

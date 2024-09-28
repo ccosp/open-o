@@ -30,8 +30,8 @@ import org.junit.Ignore;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 
 public class ONAREnhancedBornConnectorTest extends DaoTestFixtures {
 

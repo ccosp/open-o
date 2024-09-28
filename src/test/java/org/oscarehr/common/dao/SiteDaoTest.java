@@ -31,12 +31,12 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.ProviderSite;
-import org.oscarehr.common.model.ProviderSitePK;
-import org.oscarehr.common.model.Site;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.ProviderSite;
+import ca.openosp.openo.common.model.ProviderSitePK;
+import ca.openosp.openo.common.model.Site;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class SiteDaoTest extends DaoTestFixtures {

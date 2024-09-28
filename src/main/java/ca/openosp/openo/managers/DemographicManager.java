@@ -35,7 +35,7 @@ import ca.openosp.openo.common.model.DemographicExt;
 import ca.openosp.openo.common.model.DemographicMerged;
 import ca.openosp.openo.common.model.PHRVerification;
 import ca.openosp.openo.common.model.Provider;
-import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
+import ca.openosp.openo.caisi_integrator.ws.DemographicTransfer;
 import ca.openosp.openo.common.Gender;
 import ca.openosp.openo.common.exception.PatientDirectiveException;
 import ca.openosp.openo.ehrutil.LoggedInInfo;

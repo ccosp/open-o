@@ -39,8 +39,8 @@ import javassist.Modifier;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Id;
 
-import org.oscarehr.common.model.DemographicExt;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.DemographicExt;
+import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class EntityDataGenerator {

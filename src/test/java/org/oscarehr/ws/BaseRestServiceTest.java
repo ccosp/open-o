@@ -50,7 +50,7 @@ import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
 import ca.openosp.openo.ws.rest.to.model.DemographicExtTo1;
 import ca.openosp.openo.ws.rest.to.model.DemographicMergedTo1;
 import ca.openosp.openo.ws.rest.to.model.DemographicTo1;

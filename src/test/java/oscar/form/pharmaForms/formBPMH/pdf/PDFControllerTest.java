@@ -37,7 +37,7 @@ import ca.openosp.openo.form.pharmaForms.formBPMH.pdf.PDFController;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.model.Demographic;
+import ca.openosp.openo.common.model.Demographic;
 
 import ca.openosp.openo.form.pharmaForms.formBPMH.bean.BpmhDrug;
 import ca.openosp.openo.form.pharmaForms.formBPMH.bean.BpmhFormBean;

@@ -54,7 +54,7 @@
 
 // import javax.persistence.Query;
 
-// import org.oscarehr.common.model.ServiceRequestToken;
+// import ca.openosp.openo.common.model.ServiceRequestToken;
 // import org.springframework.stereotype.Repository;
 
 // @Repository

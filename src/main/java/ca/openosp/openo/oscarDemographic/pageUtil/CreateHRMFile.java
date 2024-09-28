@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.xmlbeans.XmlOptions;
-import org.oscarehr.caisi_integrator.util.MiscUtils;
+import ca.openosp.openo.caisi_integrator.util.MiscUtils;
 
 import cds.DemographicsDocument;
 import cds.DemographicsDocument.Demographics.Enrolment.EnrolmentHistory;

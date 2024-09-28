@@ -47,7 +47,7 @@ import ca.openosp.openo.common.dao.PHRVerificationDao;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.managers.SecurityInfoManager;
-import org.oscarehr.myoscar.client.ws_manager.AccountManager;
+import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
 import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.SpringUtils;

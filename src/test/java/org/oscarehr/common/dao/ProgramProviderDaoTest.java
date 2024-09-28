@@ -27,8 +27,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.PMmodule.dao.ProgramProviderDAO;
 import ca.openosp.openo.PMmodule.model.ProgramProvider;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class ProgramProviderDaoTest extends DaoTestFixtures {

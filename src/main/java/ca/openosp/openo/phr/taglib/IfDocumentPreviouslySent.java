@@ -40,7 +40,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.myoscar.commons.MedicalDataType;
+import ca.openosp.openo.myoscar.commons.MedicalDataType;
 import ca.openosp.openo.phr.service.PHRService;
 import ca.openosp.openo.ehrutil.SpringUtils;
 

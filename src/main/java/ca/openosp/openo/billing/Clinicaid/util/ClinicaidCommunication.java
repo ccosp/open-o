@@ -51,8 +51,8 @@ import ca.openosp.openo.util.UtilMisc;
 import ca.openosp.openo.oscarBilling.data.BillingFormData;
 import ca.openosp.openo.OscarProperties;
 
-//import org.oscarehr.casemgmt.dao.CaseManagementIssueDAO;
-//import org.oscarehr.casemgmt.model.CaseManagementIssue;
+//import ca.openosp.openo.casemgmt.dao.CaseManagementIssueDAO;
+//import ca.openosp.openo.casemgmt.model.CaseManagementIssue;
 
 public class ClinicaidCommunication {
 

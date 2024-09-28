@@ -31,8 +31,8 @@ import java.util.Map;
 import ca.openosp.openo.dashboard.handler.TicklerHandler;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Tickler;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Tickler;
 import ca.openosp.openo.managers.TicklerManagerImpl;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 

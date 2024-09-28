@@ -35,7 +35,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
-import org.oscarehr.caisi_integrator.ws.CachedFacility;
+import ca.openosp.openo.caisi_integrator.ws.CachedFacility;
 import ca.openosp.openo.common.dao.IntegratorConsentDao;
 import ca.openosp.openo.common.model.IntegratorConsent;
 import ca.openosp.openo.common.model.Provider;

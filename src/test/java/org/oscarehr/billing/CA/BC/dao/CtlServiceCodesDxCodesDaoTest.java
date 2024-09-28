@@ -29,8 +29,8 @@ import ca.openosp.openo.billing.CA.BC.dao.CtlServiceCodesDxCodesDao;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.billing.CA.BC.model.CtlServiceCodesDxCodes;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class CtlServiceCodesDxCodesDaoTest {

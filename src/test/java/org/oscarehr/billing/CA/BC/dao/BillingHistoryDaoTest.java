@@ -31,9 +31,9 @@ import ca.openosp.openo.billing.CA.BC.dao.BillingHistoryDao;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.billing.CA.BC.model.BillingHistory;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class BillingHistoryDaoTest extends DaoTestFixtures {

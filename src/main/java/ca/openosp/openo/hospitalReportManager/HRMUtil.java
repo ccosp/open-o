@@ -21,7 +21,7 @@ import ca.openosp.openo.hospitalReportManager.dao.HRMDocumentSubClassDao;
 import ca.openosp.openo.hospitalReportManager.dao.HRMDocumentToDemographicDao;
 import ca.openosp.openo.hospitalReportManager.dao.HRMSubClassDao;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.hospitalReportManager.dao.*;
+import ca.openosp.openo.hospitalReportManager.dao.*;
 import ca.openosp.openo.hospitalReportManager.model.HRMCategory;
 import ca.openosp.openo.hospitalReportManager.model.HRMDocument;
 import ca.openosp.openo.hospitalReportManager.model.HRMDocumentSubClass;

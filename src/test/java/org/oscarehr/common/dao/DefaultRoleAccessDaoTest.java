@@ -28,7 +28,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.PMmodule.dao.DefaultRoleAccessDAO;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class DefaultRoleAccessDaoTest extends DaoTestFixtures {

@@ -48,7 +48,7 @@ import ca.openosp.openo.common.model.Measurement;
 import ca.openosp.openo.renal.CkdScreener;
 import ca.openosp.openo.renal.ORNCkdScreeningReportThread;
 import ca.openosp.openo.renal.ORNPreImplementationReportThread;
-import org.oscarehr.ehrutil.*;
+import ca.openosp.openo.ehrutil.*;
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.form.FrmLabReq07Record;
 import ca.openosp.openo.form.FrmLabReq10Record;

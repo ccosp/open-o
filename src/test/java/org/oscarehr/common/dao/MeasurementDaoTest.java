@@ -35,9 +35,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.MeasurementDaoImpl.SearchCriteria;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.Measurement;
+import ca.openosp.openo.common.dao.MeasurementDaoImpl.SearchCriteria;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.Measurement;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class MeasurementDaoTest extends DaoTestFixtures {

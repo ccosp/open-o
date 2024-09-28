@@ -26,8 +26,8 @@ package org.oscarehr.integration.born;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 
 public class AR2005Form2XMLTest extends DaoTestFixtures {
 

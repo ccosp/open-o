@@ -16,7 +16,7 @@ import ca.openosp.openo.common.model.ConsultDocs;
 import ca.openosp.openo.common.model.EFormData;
 import ca.openosp.openo.common.model.EFormDocs;
 import ca.openosp.openo.hospitalReportManager.HRMUtil;
-import org.oscarehr.managers.*;
+import ca.openosp.openo.managers.*;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
 import documentManager.data.AttachmentLabResultData;
 import ca.openosp.openo.ehrutil.DateUtils;

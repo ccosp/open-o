@@ -25,8 +25,8 @@ package org.oscarehr.common.dao;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.oscarehr.common.dao.utils.DataUtils;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.utils.DataUtils;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import org.junit.Before;
 
 public class InboxPopulatingTest extends DaoTestFixtures {

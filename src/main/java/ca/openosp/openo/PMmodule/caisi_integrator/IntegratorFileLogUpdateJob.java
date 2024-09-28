@@ -26,8 +26,8 @@ package ca.openosp.openo.PMmodule.caisi_integrator;
 
 import java.util.List;
 
-import org.oscarehr.caisi_integrator.ws.FacilityWs;
-import org.oscarehr.caisi_integrator.ws.ImportLog;
+import ca.openosp.openo.caisi_integrator.ws.FacilityWs;
+import ca.openosp.openo.caisi_integrator.ws.ImportLog;
 import ca.openosp.openo.common.dao.FacilityDao;
 import ca.openosp.openo.common.dao.IntegratorFileLogDao;
 import ca.openosp.openo.common.jobs.OscarRunnable;

@@ -27,10 +27,10 @@ package ca.openosp.openo.phr.util;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.myoscar.client.ws_manager.MyOscarServerWebServicesManager;
+import ca.openosp.openo.myoscar.client.ws_manager.MyOscarServerWebServicesManager;
 import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
-import org.oscarehr.myoscar_server.ws.AccountWs;
-import org.oscarehr.myoscar_server.ws.RelationshipTransfer4;
+import ca.openosp.openo.myoscar_server.ws.AccountWs;
+import ca.openosp.openo.myoscar_server.ws.RelationshipTransfer4;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**

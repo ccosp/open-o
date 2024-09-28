@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import org.oscarehr.common.model.Demographic;
+import ca.openosp.openo.common.model.Demographic;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.hibernate.Session;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import org.hibernate.Query;
 
 import com.quatro.model.security.Secrole;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Provider;
 
 public class HibernateTestDao {
     HibernateTemplate template;

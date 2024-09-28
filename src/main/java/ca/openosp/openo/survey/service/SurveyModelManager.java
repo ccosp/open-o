@@ -27,13 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.openosp.openo.survey.model.QuestionTypes;
-import org.oscarehr.surveymodel.DateDocument;
-import org.oscarehr.surveymodel.Page;
-import org.oscarehr.surveymodel.Question;
-import org.oscarehr.surveymodel.Section;
-import org.oscarehr.surveymodel.Page.QContainer;
-import org.oscarehr.surveymodel.SelectDocument.Select;
-import org.oscarehr.surveymodel.SurveyDocument.Survey;
+import ca.openosp.openo.surveymodel.DateDocument;
+import ca.openosp.openo.surveymodel.Page;
+import ca.openosp.openo.surveymodel.Question;
+import ca.openosp.openo.surveymodel.Section;
+import ca.openosp.openo.surveymodel.Page.QContainer;
+import ca.openosp.openo.surveymodel.SelectDocument.Select;
+import ca.openosp.openo.surveymodel.SurveyDocument.Survey;
 
 public class SurveyModelManager {
 

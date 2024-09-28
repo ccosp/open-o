@@ -31,10 +31,10 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.oscarehr.common.dao.EFormDao.EFormSortOrder;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.EForm;
+import ca.openosp.openo.common.dao.EFormDao.EFormSortOrder;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.EForm;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EFormDaoTest extends DaoTestFixtures {

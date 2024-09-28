@@ -28,12 +28,12 @@ package org.oscarehr.common.dao;
 //import java.ehrutil.Arrays;
 //import java.ehrutil.List;
 //import org.junit.Test;
-//import org.oscarehr.common.dao.utils.EntityDataGenerator;
-//import org.oscarehr.common.model.ClientLink;
+//import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+//import ca.openosp.openo.common.model.ClientLink;
 
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class ClientLinkDaoTest extends DaoTestFixtures {

@@ -27,8 +27,8 @@ import org.apache.xml.security.utils.resolver.ResourceResolver;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.oscarehr.integration.ebs.client.EdtClientBuilder;
-import org.oscarehr.integration.ebs.client.EdtClientBuilderConfig;
+import ca.openosp.openo.integration.ebs.client.EdtClientBuilder;
+import ca.openosp.openo.integration.ebs.client.EdtClientBuilderConfig;
 import ca.openosp.openo.integration.mcedt.mailbox.CidPrefixResourceResolver;
 import ca.openosp.openo.ehrutil.MiscUtils;
 

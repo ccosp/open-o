@@ -27,12 +27,12 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.common.model.Room;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.model.Room;
 import ca.openosp.openo.ehrutil.SpringUtils;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.common.dao.FacilityDao;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.common.dao.FacilityDao;
 
 import java.util.List;
 

@@ -29,9 +29,9 @@ import ca.openosp.openo.billing.CA.dao.BillingDetailDao;
 import org.junit.Before;
 import org.junit.Test;
 import ca.openosp.openo.billing.CA.model.BillingDetail;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.dao.utils.SchemaUtils;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.dao.utils.SchemaUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class BillingDetailDaoTest extends DaoTestFixtures {

@@ -37,7 +37,7 @@ import java.util.List;
 import ca.openosp.openo.common.dao.DocumentDao;
 import ca.openosp.openo.common.model.CtlDocument;
 import ca.openosp.openo.common.model.Document;
-import org.oscarehr.common.dao.*;
+import ca.openosp.openo.common.dao.*;
 
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.PDFGenerationException;

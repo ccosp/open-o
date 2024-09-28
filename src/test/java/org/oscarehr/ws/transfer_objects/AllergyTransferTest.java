@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 
 import ca.openosp.openo.ws.transfer_objects.AllergyTransfer;
 import org.junit.Test;
-import org.oscarehr.common.model.Allergy;
+import ca.openosp.openo.common.model.Allergy;
 
 public class AllergyTransferTest {
 

@@ -26,11 +26,11 @@ package org.oscarehr.ws.conversion;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.oscarehr.common.dao.DaoTestFixtures;
-import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DemographicExt;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.dao.DaoTestFixtures;
+import ca.openosp.openo.common.dao.utils.EntityDataGenerator;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.DemographicExt;
+import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.ws.rest.conversion.DemographicConverter;
 import ca.openosp.openo.ws.rest.to.model.DemographicTo1;
 

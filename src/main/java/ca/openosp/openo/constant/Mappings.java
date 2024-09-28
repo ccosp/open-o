@@ -41,7 +41,7 @@ import org.marc.everest.datatypes.generic.PIVL;
 import org.marc.everest.datatypes.interfaces.ISetComponent;
 import org.marc.everest.rmim.uv.cdar2.vocabulary.AdministrativeGender;
 //import ca.openosp.openo.constant.Constants.IssueCodes;
-//import org.oscarehr.e2e.ehrutil.EverestUtils;
+//import ca.openosp.openo.e2e.ehrutil.EverestUtils;
 
 public class Mappings {
     Mappings() {

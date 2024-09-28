@@ -36,7 +36,7 @@ import ca.openosp.openo.appointment.search.SearchConfig;
 import ca.openosp.openo.appointment.search.TimeSlot;
 import ca.openosp.openo.managers.DayWorkSchedule;
 import ca.openosp.openo.ehrutil.MiscUtils;
-//import org.oscarehr.oscar_clinic_component.manager.BookingLearningManager;
+//import ca.openosp.openo.oscar_clinic_component.manager.BookingLearningManager;
 
 
 public class FutureApptFilter implements AvailableTimeSlotFilter {

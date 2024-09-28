@@ -30,13 +30,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.oscarehr.myoscar.client.ws_manager.MessageManager;
+import ca.openosp.openo.myoscar.client.ws_manager.MessageManager;
 import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
-import org.oscarehr.myoscar_server.ws.Message2DataTransfer;
-import org.oscarehr.myoscar_server.ws.Message2RecipientPersonAttributesTransfer;
-import org.oscarehr.myoscar_server.ws.MessageTransfer3;
-import org.oscarehr.myoscar_server.ws.NoSuchItemException_Exception;
-import org.oscarehr.myoscar_server.ws.NotAuthorisedException_Exception;
+import ca.openosp.openo.myoscar_server.ws.Message2DataTransfer;
+import ca.openosp.openo.myoscar_server.ws.Message2RecipientPersonAttributesTransfer;
+import ca.openosp.openo.myoscar_server.ws.MessageTransfer3;
+import ca.openosp.openo.myoscar_server.ws.NoSuchItemException_Exception;
+import ca.openosp.openo.myoscar_server.ws.NotAuthorisedException_Exception;
 
 public final class MyOscarMessagesHelper {
     public static final int MESSAGE_DISPLAY_SIZE = 25;

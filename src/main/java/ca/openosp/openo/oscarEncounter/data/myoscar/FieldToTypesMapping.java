@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.oscarehr.myoscar.commons.MedicalDataType;
+import ca.openosp.openo.myoscar.commons.MedicalDataType;
 
 public class FieldToTypesMapping {
 

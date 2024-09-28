@@ -60,8 +60,8 @@ import org.indivo.xml.phr.types.DurationType;
 import org.indivo.xml.phr.urns.ContentTypeQNames;
 import org.indivo.xml.phr.urns.DocumentClassificationUrns;
 import ca.openosp.openo.common.model.Drug;
-import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.myoscar_server.ws.MedicalDataTransfer4;
+import ca.openosp.openo.myoscar.commons.MedicalDataType;
+import ca.openosp.openo.myoscar_server.ws.MedicalDataTransfer4;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import org.w3c.dom.Element;
 
