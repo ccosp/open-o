@@ -55,7 +55,7 @@
 <%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
 <%@page import="org.oscarehr.common.model.Dxresearch" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
     MeasurementDao measurementDao = SpringUtils.getBean(MeasurementDao.class);
     DxresearchDAO dxResearchDao = (DxresearchDAO) SpringUtils.getBean(DxresearchDAO.class);

@@ -45,9 +45,9 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import openo.oscarRx.data.RxPrescriptionData;
-import openo.oscarRx.util.RxUtil;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.oscarRx.util.RxUtil;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 @Entity
 @Table(name = "drugs")

@@ -30,7 +30,7 @@ import java.util.Date;
 import org.oscarehr.common.dao.OscarAppointmentDao;
 import org.oscarehr.common.model.Appointment;
 
-import openo.util.ConversionUtils;
+import ca.openosp.openo.util.ConversionUtils;
 
 public class AppointmentUtil {
 

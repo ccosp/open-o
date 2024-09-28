@@ -46,7 +46,7 @@ import java.util.TreeMap;
 
 import javax.persistence.PersistenceException;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -89,9 +89,9 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import openo.MyDateFormat;
-import openo.OscarProperties;
-import openo.util.SqlUtils;
+import ca.openosp.openo.MyDateFormat;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.util.SqlUtils;
 
 /**
  *

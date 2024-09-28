@@ -46,7 +46,7 @@
 <%@ page import="org.oscarehr.managers.LookupListManager" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.common.model.LookupList" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%
     String demographic_no = request.getParameter("demo");

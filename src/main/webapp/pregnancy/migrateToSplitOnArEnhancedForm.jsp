@@ -44,8 +44,8 @@
 <%@page import="org.oscarehr.util.DbConnectionFilter" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.log.LogAction" %>
-<%@ page import="openo.oscarDB.DBHandler" %>
+<%@page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBHandler" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

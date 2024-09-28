@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="java.util.Properties" %>
 <%@ page import="java.util.List, org.oscarehr.util.SpringUtils" %>

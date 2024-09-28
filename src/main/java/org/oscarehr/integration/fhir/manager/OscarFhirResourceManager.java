@@ -49,8 +49,8 @@ import org.oscarehr.managers.ProviderManager2;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Service;
-import openo.OscarProperties;
-import openo.log.LogAction;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
 
 @Service
 public class OscarFhirResourceManager {

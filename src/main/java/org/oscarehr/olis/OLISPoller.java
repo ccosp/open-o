@@ -21,9 +21,9 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import openo.Misc;
-import openo.oscarLab.ca.all.upload.HandlerClassFactory;
-import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
+import ca.openosp.openo.Misc;
+import ca.openosp.openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MessageHandler;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.logging.log4j.Logger;
@@ -39,10 +39,10 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarLab.FileUploadCheck;
-import openo.oscarLab.ca.all.parsers.Factory;
-import openo.oscarLab.ca.all.parsers.OLISHL7Handler;
-import openo.oscarLab.ca.all.util.Utilities;
+import ca.openosp.openo.oscarLab.FileUploadCheck;
+import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
+import ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler;
+import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 import com.indivica.olis.Driver;
 import com.indivica.olis.parameters.OBR22;
@@ -213,7 +213,7 @@ public class OLISPoller {
 
                     logger.info("message:" + message);
                     // Parse the HL7 string...
-                    openo.oscarLab.ca.all.parsers.MessageHandler h = Factory.getHandler("OLIS_HL7", message);
+                    ca.openosp.openo.oscarLab.ca.all.parsers.MessageHandler h = Factory.getHandler("OLIS_HL7", message);
 
                     String resultUuid = UUID.randomUUID().toString();
 

@@ -28,7 +28,7 @@
 
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*" %>
-<%@ page import="openo.DateInMonthTable" %>
+<%@ page import="ca.openosp.openo.DateInMonthTable" %>
 <%
     //to prepare calendar display
     String type = "admissfdfion";//request.getParameter("type");

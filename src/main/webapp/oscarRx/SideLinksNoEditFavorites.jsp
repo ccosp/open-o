@@ -23,9 +23,9 @@
     Ontario, Canada
 
 --%>
-<%@page import="openo.oscarRx.data.RxPatientData" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

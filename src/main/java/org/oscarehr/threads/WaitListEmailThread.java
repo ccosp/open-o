@@ -29,7 +29,7 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class WaitListEmailThread extends TimerTask {
     private static final Logger logger = MiscUtils.getLogger();

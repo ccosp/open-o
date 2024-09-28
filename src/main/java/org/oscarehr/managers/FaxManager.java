@@ -42,7 +42,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
 import net.sf.json.JSONObject;
-import openo.form.util.FormTransportContainer;
+import ca.openosp.openo.form.util.FormTransportContainer;
 
 public interface FaxManager {
 

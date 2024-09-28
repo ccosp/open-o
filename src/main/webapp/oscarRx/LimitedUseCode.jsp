@@ -32,10 +32,10 @@
 
 <%@page %>
 <%@page import="oscar.oscarDemographic.data.*,org.oscarehr.common.model.Demographic" %>
-<%@page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler,java.util.*,oscar.oscarRx.util.*" %>
+<%@page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler,java.util.*,oscar.oscarRx.util.*" %>
 <%@page import="oscar.oscarLab.ca.on.*,oscar.util.*,oscar.oscarLab.*" %>
-<%@ page import="openo.oscarRx.util.LimitedUseLookup" %>
-<%@ page import="openo.oscarRx.util.LimitedUseCode" %>
+<%@ page import="ca.openosp.openo.oscarRx.util.LimitedUseLookup" %>
+<%@ page import="ca.openosp.openo.oscarRx.util.LimitedUseCode" %>
 
 <%
     String din = request.getParameter("din");

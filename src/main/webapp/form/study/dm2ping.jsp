@@ -40,12 +40,12 @@
 <%@ page import="org.chip.ping.xml.record.*" %>
 <%@ page import="org.chip.ping.xml.record.impl.*" %>
 <%@ page import="org.chip.ping.xml.cddm.impl.*,org.w3c.dom.*,javax.xml.parsers.*" %>
-<%@ page import="openo.OscarPingTalk" %>
+<%@ page import="ca.openosp.openo.OscarPingTalk" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
-<%@ page import="openo.oscarDB.DBHandler" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.util.UtilXML" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBHandler" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.UtilXML" %>
 
 <%@ include file="../../admin/dbconnection.jsp" %>
 

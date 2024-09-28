@@ -59,8 +59,8 @@ import org.springframework.stereotype.Service;
 
 import ca.uhn.fhir.context.FhirContext;
 
-import openo.OscarProperties;
-import openo.log.LogAction;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
 
 @Service
 public class CanadianVaccineCatalogueManager {

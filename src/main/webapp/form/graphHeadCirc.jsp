@@ -40,10 +40,10 @@
 
 <%@ page
         import="oscar.form.*, oscar.form.data.*, oscar.util.*, java.util.Date" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.FrmRecord" %>
-<%@ page import="openo.form.FrmRourkeRecord" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRourkeRecord" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
 <html:html lang="en">

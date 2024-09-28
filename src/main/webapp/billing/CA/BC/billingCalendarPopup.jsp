@@ -35,7 +35,7 @@ Use returnForm and returnItem request params and this page will fill in that inp
 %>
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*" %>
-<%@ page import="openo.DateInMonthTable" %>
+<%@ page import="ca.openosp.openo.DateInMonthTable" %>
 <%
     //to prepare calendar display
     String type = request.getParameter("type");

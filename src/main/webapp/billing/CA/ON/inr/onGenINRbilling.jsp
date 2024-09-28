@@ -27,13 +27,13 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingClaimImpl" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingItemData" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingClaimImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingItemData" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%
     BillingInrDao billingInrDao = SpringUtils.getBean(BillingInrDao.class);
 %>

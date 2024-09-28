@@ -27,8 +27,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.oscarRx.data.*,java.util.*" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName2$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -67,7 +67,7 @@
         %>
 
         <bean:define id="patient"
-                     type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+                     type="ca.openosp.openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>

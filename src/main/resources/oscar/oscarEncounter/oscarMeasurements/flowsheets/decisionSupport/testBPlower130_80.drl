@@ -11,7 +11,7 @@
 
     <rule name="BP">
         <parameter identifier="m">
-            <class>openo.oscarEncounter.oscarMeasurements.util.MeasurementDSHelper</class>
+            <class>ca.openosp.openo.util.oscarMeasurements.oscarEncounter.MeasurementDSHelper</class>
         </parameter>
         <java:condition>m.setMeasurement("BP") == true</java:condition>       
         <java:condition>m.getNumberFromSplit("/",0) &lt; 131</java:condition>         

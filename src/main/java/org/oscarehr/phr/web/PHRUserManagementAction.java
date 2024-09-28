@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -78,10 +78,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WebUtils;
 
-import openo.log.LogAction;
-import openo.log.LogConst;
-import openo.oscarDemographic.data.DemographicData;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.log.LogConst;
+import ca.openosp.openo.oscarDemographic.data.DemographicData;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;

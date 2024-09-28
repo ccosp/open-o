@@ -46,8 +46,8 @@
 <%@ page import="org.oscarehr.common.model.Encounter" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 
 <%
     EncounterDao encounterDao = SpringUtils.getBean(EncounterDao.class);

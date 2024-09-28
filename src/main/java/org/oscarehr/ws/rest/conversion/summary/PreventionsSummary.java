@@ -39,9 +39,9 @@ import org.oscarehr.ws.rest.to.model.SummaryTo1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import openo.oscarPrevention.PreventionDS;
-import openo.oscarPrevention.PreventionData;
-import openo.oscarPrevention.PreventionDisplayConfig;
+import ca.openosp.openo.oscarPrevention.PreventionDS;
+import ca.openosp.openo.oscarPrevention.PreventionData;
+import ca.openosp.openo.oscarPrevention.PreventionDisplayConfig;
 
 
 @Component
@@ -72,7 +72,7 @@ public class PreventionsSummary implements Summary {
 
         SummaryItemTo1 summaryItem;
 
-        openo.oscarPrevention.Prevention p = PreventionData.getPrevention(loggedInInfo, demographicNo);
+        ca.openosp.openo.oscarPrevention.Prevention p = PreventionData.getPrevention(loggedInInfo, demographicNo);
 
         PreventionDS pf = SpringUtils.getBean(PreventionDS.class);
 

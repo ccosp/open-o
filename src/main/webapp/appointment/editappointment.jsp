@@ -44,7 +44,7 @@
 <%@page import="org.oscarehr.common.dao.ProviderDataDao" %>
 <%@page import="org.oscarehr.managers.DemographicManager" %>
 
-<%@page import="openo.appt.status.service.impl.AppointmentStatusMgrImpl" %>
+<%@page import="ca.openosp.openo.appt.status.service.impl.AppointmentStatusMgrImpl" %>
 <%
     if (session.getAttribute("user") == null) response.sendRedirect("../logout.jsp");
 
@@ -60,8 +60,8 @@
 <%@ page import="java.time.ZoneId" %>
 <%@ page import="oscar.appt.*" %>
 <%@ page import="oscar.util.*" %>
-<%@ page import="openo.appt.status.service.AppointmentStatusMgr" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.appt.status.service.AppointmentStatusMgr" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.oscarehr.common.OtherIdManager" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.*" %>
@@ -90,14 +90,14 @@
 <%@ page import="org.oscarehr.common.model.LookupList" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
 <%@ page import="org.oscarehr.common.dao.AppointmentTypeDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.appt.ApptData" %>
-<%@ page import="openo.appt.ApptUtil" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.appt.ApptData" %>
+<%@ page import="ca.openosp.openo.appt.ApptUtil" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

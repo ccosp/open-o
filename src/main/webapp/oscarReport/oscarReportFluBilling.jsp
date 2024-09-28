@@ -41,7 +41,7 @@
 
 <%@ page import="java.util.*,oscar.oscarReport.data.*" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="openo.oscarReport.data.RptFluReportData" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptFluReportData" %>
 
 
 <%@ include file="/taglibs.jsp" %>

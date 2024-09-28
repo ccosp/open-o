@@ -52,9 +52,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.oscarRx.data.RxProviderData;
-import openo.oscarRx.data.RxProviderData.Provider;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarRx.data.RxProviderData;
+import ca.openosp.openo.oscarRx.data.RxProviderData.Provider;
 
 /**
  * @author jaygallagher

@@ -66,8 +66,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-import openo.OscarProperties;
-import openo.log.LogAction;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
 
 import com.quatro.model.security.Secrole;
 

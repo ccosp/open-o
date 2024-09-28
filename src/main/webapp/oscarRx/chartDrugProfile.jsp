@@ -86,8 +86,8 @@
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath()%>/js/global.js"></script>

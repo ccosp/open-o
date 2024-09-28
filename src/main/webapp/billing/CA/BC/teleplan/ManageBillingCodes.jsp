@@ -50,7 +50,7 @@
 <%BillingServiceDao billingServiceDao = (BillingServiceDao) SpringUtils.getBean(BillingServiceDao.class); %>
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.Misc" %>
+<%@ page import="ca.openosp.openo.Misc" %>
 <html:html lang="en">
 
     <head>

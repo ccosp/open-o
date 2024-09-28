@@ -41,7 +41,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<%@ page import="openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 
 <%
     String providerName = request.getSession().getAttribute("userfirstname") + " " +

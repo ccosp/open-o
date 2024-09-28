@@ -42,7 +42,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.MiscUtils;

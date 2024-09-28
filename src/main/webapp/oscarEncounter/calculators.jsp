@@ -40,10 +40,10 @@
 %>
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.util.StringUtils" %>
+<%@page import="ca.openosp.openo.util.StringUtils" %>
 <%@ page
         import="oscar.oscarDemographic.data.*, org.oscarehr.common.model.Demographic" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 

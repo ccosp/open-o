@@ -43,13 +43,13 @@
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@ page
-        import="oscar.form.*, openo.OscarProperties, java.util.Date, openo.util.UtilDateUtilities" %>
+        import="oscar.form.*, ca.openosp.openo.OscarProperties, java.util.Date, ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="org.oscarehr.util.LocaleUtils" %>
 <%@page import="org.oscarehr.common.dao.FrmLabReqPreSetDao, org.oscarehr.util.SpringUtils" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.FrmLabReq07Record" %>
-<%@ page import="openo.form.FrmRecord" %>
-<%@ page import="openo.form.FrmRecordHelp" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.FrmLabReq07Record" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordHelp" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

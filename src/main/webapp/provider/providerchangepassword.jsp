@@ -50,7 +50,7 @@
 <%@ page
         import="java.lang.*, java.util.*, java.text.*,java.sql.*, oscar.*"
         errorPage="/errorpage.jsp" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%!
     OscarProperties op = OscarProperties.getInstance();

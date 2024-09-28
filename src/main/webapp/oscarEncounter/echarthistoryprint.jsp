@@ -30,7 +30,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <%@page
-        import="oscar.oscarEncounter.data.*,openo.oscarEncounter.pageUtil.EctSessionBean, java.net.*" %>
+        import="oscar.oscarEncounter.data.*,ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean, java.net.*" %>
 <jsp:useBean id="providerBean" class="java.util.Properties"
              scope="session"/>
 

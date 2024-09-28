@@ -52,17 +52,17 @@
 <%@ page import="oscar.log.*" %>
 <%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@page import="oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*" %>
 <%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
 <%@ page import="org.oscarehr.documentManager.IncomingDocUtil" %>
-<%@ page import="openo.log.LogConst" %>
-<%@ page import="openo.log.LogAction" %>
-<%@ page import="openo.oscarLab.ca.all.AcknowledgementData" %>
-<%@ page import="openo.oscarMDS.data.ReportStatus" %>
+<%@ page import="ca.openosp.openo.log.LogConst" %>
+<%@ page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.ReportStatus" %>
 <%
 
     ProviderInboxRoutingDao providerInboxRoutingDao = SpringUtils.getBean(ProviderInboxRoutingDao.class);
@@ -687,8 +687,8 @@
                             </td>
                             <td><% if (a.getStatus() == null) {%>
                                 "" <% } else if (a.getStatus().equals("N")) {%><bean:message
-                                        key="openo.appt.ApptStatusData.msgNoShow"/><% } else if (a.getStatus().equals("C")) {%><bean:message
-                                        key="openo.appt.ApptStatusData.msgCanceled"/> <%}%>
+                                        key="ca.openosp.openo.appt.ApptStatusData.msgNoShow"/><% } else if (a.getStatus().equals("C")) {%><bean:message
+                                        key="ca.openosp.openo.appt.ApptStatusData.msgCanceled"/> <%}%>
                             </td>
                         </tr>
                         <%}%>

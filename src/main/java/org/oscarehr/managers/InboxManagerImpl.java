@@ -56,10 +56,10 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.HRMResultsData;
-import openo.oscarLab.ca.on.LabResultData;
-import openo.util.OscarRoleObjectPrivilege;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.HRMResultsData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 
 @Service
 public class InboxManagerImpl implements InboxManager {

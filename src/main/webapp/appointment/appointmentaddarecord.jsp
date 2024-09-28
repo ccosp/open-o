@@ -42,20 +42,20 @@
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page
-        import="java.sql.*, java.util.*, openo.MyDateFormat, oscar.oscarDemographic.data.*, org.oscarehr.common.OtherIdManager, java.text.SimpleDateFormat"
+        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, oscar.oscarDemographic.data.*, org.oscarehr.common.OtherIdManager, java.text.SimpleDateFormat"
         errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.common.model.Demographic,openo.appt.AppointmentMailer, org.oscarehr.util.SpringUtils" %>
+<%@ page import="org.oscarehr.common.model.Demographic,ca.openosp.openo.appt.AppointmentMailer, org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@page import="org.oscarehr.common.dao.WaitingListDao" %>
-<%@page import="openo.util.ConversionUtils" %>
-<%@page import="openo.util.UtilDateUtilities" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="org.oscarehr.event.EventService" %>
 <%@page import="org.oscarehr.managers.DemographicManager" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.oscarDemographic.data.DemographicMerged" %>
-<%@ page import="openo.oscarWaitingList.WaitingList" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="ca.openosp.openo.oscarWaitingList.WaitingList" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:html lang="en">

@@ -38,7 +38,7 @@ import org.oscarehr.util.LocaleUtils;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 import org.oscarehr.common.dao.BillingONExtDao;
 

@@ -50,7 +50,7 @@
 <%@page import="org.oscarehr.renal.CkdScreenerReportHandler" %>
 <%@page import="org.oscarehr.renal.CKDReportContainer" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 
 <%

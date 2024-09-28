@@ -33,7 +33,7 @@ import org.oscarehr.common.dao.ProviderPreferenceDao;
 import org.oscarehr.common.model.ProviderPreference;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 /**
  * Provides an abstract way to reference the the External Prescriber preferences specific to a

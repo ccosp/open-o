@@ -47,9 +47,9 @@ import org.owasp.encoder.Encode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.log.LogAction;
-import openo.oscarEncounter.data.EctProgram;
-import openo.util.StringUtils;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarEncounter.data.EctProgram;
+import ca.openosp.openo.util.StringUtils;
 
 @Service
 public class EmailManager {

@@ -48,8 +48,8 @@
         import="org.springframework.context.*,org.springframework.web.context.support.*" %>
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
 <%
     String formClass = "DischargeSummary";
     String formLink = "formDischargeSummary.jsp";

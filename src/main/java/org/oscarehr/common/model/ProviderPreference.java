@@ -41,7 +41,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.ElementCollection;
 //import org.hibernate.annotations.CollectionOfElements;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 @Entity
 public class ProviderPreference extends AbstractModel<String> implements Serializable {

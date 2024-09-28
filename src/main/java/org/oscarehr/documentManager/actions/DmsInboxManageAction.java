@@ -50,12 +50,12 @@ import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import openo.oscarLab.ca.all.Hl7textResultsData;
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.HRMResultsData;
-import openo.oscarLab.ca.on.LabResultData;
-import openo.oscarMDS.data.CategoryData;
-import openo.util.OscarRoleObjectPrivilege;
+import ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.HRMResultsData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.oscarMDS.data.CategoryData;
+import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -257,7 +257,7 @@ public class DmsInboxManageAction extends DispatchAction {
 
         // can't use userrole from session, because it changes if provider A search for provider B's documents
 
-        // openo.oscarMDS.data.MDSResultsData mDSData = new openo.oscarMDS.data.MDSResultsData();
+        // ca.openosp.openo.data.oscarMDS.MDSResultsData mDSData = new ca.openosp.openo.data.oscarMDS.MDSResultsData();
         CommonLabResultData comLab = new CommonLabResultData();
         // String providerNo = request.getParameter("providerNo");
         String providerNo = (String) session.getAttribute("user");

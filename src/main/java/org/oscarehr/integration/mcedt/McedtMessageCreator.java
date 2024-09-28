@@ -26,7 +26,7 @@ package org.oscarehr.integration.mcedt;
 
 import java.util.List;
 
-import openo.util.Appender;
+import ca.openosp.openo.util.Appender;
 import ca.ontario.health.ebs.EbsFault;
 import ca.ontario.health.edt.CommonResult;
 import ca.ontario.health.edt.DownloadData;

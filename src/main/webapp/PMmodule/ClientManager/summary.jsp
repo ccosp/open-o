@@ -25,7 +25,7 @@
 <%@ include file="/taglibs.jsp" %>
 
 <%@page import="java.util.List" %>
-<%@page import="openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.oscarehr.PMmodule.model.Program" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.common.model.Admission" %>
@@ -41,7 +41,7 @@
 <%@page import="org.oscarehr.common.dao.IntegratorConsentDao" %>
 <%@page import="org.oscarehr.common.model.IntegratorConsent" %>
 <%@page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.GetConsentTransfer" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>

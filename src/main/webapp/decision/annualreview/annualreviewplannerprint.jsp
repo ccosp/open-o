@@ -36,9 +36,9 @@
 
 <jsp:useBean id="riskDataBean" class="java.util.Properties" scope="page"/>
 <jsp:useBean id="risks"
-             class="openo.decision.DesAntenatalPlannerRisks_99_12" scope="page"/>
+             class="ca.openosp.openo.decision.DesAntenatalPlannerRisks_99_12" scope="page"/>
 <jsp:useBean id="checklist"
-             class="openo.decision.DesAnnualReviewPlannerChecklist" scope="page"/>
+             class="ca.openosp.openo.decision.DesAnnualReviewPlannerChecklist" scope="page"/>
 <%@ include file="../../admin/dbconnection.jsp" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.DesAnnualReviewPlan" %>
@@ -48,8 +48,8 @@
 %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 %>

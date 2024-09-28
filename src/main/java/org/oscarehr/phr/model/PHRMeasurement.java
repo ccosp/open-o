@@ -53,11 +53,11 @@ import org.oscarehr.common.model.MeasurementsExt;
 import org.oscarehr.util.MiscUtils;
 import org.w3c.dom.Element;
 
-import openo.oscarEncounter.data.EctProviderData;
-import openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean;
-import openo.oscarEncounter.oscarMeasurements.data.ImportExportMeasurements;
-import openo.oscarEncounter.oscarMeasurements.data.LoincMapEntry;
-import openo.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig;
+import ca.openosp.openo.oscarEncounter.data.EctProviderData;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.data.ImportExportMeasurements;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.data.LoincMapEntry;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig;
 
 /**
  * @author apavel

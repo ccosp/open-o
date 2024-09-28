@@ -32,12 +32,12 @@ import org.oscarehr.common.model.enumerator.LabType;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Component;
-import openo.OscarProperties;
-import openo.log.LogAction;
-import openo.oscarLab.FileUploadCheck;
-import openo.oscarLab.ca.all.upload.HandlerClassFactory;
-import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
-import openo.oscarLab.ca.all.util.Utilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarLab.FileUploadCheck;
+import ca.openosp.openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MessageHandler;
+import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;

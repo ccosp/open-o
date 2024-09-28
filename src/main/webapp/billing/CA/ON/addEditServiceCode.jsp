@@ -33,8 +33,8 @@
 <%@ page import="org.oscarehr.common.dao.BillingServiceDao" %>
 <%@ page import="org.oscarehr.billing.CA.ON.model.BillingPercLimit" %>
 <%@ page import="org.oscarehr.billing.CA.ON.dao.BillingPercLimitDao" %>
-<%@ page import="openo.util.StringUtils" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%
     BillingServiceDao billingServiceDao = SpringUtils.getBean(BillingServiceDao.class);
     BillingPercLimitDao billingPercLimitDao = SpringUtils.getBean(BillingPercLimitDao.class);

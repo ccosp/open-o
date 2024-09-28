@@ -41,7 +41,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarProvider.data.ProviderData;
+import ca.openosp.openo.oscarProvider.data.ProviderData;
 import org.oscarehr.common.dao.ProviderDataDao;
 
 /**

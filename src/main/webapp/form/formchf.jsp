@@ -46,8 +46,8 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page
         import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarEncounter.oscarMeasurements.bean.*,oscar.oscarEncounter.oscarMeasurements.pageUtil.*" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
 
 
 <html:html lang="en">

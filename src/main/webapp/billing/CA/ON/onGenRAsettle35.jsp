@@ -18,7 +18,7 @@
 
 --%>
 
-<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*, oscar.*, oscar.util.*, openo.MyDateFormat"
+<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*, oscar.*, oscar.util.*, ca.openosp.openo.MyDateFormat"
          errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 
@@ -29,7 +29,7 @@
 <%@page import="org.oscarehr.common.dao.RaDetailDao" %>
 <%@page import="org.oscarehr.common.model.Billing" %>
 <%@page import="org.oscarehr.common.dao.BillingDao" %>
-<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingRAPrep" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingRAPrep" %>
 <%
     RaHeaderDao dao = SpringUtils.getBean(RaHeaderDao.class);
     BillingDao billingDao = SpringUtils.getBean(BillingDao.class);

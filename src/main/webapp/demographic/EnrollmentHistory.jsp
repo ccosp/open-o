@@ -52,9 +52,9 @@
 <%@page import="org.oscarehr.common.model.DemographicArchive" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Date" %>
-<%@page import="openo.util.DateUtils" %>
-<%@page import="openo.util.StringUtils" %>
-<%@page import="openo.oscarDemographic.pageUtil.Util" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.StringUtils" %>
+<%@page import="ca.openosp.openo.oscarDemographic.pageUtil.Util" %>
 <html:html lang="en">
     <head>
         <title>Enrollment History</title>

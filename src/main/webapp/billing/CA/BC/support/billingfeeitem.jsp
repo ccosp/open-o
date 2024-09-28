@@ -24,9 +24,9 @@
 --%>
 <%@page import="java.math.*, java.util.*,  oscar.*, java.net.*,oscar.oscarBilling.ca.bc.data.*,org.oscarehr.common.model.*,oscar.util.*" %>
 <%@page import="org.springframework.web.context.WebApplicationContext,org.springframework.web.context.support.WebApplicationContextUtils, oscar.entities.*" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingCodeData" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.Misc" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.Misc" %>
 <%
     if (session.getAttribute("user") == null) {
         response.sendRedirect("../../logout.jsp");

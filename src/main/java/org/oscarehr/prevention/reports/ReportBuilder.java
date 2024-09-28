@@ -53,12 +53,12 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.ws.rest.to.model.PreventionSearchConfigTo1;
 import org.oscarehr.ws.rest.to.model.PreventionSearchTo1;
 
-import openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean;
-import openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler;
-import openo.oscarPrevention.PreventionData;
-import openo.oscarPrevention.reports.PreventionReportUtil;
-import openo.oscarPrevention.reports.ReportItem;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler;
+import ca.openosp.openo.oscarPrevention.PreventionData;
+import ca.openosp.openo.oscarPrevention.reports.PreventionReportUtil;
+import ca.openosp.openo.oscarPrevention.reports.ReportItem;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 public class ReportBuilder {
     private static Logger logger = MiscUtils.getLogger();

@@ -33,15 +33,15 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Hsfo2Patient;
 import org.oscarehr.common.model.Hsfo2RecommitSchedule;
 import org.oscarehr.util.LoggedInInfo;
 import org.springframework.stereotype.Repository;
 
-import openo.form.study.hsfo2.HSFODAO;
-import openo.oscarDemographic.data.DemographicData;
+import ca.openosp.openo.form.study.hsfo2.HSFODAO;
+import ca.openosp.openo.oscarDemographic.data.DemographicData;
 
 @Repository
 public class Hsfo2RecommitScheduleDaoImpl extends AbstractDaoImpl<Hsfo2RecommitSchedule> implements Hsfo2RecommitScheduleDao {

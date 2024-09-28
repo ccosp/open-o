@@ -42,7 +42,7 @@ import org.oscarehr.casemgmt.dao.CaseManagementNoteDAO;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
 import org.oscarehr.util.SpringUtils;
 
-import openo.log.LogAction;
+import ca.openosp.openo.log.LogAction;
 
 import com.quatro.service.LookupManager;
 

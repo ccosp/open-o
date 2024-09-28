@@ -8,8 +8,8 @@
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 
 <%@ page import="oscar.*, org.oscarehr.util.*,oscar.util.*,java.net.URLEncoder"%>
-<%@ page import="openo.util.UtilMisc" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.util.UtilMisc" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 
 <logic:equal name="infirmaryView_isOscar" value="false">
 

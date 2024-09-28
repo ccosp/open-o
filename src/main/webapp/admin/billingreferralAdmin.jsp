@@ -33,7 +33,7 @@
 
 <%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
 <%@page import="java.util.*" %>
-<%@ page import="openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
 
 <%
     String searchBy = "searchByName";

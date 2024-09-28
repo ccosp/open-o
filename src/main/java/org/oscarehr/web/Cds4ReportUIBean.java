@@ -56,7 +56,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 public final class Cds4ReportUIBean {
 

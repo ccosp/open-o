@@ -43,9 +43,9 @@
 <%@ page
         import="java.util.*, org.w3c.dom.*, oscar.oscarEncounter.oscarConsultationRequest.pageUtil.*" %>
 <%@ page import="oscar.oscarClinic.*" %>
-<%@ page import="openo.oscarClinic.ClinicData" %>
-<%@ page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
-<%@ page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFaxForm" %>
+<%@ page import="ca.openosp.openo.oscarClinic.ClinicData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFaxForm" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

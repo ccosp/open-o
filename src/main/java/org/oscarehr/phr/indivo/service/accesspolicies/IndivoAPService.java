@@ -38,7 +38,7 @@ import org.oscarehr.phr.model.PHRAction;
 import org.oscarehr.phr.model.PHRDocument;
 import org.oscarehr.phr.service.PHRService;
 
-import openo.util.StringUtils;
+import ca.openosp.openo.util.StringUtils;
 
 /**
  * @author apavel

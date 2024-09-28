@@ -60,9 +60,9 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleHoliday" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleHolidayDao" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.DateInMonthTable" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.DateInMonthTable" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%
     ScheduleHolidayDao scheduleHolidayDao = SpringUtils.getBean(ScheduleHolidayDao.class);
 %>

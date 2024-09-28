@@ -41,12 +41,12 @@ import org.junit.Test;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 
-import openo.OscarProperties;
-import openo.login.jaas.LdapLoginModule;
-import openo.login.jaas.LoginModuleFactory;
-import openo.login.jaas.OscarCallbackHandler;
-import openo.login.jaas.OscarConfiguration;
-import openo.login.jaas.OscarPrincipal;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.login.jaas.LdapLoginModule;
+import ca.openosp.openo.login.jaas.LoginModuleFactory;
+import ca.openosp.openo.login.jaas.OscarCallbackHandler;
+import ca.openosp.openo.login.jaas.OscarConfiguration;
+import ca.openosp.openo.login.jaas.OscarPrincipal;
 
 public class LdapLoginModuleTest extends DaoTestFixtures {
 

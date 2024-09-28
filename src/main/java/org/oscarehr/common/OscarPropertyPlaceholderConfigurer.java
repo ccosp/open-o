@@ -25,7 +25,7 @@ package org.oscarehr.common;
 
 import java.util.Properties;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;

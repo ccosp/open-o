@@ -77,9 +77,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
-import openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
-import openo.oscarPrevention.PreventionDisplayConfig;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
+import ca.openosp.openo.oscarPrevention.PreventionDisplayConfig;
 
 public class FlowsheetAction extends DispatchAction {
 

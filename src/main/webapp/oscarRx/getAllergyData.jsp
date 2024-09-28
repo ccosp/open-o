@@ -33,10 +33,10 @@
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.SystemPreferences" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxPatientData" %>
-<%@ page import="openo.oscarRx.data.RxDrugData" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxDrugData" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

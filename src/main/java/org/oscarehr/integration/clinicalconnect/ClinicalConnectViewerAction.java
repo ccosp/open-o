@@ -64,8 +64,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.log.LogAction;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
 
 public class ClinicalConnectViewerAction extends DispatchAction {
 

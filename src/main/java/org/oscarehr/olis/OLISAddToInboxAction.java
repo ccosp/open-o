@@ -29,12 +29,12 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.log.LogAction;
-import openo.log.LogConst;
-import openo.oscarLab.FileUploadCheck;
-import openo.oscarLab.ca.all.upload.HandlerClassFactory;
-import openo.oscarLab.ca.all.upload.handlers.OLISHL7Handler;
-import openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.log.LogConst;
+import ca.openosp.openo.oscarLab.FileUploadCheck;
+import ca.openosp.openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.OLISHL7Handler;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
 
 public class OLISAddToInboxAction extends DispatchAction {
 

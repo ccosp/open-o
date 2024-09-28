@@ -101,11 +101,11 @@ import org.springframework.stereotype.Component;
 import net.sf.json.JSONObject;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import openo.eform.EFormUtil;
-import openo.oscarDemographic.data.RxInformation;
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.LabResultData;
-import openo.util.ConversionUtils;
+import ca.openosp.openo.eform.EFormUtil;
+import ca.openosp.openo.oscarDemographic.data.RxInformation;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.util.ConversionUtils;
 
 @Path("/consults")
 @Component("consultationWebService")

@@ -24,14 +24,14 @@
 
 --%>
 
-<%@ page import="java.sql.*, java.util.*, openo.MyDateFormat" errorPage="/errorpage.jsp" %>
+<%@ page import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat" errorPage="/errorpage.jsp" %>
 
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.EncounterTemplateDao" %>
 <%@page import="org.oscarehr.common.model.EncounterTemplate" %>
 <%@page import="org.oscarehr.common.dao.EncounterDao" %>
 <%@page import="org.oscarehr.common.model.Encounter" %>
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%
     EncounterTemplateDao encounterTemplateDao = SpringUtils.getBean(EncounterTemplateDao.class);
     EncounterDao encounterDao = SpringUtils.getBean(EncounterDao.class);

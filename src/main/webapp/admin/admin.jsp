@@ -63,7 +63,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
@@ -419,7 +419,7 @@
                     <% } %>
                     <li><a href="#"
                            onclick='popupPage(600,900,&quot;<html:rewrite
-                                   page="/servlet/openo.DocumentUploadServlet"/>&quot;);return false;'><bean:message
+                                   page="/servlet/ca.openosp.openo.DocumentUploadServlet"/>&quot;);return false;'><bean:message
                             key="admin.admin.btnBillingReconciliation"/></a></li>
                     <!-- li><a href="#" onclick ='popupPage(600,900,&quot;<html:rewrite
                         page="/billing/CA/ON/billingRA.jsp"/>&quot;);return false;'><bean:message

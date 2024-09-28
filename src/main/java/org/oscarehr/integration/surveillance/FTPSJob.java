@@ -42,10 +42,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import net.sf.json.JSONObject;
-import openo.oscarSurveillance.ProcessSurveyFile;
+import ca.openosp.openo.oscarSurveillance.ProcessSurveyFile;
 
 
-//import openo.oscarSurveillance.ProcessSurveyFile;
+//import ca.openosp.openo.oscarSurveillance.ProcessSurveyFile;
 
 public class FTPSJob implements OscarRunnable {
 

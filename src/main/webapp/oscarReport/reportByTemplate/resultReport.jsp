@@ -31,7 +31,7 @@
 
 <%@ page
         import="java.util.*,oscar.oscarReport.reportByTemplate.*,java.sql.*, org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.oscarReport.reportByTemplate.ReportObjectGeneric" %>
+<%@ page import="ca.openosp.openo.oscarReport.reportByTemplate.ReportObjectGeneric" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

@@ -24,7 +24,7 @@
 
 --%>
 
-<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,openo.MyDateFormat" %>
+<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,ca.openosp.openo.MyDateFormat" %>
 
 <%@page import="org.oscarehr.common.model.CtlBillingService" %>
 <%@page import="org.oscarehr.common.dao.CtlBillingServiceDao" %>

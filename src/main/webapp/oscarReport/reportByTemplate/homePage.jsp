@@ -33,8 +33,8 @@
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.RBTGroup" %>
-<%@ page import="openo.oscarReport.reportByTemplate.ReportObject" %>
-<%@ page import="openo.oscarReport.reportByTemplate.ReportManager" %>
+<%@ page import="ca.openosp.openo.oscarReport.reportByTemplate.ReportObject" %>
+<%@ page import="ca.openosp.openo.oscarReport.reportByTemplate.ReportManager" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

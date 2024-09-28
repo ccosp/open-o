@@ -21,7 +21,7 @@
  */
 package com.quatro.model;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 
 import java.util.Calendar;
 import java.util.List;

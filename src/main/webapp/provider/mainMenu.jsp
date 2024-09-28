@@ -35,7 +35,7 @@
 <%@page import="org.oscarehr.managers.DashboardManager" %>
 <%@ page import="org.oscarehr.common.model.Dashboard" %>
 <%@ page import="java.util.Properties" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.List" %>

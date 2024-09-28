@@ -34,7 +34,7 @@ import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public final class DateUtils {
     public static final String JS_ISO_DATE_FORMAT = "yy-mm-dd";

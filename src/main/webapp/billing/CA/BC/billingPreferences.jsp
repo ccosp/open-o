@@ -10,11 +10,11 @@
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
-<%@ page import="openo.oscarClinic.ClinicData" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingPreference" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingPreferencesDAO" %>
+<%@ page import="ca.openosp.openo.oscarClinic.ClinicData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingPreference" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingPreferencesDAO" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%
     SystemPreferencesDao systemPreferencesDao = SpringUtils.getBean(SystemPreferencesDao.class);
     PropertyDao propertyDao = SpringUtils.getBean(PropertyDao.class);

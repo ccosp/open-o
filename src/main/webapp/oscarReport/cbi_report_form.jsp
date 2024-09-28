@@ -38,7 +38,7 @@
     }
 %>
 
-<%@page import="openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.oscarehr.PMmodule.model.Program" %>
 <%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
@@ -51,7 +51,7 @@
 <%@page import="java.util.GregorianCalendar" %>
 <%@page import="java.text.DateFormatSymbols" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="openo.util.CBIUtil" %>
+<%@page import="ca.openosp.openo.util.CBIUtil" %>
 <%@page import="java.util.Date" %>
 
 <%

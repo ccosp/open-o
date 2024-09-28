@@ -31,7 +31,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 
-import openo.util.Textualizer;
+import ca.openosp.openo.util.Textualizer;
 
 public class TextualizerTest {
 

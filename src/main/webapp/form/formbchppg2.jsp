@@ -40,13 +40,13 @@
 %>
 
 <%@ page
-        import="java.util.*, openo.util.UtilDateUtilities, oscar.form.*, oscar.form.data.*, openo.oscarPrevention.PreventionData,openo.oscarRx.data.RxPrescriptionData" %>
+        import="java.util.*, ca.openosp.openo.util.UtilDateUtilities, oscar.form.*, oscar.form.data.*, ca.openosp.openo.oscarPrevention.PreventionData,ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
 
 <%
     String formClass = "BCHP";

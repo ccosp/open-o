@@ -58,7 +58,7 @@
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.dao.forms.FormsDao" %>
-<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

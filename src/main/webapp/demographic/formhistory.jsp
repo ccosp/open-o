@@ -49,7 +49,7 @@
 <%@ page import="org.oscarehr.common.dao.RecycleBinDao" %>
 <%@ page import="org.oscarehr.common.model.Form" %>
 <%@ page import="org.oscarehr.common.dao.FormDao" %>
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%
     RecycleBinDao recycleBinDao = SpringUtils.getBean(RecycleBinDao.class);
     FormDao formDao = SpringUtils.getBean(FormDao.class);

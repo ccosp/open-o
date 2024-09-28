@@ -1,5 +1,5 @@
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxPatientData" %><%--
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPatientData" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.

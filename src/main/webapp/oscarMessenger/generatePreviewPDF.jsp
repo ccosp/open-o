@@ -28,10 +28,10 @@
         import="oscar.oscarMessenger.docxfer.send.*,
                 oscar.oscarMessenger.docxfer.util.*,
                 oscar.oscarEncounter.data.*,
-                openo.oscarEncounter.pageUtil.EctSessionBean,
-                openo.oscarRx.pageUtil.RxSessionBean,
-                openo.oscarRx.data.RxPatientData,
-                openo.oscarMessenger.pageUtil.MsgSessionBean,
+                ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean,
+                ca.openosp.openo.oscarRx.pageUtil.RxSessionBean,
+                ca.openosp.openo.oscarRx.data.RxPatientData,
+                ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean,
                 oscar.oscarDemographic.data.*" %>
 
 <%@ page import=" java.util.*, org.w3c.dom.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*"
@@ -63,7 +63,7 @@
 %>
 
 <%@ page import="oscar.util.*" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 
 
 <%
@@ -88,7 +88,7 @@
     EctSessionBean bean = new EctSessionBean();
     bean.demographicNo = demographic_no;
 
-    MsgSessionBean MsgSessionBean = (openo.oscarMessenger.pageUtil.MsgSessionBean) request.getSession().getAttribute("msgSessionBean");
+    MsgSessionBean MsgSessionBean = (ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean) request.getSession().getAttribute("msgSessionBean");
 
     request.getSession().setAttribute("EctSessionBean", bean);
 

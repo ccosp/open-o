@@ -46,7 +46,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 @Transactional
 public class ProgramDaoImpl extends HibernateDaoSupport implements ProgramDao {

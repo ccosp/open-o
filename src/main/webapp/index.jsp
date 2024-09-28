@@ -25,7 +25,7 @@
 --%>
 
 
-<%@ page import="openo.login.UAgentInfo" %>
+<%@ page import="ca.openosp.openo.login.UAgentInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix="c" %>
@@ -41,7 +41,7 @@
     pageContext.setAttribute("isMobileDevice", isMobileDevice);
 %>
 
-<jsp:useBean id="LoginResourceBean" beanName="openo.login.LoginResourceBean" type="openo.login.LoginResourceBean"/>
+<jsp:useBean id="LoginResourceBean" beanName="ca.openosp.openo.login.LoginResourceBean" type="ca.openosp.openo.login.LoginResourceBean"/>
 <c:set var="login_error" value="" scope="page"/>
 <!DOCTYPE html>
 <html:html lang="en">

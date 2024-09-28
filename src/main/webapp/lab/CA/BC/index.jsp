@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Obr" %>
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Pid" %>
@@ -48,7 +48,7 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.billing.CA.BC.dao.Hl7LinkDao" %>
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Link" %>
-<%@ page import="openo.Misc" %>
+<%@ page import="ca.openosp.openo.Misc" %>
 
 <%
 

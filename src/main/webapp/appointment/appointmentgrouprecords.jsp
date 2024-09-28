@@ -66,10 +66,10 @@
 <%@ page
         import="java.util.*, java.sql.*,java.net.*, oscar.*, oscar.util.*, org.oscarehr.common.OtherIdManager"
         errorPage="/errorpage.jsp" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.util.UtilMisc" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.util.UtilMisc" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 

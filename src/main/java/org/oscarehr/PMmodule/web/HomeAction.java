@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 import com.quatro.common.KeyConstants;
 import com.quatro.model.security.NoAccessException;

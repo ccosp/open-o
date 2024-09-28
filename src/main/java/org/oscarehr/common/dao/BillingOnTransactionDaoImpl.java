@@ -38,8 +38,8 @@ import org.oscarehr.common.model.BillingOnTransaction;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
-import openo.oscarBilling.ca.on.data.BillingClaimHeader1Data;
-import openo.oscarBilling.ca.on.data.BillingDataHlp;
+import ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data;
+import ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp;
 import org.oscarehr.common.model.BillingONItem;
 
 @Repository

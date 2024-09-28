@@ -32,7 +32,7 @@ import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.util.StringUtils;
+import ca.openosp.openo.util.StringUtils;
 
 /*
  * The purpose of the EmailComposeManager is to help prepare all necessary data to display on the emailCompose.jsp page.

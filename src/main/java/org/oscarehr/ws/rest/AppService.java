@@ -64,7 +64,7 @@ import org.oscarehr.ws.rest.to.model.AppDefinitionTo1;
 import org.oscarehr.ws.rest.to.model.RssItem;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 @Path("/app")
 public class AppService extends AbstractServiceImpl {

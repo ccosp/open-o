@@ -39,7 +39,7 @@
     }
 %>
 
-<%@ page import="java.util.*, oscar.form.*, openo.OscarProperties" %>
+<%@ page import="java.util.*, oscar.form.*, ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

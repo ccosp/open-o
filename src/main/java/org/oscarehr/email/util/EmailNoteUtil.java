@@ -22,10 +22,10 @@ import org.oscarehr.util.DateUtils;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarEncounter.data.EctFormData.PatientForm;
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.LabResultData;
-import openo.util.StringUtils;
+import ca.openosp.openo.oscarEncounter.data.EctFormData.PatientForm;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.util.StringUtils;
 
 public class EmailNoteUtil {
     private EmailLog emailLog;

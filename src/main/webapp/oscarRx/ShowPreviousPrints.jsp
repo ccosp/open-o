@@ -30,9 +30,9 @@
 <%@ page import="oscar.oscarRx.data.*" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
-<%@ page import="openo.util.DateUtils" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.util.DateUtils" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -74,7 +74,7 @@
 
     </head>
 
-    <bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+    <bean:define id="patient" type="ca.openosp.openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
     <%
         String scriptNo = request.getParameter("scriptNo");
         //load prescription

@@ -32,15 +32,15 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.RSchedule" %>
 <%@page import="org.oscarehr.common.dao.RScheduleDao" %>
-<%@page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.SxmlMisc" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 
 <%
     RScheduleDao rScheduleDao = SpringUtils.getBean(RScheduleDao.class);
 %>
 
-<jsp:useBean id="scheduleRscheduleBean" class="openo.RscheduleBean" scope="session"/>
+<jsp:useBean id="scheduleRscheduleBean" class="ca.openosp.openo.RscheduleBean" scope="session"/>
 
 
 <% scheduleRscheduleBean.clear(); %>

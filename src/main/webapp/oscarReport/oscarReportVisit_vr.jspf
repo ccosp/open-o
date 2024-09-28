@@ -41,7 +41,7 @@ if(!authed) {
 
 <%@page import="org.oscarehr.common.dao.ReportProviderDao" %>
 <%@page import="org.oscarehr.common.model.ReportProvider" %>
-<%@ page import="openo.oscarReport.data.VisitReportData" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.VisitReportData" %>
 
 
 <table class="table table-bordered table-striped table-hover table-condensed" style="font-size:12px;">

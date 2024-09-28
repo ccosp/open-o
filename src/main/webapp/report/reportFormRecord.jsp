@@ -16,7 +16,7 @@
          import="java.util.*, oscar.oscarReport.data.*" %>
 <%@ page import="oscar.login.*" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.oscarReport.data.RptReportItem" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptReportItem" %>
 <%
     boolean bDeletedList = false;
     String msg = "Report List";

@@ -72,10 +72,10 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import openo.log.LogAction;
-import openo.oscarSurveillance.ProcessSurveyFile;
-import openo.oscarSurveillance.SurveillanceMaster;
-import openo.oscarSurveillance.Survey;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarSurveillance.ProcessSurveyFile;
+import ca.openosp.openo.oscarSurveillance.SurveillanceMaster;
+import ca.openosp.openo.oscarSurveillance.Survey;
 
 
 @Path("/surveillance")

@@ -47,7 +47,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 public final class RemotePreventionHelper {
     private static Logger logger = MiscUtils.getLogger();

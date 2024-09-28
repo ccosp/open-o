@@ -35,8 +35,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page import="java.util.*" %>
 <%
     String providerName = request.getSession().getAttribute("userfirstname") + " " +

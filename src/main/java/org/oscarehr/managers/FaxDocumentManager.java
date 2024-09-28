@@ -34,7 +34,7 @@ import org.oscarehr.fax.core.FaxAccount;
 import org.oscarehr.fax.core.FaxRecipient;
 import org.oscarehr.util.LoggedInInfo;
 
-import openo.form.util.FormTransportContainer;
+import ca.openosp.openo.form.util.FormTransportContainer;
 
 public interface FaxDocumentManager {
 

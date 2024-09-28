@@ -56,12 +56,12 @@ import org.springframework.stereotype.Service;
 
 import org.oscarehr.util.SpringUtils;
 
-import openo.log.LogAction;
-import openo.oscarMessenger.data.ContactIdentifier;
-import openo.oscarMessenger.data.MessengerSystemMessage;
-import openo.oscarMessenger.data.MsgDisplayMessage;
-import openo.oscarMessenger.data.MsgMessageData;
-import openo.oscarMessenger.data.MsgProviderData;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarMessenger.data.ContactIdentifier;
+import ca.openosp.openo.oscarMessenger.data.MessengerSystemMessage;
+import ca.openosp.openo.oscarMessenger.data.MsgDisplayMessage;
+import ca.openosp.openo.oscarMessenger.data.MsgMessageData;
+import ca.openosp.openo.oscarMessenger.data.MsgProviderData;
 
 
 @Service

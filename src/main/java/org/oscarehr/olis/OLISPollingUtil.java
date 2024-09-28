@@ -33,9 +33,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import openo.Misc;
-import openo.oscarLab.ca.all.upload.HandlerClassFactory;
-import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
+import ca.openosp.openo.Misc;
+import ca.openosp.openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MessageHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.logging.log4j.Logger;
@@ -51,9 +51,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.oscarLab.FileUploadCheck;
-import openo.oscarLab.ca.all.util.Utilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarLab.FileUploadCheck;
+import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 import com.indivica.olis.Driver;
 import com.indivica.olis.parameters.OBR22;

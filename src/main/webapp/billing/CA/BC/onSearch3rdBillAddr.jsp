@@ -101,8 +101,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
-<%@page import="openo.Misc" %>
-<%@ page import="openo.oscarDB.DBPreparedHandler" %>
+<%@page import="ca.openosp.openo.Misc" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBPreparedHandler" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

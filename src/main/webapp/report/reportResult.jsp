@@ -26,10 +26,10 @@
          import="java.util.*, oscar.oscarReport.data.*" %>
 <%@ page import="oscar.oscarReport.pageUtil.*" %>
 <%@ page import="oscar.login.*" %>
-<%@ page import="openo.oscarReport.data.RptReportConfigData" %>
-<%@ page import="openo.oscarReport.data.RptReportCreator" %>
-<%@ page import="openo.oscarReport.data.RptReportItem" %>
-<%@ page import="openo.oscarReport.pageUtil.RptFormQuery" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptReportConfigData" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptReportCreator" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptReportItem" %>
+<%@ page import="ca.openosp.openo.oscarReport.pageUtil.RptFormQuery" %>
 <%
     String VALUE = "value_";
     String DATE_FORMAT = "dateFormat_";

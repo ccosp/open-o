@@ -46,9 +46,9 @@ import org.oscarehr.common.model.ProfessionalSpecialist;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 
-import openo.OscarAction;
-import openo.OscarDocumentCreator;
-import openo.util.ConcatPDF;
+import ca.openosp.openo.OscarAction;
+import ca.openosp.openo.OscarDocumentCreator;
+import ca.openosp.openo.util.ConcatPDF;
 
 /**
  * Originally developed by Prylynx for SJHCG

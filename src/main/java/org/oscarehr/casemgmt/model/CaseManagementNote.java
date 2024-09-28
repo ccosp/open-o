@@ -38,7 +38,7 @@ import org.oscarehr.casemgmt.dao.CaseManagementNoteLinkDAO;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
 
 
 public class CaseManagementNote extends BaseObject {

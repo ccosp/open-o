@@ -37,7 +37,7 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarmcmaster.ckd.CKDConfig;
 import org.oscarmcmaster.ckd.CkdConfigDocument;
 import org.oscarmcmaster.ckd.DxCodes.Code;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 import java.util.*;
 

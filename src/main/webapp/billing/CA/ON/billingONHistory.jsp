@@ -43,11 +43,11 @@
 <%@page import="org.oscarehr.common.model.BillingONPayment" %>
 <%@page import="org.oscarehr.common.dao.BillingONCHeader1Dao" %>
 <%@page import="org.oscarehr.common.model.BillingONCHeader1" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingItemData" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingItemData" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
     BillingONPaymentDao billingOnPaymentDao = SpringUtils.getBean(BillingONPaymentDao.class);
     BillingONCHeader1Dao bCh1Dao = SpringUtils.getBean(BillingONCHeader1Dao.class);

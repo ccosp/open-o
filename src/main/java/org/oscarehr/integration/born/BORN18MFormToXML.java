@@ -58,9 +58,9 @@ import org.oscarehr.sharingcenter.model.ClinicInfoDataObject;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarPrevention.PreventionDisplayConfig;
-import openo.util.StringUtils;
-import openo.OscarProperties;
+import ca.openosp.openo.oscarPrevention.PreventionDisplayConfig;
+import ca.openosp.openo.util.StringUtils;
+import ca.openosp.openo.OscarProperties;
 import ca.bornontario.x18MEWBV.*;
 
 

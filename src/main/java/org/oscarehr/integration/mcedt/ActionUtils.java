@@ -38,7 +38,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import openo.util.ConversionUtils;
+import ca.openosp.openo.util.ConversionUtils;
 import ca.ontario.health.edt.Detail;
 import ca.ontario.health.edt.TypeListResult;
 import ca.ontario.health.edt.UpdateRequest;

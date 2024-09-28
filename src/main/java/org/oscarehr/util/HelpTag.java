@@ -34,7 +34,7 @@ import org.apache.struts.Globals;
 import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.util.MessageResources;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 /**
  * Creates a anchor tag that pops up a help window to

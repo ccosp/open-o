@@ -48,7 +48,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SessionConstants;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class InfirmAction extends DispatchAction {
     private static final Logger logger = MiscUtils.getLogger();

@@ -24,7 +24,7 @@
 
 --%>
 <%@page import="org.oscarehr.common.service.AcceptableUseAgreementManager" %>
-<%@page import="openo.OscarProperties, javax.servlet.http.Cookie, openo.oscarSecurity.CookieSecurity, openo.login.UAgentInfo" %>
+<%@page import="ca.openosp.openo.OscarProperties, javax.servlet.http.Cookie, ca.openosp.openo.oscarSecurity.CookieSecurity, ca.openosp.openo.login.UAgentInfo" %>
 <%@page import="org.apache.velocity.runtime.directive.Foreach" %>
 <%@page import="org.oscarehr.common.service.AcceptableUseAgreementManager" %>
 <%@page import="java.util.*" %>

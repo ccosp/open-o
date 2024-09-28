@@ -55,7 +55,7 @@
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicTransfer" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.MatchingDemographicTransferScore" %>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
@@ -65,11 +65,11 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="openo.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicMerged" %>
 <%@page import="org.oscarehr.common.dao.OscarLogDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.Misc" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.Misc" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
 
 <%

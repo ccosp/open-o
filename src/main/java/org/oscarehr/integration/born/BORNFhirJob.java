@@ -90,7 +90,7 @@ import org.oscarehr.util.SpringUtils;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class BORNFhirJob implements OscarRunnable {
 

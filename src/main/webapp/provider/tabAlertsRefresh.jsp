@@ -30,7 +30,7 @@
     String tab = request.getParameter("id");
 
     if (tab.equals("oscar_new_lab")) { %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <oscar:newLab providerNo="<%=curUser_no%>"><bean:message key="global.lab"/></oscar:newLab>
 <% }
     if (tab.equals("oscar_new_msg")) { %>

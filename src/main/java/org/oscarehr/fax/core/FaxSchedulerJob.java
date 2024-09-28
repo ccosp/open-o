@@ -33,7 +33,7 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Component;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 @Component
 public class FaxSchedulerJob extends TimerTask {

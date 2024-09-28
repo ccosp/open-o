@@ -40,9 +40,9 @@ import org.oscarehr.phr.model.PHRMedication;
 import org.oscarehr.phr.model.PHRMessage;
 import org.oscarehr.util.MiscUtils;
 
-import openo.oscarEncounter.data.EctProviderData;
-import openo.oscarProvider.data.ProviderData;
-import openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.oscarEncounter.data.EctProviderData;
+import ca.openosp.openo.oscarProvider.data.ProviderData;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
 
 public class PHRService {
     private static final Logger logger = MiscUtils.getLogger();

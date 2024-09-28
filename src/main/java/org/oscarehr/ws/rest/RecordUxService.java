@@ -72,7 +72,7 @@ import org.springframework.stereotype.Component;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import openo.oscarProvider.data.ProviderMyOscarIdData;
+import ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData;
 
 
 @Path("/recordUX/")

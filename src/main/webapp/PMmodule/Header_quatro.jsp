@@ -1,4 +1,4 @@
-<%@ page import="openo.OscarProperties" %><%--
+<%@ page import="ca.openosp.openo.OscarProperties" %><%--
 
 
     Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.

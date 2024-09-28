@@ -40,7 +40,7 @@
 
 <%@page import="org.oscarehr.provider.model.PreventionManager" %>
 <%@ page
-        import="java.sql.*, java.util.*, openo.MyDateFormat, openo.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, org.oscarehr.common.OtherIdManager" %>
+        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, org.oscarehr.common.OtherIdManager" %>
 
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
@@ -70,10 +70,10 @@
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.common.model.ConsentType" %>
-<%@page import="openo.OscarProperties" %>
-<%@ page import="openo.log.LogConst" %>
-<%@ page import="openo.log.LogAction" %>
-<%@ page import="openo.oscarDemographic.data.DemographicNameAgeString" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.log.LogConst" %>
+<%@ page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicNameAgeString" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -432,7 +432,7 @@
 
 
             //add to waiting list if the waiting_list parameter in the property file is set to true
-            openo.oscarWaitingList.WaitingList wL = openo.oscarWaitingList.WaitingList.getInstance();
+            ca.openosp.openo.oscarWaitingList.WaitingList wL = ca.openosp.openo.oscarWaitingList.WaitingList.getInstance();
             if (wL.getFound() && OscarProperties.getInstance().getBooleanProperty("DEMOGRAPHIC_WAITING_LIST", "true")) {
                 WLWaitingListUtil.updateWaitingListRecord(
                         request.getParameter("list_id"), request.getParameter("waiting_list_note"),

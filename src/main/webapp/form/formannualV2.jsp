@@ -37,7 +37,7 @@
         return;
     }
 %>
-<%@ page import="openo.oscarEncounter.data.EctPatientData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctPatientData" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 
 <%

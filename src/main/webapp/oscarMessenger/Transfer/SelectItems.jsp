@@ -66,9 +66,9 @@
 <link rel="stylesheet" type="text/css" href="../encounterStyles.css">
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
-<%@ page import="openo.oscarMessenger.docxfer.send.MsgGenerate" %>
-<%@ page import="openo.oscarMessenger.docxfer.util.MsgCommxml" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.docxfer.send.MsgGenerate" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.docxfer.util.MsgCommxml" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

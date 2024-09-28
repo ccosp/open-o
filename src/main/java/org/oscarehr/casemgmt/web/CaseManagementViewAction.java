@@ -27,8 +27,8 @@ import com.quatro.model.security.Secrole;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsDateJsonBeanProcessor;
-import openo.OscarProperties;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.util.UtilDateUtilities;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.logging.log4j.Logger;
@@ -66,12 +66,12 @@ import org.oscarehr.provider.web.CppPreferencesUIBean;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import openo.eform.EFormUtil;
-import openo.oscarEncounter.data.EctFormData;
-import openo.oscarEncounter.data.EctFormData.PatientForm;
-import openo.oscarRx.pageUtil.RxSessionBean;
-import openo.util.ConversionUtils;
-import openo.util.OscarRoleObjectPrivilege;
+import ca.openosp.openo.eform.EFormUtil;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.oscarEncounter.data.EctFormData.PatientForm;
+import ca.openosp.openo.oscarRx.pageUtil.RxSessionBean;
+import ca.openosp.openo.util.ConversionUtils;
+import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1365,7 +1365,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         }
 
         /*
-         * openo.OscarProperties p = openo.OscarProperties.getInstance(); String noteSort = p.getProperty("CMESort", ""); if (noteSort.trim().equalsIgnoreCase("UP")) request.setAttribute("Notes", sortNotes(notes, "observation_date_asc")); else
+         * ca.openosp.openo.OscarProperties p = ca.openosp.openo.OscarProperties.getInstance(); String noteSort = p.getProperty("CMESort", ""); if (noteSort.trim().equalsIgnoreCase("UP")) request.setAttribute("Notes", sortNotes(notes, "observation_date_asc")); else
          * request.setAttribute("Notes", sortNotes(notes, "observation_date_desc"));
          */
 

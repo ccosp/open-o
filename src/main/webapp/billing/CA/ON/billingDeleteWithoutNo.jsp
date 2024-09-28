@@ -31,9 +31,9 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.BillingDao" %>
 <%@page import="org.oscarehr.common.model.Billing" %>
-<%@ page import="openo.appt.ApptStatusData" %>
-<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingCorrectionPrep" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.appt.ApptStatusData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingCorrectionPrep" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%
     AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao) SpringUtils.getBean(AppointmentArchiveDao.class);

@@ -26,10 +26,10 @@
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@page import="oscar.oscarDemographic.data.*" %>
-<%@page import="openo.util.UtilDateUtilities" %>
+<%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.oscarehr.common.model.BillingONItem" %>
 <%@page import="org.oscarehr.common.model.BillingONErrorCode, org.oscarehr.common.dao.BillingONErrorCodeDao" %>
 <%@page import="org.oscarehr.common.dao.BillingONEAReportDao, org.oscarehr.common.model.BillingONEAReport" %>
@@ -49,12 +49,12 @@
 <%@page import="java.text.NumberFormat" %>
 
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingRAImpl" %>
-<%@ page import="openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingRAImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

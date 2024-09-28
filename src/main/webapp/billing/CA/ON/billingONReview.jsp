@@ -271,22 +271,22 @@
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.oscarehr.common.model.Site" %>
-<%@ page import="openo.appt.ApptUtil" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingReviewCodeItem" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingReviewPercItem" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingSortComparator" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingCodeImpl" %>
-<%@ page import="openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
-<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingReviewPrep" %>
-<%@ page import="openo.oscarBilling.ca.on.administration.GstReport" %>
-<%@ page import="openo.oscarBilling.ca.on.administration.GstControlAction" %>
-<%@ page import="openo.oscarRx.data.RxProviderData" %>
-<%@ page import="openo.util.DateUtils" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.OscarProperties" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.appt.ApptUtil" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingReviewCodeItem" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingReviewPercItem" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingSortComparator" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingCodeImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingReviewPrep" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.administration.GstReport" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.administration.GstControlAction" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
+<%@ page import="ca.openosp.openo.util.DateUtils" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 <head>
     <title>OscarBilling</title>
 

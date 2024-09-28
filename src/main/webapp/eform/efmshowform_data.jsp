@@ -27,14 +27,14 @@
 
 <%@ page import="oscar.eform.data.*" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.oscarehr.common.model.enumerator.DocumentType" %>
 <%@ page import="org.oscarehr.documentManager.DocumentAttachmentManager" %>
 <%@ page import="org.oscarehr.managers.EmailComposeManager" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%@ page import="java.util.List" %>
-<%@ page import="openo.eform.data.EForm" %>
+<%@ page import="ca.openosp.openo.eform.data.EForm" %>
 
 <%!
     public void addHiddenEFormAttachments(LoggedInInfo loggedInInfo, EForm eForm, String eFormId) {

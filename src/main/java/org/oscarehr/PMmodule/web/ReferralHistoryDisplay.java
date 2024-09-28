@@ -38,7 +38,7 @@ import org.oscarehr.common.model.Facility;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 public class ReferralHistoryDisplay {
     private static final Logger logger = MiscUtils.getLogger();

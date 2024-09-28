@@ -21,9 +21,9 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page
         import="java.math.*, java.util.*, oscar.util.*, oscar.oscarBilling.ca.on.administration.*, oscar.oscarBilling.ca.on.data.*" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
-<%@ page import="openo.oscarBilling.ca.on.administration.GstReport" %>
-<%@ page import="openo.util.DateUtils" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.administration.GstReport" %>
+<%@ page import="ca.openosp.openo.util.DateUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

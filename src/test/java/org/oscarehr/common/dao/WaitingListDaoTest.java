@@ -38,7 +38,7 @@ import org.oscarehr.common.model.WaitingList;
 import org.oscarehr.common.model.WaitingListName;
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.ConversionUtils;
+import ca.openosp.openo.util.ConversionUtils;
 
 public class WaitingListDaoTest extends DaoTestFixtures {
 

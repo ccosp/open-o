@@ -45,7 +45,7 @@ import org.oscarehr.integration.ebs.client.EdtClientBuilder;
 import org.oscarehr.integration.ebs.client.EdtClientBuilderConfig;
 import org.oscarehr.util.MiscUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class OnlineHCValidator implements HCValidator {
     private static Logger logger = MiscUtils.getLogger();

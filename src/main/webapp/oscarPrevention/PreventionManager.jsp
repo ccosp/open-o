@@ -29,7 +29,7 @@
 <%@page import="org.oscarehr.provider.model.PreventionManager" %>
 <%@page import="org.oscarehr.common.dao.PropertyDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.List" %>
@@ -37,7 +37,7 @@
 <%@page import="java.util.regex.Pattern" %>
 <%@page import="java.util.regex.*" %>
 <%@page import="java.util.*" %>
-<%@ page import="openo.oscarPrevention.PreventionDisplayConfig" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.PreventionDisplayConfig" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

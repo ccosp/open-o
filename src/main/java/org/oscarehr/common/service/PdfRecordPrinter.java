@@ -35,8 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import openo.OscarProperties;
-import openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
@@ -63,9 +63,9 @@ import org.oscarehr.eyeform.model.EyeformTestBook;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.DateUtils;
-import openo.eform.util.GraphicalCanvasToImage;
-import openo.eform.APExecute;
+import ca.openosp.openo.util.DateUtils;
+import ca.openosp.openo.eform.util.GraphicalCanvasToImage;
+import ca.openosp.openo.eform.APExecute;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;

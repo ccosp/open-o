@@ -54,7 +54,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.hibernate.type.StandardBasicTypes;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;

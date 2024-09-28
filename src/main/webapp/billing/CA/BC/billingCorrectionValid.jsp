@@ -49,16 +49,16 @@
 <%@ page
         import="java.io.*, java.sql.*, java.util.*,java.net.*, oscar.*, java.math.*"
         errorPage="/errorpage.jsp" %>
-<%@ page import="openo.BillingBean" %>
-<%@ page import="openo.BillingDataBean" %>
-<%@ page import="openo.BillingItemBean" %>
-<%@ page import="openo.BillingPatientDataBean" %>
-<%@ page import="openo.OscarProperties" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.BillingBean" %>
+<%@ page import="ca.openosp.openo.BillingDataBean" %>
+<%@ page import="ca.openosp.openo.BillingItemBean" %>
+<%@ page import="ca.openosp.openo.BillingPatientDataBean" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 
 
 <jsp:useBean id="dbBillingDataBean" scope="page"
-             class="openo.dbBillingData">
+             class="ca.openosp.openo.dbBillingData">
     <jsp:setProperty name="dbBillingDataBean" property="*"/>
 </jsp:useBean>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>

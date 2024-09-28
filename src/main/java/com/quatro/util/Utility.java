@@ -29,7 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import openo.MyDateFormat;
+import ca.openosp.openo.MyDateFormat;
 import org.oscarehr.PMmodule.model.FieldDefinition;
 import org.oscarehr.util.MiscUtils;
 

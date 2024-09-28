@@ -49,16 +49,16 @@
 <%@ page import="java.util.*, java.sql.*, oscar.*, oscar.util.*, java.net.*" errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingCreateBillingFile" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingProviderData" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingBatchHeaderData" %>
-<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingReviewPrep" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.OscarProperties" %>
-<jsp:useBean id="SxmlMisc" class="openo.SxmlMisc" scope="session"/>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingCreateBillingFile" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingProviderData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingBatchHeaderData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingReviewPrep" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
+<jsp:useBean id="SxmlMisc" class="ca.openosp.openo.SxmlMisc" scope="session"/>
 
 <head>
     <title><bean:message key="admin.admin.btnSimulationOHIPDiskette"/></title>

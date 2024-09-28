@@ -43,7 +43,7 @@ import org.oscarehr.util.VelocityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 @Service
 public class WaitListManager {

@@ -26,9 +26,9 @@
 
 <%@page
         import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarLab.ca.on.*,oscar.util.*,oscar.oscarLab.*" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabTestValues" %>
-<%@ page import="openo.util.StringUtils" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabTestValues" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>

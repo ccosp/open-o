@@ -32,9 +32,9 @@
 <%@ page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.*" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@ page import="openo.oscarPrevention.PreventionDisplayConfig" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.PreventionDisplayConfig" %>
 <%
     String curProvider_no, userfirstname, userlastname;
     curProvider_no = (String) session.getAttribute("user");

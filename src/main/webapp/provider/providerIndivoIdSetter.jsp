@@ -27,7 +27,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ page import="oscar.oscarProvider.data.*" %>
-<%@ page import="openo.oscarProvider.data.ProviderMyOscarIdData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData" %>
 
 
 <%

@@ -18,9 +18,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.data.FrmData" %>
-<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.data.FrmData" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
 
 <%
     String formClass = "BCNewBorn";

@@ -22,8 +22,8 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="openo.util.DateUtils" %>
-<%@page import="openo.util.SqlUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.SqlUtils" %>
 <%@page import="java.util.*" %>
 <%@page import="org.caisi.model.*" %>
 <%@page import="org.oscarehr.PMmodule.model.*" %>
@@ -32,7 +32,7 @@
 <%@page import="org.oscarehr.util.*" %>
 <%@page import="java.text.*" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@page contentType="text/csv" %>
 <%

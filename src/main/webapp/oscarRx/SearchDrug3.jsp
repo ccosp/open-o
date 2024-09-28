@@ -40,7 +40,7 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="indivo" %>
 <%@ page
-        import="oscar.oscarRx.data.*,openo.oscarProvider.data.ProviderMyOscarIdData,openo.oscarDemographic.data.DemographicData,openo.OscarProperties,oscar.log.*" %>
+        import="oscar.oscarRx.data.*,ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData,ca.openosp.openo.oscarDemographic.data.DemographicData,ca.openosp.openo.OscarProperties,oscar.log.*" %>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.*" %>
@@ -51,16 +51,16 @@
 <%@page import="org.oscarehr.casemgmt.web.PrescriptDrug" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="java.util.ArrayList,openo.oscarRx.data.RxPrescriptionData" %>
+<%@page import="java.util.ArrayList,ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
 <%@page import="org.oscarehr.study.StudyFactory, org.oscarehr.study.Study, org.oscarehr.study.types.MyMedsStudy" %>
-<bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+<bean:define id="patient" type="ca.openosp.openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
 <%@page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
 <%@page import="org.oscarehr.casemgmt.model.Issue" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
 
 <%
     String rx_enhance = OscarProperties.getInstance().getProperty("rx_enhance");

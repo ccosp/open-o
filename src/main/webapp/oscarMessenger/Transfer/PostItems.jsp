@@ -41,9 +41,9 @@
 
 <%@page contentType='text/xml'
         import="oscar.oscarMessenger.docxfer.send.*, oscar.oscarMessenger.docxfer.util.*" %>
-<%@ page import="openo.oscarMessenger.docxfer.util.MsgCommxml" %>
-<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
-<%@ page import="openo.oscarMessenger.docxfer.send.MsgSendDocument" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.docxfer.util.MsgCommxml" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.docxfer.send.MsgSendDocument" %>
 <%
 
     String checks = "";

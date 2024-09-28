@@ -14,9 +14,9 @@
     }
 %>
 
-<%@ page import="java.util.*, openo.oscarDemographic.data.ProvinceNames"
+<%@ page import="java.util.*, ca.openosp.openo.oscarDemographic.data.ProvinceNames"
          errorPage="/errorpage.jsp" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <%
     ProvinceNames pNames = ProvinceNames.getInstance();

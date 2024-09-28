@@ -275,9 +275,9 @@
     </head>
 
     <body onLoad="initialize()">
-    <jsp:useBean id="patientData" class="openo.form.study.HSFO.PatientData"
+    <jsp:useBean id="patientData" class="ca.openosp.openo.form.study.HSFO.PatientData"
                  scope="request"/>
-    <jsp:useBean id="visitData" class="openo.form.study.HSFO.VisitData"
+    <jsp:useBean id="visitData" class="ca.openosp.openo.form.study.HSFO.VisitData"
                  scope="request"/>
         <%--       name="form1" --%>
     <html:form action="/form/HSFOsaveform.do" onsubmit="return checkform()">

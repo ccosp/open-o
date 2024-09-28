@@ -40,7 +40,7 @@
 %>
 
 
-<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,openo.MyDateFormat"
+<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,ca.openosp.openo.MyDateFormat"
          errorPage="/errorpage.jsp" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
@@ -51,7 +51,7 @@
     TeleplanS21Dao teleplanS21Dao = SpringUtils.getBean(TeleplanS21Dao.class);
 %>
 
-<jsp:useBean id="documentBean" class="openo.DocumentBean" scope="request"/>
+<jsp:useBean id="documentBean" class="ca.openosp.openo.DocumentBean" scope="request"/>
 
 
 <%

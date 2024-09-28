@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<%@page import="openo.eform.EFormAttachDocs" %>
+<%@page import="ca.openosp.openo.eform.EFormAttachDocs" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -51,9 +51,9 @@
 <jsp:useBean id="oscarVariables" class="java.util.Properties"
              scope="page"/>
 <%@ page
-        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,openo.MyDateFormat, openo.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocs" %>
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationAttachDocs" %>
 <%@ page import="oscar.oscarLab.ca.on.*" %>
-<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
@@ -63,13 +63,13 @@
 <%@page import="org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
-<%@ page import="openo.eform.EFormUtil" %>
+<%@ page import="ca.openosp.openo.eform.EFormUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
-<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
-<%@ page import="openo.util.StringUtils" %>
-<%@ page import="openo.util.DateUtils" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.util.DateUtils" %>
 
 <!-- Deprecated: Please use attachDocument.jsp. -->
 <%

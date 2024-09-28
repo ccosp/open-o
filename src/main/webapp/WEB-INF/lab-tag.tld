@@ -9,7 +9,7 @@
 
 <tag>
   <name>newLab</name>
-  <tagclass>openo.oscarLab.tld.LabTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarLab.tld.LabTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>providerNo</name>

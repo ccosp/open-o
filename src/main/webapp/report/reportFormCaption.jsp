@@ -17,8 +17,8 @@
          import="java.util.*, oscar.oscarReport.data.*" %>
 <%@ page import="oscar.login.*" %>
 <%@ page import="org.apache.commons.lang.*" %>
-<%@ page import="openo.oscarReport.data.RptTableFieldNameCaption" %>
-<%@ page import="openo.oscarReport.data.RptReportItem" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptTableFieldNameCaption" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptReportItem" %>
 <%
     String reportId = request.getParameter("id") != null ? request.getParameter("id") : "0";
     String tableName = request.getParameter("tableName") != null ? request.getParameter("tableName") : "";

@@ -33,7 +33,7 @@ import javax.persistence.Query;
 
 import org.oscarehr.common.model.MeasurementGroup;
 import org.springframework.stereotype.Repository;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 @Repository
 @SuppressWarnings("unchecked")

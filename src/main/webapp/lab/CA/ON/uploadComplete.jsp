@@ -1,6 +1,6 @@
 <%@page contentType="text/xml" %>
 <%@page import="javax.xml.parsers.*, org.w3c.dom.*, oscar.util.*" %>
-<%@ page import="openo.util.UtilXML" %>
+<%@ page import="ca.openosp.openo.util.UtilXML" %>
 <%
 
     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

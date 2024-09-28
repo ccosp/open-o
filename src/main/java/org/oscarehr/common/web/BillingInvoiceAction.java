@@ -33,7 +33,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -45,8 +45,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.ConcatPDF;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.util.ConcatPDF;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 /**
  * @author mweston4

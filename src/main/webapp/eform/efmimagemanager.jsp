@@ -24,8 +24,8 @@
 
 --%>
 <%@page import="java.net.URLEncoder" %>
-<%@ page import="oscar.eform.data.*, openo.OscarProperties, oscar.eform.*, java.util.*" %>
-<%@ page import="openo.eform.EFormUtil" %>
+<%@ page import="oscar.eform.data.*, ca.openosp.openo.OscarProperties, oscar.eform.*, java.util.*" %>
+<%@ page import="ca.openosp.openo.eform.EFormUtil" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

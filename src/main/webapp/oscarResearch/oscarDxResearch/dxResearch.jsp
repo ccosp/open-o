@@ -24,7 +24,7 @@
 
 --%>
 
-<%@ page import="openo.oscarDxResearch.util.dxResearchCodingSystem" %>
+<%@ page import="ca.openosp.openo.oscarDxResearch.util.dxResearchCodingSystem" %>
 <%@ page import="com.quatro.service.security.SecurityManager" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

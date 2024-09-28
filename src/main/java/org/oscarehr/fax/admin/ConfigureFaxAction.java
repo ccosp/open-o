@@ -25,7 +25,7 @@
 package org.oscarehr.fax.admin;
 
 import net.sf.json.JSONObject;
-import openo.form.JSONAction;
+import ca.openosp.openo.form.JSONAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;

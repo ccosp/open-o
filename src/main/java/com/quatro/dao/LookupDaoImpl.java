@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 import org.hibernate.Session;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.PMmodule.model.Program;
@@ -41,10 +41,10 @@ import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import openo.MyDateFormat;
-import openo.OscarProperties;
-import openo.oscarDB.DBPreparedHandler;
-import openo.oscarDB.DBPreparedHandlerParam;
+import ca.openosp.openo.MyDateFormat;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarDB.DBPreparedHandler;
+import ca.openosp.openo.oscarDB.DBPreparedHandlerParam;
 
 import com.quatro.common.KeyConstants;
 import com.quatro.model.FieldDefValue;

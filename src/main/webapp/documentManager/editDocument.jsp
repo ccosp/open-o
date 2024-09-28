@@ -51,14 +51,14 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ page
-        import="java.util.*, oscar.util.*, openo.oscarProvider.data.ProviderData, org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.CtlDocClassDao" %>
+        import="java.util.*, oscar.util.*, ca.openosp.openo.oscarProvider.data.ProviderData, org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.CtlDocClassDao" %>
 <%@ page import="org.oscarehr.common.model.DocumentExtraReviewer" %>
 <%@ page import="org.oscarehr.common.dao.DocumentExtraReviewerDao" %>
 <%@ page import="org.oscarehr.documentManager.data.AddEditDocumentForm" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%
     DocumentExtraReviewerDao documentExtraReviewerDao = SpringUtils.getBean(DocumentExtraReviewerDao.class);
     List<DocumentExtraReviewer> extraReviewers = new ArrayList<DocumentExtraReviewer>();

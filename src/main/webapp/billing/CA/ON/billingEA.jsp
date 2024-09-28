@@ -1,4 +1,4 @@
-<%@ page import="openo.OscarProperties" %><%--
+<%@ page import="ca.openosp.openo.OscarProperties" %><%--
 
     Copyright (c) 2006-. OSCARservice, OpenSoft System. All Rights Reserved.
     This software is published under the GPL GNU General Public License.

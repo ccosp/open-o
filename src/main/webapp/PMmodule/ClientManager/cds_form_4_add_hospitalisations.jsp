@@ -25,7 +25,7 @@
 <%@page import="org.oscarehr.util.WebUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="java.util.Calendar" %>
-<%@page import="openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.oscarehr.PMmodule.web.CdsForm4" %>
 
 <%

@@ -37,7 +37,7 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.util.WebUtils" %>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*" %>
 <%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic" %>
@@ -147,12 +147,12 @@
 
 
 <%@page import="org.oscarehr.util.SessionConstants" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.oscarPrevention.PreventionDS" %>
-<%@ page import="openo.oscarPrevention.PreventionData" %>
-<%@ page import="openo.oscarPrevention.PreventionDisplayConfig" %>
-<%@ page import="openo.oscarPrevention.Prevention" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.PreventionDS" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.PreventionData" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.PreventionDisplayConfig" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.Prevention" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <html:html>
 
     <head>

@@ -24,7 +24,7 @@
 
 --%>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.managers.DashboardManager" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%

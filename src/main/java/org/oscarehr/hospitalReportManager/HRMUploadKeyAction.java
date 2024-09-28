@@ -24,11 +24,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
 
-import openo.oscarLab.FileUploadCheck;
-import openo.oscarLab.ca.all.pageUtil.LabUploadForm;
-import openo.oscarLab.ca.all.upload.HandlerClassFactory;
-import openo.oscarLab.ca.all.upload.handlers.DefaultHandler;
-import openo.oscarLab.ca.all.util.Utilities;
+import ca.openosp.openo.oscarLab.FileUploadCheck;
+import ca.openosp.openo.oscarLab.ca.all.pageUtil.LabUploadForm;
+import ca.openosp.openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.DefaultHandler;
+import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 public class HRMUploadKeyAction extends Action {
     Logger logger = org.oscarehr.util.MiscUtils.getLogger();

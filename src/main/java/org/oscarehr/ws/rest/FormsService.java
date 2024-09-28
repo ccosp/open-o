@@ -78,9 +78,9 @@ import org.oscarehr.ws.rest.to.model.SummaryTo1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import openo.eform.EFormExportZip;
-import openo.oscarEncounter.data.EctFormData;
-import openo.oscarProvider.data.ProviderMyOscarIdData;
+import ca.openosp.openo.eform.EFormExportZip;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData;
 
 
 /**

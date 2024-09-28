@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.PropertyDao;

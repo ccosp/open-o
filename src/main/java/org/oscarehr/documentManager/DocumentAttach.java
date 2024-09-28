@@ -8,7 +8,7 @@ import org.oscarehr.common.model.EFormDocs;
 import org.oscarehr.common.model.enumerator.DocumentType;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarEncounter.oceanEReferal.pageUtil.OceanEReferralAttachmentUtil;
+import ca.openosp.openo.oscarEncounter.oceanEReferal.pageUtil.OceanEReferralAttachmentUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

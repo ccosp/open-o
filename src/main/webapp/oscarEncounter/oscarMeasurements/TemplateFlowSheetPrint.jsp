@@ -32,18 +32,18 @@
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.oscarehr.common.dao.FlowSheetCustomizationDao,org.oscarehr.common.model.FlowSheetCustomization" %>
 <%@ page import="org.oscarehr.common.dao.FlowSheetDrugDao,org.oscarehr.common.model.FlowSheetDrug" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementInfo" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.FlowSheetItem" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypeBeanHandler" %>
-<%@ page import="openo.oscarPrevention.PreventionData" %>
-<%@ page import="openo.oscarPrevention.Prevention" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementInfo" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.FlowSheetItem" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypeBeanHandler" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.PreventionData" %>
+<%@ page import="ca.openosp.openo.oscarPrevention.Prevention" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

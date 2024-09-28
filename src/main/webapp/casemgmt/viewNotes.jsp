@@ -25,7 +25,7 @@
 --%>
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.casemgmt.web.NoteDisplay" %>
 <% long start = System.currentTimeMillis(); %>
 <%@include file="/casemgmt/taglibs.jsp" %>
@@ -40,8 +40,8 @@
 <%@page import="org.oscarehr.common.model.PartialDate" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed = true;

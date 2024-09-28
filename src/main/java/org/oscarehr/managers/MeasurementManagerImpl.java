@@ -49,8 +49,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-import openo.log.LogAction;
-import openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
 
 @Service
 public class MeasurementManagerImpl implements MeasurementManager {

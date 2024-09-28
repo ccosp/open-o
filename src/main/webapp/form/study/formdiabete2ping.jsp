@@ -18,9 +18,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.form.study.*" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.form.data.FrmData" %>
-<%@ page import="openo.form.study.FrmStudyRecordFactory" %>
-<%@ page import="openo.form.study.FrmStudyRecord" %>
+<%@ page import="ca.openosp.openo.form.data.FrmData" %>
+<%@ page import="ca.openosp.openo.form.study.FrmStudyRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.study.FrmStudyRecord" %>
 
 <html:html lang="en">
     <head>

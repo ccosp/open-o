@@ -36,7 +36,7 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.util.OscarRoleObjectPrivilege;
+import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 
 import com.quatro.dao.security.SecobjprivilegeDao;
 import com.quatro.dao.security.SecuserroleDao;

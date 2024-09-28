@@ -3,7 +3,7 @@
 <%@page import="org.apache.commons.lang.StringEscapeUtils"%>
 <%@page import="net.sf.json.JSONObject"%>
 <%@page import="org.oscarehr.common.model.PharmacyInfo"%>
-<%@ page import="oscar.oscarRx.data.*,openo.oscarProvider.data.ProviderMyOscarIdData,openo.oscarDemographic.data.DemographicData,openo.OscarProperties,oscar.log.*"%>
+<%@ page import="oscar.oscarRx.data.*,ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData,ca.openosp.openo.oscarDemographic.data.DemographicData,ca.openosp.openo.OscarProperties,oscar.log.*"%>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%/*
  * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved. *

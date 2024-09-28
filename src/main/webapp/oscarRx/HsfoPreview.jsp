@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<%@page import="openo.oscarRx.data.RxPatientData" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -32,15 +32,15 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="oscar.*,java.lang.*" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.form.study.HSFO.HSFODAO" %>
-<%@ page import="openo.form.pdfservlet.FrmPDFServlet" %>
-<%@ page import="openo.form.pdfservlet.HsfoRxDataHolder" %>
-<%@ page import="openo.oscarProvider.data.ProSignatureData" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxProviderData" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
-<%@ page import="openo.oscarRx.util.RxUtil" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.form.study.HSFO.HSFODAO" %>
+<%@ page import="ca.openosp.openo.form.pdfservlet.FrmPDFServlet" %>
+<%@ page import="ca.openosp.openo.form.pdfservlet.HsfoRxDataHolder" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProSignatureData" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.oscarRx.util.RxUtil" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <html:html lang="en">
     <head>

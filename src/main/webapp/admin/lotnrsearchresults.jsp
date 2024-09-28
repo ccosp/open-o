@@ -34,7 +34,7 @@
 <%@ page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.*" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%
     String orderby = request.getParameter("orderby") != null ? request.getParameter("orderby") : "prevention_type";
@@ -42,7 +42,7 @@
 %>
 <%@ page import="java.sql.*, java.util.*, oscar.*" buffer="none"
          errorPage="/errorpage.jsp" %>
-<jsp:useBean id="apptMainBean" class="openo.AppointmentMainBean"
+<jsp:useBean id="apptMainBean" class="ca.openosp.openo.AppointmentMainBean"
              scope="session"/>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

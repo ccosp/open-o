@@ -49,9 +49,9 @@ import org.springframework.stereotype.Service;
 
 import com.lowagie.text.DocumentException;
 
-import openo.log.LogAction;
-import openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import openo.util.StringUtils;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import ca.openosp.openo.util.StringUtils;
 
 
 @Service

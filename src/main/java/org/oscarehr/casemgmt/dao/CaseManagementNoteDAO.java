@@ -47,7 +47,7 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.EncounterUtil;
 
-import openo.util.SqlUtils;
+import ca.openosp.openo.util.SqlUtils;
 
 public interface CaseManagementNoteDAO {
 

@@ -41,7 +41,7 @@
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page
-        import="java.util.*, java.net.URLEncoder, oscar.oscarDB.*, openo.MyDateFormat, openo.oscarWaitingList.WaitingList, org.oscarehr.common.OtherIdManager" %>
+        import="java.util.*, java.net.URLEncoder, oscar.oscarDB.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarWaitingList.WaitingList, org.oscarehr.common.OtherIdManager" %>
 <%@ page import="oscar.log.*" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
@@ -65,14 +65,14 @@
 
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
 <%@page import="org.oscarehr.common.model.ConsentType" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.log.LogAction" %>
-<%@ page import="openo.oscarDB.DBPreparedHandlerParam" %>
+<%@ page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBPreparedHandlerParam" %>
 <%!
     java.util.Properties oscarVariables = OscarProperties.getInstance();
 

@@ -35,7 +35,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.PMmodule.model.Agency;
 import org.oscarehr.PMmodule.service.AgencyManager;
 
-import openo.log.LogAction;
+import ca.openosp.openo.log.LogAction;
 
 public class AgencyManagerAction extends DispatchAction {
 

@@ -20,9 +20,9 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="openo.oscarDB.DBHandler" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.util.UtilXML" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBHandler" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.UtilXML" %>
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 %>

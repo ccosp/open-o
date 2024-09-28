@@ -28,9 +28,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
-        import="java.util.*, openo.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig, openo.OscarProperties, openo.util.StringUtils,oscar.oscarEncounter.oscarMeasurements.bean.*" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBeanHandler" %>
+        import="java.util.*, ca.openosp.openo.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig, ca.openosp.openo.OscarProperties, ca.openosp.openo.util.StringUtils,oscar.oscarEncounter.oscarMeasurements.bean.*" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBeanHandler" %>
 
 <%
 

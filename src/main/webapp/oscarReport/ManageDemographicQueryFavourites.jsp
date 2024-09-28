@@ -42,7 +42,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="openo.oscarReport.data.RptSearchData,java.util.*" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptSearchData,java.util.*" %>
 
 <%
     RptSearchData searchData = new RptSearchData();

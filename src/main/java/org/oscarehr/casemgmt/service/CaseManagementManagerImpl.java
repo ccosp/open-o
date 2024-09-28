@@ -29,9 +29,9 @@ package org.oscarehr.casemgmt.service;
 
 import com.quatro.model.security.Secrole;
 import com.quatro.service.security.RolesManager;
-import openo.OscarProperties;
-import openo.appt.ApptStatusData;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.appt.ApptStatusData;
+import ca.openosp.openo.util.UtilDateUtilities;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.LabelValueBean;
@@ -60,10 +60,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import openo.log.LogAction;
-import openo.log.LogConst;
-import openo.util.ConversionUtils;
-import openo.util.DateUtils;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.log.LogConst;
+import ca.openosp.openo.util.ConversionUtils;
+import ca.openosp.openo.util.DateUtils;
 
 import java.net.MalformedURLException;
 import java.nio.file.ProviderNotFoundException;

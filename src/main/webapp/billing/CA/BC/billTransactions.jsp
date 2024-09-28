@@ -1,8 +1,8 @@
 <%@page import="java.util.*" %>
-<%@ page import="openo.entities.Provider" %>
-<%@ page import="openo.entities.BillHistory" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingHistoryDAO" %>
-<%@ page import="openo.oscarBilling.ca.bc.MSP.MSPReconcile" %>
+<%@ page import="ca.openosp.openo.entities.Provider" %>
+<%@ page import="ca.openosp.openo.entities.BillHistory" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingHistoryDAO" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

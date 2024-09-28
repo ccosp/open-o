@@ -29,7 +29,7 @@ import java.util.Date;
 
 import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
 
-import openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
 
 public interface NoteDisplay {
     public static Comparator<NoteDisplay> noteProviderComparator = new Comparator<NoteDisplay>() {

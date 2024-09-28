@@ -39,7 +39,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 
-import openo.oscarMessenger.data.MsgMessageData;
+import ca.openosp.openo.oscarMessenger.data.MsgMessageData;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
@@ -80,8 +80,8 @@ import ca.ssha.www._2005.hial.OLISStub.HIALRequest;
 import ca.ssha.www._2005.hial.OLISStub.HIALRequestSignedRequest;
 import ca.ssha.www._2005.hial.OLISStub.OLISRequest;
 import ca.ssha.www._2005.hial.OLISStub.OLISRequestResponse;
-import openo.OscarProperties;
-import openo.oscarMessenger.data.MsgProviderData;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarMessenger.data.MsgProviderData;
 
 public class Driver {
 

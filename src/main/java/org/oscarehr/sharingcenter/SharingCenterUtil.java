@@ -45,7 +45,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.tika.mime.MimeType;
 import org.apache.commons.io.IOUtils;
 

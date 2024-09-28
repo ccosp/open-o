@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.util.UtilDateUtilities;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.common.dao.OnCallClinicDao;
 import org.oscarehr.common.dao.OscarAppointmentDao;
@@ -63,7 +63,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
 

@@ -35,7 +35,7 @@
 </security:oscarSec>
 
 <%@ page import="java.net.URLDecoder, oscar.form.data.*" %>
-<%@ page import="openo.form.data.FrmData" %>
+<%@ page import="ca.openosp.openo.form.data.FrmData" %>
 
 <%
 

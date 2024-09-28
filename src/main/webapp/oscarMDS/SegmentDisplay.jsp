@@ -26,13 +26,13 @@
 <%@page errorPage="../provider/errorpage.jsp" %>
 <%@ page
         import="java.util.*, oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*" %>
-<%@ page import="openo.oscarMDS.data.Results" %>
-<%@ page import="openo.oscarMDS.data.Headers" %>
-<%@ page import="openo.oscarMDS.data.GroupedReports" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
-<%@ page import="openo.oscarMDS.data.PatientData" %>
-<%@ page import="openo.oscarMDS.data.MDSSegmentData" %>
-<%@ page import="openo.oscarMDS.data.ReportStatus" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.Results" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.Headers" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.GroupedReports" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.PatientData" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.MDSSegmentData" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.ReportStatus" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

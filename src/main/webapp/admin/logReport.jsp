@@ -27,7 +27,7 @@
 
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="oscar.login.*, oscar.oscarDB.*, openo.MyDateFormat" %>
+<%@ page import="oscar.login.*, oscar.oscarDB.*, ca.openosp.openo.MyDateFormat" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -90,11 +90,11 @@
     }
 %>
 
-<%@page import="openo.Misc" %>
+<%@page import="ca.openosp.openo.Misc" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.oscarDB.DBPreparedHandler" %>
-<%@ page import="openo.oscarDB.DBPreparedHandlerParam" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBPreparedHandler" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBPreparedHandlerParam" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <html:html lang="en">
     <script src="${pageContext.request.contextPath}/csrfguard"></script>
     <head>

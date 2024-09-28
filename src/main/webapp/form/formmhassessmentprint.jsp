@@ -42,8 +42,8 @@
 <%@ page import="oscar.form.*, java.util.*" %>
 <%@ page import="java.io.FileInputStream" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.oscarEncounter.util.EctFileUtil" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.util.EctFileUtil" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

@@ -65,8 +65,8 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SessionConstants;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.util.DateUtils;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.util.DateUtils;
 
 import com.quatro.model.LookupCodeValue;
 

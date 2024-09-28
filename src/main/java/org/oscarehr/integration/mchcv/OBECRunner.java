@@ -37,8 +37,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.tools.ant.util.DateUtils;
 import org.oscarehr.integration.mcedt.DelegateFactory;
 import org.oscarehr.util.MiscUtils;
-import openo.OscarProperties;
-import openo.oscarReport.data.ObecData;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarReport.data.ObecData;
 
 public class OBECRunner {
 

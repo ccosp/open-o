@@ -13,19 +13,19 @@
 <%@page import="org.oscarehr.olis.dao.OLISResultNomenclatureDao" %>
 <%@page import="org.oscarehr.common.model.OLISResults" %>
 <%@page import="org.oscarehr.common.dao.OLISResultsDao" %>
-<%@page import="openo.log.LogAction" %>
+<%@page import="ca.openosp.openo.log.LogAction" %>
 <%@page import="org.oscarehr.common.model.OscarLog" %>
 <%@page import="java.io.File" %>
 <%@page import="org.oscarehr.olis.OLISUtils" %>
-<%@page import="openo.oscarLab.FileUploadCheck" %>
+<%@page import="ca.openosp.openo.oscarLab.FileUploadCheck" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.oscarLab.ca.all.upload.MessageUploader" %>
+<%@page import="ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader" %>
 <%@page import="org.oscarehr.olis.model.OLISRequestNomenclature" %>
 <%@page import="org.oscarehr.olis.dao.OLISRequestNomenclatureDao" %>
 <%@ page language="java" contentType="text/html;" %>
-<%@page import="com.indivica.olis.queries.*,org.oscarehr.olis.OLISSearchAction,java.util.*,openo.oscarLab.ca.all.parsers.Factory, openo.oscarLab.ca.all.parsers.OLISHL7Handler, openo.oscarLab.ca.all.parsers.OLISHL7Handler.OLISError, org.oscarehr.olis.OLISResultsAction, org.oscarehr.util.SpringUtils" %>
+<%@page import="com.indivica.olis.queries.*,org.oscarehr.olis.OLISSearchAction,java.util.*,ca.openosp.openo.oscarLab.ca.all.parsers.Factory, ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler, ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler.OLISError, org.oscarehr.olis.OLISResultsAction, org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.Misc" %>
+<%@ page import="ca.openosp.openo.Misc" %>
 
 <%
     OLISResultsDao olisResultsDao = SpringUtils.getBean(OLISResultsDao.class);

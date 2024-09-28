@@ -44,9 +44,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.util.ConcatPDF;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.util.ConcatPDF;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 /**
  * @author jay

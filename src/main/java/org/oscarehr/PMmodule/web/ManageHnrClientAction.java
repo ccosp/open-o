@@ -47,7 +47,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import org.oscarehr.common.dao.DemographicDaoImpl;
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 public class ManageHnrClientAction {
     private static Logger logger = MiscUtils.getLogger();

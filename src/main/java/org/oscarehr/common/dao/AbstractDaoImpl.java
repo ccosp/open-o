@@ -40,7 +40,7 @@ import org.oscarehr.common.model.AbstractModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import openo.util.ParamAppender;
+import ca.openosp.openo.util.ParamAppender;
 
 @Transactional
 public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements AbstractDao<T> {

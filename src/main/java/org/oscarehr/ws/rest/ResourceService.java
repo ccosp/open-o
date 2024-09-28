@@ -60,10 +60,10 @@ import org.oscarehr.ws.rest.to.model.NotificationTo1;
 import org.oscarehr.ws.rest.util.ClinicalConnectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import openo.OscarProperties;
-import openo.log.LogAction;
-import openo.oscarPrevention.PreventionDS;
-import openo.oscarRx.util.LimitedUseLookup;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarPrevention.PreventionDS;
+import ca.openosp.openo.oscarRx.util.LimitedUseLookup;
 
 
 @Path("/resources")

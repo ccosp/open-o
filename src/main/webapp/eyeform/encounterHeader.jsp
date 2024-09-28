@@ -27,13 +27,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="oscar.oscarEncounter.data.*, oscar.oscarProvider.data.*, openo.util.UtilDateUtilities" %>
+<%@ page import="oscar.oscarEncounter.data.*, oscar.oscarProvider.data.*, ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
-<%@ page import="openo.oscarEncounter.data.EctPatientData" %>
-<%@ page import="openo.oscarEncounter.data.EctProviderData" %>
-<%@ page import="openo.oscarProvider.data.ProviderColourUpdater" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctPatientData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctProviderData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderColourUpdater" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

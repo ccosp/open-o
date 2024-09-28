@@ -38,7 +38,7 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.provider.web.CppPreferencesUIBean;
 
 import org.owasp.encoder.Encode;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class CustomInterfaceTag extends TagSupport {
 

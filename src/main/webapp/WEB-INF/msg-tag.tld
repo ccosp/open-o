@@ -9,7 +9,7 @@
 
 <tag>
   <name>newMessage</name>
-  <tagclass>openo.oscarMessenger.tld.MsgNewMessageTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarMessenger.tld.MsgNewMessageTag</tagclass>
   <bodycontent>empty</bodycontent>
   <attribute>
     <name>providerNo</name>

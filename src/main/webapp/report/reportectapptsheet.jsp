@@ -53,7 +53,7 @@
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*"
         errorPage="../appointment/errorpage.jsp" %>
-<jsp:useBean id="daySheetBean" class="openo.AppointmentMainBean"
+<jsp:useBean id="daySheetBean" class="ca.openosp.openo.AppointmentMainBean"
              scope="page"/>
 <%
     String[][] dbQueries = new String[][]{

@@ -40,7 +40,7 @@
 
 <%@ page
         import="java.util.*, java.sql.*, java.net.*,java.text.DecimalFormat, oscar.oscarProvider.data.* " %>
-<%@ page import="openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 
 <%
 

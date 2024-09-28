@@ -14,7 +14,7 @@
 %>
 
 <%@page import="org.oscarehr.common.dao.BillingDao" %>
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
 <%@page import="org.oscarehr.common.model.Ichppccode" %>
 <%@page import="org.oscarehr.common.dao.IchppccodeDao" %>

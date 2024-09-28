@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import openo.MyDateFormat;
+import ca.openosp.openo.MyDateFormat;
 import org.apache.xmlbeans.XmlOptions;
 import org.junit.Test;
 import org.oscarehr.util.MiscUtils;

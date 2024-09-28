@@ -90,13 +90,13 @@
     }
 %>
 
-<%@ page import="java.util.*, java.sql.*, oscar.*, openo.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="java.util.*, java.sql.*, oscar.*, ca.openosp.openo.oscarDemographic.data.DemographicMerged" %>
 <%@ page import="java.lang.System" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%
     List<Demographic> demoList = null;  //demographicDao.getDemographicByProvider( "55");

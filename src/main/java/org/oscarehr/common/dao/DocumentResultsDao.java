@@ -34,7 +34,7 @@ import java.util.List;
 
 import org.oscarehr.common.model.Document;
 
-import openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
 
 public interface DocumentResultsDao {
     public boolean isSentToValidProvider(String docNo);

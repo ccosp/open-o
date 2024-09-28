@@ -34,7 +34,7 @@ import org.oscarehr.common.dao.DigitalSignatureDao;
 import org.oscarehr.common.model.DigitalSignature;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.*;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

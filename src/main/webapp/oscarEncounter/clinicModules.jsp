@@ -40,8 +40,8 @@
 %>
 
 <%@page import="java.net.URLEncoder" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>

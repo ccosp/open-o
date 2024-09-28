@@ -24,7 +24,7 @@
 
 --%>
 <%@ page
-        import="oscar.oscarProvider.data.*, oscar.oscarRx.data.*,openo.OscarProperties, openo.oscarClinic.ClinicData, java.util.*" %>
+        import="oscar.oscarProvider.data.*, oscar.oscarRx.data.*,ca.openosp.openo.OscarProperties, ca.openosp.openo.oscarClinic.ClinicData, java.util.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -47,14 +47,14 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
 <%@ page import="org.oscarehr.common.model.*" %>
-<%@ page import="openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="openo.form.study.HSFO.HSFODAO" %>
-<%@ page import="openo.oscarProvider.data.ProSignatureData" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxProviderData" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
-<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.form.study.HSFO.HSFODAO" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProSignatureData" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
 
 <%
     OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);

@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import openo.oscarLab.ca.all.upload.handlers.MEDITECHHandler;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MEDITECHHandler;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;

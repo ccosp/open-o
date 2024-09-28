@@ -33,7 +33,7 @@ import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class CkdScreenerSchedulerJob extends TimerTask {
 

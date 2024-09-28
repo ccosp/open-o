@@ -32,7 +32,7 @@
 <%@ page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.*" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%
     String curProvider_no, userfirstname, userlastname;

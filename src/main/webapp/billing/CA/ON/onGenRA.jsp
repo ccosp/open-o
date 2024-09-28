@@ -39,9 +39,9 @@
 <%@ page import="java.io.*, java.sql.*, oscar.*, oscar.util.*, java.util.*" errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingRAImpl" %>
-<%@ page import="openo.OscarProperties" %>
-<jsp:useBean id="documentBean" class="openo.DocumentBean" scope="request"/>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingRAImpl" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
+<jsp:useBean id="documentBean" class="ca.openosp.openo.DocumentBean" scope="request"/>
 
 <%
     JdbcBillingRAImpl dbObj = new JdbcBillingRAImpl();

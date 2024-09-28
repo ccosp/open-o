@@ -40,7 +40,7 @@
 %>
 
 <%@ page import="java.lang.*" errorPage="/errorpage.jsp" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
     String demographic_no = request.getParameter("demographic_no");
     boolean firstSearch = request.getParameter("firstSearch") == null ? false : (request.getParameter("firstSearch")).equalsIgnoreCase("true") ? true : false;

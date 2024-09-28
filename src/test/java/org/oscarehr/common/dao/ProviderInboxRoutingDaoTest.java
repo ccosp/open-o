@@ -35,7 +35,7 @@ import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.ProviderInboxItem;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
 
 public class ProviderInboxRoutingDaoTest extends DaoTestFixtures {
 

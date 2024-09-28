@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 import com.indivica.olis.queries.QueryType;
 

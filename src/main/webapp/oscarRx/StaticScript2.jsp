@@ -35,12 +35,12 @@
 <%@page import="org.oscarehr.common.model.PartialDate" %>
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.common.model.Drug" %>
-<%@page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicWs" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
 <%@page import="org.oscarehr.oscarRx.StaticScriptBean" %>
-<%@page import="openo.oscarRx.util.RxUtil" %>
+<%@page import="ca.openosp.openo.oscarRx.util.RxUtil" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <%@page import="java.util.ArrayList" %>

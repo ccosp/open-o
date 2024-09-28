@@ -52,7 +52,7 @@
 %>
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.oscarBilling.ca.bc.pageUtil.AddReferralDocForm" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.AddReferralDocForm" %>
 <html:html lang="en">
 
     <head>

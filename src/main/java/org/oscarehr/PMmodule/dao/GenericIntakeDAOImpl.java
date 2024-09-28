@@ -45,7 +45,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.model.Intake;
 import org.oscarehr.PMmodule.model.IntakeNode;
@@ -56,7 +56,7 @@ import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import openo.util.SqlUtils;
+import ca.openosp.openo.util.SqlUtils;
 
 /**
  * Hibernate implementation of GenericIntakeDAO interface

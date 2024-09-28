@@ -11,19 +11,19 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.oscarLab.ca.all.upload.MessageUploader" %>
+<%@page import="ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader" %>
 <%@ page language="java" errorPage="../../../provider/errorpage.jsp" %>
 <%@ page
-        import="java.util.*,java.sql.*,org.oscarehr.olis.*,org.oscarehr.common.dao.PatientLabRoutingDao, org.oscarehr.util.SpringUtils, org.oscarehr.common.model.PatientLabRouting,oscar.oscarLab.ca.all.*,oscar.oscarLab.ca.all.util.*,oscar.oscarLab.ca.all.parsers.*,openo.oscarLab.LabRequestReportLink,openo.oscarMDS.data.ReportStatus,oscar.log.*,org.apache.commons.codec.binary.Base64" %>
+        import="java.util.*,java.sql.*,org.oscarehr.olis.*,org.oscarehr.common.dao.PatientLabRoutingDao, org.oscarehr.util.SpringUtils, org.oscarehr.common.model.PatientLabRouting,oscar.oscarLab.ca.all.*,oscar.oscarLab.ca.all.util.*,oscar.oscarLab.ca.all.parsers.*,ca.openosp.openo.oscarLab.LabRequestReportLink,ca.openosp.openo.oscarMDS.data.ReportStatus,oscar.log.*,org.apache.commons.codec.binary.Base64" %>
 <%@page import="org.oscarehr.util.AppointmentUtil" %>
-<%@ page import="openo.log.LogConst" %>
-<%@ page import="openo.log.LogAction" %>
-<%@ page import="openo.oscarLab.ca.all.AcknowledgementData" %>
-<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
-<%@ page import="openo.oscarLab.ca.all.parsers.MessageHandler" %>
-<%@ page import="openo.oscarLab.ca.all.parsers.Factory" %>
-<%@ page import="openo.oscarLab.ca.all.parsers.OLISHL7Handler" %>
-<%@ page import="openo.Misc" %>
+<%@ page import="ca.openosp.openo.log.LogConst" %>
+<%@ page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.MessageHandler" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.Factory" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler" %>
+<%@ page import="ca.openosp.openo.Misc" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

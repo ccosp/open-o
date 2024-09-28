@@ -30,7 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.dashboard.display.beans.GraphPlot;
 import org.oscarehr.managers.DashboardManagerImpl;

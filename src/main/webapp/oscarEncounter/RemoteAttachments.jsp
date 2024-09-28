@@ -42,8 +42,8 @@
 <%@ page import="oscar.oscarEncounter.immunization.data.*" %>
 <%@ page
         import="oscar.oscarEncounter.immunization.pageUtil.*, java.util.*, org.w3c.dom.*" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
-<%@ page import="openo.oscarEncounter.data.EctRemoteAttachments" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctRemoteAttachments" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

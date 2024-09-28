@@ -27,8 +27,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import openo.oscarLab.ca.all.parsers.CLSHandler;
-import openo.util.ConversionUtils;
+import ca.openosp.openo.oscarLab.ca.all.parsers.CLSHandler;
+import ca.openosp.openo.util.ConversionUtils;
 
 public class CLSResultsComplianceTest {
 

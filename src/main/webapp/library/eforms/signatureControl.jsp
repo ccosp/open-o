@@ -8,7 +8,7 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-    <%@ page import="openo.OscarProperties" contentType="text/javascript"%>
+    <%@ page import="ca.openosp.openo.OscarProperties" contentType="text/javascript"%>
 
     <%
     OscarProperties props = OscarProperties.getInstance();

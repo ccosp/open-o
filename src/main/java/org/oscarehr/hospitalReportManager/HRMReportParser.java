@@ -59,7 +59,7 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 
 public class HRMReportParser {

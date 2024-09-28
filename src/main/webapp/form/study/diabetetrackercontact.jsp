@@ -49,7 +49,7 @@
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="org.oscarehr.common.model.EChart" %>
 <%@ page import="org.oscarehr.common.dao.EChartDao" %>
-<%@ page import="openo.util.UtilXML" %>
+<%@ page import="ca.openosp.openo.util.UtilXML" %>
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
     EChartDao eChartDao = SpringUtils.getBean(EChartDao.class);

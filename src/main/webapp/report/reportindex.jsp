@@ -52,8 +52,8 @@
 <%@ page
         import="java.util.*, oscar.*, java.sql.*, java.text.*, java.net.*"
         errorPage="../appointment/errorpage.jsp" %>
-<%@ page import="openo.OscarProperties" %>
-<jsp:useBean id="reportMainBean" class="openo.AppointmentMainBean"
+<%@ page import="ca.openosp.openo.OscarProperties" %>
+<jsp:useBean id="reportMainBean" class="ca.openosp.openo.AppointmentMainBean"
              scope="session"/>
 <% if (!reportMainBean.getBDoConfigure()) { %>
 <%@ include file="reportMainBeanConn.jspf" %>
@@ -813,7 +813,7 @@
                 <td></td>
             </tr>
 
-            <% //if((openo.OscarProperties.getInstance()).getProperty("demographicExt") != null && (openo.OscarProperties.getInstance()).getProperty("demographicExt").startsWith("Approximate EDD")) {
+            <% //if((ca.openosp.openo.OscarProperties.getInstance()).getProperty("demographicExt") != null && (ca.openosp.openo.OscarProperties.getInstance()).getProperty("demographicExt").startsWith("Approximate EDD")) {
             %>
             <tr>
                 <td width="2"><%=j%>

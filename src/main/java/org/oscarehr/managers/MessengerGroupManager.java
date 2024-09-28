@@ -39,8 +39,8 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import openo.oscarMessenger.data.ContactIdentifier;
-import openo.oscarMessenger.data.MsgProviderData;
+import ca.openosp.openo.oscarMessenger.data.ContactIdentifier;
+import ca.openosp.openo.oscarMessenger.data.MsgProviderData;
 
 import java.util.*;
 

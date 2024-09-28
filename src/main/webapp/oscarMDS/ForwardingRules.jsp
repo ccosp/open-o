@@ -27,7 +27,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
-        import="openo.oscarMDS.data.ProviderData, java.util.ArrayList, openo.oscarLab.ForwardingRules, openo.OscarProperties" %>
+        import="ca.openosp.openo.oscarMDS.data.ProviderData, java.util.ArrayList, ca.openosp.openo.oscarLab.ForwardingRules, ca.openosp.openo.OscarProperties" %>
 
 <%
 

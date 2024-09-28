@@ -25,8 +25,8 @@
 --%>
 
 <%@ page import="java.util.*, org.w3c.dom.*, oscar.util.*" %>
-<%@ page import="openo.oscarEncounter.immunization.config.data.EctImmImmunizationSetData" %>
-<%@ page import="openo.util.UtilXML" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.immunization.config.data.EctImmImmunizationSetData" %>
+<%@ page import="ca.openosp.openo.util.UtilXML" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
@@ -54,7 +54,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import openo.oscarLab.ca.all.upload.ProviderLabRouting;
+import ca.openosp.openo.oscarLab.ca.all.upload.ProviderLabRouting;
 
 
 public class SplitDocumentAction extends DispatchAction {

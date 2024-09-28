@@ -33,7 +33,7 @@
 <%@page import="org.oscarehr.common.model.EFormGroup" %>
 <%@page import="org.oscarehr.common.dao.EFormDataDao" %>
 <%@page import="org.oscarehr.common.dao.EFormGroupDao" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.common.dao.LabRequestReportLinkDao" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -53,15 +53,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.forms.FormsDao" %>
 <%@page import="
 		java.util.Date,
                 java.util.Hashtable,
                 java.util.Vector,
-                openo.oscarLab.LabRequestReportLink,
-                openo.util.UtilDateUtilities" %>
+                ca.openosp.openo.oscarLab.LabRequestReportLink,
+                ca.openosp.openo.util.UtilDateUtilities" %>
 <%
     LabRequestReportLinkDao linkDao = SpringUtils.getBean(LabRequestReportLinkDao.class);
     EFormGroupDao eformGroupDao = SpringUtils.getBean(EFormGroupDao.class);

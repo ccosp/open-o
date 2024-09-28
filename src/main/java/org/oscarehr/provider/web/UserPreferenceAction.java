@@ -40,7 +40,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import openo.entities.Provider;
+import ca.openosp.openo.entities.Provider;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -63,7 +63,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarBilling.ca.bc.MSP.MSPReconcile;
+import ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile;
 
 
 /**

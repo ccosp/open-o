@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceException;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -83,7 +83,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Required;
 
-import openo.log.LogAction;
+import ca.openosp.openo.log.LogAction;
 
 public class ProgramManagerViewAction extends DispatchAction {
 

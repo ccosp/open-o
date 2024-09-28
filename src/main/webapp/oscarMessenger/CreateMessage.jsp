@@ -29,11 +29,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.w3c.dom.*" %>
-<%@ page import="openo.oscarMessenger.util.Msgxml" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.util.Msgxml" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
 <%@ page import="org.oscarehr.managers.MessagingManager" %>
 <%@ page import="org.oscarehr.common.model.Groups" %>
-<%@ page import="openo.oscarMessenger.data.MsgProviderData" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.data.MsgProviderData" %>
 <%@ page import="java.util.Map, java.util.List" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -41,8 +41,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed = true;

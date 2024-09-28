@@ -30,7 +30,7 @@ package org.oscarehr.common.dao;
 
 import org.springframework.stereotype.Repository;
 import org.oscarehr.common.model.GroupMembers;
-import openo.oscarMessenger.data.ContactIdentifier;
+import ca.openosp.openo.oscarMessenger.data.ContactIdentifier;
 
 import javax.persistence.Query;
 import java.util.Collections;

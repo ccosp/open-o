@@ -1,4 +1,4 @@
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <!--
 /*
  * 

@@ -23,7 +23,7 @@
     userfirstname = (String) session.getAttribute("userfirstname");
     userlastname = (String) session.getAttribute("userlastname");
 %>
-<%@ page import="java.sql.*, java.util.*,java.net.*, openo.MyDateFormat" %>
+<%@ page import="java.sql.*, java.util.*,java.net.*, ca.openosp.openo.MyDateFormat" %>
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.billing.CA.model.BillingInr" %>

@@ -76,8 +76,8 @@ import org.oscarmcmaster.ar2005.SubsequentVisitItemType;
 import org.oscarmcmaster.ar2005.UltrasoundType;
 import org.oscarmcmaster.ar2005.YesNoNullType;
 
-import openo.form.FrmRecord;
-import openo.form.FrmRecordFactory;
+import ca.openosp.openo.form.FrmRecord;
+import ca.openosp.openo.form.FrmRecordFactory;
 
 public class ONAREnhancedFormToXML {
 

@@ -38,9 +38,9 @@ import java.util.List;
 import org.oscarehr.common.model.RaHeader;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.oscarehr.util.LoggedInInfo;
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 import java.util.Locale;
 import javax.persistence.Query;

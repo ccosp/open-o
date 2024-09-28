@@ -47,9 +47,9 @@ import org.oscarehr.util.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import openo.OscarProperties;
-import openo.oscarTickler.TicklerCreator;
-import openo.util.DateUtils;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarTickler.TicklerCreator;
+import ca.openosp.openo.util.DateUtils;
 
 public final class ConformanceTestHelper {
     private static Logger logger = MiscUtils.getLogger();

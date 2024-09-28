@@ -54,7 +54,7 @@
 <%@ page import="java.util.*, java.sql.*, oscar.*"
          errorPage="../errorpage.jsp" %>
 
-<jsp:useBean id="providerNameBean" class="openo.Dict" scope="page"/>
+<jsp:useBean id="providerNameBean" class="ca.openosp.openo.Dict" scope="page"/>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ReportTemp" %>
 <%@ page import="org.oscarehr.common.dao.ReportTempDao" %>
@@ -62,9 +62,9 @@
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.Form" %>
 <%@ page import="org.oscarehr.common.dao.FormDao" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.SxmlMisc" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%
     ReportTempDao reportTempDao = SpringUtils.getBean(ReportTempDao.class);
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

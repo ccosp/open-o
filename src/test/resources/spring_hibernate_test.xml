@@ -25,7 +25,7 @@
 				<value>classpath:/org/oscarehr/common/model</value>
 				<value>classpath:/org/oscarehr/eyeform/model</value>
 				<value>classpath:/com/quatro/model</value>
-				<value>classpath:/openo/entities</value>
+				<value>classpath:/ca/openosp/openo/entities</value>
 			</list>
 		</property>
 		<property name="annotatedClasses">

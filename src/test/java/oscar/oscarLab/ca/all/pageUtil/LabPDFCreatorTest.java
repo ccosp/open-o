@@ -43,17 +43,17 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import ca.openosp.openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
 import org.apache.commons.io.IOUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.oscarehr.util.MiscUtils;
 
 import ca.uhn.hl7v2.HL7Exception;
-import openo.oscarLab.ca.all.parsers.IHAPOIHandler;
-import openo.oscarLab.ca.all.parsers.MEDITECHHandler;
-import openo.oscarLab.ca.all.parsers.MessageHandler;
-import openo.oscarLab.ca.all.parsers.PATHL7Handler;
+import ca.openosp.openo.oscarLab.ca.all.parsers.IHAPOIHandler;
+import ca.openosp.openo.oscarLab.ca.all.parsers.MEDITECHHandler;
+import ca.openosp.openo.oscarLab.ca.all.parsers.MessageHandler;
+import ca.openosp.openo.oscarLab.ca.all.parsers.PATHL7Handler;
 
 /**
  * This unit test is used for verifying the PDF output of various lab systems

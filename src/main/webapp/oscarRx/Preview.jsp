@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<%@page import="openo.oscarRx.data.RxPatientData" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -33,13 +33,13 @@
 <%@ page import="org.apache.logging.log4j.Logger" %>
 <%@ page import="oscar.*,java.lang.*,java.util.Date" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.oscarProvider.data.ProSignatureData" %>
-<%@ page import="openo.oscarProvider.data.ProviderData" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxProviderData" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
-<%@ page import="openo.oscarRx.util.RxUtil" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProSignatureData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.oscarRx.util.RxUtil" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%

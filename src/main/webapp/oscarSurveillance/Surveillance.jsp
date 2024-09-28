@@ -26,7 +26,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@page import="oscar.oscarSurveillance.*,java.util.*,org.commonmark.node.*,org.commonmark.parser.Parser,org.commonmark.renderer.html.HtmlRenderer" %>
-<%@ page import="openo.oscarSurveillance.Survey" %>
+<%@ page import="ca.openosp.openo.oscarSurveillance.Survey" %>
 <%
     Survey survey = (Survey) request.getAttribute("survey");
     Integer curr = (Integer) request.getAttribute("currSurveyNum");

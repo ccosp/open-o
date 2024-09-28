@@ -100,8 +100,8 @@ import org.oscarehr.ws.rest.to.model.WaitingListNameTo1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import openo.OscarProperties;
-import openo.oscarWaitingList.util.WLWaitingListUtil;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarWaitingList.util.WLWaitingListUtil;
 
 
 /**

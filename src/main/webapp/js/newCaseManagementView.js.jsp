@@ -26,7 +26,7 @@
     <%@page import="org.oscarehr.util.LoggedInInfo"%>
     <%@page import="org.oscarehr.util.SpringUtils"%>
     <%@page import="org.oscarehr.common.dao.UserPropertyDAO"%>
-    <%@page import="openo.OscarProperties"%>
+    <%@page import="ca.openosp.openo.OscarProperties"%>
     <%@page contentType="text/javascript"%>
     <%@page import="org.oscarehr.casemgmt.common.Colour"%>
 

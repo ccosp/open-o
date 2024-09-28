@@ -44,9 +44,9 @@ import org.oscarehr.renal.CkdScreener;
 import org.oscarehr.renal.ORNCkdScreeningReportThread;
 import org.oscarehr.renal.ORNPreImplementationReportThread;
 import org.oscarehr.util.*;
-import openo.OscarProperties;
-import openo.form.FrmLabReq07Record;
-import openo.form.FrmLabReq10Record;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.form.FrmLabReq07Record;
+import ca.openosp.openo.form.FrmLabReq10Record;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -332,7 +332,7 @@ public class RenalAction extends DispatchAction {
         // if(success) {
 
         // 	try {
-        // 		String documentDir = openo.OscarProperties.getInstance().getProperty("DOCUMENT_DIR","");
+        // 		String documentDir = ca.openosp.openo.OscarProperties.getInstance().getProperty("DOCUMENT_DIR","");
         // 		File f = new File(documentDir,"orn_patient_letter.txt");
         //         String template=IOUtils.toString(new FileInputStream(f));
 

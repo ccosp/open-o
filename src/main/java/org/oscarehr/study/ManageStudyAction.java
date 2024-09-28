@@ -56,7 +56,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.OscarAuditLogger;
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.ConversionUtils;
+import ca.openosp.openo.util.ConversionUtils;
 
 public class ManageStudyAction extends DispatchAction {
 

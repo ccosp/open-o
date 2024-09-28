@@ -40,7 +40,7 @@ import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.quatro.dao.security.SecroleDao;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class ContextStartupListener implements javax.servlet.ServletContextListener {
     private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();

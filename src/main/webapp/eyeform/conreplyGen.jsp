@@ -41,7 +41,7 @@
 
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.oscarRx.data.RxPatientData" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
 <%@ include file="/taglibs.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -51,8 +51,8 @@
 <%@page import="org.oscarehr.eyeform.web.EyeformAction" %>
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.common.model.DemographicContact" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <html:html>
     <head>

@@ -46,7 +46,7 @@ import org.oscarehr.managers.constants.Constants;
 import org.oscarehr.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import openo.oscarEncounter.data.EctProgram;
+import ca.openosp.openo.oscarEncounter.data.EctProgram;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

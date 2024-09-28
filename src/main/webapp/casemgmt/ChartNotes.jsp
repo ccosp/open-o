@@ -25,12 +25,12 @@
 --%>
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.Misc" %>
-<%@page import="openo.util.UtilMisc" %>
+<%@page import="ca.openosp.openo.Misc" %>
+<%@page import="ca.openosp.openo.util.UtilMisc" %>
 <%@include file="/casemgmt/taglibs.jsp" %>
 <%@taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@page import="java.util.Enumeration" %>
-<%@page import="openo.oscarEncounter.pageUtil.NavBarDisplayDAO" %>
+<%@page import="ca.openosp.openo.oscarEncounter.pageUtil.NavBarDisplayDAO" %>
 <%@page import="java.util.Arrays,java.util.Properties,java.util.List,java.util.Set,java.util.ArrayList,java.util.Enumeration,java.util.HashSet,java.util.Iterator,java.text.SimpleDateFormat,java.util.Calendar,java.util.Date,java.text.ParseException" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.common.model.UserProperty,org.oscarehr.casemgmt.model.*,org.oscarehr.casemgmt.service.* " %>
@@ -38,7 +38,7 @@
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.common.model.*" %>
 <%@page import="org.oscarehr.common.dao.EFormDao" %>
-<%@page import="openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
@@ -51,20 +51,20 @@
 <%@page import="org.oscarehr.casemgmt.web.NoteDisplay" %>
 <%@page import="org.oscarehr.casemgmt.web.CaseManagementViewAction" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.casemgmt.dao.CaseManagementNoteLinkDAO" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.oscarehr.PMmodule.model.Program" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="openo.util.UtilDateUtilities" %>
+<%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="org.oscarehr.casemgmt.web.NoteDisplayNonNote" %>
 <%@page import="org.oscarehr.common.dao.EncounterTemplateDao" %>
 <%@page import="org.oscarehr.casemgmt.web.CheckBoxBean" %>
 <%@page import="org.oscarehr.managers.ProgramManager2" %>
 <%@ page import="org.oscarehr.managers.DemographicManager" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 

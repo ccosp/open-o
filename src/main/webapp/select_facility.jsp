@@ -32,7 +32,7 @@
 <%@include file="/layouts/caisi_html_top.jspf" %>
 
 
-<%@page import="openo.login.LoginAction" %>
+<%@page import="ca.openosp.openo.login.LoginAction" %>
 <h2>Please select which facility you would like to currently work in</h2>
 <%
     FacilityDao facilityDao = (FacilityDao) SpringUtils.getBean(FacilityDao.class);

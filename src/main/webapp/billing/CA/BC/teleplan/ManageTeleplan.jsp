@@ -26,8 +26,8 @@
 --%>
 
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarBilling.ca.bc.Teleplan.*" %>
-<%@ page import="openo.oscarBilling.ca.bc.Teleplan.TeleplanSequenceDAO" %>
-<%@ page import="openo.oscarBilling.ca.bc.Teleplan.TeleplanUserPassDAO" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.Teleplan.TeleplanSequenceDAO" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.Teleplan.TeleplanUserPassDAO" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
@@ -60,7 +60,7 @@
             Teleplan
             <%
                 TeleplanSequenceDAO seq = new TeleplanSequenceDAO();
-                openo.OscarProperties op = openo.OscarProperties.getInstance();
+                ca.openosp.openo.OscarProperties op = ca.openosp.openo.OscarProperties.getInstance();
             %>
             Last Sequence # = <%=seq.getLastSequenceNumber()%>   Current Datacenter #
             = <%=op.getProperty("dataCenterId", "Not Set")%>

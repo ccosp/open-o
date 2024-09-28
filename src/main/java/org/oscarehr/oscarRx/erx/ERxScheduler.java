@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 /**
  * Task scheduler that calls the synchronisation process with the External Prescriber.

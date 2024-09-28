@@ -26,7 +26,7 @@
 
 
 <%@page import="org.apache.commons.lang.StringUtils"%>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <table width="100%" border="2" valign="top">
 	<% 
  String dateBegin = StringUtils.trimToNull(request.getParameter("xml_vdate"));

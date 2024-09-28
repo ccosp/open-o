@@ -102,8 +102,8 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.oscarBilling.ca.bc.MSP.MSPReconcile" %>
-<%@ page import="openo.util.DateUtils" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile" %>
+<%@ page import="ca.openosp.openo.util.DateUtils" %>
 <!DOCTYPE HTML>
 <html>
 <head>

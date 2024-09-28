@@ -28,11 +28,11 @@
 <%@page import="org.oscarehr.util.LocaleUtils" %>
 <%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="openo.oscarRx.pageUtil.AllergyHelperBean" %>
-<%@page import="openo.oscarRx.pageUtil.AllergyDisplay" %>
+<%@page import="ca.openosp.openo.oscarRx.pageUtil.AllergyHelperBean" %>
+<%@page import="ca.openosp.openo.oscarRx.pageUtil.AllergyDisplay" %>
 <%@page import="java.util.List" %>
-<%@page import="openo.OscarProperties" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -180,7 +180,7 @@
         </script>
     </head>
     <bean:define id="patient"
-                 type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+                 type="ca.openosp.openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
     <body topmargin="0" leftmargin="0" vlink="#0000FF">
     <table border="0" cellpadding="0" cellspacing="0"

@@ -28,7 +28,7 @@
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*"
         errorPage="../appointment/errorpage.jsp" %>
-<%@ page import="openo.DateInMonthTable" %>
+<%@ page import="ca.openosp.openo.DateInMonthTable" %>
 <%
     //to prepare calendar display
     String type = request.getParameter("type");

@@ -42,9 +42,9 @@
 %>
 
 <%@ page
-        import="openo.util.UtilMisc,oscar.oscarEncounter.data.*,java.net.*,java.util.*" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+        import="ca.openosp.openo.util.UtilMisc,oscar.oscarEncounter.data.*,java.net.*,java.util.*" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     String provNo = request.getParameter("provider_no");

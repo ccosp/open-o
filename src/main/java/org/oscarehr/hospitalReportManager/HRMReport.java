@@ -30,7 +30,7 @@ import omd.hrm.PersonNameStandard.LegalName.OtherName;
 import omd.hrm.ReportFormat;
 import omd.hrm.ReportsReceived.OBRContent;
 import org.oscarehr.util.MiscUtils;
-import openo.util.StringUtils;
+import ca.openosp.openo.util.StringUtils;
 
 public class HRMReport {
 

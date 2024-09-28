@@ -62,8 +62,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import openo.OscarProperties;
-import openo.util.SqlUtils;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.util.SqlUtils;
 
 @Transactional
 public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements CaseManagementNoteDAO {

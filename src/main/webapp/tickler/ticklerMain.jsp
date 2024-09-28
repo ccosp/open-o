@@ -35,8 +35,8 @@
 <%@ page import="org.oscarehr.common.model.View" %>
 <%@ page import="org.oscarehr.common.model.TicklerLink" %>
 <%@ page import="org.oscarehr.common.dao.TicklerLinkDao" %>
-<%@ page import="openo.MyDateFormat" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.oscarehr.common.model.Site" %>
 <%@ page import="org.oscarehr.common.dao.SiteDao" %>
 <%@ page import="org.oscarehr.common.model.Tickler" %>
@@ -50,7 +50,7 @@
 <%@ page import="java.time.ZoneId" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.Duration" %>
-<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

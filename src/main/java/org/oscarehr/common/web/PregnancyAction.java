@@ -75,16 +75,16 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.form.FrmLabReq07Record;
-import openo.form.FrmLabReq10Record;
-import openo.form.FrmONAREnhancedRecord;
-import openo.form.FrmONARRecord;
-import openo.form.FrmRecord;
-import openo.form.FrmRecordFactory;
-import openo.log.LogAction;
-import openo.log.LogConst;
-import openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.form.FrmLabReq07Record;
+import ca.openosp.openo.form.FrmLabReq10Record;
+import ca.openosp.openo.form.FrmONAREnhancedRecord;
+import ca.openosp.openo.form.FrmONARRecord;
+import ca.openosp.openo.form.FrmRecord;
+import ca.openosp.openo.form.FrmRecordFactory;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.log.LogConst;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
 
 public class PregnancyAction extends DispatchAction {
 

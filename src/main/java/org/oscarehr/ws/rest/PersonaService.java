@@ -37,7 +37,7 @@ import javax.ws.rs.QueryParam;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.model.ProgramProvider;

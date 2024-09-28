@@ -53,9 +53,9 @@ import org.oscarehr.util.SpringUtils;
 import org.xml.sax.InputSource;
 
 import ca.ssha._2005.hial.Response;
-import openo.OscarProperties;
-import openo.oscarLab.ca.all.parsers.Factory;
-import openo.oscarLab.ca.all.parsers.OLISHL7Handler;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
+import ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler;
 
 
 public class OLISUtils {

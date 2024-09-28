@@ -28,7 +28,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
 
-<%@ page import="java.sql.*, java.util.*, openo.MyDateFormat" errorPage="../errorpage.jsp" %>
+<%@ page import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat" errorPage="../errorpage.jsp" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.MyGroup" %>
 <%@ page import="org.oscarehr.common.model.MyGroupPrimaryKey" %>

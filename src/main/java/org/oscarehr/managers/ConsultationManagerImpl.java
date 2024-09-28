@@ -113,13 +113,13 @@ import ca.uhn.hl7v2.model.v26.message.REF_I12;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import openo.eform.EFormUtil;
-import openo.log.LogAction;
-import openo.oscarEncounter.data.EctFormData;
-import openo.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPDFCreator;
-import openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.eform.EFormUtil;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPDFCreator;
+import ca.openosp.openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
 
 @Service
 public class ConsultationManagerImpl implements ConsultationManager {

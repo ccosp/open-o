@@ -31,18 +31,18 @@
         import="java.util.*, java.net.*, java.sql.*, oscar.*, java.text.*, java.lang.*"
         errorPage="../appointment/errorpage.jsp" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
-<jsp:useBean id="myTempBean" class="openo.ScheduleTemplateBean" scope="page"/>
+<jsp:useBean id="myTempBean" class="ca.openosp.openo.ScheduleTemplateBean" scope="page"/>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplate" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplatePrimaryKey" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleTemplateDao" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%
     ScheduleTemplateDao scheduleTemplateDao = SpringUtils.getBean(ScheduleTemplateDao.class);
     ScheduleTemplateCodeDao scheduleTemplateCodeDao = SpringUtils.getBean(ScheduleTemplateCodeDao.class);

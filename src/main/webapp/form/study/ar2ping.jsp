@@ -1,5 +1,5 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.oscarDB.DBHandler" %>
+<%@page import="ca.openosp.openo.oscarDB.DBHandler" %>
 <%@ page import="java.lang.reflect.*, java.sql.*" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <jsp:useBean id="studyMapping" class="java.util.Properties" scope="page"/>
@@ -8,12 +8,12 @@
 <%@ page import="java.util.*,oscar.ping.xml.*" %>
 <%@ page import="org.chip.ping.xml.*" %>
 <%@ page import="org.chip.ping.xml.cddm.*" %>
-<%@ page import="openo.OscarPingTalk" %>
+<%@ page import="ca.openosp.openo.OscarPingTalk" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Desaprisk" %>
 <%@page import="org.oscarehr.common.dao.DesapriskDao" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName2$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

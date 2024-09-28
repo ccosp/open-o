@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.quatro.model.LookupCodeValue;
-import openo.Misc;
+import ca.openosp.openo.Misc;
 
 /**
  * This is the object class that relates to the program table. Any customizations belong here.

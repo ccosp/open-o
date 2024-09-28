@@ -42,9 +42,9 @@ import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import openo.eform.EFormUtil;
-import openo.log.LogAction;
-import openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil;
+import ca.openosp.openo.eform.EFormUtil;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

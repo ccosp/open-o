@@ -24,18 +24,18 @@
 
 --%>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="openo.oscarEncounter.pageUtil.EctDisplayLabAction2" %>
+<%@page import="ca.openosp.openo.oscarEncounter.pageUtil.EctDisplayLabAction2" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="java.net.URLEncoder" %>
-<%@page import="openo.oscarLab.ca.all.web.LabDisplayHelper" %>
+<%@page import="ca.openosp.openo.oscarLab.ca.all.web.LabDisplayHelper" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="java.util.*" %>
-<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 <%@ page import="oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*" %>
-<%@ page import="openo.util.DateUtils" %>
-<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
-<%@ page import="openo.oscarMDS.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.util.DateUtils" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="ca.openosp.openo.oscarMDS.data.ProviderData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

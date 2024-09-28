@@ -38,7 +38,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public final class OscarSpringContextLoader extends ContextLoaderListener {
 

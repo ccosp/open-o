@@ -9,12 +9,10 @@
  */
 package org.oscarehr.olis;
 
-import java.util.TimerTask;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;

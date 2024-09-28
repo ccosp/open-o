@@ -23,7 +23,7 @@
 <%@ page import="java.util.*, java.sql.*, oscar.*" errorPage="../../../errorpage.jsp" %>
 
 
-<jsp:useBean id="SxmlMisc" class="openo.SxmlMisc" scope="session"/>
+<jsp:useBean id="SxmlMisc" class="ca.openosp.openo.SxmlMisc" scope="session"/>
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
@@ -33,8 +33,8 @@
 <%@ page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
 <%@page import="org.oscarehr.billing.CA.model.BillingInr" %>
 <%@page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
-<%@page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%
     BillingInrDao billingInrDao = SpringUtils.getBean(BillingInrDao.class);
 %>

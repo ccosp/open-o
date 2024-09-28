@@ -45,10 +45,10 @@
 %>
 <%@ page
         import="oscar.form.*, java.util.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.oscarDB.*,oscar.oscarBilling.ca.bc.MSP.*, oscar.oscarBilling.ca.bc.Teleplan.*" %>
-<%@ page import="openo.oscarBilling.ca.bc.pageUtil.WCBForm" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingFormData" %>
-<%@ page import="openo.oscarBilling.ca.bc.MSP.WcbHelper" %>
-<%@ page import="openo.oscarBilling.ca.bc.Teleplan.WCBCodes" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.WCBForm" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.MSP.WcbHelper" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.Teleplan.WCBCodes" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

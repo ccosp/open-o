@@ -28,7 +28,7 @@
 <%@page import="java.util.*,java.net.*,java.sql.*,oscar.*,oscar.util.*,oscar.appt.*" %>
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
-<%@page import="openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
+<%@page import="ca.openosp.openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
 <%@page import="org.oscarehr.common.dao.CSSStylesDAO, org.oscarehr.common.model.ProviderPreference, org.oscarehr.common.model.CssStyle" %>
 <%@page import="org.oscarehr.common.dao.BillingServiceDao, org.oscarehr.common.model.BillingService" %>
 <%@page import="org.oscarehr.common.dao.ClinicNbrDao, org.oscarehr.common.model.ClinicNbr" %>
@@ -547,18 +547,18 @@
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <html>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.appt.JdbcApptImpl" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingItemData" %>
-<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingSiteIdPrep" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.OscarProperties" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.appt.JdbcApptImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingItemData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingSiteIdPrep" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 <head>
     <title>Ontario Billing</title>
 

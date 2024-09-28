@@ -45,7 +45,7 @@
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedFacility" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Calendar,org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@include file="/layouts/caisi_html_top.jspf" %>
 

@@ -42,14 +42,14 @@
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="oscar.util.*, oscar.form.*" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.managers.DemographicManager" %>
-<%@ page import="openo.form.FrmRecord" %>
-<%@ page import="openo.form.FrmRourke2017Record" %>
-<%@ page import="openo.util.UtilMisc" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRourke2017Record" %>
+<%@ page import="ca.openosp.openo.util.UtilMisc" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

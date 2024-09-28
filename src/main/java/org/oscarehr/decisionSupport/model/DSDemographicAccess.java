@@ -56,16 +56,16 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic;
-import openo.oscarDemographic.data.DemographicData;
-import openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
-import openo.oscarEncounter.oscarMeasurements.MeasurementInfo;
-import openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
-import openo.oscarDxResearch.bean.dxResearchBean;
-import openo.oscarDxResearch.bean.dxResearchBeanHandler;
-import openo.oscarRx.data.RxPrescriptionData;
-import openo.oscarRx.data.RxPrescriptionData.Prescription;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic;
+import ca.openosp.openo.oscarDemographic.data.DemographicData;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementInfo;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
+import ca.openosp.openo.oscarDxResearch.bean.dxResearchBean;
+import ca.openosp.openo.oscarDxResearch.bean.dxResearchBeanHandler;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData.Prescription;
 
 /**
  * @author apavel

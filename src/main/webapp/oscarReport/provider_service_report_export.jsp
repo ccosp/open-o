@@ -38,7 +38,7 @@
     }
 %>
 
-<%@page import="openo.util.SqlUtils" %>
+<%@page import="ca.openosp.openo.util.SqlUtils" %>
 <%@page import="org.oscarehr.web.ProviderServiceReportUIBean" %>
 <%@page import="java.util.*" %>
 <%@page import="org.caisi.model.*" %>
@@ -48,7 +48,7 @@
 <%@page import="org.oscarehr.util.*" %>
 <%@page import="java.text.*" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
     String agencyName = OscarProperties.getInstance().getProperty("db_name", "");
     String startDateString = request.getParameter("startDate");

@@ -45,8 +45,8 @@
 <%@page import="org.oscarehr.common.model.BillingService" %>
 <%@page import="org.oscarehr.billing.CA.BC.dao.WcbDao" %>
 <%@page import="org.oscarehr.billing.CA.BC.model.Wcb" %>
-<%@page import="openo.oscarBilling.ca.bc.data.BillingmasterDAO" %>
-<%@page import="openo.entities.Billingmaster" %>
+<%@page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingmasterDAO" %>
+<%@page import="ca.openosp.openo.entities.Billingmaster" %>
 <%
     BillingServiceDao billingServiceDao = SpringUtils.getBean(BillingServiceDao.class);
     WcbDao wcbDao = SpringUtils.getBean(WcbDao.class);

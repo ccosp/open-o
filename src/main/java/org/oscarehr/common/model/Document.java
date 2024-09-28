@@ -57,7 +57,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.commons.io.FileUtils;
 
 /**

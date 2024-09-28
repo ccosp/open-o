@@ -35,8 +35,8 @@ import java.util.UUID;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import openo.OscarProperties;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.util.UtilDateUtilities;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.DaoTestFixtures;
@@ -52,9 +52,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import openo.oscarLab.ca.all.upload.HandlerClassFactory;
-import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
-import openo.util.ConversionUtils;
+import ca.openosp.openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MessageHandler;
+import ca.openosp.openo.util.ConversionUtils;
 
 public class DataUtils {
 

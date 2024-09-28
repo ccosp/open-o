@@ -44,9 +44,9 @@ import org.springframework.stereotype.Component;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.documentManager.EDocUtil.EDocSort;
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.LabResultData;
-import openo.util.StringUtils;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.util.StringUtils;
 
 @Component
 public class LabsDocsSummary implements Summary {

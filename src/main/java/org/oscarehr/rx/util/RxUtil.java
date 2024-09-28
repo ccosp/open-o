@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 import org.oscarehr.common.model.Drug;
 import org.oscarehr.util.MiscUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class RxUtil {
 

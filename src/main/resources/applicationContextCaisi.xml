@@ -19,7 +19,7 @@
 
 
 	<!-- configure the available measurement flow sheets -->
-	<bean id="measurementTemplateFlowSheet" class="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig">
+	<bean id="measurementTemplateFlowSheet" class="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig">
 		<property name="flowSheets">
 			<list>
 				<value>classpath:oscar/oscarEncounter/oscarMeasurements/flowsheets/omdDiabetesFlowsheet.xml</value>
@@ -123,7 +123,7 @@
     </bean>
 
 
-	 <bean id="scheduledOcanSubmissionTask" class="openo.ocan.task.OcanSubmissionTask">
+	 <bean id="scheduledOcanSubmissionTask" class="ca.openosp.openo.ocan.task.OcanSubmissionTask">
 		<property name="genericIntakeManager" ref="genericIntakeManager" />
 		<property name="ocanDataProcessor" ref="ocanDataProcessor" />
 		<property name="useTestData" value="true" />

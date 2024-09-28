@@ -44,7 +44,7 @@
 <%@ page import="java.util.Iterator.*" %>
 <%@ page import="java.util.Enumeration.*" %>
 <%@ page import="org.apache.commons.collections.iterators.*" %>
-<%@ page import="openo.util.UtilDateUtilities,java.util.*" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities,java.util.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="html-el" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>

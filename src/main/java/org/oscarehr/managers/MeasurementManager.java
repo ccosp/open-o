@@ -42,8 +42,8 @@ import org.oscarehr.common.model.Property;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
 
 public interface MeasurementManager {
 

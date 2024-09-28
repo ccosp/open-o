@@ -42,11 +42,11 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="oscar.oscarEncounter.immunization.data.*, oscar.util.*, oscar.oscarDemographic.data.*" %>
 <%@ page import="oscar.oscarEncounter.immunization.pageUtil.*, java.util.*, org.w3c.dom.*" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
-<%@ page import="openo.util.UtilXML" %>
-<%@ page import="openo.util.UtilMisc" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+<%@ page import="ca.openosp.openo.util.UtilXML" %>
+<%@ page import="ca.openosp.openo.util.UtilMisc" %>
 <%
     EctSessionBean bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean");
 

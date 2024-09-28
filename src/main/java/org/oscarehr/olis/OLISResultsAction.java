@@ -21,7 +21,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -43,13 +43,13 @@ import com.indivica.olis.queries.Query;
 import com.indivica.olis.queries.QueryType;
 import com.indivica.olis.queries.Z01Query;
 
-import openo.OscarProperties;
-import openo.log.LogAction;
-import openo.oscarLab.ca.all.parsers.Factory;
-import openo.oscarLab.ca.all.parsers.MessageHandler;
-import openo.oscarLab.ca.all.parsers.OLISHL7Handler;
-import openo.oscarLab.ca.all.upload.MessageUploader;
-import openo.oscarLab.ca.all.util.Utilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
+import ca.openosp.openo.oscarLab.ca.all.parsers.MessageHandler;
+import ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler;
+import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
+import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 public class OLISResultsAction extends DispatchAction {
 

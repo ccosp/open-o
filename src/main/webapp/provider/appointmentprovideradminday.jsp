@@ -65,12 +65,12 @@
 <%@ page import="org.oscarehr.common.model.*" %>
 <%@ page import="org.oscarehr.managers.PreventionManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.util.UtilMisc" %>
-<%@ page import="openo.OscarProperties" %>
-<%@ page import="openo.MyDateFormat" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.util.UtilMisc" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
@@ -128,7 +128,7 @@
 </security:oscarSec>
 
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
-<jsp:useBean id="as" class="openo.appt.ApptStatusData"/>
+<jsp:useBean id="as" class="ca.openosp.openo.appt.ApptStatusData"/>
 <jsp:useBean id="dateTimeCodeBean" class="java.util.HashMap"/>
 
 <c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 2345) %>

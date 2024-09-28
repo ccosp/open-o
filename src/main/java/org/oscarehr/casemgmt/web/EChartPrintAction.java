@@ -49,7 +49,7 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import openo.log.LogAction;
+import ca.openosp.openo.log.LogAction;
 
 import com.itextpdf.text.DocumentException;
 

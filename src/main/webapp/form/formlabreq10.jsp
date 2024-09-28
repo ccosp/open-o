@@ -44,17 +44,17 @@
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.util.LocaleUtils" %>
 <%@page import="org.oscarehr.common.dao.FrmLabReqPreSetDao, org.oscarehr.util.SpringUtils" %>
-<%@page import="oscar.form.*, openo.OscarProperties, java.util.Date, openo.util.UtilDateUtilities" %>
-<%@page import="openo.oscarRx.data.RxProviderData, openo.oscarRx.data.RxProviderData.Provider" %>
-<%@page import="org.oscarehr.util.MiscUtils,openo.oscarClinic.ClinicData" %>
+<%@page import="oscar.form.*, ca.openosp.openo.OscarProperties, java.util.Date, ca.openosp.openo.util.UtilDateUtilities" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxProviderData, ca.openosp.openo.oscarRx.data.RxProviderData.Provider" %>
+<%@page import="org.oscarehr.util.MiscUtils,ca.openosp.openo.oscarClinic.ClinicData" %>
 <%@page import="org.oscarehr.PMmodule.model.Program" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="java.util.List" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.FrmLabReq10Record" %>
-<%@ page import="openo.form.FrmRecord" %>
-<%@ page import="openo.form.FrmRecordHelp" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.FrmLabReq10Record" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordHelp" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

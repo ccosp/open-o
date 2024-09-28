@@ -27,7 +27,7 @@
 <%@ page import="org.oscarehr.common.service.FieldNoteManager" %>
 <%@ page import="org.oscarehr.common.model.EFormValue" %>
 <%@ page import="java.util.*" %>
-<%@ page import="openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

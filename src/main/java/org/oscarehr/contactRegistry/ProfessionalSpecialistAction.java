@@ -10,7 +10,7 @@ import org.oscarehr.managers.ProfessionalSpecialistsManager;
 import org.oscarehr.util.JsonUtil;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
-import openo.form.JSONAction;
+import ca.openosp.openo.form.JSONAction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

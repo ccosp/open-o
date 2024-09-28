@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
@@ -50,8 +50,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import org.oscarehr.documentManager.data.DocumentUploadForm;
-import openo.log.LogAction;
-import openo.log.LogConst;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.log.LogConst;
 
 public class DocumentUploadAction extends DispatchAction {
 

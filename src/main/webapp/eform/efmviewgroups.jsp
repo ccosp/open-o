@@ -25,7 +25,7 @@
 --%>
 
 <%@ page import="java.util.*, oscar.eform.*" %>
-<%@ page import="openo.eform.EFormUtil" %>
+<%@ page import="ca.openosp.openo.eform.EFormUtil" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%

@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
 
 import org.oscarehr.common.model.BillingONCHeader1;
 import org.oscarehr.util.MiscUtils;
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 import java.util.Locale;
 import java.util.Date;

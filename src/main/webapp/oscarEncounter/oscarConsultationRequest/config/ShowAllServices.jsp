@@ -40,7 +40,7 @@
 %>
 
 <%@ page import="java.util.ResourceBundle" %>
-<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -49,7 +49,7 @@
 <html:html lang="en">
 
     <jsp:useBean id="showAllServicesUtil" scope="session"
-                 class="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConShowAllServicesUtil"/>
+                 class="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConShowAllServicesUtil"/>
 
 
     <head>

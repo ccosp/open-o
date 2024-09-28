@@ -36,15 +36,15 @@
 
 <jsp:useBean id="riskDataBean" class="java.util.Properties" scope="page"/>
 <jsp:useBean id="risks"
-             class="openo.decision.DesAntenatalPlannerRisks_99_12" scope="page"/>
+             class="ca.openosp.openo.decision.DesAntenatalPlannerRisks_99_12" scope="page"/>
 <jsp:useBean id="checklist"
-             class="openo.decision.DesAntenatalPlannerChecklist_99_12" scope="page"/>
+             class="ca.openosp.openo.decision.DesAntenatalPlannerChecklist_99_12" scope="page"/>
 <%@ include file="../../admin/dbconnection.jsp" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Desaprisk" %>
 <%@page import="org.oscarehr.common.dao.DesapriskDao" %>
-<%@ page import="openo.oscarDB.DBHandler" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.oscarDB.DBHandler" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%
     DesapriskDao desapriskDao = SpringUtils.getBean(DesapriskDao.class);
 %>

@@ -29,7 +29,7 @@
     String form_name = "ar2_99_08";
     String username = (String) session.getAttribute("userlastname") + "," + (String) session.getAttribute("userfirstname");
 %>
-<%@ page import="java.util.*, java.sql.*, java.net.*, oscar.*, openo.util.UtilDateUtilities, oscar.form.graphic.*"
+<%@ page import="java.util.*, java.sql.*, java.net.*, oscar.*, ca.openosp.openo.util.UtilDateUtilities, oscar.form.graphic.*"
          errorPage="/errorpage.jsp" %>
 
 <%@page import="org.oscarehr.util.SpringUtils" %>
@@ -39,18 +39,18 @@
 <%@page import="org.oscarehr.common.model.Form" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="openo.form.graphic.FrmGraphicAR" %>
-<%@ page import="openo.SxmlMisc" %>
-<%@ page import="openo.MyDateFormat" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.form.graphic.FrmGraphicAR" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
     DemographicAccessoryDao demographicAccessoryDao = (DemographicAccessoryDao) SpringUtils.getBean(DemographicAccessoryDao.class);
     FormDao formDao = SpringUtils.getBean(FormDao.class);
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 %>
 
-<jsp:useBean id="checklist" class="openo.OBChecklist_99_12" scope="page"/>
-<jsp:useBean id="risks" class="openo.OBRisks_99_12" scope="page"/>
+<jsp:useBean id="checklist" class="ca.openosp.openo.OBChecklist_99_12" scope="page"/>
+<jsp:useBean id="risks" class="ca.openosp.openo.OBRisks_99_12" scope="page"/>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html>

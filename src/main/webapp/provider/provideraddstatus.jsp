@@ -24,7 +24,7 @@
 
 --%>
 
-<%@ page import="java.sql.*, java.util.*, openo.MyDateFormat,org.oscarehr.event.EventService" %>
+<%@ page import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat,org.oscarehr.event.EventService" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@page import="org.oscarehr.common.dao.AppointmentArchiveDao" %>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>

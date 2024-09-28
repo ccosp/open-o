@@ -109,9 +109,9 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.BeanUtils;
 
-import openo.OscarProperties;
-import openo.SxmlMisc;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.SxmlMisc;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfCopyFields;

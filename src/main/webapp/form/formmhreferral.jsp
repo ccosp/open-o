@@ -45,11 +45,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.form.FrmMentalHealthRecord" %>
-<%@ page import="openo.form.FrmRecordFactory" %>
-<%@ page import="openo.form.FrmRecord" %>
-<%@ page import="openo.oscarEncounter.util.EctFileUtil" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.form.FrmMentalHealthRecord" %>
+<%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
+<%@ page import="ca.openosp.openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.util.EctFileUtil" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html:html lang="en">

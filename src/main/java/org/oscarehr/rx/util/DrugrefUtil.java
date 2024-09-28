@@ -55,11 +55,11 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.ws.rest.to.model.RxDsMessageTo1;
 
-import openo.OscarProperties;
-import openo.oscarRx.data.RxPatientData;
-import openo.oscarRx.pageUtil.RxMyDrugrefInfoAction;
-import openo.oscarRx.util.MyDrugrefComparator;
-import openo.oscarRx.util.RxDrugRef;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarRx.data.RxPatientData;
+import ca.openosp.openo.oscarRx.pageUtil.RxMyDrugrefInfoAction;
+import ca.openosp.openo.oscarRx.util.MyDrugrefComparator;
+import ca.openosp.openo.oscarRx.util.RxDrugRef;
 
 public class DrugrefUtil {
     private static final Logger logger = MiscUtils.getLogger();

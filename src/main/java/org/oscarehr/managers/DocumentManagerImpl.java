@@ -39,7 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.itextpdf.text.DocumentException;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -56,8 +56,8 @@ import org.springframework.stereotype.Service;
 import org.oscarehr.documentManager.EDoc;
 
 import org.oscarehr.documentManager.EDocUtil;
-import openo.log.LogAction;
-import openo.oscarEncounter.oscarConsultationRequest.pageUtil.ImagePDFCreator;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.ImagePDFCreator;
 
 @Service
 public class DocumentManagerImpl implements DocumentManager {

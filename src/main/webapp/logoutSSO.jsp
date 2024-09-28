@@ -29,7 +29,7 @@
 <%@page import="org.oscarehr.common.model.UserProperty" %>
 <%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@page import="java.net.URLEncoder" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="java.util.HashMap, oscar.log.*"
         errorPage="/errorpage.jsp" %>
 

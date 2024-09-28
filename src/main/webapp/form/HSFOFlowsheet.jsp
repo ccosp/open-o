@@ -39,7 +39,7 @@
 %>
 
 <%@page import="oscar.util.*" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -80,11 +80,11 @@
     </head>
 
     <body onload="window.resizeTo(998,719)">
-    <jsp:useBean id="patientData" class="openo.form.study.HSFO.PatientData"
+    <jsp:useBean id="patientData" class="ca.openosp.openo.form.study.HSFO.PatientData"
                  scope="request"/>
-    <jsp:useBean id="visitData" class="openo.form.study.HSFO.VisitData"
+    <jsp:useBean id="visitData" class="ca.openosp.openo.form.study.HSFO.VisitData"
                  scope="request"/>
-    <jsp:useBean id="recordList" class="openo.form.study.HSFO.RecordList"
+    <jsp:useBean id="recordList" class="ca.openosp.openo.form.study.HSFO.RecordList"
                  scope="request"/>
 
     <%

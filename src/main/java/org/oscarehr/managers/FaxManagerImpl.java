@@ -57,9 +57,9 @@ import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
 import org.oscarehr.documentManager.EDocUtil;
-import openo.form.util.FormTransportContainer;
-import openo.log.LogAction;
-import openo.util.ConcatPDF;
+import ca.openosp.openo.form.util.FormTransportContainer;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.util.ConcatPDF;
 
 @Service
 public class FaxManagerImpl implements FaxManager {

@@ -61,8 +61,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
-import openo.OscarProperties;
-import openo.log.LogAction;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
 
 @Service
 public class DashboardManagerImpl implements DashboardManager {

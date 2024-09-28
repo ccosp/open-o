@@ -36,8 +36,8 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.oscarehr.common.model.PartialDate;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
-import openo.util.StringUtils;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.util.StringUtils;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 @Repository
 public class PartialDateDaoImpl extends AbstractDaoImpl<PartialDate> implements PartialDateDao {

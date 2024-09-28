@@ -43,7 +43,7 @@ import ca.ontario.health.edt.TypeListData;
 import ca.ontario.health.edt.TypeListResult;
 import ca.ontario.health.edt.UpdateRequest;
 import ca.ontario.health.edt.UploadData;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public abstract class EDTBaseTest {
     protected static Logger logger = MiscUtils.getLogger();

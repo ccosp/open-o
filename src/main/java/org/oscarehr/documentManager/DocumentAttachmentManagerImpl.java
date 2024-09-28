@@ -18,13 +18,13 @@ import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.eform.EFormUtil;
-import openo.oscarEncounter.data.EctFormData;
-import openo.oscarLab.ca.all.Hl7textResultsData;
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.LabResultData;
-import openo.util.ConcatPDF;
-import openo.util.StringUtils;
+import ca.openosp.openo.eform.EFormUtil;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.util.ConcatPDF;
+import ca.openosp.openo.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

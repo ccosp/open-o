@@ -53,12 +53,12 @@
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="indivo" %>
 
 <%@ page
-        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,openo.MyDateFormat, openo.oscarProvider.data.ProviderMyOscarIdData, openo.oscarDemographic.data.DemographicData" %>
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData, ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
 <%@page import="oscar.oscarProvider.data.*" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
-<%@ page import="openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%
     List providers = ProviderData.getProviderList();
     String provider = "";

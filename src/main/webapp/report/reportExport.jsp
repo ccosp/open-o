@@ -42,7 +42,7 @@
 <%@page contentType="application/octet-stream" %>
 <%@page
         import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.ClinicalReports.*" %>
-<%@ page import="openo.oscarReport.ClinicalReports.ReportEvaluator" %>
+<%@ page import="ca.openosp.openo.oscarReport.ClinicalReports.ReportEvaluator" %>
 <%
 
 

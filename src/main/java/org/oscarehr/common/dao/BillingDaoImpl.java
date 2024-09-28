@@ -35,9 +35,9 @@ import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.Billing;
 import org.oscarehr.util.DateRange;
 import org.springframework.stereotype.Repository;
-import openo.entities.Billingmaster;
-import openo.oscarBilling.ca.bc.MSP.MSPReconcile;
-import openo.util.ConversionUtils;
+import ca.openosp.openo.entities.Billingmaster;
+import ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile;
+import ca.openosp.openo.util.ConversionUtils;
 
 @Repository
 @SuppressWarnings("unchecked")

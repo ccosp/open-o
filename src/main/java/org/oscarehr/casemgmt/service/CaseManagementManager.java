@@ -81,7 +81,7 @@ import org.oscarehr.common.model.SecRole;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.LoggedInInfo;
 
-//import openo.oscarEncounter.pageUtil.EctSessionBean;
+//import ca.openosp.openo.pageUtil.oscarEncounter.EctSessionBean;
 
 import com.quatro.model.security.Secrole;
 import com.quatro.service.security.RolesManager;

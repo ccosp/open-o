@@ -22,7 +22,7 @@
     Toronto, Ontario, Canada
 
 --%>
-    <%@ page import="openo.OscarProperties"%>
+    <%@ page import="ca.openosp.openo.OscarProperties"%>
     <%@ page import="org.springframework.web.util.JavaScriptUtils"%>
     <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 

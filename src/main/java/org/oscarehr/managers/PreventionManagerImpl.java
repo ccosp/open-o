@@ -46,11 +46,11 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.log.LogAction;
-import openo.oscarPrevention.PreventionDS;
-import openo.oscarPrevention.PreventionData;
-import openo.oscarPrevention.PreventionDisplayConfig;
-import openo.util.StringUtils;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarPrevention.PreventionDS;
+import ca.openosp.openo.oscarPrevention.PreventionData;
+import ca.openosp.openo.oscarPrevention.PreventionDisplayConfig;
+import ca.openosp.openo.util.StringUtils;
 
 @Service
 public class PreventionManagerImpl implements Serializable, PreventionManager {
@@ -238,7 +238,7 @@ public class PreventionManagerImpl implements Serializable, PreventionManager {
 
     @Override
     public String getWarnings(LoggedInInfo loggedInInfo, String demo) {
-        openo.oscarPrevention.Prevention prev = PreventionData.getLocalandRemotePreventions(loggedInInfo,
+        ca.openosp.openo.oscarPrevention.Prevention prev = PreventionData.getLocalandRemotePreventions(loggedInInfo,
                 Integer.parseInt(demo));
         String message = "";
 

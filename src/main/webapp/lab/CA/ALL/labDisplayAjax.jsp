@@ -26,7 +26,7 @@
 
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.common.model.PatientLabRouting" %>
-<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="org.oscarehr.common.dao.PatientLabRoutingDao" %>
 <%@ page import="java.util.*,
                  java.sql.*,
@@ -35,10 +35,10 @@
                  oscar.oscarLab.ca.all.util.*,
                  org.oscarehr.util.SpringUtils,
                  oscar.oscarLab.ca.all.parsers.*,
-                 openo.oscarLab.LabRequestReportLink,
-                 openo.oscarMDS.data.ReportStatus,
+                 ca.openosp.openo.oscarLab.LabRequestReportLink,
+                 ca.openosp.openo.oscarMDS.data.ReportStatus,
                  oscar.log.*,
-                 openo.OscarProperties,
+                 ca.openosp.openo.OscarProperties,
                  org.apache.commons.codec.binary.Base64,
                  org.oscarehr.common.dao.Hl7TextInfoDao,
                  org.oscarehr.common.model.Hl7TextInfo,
@@ -48,13 +48,13 @@
                  java.io.ByteArrayInputStream" %>
 <%@ page import="org.oscarehr.common.model.Tickler" %>
 <%@ page import="org.oscarehr.managers.TicklerManager" %>
-<%@ page import="openo.log.LogConst" %>
-<%@ page import="openo.log.LogAction" %>
-<%@ page import="openo.oscarLab.ca.all.AcknowledgementData" %>
-<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
-<%@ page import="openo.oscarLab.ca.all.parsers.MessageHandler" %>
-<%@ page import="openo.oscarLab.ca.all.parsers.Factory" %>
-<%@ page import="openo.oscarLab.ca.all.parsers.PATHL7Handler" %>
+<%@ page import="ca.openosp.openo.log.LogConst" %>
+<%@ page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.MessageHandler" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.Factory" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.PATHL7Handler" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

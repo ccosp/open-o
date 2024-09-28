@@ -41,7 +41,7 @@
 
 <!DOCTYPE html>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.oscarLab.ca.all.pageUtil.SendOruR01UIBean" %>
+<%@page import="ca.openosp.openo.oscarLab.ca.all.pageUtil.SendOruR01UIBean" %>
 <%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.Gender" %>

@@ -38,8 +38,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.oscarTickler.TicklerCreator;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarTickler.TicklerCreator;
 
 public class CkdNotificationManager {
     private Logger logger = MiscUtils.getLogger();

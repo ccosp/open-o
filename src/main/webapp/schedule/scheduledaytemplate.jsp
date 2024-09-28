@@ -31,7 +31,7 @@
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*"
         errorPage="../appointment/errorpage.jsp" %>
 
-<jsp:useBean id="providerNameBean" class="openo.Dict" scope="session"/>
+<jsp:useBean id="providerNameBean" class="ca.openosp.openo.Dict" scope="session"/>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>

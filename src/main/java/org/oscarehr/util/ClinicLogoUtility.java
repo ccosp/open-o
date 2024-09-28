@@ -35,8 +35,8 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.DocumentDao;
 import org.oscarehr.common.dao.SiteDao;
 import org.oscarehr.common.model.Site;
-import openo.OscarProperties;
-import openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -25,10 +25,10 @@
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="java.util.Hashtable" %>
-<%@page import="openo.util.UtilDateUtilities" %>
+<%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="java.util.Collections" %>
-<%@page import="openo.MyDateFormat" %>
-<%@page import="openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.MyDateFormat" %>
+<%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="java.util.ArrayList" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

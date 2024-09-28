@@ -23,11 +23,11 @@
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@ page import="org.oscarehr.util.DateRange" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
-<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
-<%@ page import="openo.oscarBilling.ca.on.data.BillingItemData" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingItemData" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     if (session.getAttribute("user") == null)

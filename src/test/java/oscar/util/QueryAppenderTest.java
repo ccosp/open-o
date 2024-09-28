@@ -25,7 +25,7 @@ package oscar.util;
 
 import static org.junit.Assert.assertEquals;
 
-import openo.util.QueryAppender;
+import ca.openosp.openo.util.QueryAppender;
 import org.junit.Test;
 
 public class QueryAppenderTest {

@@ -50,7 +50,7 @@
 </logic:notPresent>
 <logic:present name="msgSessionBean" scope="session">
     <bean:define id="bean"
-                 type="openo.oscarMessenger.pageUtil.MsgSessionBean"
+                 type="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean"
                  name="msgSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="index.jsp"/>

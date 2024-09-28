@@ -2,9 +2,9 @@
 package org.oscarehr.casemgmt.service;
 
 import com.lowagie.text.DocumentException;
-import openo.OscarProperties;
-import openo.oscarEncounter.data.EctProviderData;
-import openo.oscarEncounter.pageUtil.EctSessionBean;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarEncounter.data.EctProviderData;
+import ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.model.ProgramProvider;
@@ -23,15 +23,15 @@ import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import openo.oscarLab.ca.all.pageUtil.OLISLabPDFCreator;
-import openo.oscarLab.ca.all.parsers.Factory;
-import openo.oscarLab.ca.all.parsers.MessageHandler;
-import openo.oscarLab.ca.all.parsers.OLISHL7Handler;
-import openo.oscarLab.ca.on.CommonLabResultData;
-import openo.oscarLab.ca.on.LabResultData;
-import openo.util.ConcatPDF;
-import openo.util.ConversionUtils;
+import ca.openosp.openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import ca.openosp.openo.oscarLab.ca.all.pageUtil.OLISLabPDFCreator;
+import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
+import ca.openosp.openo.oscarLab.ca.all.parsers.MessageHandler;
+import ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.util.ConcatPDF;
+import ca.openosp.openo.util.ConversionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import openo.oscarMessenger.data.MsgMessageData;
+import ca.openosp.openo.oscarMessenger.data.MsgMessageData;
 import org.apache.commons.io.FileUtils;
 import org.oscarehr.PMmodule.dao.SecUserRoleDao;
 import org.oscarehr.PMmodule.model.SecUserRole;
@@ -49,8 +49,8 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
-import openo.OscarProperties;
-import openo.oscarMessenger.data.MsgProviderData;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarMessenger.data.MsgProviderData;
 
 /**
  * SFTP Connector to interact with servers and return the server's reply/file data.

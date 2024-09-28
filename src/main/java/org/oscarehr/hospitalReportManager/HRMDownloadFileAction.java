@@ -40,7 +40,7 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.StringUtils;
+import ca.openosp.openo.util.StringUtils;
 
 public class HRMDownloadFileAction extends DownloadAction {
 

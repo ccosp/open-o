@@ -34,7 +34,7 @@ import org.owasp.csrfguard.log.LogLevel;
 import org.owasp.csrfguard.util.RandomGenerator;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

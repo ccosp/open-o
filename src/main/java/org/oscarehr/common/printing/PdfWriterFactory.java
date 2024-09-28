@@ -32,7 +32,7 @@ import org.oscarehr.casemgmt.service.PageNumberStamper;
 import org.oscarehr.casemgmt.service.PromoTextStamper;
 import org.oscarehr.util.MiscUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class PdfWriterFactory {
 

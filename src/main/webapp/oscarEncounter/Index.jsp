@@ -25,7 +25,7 @@
 --%>
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.oscarRx.data.RxPatientData" %>
+<%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -76,9 +76,9 @@
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
 
 <%@page
-        import="oscar.log.*,openo.util.UtilMisc,oscar.oscarEncounter.data.*, java.net.*,java.util.*,openo.util.UtilDateUtilities" %>
+        import="oscar.log.*,ca.openosp.openo.util.UtilMisc,oscar.oscarEncounter.data.*, java.net.*,java.util.*,ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page
-        import="openo.oscarMDS.data.MDSResultsData,oscar.oscarLab.ca.on.*, openo.oscarMessenger.util.MsgDemoMap, openo.oscarMessenger.data.MsgMessageData" %>
+        import="ca.openosp.openo.oscarMDS.data.MDSResultsData,oscar.oscarLab.ca.on.*, ca.openosp.openo.oscarMessenger.util.MsgDemoMap, ca.openosp.openo.oscarMessenger.data.MsgMessageData" %>
 <%@page
         import="oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarResearch.oscarDxResearch.bean.*" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
@@ -148,21 +148,21 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="openo.log.LogConst" %>
-<%@ page import="openo.log.LogAction" %>
-<%@ page import="openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctWindowSizes" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
-<%@ page import="openo.oscarEncounter.data.EctPatientData" %>
-<%@ page import="openo.oscarEncounter.data.EctProviderData" %>
-<%@ page import="openo.oscarEncounter.data.EctSplitChart" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
-<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
-<%@ page import="openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
-<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.log.LogConst" %>
+<%@ page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctWindowSizes" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctPatientData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctProviderData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctSplitChart" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="ca.openosp.openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

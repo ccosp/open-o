@@ -49,10 +49,10 @@
                 org.oscarehr.common.dao.SecRoleDao,
                 org.oscarehr.common.model.SecRole,
                 org.oscarehr.util.SpringUtils,
-                openo.oscarEncounter.data.EctProgram,
+                ca.openosp.openo.oscarEncounter.data.EctProgram,
                 java.util.Date,
                 java.util.List" %>
-<%@page import="openo.log.LogAction, openo.log.LogConst" %>
+<%@page import="ca.openosp.openo.log.LogAction, ca.openosp.openo.log.LogConst" %>
 <%@page import="org.oscarehr.documentManager.EDocUtil" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

@@ -62,7 +62,7 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.Misc" %>
+<%@ page import="ca.openosp.openo.Misc" %>
 
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
 

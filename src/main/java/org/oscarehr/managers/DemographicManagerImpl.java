@@ -76,8 +76,8 @@ import org.oscarehr.ws.rest.to.model.DemographicSearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import openo.log.LogAction;
-import openo.util.StringUtils;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.util.StringUtils;
 
 /**
  * Will provide access to demographic data, as well as closely related data such

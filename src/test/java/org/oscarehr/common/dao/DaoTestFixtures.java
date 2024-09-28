@@ -58,7 +58,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;

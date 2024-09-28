@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import openo.form.pharmaForms.formBPMH.util.JsonUtil;
+import ca.openosp.openo.form.pharmaForms.formBPMH.util.JsonUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.oscarehr.common.model.Demographic;
-import openo.form.pharmaForms.formBPMH.bean.BpmhDrug;
+import ca.openosp.openo.form.pharmaForms.formBPMH.bean.BpmhDrug;
 
 
 /*

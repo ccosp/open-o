@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -73,12 +73,12 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import openo.MyDateFormat;
+import ca.openosp.openo.MyDateFormat;
 import org.oscarehr.documentManager.data.AddEditDocumentForm;
-import openo.log.LogAction;
-import openo.log.LogConst;
-import openo.oscarEncounter.data.EctProgram;
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.log.LogConst;
+import ca.openosp.openo.oscarEncounter.data.EctProgram;
+import ca.openosp.openo.util.UtilDateUtilities;
 
 import com.itextpdf.text.pdf.PdfReader;
 

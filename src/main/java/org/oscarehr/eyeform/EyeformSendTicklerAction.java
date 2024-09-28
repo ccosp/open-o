@@ -25,7 +25,7 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarTickler.TicklerCreator;
+import ca.openosp.openo.oscarTickler.TicklerCreator;
 
 
 public class EyeformSendTicklerAction extends DispatchAction {

@@ -43,8 +43,8 @@ import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-import openo.OscarProperties;
-import openo.form.util.FormTransportContainer;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.form.util.FormTransportContainer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

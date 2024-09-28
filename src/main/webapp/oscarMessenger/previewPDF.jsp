@@ -43,7 +43,7 @@
 %>
 
 <%@ page import="oscar.util.*" %>
-<%@ page import="openo.util.Doc2PDF" %>
+<%@ page import="ca.openosp.openo.util.Doc2PDF" %>
 <%
 
     String srcText = request.getParameter("srcText");

@@ -60,8 +60,8 @@
 <%@page import="org.oscarehr.common.model.Facility" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.GetConsentTransfer" %>
 <%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="openo.oscarEncounter.data.EctProgram" %>
-<%@ page import="openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctProgram" %>
+<%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%
     AdmissionDao admissionDao = (AdmissionDao) SpringUtils.getBean(AdmissionDao.class);
     ProgramDao programDao = SpringUtils.getBean(ProgramDao.class);

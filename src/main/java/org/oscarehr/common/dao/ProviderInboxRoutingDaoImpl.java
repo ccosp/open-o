@@ -33,13 +33,13 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import openo.oscarLab.ca.on.LabResultData;
+import ca.openosp.openo.oscarLab.ca.on.LabResultData;
 import org.oscarehr.common.model.IncomingLabRules;
 import org.oscarehr.common.model.ProviderInboxItem;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.stereotype.Repository;
 
-import openo.oscarLab.ca.on.CommonLabResultData;
+import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
 
 /**
  * @author jay gallagher

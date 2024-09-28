@@ -53,7 +53,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.EncounterUtil.EncounterType;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import openo.util.SqlUtils;
+import ca.openosp.openo.util.SqlUtils;
 
 public class PopulationReportDaoImpl extends HibernateDaoSupport implements PopulationReportDao {
 

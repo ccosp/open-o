@@ -23,9 +23,9 @@
     Ontario, Canada
 
 --%>
-<%@ page import="java.util.*, java.sql.*,java.net.*, openo.oscarDB.DBPreparedHandler, openo.MyDateFormat, openo.Misc" %>
-<%@ page import="openo.oscarDemographic.data.DemographicMerged" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="java.util.*, java.sql.*,java.net.*, ca.openosp.openo.oscarDB.DBPreparedHandler, ca.openosp.openo.MyDateFormat, ca.openosp.openo.Misc" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

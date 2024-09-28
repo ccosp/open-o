@@ -40,8 +40,8 @@
 %>
 
 <%@ page
-        import="openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+        import="ca.openosp.openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

@@ -60,7 +60,7 @@ import org.apache.wss4j.dom.handler.WSHandlerConstants;
 // import org.apache.ws.security.handler.WSHandlerConstants;
 // import org.apache.wss4j.common.ext.WSSConstants;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 /**
  * This file has been renamed to "Old" because this file should no longer be enhanced. A common version of this class

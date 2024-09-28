@@ -39,7 +39,7 @@ import org.oscarehr.common.model.SecRole;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 public class ProviderServiceReportUIBean {
 

@@ -27,7 +27,7 @@
  */
 package org.oscarehr.managers;
 
-import openo.oscarRx.util.RxUtil;
+import ca.openosp.openo.oscarRx.util.RxUtil;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
@@ -42,11 +42,11 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import openo.log.LogAction;
-import openo.oscarProvider.data.ProSignatureData;
-import openo.oscarRx.data.RxPatientData;
-import openo.oscarRx.data.RxProviderData;
-import openo.util.DateUtils;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarProvider.data.ProSignatureData;
+import ca.openosp.openo.oscarRx.data.RxPatientData;
+import ca.openosp.openo.oscarRx.data.RxProviderData;
+import ca.openosp.openo.util.DateUtils;
 
 import java.util.Date;
 import java.util.List;

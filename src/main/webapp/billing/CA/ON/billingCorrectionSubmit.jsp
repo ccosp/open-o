@@ -28,10 +28,10 @@
     </head>
     <body>
     <%@ page import="oscar.*,java.text.*, java.util.*" %>
-    <jsp:useBean id="billingBean" scope="session" class="openo.BillingBean"/>
-    <jsp:useBean id="billingItem" scope="page" class="openo.BillingItemBean"/>
-    <jsp:useBean id="billingDataBean" class="openo.BillingDataBean" scope="session"/>
-    <jsp:useBean id="billingPatientDataBean" class="openo.BillingPatientDataBean" scope="session"/>
+    <jsp:useBean id="billingBean" scope="session" class="ca.openosp.openo.BillingBean"/>
+    <jsp:useBean id="billingItem" scope="page" class="ca.openosp.openo.BillingItemBean"/>
+    <jsp:useBean id="billingDataBean" class="ca.openosp.openo.BillingDataBean" scope="session"/>
+    <jsp:useBean id="billingPatientDataBean" class="ca.openosp.openo.BillingPatientDataBean" scope="session"/>
 
     <%@ page import="org.oscarehr.util.SpringUtils" %>
     <%@ page import="org.oscarehr.billing.CA.model.BillingDetail" %>
@@ -40,9 +40,9 @@
     <%@ page import="org.oscarehr.common.dao.RecycleBinDao" %>
     <%@ page import="org.oscarehr.common.model.Billing" %>
     <%@ page import="org.oscarehr.common.dao.BillingDao" %>
-    <%@ page import="openo.util.ConversionUtils" %>
-    <%@ page import="openo.BillingItemBean" %>
-    <%@ page import="openo.MyDateFormat" %>
+    <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+    <%@ page import="ca.openosp.openo.BillingItemBean" %>
+    <%@ page import="ca.openosp.openo.MyDateFormat" %>
     <%
         BillingDetailDao billingDetailDao = SpringUtils.getBean(BillingDetailDao.class);
         RecycleBinDao recycleBinDao = SpringUtils.getBean(RecycleBinDao.class);

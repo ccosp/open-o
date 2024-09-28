@@ -29,7 +29,7 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.EncounterDao" %>
 <%@page import="org.oscarehr.common.model.Encounter" %>
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%
     EncounterDao encounterDao = SpringUtils.getBean(EncounterDao.class);
 %>

@@ -37,7 +37,7 @@ import org.oscarehr.common.model.Admission;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 
 /**
  * This is a display object for the history tab of a clients admissions.

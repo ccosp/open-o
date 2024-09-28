@@ -47,8 +47,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.*,oscar.*,java.io.*,java.net.*,oscar.util.*,org.apache.commons.io.FileUtils"
          errorPage="/errorpage.jsp" %>
-<%@ page import="openo.util.FileSortByDate" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.util.FileSortByDate" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html>

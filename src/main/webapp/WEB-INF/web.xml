@@ -108,7 +108,7 @@
 	</filter>
 	<filter>
 		<filter-name>LoginFilter</filter-name>
-		<filter-class>openo.oscarSecurity.LoginFilter</filter-class>
+		<filter-class>ca.openosp.openo.oscarSecurity.LoginFilter</filter-class>
 	</filter>
 	<filter>
 		<filter-name>ResponseOverrideFilter</filter-name>
@@ -149,7 +149,7 @@
     </listener>
 	
 	<listener>
-		<listener-class>openo.login.Startup</listener-class>
+		<listener-class>ca.openosp.openo.login.Startup</listener-class>
 	</listener>
 	<listener>
 		<listener-class>org.oscarehr.common.web.OscarSpringContextLoader</listener-class>
@@ -161,7 +161,7 @@
 		<listener-class>org.oscarehr.web.OscarSessionListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>openo.form.study.hsfo2.pageUtil.HsfoQuartzContextListener</listener-class>
+		<listener-class>ca.openosp.openo.form.study.hsfo2.pageUtil.HsfoQuartzContextListener</listener-class>
 	</listener>
 
     <!--  Cross Site Request Forgery Configuration  -->
@@ -277,56 +277,56 @@
 
 	<servlet>
 		<servlet-name>UploadDocument</servlet-name>
-		<servlet-class>openo.DocumentMgtUploadServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.DocumentMgtUploadServlet</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>pdfCreator</servlet-name>
-		<servlet-class>openo.form.pdfservlet.FrmPDFServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.form.pdfservlet.FrmPDFServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>pdfCustomedCreator</servlet-name>
-		<servlet-class>openo.form.pdfservlet.FrmCustomedPDFServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.form.pdfservlet.FrmCustomedPDFServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>pdfCreatorEform</servlet-name>
-		<servlet-class>openo.eform.util.EFormPDFServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.eform.util.EFormPDFServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>reportDownload</servlet-name>
-		<servlet-class>openo.oscarReport.pageUtil.RptDownloadCSVServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.oscarReport.pageUtil.RptDownloadCSVServlet</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>OscarDownload</servlet-name>
-		<servlet-class>openo.util.OscarDownload</servlet-class>
+		<servlet-class>ca.openosp.openo.util.OscarDownload</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>Download</servlet-name>
-		<servlet-class>openo.util.GenericDownload</servlet-class>
+		<servlet-class>ca.openosp.openo.util.GenericDownload</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>BackupDownload</servlet-name>
-		<servlet-class>openo.util.BackupDownload</servlet-class>
+		<servlet-class>ca.openosp.openo.util.BackupDownload</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>UploadTeleplanServlet</servlet-name>
-		<servlet-class>openo.oscarBilling.ca.bc.MSP.DocumentTeleplanReportUploadServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.oscarBilling.ca.bc.MSP.DocumentTeleplanReportUploadServlet</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>ScatterPlotChartServlet</servlet-name>
-		<servlet-class>openo.oscarEncounter.oscarMeasurements.pageUtil.ScatterPlotChartServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.oscarEncounter.oscarMeasurements.pageUtil.ScatterPlotChartServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>DocumentUploadServlet</servlet-name>
-		<servlet-class>openo.DocumentUploadServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.DocumentUploadServlet</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<!-- <servlet>
@@ -336,7 +336,7 @@
 	</servlet> -->
 	<servlet>
 		<servlet-name>PatientListByAppointment</servlet-name>
-		<servlet-class>openo.oscarReport.data.PatientListByAppt</servlet-class>
+		<servlet-class>ca.openosp.openo.oscarReport.data.PatientListByAppt</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>ImageRenderingServlet</servlet-name>
@@ -353,7 +353,7 @@
 
 	<servlet>
 		<servlet-name>EFormViewForPdfGenerationServlet</servlet-name>
-		<servlet-class>openo.eform.util.EFormViewForPdfGenerationServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.eform.util.EFormViewForPdfGenerationServlet</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -388,7 +388,7 @@
 
 	<servlet>
 		<servlet-name>EFormSignatureViewForPdfGenerationServlet</servlet-name>
-		<servlet-class>openo.eform.util.EFormSignatureViewForPdfGenerationServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.eform.util.EFormSignatureViewForPdfGenerationServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -398,7 +398,7 @@
 
 	<servlet>
 		<servlet-name>EFormImageViewForPdfGenerationServlet</servlet-name>
-		<servlet-class>openo.eform.util.EFormImageViewForPdfGenerationServlet</servlet-class>
+		<servlet-class>ca.openosp.openo.eform.util.EFormImageViewForPdfGenerationServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -432,7 +432,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>UploadDocument</servlet-name>
-		<url-pattern>/servlet/openo.DocumentMgtUploadServlet</url-pattern>
+		<url-pattern>/servlet/ca.openosp.openo.DocumentMgtUploadServlet</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>pdfCreator</servlet-name>
@@ -468,11 +468,11 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ScatterPlotChartServlet</servlet-name>
-		<url-pattern>/servlet/openo.oscarEncounter.oscarMeasurements.pageUtil.ScatterPlotChartServlet</url-pattern>
+		<url-pattern>/servlet/ca.openosp.openo.oscarEncounter.oscarMeasurements.pageUtil.ScatterPlotChartServlet</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>DocumentUploadServlet</servlet-name>
-		<url-pattern>/servlet/openo.DocumentUploadServlet</url-pattern>
+		<url-pattern>/servlet/ca.openosp.openo.DocumentUploadServlet</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>PatientListByAppointment</servlet-name>
@@ -525,7 +525,7 @@
 	
 	<servlet>
 		<servlet-name>LoginResourceAction</servlet-name>
-		<servlet-class>openo.login.LoginResourceAction</servlet-class>
+		<servlet-class>ca.openosp.openo.login.LoginResourceAction</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

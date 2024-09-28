@@ -33,8 +33,8 @@
 %>
 <%@ page
         import="java.util.*,oscar.util.*, oscar.oscarWaitingList.bean.*" %>
-<%@ page import="openo.oscarWaitingList.bean.WLWaitingListNameBean" %>
-<%@ page import="openo.oscarWaitingList.bean.WLWaitingListNameBeanHandler" %>
+<%@ page import="ca.openosp.openo.oscarWaitingList.bean.WLWaitingListNameBean" %>
+<%@ page import="ca.openosp.openo.oscarWaitingList.bean.WLWaitingListNameBeanHandler" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

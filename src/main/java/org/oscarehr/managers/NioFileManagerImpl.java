@@ -40,7 +40,7 @@ import java.nio.file.StandardCopyOption;
 
 import javax.servlet.ServletContext;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.jpedal.PdfDecoder;
 import org.jpedal.exception.PdfException;

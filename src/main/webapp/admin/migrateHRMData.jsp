@@ -29,7 +29,7 @@
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
 <%@page import="java.io.File" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="org.oscarehr.hospitalReportManager.HRMReportParser" %>
 <%@page import="org.oscarehr.hospitalReportManager.HRMReport" %>
@@ -37,7 +37,7 @@
 <%@page import="org.oscarehr.hospitalReportManager.dao.HRMDocumentDao" %>
 <%@page import="org.oscarehr.common.model.OscarLog" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="openo.log.LogAction" %>
+<%@page import="ca.openosp.openo.log.LogAction" %>
 <%@page import="java.util.Enumeration" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>

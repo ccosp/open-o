@@ -66,7 +66,7 @@
           topmargin="10" marginwidth="0" marginheight="0">
     <h2><html:errors/></h2>
     <html:form action="/billing/CA/BC/saveAssocAction"
-               target="openo.oscarBilling.ca.bc.pageUtil.BillingCreateBillingForm">
+               target="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingCreateBillingForm">
         <html:hidden property="mode"/>
         <table width="75%" border="1" align="center" cellpadding="3"
                cellspacing="3" bgcolor="EEEEFF">

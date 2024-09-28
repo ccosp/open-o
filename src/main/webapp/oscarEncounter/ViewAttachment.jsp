@@ -40,7 +40,7 @@
 %>
 
 <%@ page
-        import="oscar.oscarEncounter.immunization.data.*,openo.util.UtilXML" %>
+        import="oscar.oscarEncounter.immunization.data.*,ca.openosp.openo.util.UtilXML" %>
 <%@ page
         import="oscar.oscarEncounter.immunization.pageUtil.*, java.util.*, org.w3c.dom.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

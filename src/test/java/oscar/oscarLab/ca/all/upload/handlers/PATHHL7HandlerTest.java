@@ -45,8 +45,8 @@ import org.junit.runners.Parameterized;
 import org.oscarehr.common.dao.utils.AuthUtils;
 import org.oscarehr.util.LoggedInInfo;
 
-import openo.oscarLab.ca.all.parsers.PATHL7Handler;
-import openo.oscarLab.ca.all.upload.MessageUploader;
+import ca.openosp.openo.oscarLab.ca.all.parsers.PATHL7Handler;
+import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
 
 @Ignore //Skipping until issue is resolved
 public class PATHHL7HandlerTest {

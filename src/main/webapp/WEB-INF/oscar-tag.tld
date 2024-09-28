@@ -9,7 +9,7 @@
 
 <tag>
   <name>preventionWarnings</name>
-  <tagclass>openo.oscarPrevention.tld.PreventionTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarPrevention.tld.PreventionTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>demographicNo</name>
@@ -20,7 +20,7 @@
 
 <tag>
   <name>newLab</name>
-  <tagclass>openo.oscarLab.tld.LabTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarLab.tld.LabTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>providerNo</name>
@@ -31,7 +31,7 @@
 
 <tag>
   <name>agedConsult</name>
-  <tagclass>openo.oscarEncounter.oscarConsultationRequest.tld.ConsultTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarEncounter.oscarConsultationRequest.tld.ConsultTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>providerNo</name>
@@ -42,13 +42,13 @@
 
 <tag>
   <name>newUnclaimedLab</name>
-  <tagclass>openo.oscarLab.tld.UnclaimedLabTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarLab.tld.UnclaimedLabTag</tagclass>
   <bodycontent>jsp</bodycontent>  
 </tag>
 
 <tag>
   <name>filledScratch</name>
-  <tagclass>openo.scratch.tld.ScratchTag</tagclass>
+  <tagclass>ca.openosp.openo.scratch.tld.ScratchTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>providerNo</name>
@@ -59,7 +59,7 @@
 
 <tag>
   <name>newMessage</name>
-  <tagclass>openo.oscarMessenger.tld.MsgNewMessageTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarMessenger.tld.MsgNewMessageTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>providerNo</name>
@@ -70,7 +70,7 @@
 
 <tag>
    <name>oscarPropertiesCheck</name>
-   <tagclass>openo.util.OscarPropertiesCheck</tagclass>
+   <tagclass>ca.openosp.openo.util.OscarPropertiesCheck</tagclass>
    <bodycontent>JSP</bodycontent>       
    <attribute>
      <name>property</name>
@@ -91,7 +91,7 @@
 
 <tag>
   <name>newTickler</name>
-  <tagclass>openo.oscarTickler.tld.TicklerTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarTickler.tld.TicklerTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>providerNo</name>
@@ -102,7 +102,7 @@
 
 <tag>
   <name>nameage</name>
-  <tagclass>openo.oscarDemographic.tld.DemographicNameAgeTag</tagclass>
+  <tagclass>ca.openosp.openo.oscarDemographic.tld.DemographicNameAgeTag</tagclass>
   <bodycontent>empty</bodycontent>
   <attribute>
     <name>demographicNo</name>
@@ -129,7 +129,7 @@
 
 <tag>
   <name>nextAppt</name>
-  <tagclass>openo.appt.tld.NextApptTag</tagclass>
+  <tagclass>ca.openosp.openo.appt.tld.NextApptTag</tagclass>
   <bodycontent>empty</bodycontent>
   <attribute>
     <name>demographicNo</name>

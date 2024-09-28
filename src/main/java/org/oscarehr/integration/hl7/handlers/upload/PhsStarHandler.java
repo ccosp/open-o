@@ -33,8 +33,8 @@ import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
-import openo.oscarLab.ca.all.upload.MessageUploader;
-import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
+import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
+import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MessageHandler;
 
 public class PhsStarHandler implements MessageHandler {
 

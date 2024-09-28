@@ -32,7 +32,7 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.Security;
 import org.oscarehr.util.LoggedInInfo;
 
-import openo.util.ConversionUtils;
+import ca.openosp.openo.util.ConversionUtils;
 
 public class AuthUtils {
 

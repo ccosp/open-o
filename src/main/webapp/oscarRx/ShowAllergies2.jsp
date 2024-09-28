@@ -30,7 +30,7 @@
 <%@page import="org.oscarehr.util.LocaleUtils" %>
 <%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page language="java" import="openo.OscarProperties" %>
+<%@ page language="java" import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -42,7 +42,7 @@
 <%@page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
 <%@page import="org.oscarehr.common.dao.PartialDateDao" %>
 <%@page import="org.oscarehr.common.model.PartialDate" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 
 <%
     String roleName2$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -360,7 +360,7 @@
         </script>
 
     </head>
-    <bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+    <bean:define id="patient" type="ca.openosp.openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
     <body>
     <%=WebUtils.popErrorAndInfoMessagesAsHtml(session)%>

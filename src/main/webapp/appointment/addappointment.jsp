@@ -53,12 +53,12 @@ Ontario, Canada
 <%@ page import="java.util.*, java.lang.*, oscar.appt.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.appt.status.service.AppointmentStatusMgr" %>
-<%@ page import="openo.appt.status.service.impl.AppointmentStatusMgrImpl" %>
-<%@ page import="openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
-<%@ page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.appt.status.service.AppointmentStatusMgr" %>
+<%@ page import="ca.openosp.openo.appt.status.service.impl.AppointmentStatusMgrImpl" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ page import="org.oscarehr.common.model.AppointmentStatus" %>
 <%@ page import="org.oscarehr.common.model.DemographicCust" %>
@@ -93,9 +93,9 @@ Ontario, Canada
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.appt.ApptData" %>
-<%@ page import="openo.appt.JdbcApptImpl" %>
-<%@ page import="openo.appt.ApptUtil" %>
+<%@ page import="ca.openosp.openo.appt.ApptData" %>
+<%@ page import="ca.openosp.openo.appt.JdbcApptImpl" %>
+<%@ page import="ca.openosp.openo.appt.ApptUtil" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

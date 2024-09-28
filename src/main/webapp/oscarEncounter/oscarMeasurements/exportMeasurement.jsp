@@ -29,9 +29,9 @@
 <%@page contentType="text/xml" %>
 <%@page
         import="oscar.oscarEncounter.oscarMeasurements.bean.*,oscar.oscarEncounter.oscarMeasurements.data.*" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypeBeanHandler" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.data.ExportMeasurementType" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypeBeanHandler" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.data.ExportMeasurementType" %>
 <%
     String mstring = request.getParameter("mType");
     String export = "<ERROR>";

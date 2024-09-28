@@ -56,8 +56,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.oscarRx.pageUtil.RxSessionBean;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarRx.pageUtil.RxSessionBean;
 
 public class ReceptionistReportAction extends DispatchAction {
     private static Logger log = MiscUtils.getLogger();

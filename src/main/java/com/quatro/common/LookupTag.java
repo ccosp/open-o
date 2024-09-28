@@ -36,7 +36,7 @@ import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.taglib.html.BaseInputTag;
 import org.oscarehr.util.MiscUtils;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 
 public class LookupTag extends BaseInputTag {
     //	private String name=null;

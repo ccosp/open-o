@@ -55,7 +55,7 @@
 <%@page import="org.oscarehr.renal.CkdScreeningReportContainer" %>
 <%@page import="org.oscarehr.common.dao.ORNCkdScreeningReportLogDao" %>
 <%@page import="org.oscarehr.common.model.ORNCkdScreeningReportLog" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

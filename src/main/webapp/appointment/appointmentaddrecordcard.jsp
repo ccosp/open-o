@@ -40,7 +40,7 @@
 %>
 
 <%@ page
-        import="java.sql.*, java.util.*, openo.MyDateFormat, org.oscarehr.common.OtherIdManager, openo.util.ConversionUtils" %>
+        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, org.oscarehr.common.OtherIdManager, ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="org.oscarehr.event.EventService, org.oscarehr.util.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

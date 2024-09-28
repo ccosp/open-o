@@ -28,7 +28,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
-<%@ page import="java.util.*,openo.oscarBilling.ca.bc.data.BillingCodeData,oscar.oscarBilling.ca.bc.pageUtil.*" %>
+<%@ page import="java.util.*,ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData,oscar.oscarBilling.ca.bc.pageUtil.*" %>
 
 <html:html lang="en">
     <head>
@@ -64,7 +64,7 @@
                 }
         %> <% request.setAttribute("test", list); %>
         <display:table name="test" defaultsort="1" defaultorder="descending"
-                       decorator="openo.oscarBilling.ca.bc.pageUtil.BillCodesTableWrapper"
+                       decorator="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillCodesTableWrapper"
                        class="table table-hover table-striped">
             <display:column property="serviceCode" title="Service Code" sortable="true" headerClass="sortable"/>
             <display:column property="description" title="Description" sortable="true" headerClass="sortable"/>

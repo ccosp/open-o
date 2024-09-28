@@ -24,7 +24,7 @@
 
 --%>
 
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ include file="/casemgmt/taglibs.jsp" %>
 

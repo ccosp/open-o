@@ -29,7 +29,7 @@
 
 <%@page import="java.util.Enumeration, org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.casemgmt.web.formbeans.*, org.oscarehr.casemgmt.model.CaseManagementNote" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO, openo.OscarProperties" %>
+<%@page import="org.oscarehr.common.dao.UserPropertyDAO, ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.common.model.UserProperty" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
@@ -39,7 +39,7 @@
 <%@page import="org.oscarehr.common.model.ProviderData" %>
 <%@page import="org.owasp.encoder.Encode" %>
 <%@page import="java.util.List, java.util.Random" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
 
 
 <%

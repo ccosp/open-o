@@ -48,8 +48,8 @@ import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarTickler.TicklerCreator;
-import openo.util.StringUtils;
+import ca.openosp.openo.oscarTickler.TicklerCreator;
+import ca.openosp.openo.util.StringUtils;
 
 public class EyeformUtilAction extends DispatchAction {
 

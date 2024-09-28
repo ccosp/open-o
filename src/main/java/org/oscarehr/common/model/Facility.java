@@ -23,7 +23,7 @@
 
 package org.oscarehr.common.model;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 
 import java.io.Serializable;
 import java.util.Date;

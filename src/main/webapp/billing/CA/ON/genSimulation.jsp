@@ -18,7 +18,7 @@
 
 --%>
 
-<%@page import="openo.util.ConversionUtils" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="java.util.Date" %>
 <%@page import="org.oscarehr.util.DateRange" %>
 <%@ page import="java.math.*, java.util.*, java.sql.*, oscar.*, oscar.oscarBilling.ca.on.OHIP.*, java.net.*"
@@ -26,8 +26,8 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="openo.oscarBilling.ca.on.OHIP.ExtractBean" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.on.OHIP.ExtractBean" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

@@ -52,10 +52,10 @@ import org.springframework.stereotype.Service;
 
 import org.oscarehr.documentManager.ConvertToEdoc;
 import org.oscarehr.documentManager.EDoc;
-import openo.form.util.FormTransportContainer;
-import openo.log.LogAction;
-import openo.oscarEncounter.data.EctFormData;
-import openo.oscarEncounter.data.EctFormData.PatientForm;
+import ca.openosp.openo.form.util.FormTransportContainer;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.oscarEncounter.data.EctFormData.PatientForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

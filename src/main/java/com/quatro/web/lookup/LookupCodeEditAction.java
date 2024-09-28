@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.DispatchAction;
 
-import openo.MyDateFormat;
+import ca.openosp.openo.MyDateFormat;
 
 import com.quatro.common.KeyConstants;
 import com.quatro.model.FieldDefValue;

@@ -40,7 +40,7 @@
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*"
         errorPage="../appointment/errorpage.jsp" %>
-<%@ page import="openo.DateInMonthTable" %>
+<%@ page import="ca.openosp.openo.DateInMonthTable" %>
 <%
     String urlfrom = request.getParameter("urlfrom") == null ? "" : request.getParameter("urlfrom");
     String param = request.getParameter("param") == null ? "" : request.getParameter("param");

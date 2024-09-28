@@ -44,9 +44,9 @@
     }
 %>
 
-<%@page import="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConAddDepartmentForm" %>
-<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
-<%@ page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConAddDepartmentForm" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <html:html lang="en">
 

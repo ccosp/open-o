@@ -29,8 +29,8 @@
 <%@page import="org.oscarehr.common.dao.BillCenterDao" %>
 <%@page import="org.oscarehr.billing.CA.model.BillActivity" %>
 <%@page import="org.oscarehr.billing.CA.dao.BillActivityDao" %>
-<%@page import="openo.util.ConversionUtils" %>
-<%@ page import="openo.SxmlMisc" %>
+<%@page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>
 
 <%

@@ -41,7 +41,7 @@ import org.oscarehr.common.model.AppUser;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 
-import openo.log.LogAction;
+import ca.openosp.openo.log.LogAction;
 
 public class OAuth1Utils {
     private static final Logger logger = MiscUtils.getLogger();

@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import openo.oscarBilling.ca.bc.MSP.MSPReconcile;
+import ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -41,10 +41,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import org.owasp.encoder.Encode;
-import openo.OscarProperties;
-import openo.log.LogAction;
-import openo.util.OscarRoleObjectPrivilege;
-import openo.util.StringUtils;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.util.OscarRoleObjectPrivilege;
+import ca.openosp.openo.util.StringUtils;
 
 public class CaseloadContentAction extends DispatchAction {
 

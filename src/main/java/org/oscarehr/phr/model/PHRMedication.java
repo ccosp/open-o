@@ -65,9 +65,9 @@ import org.oscarehr.myoscar_server.ws.MedicalDataTransfer4;
 import org.oscarehr.util.MiscUtils;
 import org.w3c.dom.Element;
 
-import openo.oscarEncounter.data.EctProviderData;
-import openo.oscarRx.data.RxPrescriptionData;
-import openo.oscarRx.util.RxUtil;
+import ca.openosp.openo.oscarEncounter.data.EctProviderData;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.oscarRx.util.RxUtil;
 
 /**
  * @author apavel

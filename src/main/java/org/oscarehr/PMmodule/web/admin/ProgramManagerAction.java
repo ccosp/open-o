@@ -99,7 +99,7 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 
-import openo.log.LogAction;
+import ca.openosp.openo.log.LogAction;
 
 import com.quatro.service.security.RolesManager;
 

@@ -30,7 +30,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.ws.rest.to.model.ProviderTo1;
 import org.oscarehr.ws.rest.to.model.Sex1;
 import org.springframework.stereotype.Component;
-import openo.util.ConversionUtils;
+import ca.openosp.openo.util.ConversionUtils;
 
 @Component
 public class ProviderConverter extends AbstractConverter<Provider, ProviderTo1> {

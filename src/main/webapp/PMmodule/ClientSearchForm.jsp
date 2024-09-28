@@ -24,7 +24,7 @@
 --%>
 <%@ include file="/taglibs.jsp" %>
 <%@ include file="/common/messages.jsp" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.PMmodule.web.utils.UserRoleUtils" %>
 <%@page import="java.util.*" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>

@@ -33,11 +33,11 @@
 <%@page import="org.oscarehr.PMmodule.service.ClientManager" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.model.DemographicExt" %>
-<%@page import="openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="openo.util.OscarRoleObjectPrivilege" %>
+<%@page import="ca.openosp.openo.util.OscarRoleObjectPrivilege" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Properties" %>

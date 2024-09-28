@@ -49,7 +49,7 @@ import org.oscarehr.util.SpringUtils;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import openo.form.JSONAction;
+import ca.openosp.openo.form.JSONAction;
 
 /*
  * This class is to support the address/phone history popup in the master demographic screen.

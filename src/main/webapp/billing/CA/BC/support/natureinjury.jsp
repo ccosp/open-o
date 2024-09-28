@@ -26,7 +26,7 @@
 <%@page import="org.oscarehr.billing.CA.BC.model.WcbNoiCode" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.billing.CA.BC.dao.WcbNoiCodeDao" %>
-<%@ page import="openo.Misc" %>
+<%@ page import="ca.openosp.openo.Misc" %>
 <html:html lang="en">
     <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

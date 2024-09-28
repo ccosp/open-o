@@ -9,14 +9,14 @@
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.dao.PropertyDao" %>
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingPreferencesDAO" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingPreference" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingPreferencesDAO" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingPreference" %>
 <%@ page import="org.oscarehr.common.model.Property" %>
 <%@ page import="java.util.List" %>
-<%@ page import="openo.oscarClinic.ClinicData" %>
+<%@ page import="ca.openosp.openo.oscarClinic.ClinicData" %>
 <%@ page import="java.util.StringTokenizer" %>
 <%@ page import="java.util.Vector" %>
-<%@ page import="openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%@ page import="org.oscarehr.common.model.SystemPreferences" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

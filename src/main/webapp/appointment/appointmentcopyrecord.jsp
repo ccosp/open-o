@@ -29,7 +29,7 @@
 <%@ page
         import="oscar.appt.*"
         errorPage="/errorpage.jsp" %>
-<%@ page import="openo.appt.ApptUtil" %>
+<%@ page import="ca.openosp.openo.appt.ApptUtil" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

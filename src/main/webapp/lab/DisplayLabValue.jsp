@@ -41,9 +41,9 @@
 
 <%@page import="java.io.Serializable" %>
 <%@page import="java.util.*,oscar.oscarLab.ca.on.*,oscar.util.*" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabTestValues" %>
-<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
-<%@ page import="openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabTestValues" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%
 
 

@@ -29,9 +29,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
-<%@ page import="openo.oscarMessenger.data.MsgDisplayMessage" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.data.MsgDisplayMessage" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -100,12 +100,12 @@
 <%
     MsgSessionBean bean = (MsgSessionBean) pageContext.findAttribute("bean");
 %>
-<jsp:useBean id="DisplayMessagesBeanId" scope="session" class="openo.oscarMessenger.pageUtil.MsgDisplayMessagesBean"/>
+<jsp:useBean id="DisplayMessagesBeanId" scope="session" class="ca.openosp.openo.oscarMessenger.pageUtil.MsgDisplayMessagesBean"/>
 <% DisplayMessagesBeanId.setProviderNo(bean.getProviderNo());
     bean.nullAttachment();
 %>
 <jsp:setProperty name="DisplayMessagesBeanId" property="*"/>
-<jsp:useBean id="ViewMessageForm" scope="session" class="openo.oscarMessenger.pageUtil.MsgViewMessageForm"/>
+<jsp:useBean id="ViewMessageForm" scope="session" class="ca.openosp.openo.oscarMessenger.pageUtil.MsgViewMessageForm"/>
 
 
 <html:html lang="en">

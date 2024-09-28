@@ -94,8 +94,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import openo.OscarProperties;
-import openo.oscarEncounter.pageUtil.EctSessionBean;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean;
 
 
 @Path("/notes")

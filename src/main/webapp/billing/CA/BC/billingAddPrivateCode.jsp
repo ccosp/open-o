@@ -28,7 +28,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ page import="java.util.*,oscar.oscarBilling.ca.bc.pageUtil.*" %>
-<%@ page import="openo.oscarBilling.ca.bc.pageUtil.BillingAddCodeForm" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingAddCodeForm" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

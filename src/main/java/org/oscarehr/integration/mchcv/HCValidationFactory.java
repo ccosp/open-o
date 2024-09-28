@@ -24,7 +24,7 @@
  */
 package org.oscarehr.integration.mchcv;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 public class HCValidationFactory {
 

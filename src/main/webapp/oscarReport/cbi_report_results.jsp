@@ -49,7 +49,7 @@
 <%@page import="org.oscarehr.PMmodule.model.OcanSubmissionLog" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
-<%@page import="openo.util.CBIUtil" %>
+<%@page import="ca.openosp.openo.util.CBIUtil" %>
 <%@page import="java.util.Date" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.text.DateFormat" %>

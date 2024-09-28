@@ -29,10 +29,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ page import="oscar.oscarRx.data.*,java.util.*" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
 
 <%
     String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
@@ -86,7 +86,7 @@
             RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
         %>
 
-        <bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+        <bean:define id="patient" type="ca.openosp.openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
             <%--		<link rel="stylesheet" type="text/css" href="styles.css">--%>
 

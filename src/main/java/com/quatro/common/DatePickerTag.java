@@ -30,7 +30,7 @@ import org.apache.struts.taglib.html.BaseInputTag;
 import org.apache.struts.taglib.html.TextTag;
 import org.oscarehr.util.MiscUtils;
 
-import openo.Misc;
+import ca.openosp.openo.Misc;
 
 public class DatePickerTag extends BaseInputTag {
     private TextTag dtTextTag = new TextTag();

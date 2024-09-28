@@ -27,9 +27,9 @@
 <%@page import="org.oscarehr.common.model.ClinicNbr" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.ClinicNbrDao" %>
-<%@page import="openo.OscarProperties, org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.OscarProperties, org.oscarehr.util.LoggedInInfo" %>
 <%@ page
-        import="java.sql.*, java.util.*, oscar.*, openo.SxmlMisc, openo.oscarProvider.data.ProviderBillCenter"
+        import="java.sql.*, java.util.*, oscar.*, ca.openosp.openo.SxmlMisc, ca.openosp.openo.oscarProvider.data.ProviderBillCenter"
         errorPage="/errorpage.jsp" %>
 
 <html:html lang="en">

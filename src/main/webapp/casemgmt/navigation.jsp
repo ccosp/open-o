@@ -31,18 +31,18 @@
 <%@ include file="/casemgmt/taglibs.jsp" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
-<%@ page import="openo.oscarEncounter.oscarMeasurements.util.MeasurementHelper" %>
-<%@ page import="openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.util.MeasurementHelper" %>
+<%@ page import="ca.openosp.openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Vector" %>
-<%@ page import="openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
-<%@ page import="openo.util.UtilDateUtilities" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <%
@@ -610,7 +610,7 @@
                                     onMouseOver="javascript:window.status='View <%=bean.patientFirstName+" "+bean.patientLastName%>\'s lab results'; return true;">
                                 <option value="null" selected>-lab results-</option>
                                 <nested:iterate id="labrst" name="casemgmt_labsbeans"
-                                                type="openo.oscarLab.ca.on.LabResultData">
+                                                type="ca.openosp.openo.oscarLab.ca.on.LabResultData">
                                     <%
 
                                         String lablable = labrst.dateTime + "" + labrst.discipline;

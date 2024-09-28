@@ -32,13 +32,13 @@
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="openo.oscarRx.pageUtil.RxWriteScriptForm" %>
-<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
-<%@ page import="openo.oscarRx.data.RxCodesData" %>
-<%@ page import="openo.oscarRx.data.RxDrugData" %>
-<%@ page import="openo.oscarRx.util.LimitedUseLookup" %>
-<%@ page import="openo.oscarRx.util.LimitedUseCode" %>
-<%@ page import="openo.oscarRx.util.RxUtil" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxWriteScriptForm" %>
+<%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxCodesData" %>
+<%@ page import="ca.openosp.openo.oscarRx.data.RxDrugData" %>
+<%@ page import="ca.openosp.openo.oscarRx.util.LimitedUseLookup" %>
+<%@ page import="ca.openosp.openo.oscarRx.util.LimitedUseCode" %>
+<%@ page import="ca.openosp.openo.oscarRx.util.RxUtil" %>
 
 <%long start = System.currentTimeMillis();%>
 

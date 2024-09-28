@@ -36,7 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicNote;
@@ -63,10 +63,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import openo.eform.EFormUtil;
-import openo.oscarEncounter.data.EctFormData;
-import openo.oscarEncounter.data.EctFormData.PatientForm;
-import openo.util.ConversionUtils;
+import ca.openosp.openo.eform.EFormUtil;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.oscarEncounter.data.EctFormData.PatientForm;
+import ca.openosp.openo.util.ConversionUtils;
 
 /**
  * Default implementation of the notes service

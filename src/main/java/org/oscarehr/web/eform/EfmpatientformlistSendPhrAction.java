@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import openo.util.UtilDateUtilities;
+import ca.openosp.openo.util.UtilDateUtilities;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.LoggedInInfo;

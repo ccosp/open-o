@@ -41,14 +41,14 @@ import java.util.regex.Matcher;
 //import java.util.List;
 
 
-import openo.oscarDemographic.data.DemographicData;
-import openo.oscarProvider.data.ProviderData;
+import ca.openosp.openo.oscarDemographic.data.DemographicData;
+import ca.openosp.openo.oscarProvider.data.ProviderData;
 import org.apache.commons.codec.binary.Base64;
 import org.oscarehr.util.LoggedInInfo;
 
-import openo.util.UtilMisc;
-import openo.oscarBilling.data.BillingFormData;
-import openo.OscarProperties;
+import ca.openosp.openo.util.UtilMisc;
+import ca.openosp.openo.oscarBilling.data.BillingFormData;
+import ca.openosp.openo.OscarProperties;
 
 //import org.oscarehr.casemgmt.dao.CaseManagementIssueDAO;
 //import org.oscarehr.casemgmt.model.CaseManagementIssue;

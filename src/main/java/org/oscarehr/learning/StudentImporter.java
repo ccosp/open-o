@@ -46,7 +46,7 @@ import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.oscarDB.DBPreparedHandler;
+import ca.openosp.openo.oscarDB.DBPreparedHandler;
 
 
 public class StudentImporter {

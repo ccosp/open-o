@@ -42,9 +42,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="openo.oscarReport.data.RptSearchData,java.util.*" %>
-<%@ page import="openo.oscarReport.pageUtil.RptDemographicReportForm" %>
-<%@ page import="openo.oscarReport.data.RptDemographicColumnNames" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptSearchData,java.util.*" %>
+<%@ page import="ca.openosp.openo.oscarReport.pageUtil.RptDemographicReportForm" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptDemographicColumnNames" %>
 
 
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>

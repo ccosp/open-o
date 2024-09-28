@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import openo.oscarRx.data.RxPrescriptionData;
+import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.casemgmt.dao.CaseManagementIssueDAO;
@@ -72,10 +72,10 @@ import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
-import openo.SxmlMisc;
-import openo.oscarClinic.ClinicData;
-import openo.oscarDemographic.data.DemographicRelationship;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.SxmlMisc;
+import ca.openosp.openo.oscarClinic.ClinicData;
+import ca.openosp.openo.oscarDemographic.data.DemographicRelationship;
 
 /**
  * This will create a PDF + assemble e-forms,documents,labs into a package

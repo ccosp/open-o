@@ -44,8 +44,8 @@
 
 <%@page import="oscar.oscarEncounter.data.*,java.net.*" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <jsp:useBean id="providerBean" class="java.util.Properties"
              scope="session"/>

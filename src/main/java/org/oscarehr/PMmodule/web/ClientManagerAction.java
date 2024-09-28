@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceException;
 
-import openo.util.DateUtils;
+import ca.openosp.openo.util.DateUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -129,9 +129,9 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WebUtils;
 import org.springframework.beans.factory.annotation.Required;
 
-import openo.OscarProperties;
-import openo.log.LogAction;
-import openo.oscarDemographic.data.DemographicRelationship;
+import ca.openosp.openo.OscarProperties;
+import ca.openosp.openo.log.LogAction;
+import ca.openosp.openo.oscarDemographic.data.DemographicRelationship;
 
 import com.quatro.service.LookupManager;
 

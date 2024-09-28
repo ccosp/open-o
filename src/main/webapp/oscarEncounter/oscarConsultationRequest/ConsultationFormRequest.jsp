@@ -51,25 +51,25 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 
 
-<%@page import="java.util.ArrayList, java.util.List, java.util.*, openo.OscarProperties, oscar.oscarLab.ca.on.*" %>
+<%@page import="java.util.ArrayList, java.util.List, java.util.*, ca.openosp.openo.OscarProperties, oscar.oscarLab.ca.on.*" %>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager,org.oscarehr.casemgmt.model.CaseManagementNote,org.oscarehr.casemgmt.model.Issue,org.oscarehr.common.model.UserProperty,org.oscarehr.common.dao.UserPropertyDAO,org.springframework.web.context.support.*,org.springframework.web.context.*" %>
 
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.oscarehr.common.model.Site" %>
 <%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestForm" %>
-<%@page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
-<%@page import="openo.oscarDemographic.data.DemographicData" %>
-<%@page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewRequestAction" %>
-<%@page import="org.oscarehr.util.MiscUtils,openo.oscarClinic.ClinicData" %>
+<%@page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestForm" %>
+<%@page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
+<%@page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewRequestAction" %>
+<%@page import="org.oscarehr.util.MiscUtils,ca.openosp.openo.oscarClinic.ClinicData" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.util.DigitalSignatureUtils" %>
 <%@ page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProgramDao, org.oscarehr.PMmodule.model.Program" %>
-<%@page import="openo.oscarDemographic.data.DemographicData, openo.oscarRx.data.RxProviderData, openo.oscarRx.data.RxProviderData.Provider, openo.oscarClinic.ClinicData" %>
+<%@page import="ca.openosp.openo.oscarDemographic.data.DemographicData, ca.openosp.openo.oscarRx.data.RxProviderData, ca.openosp.openo.oscarRx.data.RxProviderData.Provider, ca.openosp.openo.oscarClinic.ClinicData" %>
 <%@ page import="org.oscarehr.common.dao.FaxConfigDao, org.oscarehr.common.model.FaxConfig" %>
 <%@page import="org.oscarehr.common.dao.ConsultationServiceDao" %>
 <%@page import="org.oscarehr.common.model.ConsultationServices" %>
@@ -82,23 +82,23 @@
 <%@ page import="org.oscarehr.common.model.enumerator.ConsultationRequestExtKey" %>
 <%@ page import="org.oscarehr.common.dao.ConsultationRequestExtDao" %>
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
-<%@ page import="openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
-<%@ page import="openo.eform.EFormUtil" %>
-<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="ca.openosp.openo.eform.EFormUtil" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
-<%@ page import="openo.util.StringUtils" %>
-<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData" %>
-<%@ page import="openo.oscarDemographic.data.EctInformation" %>
-<%@ page import="openo.oscarDemographic.data.RxInformation" %>
-<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
-<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="ca.openosp.openo.util.StringUtils" %>
+<%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.EctInformation" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.RxInformation" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 
 
 <jsp:useBean id="displayServiceUtil" scope="request"
-             class="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
+             class="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
 <!DOCTYPE html>
 <html:html lang="en">
 

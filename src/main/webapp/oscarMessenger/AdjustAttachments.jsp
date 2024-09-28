@@ -42,9 +42,9 @@
 
 <%@page contentType='text/xml'
         import="oscar.oscarMessenger.docxfer.send.*, oscar.oscarMessenger.docxfer.util.*" %>
-<%@ page import="openo.oscarMessenger.docxfer.util.MsgCommxml" %>
-<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
-<%@ page import="openo.oscarMessenger.docxfer.send.MsgSendDocument" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.docxfer.util.MsgCommxml" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarMessenger.docxfer.send.MsgSendDocument" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

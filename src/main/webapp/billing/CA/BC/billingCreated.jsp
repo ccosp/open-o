@@ -54,11 +54,11 @@
 <%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="openo.oscarBilling.ca.bc.data.BillingFormData" %>
-<%@ page import="openo.oscarBilling.ca.bc.pageUtil.BillingBillingManager" %>
-<%@ page import="openo.oscarBilling.ca.bc.pageUtil.WCBForm" %>
-<%@ page import="openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean" %>
-<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingBillingManager" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.WCBForm" %>
+<%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean" %>
+<%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%
     BillingreferralDao billingReferralDao = (BillingreferralDao) SpringUtils.getBean(BillingreferralDAO.class);
 %>

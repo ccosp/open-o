@@ -59,9 +59,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.w3c.dom.Element;
 
-import openo.oscarDemographic.data.DemographicData;
-import openo.oscarProvider.data.ProviderData;
-import openo.oscarProvider.data.ProviderMyOscarIdData;
+import ca.openosp.openo.oscarDemographic.data.DemographicData;
+import ca.openosp.openo.oscarProvider.data.ProviderData;
+import ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData;
 
 /**
  * @author jay

@@ -43,8 +43,8 @@
 
 <%@page
         import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.data.*" %>
-<%@ page import="openo.oscarReport.data.DemographicSets" %>
-<%@ page import="openo.oscarReport.data.RptSearchData" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.DemographicSets" %>
+<%@ page import="ca.openosp.openo.oscarReport.data.RptSearchData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>

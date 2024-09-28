@@ -49,7 +49,7 @@
 <%@page import="java.text.DateFormatSymbols" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.web.*" %>
-<%@page import="openo.util.CBIUtil" %>
+<%@page import="ca.openosp.openo.util.CBIUtil" %>
 
 <%@include file="/layouts/caisi_html_top.jspf" %>
 

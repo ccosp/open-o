@@ -38,9 +38,9 @@ import org.oscarehr.common.model.EncounterForm;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.PDFGenerationException;
 
-import openo.form.util.FormTransportContainer;
-import openo.oscarEncounter.data.EctFormData;
-import openo.oscarEncounter.data.EctFormData.PatientForm;
+import ca.openosp.openo.form.util.FormTransportContainer;
+import ca.openosp.openo.oscarEncounter.data.EctFormData;
+import ca.openosp.openo.oscarEncounter.data.EctFormData.PatientForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

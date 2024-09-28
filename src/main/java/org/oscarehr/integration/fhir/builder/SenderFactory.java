@@ -30,7 +30,7 @@ import org.oscarehr.integration.fhir.resources.Settings;
 // import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.SpringUtils;
 
-import openo.OscarProperties;
+import ca.openosp.openo.OscarProperties;
 
 
 public final class SenderFactory {

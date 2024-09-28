@@ -33,7 +33,7 @@
 <%@page import="org.oscarehr.common.model.Property" %>
 <%@page import="org.oscarehr.common.dao.PropertyDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ include file="/taglibs.jsp" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

@@ -28,7 +28,7 @@ import java.util.Properties;
 
 import org.oscarehr.util.SpringUtils;
 
-import openo.util.OscarRoleObjectPrivilege;
+import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 
 import com.quatro.dao.security.SecobjprivilegeDao;
 import com.quatro.model.security.Secobjprivilege;

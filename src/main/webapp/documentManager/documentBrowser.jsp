@@ -39,7 +39,7 @@
 
 <%@page import="java.net.URLDecoder, java.net.URLEncoder,java.util.Date, java.util.List" %>
 <%@page import="org.oscarehr.documentManager.EDocUtil,org.oscarehr.documentManager.EDoc" %>
-<%@page import="openo.util.UtilDateUtilities" %>
+<%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="java.util.Hashtable" %>
 <%@page import="org.oscarehr.common.dao.CtlDocClassDao,org.oscarehr.common.dao.QueueDao" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>

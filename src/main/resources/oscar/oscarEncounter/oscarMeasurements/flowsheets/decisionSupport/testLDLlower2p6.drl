@@ -11,7 +11,7 @@
 
     <rule name="LDL">
         <parameter identifier="m">
-            <class>openo.oscarEncounter.oscarMeasurements.util.MeasurementDSHelper</class>
+            <class>ca.openosp.openo.util.oscarMeasurements.oscarEncounter.MeasurementDSHelper</class>
         </parameter>
         <java:condition>m.setMeasurement("LDL") == true</java:condition>       
         <java:condition>m.getDataAsDouble() &lt; 2.0</java:condition>       
