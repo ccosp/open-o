@@ -429,11 +429,11 @@ public class FrmCustomedPDFServlet extends HttpServlet {
                 patientHeading.append(newline).append(this.patientAddress).append(newline).append(this.patientCityPostal).append(newline).append(this.patientPhone);
 
                 if (patientHIN != null && patientHIN.trim().length() > 0) {
-                    patientHeading.append(newline).append(geti18nTagValue(locale, "openo.oscarRx.hin")).append(" ").append(patientHIN);
+                    patientHeading.append(newline).append(geti18nTagValue(locale, "ca.openosp.openo.oscarRx.hin")).append(" ").append(patientHIN);
                 }
 
                 if (patientChartNo != null && !patientChartNo.isEmpty()) {
-                    String chartNoTitle = geti18nTagValue(locale, "openo.oscarRx.chartNo");
+                    String chartNoTitle = geti18nTagValue(locale, "ca.openosp.openo.oscarRx.chartNo");
                     patientHeading.append(newline).append(chartNoTitle).append(patientChartNo);
                 }
 

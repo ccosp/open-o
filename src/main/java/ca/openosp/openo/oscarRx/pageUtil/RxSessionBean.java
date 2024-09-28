@@ -38,7 +38,7 @@ import org.oscarehr.phr.model.PHRMedication;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import ca.openosp.openo.OscarProperties;
-import openo.oscarRx.data.*;
+import ca.openosp.openo.oscarRx.data.*;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;

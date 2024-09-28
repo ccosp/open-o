@@ -206,11 +206,11 @@ public final class BillingAction extends Action {
 //    }
 //    if (codeLastBilled > 365) {
 //        MiscUtils.getLogger().debug("adding code last billed "+code);
-//      errors.add("",new ActionMessage("openo.billing.CA.BC.billingBC.error.codeLastBilled",new String[] {String.valueOf(codeLastBilled), code}));
+//      errors.add("",new ActionMessage("ca.openosp.openo.billing.CA.BC.billingBC.error.codeLastBilled",new String[] {String.valueOf(codeLastBilled), code}));
 //    }
 //    else if (codeLastBilled == -1) {
 //        MiscUtils.getLogger().debug("adding code never billed "+code);
-//      errors.add("",new ActionMessage("openo.billing.CA.BC.billingBC.error.codeNeverBilled",new String[] {code}));
+//      errors.add("",new ActionMessage("ca.openosp.openo.billing.CA.BC.billingBC.error.codeNeverBilled",new String[] {code}));
 //    }
 //  }
 

@@ -78,7 +78,7 @@ public final class HandlerClassFactory {
                 msgType = e.getAttributeValue("name");
                 String className = e.getAttributeValue("className");
                 if (msgType.equals(type) && (className.indexOf(".") == -1))
-                    msgHandler = "openo.oscarLab.ca.all.upload.handlers." + e.getAttributeValue("className");
+                    msgHandler = "ca.openosp.openo.oscarLab.ca.all.upload.handlers." + e.getAttributeValue("className");
                 if (msgType.equals(type) && (className.indexOf(".") != -1))
                     msgHandler = className;
             }

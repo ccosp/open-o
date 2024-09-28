@@ -268,7 +268,7 @@ public class BillingCreateBillingAction extends Action {
                         if (noStartTime) {
                             errors.add("",
                                     new ActionMessage(
-                                            "openo.billing.CA.BC.billingBC.error.startTimeNeeded",
+                                            "ca.openosp.openo.billing.CA.BC.billingBC.error.startTimeNeeded",
                                             item.getServiceCode()));
 
                         }
@@ -276,7 +276,7 @@ public class BillingCreateBillingAction extends Action {
                         if (noStartTime || noEndTime) {
                             errors.add("",
                                     new ActionMessage(
-                                            "openo.billing.CA.BC.billingBC.error.startTimeandEndNeeded",
+                                            "ca.openosp.openo.billing.CA.BC.billingBC.error.startTimeandEndNeeded",
                                             item.getServiceCode()));
                         }
                     }
@@ -306,7 +306,7 @@ public class BillingCreateBillingAction extends Action {
                     && (code != null && !code.equals("") && !per.dxcodeExists(code))) {
                 errors.add("",
                         new ActionMessage(
-                                "openo.billing.CA.BC.billingBC.error.invaliddxcode",
+                                "ca.openosp.openo.billing.CA.BC.billingBC.error.invaliddxcode",
                                 code));
             }
         }
@@ -335,7 +335,7 @@ public class BillingCreateBillingAction extends Action {
                 if (!age.isValid()) {
                     errors.add("",
                             new org.apache.struts.action.ActionMessage(
-                                    "openo.billing.CA.BC.billingBC.error.invalidAge",
+                                    "ca.openosp.openo.billing.CA.BC.billingBC.error.invalidAge",
                                     item.getServiceCode(),
                                     String.valueOf(demo.getAgeInYears()),
                                     age.getDescription()));
@@ -343,14 +343,14 @@ public class BillingCreateBillingAction extends Action {
                 if (!sex.isValid()) {
                     errors.add("",
                             new org.apache.struts.action.ActionMessage(
-                                    "openo.billing.CA.BC.billingBC.error.invalidSex",
+                                    "ca.openosp.openo.billing.CA.BC.billingBC.error.invalidSex",
                                     item.getServiceCode(), demo.getSex(), sex.getGender()));
                 }
 
             } else {
                 errors.add("",
                         new ActionMessage(
-                                "openo.billing.CA.BC.billingBC.error.invalidsvccode",
+                                "ca.openosp.openo.billing.CA.BC.billingBC.error.invalidsvccode",
                                 item.getServiceCode()));
 
             }
@@ -371,7 +371,7 @@ public class BillingCreateBillingAction extends Action {
                         item.getServiceCode(), serviceDate)) {
                     errors.add("",
                             new ActionMessage(
-                                    "openo.billing.CA.BC.billingBC.error.noMore00120"));
+                                    "ca.openosp.openo.billing.CA.BC.billingBC.error.noMore00120"));
                 }
                 break;
             }
@@ -419,14 +419,14 @@ public class BillingCreateBillingAction extends Action {
 
                 if ((count > dailyAvail)) {
                     String dayMsg =
-                            "openo.billing.CA.BC.billingBC.error.patientManagementCodesDayUsed";
+                            "ca.openosp.openo.billing.CA.BC.billingBC.error.patientManagementCodesDayUsed";
                     errors.add("",
                             new ActionMessage(
                                     dayMsg, new String[]{key, String.valueOf(count),
                                     String.valueOf(dailyAvail)}));
                 } else if (count > yearAvail) {
                     String yearMsg =
-                            "openo.billing.CA.BC.billingBC.error.patientManagementCodesYearUsed";
+                            "ca.openosp.openo.billing.CA.BC.billingBC.error.patientManagementCodesYearUsed";
                     errors.add("",
                             new ActionMessage(yearMsg, new String[]{key,
                                     String.valueOf(count),
@@ -460,7 +460,7 @@ public class BillingCreateBillingAction extends Action {
                 if (days >= 0 && days < 365) {
                     errors.add("",
                             new ActionMessage(
-                                    "openo.billing.CA.BC.billingBC.error.codeCond",
+                                    "ca.openosp.openo.billing.CA.BC.billingBC.error.codeCond",
                                     new String[]{item[0], item[1]}));
 
                 }
@@ -502,12 +502,12 @@ public class BillingCreateBillingAction extends Action {
         if (codeLastBilled > 365) {
             errors.add("",
                     new ActionMessage(
-                            "openo.billing.CA.BC.billingBC.error.codeLastBilled",
+                            "ca.openosp.openo.billing.CA.BC.billingBC.error.codeLastBilled",
                             new String[]{String.valueOf(codeLastBilled), code}));
         } else if (codeLastBilled == -1) {
             errors.add("",
                     new ActionMessage(
-                            "openo.billing.CA.BC.billingBC.error.codeNeverBilled",
+                            "ca.openosp.openo.billing.CA.BC.billingBC.error.codeNeverBilled",
                             new String[]{code}));
         }
     }

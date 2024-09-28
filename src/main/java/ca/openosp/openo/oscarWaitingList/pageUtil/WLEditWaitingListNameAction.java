@@ -94,13 +94,13 @@ public final class WLEditWaitingListNameAction extends Action {
                                 successCode = 1;
                             } catch (Exception ex1) {
                                 if (ex1.getMessage().equals("wlNameExists")) {
-                                    setMessage("openo.waitinglistname.wlNameExists");
+                                    setMessage("ca.openosp.openo.waitinglistname.wlNameExists");
                                     //msgs.add(ActionMessages.GLOBAL_MESSAGE,
-                                    //		 new ActionMessage("openo.waitinglistname.wlNameExists"));
+                                    //		 new ActionMessage("ca.openosp.openo.waitinglistname.wlNameExists"));
                                 } else {
-                                    setMessage("openo.waitinglistname.error");
+                                    setMessage("ca.openosp.openo.waitinglistname.error");
                                     //msgs.add(ActionMessages.GLOBAL_MESSAGE,
-                                    //		 new ActionMessage("openo.waitinglistname.error"));
+                                    //		 new ActionMessage("ca.openosp.openo.waitinglistname.error"));
                                 }
                             }
                         }
@@ -112,13 +112,13 @@ public final class WLEditWaitingListNameAction extends Action {
                                 successCode = 2;
                             } catch (Exception ex2) {
                                 if (ex2.getMessage().equals("wlNameExists")) {
-                                    setMessage("openo.waitinglistname.wlNameExists");
+                                    setMessage("ca.openosp.openo.waitinglistname.wlNameExists");
                                     //msgs.add(ActionMessages.GLOBAL_MESSAGE,
-                                    //		 new ActionMessage("openo.waitinglistname.noSuchWL"));
+                                    //		 new ActionMessage("ca.openosp.openo.waitinglistname.noSuchWL"));
                                 } else {
-                                    setMessage("openo.waitinglistname.error");
+                                    setMessage("ca.openosp.openo.waitinglistname.error");
                                     //msgs.add(ActionMessages.GLOBAL_MESSAGE,
-                                    //		 new ActionMessage("openo.waitinglistname.error"));
+                                    //		 new ActionMessage("ca.openosp.openo.waitinglistname.error"));
                                 }
                             }
                         }
@@ -130,13 +130,13 @@ public final class WLEditWaitingListNameAction extends Action {
                                 successCode = 3;
                             } catch (Exception ex3) {
                                 if (ex3.getMessage().equals("wlNameUsed")) {
-                                    setMessage("openo.waitinglistname.wlNameUsed");
+                                    setMessage("ca.openosp.openo.waitinglistname.wlNameUsed");
                                     //msgs.add(ActionMessages.GLOBAL_MESSAGE,
-                                    //		 new ActionMessage("openo.waitinglistname.wlNameUsed"));
+                                    //		 new ActionMessage("ca.openosp.openo.waitinglistname.wlNameUsed"));
                                 } else {
-                                    setMessage("openo.waitinglistname.error");
+                                    setMessage("ca.openosp.openo.waitinglistname.error");
                                     //msgs.add(ActionMessages.GLOBAL_MESSAGE,
-                                    //		 new ActionMessage("openo.waitinglistname.error"));
+                                    //		 new ActionMessage("ca.openosp.openo.waitinglistname.error"));
                                 }
                             }
                         }
@@ -147,22 +147,22 @@ public final class WLEditWaitingListNameAction extends Action {
 
             } catch (Exception ex) {
                 MiscUtils.getLogger().debug("WLEditWaitingListNameAction/execute(): Exception: " + ex);
-                setMessage("openo.waitinglistname.error");
-                //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("openo.waitinglistname.error"));
+                setMessage("ca.openosp.openo.waitinglistname.error");
+                //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("ca.openosp.openo.waitinglistname.error"));
                 return (mapping.findForward("failure"));
             }
 
         }
 
         if (successCode == 1) {
-            setMessage("openo.waitinglistname.createSuccess");
-            //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("openo.waitinglistname.createSuccess"));
+            setMessage("ca.openosp.openo.waitinglistname.createSuccess");
+            //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("ca.openosp.openo.waitinglistname.createSuccess"));
         } else if (successCode == 2) {
-            setMessage("openo.waitinglistname.editSuccess");
-            //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("openo.waitinglistname.editSuccess"));
+            setMessage("ca.openosp.openo.waitinglistname.editSuccess");
+            //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("ca.openosp.openo.waitinglistname.editSuccess"));
         } else if (successCode == 3) {
-            setMessage("openo.waitinglistname.removeSuccess");
-            //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("openo.waitinglistname.removeSuccess"));
+            setMessage("ca.openosp.openo.waitinglistname.removeSuccess");
+            //msgs.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("ca.openosp.openo.waitinglistname.removeSuccess"));
         } else {
             // no idea if this is good or bad, original author didn't document
         }

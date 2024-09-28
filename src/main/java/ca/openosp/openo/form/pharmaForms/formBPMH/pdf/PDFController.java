@@ -88,7 +88,7 @@ public class PDFController {
     private final String STRING_FILTER = "[^a-zA-Z0-9_' '!.!#]";
 
     private static String[] ALLOWED_BEAN_PACKAGES = new String[]{"org.oscarehr.common.model",
-            "openo.form.pharmaForms.formBPMH.bean"};
+            "ca.openosp.openo.form.pharmaForms.formBPMH.bean"};
 
     private static final String DATE_FORMAT = "MM-dd-yyyy";
 

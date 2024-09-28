@@ -1014,7 +1014,7 @@ clinic_ref_code
         if (adjAmount != null && !"".equals(adjAmount)) {
             if (!StringUtils.isNumeric(adjAmount)) {
                 errors.add(ActionMessages.GLOBAL_MESSAGE,
-                        new ActionMessage("openo.billing.CA.BC.error.adjAmount"));
+                        new ActionMessage("ca.openosp.openo.billing.CA.BC.error.adjAmount"));
             }
         }
         return errors;

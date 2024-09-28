@@ -32,7 +32,7 @@ import java.io.Serializable;
 
 
 /**
- * An interface used for all contact types in openo.
+ * An interface used for all contact types in ca.openosp.openo.
  */
 public interface ContactInterface extends Serializable {
 

@@ -79,7 +79,7 @@ public class Connection {
             String response = this.CreateString(LoginQuery.replaceAll("@username", username).replaceAll("@password", password));
             success = (response.toUpperCase().indexOf("ACCESSGRANTED") > -1);
         } catch (Exception ex) {
-            logger.error("Error - openo.PathNet.Connection.Open - Message: " + ex.getMessage(), ex);
+            logger.error("Error - ca.openosp.openo.PathNet.Connection.Open - Message: " + ex.getMessage(), ex);
             success = false;
         }
         return success;
@@ -89,7 +89,7 @@ public class Connection {
         try {
             this.CreateInputStream(LogoutQuery).close();
         } catch (Exception ex) {
-            logger.error("Error - openo.PathNet.Connection.Close - Message: " + ex.getMessage(), ex);
+            logger.error("Error - ca.openosp.openo.PathNet.Connection.Close - Message: " + ex.getMessage(), ex);
         }
     }
 
@@ -109,7 +109,7 @@ public class Connection {
                 }
             }
         } catch (Exception ex) {
-            logger.error("Error - openo.PathNet.Connection.Retrieve - Message: " + ex.getMessage(), ex);
+            logger.error("Error - ca.openosp.openo.PathNet.Connection.Retrieve - Message: " + ex.getMessage(), ex);
         }
         return messages;
     }
@@ -130,7 +130,7 @@ public class Connection {
                 }
             }
         } catch (Exception ex) {
-            logger.error("Error - openo.PathNet.Connection.Retrieve - Message: " + ex.getMessage(), ex);
+            logger.error("Error - ca.openosp.openo.PathNet.Connection.Retrieve - Message: " + ex.getMessage(), ex);
         }
         return messages;
     }
@@ -140,7 +140,7 @@ public class Connection {
         try {
             this.CreateInputStream((success ? PositiveAckQuery : NegativeAckQuery)).close();
         } catch (Exception ex) {
-            logger.error("Error - openo.PathNet.Connection.Acknowledge - Message: " + ex.getMessage(), ex);
+            logger.error("Error - ca.openosp.openo.PathNet.Connection.Acknowledge - Message: " + ex.getMessage(), ex);
         }
     }
 

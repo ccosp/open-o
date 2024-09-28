@@ -86,7 +86,7 @@ public class PID extends Node {
         } else {
             return (this.containers.get(this.containers.size() - 1)).Parse(line);
         }
-        logger.error("Error During Parsing, Unknown Line - openo.PathNet.HL7.V2_3.PID - Message: " + line);
+        logger.error("Error During Parsing, Unknown Line - ca.openosp.openo.PathNet.HL7.V2_3.PID - Message: " + line);
         return null;
     }
 

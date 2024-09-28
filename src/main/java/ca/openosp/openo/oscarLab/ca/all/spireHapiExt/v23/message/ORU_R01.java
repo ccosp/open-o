@@ -22,7 +22,7 @@
  * Hamilton
  * Ontario, Canada
  */
-//package openo.v23.message;
+//package ca.openosp.openo.v23.message;
 package ca.openosp.openo.oscarLab.ca.all.spireHapiExt.v23.message;
 
 import ca.uhn.hl7v2.HL7Exception;

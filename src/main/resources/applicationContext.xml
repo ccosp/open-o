@@ -360,7 +360,7 @@
 
 
 	<!--Email Support -->
-        <context:component-scan base-package="openo.service"/>
+        <context:component-scan base-package="ca.openosp.openo.service"/>
 
         <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" p:corePoolSize="5"
           p:maxPoolSize="10" p:queueCapacity="100" p:waitForTasksToCompleteOnShutdown="true"/>

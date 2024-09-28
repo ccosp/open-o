@@ -461,7 +461,7 @@ public class FormeCARESManager {
         int demographicNo = jsonDataObject.getInt(Constants.Cares.FormField.demographicNo.name());
 
         /* add authorization for fetching Medications here
-         * since a Drug manager does not exist in this version of openo.
+         * since a Drug manager does not exist in this version of ca.openosp.openo.
          */
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.prescriptions", SecurityInfoManager.READ, demographicNo)) {
             jsonDataObject.element(Constants.Cares.Medication.medications.name(), new String[]{"User not authorized to view medications for this patient. " +
@@ -513,7 +513,7 @@ public class FormeCARESManager {
     private void setProblems(LoggedInInfo loggedInInfo, JSONObject jsonDataObject) {
         List<Dxresearch> dxresearchList = null;
         /* add authorization for fetching disease registry here
-         * since a dxregistry manager not exist in this version of openo.
+         * since a dxregistry manager not exist in this version of ca.openosp.openo.
          */
         int demographicNo = jsonDataObject.getInt(Constants.Cares.FormField.demographicNo.name());
         if (!securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.DxRegistry", SecurityInfoManager.READ, demographicNo)) {

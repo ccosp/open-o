@@ -82,12 +82,12 @@ public class SupServiceCodeAssocActionForm
             if (primaryCode == null || "".equals(primaryCode)) {
                 errors.add("",
                         new ActionMessage(
-                                "openo.billing.CA.BC.billingBC.error.nullservicecode"));
+                                "ca.openosp.openo.billing.CA.BC.billingBC.error.nullservicecode"));
 
             } else if (!per.serviceCodeExists(primaryCode)) {
                 errors.add("",
                         new ActionMessage(
-                                "openo.billing.CA.BC.billingBC.error.invalidsvccode", primaryCode));
+                                "ca.openosp.openo.billing.CA.BC.billingBC.error.invalidsvccode", primaryCode));
 
 
             }
@@ -96,12 +96,12 @@ public class SupServiceCodeAssocActionForm
             if (secondaryCode == null || "".equals(secondaryCode)) {
                 errors.add("",
                         new ActionMessage(
-                                "openo.billing.CA.BC.billingBC.error.nullservicecode"));
+                                "ca.openosp.openo.billing.CA.BC.billingBC.error.nullservicecode"));
 
             } else if (!per.serviceCodeExists(secondaryCode)) {
                 errors.add("",
                         new ActionMessage(
-                                "openo.billing.CA.BC.billingBC.error.invalidsvccode", secondaryCode));
+                                "ca.openosp.openo.billing.CA.BC.billingBC.error.invalidsvccode", secondaryCode));
             }
         }
         return errors;

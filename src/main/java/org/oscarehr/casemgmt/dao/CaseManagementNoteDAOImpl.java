@@ -233,7 +233,7 @@ public class CaseManagementNoteDAOImpl extends HibernateDaoSupport implements Ca
         }
     }
 
-    // This was created by openo. if all notes' UUID are same like null, it will
+    // This was created by ca.openosp.openo. if all notes' UUID are same like null, it will
     // only get one note.
     @SuppressWarnings("unchecked")
     @Override

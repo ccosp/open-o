@@ -271,7 +271,7 @@ public class SpireHandler implements MessageHandler {
     public void init(String hl7Body) throws HL7Exception {
         hl7Body = fixMessage(hl7Body);
 
-        ModelClassFactory cmf = new CustomModelClassFactory("openo.oscarLab.ca.all.spireHapiExt");
+        ModelClassFactory cmf = new CustomModelClassFactory("ca.openosp.openo.oscarLab.ca.all.spireHapiExt");
         PipeParser p = new PipeParser(cmf);
         p.setValidationContext(new NoValidation());
 

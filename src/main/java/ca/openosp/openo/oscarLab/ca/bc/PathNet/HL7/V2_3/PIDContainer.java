@@ -62,7 +62,7 @@ public class PIDContainer extends Node {
         } else if (this.obr != null) {
             return this.obr.Parse(line);
         }
-        logger.error("Error During Parsing, Unknown Line - openo.PathNet.HL7.V2_3.PIDContainer - Message: " + line);
+        logger.error("Error During Parsing, Unknown Line - ca.openosp.openo.PathNet.HL7.V2_3.PIDContainer - Message: " + line);
         return null;
     }
 

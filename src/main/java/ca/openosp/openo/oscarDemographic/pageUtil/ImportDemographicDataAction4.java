@@ -586,7 +586,7 @@ public class ImportDemographicDataAction4 extends Action {
         String docDir = oscarProperties.getProperty("DOCUMENT_DIR");
         docDir = Util.fixDirName(docDir);
         if (!Util.checkDir(docDir)) {
-            logger.debug("Error! Cannot write to DOCUMENT_DIR - Check openo.properties or dir permissions.");
+            logger.debug("Error! Cannot write to DOCUMENT_DIR - Check ca.openosp.openo.properties or dir permissions.");
         }
 
         File xmlF = new File(xmlFile);
@@ -826,7 +826,7 @@ public class ImportDemographicDataAction4 extends Action {
         String docDir = oscarProperties.getProperty("DOCUMENT_DIR");
         docDir = Util.fixDirName(docDir);
         if (!Util.checkDir(docDir)) {
-            logger.debug("Error! Cannot write to DOCUMENT_DIR - Check openo.properties or dir permissions.");
+            logger.debug("Error! Cannot write to DOCUMENT_DIR - Check ca.openosp.openo.properties or dir permissions.");
         }
 
         File xmlF = new File(xmlFile);

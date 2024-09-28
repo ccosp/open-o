@@ -319,7 +319,7 @@ public class FrmPDFServlet extends HttpServlet {
             }
 
             if (req.getParameter("postProcessor" + suffix) != null) {
-                String className = "openo.form.pdfservlet." + req.getParameter("postProcessor" + suffix);
+                String className = "ca.openosp.openo.form.pdfservlet." + req.getParameter("postProcessor" + suffix);
                 try {
                     FrmPDFPostValueProcessor pp = (FrmPDFPostValueProcessor) Class.forName(className).newInstance();
                     props = pp.process(props);

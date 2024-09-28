@@ -22,7 +22,7 @@
  * Hamilton
  * Ontario, Canada
  */
-//package openo.v23.segment;
+//package ca.openosp.openo.v23.segment;
 package ca.openosp.openo.oscarLab.ca.all.spireHapiExt.v23.segment;
 
 import org.apache.logging.log4j.Logger;

@@ -106,7 +106,7 @@ public class PdfRecordPrinter {
     private static Logger logger = MiscUtils.getLogger();
 
     private static final String BILLING_INVOICE_TEMPLATE_FILE = "org/oscarehr/common/web/BillingInvoiceTemplate.jrxml";
-    //private static final String OSCAR_LOGO_FILE = "org/oscarehr/common/web/images/openo.jpg";
+    //private static final String OSCAR_LOGO_FILE = "org/oscarehr/common/web/images/ca.openosp.openo.jpg";
 
     private OutputStream os;
 

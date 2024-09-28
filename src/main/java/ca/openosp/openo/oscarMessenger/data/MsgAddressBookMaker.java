@@ -41,7 +41,7 @@ import org.w3c.dom.Element;
 
 import ca.openosp.openo.oscarMessenger.docxfer.util.MsgCommxml;
 
-// This is a modified version of openo.comm.client.AddressBook
+// This is a modified version of ca.openosp.openo.comm.client.AddressBook
 public class MsgAddressBookMaker {
     private OscarCommLocationsDao oscarCommLocationsDao = SpringUtils.getBean(OscarCommLocationsDao.class);
 

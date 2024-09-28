@@ -260,7 +260,7 @@ public class NioFileManagerImpl implements NioFileManager {
     /**
      * Get the default OscarDocument directory.
      * Newer versions of OSCAR will only define the path for the BASE_DOCUMENT and
-     * not for the full DOCUMENT_DIRECTORY path in openo.properties.
+     * not for the full DOCUMENT_DIRECTORY path in ca.openosp.openo.properties.
      * This method considers both locations.
      */
     private String getDocumentDirectory() {

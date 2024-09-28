@@ -30,7 +30,7 @@ import org.oscarehr.util.MiscUtils;
 
 public class FrmStudyRecordFactory {
     public FrmStudyRecord factory(String which) {
-        String fullName = "openo.form.study.FrmStudy" + which + "Record"; // get reference to the class
+        String fullName = "ca.openosp.openo.form.study.FrmStudy" + which + "Record"; // get reference to the class
         FrmStudyRecord myClass = null;
 
         try {

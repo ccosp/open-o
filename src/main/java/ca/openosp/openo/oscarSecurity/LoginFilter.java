@@ -51,7 +51,7 @@ public class LoginFilter implements Filter {
     private static final Logger logger = MiscUtils.getLogger();
 
     private static final String[] EXEMPT_URLS = {
-            "/images/openo.ico",
+            "/images/ca.openosp.openo.ico",
             "/images/Logo.png",
             "/images/oneId/",
             "/signature_pad/",
@@ -83,7 +83,7 @@ public class LoginFilter implements Filter {
     };
 
     private static final String[] EXEMPT_URLS_FOR_REQUEST_TIMEOUT = {
-            "/images/openo.ico",
+            "/images/ca.openosp.openo.ico",
             "/images/Logo.png",
             "/images/oneId/",
             "/login.do",

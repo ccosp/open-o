@@ -1,8 +1,8 @@
-package openo.util;
+package ca.openosp.openo.util;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import openo.util.HibernateTestDao;
+import ca.openosp.openo.util.HibernateTestDao;
 
 public class TestHiberante {
 
