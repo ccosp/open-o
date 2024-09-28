@@ -253,8 +253,7 @@
 		<property name="enabled" value="${pmm.refer.temporaryAdmission.enabled}" />
 	</bean>
 	<bean id="clientManager" class="org.oscarehr.PMmodule.service.ClientManagerImpl" autowire="byName">
-		<property name="demographicDao" ref="demographicDao" />
-		<property name="clientReferralDAO" ref="clientReferralDAO" />
+		<property name="demographicDao" ref="demographicDao" /><property name="clientReferralDAO" ref="clientReferralDAO" />
 		<property name="programQueueManager" ref="programQueueManager" />
 		<property name="admissionManager" ref="admissionManager" />
 		<property name="clientRestrictionManager" ref="clientRestrictionManager" />
@@ -361,7 +360,7 @@
 
 
 	<!--Email Support -->
-        <context:component-scan base-package="oscar.service"/>
+        <context:component-scan base-package="openo.service"/>
 
         <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" p:corePoolSize="5"
           p:maxPoolSize="10" p:queueCapacity="100" p:waitForTasksToCompleteOnShutdown="true"/>
