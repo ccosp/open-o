@@ -49,7 +49,7 @@ import openo.oscarBilling.ca.bc.data.BillRecipient;
 import openo.oscarBilling.ca.bc.data.BillingHistoryDAO;
 import openo.oscarBilling.ca.bc.data.BillingmasterDAO;
 import openo.oscarDB.DBHandler;
-import oscar.util.*;
+import openo.util.*;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;

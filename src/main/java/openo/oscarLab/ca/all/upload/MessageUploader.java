@@ -67,7 +67,7 @@ import org.oscarehr.util.SpringUtils;
 import openo.OscarProperties;
 import openo.oscarDemographic.data.DemographicMerged;
 import openo.oscarLab.ca.all.Hl7textResultsData;
-import oscar.oscarLab.ca.all.parsers.*;
+import openo.oscarLab.ca.all.parsers.*;
 import openo.util.UtilDateUtilities;
 
 public final class MessageUploader {
