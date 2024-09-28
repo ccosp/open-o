@@ -1,8 +1,8 @@
-package oscar.util;
+package openo.util;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import oscar.util.HibernateTestDao;
+import openo.util.HibernateTestDao;
 
 public class TestHiberante {
 
