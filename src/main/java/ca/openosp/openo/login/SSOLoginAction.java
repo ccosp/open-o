@@ -409,7 +409,7 @@ public final class SSOLoginAction extends DispatchAction {
 
     /**
      * A basic Action method to redirect a user login to the SSO Identity Provider when
-     * SSO authentication is enabled in the ca.openosp.openo.properties file.
+     * SSO authentication is enabled in the openo.properties file.
      * This method sends an authentication request to the IDP and then handles the
      * reply.
      */

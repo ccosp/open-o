@@ -310,7 +310,7 @@ public class DemographicExportAction4 extends Action {
         switch (template) {
             case CMS4:
                 if (!new File(tmpDir).mkdir() || !Util.checkDir(tmpDir)) {
-                    logger.debug("Error! Cannot write to TMP_DIR - Check ca.openosp.openo.properties or dir permissions. (" + tmpDir + ")");
+                    logger.debug("Error! Cannot write to TMP_DIR - Check openo.properties or dir permissions. (" + tmpDir + ")");
                 } else {
                     XmlOptions options = new XmlOptions();
                     options.put(XmlOptions.SAVE_PRETTY_PRINT);
@@ -2625,7 +2625,7 @@ public class DemographicExportAction4 extends Action {
             // Remove unused E2E tools.
 //		case E2E:
 //			if (!Util.checkDir(tmpDir)) {
-//				logger.debug("Error! Cannot write to TMP_DIR - Check ca.openosp.openo.properties or dir permissions.");
+//				logger.debug("Error! Cannot write to TMP_DIR - Check openo.properties or dir permissions.");
 //			} else {
 //				ArrayList<File> files = new ArrayList<File>();
 //				StringBuilder exportLog = new StringBuilder();
@@ -2747,7 +2747,7 @@ public class DemographicExportAction4 extends Action {
         out.write("CMS Vendor, Product & Version : ");
         String vendor = oscarProperties.getProperty("Vendor_Product");
         if (StringUtils.empty(vendor)) {
-            exportError.add("Error! Vendor_Product not defined in ca.openosp.openo.properties");
+            exportError.add("Error! Vendor_Product not defined in openo.properties");
         } else {
             out.write(vendor);
         }
@@ -2755,7 +2755,7 @@ public class DemographicExportAction4 extends Action {
         out.write("Application Support Contact   : ");
         String support = oscarProperties.getProperty("Support_Contact");
         if (StringUtils.empty(support)) {
-            exportError.add("Error! Support_Contact not defined in ca.openosp.openo.properties");
+            exportError.add("Error! Support_Contact not defined in openo.properties");
         } else {
             out.write(support);
         }
