@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-//import oscar.util.SqlUtils;
+//import openo.util.SqlUtils;
 
 public final class BillingAction extends Action {
     private static Logger _log = MiscUtils.getLogger();
@@ -133,7 +133,7 @@ public final class BillingAction extends Action {
                 }
             }
 //      else if ("true".equals(encounter)) {
-//        bean = (oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.getSession().getAttribute("billingSessionBean");
+//        bean = (openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.getSession().getAttribute("billingSessionBean");
 //        frm.setXml_provider(request.getParameter("user_no"));
 //        region = bean.getBillRegion();
 //      }
@@ -141,7 +141,7 @@ public final class BillingAction extends Action {
 //       * @todo Test this, it looks unnecessary
 //       */
 //      else {
-//        bean = (oscar.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.
+//        bean = (openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean) request.
 //            getSession().getAttribute("billingSessionBean");
 //      }
         }
@@ -206,11 +206,11 @@ public final class BillingAction extends Action {
 //    }
 //    if (codeLastBilled > 365) {
 //        MiscUtils.getLogger().debug("adding code last billed "+code);
-//      errors.add("",new ActionMessage("oscar.billing.CA.BC.billingBC.error.codeLastBilled",new String[] {String.valueOf(codeLastBilled), code}));
+//      errors.add("",new ActionMessage("openo.billing.CA.BC.billingBC.error.codeLastBilled",new String[] {String.valueOf(codeLastBilled), code}));
 //    }
 //    else if (codeLastBilled == -1) {
 //        MiscUtils.getLogger().debug("adding code never billed "+code);
-//      errors.add("",new ActionMessage("oscar.billing.CA.BC.billingBC.error.codeNeverBilled",new String[] {code}));
+//      errors.add("",new ActionMessage("openo.billing.CA.BC.billingBC.error.codeNeverBilled",new String[] {code}));
 //    }
 //  }
 

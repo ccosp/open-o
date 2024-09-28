@@ -146,7 +146,7 @@ public class CommonLabTestValues {
 
             String testNam = "Unknown";
             String labType = String.valueOf(i[0]);
-            String title = "";//TODO:oscar.Misc.getString(rs,"title");
+            String title = "";//TODO:openo.Misc.getString(rs,"title");
 
             String obserIden = String.valueOf(i[1]); //reportname or observationIden
             int first = obserIden.indexOf('^');
@@ -174,7 +174,7 @@ public class CommonLabTestValues {
             String testNam = String.valueOf(i[1]);
             testNam = testNam.substring(1 + testNam.indexOf('^'));
             String labType = String.valueOf(i[0]);
-            String title = "";//TODO:oscar.Misc.getString(rs,"title");
+            String title = "";//TODO:openo.Misc.getString(rs,"title");
 
             Hashtable<String, Serializable> h = new Hashtable<String, Serializable>();
             h.put("testName", testNam);

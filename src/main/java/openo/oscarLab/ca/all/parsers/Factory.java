@@ -145,7 +145,7 @@ public final class Factory {
                     if (className.indexOf(".") != -1) {
                         msgHandler = className;
                     } else {
-                        msgHandler = "oscar.oscarLab.ca.all.parsers." + className;
+                        msgHandler = "openo.oscarLab.ca.all.parsers." + className;
                     }
                 }
             }

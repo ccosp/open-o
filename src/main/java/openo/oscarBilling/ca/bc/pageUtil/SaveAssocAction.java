@@ -65,14 +65,14 @@ public class SaveAssocAction
             if (per.assocExists(assoc.getServiceCode())) {
                 errors.add("",
                         new org.apache.struts.action.ActionMessage(
-                                "oscar.billing.CA.BC.billingBC.error.assocexists",
+                                "openo.billing.CA.BC.billingBC.error.assocexists",
                                 assoc.getServiceCode()));
             }
         }
         if (!per.serviceCodeExists(assoc.getServiceCode())) {
             errors.add("",
                     new org.apache.struts.action.ActionMessage(
-                            "oscar.billing.CA.BC.billingBC.error.invalidsvccode",
+                            "openo.billing.CA.BC.billingBC.error.invalidsvccode",
                             assoc.getServiceCode()));
         }
         List dxcodes = assoc.getDxCodes();
@@ -81,7 +81,7 @@ public class SaveAssocAction
             if (!per.dxcodeExists(code)) {
                 errors.add("",
                         new org.apache.struts.action.ActionMessage(
-                                "oscar.billing.CA.BC.billingBC.error.invaliddxcode",
+                                "openo.billing.CA.BC.billingBC.error.invaliddxcode",
                                 code));
             }
         }

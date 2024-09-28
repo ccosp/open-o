@@ -29,7 +29,7 @@ public class EReferAction extends DispatchAction {
 
     // Documents (attachments) originate from the consult request window.
     // Users can attach these documents using the attachment GUI on the consult request form.
-    // All documents are internal to Oscar.
+    // All documents are internal to openo.
     public void attachOceanEReferralConsult(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         String demographicNo = StringUtils.isNullOrEmpty(request.getParameter("demographicNo")) ? "" : request.getParameter("demographicNo");
         String documents = StringUtils.isNullOrEmpty(request.getParameter("documents")) ? "" : request.getParameter("documents");
@@ -59,7 +59,7 @@ public class EReferAction extends DispatchAction {
 
     // Documents (attachments) originate from the consult request window.
     // Users can attach these documents using the attachment GUI on the consult request form.
-    // All documents are internal to Oscar.
+    // All documents are internal to openo.
     public void editOceanEReferralConsult(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
         String providerNo = loggedInInfo.getLoggedInProviderNo();

@@ -66,14 +66,14 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
 
 public class MeasurementHL7UploaderAction extends DispatchActionSupport {
     private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
-    private static SimpleDateFormat sdf = new SimpleDateFormat(OscarProperties.getInstance().getProperty("oscar.measurements.hl7.datetime.format", "yyyyMMddHHmmss"));
+    private static SimpleDateFormat sdf = new SimpleDateFormat(OscarProperties.getInstance().getProperty("openo.measurements.hl7.datetime.format", "yyyyMMddHHmmss"));
 
     private static MeasurementDao measurementsDao = SpringUtils.getBean(MeasurementDao.class);
     private static SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
     // settings to be set in spring config xml, if needed
-    private String defaultProviderNo = OscarProperties.getInstance().getProperty("oscar.measurements.hl7.defaultProviderNo", "999998");
-    private String hl7UploadPassword = OscarProperties.getInstance().getProperty("oscar.measurements.hl7.password");
+    private String defaultProviderNo = OscarProperties.getInstance().getProperty("openo.measurements.hl7.defaultProviderNo", "999998");
+    private String hl7UploadPassword = OscarProperties.getInstance().getProperty("openo.measurements.hl7.password");
 
     public void setHl7UploadPassword(String uploadPassword) {
         this.hl7UploadPassword = uploadPassword;

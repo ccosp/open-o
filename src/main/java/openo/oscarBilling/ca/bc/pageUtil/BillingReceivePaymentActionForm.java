@@ -63,14 +63,14 @@ public class BillingReceivePaymentActionForm
         if (!StringUtils.isNumeric(amountReceived)) {
             errors.add("",
                     new ActionMessage(
-                            "oscar.billing.CA.BC.billingBC.error.nonNumericAmount",
+                            "openo.billing.CA.BC.billingBC.error.nonNumericAmount",
                             ""));
         } else {
             double dblAmount = new Double(amountReceived).doubleValue();
             if (dblAmount == 0) {
                 errors.add("",
                         new ActionMessage(
-                                "oscar.billing.CA.BC.billingBC.error.zeroAmount",
+                                "openo.billing.CA.BC.billingBC.error.zeroAmount",
                                 ""));
 
             }

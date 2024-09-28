@@ -120,14 +120,14 @@ public class AssociateCodesActionForm
         if (!StringUtils.isNumeric(this.xml_other1)) {
             errors.add("",
                     new ActionMessage(
-                            "oscar.billing.CA.BC.billingBC.error.nullservicecode"));
+                            "openo.billing.CA.BC.billingBC.error.nullservicecode"));
         }
         if (!StringUtils.isNumeric(this.xml_diagnostic_detail1) &&
                 !StringUtils.isNumeric(this.xml_diagnostic_detail2) &&
                 !StringUtils.isNumeric(this.xml_diagnostic_detail3)) {
             errors.add("",
                     new ActionMessage(
-                            "oscar.billing.CA.BC.billingBC.error.nulldxcodes"));
+                            "openo.billing.CA.BC.billingBC.error.nulldxcodes"));
         }
         return errors;
     }

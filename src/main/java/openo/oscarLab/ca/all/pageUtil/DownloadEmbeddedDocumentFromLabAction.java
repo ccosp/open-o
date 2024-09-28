@@ -57,7 +57,7 @@ public class DownloadEmbeddedDocumentFromLabAction extends Action {
             throw new SecurityException("missing required security object (_lab)");
         }
 
-        //String hl7 = oscar.oscarLab.ca.all.parsers.Factory.getHL7Body(labNo);
+        //String hl7 = openo.oscarLab.ca.all.parsers.Factory.getHL7Body(labNo);
 
         MessageHandler handler = Factory.getHandler(labNo);
 

@@ -106,7 +106,7 @@ public class FrmFormRHPreventionAction extends Action {
             throw new SecurityException("missing required security object (_form)");
         }
 
-        // <action path="/form/AddRHWorkFlow" scope="request" name="FrmForm" type="oscar.form.pageUtil.FrmFormAddRHWorkFlowAction">
+        // <action path="/form/AddRHWorkFlow" scope="request" name="FrmForm" type="openo.form.pageUtil.FrmFormAddRHWorkFlowAction">
         String demographicNo = request.getParameter("demographic_no");
         if (demographicNo == null) {
             demographicNo = (String) request.getAttribute("demographic_no");

@@ -2045,7 +2045,7 @@ public class OcanDataProcessor {
 
     private void marshal(Object doc, String name) throws FileNotFoundException, JAXBException {
         /* Class<T> clazz = document.getValue().getClass(); */
-        JAXBContext jc = JAXBContext.newInstance("oscar.ocan.domain.submission"
+        JAXBContext jc = JAXBContext.newInstance("openo.ocan.domain.submission"
                 /* clazz.getPackage().getName()	 */);
         Marshaller m = jc.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);

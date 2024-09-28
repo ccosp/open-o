@@ -194,7 +194,7 @@ public final class OruR01 {
         ObservationData observationData = new ObservationData();
         observationData.subject = "txt test";
         observationData.textMessage = "once upon a time";
-        observationData.binaryDataFileName = "/tmp/oscar.properties";
+        observationData.binaryDataFileName = "/tmp/openo.properties";
         byte[] b = FileUtils.readFileToByteArray(new File(observationData.binaryDataFileName));
         observationData.binaryData = b;
 

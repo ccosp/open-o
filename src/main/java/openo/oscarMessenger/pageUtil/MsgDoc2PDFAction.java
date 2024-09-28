@@ -71,7 +71,7 @@ public final class MsgDoc2PDFAction extends Action {
                 frm.setIsPreview(false);
 
             } else {
-                MiscUtils.getLogger().debug(" oscar.oscarMessenger.pageUtil.MsgSessionBean is null");
+                MiscUtils.getLogger().debug(" openo.oscarMessenger.pageUtil.MsgSessionBean is null");
             }
         }
         return (mapping.findForward("success"));

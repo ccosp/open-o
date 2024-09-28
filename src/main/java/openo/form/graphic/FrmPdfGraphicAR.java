@@ -1,7 +1,7 @@
 //CHECKSTYLE:OFF
 
 /*
- * java oscar.form.graphic.FrmPdfGraphicAR
+ * java openo.form.graphic.FrmPdfGraphicAR
  */
 
 package openo.form.graphic;

@@ -180,7 +180,7 @@ public class SurveillanceMaster {
     }
 
     /**
-     * Load surveys from the survey config file.  Name of the file is define in the oscar.properties file.
+     * Load surveys from the survey config file.  Name of the file is define in the openo.properties file.
      * the Key is: surveillance_config_file
      * <p>
      * XML format ex

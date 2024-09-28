@@ -35,7 +35,7 @@ public class OscarPropertyPlaceholderConfigurer extends PropertyPlaceholderConfi
 
         Properties p2 = OscarProperties.getInstance();
         MiscUtils.getLogger().debug("oscarproperties=" + p2.toString());
-        if (p2 != null && placeholder.startsWith("oscar.")) {
+        if (p2 != null && placeholder.startsWith("openo.")) {
             String value = p2.getProperty(placeholder.substring(6));
             MiscUtils.getLogger().debug("resolveplaceholder1:" + placeholder.substring(6) + "=" + value);
             if (value != null) {
@@ -53,7 +53,7 @@ public class OscarPropertyPlaceholderConfigurer extends PropertyPlaceholderConfi
 
         Properties p2 = OscarProperties.getInstance();
         MiscUtils.getLogger().debug("oscarproperties=" + p2.toString());
-        if (p2 != null && placeholder.startsWith("oscar.")) {
+        if (p2 != null && placeholder.startsWith("openo.")) {
             String value = p2.getProperty(placeholder.substring(6));
             MiscUtils.getLogger().debug("resolveplaceholder2:" + placeholder.substring(6) + "=" + value);
             if (value != null) {

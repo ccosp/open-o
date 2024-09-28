@@ -755,7 +755,7 @@ public final class BillingCreateBillingForm extends ActionForm {
 
 
         if ("WCB".equals(this.getXml_billtype()) && request.getParameter("WCBid") == null) {
-            errors.add("", new ActionMessage("oscar.billing.CA.BC.billingBC.wcb.error.formRequired"));
+            errors.add("", new ActionMessage("openo.billing.CA.BC.billingBC.wcb.error.formRequired"));
             request.setAttribute("FormMissing", "YES");
         }
 
@@ -764,7 +764,7 @@ public final class BillingCreateBillingForm extends ActionForm {
                 if (this.service == null || service.length == 0) {
                     errors.add("",
                             new ActionMessage(
-                                    "oscar.billing.CA.BC.billingBC.error.nullservicecode"));
+                                    "openo.billing.CA.BC.billingBC.error.nullservicecode"));
                 }
             }
             if (!"pri".equalsIgnoreCase(this.getXml_billtype())) {
@@ -776,7 +776,7 @@ public final class BillingCreateBillingForm extends ActionForm {
                                 xml_diagnostic_detail3.equals(""))) {
                     errors.add("",
                             new ActionMessage(
-                                    "oscar.billing.CA.BC.billingBC.error.nulldxcodes"));
+                                    "openo.billing.CA.BC.billingBC.error.nulldxcodes"));
                 }
             }
         }

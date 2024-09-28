@@ -164,7 +164,7 @@ public class EcaresFormAction extends JSONAction {
     }
 
     /**
-     * Crazy OSCAR.  It may be possible that the demographic number
+     * Crazy openo.  It may be possible that the demographic number
      * variable name is slightly different.
      * <p>
      * This also kinda masks the potential for a parse int exception.

@@ -75,7 +75,7 @@ public class BillingSaveBillingAction extends Action {
         BillingSessionBean bean;
         bean = (BillingSessionBean) request.getSession().
                 getAttribute("billingSessionBean");
-        //  oscar.oscarBilling.data.BillingStoreData bsd = new oscar.oscarBilling.data.BillingStoreDate();
+        //  openo.oscarBilling.data.BillingStoreData bsd = new openo.oscarBilling.data.BillingStoreDate();
         //  bsd.storeBilling(bean);
         ApptStatusData as = new ApptStatusData();
         String billStatus = as.billStatus(bean.getApptStatus());

@@ -390,8 +390,8 @@ public class EctSessionBean implements java.io.Serializable {
 
     public String getTeam() {
         if (team == null) {
-            //          oscar.oscarEncounter.oscarConsultation.data.ProviderData providerData;
-            //          providerData = new oscar.oscarEncounter.oscarConsultation.data.ProviderData();
+            //          openo.oscarEncounter.oscarConsultation.data.ProviderData providerData;
+            //          providerData = new openo.oscarEncounter.oscarConsultation.data.ProviderData();
             EctConProviderData providerData = new EctConProviderData();
             team = providerData.getTeam(providerNo);
         }

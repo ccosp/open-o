@@ -40,12 +40,12 @@ xalan.jar
 xercesImpl.jar
 xsltc.jar
 javac -d . FrmStudyXMLClientSend.java
-java -classpath .:%CLASSPATH% oscar.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://67.69.12.115:8443/OscarComm/DummyReceiver
-java -classpath .:%CLASSPATH% oscar.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://192.168.42.180:15000/ /root/oscarComm/oscarComm.keystore
+java -classpath .:%CLASSPATH% openo.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://67.69.12.115:8443/OscarComm/DummyReceiver
+java -classpath .:%CLASSPATH% openo.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://192.168.42.180:15000/ /root/oscarComm/oscarComm.keystore
 
-java -classpath .:%CLASSPATH% oscar.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://130.113.150.203:15501/ /root/oscarComm/enleague.keystore
-java -classpath .:%CLASSPATH% oscar.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://192.168.42.180:15000/ /root/oscarComm/compete.keystore
-java oscar.form.study.FrmStudyXMLClientSend c:\\root\\oscar_sfhc.properties https://67.69.12.115:8443/OscarComm/DummyReceiver
+java -classpath .:%CLASSPATH% openo.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://130.113.150.203:15501/ /root/oscarComm/enleague.keystore
+java -classpath .:%CLASSPATH% openo.form.study.FrmStudyXMLClientSend /root/oscar_sfhc.properties https://192.168.42.180:15000/ /root/oscarComm/compete.keystore
+java openo.form.study.FrmStudyXMLClientSend c:\\root\\oscar_sfhc.properties https://67.69.12.115:8443/OscarComm/DummyReceiver
 */
 
 package openo.form.study;

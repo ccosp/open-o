@@ -115,7 +115,7 @@ public class ProcessSurveyFile {
             int counter = 0;
 	        /*try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(baos))) {
 	        		while(rs.next()){ 
-                    String surveyDataId = oscar.Misc.getString(rs, "surveyDataId");
+                    String surveyDataId = openo.Misc.getString(rs, "surveyDataId");
                     String writeString = replaceAllValues(exp, rs);                     
                     writer.write(writeString+'\n');     
                     surveyDataIdProcessed.add(surveyDataId);

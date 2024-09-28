@@ -40,7 +40,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each
  * Java content interface and Java element interface
- * generated in the oscar.ocan.domain.client package.
+ * generated in the openo.ocan.domain.client package.
  * <p>An ObjectFactory allows you to programatically
  * construct new instances of the Java representation
  * for XML content. The Java representation of XML
@@ -67,7 +67,7 @@ public class ObjectFactory {
     private final static QName _CNoNeed_QNAME = new QName("", "CNo_Need");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: oscar.ocan.domain.client
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: openo.ocan.domain.client
      */
     public ObjectFactory() {
     }

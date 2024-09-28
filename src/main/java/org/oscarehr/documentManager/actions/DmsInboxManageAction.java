@@ -257,7 +257,7 @@ public class DmsInboxManageAction extends DispatchAction {
 
         // can't use userrole from session, because it changes if provider A search for provider B's documents
 
-        // oscar.oscarMDS.data.MDSResultsData mDSData = new oscar.oscarMDS.data.MDSResultsData();
+        // openo.oscarMDS.data.MDSResultsData mDSData = new openo.oscarMDS.data.MDSResultsData();
         CommonLabResultData comLab = new CommonLabResultData();
         // String providerNo = request.getParameter("providerNo");
         String providerNo = (String) session.getAttribute("user");

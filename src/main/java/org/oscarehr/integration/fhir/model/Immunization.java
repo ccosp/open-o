@@ -227,7 +227,7 @@ public class Immunization<T extends AbstractModel<Integer> & ImmunizationInterfa
     }
 
     /**
-     * SNOMED is a fixed (static) system in Oscar.
+     * SNOMED is a fixed (static) system in openo.
      */
     private void setVaccineCode(org.hl7.fhir.dstu3.model.Immunization immunization) {
         CVCImmunizationDao cvcImmDao = SpringUtils.getBean(CVCImmunizationDao.class);
@@ -261,7 +261,7 @@ public class Immunization<T extends AbstractModel<Integer> & ImmunizationInterfa
     }
 
     /**
-     * SNOMED is a fixed (static) system in Oscar.
+     * SNOMED is a fixed (static) system in openo.
      */
     private void setVaccineCode2(org.hl7.fhir.dstu3.model.Immunization immunization) {
 		/*

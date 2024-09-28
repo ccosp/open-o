@@ -36,8 +36,8 @@ import org.oscarehr.appointment.search.SearchConfig;
 import org.oscarehr.appointment.search.TimeSlot;
 import org.oscarehr.common.model.Appointment;
 import org.oscarehr.managers.DayWorkSchedule;
-//import org.oscarehr.oscar.ws.manager.ScheduleManager;
-//import org.oscarehr.oscar.ws.utils.OscarServerWebServicesManager;
+//import org.oscarehr.openo.ws.manager.ScheduleManager;
+//import org.oscarehr.openo.ws.utils.OscarServerWebServicesManager;
 import org.oscarehr.managers.ScheduleManager;
 
 //import org.oscarehr.ws.AppointmentTransfer;

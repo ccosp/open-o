@@ -45,7 +45,7 @@ import net.sf.json.JSONObject;
 import openo.oscarSurveillance.ProcessSurveyFile;
 
 
-//import oscar.oscarSurveillance.ProcessSurveyFile;
+//import openo.oscarSurveillance.ProcessSurveyFile;
 
 public class FTPSJob implements OscarRunnable {
 

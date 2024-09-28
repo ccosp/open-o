@@ -80,7 +80,7 @@ public class HL7A04Data {
      * Constructor
      */
     /*
-	public HL7A04Data(oscar.oscarDemographic.data.DemographicData.Demographic demograph) {
+	public HL7A04Data(openo.oscarDemographic.data.DemographicData.Demographic demograph) {
 		this.setDemographicData(demograph);
 	}
 	*/
@@ -108,7 +108,7 @@ public class HL7A04Data {
      * Constructor
      */
     /*
-	public HL7A04Data( oscar.oscarDemographic.data.DemographicData.Demographic demograph, ApptData appData, ClinicData clinicData) throws HL7Exception {
+	public HL7A04Data( openo.oscarDemographic.data.DemographicData.Demographic demograph, ApptData appData, ClinicData clinicData) throws HL7Exception {
         this.setDemographicData(demograph);
         this.setAppData(appData);
         this.setClinicData(clinicData);
@@ -119,7 +119,7 @@ public class HL7A04Data {
      *
      */
 	/*
-	public void setDemographicData(oscar.oscarDemographic.data.DemographicData.Demographic demograph) {
+	public void setDemographicData(openo.oscarDemographic.data.DemographicData.Demographic demograph) {
 		this.demoData = new String[6];
 		
 		this.demoData[0] = demograph.getDemographicNo();

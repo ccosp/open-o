@@ -70,7 +70,7 @@ public class OBR extends Node {
             this.note.add(nte);
             return nte.Parse(line);
         }
-        _logger.error("Error During Parsing, Unknown Line - oscar.PathNet.HL7.V2_3.OBR - Message: " + line);
+        _logger.error("Error During Parsing, Unknown Line - openo.PathNet.HL7.V2_3.OBR - Message: " + line);
         return null;
     }
 

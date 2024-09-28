@@ -49,7 +49,7 @@ public class ORC extends Node {
         if (line.startsWith("ORC")) {
             return super.Parse(line, 0, 1);
         }
-        logger.error("Error During Parsing, Unknown Line - oscar.PathNet.HL7.V2_3.ORC - Message: " + line);
+        logger.error("Error During Parsing, Unknown Line - openo.PathNet.HL7.V2_3.ORC - Message: " + line);
         return null;
     }
 

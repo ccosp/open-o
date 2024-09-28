@@ -191,7 +191,7 @@ public class PathnetResultsData {
                 }
                 lbData.sex = pid.getSex();
                 lbData.resultStatus = "0"; //TODO
-                // solve lbData.resultStatus.add(oscar.Misc.getString(rs,"abnormalFlag"));
+                // solve lbData.resultStatus.add(openo.Misc.getString(rs,"abnormalFlag"));
                 lbData.dateTime = ConversionUtils.toTimestampString(msh.getDateTime());
 
                 //priority

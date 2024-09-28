@@ -269,11 +269,11 @@ public class PrescriptionManagerImpl implements PrescriptionManager {
      */
     private String getPrescriptionTextView(LoggedInInfo info, Integer demo, List<Drug> drugs) {
 
-        // This code uses legacy code from oscar.oscarRx package.
+        // This code uses legacy code from openo.oscarRx package.
         // Should refactor to change this. Trying best to limit the
         // scope to this method.
         //
-        // TODO: Refactor to not use code from oscar.oscarRx
+        // TODO: Refactor to not use code from openo.oscarRx
 
         RxPatientData.Patient patient = RxPatientData.getPatient(info, demo);
         RxProviderData.Provider provider = (new RxProviderData()).getProvider(info.getLoggedInProviderNo());

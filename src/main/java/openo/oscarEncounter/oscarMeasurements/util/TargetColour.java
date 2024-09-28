@@ -92,7 +92,7 @@ public class TargetColour {
         log.debug("ruleName" + ruleName + " cond size " + getTargetConditions().size() + " list size " + list.size());
 
         RuleBaseCreator rcb = new RuleBaseCreator();
-        Element ruleElement = rcb.getRule(ruleName, "oscar.oscarEncounter.oscarMeasurements.util.MeasurementDSHelper", list, consequence);
+        Element ruleElement = rcb.getRule(ruleName, "openo.oscarEncounter.oscarMeasurements.util.MeasurementDSHelper", list, consequence);
 
         return ruleElement;
     }

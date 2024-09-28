@@ -353,7 +353,7 @@ R = Retransmitted
 C = corrected
 X = deleted (available on request; not always preceded by non-X OBRs in an earlier transmission)
 
-     * @see oscar.oscarLab.ca.all.parsers.MessageHandler#getOrderStatus()
+     * @see openo.oscarLab.ca.all.parsers.MessageHandler#getOrderStatus()
      */
     public String getOrderStatus() {
         String orderStatus = null;

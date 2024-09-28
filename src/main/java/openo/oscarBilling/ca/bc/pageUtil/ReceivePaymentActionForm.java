@@ -127,7 +127,7 @@ public class ReceivePaymentActionForm
         if (!StringUtils.isNumeric(this.getAmountReceived())) {
             errors.add("",
                     new ActionMessage(
-                            "oscar.billing.CA.BC.billingBC.receivePayment.error.amtReceived"));
+                            "openo.billing.CA.BC.billingBC.receivePayment.error.amtReceived"));
         }
         return errors;
     }

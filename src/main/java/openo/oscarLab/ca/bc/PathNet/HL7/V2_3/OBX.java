@@ -63,7 +63,7 @@ public class OBX extends Node {
             this.note.add(nte);
             return nte.Parse(line);
         }
-        logger.error("Error During Parsing, Unknown Line - oscar.PathNet.HL7.V2_3.OBX - Message: " + line);
+        logger.error("Error During Parsing, Unknown Line - openo.PathNet.HL7.V2_3.OBX - Message: " + line);
         return null;
     }
 

@@ -605,120 +605,120 @@ public class WCB {
         List errors = new ArrayList();
 
         if (w_lname == null || "".equals(w_lname)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_lname");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_lname");
         }
         if (w_fname == null || "".equals(w_fname)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_fname");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_fname");
         }
         if (w_dob == null || "".equals(w_dob)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_dob");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_dob");
         }
         if (w_gender == null || "".equals(w_gender)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_gender");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_gender");
         }
 
         if (!StringUtils.isNumeric(w_phn)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_phn");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_phn");
         }
         if (w_doi == null || "".equals(w_doi)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_doi");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_doi");
         }
 
         if ((w_feeitem == null || "".equals(w_feeitem) && (w_extrafeeitem == null || "".equals(w_extrafeeitem)))) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.enterfee");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.enterfee");
         }
         if (w_icd9 == null || "".equals(w_icd9)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_icd9");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_icd9");
         }
 //        } else if (!per.dxcodeExists(w_icd9)) {
-//            errors.add("oscar.billing.CA.BC.billingBC.error.invaliddxcode", w_icd9);
+//            errors.add("openo.billing.CA.BC.billingBC.error.invaliddxcode", w_icd9);
 //        }
 
         if (w_noi == null || "".equals(w_noi)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_noi");
         }
 
         if ((w_noi != null && w_noi.length() > 0) && !StringUtils.isNumeric(w_noi)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
         }
 
         if ((w_feeitem != null && w_feeitem.length() > 0) && !StringUtils.isNumeric(w_feeitem)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_feeitem.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_feeitem.numeric");
         }
 
         if ((w_extrafeeitem != null && w_extrafeeitem.length() > 0) && !StringUtils.isNumeric(w_extrafeeitem)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_extrafeeitem.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_extrafeeitem.numeric");
         }
 
         if (!StringUtils.isNumeric(w_icd9)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_icd9.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_icd9.numeric");
         }
 
         if ((w_bp != null && w_bp.length() > 0) && !StringUtils.isNumeric(w_bp)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
         }
 
 
         if ("1".equals(formNeeded)) {
             if (w_empname == null || "".equals(w_empname)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_empname");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_empname");
             }
             if (this.w_opaddress == null || "".equals(w_opaddress)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_opaddress");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_opaddress");
             }
             if (this.w_opcity == null || "".equals(w_opcity)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_opcity");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_opcity");
             }
             if (this.w_emparea == null || !StringUtils.isNumeric(w_emparea)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_emparea");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_emparea");
             }
 
             if (w_empphone == null || !StringUtils.isNumeric(w_empphone)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_empphone");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_empphone");
             }
 
             if (w_diagnosis == null || "".equals(w_diagnosis)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_diagnosis");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_diagnosis");
             }
 
             //From injury or since last report, has the worker been disabled from work?
             if ("Y".equals(w_work)) {
                 if (w_workdate == null) {
-                    errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_workdate");
+                    errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_workdate");
                 }
             } else if (w_work == null) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rphysician");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rphysician");
             }
 
             //Is the worker now medically capable of working full duties, full time?
             if ("N".equals(w_capability)) {
                 if (w_capreason == null || "".equals(w_capreason)) {
-                    errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_capreason");
+                    errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_capreason");
                 }
             } else if (w_capability == null) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_capability");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_capability");
             }
 
             //If appropriate, is the worker now ready for a rehabilitation program?
             if ("Y".equals(w_rehab)) {
                 if (w_rehabtype == null || "".equals(w_rehabtype)) {
-                    errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rehabtype");
+                    errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rehabtype");
                 }
             } else if (w_rehab == null) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rehab");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rehab");
             }
 
             if (w_rphysician == null) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rphysician");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rphysician");
             }
 ////            if (w_reportype == null) {
-////                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_reportype");
+////                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_reportype");
 ////            }
             if (w_estimate == null) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_estimate");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_estimate");
             }
             if (w_tofollow == null) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_tofollow");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_tofollow");
             }
         }
         return errors;
@@ -765,19 +765,19 @@ public class WCB {
      */
     public List verifyFormNotNeeded() {
         List errors = new ArrayList();
-        checkNullOrBlankValue(w_lname, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_lname");
-        checkNullOrBlankValue(w_fname, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_fname");
-        checkNullOrBlankValue(w_dob, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_dob");
-        checkNullOrBlankValue(w_gender, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_gender");
-        checkNullAndNumericValue(w_phn, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_phn");
-        checkNullOrBlankValue(w_doi, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_doi");
-        checkNullOrBlankValue(w_noi, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_noi");
+        checkNullOrBlankValue(w_lname, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_lname");
+        checkNullOrBlankValue(w_fname, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_fname");
+        checkNullOrBlankValue(w_dob, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_dob");
+        checkNullOrBlankValue(w_gender, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_gender");
+        checkNullAndNumericValue(w_phn, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_phn");
+        checkNullOrBlankValue(w_doi, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_doi");
+        checkNullOrBlankValue(w_noi, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_noi");
 
         if ((w_noi != null && w_noi.length() > 0) && !StringUtils.isNumeric(w_noi)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
         }
         if ((w_bp != null && w_bp.length() > 0) && !StringUtils.isNumeric(w_bp)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
         }
 
 
@@ -825,35 +825,35 @@ public class WCB {
     public List verifyEverythingOnForm() {
         List errors = new ArrayList();
 
-        checkNullOrBlankValue(w_empname, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_empname");//DR03   1 of 4 N01  P22   WCB-Employer-Name              Yes    Yes 
-        checkNullOrBlankValue(w_opaddress, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_opaddress");//DR04   1 of 4 N01  P22   WCB-Work-Location              Yes    Yes
-        checkNullOrBlankValue(w_address, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_address");        //DR14   1 of 4 N01  P22   WCB-Workers-Address1           Yes    Yes w_address
-        checkNullOrBlankValue(w_city, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_opcity");//DR15   1 of 4 N01  P22   WCB-Worker-City                Yes    Yes w_city
+        checkNullOrBlankValue(w_empname, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_empname");//DR03   1 of 4 N01  P22   WCB-Employer-Name              Yes    Yes 
+        checkNullOrBlankValue(w_opaddress, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_opaddress");//DR04   1 of 4 N01  P22   WCB-Work-Location              Yes    Yes
+        checkNullOrBlankValue(w_address, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_address");        //DR14   1 of 4 N01  P22   WCB-Workers-Address1           Yes    Yes w_address
+        checkNullOrBlankValue(w_city, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_opcity");//DR15   1 of 4 N01  P22   WCB-Worker-City                Yes    Yes w_city
 
         if ("Y".equals(w_rphysician)) {
-            checkNullOrBlankValue(w_duration, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_patientDuration");//DR23   1 of 4 N01  P22   WCB-Patient-Duration           Yes if DR22 w_duration 
+            checkNullOrBlankValue(w_duration, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_patientDuration");//DR23   1 of 4 N01  P22   WCB-Patient-Duration           Yes if DR22 w_duration 
         } else if (w_rphysician == null) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rphysician");//DR22   1 of 4 N01  P22   WCB-Regular-Practitioner       Yes    Yes w_rphysician
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rphysician");//DR22   1 of 4 N01  P22   WCB-Regular-Practitioner       Yes    Yes w_rphysician
 
         }
 
-        checkNullOrBlankValue(w_problem, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_priorProblem");//DR26   2 of 4 N01  P22   WCB-Prior-Problems             Yes    Yes w_problem
-        checkNullOrBlankValue(w_diagnosis, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_diagnosis");//DR28   1 of 4 N01  P22   WCB-Alpha-Injury-Description   Yes    Yes w_diagnosis
+        checkNullOrBlankValue(w_problem, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_priorProblem");//DR26   2 of 4 N01  P22   WCB-Prior-Problems             Yes    Yes w_problem
+        checkNullOrBlankValue(w_diagnosis, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_diagnosis");//DR28   1 of 4 N01  P22   WCB-Alpha-Injury-Description   Yes    Yes w_diagnosis
 
-        checkNullOrBlankValue(w_work, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_disabledFromWork");//DR36   1 of 4 N01  P22   WCB-Disabled-From-Work         Yes    Yes w_work
-        checkNullOrBlankValue(w_clinicinfo, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_ClinicalInfo");//DR38a  3 of 4 N01  P22   WCB-Clinical-info-part-1       Yes    Yes w_clinicinfo
+        checkNullOrBlankValue(w_work, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_disabledFromWork");//DR36   1 of 4 N01  P22   WCB-Disabled-From-Work         Yes    Yes w_work
+        checkNullOrBlankValue(w_clinicinfo, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_ClinicalInfo");//DR38a  3 of 4 N01  P22   WCB-Clinical-info-part-1       Yes    Yes w_clinicinfo
 
         if ("N".equals(w_capability)) {
-            checkNullOrBlankValue(w_capreason, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_capreason");//DR41   2 of 4 N01  P22   WCB-Restrictions               Yes if DR40 = N Yes  w_capreason
-            checkNullOrBlankValue(w_estimate, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_estimate");//DR42   1 of 4 N01  P22   WCB-Estimated-time-off         Yes if DR40 = N Yes  w_estimate
+            checkNullOrBlankValue(w_capreason, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_capreason");//DR41   2 of 4 N01  P22   WCB-Restrictions               Yes if DR40 = N Yes  w_capreason
+            checkNullOrBlankValue(w_estimate, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_estimate");//DR42   1 of 4 N01  P22   WCB-Estimated-time-off         Yes if DR40 = N Yes  w_estimate
         } else if (w_capability == null) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_capability");//DR40   1 of 4 N01  P22   WCB-Full-Duties                Yes    Yes w_capability
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_capability");//DR40   1 of 4 N01  P22   WCB-Full-Duties                Yes    Yes w_capability
         }
 
         if ("Y".equals(w_rehab)) {
-            checkNullOrBlankValue(w_rehabtype, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_rehabtype");//DR44   1 of 4 N01  P22   WCB-Rehab-Program              Yes if DR43 = Y Yes  w_rehabtype
+            checkNullOrBlankValue(w_rehabtype, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_rehabtype");//DR44   1 of 4 N01  P22   WCB-Rehab-Program              Yes if DR43 = Y Yes  w_rehabtype
         } else if (w_rehab == null) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rehab");//DR43   1 of 4 N01  P22   WCB-Rehab-Ready                Yes                   w_rehab
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rehab");//DR43   1 of 4 N01  P22   WCB-Rehab-Ready                Yes                   w_rehab
         }
         return errors;
     }
@@ -861,67 +861,67 @@ public class WCB {
     public List verifyOnForm() {
         List errors = new ArrayList();
 
-        checkNullOrBlankValue(w_lname, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_lname");
-        checkNullOrBlankValue(w_fname, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_fname");
-        checkNullOrBlankValue(w_dob, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_dob");
-        checkNullOrBlankValue(w_gender, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_gender");
+        checkNullOrBlankValue(w_lname, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_lname");
+        checkNullOrBlankValue(w_fname, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_fname");
+        checkNullOrBlankValue(w_dob, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_dob");
+        checkNullOrBlankValue(w_gender, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_gender");
 
         if (!StringUtils.isNumeric(w_phn)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_phn");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_phn");
         }
-        checkNullOrBlankValue(w_doi, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_doi");
-        checkNullOrBlankValue(w_noi, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_noi");
+        checkNullOrBlankValue(w_doi, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_doi");
+        checkNullOrBlankValue(w_noi, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_noi");
 
 
         if ((w_noi != null && w_noi.length() > 0) && !StringUtils.isNumeric(w_noi)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_noi.numeric");
         }
         if ((w_bp != null && w_bp.length() > 0) && !StringUtils.isNumeric(w_bp)) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_bp.numeric");
         }
 
         if ("1".equals(formNeeded)) {
-            checkNullOrBlankValue(w_empname, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_empname");
-            checkNullOrBlankValue(w_opaddress, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_opaddress");
-            checkNullOrBlankValue(w_opcity, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_opcity");
+            checkNullOrBlankValue(w_empname, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_empname");
+            checkNullOrBlankValue(w_opaddress, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_opaddress");
+            checkNullOrBlankValue(w_opcity, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_opcity");
 
             if (this.w_emparea == null || !StringUtils.isNumeric(w_emparea)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_emparea");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_emparea");
             }
 
             if (w_empphone == null || !StringUtils.isNumeric(w_empphone)) {
-                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_empphone");
+                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_empphone");
             }
 
-            checkNullOrBlankValue(w_diagnosis, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_diagnosis");
+            checkNullOrBlankValue(w_diagnosis, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_diagnosis");
         }
 
         //From injury or since last report, has the worker been disabled from work?
         if ("Y".equals(w_work)) {
-            checkNullValue(w_workdate, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_workdate");
+            checkNullValue(w_workdate, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_workdate");
         } else if (w_work == null) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rphysician");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rphysician");
         }
 
         //Is the worker now medically capable of working full duties, full time?
         if ("N".equals(w_capability)) {
-            checkNullOrBlankValue(w_capreason, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_capreason");
+            checkNullOrBlankValue(w_capreason, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_capreason");
         } else if (w_capability == null) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_capability");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_capability");
         }
 
         //If appropriate, is the worker now ready for a rehabilitation program?
         if ("Y".equals(w_rehab)) {
-            checkNullOrBlankValue(w_rehabtype, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_rehabtype");
+            checkNullOrBlankValue(w_rehabtype, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_rehabtype");
         } else if (w_rehab == null) {
-            errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_rehab");
+            errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_rehab");
         }
 
-        checkNullValue(w_rphysician, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_rphysician");
-        checkNullValue(w_estimate, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_estimate");
-        checkNullValue(w_tofollow, errors, "oscar.billing.CA.BC.billingBC.wcb.error.w_tofollow");
+        checkNullValue(w_rphysician, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_rphysician");
+        checkNullValue(w_estimate, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_estimate");
+        checkNullValue(w_tofollow, errors, "openo.billing.CA.BC.billingBC.wcb.error.w_tofollow");
 ////            if (w_reportype == null) {
-////                errors.add("oscar.billing.CA.BC.billingBC.wcb.error.w_reportype");
+////                errors.add("openo.billing.CA.BC.billingBC.wcb.error.w_reportype");
 ////            }
 
 

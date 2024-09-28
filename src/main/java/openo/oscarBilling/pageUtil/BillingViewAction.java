@@ -98,7 +98,7 @@ public final class BillingViewAction extends Action {
 
             //if(request.getParameter("demographic_no")!=null & request.getParameter("appointment_no")!=null)
             //{
-            //    bean = new oscar.oscarBilling.pageUtil.BillingSessionBean();
+            //    bean = new openo.oscarBilling.pageUtil.BillingSessionBean();
 
             //	 bean.setApptProviderNo(request.getParameter("apptProvider_no"));
             //    bean.setPatientName(request.getParameter("demographic_name"));
@@ -116,7 +116,7 @@ public final class BillingViewAction extends Action {
             //            }//if
             //else
             //{
-            //    bean = (oscar.oscarBilling.pageUtil.BillingSessionBean)request.getSession().getAttribute("billingSessionBean");
+            //    bean = (openo.oscarBilling.pageUtil.BillingSessionBean)request.getSession().getAttribute("billingSessionBean");
             //}
 
 

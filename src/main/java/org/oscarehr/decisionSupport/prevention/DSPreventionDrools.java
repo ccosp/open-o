@@ -46,7 +46,7 @@ public class DSPreventionDrools {
 
     public static final Namespace namespace = Namespace.getNamespace("http://drools.org/rules");
     public static final Namespace javaNamespace = Namespace.getNamespace("java", "http://drools.org/semantics/java");
-    public static final String preventionObjectClassPath = "oscar.oscarPrevention.Prevention";
+    public static final String preventionObjectClassPath = "openo.oscarPrevention.Prevention";
 
     public static RuleBase createRuleBase(byte[] ruleSet) throws Exception {
         logger.debug(preventionObjectClassPath);

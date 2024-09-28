@@ -242,7 +242,7 @@ public class FrmLabReq10Record extends FrmRecord {
         // missing
         // props.setProperty("hcType", demographic.getHcType());
         // props.setProperty("demoProvider", demographic.getProviderNo());
-        // props.setProperty("clinicProvince",oscar.Misc.getString(rs, "clinic_province"));
+        // props.setProperty("clinicProvince",openo.Misc.getString(rs, "clinic_province"));
 
         logger.debug("Remote properties : " + p);
 

@@ -59,12 +59,12 @@ public class WLWaitingListBeanHandler {
 
             onListSinceDateOnly = ConversionUtils.toDateString(waitingList.getOnListSince());
 
-            WLPatientWaitingListBean wLBean = new WLPatientWaitingListBean(String.valueOf(waitingList.getDemographicNo()), // oscar.Misc.getString(rs, "demographic_no"),
-                    String.valueOf(waitingList.getListId()), // oscar.Misc.getString(rs, "listID"),
-                    String.valueOf(waitingList.getPosition()), // oscar.Misc.getString(rs, "position"),
-                    demographic.getFullName(),//  oscar.Misc.getString(rs, "patientName"),
-                    demographic.getPhone(), //  oscar.Misc.getString(rs, "phone"),
-                    waitingList.getNote(), // o oscar.Misc.getString(rs, "note"),
+            WLPatientWaitingListBean wLBean = new WLPatientWaitingListBean(String.valueOf(waitingList.getDemographicNo()), // openo.Misc.getString(rs, "demographic_no"),
+                    String.valueOf(waitingList.getListId()), // openo.Misc.getString(rs, "listID"),
+                    String.valueOf(waitingList.getPosition()), // openo.Misc.getString(rs, "position"),
+                    demographic.getFullName(),//  openo.Misc.getString(rs, "patientName"),
+                    demographic.getPhone(), //  openo.Misc.getString(rs, "phone"),
+                    waitingList.getNote(), // o openo.Misc.getString(rs, "note"),
                     onListSinceDateOnly);
             waitingListArrayList.add(wLBean);
         }
